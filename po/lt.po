@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: xfce4-session 4.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-01 17:04+0100\n"
-"PO-Revision-Date: 2005-01-07 02:40+0200\n"
+"PO-Revision-Date: 2005-01-23 02:11+0200\n"
 "Last-Translator: Mantas <mantaz@users.sf.net>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgid ""
 "valid splash theme archive."
 msgstr ""
 "Neįmanoma įdiegti įkelties temos iš bylos „%s“, patiktrinkite, ar tai tikra "
-"paleisties temos byla"
+"įkelties temos byla"
 
 #: engines/balou/config.c:382
 #, c-format
@@ -57,7 +57,7 @@ msgstr "_Eksportuoti temą"
 
 #: engines/balou/config.c:841
 msgid "Balou theme"
-msgstr "Balou tema"
+msgstr "„Balou“ tema"
 
 #: engines/balou/config.c:924
 msgid "Configure Balou..."
@@ -69,7 +69,7 @@ msgstr "Pasirinkite paveikslą…"
 
 #: engines/simple/simple.c:360
 msgid "Configure Simple..."
-msgstr "„Paprasto“ ekrano derinimas..."
+msgstr "„Paprasto“ ekrano derinimas…"
 
 #: engines/simple/simple.c:371
 msgid "Font"
@@ -108,12 +108,12 @@ msgid ""
 "If set, the session manager will ask you to choose a session every time you "
 "log in to Xfce."
 msgstr ""
-"Įjungus šį nustatymą, sesijų valdyklė prašys Jūsų pasirinkti sesiją, "
+"Šis parametras nurodo sesijų valdyklei prašyti Jūsų pasirinkti sesiją, "
 "kaskart prisijungiant prie Xfce."
 
 #: settings/session/session.c:150
 msgid "Logout settings"
-msgstr "Atsijungimo nuostatos"
+msgstr "Atsijungimo parametrai"
 
 #: settings/session/session.c:156
 msgid "Automatically save session on logout"
@@ -125,9 +125,9 @@ msgid ""
 "automatically when you log out. If you don't select this option you'll be "
 "prompted whether you want to save the current session on each logout."
 msgstr ""
-"Ši parinktis nurodo sesijų valdyklei automatiškai išsaugoti esamą sesiją "
-"išsiregistruojant. Jos nepasirinkę, Jūsų būs klausiama, ar norite išsaugoti "
-"esamą sesiją, kiekvieno išsiregistravimo metu."
+"Šis parametras nurodo sesijų valdyklei automatiškai išsaugoti esamą sesiją "
+"atsijungiant. Jo nepasirinkus, Jūsų kiekvieno atsijungimo metu bus "
+"klausiama, ar norite išsaugoti esamą sesiją."
 
 #: settings/session/session.c:169
 msgid "Prompt on logout"
@@ -139,8 +139,8 @@ msgid ""
 "will be saved or not depends on whether you enabled the automatic saving of "
 "sessions on logout or not."
 msgstr ""
-"Ši parinktis išjungia išsiregistravimo patvirtinimo dialogą. Ar sesija bus "
-"išsaugota, priklauso nuo to ar Jūs įjungėte automatinį sesijos "
+"Įjungus šį parametrą, atsijungimo patvirtinimo dialogas nebebus rodomas. "
+"Ar sesija bus išsaugota, priklauso nuo to, ar Jūs įjungėte automatinį sesijos "
 "išsaugojimą išsiregistruojant."
 
 #: settings/session/session.c:211
@@ -149,7 +149,7 @@ msgstr "Suderinamumas"
 
 #: settings/session/session.c:220
 msgid "Launch Gnome services on startup"
-msgstr "Paleisti Gnome servisus įkelties metu"
+msgstr "Paleisti Gnome tarnybas įkelties metu"
 
 #: settings/session/session.c:230
 msgid ""
@@ -158,14 +158,14 @@ msgid ""
 "enable this if you want to use the Assistive Technologies that ship with "
 "Gnome."
 msgstr ""
-"Įjunkite šią parinktį, jei planuojate naudoti Gnome programas. Tai nurodys sesijų "
-"valdyklei paleisti keletą pagrindinių Gnome tarnybų. Turėtumėte įjungti, jei "
-"norėsite naudoti pagalbines technologijas, pateikiamas kartu su "
+"Įjunkite šį parametrą, jei žadate naudoti Gnome programas. Jis nurodys sesijų "
+"valdyklei paleisti keletą pagrindinių Gnome tarnybų. Taip pat turėtumėte "
+"įjungti, jei norėsite naudotis pagalbinėmis technologijomis, pateikiamomis su "
 "Gnome."
 
 #: settings/session/session.c:237
 msgid "Launch KDE services on startup"
-msgstr "Paleisti KDE servisus įkelties metu"
+msgstr "Paleisti KDE tarnybas įkelties metu"
 
 #: settings/session/session.c:243
 msgid ""
@@ -174,10 +174,9 @@ msgid ""
 "other hand, KDE applications will startup faster. Some KDE applications may "
 "not work at all if you don't enable this option."
 msgstr ""
-"Įjunkite šią parinktį jei planuojate Xfce sesijoje leisti KDE programas. Tai "
+"Įjunkite šį parametrą jei Xfce sesijoje žadate naudotis KDE programomis. Tai "
 "žymiai padidins Xfce įkėlimo laiką, tačiau KDE programos bus paleidžiamos "
-"greičiau. Kai kurios KDE programos gali visiškai neveikti jeigu "
-"neįjungsite šios parinkties."
+"greičiau. Kai kurios jų gali visiškai neveikti neįjungus šio parametro."
 
 #: settings/session/session.c:256
 msgid "Security"
@@ -192,21 +191,21 @@ msgid ""
 "Allow the session manager to manage applications running on remote hosts. Do "
 "not enable this option unless you know what you are doing."
 msgstr ""
-"Leisti sesijų valdyklei valdyti programas, veikiančias nutolusiuose "
+"Leisti sesijų valdyklei disponuoti programomis, veikiančiomis nutolusiuose "
 "kompiuteriuose. Neįjunkite šios galimybės, nebent žinote, ką darote."
 
 #: settings/session/session.c:334 settings/session/session.c:349
 #: settings/session/session.c:387
 msgid "Sessions and Startup"
-msgstr "Sesijos ir įkeltis"
+msgstr "Sesijų ir įkelties nustatymai"
 
 #: settings/session/session.c:358
 msgid "General"
-msgstr "Įprastas"
+msgstr "Pagrindiniai"
 
 #: settings/session/session.c:364
 msgid "Advanced"
-msgstr "Išplėstas"
+msgstr "Kiti"
 
 #: settings/splash/splash.c:305 settings/splash/splash.c:308
 #: settings/splash/splash.c:311 settings/splash/splash.c:314
@@ -224,7 +223,7 @@ msgstr "Derinti"
 
 #: settings/splash/splash.c:468
 msgid "Opens the configuration panel for the selected splash screen."
-msgstr "Atveria pasirenkto įkelties ekrano derinimo langą."
+msgstr "Atveria pasirinkto įkelties ekrano derinimo langą."
 
 #: settings/splash/splash.c:472
 msgid "Test"
@@ -232,7 +231,7 @@ msgstr "Išbandyti"
 
 #: settings/splash/splash.c:479
 msgid "Demonstrates the selected splash screen."
-msgstr "Parodo pasirinktą įkelties ekraną"
+msgstr "Parodo pasirinktą įkelties ekraną."
 
 #: settings/splash/splash.c:496
 msgid "Information"
@@ -273,7 +272,7 @@ msgstr "Įkeliami sesijos duomenys"
 
 #: xfce4-session/shutdown.c:291
 msgid "What do you want to do next?"
-msgstr "Ką noretumėte daryti dabar?"
+msgstr "Ką noretumėte daryti toliau?"
 
 #: xfce4-session/shutdown.c:300
 msgid "Quit current session"
@@ -293,7 +292,7 @@ msgstr "_Saugoti sesiją ateities prisijungimams"
 
 #: xfce4-session/shutdown.c:393
 msgid "Please enter your password:"
-msgstr "Įveskite savo slaptažodį:"
+msgstr "Įveskite slaptažodį:"
 
 #: xfce4-session/shutdown.c:425
 msgid "<b>An error occured</b>"
@@ -304,7 +303,7 @@ msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
 msgstr ""
-"Arba įvedėte neteisingą slaptažodį, arba sistemos administratorius nesuteikė "
+"Jūs įvedėte neteisingą slaptažodį, arba sistemos administratorius nesuteikė "
 "Jums teisės išjungti kompiuterį."
 
 #: xfce4-session/xfsm-chooser.c:209
@@ -312,8 +311,8 @@ msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr ""
-"Pasirinkite sesiją, kurią norite atstatyti. Galite tiesiog dukart "
-"spragtelėti ant sesijos vardo, norėdami ją atstatyti."
+"Pasirinkite sesiją, kurią norite atstatyti. Norėdami tai padaryti, galite "
+"tiesiog dukart spragtelėti ant sesijos pavadinimo."
 
 #. "Logout" button
 #: xfce4-session/xfsm-chooser.c:235
@@ -322,7 +321,7 @@ msgstr "Išsiregistruoti"
 
 #: xfce4-session/xfsm-chooser.c:237
 msgid "Cancel the login attempt and return to the login screen."
-msgstr "Nutraukti prisijungimo bandymus ir grįžti į prisijungimo ekraną."
+msgstr "Nutraukti bandymą prisijungti ir grįžti į prisijungimo ekraną."
 
 #. "New" button
 #: xfce4-session/xfsm-chooser.c:245
@@ -355,7 +354,7 @@ msgstr "Vistiek tęsti"
 
 #: xfce4-session/xfsm-dns.c:152
 msgid "Try again"
-msgstr "Bandykite dar"
+msgstr "Bandyti dar"
 
 #: xfce4-session/xfsm-compat-gnome.c:239
 msgid "Starting The Gnome Keyring Daemon"
@@ -367,7 +366,7 @@ msgstr "Paleidžiamos Gnome pagalbinės technologijos"
 
 #: xfce4-session/xfsm-compat-kde.c:118
 msgid "Starting KDE services"
-msgstr "Peleidžiamos KDE tarnybos"
+msgstr "Paleidžiamos KDE tarnybos"
 
 #: xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -375,11 +374,11 @@ msgstr "Pasirinkite sesiją"
 
 #: xfce4-session/xfsm-splash-screen.c:208
 msgid "Choose session name"
-msgstr "Pasirinkite sesijos vardą"
+msgstr "Pasirinkite sesijos pavadinimą"
 
 #: xfce4-session/xfsm-splash-screen.c:222
 msgid "Choose a name for the new session:"
-msgstr "Pasirinkite vardą naujai sesijai:"
+msgstr "Parinkite pavadinimą naujai sesijai:"
 
 #: xfce4-session/xfsm-startup.c:93
 msgid "Starting the Volume Controller"
@@ -391,7 +390,7 @@ msgstr "Paleidžiamas skydelis"
 
 #: xfce4-session/xfsm-startup.c:97
 msgid "Starting the Desktop Manager"
-msgstr "Paleidžiama darbastalio tvarkyklė"
+msgstr "Paleidžiama darbastalio valdyklė"
 
 #: xfce4-session/xfsm-startup.c:99
 msgid "Starting the Taskbar"
@@ -460,60 +459,9 @@ msgstr "Paleidžiamas X terminalo emuliatorius"
 #: xfce4-session/xfsm-startup.c:137
 #, c-format
 msgid "Starting %s"
-msgstr "Peleidžiama %s"
+msgstr "Paleidžiama programa „%s“"
 
 #: xfce4-session/xfsm-startup.c:159
 msgid "Performing Autostart..."
 msgstr "Vykdomas autopaleidimas…"
 
-#~ msgid "Background window"
-#~ msgstr "Fono langas"
-
-#~ msgid "Restoring the desktop settings, please wait..."
-#~ msgstr "Atstatomi darbalaukio nustatymai, prašome palaukti..."
-
-#~ msgid "Starting Xfce, please wait..."
-#~ msgstr "Peleidžiama Xfce, palaukite..."
-
-#~ msgid "Session rc object"
-#~ msgstr "Sesijos rc objektas"
-
-#~ msgid "Restore"
-#~ msgstr "Atkurti"
-
-#~ msgid "Create"
-#~ msgstr "Sukurti"
-
-#~ msgid "Restore a previously saved session:"
-#~ msgstr "Atstatyti anksčiau išsaugotą sesiją:"
-
-#~ msgid ""
-#~ "Choose this option if you want to restore one of your previously saved "
-#~ "sessions. This will bring up the desktop as it was when you saved the "
-#~ "session."
-#~ msgstr ""
-#~ "Pasirinkite šį parametrą jei norite atstatyti vieną iš anksčiau išsaugotų "
-#~ "sesijų. Bus paleistas darbastalis, koks buvo išsaugant."
-
-#~ msgid ""
-#~ "Choose this option if you want to create a new session. The new session "
-#~ "will be started as a default desktop. XXX - better text?"
-#~ msgstr ""
-#~ "Pasirinkite šį parametrą jei norite sukurti naują sesiją. Sesija bus "
-#~ "paleista kaip pagrindinis darbastalis. XXX - geresnis tekstas?"
-
-#~ msgid ""
-#~ "Enter the name of the new session here. The name has to be unique among "
-#~ "your session names and empty session names are not allowed."
-#~ msgstr ""
-#~ "Įveskite naujos sesijos pavadinimą. Pavadinimas turi būti unikalus bei "
-#~ "netuščias."
-
-#~ msgid "Display chooser on demand"
-#~ msgstr "Rodyti pasirinkimą pareikalavus"
-
-#~ msgid "Restore last session automatically"
-#~ msgstr "Automatiškai atstatyti praėjusią sesiją"
-
-#~ msgid "Look & Feel"
-#~ msgstr "Look & Feel"
