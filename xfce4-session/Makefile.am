@@ -42,7 +42,7 @@ xfce4_session_SOURCES =							\
 	xfsm-startup.h
 
 xfce4_session_CFLAGS =							\
-	@GNOME_CFLAGS@							\
+	@GCONF_CFLAGS@							\
 	@LIBSM_CFLAGS@							\
 	@LIBX11_CFLAGS@							\
 	@LIBXFCE4MCS_CLIENT_CFLAGS@					\
@@ -60,7 +60,7 @@ xfce4_session_LDADD =							\
 	@LIBX11_LIBS@							\
 	@LIBXFCE4MCS_CLIENT_LIBS@					\
 	@LIBXFCEGUI4_LIBS@						\
-	@GNOME_LIBS@
+	@GCONF_LIBS@
 
 xfce4_session_DEPENDENCIES =						\
 	$(top_builddir)/libxfsm/libxfsm-4.2.la

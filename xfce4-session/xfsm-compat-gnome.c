@@ -50,10 +50,10 @@
 
 #include <gdk/gdkx.h>
 
-#include <libgnome/libgnome.h>
 #include <libxfce4util/libxfce4util.h>
 
 #ifdef HAVE_GCONF
+#include <libgnome/libgnome.h>
 #include <gconf/gconf-client.h>
 #endif
 
@@ -273,11 +273,13 @@ xfsm_compat_gnome_shutdown (void)
   /* shutdown the keyring daemon */
   gnome_keyring_daemon_shutdown ();
 
+#ifdef HAVE_GCONF
   if (gnome_conf_client != NULL)
     {
       g_object_unref (G_OBJECT (gnome_conf_client));
       gnome_conf_client = NULL;
     }
+#endif
 
   /* shutdown the GConf daemon */
   if (!g_spawn_command_line_sync ("gconftool-2 --shutdown", NULL,
