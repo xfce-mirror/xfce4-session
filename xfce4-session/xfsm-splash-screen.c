@@ -78,7 +78,7 @@ xfsm_splash_screen_new (GdkDisplay  *display,
   splash->engine.primary_monitor = monitor;
 
   /* load and setup the engine */
-  if (G_LIKELY (engine != NULL))
+  if (G_LIKELY (engine != NULL && *engine != '\0'))
     {
       xfsm_splash_screen_load (splash, engine);
       if (G_LIKELY (splash->engine.setup != NULL))

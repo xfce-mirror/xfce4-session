@@ -172,7 +172,6 @@ icons/72x72/Makefile
 icons/128x128/Makefile
 po/Makefile.in
 settings/Makefile
-settings/scripts/Makefile
 settings/session/Makefile
 settings/splash/Makefile
 xfce4-session/Makefile

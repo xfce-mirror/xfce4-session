@@ -38,9 +38,9 @@ host_triplet = @host@
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
 	$(srcdir)/xfce4-session.spec.in $(top_srcdir)/configure \
-	$(top_srcdir)/settings/scripts/Makefile.in AUTHORS COPYING \
-	ChangeLog INSTALL NEWS TODO compile config.guess config.sub \
-	depcomp install-sh ltmain.sh missing mkinstalldirs
+	AUTHORS COPYING ChangeLog INSTALL NEWS TODO compile \
+	config.guess config.sub depcomp install-sh ltmain.sh missing \
+	mkinstalldirs
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/X11.m4 \
@@ -52,7 +52,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno configure.status.lineno
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = config.h
-CONFIG_CLEAN_FILES = xfce4-session.spec settings/scripts/Makefile
+CONFIG_CLEAN_FILES = xfce4-session.spec
 SOURCES =
 DIST_SOURCES =
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
@@ -303,8 +303,6 @@ distclean-hdr:
 	-rm -f config.h stamp-h1
 xfce4-session.spec: $(top_builddir)/config.status $(srcdir)/xfce4-session.spec.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
-settings/scripts/Makefile: $(top_builddir)/config.status $(top_srcdir)/settings/scripts/Makefile.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -452,7 +450,7 @@ distclean-tags:
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/. $(distdir)/m4 $(distdir)/po $(distdir)/settings/scripts $(distdir)/xfce4-session
+	$(mkdir_p) $(distdir)/. $(distdir)/m4 $(distdir)/po $(distdir)/xfce4-session
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
