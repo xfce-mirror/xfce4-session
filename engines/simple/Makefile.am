@@ -20,7 +20,7 @@ libsimple_la_LDFLAGS +=							\
 	-no-undefined							\
 	-export-symbols $(top_srcdir)/xfce4-session/xfsm-splash-rc.def	\
 	@XFCE_MCS_MANAGER_LDFLAGS@
-libsimple_la_LIBADD +=							\
+libsimple_la_LIBADD =							\
 	@XFCE_MCS_MANAGER_LIBS@
 endif
 

@@ -19,7 +19,7 @@ libmice_la_LDFLAGS +=							\
 	-no-undefined							\
 	-export-symbols $(top_srcdir)/xfce4-session/xfsm-splash-rc.def	\
 	@XFCE_MCS_MANAGER_LDFLAGS@
-libmice_la_LIBADD +=							\
+libmice_la_LIBADD =							\
 	@XFCE_MCS_MANAGER_LIBS@
 endif
 

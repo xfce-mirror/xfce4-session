@@ -19,7 +19,7 @@ session_settings_la_LDFLAGS +=						\
 	-no-undefined							\
 	-export-symbols $(datadir)/xfce4/devel/mcs-manager.def		\
 	@XFCE_MCS_MANAGER_LDFLAGS@
-session_settings_la_LIBADD +=						\
+session_settings_la_LIBADD =						\
 	@XFCE_MCS_MANAGER_LIBS@
 endif
 
