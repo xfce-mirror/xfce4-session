@@ -70,6 +70,7 @@
 #include "util.h"
 
 #include <xfce4-session/client-list.h>
+#include <xfce4-session/tray-icon.h>
 
 #define XFSM_VERSION	2
 
@@ -95,6 +96,9 @@ static IceListenObj *listenObjs;
 
 /* client list GUI */
 GtkWidget	*clientList = NULL;
+
+/* system tray icon */
+extern GtkWidget	*trayIcon;
 
 /* prototypes */
 static Status	new_client(SmsConn, SmPointer, unsigned long *, SmsCallbacks *,
@@ -380,8 +384,10 @@ manager_saveyourself(int saveType, Bool shutdown, int interactStyle, Bool fast)
 
 	g_return_if_fail(state == MANAGER_IDLE);
 
+	shutdownSave = TRUE;
+
 	/* ask user whether to logout */
-	if (shutdown && !shutdownDialog(&shutdownType, &shutdownSave))
+	if (!fast && shutdown && !shutdownDialog(&shutdownType, &shutdownSave))
 		return;
 
 	/* */
@@ -604,8 +610,6 @@ save_yourself_request(SmsConn smsConn, Client *client, int saveType,
                       Bool shutdown, int interactStyle, Bool fast, Bool global)
 {
 	g_return_if_fail(client_state(client) == CLIENT_IDLE);
-
-	shutdownSave = TRUE;
 
 	if (!global) {
 		/*

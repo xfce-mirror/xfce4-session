@@ -141,9 +141,8 @@ xfsm_tray_icon_popup(XfsmTrayIcon *icon, gpointer data)
 static void
 xfsm_tray_icon_init(XfsmTrayIcon *icon)
 {
-	GtkWidget *eventbox;
-	GdkPixbuf *pixbuf;
 	GtkWidget *image;
+	GdkPixbuf *pixbuf;
 
 	/* no menu connected yet */
 	icon->menu = NULL;
@@ -157,14 +156,9 @@ xfsm_tray_icon_init(XfsmTrayIcon *icon)
 			GDK_FOCUS_CHANGE_MASK);
 
 	/* */
-	eventbox = gtk_event_box_new();
-	gtk_container_add(GTK_CONTAINER(icon), eventbox);
-	gtk_widget_show(eventbox);
-
-	/* */
 	pixbuf = inline_icon_at_size(session_icon_data, 16, 16);
 	image = gtk_image_new_from_pixbuf(pixbuf);
-	gtk_container_add(GTK_CONTAINER(eventbox), image);
+	gtk_container_add(GTK_CONTAINER(icon), image);
 	g_object_unref(pixbuf);
 	gtk_widget_show(image);
 
@@ -185,7 +179,7 @@ xfsm_tray_icon_finalize(GObject *object)
 	g_return_if_fail(XFSM_IS_TRAY_ICON(object));
 
 	icon = XFSM_TRAY_ICON(object);
-	
+
 	g_object_unref(G_OBJECT(icon->menu));
 
 	G_OBJECT_CLASS(parent_class)->finalize(object);
@@ -203,4 +197,5 @@ xfsm_tray_icon_new(GtkMenu *menu)
 	
 	return(GTK_WIDGET(icon));
 }
+
 

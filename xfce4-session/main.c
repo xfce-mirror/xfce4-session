@@ -72,6 +72,9 @@ static gint	signalState = SIGNAL_NONE;
 /* */
 McsClient	*settingsClient;
 
+/* system tray icon */
+GtkWidget	*trayIcon;
+
 /*
  */
 static gboolean
@@ -320,7 +323,7 @@ create_tray_icon(void)
 			G_CALLBACK(toggle_visible_cb), clientList);
 
 	/* the tray icon now keeps a ref on the menu */
-	g_object_unref(G_OBJECT(menu));
+	gtk_object_sink(GTK_OBJECT(menu));
 
 	return(icon);
 }
@@ -445,9 +448,9 @@ main(int argc, char **argv)
 	if (!manager_restart())
 		g_idle_add((GSourceFunc)start_default_session, NULL);
 
-	/*
-	 */
-	gtk_widget_show(create_tray_icon());
+	/* */
+	trayIcon = create_tray_icon();
+	gtk_widget_show(trayIcon);
 
 	/*
 	 * Connect UNIX signals
@@ -462,11 +465,9 @@ main(int argc, char **argv)
 #endif
 	(void)sigaction(SIGUSR1, &act, NULL);
 	(void)sigaction(SIGINT, &act, NULL);
-	(void)sigaction(SIGTERM, &act, NULL);
 #else
 	(void)signal(SIGUSR1, signal_handler);
 	(void)signal(SIGINT, signal_handler);
-	(void)signal(SIGTERM, signal_handler);
 #endif
 
 	/* schedule add UNIX signal state checker */
