@@ -82,7 +82,7 @@ screenshot_save (GdkPixmap *pm, GdkRectangle *area)
         {
           /* determine thumb file */
           dpy = gdk_drawable_get_display (GDK_DRAWABLE (pm));
-          display_name = xfsm_display_fullname (dpy);
+          display_name = xfce_gdk_display_get_fullname (dpy);
           resource = g_strconcat ("sessions/thumbs-", display_name,
                                   "/", session_name, ".png", NULL);
           filename = xfce_resource_save_location (XFCE_RESOURCE_CACHE,
@@ -180,7 +180,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   gtk_rc_reparse_all ();
 
   /* get screen with pointer */
-  screen = xfsm_locate_screen_with_pointer (&monitor);
+  screen = xfce_gdk_display_locate_monitor_with_pointer (NULL, &monitor);
   if (screen == NULL)
     {
       screen = gdk_screen_get_default ();
@@ -243,6 +243,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
       theme = xfsm_splash_theme_load (theme_name);
       fadeout = xfsm_fadeout_new (gtk_widget_get_display (hidden), theme);
       xfsm_splash_theme_destroy (theme);
+      gdk_flush ();
 
       /* create confirm dialog */
       dialog = g_object_new (GTK_TYPE_DIALOG,
@@ -324,7 +325,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
     xfsm_window_add_border (GTK_WINDOW (dialog));
 	
   /* center dialog on target monitor */
-  xfsm_center_window_on_screen (GTK_WINDOW (dialog), screen, monitor);
+  xfce_gtk_window_center_on_monitor (GTK_WINDOW (dialog), screen, monitor);
 
   /* connect to the shutdown helper */
   shutdown_helper = xfsm_shutdown_helper_spawn ();
@@ -413,7 +414,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
       gtk_widget_show (entry);
 
       /* center dialog on target monitor */
-      xfsm_center_window_on_screen (GTK_WINDOW (dialog), screen, monitor);
+      xfce_gtk_window_center_on_monitor (GTK_WINDOW (dialog), screen, monitor);
 
       /* again, save the area below the dialog */
       if (!accessibility)
@@ -481,8 +482,8 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
               gtk_widget_show (label);
 
               /* center dialog on target monitor */
-              xfsm_center_window_on_screen (GTK_WINDOW (dialog), screen,
-                                            monitor);
+              xfce_gtk_window_center_on_monitor (GTK_WINDOW (dialog),
+                                                 screen, monitor);
 
               gtk_widget_show_now (dialog);
 

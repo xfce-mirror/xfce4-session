@@ -30,21 +30,12 @@ G_BEGIN_DECLS;
 
 GtkWidget	*xfsm_imgbtn_new(const gchar *, const gchar *, GtkWidget **);
 
-gchar* xfsm_display_fullname (GdkDisplay *display) G_GNUC_CONST;
-gchar* xfsm_screen_fullname (GdkScreen *screen) G_GNUC_CONST;
-
 gboolean xfsm_start_application (gchar      **command,
                                  gchar      **environment,
                                  GdkScreen   *screen,
                                  const gchar *current_directory,
                                  const gchar *client_machine,
                                  const gchar *user_id);
-
-GdkScreen *xfsm_locate_screen_with_pointer (gint *monitor_ret);
-
-void xfsm_center_window_on_screen (GtkWindow *window,
-                                   GdkScreen *screen,
-                                   gint       monitor);
 
 void xfsm_place_trash_window (GtkWindow *window,
                               GdkScreen *screen,

@@ -719,7 +719,7 @@ load_thumbnail (const gchar *name)
 
   /* determine thumb file */
   display = gdk_display_get_default ();
-  display_name = xfsm_display_fullname (display);
+  display_name = xfce_gdk_display_get_fullname (display);
   resource = g_strconcat ("sessions/thumbs-", display_name,
                           "/", name, ".png", NULL);
   filename = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource, TRUE);

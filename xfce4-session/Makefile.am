@@ -21,6 +21,8 @@ xfce4_session_SOURCES =							\
 	xfsm-compat-gnome.h						\
 	xfsm-compat-kde.c						\
 	xfsm-compat-kde.h						\
+	xfsm-dns.c							\
+	xfsm-dns.h							\
 	xfsm-fadeout.c							\
 	xfsm-fadeout.h							\
 	xfsm-global.c							\

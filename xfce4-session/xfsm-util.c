@@ -38,6 +38,8 @@
 
 #include <gdk/gdkx.h>
 
+#include <libxfcegui4/libxfcegui4.h>
+
 #include <xfce4-session/xfsm-util.h>
 
 
@@ -75,58 +77,6 @@ xfsm_imgbtn_new(const gchar *text, const gchar *icon, GtkWidget **label_ret)
 }
 
 
-gchar*
-xfsm_display_fullname (GdkDisplay *display)
-{
-  const gchar *name;
-  const gchar *np;
-  gchar       *hostname;
-  gchar        buffer[256];
-  gchar       *bp;
-                                                                                
-  name = gdk_display_get_name (display);
-  if (*name == ':')
-    {
-      hostname = xfce_gethostname ();
-      g_strlcpy (buffer, hostname, 256);
-      g_free (hostname);
-                                                                                
-      bp = buffer + strlen (buffer);
-                                                                                
-      for (np = name; *np != '\0' && *np != '.' && bp < buffer + 255; )
-        *bp++ = *np++;
-      *bp = '\0';
-    }
-  else
-    {
-      g_strlcpy (buffer, name, 256);
-                                                                                
-      for (bp = buffer + strlen (buffer) - 1; *bp != ':'; --bp)
-        if (*bp == '.')
-          {
-            *bp = '\0';
-            break;
-          }
-    }
-                                                                                
-  return g_strdup (buffer);
-}
-
-
-gchar*
-xfsm_screen_fullname (GdkScreen *screen)
-{
-  gchar *display_name;
-  gchar *screen_name;
-  
-  display_name = xfsm_display_fullname (gdk_screen_get_display (screen));
-  screen_name = g_strdup_printf ("%s.%d", display_name, gdk_screen_get_number (screen));
-  g_free (display_name);
-  
-  return screen_name;
-}
-
-
 gboolean
 xfsm_start_application (gchar      **command,
                         gchar      **environment,
@@ -159,7 +109,7 @@ xfsm_start_application (gchar      **command,
   if (screen != NULL)
     {
       if (client_machine != NULL)
-        screen_name = xfsm_screen_fullname (screen);
+        screen_name = xfce_gdk_screen_get_fullname (screen);
       else
         screen_name = gdk_screen_make_display_name (screen);
       argv[argc++] = g_strdup ("env");
@@ -192,82 +142,6 @@ xfsm_start_application (gchar      **command,
   g_strfreev (argv);
   
   return result;
-}
-
-
-static gboolean
-xfsm_screen_contains_pointer (GdkScreen *screen,
-                              int       *x,
-			                        int       *y)
-{
-	GdkWindow    *root_window;
-	Window        root, child;
-	Bool          retval;
-	int           rootx, rooty;
-	int           winx, winy;
-	unsigned int  xmask;
-
-	root_window = gdk_screen_get_root_window (screen);
-
-	retval = XQueryPointer (gdk_display,
-        gdk_x11_drawable_get_xid (GDK_DRAWABLE (root_window)),
-				&root, &child, &rootx, &rooty, &winx, &winy, &xmask);
-
-	if (x)
-		*x = retval ? rootx : -1;
-	if (y)
-		*y = retval ? rooty : -1;
-
-	return retval;
-}
-
-
-GdkScreen*
-xfsm_locate_screen_with_pointer (gint *monitor_ret)
-{
-	GdkDisplay *display;
-	int         n_screens, i;
-
-	display = gdk_display_get_default ();
-
-	n_screens = gdk_display_get_n_screens (display);
-	for (i = 0; i < n_screens; i++) {
-		GdkScreen  *screen;
-		int         x, y;
-
-		screen = gdk_display_get_screen (display, i);
-
-		if (xfsm_screen_contains_pointer (screen, &x, &y)) {
-			if (monitor_ret)
-				*monitor_ret = gdk_screen_get_monitor_at_point (screen, x, y);
-
-			return screen;
-		}
-	}
-
-	if (monitor_ret)
-		*monitor_ret = 0;
-
-	return NULL;
-}
-
-
-void
-xfsm_center_window_on_screen (GtkWindow *window,
-			                        GdkScreen *screen,
-                    			    gint       monitor)
-{
-	GtkRequisition requisition;
-	GdkRectangle   geometry;
-	gint           x, y;
-
-	gdk_screen_get_monitor_geometry (screen, monitor, &geometry);
-	gtk_widget_size_request (GTK_WIDGET (window), &requisition);
-
-	x = geometry.x + (geometry.width - requisition.width) / 2;
-	y = geometry.y + (geometry.height - requisition.height) / 2;
-
-	gtk_window_move (window, x, y);
 }
 
 

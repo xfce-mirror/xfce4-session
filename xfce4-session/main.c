@@ -51,6 +51,7 @@
 #include <xfce4-session/ice-layer.h>
 #include <xfce4-session/shutdown.h>
 #include <xfce4-session/sm-layer.h>
+#include <xfce4-session/xfsm-dns.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-manager.h>
 #include <xfce4-session/xfsm-splash-theme.h>
@@ -280,9 +281,12 @@ main (int argc, char **argv)
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
   
   gtk_init (&argc, &argv);
-  
-  /* fake a client id for the manager, so smproxy does not recognize
-   * us to be a session client.
+
+  /* verify that the DNS settings are ok */
+  xfsm_dns_check ();
+
+  /* fake a client id for the manager, so the legacy management does not
+   * recognize us to be a session client.
    */
   gdk_set_sm_client_id (xfsm_manager_generate_client_id (NULL));
 

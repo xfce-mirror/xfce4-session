@@ -391,7 +391,7 @@ xfsm_manager_init (XfceRc *rc)
   gchar *resource_name;
 
   xfce_rc_set_group (rc, "General");
-  display_name  = xfsm_display_fullname (gdk_display_get_default ());
+  display_name  = xfce_gdk_display_get_fullname (gdk_display_get_default ());
   resource_name = g_strconcat ("sessions/xfce4-session-", display_name, NULL);
   session_file  = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource_name, TRUE);
   g_free (resource_name);

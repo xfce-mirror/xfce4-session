@@ -60,6 +60,7 @@ am_xfce4_session_OBJECTS = xfce4_session-ice-layer.$(OBJEXT) \
 	xfce4_session-xfsm-client.$(OBJEXT) \
 	xfce4_session-xfsm-compat-gnome.$(OBJEXT) \
 	xfce4_session-xfsm-compat-kde.$(OBJEXT) \
+	xfce4_session-xfsm-dns.$(OBJEXT) \
 	xfce4_session-xfsm-fadeout.$(OBJEXT) \
 	xfce4_session-xfsm-global.$(OBJEXT) \
 	xfce4_session-xfsm-legacy.$(OBJEXT) \
@@ -84,6 +85,7 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-client.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-compat-kde.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-dns.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-fadeout.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-global.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-legacy.Po \
@@ -274,6 +276,8 @@ xfce4_session_SOURCES = \
 	xfsm-compat-gnome.h						\
 	xfsm-compat-kde.c						\
 	xfsm-compat-kde.h						\
+	xfsm-dns.c							\
+	xfsm-dns.h							\
 	xfsm-fadeout.c							\
 	xfsm-fadeout.h							\
 	xfsm-global.c							\
@@ -397,6 +401,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-client.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-compat-kde.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-dns.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-fadeout.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-global.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-legacy.Po@am__quote@
@@ -647,6 +652,30 @@ xfce4_session-xfsm-compat-kde.lo: xfsm-compat-kde.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-compat-kde.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-compat-kde.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-compat-kde.lo `test -f 'xfsm-compat-kde.c' || echo '$(srcdir)/'`xfsm-compat-kde.c
+
+xfce4_session-xfsm-dns.o: xfsm-dns.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-dns.o -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-dns.Tpo" -c -o xfce4_session-xfsm-dns.o `test -f 'xfsm-dns.c' || echo '$(srcdir)/'`xfsm-dns.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-dns.Tpo" "$(DEPDIR)/xfce4_session-xfsm-dns.Po"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-dns.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-dns.c' object='xfce4_session-xfsm-dns.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-dns.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-dns.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-dns.o `test -f 'xfsm-dns.c' || echo '$(srcdir)/'`xfsm-dns.c
+
+xfce4_session-xfsm-dns.obj: xfsm-dns.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-dns.obj -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-dns.Tpo" -c -o xfce4_session-xfsm-dns.obj `if test -f 'xfsm-dns.c'; then $(CYGPATH_W) 'xfsm-dns.c'; else $(CYGPATH_W) '$(srcdir)/xfsm-dns.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-dns.Tpo" "$(DEPDIR)/xfce4_session-xfsm-dns.Po"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-dns.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-dns.c' object='xfce4_session-xfsm-dns.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-dns.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-dns.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-dns.obj `if test -f 'xfsm-dns.c'; then $(CYGPATH_W) 'xfsm-dns.c'; else $(CYGPATH_W) '$(srcdir)/xfsm-dns.c'; fi`
+
+xfce4_session-xfsm-dns.lo: xfsm-dns.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-dns.lo -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-dns.Tpo" -c -o xfce4_session-xfsm-dns.lo `test -f 'xfsm-dns.c' || echo '$(srcdir)/'`xfsm-dns.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-dns.Tpo" "$(DEPDIR)/xfce4_session-xfsm-dns.Plo"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-dns.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-dns.c' object='xfce4_session-xfsm-dns.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-dns.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-dns.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-dns.lo `test -f 'xfsm-dns.c' || echo '$(srcdir)/'`xfsm-dns.c
 
 xfce4_session-xfsm-fadeout.o: xfsm-fadeout.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-fadeout.o -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-fadeout.Tpo" -c -o xfce4_session-xfsm-fadeout.o `test -f 'xfsm-fadeout.c' || echo '$(srcdir)/'`xfsm-fadeout.c; \

@@ -9,7 +9,7 @@ dnl
 dnl Version information
 m4_define([xfsm_version_major], [4])
 m4_define([xfsm_version_minor], [1])
-m4_define([xfsm_version_micro], [9])
+m4_define([xfsm_version_micro], [10])
 m4_define([xfsm_version], [xfsm_version_major.xfsm_version_minor.xfsm_version_micro])
 
 dnl Initialize autoconf
@@ -39,9 +39,10 @@ AC_PROG_LIBTOOL
 
 dnl check for standard header files
 AC_HEADER_STDC
-AC_CHECK_FUNCS([sigaction strdup sync])
-AC_CHECK_HEADERS([errno.h fcntl.h limits.h signal.h stdarg.h sys/param.h \
-  sys/resource.h sys/time.h sys/wait.h time.h unistd.h])
+AC_CHECK_FUNCS([getaddrinfo gethostbyname gethostname sigaction strdup sync])
+AC_CHECK_HEADERS([errno.h fcntl.h limits.h netdb.h signal.h stdarg.h \
+  sys/param.h sys/resource.h sys/socket.h sys/time.h sys/wait.h sys/utsname.h \
+  time.h unistd.h])
 
 dnl Check for X11 installed
 BM_LIBX11_REQUIRE
@@ -62,7 +63,7 @@ BM_I18N([xfce4-session], [ar az ca de es es_MX eu fa_IR fr hi it ja ko lt ms nl 
 dnl Check for required packages
 BM_DEPEND([LIBXFCE4UTIL], [libxfce4util-1.0], [4.1.11])
 BM_DEPEND([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.1.0])
-BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [4.1.19])
+BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [4.1.20])
 
 dnl Configure the MCS plugins
 XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.1.0])

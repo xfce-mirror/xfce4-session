@@ -42,6 +42,7 @@
 #include <gdk/gdkx.h>
 
 #include <libxfce4util/libxfce4util.h>
+#include <libxfcegui4/libxfcegui4.h>
 
 #include <xfce4-session/xfsm-chooser.h>
 #include <xfce4-session/xfsm-chooser-trash.h>
@@ -765,9 +766,9 @@ xfsm_splash_screen_choose (XfsmSplashScreen *splash,
 
   xfsm_window_add_border (GTK_WINDOW (chooser));
   gtk_window_set_screen (GTK_WINDOW (chooser), splash->main_screen);
-  xfsm_center_window_on_screen (GTK_WINDOW (chooser),
-                                splash->main_screen,
-                                splash->main_monitor);
+  xfce_gtk_window_center_on_monitor (GTK_WINDOW (chooser),
+                                     splash->main_screen,
+                                     splash->main_monitor);
 
   gtk_widget_show_now (GTK_WIDGET (trash));
   gtk_widget_show_now (GTK_WIDGET (chooser));
