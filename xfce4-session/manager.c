@@ -149,13 +149,19 @@ setenv(const gchar *name, const gchar *value, gboolean overwrite)
   if (g_getenv(name) == NULL || overwrite) {
 	  buf = g_strdup_printf("%s=%s", name, value);
 	  result = putenv(buf);
+#if !defined(sun) && !defined(__sun)
+    /* Solaris requires the memory not to be freed for some weird
+     * reason.
+     *                               -- 20040123, bm
+     */
 	  g_free(buf);
+#endif
   }
 
   return(result);
 }
 #endif	/* !HAVE_SETENV */
-
+when another instance
 /*
  */
 gboolean
