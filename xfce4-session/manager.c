@@ -1,4 +1,5 @@
-/*
+/* $Id$ */
+/*-
  * Copyright (c) 2003 Benedikt Meurer <benedikt.meurer@unix-ag.uni-siegen.de>
  * All rights reserved.
  *
@@ -90,6 +91,9 @@ gboolean	shutdownSave = TRUE;
 /* id of running "Die" timeout if any */
 static guint	dieTimeoutId = 0;
 
+/* id of running "Save yourself" timeout if any */
+static guint  saveTimeoutId = 0;
+
 /* ICE socket listener objects */
 static int numListeners;
 static IceListenObj *listenObjs;
@@ -109,6 +113,7 @@ static void	interact_done(SmsConn, Client *, Bool);
 static void	save_yourself_request(SmsConn, Client *, int, Bool, int, Bool,
                                       Bool);
 static void	save_yourself_phase2_request(SmsConn, Client *);
+static gboolean save_yourself_timeout();
 static void	save_yourself_done(SmsConn, Client *, Bool);
 static void	close_connection(SmsConn, Client *, int, char **);
 static void	set_properties(SmsConn, Client *, int, SmProp **);
@@ -437,6 +442,10 @@ manager_saveyourself(int saveType, Bool shutdown, int interactStyle, Bool fast)
 			SmsSaveYourself(CLIENT(lp->data)->smsConn, saveType,
 					shutdown, interactStyle, fast);
 		}
+
+    /* give all clients the chance to complete the SaveYourself phase */
+    saveTimeoutId = g_timeout_add(10 * 1000,
+        (GSourceFunc)save_yourself_timeout, NULL);
 	}
 	else {
 		/*
@@ -696,6 +705,48 @@ save_yourself_phase2_request(SmsConn smsConn, Client *client)
 	}
 }
 
+/**
+ **/
+static gboolean
+save_yourself_timeout()
+{
+#ifdef TESTING_TIMEOUT
+	IceConn iceConn;
+  Client *client;
+  GList *lp;
+
+
+  /* find first client to remove */
+  for (lp = g_list_first(clients); lp; lp = lp->next) {
+    if (client_state(lp->data) != CLIENT_SAVING)
+      continue;
+
+    client = CLIENT(lp->data);
+
+ 	  /* XXX */
+	  xfsm_session_control_remove(XFSM_SESSION_CONTROL(sessionControl), client);
+
+	  /* shutdown the XSMP/ICE connection */
+    iceConn = SmsGetIceConnection(client->smsConn);
+    SmsCleanUp(client->smsConn);
+    IceSetShutdownNegotiation(iceConn, False);
+    IceCloseConnection(iceConn);
+
+    /* remove client */
+    clients = g_list_remove(clients, client);
+    client_free(client);
+
+    /* get the timeout going... */
+    return(TRUE);
+  }
+#endif
+
+  /* no more clients in SaveYourself state */
+
+  g_warning("SaveYourself timeout occurred! EVIL! EVIL!");
+  return(FALSE);
+}
+
 /*
  */
 static void
@@ -742,6 +793,12 @@ save_yourself_done(SmsConn smsConn, Client *client, Bool success)
 			enterPhase2 = TRUE;
 	}
 
+  /* Remove a running Save Yourself timer */
+  if (saveTimeoutId) {
+    g_source_remove(saveTimeoutId);
+    saveTimeoutId = 0;
+  }
+
 	/*
 	 * Ok, all clients completed the SaveYourself Phase1, and there's
 	 * atleast one client that requested to enter save Phase2, so lets
@@ -764,10 +821,10 @@ save_yourself_done(SmsConn smsConn, Client *client, Bool success)
 	 * are now save to complete the CheckPoint (and shutdown the
 	 * session manager).
 	 */
-	if (state == MANAGER_CHECKPOINT) {
-		if (!manager_save())
-			g_warning("Unable to save session checkpoint");
+  if (!manager_save())
+	  g_warning("Unable to save session checkpoint");
 
+	if (state == MANAGER_CHECKPOINT) {
 		/* Notify all clients that we passed the checkpoint */
 		for (lp = g_list_first(clients); lp; lp = lp->next) {
 #ifdef DEBUG
