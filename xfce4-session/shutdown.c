@@ -129,7 +129,7 @@ hide_fadeout_windows (void)
 
   attr.x = 0;
   attr.y = 0;
-	attr.event_mask = 0;
+  attr.event_mask = 0;
   attr.window_type = GDK_WINDOW_TOPLEVEL;
   attr.wclass = GDK_INPUT_OUTPUT;
   attr.override_redirect = TRUE;
@@ -346,7 +346,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 	    gdk_pointer_grab(dialog->window, TRUE, 0, NULL, NULL, GDK_CURRENT_TIME);
     	gdk_keyboard_grab(dialog->window, FALSE, GDK_CURRENT_TIME);
     	XSetInputFocus(GDK_DISPLAY(), GDK_WINDOW_XWINDOW(dialog->window),
-		                 RevertToParent, CurrentTime);
+		                 RevertToNone, CurrentTime);
     }
 
   /* create small border */

@@ -211,7 +211,7 @@ create_fullscreen_window (GdkScreen *screen, int monitor)
   /* init window attributes */
   attr.x = geometry.x;
   attr.y = geometry.y;
-	attr.event_mask = 0;
+  attr.event_mask = 0;
   attr.width = geometry.width;
   attr.height = geometry.height;
   attr.wclass = GDK_INPUT_OUTPUT;

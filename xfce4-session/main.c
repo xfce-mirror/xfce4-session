@@ -29,6 +29,12 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+#ifdef HAVE_FCNTL_H
+#include <fcntl.h>
+#endif
 #ifdef HAVE_MEMORY_H
 #include <memory.h>
 #endif
@@ -37,6 +43,9 @@
 #endif
 #ifdef HAVE_STRING_H
 #include <string.h>
+#endif
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
 #endif
 
 #include <gdk/gdkx.h>
@@ -57,9 +66,13 @@ void
 setup_environment (void)
 {
   const gchar *lang;
+  const gchar *sm;
+  gchar       *authfile;
+  int          fd;
 
   /* check that no other session manager is running */  
-  if (g_getenv ("SESSION_MANAGER") != NULL)
+  sm = g_getenv ("SESSION_MANAGER");
+  if (sm != NULL && strlen (sm) > 0)
     {
       fprintf (stderr, "xfce4-session: Another session manager is already running\n");
       exit (EXIT_FAILURE);
@@ -79,6 +92,17 @@ setup_environment (void)
       xfce_setenv ("LANG", lang, TRUE);
       xfce_unsetenv ("GDM_LANG");
     }
+
+  /* check access to $HOME/.ICEauthority */
+  authfile = xfce_get_homefile (".ICEauthority", NULL);
+  fd = open (authfile, O_RDWR | O_CREAT, 0600);
+  if (fd < 0)
+    {
+      fprintf (stderr, "xfce4-session: Unable to access file %s: %s\n",
+               authfile, g_strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+  close (fd);
 }
 
 
@@ -159,8 +183,6 @@ init_display (GdkDisplay *dpy)
   gdk_cursor_unref (cursor);
 
   gdk_flush ();
-
-  g_usleep (1000 * 1000);
 
   /* start a MCS manager process per screen */
   for (n = 0; n < gdk_display_get_n_screens (dpy); ++n)
