@@ -34,7 +34,7 @@ dnl Check for session management support
 BM_LIBSM
 
 dnl Check for i18n support
-BM_I18N([xfce4-session], [de])
+BM_I18N([xfce4-session], [de es_MX])
 
 dnl Check for required packages
 BM_DEPEND([LIBXFCE4UTIL], [libxfce4util-1.0], [3.91.0])
