@@ -464,7 +464,12 @@ xfsm_legacy_store_session (XfceRc *rc)
       sm_window = SM_WINDOW (lp->data);
       if (sm_window->type != SM_ERROR)
         {
-          /* XXX - exclude apps based on wmclass1 or wmclass2 */
+          /* xmms is b0rked! */
+          if ((sm_window->wm_class1 != NULL
+                && strcmp (sm_window->wm_class1, "xmms") == 0)
+              || (sm_window->wm_class2 != NULL
+                && strcmp (sm_window->wm_class2, "xmms") == 0))
+            continue;
 
           if (sm_window->wm_command == NULL
               || sm_window->wm_client_machine == NULL)
