@@ -208,6 +208,7 @@ initialize (int argc, char **argv)
     xfce_rc_delete_entry (rc, "ConfirmLogout", FALSE);
   if (xfce_rc_has_entry (rc, "AlwaysDisplayChooser"))
     xfce_rc_delete_entry (rc, "AlwaysDisplayChooser", FALSE);
+  xfce_rc_delete_group (rc, "Splash Theme", FALSE);
 
   xfce_rc_close (rc);
 }

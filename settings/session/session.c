@@ -146,7 +146,6 @@ general_create (XfceRc *rc)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (general_prompt), prompt);
   g_signal_connect (G_OBJECT (general_prompt), "toggled",
                     G_CALLBACK (config_store), NULL);
-  gtk_widget_set_sensitive (general_prompt, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox), general_prompt, FALSE, TRUE, 0);
 
   return page;

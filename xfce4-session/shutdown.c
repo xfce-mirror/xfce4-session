@@ -116,10 +116,6 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 {
 	gboolean accessibility;
   XfsmFadeout *fadeout = NULL;
-#if 0
-  const gchar *theme_name;
-  XfsmSplashTheme *theme;
-#endif
   GdkScreen *screen;
 	GtkWidget *dialog;
 	GtkWidget *label;
@@ -140,6 +136,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   GdkPixbuf *icon;
   gboolean saveonexit;
   gboolean autosave;
+  gboolean prompt;
   gint monitor;
 	gint result;
   XfceRc *rc;
@@ -171,8 +168,18 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   xfce_rc_set_group (rc, "General");
   saveonexit = xfce_rc_read_bool_entry (rc, "SaveOnExit", TRUE);
   autosave = xfce_rc_read_bool_entry (rc, "AutoSave", FALSE);
+  prompt = xfce_rc_read_bool_entry (rc, "PromptOnLogout", TRUE);
 
-  /** XXX - evalute General/PromptOnLogout! */
+  /* if PromptOnLogout is off, saving depends on AutoSave */
+  if (!prompt)
+    {
+      xfce_rc_close (rc);
+
+      *shutdownType = SHUTDOWN_LOGOUT;
+      *saveSession = autosave;
+
+      return TRUE;
+    }
 
   /* It's really bad here if someone else has the pointer
    * grabbed, so we first grab the pointer and keyboard
@@ -240,15 +247,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 #endif
 
       /* display fadeout */
-#if 0
-      xfce_rc_set_group (rc, "General");
-      theme_name = xfce_rc_read_entry (rc, "SplashTheme", "Default");
-      theme = xfsm_splash_theme_load (theme_name);
-#endif
       fadeout = xfsm_fadeout_new (gtk_widget_get_display (hidden));
-#if 0
-      xfsm_splash_theme_destroy (theme);
-#endif
       gdk_flush ();
 
       /* create confirm dialog */
