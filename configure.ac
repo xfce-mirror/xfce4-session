@@ -42,7 +42,7 @@ BM_DEPEND([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [3.91.0])
 BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [3.92.2])
 
 dnl Configure the MCS plugins
-XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [3.91.0])
+XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [3.91.1])
 
 dnl Check for debugging support
 BM_DEBUG_SUPPORT

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2003-07-07 23:25+0200\n"
+"POT-Creation-Date: 2003-07-09 00:33+0200\n"
 "PO-Revision-Date: 2003-07-08 15:00+0200\n"
 "Last-Translator: Jasper Huijsmans <huysmans@users.sourceforge.net>\n"
 "Language-Team: Nederlands <NL@li.org>\n"
@@ -105,7 +105,8 @@ msgstr "Bezig met starten sessie beheerder"
 msgid ""
 "Unable to create users XFce settings\n"
 "directory %s: %s"
-msgstr "Kan gebruikersmap voor opslaan\n"
+msgstr ""
+"Kan gebruikersmap voor opslaan\n"
 "XFce opties niet creëren: %s: %s"
 
 #: xfce4-session/main.c:131
@@ -113,10 +114,17 @@ msgstr "Kan gebruikersmap voor opslaan\n"
 msgid ""
 "Unable to create users XFce session\n"
 "directory %s: %s"
-msgstr "Kan gebruikersmap voor opslaan\n"
+msgstr ""
+"Kan gebruikersmap voor opslaan\n"
 "XFce sessie niet creëren: %s: %s"
 
-#: xfce4-session/main.c:240
+#.
+#: xfce4-session/main.c:254 xfce4-session/client-list.c:249
+#, fuzzy
+msgid "Session control"
+msgstr "Sessiebeheer"
+
+#: xfce4-session/main.c:305
 msgid ""
 "The session manager was unable to start the\n"
 "Multi-Channel settings manager. This is most\n"
@@ -129,11 +137,11 @@ msgstr ""
 "door een onvolledige installatie. Meldt het probleem\n"
 "a.u.b. aan uw systeembeheerder."
 
-#: xfce4-session/main.c:253
+#: xfce4-session/main.c:318
 msgid "Unable to create MCS client"
 msgstr "Kan MCS client niet creëren"
 
-#: xfce4-session/manager.c:306
+#: xfce4-session/manager.c:313
 msgid ""
 "The session manager was unable to restore your\n"
 "previous session. It'll therefore start a default\n"
@@ -142,7 +150,7 @@ msgstr ""
 "De sessiebeheerder kon uw vorige sessie niet herstellen.\n"
 "Een standaard sessie zal worden gestart."
 
-#: xfce4-session/manager.c:762
+#: xfce4-session/manager.c:773
 #, c-format
 msgid ""
 "The client \"%s\" closed the connection\n"
@@ -185,6 +193,12 @@ msgstr ""
 "\n"
 "%s"
 
+#.
+#: xfce4-session/splash-screen.c:264
+#, c-format
+msgid "Starting %s..."
+msgstr "Bezig met starten %s..."
+
 #: xfce4-session/startup.c:149
 msgid "Doing Autostart..."
 msgstr "Bezig met uitvoeren Autostart..."
@@ -193,11 +207,36 @@ msgstr "Bezig met uitvoeren Autostart..."
 msgid "Starting session manager..."
 msgstr "Bezig met starten sesiebeheerder"
 
-#.
-#: xfce4-session/splash-screen.c:269
-#, c-format
-msgid "Starting %s..."
-msgstr "Bezig met starten %s..."
+#: xfce4-session/client-list.c:184
+#, fuzzy, c-format
+msgid "Unable to clone client: %s"
+msgstr "Kan MCS client niet creëren"
+
+#: xfce4-session/client-list.c:272
+msgid "Program"
+msgstr ""
+
+#: xfce4-session/client-list.c:277
+msgid "User"
+msgstr ""
+
+#: xfce4-session/client-list.c:284
+msgid "Priority"
+msgstr ""
+
+#. kill button
+#: xfce4-session/client-list.c:303
+msgid "Kill client"
+msgstr ""
+
+#. clone button
+#: xfce4-session/client-list.c:309
+msgid "Clone client"
+msgstr ""
+
+#: xfce4-session/client-list.c:411 xfce4-session/client-list.c:414
+msgid "Unknown"
+msgstr ""
 
 #: xfce4-shutdown/main.c:136
 #, c-format
@@ -244,4 +283,3 @@ msgstr ""
 "om uw naam toe te voegen aan het bestand %s of om sudo(8)\n"
 "te installeren en u toegangsrechten te verschaffen om de\n"
 "commando's reboot en halt uit te kunnen voeren.\n"
-
