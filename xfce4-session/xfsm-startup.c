@@ -142,9 +142,9 @@ static void
 xfsm_startup_autostart (void)
 {
   const gchar *entry;
-  gchar *argv[] = { NULL, NULL };
+  gchar *argv[3];
   GError *err;
-  gchar *file;
+  gchar  file[1024];
   gchar *dir;
   GDir *dirp;
   gint n = 0;
@@ -161,25 +161,34 @@ xfsm_startup_autostart (void)
           if (entry == NULL)
             break;
 
-          file = g_build_filename (dir, entry, NULL);
+          g_snprintf (file, 1024, "%s/%s", dir, entry);
+
+          err = NULL;
 
           if (g_file_test (file, G_FILE_TEST_IS_EXECUTABLE))
             {
-              *argv = file;
-              err = NULL;
+              argv[0] = file;
+              argv[1] = NULL;
 
-              if (!g_spawn_async (NULL, argv, NULL, 0, NULL, NULL, NULL, &err))
-                {
-                  g_warning ("Unable to launch %s: %s", file, err->message);
-                  g_error_free (err);
-                }
-              else
-                {
-                  ++n;
-                }
             }
+          else if (g_file_test (file, G_FILE_TEST_IS_REGULAR))
+            {
+              argv[0] = "/bin/sh";
+              argv[1] = file;
+              argv[2] = NULL;
+            }
+          else
+            continue;
 
-          g_free (file);
+          if (!g_spawn_async (NULL, argv, NULL, 0, NULL, NULL, NULL, &err))
+            {
+              g_warning ("Unable to launch %s: %s", file, err->message);
+              g_error_free (err);
+            }
+          else
+            {
+              ++n;
+            }
         }
 
       g_dir_close (dirp);
