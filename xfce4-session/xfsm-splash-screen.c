@@ -731,8 +731,12 @@ xfsm_splash_screen_choose (XfsmSplashScreen *splash,
         *name_return = g_strdup (default_session);
 
       for (lp = sessions; lp != NULL; lp = lp->next)
-        if (strcmp ((const gchar *) lp->data, default_session) == 0)
-          break;
+        {
+          XfsmChooserSession *session = (XfsmChooserSession *) lp->data;
+        
+          if (strcmp (session->name, default_session) == 0)
+            break;
+        }
 
       return (lp != NULL);
     }

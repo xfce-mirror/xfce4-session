@@ -33,6 +33,7 @@ G_BEGIN_DECLS
 
 typedef struct _XfsmChooser XfsmChooser;
 typedef struct _XfsmChooserClass XfsmChooserClass;
+typedef struct _XfsmChooserSession XfsmChooserSession;
 
 struct _XfsmChooserClass
 {
@@ -50,6 +51,12 @@ struct _XfsmChooser
   GtkWidget *start;
 
   GtkTooltips *tooltips;
+};
+
+struct _XfsmChooserSession
+{
+  gchar *name;
+  time_t atime;
 };
 
 typedef enum _XfsmChooserReturn

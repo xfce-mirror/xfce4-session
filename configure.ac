@@ -93,6 +93,18 @@ else
   AC_MSG_RESULT([yes])
 fi
 
+dnl Check whether to create session screenshots
+AC_ARG_ENABLE([session-screenshots],
+AC_HELP_STRING([--enable-session-screenshots], [Create screenshots of sessions on logout]),
+  [], [enable_session_screenshots=no])
+AC_MSG_CHECKING([whether to create screenshots of sessions on logout])
+if test x"$enable_session_screenshots" != x"yes"; then
+  AC_MSG_RESULT([no])
+else
+  AC_DEFINE([SESSION_SCREENSHOTS], [1], [Define for session screenshots])
+  AC_MSG_RESULT([yes])
+fi
+
 dnl
 dnl arguments to set shutdown commands
 dnl

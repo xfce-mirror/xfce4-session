@@ -99,7 +99,6 @@ struct _SmWindow
   Window  wid;
   gint    screen_num;
 };
-
 #define SM_WINDOW(window) ((SmWindow *) (window))
 
 typedef struct
@@ -109,11 +108,10 @@ typedef struct
 } SmRestartApp;
 #define SM_RESTART_APP(a) ((SmRestartApp *) (a))
 
+
 static GList *restart_apps = NULL;
-
-
-
 static GList *window_list = NULL;
+
 
 /* X Atoms */
 static Atom _XA_WM_PROTOCOLS     = None;
@@ -193,44 +191,22 @@ wins_error_handler (Display *display, XErrorEvent *event)
 }
 
 
-static gchar*
-get_string_property (Window window, Atom prop)
+static gboolean
+has_xsmp_support (Window window)
 {
-  static char buffer[256];
-  Atom type;
-  int format, status;
-  unsigned long nitems = 0;
-  unsigned long extra = 0;
-  unsigned char *data = NULL;
+  XTextProperty tp;
+  gboolean has_it = FALSE;
 
-  status = XGetWindowProperty (gdk_display, window, prop, 0, 10000,
-                               False, XA_STRING, &type, &format,
-                               &nitems, &extra, &data);
-
-  *buffer = '\0';
-
-  if (status == Success)
+  if (XGetTextProperty (gdk_display, window, &tp, _XA_SM_CLIENT_ID))
     {
-      if (data != NULL)
-        {
-          g_strlcpy (buffer, (char *) data, 256);
-          XFree (data);
-        }
+      if (tp.encoding == XA_STRING && tp.format == 8 && tp.nitems != 0)
+        has_it = TRUE;
+
+      if (tp.value != NULL)
+        XFree ((char *) tp.value);
     }
 
-  return buffer;
-}
-
-
-static gboolean
-has_sessionid (Window window, Window leader)
-{
-  gchar *result;
-
-  result = get_string_property (window, _XA_SM_CLIENT_ID);
-  if (*result == '\0' && leader != None && leader != window)
-    result = get_string_property (leader, _XA_SM_CLIENT_ID);
-  return (*result != '\0');
+  return has_it;
 }
 
 
@@ -256,14 +232,47 @@ get_wmcommand (Window window)
 static gchar*
 get_wmclientmachine (Window window)
 {
-  gchar *result;
+  XTextProperty tp;
+  gchar *result = NULL;
 
-  /* XXX - Use XGetWMClientMachine instead */
-  result = get_string_property (window, XA_WM_CLIENT_MACHINE);
-  if (*result == '\0')
-    return g_strdup ("localhost");
-  return g_strdup (result);
+  if (XGetWMClientMachine (gdk_display, window, &tp))
+    {
+      if (tp.encoding == XA_STRING && tp.format == 8 && tp.nitems != 0)
+        result = g_strdup ((char *) tp.value);
+
+      if (tp.value != NULL)
+        XFree ((char *) tp.value);
+    }
+
+  if (result == NULL)
+    result = g_strdup ("localhost");
+
+  return result;
 }
+
+static Window
+get_clientleader (Window window)
+{
+  Atom type;
+  int format, status;
+  unsigned long nitems = 0;
+  unsigned long extra = 0;
+  unsigned char *data = 0;
+  Window result = window;
+
+  status = XGetWindowProperty (gdk_display, window, _XA_WM_CLIENT_LEADER,
+                               0, 10000, FALSE, XA_WINDOW, &type, &format,
+                               &nitems, &extra, &data);
+  if (status  == Success)
+    {
+      if (data != NULL && nitems > 0)
+          result = *((Window *) data);
+      XFree(data);
+    }
+
+  return result;
+}
+
 #endif
 
 
@@ -318,8 +327,9 @@ xfsm_legacy_perform_session_save (void)
       for (lp = windows; lp != NULL; lp = lp->next)
         {
           window = netk_window_get_xid (NETK_WINDOW (lp->data));
-          leader = netk_window_get_group_leader (NETK_WINDOW (lp->data));
-          if (sm_window_list_contains (leader) || has_sessionid (window,leader))
+          leader = get_clientleader (window);
+          if (leader == None || sm_window_list_contains (leader)
+              || has_xsmp_support (window) || has_xsmp_support (leader))
             continue;
 
           type = SM_WMCOMMAND;
@@ -402,7 +412,8 @@ xfsm_legacy_perform_session_save (void)
             {
               for (lp = window_list; lp != NULL; lp = lp->next)
                 {
-                  if (SM_WINDOW (lp->data)->wid == ev.xany.window)
+                  if (SM_WINDOW (lp->data)->wid == ev.xany.window
+                      && SM_WINDOW (lp->data)->type != SM_WMCOMMAND)
                     {
                       --awaiting_replies;
                       if (SM_WINDOW (lp->data)->type != SM_ERROR)
@@ -464,7 +475,7 @@ xfsm_legacy_store_session (XfceRc *rc)
       sm_window = SM_WINDOW (lp->data);
       if (sm_window->type != SM_ERROR)
         {
-          /* xmms is b0rked! */
+          /* xmms is b0rked, surprise, surprise */
           if ((sm_window->wm_class1 != NULL
                 && strcmp (sm_window->wm_class1, "xmms") == 0)
               || (sm_window->wm_class2 != NULL
@@ -557,6 +568,7 @@ xfsm_legacy_shutdown (void)
 
   gdk_error_trap_push ();
 
+  /* kill 'em all! */
   for (lp = window_list; lp != NULL; lp = lp->next)
     {
       sm_window = SM_WINDOW (lp->data);

@@ -411,10 +411,6 @@ xfsm_properties_merge (XfsmProperties *properties,
               if (properties->program != NULL)
                 g_free (properties->program);
               properties->program = g_strdup ((const gchar *) prop->vals->value);
-
-              /* we need to manually raise the priority for smproxy */
-              if (strcmp (properties->program, "smproxy") == 0)
-                properties->priority = 40;
             }
           else
             {

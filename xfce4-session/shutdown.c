@@ -59,6 +59,49 @@
 static XfsmShutdownHelper *shutdown_helper = NULL;
 
 
+#ifdef SESSION_SCREENSHOTS
+static void
+screenshot_save (GdkPixmap *pm, GdkRectangle *area)
+{
+  gchar *display_name;
+  gchar *resource;
+  gchar *filename;
+  GdkDisplay *dpy;
+  GdkPixbuf *spb;
+  GdkPixbuf *pb;
+
+  pb = gdk_pixbuf_get_from_drawable (NULL, GDK_DRAWABLE (pm), NULL,
+                                     0, 0, 0, 0, area->width, area->height);
+
+  if (pb != NULL)
+    {
+      /* scale down the pixbuf */
+      spb = gdk_pixbuf_scale_simple (pb, 52, 43, GDK_INTERP_HYPER);
+
+      if (spb != NULL)
+        {
+          /* determine thumb file */
+          dpy = gdk_drawable_get_display (GDK_DRAWABLE (pm));
+          display_name = xfsm_display_fullname (dpy);
+          resource = g_strconcat ("sessions/thumbs-", display_name,
+                                  "/", session_name, ".png", NULL);
+          filename = xfce_resource_save_location (XFCE_RESOURCE_CACHE,
+                                                  resource, TRUE);
+          g_free (display_name);
+          g_free (resource);
+
+          gdk_pixbuf_save (spb, filename, "png", NULL, NULL);
+
+          g_object_unref (G_OBJECT (spb));
+          g_free (filename);
+        }
+
+      g_object_unref (G_OBJECT (pb));
+    }
+}
+#endif
+
+
 static void
 entry_activate_cb (GtkWidget *entry, GtkDialog *dialog)
 {
@@ -97,6 +140,12 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   gint monitor;
 	gint result;
   XfceRc *rc;
+#ifdef SESSION_SCREENSHOTS
+  GdkRectangle screenshot_area;
+  GdkWindow *root;
+  GdkPixmap *screenshot_pm = NULL;
+  GdkGC *screenshot_gc;
+#endif
 
   /* XXX - move to other module?! */
   GdkPixmap *saved = NULL;
@@ -162,6 +211,39 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
           g_usleep (50 * 1000);
         }
 
+      gdk_x11_grab_server ();
+
+#ifdef SESSION_SCREENSHOTS
+      /* grab a screenshot */
+      root = gdk_screen_get_root_window (screen);
+      gdk_screen_get_monitor_geometry (screen, monitor, &screenshot_area);
+      screenshot_pm = gdk_pixmap_new (GDK_DRAWABLE (root),
+                                      screenshot_area.width,
+                                      screenshot_area.height,
+                                      -1);
+      screenshot_gc = gdk_gc_new (GDK_DRAWABLE (screenshot_pm));
+      gdk_gc_set_function (screenshot_gc, GDK_COPY);
+      gdk_gc_set_subwindow (screenshot_gc, TRUE);
+      gdk_draw_drawable (GDK_DRAWABLE (screenshot_pm),
+                         screenshot_gc,
+                         GDK_DRAWABLE (root),
+                         screenshot_area.x,
+                         screenshot_area.y,
+                         0,
+                         0,
+                         screenshot_area.width,
+                         screenshot_area.height);
+      g_object_unref (G_OBJECT (screenshot_gc));
+#endif
+
+      /* display fadeout */
+      xfce_rc_set_group (rc, "General");
+      theme_name = xfce_rc_read_entry (rc, "SplashTheme", "Default");
+      theme = xfsm_splash_theme_load (theme_name);
+      fadeout = xfsm_fadeout_new (gtk_widget_get_display (hidden), theme);
+      xfsm_splash_theme_destroy (theme);
+
+      /* create confirm dialog */
       dialog = g_object_new (GTK_TYPE_DIALOG,
                              "type", GTK_WINDOW_POPUP,
                              NULL);
@@ -241,18 +323,6 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 	
   /* center dialog on target monitor */
   xfsm_center_window_on_screen (GTK_WINDOW (dialog), screen, monitor);
-
-  if (!accessibility)
-    {
-      gdk_x11_grab_server ();
-
-      /* display fadeout */
-      xfce_rc_set_group (rc, "General");
-      theme_name = xfce_rc_read_entry (rc, "SplashTheme", "Default");
-      theme = xfsm_splash_theme_load (theme_name);
-      fadeout = xfsm_fadeout_new (gtk_widget_get_display (dialog), theme);
-      xfsm_splash_theme_destroy (theme);
-    }
 
   /* connect to the shutdown helper */
   shutdown_helper = xfsm_shutdown_helper_spawn ();
@@ -458,6 +528,16 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
       xfce_rc_write_entry (rc, "SessionName", session_name);
       xfce_rc_write_bool_entry (rc, "SaveOnExit", *saveSession);
     }
+
+#ifdef SESSION_SCREENSHOTS
+  if (screenshot_pm != NULL)
+    {
+      if (result == GTK_RESPONSE_OK)
+        screenshot_save (screenshot_pm, &screenshot_area);
+
+      g_object_unref (G_OBJECT (screenshot_pm));
+    }
+#endif
 
   xfce_rc_close (rc);
 

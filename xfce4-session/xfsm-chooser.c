@@ -29,6 +29,9 @@
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
+#ifdef HAVE_TIME_H
+#include <time.h>
+#endif
 
 #include <libxfce4util/libxfce4util.h>
 #include <libxfcegui4/libxfcegui4.h>
@@ -43,6 +46,7 @@
 enum
 {
   ICON_COLUMN,
+  TITLE_COLUMN,
   NAME_COLUMN,
   N_COLUMNS,
 };
@@ -50,6 +54,10 @@ enum
 static void xfsm_chooser_class_init (XfsmChooserClass *klass);
 static void xfsm_chooser_init (XfsmChooser *chooser);
 static void xfsm_chooser_finalize (GObject *object);
+
+#ifdef SESSION_SCREENSHOTS
+static GdkPixbuf*load_thumbnail (const gchar *name);
+#endif
 
 static GObjectClass *parent_class;
 
@@ -230,7 +238,10 @@ xfsm_chooser_init (XfsmChooser *chooser)
   gtk_widget_show (swin);
 
   /* tree view */
-  model = gtk_list_store_new (N_COLUMNS, GDK_TYPE_PIXBUF, G_TYPE_STRING);
+  model = gtk_list_store_new (N_COLUMNS,
+                              GDK_TYPE_PIXBUF,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING);
   chooser->tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL(model));
   g_object_unref (G_OBJECT (model));
   gtk_tooltips_set_tip (chooser->tooltips, chooser->tree,
@@ -244,7 +255,7 @@ xfsm_chooser_init (XfsmChooser *chooser)
         gtk_cell_renderer_pixbuf_new (), "pixbuf", ICON_COLUMN, NULL));
   gtk_tree_view_append_column (GTK_TREE_VIEW (chooser->tree),
       gtk_tree_view_column_new_with_attributes ("Sessions",
-        gtk_cell_renderer_text_new (), "text", NAME_COLUMN, NULL));
+        gtk_cell_renderer_text_new (), "markup", TITLE_COLUMN, NULL));
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (chooser->tree));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
   g_signal_connect (G_OBJECT (selection), "changed",
@@ -254,6 +265,7 @@ xfsm_chooser_init (XfsmChooser *chooser)
   g_signal_connect (G_OBJECT (chooser->tree), "focus-in-event",
                     G_CALLBACK (xfsm_chooser_focus_in), chooser);
   gtk_container_add (GTK_CONTAINER (swin), chooser->tree);
+  gtk_widget_set_size_request (chooser->tree, -1, 90);
   gtk_widget_show (chooser->tree);
 
   /* horizontal box for the "Create new session" action */
@@ -321,11 +333,14 @@ xfsm_chooser_set_sessions (XfsmChooser *chooser,
                            GList *sessions,
                            const gchar *default_session)
 {
+  XfsmChooserSession *session;
   GtkTreeSelection *selection;
   GtkTreeModel *model;
   GtkTreeIter diter;
   GtkTreeIter iter;
+  GdkPixbuf *pb_default;
   GdkPixbuf *pb;
+  gchar *title;
   GList *lp;
 
   g_return_if_fail (XFSM_IS_CHOOSER (chooser));
@@ -335,24 +350,45 @@ xfsm_chooser_set_sessions (XfsmChooser *chooser,
 
   if (sessions != NULL)
     {
-      pb = xfce_inline_icon_at_size (chooser_icon_data, 16, 16);
+      pb_default = xfce_inline_icon_at_size (chooser_icon_data, 52, 42);
 
       for (lp = sessions; lp != NULL; lp = lp->next)
         {
+          session = (XfsmChooserSession *) lp->data;
+
+#ifdef SESSION_SCREENSHOTS
+          pb = load_thumbnail (session->name);
+          if (pb == NULL)
+            {
+#endif
+              g_object_ref (G_OBJECT (pb_default));
+              pb = pb_default;
+#ifdef SESSION_SCREENSHOTS
+            }
+#endif
+
+          title = g_strdup_printf ("<b><big>%s</big></b>\n"
+                                   "<small><i>Last access: %s</i></small>",
+                                   session->name, ctime (&session->atime));
+
           gtk_list_store_append (GTK_LIST_STORE (model), &iter);
           gtk_list_store_set (GTK_LIST_STORE (model), &iter,
                               ICON_COLUMN, pb,
-                              NAME_COLUMN, (const gchar *) lp->data,
+                              NAME_COLUMN, session->name,
+                              TITLE_COLUMN, title,
                               -1);
 
           if (lp == sessions || (default_session != NULL
-                && strcmp (default_session, (const gchar *) lp->data) == 0))
+                && strcmp (default_session, session->name) == 0))
             {
               diter = iter;
             }
+
+          g_object_unref (G_OBJECT (pb));
+          g_free (title);
         }
 
-      g_object_unref (G_OBJECT (pb));
+      g_object_unref (pb_default);
 
       gtk_tree_selection_select_iter (selection, &diter);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (chooser->radio_load),
@@ -372,6 +408,7 @@ xfsm_chooser_set_sessions (XfsmChooser *chooser,
 
   xfsm_chooser_load_toggled (GTK_TOGGLE_BUTTON (chooser->radio_load), chooser);
 }
+
 
 XfsmChooserReturn
 xfsm_chooser_run (XfsmChooser *chooser, gchar **name)
@@ -408,5 +445,32 @@ xfsm_chooser_run (XfsmChooser *chooser, gchar **name)
   return XFSM_CHOOSER_CREATE;
 }
 
+
+#ifdef SESSION_SCREENSHOTS
+static GdkPixbuf*
+load_thumbnail (const gchar *name)
+{
+  GdkDisplay *display;
+  GdkPixbuf  *pb;
+  gchar *display_name;
+  gchar *resource;
+  gchar *filename;
+
+  /* determine thumb file */
+  display = gdk_display_get_default ();
+  display_name = xfsm_display_fullname (display);
+  resource = g_strconcat ("sessions/thumbs-", display_name,
+                          "/", name, ".png", NULL);
+  filename = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource, TRUE);
+  g_free (display_name);
+  g_free (resource);
+
+  pb = gdk_pixbuf_new_from_file (filename, NULL);
+
+  g_free (filename);
+
+  return pb;
+}
+#endif
 
 

@@ -50,6 +50,7 @@
 #include <libxfcegui4/libxfcegui4.h>
 
 #include <xfce4-session/shutdown.h>
+#include <xfce4-session/xfsm-chooser.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-legacy.h>
 #include <xfce4-session/xfsm-manager.h>
@@ -182,29 +183,38 @@ xfsm_manager_startup_timedout (gpointer user_data)
 
 
 static gboolean
-xfsm_manager_choose_session (const XfceRc *rc)
+xfsm_manager_choose_session (XfceRc *rc)
 {
+  XfsmChooserSession *session;
   gchar **groups;
-  GList *names;
+  GList *sessions, *lp;
   gboolean load;
   gchar *name;
   int n;
 
   groups = xfce_rc_get_groups (rc);
-  for (n = 0, names = NULL; groups[n] != NULL; ++n)
+  for (n = 0, sessions = NULL; groups[n] != NULL; ++n)
     {
       if (strncmp (groups[n], "Session: ", 9) == 0)
-        names = g_list_append (names, groups[n] + 9);
+        {
+          session = g_new0 (XfsmChooserSession, 1);
+          session->name = groups[n] + 9;
+          xfce_rc_set_group (rc, groups[n]);
+          session->atime = xfce_rc_read_int_entry (rc, "LastAccess", 0);
+          sessions = g_list_append (sessions, session);
+        }
     }
 
-  load = xfsm_splash_screen_choose (splash_screen, names, session_name,
-                                    &name);
+  load = xfsm_splash_screen_choose (splash_screen, sessions,
+                                    session_name, &name);
 
   if (session_name != NULL)
     g_free (session_name);
   session_name = name;
 
-  g_list_free (names);
+  for (lp = sessions; lp != NULL; lp = lp->next)
+    g_free (lp->data);
+  g_list_free (sessions);
   g_strfreev (groups);
 
   return load;
@@ -339,7 +349,7 @@ xfsm_manager_load_settings (XfceRc *rc)
 
   if (session_loaded)
     {
-      xfsm_verbose ("Session \"%s\" loaded successfully.\n", session_name);
+      xfsm_verbose ("Session \"%s\" loaded successfully.\n\n", session_name);
       failsafe_mode = FALSE;
     }
   else
@@ -1037,6 +1047,9 @@ xfsm_manager_store_session (void)
       g_snprintf (prefix, 64, "Screen%d_ActiveWorkspace", n);
       xfce_rc_write_int_entry (rc, prefix, m);
     }
+
+  /* remember time */
+  xfce_rc_write_int_entry (rc, "LastAccess", time (NULL));
 
   xfce_rc_close (rc);
 }
