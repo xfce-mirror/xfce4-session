@@ -7,7 +7,7 @@ AC_INIT([configure.ac])
 
 AM_CONFIG_HEADER([config.h])
 
-AM_INIT_AUTOMAKE([xfce4-session], [0.1.3])
+AM_INIT_AUTOMAKE([xfce4-session], [0.1.4])
 
 AM_MAINTAINER_MODE
 
