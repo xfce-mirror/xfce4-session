@@ -1,3 +1,10 @@
+2003-07-10 01:15  bmeurer
+
+	* ChangeLog, TODO, xfce4-session/startup.c: Give clients more time
+	to restart: g_idle_add(..) -> g_timeout_add(50,..) This fixes some
+	problems with clients being restarted too fast and xfwm4 failing to
+	restore window properties correct.
+
 2003-07-10 00:50  bmeurer
 
 	* ChangeLog, po/de.gmo, po/de.po, po/es.gmo, po/es.po,
