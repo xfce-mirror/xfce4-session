@@ -7,7 +7,7 @@ AC_INIT([configure.ac])
 
 AM_CONFIG_HEADER([config.h])
 
-AM_INIT_AUTOMAKE([xfce4-session], [0.1.4])
+AM_INIT_AUTOMAKE([xfce4-session], [0.2.0])
 
 AM_MAINTAINER_MODE
 
@@ -23,9 +23,9 @@ AC_PROG_LIBTOOL
 
 dnl check for standard header files
 AC_HEADER_STDC
-AC_CHECK_FUNCS([gethostname mkdir setenv sigaction])
+AC_CHECK_FUNCS([mkdir clearenv putenv setenv sigaction])
 AC_CHECK_HEADERS([errno.h fcntl.h limits.h signal.h sys/param.h sys/utsname.h \
-  sys/wait.h time.h])
+  sys/wait.h time.h unistd.h])
 
 dnl Check for X11 installed
 BM_LIBX11_REQUIRE
@@ -47,6 +47,40 @@ XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.0.0])
 
 dnl Check for debugging support
 BM_DEBUG_SUPPORT
+
+dnl
+dnl arguments to set shutdown commands
+dnl
+
+AC_MSG_CHECKING([for custom 'poweroff' command])
+AC_ARG_WITH([poweroff],
+	AC_HELP_STRING([--with-poweroff=cmd], [command used to power down (full path with arguments)]),
+	[with_poweroff="$withval"],
+	[with_poweroff="no"])
+if test "x$with_poweroff" != "xno"; then
+	AC_DEFINE_UNQUOTED(POWEROFF_CMD, "$with_poweroff", [poweroff command])
+fi
+AC_MSG_RESULT([$with_poweroff])
+
+AC_MSG_CHECKING([for custom 'halt' command])
+AC_ARG_WITH([halt],
+	AC_HELP_STRING([--with-halt=cmd], [command used to halt (full path with arguments)]),
+	[with_halt="$withval"],
+	[with_halt="no"])
+if test "x$with_halt" != "xno"; then
+	AC_DEFINE_UNQUOTED(HALT_CMD, "$with_halt", [halt command])
+fi
+AC_MSG_RESULT([$with_halt])
+
+AC_MSG_CHECKING([for custom 'reboot' command])
+AC_ARG_WITH([reboot],
+	AC_HELP_STRING([--with-reboot=cmd], [command used to reboot (full path with arguments)]),
+	[with_reboot="$withval"],
+	[with_reboot="no"])
+if test "x$with_reboot" != "xno"; then
+	AC_DEFINE_UNQUOTED(REBOOT_CMD, "$with_reboot", [reboot command])
+fi
+AC_MSG_RESULT([$with_reboot])
 
 AC_OUTPUT([
 Makefile

@@ -35,9 +35,6 @@
 extern char	*fstrread(FILE *);
 extern void	fstrwrite(FILE *, const char *);
 
-extern gchar	*xfce_strjoin(gchar *, gchar **, gint);
-extern gchar	*xfce_gethostname(void);
-
 extern GtkWidget	*xfsm_imgbtn_new(const gchar *, const gchar *);
 
 #if 0
@@ -47,4 +44,3 @@ extern void		netk_gtk_window_set_skip_tasklist(GtkWindow *,gboolean);
 #endif
 
 #endif	/* !__XFSM_UTIL_H__ */
-

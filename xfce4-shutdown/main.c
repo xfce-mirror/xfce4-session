@@ -112,8 +112,7 @@ sudo(const gchar *action)
 
 	err = NULL;
 	command = g_strdup_printf("sudo -S -u root /sbin/%s", action);
-	result = g_spawn_command_line_sync(command, &outbuf, &errbuf, &status,
-			&err);
+	result = g_spawn_command_line_sync(command, &outbuf, &errbuf, &status, &err);
 	g_free(command);
 
 	if (!result) {
@@ -173,19 +172,50 @@ main(int argc, char **argv)
 					PATH_SHUTDOWNALLOW);
 			return(EXIT_FAILURE);
 		}
+		
+    /*
+     * XXX - I wonder if this is actually a good idea. 
+     *                                  - bm, 20040110
+     */
+#if defined(POWEROFF_CMD) || defined(HALT_CMD) || defined(REBOOT_CMD)
+#ifdef HAVE_CLEARENV
+		clearenv();
+#endif
+#if defined(HAVE_SETENV)
+		setenv("PATH", "/bin:/sbin:/usr/bin:/usr/sbin", 1);
+		setenv("IFS", " \t\n", 1);
+#elif defined(HAVE_PUTENV)
+		putenv("PATH=/bin:/sbin:/usr/bin:/usr/sbin");
+		putenv("IFS= \t\n");
+#endif
+#endif
 
 		/* Ok, lets get this box down */
 		if (!strcmp(action, "poweroff")) {
+#ifdef POWEROFF_CMD
+			if (g_spawn_command_line_sync(POWEROFF_CMD, NULL, NULL, NULL, NULL))
+				return(EXIT_SUCCESS);
+#endif
+
+      /* Ok, now the dirty way */
 			execl("/sbin/poweroff", "poweroff", NULL);
 			execl("/sbin/halt", "halt", "-p", NULL);
 			/* FALLTHROUGH */
 		}
 
 		if (!strcmp(action, "reboot")) {
+#ifdef REBOOT_CMD
+			if(g_spawn_command_line_sync(REBOOT_CMD, NULL, NULL, NULL, NULL))
+				return(EXIT_SUCCESS);
+#endif
 			execl("/sbin/reboot", "reboot", NULL);
 			/* FALLTHROUGH */
 		}
 
+#ifdef HALT_CMD
+		if(g_spawn_command_line_sync(HALT_CMD, NULL, NULL, NULL, NULL))
+			return(EXIT_SUCCESS);
+#endif
 		execl("/sbin/halt", "halt", NULL);
 
 		fprintf(stderr, _(
@@ -197,12 +227,17 @@ main(int argc, char **argv)
 
 	/* try using sudo (should not return) */
 	if (sudo(action)) {
+#if 0
 		/*
 		 * Ok, sudo returned indicating success, that means, the
 		 * system is about to go down, so idle a bit
 		 */
 		for (;;)
 			sleep(1);
+#else
+    /* better return to caller here */
+    return(EXIT_SUCCESS);
+#endif
 	}
 
 	fprintf(stderr, _(

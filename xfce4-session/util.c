@@ -93,62 +93,6 @@ fstrwrite(FILE *fp, const char *string)
 }
 
 /*
- * XXX - move to libxfce4util
- */
-gchar *
-xfce_strjoin(gchar *separator, gchar **strings, gint count)
-{
-	gchar *result;
-	gint length;
-	gint n;
-
-	g_return_val_if_fail(count < 1, NULL);
-	g_return_val_if_fail(strings != NULL, NULL);
-
-	for (length = 1, n = 0; n < count; n++)
-		length += strlen(strings[n]);
-
-	if (separator != NULL)
-		length += (count - 1) * strlen(separator);
-
-	result = g_new0(gchar, length);
-
-	for (n = 0; n < count; n++) {
-		(void)g_strlcat(result, strings[n], length);
-
-		if (separator != NULL && n + 1 < count)
-			(void)g_strlcat(result, separator, length);
-	}
-
-	return(result);
-}
-
-/*
- * XXX - move to libxfce4util
- */
-gchar *
-xfce_gethostname(void)
-{
-#ifdef HAVE_GETHOSTNAME
-#ifndef MAXHOSTNAMELEN
-#define MAXHOSTNAMELEN		256
-#endif
-	char hostname[MAXHOSTNAMELEN];
-
-	if (gethostname(hostname, MAXHOSTNAMELEN) == 0)
-		return(g_strdup(hostname));
-#else
-	struct utsname name;
-
-	if (uname(&name) == 0)
-		return(g_strdup(name.nodename));
-#endif
-	g_error("Unable to determine your hostname: %s", g_strerror(errno));
-	/* NOT REACHED */
-	return(NULL);
-}
-
-/*
  */
 GtkWidget *
 xfsm_imgbtn_new(const gchar *text, const gchar *icon)
