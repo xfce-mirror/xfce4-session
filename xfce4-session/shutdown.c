@@ -40,7 +40,6 @@
 #include <string.h>
 #endif
 
-#include <libxfce4util/i18n.h>
 #include <libxfcegui4/libxfcegui4.h>
 #include <gtk/gtk.h>
 
@@ -205,17 +204,25 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 
 	/* this window *should* not be handled by the window manager */
 	g_object_set(G_OBJECT(dialog), "type", GTK_WINDOW_POPUP, NULL);
+#if GTK_CHECK_VERSION(2,3,0)
+	g_object_set (G_OBJECT (dialog), "type_hint",
+		      GDK_WINDOW_TYPE_HINT_UTILITY, NULL);
+#else
+	g_object_set (G_OBJECT (dialog), "decorated", FALSE, NULL);
+#endif
 
 	/*
 	 * Grabbing the Xserver when accessibility is enabled will cause a
-	 * hang. Found in gnome-session (see #93103 for details).
+	 * hang. Found in gnome-session (see gnome bug #93103 for details).
 	 */
 	accessibility = GTK_IS_ACCESSIBLE(gtk_widget_get_accessible(dialog));
+#if !GTK_CHECK_VERSION(2,3,0)
 	if (!accessibility) {
 		gdk_x11_grab_server();
 		drawBackground();
 		gdk_flush();
 	}
+#endif
 
 	dbox = GTK_DIALOG(dialog)->vbox;
 
@@ -284,7 +291,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 	gtk_widget_show(checkbox);
 
 	/* need to realize the dialog first! */
-	gtk_widget_show(dialog);
+	gtk_widget_show_now(dialog);
 
 	/* Grab Keyboard and Mouse pointer */
 	gdk_pointer_grab(dialog->window, TRUE, 0, NULL, NULL, GDK_CURRENT_TIME);
@@ -304,11 +311,13 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 
 	gtk_widget_destroy(dialog);
 
+#if !GTK_CHECK_VERSION(2, 3, 0)
 	/* ungrab the Xserver */
 	if (!accessibility) {
 		gdk_x11_ungrab_server();
 		refreshBackground();
 	}
+#endif
 
 	/* Release Keyboard/Mouse pointer grab */
 	gdk_keyboard_ungrab(GDK_CURRENT_TIME);
