@@ -28,11 +28,17 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_SYS_STAT_H
+#include <sys/stat.h>
+#endif
 #ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
 #endif
 
 #include <ctype.h>
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
 #ifdef HAVE_LIMITS_H
 #include <limits.h>
 #endif
@@ -46,8 +52,6 @@
 
 #include <libxfce4util/i18n.h>
 #include <glib.h>
-
-#define	PATH_SHUTDOWNALLOW	(SYSCONFDIR G_DIR_SEPARATOR_S "shutdown.allow")
 
 /*
  * Check if a user is allowed to issue shutdown commands (when running
@@ -67,12 +71,8 @@ checkUser(const gchar *action)
 	if ((username = g_get_user_name()) == NULL)
 		return(FALSE);
 
-	if ((fp = fopen(PATH_SHUTDOWNALLOW, "r")) == NULL) {
-#ifdef DEBUG
-		fprintf(stderr, "Unable to open file %s\n",PATH_SHUTDOWNALLOW);
-#endif
+	if ((fp = fopen(PATH_SHUTDOWNALLOW, "r")) == NULL)
 		return(FALSE);
-	}
 
 	while (fgets(buffer, LINE_MAX, fp) != NULL) {
 		/* skip leading white space */
@@ -129,6 +129,7 @@ sudo(const gchar *action)
 int
 main(int argc, char **argv)
 {
+	struct stat sb;
 	char *action;
 
 	/* */
@@ -147,6 +148,18 @@ main(int argc, char **argv)
 	}
 
 	if (geteuid() == 0) {
+		if (stat(PATH_SHUTDOWNALLOW, &sb) < 0) {
+			fprintf(stderr, "Unable to stat file %s: %s\n",
+					PATH_SHUTDOWNALLOW, g_strerror(errno));
+			return(EXIT_FAILURE);
+		}
+
+		if (sb.st_uid != 0) {
+			fprintf(stderr, "%s is not owned by root",
+					PATH_SHUTDOWNALLOW);
+			return(FALSE);
+		}
+
 		/*
 		 * Ok, we are running as root (or setuid to root), so lets
 		 * try to do it the simple way

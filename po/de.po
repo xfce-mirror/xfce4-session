@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XFSession 0.0.15\n"
-"POT-Creation-Date: 2003-07-09 00:33+0200\n"
+"POT-Creation-Date: 2003-07-09 23:36+0200\n"
 "PO-Revision-Date: 2003-07-07 20:10+0100\n"
 "Last-Translator: Moritz Heiber <moritz-heiber@arcor.de>\n"
 "Language-Team: none <none@none>\n"
@@ -114,12 +114,21 @@ msgid ""
 msgstr "Kann Sitzungsverzeichnis %s nicht erstellen: %s"
 
 #.
-#: xfce4-session/main.c:254 xfce4-session/client-list.c:249
-#, fuzzy
+#: xfce4-session/main.c:270 xfce4-session/client-list.c:264
 msgid "Session control"
-msgstr "Sitzungsmanagement"
+msgstr "Sitzungsübersicht"
 
-#: xfce4-session/main.c:305
+#.
+#: xfce4-session/main.c:285
+msgid "Save session"
+msgstr "Sitzung speichern"
+
+#.
+#: xfce4-session/main.c:294
+msgid "Quit session"
+msgstr "Sitzung beenden"
+
+#: xfce4-session/main.c:347
 msgid ""
 "The session manager was unable to start the\n"
 "Multi-Channel settings manager. This is most\n"
@@ -133,11 +142,11 @@ msgstr ""
 "Bitte kontaktieren Sie Ihren Administrator und informieren\n"
 "Sie ihn über das Problem."
 
-#: xfce4-session/main.c:318
+#: xfce4-session/main.c:360
 msgid "Unable to create MCS client"
 msgstr "Konnte keine Verbindung zum Einstellungsmanager herstellen"
 
-#: xfce4-session/manager.c:313
+#: xfce4-session/manager.c:338
 msgid ""
 "The session manager was unable to restore your\n"
 "previous session. It'll therefore start a default\n"
@@ -147,7 +156,7 @@ msgstr ""
 "wiederherzustellen. Es wird jetzt mit den Defaulteinstellungen\n"
 "gestartet."
 
-#: xfce4-session/manager.c:773
+#: xfce4-session/manager.c:812
 #, c-format
 msgid ""
 "The client \"%s\" closed the connection\n"
@@ -206,34 +215,72 @@ msgstr "Durchlaufe Autostart..."
 msgid "Starting session manager..."
 msgstr "Starte Sitzungsmanager..."
 
-#: xfce4-session/client-list.c:184
+#: xfce4-session/client-list.c:71
+msgid "Idle"
+msgstr ""
+
+#: xfce4-session/client-list.c:72
+msgid "Interacting"
+msgstr ""
+
+#: xfce4-session/client-list.c:73
+msgid "Save completed"
+msgstr ""
+
+#. global save
+#: xfce4-session/client-list.c:74 xfce4-session/client-list.c:75
+msgid "Saving"
+msgstr ""
+
+#. local save
+#: xfce4-session/client-list.c:76
+msgid "Waiting to interact"
+msgstr ""
+
+#: xfce4-session/client-list.c:77
+msgid "Waiting to enter Phase2"
+msgstr ""
+
+#: xfce4-session/client-list.c:78
+msgid "Saving (Phase2)"
+msgstr ""
+
+#: xfce4-session/client-list.c:79
+msgid "Disconnecting"
+msgstr ""
+
+#: xfce4-session/client-list.c:199
 #, fuzzy, c-format
 msgid "Unable to clone client: %s"
 msgstr "Konnte keine Verbindung zum Einstellungsmanager herstellen"
 
-#: xfce4-session/client-list.c:272
+#: xfce4-session/client-list.c:288
 msgid "Program"
 msgstr "Programm"
 
-#: xfce4-session/client-list.c:277
+#: xfce4-session/client-list.c:293
 msgid "User"
 msgstr "Benutzer"
 
-#: xfce4-session/client-list.c:284
+#: xfce4-session/client-list.c:300
 msgid "Priority"
 msgstr "Priorität"
 
+#: xfce4-session/client-list.c:305
+msgid "State"
+msgstr "Status"
+
 #. kill button
-#: xfce4-session/client-list.c:303
+#: xfce4-session/client-list.c:324
 msgid "Kill client"
 msgstr "Töte Client"
 
 #. clone button
-#: xfce4-session/client-list.c:309
+#: xfce4-session/client-list.c:330
 msgid "Clone client"
 msgstr "Client duplizieren"
 
-#: xfce4-session/client-list.c:411 xfce4-session/client-list.c:414
+#: xfce4-session/client-list.c:432 xfce4-session/client-list.c:435
 msgid "Unknown"
 msgstr "Unbekannt"
 

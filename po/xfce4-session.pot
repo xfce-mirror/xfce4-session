@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2003-07-09 00:33+0200\n"
+"POT-Creation-Date: 2003-07-10 00:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,22 +92,22 @@ msgstr ""
 msgid "Show theme info"
 msgstr ""
 
-#: xfce4-session/main.c:75
+#: xfce4-session/main.c:89
 msgid "desktop"
 msgstr ""
 
-#: xfce4-session/main.c:102
+#: xfce4-session/main.c:116
 msgid "Starting session manager.."
 msgstr ""
 
-#: xfce4-session/main.c:122
+#: xfce4-session/main.c:136
 #, c-format
 msgid ""
 "Unable to create users XFce settings\n"
 "directory %s: %s"
 msgstr ""
 
-#: xfce4-session/main.c:131
+#: xfce4-session/main.c:145
 #, c-format
 msgid ""
 "Unable to create users XFce session\n"
@@ -115,11 +115,21 @@ msgid ""
 msgstr ""
 
 #.
-#: xfce4-session/main.c:254 xfce4-session/client-list.c:249
+#: xfce4-session/main.c:284 xfce4-session/client-list.c:264
 msgid "Session control"
 msgstr ""
 
-#: xfce4-session/main.c:305
+#.
+#: xfce4-session/main.c:299
+msgid "Save session"
+msgstr ""
+
+#.
+#: xfce4-session/main.c:308
+msgid "Quit session"
+msgstr ""
+
+#: xfce4-session/main.c:405
 msgid ""
 "The session manager was unable to start the\n"
 "Multi-Channel settings manager. This is most\n"
@@ -128,18 +138,18 @@ msgid ""
 "and report the problem."
 msgstr ""
 
-#: xfce4-session/main.c:318
+#: xfce4-session/main.c:418
 msgid "Unable to create MCS client"
 msgstr ""
 
-#: xfce4-session/manager.c:313
+#: xfce4-session/manager.c:338
 msgid ""
 "The session manager was unable to restore your\n"
 "previous session. It'll therefore start a default\n"
 "session."
 msgstr ""
 
-#: xfce4-session/manager.c:773
+#: xfce4-session/manager.c:812
 #, c-format
 msgid ""
 "The client \"%s\" closed the connection\n"
@@ -189,48 +199,86 @@ msgstr ""
 msgid "Starting session manager..."
 msgstr ""
 
-#: xfce4-session/client-list.c:184
+#: xfce4-session/client-list.c:71
+msgid "Idle"
+msgstr ""
+
+#: xfce4-session/client-list.c:72
+msgid "Interacting"
+msgstr ""
+
+#: xfce4-session/client-list.c:73
+msgid "Save completed"
+msgstr ""
+
+#. global save
+#: xfce4-session/client-list.c:74 xfce4-session/client-list.c:75
+msgid "Saving"
+msgstr ""
+
+#. local save
+#: xfce4-session/client-list.c:76
+msgid "Waiting to interact"
+msgstr ""
+
+#: xfce4-session/client-list.c:77
+msgid "Waiting to enter Phase2"
+msgstr ""
+
+#: xfce4-session/client-list.c:78
+msgid "Saving (Phase2)"
+msgstr ""
+
+#: xfce4-session/client-list.c:79
+msgid "Disconnecting"
+msgstr ""
+
+#: xfce4-session/client-list.c:199
 #, c-format
 msgid "Unable to clone client: %s"
 msgstr ""
 
-#: xfce4-session/client-list.c:272
+#: xfce4-session/client-list.c:288
 msgid "Program"
 msgstr ""
 
-#: xfce4-session/client-list.c:277
+#: xfce4-session/client-list.c:293
 msgid "User"
 msgstr ""
 
-#: xfce4-session/client-list.c:284
+#: xfce4-session/client-list.c:300
 msgid "Priority"
 msgstr ""
 
+#: xfce4-session/client-list.c:305
+msgid "State"
+msgstr ""
+
 #. kill button
-#: xfce4-session/client-list.c:303
+#: xfce4-session/client-list.c:324
 msgid "Kill client"
 msgstr ""
 
 #. clone button
-#: xfce4-session/client-list.c:309
+#: xfce4-session/client-list.c:330
 msgid "Clone client"
 msgstr ""
 
-#: xfce4-session/client-list.c:411 xfce4-session/client-list.c:414
+#: xfce4-session/client-list.c:436 xfce4-session/client-list.c:439
 msgid "Unknown"
 msgstr ""
 
-#: xfce4-shutdown/main.c:136
+#: xfce4-shutdown/main.c:137
 #, c-format
 msgid "Usage: %s <action>\n"
 msgstr ""
 
-#: xfce4-shutdown/main.c:145
+#: xfce4-shutdown/main.c:146
 #, c-format
 msgid "%s: Unknown action %s\n"
 msgstr ""
 
-#: xfce4-shutdown/main.c:156
+#: xfce4-shutdown/main.c:169
 #, c-format
 msgid ""
 "You are not allowed to execute the action \"%s\".\n"
@@ -239,14 +287,14 @@ msgid ""
 "adding your username to the file %s.\n"
 msgstr ""
 
-#: xfce4-shutdown/main.c:179
+#: xfce4-shutdown/main.c:192
 msgid ""
 "Unable to shutdown this box. Please check your\n"
 "installation, or contact your system administrator\n"
 "and report the problem.\n"
 msgstr ""
 
-#: xfce4-shutdown/main.c:196
+#: xfce4-shutdown/main.c:209
 #, c-format
 msgid ""
 "Got no way to shutdown the system. You should ask\n"

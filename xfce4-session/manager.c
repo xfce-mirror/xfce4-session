@@ -118,6 +118,31 @@ do {									\
 } while (0)
 
 /*
+ * Convince macro
+ */
+#define	client_set_state(_client, _state)				\
+do {									\
+	CLIENT((_client))->state = _state;				\
+	xfsm_client_list_update(XFSM_CLIENT_LIST(clientList),		\
+			CLIENT((_client)));				\
+} while (0)
+
+/*
+ * Provide a setenv function for systems that lack it
+ */
+#ifndef HAVE_SETENV
+static void
+setenv(const gchar *name, const gchar *value, gboolean overwrite)
+{
+	gchar *buf;
+
+	buf = g_strdup_printf("%s=%s", name, value);
+	putenv(buf);
+	g_free(buf);
+}
+#endif	/* !HAVE_SETENV */
+
+/*
  */
 gboolean
 manager_init(void)
@@ -348,6 +373,55 @@ manager_generate_client_id(SmsConn smsConn)
 
 /*
  */
+void
+manager_saveyourself(int saveType, Bool shutdown, int interactStyle, Bool fast)
+{
+	GList *lp;
+
+	g_return_if_fail(state == MANAGER_IDLE);
+
+	/* ask user whether to logout */
+	if (shutdown && !shutdownDialog(&shutdownType, &shutdownSave))
+		return;
+
+	/* */
+	if (!shutdown || shutdownSave) {
+		/* */
+		state = shutdown ? MANAGER_SHUTDOWN : MANAGER_CHECKPOINT;
+
+		/* put all clients into SaveYourself state */
+		for (lp = g_list_first(clients); lp; lp = lp->next) {
+			if (client_state(lp->data) == CLIENT_SAVINGLOCAL) {
+				/*
+				 * client is already in saving state, no need
+				 * to send another SaveYourself message.
+				 */
+				CLIENT(lp->data)->state = CLIENT_SAVING;
+				continue;
+			}
+			
+			client_set_state(lp->data, CLIENT_SAVING);
+			SmsSaveYourself(CLIENT(lp->data)->smsConn, saveType,
+					shutdown, interactStyle, fast);
+		}
+	}
+	else {
+		/*
+		 * We are about to shutdown the manager without saving, so
+		 * send all SM clients the SmDie message.
+		 */
+		state = MANAGER_SHUTDOWNPHASE2;
+		for (lp = g_list_first(clients); lp; lp = lp->next)
+			SmsDie(CLIENT(lp->data)->smsConn);
+
+		/* give all clients the chance to close the connection */
+		dieTimeoutId = g_timeout_add(5 * 1000,
+			(GSourceFunc)gtk_main_quit, NULL);
+	}
+}
+
+/*
+ */
 static Status
 new_client(SmsConn smsConn, SmPointer managerData, unsigned long *mask,
            SmsCallbacks *callbacks, char **failureReason)
@@ -459,13 +533,13 @@ interact_request(SmsConn smsConn, Client *client, int dialogType)
 			 * Theres already a client interacting, so put this
 			 * one on the wait queue
 			 */
-			client->state = CLIENT_WAITFORINTERACT;
+			client_set_state(client, CLIENT_WAITFORINTERACT);
 			return;
 		}
 	}
 
 	/* let this client interact with the user */
-	client->state = CLIENT_INTERACTING;
+	client_set_state(client, CLIENT_INTERACTING);
 	SmsInteract(smsConn);
 }
 
@@ -480,7 +554,7 @@ interact_done(SmsConn smsConn, Client *client, Bool cancelShutdown)
 			 state == MANAGER_SHUTDOWN);
 	g_return_if_fail(client_state(client) == CLIENT_INTERACTING);
 
-	client->state = CLIENT_SAVING;
+	client_set_state(client, CLIENT_SAVING);
 
 	/*
 	 * Setting the cancel-shutdown field to True indicates that the user
@@ -506,7 +580,7 @@ interact_done(SmsConn smsConn, Client *client, Bool cancelShutdown)
 				continue;
 
 			/* reset all clients that are waiting for interact */
-			client->state = CLIENT_SAVING;
+			client_set_state(client, CLIENT_SAVING);
 			SmsShutdownCancelled(CLIENT(lp->data)->smsConn);
 		}
 
@@ -516,7 +590,7 @@ interact_done(SmsConn smsConn, Client *client, Bool cancelShutdown)
 	/* Let the next client interact */
 	for (lp = g_list_first(clients); lp; lp = lp->next) {
 		if (client_state(lp->data) == CLIENT_WAITFORINTERACT) {
-			CLIENT(lp->data)->state = CLIENT_INTERACTING;
+			client_set_state(lp->data, CLIENT_INTERACTING);
 			SmsInteract(CLIENT(lp->data)->smsConn);
 			break;
 		}
@@ -529,9 +603,6 @@ static void
 save_yourself_request(SmsConn smsConn, Client *client, int saveType,
                       Bool shutdown, int interactStyle, Bool fast, Bool global)
 {
-	GList *lp;
-
-	g_return_if_fail(state == MANAGER_IDLE);
 	g_return_if_fail(client_state(client) == CLIENT_IDLE);
 
 	shutdownSave = TRUE;
@@ -542,48 +613,12 @@ save_yourself_request(SmsConn smsConn, Client *client, int saveType,
 		 * shutdown here, since it does not make sense for a local
 		 * checkpoint.
 		 */
-		client->state = CLIENT_SAVINGLOCAL;
+		client_set_state(client, CLIENT_SAVINGLOCAL);
 		SmsSaveYourself(smsConn, saveType, FALSE, interactStyle, fast);
-		return;
-	}
-
-	/* ask user whether to logout */
-	if (shutdown && !shutdownDialog(&shutdownType, &shutdownSave))
-		return;
-
-	/* */
-	if (shutdownSave) {
-		/* */
-		state = shutdown ? MANAGER_SHUTDOWN : MANAGER_CHECKPOINT;
-
-		/* put all clients into SaveYourself state */
-		for (lp = g_list_first(clients); lp; lp = lp->next) {
-			if (client_state(lp->data) == CLIENT_SAVINGLOCAL) {
-				/*
-				 * client is already in saving state, no need
-				 * to send another SaveYourself message.
-				 */
-				CLIENT(lp->data)->state = CLIENT_SAVING;
-				continue;
-			}
-			
-			CLIENT(lp->data)->state = CLIENT_SAVING;
-			SmsSaveYourself(CLIENT(lp->data)->smsConn, saveType,
-					shutdown, interactStyle, fast);
-		}
 	}
 	else {
-		/*
-		 * We are about to shutdown the manager without saving, so
-		 * send all SM clients the SmDie message.
-		 */
-		state = MANAGER_SHUTDOWNPHASE2;
-		for (lp = g_list_first(clients); lp; lp = lp->next)
-			SmsDie(CLIENT(lp->data)->smsConn);
-
-		/* give all clients the chance to close the connection */
-		dieTimeoutId = g_timeout_add(5 * 1000,
-			(GSourceFunc)gtk_main_quit, NULL);
+		/* request the manager to do a SaveYourself */
+		manager_saveyourself(saveType, shutdown, interactStyle, fast);
 	}
 }
 
@@ -617,7 +652,7 @@ save_yourself_phase2_request(SmsConn smsConn, Client *client)
 	/* ok, we are ready to enter SaveYourselfPhase2 */
 	for (lp = g_list_first(clients); lp; lp = lp->next) {
 		if (client_state(lp->data) == CLIENT_WAITFORPHASE2) {
-			CLIENT(lp->data)->state = CLIENT_PHASE2;
+			client_set_state(lp->data, CLIENT_PHASE2);
 			SmsSaveYourselfPhase2(CLIENT(lp->data)->smsConn);
 		}
 	}
@@ -633,7 +668,7 @@ save_yourself_done(SmsConn smsConn, Client *client, Bool success)
 
 	/* A client completed a local SaveYourself */
 	if (client_state(client) == CLIENT_SAVINGLOCAL) {
-		client->state = CLIENT_IDLE;
+		client_set_state(client, CLIENT_IDLE);
 		SmsSaveComplete(client->smsConn);
 		return;
 	}
@@ -653,7 +688,8 @@ save_yourself_done(SmsConn smsConn, Client *client, Bool success)
 	g_return_if_fail(state == MANAGER_CHECKPOINT ||
 			 state == MANAGER_SHUTDOWN);
 
-	client->state = CLIENT_SAVEDONE;
+	client_set_state(client, CLIENT_SAVEDONE);
+
 	enterPhase2 = FALSE;
 
 	/* check if all clients completed the SaveYourself */
@@ -679,7 +715,7 @@ save_yourself_done(SmsConn smsConn, Client *client, Bool success)
 			if (CLIENT(lp->data)->state != CLIENT_WAITFORPHASE2)
 				continue;
 
-			CLIENT(lp->data)->state = CLIENT_PHASE2;
+			client_set_state(lp->data, CLIENT_PHASE2);
 			SmsSaveYourselfPhase2(CLIENT(lp->data)->smsConn);
 		}
 
@@ -704,9 +740,12 @@ save_yourself_done(SmsConn smsConn, Client *client, Bool success)
 					  CLIENT(lp->data)->id);
 			}
 #endif
-			CLIENT(lp->data)->state = CLIENT_IDLE;
+			client_set_state(lp->data, CLIENT_IDLE);
 			SmsSaveComplete(CLIENT(lp->data)->smsConn);
 		}
+
+		/* reset manager to idle state */
+		state = MANAGER_IDLE;
 
 		return;
 	}
@@ -743,7 +782,7 @@ close_connection(SmsConn smsConn, Client *client, int nReasons, char **reasons)
 	IceCloseConnection(iceConn);
 
 	/* remember this client to be in "Disconnect"-state, see below */
-	client->state = CLIENT_DISCONNECTED;
+	client_set_state(client, CLIENT_DISCONNECTED);
 
 	if (state == MANAGER_SHUTDOWNPHASE2) {
 		/* Check if there are still clients connected to the manager */

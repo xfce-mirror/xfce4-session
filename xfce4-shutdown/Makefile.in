@@ -181,7 +181,7 @@ xfce4_shutdown_SOURCES = \
 
 xfce4_shutdown_CFLAGS = \
 	@LIBXFCE4UTIL_CFLAGS@						\
-	-DSYSCONFDIR=\"$(sysconfdir)/xfce4\"
+	-DPATH_SHUTDOWNALLOW=\"$(sysconfdir)/xfce4/shutdown.allow\"
 
 
 xfce4_shutdown_LDADD = \

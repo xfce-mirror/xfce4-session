@@ -1,3 +1,17 @@
+20030710:
+---------
+	* Added spec file
+	* Two Solaris fixes
+	* State is now displayed in "session control"
+	* added "Quit session" and "Save session" to the tray menu
+	  (GtkImageMenuItem's now working btw.)
+	* Fixed bug in SaveYourselfDone code (manager does not entered
+	  IDLE state after a succesfull checkpoint)
+	* Added UNIX signals support: SIGUSR1 saves current session, SIGINT
+	  quits current session
+	* Added security check to xfce4-shutdown (shutdown.allow has to
+	  owned by root to be used)
+
 20030708:
 ---------
 	* startxfce4 in xfce-utils was altered to automatically use

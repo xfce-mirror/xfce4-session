@@ -27,6 +27,8 @@
 #ifndef __XFSM_MANAGER_H__
 #define __XFSM_MANAGER_H__
 
+#include <X11/SM/SMlib.h>
+
 #include <glib.h>
 
 /* manager states */
@@ -52,5 +54,6 @@ extern gboolean	manager_init(void);
 extern gboolean	manager_save(void);
 extern gboolean	manager_restart(void);
 extern gchar	*manager_generate_client_id(SmsConn);
+extern void	manager_saveyourself(int, Bool, int, Bool);
 
 #endif	/* !__XFSM_MANAGER_H__ */

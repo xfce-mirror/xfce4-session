@@ -45,6 +45,7 @@ enum
 	PROGRAM_COLUMN,
 	USERID_COLUMN,
 	PRIORITY_COLUMN,
+	STATE_COLUMN,
 	N_COLUMNS
 };
 
@@ -64,6 +65,20 @@ static void	xfsm_client_list_finalize(GObject *);
 
 /* parent class */
 static GObjectClass	*parent_class;
+
+/* client state names */
+static const gchar *state_names[] = {
+	N_("Idle"),
+	N_("Interacting"),
+	N_("Save completed"),
+	N_("Saving"),			/* global save */
+	N_("Saving"),			/* local save */
+	N_("Waiting to interact"),
+	N_("Waiting to enter Phase2"),
+	N_("Saving (Phase2)"),
+	N_("Disconnecting"),
+	NULL
+};
 
 /*
  */
@@ -256,7 +271,8 @@ xfsm_client_list_init(XfsmClientList *list)
 	store = gtk_list_store_new(N_COLUMNS,
 			G_TYPE_STRING,
 			G_TYPE_STRING,
-			G_TYPE_INT);
+			G_TYPE_INT,
+			G_TYPE_STRING);
 
 	/* */
 	list->tree = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
@@ -284,6 +300,11 @@ xfsm_client_list_init(XfsmClientList *list)
 		gtk_tree_view_column_new_with_attributes(_("Priority"),
 			renderer,
 			"text", PRIORITY_COLUMN,
+			NULL));
+	gtk_tree_view_append_column(GTK_TREE_VIEW(list->tree),
+		gtk_tree_view_column_new_with_attributes(_("State"),
+			gtk_cell_renderer_text_new(),
+			"text", STATE_COLUMN,
 			NULL));
 
 	/* */
@@ -342,6 +363,10 @@ xfsm_client_list_finalize(GObject *object)
 	g_return_if_fail(XFSM_IS_CLIENT_LIST(object));
 
 	list = XFSM_CLIENT_LIST(object);
+
+	/* free all list items */
+	g_list_foreach(list->clients, (GFunc)g_free, NULL);
+	g_list_free(list->clients);
 
 	G_OBJECT_CLASS(parent_class)->finalize(object);
 }
@@ -419,6 +444,7 @@ xfsm_client_list_update(XfsmClientList *list, Client *client)
 			PROGRAM_COLUMN, program,
 			USERID_COLUMN, userid,
 			PRIORITY_COLUMN, client_get_priority(client),
+			STATE_COLUMN, _(state_names[client_state(client)]),
 			-1);
 
 	/* */

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2003-07-09 00:33+0200\n"
+"POT-Creation-Date: 2003-07-09 23:36+0200\n"
 "PO-Revision-Date: 2003-07-08 15:00+0200\n"
 "Last-Translator: Jasper Huijsmans <huysmans@users.sourceforge.net>\n"
 "Language-Team: Nederlands <NL@li.org>\n"
@@ -119,12 +119,24 @@ msgstr ""
 "XFce sessie niet creëren: %s: %s"
 
 #.
-#: xfce4-session/main.c:254 xfce4-session/client-list.c:249
+#: xfce4-session/main.c:270 xfce4-session/client-list.c:264
 #, fuzzy
 msgid "Session control"
 msgstr "Sessiebeheer"
 
-#: xfce4-session/main.c:305
+#.
+#: xfce4-session/main.c:285
+#, fuzzy
+msgid "Save session"
+msgstr "Uitloggen"
+
+#.
+#: xfce4-session/main.c:294
+#, fuzzy
+msgid "Quit session"
+msgstr "Uitloggen"
+
+#: xfce4-session/main.c:347
 msgid ""
 "The session manager was unable to start the\n"
 "Multi-Channel settings manager. This is most\n"
@@ -137,11 +149,11 @@ msgstr ""
 "door een onvolledige installatie. Meldt het probleem\n"
 "a.u.b. aan uw systeembeheerder."
 
-#: xfce4-session/main.c:318
+#: xfce4-session/main.c:360
 msgid "Unable to create MCS client"
 msgstr "Kan MCS client niet creëren"
 
-#: xfce4-session/manager.c:313
+#: xfce4-session/manager.c:338
 msgid ""
 "The session manager was unable to restore your\n"
 "previous session. It'll therefore start a default\n"
@@ -150,7 +162,7 @@ msgstr ""
 "De sessiebeheerder kon uw vorige sessie niet herstellen.\n"
 "Een standaard sessie zal worden gestart."
 
-#: xfce4-session/manager.c:773
+#: xfce4-session/manager.c:812
 #, c-format
 msgid ""
 "The client \"%s\" closed the connection\n"
@@ -207,34 +219,72 @@ msgstr "Bezig met uitvoeren Autostart..."
 msgid "Starting session manager..."
 msgstr "Bezig met starten sesiebeheerder"
 
-#: xfce4-session/client-list.c:184
+#: xfce4-session/client-list.c:71
+msgid "Idle"
+msgstr ""
+
+#: xfce4-session/client-list.c:72
+msgid "Interacting"
+msgstr ""
+
+#: xfce4-session/client-list.c:73
+msgid "Save completed"
+msgstr ""
+
+#. global save
+#: xfce4-session/client-list.c:74 xfce4-session/client-list.c:75
+msgid "Saving"
+msgstr ""
+
+#. local save
+#: xfce4-session/client-list.c:76
+msgid "Waiting to interact"
+msgstr ""
+
+#: xfce4-session/client-list.c:77
+msgid "Waiting to enter Phase2"
+msgstr ""
+
+#: xfce4-session/client-list.c:78
+msgid "Saving (Phase2)"
+msgstr ""
+
+#: xfce4-session/client-list.c:79
+msgid "Disconnecting"
+msgstr ""
+
+#: xfce4-session/client-list.c:199
 #, fuzzy, c-format
 msgid "Unable to clone client: %s"
 msgstr "Kan MCS client niet creëren"
 
-#: xfce4-session/client-list.c:272
+#: xfce4-session/client-list.c:288
 msgid "Program"
 msgstr ""
 
-#: xfce4-session/client-list.c:277
+#: xfce4-session/client-list.c:293
 msgid "User"
 msgstr ""
 
-#: xfce4-session/client-list.c:284
+#: xfce4-session/client-list.c:300
 msgid "Priority"
 msgstr ""
 
+#: xfce4-session/client-list.c:305
+msgid "State"
+msgstr ""
+
 #. kill button
-#: xfce4-session/client-list.c:303
+#: xfce4-session/client-list.c:324
 msgid "Kill client"
 msgstr ""
 
 #. clone button
-#: xfce4-session/client-list.c:309
+#: xfce4-session/client-list.c:330
 msgid "Clone client"
 msgstr ""
 
-#: xfce4-session/client-list.c:411 xfce4-session/client-list.c:414
+#: xfce4-session/client-list.c:432 xfce4-session/client-list.c:435
 msgid "Unknown"
 msgstr ""
 

@@ -35,6 +35,9 @@
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
 #endif
+#ifdef HAVE_SIGNAL_H
+#include <signal.h>
+#endif
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
@@ -54,6 +57,17 @@
 
 /* */
 #define	CHANNEL	"session"
+
+/* UNIX signal states */
+enum
+{
+	SIGNAL_NONE,
+	SIGNAL_SAVE,
+	SIGNAL_QUIT
+};
+
+/* current UNIX signal state */
+static gint	signalState = SIGNAL_NONE;
 
 /* */
 McsClient	*settingsClient;
@@ -170,7 +184,7 @@ settings_notify(const char *name, const char *channel, McsAction action,
 			}
 		}
 		break;
-		
+	
 	case MCS_ACTION_DELETED:
 	default:
 		break;
@@ -213,7 +227,7 @@ settings_watch(Window xwindow, Bool starting, long mask, void *data)
 /*
  */
 static void
-toggle_visible(GtkWidget *widget)
+toggle_visible_cb(GtkWidget *widget)
 {
 	if (GTK_WIDGET_VISIBLE(widget))
 		gtk_widget_hide(widget);
@@ -224,9 +238,25 @@ toggle_visible(GtkWidget *widget)
 /*
  */
 static void
-show_preferences(void)
+show_preferences_cb(void)
 {
 	(void)g_spawn_command_line_async("xfce-setting-show session", NULL);
+}
+
+/*
+ */
+static void
+save_session_cb(void)
+{
+	manager_saveyourself(SmSaveBoth, False, SmInteractStyleNone, False);
+}
+
+/*
+ */
+static void
+quit_session_cb(void)
+{
+	manager_saveyourself(SmSaveBoth, True, SmInteractStyleAny, False);
 }
 
 /*
@@ -246,22 +276,48 @@ create_tray_icon(void)
 	menuItem = gtk_image_menu_item_new_from_stock(GTK_STOCK_PREFERENCES,
 			NULL);
 	g_signal_connect(menuItem, "activate", 
-			G_CALLBACK(show_preferences), NULL);
+			G_CALLBACK(show_preferences_cb), NULL);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
 	gtk_widget_show(menuItem);
 
 	/* */
-	menuItem = gtk_menu_item_new_with_mnemonic(_("Session control"));
+	menuItem = gtk_image_menu_item_new_with_mnemonic(_("Session control"));
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
+		gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO,
+			GTK_ICON_SIZE_MENU));
 	g_signal_connect_swapped(menuItem, "activate",
 			G_CALLBACK(gtk_widget_show), clientList);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
+	gtk_widget_show_all(menuItem);
+
+	/* */
+	menuItem = gtk_separator_menu_item_new();
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
 	gtk_widget_show(menuItem);
+
+	/* */
+	menuItem = gtk_image_menu_item_new_with_mnemonic(_("Save session"));
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
+		gtk_image_new_from_stock(GTK_STOCK_SAVE, GTK_ICON_SIZE_MENU));
+	g_signal_connect(G_OBJECT(menuItem), "activate",
+			G_CALLBACK(save_session_cb), NULL);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
+	gtk_widget_show_all(menuItem);
+
+	/* */
+	menuItem = gtk_image_menu_item_new_with_mnemonic(_("Quit session"));
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
+		gtk_image_new_from_stock(GTK_STOCK_QUIT, GTK_ICON_SIZE_MENU));
+	g_signal_connect(G_OBJECT(menuItem), "activate",
+			G_CALLBACK(quit_session_cb), NULL);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
+	gtk_widget_show_all(menuItem);
 
 	icon = xfsm_tray_icon_new(GTK_MENU(menu));
 
 	/* connect the double action */
 	g_signal_connect_swapped(G_OBJECT(icon), "clicked",
-			G_CALLBACK(toggle_visible), clientList);
+			G_CALLBACK(toggle_visible_cb), clientList);
 
 	/* the tray icon now keeps a ref on the menu */
 	g_object_unref(G_OBJECT(menu));
@@ -270,12 +326,56 @@ create_tray_icon(void)
 }
 
 /*
+ * Check UNIX signal state
+ */
+static gboolean
+check_signal_state(void)
+{
+	switch (signalState) {
+	case SIGNAL_SAVE:
+		save_session_cb();
+		break;
+
+	case SIGNAL_QUIT:
+		quit_session_cb();
+		break;
+	}
+
+	/* reset UNIX signal state */
+	signalState = SIGNAL_NONE;
+
+	/* keep checker running */
+	return(TRUE);
+}
+
+/*
+ * UNIX signal handler
+ */
+static void
+signal_handler(int signalCode)
+{
+	switch (signalCode) {
+	case SIGUSR1:
+		signalState = SIGNAL_SAVE;
+		break;
+
+	default:
+		signalState = SIGNAL_QUIT;
+		break;
+	}
+}
+
+/*
  */
 int
 main(int argc, char **argv)
 {
 	extern gchar *startupSplashTheme;
+#ifdef HAVE_SIGACTION
+	struct sigaction act;
+#endif
 	McsSetting *setting;
+	const gchar *theme;
 	gchar *message;
 	
 	xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
@@ -333,7 +433,6 @@ main(int argc, char **argv)
 		g_free(setting);
 	}
 	else {
-		const gchar *theme;
 		if ((theme = g_getenv("XFSM_SPLASH_THEME")) != NULL)
 			startupSplashTheme = g_strdup(theme);
 		g_warning("Failed to get splash theme setting");
@@ -349,6 +448,29 @@ main(int argc, char **argv)
 	/*
 	 */
 	gtk_widget_show(create_tray_icon());
+
+	/*
+	 * Connect UNIX signals
+	 */
+#ifdef HAVE_SIGACTION
+	act.sa_handler = signal_handler;
+	sigemptyset(&act.sa_mask);
+#ifdef SA_RESTART
+	act.sa_flags = SA_RESTART;
+#else
+	act.sa_flags = 0;
+#endif
+	(void)sigaction(SIGUSR1, &act, NULL);
+	(void)sigaction(SIGINT, &act, NULL);
+	(void)sigaction(SIGTERM, &act, NULL);
+#else
+	(void)signal(SIGUSR1, signal_handler);
+	(void)signal(SIGINT, signal_handler);
+	(void)signal(SIGTERM, signal_handler);
+#endif
+
+	/* schedule add UNIX signal state checker */
+	(void)g_timeout_add(500, (GSourceFunc)check_signal_state, NULL);
 
 	gtk_main();
 

@@ -1,0 +1,44 @@
+Summary: 	Session manager
+Name: 		xfce4-session
+Version: 	@VERSION@
+Release: 	1
+License:	BSD
+URL: 		http://www.xfce.org/
+Source0: 	%{name}-%{version}.tar.gz
+Group: 		User Interface/Desktops
+BuildRoot: 	%{_tmppath}/%{name}-root
+Requires:	libxfcegui4 >= @LIBXFCEGUI4_REQUIRED_VERSION@
+Requires:	libxfce4mcs >= @LIBXFCE4MCS_CLIENT_REQUIRED_VERSION@
+Requires:	xfce-mcs-manager >= @XFCE_MCS_MANAGER_REQUIRED_VERSION@
+BuildRequires: 	libxfcegui4-devel >= @LIBXFCEGUI4_REQUIRED_VERSION@
+BuildRequires:	libxfce4mcs-devel >= @LIBXFCE4MCS_CLIENT_REQUIRED_VERSION@
+BuildRequires:	xfce-mcs-manager-devel >= @XFCE_MCS_MANAGER_REQUIRED_VERSION@
+
+%description
+xfce4-session is the session manager for the XFce desktop environment
+
+%prep
+%setup -q
+
+%build
+%configure
+make
+
+%install
+rm -rf $RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir}
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(-,root,root)
+%doc AUTHORS COPYING ChangeLog ChangeLog.pre-xfce-devel NEWS README TODO
+%{_sysconfdir}/xfce4/
+%{_datadir}/xfce4/splash/
+%{_datadir}/locale/
+%{_bindir}/*
+%{_sbindir}/*
+%{_datadir}/xfce4/themes/
+%{_libdir}/xfce4/mcs-plugins/
+

@@ -7,9 +7,7 @@ SUBDIRS =								\
 	xfce4-shutdown
 
 distclean-local:
-	rm -rf *.cache *~
-
-ACLOCAL_AMFLAGS = -I m4
+	rm -rf xfce4-session.spec *.cache *~
 
 EXTRA_DIST =								\
 	AUTHORS								\
@@ -17,4 +15,11 @@ EXTRA_DIST =								\
 	INSTALL								\
 	NEWS								\
 	README								\
-	TODO
+	TODO								\
+	xfce4-session.spec
+
+rpm: dist
+	rpmbuild -ta $(PACKAGE)-$(VERSION).tar.gz
+	@rm -f $(PACKAGE)-$(VERSION).tar.gz
+
+ACLOCAL_AMFLAGS = -I m4

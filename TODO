@@ -3,10 +3,7 @@
  * add a SaveYourself timeout, so bogus clients do not prevent the desktop
    from shutdown
  * Multiscreen support is missing (e.g. with the logout screen)
- * Save session on SIGHUP -> SaveYourself checkpoint
  * Save to XML instead of this binary format.
- * Add a systray icon to configure the manager "online". E.g. having a
-   menu item "Save session now" to issue a SaveYourself request. (Part. done)
  * Honor SmRestartStyleHint
 
  * Should we move XfsmTrayIcon to libxfcegui4? It provides a nice way to
@@ -15,12 +12,3 @@
 
  * Try to translate userids provided by smproxy to usernames if hostnames
    match.
-
- * Add .spec file
-
-MCS-plugin:
------------
-
-The following behaviour should be configurable through an MCS plugin:
-
-	* Autosave session every n minutes

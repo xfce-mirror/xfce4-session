@@ -7,7 +7,7 @@ AC_INIT([configure.ac])
 
 AM_CONFIG_HEADER([config.h])
 
-AM_INIT_AUTOMAKE([xfce4-session], [0.0.22])
+AM_INIT_AUTOMAKE([xfce4-session], [0.0.23])
 
 AM_MAINTAINER_MODE
 
@@ -23,8 +23,8 @@ AC_PROG_LIBTOOL
 
 dnl check for standard header files
 AC_HEADER_STDC
-AC_CHECK_FUNCS([gethostname setenv])
-AC_CHECK_HEADERS([errno.h fcntl.h limits.h sys/param.h sys/utsname.h \
+AC_CHECK_FUNCS([gethostname setenv sigaction])
+AC_CHECK_HEADERS([errno.h fcntl.h limits.h signal.h sys/param.h sys/utsname.h \
   sys/wait.h time.h])
 
 dnl Check for X11 installed
@@ -54,6 +54,7 @@ defaults/splash/Makefile
 docs/Makefile
 settings/Makefile
 po/Makefile.in
+xfce4-session.spec
 xfce4-session/Makefile
 xfce4-shutdown/Makefile
 ])
