@@ -139,6 +139,8 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   gboolean prompt;
   gint monitor;
 	gint result;
+  XfceKiosk *kiosk;
+  gboolean kiosk_can_shutdown;
   XfceRc *rc;
 #ifdef SESSION_SCREENSHOTS
   GdkRectangle screenshot_area;
@@ -162,6 +164,11 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
       xfsm_shutdown_helper_destroy (shutdown_helper);
       shutdown_helper = NULL;
     }
+
+  /* load kiosk settings */
+  kiosk = xfce_kiosk_new ("xfce4-session");
+  kiosk_can_shutdown = xfce_kiosk_query (kiosk, "Shutdown");
+  xfce_kiosk_free (kiosk);
 
   /* load configuration */
   rc = xfsm_open_config (FALSE);
@@ -334,7 +341,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 
   /* connect to the shutdown helper */
   shutdown_helper = xfsm_shutdown_helper_spawn ();
-  if (shutdown_helper == NULL)
+  if (shutdown_helper == NULL || !kiosk_can_shutdown)
     {
       gtk_widget_set_sensitive (radio_reboot, FALSE);
       gtk_widget_set_sensitive (radio_halt, FALSE);

@@ -51,6 +51,10 @@ static GtkWidget    *advanced_kde;
 static GtkWidget    *advanced_gnome;
 static GtkWidget    *advanced_remote;
 static GtkTooltips  *tooltips;
+static gboolean      kiosk_can_chooser;
+static gboolean      kiosk_can_logout;
+static gboolean      kiosk_can_compat;
+static gboolean      kiosk_can_security;
 
 
 
@@ -76,22 +80,28 @@ config_store (void)
   rc = config_open (FALSE);
 
   xfce_rc_set_group (rc, "General");
-  xfce_rc_write_bool_entry (rc, "AutoSave", gtk_toggle_button_get_active (
-                            GTK_TOGGLE_BUTTON (general_autosave)));
-  xfce_rc_write_bool_entry (rc, "DisableTcp", !gtk_toggle_button_get_active (
-                            GTK_TOGGLE_BUTTON (advanced_remote)));
-  xfce_rc_write_bool_entry (rc, "PromptOnLogout", gtk_toggle_button_get_active (
-                            GTK_TOGGLE_BUTTON (general_prompt)));
+  if (G_LIKELY (kiosk_can_logout))
+    {
+      xfce_rc_write_bool_entry (rc, "AutoSave", gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (general_autosave)));
+      xfce_rc_write_bool_entry (rc, "PromptOnLogout", gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (general_prompt)));
+    }
+  if (G_LIKELY (kiosk_can_security))
+    {
+      xfce_rc_write_bool_entry (rc, "DisableTcp", !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (advanced_remote)));
+    }
 
-  xfce_rc_set_group (rc, "Compatibility");
-  xfce_rc_write_bool_entry (rc, "LaunchGnome", gtk_toggle_button_get_active (
-                            GTK_TOGGLE_BUTTON (advanced_gnome)));
-  xfce_rc_write_bool_entry (rc, "LaunchKDE", gtk_toggle_button_get_active (
-                            GTK_TOGGLE_BUTTON (advanced_kde)));
+  if (G_LIKELY (kiosk_can_compat))
+    {
+      xfce_rc_set_group (rc, "Compatibility");
+      xfce_rc_write_bool_entry (rc, "LaunchGnome", gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (advanced_gnome)));
+      xfce_rc_write_bool_entry (rc, "LaunchKDE", gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (advanced_kde)));
+    }
 
-  xfce_rc_set_group (rc, "Chooser");
-  xfce_rc_write_bool_entry (rc, "AlwaysDisplay", gtk_toggle_button_get_active (
-                            GTK_TOGGLE_BUTTON (general_chooser)));
+  if (G_LIKELY (kiosk_can_chooser))
+    {
+      xfce_rc_set_group (rc, "Chooser");
+      xfce_rc_write_bool_entry (rc, "AlwaysDisplay", gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (general_chooser)));
+    }
 
   xfce_rc_close (rc);
 }
@@ -130,6 +140,7 @@ general_create (XfceRc *rc)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (general_chooser), chooser);
   g_signal_connect (G_OBJECT (general_chooser), "toggled",
                     G_CALLBACK (config_store), NULL);
+  gtk_widget_set_sensitive (general_chooser, kiosk_can_chooser);
   gtk_box_pack_start (GTK_BOX (vbox), general_chooser, FALSE, TRUE, 0);
   gtk_tooltips_set_tip (tooltips, general_chooser,
                         _("If set, the session manager will ask you to choose "
@@ -139,6 +150,7 @@ general_create (XfceRc *rc)
   frame = xfce_framebox_new (_("Logout settings"), TRUE);
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, TRUE, 0);
   vbox = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_sensitive (vbox, kiosk_can_logout);
   xfce_framebox_add (XFCE_FRAMEBOX (frame), vbox);
 
   general_autosave = gtk_check_button_new_with_label (_("Automatically save session on logout"));
@@ -202,6 +214,7 @@ advanced_create (XfceRc *rc)
   xfce_framebox_add (XFCE_FRAMEBOX (frame), hbox);
 
   vbox = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_sensitive (vbox, kiosk_can_compat);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
 
   advanced_gnome = gtk_check_button_new_with_label (_("Launch Gnome services on startup"));
@@ -248,6 +261,7 @@ advanced_create (XfceRc *rc)
   advanced_remote = gtk_check_button_new_with_label (_("Manage remote applications"));
 #ifdef HAVE__ICETRANSNOLISTEN
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (advanced_remote), remote);
+  gtk_widget_set_sensitive (advanced_remote, kiosk_can_security);
 #else
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (advanced_remote), TRUE);
   gtk_widget_set_senstive (advanced_remote, FALSE);
@@ -296,7 +310,8 @@ dialog_run (McsPlugin *plugin)
   GtkWidget *label;
   GtkWidget *page;
   GtkWidget *dbox;
-  XfceRc *rc;
+  XfceKiosk *kiosk;
+  XfceRc    *rc;
 
   if (dialog != NULL)
     {
@@ -304,6 +319,12 @@ dialog_run (McsPlugin *plugin)
       return;
     }
 
+  kiosk = xfce_kiosk_new ("xfce4-session");
+  kiosk_can_chooser = xfce_kiosk_query (kiosk, "Chooser");
+  kiosk_can_logout = xfce_kiosk_query (kiosk, "Logout");
+  kiosk_can_compat = xfce_kiosk_query (kiosk, "Compatibility");
+  kiosk_can_security = xfce_kiosk_query (kiosk, "Security");
+  xfce_kiosk_free (kiosk);
   tooltips = gtk_tooltips_new ();
 
   rc = config_open (TRUE);

@@ -67,6 +67,7 @@ enum
  */
 static GList       *modules = NULL;
 static XfceRc      *modules_rc = NULL;
+static gboolean     kiosk_can_splash = FALSE;
 static gboolean     splash_centered;
 static GtkWidget   *splash_dialog = NULL;
 static GtkWidget   *splash_treeview;
@@ -291,8 +292,8 @@ splash_selection_changed (GtkTreeSelection *selection)
           xfce_rc_write_entry (rc, "Engine", module_engine (module));
           xfce_rc_flush (rc);
 
-          gtk_widget_set_sensitive (splash_button_cfg,
-                                    module_can_configure (module));
+          gtk_widget_set_sensitive (splash_button_cfg, kiosk_can_splash
+                                 && module_can_configure (module));
           gtk_widget_set_sensitive (splash_button_test, TRUE);
         }
       else
@@ -347,6 +348,7 @@ splash_run (McsPlugin *plugin)
   GtkWidget         *swin;
   GtkWidget         *frame;
   GtkWidget         *table;
+  XfceKiosk         *kiosk;
   XfceRc            *rc;
   GList             *lp;
 
@@ -360,6 +362,11 @@ splash_run (McsPlugin *plugin)
 
   /* load splash modules */
   splash_load_modules ();
+
+  /* query kiosk settings */
+  kiosk = xfce_kiosk_new ("xfce4-session");
+  kiosk_can_splash = xfce_kiosk_query (kiosk, "Splash");
+  xfce_kiosk_free (kiosk);
 
   /* load config */
   rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG,
@@ -435,6 +442,7 @@ splash_run (McsPlugin *plugin)
   splash_treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (splash_treeview), FALSE);
   gtk_container_add (GTK_CONTAINER (swin), splash_treeview);
+  gtk_widget_set_sensitive (splash_treeview, kiosk_can_splash);
   gtk_widget_show (splash_treeview);
   g_object_unref (G_OBJECT (store));
 

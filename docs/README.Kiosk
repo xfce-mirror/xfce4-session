@@ -1,0 +1,40 @@
+The Xfce session manager supports the KIOSK mode introduced with libxfce4util
+4.1.13. It provides the following KIOSK capabilities:
+
+	CustomizeSplash		whether or not the user is allowed to customize
+				the splash screen.
+
+	CustomizeChooser	whether or not the user is allowed to customize
+				the session chooser settings
+
+	CustomizeLogout		whether or not the user is allowed to customize
+				the logout settings
+
+	CustomizeCompatibility	whether or not the user is allowed to customize
+				the compatibility settings (KDE/Gnome compat)
+
+	CustomizeSecurity	whether or not the user is allowed to customize
+				the security settings. This is one of the most
+				IMPORTANT settings, since it prevents users
+				(actually libICE) from binding to a TCP port.
+
+	Shutdown		whether or not the user is allowed to shutdown
+				(reboot or poweroff) the system. If a user lacks
+				this capability the reboot and poweroff options
+				in the shutdown dialog will be greyed out.
+
+So a sample xfce4-session in your kioskrc might look like this:
+
+--- snip ---
+[xfce4-session]
+CustomizeSplash=ALL
+CustomizeChooser=ALL
+CustomizeLogout=ALL
+CustomizeCompatibility=%wheel
+CustomizeSecurity=NONE
+Shutdown=%wheel
+--- snip ---
+
+This allows all users to change their splash, chooser and logout settings, but
+allows only users in the group wheel to customize the the compatibility settings
+and shutdown the system. No one will be allowed to adjust the security settings.
