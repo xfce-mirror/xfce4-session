@@ -20,7 +20,8 @@
    mail on 20031211). [DONE]
  * Fix the problem with xfce4-session not working on Solaris 9! [DONE]
  * Move "setenv()" from manager.c to libxfce4util as xfce_setenv() [DONE]
-
+ * An error leads to a session close on Linux when running several xterms
+   as reported by Olivier.
 
 Solution for the TIMEOUT in SAVEYOURSELF problem:
 -------------------------------------------------
@@ -33,3 +34,40 @@ Solution for the TIMEOUT in SAVEYOURSELF problem:
    of the given clients. In addition to the window there should be a timer
    that counts from 60 to 0 seconds and once 0 is reached the session is
    automatically terminated.
+
+
+IRC Log of Olivier and another Linux user with the xterm problem:
+-----------------------------------------------------------------
+<thomas_adam> ~/.xsession-errors report failings...
+<ofourdan> sorry...
+<ofourdan> what errors?
+<thomas_adam> Client 0x3735252653653536738 lost connection to ICE_socket
+<thomas_adam> that's repeated for the other xterm (there were two in the session I saved)
+<thomas_adam> and then I just get flung back to the VT
+<ofourdan> I think I had such a problem already and reported to benny
+<ofourdan> no core, just the session dies
+<thomas_adam> ah right
+<thomas_adam> yup
+<thomas_adam> so a work in progress then? :)
+<ofourdan> dunno, cuz he didn't take it into account
+<ofourdan> afaik
+<thomas_adam> oh, :)
+<ofourdan> he can't reproduce the problem
+<ofourdan> do you run linux.
+<ofourdan> what xfree ?
+<ofourdan> does it fail with xterm?
+<thomas_adam> Debain Unstable
+<thomas_adam> XFree86 4.2.1.1
+<thomas_adam> If I clear ~/.xfce/session
+<thomas_adam> and start from scratch...
+<ofourdan> what if you run another type of terminal, like gnome-terminal or rxvt instead of xterm?
+<thomas_adam> yeah...
+<thomas_adam> if I open say rxvt or xterm or both, and save them...
+<thomas_adam> log back in, the session is restored fine....
+<ofourdan> no, no, no xterm at all
+<thomas_adam> I have tried that....
+<thomas_adam> I'm getting to my point :)
+<ofourdan> well, I'll try to ping benny agin on that, it's definitely a show stopper
+<thomas_adam> one save and one restore of that session works fine...
+<thomas_adam> any subsequent restores of that session cause it to keel over and die.
+
