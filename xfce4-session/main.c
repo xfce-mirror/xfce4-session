@@ -320,6 +320,7 @@ show_about_dialog(void)
   }
 
   gtk_widget_show(dialog);
+  gtk_window_present(GTK_WINDOW(dialog));
 }
 
 /*
