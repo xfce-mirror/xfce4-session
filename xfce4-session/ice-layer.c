@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003,2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -51,336 +51,307 @@
 #include <X11/ICE/ICEutil.h>
 #include <X11/SM/SMlib.h>
 
-#include <glib.h>
-#include <libxfce4util/i18n.h>
+#include <libxfce4util/libxfce4util.h>
 
-#include <xfce4-session/client.h>
-#include <xfce4-session/session-control.h>
-#include <xfce4-session/xfce_trayicon.h>
-#include "ice-layer.h"
-#include "manager.h"
+#include <xfce4-session/ice-layer.h>
+#include <xfce4-session/xfsm-global.h>
+#include <xfce4-session/xfsm-manager.h>
 
 /* prototypes */
-static void	ice_error_handler(IceConn);
-static gboolean	ice_process_messages(GIOChannel *, GIOCondition, IceConn);
-static gboolean	ice_connection_accept(GIOChannel *, GIOCondition, IceListenObj);
-static FILE 	*ice_tmpfile(char **);
-static void	ice_auth_add(FILE *, FILE *, char *, IceListenObj);
-static void	ice_cleanup(void);
+static void	 ice_error_handler     (IceConn);
+static gboolean	 ice_process_messages  (GIOChannel  *channel,
+                                        GIOCondition condition,
+                                        gpointer     user_data);
+static gboolean	 ice_connection_accept (GIOChannel  *channel,
+                                        GIOCondition condition,
+                                        gpointer     watch_data);
+static FILE 	*ice_tmpfile           (char **name);
+static void	 ice_auth_add          (FILE *,
+                                        FILE *,
+                                        char *,
+                                        IceListenObj);
 
-/* ICE authority cleanup file name */
-static char *authCleanupFile;
+static char *auth_cleanup_file;
 
-/*
- * ICE host based authentication proc
- */
+
 Bool
-ice_auth_proc(char *hostname)
+ice_auth_proc (char *hostname)
 {
-	return(False);
+  return False;
 }
 
-/*
- * ICE I/O error handler
- */
+
 static void
-ice_error_handler(IceConn iceConn)
+ice_error_handler (IceConn ice_conn)
 {
-	/*
-	 * The I/O error handlers does whatever is necessary to respond
-	 * to the I/O error and then returns, but it does not call
-	 * IceCloseConnection. The ICE connection is given a "bad IO"
-	 * status, and all future reads and writes to the connection
-	 * are ignored. The next time IceProcessMessages is called it
-	 * will return a status of IceProcessMessagesIOError. At that
-	 * time, the application should call IceCloseConnection.
-	 */
-	g_warning("ICE I/O error on connection %p", iceConn);
+  /*
+   * The I/O error handlers does whatever is necessary to respond
+   * to the I/O error and then returns, but it does not call
+   * IceCloseConnection. The ICE connection is given a "bad IO"
+   * status, and all future reads and writes to the connection
+   * are ignored. The next time IceProcessMessages is called it
+   * will return a status of IceProcessMessagesIOError. At that
+   * time, the application should call IceCloseConnection.
+   */
+  xfsm_verbose ("ICE connection fd = %d, ICE I/O error on connection\n",
+                IceConnectionNumber (ice_conn));
 }
 
-/*
- * Process ICE messages
- */
+
 static gboolean
-ice_process_messages(GIOChannel *channel, GIOCondition condition,
-                     IceConn iceConn)
+ice_process_messages (GIOChannel  *channel,
+                      GIOCondition condition,
+                      gpointer     user_data)
 {
-	/* XXX */
-	extern GtkWidget *sessionControl;
-	extern XfceTrayIcon *trayIcon;
-	IceProcessMessagesStatus status;
-	SmsConn smsConn;
-	gchar *tip;
-	GList *lp;
+  IceProcessMessagesStatus status;
+  IceConn                  ice_conn = (IceConn) user_data;
 
-	status = IceProcessMessages(iceConn, NULL, NULL);
+  status = IceProcessMessages (ice_conn, NULL, NULL);
 
-	if (status == IceProcessMessagesIOError) {
-		for (lp = g_list_first(clients); lp; lp = lp->next)
-			if (CLIENT(lp->data)->iceConn == iceConn)
-				break;
+  if (status == IceProcessMessagesIOError)
+    {
+      xfsm_manager_close_connection_by_ice_conn (ice_conn);
 
-		if (lp != NULL) {
-			smsConn = CLIENT(lp->data)->smsConn;
-			xfsm_session_control_remove(
-					XFSM_SESSION_CONTROL(sessionControl),
-					CLIENT(lp->data));
-			client_free(CLIENT(lp->data));
-			SmsCleanUp(smsConn);
-			clients = g_list_delete_link(clients, lp);
-		}
+      /* remove the I/O watch */
+      return FALSE;
+    }
 
-		/* update the tray icon tip */
-		tip = g_strdup_printf(_("%u clients connected"),
-				g_list_length(clients));
-		xfce_tray_icon_set_tooltip(trayIcon, tip, NULL);
-		g_free(tip);
-
-		IceSetShutdownNegotiation(iceConn, False);
-		(void)IceCloseConnection(iceConn);
-
-		/* remove the I/O watch */
-		return(FALSE);
-	}
-
-	/* keep the I/O watch running */
-	return(TRUE);
+  /* keep the I/O watch running */
+  return TRUE;
 }
 
-/*
- * ICE connection watch. This is called whenever a new ICE connection is
- * made. It arranges for the ICE connection to be handled via the GLib
- * main event loop.
- */
-/* ARGSUSED */
+
 static void
-ice_connection_watch(IceConn iceConn, IcePointer clientData, Bool opening,
-                     IcePointer *watchData)
+ice_connection_watch (IceConn     ice_conn,
+                      IcePointer  client_data,
+                      Bool        opening,
+                      IcePointer *watch_data)
 {
-	GIOChannel *channel;
-	guint watchID;
-	gint fd;
+  GIOChannel *channel;
+  guint       watchid;
+  gint        fd;
 
-	if (opening) {
-		fd = IceConnectionNumber(iceConn);
+  if (opening)
+    {
+      fd = IceConnectionNumber (ice_conn);
 
-		/*
-		 * Make sure we don't pass on these file descriptors to an
-		 * exec'd child process.
-		 */
-		fcntl(fd, F_SETFD, fcntl(fd, F_GETFD, 0) | FD_CLOEXEC);
+      /* Make sure we don't pass on these file descriptors to an
+       * exec'd child process.
+       */
+      fcntl (fd, F_SETFD, fcntl (fd, F_GETFD, 0) | FD_CLOEXEC);
 
-		/* create an I/O channel for the new client connection */
-		channel = g_io_channel_unix_new(fd);
-		watchID = g_io_add_watch(channel, G_IO_ERR | G_IO_HUP | G_IO_IN,
-				(GIOFunc)ice_process_messages, iceConn);
-		g_io_channel_unref(channel);
+      channel = g_io_channel_unix_new (fd);
+      watchid = g_io_add_watch (channel, G_IO_ERR | G_IO_HUP | G_IO_IN,
+                                ice_process_messages, ice_conn);
+      g_io_channel_unref (channel);
 
-		/* */
-		*watchData = (IcePointer)GUINT_TO_POINTER(watchID);
-	}
-	else {
-		/* remove the I/O source as the connection is going down */
-		g_source_remove(GPOINTER_TO_UINT(*watchData));
-	}
+      *watch_data = (IcePointer) GUINT_TO_POINTER (watchid);
+    }
+  else
+    {
+      watchid = GPOINTER_TO_UINT (*watch_data);
+      g_source_remove (watchid);
+    }
 }
 
-/*
- * Accept new ICE connections
- */
+
 static gboolean
-ice_connection_accept(GIOChannel *channel, GIOCondition condition,
-                     IceListenObj iceListener)
+ice_connection_accept (GIOChannel  *channel,
+                       GIOCondition condition,
+                       gpointer     watch_data)
 {
-	IceConnectStatus cstatus;
-	IceAcceptStatus astatus;
-	IceConn iceConn;
+  IceConnectStatus cstatus;
+  IceAcceptStatus  astatus;
+  IceListenObj     ice_listener = (IceListenObj) watch_data;
+  IceConn          ice_conn;
 
-	iceConn = IceAcceptConnection(iceListener, &astatus);
+  ice_conn = IceAcceptConnection (ice_listener, &astatus);
 
-	if (astatus != IceAcceptSuccess) {
-		g_warning("Failed to accept ICE connection on listener %p",
-				(void *)iceListener);
-		return(TRUE);
-	}
+  if (astatus != IceAcceptSuccess)
+    {
+      g_warning ("Failed to accept ICE connection on listener %p",
+                 (gpointer) ice_listener);
+    }
+  else
+    {
+      /* Wait for the connection to leave pending state */
+      do
+        {
+          IceProcessMessages (ice_conn, NULL, NULL);
+        }
+      while ((cstatus = IceConnectionStatus (ice_conn)) == IceConnectPending);
 
-	/* Wait for the connection to leave pending state */
-	do {
-		(void)IceProcessMessages(iceConn, NULL, NULL);
-	} while ((cstatus = IceConnectionStatus(iceConn)) == IceConnectPending);
+      if (cstatus != IceConnectAccepted)
+        {
+          if (cstatus == IceConnectIOError)
+            {
+              g_warning ("I/O error opening ICE connection %p", (gpointer) ice_conn);
+            }
+          else
+            {
+              g_warning ("ICE connection %p rejected", (gpointer) ice_conn);
+            }
 
-	if (cstatus != IceConnectAccepted) {
-		if (cstatus == IceConnectIOError) {
-			g_warning("I/O error opening ICE connection %p",
-				(void *)iceConn);
-		}
-		else {
-			g_warning("ICE connectio %p rejected", (void *)iceConn);
-		}
-
-		IceSetShutdownNegotiation(iceConn, False);
-		(void)IceCloseConnection(iceConn);
-	}
-
-	/* keep the listener watch running */
-	return(TRUE);
+          IceSetShutdownNegotiation (ice_conn, False);
+          IceCloseConnection (ice_conn);
+        }
+    }
+  
+  return TRUE;
 }
 
-/*
- */
-static FILE *
-ice_tmpfile(char **name)
+
+static FILE*
+ice_tmpfile (char **name)
 {
-	GError *error;
-	mode_t mode;
-	FILE *fp;
-	int fd;
+  GError *error;
+  mode_t  mode;
+  FILE   *fp = NULL;
+  int     fd;
 
-	fp = NULL;
-	mode = umask(0077);
+  mode = umask (0077);
 
-	if ((fd = g_file_open_tmp(".xfsm-ICE-XXXXXX", name, &error)) < 0) {
-		g_warning("Unable to open temporary file: %s", error->message);
-		g_error_free(error);
-	}
-	else
-		fp = fdopen(fd, "wb");
+  fd = g_file_open_tmp(".xfsm-ICE-XXXXXX", name, &error);
+  if (fd < 0)
+    {
+      g_warning ("Unable to open temporary file: %s", error->message);
+      g_error_free (error);
+    }
+  else
+    {
+      fp = fdopen (fd, "wb");
+    }
 
-	umask(mode);
+  umask (mode);
 
-	return(fp);
+  return fp;
 }
 
-/*
- * for printing hex digits (taken from KDE3)
- */
+
 static void
-fprintfhex(FILE *fp, int len, char *cp)
+fprintfhex (FILE *fp, int len, char *cp)
 {
-	static char hexchars[] = "0123456789abcdef";
+  static char hexchars[] = "0123456789abcdef";
 
-	for (; len > 0; len--, cp++) {
-		unsigned char s = *cp;
-		putc(hexchars[s >> 4], fp);
-		putc(hexchars[s & 0x0f], fp);
-	}
+  for (; len > 0; len--, cp++)
+    {
+      unsigned char s = *cp;
+      putc (hexchars[s >> 4], fp);
+      putc (hexchars[s & 0x0f], fp);
+    }
 }
 
-/*
- */
+
 static void
-ice_auth_add(FILE *setupFp, FILE *cleanupFp, char *protocol,
-             IceListenObj iceListener)
+ice_auth_add (FILE        *setup_fp,
+              FILE        *cleanup_fp,
+              char        *protocol,
+              IceListenObj ice_listener)
 {
-	IceAuthDataEntry entry;
+  IceAuthDataEntry entry;
 
-	entry.protocol_name = protocol;
-	entry.network_id = IceGetListenConnectionString(iceListener);
-	entry.auth_name = "MIT-MAGIC-COOKIE-1";
-	entry.auth_data = IceGenerateMagicCookie(16);
-	entry.auth_data_length = 16;
+  entry.protocol_name = protocol;
+  entry.network_id = IceGetListenConnectionString (ice_listener);
+  entry.auth_name = "MIT-MAGIC-COOKIE-1";
+  entry.auth_data = IceGenerateMagicCookie (16);
+  entry.auth_data_length = 16;
 
-	IceSetPaAuthData(1, &entry);
+  IceSetPaAuthData (1, &entry);
 
-	fprintf(setupFp, "add %s \"\" %s MIT-MAGIC-COOKIE-1 ", protocol,
-			entry.network_id);
-	fprintfhex(setupFp, 16, entry.auth_data);
-	fprintf(setupFp, "\n");
+  fprintf (setup_fp,
+           "add %s \"\" %s MIT-MAGIC-COOKIE-1 ",
+           protocol,
+           entry.network_id);
+  fprintfhex (setup_fp, 16, entry.auth_data);
+  fprintf (setup_fp, "\n");
 
-	fprintf(cleanupFp, "remove protoname=%s protodata=\"\" netid=%s "
-			   "authname=MIT-MAGIC-COOKIE-1\n", protocol,
-			   entry.network_id);
+  fprintf (cleanup_fp,
+           "remove protoname=%s protodata=\"\" netid=%s authname=MIT-MAGIC-COOKIE-1\n",
+           protocol,
+           entry.network_id);
 
-	free(entry.network_id);
-	free(entry.auth_data);
+  free (entry.network_id);
+  free (entry.auth_data);
 }
 
-/*
- */
+
 gboolean
-ice_setup_listeners(int numListeners, IceListenObj *listenObjs)
+ice_setup_listeners (int           num_listeners,
+                     IceListenObj *listen_objs)
 {
-	GIOChannel *channel;
-	char *authSetupFile;
-	gchar *command;
-	FILE *cleanupFp;
-	FILE *setupFp;
-	int fd;
-	int n;
+  GIOChannel *channel;
+  char       *auth_setup_file;
+  gchar      *command;
+  FILE       *cleanup_fp;
+  FILE       *setup_fp;
+  int         fd;
+  int         n;
 
-	/* */
-	IceSetIOErrorHandler(ice_error_handler);
-	IceAddConnectionWatch(ice_connection_watch, NULL);
+  IceSetIOErrorHandler (ice_error_handler);
+  IceAddConnectionWatch (ice_connection_watch, NULL);
 
-	if ((cleanupFp = ice_tmpfile(&authCleanupFile)) == NULL)
-		return(FALSE);
+  cleanup_fp = ice_tmpfile(&auth_cleanup_file);
+  if (cleanup_fp == NULL)
+    return FALSE;
 
-	if ((setupFp = ice_tmpfile(&authSetupFile)) == NULL) {
-		(void)fclose(cleanupFp);
-		(void)unlink(authCleanupFile);
-		g_free(authCleanupFile);
-		return(FALSE);
-	}
+  setup_fp = ice_tmpfile(&auth_setup_file);
+  if (setup_fp == NULL)
+    {
+      fclose (cleanup_fp);
+      unlink (auth_cleanup_file);
+      g_free (auth_cleanup_file);
+      return FALSE;
+    }
 
-	for (n = 0; n < numListeners; n++) {
-		fd = IceGetListenConnectionNumber(listenObjs[n]);
+  for (n = 0; n < num_listeners; n++)
+    {
+      fd = IceGetListenConnectionNumber (listen_objs[n]);
 
-		/*
-		 * Make sure we don't pass on these file descriptors to an
-		 * exec'd child process.
-		 */
-		fcntl(fd, F_SETFD, fcntl(fd, F_GETFD, 0) | FD_CLOEXEC);
+      /* Make sure we don't pass on these file descriptors to an
+       * exec'd child process.
+       */
+      fcntl (fd, F_SETFD, fcntl (fd, F_GETFD, 0) | FD_CLOEXEC);
 
-		/* create an I/O channel for the new client connection */
-		channel = g_io_channel_unix_new(fd);
-		(void)g_io_add_watch(channel, G_IO_ERR | G_IO_HUP | G_IO_IN,
-				(GIOFunc)ice_connection_accept,
-				(gpointer)listenObjs[n]);
-		g_io_channel_unref(channel);
+      channel = g_io_channel_unix_new (fd);
+      g_io_add_watch (channel, G_IO_ERR | G_IO_HUP | G_IO_IN,
+                      ice_connection_accept,
+                      listen_objs[n]);
+      g_io_channel_unref (channel);
 
-		/* setup auth for this listener */
-		ice_auth_add(setupFp, cleanupFp, "ICE", listenObjs[n]);
-		ice_auth_add(setupFp, cleanupFp, "XSMP", listenObjs[n]);
-		IceSetHostBasedAuthProc(listenObjs[n], ice_auth_proc);
-	}
+      /* setup auth for this listener */
+      ice_auth_add (setup_fp, cleanup_fp, "ICE", listen_objs[n]);
+      ice_auth_add (setup_fp, cleanup_fp, "XSMP", listen_objs[n]);
+      IceSetHostBasedAuthProc (listen_objs[n], ice_auth_proc);
+    }
 
-	/* close ICE authority files */
-	(void)fclose(setupFp);
-	(void)fclose(cleanupFp);
+  fclose (setup_fp);
+  fclose (cleanup_fp);
 
-	/* setup ICE authority */
-	command = g_strdup_printf("iceauth source %s", authSetupFile);
-	system(command);
-	g_free(command);
+  /* setup ICE authority and remove setup file */
+  command = g_strdup_printf ("iceauth source %s", auth_setup_file);
+  system (command);
+  g_free (command);
+  unlink (auth_setup_file);
+  g_free (auth_setup_file);
 
-	/* remove the setup file, no longer needed */
-	unlink(authSetupFile);
-	g_free(authSetupFile);
-
-	/* remember to cleanup ICE stuff on exit() */
-	g_atexit(ice_cleanup);
-
-	return(TRUE);
+  return TRUE;
 }
 
-/*
- * Cleanup ICE stuff
- */
 void
-ice_cleanup(void)
+ice_cleanup (void)
 {
-	gchar *command;
+  gchar *command;
 
-	g_return_if_fail(authCleanupFile != NULL);
+  g_return_if_fail (auth_cleanup_file != NULL);
 
-	/* remove newly added ICE authority entries */
-	command = g_strdup_printf("iceauth source %s", authCleanupFile);
-	system(command);
-	g_free(command);
+  /* remove newly added ICE authority entries */
+  command = g_strdup_printf ("iceauth source %s", auth_cleanup_file);
+  system (command);
+  g_free (command);
 
-	/* remove the cleanup file, no longer needed */
-	unlink(authCleanupFile);
-	g_free(authCleanupFile);
+  /* remove the cleanup file, no longer needed */
+  unlink (auth_cleanup_file);
+  g_free (auth_cleanup_file);
 }
 
 

@@ -25,16 +25,25 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __XFSM_ICE_LAYER_H__
-#define __XFSM_ICE_LAYER_H__
+#ifndef __XFSM_SPLASH_SCREEN_H__
+#define __XFSM_SPLASH_SCREEN_H__
 
-#include <X11/ICE/ICElib.h>
+#include <gdk/gdk.h>
 
-#include <glib.h>
+G_BEGIN_DECLS
 
-Bool     ice_auth_proc       (char         *hostname);
-gboolean ice_setup_listeners (int           num_listeners,
-                              IceListenObj *listen_objs);
-void     ice_cleanup         (void);
+typedef struct _XfsmSplashScreen XfsmSplashScreen;
 
-#endif	/* !__XFSM_ICE_LAYER_H__ */
+XfsmSplashScreen *xfsm_splash_screen_new (GdkDisplay *display,
+                                          gboolean display_chooser);
+void xfsm_splash_screen_next (XfsmSplashScreen *splash,
+                              const gchar *text);
+gboolean xfsm_splash_screen_choose (XfsmSplashScreen *splash,
+                                    GList *sessions,
+                                    const gchar *default_session,
+                                    gchar **name_return);
+void xfsm_splash_screen_destroy (XfsmSplashScreen *splash);
+
+G_END_DECLS
+
+#endif	/* !__XFSM_SPLASH_SCREEN_H__ */

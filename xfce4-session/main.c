@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003,2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,17 +29,9 @@
 #include <config.h>
 #endif
 
-#ifdef HAVE_SYS_STAT_H
-#include <sys/stat.h>
+#ifdef HAVE_MEMORY_H
+#include <memory.h>
 #endif
-
-#ifdef HAVE_ERRNO_H
-#include <errno.h>
-#endif
-#ifdef HAVE_SIGNAL_H
-#include <signal.h>
-#endif
-#include <stdio.h>
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
@@ -47,550 +39,219 @@
 #include <string.h>
 #endif
 
-#include <libxfce4mcs/mcs-client.h>
-#include <libxfce4util/i18n.h>
-#include <libxfce4util/util.h>
-#include <libxfcegui4/libxfcegui4.h>
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
-#include <settings/session-icon.h>
+#include <libxfce4mcs/mcs-client.h>
+#include <libxfce4util/libxfce4util.h>
+
 #include <xfce4-session/ice-layer.h>
-#include <xfce4-session/manager.h>
 #include <xfce4-session/shutdown.h>
-#include <xfce4-session/splash-screen.h>
-#include <xfce4-session/xfce_trayicon.h>
+#include <xfce4-session/sm-layer.h>
+#include <xfce4-session/xfsm-global.h>
+#include <xfce4-session/xfsm-manager.h>
+#include <xfce4-session/xfsm-startup.h>
 
-/* */
-#define	CHANNEL	"session"
 
-/* UNIX signal states */
-enum
+void
+setup_environment (void)
 {
-	SIGNAL_NONE,
-	SIGNAL_SAVE,
-	SIGNAL_QUIT
-};
+  const gchar *lang;
 
-/* current UNIX signal state */
-static gint	signalState = SIGNAL_NONE;
+  /* check that no other session manager is running */  
+  if (g_getenv ("SESSION_MANAGER") != NULL)
+    {
+      fprintf (stderr, "xfce4-session: Another session manager is already running\n");
+      exit (EXIT_FAILURE);
+    }
 
-/* */
-McsClient	*settingsClient;
+  /* check if running in verbose mode */
+  if (g_getenv ("XFSM_VERBOSE") != NULL)
+    xfsm_enable_verbose ();
 
-/* system tray icon */
-XfceTrayIcon	*trayIcon;
+  /* pass correct DISPLAY to children, in case of --display in argv */
+  xfce_setenv ("DISPLAY", gdk_display_get_name (gdk_display_get_default ()), TRUE);
 
-/*
- */
-static gboolean
-ready_default_session(GtkWidget *splash)
-{
-	gtk_widget_destroy(splash);
-	return(FALSE);
+  /* this is for compatibility with the GNOME Display Manager */
+  lang = g_getenv ("GDM_LANG");
+  if (lang != NULL)
+    {
+      xfce_setenv ("LANG", lang, TRUE);
+      xfce_unsetenv ("GDM_LANG");
+    }
 }
 
-/*
- */
-static gboolean
-cont_default_session(XfsmSplashScreen *splash)
-{
-	xfsm_splash_screen_launch(splash, _("desktop"));
-	g_timeout_add(3 * 1000, (GSourceFunc)ready_default_session, splash);
-	return(FALSE);
-}
-
-/*
- * Start a default XFce4 session
- */
-static gboolean
-start_default_session(void)
-{
-	extern gchar *startupSplashTheme;
-	GtkWidget *splash;
-	GError *error;
-
-	/* try to launch the default session script */
-	if (!g_spawn_command_line_async("/bin/sh " DEFAULT_SESSION, &error)) {
-		xfce_err("The session manager was unable to start the\n"
-			 "default session. This is most often caused\n"
-			 "by a broken installation of the session manager.\n"
-			 "Please contact your local system administrator\n"
-			 "and report the problem.");
-		g_idle_add((GSourceFunc)exit, GUINT_TO_POINTER(EXIT_FAILURE));
-	}
-	else {
-		/* show up splash screen */
-		splash = xfsm_splash_screen_new(startupSplashTheme,
-				1, _("Starting session manager.."));
-		gtk_widget_show(splash);
-		g_idle_add((GSourceFunc)cont_default_session, splash);
-	}
-
-	return(FALSE);
-}
-
-/*
- * Run a sanity check before logging in
- */
-static gboolean
-sanity_check(gchar **message)
-{
-	gchar *path;
-
-	path = (gchar *)xfce_get_userdir();
-
-	if (!g_file_test(path, G_FILE_TEST_IS_DIR) && mkdir(path, 0755) < 0) {
-		*message = g_strdup_printf(_(
-				"Unable to create users XFce settings\n"
-				"directory %s: %s"), path, g_strerror(errno));
-		return(FALSE);
-	}
-
-	path = xfce_get_userfile("sessions", NULL);
-
-	if (!g_file_test(path, G_FILE_TEST_IS_DIR) && mkdir(path, 0755) < 0) {
-		*message = g_strdup_printf(_(
-				"Unable to create users XFce session\n"
-				"directory %s: %s"), path, g_strerror(errno));
-		return(FALSE);
-	}
-
-	g_free(path);
-
-	return(TRUE);
-}
-
-/*
- */
-static void
-settings_notify(const char *name, const char *channel, McsAction action,
-		McsSetting *setting, void *data)
-{
-	/* XXX */
-	extern gboolean	shutdownConfirm;
-	extern gboolean	shutdownAutoSave;
-	extern gint	shutdownDefault;
-	extern gchar	*startupSplashTheme;
-
-	switch (action) {
-	case MCS_ACTION_NEW:
-	case MCS_ACTION_CHANGED:
-		if (setting->type == MCS_TYPE_INT) {
-			if (!strcmp(name, "Session/ConfirmLogout"))
-				shutdownConfirm = setting->data.v_int;
-			else if (!strcmp(name, "Session/AutoSave"))
-				shutdownAutoSave = setting->data.v_int;
-			else if (!strcmp(name, "Session/DefaultAction"))
-				shutdownDefault = setting->data.v_int;
-			else if (!strcmp(name, "Session/TrayIcon")) {
-				if ((gboolean)setting->data.v_int)
-					xfce_tray_icon_connect(trayIcon);
-				else
-					xfce_tray_icon_disconnect(trayIcon);
-			}
-		}
-		else if (setting->type == MCS_TYPE_STRING) {
-			if (!strcmp(name, "Session/StartupSplashTheme")) {
-				if (startupSplashTheme != NULL)
-					g_free(startupSplashTheme);
-				startupSplashTheme =
-					g_strdup(setting->data.v_string);
-			}
-		}
-		break;
-	
-	case MCS_ACTION_DELETED:
-	default:
-		break;
-	}
-}
-
-/*
- */
-static GdkFilterReturn
-settings_filter(GdkXEvent *xevent, GdkEvent *event, gpointer data)
-{
-	if (mcs_client_process_event(settingsClient, (XEvent *)xevent))
-		return(GDK_FILTER_REMOVE);
-	else
-		return(GDK_FILTER_CONTINUE);
-}
-
-/*
- */
-static void
-settings_watch(Window xwindow, Bool starting, long mask, void *data)
-{
-	GdkWindow *window;
-
-	window = gdk_window_lookup(xwindow);
-
-	if (starting) {
-		if (window == NULL)
-			window = gdk_window_foreign_new(xwindow);
-		else
-			g_object_ref(window);
-		gdk_window_add_filter(window, settings_filter, data);
-	}
-	else {
-		gdk_window_remove_filter(window, settings_filter, data);
-		g_object_unref(window);
-	}
-}
-
-/*
- */
-static void
-toggle_visible_cb(GtkWidget *widget)
-{
-	if (GTK_WIDGET_VISIBLE(widget))
-		gtk_widget_hide(widget);
-	else
-		gtk_widget_show(widget);
-}
-
-/*
- */
-static void
-show_preferences_cb(void)
-{
-	(void)g_spawn_command_line_async("xfce-setting-show session", NULL);
-}
-
-/*
- */
-static void
-save_session_cb(void)
-{
-	manager_saveyourself(SmSaveBoth, False, SmInteractStyleNone, False);
-}
-
-/*
- */
-static void
-quit_session_cb(void)
-{
-	manager_saveyourself(SmSaveBoth, True, SmInteractStyleAny, False);
-}
 
 static void
-show_about_dialog(void)
+usage (int exit_code)
 {
-  static GtkWidget *dialog = NULL;
-  XfceAboutInfo *info;
-  GdkPixbuf *pb;
-
-  if (dialog == NULL) {
-    info = xfce_about_info_new(
-        PACKAGE_NAME,
-        PACKAGE_VERSION,
-        _("XFce desktop session manager"),
-        XFCE_COPYRIGHT_TEXT("2003,2004", "The XFce development team"),
-        XFCE_LICENSE_BSD);
-    xfce_about_info_set_homepage(info, "http://www.xfce.org/");
-    xfce_about_info_add_credit(info,
-        "Benedikt Meurer",
-        "benny@xfce.org",
-        "Application development");
-    xfce_about_info_add_credit(info,
-        "Oliver M. Bolzer",
-        "oliver@debian.org",
-        "Manual pages");
-    xfce_about_info_add_credit(info,
-        "Craig A. Betts",
-        "craig.betts@dfrc.nasa.gov",
-        "Solaris testing");
-    xfce_about_info_add_credit(info,
-        "Chris Greenman",
-        "chris.greenman@dfrc.nasa.gov",
-        "Solaris testing");
-
-    pb = inline_icon_at_size(session_icon_data, 48, 48);
-    dialog = xfce_about_dialog_new(NULL, info, pb);
-    g_object_unref(G_OBJECT(pb));
-
-   g_signal_connect_swapped(
-       GTK_OBJECT(dialog),
-       "response",
-       G_CALLBACK(gtk_widget_destroy),
-       GTK_OBJECT(dialog));
-
-   g_object_add_weak_pointer(G_OBJECT(dialog), (gpointer)&dialog);
-  }
-
-  gtk_widget_show(dialog);
-  gtk_window_present(GTK_WINDOW(dialog));
+  fprintf (stderr,
+           "Usage: xfce4-session [OPTION...]\n"
+           "\n"
+           "GTK+\n"
+           "  --display=DISPLAY        X display to use\n"
+           "  --screen=SCREEN          X screen to use\n"
+           "\n"
+           "Application options\n"
+           "  --disable-tcp            Disable binding to TCP ports\n"
+           "  --help                   Print this help message and exit\n"
+           "  --version                Print version information and exit\n"
+           "\n");
+  exit (exit_code);
 }
 
-/*
- */
-static XfceTrayIcon *
-create_tray_icon(void)
-{
-	/* XXX */
-	extern GtkWidget *sessionControl;
-	GtkWidget *menuItem;
-	XfceTrayIcon *icon;
-	GtkWidget *menu;
-	GdkPixbuf *pb;
 
-	menu = gtk_menu_new();
-
-	/* */
-	menuItem = gtk_image_menu_item_new_with_mnemonic(_("About xfce4-session"));
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-		gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_MENU));
-	g_signal_connect_swapped(menuItem, "activate",
-			G_CALLBACK(show_about_dialog), NULL);
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
-	gtk_widget_show_all(menuItem);
-
-	/* */
-	menuItem = gtk_separator_menu_item_new();
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
-	gtk_widget_show(menuItem);
-
-	/* */
-	menuItem = gtk_image_menu_item_new_from_stock(GTK_STOCK_PREFERENCES,
-			NULL);
-	g_signal_connect(menuItem, "activate", 
-			G_CALLBACK(show_preferences_cb), NULL);
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
-	gtk_widget_show(menuItem);
-
-	/* */
-	menuItem = gtk_image_menu_item_new_with_mnemonic(_("Session control"));
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-		gtk_image_new_from_stock(GTK_STOCK_EXECUTE, GTK_ICON_SIZE_MENU));
-	g_signal_connect_swapped(menuItem, "activate",
-			G_CALLBACK(gtk_widget_show), sessionControl);
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
-	gtk_widget_show_all(menuItem);
-
-	/* */
-	menuItem = gtk_separator_menu_item_new();
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
-	gtk_widget_show(menuItem);
-
-	/* */
-	menuItem = gtk_image_menu_item_new_with_mnemonic(_("Save session"));
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-		gtk_image_new_from_stock(GTK_STOCK_SAVE, GTK_ICON_SIZE_MENU));
-	g_signal_connect(G_OBJECT(menuItem), "activate",
-			G_CALLBACK(save_session_cb), NULL);
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
-	gtk_widget_show_all(menuItem);
-
-	/* */
-	menuItem = gtk_image_menu_item_new_with_mnemonic(_("Quit session"));
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-		gtk_image_new_from_stock(GTK_STOCK_QUIT, GTK_ICON_SIZE_MENU));
-	g_signal_connect(G_OBJECT(menuItem), "activate",
-			G_CALLBACK(quit_session_cb), NULL);
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
-	gtk_widget_show_all(menuItem);
-
-	pb = inline_icon_at_size(session_icon_data, 16, 16);
-	icon = xfce_tray_icon_new_with_menu_from_pixbuf(menu, pb);
-	g_object_unref(pb);
-
-	/* connect the double action */
-	g_signal_connect_swapped(G_OBJECT(icon), "clicked",
-			G_CALLBACK(toggle_visible_cb), sessionControl);
-
-	return(icon);
-}
-
-/*
- * Check UNIX signal state
- */
-static gboolean
-check_signal_state(void)
-{
-	switch (signalState) {
-	case SIGNAL_SAVE:
-		save_session_cb();
-		break;
-
-	case SIGNAL_QUIT:
-		quit_session_cb();
-		break;
-	}
-
-	/* reset UNIX signal state */
-	signalState = SIGNAL_NONE;
-
-	/* keep checker running */
-	return(TRUE);
-}
-
-/*
- * UNIX signal handler
- */
 static void
-signal_handler(int signalCode)
+init_display (GdkDisplay *dpy)
 {
-	switch (signalCode) {
-	case SIGUSR1:
-		signalState = SIGNAL_SAVE;
-		break;
+  PangoContext *context;
+  PangoLayout *layout;
+  GdkRectangle area;
+  GdkColormap *cmap;
+  GdkCursor *cursor;
+  GdkScreen *screen;
+  GdkWindow *root;
+  GdkColor black;
+  GdkColor white;
+  char text[256];
+  int tw, th;
+  GdkGC *gc;
+  int n;
 
-	default:
-		signalState = SIGNAL_QUIT;
-		break;
-	}
+  gdk_color_parse ("Black", &black);
+  gdk_color_parse ("White", &white);
+
+  g_snprintf (text, 256, "<span face=\"Sans\" size=\"x-large\">%s</span>",
+              _("Restoring the desktop settings, please wait..."));
+
+  cursor = gdk_cursor_new_for_display (dpy, GDK_LEFT_PTR);
+
+  for (n = 0; n < gdk_display_get_n_screens (dpy); ++n)
+    {
+      screen = gdk_display_get_screen (dpy, n);
+      gdk_screen_get_monitor_geometry (screen, 0, &area);
+      root = gdk_screen_get_root_window (screen);
+      cmap = gdk_drawable_get_colormap (GDK_DRAWABLE (root));
+      gdk_rgb_find_color (cmap, &white);
+      gdk_window_set_background (root, &white);
+      gdk_window_set_cursor (root, cursor);
+      gdk_window_clear (root);
+
+      gc = gdk_gc_new (GDK_DRAWABLE (root));
+      gdk_gc_set_function (gc, GDK_COPY);
+      gdk_gc_set_rgb_fg_color (gc, &black);
+
+      gdk_flush ();
+
+      context = gdk_pango_context_get_for_screen (screen);
+      layout = pango_layout_new (context);
+      pango_layout_set_markup (layout, text, -1);
+      pango_layout_get_pixel_size (layout, &tw, &th);
+      gdk_draw_layout (GDK_DRAWABLE (root), gc,
+                       area.x + (area.width - tw) / 2,
+                       area.y + (area.height - th) / 2,
+                       layout);
+
+      g_object_unref (G_OBJECT (layout));
+      g_object_unref (G_OBJECT (gc));
+    }
+
+  gdk_cursor_unref (cursor);
+
+  gdk_flush ();
+
+  g_usleep (1000 * 1000);
+
+  /* start a MCS manager process per screen */
+  for (n = 0; n < gdk_display_get_n_screens (dpy); ++n)
+    {
+      mcs_client_check_manager (gdk_x11_display_get_xdisplay (dpy), n,
+                                "xfce-mcs-manager");
+    }
 }
 
-/*
- */
-int
-main(int argc, char **argv)
+
+static void
+init_splash (GdkDisplay *dpy, XfceRc *rc)
 {
-	extern gchar *startupSplashTheme;
+  gboolean chooser;
+
+  /* boot the splash screen */
+  chooser = xfce_rc_read_bool_entry (rc, "AlwaysDisplayChooser", FALSE);
+  splash_screen = xfsm_splash_screen_new (dpy, chooser);
+}
+
+
+static void
+initialize (int argc, char **argv)
+{
   gboolean disable_tcp = FALSE;
-#ifdef HAVE_SIGACTION
-	struct sigaction act;
-#endif
-	McsSetting *setting;
-	const gchar *theme;
-	gchar *message;
-	
-	xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
-
-	gtk_init(&argc, &argv);
-
-  for (++argv; --argc > 0; ++argv) {
-    if (strcmp(*argv, "--version") == 0) {
-      printf(
-          "XFce %s\n"
-          "\n"
-          "Copyright (c) 2003,2004\n"
-          "        The XFce development team. All rights reserved.\n"
-          "\n"
-          "Please report bugs to <%s>.\n",
-          PACKAGE_STRING, PACKAGE_BUGREPORT);
-      return(EXIT_SUCCESS);
+  GdkDisplay *dpy;
+  XfceRc *rc;
+  
+  for (++argv; --argc > 0; ++argv)
+    {
+      if (strcmp (*argv, "--version") == 0)
+        {
+          printf ("Xfce %s\n\n"
+                  "Copyright (c) 2003-2004\n"
+                  "        The Xfce development team. All rights reserved.\n\n"
+                  "Written for Xfce by Benedikt Meurer <benny@xfce.org>.\n\n"
+                  "Please report bugs to <%s>.\n",
+                  PACKAGE_STRING, PACKAGE_BUGREPORT);
+          exit (EXIT_SUCCESS);
+        }
+      else if (strcmp (*argv, "--disable-tcp") == 0)
+        {
+          disable_tcp = TRUE;
+        }
+      else
+        {
+          usage (strcmp (*argv, "--help") == 0 ? EXIT_SUCCESS : EXIT_FAILURE);
+        }
     }
-    else if (strcmp(*argv, "--disable-tcp") == 0) {
-#ifdef HAVE__ICETRANSNOLISTEN
-      disable_tcp = TRUE;
-#else
-      g_warning(
-          "_IceTransNoListen() not available on your system, "
-          "--disable-tcp has no effect!");
-#endif
-    }
-    else {
-      fprintf(stderr,
-          "Usage: xfce4-session [OPTION...]\n"
-          "\n"
-          "GTK+\n"
-          "  --display=DISPLAY        X display to use\n"
-          "  --screen=SCREEN          X screen to use\n"
-          "\n"
-          "Application options\n"
-          "  --disable-tcp            Disable binding to TCP ports\n"
-          "  --help                   Print this help message\n"
-          "  --version                Print version information and exit\n"
-          "\n");
-      return(strcmp(*argv, "--help") == 0 ? EXIT_SUCCESS : EXIT_FAILURE);
-    }
-  }
 
-	/*
-	 * fake a clientID for the manager, so smproxy does not recognize
-	 * us to be a session client
-	 */
-	gdk_set_sm_client_id(manager_generate_client_id(NULL));
+  setup_environment ();
 
-	/* run a sanity check before we start the actual session manager */
-	if (!sanity_check(&message)) {
-		xfce_err("%s", message);
-		return(EXIT_FAILURE);
-	}
+  dpy = gdk_display_get_default ();
+  init_display (dpy);
 
-	if (!manager_init(disable_tcp))
-    return(EXIT_FAILURE);
+  rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG,
+                            "xfce4-session/xfce4-session.rc",
+                            TRUE);
+  xfce_rc_set_group (rc, "General");
 
-	/* make sure the MCS manager is running */
-	if (!mcs_client_check_manager(GDK_DISPLAY(),
-				DefaultScreen(GDK_DISPLAY()),
-				"xfce-mcs-manager")) {
-		xfce_err(_(
-			"The session manager was unable to start the\n"
-			"Multi-Channel settings manager. This is most\n"
-			"often caused by a broken XFce installation.\n"
-			"Please contact your local system administrator\n"
-			"and report the problem."));
-		return(EXIT_FAILURE);
-	}
+  init_splash (dpy, rc);
+  sm_init (rc, disable_tcp);
+  xfsm_startup_init (rc);
+  xfsm_manager_init (rc);
 
-	/* */
-	trayIcon = create_tray_icon();
-	xfce_tray_icon_connect(trayIcon);
-
-	/* connect to the settings manager */
-	if ((settingsClient = mcs_client_new(GDK_DISPLAY(),
-				DefaultScreen(GDK_DISPLAY()),
-				settings_notify, settings_watch,
-				NULL)) == NULL) {
-		g_error(_("Unable to create MCS client"));
-	}
-	else
-		mcs_client_add_channel(settingsClient, CHANNEL);
-
-	/* query MCS splash theme setting */
-	if (startupSplashTheme != NULL) {
-		g_free(startupSplashTheme);
-		startupSplashTheme = NULL;
-	}
-	
-	if (mcs_client_get_setting(settingsClient,
-				"Session/StartupSplashTheme",
-				CHANNEL, &setting) == MCS_SUCCESS) {
-		startupSplashTheme = g_strdup(setting->data.v_string);
-		mcs_setting_free(setting);
-	}
-	else {
-		if ((theme = g_getenv("XFSM_SPLASH_THEME")) != NULL)
-			startupSplashTheme = g_strdup(theme);
-		g_warning("Failed to get splash theme setting");
-	}
-
-	/*
-	 * the manager was unable to restart a previous session, so we
-	 * simply start a new default session.
-	 */
-	if (!manager_restart())
-		g_idle_add((GSourceFunc)start_default_session, NULL);
-
-	/*
-	 * Connect UNIX signals
-	 */
-#ifdef HAVE_SIGACTION
-	act.sa_handler = signal_handler;
-	sigemptyset(&act.sa_mask);
-#ifdef SA_RESTART
-	act.sa_flags = SA_RESTART;
-#else
-	act.sa_flags = 0;
-#endif
-	(void)sigaction(SIGUSR1, &act, NULL);
-	(void)sigaction(SIGINT, &act, NULL);
-#else
-	(void)signal(SIGUSR1, signal_handler);
-	(void)signal(SIGINT, signal_handler);
-#endif
-
-	/* schedule add UNIX signal state checker */
-	(void)g_timeout_add(500, (GSourceFunc)check_signal_state, NULL);
-
-	gtk_main();
-
-	if (shutdownSave && !manager_save())
-		g_warning("Unable to save session");
-
-	return(shutdown(shutdownType));
+  xfce_rc_close (rc);
 }
 
+
+int
+main (int argc, char **argv)
+{
+  /* imported from xfsm-manager.c */
+  extern gint shutdown_type;
+
+  xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
+  
+  gtk_init (&argc, &argv);
+  
+  /* fake a client id for the manager, so smproxy does not recognize
+   * us to be a session client.
+   */
+  gdk_set_sm_client_id (xfsm_manager_generate_client_id (NULL));
+
+  initialize (argc, argv);
+  
+  xfsm_manager_restart ();
+  
+  gtk_main ();
+  
+  ice_cleanup ();
+
+  return shutdown (shutdown_type);
+}

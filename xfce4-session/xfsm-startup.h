@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003,2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,36 +25,13 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __XFSM_MANAGER_H__
-#define __XFSM_MANAGER_H__
+#ifndef __XFSM_STARTUP_H__
+#define __XFSM_STARTUP_H__
 
-#include <X11/SM/SMlib.h>
+#include <libxfce4util/libxfce4util.h>
 
-#include <glib.h>
+void xfsm_startup_init (XfceRc *rc);
+gboolean xfsm_startup_continue (const gchar *previous_id);
 
-/* manager states */
-enum
-{
-	MANAGER_IDLE = 0,
-	MANAGER_CHECKPOINT,
-	MANAGER_SHUTDOWN,
-	MANAGER_SHUTDOWNPHASE2,
-};
+#endif /* !__XFSM_STARTUP_H__ */
 
-/* list of currently connected SM clients */
-extern GList	*clients;
-
-/* kind of shutdown (logout, reboot, halt) */
-extern gint	shutdownType;
-
-/* save session on shutdown */
-extern gboolean	shutdownSave;
-
-/* prototypes */
-extern gboolean	manager_init(gboolean);
-extern gboolean	manager_save(void);
-extern gboolean	manager_restart(void);
-extern gchar	*manager_generate_client_id(SmsConn);
-extern void	manager_saveyourself(int, Bool, int, Bool);
-
-#endif	/* !__XFSM_MANAGER_H__ */

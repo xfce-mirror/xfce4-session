@@ -1,0 +1,936 @@
+/* $Id$ */
+/*-
+ * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#ifdef HAVE_MEMORY_H
+#include <memory.h>
+#endif
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+#ifdef HAVE_TIME_H
+#include <time.h>
+#endif
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#include <X11/ICE/ICElib.h>
+#include <X11/SM/SMlib.h>
+
+#include <gtk/gtk.h>
+
+#include <xfce4-session/shutdown.h>
+#include <xfce4-session/xfsm-global.h>
+#include <xfce4-session/xfsm-manager.h>
+#include <xfce4-session/xfsm-startup.h>
+#include <xfce4-session/xfsm-util.h>
+
+
+#define DEFAULT_SESSION_NAME "Default"
+
+
+/*
+   Prototypes
+ */
+static gboolean xfsm_manager_startup (void);
+static void     xfsm_manager_startup_continue (const gchar *previous_id);
+static gboolean xfsm_manager_startup_timedout (gpointer user_data);
+static void     xfsm_manager_load_settings (XfceRc *rc);
+static gboolean xfsm_manager_load_session (void);
+
+
+/*
+   Static data
+ */
+static XfsmManagerState state = XFSM_MANAGER_STARTUP;
+static guint            die_timeout_id = 0;
+static guint            startup_timeout_id = 0;
+
+
+static gboolean
+xfsm_manager_startup (void)
+{
+  pending_properties = g_list_sort (pending_properties,
+                                    (GCompareFunc) xfsm_properties_compare);
+  xfsm_manager_startup_continue (NULL);
+  return FALSE;
+}
+
+
+static void
+xfsm_manager_startup_continue (const gchar *previous_id)
+{
+  gboolean startup_done = FALSE;
+
+  xfsm_verbose ("Manager startup continues [Previous Id = %s]\n\n",
+                previous_id != NULL ? previous_id : "None");
+
+  if (startup_timeout_id != 0)
+    {
+      g_source_remove (startup_timeout_id);
+      startup_timeout_id = 0;
+
+      /* work around broken clients */
+      if (state != XFSM_MANAGER_STARTUP)
+        return;
+    }
+
+  startup_done = xfsm_startup_continue (previous_id);
+
+  if (startup_done)
+    {
+      xfsm_verbose ("Manager finished startup, entering IDLE mode now\n\n");
+      state = XFSM_MANAGER_IDLE;
+    }
+  else
+    {
+      startup_timeout_id = g_timeout_add (STARTUP_TIMEOUT,
+                                          xfsm_manager_startup_timedout,
+                                          NULL);
+    }
+}
+
+
+static gboolean
+xfsm_manager_startup_timedout (gpointer user_data)
+{
+  xfsm_verbose ("Manager startup timed out\n\n");
+
+  startup_timeout_id = 0; /* will be removed automagically once we return */
+  xfsm_manager_startup_continue (NULL);
+  
+  return FALSE;
+}
+
+
+static gboolean
+xfsm_manager_choose_session (const XfceRc *rc)
+{
+  gchar **groups;
+  GList *names;
+  gboolean load;
+  gchar *name;
+  int n;
+
+  groups = xfce_rc_get_groups (rc);
+  for (n = 0, names = NULL; groups[n] != NULL; ++n)
+    {
+      if (strncmp (groups[n], "Session: ", 9) == 0)
+        names = g_list_append (names, groups[n] + 9);
+    }
+
+  load = xfsm_splash_screen_choose (splash_screen, names, session_name,
+                                    &name);
+
+  if (session_name != NULL)
+    g_free (session_name);
+  session_name = name;
+
+  g_list_free (names);
+  g_strfreev (groups);
+
+  return load;
+}
+
+
+static gboolean
+xfsm_manager_load_session (void)
+{
+  XfsmProperties *properties;
+  gchar           buffer[1024];
+  XfceRc         *rc;
+  gint            count;
+  
+  rc = xfce_rc_simple_open (session_file, TRUE);
+  if (rc == NULL)
+    return FALSE;
+  
+  if (!xfsm_manager_choose_session (rc))
+    {
+      xfce_rc_close (rc);
+      return FALSE;
+    }
+
+  g_snprintf (buffer, 1024, "Session: %s", session_name);
+  
+  xfce_rc_set_group (rc, buffer);
+  count = xfce_rc_read_int_entry (rc, "Count", 0);
+  if (count <= 0)
+    {
+      xfce_rc_close (rc);
+      return FALSE;
+    }
+  
+  while (count-- > 0)
+    {
+      g_snprintf (buffer, 1024, "Client%d_", count);
+      properties = xfsm_properties_load (rc, buffer);
+      if (properties == NULL)
+        continue;
+      if (xfsm_properties_check (properties))
+        pending_properties = g_list_append (pending_properties, properties);
+      else
+        xfsm_properties_free (properties);
+    }
+  
+  xfce_rc_close (rc);
+
+  return pending_properties != NULL;
+}
+
+
+static gboolean
+xfsm_manager_load_failsafe (XfceRc *rc)
+{
+  FailsafeClient *fclient;
+  const gchar    *old_group;
+  GdkDisplay     *display;
+  gchar         **command;
+  gchar           command_entry[256];
+  gchar           screen_entry[256];
+  gint            count;
+  gint            i;
+  gint            n_screen;
+  
+  if (!xfce_rc_has_group (rc, "Failsafe Session"))
+    return FALSE;
+
+  display = gdk_display_get_default ();
+  old_group = xfce_rc_get_group (rc);
+  xfce_rc_set_group (rc, "Failsafe Session");
+  
+  count = xfce_rc_read_int_entry (rc, "Count", 0);
+
+  for (i = 0; i < count; ++i)
+    {
+      g_snprintf (command_entry, 256, "Client%d_Command", i);
+      command = xfce_rc_read_list_entry (rc, command_entry, NULL);
+      if (command == NULL)
+        continue;
+
+      g_snprintf (screen_entry, 256, "Client%d_PerScreen", i);
+      if (xfce_rc_read_bool_entry (rc, screen_entry, FALSE))
+        {
+          for (n_screen = 0; n_screen < gdk_display_get_n_screens (display); ++n_screen)
+            {
+              fclient = g_new0 (FailsafeClient, 1);
+              if (command != NULL)
+                {
+                  fclient->command = command;
+                  command = NULL;
+                }
+              else
+                {
+                  fclient->command = xfce_rc_read_list_entry (rc, command_entry, NULL);
+                }
+              fclient->screen = gdk_display_get_screen (display, n_screen);
+              failsafe_clients = g_list_append (failsafe_clients, fclient);
+            }
+        }
+      else
+        {
+          fclient = g_new0 (FailsafeClient, 1);
+          fclient->command = command;
+          fclient->screen = gdk_screen_get_default ();
+          failsafe_clients = g_list_append (failsafe_clients, fclient);
+        }
+    }
+
+  xfce_rc_set_group (rc, old_group);
+
+  return failsafe_clients != NULL;
+}
+
+
+static void
+xfsm_manager_load_settings (XfceRc *rc)
+{
+  gboolean     session_loaded = FALSE;
+  const gchar *name;
+  
+  name = xfce_rc_read_entry (rc, "SessionName", NULL);
+  if (name != NULL && *name != '\0')
+    session_name = g_strdup (name);
+  else
+    session_name = g_strdup (DEFAULT_SESSION_NAME);
+
+  session_loaded = xfsm_manager_load_session ();
+
+  if (session_loaded)
+    {
+      xfsm_verbose ("Session \"%s\" loaded successfully.\n", session_name);
+      failsafe_mode = FALSE;
+    }
+  else
+    {
+      if (!xfsm_manager_load_failsafe (rc))
+        {
+          fprintf (stderr, "xfce4-session: Unable to load failsafe session, exiting.\n");
+          exit (EXIT_FAILURE);
+        }
+      failsafe_mode = TRUE;
+    }
+}
+
+
+void
+xfsm_manager_init (XfceRc *rc)
+{
+  gchar *display_name;
+  gchar *resource_name;
+
+  xfce_rc_set_group (rc, "General");
+  display_name  = xfsm_display_fullname (gdk_display_get_default ());
+  resource_name = g_strconcat ("sessions/xfce4-session-", display_name, NULL);
+  session_file  = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource_name, TRUE);
+  g_free (resource_name);
+  g_free (display_name);
+
+  xfsm_manager_load_settings (rc);
+}
+
+
+gboolean
+xfsm_manager_restart (void)
+{
+  g_idle_add ((GSourceFunc) xfsm_manager_startup, NULL);
+  
+  return TRUE;
+}
+
+
+gchar*
+xfsm_manager_generate_client_id (SmsConn sms_conn)
+{
+  static char *addr = NULL;
+  static int   sequence = 0;
+  char        *id;
+
+  if (sms_conn == NULL || (id = SmsGenerateClientID (sms_conn)) == NULL)
+    {
+      if (addr == NULL)
+        {
+          /*
+           * Faking our IP address, the 0 below is "unknown"
+           * address format (1 would be IP, 2 would be DEC-NET
+           * format). Stolen from KDE :-)
+           */
+          addr = g_strdup_printf ("0%.8x", g_random_int ());
+        }
+
+      id = (char *) malloc (50);
+      g_snprintf (id, 50, "1%s%.13ld%.10d%.4d", addr,
+                  (long) time (NULL), (int) getpid (), sequence);
+      sequence = (sequence + 1) % 10000;
+    }
+
+  return id;
+}
+
+
+XfsmClient*
+xfsm_manager_new_client (SmsConn  sms_conn,
+                         gchar  **error)
+{
+  if (state != XFSM_MANAGER_IDLE && state != XFSM_MANAGER_STARTUP)
+    {
+      if (error != NULL)
+        *error = "We don't accept clients while in CheckPoint/Shutdown state!";
+      return NULL;
+    }
+
+  return xfsm_client_new (sms_conn);
+}
+
+
+gboolean
+xfsm_manager_register_client (XfsmClient  *client,
+                              const gchar *previous_id)
+{
+  XfsmProperties *properties;
+  gchar          *client_id;
+  GList          *lp;
+  
+  if (previous_id != NULL)
+    {
+      for (lp = pending_properties; lp != NULL; lp = lp->next)
+        if (strcmp (XFSM_PROPERTIES (lp->data)->client_id, previous_id) == 0)
+          break;
+      
+      /* If previous_id is invalid, the SM will send a BadValue error message
+       * to the client and reverts to register state waiting for another
+       * RegisterClient message.
+       */
+      if (lp == NULL)
+        return FALSE;
+
+      properties = XFSM_PROPERTIES (lp->data);
+      xfsm_client_set_initial_properties (client, properties);
+      pending_properties = g_list_remove (pending_properties, properties);
+    }
+  else
+    {
+      client_id = xfsm_manager_generate_client_id (client->sms_conn);
+      properties = xfsm_properties_new (client_id,
+                                        SmsClientHostName (client->sms_conn));
+      xfsm_client_set_initial_properties (client, properties);
+      g_free (client_id);
+    }
+
+  running_clients = g_list_append (running_clients, client);
+
+  SmsRegisterClientReply (client->sms_conn, (char *) client->id);
+  
+  if (previous_id == NULL)
+    {
+      SmsSaveYourself (client->sms_conn, SmSaveLocal, False, SmInteractStyleNone, False);
+      client->state = XFSM_CLIENT_SAVINGLOCAL;
+      client->save_timeout_id = g_timeout_add (SAVE_TIMEOUT,
+                                               xfsm_manager_save_timeout,
+                                               client);
+    }
+
+  if (state == XFSM_MANAGER_STARTUP)
+    xfsm_manager_startup_continue (previous_id);
+
+  return TRUE;
+}
+
+
+void
+xfsm_manager_start_interact (XfsmClient *client)
+{
+  /* notify client of interact */
+  SmsInteract (client->sms_conn);
+  client->state = XFSM_CLIENT_INTERACTING;
+  
+  /* stop save yourself timeout */
+  g_source_remove (client->save_timeout_id);
+  client->save_timeout_id = 0;
+}
+
+
+void
+xfsm_manager_interact (XfsmClient *client,
+                       int         dialog_type)
+{
+  GList *lp;
+  
+  if (client->state != XFSM_CLIENT_SAVING)
+    {
+      xfsm_verbose ("Client Id = %s, requested INTERACT, but client is not in SAVING mode\n"
+                    "   Client will be disconnected now.\n\n",
+                    client->id);
+      xfsm_manager_close_connection (client, TRUE);
+    }
+  else if (state != XFSM_MANAGER_CHECKPOINT && state != XFSM_MANAGER_SHUTDOWN)
+    {
+      xfsm_verbose ("Client Id = %s, requested INTERACT, but manager is not in CheckPoint/Shutdown mode\n"
+                    "   Clinet will be disconnected now.\n\n",
+                    client->id);
+      xfsm_manager_close_connection (client, TRUE);
+    }
+  else
+    {
+      for (lp = running_clients; lp != NULL; lp = lp->next)
+        if (XFSM_CLIENT (lp->data)->state == XFSM_CLIENT_INTERACTING)
+          {
+            client->state = XFSM_CLIENT_WAITFORINTERACT;
+            return;
+          }
+  
+      xfsm_manager_start_interact (client);
+    }
+}
+
+
+void
+xfsm_manager_interact_done (XfsmClient *client,
+                            gboolean    cancel_shutdown)
+{
+  GList *lp;
+  
+  if (client->state != XFSM_CLIENT_INTERACTING)
+    {
+      xfsm_verbose ("Client Id = %s, send INTERACT DONE, but client is not in INTERACTING state\n"
+                    "   Client will be disconnected now.\n\n",
+                    client->id);
+      xfsm_manager_close_connection (client, TRUE);
+      return;
+    }
+  else if (state != XFSM_MANAGER_CHECKPOINT && state != XFSM_MANAGER_SHUTDOWN)
+    {
+      xfsm_verbose ("Client Id = %s, send INTERACT DONE, but manager is not in CheckPoint/Shutdown state\n"
+                    "   Client will be disconnected now.\n\n",
+                    client->id);
+      xfsm_manager_close_connection (client, TRUE);
+      return;
+    }
+  
+  client->state = XFSM_CLIENT_SAVING;
+  
+  /* Setting the cancel-shutdown field to True indicates that the user
+   * has requested that the entire shutdown be cancelled. Cancel-
+   * shutdown may only be True if the corresponding SaveYourself
+   * message specified True for the shutdown field and Any or Error
+   * for the interact-style field. Otherwise, cancel-shutdown must be
+   * False.
+   */
+  if (cancel_shutdown && state == XFSM_MANAGER_SHUTDOWN)
+    {
+      /* we go into checkpoint state from here... */
+      state = XFSM_MANAGER_CHECKPOINT;
+      
+      /* If a shutdown is in progress, the user may have the option
+       * of cancelling the shutdown. If the shutdown is cancelled
+       * (specified in the "Interact Done" message), the session
+       * manager should send a "Shutdown Cancelled" message to each
+       * client that requested to interact.
+       */
+      for (lp = running_clients; lp != NULL; lp = lp->next)
+        {
+          if (XFSM_CLIENT (lp->data)->state != XFSM_CLIENT_WAITFORINTERACT)
+            continue;
+
+          /* reset all clients that are waiting for interact */
+          client->state = XFSM_CLIENT_SAVING;
+          SmsShutdownCancelled (XFSM_CLIENT (lp->data)->sms_conn);
+        }
+    }
+  else
+    {
+      /* let next client interact */
+      for (lp = running_clients; lp != NULL; lp = lp->next)
+        if (XFSM_CLIENT (lp->data)->state == XFSM_CLIENT_WAITFORINTERACT)
+          {
+            xfsm_manager_start_interact (XFSM_CLIENT (lp->data));
+            break;
+          }
+    }
+
+  /* restart save yourself timeout for client */
+  client->save_timeout_id = g_timeout_add (SAVE_TIMEOUT,
+                                           xfsm_manager_save_timeout,
+                                           client);
+}
+
+
+void
+xfsm_manager_save_yourself (XfsmClient *client,
+                            gint        save_type,
+                            gboolean    shutdown,
+                            gint        interact_style,
+                            gboolean    fast,
+                            gboolean    global)
+{
+  gboolean shutdown_save = TRUE;
+  GList   *lp;
+
+  if (client->state != XFSM_CLIENT_IDLE)
+    {
+      xfsm_verbose ("Client Id = %s, requested SAVE YOURSELF, but client is not in IDLE mode.\n"
+                    "   Client will be nuked now.\n\n",
+                    client->id);
+      xfsm_manager_close_connection (client, TRUE);
+      return;
+    }
+  else if (state != XFSM_MANAGER_IDLE)
+    {
+      xfsm_verbose ("Client Id = %s, requested SAVE YOURSELF, but manager is not in IDLE mode.\n"
+                    "   Client will be nuked now.\n\n",
+                    client->id);
+      xfsm_manager_close_connection (client, TRUE);
+      return;
+    }
+  
+  if (!global)
+    {
+      /* client requests a local checkpoint. We slightly ignore
+       * shutdown here, since it does not make sense for a local
+       * checkpoint.
+       */
+      SmsSaveYourself (client->sms_conn, save_type, FALSE, interact_style, fast);
+      client->state = XFSM_CLIENT_SAVINGLOCAL;
+      client->save_timeout_id = g_timeout_add (SAVE_TIMEOUT,
+                                               xfsm_manager_save_timeout,
+                                               client);
+    }
+  else
+    {
+      if (!fast && shutdown && !shutdownDialog (&shutdown_type, &shutdown_save))
+        return;
+  
+      if (!shutdown || shutdown_save)
+        {
+          state = shutdown ? XFSM_MANAGER_SHUTDOWN : XFSM_MANAGER_CHECKPOINT;
+          
+          for (lp = running_clients; lp != NULL; lp = lp->next)
+            {
+              XfsmClient *client = XFSM_CLIENT (lp->data);
+
+              if (client->state != XFSM_CLIENT_SAVINGLOCAL)
+                {
+                  SmsSaveYourself (client->sms_conn, save_type, shutdown,
+                                   interact_style, fast);
+                }
+
+              client->state = XFSM_CLIENT_SAVING;
+              client->save_timeout_id = g_timeout_add (SAVE_TIMEOUT,
+                                                       xfsm_manager_save_timeout,
+                                                       client);
+            } 
+        }
+      else
+        {
+          /* shutdown session without saving */
+          xfsm_manager_perform_shutdown ();
+        }
+    }
+}
+
+
+void
+xfsm_manager_save_yourself_phase2 (XfsmClient *client)
+{
+  if (state != XFSM_MANAGER_CHECKPOINT && state != XFSM_MANAGER_SHUTDOWN)
+    {
+      SmsSaveYourselfPhase2 (client->sms_conn);
+      client->state = XFSM_CLIENT_SAVINGLOCAL;
+      g_source_remove (client->save_timeout_id);
+      client->save_timeout_id = g_timeout_add (SAVE_TIMEOUT,
+                                               xfsm_manager_save_timeout,
+                                               client);
+    }
+  else
+    {
+      client->state = XFSM_CLIENT_WAITFORPHASE2;
+      g_source_remove (client->save_timeout_id);
+      client->save_timeout_id = 0;
+
+      if (!xfsm_manager_check_clients_saving ())
+        xfsm_manager_maybe_enter_phase2 ();
+    }
+}
+
+
+void
+xfsm_manager_save_yourself_done (XfsmClient *client,
+                                 gboolean    success)
+{
+  if (client->state != XFSM_CLIENT_SAVING && client->state != XFSM_CLIENT_SAVINGLOCAL)
+    {
+      xfsm_verbose ("Client Id = %s send SAVE YOURSELF DONE, while not being "
+                    "in save mode. Prepare to be nuked!\n",
+                    client->id);
+      
+      xfsm_manager_close_connection (client, TRUE);
+    }
+
+  /* remove client save timeout, as client responded in time */  
+  g_source_remove (client->save_timeout_id);
+  client->save_timeout_id = 0;
+
+  if (client->state == XFSM_CLIENT_SAVINGLOCAL)
+    {
+      /* client completed local SaveYourself */
+      client->state = XFSM_CLIENT_IDLE;
+      SmsSaveComplete (client->sms_conn);
+    }
+  else if (state != XFSM_MANAGER_CHECKPOINT && state != XFSM_MANAGER_SHUTDOWN)
+    {
+      xfsm_verbose ("Client Id = %s, send SAVE YOURSELF DONE, but manager is not in CheckPoint/Shutdown mode.\n"
+                    "   Client will be nuked now.\n\n",
+                    client->id);
+      xfsm_manager_close_connection (client, TRUE);
+    }
+  else
+    {
+      client->state = XFSM_CLIENT_SAVEDONE;
+      xfsm_manager_complete_saveyourself ();
+    }
+}
+
+
+void
+xfsm_manager_close_connection (XfsmClient *client,
+                               gboolean    cleanup)
+{
+  IceConn ice_conn;
+  GList  *lp;
+  
+  client->state = XFSM_CLIENT_DISCONNECTED;
+  if (client->save_timeout_id > 0)
+    {
+      g_source_remove (client->save_timeout_id);
+      client->save_timeout_id = 0;
+    }
+
+  if (cleanup)
+    {
+      ice_conn = SmsGetIceConnection (client->sms_conn);
+      SmsCleanUp (client->sms_conn);
+      IceSetShutdownNegotiation (ice_conn, False);
+      IceCloseConnection (ice_conn);
+    }
+  
+  if (state == XFSM_MANAGER_SHUTDOWNPHASE2)
+    {
+      for (lp = running_clients; lp != NULL; lp = lp->next)
+        if (XFSM_CLIENT (lp->data)->state != XFSM_CLIENT_DISCONNECTED)
+          return;
+      
+      /* all clients finished the DIE phase in time */
+      g_source_remove (die_timeout_id);
+      gtk_main_quit ();
+    }
+  else if (state == XFSM_MANAGER_SHUTDOWN || state == XFSM_MANAGER_CHECKPOINT)
+    {
+      xfsm_verbose ("Client Id = %s, closed connection in checkpoint state\n"
+                    "   Session manager will show NO MERCY\n\n",
+                    client->id);
+      
+      /* stupid client disconnected in CheckPoint state, prepare to be nuked! */
+      running_clients = g_list_remove (running_clients, client);
+      xfsm_client_free (client);
+      xfsm_manager_complete_saveyourself ();
+    }
+  else
+    {
+      XfsmProperties *properties = client->properties;
+      
+      if (properties != NULL && xfsm_properties_check (properties))
+        {
+          if (properties->restart_style_hint == SmRestartAnyway)
+            {
+              restart_properties = g_list_append (restart_properties, properties);
+              client->properties = NULL;
+            }
+          else if (properties->restart_style_hint == SmRestartImmediately)
+            {
+              if (++properties->restart_attempts > MAX_RESTART_ATTEMPTS)
+                {
+                  xfsm_verbose ("Client Id = %s, reached maximum attempts [Restart attempts = %d]\n"
+                                "   Will be re-scheduled for run on next startup\n",
+                                properties->client_id, properties->restart_attempts);
+
+                  restart_properties = g_list_append (restart_properties, properties);
+                  client->properties = NULL;
+                }
+#if 0
+              else if (xfsm_manager_run_prop_command (properties, SmRestartCommand))
+                {
+                  /* XXX - add a timeout here, in case the application does not come up */
+                  pending_properties = g_list_append (pending_properties, properties);
+                  client->properties = NULL;
+                }
+#endif
+            }
+        }
+
+      running_clients = g_list_remove (running_clients, client);
+      xfsm_client_free (client);
+    }
+}
+
+
+void
+xfsm_manager_close_connection_by_ice_conn (IceConn ice_conn)
+{
+  GList *lp;
+  
+  for (lp = running_clients; lp != NULL; lp = lp->next)
+    if (SmsGetIceConnection (XFSM_CLIENT (lp->data)->sms_conn) == ice_conn)
+      {
+        xfsm_manager_close_connection (XFSM_CLIENT (lp->data), FALSE);
+        break;
+      }
+
+  /* be sure to close the Ice connection in any case */
+  IceSetShutdownNegotiation (ice_conn, False);
+  IceCloseConnection (ice_conn);
+}
+
+
+void
+xfsm_manager_perform_shutdown (void)
+{          
+  GList *lp;
+  
+  /* send SmDie message to all clients */
+  state = XFSM_MANAGER_SHUTDOWNPHASE2;
+  for (lp = running_clients; lp != NULL; lp = lp->next)
+    SmsDie (XFSM_CLIENT (lp->data)->sms_conn);
+
+  /* give all clients the chance to close the connection */
+  die_timeout_id = g_timeout_add (DIE_TIMEOUT,
+                                  (GSourceFunc) gtk_main_quit,
+                                  NULL);
+}
+
+
+gboolean
+xfsm_manager_check_clients_saving (void)
+{
+  GList *lp;
+  
+  for (lp = running_clients; lp != NULL; lp = lp->next)
+    if (XFSM_CLIENT (lp->data)->state == XFSM_CLIENT_SAVING)
+      return TRUE;
+  
+  return FALSE;
+}
+
+
+gboolean
+xfsm_manager_maybe_enter_phase2 (void)
+{
+  gboolean entered_phase2 = FALSE;
+  GList   *lp;
+  
+  for (lp = running_clients; lp != NULL; lp = lp->next)
+    { 
+      XfsmClient *client = XFSM_CLIENT (lp->data);
+      
+      if (client->state == XFSM_CLIENT_WAITFORPHASE2)
+        {
+          entered_phase2 = TRUE;
+          SmsSaveYourselfPhase2 (client->sms_conn);
+          client->state = XFSM_CLIENT_SAVING;
+          client->save_timeout_id = g_timeout_add (SAVE_TIMEOUT,
+                                                   xfsm_manager_save_timeout,
+                                                   client);
+        }
+    }
+
+  return entered_phase2;
+}
+
+
+void
+xfsm_manager_complete_saveyourself (void)
+{
+  GList *lp;
+  
+  /* Check if still clients in SAVING state or if we have to enter PHASE2
+   * now. In either case, SaveYourself cannot be completed in this run.
+   */
+  if (xfsm_manager_check_clients_saving () || xfsm_manager_maybe_enter_phase2 ())
+    return;
+  
+  xfsm_verbose ("Manager finished SAVE YOURSELF, session data will be stored now.\n\n");
+  
+  /* all clients done, store session data */
+  xfsm_manager_store_session ();
+  
+  if (state == XFSM_MANAGER_CHECKPOINT)
+    {
+      /* reset all clients to idle state */
+      state = XFSM_MANAGER_IDLE;
+      for (lp = running_clients; lp != NULL; lp = lp->next)
+        {
+          XFSM_CLIENT (lp->data)->state = XFSM_CLIENT_IDLE;
+          SmsSaveComplete (XFSM_CLIENT (lp->data)->sms_conn);
+        }
+    }
+  else
+    {
+      /* shutdown the session */
+      xfsm_manager_perform_shutdown ();
+    }
+}
+
+
+gboolean
+xfsm_manager_save_timeout (gpointer client_data)
+{
+  XfsmClient *client = XFSM_CLIENT (client_data);
+  
+  xfsm_verbose ("Client id = %s, received SAVE TIMEOUT\n"
+                "   Client will be disconnected now.\n\n",
+                client->id);
+
+  xfsm_manager_close_connection (client, TRUE);
+  
+  return FALSE;
+}
+
+
+void
+xfsm_manager_store_session (void)
+{
+  XfceRc *rc;
+  GList  *lp;
+  gchar   prefix[32];
+  gchar  *group;
+  gint    count = 0;
+
+  rc = xfce_rc_simple_open (session_file, FALSE);
+  if (rc == NULL)
+    {
+      fprintf (stderr,
+               "xfce4-session: Unable to open session file %s for "
+               "writing. Session data will not be stored. Please check "
+               "your installation.\n",
+               session_file);
+      return;
+    }
+
+  group = g_strconcat ("Session: ", session_name, NULL);
+  xfce_rc_delete_group (rc, group, TRUE);
+  xfce_rc_set_group (rc, group);
+  g_free (group);
+
+  for (lp = restart_properties; lp != NULL; lp = lp->next)
+    {
+      g_snprintf (prefix, 32, "Client%d_", count);
+      xfsm_properties_store (XFSM_PROPERTIES (lp->data), rc, prefix);
+      ++count;
+    }
+
+  for (lp = running_clients; lp != NULL; lp = lp->next)
+    {
+      if (XFSM_CLIENT (lp->data)->properties == NULL
+          || !xfsm_properties_check (XFSM_CLIENT (lp->data)->properties))
+        continue;
+      
+      g_snprintf (prefix, 32, "Client%d_", count);
+      xfsm_properties_store (XFSM_CLIENT (lp->data)->properties, rc, prefix);
+      ++count;
+    }
+
+  xfce_rc_write_int_entry (rc, "Count", count);
+  xfce_rc_close (rc);
+}
+
+

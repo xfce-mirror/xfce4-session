@@ -25,16 +25,55 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __XFSM_ICE_LAYER_H__
-#define __XFSM_ICE_LAYER_H__
+#ifndef __XFSM_GLOBAL_H__
+#define __XFSM_GLOBAL_H__
 
-#include <X11/ICE/ICElib.h>
+#include <xfce4-session/xfsm-splash-screen.h>
 
-#include <glib.h>
 
-Bool     ice_auth_proc       (char         *hostname);
-gboolean ice_setup_listeners (int           num_listeners,
-                              IceListenObj *listen_objs);
-void     ice_cleanup         (void);
+typedef struct _FailsafeClient FailsafeClient;
+struct _FailsafeClient
+{
+  gchar    **command;
+  GdkScreen *screen;
+};
+  
 
-#endif	/* !__XFSM_ICE_LAYER_H__ */
+#define DEFAULT_SESSION_NAME "Default"
+
+
+extern gboolean          verbose;
+extern GList            *pending_properties;
+extern GList            *restart_properties;
+extern GList            *running_clients;
+extern gchar            *session_name;
+extern gchar            *session_file;
+extern GList            *failsafe_clients;
+extern gboolean          failsafe_mode;
+extern gint              shutdown_type;
+extern XfsmSplashScreen *splash_screen;
+
+
+#if defined(G_HAVE_ISO_VARARGS)
+
+#define xfsm_verbose(...)             \
+G_STMT_START{                         \
+  if (G_UNLIKELY (verbose))           \
+    xfsm_verbose_real (__VA_ARGS__);  \
+}G_STMT_END
+
+#elif defined(G_HAVE_GNUC_VARARGS)
+
+#define xfsm_verbose(format, ...)     \
+G_STMT_START{                         \
+  if (G_UNLIKELY (verbose))           \
+    xfsm_verbose_real ( ## format);   \
+}G_STMT_END
+  
+#endif
+
+void xfsm_enable_verbose (void);
+void xfsm_verbose_real (const gchar *format, ...) G_GNUC_PRINTF (1, 2);
+
+
+#endif /* !__XFSM_GLOBAL_H__ */

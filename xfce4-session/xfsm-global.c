@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003,2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,13 +25,60 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __XFSM_PENDING_H__
-#define __XFSM_PENDING_H__
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
-/* list of pending clients */
-extern GList	*pendingClients;
+#ifdef HAVE_STDARG_H
+#include <stdarg.h>
+#endif
+#include <stdio.h>
 
-/* prototypes */
-extern void	pending_continue(Client *);
+#include <libxfce4util/libxfce4util.h>
 
-#endif	/* !__XFSM_PENDING_H__ */
+#include <xfce4-session/shutdown.h>
+#include <xfce4-session/xfsm-global.h>
+
+
+/* global variables */
+gboolean          verbose = FALSE;
+GList            *pending_properties = NULL;
+GList            *restart_properties = NULL;
+GList            *running_clients = NULL;
+gchar            *session_name = NULL;
+gchar            *session_file = NULL;
+GList            *failsafe_clients = NULL;
+gboolean          failsafe_mode = TRUE;
+gint              shutdown_type = SHUTDOWN_LOGOUT;
+XfsmSplashScreen *splash_screen = NULL;
+
+void
+xfsm_enable_verbose (void)
+{
+  if (!verbose)
+    {
+      verbose = TRUE;
+      printf ("xfce4-session: Session Manager running in verbose mode.\n");
+    }
+}
+
+
+void
+xfsm_verbose_real (const gchar *format, ...)
+{
+  static FILE *fp = NULL;
+  gchar       *logfile;
+  va_list      valist;
+  
+  if (G_UNLIKELY (fp == NULL))
+    {
+      logfile = xfce_get_homefile (".xfce4-session.verbose-log", NULL);
+      fp = fopen (logfile, "w");
+      g_free (logfile);
+    }
+  
+  va_start (valist, format);
+  vfprintf (fp, format, valist);
+  fflush (fp);
+  va_end (valist);
+}

@@ -1,6 +1,6 @@
-/* $Id$ */
+/* $Id */
 /*-
- * Copyright (c) 2003,2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,23 +25,11 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __XFSM_UTIL_H__
-#define __XFSM_UTIL_H__
+#ifndef __SM_LAYER_H__
+#define __SM_LAYER_H__
 
-#include <stdio.h>
+#include <libxfce4util/libxfce4util.h>
 
-#include <gtk/gtk.h>
+void sm_init (XfceRc *rc, gboolean disable_tcp);
 
-/* prototypes */
-extern char	*fstrread(FILE *);
-extern void	fstrwrite(FILE *, const char *);
-
-extern GtkWidget	*xfsm_imgbtn_new(const gchar *, const gchar *);
-
-#if 0
-/* NOT YET: Does not work when no NET wm is running */
-extern void		netk_gtk_window_set_skip_pager(GtkWindow *, gboolean);
-extern void		netk_gtk_window_set_skip_tasklist(GtkWindow *,gboolean);
-#endif
-
-#endif	/* !__XFSM_UTIL_H__ */
+#endif /* !__SM_LAYER_H__ */

@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003,2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2004 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,59 +25,51 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __XFSM_SPLASH_SCREEN_H__
-#define __XFSM_SPLASH_SCREEN_H__
+#ifndef __XFSM_CHOOSER_H__
+#define __XFSM_CHOOSER_H__
 
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
-#define	XFSM_SPLASH_SCREEN(obj)						\
-	G_TYPE_CHECK_INSTANCE_CAST(obj, xfsm_splash_screen_get_type(),	\
-			XfsmSplashScreen)
-#define	XFSM_SPLASH_SCREEN_CLASS(klass)					\
-	G_TYPE_CHECK_CLASS_CAST(klass, xfsm_splash_screen_get_type(),	\
-			XfsmSplashScreenClass)
-#define	XFSM_IS_SPLASH_SCREEN(obj)					\
-	G_TYPE_CHECK_INSTANCE_TYPE(obj, xfsm_splash_screen_get_type())
+#define XFSM_TYPE_CHOOSER xfsm_chooser_get_type()
+#define XFSM_CHOOSER(obj) G_TYPE_CHECK_INSTANCE_CAST(obj, XFSM_TYPE_CHOOSER, XfsmChooser)
+#define XFSM_CHOOSER_CLASS(klass) G_TYPE_CHECK_CLASS_CAST(klass, XFSM_TYPE_CHOOSER, XfsmChooserClass)
+#define XFSM_IS_CHOOSER(obj) G_TYPE_CHECK_INSTANCE_TYPE(obj, XFSM_TYPE_CHOOSER)
 
-typedef struct	_XfsmSplashScreen	XfsmSplashScreen;
-typedef struct	_XfsmSplashScreenClass	XfsmSplashScreenClass;
+typedef struct _XfsmChooser XfsmChooser;
+typedef struct _XfsmChooserClass XfsmChooserClass;
 
-struct _XfsmSplashScreenClass
+struct _XfsmChooserClass
 {
-	GtkWindowClass	parent_class;
+  GtkDialogClass parent_class;
 };
 
-struct _XfsmSplashScreen
+struct _XfsmChooser
 {
-	GtkWindow	window;
+  GtkDialog dialog;
 
-	/* dialog items */
-	GtkWidget	*logoImage;
-	GtkWidget	*progressBar;
+  GtkWidget *radio_load;
+  GtkWidget *radio_create;
+  GtkWidget *tree;
+  GtkWidget *name;
+  GtkWidget *start;
 
-	/* list of logo pictures */
-	guint		pictureCount;
-	guint		pictureCurrent;
-	guint		pictureTimeout;
-	guint		pictureTimeoutId;
-	GdkPixbuf	**pictures;
-
-	/* */
-	guint		progressMax;
-	guint		progressCount;
+  GtkTooltips *tooltips;
 };
 
-/* prototypes */
-extern GType		xfsm_splash_screen_get_type(void);
-extern GtkWidget	*xfsm_splash_screen_new(const gchar *, guint,
-				const gchar *);
-extern void		xfsm_splash_screen_set_text(XfsmSplashScreen *,
-				const gchar *);
-extern void		xfsm_splash_screen_launch(XfsmSplashScreen *,
-				const gchar *);
+typedef enum _XfsmChooserReturn
+{
+  XFSM_CHOOSER_CREATE,
+  XFSM_CHOOSER_LOAD,
+  XFSM_CHOOSER_LOGOUT,
+} XfsmChooserReturn;
 
-G_END_DECLS
+GType xfsm_chooser_get_type (void) G_GNUC_CONST;
+void xfsm_chooser_set_sessions (XfsmChooser *chooser, GList *sessions,
+                               const gchar *default_session);
+XfsmChooserReturn xfsm_chooser_run (XfsmChooser *chooser, gchar **name);
 
-#endif	/* !__XFSM_SPLASH_SCREEN_H__ */
+G_END_DECLS;
+
+#endif /* !__XFSM_CHOOSER_H__ */
