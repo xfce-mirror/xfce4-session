@@ -22,6 +22,7 @@
 #ifndef __XFSM_SPLASH_RC_H__
 #define __XFSM_SPLASH_RC_H__
 
+#include <gmodule.h>
 #include <libxfce4util/libxfce4util.h>
 
 
@@ -30,29 +31,38 @@ G_BEGIN_DECLS;
 typedef struct _XfsmSplashRc XfsmSplashRc;
 
 
+G_MODULE_IMPORT
 XfsmSplashRc *xfsm_splash_rc_new              (XfceRc       *rc,
                                                const gchar  *group);
+G_MODULE_IMPORT
 const gchar  *xfsm_splash_rc_read_entry       (XfsmSplashRc *splash_rc,
                                                const gchar  *key,
                                                const gchar  *fallback);
+G_MODULE_IMPORT
 gint          xfsm_splash_rc_read_int_entry   (XfsmSplashRc *splash_rc,
                                                const gchar  *key,
                                                gint          fallback);
+G_MODULE_IMPORT
 gboolean      xfsm_splash_rc_read_bool_entry  (XfsmSplashRc *splash_rc,
                                                const gchar  *key,
                                                gboolean      fallback);
+G_MODULE_IMPORT
 gchar       **xfsm_splash_rc_read_list_entry  (XfsmSplashRc *splash_rc,
                                                const gchar  *key,
                                                const gchar  *delimiter);
+G_MODULE_IMPORT
 void          xfsm_splash_rc_write_entry      (XfsmSplashRc *splash_rc,
                                                const gchar  *key,
                                                const gchar  *value);
+G_MODULE_IMPORT
 void          xfsm_splash_rc_write_int_entry  (XfsmSplashRc *splash_rc,
                                                const gchar  *key,
                                                gint          value);
+G_MODULE_IMPORT
 void          xfsm_splash_rc_write_bool_entry (XfsmSplashRc *splash_rc,
                                                const gchar  *key,
                                                gboolean      value);
+G_MODULE_IMPORT
 void          xfsm_splash_rc_write_list_entry (XfsmSplashRc *splash_rc,
                                                const gchar  *key,
                                                gchar       **value,

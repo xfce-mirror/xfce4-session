@@ -14,6 +14,14 @@ session_settings_la_CFLAGS =						\
 	@XFCE_MCS_MANAGER_CFLAGS@					\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"
 
+if HAVE_CYGWIN
+session_settings_la_LDFLAGS +=						\
+	-no-undefined							\
+	-export-symbols $(datadir)/xfce4/devel/mcs-manager.def		\
+	@XFCE_MCS_MANAGER_LDFLAGS@
+session_settings_la_LIBADD +=						\
+	@XFCE_MCS_MANAGER_LIBS@
+endif
 
 EXTRA_DIST =								\
 	xfce-session-settings.desktop

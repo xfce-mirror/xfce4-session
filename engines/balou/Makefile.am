@@ -25,3 +25,11 @@ libbalou_la_LDFLAGS =							\
 	-avoid-version							\
 	-module
 
+if HAVE_CYGWIN
+libbalou_la_LDFLAGS +=							\
+	-no-undefined							\
+	-export-symbols $(top_srcdir)/xfce4-session/xfsm-splash-rc.def	\
+	@XFCE_MCS_MANAGER_LDFLAGS@
+libbalou_la_LIBADD +=							\
+	@XFCE_MCS_MANAGER_LIBS@
+endif
