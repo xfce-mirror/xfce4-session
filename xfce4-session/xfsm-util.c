@@ -331,6 +331,18 @@ xfsm_window_add_border (GtkWindow *window)
 }
 
 
+void
+xfsm_window_grab_input (GtkWindow *window)
+{
+  GdkWindow *xwindow = GTK_WIDGET (window)->window;
+
+  gdk_pointer_grab (xwindow, TRUE, 0, NULL, NULL, GDK_CURRENT_TIME);
+  gdk_keyboard_grab (xwindow, FALSE, GDK_CURRENT_TIME);
+  XSetInputFocus (GDK_DISPLAY (), GDK_WINDOW_XWINDOW (xwindow),
+                  RevertToParent, CurrentTime);
+}
+
+
 XfceRc*
 xfsm_open_config (gboolean readonly)
 {

@@ -23,6 +23,8 @@ xfce4_session_SOURCES =							\
 	xfsm-manager.h							\
 	xfsm-properties.c						\
 	xfsm-properties.h						\
+	xfsm-shutdown-helper.c						\
+	xfsm-shutdown-helper.h						\
 	xfsm-splash-screen.c						\
 	xfsm-splash-screen.h						\
 	xfsm-splash-theme.c						\
@@ -38,7 +40,7 @@ xfce4_session_CFLAGS =							\
 	@LIBXFCE4MCS_CLIENT_CFLAGS@					\
 	@LIBXFCEGUI4_CFLAGS@						\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
-	-DSHUTDOWN_COMMAND=\"$(sbindir)/xfce4-shutdown\"
+	-DXFSM_SHUTDOWN_HELPER=\"$(libexecdir)/xfsm-shutdown-helper\"
 
 xfce4_session_LDADD =							\
 	@LIBSM_LDFLAGS@							\

@@ -14,7 +14,7 @@
 
 @SET_MAKE@
 
-SOURCES = $(xfce4_shutdown_SOURCES)
+SOURCES = $(xfsm_shutdown_helper_SOURCES)
 
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
@@ -37,8 +37,8 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 host_triplet = @host@
-sbin_PROGRAMS = xfce4-shutdown$(EXEEXT)
-subdir = xfce4-shutdown
+libexec_PROGRAMS = xfsm-shutdown-helper$(EXEEXT)
+subdir = xfsm-shutdown-helper
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/X11.m4 \
@@ -49,16 +49,16 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
-am__installdirs = $(DESTDIR)$(sbindir) $(DESTDIR)$(man1dir)
-sbinPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
-PROGRAMS = $(sbin_PROGRAMS)
-am_xfce4_shutdown_OBJECTS = xfce4_shutdown-main.$(OBJEXT)
-xfce4_shutdown_OBJECTS = $(am_xfce4_shutdown_OBJECTS)
-xfce4_shutdown_DEPENDENCIES =
+am__installdirs = $(DESTDIR)$(libexecdir)
+libexecPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
+PROGRAMS = $(libexec_PROGRAMS)
+am_xfsm_shutdown_helper_OBJECTS = xfsm_shutdown_helper-main.$(OBJEXT)
+xfsm_shutdown_helper_OBJECTS = $(am_xfsm_shutdown_helper_OBJECTS)
+xfsm_shutdown_helper_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/xfce4_shutdown-main.Po
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/xfsm_shutdown_helper-main.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) \
@@ -67,11 +67,8 @@ LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) \
 CCLD = $(CC)
 LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(xfce4_shutdown_SOURCES)
-DIST_SOURCES = $(xfce4_shutdown_SOURCES)
-man1dir = $(mandir)/man1
-NROFF = nroff
-MANS = $(man_MANS)
+SOURCES = $(xfsm_shutdown_helper_SOURCES)
+DIST_SOURCES = $(xfsm_shutdown_helper_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -160,6 +157,7 @@ RANLIB = @RANLIB@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
+SUDO = @SUDO@
 USE_NLS = @USE_NLS@
 VERSION = @VERSION@
 XFCE_MCS_MANAGER_CFLAGS = @XFCE_MCS_MANAGER_CFLAGS@
@@ -213,19 +211,14 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-man_MANS = xfce4-shutdown.1
-EXTRA_DIST = \
-	$(man_MANS)
-
-xfce4_shutdown_SOURCES = \
+xfsm_shutdown_helper_SOURCES = \
 	main.c
 
-xfce4_shutdown_CFLAGS = \
-	@LIBXFCE4UTIL_CFLAGS@						\
-	-DPATH_SHUTDOWNALLOW=\"$(sysconfdir)/xfce4/shutdown.allow\"
+xfsm_shutdown_helper_CFLAGS = \
+	$(LIBXFCE4UTIL_CFLAGS)
 
-xfce4_shutdown_LDADD = \
-	@LIBXFCE4UTIL_LIBS@
+xfsm_shutdown_helper_LDFLAGS = \
+	$(LIBXFCE4UTIL_LIBS)
 
 all: all-am
 
@@ -240,9 +233,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  xfce4-shutdown/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  xfsm-shutdown-helper/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  xfce4-shutdown/Makefile
+	  $(AUTOMAKE) --foreign  xfsm-shutdown-helper/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -260,37 +253,37 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
-install-sbinPROGRAMS: $(sbin_PROGRAMS)
+install-libexecPROGRAMS: $(libexec_PROGRAMS)
 	@$(NORMAL_INSTALL)
-	$(mkdir_p) $(DESTDIR)$(sbindir)
-	@list='$(sbin_PROGRAMS)'; for p in $$list; do \
+	$(mkdir_p) $(DESTDIR)$(libexecdir)
+	@list='$(libexec_PROGRAMS)'; for p in $$list; do \
 	  p1=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
 	  if test -f $$p \
 	     || test -f $$p1 \
 	  ; then \
 	    f=`echo "$$p1" | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
-	   echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(sbinPROGRAMS_INSTALL) $$p $(DESTDIR)$(sbindir)/$$f"; \
-	   $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(sbinPROGRAMS_INSTALL) $$p $(DESTDIR)$(sbindir)/$$f || exit 1; \
+	   echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(libexecPROGRAMS_INSTALL) $$p $(DESTDIR)$(libexecdir)/$$f"; \
+	   $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(libexecPROGRAMS_INSTALL) $$p $(DESTDIR)$(libexecdir)/$$f || exit 1; \
 	  else :; fi; \
 	done
 
-uninstall-sbinPROGRAMS:
+uninstall-libexecPROGRAMS:
 	@$(NORMAL_UNINSTALL)
-	@list='$(sbin_PROGRAMS)'; for p in $$list; do \
+	@list='$(libexec_PROGRAMS)'; for p in $$list; do \
 	  f=`echo "$$p" | sed 's,^.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/'`; \
-	  echo " rm -f $(DESTDIR)$(sbindir)/$$f"; \
-	  rm -f $(DESTDIR)$(sbindir)/$$f; \
+	  echo " rm -f $(DESTDIR)$(libexecdir)/$$f"; \
+	  rm -f $(DESTDIR)$(libexecdir)/$$f; \
 	done
 
-clean-sbinPROGRAMS:
-	@list='$(sbin_PROGRAMS)'; for p in $$list; do \
+clean-libexecPROGRAMS:
+	@list='$(libexec_PROGRAMS)'; for p in $$list; do \
 	  f=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-xfce4-shutdown$(EXEEXT): $(xfce4_shutdown_OBJECTS) $(xfce4_shutdown_DEPENDENCIES) 
-	@rm -f xfce4-shutdown$(EXEEXT)
-	$(LINK) $(xfce4_shutdown_LDFLAGS) $(xfce4_shutdown_OBJECTS) $(xfce4_shutdown_LDADD) $(LIBS)
+xfsm-shutdown-helper$(EXEEXT): $(xfsm_shutdown_helper_OBJECTS) $(xfsm_shutdown_helper_DEPENDENCIES) 
+	@rm -f xfsm-shutdown-helper$(EXEEXT)
+	$(LINK) $(xfsm_shutdown_helper_LDFLAGS) $(xfsm_shutdown_helper_OBJECTS) $(xfsm_shutdown_helper_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -298,7 +291,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_shutdown-main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfsm_shutdown_helper-main.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
@@ -324,29 +317,29 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
-xfce4_shutdown-main.o: main.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_shutdown_CFLAGS) $(CFLAGS) -MT xfce4_shutdown-main.o -MD -MP -MF "$(DEPDIR)/xfce4_shutdown-main.Tpo" -c -o xfce4_shutdown-main.o `test -f 'main.c' || echo '$(srcdir)/'`main.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_shutdown-main.Tpo" "$(DEPDIR)/xfce4_shutdown-main.Po"; else rm -f "$(DEPDIR)/xfce4_shutdown-main.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='main.c' object='xfce4_shutdown-main.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_shutdown-main.Po' tmpdepfile='$(DEPDIR)/xfce4_shutdown-main.TPo' @AMDEPBACKSLASH@
+xfsm_shutdown_helper-main.o: main.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfsm_shutdown_helper_CFLAGS) $(CFLAGS) -MT xfsm_shutdown_helper-main.o -MD -MP -MF "$(DEPDIR)/xfsm_shutdown_helper-main.Tpo" -c -o xfsm_shutdown_helper-main.o `test -f 'main.c' || echo '$(srcdir)/'`main.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfsm_shutdown_helper-main.Tpo" "$(DEPDIR)/xfsm_shutdown_helper-main.Po"; else rm -f "$(DEPDIR)/xfsm_shutdown_helper-main.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='main.c' object='xfsm_shutdown_helper-main.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfsm_shutdown_helper-main.Po' tmpdepfile='$(DEPDIR)/xfsm_shutdown_helper-main.TPo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_shutdown_CFLAGS) $(CFLAGS) -c -o xfce4_shutdown-main.o `test -f 'main.c' || echo '$(srcdir)/'`main.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfsm_shutdown_helper_CFLAGS) $(CFLAGS) -c -o xfsm_shutdown_helper-main.o `test -f 'main.c' || echo '$(srcdir)/'`main.c
 
-xfce4_shutdown-main.obj: main.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_shutdown_CFLAGS) $(CFLAGS) -MT xfce4_shutdown-main.obj -MD -MP -MF "$(DEPDIR)/xfce4_shutdown-main.Tpo" -c -o xfce4_shutdown-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_shutdown-main.Tpo" "$(DEPDIR)/xfce4_shutdown-main.Po"; else rm -f "$(DEPDIR)/xfce4_shutdown-main.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='main.c' object='xfce4_shutdown-main.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_shutdown-main.Po' tmpdepfile='$(DEPDIR)/xfce4_shutdown-main.TPo' @AMDEPBACKSLASH@
+xfsm_shutdown_helper-main.obj: main.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfsm_shutdown_helper_CFLAGS) $(CFLAGS) -MT xfsm_shutdown_helper-main.obj -MD -MP -MF "$(DEPDIR)/xfsm_shutdown_helper-main.Tpo" -c -o xfsm_shutdown_helper-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfsm_shutdown_helper-main.Tpo" "$(DEPDIR)/xfsm_shutdown_helper-main.Po"; else rm -f "$(DEPDIR)/xfsm_shutdown_helper-main.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='main.c' object='xfsm_shutdown_helper-main.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfsm_shutdown_helper-main.Po' tmpdepfile='$(DEPDIR)/xfsm_shutdown_helper-main.TPo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_shutdown_CFLAGS) $(CFLAGS) -c -o xfce4_shutdown-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfsm_shutdown_helper_CFLAGS) $(CFLAGS) -c -o xfsm_shutdown_helper-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`
 
-xfce4_shutdown-main.lo: main.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_shutdown_CFLAGS) $(CFLAGS) -MT xfce4_shutdown-main.lo -MD -MP -MF "$(DEPDIR)/xfce4_shutdown-main.Tpo" -c -o xfce4_shutdown-main.lo `test -f 'main.c' || echo '$(srcdir)/'`main.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_shutdown-main.Tpo" "$(DEPDIR)/xfce4_shutdown-main.Plo"; else rm -f "$(DEPDIR)/xfce4_shutdown-main.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='main.c' object='xfce4_shutdown-main.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_shutdown-main.Plo' tmpdepfile='$(DEPDIR)/xfce4_shutdown-main.TPlo' @AMDEPBACKSLASH@
+xfsm_shutdown_helper-main.lo: main.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfsm_shutdown_helper_CFLAGS) $(CFLAGS) -MT xfsm_shutdown_helper-main.lo -MD -MP -MF "$(DEPDIR)/xfsm_shutdown_helper-main.Tpo" -c -o xfsm_shutdown_helper-main.lo `test -f 'main.c' || echo '$(srcdir)/'`main.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfsm_shutdown_helper-main.Tpo" "$(DEPDIR)/xfsm_shutdown_helper-main.Plo"; else rm -f "$(DEPDIR)/xfsm_shutdown_helper-main.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='main.c' object='xfsm_shutdown_helper-main.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfsm_shutdown_helper-main.Plo' tmpdepfile='$(DEPDIR)/xfsm_shutdown_helper-main.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_shutdown_CFLAGS) $(CFLAGS) -c -o xfce4_shutdown-main.lo `test -f 'main.c' || echo '$(srcdir)/'`main.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfsm_shutdown_helper_CFLAGS) $(CFLAGS) -c -o xfsm_shutdown_helper-main.lo `test -f 'main.c' || echo '$(srcdir)/'`main.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -357,51 +350,6 @@ clean-libtool:
 distclean-libtool:
 	-rm -f libtool
 uninstall-info-am:
-install-man1: $(man1_MANS) $(man_MANS)
-	@$(NORMAL_INSTALL)
-	$(mkdir_p) $(DESTDIR)$(man1dir)
-	@list='$(man1_MANS) $(dist_man1_MANS) $(nodist_man1_MANS)'; \
-	l2='$(man_MANS) $(dist_man_MANS) $(nodist_man_MANS)'; \
-	for i in $$l2; do \
-	  case "$$i" in \
-	    *.1*) list="$$list $$i" ;; \
-	  esac; \
-	done; \
-	for i in $$list; do \
-	  if test -f $(srcdir)/$$i; then file=$(srcdir)/$$i; \
-	  else file=$$i; fi; \
-	  ext=`echo $$i | sed -e 's/^.*\\.//'`; \
-	  case "$$ext" in \
-	    1*) ;; \
-	    *) ext='1' ;; \
-	  esac; \
-	  inst=`echo $$i | sed -e 's/\\.[0-9a-z]*$$//'`; \
-	  inst=`echo $$inst | sed -e 's/^.*\///'`; \
-	  inst=`echo $$inst | sed '$(transform)'`.$$ext; \
-	  echo " $(INSTALL_DATA) $$file $(DESTDIR)$(man1dir)/$$inst"; \
-	  $(INSTALL_DATA) $$file $(DESTDIR)$(man1dir)/$$inst; \
-	done
-uninstall-man1:
-	@$(NORMAL_UNINSTALL)
-	@list='$(man1_MANS) $(dist_man1_MANS) $(nodist_man1_MANS)'; \
-	l2='$(man_MANS) $(dist_man_MANS) $(nodist_man_MANS)'; \
-	for i in $$l2; do \
-	  case "$$i" in \
-	    *.1*) list="$$list $$i" ;; \
-	  esac; \
-	done; \
-	for i in $$list; do \
-	  ext=`echo $$i | sed -e 's/^.*\\.//'`; \
-	  case "$$ext" in \
-	    1*) ;; \
-	    *) ext='1' ;; \
-	  esac; \
-	  inst=`echo $$i | sed -e 's/\\.[0-9a-z]*$$//'`; \
-	  inst=`echo $$inst | sed -e 's/^.*\///'`; \
-	  inst=`echo $$inst | sed '$(transform)'`.$$ext; \
-	  echo " rm -f $(DESTDIR)$(man1dir)/$$inst"; \
-	  rm -f $(DESTDIR)$(man1dir)/$$inst; \
-	done
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -478,9 +426,9 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(PROGRAMS) $(MANS)
+all-am: Makefile $(PROGRAMS)
 installdirs:
-	$(mkdir_p) $(DESTDIR)$(sbindir) $(DESTDIR)$(man1dir)
+	$(mkdir_p) $(DESTDIR)$(libexecdir)
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -507,7 +455,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-libtool clean-sbinPROGRAMS \
+clean-am: clean-generic clean-libexecPROGRAMS clean-libtool \
 	mostlyclean-am
 
 distclean: distclean-am
@@ -526,13 +474,13 @@ info: info-am
 
 info-am:
 
-install-data-am: install-man
+install-data-am:
 
-install-exec-am: install-sbinPROGRAMS
+install-exec-am: install-libexecPROGRAMS
 
 install-info: install-info-am
 
-install-man: install-man1
+install-man:
 
 installcheck-am:
 
@@ -554,22 +502,20 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-info-am uninstall-man uninstall-sbinPROGRAMS
-
-uninstall-man: uninstall-man1
+uninstall-am: uninstall-info-am uninstall-libexecPROGRAMS
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
-	clean-libtool clean-sbinPROGRAMS ctags distclean \
+	clean-libexecPROGRAMS clean-libtool ctags distclean \
 	distclean-compile distclean-generic distclean-libtool \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
 	install install-am install-data install-data-am install-exec \
-	install-exec-am install-info install-info-am install-man \
-	install-man1 install-sbinPROGRAMS install-strip installcheck \
+	install-exec-am install-info install-info-am \
+	install-libexecPROGRAMS install-man install-strip installcheck \
 	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am uninstall-info-am uninstall-man \
-	uninstall-man1 uninstall-sbinPROGRAMS
+	tags uninstall uninstall-am uninstall-info-am \
+	uninstall-libexecPROGRAMS
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

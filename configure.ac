@@ -9,7 +9,7 @@ dnl
 dnl Version information
 m4_define([xfsm_version_major], [4])
 m4_define([xfsm_version_minor], [1])
-m4_define([xfsm_version_micro], [5])
+m4_define([xfsm_version_micro], [6])
 m4_define([xfsm_version], [xfsm_version_major.xfsm_version_minor.xfsm_version_micro])
 
 dnl Initialize autoconf
@@ -41,7 +41,7 @@ dnl check for standard header files
 AC_HEADER_STDC
 AC_CHECK_FUNCS([mkdir clearenv sigaction strdup])
 AC_CHECK_HEADERS([errno.h fcntl.h limits.h signal.h stdarg.h sys/param.h \
-  sys/utsname.h sys/wait.h time.h unistd.h])
+  sys/resource.h sys/wait.h time.h unistd.h])
 
 dnl Check for X11 installed
 BM_LIBX11_REQUIRE
@@ -69,6 +69,12 @@ XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.1.0])
 
 dnl Check for debugging support
 BM_DEBUG_SUPPORT
+
+dnl check for sudo
+AC_PATH_PROG([SUDO], [sudo])
+if test x"$SUDO" != x""; then
+  AC_DEFINE_UNQUOTED([SUDO_CMD], ["$SUDO"], [path to sudo])
+fi
 
 dnl
 dnl arguments to set shutdown commands
@@ -114,5 +120,5 @@ settings/Makefile
 themes/Makefile
 themes/Default/Makefile
 xfce4-session/Makefile
-xfce4-shutdown/Makefile
+xfsm-shutdown-helper/Makefile
 ])

@@ -61,6 +61,7 @@ am_xfce4_session_OBJECTS = xfce4_session-ice-layer.$(OBJEXT) \
 	xfce4_session-xfsm-global.$(OBJEXT) \
 	xfce4_session-xfsm-manager.$(OBJEXT) \
 	xfce4_session-xfsm-properties.$(OBJEXT) \
+	xfce4_session-xfsm-shutdown-helper.$(OBJEXT) \
 	xfce4_session-xfsm-splash-screen.$(OBJEXT) \
 	xfce4_session-xfsm-splash-theme.$(OBJEXT) \
 	xfce4_session-xfsm-startup.$(OBJEXT) \
@@ -80,6 +81,7 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-global.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-manager.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-properties.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-splash-screen.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-splash-theme.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-startup.Po \
@@ -185,6 +187,7 @@ RANLIB = @RANLIB@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
+SUDO = @SUDO@
 USE_NLS = @USE_NLS@
 VERSION = @VERSION@
 XFCE_MCS_MANAGER_CFLAGS = @XFCE_MCS_MANAGER_CFLAGS@
@@ -260,6 +263,8 @@ xfce4_session_SOURCES = \
 	xfsm-manager.h							\
 	xfsm-properties.c						\
 	xfsm-properties.h						\
+	xfsm-shutdown-helper.c						\
+	xfsm-shutdown-helper.h						\
 	xfsm-splash-screen.c						\
 	xfsm-splash-screen.h						\
 	xfsm-splash-theme.c						\
@@ -275,7 +280,7 @@ xfce4_session_CFLAGS = \
 	@LIBXFCE4MCS_CLIENT_CFLAGS@					\
 	@LIBXFCEGUI4_CFLAGS@						\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
-	-DSHUTDOWN_COMMAND=\"$(sbindir)/xfce4-shutdown\"
+	-DXFSM_SHUTDOWN_HELPER=\"$(libexecdir)/xfsm-shutdown-helper\"
 
 xfce4_session_LDADD = \
 	@LIBSM_LDFLAGS@							\
@@ -370,6 +375,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-global.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-manager.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-properties.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-splash-screen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-splash-theme.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-startup.Po@am__quote@
@@ -638,6 +644,30 @@ xfce4_session-xfsm-properties.lo: xfsm-properties.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-properties.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-properties.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-properties.lo `test -f 'xfsm-properties.c' || echo '$(srcdir)/'`xfsm-properties.c
+
+xfce4_session-xfsm-shutdown-helper.o: xfsm-shutdown-helper.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-shutdown-helper.o -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Tpo" -c -o xfce4_session-xfsm-shutdown-helper.o `test -f 'xfsm-shutdown-helper.c' || echo '$(srcdir)/'`xfsm-shutdown-helper.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Tpo" "$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Po"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-shutdown-helper.c' object='xfce4_session-xfsm-shutdown-helper.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-shutdown-helper.o `test -f 'xfsm-shutdown-helper.c' || echo '$(srcdir)/'`xfsm-shutdown-helper.c
+
+xfce4_session-xfsm-shutdown-helper.obj: xfsm-shutdown-helper.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-shutdown-helper.obj -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Tpo" -c -o xfce4_session-xfsm-shutdown-helper.obj `if test -f 'xfsm-shutdown-helper.c'; then $(CYGPATH_W) 'xfsm-shutdown-helper.c'; else $(CYGPATH_W) '$(srcdir)/xfsm-shutdown-helper.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Tpo" "$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Po"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-shutdown-helper.c' object='xfce4_session-xfsm-shutdown-helper.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-shutdown-helper.obj `if test -f 'xfsm-shutdown-helper.c'; then $(CYGPATH_W) 'xfsm-shutdown-helper.c'; else $(CYGPATH_W) '$(srcdir)/xfsm-shutdown-helper.c'; fi`
+
+xfce4_session-xfsm-shutdown-helper.lo: xfsm-shutdown-helper.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-shutdown-helper.lo -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Tpo" -c -o xfce4_session-xfsm-shutdown-helper.lo `test -f 'xfsm-shutdown-helper.c' || echo '$(srcdir)/'`xfsm-shutdown-helper.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Tpo" "$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Plo"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-shutdown-helper.c' object='xfce4_session-xfsm-shutdown-helper.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-shutdown-helper.lo `test -f 'xfsm-shutdown-helper.c' || echo '$(srcdir)/'`xfsm-shutdown-helper.c
 
 xfce4_session-xfsm-splash-screen.o: xfsm-splash-screen.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-splash-screen.o -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-splash-screen.Tpo" -c -o xfce4_session-xfsm-splash-screen.o `test -f 'xfsm-splash-screen.c' || echo '$(srcdir)/'`xfsm-splash-screen.c; \

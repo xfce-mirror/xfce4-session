@@ -35,10 +35,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %doc AUTHORS COPYING ChangeLog ChangeLog.pre-xfce-devel NEWS README TODO
 %{_sysconfdir}/xfce4/
-%{_datadir}/xfce4/splash/
+%{_datadir}/themes/
 %{_datadir}/locale/
 %{_mandir}/man1/*
 %{_bindir}/*
-%{_sbindir}/*
 %{_libdir}/xfce4/mcs-plugins/
-
+%{_libexecdir}/xfsm-shutdown-helper

@@ -5,7 +5,7 @@ SUBDIRS =								\
 	settings							\
 	themes								\
 	xfce4-session							\
-	xfce4-shutdown
+	xfsm-shutdown-helper
 
 configdir = $(sysconfdir)/xdg/xfce4-session
 config_DATA = xfce4-session.rc

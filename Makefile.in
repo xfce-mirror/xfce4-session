@@ -163,6 +163,7 @@ RANLIB = @RANLIB@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
+SUDO = @SUDO@
 USE_NLS = @USE_NLS@
 VERSION = @VERSION@
 XFCE_MCS_MANAGER_CFLAGS = @XFCE_MCS_MANAGER_CFLAGS@
@@ -223,7 +224,7 @@ SUBDIRS = \
 	settings							\
 	themes								\
 	xfce4-session							\
-	xfce4-shutdown
+	xfsm-shutdown-helper
 
 configdir = $(sysconfdir)/xdg/xfce4-session
 config_DATA = xfce4-session.rc
