@@ -173,8 +173,9 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 
 	/* Try to grab Input on a hidden window first */
 	hidden = gtk_invisible_new();
-	gtk_widget_show(hidden);
-
+	gtk_widget_show_now(hidden);
+        gdk_flush();
+        
 	for (;;) {
 		if (gdk_pointer_grab(hidden->window, FALSE, 0, NULL, NULL,
 					GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS) {
@@ -204,25 +205,25 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 
 	/* this window *should* not be handled by the window manager */
 	g_object_set(G_OBJECT(dialog), "type", GTK_WINDOW_POPUP, NULL);
-#if GTK_CHECK_VERSION(2,3,0)
-	g_object_set (G_OBJECT (dialog), "type_hint",
-		      GDK_WINDOW_TYPE_HINT_UTILITY, NULL);
-#else
+	if ((gtk_major_version >=2) && (gtk_minor_version >= 3)) {
+		g_object_set (G_OBJECT (dialog), "type_hint", 
+			      GDK_WINDOW_TYPE_HINT_UTILITY, NULL);
+	}
 	g_object_set (G_OBJECT (dialog), "decorated", FALSE, NULL);
-#endif
 
 	/*
 	 * Grabbing the Xserver when accessibility is enabled will cause a
 	 * hang. Found in gnome-session (see gnome bug #93103 for details).
 	 */
 	accessibility = GTK_IS_ACCESSIBLE(gtk_widget_get_accessible(dialog));
-#if !GTK_CHECK_VERSION(2,3,0)
-	if (!accessibility) {
-		gdk_x11_grab_server();
-		drawBackground();
-		gdk_flush();
-	}
-#endif
+	if ((gtk_major_version >=2) && (gtk_minor_version < 3)) {
+	        if (!accessibility) {
+		        gdk_x11_grab_server();
+		        drawBackground();
+		        gdk_flush();
+	        }
+        }
+
 
 	dbox = GTK_DIALOG(dialog)->vbox;
 
@@ -311,13 +312,13 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 
 	gtk_widget_destroy(dialog);
 
-#if !GTK_CHECK_VERSION(2, 3, 0)
-	/* ungrab the Xserver */
-	if (!accessibility) {
-		gdk_x11_ungrab_server();
-		refreshBackground();
-	}
-#endif
+	if ((gtk_major_version >=2) && (gtk_minor_version < 3)) {
+	        /* ungrab the Xserver */
+	        if (!accessibility) {
+		        gdk_x11_ungrab_server();
+		        refreshBackground();
+	        }
+        }
 
 	/* Release Keyboard/Mouse pointer grab */
 	gdk_keyboard_ungrab(GDK_CURRENT_TIME);
