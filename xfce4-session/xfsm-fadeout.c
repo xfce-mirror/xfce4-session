@@ -26,8 +26,25 @@
 #include <xfce4-session/xfsm-fadeout.h>
 
 
+
 #define COLOR "#b6c4d7"
 
+
+
+typedef struct _FoScreen FoScreen;
+
+
+
+static void xfsm_fadeout_drawable_mono (XfsmFadeout *fadeout,
+                                        GdkDrawable *drawable);
+
+
+
+struct _FoScreen
+{
+  GdkWindow *window;
+  GdkPixmap *backbuf;
+};
 
 struct _XfsmFadeout
 {
@@ -35,8 +52,6 @@ struct _XfsmFadeout
   GList   *screens;
 };
 
-
-static void xfsm_fadeout_screen_mono (XfsmFadeout *fadeout, GdkScreen *screen);
 
 
 static char stipple_data[] = {
@@ -48,14 +63,64 @@ static char stipple_data[] = {
 XfsmFadeout*
 xfsm_fadeout_new (GdkDisplay *display)
 {
-  XfsmFadeout *fadeout;
-  gint n;
+  GdkWindowAttr  attr;
+  GdkGCValues    values;
+  XfsmFadeout   *fadeout;
+  GdkWindow     *root;
+  GdkCursor     *cursor;
+  FoScreen      *screen;
+  GdkGC         *gc;
+  GList         *lp;
+  gint           width;
+  gint           height;
+  gint           n;
 
   fadeout = g_new0 (XfsmFadeout, 1);
   gdk_color_parse (COLOR, &fadeout->color);
 
+  cursor = gdk_cursor_new (GDK_WATCH);
+
   for (n = 0; n < gdk_display_get_n_screens (display); ++n)
-    xfsm_fadeout_screen_mono (fadeout, gdk_display_get_screen (display, n));
+    {
+      screen = g_new (FoScreen, 1);
+
+      root = gdk_screen_get_root_window (gdk_display_get_screen (display, n));
+      gdk_drawable_get_size (GDK_DRAWABLE (root), &width, &height);
+
+      values.function = GDK_COPY;
+      values.graphics_exposures = FALSE;
+      values.subwindow_mode = TRUE;
+      gc = gdk_gc_new_with_values (root, &values, GDK_GC_FUNCTION | GDK_GC_EXPOSURES | GDK_GC_SUBWINDOW);
+
+      screen->backbuf = gdk_pixmap_new (GDK_DRAWABLE (root), width, height, -1);
+      gdk_draw_drawable (GDK_DRAWABLE (screen->backbuf),
+                         gc, GDK_DRAWABLE (root),
+                         0, 0, 0, 0, width, height);
+      xfsm_fadeout_drawable_mono (fadeout, GDK_DRAWABLE (screen->backbuf));
+
+      attr.x = 0;
+      attr.y = 0;
+      attr.width = width;
+      attr.height = height;
+      attr.event_mask = 0;
+      attr.wclass = GDK_INPUT_OUTPUT;
+      attr.window_type = GDK_WINDOW_TEMP;
+      attr.cursor = cursor;
+      attr.override_redirect = TRUE;
+
+      screen->window = gdk_window_new (root, &attr, GDK_WA_X | GDK_WA_Y
+                                       | GDK_WA_NOREDIR | GDK_WA_CURSOR);
+      gdk_window_set_back_pixmap (screen->window, screen->backbuf, FALSE);
+
+      g_object_unref (G_OBJECT (gc));
+
+      fadeout->screens = g_list_append (fadeout->screens, screen);
+    }
+
+  for (lp = fadeout->screens; lp != NULL; lp = lp->next)
+    gdk_window_show (((FoScreen *) lp->data)->window);
+
+  gdk_cursor_unref (cursor);
 
   return fadeout;
 }
@@ -64,30 +129,16 @@ xfsm_fadeout_new (GdkDisplay *display)
 void
 xfsm_fadeout_destroy (XfsmFadeout *fadeout)
 {
-  GdkWindowAttr attr;
-  GdkWindow *window;
-  GdkWindow *root;
-  GList *lp;
-
-  attr.x = 0;
-  attr.y = 0;
-  attr.event_mask = 0;
-  attr.window_type = GDK_WINDOW_TOPLEVEL;
-  attr.wclass = GDK_INPUT_OUTPUT;
-  attr.override_redirect = TRUE;
+  FoScreen *screen;
+  GList    *lp;
 
   for (lp = fadeout->screens; lp != NULL; lp = lp->next)
     {
-      root = gdk_screen_get_root_window (GDK_SCREEN (lp->data));
+      screen = lp->data;
 
-      gdk_drawable_get_size (GDK_DRAWABLE (root), &attr.width, &attr.height);
-
-      window = gdk_window_new (root, &attr, GDK_WA_X | GDK_WA_Y |
-                               GDK_WA_NOREDIR);
-
-      gdk_window_show (window);
-
-      gdk_window_destroy (window);
+      gdk_window_destroy (screen->window);
+      g_object_unref (G_OBJECT (screen->backbuf));
+      g_free (screen);
     }
 
   g_list_free (fadeout->screens);
@@ -96,43 +147,33 @@ xfsm_fadeout_destroy (XfsmFadeout *fadeout)
 
 
 static void
-xfsm_fadeout_screen_mono (XfsmFadeout *fadeout,
-                          GdkScreen   *screen)
+xfsm_fadeout_drawable_mono (XfsmFadeout *fadeout,
+                            GdkDrawable *drawable)
 {
-  GdkRectangle geometry;
-  GdkGCValues values;
-  GdkWindow *root;
-  GdkBitmap *bm;
-  GdkGC *gc;
-  int m;
+  GdkGCValues  values;
+  GdkBitmap   *bm;
+  GdkGC       *gc;
+  gint         width;
+  gint         height;
 
-  root = gdk_screen_get_root_window (screen);
-
-  bm = gdk_bitmap_create_from_data (root, stipple_data, 2, 2);
+  bm = gdk_bitmap_create_from_data (drawable, stipple_data, 2, 2);
 
   values.function = GDK_COPY;
   values.fill = GDK_STIPPLED;
   values.stipple = GDK_PIXMAP (bm);
   values.subwindow_mode = TRUE;
 
-  gc = gdk_gc_new_with_values (GDK_DRAWABLE (root), &values,
+  gc = gdk_gc_new_with_values (drawable, &values,
                                GDK_GC_FUNCTION | GDK_GC_FILL |
                                GDK_GC_STIPPLE | GDK_GC_SUBWINDOW);
 
   gdk_gc_set_rgb_fg_color (gc, &fadeout->color);
 
-  for (m = 0; m < gdk_screen_get_n_monitors (screen); ++m)
-    {
-      gdk_screen_get_monitor_geometry (screen, m, &geometry);
-
-      gdk_draw_rectangle (GDK_DRAWABLE (root), gc, TRUE,
-                          geometry.x, geometry.y,
-                          geometry.width, geometry.height);
-    }
+  gdk_drawable_get_size (drawable, &width, &height);
+  gdk_draw_rectangle (drawable, gc, TRUE,
+                      0, 0, width, height);
 
   g_object_unref (G_OBJECT (gc));
   g_object_unref (G_OBJECT (bm));
-
-  fadeout->screens = g_list_prepend (fadeout->screens, screen);
 }
 

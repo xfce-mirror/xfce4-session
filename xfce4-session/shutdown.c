@@ -149,12 +149,6 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   GdkGC *screenshot_gc;
 #endif
 
-  /* XXX - move to other module?! */
-  GdkPixmap *saved = NULL;
-  GdkGC *saved_gc = NULL;
-  int saved_x, saved_y;
-  int saved_w, saved_h;
-
 	g_return_val_if_fail(saveSession != NULL, FALSE);
 	g_return_val_if_fail(shutdownType != NULL, FALSE);
 
@@ -227,8 +221,6 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 
           g_usleep (50 * 1000);
         }
-
-      gdk_x11_grab_server ();
 
 #ifdef SESSION_SCREENSHOTS
       /* grab a screenshot */
@@ -350,19 +342,9 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   /* save portion of the root window covered by the dialog */
   if (!accessibility && shutdown_helper != NULL)
     {
-      GdkWindow *root;
-
-      gtk_window_get_position (GTK_WINDOW (dialog), &saved_x, &saved_y);
-      gtk_window_get_size (GTK_WINDOW (dialog), &saved_w, &saved_h);
-
-      root = gdk_screen_get_root_window (screen);
-      saved = gdk_pixmap_new (GDK_DRAWABLE (root), saved_w, saved_h, -1);
-      saved_gc = gdk_gc_new (GDK_DRAWABLE (saved));
-      gdk_gc_set_function (saved_gc, GDK_COPY);
-      gdk_gc_set_subwindow (saved_gc, TRUE);
-
-      gdk_draw_drawable (GDK_DRAWABLE (saved), saved_gc, GDK_DRAWABLE (root),
-                         saved_x, saved_y, 0, 0, saved_w, saved_h);
+      gtk_widget_realize (dialog);
+      gdk_window_set_override_redirect (dialog->window, TRUE);
+      gdk_window_raise (dialog->window);
     }
 
 	/* need to realize the dialog first! */
@@ -370,7 +352,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   gtk_widget_grab_focus (ok_button);
 
 	/* Grab Keyboard and Mouse pointer */
-  if (!accessibility) 
+  if (!accessibility)
     xfsm_window_grab_input (GTK_WINDOW (dialog));
 
 	/* run the logout dialog */
@@ -393,18 +375,9 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   if (result == GTK_RESPONSE_OK && *shutdownType != SHUTDOWN_LOGOUT
       && xfsm_shutdown_helper_need_password (shutdown_helper))
     {
-      GdkWindow *root;
-
-      root = gdk_screen_get_root_window (screen);
-
-      /* clear the area occupied by the dialog first */
-      if (!accessibility)
-        {
-          gdk_draw_drawable (GDK_DRAWABLE (root), saved_gc, GDK_DRAWABLE(saved),
-                             0, 0, saved_x, saved_y, saved_w, saved_h);
-        }
-
-      gtk_container_remove (GTK_CONTAINER (vbox), radio_vbox);
+      if (checkbox != NULL)
+        gtk_widget_destroy (checkbox);
+      gtk_widget_destroy (radio_vbox);
 
       entry_vbox = gtk_vbox_new (FALSE, BORDER);
       gtk_box_pack_start (GTK_BOX (vbox), entry_vbox, TRUE, TRUE, 0);
@@ -428,19 +401,6 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
       /* center dialog on target monitor */
       xfce_gtk_window_center_on_monitor (GTK_WINDOW (dialog), screen, monitor);
 
-      /* again, save the area below the dialog */
-      if (!accessibility)
-        {
-          g_object_unref (G_OBJECT (saved));
-
-          gtk_window_get_position (GTK_WINDOW (dialog), &saved_x, &saved_y);
-          gtk_window_get_size (GTK_WINDOW (dialog), &saved_w, &saved_h);
-
-          saved = gdk_pixmap_new (GDK_DRAWABLE (root), saved_w, saved_h, -1);
-          gdk_draw_drawable (GDK_DRAWABLE (saved), saved_gc, GDK_DRAWABLE(root),
-                             saved_x, saved_y, 0, 0, saved_w, saved_h);
-        }
-
       gtk_widget_show_now (dialog);
       gtk_widget_grab_focus (entry);
 
@@ -456,16 +416,6 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 
           if (!xfsm_shutdown_helper_send_password (shutdown_helper, pw))
             {
-              gtk_widget_hide (dialog);
-
-              /* clear the area occupied by the dialog first */
-              if (!accessibility)
-                {
-                  gdk_draw_drawable (GDK_DRAWABLE (root), saved_gc,
-                                     GDK_DRAWABLE(saved), 0, 0,
-                                     saved_x, saved_y, saved_w, saved_h);
-                }
-
               gtk_image_set_from_stock (GTK_IMAGE (image),
                                         GTK_STOCK_DIALOG_ERROR,
                                         GTK_ICON_SIZE_DIALOG);
@@ -518,13 +468,6 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
     {
       xfsm_fadeout_destroy (fadeout);
 
-      if (saved != NULL)
-        {
-          g_object_unref (G_OBJECT (saved_gc));
-          g_object_unref (G_OBJECT (saved));
-        }
-
-      gdk_x11_ungrab_server ();
       gdk_pointer_ungrab (GDK_CURRENT_TIME);
       gdk_keyboard_ungrab (GDK_CURRENT_TIME);
       gdk_flush ();

@@ -9,7 +9,7 @@ dnl
 dnl Version information
 m4_define([xfsm_version_major], [4])
 m4_define([xfsm_version_minor], [1])
-m4_define([xfsm_version_micro], [15])
+m4_define([xfsm_version_micro], [16])
 m4_define([xfsm_version], [xfsm_version_major.xfsm_version_minor.xfsm_version_micro])
 
 dnl Initialize autoconf
