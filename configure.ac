@@ -33,6 +33,12 @@ BM_LIBX11_REQUIRE
 dnl Check for session management support
 BM_LIBSM
 
+dnl Check for _IceTransNoListen
+ac_LIBS="$LIBS"
+LIBS="$LIBS $LIBSM_LDFLAGS $LIBSM_LIBS"
+AC_CHECK_FUNCS([_IceTransNoListen])
+LIBS="$ac_LIBS"
+
 dnl Check for i18n support
 BM_I18N([xfce4-session], [az ca de es es_MX fr hi it ko nl no pl sv ta tr zh_CN
 	 zh_TW])

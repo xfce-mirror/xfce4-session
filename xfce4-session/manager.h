@@ -50,7 +50,7 @@ extern gint	shutdownType;
 extern gboolean	shutdownSave;
 
 /* prototypes */
-extern gboolean	manager_init(void);
+extern gboolean	manager_init(gboolean);
 extern gboolean	manager_save(void);
 extern gboolean	manager_restart(void);
 extern gchar	*manager_generate_client_id(SmsConn);

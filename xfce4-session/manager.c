@@ -149,7 +149,7 @@ setenv(const gchar *name, const gchar *value, gboolean overwrite)
 /*
  */
 gboolean
-manager_init(void)
+manager_init(gboolean disable_tcp)
 {
 	char *sessionManager;
 	char error[2048];
@@ -165,6 +165,13 @@ manager_init(void)
 		g_warning("Unable to register XSM protocol: %s", error);
 		return(FALSE);
 	}
+
+#ifdef HAVE__ICETRANSNOLISTEN
+  if (disable_tcp) {
+    extern void _IceTransNoListen(char *);
+    _IceTransNoListen("tcp");
+  }
+#endif
 
 	if (!IceListenForConnections(&numListeners, &listenObjs, 2048,
 			error)) {

@@ -38,6 +38,7 @@
 #ifdef HAVE_SIGNAL_H
 #include <signal.h>
 #endif
+#include <stdio.h>
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
@@ -384,6 +385,7 @@ int
 main(int argc, char **argv)
 {
 	extern gchar *startupSplashTheme;
+  gboolean disable_tcp = FALSE;
 #ifdef HAVE_SIGACTION
 	struct sigaction act;
 #endif
@@ -394,6 +396,37 @@ main(int argc, char **argv)
 	xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
 	gtk_init(&argc, &argv);
+
+  for (++argv; --argc > 0; ++argv) {
+    if (strcmp(*argv, "--version") == 0) {
+      printf("XFce %s %s\n", PACKAGE, VERSION);
+      return(EXIT_SUCCESS);
+    }
+    else if (strcmp(*argv, "--disable-tcp") == 0) {
+#ifdef HAVE__ICETRANSNOLISTEN
+      disable_tcp = TRUE;
+#else
+      g_warning(
+          "_IceTransNoListen() not available on your system, "
+          "--disable-tcp has no effect!");
+#endif
+    }
+    else {
+      fprintf(stderr,
+          "Usage: xfce4-session [OPTION...]\n"
+          "\n"
+          "GTK+\n"
+          "  --display=DISPLAY        X display to use\n"
+          "  --screen=SCREEN          X screen to use\n"
+          "\n"
+          "Application options\n"
+          "  --disable-tcp            Disable binding to TCP ports\n"
+          "  --help                   Print this help message\n"
+          "  --version                Print version information and exit\n"
+          "\n");
+      return(strcmp(*argv, "--help") == 0 ? EXIT_SUCCESS : EXIT_FAILURE);
+    }
+  }
 
 	/*
 	 * fake a clientID for the manager, so smproxy does not recognize
@@ -407,8 +440,8 @@ main(int argc, char **argv)
 		return(EXIT_FAILURE);
 	}
 
-	if (!manager_init())
-		g_error("Unable to initialize session manager");
+	if (!manager_init(disable_tcp))
+    return(EXIT_FAILURE);
 
 	/* make sure the MCS manager is running */
 	if (!mcs_client_check_manager(GDK_DISPLAY(),
