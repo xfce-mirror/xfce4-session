@@ -1,0 +1,359 @@
+# translation of xfce4-session.po to Euskara
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) 1996 THE PACKAGE'S COPYRIGHT HOLDER.
+# Piarres Beobide Egaña <pi@beobide.net>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: xfce4-session\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-01-29 23:40+0100\n"
+"PO-Revision-Date: 1996-01-30 03:49+0100\n"
+"Last-Translator: Piarres Beobide Egaña <pi@beobide.net>\n"
+"Language-Team: Euskara <eu@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit"
+
+#: settings/session.c:228
+msgid "Default Theme"
+msgstr "Lehenetsitako gaia"
+
+#: settings/session.c:233
+msgid "Default splash screen"
+msgstr "Lehenetsitako abiarazpen pantaila"
+
+#: settings/session.c:272
+#, c-format
+msgid "About %s..."
+msgstr "Honi buruz %s..."
+
+#: settings/session.c:294
+msgid "Info:"
+msgstr "Informazioa:"
+
+#: settings/session.c:302
+msgid "Author:"
+msgstr "Egilea:"
+
+#: settings/session.c:378
+#, c-format
+#, fuzzy
+msgid "Unable to install splash theme from file %s: %s"
+msgstr "- Nork s s"
+
+#: settings/session.c:399 settings/session.c:741
+msgid "Install new theme"
+msgstr "Instalatu gai berria"
+
+#: settings/session.c:478 settings/session.c:601 settings/session.c:615
+msgid "Session management"
+msgstr "Saio kudeaketa"
+
+#. General settings
+#: settings/session.c:626
+msgid "General"
+msgstr "Orokorra"
+
+#.
+#: settings/session.c:635
+msgid "Confirm logout"
+msgstr "Berretsi irteera"
+
+#: settings/session.c:637
+#, fuzzy
+msgid ""
+"Should the session manager ask the user to confirm the logout. If disabled, "
+"the session will be closed without any further user interaction."
+msgstr "- ezgaitua."
+
+#: settings/session.c:648
+msgid "Automatically save session on logout"
+msgstr "Automatikoki gabatu sesioa irteterakoan"
+
+#.
+#: settings/session.c:655
+#, fuzzy
+msgid "Show tray icon"
+msgstr "Erakutsi"
+
+#: settings/session.c:657
+#, fuzzy
+msgid ""
+"Show the session managers tray icon in the desktops notification area (also "
+"known as the system tray)."
+msgstr "Erakutsi."
+
+#. Logout action settings
+#: settings/session.c:666
+msgid "Default action on logout"
+msgstr "Saioa ixterako lehenetsitako ekintza"
+
+#.
+#: settings/session.c:678 xfce4-session/shutdown.c:256
+msgid "_Quit current session"
+msgstr "_Utzi saio hau"
+
+#.
+#: settings/session.c:682 xfce4-session/shutdown.c:261
+msgid "_Reboot the computer"
+msgstr "_Berrabiaraz ordenagailua"
+
+#.
+#: settings/session.c:686 xfce4-session/shutdown.c:266
+msgid "_Turn off computer"
+msgstr "_Itzali ordenagailua"
+
+#. Logout action settings
+#: settings/session.c:698
+msgid "Splash screen theme"
+msgstr "Abiarazte pantaila gaia"
+
+#: settings/session.c:722
+msgid ""
+"Select the splash screen theme that should be displayed when the session is "
+"started."
+msgstr "Aukera ezazu saio hasieran erakutsiko den abiarate pantaila"
+
+#: settings/session.c:732
+msgid "Show theme info"
+msgstr "Erakutsi gai informazioa"
+
+#. update the tray icon tip
+#: xfce4-session/ice-layer.c:134 xfce4-session/manager.c:546
+#: xfce4-session/manager.c:904
+#, c-format
+msgid "%u clients connected"
+msgstr "%u bezero konektaturik"
+
+#: xfce4-session/main.c:98
+msgid "desktop"
+msgstr "Idazmahaia"
+
+#: xfce4-session/main.c:125
+msgid "Starting session manager.."
+msgstr "Sesio kudeatzailea abiarazten..."
+
+#: xfce4-session/main.c:145
+#, c-format
+#, fuzzy
+msgid ""
+"Unable to create users XFce settings\n"
+"directory %s: %s"
+msgstr "- s "
+
+#: xfce4-session/main.c:154
+#, c-format
+#, fuzzy
+msgid ""
+"Unable to create users XFce session\n"
+"directory %s: %s"
+msgstr "- s s"
+
+#.
+#: xfce4-session/main.c:300 xfce4-session/session-control.c:269
+msgid "Session control"
+msgstr "Saio kontrola"
+
+#.
+#: xfce4-session/main.c:315
+msgid "Save session"
+msgstr "Gorde saioa"
+
+#.
+#: xfce4-session/main.c:324
+msgid "Quit session"
+msgstr "Irten saiotik"
+
+#: xfce4-session/main.c:459
+#, fuzzy
+msgid ""
+"The session manager was unable to start the\n"
+"Multi-Channel settings manager. This is most\n"
+"often caused by a broken XFce installation.\n"
+"Please contact your local system administrator\n"
+"and report the problem."
+msgstr "- da -  a."
+
+#: xfce4-session/main.c:476
+msgid "Unable to create MCS client"
+msgstr "Ezin da MCS bezeroa sortu"
+
+#: xfce4-session/manager.c:359
+msgid ""
+"The session manager was unable to restore your\n"
+"previous session. It'll therefore start a default\n"
+"session."
+msgstr ""
+"Saio kudeatzailea ez a zure aurreko saio \n"
+"berreskuratzekogai. Beraz lehenetsitako saioa\n"
+"irekiko du jarraian."
+
+#: xfce4-session/manager.c:893
+#, c-format
+msgid ""
+"The client \"%s\" closed the connection\n"
+"to the session manager. The following reason\n"
+"was given:\n"
+"\n"
+"%s"
+msgstr ""
+"\"%s\" bezeroak saio kudeatzailerakiko konexioa\n"
+"moztu du. Honako arrazoi hau\n"
+"eman du\n"
+"\n"
+"%s"
+
+#: xfce4-session/shutdown.c:195
+msgid "Logout session"
+msgstr "Irten"
+
+#: xfce4-session/shutdown.c:225
+#, c-format
+msgid "End session for <b>%s</b>"
+msgstr "Itxi sesioa honentzat:<b>%s</b>"
+
+#.
+#: xfce4-session/shutdown.c:248
+msgid "What do you want to do next?"
+msgstr "Zer egin nahi duzu orain?"
+
+#: xfce4-session/shutdown.c:279
+msgid "_Save session for future logins"
+msgstr "_Gorde sesioa hurrengo abiarazterako"
+
+#: xfce4-session/shutdown.c:360 xfce4-session/shutdown.c:372
+#, c-format
+msgid ""
+"The following error occured while trying to shutdown the computer:\n"
+"\n"
+"%s"
+msgstr ""
+"Errore hau gertatu da ordenagailua itzaltzen saiatzerakoan:"
+"\n"
+"%s"
+
+#.
+#: xfce4-session/splash-screen.c:272
+#, c-format
+msgid "Starting %s..."
+msgstr "%s abiarazten..."
+
+#: xfce4-session/startup.c:150
+msgid "Doing Autostart..."
+msgstr "Autoabiaraztea egina"
+
+#: xfce4-session/startup.c:208
+msgid "Starting session manager..."
+msgstr "Saio kudeatzailea abiarazten..."
+
+#: xfce4-session/session-control.c:73
+msgid "Idle"
+msgstr "Geldirik"
+
+#: xfce4-session/session-control.c:74
+msgid "Interacting"
+msgstr "Elkar-eragiten"
+
+#: xfce4-session/session-control.c:75
+msgid "Save completed"
+msgstr "Gordeketa osoturik"
+
+#: xfce4-session/session-control.c:76
+msgid "Saving"
+msgstr "Gordetzen"
+
+#. global save
+#: xfce4-session/session-control.c:77
+msgid "Saving (local)"
+msgstr "Gordetzen (lokalean)"
+
+#. local save
+#: xfce4-session/session-control.c:78
+msgid "Waiting to interact"
+msgstr "Elkar-eragiteko zain"
+
+#: xfce4-session/session-control.c:79
+msgid "Waiting to enter Phase2"
+msgstr "2. fasean sartzeko zain"
+
+#: xfce4-session/session-control.c:80
+msgid "Disconnecting"
+msgstr "Deskonektatzen"
+
+#: xfce4-session/session-control.c:201
+#, c-format
+msgid "Unable to clone client: %s"
+msgstr "Ezin da bezeroa bikoiztu: %s"
+
+#: xfce4-session/session-control.c:300
+msgid "Priority"
+msgstr "Lehentasuna"
+
+#: xfce4-session/session-control.c:305
+msgid "Program"
+msgstr "Programa"
+
+#: xfce4-session/session-control.c:310
+msgid "User"
+msgstr "Erabiltzailea"
+
+#: xfce4-session/session-control.c:315
+msgid "State"
+msgstr "Egoera"
+
+#. kill button
+#: xfce4-session/session-control.c:334
+msgid "Kill client"
+msgstr "Akabatu bezeroa"
+
+#. clone button
+#: xfce4-session/session-control.c:340
+msgid "Clone client"
+msgstr "Bikoiztu bezeroa"
+
+#: xfce4-session/session-control.c:446 xfce4-session/session-control.c:449
+msgid "Unknown"
+msgstr "Ezezaguna"
+
+#: xfce4-shutdown/main.c:140
+#, c-format
+msgid "Usage: %s <action>\n"
+msgstr "Erabilera: %s<ekintza>\n"
+
+#: xfce4-shutdown/main.c:149
+#, c-format
+msgid "%s: Unknown action %s\n"
+msgstr "%s Ekintza ezezaguna %s\n"
+
+#: xfce4-shutdown/main.c:172
+#, c-format
+msgid ""
+"You are not allowed to execute the action \"%s\".\n"
+"Ask your system adminitrator to add you to the list\n"
+"of people allowed to execute shutdown actions, by\n"
+"adding your username to the file %s.\n"
+msgstr ""
+"Ez zaude \"%s\" ekintza egiteko baimendurik.\n"
+"Eskai iezaiozu sistema kudeatzaileare, zu makina\n"
+"itzaltzeko baimenduta dagoen taldeari gehitzeko, hau \n"
+"zure izena %s fitxategian gehitzen lor dezake.\n"
+
+#: xfce4-shutdown/main.c:226
+#, fuzzy
+msgid ""
+"Unable to shutdown this box. Please check your\n"
+"installation, or contact your system administrator\n"
+"and report the problem.\n"
+msgstr "- markatu edo n"
+
+#: xfce4-shutdown/main.c:248
+#, c-format
+#, fuzzy
+msgid ""
+"Got no way to shutdown the system. You should ask\n"
+"your system administrator to either add your account\n"
+"name to %s or to install sudo(8) and grant\n"
+"you the right execute reboot and halt commands.\n"
+msgstr "Ez - - - s edo - eta zuzena eta n"
+
