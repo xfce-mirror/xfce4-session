@@ -262,7 +262,6 @@ xfsm_client_list_init(XfsmClientList *list)
 	/* window options */
 	gtk_window_set_position(GTK_WINDOW(list), GTK_WIN_POS_CENTER_ALWAYS);
 	gtk_window_set_title(GTK_WINDOW(list), _("Session control"));
-	gtk_window_stick(GTK_WINDOW(list));
 
 	/* */
 	vbox = GTK_DIALOG(list)->vbox;
