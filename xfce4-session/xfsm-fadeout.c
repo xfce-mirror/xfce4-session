@@ -28,12 +28,14 @@
 
 struct _XfsmFadeout
 {
-  GdkColor color;
+  GdkColor color1;
+  GdkColor color2;
   GList   *screens;
 };
 
 
-static void xfsm_fadeout_screen (XfsmFadeout *fadeout, GdkScreen *screen);
+static void xfsm_fadeout_screen_mono (XfsmFadeout *fadeout, GdkScreen *screen);
+static void xfsm_fadeout_screen_poly (XfsmFadeout *fadeout, GdkScreen *screen);
 
 
 static char stipple_data[] = {
@@ -50,10 +52,18 @@ xfsm_fadeout_new (GdkDisplay            *display,
   gint n;
 
   fadeout = g_new0 (XfsmFadeout, 1);
-  xfsm_splash_theme_get_focolor (theme, &fadeout->color);
+  xfsm_splash_theme_get_focolors (theme, &fadeout->color1, &fadeout->color2);
 
-  for (n = 0; n < gdk_display_get_n_screens (display); ++n)
-    xfsm_fadeout_screen (fadeout, gdk_display_get_screen (display, n));
+  if (gdk_color_equal (&fadeout->color1, &fadeout->color2))
+    {
+      for (n = 0; n < gdk_display_get_n_screens (display); ++n)
+        xfsm_fadeout_screen_mono (fadeout, gdk_display_get_screen (display, n));
+    }
+  else
+    {
+      for (n = 0; n < gdk_display_get_n_screens (display); ++n)
+        xfsm_fadeout_screen_poly (fadeout, gdk_display_get_screen (display, n));
+    }
 
   return fadeout;
 }
@@ -95,8 +105,8 @@ xfsm_fadeout_destroy (XfsmFadeout *fadeout)
 
 
 static void
-xfsm_fadeout_screen (XfsmFadeout *fadeout,
-                     GdkScreen   *screen)
+xfsm_fadeout_screen_mono (XfsmFadeout *fadeout,
+                          GdkScreen   *screen)
 {
   GdkRectangle geometry;
   GdkGCValues values;
@@ -118,7 +128,7 @@ xfsm_fadeout_screen (XfsmFadeout *fadeout,
                                GDK_GC_FUNCTION | GDK_GC_FILL |
                                GDK_GC_STIPPLE | GDK_GC_SUBWINDOW);
 
-  gdk_gc_set_rgb_fg_color (gc, &fadeout->color);
+  gdk_gc_set_rgb_fg_color (gc, &fadeout->color1);
 
   for (m = 0; m < gdk_screen_get_n_monitors (screen); ++m)
     {
@@ -127,6 +137,75 @@ xfsm_fadeout_screen (XfsmFadeout *fadeout,
       gdk_draw_rectangle (GDK_DRAWABLE (root), gc, TRUE,
                           geometry.x, geometry.y,
                           geometry.width, geometry.height);
+    }
+
+  g_object_unref (G_OBJECT (gc));
+  g_object_unref (G_OBJECT (bm));
+
+  fadeout->screens = g_list_prepend (fadeout->screens, screen);
+}
+
+
+static void
+fadeout_monitor_poly (GdkDrawable    *drawable,
+                      GdkGC          *gc,
+                      const GdkColor *color1,
+                      const GdkColor *color2,
+                      gint            x,
+                      gint            y, 
+                      gint            width,
+                      gint            height)
+{
+  GdkColor color;
+  gint     i;
+
+  for (i = y; i < y + height; ++i)
+    {
+      color.red = color2->red + (i * (color1->red
+            - color2->red) / height);
+      color.green = color2->green + (i * (color1->green
+            - color2->green) / height);
+      color.blue = color2->blue + (i * (color1->blue
+            - color2->blue) / height);
+
+      gdk_gc_set_rgb_fg_color (gc, &color);
+      gdk_draw_rectangle (drawable, gc, TRUE, x, y + i, width, 1);
+    }
+}
+
+
+static void
+xfsm_fadeout_screen_poly (XfsmFadeout *fadeout,
+                          GdkScreen   *screen)
+{
+  GdkRectangle geometry;
+  GdkGCValues values;
+  GdkWindow *root;
+  GdkBitmap *bm;
+  GdkGC *gc;
+  int m;
+
+  root = gdk_screen_get_root_window (screen);
+
+  bm = gdk_bitmap_create_from_data (root, stipple_data, 2, 2);
+
+  values.function = GDK_COPY;
+  values.fill = GDK_STIPPLED;
+  values.stipple = GDK_PIXMAP (bm);
+  values.subwindow_mode = TRUE;
+
+  gc = gdk_gc_new_with_values (GDK_DRAWABLE (root), &values,
+                               GDK_GC_FUNCTION | GDK_GC_FILL |
+                               GDK_GC_STIPPLE | GDK_GC_SUBWINDOW);
+
+  for (m = 0; m < gdk_screen_get_n_monitors (screen); ++m)
+    {
+      gdk_screen_get_monitor_geometry (screen, m, &geometry);
+
+      fadeout_monitor_poly (GDK_DRAWABLE (root), gc,
+                            &fadeout->color1, &fadeout->color2,
+                            geometry.x, geometry.y,
+                            geometry.width, geometry.height);
     }
 
   g_object_unref (G_OBJECT (gc));

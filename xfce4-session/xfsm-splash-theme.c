@@ -43,15 +43,22 @@
 
 struct _XfsmSplashTheme
 {
-  GdkColor bgcolor;
+  GdkColor bgcolor1;
+  GdkColor bgcolor2;
   GdkColor fgcolor;
-  GdkColor focolor;
+  GdkColor focolor1;
+  GdkColor focolor2;
   gchar   *logo_file;
   gchar   *chooser_icon_file;
   gchar   *skip_icon_file;
 };
 
 
+static void load_color_pair (const XfceRc *rc,
+                             const gchar  *name,
+                             GdkColor     *color1_return,
+                             GdkColor     *color2_return,
+                             const gchar  *color_default);
 static GdkPixbuf *xfsm_splash_theme_load_pixbuf (const gchar *path,
                                                  gint         available_width,
                                                  gint         available_height);
@@ -90,17 +97,13 @@ xfsm_splash_theme_load (const gchar *name)
           goto set_defaults;
         }
 
-      spec = xfce_rc_read_entry (rc, "bgcolor", DEFAULT_BGCOLOR);
-      if (!gdk_color_parse (spec, &theme->bgcolor))
-        gdk_color_parse (DEFAULT_BGCOLOR, &theme->bgcolor);
+      xfce_rc_set_group (rc, "Splash Screen");
+      load_color_pair (rc, "bgcolor", &theme->bgcolor1, &theme->bgcolor2,
+                       DEFAULT_BGCOLOR);
 
       spec = xfce_rc_read_entry (rc, "fgcolor", DEFAULT_FGCOLOR);
       if (!gdk_color_parse (spec, &theme->fgcolor))
         gdk_color_parse (DEFAULT_FGCOLOR, &theme->fgcolor);
-
-      spec = xfce_rc_read_entry (rc, "focolor", DEFAULT_FOCOLOR);
-      if (!gdk_color_parse (spec, &theme->focolor))
-        gdk_color_parse (DEFAULT_FOCOLOR, &theme->focolor);
 
       image_file = xfce_rc_read_entry (rc, "logo", NULL);
       if (image_file != NULL)
@@ -139,6 +142,10 @@ xfsm_splash_theme_load (const gchar *name)
           theme->skip_icon_file = NULL;
         }
 
+      xfce_rc_set_group (rc, "Logout Screen");
+      load_color_pair (rc, "focolor", &theme->focolor1, &theme->focolor2,
+                       DEFAULT_FOCOLOR);
+
       xfce_rc_close (rc);
       g_free (file);
 
@@ -146,8 +153,11 @@ xfsm_splash_theme_load (const gchar *name)
     }
 
 set_defaults:
-  gdk_color_parse (DEFAULT_BGCOLOR, &theme->bgcolor);
+  gdk_color_parse (DEFAULT_BGCOLOR, &theme->bgcolor1);
+  gdk_color_parse (DEFAULT_BGCOLOR, &theme->bgcolor2);
   gdk_color_parse (DEFAULT_FGCOLOR, &theme->fgcolor);
+  gdk_color_parse (DEFAULT_FOCOLOR, &theme->focolor1);
+  gdk_color_parse (DEFAULT_FOCOLOR, &theme->focolor2);
   theme->logo_file = NULL;
 
   return theme;
@@ -159,9 +169,7 @@ xfsm_splash_theme_copy (const XfsmSplashTheme *theme)
 {
   XfsmSplashTheme *new_theme;
 
-  new_theme = g_new0 (XfsmSplashTheme, 1);
-  new_theme->bgcolor = theme->bgcolor;
-  new_theme->fgcolor = theme->fgcolor;
+  new_theme = (XfsmSplashTheme *) g_memdup (theme, sizeof (*theme));
 
   if (theme->logo_file != NULL)
     new_theme->logo_file = g_strdup (theme->logo_file);
@@ -180,7 +188,7 @@ void
 xfsm_splash_theme_get_bgcolor (const XfsmSplashTheme *theme,
                                GdkColor *color_return)
 {
-  memcpy (color_return, &theme->bgcolor, sizeof (*color_return));
+  memcpy (color_return, &theme->bgcolor1, sizeof (*color_return));
 }
 
 
@@ -193,10 +201,12 @@ xfsm_splash_theme_get_fgcolor (const XfsmSplashTheme *theme,
 
 
 void
-xfsm_splash_theme_get_focolor (const XfsmSplashTheme *theme,
-                               GdkColor *color_return)
+xfsm_splash_theme_get_focolors (const XfsmSplashTheme *theme,
+                                GdkColor *color1_return,
+                                GdkColor *color2_return)
 {
-  memcpy (color_return, &theme->focolor, sizeof (*color_return));
+  memcpy (color1_return, &theme->focolor1, sizeof (*color1_return));
+  memcpy (color2_return, &theme->focolor2, sizeof (*color2_return));
 }
 
 
@@ -234,6 +244,47 @@ xfsm_splash_theme_get_chooser_icon (const XfsmSplashTheme *theme,
 
 
 void
+xfsm_splash_theme_draw_gradient (const XfsmSplashTheme *theme,
+                                 GdkDrawable *drawable,
+                                 gint x,
+                                 gint y,
+                                 gint width,
+                                 gint height)
+{
+  GdkColor color;
+  GdkGC   *gc;
+  gint     i;
+
+  gc = gdk_gc_new (drawable);
+  if (gc == NULL)
+    return;
+
+  if (gdk_color_equal (&theme->bgcolor1, &theme->bgcolor2))
+    {
+      gdk_gc_set_rgb_fg_color (gc, &theme->bgcolor1);
+      gdk_draw_rectangle (drawable, gc, TRUE, x, y, width, height);
+    }
+  else
+    {
+      for (i = y; i < y + height; ++i)
+        {
+          color.red = theme->bgcolor2.red + (i * (theme->bgcolor1.red
+                - theme->bgcolor2.red) / height);
+          color.green = theme->bgcolor2.green + (i * (theme->bgcolor1.green
+                - theme->bgcolor2.green) / height);
+          color.blue = theme->bgcolor2.blue + (i * (theme->bgcolor1.blue
+                - theme->bgcolor2.blue) / height);
+
+          gdk_gc_set_rgb_fg_color (gc, &color);
+          gdk_draw_rectangle (drawable, gc, TRUE, x, y + i, width, 1);
+        }
+    }
+
+  g_object_unref (G_OBJECT (gc));
+}
+
+
+void
 xfsm_splash_theme_destroy (XfsmSplashTheme *theme)
 {
   if (theme->logo_file != NULL)
@@ -243,6 +294,50 @@ xfsm_splash_theme_destroy (XfsmSplashTheme *theme)
   if (theme->skip_icon_file != NULL)
     g_free (theme->skip_icon_file);
   g_free (theme);
+}
+
+
+static void
+load_color_pair (const XfceRc *rc,
+                 const gchar  *name,
+                 GdkColor     *color1_return, 
+                 GdkColor     *color2_return,
+                 const gchar  *color_default)
+{
+  const gchar *spec;
+  gchar      **s;
+
+  spec = xfce_rc_read_entry (rc, name, color_default);
+  if (spec == NULL)
+    {
+      gdk_color_parse (color_default, color1_return);
+      gdk_color_parse (color_default, color2_return);
+    }
+  else
+    {
+      s = g_strsplit (spec, ":", 2);
+
+      if (s[0] == NULL)
+        {
+          gdk_color_parse (color_default, color1_return);
+          gdk_color_parse (color_default, color2_return);
+        }
+      else if (s[1] == NULL)
+        {
+          if (!gdk_color_parse (s[0], color1_return))
+            gdk_color_parse (color_default, color1_return);
+          *color2_return = *color1_return;
+        }
+      else
+        {
+          if (!gdk_color_parse (s[0], color2_return))
+            gdk_color_parse (color_default, color2_return);
+          if (!gdk_color_parse (s[1], color1_return))
+            *color1_return = *color2_return;
+        }
+
+      g_strfreev (s);
+    }
 }
 
 

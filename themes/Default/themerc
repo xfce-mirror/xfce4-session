@@ -3,10 +3,38 @@
 # NOTE: File format is not yet frozen!
 #
 
-# Splash theme settings
-bgcolor=White
-fgcolor=Black
-logo=logo
+#
+# Info section
+#
+[Info]
+Author=Francois Le Clainche <fleclainche@wanadoo.fr>;Benedikt Meurer <benny@xfce.org>
+Name=Default Theme
+Name[de]=Standard Thema
 
-# logout theme settings
-focolor=Grey10
+
+#
+# splash screen settings
+#
+[Splash Screen]
+# The background color, can be a single color or a vertical gradient. The
+# latter is written as <color1>:<color2>.
+bgcolor=Black:#7991ae
+# The foreground color, used for text.
+fgcolor=#fefefe
+# The logo file, if the extension is missing, xfce4-session will search
+# for .svg, .png, .xpm
+logo=logo
+# The chooser icon, used for the chooser button on the left-bottom edge,
+# see the comment on extensions for logo.
+chooser_icon=chooser_icon
+# The skip icon, used for the skip button on the left-bottom edge,
+# see the comment on extensions for logo.
+skip_icon=skip_icon
+
+
+#
+# logout screen settings
+#
+[Logout Screen]
+# The fadeout color, can be gradient
+focolor=Black:#fefefe

@@ -371,6 +371,8 @@ xfsm_splash_screen_new (GdkDisplay *display,
 
       for (m = 0; m < gdk_screen_get_n_monitors (screen); ++m)
         {
+          GdkRectangle area;
+
           xfsm_splash_theme_get_bgcolor (theme, &color);
           window = create_fullscreen_window (screen, m, &color);
 
@@ -379,15 +381,24 @@ xfsm_splash_screen_new (GdkDisplay *display,
           gdk_gc_set_rgb_fg_color (gc, &color);
           gdk_gc_set_function (gc, GDK_COPY);
 
+          gdk_screen_get_monitor_geometry (screen, m, &area);
+
+          /* draw the gradient (if any) */
+          xfsm_splash_theme_draw_gradient (theme,
+                                           GDK_DRAWABLE (window),
+                                           area.x,
+                                           area.y,
+                                           area.width,
+                                           area.height);
+
           if (n == 0 && m == 0) {
             /* first window is handled special */
             splash->main_screen = screen;
             splash->main_monitor = m;
             splash->window = window;
             splash->copy_gc = gc;
-            gdk_drawable_get_size (GDK_DRAWABLE (splash->window),
-                                   &splash->screen_w,
-                                   &splash->screen_h);
+            splash->screen_w = area.width;
+            splash->screen_h = area.height;
             splash->colormap = gdk_screen_get_rgb_colormap (screen);
 
             splash->backbuf = gdk_pixmap_new (GDK_DRAWABLE (splash->window),
@@ -396,10 +407,6 @@ xfsm_splash_screen_new (GdkDisplay *display,
                                               -1);
           }
           else {
-            GdkRectangle area;
-
-            gdk_screen_get_monitor_geometry (screen, m, &area);
-
             gdk_draw_layout (GDK_DRAWABLE (window), gc,
                              area.x + (area.width - w) / 2,
                              area.y + (area.height - h) / 2,
@@ -453,6 +460,15 @@ xfsm_splash_screen_new (GdkDisplay *display,
     g_object_unref (l);
   }
 
+  /* draw the gradient (if any) */
+  xfsm_splash_theme_draw_gradient (theme,
+                                   GDK_DRAWABLE (splash->backbuf),
+                                   0,
+                                   0,
+                                   splash->screen_w,
+                                   splash->screen_h - splash->text_h);
+
+  /* display the logo pixbuf (if any) */
   pb = xfsm_splash_theme_get_logo (theme,
                                    splash->screen_w,
                                    splash->screen_h - splash->text_h);

@@ -38,8 +38,9 @@ void xfsm_splash_theme_get_bgcolor (const XfsmSplashTheme *theme,
 void xfsm_splash_theme_get_fgcolor (const XfsmSplashTheme *theme,
                                     GdkColor *color_return);
 
-void xfsm_splash_theme_get_focolor (const XfsmSplashTheme *theme,
-                                    GdkColor *color_return);
+void xfsm_splash_theme_get_focolors (const XfsmSplashTheme *theme,
+                                     GdkColor *color1_return,
+                                     GdkColor *color2_return);
 
 GdkPixbuf *xfsm_splash_theme_get_logo (const XfsmSplashTheme *theme,
                                        gint available_width,
@@ -52,6 +53,13 @@ GdkPixbuf *xfsm_splash_theme_get_skip_icon (const XfsmSplashTheme *theme,
 GdkPixbuf *xfsm_splash_theme_get_chooser_icon (const XfsmSplashTheme *theme,
                                                gint available_width,
                                                gint available_height);
+
+void xfsm_splash_theme_draw_gradient (const XfsmSplashTheme *theme,
+                                      GdkDrawable *drawable,
+                                      gint x,
+                                      gint y,
+                                      gint width,
+                                      gint height);
 
 void xfsm_splash_theme_destroy (XfsmSplashTheme *theme);
 
