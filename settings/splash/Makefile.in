@@ -237,6 +237,7 @@ splash_settings_la_SOURCES = \
 	splash.c
 
 splash_settings_la_CFLAGS = \
+	-I$(top_srcdir)							\
 	@XFCE_MCS_MANAGER_CFLAGS@					\
 	-DMODULESDIR=\"$(libdir)/xfce4/splash/engines\"			\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"

@@ -635,8 +635,6 @@ dvi: dvi-recursive
 
 dvi-am:
 
-html: html-recursive
-
 info: info-recursive
 
 info-am:
@@ -693,6 +691,9 @@ uninstall-info: uninstall-info-recursive
 
 distclean-local:
 	rm -rf xfce4-session.spec *.cache *~
+
+html:
+	make -C docs html
 
 rpm: dist
 	rpmbuild -ta $(PACKAGE)-$(VERSION).tar.gz

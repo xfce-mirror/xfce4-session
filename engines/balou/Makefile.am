@@ -17,6 +17,7 @@ libbalou_la_SOURCES =							\
 	gnome-uri.h
 
 libbalou_la_CFLAGS =							\
+	-I$(top_srcdir)							\
 	@LIBXFCEGUI4_CFLAGS@						\
 	-DBALOU_EXPORT_THEME=\"$(libexecdir)/balou-export-theme\"	\
 	-DBALOU_INSTALL_THEME=\"$(libexecdir)/balou-install-theme\"

@@ -8,6 +8,7 @@ libxfsm_la_SOURCES =							\
 	xfsm-util.c
 
 libxfsm_la_CFLAGS =							\
+	-I$(top_srcdir)							\
 	@LIBX11_CFLAGS@							\
 	@LIBXFCEGUI4_CFLAGS@
 
@@ -55,6 +56,7 @@ xfce4_session_SOURCES =							\
 	xfsm-startup.h
 
 xfce4_session_CFLAGS =							\
+	-I$(top_srcdir)							\
 	@GNOME_CFLAGS@							\
 	@LIBSM_CFLAGS@							\
 	@LIBX11_CFLAGS@							\

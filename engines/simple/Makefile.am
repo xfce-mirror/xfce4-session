@@ -8,6 +8,7 @@ libsimple_la_SOURCES =							\
 	simple.c
 
 libsimple_la_CFLAGS =							\
+	-I$(top_srcdir)							\
 	@LIBX11_CFLAGS@							\
 	@LIBXFCEGUI4_CFLAGS@
 

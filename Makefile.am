@@ -25,6 +25,9 @@ EXTRA_DIST =								\
 	xfce4-session.spec						\
 	xfce4-session.spec.in
 
+html:
+	make -C docs html
+
 rpm: dist
 	rpmbuild -ta $(PACKAGE)-$(VERSION).tar.gz
 	@rm -f $(PACKAGE)-$(VERSION).tar.gz

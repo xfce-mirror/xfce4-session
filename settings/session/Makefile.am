@@ -11,6 +11,7 @@ session_settings_la_SOURCES =						\
 	session.c
 
 session_settings_la_CFLAGS =						\
+	-I$(top_srcdir)							\
 	@XFCE_MCS_MANAGER_CFLAGS@					\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"
 

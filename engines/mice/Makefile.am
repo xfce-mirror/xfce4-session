@@ -8,6 +8,7 @@ libmice_la_SOURCES =							\
 	mice.c
 
 libmice_la_CFLAGS =							\
+	-I$(top_srcdir)							\
 	@LIBXFCEGUI4_CFLAGS@
 
 libmice_la_LDFLAGS =							\

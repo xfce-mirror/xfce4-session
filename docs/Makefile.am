@@ -6,3 +6,6 @@ noinst_DATA =								\
 	README.Kiosk
 
 EXTRA_DIST = $(noinst_DATA)
+
+html:
+	make -C C html
