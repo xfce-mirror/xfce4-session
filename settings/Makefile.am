@@ -24,7 +24,8 @@ noinst_DATA =								\
 	session-icon.h
 
 EXTRA_DIST =								\
-	session.png
+	session.png								\
+	xfce-session-settings.desktop
 
 appsdir = $(datadir)/applications
 apps_DATA = xfce-session-settings.desktop
