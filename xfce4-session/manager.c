@@ -646,7 +646,6 @@ save_yourself_phase2_request(SmsConn smsConn, Client *client)
 		 * send the save yourself phase2.
 		 */
 		SmsSaveYourselfPhase2(client->smsConn);
-		/*client->state = CLIENT_PHASE2;*/
 		return;
 	}
 
@@ -663,7 +662,7 @@ save_yourself_phase2_request(SmsConn smsConn, Client *client)
 	/* ok, we are ready to enter SaveYourselfPhase2 */
 	for (lp = g_list_first(clients); lp; lp = lp->next) {
 		if (client_state(lp->data) == CLIENT_WAITFORPHASE2) {
-			client_set_state(lp->data, CLIENT_PHASE2);
+			client_set_state(lp->data, CLIENT_SAVING);
 			SmsSaveYourselfPhase2(CLIENT(lp->data)->smsConn);
 		}
 	}
@@ -685,8 +684,7 @@ save_yourself_done(SmsConn smsConn, Client *client, Bool success)
 	}
 
 	/* validate client requests */
-	if (client_state(client) != CLIENT_PHASE2 &&
-	    client_state(client) != CLIENT_SAVING) {
+	if (client_state(client) != CLIENT_SAVING) {
 #ifdef DEBUG
 		g_warning("The client %s which is neither in SaveYourself "
 			  "nor in SaveYourselfPhase2 state send a "
@@ -726,7 +724,7 @@ save_yourself_done(SmsConn smsConn, Client *client, Bool success)
 			if (CLIENT(lp->data)->state != CLIENT_WAITFORPHASE2)
 				continue;
 
-			client_set_state(lp->data, CLIENT_PHASE2);
+			client_set_state(lp->data, CLIENT_SAVING);
 			SmsSaveYourselfPhase2(CLIENT(lp->data)->smsConn);
 		}
 

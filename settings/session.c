@@ -39,6 +39,9 @@
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
 #include <libxfce4mcs/mcs-manager.h>
 #include <libxfce4util/debug.h>
@@ -360,8 +363,13 @@ do_install_theme(GtkWidget *dialog, gpointer data)
 	error = NULL;
 
 	/* check if users splash themes directory exists */
-	if (!g_file_test(dir, G_FILE_TEST_IS_DIR))
+	if (!g_file_test(dir, G_FILE_TEST_IS_DIR)) {
+#ifdef HAVE_MKDIR
 		(void)mkdir(dir, 0755);
+#else
+		(void)execlp("mkdir", "mkdir", dir, NULL);
+#endif
+	}
 
 	if (!g_spawn_sync(dir, argv, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL,
 				NULL, NULL, NULL, &error)) {

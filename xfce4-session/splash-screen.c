@@ -39,13 +39,14 @@
 #include <string.h>
 #endif
 
+#include <gtk/gtk.h>
 #include <libxfce4util/i18n.h>
 #include <libxfce4util/util.h>
 #include <libxfcegui4/libxfcegui4.h>
-#include <gtk/gtk.h>
 
-#include <xfce4-session/splash-screen.h>
 #include <xfce4-session/splash-fallback.h>
+#include <xfce4-session/splash-screen.h>
+#include <xfce4-session/util.h>
 
 /* max number of pictures for a splash theme */
 #define	MAX_PICTURES	25
@@ -132,6 +133,12 @@ xfsm_splash_screen_init(XfsmSplashScreen *splash)
 	gtk_widget_realize(GTK_WIDGET(splash));
 	gdk_window_set_cursor(GTK_WIDGET(splash)->window,
 			gdk_cursor_new(GDK_WATCH));
+
+	/* */
+#if GTK_CHECK_VERSION(2, 2, 0)
+	gdk_window_set_skip_pager_hint(GTK_WIDGET(splash)->window, TRUE);
+	gdk_window_set_skip_taskbar_hint(GTK_WIDGET(splash)->window, TRUE);
+#endif
 
 	/* */
 	vbox = gtk_vbox_new(FALSE, 1);

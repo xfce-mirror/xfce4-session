@@ -28,10 +28,11 @@
 #include <config.h>
 #endif /* !HAVE_CONFIG_H */
 
+#include <gtk/gtk.h>
 #include <libxfce4util/i18n.h>
 #include <libxfcegui4/libxfcegui4.h>
-#include <gtk/gtk.h>
 
+#include <settings/session-icon.h>
 #include <xfce4-session/client.h>
 #include <xfce4-session/client-list.h>
 #include <xfce4-session/util.h>
@@ -72,10 +73,9 @@ static const gchar *state_names[] = {
 	N_("Interacting"),
 	N_("Save completed"),
 	N_("Saving"),			/* global save */
-	N_("Saving"),			/* local save */
+	N_("Saving (local)"),		/* local save */
 	N_("Waiting to interact"),
 	N_("Waiting to enter Phase2"),
-	N_("Saving (Phase2)"),
 	N_("Disconnecting"),
 	NULL
 };
@@ -253,6 +253,7 @@ xfsm_client_list_init(XfsmClientList *list)
 	GtkTreeSelection *selection;
 	GtkCellRenderer *renderer;
 	GtkListStore *store;
+	GdkPixbuf *icon;
 	GtkWidget *swin;
 	GtkWidget *vbox;
 
@@ -262,6 +263,11 @@ xfsm_client_list_init(XfsmClientList *list)
 	/* window options */
 	gtk_window_set_position(GTK_WINDOW(list), GTK_WIN_POS_CENTER_ALWAYS);
 	gtk_window_set_title(GTK_WINDOW(list), _("Session control"));
+
+	/* set window icon */
+	icon = gdk_pixbuf_new_from_inline(-1, session_icon_data, FALSE, NULL);
+	gtk_window_set_icon(GTK_WINDOW(list), icon);
+	g_object_unref(G_OBJECT(icon));
 
 	/* */
 	vbox = GTK_DIALOG(list)->vbox;

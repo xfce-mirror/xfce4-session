@@ -1753,7 +1753,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=xfce4-session
- VERSION=0.0.24
+ VERSION=0.1.0
 
 
 cat >>confdefs.h <<_ACEOF
@@ -19469,7 +19469,8 @@ fi
 
 
 
-for ac_func in gethostname setenv sigaction
+
+for ac_func in gethostname mkdir setenv sigaction
 do
 as_ac_var=`echo "ac_cv_func_$ac_func" | $as_tr_sh`
 echo "$as_me:$LINENO: checking for $ac_func" >&5

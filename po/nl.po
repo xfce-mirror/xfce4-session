@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2003-07-13 10:10+0200\n"
+"POT-Creation-Date: 2003-07-13 18:14+0200\n"
 "PO-Revision-Date: 2003-07-08 15:00+0200\n"
 "Last-Translator: Jasper Huijsmans <huysmans@users.sourceforge.net>\n"
 "Language-Team: Nederlands <NL@li.org>\n"
@@ -15,80 +15,80 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: settings/session.c:219
+#: settings/session.c:226
 msgid "Default Theme"
 msgstr "Standaard Thema"
 
-#: settings/session.c:224
+#: settings/session.c:231
 msgid "Default splash screen"
 msgstr "Standaard splash screen"
 
-#: settings/session.c:263
+#: settings/session.c:270
 #, c-format
 msgid "About %s..."
 msgstr "Over %s..."
 
-#: settings/session.c:285
+#: settings/session.c:292
 msgid "Info:"
 msgstr "Info:"
 
-#: settings/session.c:293
+#: settings/session.c:300
 msgid "Author:"
 msgstr "Auteur:"
 
-#: settings/session.c:360
+#: settings/session.c:376
 #, c-format
 msgid "Unable to install splash theme from file %s: %s"
 msgstr "Kan splash screen niet installeren uit bestand %s: %s"
 
-#: settings/session.c:381 settings/session.c:684
+#: settings/session.c:397 settings/session.c:700
 msgid "Install new theme"
 msgstr "Nieuw thema installeren"
 
-#: settings/session.c:450 settings/session.c:561 settings/session.c:575
+#: settings/session.c:466 settings/session.c:577 settings/session.c:591
 msgid "Session management"
 msgstr "Sessiebeheer"
 
 #. General settings
-#: settings/session.c:586
+#: settings/session.c:602
 msgid "General"
 msgstr "Algemeen"
 
 #.
-#: settings/session.c:595
+#: settings/session.c:611
 msgid "Confirm logout"
 msgstr "Uitloggen bevestigen"
 
-#: settings/session.c:604
+#: settings/session.c:620
 msgid "Automatically save session on logout"
 msgstr "Automatisch sessie bewaren bij uitloggen"
 
 #. Logout action settings
-#: settings/session.c:612
+#: settings/session.c:628
 msgid "Default action on logout"
 msgstr "Standaard actie bij uitloggen"
 
 #.
-#: settings/session.c:624 xfce4-session/shutdown.c:252
+#: settings/session.c:640 xfce4-session/shutdown.c:252
 msgid "_Quit current session"
 msgstr "_Huidige sessie afsluiten"
 
 #.
-#: settings/session.c:628 xfce4-session/shutdown.c:257
+#: settings/session.c:644 xfce4-session/shutdown.c:257
 msgid "_Reboot the computer"
 msgstr "Computer opnieuw _opstarten"
 
 #.
-#: settings/session.c:632 xfce4-session/shutdown.c:262
+#: settings/session.c:648 xfce4-session/shutdown.c:262
 msgid "_Turn off computer"
 msgstr "Computer _afsluiten"
 
 #. Logout action settings
-#: settings/session.c:644
+#: settings/session.c:660
 msgid "Splash screen theme"
 msgstr "Splash screen thema"
 
-#: settings/session.c:675
+#: settings/session.c:691
 msgid "Show theme info"
 msgstr "Thema informatie"
 
@@ -119,7 +119,7 @@ msgstr ""
 "XFce sessie niet creëren: %s: %s"
 
 #.
-#: xfce4-session/main.c:289 xfce4-session/client-list.c:264
+#: xfce4-session/main.c:289 xfce4-session/client-list.c:265
 #, fuzzy
 msgid "Session control"
 msgstr "Sessiebeheer"
@@ -163,12 +163,12 @@ msgstr ""
 "Een standaard sessie zal worden gestart."
 
 #. update the tray icon tooltip
-#: xfce4-session/manager.c:524 xfce4-session/manager.c:835
+#: xfce4-session/manager.c:524 xfce4-session/manager.c:833
 #, c-format
 msgid "%u clients connected"
 msgstr ""
 
-#: xfce4-session/manager.c:824
+#: xfce4-session/manager.c:822
 #, c-format
 msgid ""
 "The client \"%s\" closed the connection\n"
@@ -212,7 +212,7 @@ msgstr ""
 "%s"
 
 #.
-#: xfce4-session/splash-screen.c:264
+#: xfce4-session/splash-screen.c:271
 #, c-format
 msgid "Starting %s..."
 msgstr "Bezig met starten %s..."
@@ -225,34 +225,34 @@ msgstr "Bezig met uitvoeren Autostart..."
 msgid "Starting session manager..."
 msgstr "Bezig met starten sesiebeheerder"
 
-#: xfce4-session/client-list.c:71
+#: xfce4-session/client-list.c:72
 msgid "Idle"
 msgstr ""
 
-#: xfce4-session/client-list.c:72
+#: xfce4-session/client-list.c:73
 msgid "Interacting"
 msgstr ""
 
-#: xfce4-session/client-list.c:73
+#: xfce4-session/client-list.c:74
 msgid "Save completed"
 msgstr ""
 
-#. global save
-#: xfce4-session/client-list.c:74 xfce4-session/client-list.c:75
+#: xfce4-session/client-list.c:75
 msgid "Saving"
 msgstr ""
 
-#. local save
+#. global save
 #: xfce4-session/client-list.c:76
+msgid "Saving (local)"
+msgstr ""
+
+#. local save
+#: xfce4-session/client-list.c:77
 msgid "Waiting to interact"
 msgstr ""
 
-#: xfce4-session/client-list.c:77
-msgid "Waiting to enter Phase2"
-msgstr ""
-
 #: xfce4-session/client-list.c:78
-msgid "Saving (Phase2)"
+msgid "Waiting to enter Phase2"
 msgstr ""
 
 #: xfce4-session/client-list.c:79
@@ -264,33 +264,33 @@ msgstr ""
 msgid "Unable to clone client: %s"
 msgstr "Kan MCS client niet creëren"
 
-#: xfce4-session/client-list.c:288
+#: xfce4-session/client-list.c:293
 msgid "Program"
 msgstr ""
 
-#: xfce4-session/client-list.c:293
+#: xfce4-session/client-list.c:298
 msgid "User"
 msgstr ""
 
-#: xfce4-session/client-list.c:300
+#: xfce4-session/client-list.c:305
 msgid "Priority"
 msgstr ""
 
-#: xfce4-session/client-list.c:305
+#: xfce4-session/client-list.c:310
 msgid "State"
 msgstr ""
 
 #. kill button
-#: xfce4-session/client-list.c:324
+#: xfce4-session/client-list.c:329
 msgid "Kill client"
 msgstr ""
 
 #. clone button
-#: xfce4-session/client-list.c:330
+#: xfce4-session/client-list.c:335
 msgid "Clone client"
 msgstr ""
 
-#: xfce4-session/client-list.c:436 xfce4-session/client-list.c:439
+#: xfce4-session/client-list.c:441 xfce4-session/client-list.c:444
 msgid "Unknown"
 msgstr ""
 

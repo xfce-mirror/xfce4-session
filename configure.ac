@@ -7,7 +7,7 @@ AC_INIT([configure.ac])
 
 AM_CONFIG_HEADER([config.h])
 
-AM_INIT_AUTOMAKE([xfce4-session], [0.0.24])
+AM_INIT_AUTOMAKE([xfce4-session], [0.1.0])
 
 AM_MAINTAINER_MODE
 
@@ -23,7 +23,7 @@ AC_PROG_LIBTOOL
 
 dnl check for standard header files
 AC_HEADER_STDC
-AC_CHECK_FUNCS([gethostname setenv sigaction])
+AC_CHECK_FUNCS([gethostname mkdir setenv sigaction])
 AC_CHECK_HEADERS([errno.h fcntl.h limits.h signal.h sys/param.h sys/utsname.h \
   sys/wait.h time.h])
 

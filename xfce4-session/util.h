@@ -40,5 +40,11 @@ extern gchar	*xfce_gethostname(void);
 
 extern GtkWidget	*xfsm_imgbtn_new(const gchar *, const gchar *);
 
+#if 0
+/* NOT YET: Does not work when no NET wm is running */
+extern void		netk_gtk_window_set_skip_pager(GtkWindow *, gboolean);
+extern void		netk_gtk_window_set_skip_tasklist(GtkWindow *,gboolean);
+#endif
+
 #endif	/* !__XFSM_UTIL_H__ */
 

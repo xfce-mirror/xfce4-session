@@ -49,9 +49,12 @@
 #include <unistd.h>
 #endif
 
+#include <X11/Xlib.h>
+
+#include <gdk/gdkx.h>
 #include <glib.h>
 
-#include "util.h"
+#include <xfce4-session/util.h>
 
 /*
  * Read a string from session file
@@ -182,3 +185,72 @@ xfsm_imgbtn_new(const gchar *text, const gchar *icon)
 	return(button);
 }
 
+#if 0
+/*
+ * XXX - move this to libxfcegui4
+ */
+static void
+set_skip_pager_handler(GtkWidget *widget, gpointer data)
+{
+	extern void p_netk_change_state(Screen *, Window, gboolean, Atom, Atom);
+	extern Atom p_netk_atom_get(const char *);
+
+	p_netk_change_state(DefaultScreenOfDisplay(GDK_DISPLAY()),
+			GDK_WINDOW_XWINDOW(widget->window),
+			GPOINTER_TO_UINT(data),
+			p_netk_atom_get("_NET_WM_STATE_SKIP_PAGER"), 0);
+}
+
+/*
+ * XXX - move this to libxfcegui4
+ */
+static void
+set_skip_tasklist_handler(GtkWidget *widget, gpointer data)
+{
+	extern void p_netk_change_state(Screen *, Window, gboolean, Atom, Atom);
+	extern Atom p_netk_atom_get(const char *);
+
+	p_netk_change_state(DefaultScreenOfDisplay(GDK_DISPLAY()),
+			GDK_WINDOW_XWINDOW(widget->window),
+			GPOINTER_TO_UINT(data),
+			p_netk_atom_get("_NET_WM_STATE_SKIP_TASKBAR"), 0);
+}
+
+/*
+ * XXX - move this to libxfcegui4
+ */
+void
+netk_gtk_window_set_skip_pager(GtkWindow *window, gboolean value)
+{
+	g_return_if_fail(GTK_IS_WINDOW(window));
+
+	if (GTK_WIDGET_REALIZED(window)) {
+		set_skip_pager_handler(GTK_WIDGET(window),
+				GUINT_TO_POINTER(value));
+	}
+
+	/* XXX - the handler should be removed prior to connecting a new one */
+	g_signal_connect(G_OBJECT(window), "realize",
+		G_CALLBACK(set_skip_pager_handler),
+		GUINT_TO_POINTER(value));
+}
+
+/*
+ * XXX - move this to libxfcegui4
+ */
+void
+netk_gtk_window_set_skip_tasklist(GtkWindow *window, gboolean value)
+{
+	g_return_if_fail(GTK_IS_WINDOW(window));
+
+	if (GTK_WIDGET_REALIZED(window)) {
+		set_skip_tasklist_handler(GTK_WIDGET(window),
+				GUINT_TO_POINTER(value));
+	}
+
+	/* XXX - the handler should be removed prior to connecting a new one */
+	g_signal_connect(G_OBJECT(window), "realize",
+		G_CALLBACK(set_skip_tasklist_handler),
+		GUINT_TO_POINTER(value));
+}
+#endif

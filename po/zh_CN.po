@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XFSession 0.0.15\n"
-"POT-Creation-Date: 2003-07-13 10:10+0200\n"
+"POT-Creation-Date: 2003-07-13 18:14+0200\n"
 "PO-Revision-Date: 2003-07-10 13:10+0200\n"
 "Last-Translator: Yongtao Yang <yongtao.yang@telia.com>\n"
 "Language-Team: none <none@none>\n"
@@ -17,80 +17,80 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: settings/session.c:219
+#: settings/session.c:226
 msgid "Default Theme"
 msgstr "默认主题"
 
-#: settings/session.c:224
+#: settings/session.c:231
 msgid "Default splash screen"
 msgstr "默认飞溅屏幕"
 
-#: settings/session.c:263
+#: settings/session.c:270
 #, c-format
 msgid "About %s..."
 msgstr "关于 %s..."
 
-#: settings/session.c:285
+#: settings/session.c:292
 msgid "Info:"
 msgstr "信息:"
 
-#: settings/session.c:293
+#: settings/session.c:300
 msgid "Author:"
 msgstr "作者:"
 
-#: settings/session.c:360
+#: settings/session.c:376
 #, c-format
 msgid "Unable to install splash theme from file %s: %s"
 msgstr "无法从文件 %s 中安装飞溅屏幕主题: %s"
 
-#: settings/session.c:381 settings/session.c:684
+#: settings/session.c:397 settings/session.c:700
 msgid "Install new theme"
 msgstr "安装新主题"
 
-#: settings/session.c:450 settings/session.c:561 settings/session.c:575
+#: settings/session.c:466 settings/session.c:577 settings/session.c:591
 msgid "Session management"
 msgstr "会话管理"
 
 #. General settings
-#: settings/session.c:586
+#: settings/session.c:602
 msgid "General"
 msgstr "通用"
 
 #.
-#: settings/session.c:595
+#: settings/session.c:611
 msgid "Confirm logout"
 msgstr "注销确认"
 
-#: settings/session.c:604
+#: settings/session.c:620
 msgid "Automatically save session on logout"
 msgstr "注销时自动保存会话"
 
 #. Logout action settings
-#: settings/session.c:612
+#: settings/session.c:628
 msgid "Default action on logout"
 msgstr "注销时的默认动作"
 
 #.
-#: settings/session.c:624 xfce4-session/shutdown.c:252
+#: settings/session.c:640 xfce4-session/shutdown.c:252
 msgid "_Quit current session"
 msgstr "退出当前会话(_Q)"
 
 #.
-#: settings/session.c:628 xfce4-session/shutdown.c:257
+#: settings/session.c:644 xfce4-session/shutdown.c:257
 msgid "_Reboot the computer"
 msgstr "重新启动计算机(_R)"
 
 #.
-#: settings/session.c:632 xfce4-session/shutdown.c:262
+#: settings/session.c:648 xfce4-session/shutdown.c:262
 msgid "_Turn off computer"
 msgstr "关闭计算机(_T)"
 
 #. Logout action settings
-#: settings/session.c:644
+#: settings/session.c:660
 msgid "Splash screen theme"
 msgstr "飞溅屏幕主题"
 
-#: settings/session.c:675
+#: settings/session.c:691
 msgid "Show theme info"
 msgstr "显示主题信息"
 
@@ -117,7 +117,7 @@ msgid ""
 msgstr "msgstr \"无法创建用户的XFce会话目录 %s: %s\""
 
 #.
-#: xfce4-session/main.c:289 xfce4-session/client-list.c:264
+#: xfce4-session/main.c:289 xfce4-session/client-list.c:265
 msgid "Session control"
 msgstr "会话控制"
 
@@ -159,12 +159,12 @@ msgstr ""
 "默认会话。"
 
 #. update the tray icon tooltip
-#: xfce4-session/manager.c:524 xfce4-session/manager.c:835
+#: xfce4-session/manager.c:524 xfce4-session/manager.c:833
 #, c-format
 msgid "%u clients connected"
 msgstr ""
 
-#: xfce4-session/manager.c:824
+#: xfce4-session/manager.c:822
 #, c-format
 msgid ""
 "The client \"%s\" closed the connection\n"
@@ -207,7 +207,7 @@ msgstr ""
 "%s"
 
 #.
-#: xfce4-session/splash-screen.c:264
+#: xfce4-session/splash-screen.c:271
 #, c-format
 msgid "Starting %s..."
 msgstr "启动 %s..."
@@ -220,34 +220,34 @@ msgstr "执行自动启动..."
 msgid "Starting session manager..."
 msgstr "启动会话管理器..."
 
-#: xfce4-session/client-list.c:71
+#: xfce4-session/client-list.c:72
 msgid "Idle"
 msgstr ""
 
-#: xfce4-session/client-list.c:72
+#: xfce4-session/client-list.c:73
 msgid "Interacting"
 msgstr ""
 
-#: xfce4-session/client-list.c:73
+#: xfce4-session/client-list.c:74
 msgid "Save completed"
 msgstr ""
 
-#. global save
-#: xfce4-session/client-list.c:74 xfce4-session/client-list.c:75
+#: xfce4-session/client-list.c:75
 msgid "Saving"
 msgstr ""
 
-#. local save
+#. global save
 #: xfce4-session/client-list.c:76
+msgid "Saving (local)"
+msgstr ""
+
+#. local save
+#: xfce4-session/client-list.c:77
 msgid "Waiting to interact"
 msgstr ""
 
-#: xfce4-session/client-list.c:77
-msgid "Waiting to enter Phase2"
-msgstr ""
-
 #: xfce4-session/client-list.c:78
-msgid "Saving (Phase2)"
+msgid "Waiting to enter Phase2"
 msgstr ""
 
 #: xfce4-session/client-list.c:79
@@ -259,33 +259,33 @@ msgstr ""
 msgid "Unable to clone client: %s"
 msgstr "无法复制客户：%s"
 
-#: xfce4-session/client-list.c:288
+#: xfce4-session/client-list.c:293
 msgid "Program"
 msgstr "程序"
 
-#: xfce4-session/client-list.c:293
+#: xfce4-session/client-list.c:298
 msgid "User"
 msgstr "用户"
 
-#: xfce4-session/client-list.c:300
+#: xfce4-session/client-list.c:305
 msgid "Priority"
 msgstr "优先级"
 
-#: xfce4-session/client-list.c:305
+#: xfce4-session/client-list.c:310
 msgid "State"
 msgstr ""
 
 #. kill button
-#: xfce4-session/client-list.c:324
+#: xfce4-session/client-list.c:329
 msgid "Kill client"
 msgstr "中止客户程序"
 
 #. clone button
-#: xfce4-session/client-list.c:330
+#: xfce4-session/client-list.c:335
 msgid "Clone client"
 msgstr "复制客户程序"
 
-#: xfce4-session/client-list.c:436 xfce4-session/client-list.c:439
+#: xfce4-session/client-list.c:441 xfce4-session/client-list.c:444
 msgid "Unknown"
 msgstr "未知"
 
