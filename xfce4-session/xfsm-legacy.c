@@ -459,12 +459,14 @@ xfsm_legacy_perform_session_save (void)
           sm_window->wm_client_machine = get_wmclientmachine (sm_window->wid);
         }
     }
+#endif
 }
 
 
 void
 xfsm_legacy_store_session (XfceRc *rc)
 {
+#ifdef LEGACY_SESSION_MANAGEMENT
   int count = 0;
   SmWindow *sm_window;
   GList *lp;
@@ -531,6 +533,40 @@ xfsm_legacy_load_session (XfceRc *rc)
       app->command = command;
 
       restart_apps = g_list_append (restart_apps, app);
+    }
+#endif
+}
+
+
+void
+xfsm_legacy_init (void)
+{
+#ifdef LEGACY_SESSION_MANAGEMENT
+  Atom dt_save_mode;
+  Atom dt_restore_mode;
+  Display *dpy;
+  Window root;
+  int n;
+
+  dpy = gdk_display;
+
+  /* Some CDE apps are broken (thanks again to Craig for the Sun Box :).
+   * Bugfix found on http://bugzilla.gnome.org/long_list.cgi?buglist=81343
+   * and implemented in gnome-session. The following code extends what
+   * gnome does, since it seems to be necessary to set both properties
+   * per screen, not just for the first screen. Anybody with access to
+   * CDE source code to enlighten me?
+   *                                          -- bm, 20040530
+   */
+  dt_save_mode = XInternAtom (dpy, "_DT_SAVE_MODE", False);
+  dt_restore_mode = XInternAtom (dpy, "_DT_RESTORE_MODE", False);
+  for (n = 0; n < ScreenCount (dpy); ++n)
+    {
+      root = RootWindow (dpy, n);
+      XChangeProperty (dpy, root, dt_save_mode, XA_STRING, 8,
+                       PropModeReplace, "xfce4", sizeof ("xfce4"));
+      XChangeProperty (dpy, root, dt_restore_mode, XA_STRING, 8,
+                       PropModeReplace, "xfce4", sizeof ("xfce4"));
     }
 #endif
 }

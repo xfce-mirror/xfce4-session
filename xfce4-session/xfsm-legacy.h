@@ -22,12 +22,15 @@
 #ifndef __XFSM_LEGACY_H__
 #define __XFSM_LEGACY_H__
 
+#include <gdk/gdk.h>
+
 #include <libxfce4util/libxfce4util.h>
 
 
 void xfsm_legacy_perform_session_save (void);
 void xfsm_legacy_store_session (XfceRc *rc);
 void xfsm_legacy_load_session (XfceRc *rc);
+void xfsm_legacy_init (void);
 void xfsm_legacy_startup (void);
 void xfsm_legacy_shutdown (void);
 

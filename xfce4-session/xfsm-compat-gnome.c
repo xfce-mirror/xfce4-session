@@ -47,6 +47,11 @@
 #include <unistd.h>
 #endif
 
+#include <X11/Xatom.h>
+#include <X11/Xlib.h>
+
+#include <gdk/gdkx.h>
+
 #include <libgnome/libgnome.h>
 #include <libxfce4util/libxfce4util.h>
 #include <gconf/gconf-client.h>
@@ -60,6 +65,8 @@
 
 static GConfClient *gnome_conf_client = NULL;
 static pid_t gnome_keyring_daemon_pid = 0;
+static Window gnome_smproxy_window = None;
+
 
 static void
 gnome_keyring_daemon_startup (void)
@@ -169,9 +176,63 @@ gnome_ast_startup (void)
 }
 
 
+static void
+xfsm_compat_gnome_smproxy_startup (void)
+{
+  Atom gnome_sm_proxy;
+  Display *dpy;
+  Window root;
+
+  gdk_error_trap_push ();
+
+  /* Set GNOME_SM_PROXY property, since some apps (like OOo) seem to require
+   * it for property behaviour. Thanks to Jasper/Francois for reporting this.
+   * This has another advantage, since it prevents people from running
+   * gnome-smproxy in xfce4, which would cause trouble otherwise.
+   */
+  dpy = gdk_display;
+  root = RootWindow (dpy, 0);
+  
+  if (gnome_smproxy_window != None)
+    XDestroyWindow (dpy, gnome_smproxy_window);
+  
+  gnome_sm_proxy = XInternAtom (dpy, "GNOME_SM_PROXY", False);
+  gnome_smproxy_window = XCreateSimpleWindow (dpy, root, 1, 1, 1, 1, 0, 0, 0);
+  
+  XChangeProperty (dpy, gnome_smproxy_window, gnome_sm_proxy,
+                   XA_CARDINAL, 32, PropModeReplace,
+                   (unsigned char *) (void *) &gnome_smproxy_window, 1);
+  XChangeProperty (dpy, root, gnome_sm_proxy,
+                   XA_CARDINAL, 32, PropModeReplace,
+                   (unsigned char *) (void *) &gnome_smproxy_window, 1);
+
+  XSync (dpy, False);
+
+  gdk_error_trap_pop ();
+}
+
+
+static void
+xfsm_compat_gnome_smproxy_shutdown (void)
+{
+  gdk_error_trap_push ();
+
+  if (gnome_smproxy_window != None)
+    {
+      XDestroyWindow (gdk_display, gnome_smproxy_window);
+      XSync (gdk_display, False);
+      gnome_smproxy_window = None;
+    }
+
+  gdk_error_trap_pop ();
+}
+
+
 void
 xfsm_compat_gnome_startup (XfsmSplashScreen *splash)
 {
+  xfsm_compat_gnome_smproxy_startup ();
+
   /* fire up the keyring daemon */
   xfsm_splash_screen_next (splash, _("Starting The Gnome Keyring Daemon"));
   gnome_keyring_daemon_startup ();
@@ -218,6 +279,8 @@ xfsm_compat_gnome_shutdown (void)
       g_warning ("Failed to shutdown the GConf daemon on logout: "
                  "gconftool-2 returned status %d", status);
     }
+
+  xfsm_compat_gnome_smproxy_shutdown ();
 }
 
 #endif

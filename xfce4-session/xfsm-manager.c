@@ -384,6 +384,9 @@ xfsm_manager_init (XfceRc *rc)
 gboolean
 xfsm_manager_restart (void)
 {
+  /* setup legacy application handling */
+  xfsm_legacy_init ();
+
   g_idle_add ((GSourceFunc) xfsm_manager_startup, NULL);
   
   return TRUE;
