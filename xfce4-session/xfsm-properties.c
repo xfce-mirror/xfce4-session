@@ -52,7 +52,7 @@ static void    xfsm_properties_replace_discard_command (XfsmProperties *properti
 
 
 #ifndef HAVE_STRDUP
-G_INLINE_FUNC char*
+static char*
 strdup (const char *s)
 {
   char *t;
@@ -66,7 +66,7 @@ strdup (const char *s)
 #endif
 
 
-G_INLINE_FUNC gchar*
+static gchar*
 compose (gchar       *buffer,
          gsize        length,
          const gchar *prefix,
