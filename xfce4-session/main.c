@@ -32,6 +32,9 @@
 #ifdef HAVE_MEMORY_H
 #include <memory.h>
 #endif
+#ifdef HAVE_SIGNAL_H
+#include <signal.h>
+#endif
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
@@ -280,6 +283,9 @@ main (int argc, char **argv)
 
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
   
+  /* stupid, damn f*ck*ng stupid linux! */
+  signal (SIGPIPE, SIG_IGN);
+
   gtk_init (&argc, &argv);
 
   /* verify that the DNS settings are ok */
