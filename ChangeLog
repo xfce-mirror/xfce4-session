@@ -1,50 +1,68 @@
-2003-08-03 20:37  bmeurer
+2003-08-10  huysmans
+
+	* po/: zh_CN.gmo, zh_CN.po: Update chinese translations
+
+2003-08-08  huysmans
+
+	* configure, configure.ac, po/ca.gmo, po/ca.po: Update catalan
+	translations
+
+2003-08-03  bmeurer
+
+	* Makefile.in, aclocal.m4, configure, ltcf-c.sh: Removed obsolete
+	ltcf-c.sh leftover from libtool 1.4
+
+2003-08-03  bmeurer
+
+	* ChangeLog: Updated ChangeLogs
+
+2003-08-03  bmeurer
 
 	* m4/X11.m4: grep -q does not work with Solaris grep, fixed it.
 
-2003-08-03 18:55  bmeurer
+2003-08-03  bmeurer
 
 	* xfce4-session/util.c: Fix stupid typo: #ifdef -> #ifndef
 
-2003-07-24 18:30  bmeurer
+2003-07-24  bmeurer
 
 	* TODO: Added note about Autostart with default.session (thanks to
 	Bernhard).
 
-2003-07-23 18:00  bmeurer
+2003-07-23  bmeurer
 
 	* xfce4-session/: xfsm-marshal.c, xfsm-marshal.h,
 	xfsm-marshal.list: Added initial marshallers stuff.
 
-2003-07-22 13:07  bmeurer
+2003-07-22  bmeurer
 
 	* xfce4-session/xfsm-marshal.list: Added a dummy file to get it
 	working again.
 
-2003-07-21 23:23  bmeurer
+2003-07-21  bmeurer
 
 	* ChangeLog, NEWS, configure, configure.ac,
 	xfce4-session/Makefile.am, xfce4-session/Makefile.in,
 	xfce4-session/ice-layer.c, xfce4-session/main.c,
 	xfce4-session/manager.c: Use mcs_setting_free() where appriotate.
 
-2003-07-19 13:16  bmeurer
+2003-07-19  bmeurer
 
 	* po/POTFILES.in, po/de.gmo, po/de.po, po/es.gmo, po/es.po,
 	po/es_MX.gmo, po/es_MX.po, po/nl.gmo, po/nl.po, po/tr.gmo,
 	po/tr.po, po/xfce4-session.pot, po/zh_CN.gmo, po/zh_CN.po,
 	xfce4-session/ice-layer.c: Fixed broken POTFILES.in
 
-2003-07-18 23:09  bmeurer
+2003-07-18  bmeurer
 
 	* ChangeLog, TODO: Add note about Autostart option
 
-2003-07-18 21:45  bmeurer
+2003-07-18  bmeurer
 
 	* xfce4-session/main.c: Fixes: "the xfce4-session trayicon is off
 	by default, but the settings dialog says it's on"
 
-2003-07-18 12:05  bmeurer
+2003-07-18  bmeurer
 
 	* configure, configure.ac, xfce4-session/Makefile.am,
 	xfce4-session/Makefile.in, xfce4-session/client-list.c,
@@ -54,23 +72,23 @@
 	Renamed ClientList to SessionControl, since the old name was
 	confusing.
 
-2003-07-18 09:46  huysmans
+2003-07-18  huysmans
 
 	* configure, configure.ac, po/tr.gmo, po/tr.po: Update turkish
 	translations
 
-2003-07-16 20:01  huysmans
+2003-07-16  huysmans
 
 	* po/: nl.gmo, nl.po: Update dutch translations
 
-2003-07-16 00:06  bmeurer
+2003-07-16  bmeurer
 
 	* ChangeLog, NEWS, xfce4-session/client-list.c,
 	xfce4-session/xfce_trayicon.c: XfceTrayIcon now provides both
 	"clicked" and "double_clicked" signals.  "clicked" is used for the
 	session tray icon.
 
-2003-07-15 18:23  bmeurer
+2003-07-15  bmeurer
 
 	* NEWS, configure, configure.ac, po/de.gmo, po/de.po, po/es.gmo,
 	po/es.po, po/es_MX.gmo, po/es_MX.po, po/nl.gmo, po/nl.po,
@@ -85,11 +103,11 @@
 	again, since the xfwm4 problem with sticky windows seems to be
 	fixed.
 
-2003-07-14 20:31  bmeurer
+2003-07-14  bmeurer
 
 	* xfce4-session.spec.in: Fixed spec file.
 
-2003-07-13 18:18  bmeurer
+2003-07-13  bmeurer
 
 	* NEWS, TODO, config.h.in, configure, configure.ac, po/de.gmo,
 	po/de.po, po/es.gmo, po/es.po, po/es_MX.gmo, po/es_MX.po,
@@ -100,21 +118,21 @@
 	xfce4-session/util.h: Several updates and fixes. Version is now
 	0.1.0. See NEWS for details.
 
-2003-07-13 16:44  bmeurer
+2003-07-13  bmeurer
 
 	* xfce4-session/client-list.c: Do not make "session control"
 	sticky. That fixes the withdrawn issue.
 
-2003-07-13 13:54  bmeurer
+2003-07-13  bmeurer
 
 	* ChangeLog, settings/session.c: Create users splash themes dir
 	upon install theme request.
 
-2003-07-13 10:43  huysmans
+2003-07-13  huysmans
 
 	* ChangeLog: Update ChangeLogs for release
 
-2003-07-13 10:13  bmeurer
+2003-07-13  bmeurer
 
 	* TODO, po/POTFILES.in, po/de.gmo, po/de.po, po/es.gmo, po/es.po,
 	po/es_MX.gmo, po/es_MX.po, po/nl.gmo, po/nl.po,
@@ -122,11 +140,11 @@
 	xfce4-session/xfce_trayicon.c: Fixed wrong POTFILES.in. Fixed
 	gtk2.0 compat.
 
-2003-07-12 21:03  bmeurer
+2003-07-12  bmeurer
 
 	* ChangeLog, NEWS: Fixed typo.
 
-2003-07-12 20:41  bmeurer
+2003-07-12  bmeurer
 
 	* ChangeLog, Makefile.am, Makefile.in, NEWS, TODO, configure,
 	configure.ac, xfce4-session.spec.in, po/POTFILES.in, po/de.gmo,
@@ -138,26 +156,26 @@
 	xfce4-session/xfce_trayicon.c, xfce4-session/xfce_trayicon.h: Fixed
 	tray icon problem, using new XfceTrayIcon class.
 
-2003-07-11 20:41  huysmans
+2003-07-11  huysmans
 
 	* xfce4-session.spec, po/de.gmo, po/de.po: update German
 	translations and remove spec file (it is generated)
 
-2003-07-11 15:56  huysmans
+2003-07-11  huysmans
 
 	* configure, configure.ac: Hmm, chinese translation updates that
 	didn't get picked up by my previous commit. Should have been in
 	rc1, sorry.
 
-2003-07-11 09:33  huysmans
+2003-07-11  huysmans
 
 	* ChangeLog: Update ChangeLog's for release
 
-2003-07-11 09:17  huysmans
+2003-07-11  huysmans
 
 	* po/: zh_CN.gmo, zh_CN.po: Update Chinese translations (2)
 
-2003-07-11 01:02  bmeurer
+2003-07-11  bmeurer
 
 	* ChangeLog, NEWS, TODO, po/de.gmo, po/de.po, po/es.gmo, po/es.po,
 	po/es_MX.gmo, po/es_MX.po, po/nl.gmo, po/nl.po,
@@ -168,23 +186,23 @@
 	gtk_menu_new() -> g_object_ref() -> g_object_unref() ->
 	g_object_unref() *PLONK*
 
-2003-07-10 11:56  huysmans
+2003-07-10  huysmans
 
 	* ChangeLog: Update ChangeLog's for release
 
-2003-07-10 01:15  bmeurer
+2003-07-10  bmeurer
 
 	* ChangeLog, TODO, xfce4-session/startup.c: Give clients more time
 	to restart: g_idle_add(..) -> g_timeout_add(50,..) This fixes some
 	problems with clients being restarted too fast and xfwm4 failing to
 	restore window properties correct.
 
-2003-07-10 00:50  bmeurer
+2003-07-10  bmeurer
 
 	* ChangeLog, po/de.gmo, po/de.po, po/es.gmo, po/es.po,
 	po/es_MX.gmo, po/es_MX.po, po/nl.gmo, po/nl.po: Updated po's
 
-2003-07-10 00:46  bmeurer
+2003-07-10  bmeurer
 
 	* ChangeLog, Makefile.am, Makefile.in, NEWS, TODO, config.h.in,
 	configure, configure.ac, xfce4-session.spec, xfce4-session.spec.in,
@@ -198,18 +216,18 @@
 	the tray menu. Fixed bug in SaveYourselfDone.  Added UNIX signals
 	support. Added security check to xfce4-shutdown.
 
-2003-07-09 09:28  bmeurer
+2003-07-09  bmeurer
 
 	* ChangeLog, TODO: Added .spec file to TODO list, updated
 	ChangeLog.
 
-2003-07-09 00:37  bmeurer
+2003-07-09  bmeurer
 
 	* ChangeLog, configure, configure.ac, po/POTFILES.in, po/de.gmo,
 	po/de.po, po/es.po, po/es_MX.po, po/nl.po, po/xfce4-session.pot:
 	Depend on fixed xfce-mcs-manager and updated translation (german).
 
-2003-07-09 00:30  bmeurer
+2003-07-09  bmeurer
 
 	* ChangeLog, NEWS, TODO, defaults/default.session,
 	po/xfce4-session.pot, xfce4-session/main.c,
@@ -217,13 +235,13 @@
 	xfce4-session/tray-icon.c, xfce4-session/tray-icon.h: Additional
 	notes and ChangeLog updated.
 
-2003-07-08 23:20  bmeurer
+2003-07-08  bmeurer
 
 	* ChangeLog, po/xfce4-session.pot, xfce4-session/ice-layer.c:
 	Client was not removed from "session control" if an ICE error
 	occurred.
 
-2003-07-08 23:05  bmeurer
+2003-07-08  bmeurer
 
 	* NEWS, configure, configure.ac, xfce4-session/Makefile.am,
 	xfce4-session/Makefile.in, xfce4-session/client-list.c,
@@ -234,70 +252,70 @@
 	xfce4-session/util.c, xfce4-session/util.h: Several updates. See
 	NEWS file for details.
 
-2003-07-08 18:14  bmeurer
+2003-07-08  bmeurer
 
 	* NEWS, docs/FAQ: Added notes about Oliviers recent changes to
 	startxfce4.
 
-2003-07-08 15:08  huysmans
+2003-07-08  huysmans
 
 	* po/es.gmo, po/es.po, po/es_MX.gmo, po/es_MX.po, po/nl.gmo,
 	po/nl.po, configure, configure.ac: Add Dutch translations and fix
 	Spanish ones
 
-2003-07-08 04:40  edscott
+2003-07-08  edscott
 
 	* po/: es.po, es_MX.po: specify utf-8 charset in spanish files
 
-2003-07-08 04:36  edscott
+2003-07-08  edscott
 
 	* configure.ac, po/es.po: european spanish (initial)
 
-2003-07-08 04:34  edscott
+2003-07-08  edscott
 
 	* configure.ac, po/es_MX.po: spanish
 
-2003-07-07 23:33  bmeurer
+2003-07-07  bmeurer
 
 	* ChangeLog, ltmain.sh: Trying Olivier's special MacOSX compat
 	libtool.
 
-2003-07-07 23:26  bmeurer
+2003-07-07  bmeurer
 
 	* aclocal.m4, configure, po/de.gmo, po/de.po, po/xfce4-session.pot:
 	Strings changed (due to tooltips being added).
 
-2003-07-07 23:19  bmeurer
+2003-07-07  bmeurer
 
 	* ChangeLog: Updated ChangeLog.
 
-2003-07-07 23:18  bmeurer
+2003-07-07  bmeurer
 
 	* ChangeLog, settings/session.c: Added tooltips and improved the
 	"Install theme" dialog handling.
 
-2003-07-07 22:12  bmeurer
+2003-07-07  bmeurer
 
 	* NEWS, TODO, configure, configure.ac, docs/FAQ, docs/Makefile.am,
 	docs/Makefile.in, po/de.gmo, po/de.po: Added FAQ. Updated german
 	translation again. version to 0.0.21.
 
-2003-07-07 21:35  bmeurer
+2003-07-07  bmeurer
 
 	* po/: de.gmo, de.po: Updated German translation, thanks to Moritz
 	Heiber.
 
-2003-07-07 20:07  bmeurer
+2003-07-07  bmeurer
 
 	* ChangeLog, Makefile.am, Makefile.in: Added
 	ChangeLog.pre-xfce-devel to Makefile.am.
 
-2003-07-07 19:36  bmeurer
+2003-07-07  bmeurer
 
 	* ChangeLog, Makefile.in, ltconfig: Remove ltconfig script. Its
 	autogenerated.
 
-2003-07-07 19:27  bmeurer
+2003-07-07  bmeurer
 
 	* AUTHORS, README, TODO, aclocal.m4, autogen.sh, compile,
 	config.guess, config.h.in, config.sub, configure, configure.ac,
@@ -328,7 +346,7 @@
 	xfce4-shutdown/main.c: Initial import of the new session manager
 	with version 0.0.20.
 
-2003-07-07 19:27  bmeurer
+2003-07-07  bmeurer
 
 	* AUTHORS, README, TODO, aclocal.m4, autogen.sh, compile,
 	config.guess, config.h.in, config.sub, configure, configure.ac,
