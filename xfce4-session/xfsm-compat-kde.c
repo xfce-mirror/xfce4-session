@@ -124,6 +124,14 @@ xfsm_compat_kde_startup (XfsmSplashScreen *splash)
                             "SESSION_MANAGER \"%s\"",
                             g_getenv ("SESSION_MANAGER"));
   run (command);
+
+  /* tell kde if we are running multi-head */
+  if (gdk_display_get_n_screens (gdk_display_get_default ()) > 1)
+    {
+      g_snprintf (command, 256, "dcop klauncher klauncher setLaunchEnv "
+                                "KDE_MULTIHEAD \"true\"");
+      run (command);
+    }
 }
 
 

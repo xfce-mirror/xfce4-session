@@ -330,6 +330,7 @@ sm_set_properties (SmsConn   sms_conn,
   XfsmClient     *client     = (XfsmClient *) client_data;
   XfsmProperties *properties = client->properties;
   int             n;
+  int             i;
   
   if (G_UNLIKELY (verbose))
     {
@@ -346,6 +347,15 @@ sm_set_properties (SmsConn   sms_conn,
             {
               const guint8 *cardptr = (const guint8 *) props[n]->vals->value;
               xfsm_verbose ("   Value: %u\n", (unsigned) *cardptr);
+            }
+          else if (strcmp (props[n]->type, "LISTofARRAY8") == 0)
+            {
+              xfsm_verbose ("   Value: ");
+              for (i = 0; i < props[n]->num_vals; ++i)
+                {
+                  xfsm_verbose ("%s%s", (const gchar *) props[n]->vals[i].value,
+                                (i == props[n]->num_vals - 1) ? ""  : ",");
+                }
             }
         }
       xfsm_verbose ("\n");
