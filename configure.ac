@@ -1,22 +1,22 @@
 dnl $Id$
 dnl
-dnl Copyright (c) 2003,2003
-dnl         The XFce development team. All rights reserved.
+dnl Copyright (c) 2003-2004
+dnl         The Xfce development team. All rights reserved.
 dnl
-dnl Written for XFce by Benedikt Meurer <benny@xfce.org>.
+dnl Written for Xfce by Benedikt Meurer <benny@xfce.org>.
 dnl
 
 dnl Version information
 m4_define([xfsm_version_major], [4])
 m4_define([xfsm_version_minor], [1])
-m4_define([xfsm_version_micro], [2])
+m4_define([xfsm_version_micro], [5])
 m4_define([xfsm_version], [xfsm_version_major.xfsm_version_minor.xfsm_version_micro])
 
 dnl Initialize autoconf
-AC_COPYRIGHT([Copyright (c) 2003,2004
-        The XFce development team. All rights reserved.
+AC_COPYRIGHT([Copyright (c) 2003-2004
+        The Xfce development team. All rights reserved.
         
-Written for XFce by Benedikt Meurer <benny@xfce.org>.])
+Written for Xfce by Benedikt Meurer <benny@xfce.org>.])
 AC_INIT([xfce4-session], [xfsm_version], [xfce4-dev@xfce.org])
 AC_PREREQ([2.50])
 AC_REVISION([$Id$])
@@ -40,8 +40,8 @@ AC_PROG_LIBTOOL
 dnl check for standard header files
 AC_HEADER_STDC
 AC_CHECK_FUNCS([mkdir clearenv sigaction strdup])
-AC_CHECK_HEADERS([errno.h fcntl.h limits.h signal.h sys/param.h sys/utsname.h \
-  sys/wait.h time.h unistd.h])
+AC_CHECK_HEADERS([errno.h fcntl.h limits.h signal.h stdarg.h sys/param.h \
+  sys/utsname.h sys/wait.h time.h unistd.h])
 
 dnl Check for X11 installed
 BM_LIBX11_REQUIRE
@@ -60,7 +60,7 @@ BM_I18N([xfce4-session], [ar az ca de es es_MX eu fa_IR fr hi it ja ko ms nl no
 	 pl pt_BR sv ta tr zh_CN zh_TW])
 
 dnl Check for required packages
-BM_DEPEND([LIBXFCE4UTIL], [libxfce4util-1.0], [4.1.1])
+BM_DEPEND([LIBXFCE4UTIL], [libxfce4util-1.0], [4.1.11])
 BM_DEPEND([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.1.0])
 BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [4.1.0])
 
@@ -106,11 +106,9 @@ AC_MSG_RESULT([$with_reboot])
 
 AC_OUTPUT([
 Makefile
-defaults/Makefile
-docs/Makefile
-settings/Makefile
-po/Makefile.in
 xfce4-session.spec
+po/Makefile.in
+settings/Makefile
 xfce4-session/Makefile
 xfce4-shutdown/Makefile
 ])
