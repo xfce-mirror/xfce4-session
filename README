@@ -8,7 +8,15 @@ with your code. To be able to shutdown the computer, you must be listed
 in the systems sudoers file, in particular, you must be allowed to execute
 $libexecdir/xfsm-shutdown-helper as user root (where $libexecdir is the
 libexec subdir in the prefix you installed xfce4-session, for example
-/usr/local/libexec).
+/usr/local/libexec). 
+
+For example, you installed xfce4-session into /usr/local, your hostname
+is myhost and your user account is named myuser, then you'd have to add
+the following line to your sudoers file (remember to use visudo to edit
+that file):
+
+  myuser	myhost=/usr/local/libexec/xfsm-shutdown-helper
+
 
 
 Legacy session management:
