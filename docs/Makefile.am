@@ -1,5 +1,6 @@
 SUBDIRS =								\
-	C
+	C								\
+	fr
 
 noinst_DATA =								\
 	FAQ								\
@@ -9,3 +10,4 @@ EXTRA_DIST = $(noinst_DATA)
 
 html:
 	make -C C html
+	make -C fr html
