@@ -799,16 +799,18 @@ config_store (GtkTreeView  *treeview,
 
 static gboolean
 config_selection_changed (GtkTreeSelection *selection,
-                          GtkWidget        *treeview)
+                          gpointer          user_data)
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
+  GtkTreeView  *treeview;
   GdkPixbuf    *icon;
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
+      treeview = gtk_tree_selection_get_tree_view (selection);
       gtk_tree_model_get (model, &iter, PREVIEW_COLUMN, &icon, -1);
-      gtk_drag_source_set_icon_pixbuf (treeview, icon);
+      gtk_drag_source_set_icon_pixbuf (GTK_WIDGET (treeview), icon);
       g_object_unref (icon);
     }
 
@@ -859,7 +861,7 @@ config_create (XfsmSplashRc *rc)
   gtk_tree_selection_set_mode (GTK_TREE_SELECTION (selection),
                                GTK_SELECTION_SINGLE);
   g_signal_connect (G_OBJECT (selection), "changed",
-                    G_CALLBACK (config_selection_changed), treeview);
+                    G_CALLBACK (config_selection_changed), NULL);
   g_idle_add ((GSourceFunc)config_selection_changed, selection);
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
   gtk_container_add (GTK_CONTAINER (swin), treeview);

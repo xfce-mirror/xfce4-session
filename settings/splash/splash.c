@@ -65,22 +65,23 @@ enum
 /*
    Global variables
  */
-static GList     *modules = NULL;
-static XfceRc    *modules_rc = NULL;
-static gboolean   splash_centered;
-static GtkWidget *splash_dialog = NULL;
-static GtkWidget *splash_treeview;
-static GtkWidget *splash_button_cfg;
-static GtkWidget *splash_button_test;
-static GtkWidget *splash_image;
-static GtkWidget *splash_descr0;
-static GtkWidget *splash_descr1;
-static GtkWidget *splash_version0;
-static GtkWidget *splash_version1;
-static GtkWidget *splash_author0;
-static GtkWidget *splash_author1;
-static GtkWidget *splash_www0;
-static GtkWidget *splash_www1;
+static GList       *modules = NULL;
+static XfceRc      *modules_rc = NULL;
+static gboolean     splash_centered;
+static GtkWidget   *splash_dialog = NULL;
+static GtkWidget   *splash_treeview;
+static GtkWidget   *splash_button_cfg;
+static GtkWidget   *splash_button_test;
+static GtkWidget   *splash_image;
+static GtkWidget   *splash_descr0;
+static GtkWidget   *splash_descr1;
+static GtkWidget   *splash_version0;
+static GtkWidget   *splash_version1;
+static GtkWidget   *splash_author0;
+static GtkWidget   *splash_author1;
+static GtkWidget   *splash_www0;
+static GtkWidget   *splash_www1;
+static GtkTooltips *tooltips = NULL;
 
 
 /*
@@ -152,6 +153,12 @@ splash_response (void)
     {
       gtk_widget_destroy (splash_dialog);
       splash_dialog = NULL;
+    }
+
+  if (G_LIKELY (tooltips != NULL))
+    {
+      gtk_object_destroy (GTK_OBJECT (tooltips));
+      tooltips = NULL;
     }
 
   splash_unload_modules ();
@@ -337,6 +344,8 @@ splash_run (McsPlugin *plugin)
   GtkWidget         *header;
   GtkWidget         *hbox;
   GtkWidget         *vbox;
+  GtkWidget         *swin;
+  GtkWidget         *frame;
   GtkWidget         *table;
   XfceRc            *rc;
   GList             *lp;
@@ -346,6 +355,8 @@ splash_run (McsPlugin *plugin)
       gtk_window_present (GTK_WINDOW (splash_dialog));
       return;
     }
+
+  tooltips = gtk_tooltips_new ();
 
   /* load splash modules */
   splash_load_modules ();
@@ -412,9 +423,18 @@ splash_run (McsPlugin *plugin)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
+  swin = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swin), 
+                                  GTK_POLICY_NEVER,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (swin),
+                                       GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), swin, TRUE, TRUE, 0);
+  gtk_widget_show (swin);
+  
   splash_treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (splash_treeview), FALSE);
-  gtk_box_pack_start (GTK_BOX (vbox), splash_treeview, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (swin), splash_treeview);
   gtk_widget_show (splash_treeview);
   g_object_unref (G_OBJECT (store));
 
@@ -434,6 +454,10 @@ splash_run (McsPlugin *plugin)
                     splash_configure, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), splash_button_cfg, FALSE, FALSE, 0);
   gtk_widget_show (splash_button_cfg);
+  gtk_tooltips_set_tip (tooltips, splash_button_cfg,
+                        _("Opens the configuration panel for the selected "
+                          "splash screen."),
+                        NULL);
 
   splash_button_test = xfsm_imgbtn_new (_("Test"), GTK_STOCK_EXECUTE, NULL);
   gtk_widget_set_sensitive (splash_button_test, FALSE);
@@ -441,19 +465,33 @@ splash_run (McsPlugin *plugin)
                     splash_test, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), splash_button_test, FALSE, FALSE, 0);
   gtk_widget_show (splash_button_test);
+  gtk_tooltips_set_tip (tooltips, splash_button_test,
+                        _("Demonstrates the selected splash screen."),
+                        NULL);
 
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
   splash_image = gtk_image_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), splash_image, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), splash_image);
   gtk_widget_show (splash_image);
+
+  frame = gtk_frame_new (_("Information"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
+  gtk_widget_show (frame);
 
   table = gtk_table_new (4, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
+  gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
   splash_descr0 = gtk_label_new (_("<b>Description:</b>"));

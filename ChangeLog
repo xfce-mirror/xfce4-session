@@ -1,3 +1,88 @@
+2004-07-23 19:09  benny
+
+	* xfce4-session.spec.in: Fixed .spec file.
+
+2004-07-23 18:31  benny
+
+	* xfce4-session.rc: AlwaysDisplay is now false by default.
+
+2004-07-23 17:46  benny
+
+	* xfce4-session/xfsm-fadeout.c: Use single-colored fadeout screen,
+	faster on remote displays.
+
+2004-07-23 16:47  benny
+
+	* settings/session/session.c, xfce4-session/main.c,
+	xfce4-session/shutdown.c: Implemented PromptOnLogout.
+
+2004-07-23 15:09  benny
+
+	* configure, xfce4-session/shutdown.c,
+	xfce4-session/xfsm-shutdown-helper-sudo.c: Reap the shutdown
+	helper, so no zombies are created if the user cancels the shutdown
+	attempt.
+
+2004-07-23 14:33  benny
+
+	* configure, configure.ac: Disabled redhat shutdown code for now,
+	until I can be sure, that it works.
+
+2004-07-22 01:00  benny
+
+	* m4/depends.m4: Readded the XFCE_MCS_PLUGIN macro. I didn't ment
+	to remove it, tho.
+
+2004-07-20 22:58  benny
+
+	* m4/depends.m4: Modifed panel plugin check, so one (the installer)
+	can choose to install into a different plugin dir.
+
+2004-07-16 16:08  benny
+
+	* Makefile.am, Makefile.in, config.h.in, configure, configure.ac,
+	engines/.cvsignore, engines/balou/.cvsignore,
+	engines/balou/scripts/.cvsignore, engines/balou/themes/.cvsignore,
+	engines/balou/themes/Default/.cvsignore, engines/mice/.cvsignore,
+	engines/simple/.cvsignore, engines/simple/simple.c,
+	icons/.cvsignore, icons/128x128/.cvsignore, icons/48x48/.cvsignore,
+	icons/64x64/.cvsignore, icons/72x72/.cvsignore,
+	settings/.cvsignore, settings/scripts/.cvsignore,
+	settings/session/.cvsignore, settings/splash/.cvsignore,
+	xfce4-session/.cvsignore, xfce4-session/Makefile.am,
+	xfce4-session/Makefile.in,
+	xfce4-session/xfsm-shutdown-helper-none.c,
+	xfce4-session/xfsm-shutdown-helper-redhat.c,
+	xfce4-session/xfsm-shutdown-helper-sudo.c,
+	xfce4-session/xfsm-shutdown-helper.c: Added simple redhat shutdown
+	code (dunno if this works actually, copied from gnome-session) per
+	botsie's request. Added lots of .cvsignore files. Use Brians
+	XfceColorButton instead of the 2.4-only GtkColorButton widget. 
+	Removed the custom xinitrc script, its no longer required, since
+	xinitrc starts xfce4-session automatically.
+
+2004-07-15 22:37  benny
+
+	* engines/simple/simple.c: Use clipping to avoid drawing the layout
+	to the window border.
+
+2004-07-15 22:27  benny
+
+	* xfce4-session/: Makefile.am, Makefile.in, chooser-icon.h,
+	xfsm-manager.c: Use GdkPixdata instead of raw pixbuf data.
+
+2004-07-15 22:17  benny
+
+	* ChangeLog, configure, engines/mice/mice.c,
+	xfce4-session/xfsm-compat-gnome.c, xfce4-session/xfsm-fadeout.c,
+	xfce4-session/xfsm-splash-screen.c: Updated ChangeLog. Removed
+	useless debug message and changed fadeout color.
+
+2004-07-15 19:55  benny
+
+	* engines/simple/simple.c: Fix rendering bug with small images and
+	added text shadow.
+
 2004-07-14 22:17  benny
 
 	* configure, configure.ac, engines/balou/Makefile.am,
@@ -145,13 +230,13 @@
 
 	* Makefile.in, aclocal.m4, config.guess, config.sub, configure,
 	configure.ac, install-sh, ltmain.sh, mkinstalldirs,
-	defaults/Makefile.in, docs/Makefile.in, icons/Makefile.in,
-	icons/128x128/Makefile.in, icons/48x48/Makefile.in,
-	icons/64x64/Makefile.in, icons/72x72/Makefile.in, po/lt.gmo,
-	po/lt.po, settings/Makefile.in, settings/scripts/Makefile.in,
-	themes/Makefile.in, themes/Default/Makefile.in,
-	xfce4-session/Makefile.in, xfsm-shutdown-helper/Makefile.in:
-	Updated lt translations from Mantas Zapolskas
+	docs/Makefile.in, icons/Makefile.in, icons/128x128/Makefile.in,
+	icons/48x48/Makefile.in, icons/64x64/Makefile.in,
+	icons/72x72/Makefile.in, po/lt.gmo, po/lt.po, settings/Makefile.in,
+	settings/scripts/Makefile.in, themes/Makefile.in,
+	themes/Default/Makefile.in, xfce4-session/Makefile.in,
+	xfsm-shutdown-helper/Makefile.in: Updated lt translations from
+	Mantas Zapolskas
 
 2004-06-13 11:40  pollux
 
@@ -219,18 +304,17 @@
 2004-06-05 23:19  benny
 
 	* BUGS, ChangeLog, Makefile.in, config.h.in, configure,
-	configure.ac, defaults/Makefile.in, docs/Makefile.in,
-	icons/Makefile.am, icons/Makefile.in, icons/xfsm-shutdown.png,
-	po/ar.gmo, po/az.gmo, po/ca.gmo, po/de.gmo, po/de.po, po/es.gmo,
-	po/es_MX.gmo, po/eu.gmo, po/fa_IR.gmo, po/fr.gmo, po/hi.gmo,
-	po/it.gmo, po/ja.gmo, po/ko.gmo, po/ms.gmo, po/nl.gmo, po/no.gmo,
-	po/pl.gmo, po/pt_BR.gmo, po/sv.gmo, po/ta.gmo, po/tr.gmo,
-	po/zh_CN.gmo, po/zh_TW.gmo, settings/Makefile.am,
-	settings/Makefile.in, settings/gnome-kde-logo.h,
-	settings/gnome-kde-logo.png, settings/looknfeel.c,
-	settings/session.c, settings/xfsm-install-theme,
-	settings/scripts/Makefile.am, settings/scripts/Makefile.in,
-	settings/scripts/xfsm-export-theme,
+	configure.ac, docs/Makefile.in, icons/Makefile.am,
+	icons/Makefile.in, icons/xfsm-shutdown.png, po/ar.gmo, po/az.gmo,
+	po/ca.gmo, po/de.gmo, po/de.po, po/es.gmo, po/es_MX.gmo, po/eu.gmo,
+	po/fa_IR.gmo, po/fr.gmo, po/hi.gmo, po/it.gmo, po/ja.gmo,
+	po/ko.gmo, po/ms.gmo, po/nl.gmo, po/no.gmo, po/pl.gmo,
+	po/pt_BR.gmo, po/sv.gmo, po/ta.gmo, po/tr.gmo, po/zh_CN.gmo,
+	po/zh_TW.gmo, settings/Makefile.am, settings/Makefile.in,
+	settings/gnome-kde-logo.h, settings/gnome-kde-logo.png,
+	settings/looknfeel.c, settings/session.c,
+	settings/xfsm-install-theme, settings/scripts/Makefile.am,
+	settings/scripts/Makefile.in, settings/scripts/xfsm-export-theme,
 	settings/scripts/xfsm-install-theme, themes/Makefile.in,
 	themes/Default/Makefile.in, xfce4-session/Makefile.in,
 	xfce4-session/main.c, xfce4-session/shutdown.c,
@@ -254,8 +338,8 @@
 2004-06-05 14:46  benny
 
 	* Makefile.am, Makefile.in, config.h.in, configure, configure.ac,
-	xfce4-session.rc, defaults/Makefile.in, docs/Makefile.in,
-	icons/Makefile.am, icons/Makefile.in, icons/xfsm-trash-hilight.png,
+	xfce4-session.rc, docs/Makefile.in, icons/Makefile.am,
+	icons/Makefile.in, icons/xfsm-trash-hilight.png,
 	icons/xfsm-trash-normal.png, po/POTFILES.in, po/ar.po, po/az.po,
 	po/ca.po, po/de.po, po/es.po, po/es_MX.po, po/eu.po, po/fa_IR.po,
 	po/fr.gmo, po/fr.po, po/hi.po, po/it.po, po/ja.po, po/ko.po,
@@ -352,12 +436,11 @@
 2004-05-25 23:29  benny
 
 	* Makefile.in, config.h.in, configure, configure.ac,
-	xfce4-session.spec.in, defaults/Makefile.in, docs/Makefile.in,
-	settings/Makefile.in, settings/looknfeel.c, settings/session.c,
-	themes/Makefile.in, themes/Default/Makefile.in,
-	xfce4-session/Makefile.am, xfce4-session/Makefile.in,
-	xfce4-session/main.c, xfce4-session/shutdown.c,
-	xfce4-session/xfsm-compat-gnome.c,
+	xfce4-session.spec.in, docs/Makefile.in, settings/Makefile.in,
+	settings/looknfeel.c, settings/session.c, themes/Makefile.in,
+	themes/Default/Makefile.in, xfce4-session/Makefile.am,
+	xfce4-session/Makefile.in, xfce4-session/main.c,
+	xfce4-session/shutdown.c, xfce4-session/xfsm-compat-gnome.c,
 	xfce4-session/xfsm-compat-gnome.h, xfce4-session/xfsm-compat-kde.c,
 	xfce4-session/xfsm-compat-kde.h, xfce4-session/xfsm-global.c,
 	xfce4-session/xfsm-global.h, xfce4-session/xfsm-splash-screen.c,
@@ -457,9 +540,7 @@
 
 2004-05-20 23:04  benny
 
-	* BUGS, ChangeLog, README, defaults/Makefile.am,
-	defaults/Makefile.in, defaults/shutdown.allow: Remove obsolete
-	file. Updated ChangeLog.
+	* BUGS, ChangeLog, README: Remove obsolete file. Updated ChangeLog.
 
 2004-05-20 22:51  benny
 
@@ -469,11 +550,11 @@
 2004-05-20 22:45  benny
 
 	* BUGS, Makefile.am, Makefile.in, README, config.h.in, configure,
-	configure.ac, xfce4-session.spec.in, defaults/Makefile.in,
-	docs/FAQ, docs/Makefile.in, settings/Makefile.in,
-	themes/Makefile.in, themes/Default/Makefile.in,
-	xfce4-session/Makefile.am, xfce4-session/Makefile.in,
-	xfce4-session/shutdown.c, xfce4-session/xfsm-shutdown-helper.c,
+	configure.ac, xfce4-session.spec.in, docs/FAQ, docs/Makefile.in,
+	settings/Makefile.in, themes/Makefile.in,
+	themes/Default/Makefile.in, xfce4-session/Makefile.am,
+	xfce4-session/Makefile.in, xfce4-session/shutdown.c,
+	xfce4-session/xfsm-shutdown-helper.c,
 	xfce4-session/xfsm-shutdown-helper.h, xfce4-session/xfsm-util.c,
 	xfce4-session/xfsm-util.h, xfsm-shutdown-helper/Makefile.am,
 	xfsm-shutdown-helper/Makefile.in, xfsm-shutdown-helper/main.c: New
@@ -656,9 +737,8 @@
 2004-05-17 20:30  benny
 
 	* Makefile.in, aclocal.m4, config.guess, config.sub, configure,
-	configure.ac, install-sh, ltmain.sh, defaults/Makefile.am,
-	defaults/Makefile.in, defaults/default.session, docs/FAQ,
-	docs/Makefile.am, docs/Makefile.in, docs/SessionFileFormat.txt,
+	configure.ac, install-sh, ltmain.sh, docs/FAQ, docs/Makefile.am,
+	docs/Makefile.in, docs/SessionFileFormat.txt,
 	docs/SplashThemes.txt, po/POTFILES.in, po/ar.gmo, po/ar.po,
 	po/az.gmo, po/az.po, po/ca.gmo, po/ca.po, po/de.gmo, po/de.po,
 	po/es.gmo, po/es.po, po/es_MX.gmo, po/es_MX.po, po/eu.gmo,
@@ -698,9 +778,9 @@
 2004-05-03 23:44  olivier
 
 	* Makefile.in, aclocal.m4, config.guess, config.sub, configure,
-	install-sh, ltmain.sh, mkinstalldirs, defaults/Makefile.in,
-	docs/Makefile.in, xfce4-session/Makefile.in: Update zh_TW
-	translations from umm <umm@pchome.com.tw>
+	install-sh, ltmain.sh, mkinstalldirs, docs/Makefile.in,
+	xfce4-session/Makefile.in: Update zh_TW translations from umm
+	<umm@pchome.com.tw>
 
 2004-05-03 22:21  kelnos
 
@@ -831,9 +911,8 @@
 
 	* Makefile.in, aclocal.m4, compile, config.guess, config.sub,
 	configure, depcomp, install-sh, ltmain.sh, missing, mkinstalldirs,
-	defaults/Makefile.in, docs/Makefile.in, settings/Makefile.in,
-	xfce4-session/Makefile.in: Update libtool and other automake,
-	autoconf and gettext packages
+	docs/Makefile.in, settings/Makefile.in, xfce4-session/Makefile.in:
+	Update libtool and other automake, autoconf and gettext packages
 
 2004-01-23 14:19  benny
 
@@ -891,11 +970,10 @@
 
 	* ChangeLog, Makefile.in, aclocal.m4, config.guess, config.sub,
 	configure, configure.ac, depcomp, install-sh, ltmain.sh,
-	defaults/Makefile.in, docs/Makefile.in, po/fr.gmo, po/fr.po,
-	settings/Makefile.in, xfce4-session/Makefile.in,
-	xfce4-session/shutdown.c: Added french translations, thanks to
-	Jean-François Wauthy <pollux@castor.be>. Make "poweroff" the
-	default shutdown operation
+	docs/Makefile.in, po/fr.gmo, po/fr.po, settings/Makefile.in,
+	xfce4-session/Makefile.in, xfce4-session/shutdown.c: Added french
+	translations, thanks to Jean-François Wauthy <pollux@castor.be>.
+	Make "poweroff" the default shutdown operation
 
 2003-12-29 16:18  olivier
 
@@ -914,8 +992,8 @@
 2003-12-24 07:54  jasper
 
 	* Makefile.in, aclocal.m4, config.guess, config.sub, configure,
-	configure.ac, depcomp, install-sh, ltmain.sh, defaults/Makefile.in,
-	docs/Makefile.in, po/xfce4-session.pot, settings/Makefile.in,
+	configure.ac, depcomp, install-sh, ltmain.sh, docs/Makefile.in,
+	po/xfce4-session.pot, settings/Makefile.in,
 	xfce4-session/Makefile.in, xfce4-session/splash-fallback.h: Bump
 	version number for tarball release
 
@@ -968,8 +1046,8 @@
 2003-11-20 18:57  benny
 
 	* Makefile.in, aclocal.m4, config.guess, config.sub, configure,
-	configure.ac, depcomp, install-sh, ltmain.sh, defaults/Makefile.in,
-	docs/Makefile.in, po/ko.gmo, po/ko.po, settings/Makefile.in,
+	configure.ac, depcomp, install-sh, ltmain.sh, docs/Makefile.in,
+	po/ko.gmo, po/ko.po, settings/Makefile.in,
 	xfce4-session/Makefile.in: Added korean translations, thanks to
 	byunghyunchoi@hotmail.com.
 
@@ -1243,11 +1321,10 @@
 
 2003-07-09 00:30  bmeurer
 
-	* ChangeLog, NEWS, TODO, defaults/default.session,
-	po/xfce4-session.pot, xfce4-session/main.c,
-	xfce4-session/manager.c, xfce4-session/manager.h,
-	xfce4-session/tray-icon.c, xfce4-session/tray-icon.h: Additional
-	notes and ChangeLog updated.
+	* ChangeLog, NEWS, TODO, po/xfce4-session.pot,
+	xfce4-session/main.c, xfce4-session/manager.c,
+	xfce4-session/manager.h, xfce4-session/tray-icon.c,
+	xfce4-session/tray-icon.h: Additional notes and ChangeLog updated.
 
 2003-07-08 23:20  bmeurer
 
@@ -1335,23 +1412,20 @@
 	config.guess, config.h.in, config.sub, configure, configure.ac,
 	depcomp, install-sh, ltcf-c.sh, ltconfig, INSTALL, Makefile.am,
 	Makefile.in, ltmain.sh, missing, mkinstalldirs, COPYING, ChangeLog,
-	ChangeLog.pre-xfce-devel, NEWS, defaults/Makefile.am,
-	defaults/Makefile.in, defaults/default.session,
-	defaults/shutdown.allow, defaults/xinitrc.xfce4-session,
-	docs/Makefile.am, docs/Makefile.in, docs/SessionFileFormat.txt,
-	docs/SplashThemes.txt, xfce4-session/Makefile.in,
-	xfce4-session/client.c, xfce4-session/client.h,
-	xfce4-session/ice-layer.c, xfce4-session/ice-layer.h,
-	xfce4-session/main.c, xfce4-session/manager.c,
-	xfce4-session/manager.h, xfce4-session/util.h,
-	xfce4-session/shutdown.c, xfce4-session/shutdown.h,
-	xfce4-session/splash-fallback.h, settings/Makefile.am,
-	xfce4-session/Makefile.am, xfce4-session/splash-fallback.png,
-	xfce4-session/splash-screen.c, xfce4-session/splash-screen.h,
-	xfce4-session/startup.c, xfce4-session/startup.h,
-	xfce4-session/util.c, settings/Makefile.in,
-	settings/session-icon.h, settings/session.c, m4/X11.m4,
-	m4/debug.m4, m4/depends.m4, m4/i18n.m4, po/ChangeLog,
+	ChangeLog.pre-xfce-devel, NEWS, docs/Makefile.am, docs/Makefile.in,
+	docs/SessionFileFormat.txt, docs/SplashThemes.txt,
+	xfce4-session/Makefile.in, xfce4-session/client.c,
+	xfce4-session/client.h, xfce4-session/ice-layer.c,
+	xfce4-session/ice-layer.h, xfce4-session/main.c,
+	xfce4-session/manager.c, xfce4-session/manager.h,
+	xfce4-session/util.h, xfce4-session/shutdown.c,
+	xfce4-session/shutdown.h, xfce4-session/splash-fallback.h,
+	settings/Makefile.am, xfce4-session/Makefile.am,
+	xfce4-session/splash-fallback.png, xfce4-session/splash-screen.c,
+	xfce4-session/splash-screen.h, xfce4-session/startup.c,
+	xfce4-session/startup.h, xfce4-session/util.c,
+	settings/Makefile.in, settings/session-icon.h, settings/session.c,
+	m4/X11.m4, m4/debug.m4, m4/depends.m4, m4/i18n.m4, po/ChangeLog,
 	po/Makefile.in.in, po/POTFILES.in, po/de.gmo, po/de.po,
 	po/xfce4-session.pot, settings/session.png: Initial revision
 
@@ -1361,23 +1435,20 @@
 	config.guess, config.h.in, config.sub, configure, configure.ac,
 	depcomp, install-sh, ltcf-c.sh, ltconfig, INSTALL, Makefile.am,
 	Makefile.in, ltmain.sh, missing, mkinstalldirs, COPYING, ChangeLog,
-	ChangeLog.pre-xfce-devel, NEWS, defaults/Makefile.am,
-	defaults/Makefile.in, defaults/default.session,
-	defaults/shutdown.allow, defaults/xinitrc.xfce4-session,
-	docs/Makefile.am, docs/Makefile.in, docs/SessionFileFormat.txt,
-	docs/SplashThemes.txt, xfce4-session/Makefile.in,
-	xfce4-session/client.c, xfce4-session/client.h,
-	xfce4-session/ice-layer.c, xfce4-session/ice-layer.h,
-	xfce4-session/main.c, xfce4-session/manager.c,
-	xfce4-session/manager.h, xfce4-session/util.h,
-	xfce4-session/shutdown.c, xfce4-session/shutdown.h,
-	xfce4-session/splash-fallback.h, settings/Makefile.am,
-	xfce4-session/Makefile.am, xfce4-session/splash-fallback.png,
-	xfce4-session/splash-screen.c, xfce4-session/splash-screen.h,
-	xfce4-session/startup.c, xfce4-session/startup.h,
-	xfce4-session/util.c, settings/Makefile.in,
-	settings/session-icon.h, settings/session.c, m4/X11.m4,
-	m4/debug.m4, m4/depends.m4, m4/i18n.m4, po/ChangeLog,
+	ChangeLog.pre-xfce-devel, NEWS, docs/Makefile.am, docs/Makefile.in,
+	docs/SessionFileFormat.txt, docs/SplashThemes.txt,
+	xfce4-session/Makefile.in, xfce4-session/client.c,
+	xfce4-session/client.h, xfce4-session/ice-layer.c,
+	xfce4-session/ice-layer.h, xfce4-session/main.c,
+	xfce4-session/manager.c, xfce4-session/manager.h,
+	xfce4-session/util.h, xfce4-session/shutdown.c,
+	xfce4-session/shutdown.h, xfce4-session/splash-fallback.h,
+	settings/Makefile.am, xfce4-session/Makefile.am,
+	xfce4-session/splash-fallback.png, xfce4-session/splash-screen.c,
+	xfce4-session/splash-screen.h, xfce4-session/startup.c,
+	xfce4-session/startup.h, xfce4-session/util.c,
+	settings/Makefile.in, settings/session-icon.h, settings/session.c,
+	m4/X11.m4, m4/debug.m4, m4/depends.m4, m4/i18n.m4, po/ChangeLog,
 	po/Makefile.in.in, po/POTFILES.in, po/de.gmo, po/de.po,
 	po/xfce4-session.pot, settings/session.png: Initial import of the
 	new session manager with version 0.0.20.

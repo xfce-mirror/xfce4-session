@@ -9,7 +9,7 @@ dnl
 dnl Version information
 m4_define([xfsm_version_major], [4])
 m4_define([xfsm_version_minor], [1])
-m4_define([xfsm_version_micro], [12])
+m4_define([xfsm_version_micro], [13])
 m4_define([xfsm_version], [xfsm_version_major.xfsm_version_minor.xfsm_version_micro])
 
 dnl Initialize autoconf
@@ -62,7 +62,7 @@ BM_I18N([xfce4-session], [ar az ca de es es_MX eu fa_IR fr hi it ja ko lt
 
 dnl Check for required packages
 BM_DEPEND([LIBXFCE4UTIL], [libxfce4util-1.0], [4.1.11])
-BM_DEPEND([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.1.0])
+BM_DEPEND([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.1.1])
 BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [4.1.24])
 
 dnl Configure the MCS plugins

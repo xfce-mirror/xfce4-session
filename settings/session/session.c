@@ -43,13 +43,14 @@
 /*
    Global variables
  */
-static GtkWidget *dialog = NULL;
-static GtkWidget *general_chooser;
-static GtkWidget *general_autosave;
-static GtkWidget *general_prompt;
-static GtkWidget *advanced_kde;
-static GtkWidget *advanced_gnome;
-static GtkWidget *advanced_remote;
+static GtkWidget    *dialog = NULL;
+static GtkWidget    *general_chooser;
+static GtkWidget    *general_autosave;
+static GtkWidget    *general_prompt;
+static GtkWidget    *advanced_kde;
+static GtkWidget    *advanced_gnome;
+static GtkWidget    *advanced_remote;
+static GtkTooltips  *tooltips;
 
 
 
@@ -130,6 +131,10 @@ general_create (XfceRc *rc)
   g_signal_connect (G_OBJECT (general_chooser), "toggled",
                     G_CALLBACK (config_store), NULL);
   gtk_box_pack_start (GTK_BOX (vbox), general_chooser, FALSE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, general_chooser,
+                        _("If set, the session manager will ask you to choose "
+                          "a session every time you log in to Xfce."),
+                        NULL);
 
   frame = xfce_framebox_new (_("Logout settings"), TRUE);
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, TRUE, 0);
@@ -141,12 +146,25 @@ general_create (XfceRc *rc)
   g_signal_connect (G_OBJECT (general_autosave), "toggled",
                     G_CALLBACK (config_store), NULL);
   gtk_box_pack_start (GTK_BOX (vbox), general_autosave, FALSE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, general_autosave,
+                        _("This option instructs the session manager to "
+                          "save the current session automatically when "
+                          "you log out. If you don't select this option "
+                          "you'll be prompted whether you want to save "
+                          "the current session on each logout."),
+                        NULL);
 
   general_prompt = gtk_check_button_new_with_label (_("Prompt on logout"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (general_prompt), prompt);
   g_signal_connect (G_OBJECT (general_prompt), "toggled",
                     G_CALLBACK (config_store), NULL);
   gtk_box_pack_start (GTK_BOX (vbox), general_prompt, FALSE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, general_prompt,
+                        _("This option disables the logout confirmation "
+                          "dialog. Whether the session will be saved or not "
+                          "depends on whether you enabled the automatic "
+                          "saving of sessions on logout or not."),
+                        NULL);
 
   return page;
 }
@@ -195,12 +213,27 @@ advanced_create (XfceRc *rc)
   g_signal_connect (G_OBJECT (advanced_gnome), "toggled",
                     G_CALLBACK (config_store), NULL);
   gtk_box_pack_start (GTK_BOX (vbox), advanced_gnome, FALSE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, advanced_gnome,
+                        _("Enable this if you plan to use Gnome applications. "
+                          "This will instruct the session manager to start "
+                          "some vital Gnome services for you. You should "
+                          "also enable this if you want to use the Assistive "
+                          "Technologies that ship with Gnome."),
+                        NULL);
 
   advanced_kde = gtk_check_button_new_with_label (_("Launch KDE services on startup"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (advanced_kde), kde);
   g_signal_connect (G_OBJECT (advanced_kde), "toggled",
                     G_CALLBACK (config_store), NULL);
   gtk_box_pack_start (GTK_BOX (vbox), advanced_kde, FALSE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, advanced_kde,
+                        _("Enable this option if you plan to run KDE "
+                          "applications as part of your Xfce Desktop session. "
+                          "This will notably increase the startup time, but "
+                          "on the other hand, KDE applications will startup "
+                          "faster. Some KDE applications may not work at all "
+                          "if you don't enable this option."),
+                        NULL);
 
   icon = xfce_themed_icon_load ("xfsm-gnome-kde-logo", 64);
   image = gtk_image_new_from_pixbuf (icon);
@@ -216,11 +249,17 @@ advanced_create (XfceRc *rc)
 #ifdef HAVE__ICETRANSNOLISTEN
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (advanced_remote), remote);
 #else
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (advanced_remote), TRUE);
   gtk_widget_set_senstive (advanced_remote, FALSE);
 #endif
   g_signal_connect (G_OBJECT (advanced_remote), "toggled",
                     G_CALLBACK (config_store), NULL);
   gtk_box_pack_start (GTK_BOX (vbox), advanced_remote, FALSE, TRUE, 0);
+  gtk_tooltips_set_tip (tooltips, advanced_remote,
+                        _("Allow the session manager to manage applications "
+                          "running on remote hosts. Do not enable this "
+                          "option unless you know what you are doing."),
+                        NULL);
 
   return page;
 }
@@ -237,6 +276,12 @@ dialog_response (void)
     {
       gtk_widget_destroy (dialog);
       dialog = NULL;
+    }
+
+  if (tooltips != NULL)
+    {
+      gtk_object_destroy (GTK_OBJECT (tooltips));
+      tooltips = NULL;
     }
 
   return TRUE;
@@ -258,6 +303,8 @@ dialog_run (McsPlugin *plugin)
       gtk_window_present (GTK_WINDOW (dialog));
       return;
     }
+
+  tooltips = gtk_tooltips_new ();
 
   rc = config_open (TRUE);
 
