@@ -129,7 +129,7 @@ hide_fadeout_windows (void)
 
   attr.x = 0;
   attr.y = 0;
-  attr.window_type = GDK_WINDOW_TEMP;
+  attr.window_type = GDK_WINDOW_TOPLEVEL;
   attr.wclass = GDK_INPUT_OUTPUT;
   attr.override_redirect = TRUE;
 
