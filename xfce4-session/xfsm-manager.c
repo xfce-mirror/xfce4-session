@@ -80,6 +80,7 @@ static guint            startup_timeout_id = 0;
 static gboolean
 xfsm_manager_startup (void)
 {
+  xfsm_startup_foreign ();
   pending_properties = g_list_sort (pending_properties,
                                     (GCompareFunc) xfsm_properties_compare);
   xfsm_manager_startup_continue (NULL);

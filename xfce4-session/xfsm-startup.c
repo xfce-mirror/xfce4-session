@@ -49,6 +49,10 @@
 #include <xfce4-session/xfsm-util.h>
 
 
+#define KDEINIT "env DYLD_FORCE_FLAT_NAMESPACE= LD_BIND_NOW=true " \
+                "SESSION_MANAGER= kdeinit +kcminit +knotify"
+
+
 /*
    Prototypes
  */
@@ -60,6 +64,8 @@ static gboolean xfsm_startup_continue_session  (const gchar *previous_id);
    Globals
  */
 static gchar     *splash_theme_name = NULL;
+static gboolean   startup_kde = FALSE;
+static gboolean   startup_gnome = FALSE;
 
 
 void
@@ -73,6 +79,10 @@ xfsm_startup_init (XfceRc *rc)
     splash_theme_name = g_strdup (name);
   else
     splash_theme_name = NULL;
+
+  xfce_rc_set_group (rc, "Compatibility");
+  startup_gnome = xfce_rc_read_bool_entry (rc, "LaunchGnome", FALSE);
+  startup_kde = xfce_rc_read_bool_entry (rc, "LaunchKDE", FALSE);
 }
 
 
@@ -187,6 +197,19 @@ xfsm_startup_autostart (void)
     g_timeout_add (1000, destroy_splash, NULL);
 
   g_free (dir);
+}
+
+
+void
+xfsm_startup_foreign (void)
+{
+  if (startup_kde)
+    {
+      xfsm_splash_screen_next (splash_screen, _("Launching KDE services..."));
+      gdk_flush ();
+
+      g_spawn_command_line_sync (KDEINIT, NULL, NULL, NULL, NULL);
+    }
 }
 
 

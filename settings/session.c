@@ -402,7 +402,6 @@ advanced_create (XfceRc *rc)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (advanced_kde), kde);
   g_signal_connect (G_OBJECT (advanced_kde), "toggled",
                     G_CALLBACK (config_store), NULL);
-  gtk_widget_set_sensitive (advanced_kde, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox), advanced_kde, FALSE, TRUE, 0);
 
   frame = xfce_framebox_new (_("Security"), TRUE);

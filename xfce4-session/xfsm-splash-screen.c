@@ -304,24 +304,16 @@ splash_window_filter (GdkXEvent *xevent,
       }
     break;
 
-  case ButtonPress:
+  case ButtonRelease:
     if (xfsm_area_contains (&splash->skip_area, button->x, button->y))
       {
         splash->chooser_display = FALSE;
         gtk_main_quit ();
-
-        cursor = gdk_cursor_new (GDK_WATCH);
-        gdk_window_set_cursor (splash->window, cursor);
-        gdk_cursor_unref (cursor);
       }
     else if (xfsm_area_contains (&splash->chooser_area, button->x, button->y))
       {
         splash->chooser_display = TRUE;
         gtk_main_quit ();
-
-        cursor = gdk_cursor_new (GDK_WATCH);
-        gdk_window_set_cursor (splash->window, cursor);
-        gdk_cursor_unref (cursor);
       }
     break;
 
@@ -697,6 +689,7 @@ xfsm_splash_screen_choose (XfsmSplashScreen *splash,
   XfsmChooserReturn result;
   XfsmChooser *chooser;
   GdkEventMask mask;
+  GdkCursor *cursor;
   GList *lp;
   guint id;
 
@@ -714,7 +707,7 @@ xfsm_splash_screen_choose (XfsmSplashScreen *splash,
           chooser_timeout_display (splash);
           
           mask = gdk_window_get_events (splash->window);
-          gdk_window_set_events (splash->window, mask | GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK);
+          gdk_window_set_events (splash->window, mask | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK);
 
           id = g_timeout_add (1000, chooser_timeout, splash);
           gtk_main ();
@@ -768,6 +761,10 @@ xfsm_splash_screen_choose (XfsmSplashScreen *splash,
 
   if (result == XFSM_CHOOSER_LOGOUT)
     exit (EXIT_SUCCESS);
+
+  cursor = gdk_cursor_new (GDK_WATCH);
+  gdk_window_set_cursor (splash->window, cursor);
+  gdk_cursor_unref (cursor);
 
   return (result == XFSM_CHOOSER_LOAD);
 }

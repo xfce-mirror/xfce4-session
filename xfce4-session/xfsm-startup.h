@@ -25,6 +25,7 @@
 #include <libxfce4util/libxfce4util.h>
 
 void xfsm_startup_init (XfceRc *rc);
+void xfsm_startup_foreign (void);
 gboolean xfsm_startup_continue (const gchar *previous_id);
 
 #endif /* !__XFSM_STARTUP_H__ */
