@@ -28,7 +28,7 @@
 #include <gdk-pixbuf/gdk-pixdata.h>
 #include <gmodule.h>
 
-#include <xfce4-session/xfsm-splash-engine.h>
+#include <libxfsm/xfsm-splash-engine.h>
 
 #include <engines/mice/preview.h>
 #include <engines/mice/slide.h>

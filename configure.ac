@@ -9,7 +9,7 @@ dnl
 dnl Version information
 m4_define([xfsm_version_major], [4])
 m4_define([xfsm_version_minor], [1])
-m4_define([xfsm_version_micro], [91])
+m4_define([xfsm_version_micro], [92])
 m4_define([xfsm_version], [xfsm_version_major.xfsm_version_minor.xfsm_version_micro])
 
 dnl Initialize autoconf
@@ -66,9 +66,9 @@ BM_I18N([xfce4-session], [ar az be ca de es es_MX et eu fa fi fr gu he hi it
 			  vi zh_CN zh_TW])
 
 dnl Check for required packages
-BM_DEPEND([LIBXFCE4UTIL], [libxfce4util-1.0], [4.1.13])
-BM_DEPEND([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.1.1])
-BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [4.1.24])
+BM_DEPEND([LIBXFCE4UTIL], [libxfce4util-1.0], [4.1.91])
+BM_DEPEND([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.1.91])
+BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [4.1.91])
 
 dnl Configure the MCS plugins
 XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.1.0])
@@ -195,11 +195,13 @@ icons/64x64/Makefile
 icons/72x72/Makefile
 icons/128x128/Makefile
 icons/scalable/Makefile
+libxfsm/Makefile
+libxfsm/xfce4-session-1.0.pc
 po/Makefile.in
 settings/Makefile
 settings/session/Makefile
 settings/splash/Makefile
 xfce4-session/Makefile
-xfce4-session/xfce4-session-1.0.pc
+xfce4-session-logout/Makefile
 xfsm-shutdown-helper/Makefile
 ])

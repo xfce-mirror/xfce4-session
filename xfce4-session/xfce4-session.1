@@ -1,6 +1,6 @@
-.TH xfce4-session 1 "Jan 25, 2004"
+.TH xfce4-session 1 "Nov 01, 2004"
 .SH NAME
-xfce4-session \- Starts up the XFce4 Desktop Environment 
+xfce4-session \- Starts up the Xfce Desktop Environment 
 .SH SYNOPSIS
 .B xfce4-session
 .br
@@ -9,7 +9,7 @@ This manual page documents briefly the
 .B xfce4-session
 command.
 .PP
-The \fBxfce4-session\fP program starts up the XFce4 Desktop Environment and
+The \fBxfce4-session\fP program starts up the Xfce Desktop Environment and
 is typicaly executed by your login manager (e.g. xdm, gdm, kdm, wdm or from
 your X startup scripts). It will load your last session or a default session
 that includes the standard Xfce programs if no saved session is available.
@@ -35,12 +35,42 @@ Print a help screen and exit.
 .B \-\-version
 Output version information and exit.
 
+
+.SH ENVIRONMENT
+\fBxfce4-session\fP's behaviour is affected by the following environment
+variables.
+.PP
+.TP
+.B XDG_CONFIG_HOME
+Specifies the root for all user-specific configuration files. If this
+environment variable is unset, it defaults to
+.I ~/.config/
+.TP
+.B XDG_CONFIG_DIRS
+Set of preference ordered base directories relative to which configuration
+files should be searched in addition to the
+.B $XDG_CONFIG_HOME
+base directory. The directories should be separated with a colon.
+.TP
+.B XDG_CACHE_HOME
+Specifies the root for all user-specific cache data. If this environment
+variable is unset, it defaults to
+.I ~/.cache/
+
+.SH FILES
+\fBxfce4-session\fP reads its configuration from the file
+.IR $XDG_CONFIG_DIRS/xfce4-session/xfce4-session.rc .
+\fBxfce4-session\fP stores its session data into
+.IR $XDG_CACHE_HOME/sessions/ .
+
 .SH AUTHOR
-\fBxfce4-session\fP is written by Benedikt Meurer
+\fBxfce4-session\fP as written by Benedikt Meurer
 <benny@xfce.org> as part of the Xfce project.
 This manual page was written by Oliver M. Bolzer <oliver@debian.org>
 and Benedikt Meurer <benny@xfce.org>.
+
 .SH "REPORTING BUGS"
-Report bugs to <xfce4-dev@xfce.org>.
+Report bugs to http://bugzilla.xfce.org/.
+
 .SH COPYRIGHT
 Copyright \(co 2003-2004 Benedikt Meurer.

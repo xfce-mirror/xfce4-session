@@ -26,7 +26,7 @@
 
 #include <gtk/gtk.h>
 
-#include <xfce4-session/xfsm-splash-rc.h>
+#include <libxfsm/xfsm-splash-rc.h>
 
 
 #define XFSM_CHOOSE_LOGOUT  0

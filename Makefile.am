@@ -1,10 +1,12 @@
 SUBDIRS =								\
-	xfce4-session							\
+	libxfsm								\
 	docs								\
 	engines								\
 	icons								\
 	po								\
 	settings							\
+	xfce4-session							\
+	xfce4-session-logout						\
 	xfsm-shutdown-helper
 
 configdir = $(sysconfdir)/xdg/xfce4-session

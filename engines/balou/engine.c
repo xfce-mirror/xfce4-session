@@ -25,7 +25,7 @@
 
 #include <gmodule.h>
 
-#include <xfce4-session/xfsm-splash-engine.h>
+#include <libxfsm/xfsm-splash-engine.h>
 
 #include <engines/balou/balou.h>
 

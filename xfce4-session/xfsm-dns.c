@@ -53,8 +53,9 @@
 
 #include <libxfcegui4/libxfcegui4.h>
 
+#include <libxfsm/xfsm-util.h>
+
 #include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-util.h>
 
 
 static gchar*

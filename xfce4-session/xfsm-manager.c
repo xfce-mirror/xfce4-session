@@ -50,15 +50,16 @@
 
 #include <libxfcegui4/libxfcegui4.h>
 
+#include <libxfsm/xfsm-splash-engine.h>
+#include <libxfsm/xfsm-util.h>
+
 #include <xfce4-session/chooser-icon.h>
 #include <xfce4-session/shutdown.h>
 #include <xfce4-session/xfsm-chooser.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-legacy.h>
 #include <xfce4-session/xfsm-manager.h>
-#include <xfce4-session/xfsm-splash-engine.h>
 #include <xfce4-session/xfsm-startup.h>
-#include <xfce4-session/xfsm-util.h>
 
 
 #define DEFAULT_SESSION_NAME "Default"
@@ -434,7 +435,10 @@ xfsm_manager_load_settings (XfceRc *rc)
     {
       if (!xfsm_manager_load_failsafe (rc))
         {
-          fprintf (stderr, "xfce4-session: Unable to load failsafe session, exiting.\n");
+          fprintf (stderr, "xfce4-session: Unable to load failsafe session, exiting. Please check\n"
+                           "               the value of the environment variable XDG_CONFIG_DIRS\n"
+                           "               and make sure that it includes the following path:\n\n"
+                           "                " SYSCONFDIR "/xdg\n\n");
           xfce_rc_close (rc);
           exit (EXIT_FAILURE);
         }

@@ -27,8 +27,8 @@
 
 #include <libxfcegui4/libxfcegui4.h>
 
-#include <xfce4-session/xfsm-splash-engine.h>
-#include <xfce4-session/xfsm-splash-rc.h>
+#include <libxfsm/xfsm-splash-engine.h>
+#include <libxfsm/xfsm-splash-rc.h>
 
 #include <settings/splash/module.h>
 

@@ -23,9 +23,10 @@
 #include <config.h>
 #endif
 
+#include <libxfsm/xfsm-util.h>
+
 #include <xfce4-session/xfsm-client.h>
 #include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-util.h>
 
 
 XfsmClient*

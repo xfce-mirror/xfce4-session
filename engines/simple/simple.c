@@ -30,7 +30,7 @@
 
 #include <libxfcegui4/libxfcegui4.h>
 
-#include <xfce4-session/xfsm-splash-engine.h>
+#include <libxfsm/xfsm-splash-engine.h>
 
 #include <engines/simple/fallback.h>
 #include <engines/simple/preview.h>

@@ -44,6 +44,8 @@
 #include <libxfcegui4/libxfcegui4.h>
 #include <gtk/gtk.h>
 
+#include <libxfsm/xfsm-util.h>
+
 #include <xfce4-session/shutdown.h>
 #include <xfce4-session/xfsm-compat-gnome.h>
 #include <xfce4-session/xfsm-compat-kde.h>
@@ -51,7 +53,6 @@
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-legacy.h>
 #include <xfce4-session/xfsm-shutdown-helper.h>
-#include <xfce4-session/xfsm-util.h>
 
 #define BORDER		6
 

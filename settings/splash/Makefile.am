@@ -21,7 +21,7 @@ splash_settings_la_CFLAGS =						\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"
 
 splash_settings_la_LIBADD =						\
-	$(top_builddir)/xfce4-session/libxfsm-4.2.la
+	$(top_builddir)/libxfsm/libxfsm-4.2.la
 
 if HAVE_OS_CYGWIN
 splash_settings_la_LDFLAGS +=						\
@@ -33,7 +33,7 @@ splash_settings_la_LIBADD +=						\
 endif
 
 splash_settings_la_DEPENDENCIES =					\
-	$(top_builddir)/xfce4-session/libxfsm-4.2.la
+	$(top_builddir)/libxfsm/libxfsm-4.2.la
 
 
 EXTRA_DIST =								\

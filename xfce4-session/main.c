@@ -51,6 +51,8 @@
 #include <libxfce4mcs/mcs-client.h>
 #include <libxfce4util/libxfce4util.h>
 
+#include <libxfsm/xfsm-util.h>
+
 #include <xfce4-session/ice-layer.h>
 #include <xfce4-session/shutdown.h>
 #include <xfce4-session/sm-layer.h>
@@ -58,7 +60,6 @@
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-manager.h>
 #include <xfce4-session/xfsm-startup.h>
-#include <xfce4-session/xfsm-util.h>
 
 
 void
@@ -166,8 +167,12 @@ initialize (int argc, char **argv)
                   "Copyright (c) 2003-2004\n"
                   "        The Xfce development team. All rights reserved.\n\n"
                   "Written for Xfce by Benedikt Meurer <benny@xfce.org>.\n\n"
+                  "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d%d.\n\n"
                   "Please report bugs to <%s>.\n",
-                  PACKAGE_STRING, xfce_version_string (), PACKAGE_BUGREPORT);
+                  PACKAGE_STRING, xfce_version_string (),
+                  GTK_MAJOR_VERSION, GTK_MINOR_VERSION, GTK_MICRO_VERSION,
+                  gtk_major_version, gtk_minor_version, gtk_micro_version,
+                  PACKAGE_BUGREPORT);
           exit (EXIT_SUCCESS);
         }
       else if (strcmp (*argv, "--disable-tcp") == 0)

@@ -28,7 +28,7 @@ libbalou_la_LDFLAGS =							\
 	-module
 
 libbalou_la_LIBADD =							\
-	$(top_builddir)/xfce4-session/libxfsm-4.2.la
+	$(top_builddir)/libxfsm/libxfsm-4.2.la
 
 if HAVE_OS_CYGWIN
 libbalou_la_LIBADD +=							\
@@ -36,4 +36,4 @@ libbalou_la_LIBADD +=							\
 endif
 
 libbalou_la_DEPENDENCIES =						\
-	$(top_builddir)/xfce4-session/libxfsm-4.2.la
+	$(top_builddir)/libxfsm/libxfsm-4.2.la

@@ -17,7 +17,7 @@ libmice_la_LDFLAGS =							\
 	-module
 
 libmice_la_LIBADD =							\
-	$(top_builddir)/xfce4-session/libxfsm-4.2.la
+	$(top_builddir)/libxfsm/libxfsm-4.2.la
 
 if HAVE_OS_CYGWIN
 libmice_la_LIBADD +=							\
@@ -25,7 +25,7 @@ libmice_la_LIBADD +=							\
 endif
 
 libmice_la_DEPENDENCIES =						\
-	$(top_builddir)/xfce4-session/libxfsm-4.2.la
+	$(top_builddir)/libxfsm/libxfsm-4.2.la
 
 noinst_PROGRAMS =							\
 	generate

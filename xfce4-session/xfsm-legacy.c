@@ -75,7 +75,7 @@
 
 #include <libxfcegui4/libxfcegui4.h>
 
-#include <xfce4-session/xfsm-util.h>
+#include <libxfsm/xfsm-util.h>
 
 
 #define WM_SAVE_YOURSELF_TIMEOUT  4000

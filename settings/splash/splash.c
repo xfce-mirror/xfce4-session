@@ -38,8 +38,8 @@
 #include <libxfcegui4/libxfcegui4.h>
 #include <xfce-mcs-manager/manager-plugin.h>
 
-#include <xfce4-session/xfsm-splash-engine.h>
-#include <xfce4-session/xfsm-util.h>
+#include <libxfsm/xfsm-util.h>
+#include <libxfsm/xfsm-splash-engine.h>
 
 #include <settings/splash/module.h>
 #include <settings/splash/nopreview.h>

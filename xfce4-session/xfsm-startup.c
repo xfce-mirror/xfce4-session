@@ -43,12 +43,13 @@
 
 #include <libxfce4util/libxfce4util.h>
 
+#include <libxfsm/xfsm-util.h>
+
 #include <xfce4-session/xfsm-compat-gnome.h>
 #include <xfce4-session/xfsm-compat-kde.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-manager.h>
 #include <xfce4-session/xfsm-splash-screen.h>
-#include <xfce4-session/xfsm-util.h>
 
 
 

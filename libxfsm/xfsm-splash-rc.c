@@ -23,7 +23,7 @@
 #include <config.h>
 #endif
 
-#include <xfce4-session/xfsm-splash-rc.h>
+#include <libxfsm/xfsm-splash-rc.h>
 
 
 struct _XfsmSplashRc

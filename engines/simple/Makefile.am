@@ -18,7 +18,7 @@ libsimple_la_LDFLAGS =							\
 	-module
 
 libsimple_la_LIBADD =							\
-	$(top_builddir)/xfce4-session/libxfsm-4.2.la
+	$(top_builddir)/libxfsm/libxfsm-4.2.la
 
 if HAVE_OS_CYGWIN
 libsimple_la_LIBADD +=							\
@@ -26,7 +26,7 @@ libsimple_la_LIBADD +=							\
 endif
 
 libsimple_la_DEPENDENCIES =						\
-	$(top_builddir)/xfce4-session/libxfsm-4.2.la
+	$(top_builddir)/libxfsm/libxfsm-4.2.la
 	
 EXTRA_DIST =								\
 	fallback.h							\

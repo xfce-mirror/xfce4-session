@@ -7,13 +7,91 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-11 18:28+0200\n"
+"POT-Creation-Date: 2004-11-01 17:04+0100\n"
 "PO-Revision-Date: 2003-10-22 14:27+0800\n"
 "Last-Translator: Ambrose Li <acli@ada.dhs.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: engines/balou/balou-theme.c:110
+msgid "No description given"
+msgstr "沒有說明"
+
+#: engines/balou/config.c:317
+msgid "Choose theme file to install..."
+msgstr "請選擇要安裝的主題檔案..."
+
+# TODO 譯文有待改進
+#: engines/balou/config.c:329
+#, c-format
+msgid ""
+"Unable to install splash theme from file %s, please check that the file is a "
+"valid splash theme archive."
+msgstr ""
+"無法由檔案「%s」安裝啟動畫面主題，請核實該檔案是否為有效的啟動畫面主題檔案。"
+
+#: engines/balou/config.c:382
+#, c-format
+msgid "Unable to remove splash theme \"%s\" from directory %s."
+msgstr "無法從目錄「%s」中移除啟動畫面主題「%s」。"
+
+#: engines/balou/config.c:467
+msgid "Choose theme filename..."
+msgstr "選擇主題的檔案名稱..."
+
+#: engines/balou/config.c:600
+msgid "_Install new theme"
+msgstr "安裝新主題(_I)"
+
+#: engines/balou/config.c:609
+msgid "_Remove theme"
+msgstr "移除主題(_R)"
+
+#: engines/balou/config.c:626
+msgid "_Export theme"
+msgstr "匯出主題(_E)"
+
+#: engines/balou/config.c:841
+msgid "Balou theme"
+msgstr "「Balou」主題"
+
+#: engines/balou/config.c:924
+msgid "Configure Balou..."
+msgstr "設定 Balou..."
+
+#: engines/simple/simple.c:315
+msgid "Choose image..."
+msgstr "選擇圖像..."
+
+#: engines/simple/simple.c:360
+msgid "Configure Simple..."
+msgstr "設定 Simple..."
+
+#: engines/simple/simple.c:371
+msgid "Font"
+msgstr "字型"
+
+#: engines/simple/simple.c:380
+msgid "Colors"
+msgstr "顏色"
+
+#: engines/simple/simple.c:388
+msgid "Background color:"
+msgstr "背景顏色："
+
+#: engines/simple/simple.c:400
+msgid "Text color:"
+msgstr "文字顏色："
+
+#: engines/simple/simple.c:412
+msgid "Image"
+msgstr "圖像"
+
+#: engines/simple/simple.c:420
+msgid "Use custom image"
+msgstr "使用自訂圖像"
 
 #: settings/session/session.c:133
 msgid "Session chooser"
@@ -175,83 +253,83 @@ msgstr "<b>網頁：</b>"
 msgid "Splash Screen"
 msgstr "啟動畫面"
 
-#: xfce4-session/main.c:138
+#: xfce4-session/main.c:139
 msgid "Loading desktop settings"
 msgstr "載入卓面設定中"
 
 #. verify that the DNS settings are ok
-#: xfce4-session/main.c:191
+#: xfce4-session/main.c:196
 msgid "Verifying DNS settings"
 msgstr "核實 DNS 設定中"
 
-#: xfce4-session/main.c:194
+#: xfce4-session/main.c:199
 msgid "Loading session data"
 msgstr "載入工作階段資料中"
 
-#: xfce4-session/shutdown.c:290
+#: xfce4-session/shutdown.c:291
 msgid "What do you want to do next?"
 msgstr "下一步您要做什麼？"
 
-#: xfce4-session/shutdown.c:299
+#: xfce4-session/shutdown.c:300
 msgid "Quit current session"
 msgstr "退出目前工作階段"
 
-#: xfce4-session/shutdown.c:305
+#: xfce4-session/shutdown.c:306
 msgid "Reboot the computer"
 msgstr "重新啟動電腦"
 
-#: xfce4-session/shutdown.c:310
+#: xfce4-session/shutdown.c:311
 msgid "Turn off the computer"
 msgstr "關閉電腦"
 
-#: xfce4-session/shutdown.c:317
+#: xfce4-session/shutdown.c:318
 msgid "_Save session for future logins"
 msgstr "為往後的登入儲存工作階段(_S)"
 
-#: xfce4-session/shutdown.c:392
+#: xfce4-session/shutdown.c:393
 msgid "Please enter your password:"
 msgstr "請輸入密碼："
 
-#: xfce4-session/shutdown.c:424
+#: xfce4-session/shutdown.c:425
 msgid "<b>An error occured</b>"
 msgstr "<b>發生錯誤</b>"
 
-#: xfce4-session/shutdown.c:438
+#: xfce4-session/shutdown.c:439
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
 msgstr "您的密碼可能輸入錯誤，或者系統管理員不允許使用您的賬戶關機。"
 
 # XXX 暫譯
-#: xfce4-session/xfsm-chooser.c:208
+#: xfce4-session/xfsm-chooser.c:209
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr "請選擇您要載入的工作階段。要載入一個工作階段，雙擊工作階段的名稱即可。"
 
 #. "Logout" button
-#: xfce4-session/xfsm-chooser.c:234
+#: xfce4-session/xfsm-chooser.c:235
 msgid "Logout"
 msgstr "登出"
 
-#: xfce4-session/xfsm-chooser.c:236
+#: xfce4-session/xfsm-chooser.c:237
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "取消登入，並返回登入畫面。"
 
 #. "New" button
-#: xfce4-session/xfsm-chooser.c:244
+#: xfce4-session/xfsm-chooser.c:245
 msgid "New session"
 msgstr "新增工作階段"
 
-#: xfce4-session/xfsm-chooser.c:246
+#: xfce4-session/xfsm-chooser.c:247
 msgid "Create a new session."
 msgstr "建立一個新的工作階段。"
 
-#: xfce4-session/xfsm-dns.c:76
+#: xfce4-session/xfsm-dns.c:77
 msgid "(Unknown)"
 msgstr "(不明)"
 
-#: xfce4-session/xfsm-dns.c:143
+#: xfce4-session/xfsm-dns.c:144
 #, c-format
 msgid ""
 "Could not look up internet address for %s.\n"
@@ -264,11 +342,11 @@ msgstr ""
 "在 /etc/hosts 加入「%s」\n"
 "可能可以改正這個問題。"
 
-#: xfce4-session/xfsm-dns.c:150
+#: xfce4-session/xfsm-dns.c:151
 msgid "Continue anyway"
 msgstr "暫且繼續"
 
-#: xfce4-session/xfsm-dns.c:151
+#: xfce4-session/xfsm-dns.c:152
 msgid "Try again"
 msgstr "重試"
 
@@ -284,180 +362,102 @@ msgstr "啟動 Gnome Assistive Technologies 中"
 msgid "Starting KDE services"
 msgstr "啟動 KDE 服務中..."
 
-#: xfce4-session/xfsm-splash-screen.c:177
+#: xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
 msgstr "選擇工作階段"
 
-#: xfce4-session/xfsm-splash-screen.c:207
+#: xfce4-session/xfsm-splash-screen.c:208
 msgid "Choose session name"
 msgstr "選擇工作階段名稱"
 
-#: xfce4-session/xfsm-splash-screen.c:221
+#: xfce4-session/xfsm-splash-screen.c:222
 msgid "Choose a name for the new session:"
 msgstr "請為工作階段改個名："
 
-#: xfce4-session/xfsm-startup.c:92
+#: xfce4-session/xfsm-startup.c:93
 msgid "Starting the Volume Controller"
 msgstr "啟動音量控制器中"
 
-#: xfce4-session/xfsm-startup.c:94
+#: xfce4-session/xfsm-startup.c:95
 msgid "Starting the Panel"
 msgstr "啟動面板中"
 
-#: xfce4-session/xfsm-startup.c:96
+#: xfce4-session/xfsm-startup.c:97
 msgid "Starting the Desktop Manager"
 msgstr "啟動卓面管理程式中"
 
-#: xfce4-session/xfsm-startup.c:98
+#: xfce4-session/xfsm-startup.c:99
 msgid "Starting the Taskbar"
 msgstr "啟動工作列中"
 
-#: xfce4-session/xfsm-startup.c:100
+#: xfce4-session/xfsm-startup.c:101
 msgid "Starting the Window Manager"
 msgstr "啟動視窗管理程式中"
 
-#: xfce4-session/xfsm-startup.c:104
+#: xfce4-session/xfsm-startup.c:105
 msgid "Starting the Gnome Terminal Emulator"
 msgstr "啟動 Gnome 終端機中"
 
-#: xfce4-session/xfsm-startup.c:108
+#: xfce4-session/xfsm-startup.c:109
 msgid "Starting the KDE Advanced Text Editor"
 msgstr "啟動 KDE 進階文字編輯器中"
 
-#: xfce4-session/xfsm-startup.c:110
+#: xfce4-session/xfsm-startup.c:111
 msgid "Starting the KDE Clipboard Manager"
 msgstr "啟動 KDE 剪貼簿管理程式中"
 
-#: xfce4-session/xfsm-startup.c:112
+#: xfce4-session/xfsm-startup.c:113
 msgid "Starting the KDE Mail Reader"
 msgstr "啟動 KDE 郵件閱讀器中"
 
-#: xfce4-session/xfsm-startup.c:114
+#: xfce4-session/xfsm-startup.c:115
 msgid "Starting the KDE News Reader"
 msgstr "啟動 KDE 新聞閱讀器中"
 
-#: xfce4-session/xfsm-startup.c:116
+#: xfce4-session/xfsm-startup.c:117
 msgid "Starting the Konqueror"
 msgstr "啟動 Konqueror 中"
 
-#: xfce4-session/xfsm-startup.c:118
+#: xfce4-session/xfsm-startup.c:119
 msgid "Starting the KDE Terminal Emulator"
 msgstr "啟動 KDE 終端機中"
 
-#: xfce4-session/xfsm-startup.c:122
+#: xfce4-session/xfsm-startup.c:123
 msgid "Starting the Beep Media Player"
 msgstr "啟動 Beep Media Player 中"
 
-#: xfce4-session/xfsm-startup.c:124
+#: xfce4-session/xfsm-startup.c:125
 msgid "Starting The Gimp"
 msgstr "啟動 Gimp 中"
 
-#: xfce4-session/xfsm-startup.c:126
+#: xfce4-session/xfsm-startup.c:127
 msgid "Starting the VI Improved Editor"
 msgstr "啟動 VI Improved 文字編輯器中"
 
-#: xfce4-session/xfsm-startup.c:128
+#: xfce4-session/xfsm-startup.c:129
 msgid "Starting the Session Management Proxy"
 msgstr "啟動工作階段管理代理程式中"
 
-#: xfce4-session/xfsm-startup.c:130
+#: xfce4-session/xfsm-startup.c:131
 msgid "Starting the X-Chat IRC Client"
 msgstr "啟動 X-Chat 中"
 
-#: xfce4-session/xfsm-startup.c:132
+#: xfce4-session/xfsm-startup.c:133
 msgid "Starting the X Multimedia System"
 msgstr "啟動 X Multimedia System 中"
 
-#: xfce4-session/xfsm-startup.c:134
+#: xfce4-session/xfsm-startup.c:135
 msgid "Starting the X Terminal Emulator"
 msgstr "啟動 X 終端機中"
 
-#: xfce4-session/xfsm-startup.c:136
+#: xfce4-session/xfsm-startup.c:137
 #, c-format
 msgid "Starting %s"
 msgstr "啟動 %s 中"
 
-#: xfce4-session/xfsm-startup.c:158
+#: xfce4-session/xfsm-startup.c:159
 msgid "Performing Autostart..."
 msgstr "執行自動啟動中..."
-
-#: engines/balou/balou-theme.c:110
-msgid "No description given"
-msgstr "沒有說明"
-
-#: engines/balou/config.c:317
-msgid "Choose theme file to install..."
-msgstr "請選擇要安裝的主題檔案..."
-
-# TODO 譯文有待改進
-#: engines/balou/config.c:329
-#, c-format
-msgid ""
-"Unable to install splash theme from file %s, please check that the file is a "
-"valid splash theme archive."
-msgstr ""
-"無法由檔案「%s」安裝啟動畫面主題，請核實該檔案是否為有效的啟動畫面主題檔案。"
-
-#: engines/balou/config.c:382
-#, c-format
-msgid "Unable to remove splash theme \"%s\" from directory %s."
-msgstr "無法從目錄「%s」中移除啟動畫面主題「%s」。"
-
-#: engines/balou/config.c:467
-msgid "Choose theme filename..."
-msgstr "選擇主題的檔案名稱..."
-
-#: engines/balou/config.c:600
-msgid "_Install new theme"
-msgstr "安裝新主題(_I)"
-
-#: engines/balou/config.c:609
-msgid "_Remove theme"
-msgstr "移除主題(_R)"
-
-#: engines/balou/config.c:626
-msgid "_Export theme"
-msgstr "匯出主題(_E)"
-
-#: engines/balou/config.c:841
-msgid "Balou theme"
-msgstr "「Balou」主題"
-
-#: engines/balou/config.c:924
-msgid "Configure Balou..."
-msgstr "設定 Balou..."
-
-#: engines/simple/simple.c:315
-msgid "Choose image..."
-msgstr "選擇圖像..."
-
-#: engines/simple/simple.c:360
-msgid "Configure Simple..."
-msgstr "設定 Simple..."
-
-#: engines/simple/simple.c:371
-msgid "Font"
-msgstr "字型"
-
-#: engines/simple/simple.c:380
-msgid "Colors"
-msgstr "顏色"
-
-#: engines/simple/simple.c:388
-msgid "Background color:"
-msgstr "背景顏色："
-
-#: engines/simple/simple.c:400
-msgid "Text color:"
-msgstr "文字顏色："
-
-#: engines/simple/simple.c:412
-msgid "Image"
-msgstr "圖像"
-
-#: engines/simple/simple.c:420
-msgid "Use custom image"
-msgstr "使用自訂圖像"
 
 #, fuzzy
 #~ msgid "Starting Xfce, please wait..."

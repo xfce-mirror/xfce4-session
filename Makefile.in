@@ -226,12 +226,14 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 SUBDIRS = \
-	xfce4-session							\
+	libxfsm								\
 	docs								\
 	engines								\
 	icons								\
 	po								\
 	settings							\
+	xfce4-session							\
+	xfce4-session-logout						\
 	xfsm-shutdown-helper
 
 configdir = $(sysconfdir)/xdg/xfce4-session
@@ -452,7 +454,7 @@ distclean-tags:
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/. $(distdir)/m4 $(distdir)/po $(distdir)/xfce4-session
+	$(mkdir_p) $(distdir)/. $(distdir)/libxfsm $(distdir)/m4 $(distdir)/po
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \

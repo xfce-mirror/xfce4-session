@@ -35,10 +35,11 @@
 #include <libxfce4util/libxfce4util.h>
 #include <libxfcegui4/libxfcegui4.h>
 
+#include <libxfsm/xfsm-splash-engine.h>
+#include <libxfsm/xfsm-util.h>
+
 #include <xfce4-session/xfsm-chooser.h>
-#include <xfce4-session/xfsm-splash-engine.h>
 #include <xfce4-session/xfsm-splash-screen.h>
-#include <xfce4-session/xfsm-util.h>
 
 
 struct _XfsmSplashScreen

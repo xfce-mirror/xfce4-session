@@ -33,9 +33,10 @@
 #include <stdlib.h>
 #endif
 
+#include <libxfsm/xfsm-util.h>
+
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-properties.h>
-#include <xfce4-session/xfsm-util.h>
 
 
 /* local prototypes */
