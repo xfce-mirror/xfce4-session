@@ -454,11 +454,15 @@ xfsm_manager_init (XfceRc *rc)
 
   xfce_rc_set_group (rc, "General");
   display_name  = xfce_gdk_display_get_fullname (gdk_display_get_default ());
+
 #ifdef HAVE_OS_CYGWIN
   /* rename a colon (:) to a hash (#) under cygwin. windows doesn't like
-     filenames with a colon... */
-  for (s = display_name; *s != '\0'; ++s) if (*s == ':') *s = '#';
+   * filenames with a colon... */
+  for (s = display_name; *s != '\0'; ++s)
+    if (*s == ':')
+      *s = '#';
 #endif
+
   resource_name = g_strconcat ("sessions/xfce4-session-", display_name, NULL);
   session_file  = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource_name, TRUE);
   g_free (resource_name);
