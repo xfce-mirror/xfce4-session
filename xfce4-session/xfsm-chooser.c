@@ -58,6 +58,7 @@ static void xfsm_chooser_finalize (GObject *object);
 #ifdef SESSION_SCREENSHOTS
 static GdkPixbuf*load_thumbnail (const gchar *name);
 #endif
+static gint session_compare (XfsmChooserSession *a, XfsmChooserSession *b);
 
 static GObjectClass *parent_class;
 
@@ -199,6 +200,8 @@ static void
 xfsm_chooser_init (XfsmChooser *chooser)
 {
   GtkTreeSelection *selection;
+  GtkTreeViewColumn *column;
+  GtkCellRenderer *renderer;
   GtkListStore *model;
   GtkWidget *button;
   GtkWidget *swin;
@@ -250,12 +253,18 @@ xfsm_chooser_init (XfsmChooser *chooser)
                           "name to restore it."),
                         NULL);
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (chooser->tree), FALSE);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (chooser->tree),
-      gtk_tree_view_column_new_with_attributes ("Icon",
-        gtk_cell_renderer_pixbuf_new (), "pixbuf", ICON_COLUMN, NULL));
-  gtk_tree_view_append_column (GTK_TREE_VIEW (chooser->tree),
-      gtk_tree_view_column_new_with_attributes ("Sessions",
-        gtk_cell_renderer_text_new (), "markup", TITLE_COLUMN, NULL));
+  column = gtk_tree_view_column_new ();
+  renderer = gtk_cell_renderer_pixbuf_new ();
+  gtk_tree_view_column_pack_start (column, renderer, FALSE);
+  gtk_tree_view_column_set_attributes (column, renderer,
+                                       "pixbuf", ICON_COLUMN,
+                                       NULL);
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_tree_view_column_pack_start (column, renderer, TRUE);
+  gtk_tree_view_column_set_attributes (column, renderer,
+                                       "markup", TITLE_COLUMN,
+                                       NULL);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (chooser->tree), column);
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (chooser->tree));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
   g_signal_connect (G_OBJECT (selection), "changed",
@@ -350,6 +359,9 @@ xfsm_chooser_set_sessions (XfsmChooser *chooser,
 
   if (sessions != NULL)
     {
+      /* sort session by access time */
+      sessions = g_list_sort (sessions, (GCompareFunc) session_compare);
+
       pb_default = xfce_inline_icon_at_size (chooser_icon_data, 52, 42);
 
       for (lp = sessions; lp != NULL; lp = lp->next)
@@ -472,5 +484,15 @@ load_thumbnail (const gchar *name)
   return pb;
 }
 #endif
+
+
+static gint
+session_compare (XfsmChooserSession *a, XfsmChooserSession *b)
+{
+  if (a->atime > b->atime)
+    return -1;
+  return 1;
+}
+
 
 

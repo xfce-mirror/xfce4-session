@@ -33,9 +33,6 @@ GtkWidget	*xfsm_imgbtn_new(const gchar *, const gchar *, GtkWidget **);
 gchar* xfsm_display_fullname (GdkDisplay *display) G_GNUC_CONST;
 gchar* xfsm_screen_fullname (GdkScreen *screen) G_GNUC_CONST;
 
-gchar* xfsm_expand_variables (const gchar *command,
-                              gchar      **envp);
-
 gboolean xfsm_start_application (gchar      **command,
                                  gchar      **environment,
                                  GdkScreen   *screen,
@@ -49,8 +46,8 @@ void xfsm_center_window_on_screen (GtkWindow *window,
                                    GdkScreen *screen,
                                    gint       monitor);
 
+/* XXX - move to libxfce4util? */
 gchar **xfsm_strv_copy (gchar **v);
-
 gboolean xfsm_strv_equal (gchar **a, gchar **b);
 
 void xfsm_window_add_border (GtkWindow *window);

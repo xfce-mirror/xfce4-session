@@ -98,6 +98,7 @@ setup_environment (void)
                authfile, g_strerror (errno));
       exit (EXIT_FAILURE);
     }
+  g_free (authfile);
   close (fd);
 }
 
@@ -160,8 +161,6 @@ init_display (GdkDisplay            *dpy,
       gc = gdk_gc_new (GDK_DRAWABLE (root));
       gdk_gc_set_function (gc, GDK_COPY);
       gdk_gc_set_rgb_fg_color (gc, &fgcolor);
-
-      gdk_flush ();
 
       context = gdk_pango_context_get_for_screen (screen);
       layout = pango_layout_new (context);

@@ -346,6 +346,7 @@ xfsm_splash_screen_new (GdkDisplay *display,
   /* the other screens */
   for (n = 0; n < gdk_display_get_n_screens (display); ++n)
     {
+      PangoContext *context;
       PangoLayout *layout;
       GdkWindow *window;
       GdkScreen *screen;
@@ -355,7 +356,8 @@ xfsm_splash_screen_new (GdkDisplay *display,
 
       screen = gdk_display_get_screen (display, n);
 
-      layout = pango_layout_new (gdk_pango_context_get_for_screen (screen));
+      context = gdk_pango_context_get_for_screen (screen);
+      layout = pango_layout_new (context);
       g_snprintf (buffer, 128, "<span face=\"Sans\" size=\"x-large\">%s</span>",
           _("Starting Xfce, please wait..."));
       pango_layout_set_markup (layout, buffer, -1);
@@ -412,6 +414,7 @@ xfsm_splash_screen_new (GdkDisplay *display,
         }
 
       g_object_unref (G_OBJECT (layout));
+      g_object_unref (G_OBJECT (context));
     }
 
   /* duplicate gc and swap fg/bg colors */
@@ -637,6 +640,7 @@ display_chooser_text (XfsmSplashScreen *splash,
                          0, splash->screen_h - splash->text_h,
                          splash->screen_w, splash->text_h);
       g_object_unref (G_OBJECT (layout));
+      g_object_unref (G_OBJECT (context));
     }
   else
     {
@@ -794,6 +798,9 @@ xfsm_splash_screen_destroy (XfsmSplashScreen *splash)
     gdk_window_destroy (GDK_WINDOW (lp->data));
 
   xfsm_splash_theme_destroy (splash->theme);
+
+  if (splash->context != NULL)
+    g_object_unref (G_OBJECT (splash->context));
 
   if (splash->skip_pm != NULL)
     g_object_unref (G_OBJECT (splash->skip_pm));

@@ -285,13 +285,15 @@ looknfeel_dropped (GtkWidget *treeview, GdkDragContext *context,
 GtkWidget*
 looknfeel_create (XfceRc *rc)
 {
-  GtkTreeSelection *selection;
-  GtkTreeModel     *model;
-  GtkWidget        *frame;
-  GtkWidget        *page;
-  GtkWidget        *swin;
-  GtkWidget        *vbox;
-  const gchar      *theme;
+  GtkTreeSelection  *selection;
+  GtkTreeViewColumn *column;
+  GtkCellRenderer   *renderer;
+  GtkTreeModel      *model;
+  GtkWidget         *frame;
+  GtkWidget         *page;
+  GtkWidget         *swin;
+  GtkWidget         *vbox;
+  const gchar       *theme;
 
   xfce_rc_set_group (rc, "Splash Theme");
   theme = xfce_rc_read_entry (rc, "Name", "Default");
@@ -323,13 +325,21 @@ looknfeel_create (XfceRc *rc)
   g_signal_connect (G_OBJECT (selection), "changed",
                     G_CALLBACK (config_store), NULL);
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (looknfeel_treeview), FALSE);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (looknfeel_treeview),
-      gtk_tree_view_column_new_with_attributes ("Preview",
-        gtk_cell_renderer_pixbuf_new (), "pixbuf", PREVIEW_COLUMN, NULL));
-  gtk_tree_view_append_column (GTK_TREE_VIEW (looknfeel_treeview),
-      gtk_tree_view_column_new_with_attributes ("Description",
-        gtk_cell_renderer_text_new (), "markup", TITLE_COLUMN, NULL));
   gtk_container_add (GTK_CONTAINER (swin), looknfeel_treeview);
+
+  /* add tree view columns */
+  column = gtk_tree_view_column_new ();
+  renderer = gtk_cell_renderer_pixbuf_new ();
+  gtk_tree_view_column_pack_start (column, renderer, FALSE);
+  gtk_tree_view_column_set_attributes (column, renderer,
+                                       "pixbuf", PREVIEW_COLUMN,
+                                       NULL);
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_tree_view_column_pack_start (column, renderer, TRUE);
+  gtk_tree_view_column_set_attributes (column, renderer,
+                                       "markup", TITLE_COLUMN,
+                                       NULL);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (looknfeel_treeview), column);
 
   /* Drag&Drop support */
   gtk_drag_dest_set (looknfeel_treeview, GTK_DEST_DEFAULT_ALL, targets,

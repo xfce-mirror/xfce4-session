@@ -23,12 +23,22 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_SYS_STAT_H
+#include <sys/stat.h>
+#endif
+
 #include <math.h>
 #ifdef HAVE_MEMORY_H
 #include <memory.h>
 #endif
 #ifdef HAVE_STRING_H
 #include <string.h>
+#endif
+#ifdef HAVE_TIME_H
+#include <time.h>
+#endif
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
 #endif
 
 #include <libxfce4util/libxfce4util.h>
@@ -50,12 +60,17 @@ struct _XfsmSplashTheme
   GdkColor focolor2;
   gchar   *name;
   gchar   *description;
+  gchar   *theme_file;
   gchar   *logo_file;
   gchar   *chooser_icon_file;
   gchar   *skip_icon_file;
 };
 
 
+static time_t mtime (const gchar *path);
+static GdkPixbuf *load_cached_preview (const XfsmSplashTheme *theme);
+static void store_cached_preview (const XfsmSplashTheme *theme,
+                                  GdkPixbuf             *pixbuf);
 static void load_color_pair (const XfceRc *rc,
                              const gchar  *name,
                              GdkColor     *color1_return,
@@ -90,6 +105,8 @@ xfsm_splash_theme_load (const gchar *name)
           g_free (file);
           goto set_defaults;
         }
+
+      theme->theme_file = g_strdup (file);
 
       xfce_rc_set_group (rc, "Info");
       theme->name = g_strdup (xfce_rc_read_entry (rc, "Name", name));
@@ -174,6 +191,9 @@ xfsm_splash_theme_copy (const XfsmSplashTheme *theme)
 
   if (theme->description != NULL)
     new_theme->description = g_strdup (theme->description);
+
+  if (theme->theme_file != NULL)
+    new_theme->theme_file = g_strdup (theme->theme_file);
 
   if (theme->logo_file != NULL)
     new_theme->logo_file = g_strdup (theme->logo_file);
@@ -270,6 +290,9 @@ xfsm_splash_theme_draw_gradient (const XfsmSplashTheme *theme,
                                  gint height)
 {
   GdkColor color;
+  gint     dred;
+  gint     dgreen;
+  gint     dblue;
   GdkGC   *gc;
   gint     i;
 
@@ -284,17 +307,19 @@ xfsm_splash_theme_draw_gradient (const XfsmSplashTheme *theme,
     }
   else
     {
-      for (i = y; i < y + height; ++i)
+      /* calculate differences */
+      dred = theme->bgcolor1.red - theme->bgcolor2.red;
+      dgreen = theme->bgcolor1.green - theme->bgcolor2.green;
+      dblue = theme->bgcolor1.blue - theme->bgcolor2.blue;
+
+      for (i = 0; i < height; ++i, ++y)
         {
-          color.red = theme->bgcolor2.red + (i * (theme->bgcolor1.red
-                - theme->bgcolor2.red) / height);
-          color.green = theme->bgcolor2.green + (i * (theme->bgcolor1.green
-                - theme->bgcolor2.green) / height);
-          color.blue = theme->bgcolor2.blue + (i * (theme->bgcolor1.blue
-                - theme->bgcolor2.blue) / height);
+          color.red = theme->bgcolor2.red + (i * dred / height);
+          color.green = theme->bgcolor2.green + (i * dgreen / height);
+          color.blue = theme->bgcolor2.blue + (i * dblue / height);
 
           gdk_gc_set_rgb_fg_color (gc, &color);
-          gdk_draw_rectangle (drawable, gc, TRUE, x, y + i, width, 1);
+          gdk_draw_line (drawable, gc, x, y, x + width, y);
         }
     }
 
@@ -307,8 +332,8 @@ xfsm_splash_theme_generate_preview (const XfsmSplashTheme *theme,
                                     gint                   width,
                                     gint                   height)
 {
-#define WIDTH   640
-#define HEIGHT  480
+#define WIDTH   320
+#define HEIGHT  240
 
   GdkPixmap *pixmap;
   GdkPixbuf *pixbuf;
@@ -316,6 +341,11 @@ xfsm_splash_theme_generate_preview (const XfsmSplashTheme *theme,
   GdkWindow *root;
   GdkGC     *gc;
   gint       pw, ph;
+
+  /* check for a cached preview first */
+  scaled = load_cached_preview (theme);
+  if (scaled != NULL)
+    return scaled;
 
   root = gdk_screen_get_root_window (gdk_screen_get_default ());
   pixmap = gdk_pixmap_new (GDK_DRAWABLE (root), WIDTH, HEIGHT, -1);
@@ -346,6 +376,9 @@ xfsm_splash_theme_generate_preview (const XfsmSplashTheme *theme,
   g_object_unref (pixbuf);
   g_object_unref (pixmap);
 
+  /* store preview */
+  store_cached_preview (theme, scaled);
+
   return scaled;
 
 #undef WIDTH
@@ -360,6 +393,8 @@ xfsm_splash_theme_destroy (XfsmSplashTheme *theme)
     g_free (theme->name);
   if (theme->description != NULL)
     g_free (theme->description);
+  if (theme->theme_file != NULL)
+    g_free (theme->theme_file);
   if (theme->logo_file != NULL)
     g_free (theme->logo_file);
   if (theme->chooser_icon_file != NULL)
@@ -478,6 +513,69 @@ xfsm_splash_theme_load_pixbuf (const gchar *path,
     }
 
   return pb;
+}
+
+
+static time_t
+mtime (const gchar *path)
+{
+  struct stat sb;
+
+  if (path == NULL || stat (path, &sb) < 0)
+    return (time_t) 0;
+
+  return sb.st_mtime;
+}
+
+
+static GdkPixbuf*
+load_cached_preview (const XfsmSplashTheme *theme)
+{
+  GdkPixbuf *pixbuf;
+  gchar     *resource;
+  gchar     *preview;
+
+  resource = g_strconcat ("splash-theme-preview-", theme->name, ".png", NULL);
+  preview = xfce_resource_lookup (XFCE_RESOURCE_CACHE, resource);
+  g_free (resource);
+
+  if (preview == NULL)
+    return NULL;
+
+  if ((mtime (preview) < mtime (theme->theme_file))
+      || (theme->logo_file != NULL
+        && (mtime (preview) < mtime (theme->logo_file))))
+    {
+      /* preview is outdated, need to regenerate preview */
+      unlink (preview);
+      g_free (preview);
+
+      return NULL;
+    }
+
+  pixbuf = gdk_pixbuf_new_from_file (preview, NULL);
+  g_free (preview);
+
+  return pixbuf;
+}
+
+
+static void
+store_cached_preview (const XfsmSplashTheme *theme,
+                      GdkPixbuf             *pixbuf)
+{
+  gchar *resource;
+  gchar *preview;
+
+  resource = g_strconcat ("splash-theme-preview-", theme->name, ".png", NULL);
+  preview = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource, TRUE);
+  g_free (resource);
+
+  if (preview != NULL)
+    {
+      gdk_pixbuf_save (pixbuf, preview, "png", NULL, NULL);
+      g_free (preview);
+    }
 }
 
 
