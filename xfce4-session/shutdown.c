@@ -114,6 +114,8 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   saveonexit = xfce_rc_read_bool_entry (rc, "SaveOnExit", TRUE);
   autosave = xfce_rc_read_bool_entry (rc, "AutoSave", FALSE);
 
+  /** XXX - evalute General/PromptOnLogout! */
+
   /* It's really bad here if someone else has the pointer
    * grabbed, so we first grab the pointer and keyboard
    * to an offscreen window, and then once we have the

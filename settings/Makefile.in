@@ -53,12 +53,14 @@ am__installdirs = $(DESTDIR)$(sessiondir) $(DESTDIR)$(appsdir)
 sessionLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(session_LTLIBRARIES)
 session_settings_la_LIBADD =
-am_session_settings_la_OBJECTS = session_settings_la-session.lo
+am_session_settings_la_OBJECTS = session_settings_la-session.lo \
+	session_settings_la-xfsm-splash-theme.lo
 session_settings_la_OBJECTS = $(am_session_settings_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/session_settings_la-session.Plo
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/session_settings_la-session.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/session_settings_la-xfsm-splash-theme.Plo
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) \
@@ -223,7 +225,8 @@ session_settings_la_LDFLAGS = \
 
 session_settings_la_SOURCES = \
 	session-icon.h							\
-	session.c
+	session.c							\
+	../xfce4-session/xfsm-splash-theme.c
 
 session_settings_la_CFLAGS = \
 	@XFCE_MCS_MANAGER_CFLAGS@					\
@@ -308,6 +311,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/session_settings_la-session.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/session_settings_la-xfsm-splash-theme.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
@@ -356,6 +360,30 @@ session_settings_la-session.lo: session.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/session_settings_la-session.Plo' tmpdepfile='$(DEPDIR)/session_settings_la-session.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -c -o session_settings_la-session.lo `test -f 'session.c' || echo '$(srcdir)/'`session.c
+
+session_settings_la-xfsm-splash-theme.o: ../xfce4-session/xfsm-splash-theme.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -MT session_settings_la-xfsm-splash-theme.o -MD -MP -MF "$(DEPDIR)/session_settings_la-xfsm-splash-theme.Tpo" -c -o session_settings_la-xfsm-splash-theme.o `test -f '../xfce4-session/xfsm-splash-theme.c' || echo '$(srcdir)/'`../xfce4-session/xfsm-splash-theme.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/session_settings_la-xfsm-splash-theme.Tpo" "$(DEPDIR)/session_settings_la-xfsm-splash-theme.Po"; else rm -f "$(DEPDIR)/session_settings_la-xfsm-splash-theme.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='../xfce4-session/xfsm-splash-theme.c' object='session_settings_la-xfsm-splash-theme.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/session_settings_la-xfsm-splash-theme.Po' tmpdepfile='$(DEPDIR)/session_settings_la-xfsm-splash-theme.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -c -o session_settings_la-xfsm-splash-theme.o `test -f '../xfce4-session/xfsm-splash-theme.c' || echo '$(srcdir)/'`../xfce4-session/xfsm-splash-theme.c
+
+session_settings_la-xfsm-splash-theme.obj: ../xfce4-session/xfsm-splash-theme.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -MT session_settings_la-xfsm-splash-theme.obj -MD -MP -MF "$(DEPDIR)/session_settings_la-xfsm-splash-theme.Tpo" -c -o session_settings_la-xfsm-splash-theme.obj `if test -f '../xfce4-session/xfsm-splash-theme.c'; then $(CYGPATH_W) '../xfce4-session/xfsm-splash-theme.c'; else $(CYGPATH_W) '$(srcdir)/../xfce4-session/xfsm-splash-theme.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/session_settings_la-xfsm-splash-theme.Tpo" "$(DEPDIR)/session_settings_la-xfsm-splash-theme.Po"; else rm -f "$(DEPDIR)/session_settings_la-xfsm-splash-theme.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='../xfce4-session/xfsm-splash-theme.c' object='session_settings_la-xfsm-splash-theme.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/session_settings_la-xfsm-splash-theme.Po' tmpdepfile='$(DEPDIR)/session_settings_la-xfsm-splash-theme.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -c -o session_settings_la-xfsm-splash-theme.obj `if test -f '../xfce4-session/xfsm-splash-theme.c'; then $(CYGPATH_W) '../xfce4-session/xfsm-splash-theme.c'; else $(CYGPATH_W) '$(srcdir)/../xfce4-session/xfsm-splash-theme.c'; fi`
+
+session_settings_la-xfsm-splash-theme.lo: ../xfce4-session/xfsm-splash-theme.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -MT session_settings_la-xfsm-splash-theme.lo -MD -MP -MF "$(DEPDIR)/session_settings_la-xfsm-splash-theme.Tpo" -c -o session_settings_la-xfsm-splash-theme.lo `test -f '../xfce4-session/xfsm-splash-theme.c' || echo '$(srcdir)/'`../xfce4-session/xfsm-splash-theme.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/session_settings_la-xfsm-splash-theme.Tpo" "$(DEPDIR)/session_settings_la-xfsm-splash-theme.Plo"; else rm -f "$(DEPDIR)/session_settings_la-xfsm-splash-theme.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='../xfce4-session/xfsm-splash-theme.c' object='session_settings_la-xfsm-splash-theme.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/session_settings_la-xfsm-splash-theme.Plo' tmpdepfile='$(DEPDIR)/session_settings_la-xfsm-splash-theme.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -c -o session_settings_la-xfsm-splash-theme.lo `test -f '../xfce4-session/xfsm-splash-theme.c' || echo '$(srcdir)/'`../xfce4-session/xfsm-splash-theme.c
 
 mostlyclean-libtool:
 	-rm -f *.lo

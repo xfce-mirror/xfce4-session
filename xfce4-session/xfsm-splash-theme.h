@@ -32,6 +32,10 @@ XfsmSplashTheme *xfsm_splash_theme_load (const gchar *name);
 
 XfsmSplashTheme *xfsm_splash_theme_copy (const XfsmSplashTheme *theme);
 
+const gchar *xfsm_splash_theme_get_name (const XfsmSplashTheme *theme);
+
+const gchar *xfsm_splash_theme_get_description (const XfsmSplashTheme *theme);
+
 void xfsm_splash_theme_get_bgcolor (const XfsmSplashTheme *theme,
                                     GdkColor *color_return);
 
@@ -60,6 +64,10 @@ void xfsm_splash_theme_draw_gradient (const XfsmSplashTheme *theme,
                                       gint y,
                                       gint width,
                                       gint height);
+
+GdkPixbuf *xfsm_splash_theme_generate_preview (const XfsmSplashTheme *theme,
+                                               gint width,
+                                               gint height);
 
 void xfsm_splash_theme_destroy (XfsmSplashTheme *theme);
 

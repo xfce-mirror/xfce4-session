@@ -48,6 +48,8 @@ struct _XfsmSplashTheme
   GdkColor fgcolor;
   GdkColor focolor1;
   GdkColor focolor2;
+  gchar   *name;
+  gchar   *description;
   gchar   *logo_file;
   gchar   *chooser_icon_file;
   gchar   *skip_icon_file;
@@ -76,17 +78,9 @@ xfsm_splash_theme_load (const gchar *name)
 
   theme = g_new0 (XfsmSplashTheme, 1);
 
-  resource = xfce_get_homefile (".themes", name, "xfsm4", "themerc", NULL);
-  if (g_file_test (resource, G_FILE_TEST_IS_REGULAR))
-    file = g_strdup (resource);
+  resource = g_strdup_printf ("%s/xfsm4/themerc", name);
+  file = xfce_resource_lookup (XFCE_RESOURCE_THEMES, resource);
   g_free (resource);
-
-  if (file == NULL)
-    {
-      resource = g_strdup_printf ("themes/%s/xfsm4/themerc", name);
-      file = xfce_resource_lookup (XFCE_RESOURCE_DATA, resource);
-      g_free (resource);
-    }
 
   if (file != NULL)
     {
@@ -96,6 +90,10 @@ xfsm_splash_theme_load (const gchar *name)
           g_free (file);
           goto set_defaults;
         }
+
+      xfce_rc_set_group (rc, "Info");
+      theme->name = g_strdup (xfce_rc_read_entry (rc, "Name", name));
+      theme->description = g_strdup (xfce_rc_read_entry (rc, "Description", _("No description given")));
 
       xfce_rc_set_group (rc, "Splash Screen");
       load_color_pair (rc, "bgcolor", &theme->bgcolor1, &theme->bgcolor2,
@@ -171,6 +169,12 @@ xfsm_splash_theme_copy (const XfsmSplashTheme *theme)
 
   new_theme = (XfsmSplashTheme *) g_memdup (theme, sizeof (*theme));
 
+  if (theme->name != NULL)
+    new_theme->name = g_strdup (theme->name);
+
+  if (theme->description != NULL)
+    new_theme->description = g_strdup (theme->description);
+
   if (theme->logo_file != NULL)
     new_theme->logo_file = g_strdup (theme->logo_file);
 
@@ -181,6 +185,20 @@ xfsm_splash_theme_copy (const XfsmSplashTheme *theme)
     new_theme->skip_icon_file = g_strdup (theme->skip_icon_file);
 
   return new_theme;
+}
+
+
+const gchar*
+xfsm_splash_theme_get_name (const XfsmSplashTheme *theme)
+{
+  return theme->name;
+}
+
+
+const gchar*
+xfsm_splash_theme_get_description (const XfsmSplashTheme *theme)
+{
+  return theme->description;
 }
 
 
@@ -284,9 +302,64 @@ xfsm_splash_theme_draw_gradient (const XfsmSplashTheme *theme,
 }
 
 
+GdkPixbuf*
+xfsm_splash_theme_generate_preview (const XfsmSplashTheme *theme,
+                                    gint                   width,
+                                    gint                   height)
+{
+#define WIDTH   640
+#define HEIGHT  480
+
+  GdkPixmap *pixmap;
+  GdkPixbuf *pixbuf;
+  GdkPixbuf *scaled;
+  GdkWindow *root;
+  GdkGC     *gc;
+  gint       pw, ph;
+
+  root = gdk_screen_get_root_window (gdk_screen_get_default ());
+  pixmap = gdk_pixmap_new (GDK_DRAWABLE (root), WIDTH, HEIGHT, -1);
+  xfsm_splash_theme_draw_gradient (theme, GDK_DRAWABLE (pixmap),
+                                   0, 0, WIDTH, HEIGHT);
+
+  pixbuf = xfsm_splash_theme_get_logo (theme, WIDTH, HEIGHT);
+  if (pixbuf != NULL)
+    {
+      gc = gdk_gc_new (GDK_DRAWABLE (pixmap));
+      gdk_gc_set_function (gc, GDK_COPY);
+
+      pw = gdk_pixbuf_get_width (pixbuf);
+      ph = gdk_pixbuf_get_height (pixbuf);
+
+      gdk_draw_pixbuf (GDK_DRAWABLE (pixmap), gc, pixbuf, 0, 0,
+                       (WIDTH - pw) / 2, (HEIGHT - ph) / 2,
+                       pw, ph, GDK_RGB_DITHER_NONE, 0, 0);
+
+      g_object_unref (G_OBJECT (pixbuf));
+      g_object_unref (G_OBJECT (gc));
+    }
+
+  pixbuf = gdk_pixbuf_get_from_drawable (NULL, GDK_DRAWABLE (pixmap),
+                                         NULL, 0, 0, 0, 0, WIDTH, HEIGHT);
+  scaled = gdk_pixbuf_scale_simple (pixbuf, width, height, GDK_INTERP_BILINEAR);
+
+  g_object_unref (pixbuf);
+  g_object_unref (pixmap);
+
+  return scaled;
+
+#undef WIDTH
+#undef HEIGHT
+}
+
+
 void
 xfsm_splash_theme_destroy (XfsmSplashTheme *theme)
 {
+  if (theme->name != NULL)
+    g_free (theme->name);
+  if (theme->description != NULL)
+    g_free (theme->description);
   if (theme->logo_file != NULL)
     g_free (theme->logo_file);
   if (theme->chooser_icon_file != NULL)
@@ -346,7 +419,7 @@ xfsm_splash_theme_load_pixbuf (const gchar *path,
                                gint available_width,
                                gint available_height)
 {
-  static char *suffixes[] = { "svg", "png", "jpeg", "xpm", NULL };
+  static char *suffixes[] = { "svg", "png", "jpeg", "jpg", "xpm", NULL };
   GdkPixbuf *scaled;
   GdkPixbuf *pb = NULL;
   gint pb_width;

@@ -9,7 +9,8 @@ session_settings_la_LDFLAGS =						\
 
 session_settings_la_SOURCES =						\
 	session-icon.h							\
-	session.c
+	session.c							\
+	../xfce4-session/xfsm-splash-theme.c
 
 session_settings_la_CFLAGS =						\
 	@XFCE_MCS_MANAGER_CFLAGS@					\

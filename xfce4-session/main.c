@@ -237,12 +237,13 @@ initialize (int argc, char **argv)
   setup_environment ();
 
   rc = xfsm_open_config (TRUE);
-  xfce_rc_set_group (rc, "General");
 
   /* load splash theme setting */
-  theme_name = xfce_rc_read_entry (rc, "SplashTheme", "Default");
+  xfce_rc_set_group (rc, "Splash Theme");
+  theme_name = xfce_rc_read_entry (rc, "Name", "Default");
   theme = xfsm_splash_theme_load (theme_name);
 
+  xfce_rc_set_group (rc, "General");
   dpy = gdk_display_get_default ();
   init_display (dpy, theme);
 
