@@ -38,6 +38,14 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 host_triplet = @host@
+@HAVE_CYGWIN_TRUE@am__append_1 = \
+@HAVE_CYGWIN_TRUE@	-no-undefined							\
+@HAVE_CYGWIN_TRUE@	-export-symbols $(datadir)/xfce4/devel/mcs-manager.def
+
+@HAVE_CYGWIN_TRUE@am__append_2 = \
+@HAVE_CYGWIN_TRUE@	@XFCE_MCS_MANAGER_LIBS@						\
+@HAVE_CYGWIN_TRUE@	@LIBX11_LIBS@
+
 subdir = settings/splash
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -53,6 +61,7 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(splashdir)" "$(DESTDIR)$(appsdir)"
 splashLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(splash_LTLIBRARIES)
+am__DEPENDENCIES_1 =
 am_splash_settings_la_OBJECTS = splash_settings_la-module.lo \
 	splash_settings_la-splash.lo
 splash_settings_la_OBJECTS = $(am_splash_settings_la_OBJECTS)
@@ -228,8 +237,8 @@ splash_LTLIBRARIES = \
 
 splash_settings_la_LDFLAGS = \
 	-avoid-version							\
-	-module
-
+	-module\
+$(am__append_1)
 splash_settings_la_SOURCES = \
 	module.c							\
 	module.h							\
@@ -243,8 +252,8 @@ splash_settings_la_CFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"
 
 splash_settings_la_LIBADD = \
-	$(top_builddir)/xfce4-session/libxfsm.la
-
+	$(top_builddir)/xfce4-session/libxfsm.la\
+$(am__append_2)
 splash_settings_la_DEPENDENCIES = \
 	$(top_builddir)/xfce4-session/libxfsm.la
 
