@@ -1021,6 +1021,7 @@ xfsm_manager_store_session (void)
   XfceRc        *rc;
   GList         *lp;
   gchar          prefix[64];
+  gchar         *backup;
   gchar         *group;
   gint           count = 0;
   gint           n, m;
@@ -1034,6 +1035,15 @@ xfsm_manager_store_session (void)
                "your installation.\n",
                session_file);
       return;
+    }
+
+  /* backup the old session file first */
+  if (g_file_test (session_file, G_FILE_TEST_IS_REGULAR))
+    {
+      backup = g_strconcat (session_file, ".bak", NULL);
+      unlink (backup);
+      link (session_file, backup);
+      g_free (backup);
     }
 
   group = g_strconcat ("Session: ", session_name, NULL);
