@@ -1,3 +1,34 @@
+2003-07-18 21:45  bmeurer
+
+	* xfce4-session/main.c: Fixes: "the xfce4-session trayicon is off
+	by default, but the settings dialog says it's on"
+
+2003-07-18 12:05  bmeurer
+
+	* configure, configure.ac, xfce4-session/Makefile.am,
+	xfce4-session/Makefile.in, xfce4-session/client-list.c,
+	xfce4-session/client-list.h, xfce4-session/ice-layer.c,
+	xfce4-session/main.c, xfce4-session/manager.c,
+	xfce4-session/session-control.c, xfce4-session/session-control.h:
+	Renamed ClientList to SessionControl, since the old name was
+	confusing.
+
+2003-07-18 09:46  huysmans
+
+	* configure, configure.ac, po/tr.gmo, po/tr.po: Update turkish
+	translations
+
+2003-07-16 20:01  huysmans
+
+	* po/: nl.gmo, nl.po: Update dutch translations
+
+2003-07-16 00:06  bmeurer
+
+	* ChangeLog, NEWS, xfce4-session/client-list.c,
+	xfce4-session/xfce_trayicon.c: XfceTrayIcon now provides both
+	"clicked" and "double_clicked" signals.  "clicked" is used for the
+	session tray icon.
+
 2003-07-15 18:23  bmeurer
 
 	* NEWS, configure, configure.ac, po/de.gmo, po/de.po, po/es.gmo,
