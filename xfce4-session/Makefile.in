@@ -195,7 +195,9 @@ xfce4_session_SOURCES = \
 	util.c								\
 	util.h								\
 	xfce_trayicon.c							\
-	xfce_trayicon.h
+	xfce_trayicon.h							\
+	xfsm-marshal.c							\
+	xfsm-marshal.h
 
 
 xfce4_session_CFLAGS = \
@@ -219,7 +221,8 @@ xfce4_session_LDADD = \
 
 
 EXTRA_DIST = \
-	splash-fallback.png
+	splash-fallback.png						\
+	xfsm-marshal.list
 
 subdir = xfce4-session
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -236,7 +239,8 @@ am_xfce4_session_OBJECTS = xfce4_session-client.$(OBJEXT) \
 	xfce4_session-shutdown.$(OBJEXT) \
 	xfce4_session-splash-screen.$(OBJEXT) \
 	xfce4_session-startup.$(OBJEXT) xfce4_session-util.$(OBJEXT) \
-	xfce4_session-xfce_trayicon.$(OBJEXT)
+	xfce4_session-xfce_trayicon.$(OBJEXT) \
+	xfce4_session-xfsm-marshal.$(OBJEXT)
 xfce4_session_OBJECTS = $(am_xfce4_session_OBJECTS)
 xfce4_session_DEPENDENCIES =
 xfce4_session_LDFLAGS =
@@ -253,7 +257,8 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-splash-screen.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-startup.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-util.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfce_trayicon.Po
+@AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfce_trayicon.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-marshal.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) \
@@ -323,6 +328,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-startup.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-util.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfce_trayicon.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-marshal.Po@am__quote@
 
 distclean-depend:
 	-rm -rf ./$(DEPDIR)
@@ -690,6 +696,39 @@ xfce4_session-xfce_trayicon.lo: xfce_trayicon.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfce_trayicon.lo `test -f 'xfce_trayicon.c' || echo '$(srcdir)/'`xfce_trayicon.c
 
+xfce4_session-xfsm-marshal.o: xfsm-marshal.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-marshal.o -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-marshal.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o xfce4_session-xfsm-marshal.o `test -f 'xfsm-marshal.c' || echo '$(srcdir)/'`xfsm-marshal.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-marshal.Tpo" "$(DEPDIR)/xfce4_session-xfsm-marshal.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/xfce4_session-xfsm-marshal.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-marshal.c' object='xfce4_session-xfsm-marshal.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-marshal.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-marshal.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-marshal.o `test -f 'xfsm-marshal.c' || echo '$(srcdir)/'`xfsm-marshal.c
+
+xfce4_session-xfsm-marshal.obj: xfsm-marshal.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-marshal.obj -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-marshal.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o xfce4_session-xfsm-marshal.obj `if test -f 'xfsm-marshal.c'; then $(CYGPATH_W) 'xfsm-marshal.c'; else $(CYGPATH_W) '$(srcdir)/xfsm-marshal.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-marshal.Tpo" "$(DEPDIR)/xfce4_session-xfsm-marshal.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/xfce4_session-xfsm-marshal.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-marshal.c' object='xfce4_session-xfsm-marshal.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-marshal.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-marshal.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-marshal.obj `if test -f 'xfsm-marshal.c'; then $(CYGPATH_W) 'xfsm-marshal.c'; else $(CYGPATH_W) '$(srcdir)/xfsm-marshal.c'; fi`
+
+xfce4_session-xfsm-marshal.lo: xfsm-marshal.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-marshal.lo -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-marshal.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o xfce4_session-xfsm-marshal.lo `test -f 'xfsm-marshal.c' || echo '$(srcdir)/'`xfsm-marshal.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-marshal.Tpo" "$(DEPDIR)/xfce4_session-xfsm-marshal.Plo"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/xfce4_session-xfsm-marshal.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-marshal.c' object='xfce4_session-xfsm-marshal.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-marshal.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-marshal.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-marshal.lo `test -f 'xfsm-marshal.c' || echo '$(srcdir)/'`xfsm-marshal.c
+
 mostlyclean-libtool:
 	-rm -f *.lo
 
@@ -877,6 +916,14 @@ uninstall-am: uninstall-binPROGRAMS uninstall-info-am
 splash-fallback.h: $(srcdir)/splash-fallback.png
 	gdk-pixbuf-csource --raw --build-list				\
 	fallback_logo $(srcdir)/splash-fallback.png > splash-fallback.h
+
+xfsm-marshal.c: xfsm-marshal.list
+	glib-genmarshal --prefix=_xfsm_marshal xfsm-marshal.list	\
+	--body > xfsm-marshal.c
+
+xfsm-marshal.h: xfsm-marshal.list
+	glib-genmarshal --prefix=_xfsm_marshal xfsm-marshal.list	\
+	--header > xfsm-marshal.h
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

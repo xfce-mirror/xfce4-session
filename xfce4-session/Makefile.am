@@ -20,7 +20,9 @@ xfce4_session_SOURCES =							\
 	util.c								\
 	util.h								\
 	xfce_trayicon.c							\
-	xfce_trayicon.h
+	xfce_trayicon.h							\
+	xfsm-marshal.c							\
+	xfsm-marshal.h
 
 xfce4_session_CFLAGS =							\
 	@LIBSM_CFLAGS@							\
@@ -41,8 +43,17 @@ xfce4_session_LDADD =							\
 	@LIBXFCEGUI4_LIBS@
 
 EXTRA_DIST =								\
-	splash-fallback.png
+	splash-fallback.png						\
+	xfsm-marshal.list
 
 splash-fallback.h: $(srcdir)/splash-fallback.png
 	gdk-pixbuf-csource --raw --build-list				\
 	fallback_logo $(srcdir)/splash-fallback.png > splash-fallback.h
+
+xfsm-marshal.c: xfsm-marshal.list
+	glib-genmarshal --prefix=_xfsm_marshal xfsm-marshal.list	\
+	--body > xfsm-marshal.c
+
+xfsm-marshal.h: xfsm-marshal.list
+	glib-genmarshal --prefix=_xfsm_marshal xfsm-marshal.list	\
+	--header > xfsm-marshal.h

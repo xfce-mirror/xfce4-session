@@ -260,6 +260,24 @@ end:
 }
 
 /*
+ * This does the initial startup. Starting up have to be done after atleast
+ * one run through the gtk main loop, else the splash screen will use the
+ * old screen height/width that was set before the mcs manager (with the
+ * Xrandr plugin) fired up.
+ */
+static gboolean
+manager_startup(void)
+{
+	/* sort list of pending clients by priority */
+	pendingClients = g_list_sort(pendingClients,
+		(GCompareFunc)client_compare_priority);
+
+	pending_continue(NULL);
+
+	return(FALSE);
+}
+
+/*
  */
 gboolean
 manager_restart(void)
@@ -326,11 +344,7 @@ manager_restart(void)
 
 	(void)fclose(fp);
 
-	/* sort list of pending clients by priority */
-	pendingClients = g_list_sort(pendingClients,
-		(GCompareFunc)client_compare_priority);
-
-	pending_continue(NULL);
+	(void)g_idle_add((GSourceFunc)manager_startup, NULL);
 
 	return(TRUE);
 

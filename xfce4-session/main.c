@@ -444,7 +444,7 @@ main(int argc, char **argv)
 				"Session/StartupSplashTheme",
 				CHANNEL, &setting) == MCS_SUCCESS) {
 		startupSplashTheme = g_strdup(setting->data.v_string);
-		g_free(setting);
+		mcs_setting_free(setting);
 	}
 	else {
 		if ((theme = g_getenv("XFSM_SPLASH_THEME")) != NULL)

@@ -205,11 +205,7 @@ ice_connection_accept(GIOChannel *channel, GIOCondition condition,
 
 	/* Wait for the connection to leave pending state */
 	do {
-#if 0 /* THIS MIGHT CAUSE A RACE CONDITIION ?!?! */
-		(void)g_main_context_iteration(NULL, TRUE);
-#else
 		(void)IceProcessMessages(iceConn, NULL, NULL);
-#endif
 	} while ((cstatus = IceConnectionStatus(iceConn)) == IceConnectPending);
 
 	if (cstatus != IceConnectAccepted) {
