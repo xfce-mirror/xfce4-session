@@ -74,10 +74,13 @@ static gboolean	autoSave = FALSE;
 static gint	defaultAction = SHUTDOWN_LOGOUT;
 
 /* */
-static GtkWidget *dialog = NULL;
+static GtkWidget	 *dialog = NULL;
 
 /* themes option menu */
-static GtkWidget *themesMenu = NULL;
+static GtkWidget	 *themesMenu = NULL;
+
+/* */
+static GtkTooltips	*tooltips = NULL;
 
 /* */
 typedef struct {
@@ -340,45 +343,60 @@ rebuild_themes_menu(void)
  * XXX - "tar" execution could be done better :-)
  */
 static void
+do_install_theme(GtkWidget *dialog, gpointer data)
+{
+	gchar * argv[] = { "tar", "xzf", NULL, NULL };
+	const gchar *filename;
+	GError *error;
+	gchar *dir;
+	
+	filename = gtk_file_selection_get_filename(GTK_FILE_SELECTION(dialog));
+	argv[2] = (gchar *)filename;
+	dir = xfce_get_userfile("splash", NULL);
+	error = NULL;
+
+	if (!g_spawn_sync(dir, argv, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL,
+				NULL, NULL, NULL, &error)) {
+		xfce_err(_("Unable to install splash theme from file %s: %s"),
+				filename, error->message);
+		g_error_free(error);
+	}
+	else {
+		/* rescan themes */
+		find_themes((McsPlugin *)g_object_get_data(
+					G_OBJECT(dialog), "user-data"));
+		rebuild_themes_menu();
+	}
+	
+	g_free(dir);
+}
+
+/*
+ */
+static void
 install_theme(GtkWidget *button, McsPlugin *plugin)
 {
-	const gchar *filename;
 	GtkWidget *dialog;
-	gint response;
-	gchar *dir;
-	GError *error;
-	gchar *argv[] = { "tar", "xzf", NULL, NULL };
 
 	dialog = gtk_file_selection_new(_("Install new theme"));
 	gtk_file_selection_complete(GTK_FILE_SELECTION(dialog), "*.tar.gz");
+	g_object_set_data(G_OBJECT(dialog), "user-data", plugin);
 
-	response = gtk_dialog_run(GTK_DIALOG(dialog));
+	g_signal_connect_swapped(GTK_FILE_SELECTION(dialog)->ok_button,
+			"clicked", G_CALLBACK(do_install_theme), dialog);
 
-	switch (response) {
-	case GTK_RESPONSE_OK:
-		filename = gtk_file_selection_get_filename(
-				GTK_FILE_SELECTION(dialog));
-		argv[2] = (gchar *)filename;
-		dir = xfce_get_userfile("splash", NULL);
-		error = NULL;
+	/*
+	 * Ensure that the dialog box is destroyed when the user clicks a
+	 * button.
+	 */
+	g_signal_connect_swapped(GTK_FILE_SELECTION(dialog)->ok_button,
+			"clicked", G_CALLBACK(gtk_widget_destroy), dialog);
 
-		if (!g_spawn_sync(dir, argv, NULL, G_SPAWN_SEARCH_PATH, NULL,
-				NULL, NULL, NULL, NULL, &error)) {
-			xfce_err(_(
-				"Unable to install splash theme from file "
-				"%s: %s"), filename, error->message);
-			g_error_free(error);
-		}
-		else {
-			/* rescan themes */
-			find_themes(plugin);
-			rebuild_themes_menu();
-		}
-		g_free(dir);
-		break;
-	}
-
-	gtk_widget_destroy(dialog);
+	g_signal_connect_swapped(GTK_FILE_SELECTION(dialog)->cancel_button,
+			"clicked", G_CALLBACK(gtk_widget_destroy), dialog);
+   
+	/* Display that dialog */
+	gtk_widget_show(dialog);
 }
 
 /*
@@ -536,6 +554,10 @@ run_dialog(McsPlugin *plugin)
 	/* search installed splash themes */
 	find_themes(plugin);
 
+	/* */
+	if (tooltips == NULL)
+		tooltips = gtk_tooltips_new();
+
 	dialog = gtk_dialog_new_with_buttons(_("Session management"), NULL,
 			GTK_DIALOG_NO_SEPARATOR,
 			GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
@@ -650,6 +672,7 @@ run_dialog(McsPlugin *plugin)
 
 	/* Info button */
 	button = gtk_button_new();
+	gtk_tooltips_set_tip(tooltips, button, _("Show theme info"), NULL);
 	image = gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO,
 			GTK_ICON_SIZE_BUTTON);
 	gtk_container_add(GTK_CONTAINER(button), image);
@@ -658,6 +681,7 @@ run_dialog(McsPlugin *plugin)
 
 	/* Install button */
 	button = gtk_button_new();
+	gtk_tooltips_set_tip(tooltips, button, _("Install new theme"), NULL);
 	image = gtk_image_new_from_stock(GTK_STOCK_OPEN, GTK_ICON_SIZE_BUTTON);
 	gtk_container_add(GTK_CONTAINER(button), image);
 	g_signal_connect(button, "clicked", G_CALLBACK(install_theme), plugin);
