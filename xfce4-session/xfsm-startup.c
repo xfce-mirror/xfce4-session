@@ -212,10 +212,8 @@ xfsm_startup_foreign (void)
   if (compat_kde)
     xfsm_compat_kde_startup (splash_screen);
 
-#ifdef HAVE_GNOME
   if (compat_gnome)
     xfsm_compat_gnome_startup (splash_screen);
-#endif
 }
 
 

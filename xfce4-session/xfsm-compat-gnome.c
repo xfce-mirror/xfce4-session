@@ -25,8 +25,6 @@
 #include <config.h>
 #endif
 
-#ifdef HAVE_GNOME
-
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
 #endif
@@ -54,16 +52,22 @@
 
 #include <libgnome/libgnome.h>
 #include <libxfce4util/libxfce4util.h>
+
+#ifdef HAVE_GCONF
 #include <gconf/gconf-client.h>
+#endif
 
 #include <xfce4-session/xfsm-compat-gnome.h>
 
 
+#ifdef HAVE_GCONF
 #define ACCESSIBILITY_KEY "/desktop/gnome/interface/accessibility"
 #define AT_STARTUP_KEY    "/desktop/gnome/accessibility/startup/exec_ats"
 
-
 static GConfClient *gnome_conf_client = NULL;
+#endif
+
+
 static pid_t gnome_keyring_daemon_pid = 0;
 static Window gnome_smproxy_window = None;
 
@@ -132,6 +136,7 @@ gnome_keyring_daemon_shutdown (void)
 }
 
 
+#ifdef HAVE_GCONF
 static void
 gnome_ast_startup (void)
 {
@@ -175,6 +180,7 @@ gnome_ast_startup (void)
       g_slist_free (list);
     }
 }
+#endif
 
 
 static void
@@ -187,7 +193,7 @@ xfsm_compat_gnome_smproxy_startup (void)
   gdk_error_trap_push ();
 
   /* Set GNOME_SM_PROXY property, since some apps (like OOo) seem to require
-   * it for property behaviour. Thanks to Jasper/Francois for reporting this.
+   * it to behave properly. Thanks to Jasper/Francois for reporting this.
    * This has another advantage, since it prevents people from running
    * gnome-smproxy in xfce4, which would cause trouble otherwise.
    */
@@ -239,6 +245,7 @@ xfsm_compat_gnome_startup (XfsmSplashScreen *splash)
     xfsm_splash_screen_next (splash, _("Starting The Gnome Keyring Daemon"));
   gnome_keyring_daemon_startup ();
 
+#ifdef HAVE_GCONF
   /* connect to the GConf daemon */
   gnome_conf_client = gconf_client_get_default ();
   if (gnome_conf_client != NULL)
@@ -253,6 +260,7 @@ xfsm_compat_gnome_startup (XfsmSplashScreen *splash)
           gnome_ast_startup ();
         }
     }
+#endif
 }
 
 
@@ -287,6 +295,4 @@ xfsm_compat_gnome_shutdown (void)
 
   xfsm_compat_gnome_smproxy_shutdown ();
 }
-
-#endif
 

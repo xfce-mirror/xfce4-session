@@ -218,11 +218,7 @@ advanced_create (XfceRc *rc)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
 
   advanced_gnome = gtk_check_button_new_with_label (_("Launch Gnome services on startup"));
-#ifdef HAVE_GNOME
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (advanced_gnome), gnome);
-#else
-  gtk_widget_set_sensitive (advanced_gnome, FALSE);
-#endif
   g_signal_connect (G_OBJECT (advanced_gnome), "toggled",
                     G_CALLBACK (config_store), NULL);
   gtk_box_pack_start (GTK_BOX (vbox), advanced_gnome, FALSE, TRUE, 0);

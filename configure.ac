@@ -74,8 +74,8 @@ dnl Configure the MCS plugins
 XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.1.0])
 
 dnl Check for gnome support
-BM_DEPEND_CHECK([GNOME], [libgnome-2.0], [2.4.0], [gnome],
-  [Gnome support], [yes])
+BM_DEPEND_CHECK([GCONF], [gconf-2.0], [2.4.0], [gconf],
+  [Assistive technologies support], [no])
 
 dnl Check for debugging support
 BM_DEBUG_SUPPORT

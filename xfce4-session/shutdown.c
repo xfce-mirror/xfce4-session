@@ -516,10 +516,8 @@ xfsm_shutdown(gint type)
 {
   gboolean result;
 
-#ifdef HAVE_GNOME
   if (compat_gnome)
     xfsm_compat_gnome_shutdown ();
-#endif
 
   if (compat_kde)
     xfsm_compat_kde_shutdown ();
