@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: XFSession 0.0.15\n"
 "POT-Creation-Date: 2003-07-07 19:24+0200\n"
-"PO-Revision-Date: 2003-07-03 23:17+0100\n"
+"PO-Revision-Date: 2003-07-07 20:10+0100\n"
 "Last-Translator: Moritz Heiber <moritz-heiber@arcor.de>\n"
 "Language-Team: none <none@none>\n"
 "MIME-Version: 1.0\n"
@@ -15,37 +15,37 @@ msgstr ""
 
 #: settings/session.c:216
 msgid "Default Theme"
-msgstr ""
+msgstr "Default Theme"
 
 #: settings/session.c:221
 msgid "Default splash screen"
-msgstr ""
+msgstr "Default Splashscreen"
 
 #: settings/session.c:260
 #, c-format
 msgid "About %s..."
-msgstr ""
+msgstr "Über %s..."
 
 #: settings/session.c:282
 msgid "Info:"
-msgstr ""
+msgstr "Info:"
 
 #: settings/session.c:290
 msgid "Author:"
-msgstr ""
+msgstr "Autor:"
 
 #: settings/session.c:352
 msgid "Install new theme"
-msgstr ""
+msgstr "Neues Theme installieren"
 
 #: settings/session.c:368
 #, c-format
 msgid "Unable to install splash theme from file %s: %s"
-msgstr ""
+msgstr "Kann Splashtheme aus %s nicht installieren: %s"
 
 #: settings/session.c:432 settings/session.c:539 settings/session.c:553
 msgid "Session management"
-msgstr "Sitzungsverwaltung"
+msgstr "Sitzungsmanagement"
 
 #. General settings
 #: settings/session.c:564
@@ -59,7 +59,7 @@ msgstr "Ausloggen bestätigen"
 
 #: settings/session.c:582
 msgid "Automatically save session on logout"
-msgstr "Speichere Sitzung beim Beenden"
+msgstr "Sitzung automatisch beim Beenden speichern"
 
 #. Logout action settings
 #: settings/session.c:590
@@ -73,20 +73,18 @@ msgstr "_Beende laufende Sitzung"
 
 #.
 #: settings/session.c:606 xfce4-session/shutdown.c:257
-#, fuzzy
 msgid "_Reboot the computer"
 msgstr "Computer _rebooten"
 
 #.
 #: settings/session.c:610 xfce4-session/shutdown.c:262
-#, fuzzy
 msgid "_Turn off computer"
 msgstr "Computer _herunterfahren"
 
 #. Logout action settings
 #: settings/session.c:622
 msgid "Splash screen theme"
-msgstr ""
+msgstr "Splashscreen Theme"
 
 #: xfce4-session/main.c:75
 msgid "desktop"
@@ -95,7 +93,7 @@ msgstr "Arbeitsplatz"
 #: xfce4-session/main.c:102
 #, fuzzy
 msgid "Starting session manager.."
-msgstr "Starte Sitzungsverwalter..."
+msgstr "Starte Sitzungsmanager..."
 
 #: xfce4-session/main.c:122
 #, c-format
@@ -109,7 +107,7 @@ msgstr "Kann Einstellungsverzeichnis %s nicht erzeugen: %s"
 msgid ""
 "Unable to create users XFce session\n"
 "directory %s: %s"
-msgstr "Kann Sessionverzeichnis %s nicht erstellen: %s"
+msgstr "Kann Sitzungsverzeichnis %s nicht erstellen: %s"
 
 #: xfce4-session/main.c:240
 msgid ""
@@ -119,7 +117,7 @@ msgid ""
 "Please contact your local system administrator\n"
 "and report the problem."
 msgstr ""
-"Der Sessionmanager konnte den\n"
+"Der Sitzungsmanager konnte den\n"
 "Einstellungsmanager nicht starten. Das hängt meistens\n"
 "mit einer falschen XFce Installation zusammen.\n"
 "Bitte kontaktieren sie ihren Administrator und informieren\n"
@@ -135,6 +133,9 @@ msgid ""
 "previous session. It'll therefore start a default\n"
 "session."
 msgstr ""
+"Der Sitzungsmanager war nicht in der Lage, ihre vorherige Sitzung\n"
+"wiederherzustellen. Es wird jetzt mit den Defaulteinstellungen\n"
+"gestartet."
 
 #: xfce4-session/manager.c:762
 #, c-format
@@ -146,7 +147,7 @@ msgid ""
 "%s"
 msgstr ""
 "Der Client \"%s\" beendete die Verbindung\n"
-"zum Sessionmanager. Folgender Grund wurde\n"
+"zum Sitzungsmanager. Folgender Grund wurde\n"
 "angegeben:\n"
 "\n"
 "%s"
@@ -182,12 +183,12 @@ msgstr ""
 
 #: xfce4-session/startup.c:149
 msgid "Doing Autostart..."
-msgstr ""
+msgstr "Durchlaufe Autostart..."
 
 #: xfce4-session/startup.c:207
 #, fuzzy
 msgid "Starting session manager..."
-msgstr "Starte Sitzungsverwalter..."
+msgstr "Starte Sitzungsmanager..."
 
 #.
 #: xfce4-session/splash-screen.c:269
@@ -198,12 +199,12 @@ msgstr "Starte %s..."
 #: xfce4-shutdown/main.c:136
 #, c-format
 msgid "Usage: %s <action>\n"
-msgstr ""
+msgstr "Verwendung: %s <action>\n"
 
 #: xfce4-shutdown/main.c:145
 #, c-format
 msgid "%s: Unknown action %s\n"
-msgstr ""
+msgstr "%s: Unbekannte Aktion %s\n"
 
 #: xfce4-shutdown/main.c:156
 #, c-format
@@ -213,6 +214,10 @@ msgid ""
 "of people allowed to execute shutdown actions, by\n"
 "adding your username to the file %s.\n"
 msgstr ""
+"Es ist ihnen nicht erlaubt diese Aktion auszuführen \"%s\".\n"
+"Kontaktieren sie ihren Systemadministrator um auf die\n"
+"Liste der Leute zu kommen, die ein Herunterfahren auslösen\n"
+"dürfen. Die Liste befindet sich in dieser Datei: %s.\n"
 
 #: xfce4-shutdown/main.c:179
 #, fuzzy
@@ -221,7 +226,7 @@ msgid ""
 "installation, or contact your system administrator\n"
 "and report the problem.\n"
 msgstr ""
-"Der Sessionmanager konnte den\n"
+"Der Sitzungsmanager konnte den\n"
 "Einstellungsmanager nicht starten. Das hängt meistens\n"
 "mit einer falschen XFce Installation zusammen.\n"
 "Bitte kontaktieren sie ihren Administrator und informieren\n"
@@ -235,34 +240,7 @@ msgid ""
 "name to %s or to install sudo(8) and grant\n"
 "you the right execute reboot and halt commands.\n"
 msgstr ""
-
-#, fuzzy
-#~ msgid "session manager"
-#~ msgstr "Sitzungsverwaltung"
-
-#~ msgid "Login as different user"
-#~ msgstr "Als anderer User einloggen"
-
-#~ msgid "_Save session"
-#~ msgstr "_Session speichern"
-
-#~ msgid "reboot"
-#~ msgstr "Rebooten"
-
-#~ msgid "shutdown"
-#~ msgstr "Herunterfahren"
-
-#~ msgid ""
-#~ "Failed to %s the computer using sudo.\n"
-#~ "Please consult your local system\n"
-#~ "adminitrator."
-#~ msgstr ""
-#~ "Konnte Computer mit Hilfe von sude nicht\n"
-#~ "%s . Bitte kontaktieren sie ihren lokalen\n"
-#~ "Administrator."
-
-#~ msgid "Shutdown"
-#~ msgstr "Herunterfahren"
-
-#~ msgid "Use sudo to reboot and shutdown the computer"
-#~ msgstr "Benutzen sie sudo um den Computer herunterzufahren"
+"Kein Weg gefunden, um den Computer herunterzufahren. Sie sollten ihren\n"
+"Systemadministrator bitten, entweder ihren Namen zu der Liste %s hinzuzu-\n"
+"fügen oder sudo(8) zu installieren und ihnen die Rechte zum Herunterfahren\n"
+"und/oder Rebooten des Rechners zu gewähren.\n"
