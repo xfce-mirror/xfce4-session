@@ -1,245 +1,61 @@
-2003-07-07 19:22  bmeurer
+2003-07-07 19:27  bmeurer
 
-	* ChangeLog, defaults/Makefile.am, defaults/Makefile.in,
-	defaults/xinitrc.xfce4-session: Added sample xinitrc file.
-
-2003-07-07 19:12  bmeurer
-
-	* ChangeLog, configure, configure.ac, po/xfce4-session.pot,
-	settings/session.c: Latest version in private CVS. Next version
-	will be in xfce4 CVSROOT.
-
-2003-07-07 18:12  bmeurer
-
-	* ChangeLog, TODO, configure, configure.ac,
+	* AUTHORS, README, TODO, aclocal.m4, autogen.sh, compile,
+	config.guess, config.h.in, config.sub, configure, configure.ac,
+	depcomp, install-sh, ltcf-c.sh, ltconfig, INSTALL, Makefile.am,
+	Makefile.in, ltmain.sh, missing, mkinstalldirs, COPYING, ChangeLog,
+	ChangeLog.pre-xfce-devel, NEWS, defaults/Makefile.am,
+	defaults/Makefile.in, defaults/default.session,
+	defaults/shutdown.allow, defaults/xinitrc.xfce4-session,
 	defaults/splash/Makefile.am, defaults/splash/Makefile.in,
+	docs/Makefile.am, docs/Makefile.in, docs/SessionFileFormat.txt,
+	docs/SplashThemes.txt, defaults/splash/logo.png,
 	defaults/splash/preview.png, defaults/splash/splash.theme,
-	po/xfce4-session.pot, settings/Makefile.am, settings/Makefile.in,
-	settings/session.c, xfce4-session/client.c, xfce4-session/client.h,
-	xfce4-session/main.c, xfce4-session/manager.c,
-	xfce4-session/startup.c, xfce4-session/util.c: Splash theme
-	configurable with the MCS plugin. Added 3 fields to the
-	splash.theme file (info, author and preview) used for the new
-	"About theme..." dialog.
-
-2003-07-06 23:25  bmeurer
-
-	* TODO: Added note about systray icon.
-
-2003-07-06 23:22  bmeurer
-
-	* NEWS, TODO, config.h.in, configure, configure.ac, po/POTFILES.in,
-	po/de.gmo, po/de.po, po/xfce4-session.pot,
-	xfce4-session/Makefile.am, xfce4-session/Makefile.in,
-	xfce4-session/manager.c, xfce4-session/pending.c,
-	xfce4-session/pending.h, xfce4-session/startup.c,
-	xfce4-session/startup.h: Update to 0.0.18. Added several error
-	messages. Fixes. Added TODO items.
-
-2003-07-06 23:02  bmeurer
-
-	* xfce4-session/main.c: Now displays a splash screen when starting
-	a default session.
-
-2003-07-06 23:00  bmeurer
-
-	* xfce4-session/: util.c, util.h: Added xfce_gethostname() - a save
-	way to determine hosts nodename.
-
-2003-07-06 22:30  bmeurer
-
-	* xfce4-session/manager.c: Removed compat code for old session file
-	naming scheme.
-
-2003-07-06 21:49  bmeurer
-
-	* ChangeLog, po/xfce4-session.pot, xfce4-session/pending.c: Updated
-	ChangeLog.
-
-2003-07-06 19:18  bmeurer
-
-	* defaults/splash/Makefile: This was wrong.
-
-2003-07-06 19:17  bmeurer
-
-	* NEWS, TODO, configure, configure.ac, defaults/Makefile.am,
-	defaults/Makefile.in, defaults/splash/Makefile,
-	defaults/splash/Makefile.am, defaults/splash/Makefile.in,
-	defaults/splash/logo.png, defaults/splash/splash.theme,
-	docs/Makefile.am, docs/Makefile.in, docs/SplashThemes.txt,
-	po/POTFILES.in, po/de.gmo, po/de.po, po/xfce4-session.pot,
-	xfce4-session/Makefile.am, xfce4-session/Makefile.in,
-	xfce4-session/pending.c, xfce4-session/splash-fallback.h,
-	xfce4-session/splash-fallback.png, xfce4-session/splash-icon.h,
-	xfce4-session/splash-screen.c, xfce4-session/splash-screen.h,
-	xfce4-session/splash.png: Make Splash screen themable.
-
-2003-07-06 11:52  bmeurer
-
-	* TODO: Note about Splash -> GtkWidget
-
-2003-07-06 11:39  bmeurer
-
-	* NEWS, TODO, configure, configure.ac, po/xfce4-session.pot,
-	xfce4-session/pending.c, xfce4-session/shutdown.c:
-	~/Desktop/Autostart/ now done by xfce4-session. Note about not
-	hardcoding the splash screen in TODO.
-
-2003-07-06 00:41  bmeurer
-
-	* TODO, configure, configure.ac, po/de.gmo, po/de.po,
-	po/xfce4-session.pot, settings/session.c, xfce4-session/client.c,
-	xfce4-session/manager.c, xfce4-session/pending.c,
-	xfce4-session/shutdown.c: Several fixes. new TODO items.
-
-2003-07-05 01:04  bmeurer
-
-	* Makefile.in, TODO, aclocal.m4, config.h.in, configure,
-	configure.ac, ltmain.sh, defaults/Makefile.in, docs/Makefile.in,
-	po/de.gmo, po/de.po, po/xfce4-session.pot, settings/Makefile.in,
-	settings/session.c, xfce4-session/Makefile.am,
 	xfce4-session/Makefile.in, xfce4-session/client.c,
-	xfce4-session/client.h, xfce4-session/main.c,
-	xfce4-session/manager.c, xfce4-session/pending.c,
-	xfce4-session/shutdown.c, xfce4-shutdown/Makefile.in: Fixed
-	splash-screen property. Olivier added function to libxfcegui4, so
-	that we now depend on the latest libxfcegui4.
-
-2003-07-04 19:48  bmeurer
-
-	* README: Cleanup
-
-2003-07-04 19:47  bmeurer
-
-	* Makefile.am, Makefile.in, TODO, config.h.in, configure,
-	configure.ac, po/POTFILES.in, po/de.po, po/xfce4-session.pot,
-	xfce4-shutdown/main.c: Minor updates (TODO cleanups, etc.)
-
-2003-07-04 19:40  bmeurer
-
-	* Makefile.am, Makefile.in, README, TODO, configure, configure.ac,
-	defaults/Makefile.am, defaults/Makefile.in,
-	defaults/shutdown.allow, docs/Makefile.in, po/xfce4-session.pot,
-	settings/Makefile.in, settings/session.c,
-	xfce4-session/Makefile.am, xfce4-session/Makefile.in,
-	xfce4-session/main.c, xfce4-session/pending.c,
-	xfce4-session/shutdown.c, xfce4-session/splash-icon.h,
-	xfce4-session/splash.png, xfce4-shutdown/Makefile.am,
-	xfce4-shutdown/Makefile.in, xfce4-shutdown/main.c: Added shutdown
-	program to remove complexity from the manager program, and make it
-	possible to install the shutdown program setuid.
-
-2003-07-04 00:21  bmeurer
-
-	* TODO: note shutdown problem.
-
-2003-07-04 00:17  bmeurer
-
-	* po/xfce4-session.pot, settings/session.c: Fixed problem with
-	xfce-mcs-manager exiting on "Close".
-
-2003-07-03 23:37  bmeurer
-
-	* xfce4-session/shutdown.c: Changed button order in Logout dialog.
-
-2003-07-03 23:24  bmeurer
-
-	* Makefile.am, Makefile.in, TODO, aclocal.m4, config.h.in,
-	configure, configure.ac, defaults/Makefile.in, docs/Makefile.in,
-	po/ChangeLog, po/Makefile.in.in, po/POTFILES.in, po/de.gmo,
-	po/de.po, po/xfce4-session.pot, settings/Makefile.am,
-	settings/Makefile.in, settings/session.c,
-	xfce4-session/Makefile.am, xfce4-session/Makefile.in,
-	xfce4-session/main.c, xfce4-session/manager.c,
-	xfce4-session/manager.h, xfce4-session/shutdown.c,
-	xfce4-session/shutdown.h: MCS plugin now working (randomly crashes
-	xfce-mcs-manager though).  Shutdown support (optional sudo
-	support).
-
-2003-07-03 12:15  bmeurer
-
-	* TODO: Added new TODO items.
-
-2003-07-03 01:08  bmeurer
-
-	* Makefile.am, Makefile.in, NEWS, TODO, aclocal.m4, configure,
-	configure.ac, defaults/Makefile.in, docs/Makefile.in, m4/debug.m4,
-	m4/depends.m4, m4/i18n.m4, settings/Makefile.am,
-	settings/Makefile.in, settings/session-icon.h, settings/session.c,
-	settings/session.png, xfce4-session/Makefile.am,
-	xfce4-session/Makefile.in, xfce4-session/client.h,
-	xfce4-session/ice-layer.c, xfce4-session/ice-layer.h,
-	xfce4-session/main.c, xfce4-session/manager.c,
-	xfce4-session/pending.c, xfce4-session/pending.h,
-	xfce4-session/splash-icon.h, xfce4-session/splash.png: Added splash
-	screen. Added initial settings module. Fixed startup problems (see
-	pending.c).
-
-2003-07-02 21:54  bmeurer
-
-	* docs/SessionFileFormat.txt: Get this right!
-
-2003-07-02 15:09  bmeurer
-
-	* Makefile.in, configure, configure.ac, xfce4-session/client.c,
 	xfce4-session/client.h, xfce4-session/ice-layer.c,
 	xfce4-session/ice-layer.h, xfce4-session/main.c,
-	xfce4-session/manager.c, xfce4-session/util.c,
-	xfce4-session/util.h: Fixed a stupid failure:
-	
-	did g_list_remove(clients, lp) instead of
-	g_list_delete_link(clients, lp)
+	xfce4-session/manager.c, xfce4-session/manager.h,
+	xfce4-session/util.h, xfce4-session/shutdown.c,
+	xfce4-session/shutdown.h, xfce4-session/splash-fallback.h,
+	settings/Makefile.am, xfce4-session/Makefile.am,
+	xfce4-session/splash-fallback.png, xfce4-session/splash-screen.c,
+	xfce4-session/splash-screen.h, xfce4-session/startup.c,
+	xfce4-session/startup.h, xfce4-session/util.c,
+	settings/Makefile.in, settings/session-icon.h, settings/session.c,
+	m4/X11.m4, m4/debug.m4, m4/depends.m4, m4/i18n.m4, po/ChangeLog,
+	po/Makefile.in.in, po/POTFILES.in, po/de.gmo, po/de.po,
+	po/xfce4-session.pot, settings/session.png,
+	xfce4-shutdown/Makefile.am, xfce4-shutdown/Makefile.in,
+	xfce4-shutdown/main.c: Initial import of the new session manager
+	with version 0.0.20.
 
-2003-07-02 00:18  bmeurer
+2003-07-07 19:27  bmeurer
 
-	* Makefile.am, TODO, xfce4-session/ice-layer.c: Added TODO file.
-
-2003-07-02 00:00  bmeurer
-
-	* config.h.in, configure, configure.ac, xfce4-session/main.c,
-	xfce4-session/manager.c: Added a client id generator.
-
-2003-07-01 22:38  bmeurer
-
-	* Makefile.in, configure, configure.ac, defaults/Makefile.in,
-	docs/Makefile.in, xfce4-session/Makefile.am,
+	* AUTHORS, README, TODO, aclocal.m4, autogen.sh, compile,
+	config.guess, config.h.in, config.sub, configure, configure.ac,
+	depcomp, install-sh, ltcf-c.sh, ltconfig, INSTALL, Makefile.am,
+	Makefile.in, ltmain.sh, missing, mkinstalldirs, COPYING, ChangeLog,
+	ChangeLog.pre-xfce-devel, NEWS, defaults/Makefile.am,
+	defaults/Makefile.in, defaults/default.session,
+	defaults/shutdown.allow, defaults/xinitrc.xfce4-session,
+	defaults/splash/Makefile.am, defaults/splash/Makefile.in,
+	docs/Makefile.am, docs/Makefile.in, docs/SessionFileFormat.txt,
+	docs/SplashThemes.txt, defaults/splash/logo.png,
+	defaults/splash/preview.png, defaults/splash/splash.theme,
 	xfce4-session/Makefile.in, xfce4-session/client.c,
-	xfce4-session/ice-layer.c, xfce4-session/manager.c,
-	xfce4-session/util.c: Make this work on Linux :-)
-
-2003-07-01 20:25  bmeurer
-
-	* configure, configure.ac: version -> 0.0.3
-
-2003-07-01 20:09  bmeurer
-
-	* AUTHORS, COPYING, ChangeLog, INSTALL, Makefile.am, Makefile.in,
-	NEWS, README, aclocal.m4, autogen.sh, compile, config.guess,
-	config.h.in, config.sub, configure, configure.ac, depcomp,
-	install-sh, ltcf-c.sh, ltconfig, ltmain.sh, missing, mkinstalldirs,
-	defaults/Makefile.am, defaults/Makefile.in,
-	defaults/default.session, docs/Makefile.am, docs/Makefile.in,
-	docs/SessionFileFormat.txt, m4/X11.m4, m4/debug.m4, m4/depends.m4,
-	m4/i18n.m4, xfce4-session/Makefile.am, xfce4-session/Makefile.in,
-	xfce4-session/client.c, xfce4-session/client.h,
-	xfce4-session/ice-layer.c, xfce4-session/ice-layer.h,
-	xfce4-session/main.c, xfce4-session/manager.c,
-	xfce4-session/manager.h, xfce4-session/util.c,
-	xfce4-session/util.h: Initial revision
-
-2003-07-01 20:09  bmeurer
-
-	* AUTHORS, COPYING, ChangeLog, INSTALL, Makefile.am, Makefile.in,
-	NEWS, README, aclocal.m4, autogen.sh, compile, config.guess,
-	config.h.in, config.sub, configure, configure.ac, depcomp,
-	install-sh, ltcf-c.sh, ltconfig, ltmain.sh, missing, mkinstalldirs,
-	defaults/Makefile.am, defaults/Makefile.in,
-	defaults/default.session, docs/Makefile.am, docs/Makefile.in,
-	docs/SessionFileFormat.txt, m4/X11.m4, m4/debug.m4, m4/depends.m4,
-	m4/i18n.m4, xfce4-session/Makefile.am, xfce4-session/Makefile.in,
-	xfce4-session/client.c, xfce4-session/client.h,
-	xfce4-session/ice-layer.c, xfce4-session/ice-layer.h,
-	xfce4-session/main.c, xfce4-session/manager.c,
-	xfce4-session/manager.h, xfce4-session/util.c,
-	xfce4-session/util.h: Initial import.
+	xfce4-session/client.h, xfce4-session/ice-layer.c,
+	xfce4-session/ice-layer.h, xfce4-session/main.c,
+	xfce4-session/manager.c, xfce4-session/manager.h,
+	xfce4-session/util.h, xfce4-session/shutdown.c,
+	xfce4-session/shutdown.h, xfce4-session/splash-fallback.h,
+	settings/Makefile.am, xfce4-session/Makefile.am,
+	xfce4-session/splash-fallback.png, xfce4-session/splash-screen.c,
+	xfce4-session/splash-screen.h, xfce4-session/startup.c,
+	xfce4-session/startup.h, xfce4-session/util.c,
+	settings/Makefile.in, settings/session-icon.h, settings/session.c,
+	m4/X11.m4, m4/debug.m4, m4/depends.m4, m4/i18n.m4, po/ChangeLog,
+	po/Makefile.in.in, po/POTFILES.in, po/de.gmo, po/de.po,
+	po/xfce4-session.pot, settings/session.png,
+	xfce4-shutdown/Makefile.am, xfce4-shutdown/Makefile.in,
+	xfce4-shutdown/main.c: Initial revision
 
