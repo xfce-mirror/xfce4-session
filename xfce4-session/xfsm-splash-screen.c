@@ -78,6 +78,8 @@ struct _XfsmSplashScreen
   int text_w;
 
   int current_x;
+
+  guint idle_id;
 };
 
 
@@ -91,6 +93,15 @@ xfsm_splash_screen_raise (XfsmSplashScreen *splash)
     gdk_window_raise (GDK_WINDOW (lp->data));
 
   gdk_window_raise (splash->window);
+}
+
+
+static gboolean
+xfsm_splash_screen_idle_raise (gpointer user_data)
+{
+  XfsmSplashScreen *splash = (XfsmSplashScreen *) user_data;
+  xfsm_splash_screen_raise (splash);
+  return TRUE;
 }
 
 
@@ -430,6 +441,11 @@ xfsm_splash_screen_new (GdkDisplay *display, gboolean display_chooser)
 void
 xfsm_splash_screen_next (XfsmSplashScreen *splash, const gchar *text)
 {
+  if (splash->idle_id == 0)
+    {
+      splash->idle_id = g_idle_add (xfsm_splash_screen_idle_raise, splash);
+    }
+
   xfsm_splash_screen_fadeout (splash);
   xfsm_splash_screen_fadein (splash, text);
 }
@@ -595,6 +611,12 @@ xfsm_splash_screen_destroy (XfsmSplashScreen *splash)
 
   if (splash->layout_pm != NULL)
     xfsm_splash_screen_fadeout (splash);
+
+  if (splash->idle_id != 0)
+    {
+      g_source_remove (splash->idle_id);
+      splash->idle_id = 0;
+    }
 
   for (lp = splash->other_windows; lp != NULL; lp = lp->next)
     gdk_window_destroy (GDK_WINDOW (lp->data));
