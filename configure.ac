@@ -32,6 +32,10 @@ AC_AIX
 AC_ISC_POSIX
 AC_MINIX
 AM_CONDITIONAL([HAVE_CYGWIN], [test "`uname | grep \"CYGWIN\"`" != ""])
+if test `uname | grep "CYGWIN"` != ""
+then
+	AC_DEFINE([HAVE_OS_CYGWIN], [1], [Compiling under cygwin])
+fi
 
 dnl check for basic programs
 AC_PROG_CC
