@@ -1,4 +1,4 @@
-splashdir = @XFCE_MCS_MANAGER_PLUGINSDIR@
+splashdir = $(libdir)/xfce4/mcs-plugins
 
 splash_LTLIBRARIES = 							\
 	splash_settings.la

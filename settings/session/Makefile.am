@@ -1,4 +1,4 @@
-sessiondir = @XFCE_MCS_MANAGER_PLUGINSDIR@
+sessiondir = $(libdir)/xfce4/mcs-plugins
 
 session_LTLIBRARIES = 							\
 	session_settings.la
