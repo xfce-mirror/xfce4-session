@@ -107,6 +107,8 @@ AC_MSG_RESULT([$with_reboot])
 AC_OUTPUT([
 Makefile
 xfce4-session.spec
+defaults/Makefile
+docs/Makefile
 po/Makefile.in
 settings/Makefile
 xfce4-session/Makefile

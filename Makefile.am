@@ -15,6 +15,7 @@ distclean-local:
 EXTRA_DIST =								\
 	$(config_DATA)							\
 	AUTHORS								\
+	BUGS								\
 	ChangeLog.pre-xfce-devel					\
 	INSTALL								\
 	NEWS								\
