@@ -107,7 +107,6 @@ AC_MSG_RESULT([$with_reboot])
 AC_OUTPUT([
 Makefile
 defaults/Makefile
-defaults/splash/Makefile
 docs/Makefile
 settings/Makefile
 po/Makefile.in

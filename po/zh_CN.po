@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XFSession 0.0.15\n"
-"POT-Creation-Date: 2003-07-19 13:15+0200\n"
+"POT-Creation-Date: 2004-05-17 20:27+0200\n"
 "PO-Revision-Date: 2003-07-10 13:10+0200\n"
 "Last-Translator: Yongtao Yang <yongtao.yang@telia.com>\n"
 "Language-Team: none <none@none>\n"
@@ -17,208 +17,35 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: settings/session.c:227
-msgid "Default Theme"
-msgstr "默认主题"
-
-#: settings/session.c:232
-msgid "Default splash screen"
-msgstr "默认飞溅屏幕"
-
-#: settings/session.c:271
-#, c-format
-msgid "About %s..."
-msgstr "关于 %s..."
-
-#: settings/session.c:293
-msgid "Info:"
-msgstr "信息:"
-
-#: settings/session.c:301
-msgid "Author:"
-msgstr "作者:"
-
-#: settings/session.c:377
-#, c-format
-msgid "Unable to install splash theme from file %s: %s"
-msgstr "无法从文件 %s 中安装飞溅屏幕主题: %s"
-
-#: settings/session.c:398 settings/session.c:740
-msgid "Install new theme"
-msgstr "安装新主题"
-
-#: settings/session.c:477 settings/session.c:600 settings/session.c:614
-msgid "Session management"
-msgstr "会话管理"
-
-#. General settings
-#: settings/session.c:625
-msgid "General"
-msgstr "通用"
-
-#.
-#: settings/session.c:634
-msgid "Confirm logout"
-msgstr "注销确认"
-
-#: settings/session.c:636
-msgid ""
-"Should the session manager ask the user to confirm the logout. If disabled, "
-"the session will be closed without any further user interaction."
-msgstr "会话管理器是否要求用户在注销时确认，如果关闭该项，"
-"会话将在没有任何用户进一步操作的情况下关闭"
-
-#: settings/session.c:647
-msgid "Automatically save session on logout"
-msgstr "注销时自动保存会话"
-
-#.
-#: settings/session.c:654
-msgid "Show tray icon"
-msgstr "显示托盘图标"
-
-#: settings/session.c:656
-msgid ""
-"Show the session managers tray icon in the desktops notification area (also "
-"known as the system tray)."
-msgstr "在桌面提示区(也称系统托盘)中显示会话管理器图标。"
-
-#. Logout action settings
-#: settings/session.c:665
-msgid "Default action on logout"
-msgstr "注销时的默认动作"
-
-#.
-#: settings/session.c:677 xfce4-session/shutdown.c:252
-msgid "_Quit current session"
-msgstr "退出当前会话(_Q)"
-
-#.
-#: settings/session.c:681 xfce4-session/shutdown.c:257
-msgid "_Reboot the computer"
-msgstr "重新启动计算机(_R)"
-
-#.
-#: settings/session.c:685 xfce4-session/shutdown.c:262
-msgid "_Turn off computer"
-msgstr "关闭计算机(_T)"
-
-#. Logout action settings
-#: settings/session.c:697
-msgid "Splash screen theme"
-msgstr "飞溅屏幕主题"
-
-#: settings/session.c:721
-msgid ""
-"Select the splash screen theme that should be displayed when the session is "
-"started."
-msgstr "选择会话开始时所显示的飞溅屏幕主题。"
-
-#: settings/session.c:731
-msgid "Show theme info"
-msgstr "显示主题信息"
-
-#. update the tray icon tip
-#: xfce4-session/ice-layer.c:133 xfce4-session/manager.c:525
-#: xfce4-session/manager.c:835
-#, c-format
-msgid "%u clients connected"
-msgstr "%u 个客户程序已连接"
-
-#: xfce4-session/main.c:93
-msgid "desktop"
-msgstr "桌面"
-
-#: xfce4-session/main.c:120
-msgid "Starting session manager.."
-msgstr "启动会话管理器..."
-
-#: xfce4-session/main.c:140
-#, c-format
-msgid ""
-"Unable to create users XFce settings\n"
-"directory %s: %s"
-msgstr "无法创建用户的XFce配置目录 %s: %s"
-
-#: xfce4-session/main.c:149
-#, c-format
-msgid ""
-"Unable to create users XFce session\n"
-"directory %s: %s"
-msgstr "msgstr \"无法创建用户的XFce会话目录 %s: %s\""
-
-#.
-#: xfce4-session/main.c:295 xfce4-session/session-control.c:268
-msgid "Session control"
-msgstr "会话控制"
-
-#.
-#: xfce4-session/main.c:310
-msgid "Save session"
-msgstr "保存会话"
-
-#.
-#: xfce4-session/main.c:319
-msgid "Quit session"
-msgstr "退出会话"
-
-#: xfce4-session/main.c:415
-msgid ""
-"The session manager was unable to start the\n"
-"Multi-Channel settings manager. This is most\n"
-"often caused by a broken XFce installation.\n"
-"Please contact your local system administrator\n"
-"and report the problem."
+#: xfce4-session/main.c:125
+msgid "Restoring the desktop settings, please wait..."
 msgstr ""
-"会话管理器无法启动多通道设置管理器，这很可能\n"
-"是 XFce 安装不正确导致的。请联系你的系统管理\n"
-"员并报告问题。"
-
-#: xfce4-session/main.c:432
-msgid "Unable to create MCS client"
-msgstr "无法创建 MCS 客户"
-
-#: xfce4-session/manager.c:342
-msgid ""
-"The session manager was unable to restore your\n"
-"previous session. It'll therefore start a default\n"
-"session."
-msgstr ""
-"会话管理器无法回复你的前一次会话，所以它将启动一个\n"
-"默认会话。"
-
-#: xfce4-session/manager.c:824
-#, c-format
-msgid ""
-"The client \"%s\" closed the connection\n"
-"to the session manager. The following reason\n"
-"was given:\n"
-"\n"
-"%s"
-msgstr ""
-"客户 \"%s\" 关闭了与会话管理器的连接。原因如下：\n"
-"\n"
-"%s"
-
-#: xfce4-session/shutdown.c:191
-msgid "Logout session"
-msgstr "注销会话"
-
-#: xfce4-session/shutdown.c:221
-#, c-format
-msgid "End session for <b>%s</b>"
-msgstr "结束会话 <b>%s</b>"
 
 #.
-#: xfce4-session/shutdown.c:244
+#: xfce4-session/shutdown.c:300
 msgid "What do you want to do next?"
 msgstr "下一步您要干什么?"
 
-#: xfce4-session/shutdown.c:275
+#: xfce4-session/shutdown.c:309
+#, fuzzy
+msgid "Quit current session"
+msgstr "退出当前会话(_Q)"
+
+#: xfce4-session/shutdown.c:315
+#, fuzzy
+msgid "Reboot the computer"
+msgstr "重新启动计算机(_R)"
+
+#: xfce4-session/shutdown.c:320
+#, fuzzy
+msgid "Turn off the computer"
+msgstr "关闭计算机(_T)"
+
+#: xfce4-session/shutdown.c:327
 msgid "_Save session for future logins"
 msgstr "为以后的登陆保存会话(_S)"
 
-#: xfce4-session/shutdown.c:349 xfce4-session/shutdown.c:358
+#: xfce4-session/shutdown.c:492 xfce4-session/shutdown.c:504
 #, c-format
 msgid ""
 "The following error occured while trying to shutdown the computer:\n"
@@ -229,100 +56,175 @@ msgstr ""
 "\n"
 "%s"
 
-#.
-#: xfce4-session/splash-screen.c:271
-#, c-format
-msgid "Starting %s..."
-msgstr "启动 %s..."
+#: xfce4-session/xfsm-startup.c:107
+msgid "Starting the Volume Controller"
+msgstr ""
 
-#: xfce4-session/startup.c:149
-msgid "Doing Autostart..."
-msgstr "执行自动启动..."
-
-#: xfce4-session/startup.c:207
-msgid "Starting session manager..."
+#: xfce4-session/xfsm-startup.c:109
+#, fuzzy
+msgid "Starting the Panel"
 msgstr "启动会话管理器..."
 
-#: xfce4-session/session-control.c:72
-msgid "Idle"
-msgstr "空闲"
+#: xfce4-session/xfsm-startup.c:111
+#, fuzzy
+msgid "Starting the Desktop Manager"
+msgstr "启动会话管理器..."
 
-#: xfce4-session/session-control.c:73
-msgid "Interacting"
-msgstr "交互"
+#: xfce4-session/xfsm-startup.c:113
+#, fuzzy
+msgid "Starting the Taskbar"
+msgstr "启动会话管理器..."
 
-#: xfce4-session/session-control.c:74
-msgid "Save completed"
-msgstr "保存完成"
+#: xfce4-session/xfsm-startup.c:115
+#, fuzzy
+msgid "Starting the Window Manager"
+msgstr "启动会话管理器..."
 
-#: xfce4-session/session-control.c:75
-msgid "Saving"
-msgstr "正在保存"
+#: xfce4-session/xfsm-startup.c:119
+msgid "Starting the Gnome Terminal Emulator"
+msgstr ""
 
-#. global save
-#: xfce4-session/session-control.c:76
-msgid "Saving (local)"
-msgstr "保存中(本地)"
+#: xfce4-session/xfsm-startup.c:123
+msgid "Starting the Beep Media Player"
+msgstr ""
 
-#. local save
-#: xfce4-session/session-control.c:77
-msgid "Waiting to interact"
-msgstr "等待交互"
+#: xfce4-session/xfsm-startup.c:125
+msgid "Starting The Gimp"
+msgstr ""
 
-#: xfce4-session/session-control.c:78
-msgid "Waiting to enter Phase2"
-msgstr "等待进入第2阶段"
+#: xfce4-session/xfsm-startup.c:127
+msgid "Starting the VI Improved Editor"
+msgstr ""
 
-#: xfce4-session/session-control.c:79
-msgid "Disconnecting"
-msgstr "正在断开"
+#: xfce4-session/xfsm-startup.c:129
+#, fuzzy
+msgid "Starting the Session Management Proxy"
+msgstr "启动会话管理器..."
 
-#: xfce4-session/session-control.c:200
-#, c-format
-msgid "Unable to clone client: %s"
-msgstr "无法复制客户：%s"
+#: xfce4-session/xfsm-startup.c:131
+msgid "Starting the X-Chat IRC Client"
+msgstr ""
 
-#: xfce4-session/session-control.c:299
-msgid "Priority"
-msgstr "优先级"
+#: xfce4-session/xfsm-startup.c:133
+msgid "Starting the X Multimedia System"
+msgstr ""
 
-#: xfce4-session/session-control.c:304
-msgid "Program"
-msgstr "程序"
+#: xfce4-session/xfsm-startup.c:135
+msgid "Starting the X Terminal Emulator"
+msgstr ""
 
-#: xfce4-session/session-control.c:309
-msgid "User"
-msgstr "用户"
+#: xfce4-session/xfsm-startup.c:137
+#, fuzzy, c-format
+msgid "Starting %s"
+msgstr "启动 %s..."
 
-#: xfce4-session/session-control.c:314
-msgid "State"
-msgstr "状态"
+#: xfce4-session/xfsm-splash-screen.c:285
+#, fuzzy
+msgid "Starting Xfce, please wait..."
+msgstr "启动 %s..."
 
-#. kill button
-#: xfce4-session/session-control.c:333
-msgid "Kill client"
-msgstr "中止客户程序"
+#: xfce4-session/xfsm-splash-screen.c:350
+#, fuzzy
+msgid "Please wait, loading session data..."
+msgstr "启动会话管理器..."
 
-#. clone button
-#: xfce4-session/session-control.c:339
-msgid "Clone client"
-msgstr "复制客户程序"
+#: xfce4-session/xfsm-splash-screen.c:562
+msgid "Pick a session or create a new one"
+msgstr ""
 
-#: xfce4-session/session-control.c:445 xfce4-session/session-control.c:448
-msgid "Unknown"
-msgstr "未知"
+#: xfce4-session/xfsm-chooser.c:105 xfce4-session/xfsm-chooser.c:123
+#: xfce4-session/xfsm-chooser.c:182 xfce4-session/xfsm-chooser.c:355
+msgid "Restore"
+msgstr ""
 
-#: xfce4-shutdown/main.c:137
+#: xfce4-session/xfsm-chooser.c:189 xfce4-session/xfsm-chooser.c:364
+msgid "Create"
+msgstr ""
+
+#: xfce4-session/xfsm-chooser.c:212
+msgid "Restore a previously saved session:"
+msgstr ""
+
+#: xfce4-session/xfsm-chooser.c:214
+msgid ""
+"Choose this option if you want to restore one of your previously saved "
+"sessions. This will bring up the desktop as it was when you saved the "
+"session."
+msgstr ""
+
+#: xfce4-session/xfsm-chooser.c:240
+msgid ""
+"Choose the session you want to restore. You can simply double-click the "
+"session name to restore it."
+msgstr ""
+
+#: xfce4-session/xfsm-chooser.c:266
+#, fuzzy
+msgid "Create a new session:"
+msgstr "保存会话"
+
+#: xfce4-session/xfsm-chooser.c:268
+msgid ""
+"Choose this option if you want to create a new session. The new session will "
+"be started as a default desktop. XXX - better text?"
+msgstr ""
+
+#: xfce4-session/xfsm-chooser.c:278
+msgid ""
+"Enter the name of the new session here. The name has to be unique among your "
+"session names and empty session names are not allowed."
+msgstr ""
+
+#. "Logout" button
+#: xfce4-session/xfsm-chooser.c:288
+msgid "Logout"
+msgstr ""
+
+#: xfce4-session/xfsm-chooser.c:290
+msgid "Cancel the login attempt and return to the login screen."
+msgstr ""
+
+#: settings/session.c:90 settings/session.c:182 settings/session.c:196
+msgid "Session management"
+msgstr "会话管理"
+
+#. General settings
+#: settings/session.c:207
+msgid "General"
+msgstr "通用"
+
+#.
+#: settings/session.c:216
+msgid "Confirm logout"
+msgstr "注销确认"
+
+#: settings/session.c:218
+msgid ""
+"Should the session manager ask the user to confirm the logout. If disabled, "
+"the session will be closed without any further user interaction."
+msgstr ""
+"会话管理器是否要求用户在注销时确认，如果关闭该项，�"
+"�话将在没有任何用户进一步操作的情况下关闭"
+
+#: settings/session.c:229
+msgid "Automatically save session on logout"
+msgstr "注销时自动保存会话"
+
+#: settings/session.c:236
+msgid "Display session chooser on each login"
+msgstr ""
+
+#: xfce4-shutdown/main.c:181
 #, c-format
 msgid "Usage: %s <action>\n"
 msgstr "用途: %s <动作>\n"
 
-#: xfce4-shutdown/main.c:146
+#: xfce4-shutdown/main.c:190
 #, c-format
 msgid "%s: Unknown action %s\n"
 msgstr "%s: 未知动作 %s\n"
 
-#: xfce4-shutdown/main.c:169
+#: xfce4-shutdown/main.c:221
 #, c-format
 msgid ""
 "You are not allowed to execute the action \"%s\".\n"
@@ -334,7 +236,7 @@ msgstr ""
 "您的用户名添加到文件 %s 中，这样使您有权关闭\n"
 "计算机。\n"
 
-#: xfce4-shutdown/main.c:192
+#: xfce4-shutdown/main.c:270
 msgid ""
 "Unable to shutdown this box. Please check your\n"
 "installation, or contact your system administrator\n"
@@ -343,7 +245,7 @@ msgstr ""
 "无法关闭计算机。请检查您的安装正确与否，\n"
 "或者向您的系统管理员报告问题。\n"
 
-#: xfce4-shutdown/main.c:209
+#: xfce4-shutdown/main.c:292
 #, c-format
 msgid ""
 "Got no way to shutdown the system. You should ask\n"
@@ -351,5 +253,162 @@ msgid ""
 "name to %s or to install sudo(8) and grant\n"
 "you the right execute reboot and halt commands.\n"
 msgstr ""
-"无法关闭计算机。您应该要求您的系统管理员把您的用户名添加到 %s 中，\n"
+"无法关闭计算机。您应该要求您的系统管理员把您的用户�"
+"�添加到 %s 中，\n"
 "或者安装 sudo(8) 并授予您执行重启和关机命令的权限。\n"
+
+#~ msgid "Default Theme"
+#~ msgstr "默认主题"
+
+#~ msgid "Default splash screen"
+#~ msgstr "默认飞溅屏幕"
+
+#~ msgid "About %s..."
+#~ msgstr "关于 %s..."
+
+#~ msgid "Info:"
+#~ msgstr "信息:"
+
+#~ msgid "Author:"
+#~ msgstr "作者:"
+
+#~ msgid "Unable to install splash theme from file %s: %s"
+#~ msgstr "无法从文件 %s 中安装飞溅屏幕主题: %s"
+
+#~ msgid "Install new theme"
+#~ msgstr "安装新主题"
+
+#~ msgid "Show tray icon"
+#~ msgstr "显示托盘图标"
+
+#~ msgid ""
+#~ "Show the session managers tray icon in the desktops notification area (also "
+#~ "known as the system tray)."
+#~ msgstr ""
+#~ "在桌面提示区(也称系统托盘)中显示会话管理器图标。"
+
+#~ msgid "Default action on logout"
+#~ msgstr "注销时的默认动作"
+
+#~ msgid "Splash screen theme"
+#~ msgstr "飞溅屏幕主题"
+
+#~ msgid ""
+#~ "Select the splash screen theme that should be displayed when the session is "
+#~ "started."
+#~ msgstr "选择会话开始时所显示的飞溅屏幕主题。"
+
+#~ msgid "Show theme info"
+#~ msgstr "显示主题信息"
+
+#~ msgid "%u clients connected"
+#~ msgstr "%u 个客户程序已连接"
+
+#~ msgid "desktop"
+#~ msgstr "桌面"
+
+#~ msgid ""
+#~ "Unable to create users XFce settings\n"
+#~ "directory %s: %s"
+#~ msgstr "无法创建用户的XFce配置目录 %s: %s"
+
+#~ msgid ""
+#~ "Unable to create users XFce session\n"
+#~ "directory %s: %s"
+#~ msgstr "msgstr \"无法创建用户的XFce会话目录 %s: %s\""
+
+#~ msgid "Session control"
+#~ msgstr "会话控制"
+
+#~ msgid "Quit session"
+#~ msgstr "退出会话"
+
+#~ msgid ""
+#~ "The session manager was unable to start the\n"
+#~ "Multi-Channel settings manager. This is most\n"
+#~ "often caused by a broken XFce installation.\n"
+#~ "Please contact your local system administrator\n"
+#~ "and report the problem."
+#~ msgstr ""
+#~ "会话管理器无法启动多通道设置管理器，这很可能\n"
+#~ "是 XFce 安装不正确导致的。请联系你的系统管理\n"
+#~ "员并报告问题。"
+
+#~ msgid "Unable to create MCS client"
+#~ msgstr "无法创建 MCS 客户"
+
+#~ msgid ""
+#~ "The session manager was unable to restore your\n"
+#~ "previous session. It'll therefore start a default\n"
+#~ "session."
+#~ msgstr ""
+#~ "会话管理器无法回复你的前一次会话，所以它将启动一个\n"
+#~ "默认会话。"
+
+#~ msgid ""
+#~ "The client \"%s\" closed the connection\n"
+#~ "to the session manager. The following reason\n"
+#~ "was given:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "客户 \"%s\" 关闭了与会话管理器的连接。原因如下：\n"
+#~ "\n"
+#~ "%s"
+
+#~ msgid "Logout session"
+#~ msgstr "注销会话"
+
+#~ msgid "End session for <b>%s</b>"
+#~ msgstr "结束会话 <b>%s</b>"
+
+#~ msgid "Doing Autostart..."
+#~ msgstr "执行自动启动..."
+
+#~ msgid "Idle"
+#~ msgstr "空闲"
+
+#~ msgid "Interacting"
+#~ msgstr "交互"
+
+#~ msgid "Save completed"
+#~ msgstr "保存完成"
+
+#~ msgid "Saving"
+#~ msgstr "正在保存"
+
+#~ msgid "Saving (local)"
+#~ msgstr "保存中(本地)"
+
+#~ msgid "Waiting to interact"
+#~ msgstr "等待交互"
+
+#~ msgid "Waiting to enter Phase2"
+#~ msgstr "等待进入第2阶段"
+
+#~ msgid "Disconnecting"
+#~ msgstr "正在断开"
+
+#~ msgid "Unable to clone client: %s"
+#~ msgstr "无法复制客户：%s"
+
+#~ msgid "Priority"
+#~ msgstr "优先级"
+
+#~ msgid "Program"
+#~ msgstr "程序"
+
+#~ msgid "User"
+#~ msgstr "用户"
+
+#~ msgid "State"
+#~ msgstr "状态"
+
+#~ msgid "Kill client"
+#~ msgstr "中止客户程序"
+
+#~ msgid "Clone client"
+#~ msgstr "复制客户程序"
+
+#~ msgid "Unknown"
+#~ msgstr "未知"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XFCE4-Session\n"
-"POT-Creation-Date: 2003-07-19 13:15+0200\n"
+"POT-Creation-Date: 2004-05-17 20:27+0200\n"
 "PO-Revision-Date: 2003-10-21 16:54-0600\n"
 "Last-Translator: Dinesh Nadarajah <dinesh_list@sbcglobal.net>\n"
 "Language-Team: Tamil <tamillinux-user@lists.sourceforge.net>\n"
@@ -14,311 +14,238 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: settings/session.c:227
-msgid "Default Theme"
-msgstr "கொடாநிலை தோற்றம்"
-
-#: settings/session.c:232
-msgid "Default splash screen"
-msgstr "கொடாநிலை திரை தொடக்கம் ஓவியம்"
-
-#: settings/session.c:271
-#, c-format
-msgid "About %s..."
-msgstr "%s பற்றி..."
-
-#: settings/session.c:293
-msgid "Info:"
-msgstr "தகவல்:"
-
-#: settings/session.c:301
-msgid "Author:"
-msgstr "எழுதியவர்:"
-
-#: settings/session.c:377
-#, c-format
-msgid "Unable to install splash theme from file %s: %s"
-msgstr "திரை-தொடக்க ஓவியதெதை %s கோப்பிலிருந்து நிறுவிக்க முடியவில்லை: %s"
-
-#: settings/session.c:398
-#: settings/session.c:740
-msgid "Install new theme"
-msgstr "புதிய உருகாறு நிறுவிக்கவும்"
-
-#: settings/session.c:477
-#: settings/session.c:600
-#: settings/session.c:614
-msgid "Session management"
-msgstr "அமர்வு மேலாண்மை"
-
-#. General settings
-#: settings/session.c:625
-msgid "General"
-msgstr "¦À¡ÐÅ¡É¨Å"
-
-#.
-#: settings/session.c:634
-msgid "Confirm logout"
-msgstr "கணிப்பொறியிலிருந்து வெளிச்செல்வதை உறுதிசெய்ய வேண்டும்"
-
-#: settings/session.c:636
-msgid "Should the session manager ask the user to confirm the logout. If disabled, the session will be closed without any further user interaction."
+#: xfce4-session/main.c:125
+msgid "Restoring the desktop settings, please wait..."
 msgstr ""
 
-#: settings/session.c:647
-msgid "Automatically save session on logout"
-msgstr "வெளிச்செல்லும்போது அமர்வு நிலையை சேமிக்கவும்"
-
 #.
-#: settings/session.c:654
-msgid "Show tray icon"
-msgstr "பட்டையில் குறும்படத்தை காட்டுக"
+#: xfce4-session/shutdown.c:300
+msgid "What do you want to do next?"
+msgstr ""
+"உங்களுக்கு, அடுத்து என்ன "
+"செய்ய விருப்பம்?"
 
-#: settings/session.c:656
-msgid "Show the session managers tray icon in the desktops notification area (also known as the system tray)."
-msgstr "அமர்வு மேலாளர் குறும்படத்தை பட்டையில் காண்பிக்கவும்"
+#: xfce4-session/shutdown.c:309
+#, fuzzy
+msgid "Quit current session"
+msgstr ""
+"தற்போதைய அமர்விலிருந்து "
+"வெளியேறுக"
 
-#. Logout action settings
-#: settings/session.c:665
-msgid "Default action on logout"
-msgstr "வெளிச்செல்லும்போது கொடாநிலை செய்கை"
+#: xfce4-session/shutdown.c:315
+#, fuzzy
+msgid "Reboot the computer"
+msgstr ""
+"_கணிப்பொறியை மீண்டும் "
+"தொடங்கவும்"
 
-#.
-#: settings/session.c:677
-#: xfce4-session/shutdown.c:252
-msgid "_Quit current session"
-msgstr "தற்போதைய அமர்விலிருந்து வெளியேறுக"
-
-#.
-#: settings/session.c:681
-#: xfce4-session/shutdown.c:257
-msgid "_Reboot the computer"
-msgstr "_கணிப்பொறியை மீண்டும் தொடங்கவும்"
-
-#.
-#: settings/session.c:685
-#: xfce4-session/shutdown.c:262
-msgid "_Turn off computer"
+#: xfce4-session/shutdown.c:320
+#, fuzzy
+msgid "Turn off the computer"
 msgstr "கணிப்பொறியை நிறுத்துக"
 
-#. Logout action settings
-#: settings/session.c:697
-msgid "Splash screen theme"
-msgstr "திரை-தொடக்கம் ஓவிய தோற்றம்"
-
-#: settings/session.c:721
-msgid "Select the splash screen theme that should be displayed when the session is started."
-msgstr "அமர்வு தொடங்கும்போது காண்பிக்க வேண்டிய தொடக்க-ஓவிய உருவம் தெரிவுவெய்யவும்."
-
-#: settings/session.c:731
-msgid "Show theme info"
-msgstr "தோற்றத்தின் தகவல் காண்பிக்கவும்"
-
-#. update the tray icon tip
-#: xfce4-session/ice-layer.c:133
-#: xfce4-session/manager.c:525
-#: xfce4-session/manager.c:835
-#, c-format
-msgid "%u clients connected"
-msgstr "இணைப்பு கொண்ட சேவைப்பயனர்கள் %u"
-
-#: xfce4-session/main.c:93
-msgid "desktop"
-msgstr "கணிமேசை"
-
-#: xfce4-session/main.c:120
-msgid "Starting session manager.."
-msgstr "அமர்வு மேலாளர் தொடங்கப்படுகிறது..."
-
-#: xfce4-session/main.c:140
-#, c-format
-msgid ""
-"Unable to create users XFce settings\n"
-"directory %s: %s"
-msgstr ""
-"பயனரின் XFce அமைப்பு அடைவு படைக்க\n"
-"முடியவில்லை %s: %s"
-
-#: xfce4-session/main.c:149
-#, c-format
-msgid ""
-"Unable to create users XFce session\n"
-"directory %s: %s"
-msgstr ""
-"பயனரின் XFce அமர்வு அடைவு படைக்க\n"
-"முடியவில்லை %s:·%s"
-
-#.
-#: xfce4-session/main.c:295
-#: xfce4-session/session-control.c:268
-msgid "Session control"
-msgstr "அமர்வு கட்டுப்பாடு"
-
-#.
-#: xfce4-session/main.c:310
-msgid "Save session"
-msgstr "அமர்வு சேமிக்கவும்"
-
-#.
-#: xfce4-session/main.c:319
-msgid "Quit session"
-msgstr "அமர்விலிருந்து வெளிச்செல்"
-
-#: xfce4-session/main.c:415
-msgid ""
-"The session manager was unable to start the\n"
-"Multi-Channel settings manager. This is most\n"
-"often caused by a broken XFce installation.\n"
-"Please contact your local system administrator\n"
-"and report the problem."
-msgstr ""
-
-#: xfce4-session/main.c:432
-msgid "Unable to create MCS client"
-msgstr "MCS சேவைப்பயனர் படைக்க முடியவில்லை"
-
-#: xfce4-session/manager.c:342
-msgid ""
-"The session manager was unable to restore your\n"
-"previous session. It'll therefore start a default\n"
-"session."
-msgstr ""
-
-#: xfce4-session/manager.c:824
-#, c-format
-msgid ""
-"The client \"%s\" closed the connection\n"
-"to the session manager. The following reason\n"
-"was given:\n"
-"\n"
-"%s"
-msgstr ""
-
-#: xfce4-session/shutdown.c:191
-msgid "Logout session"
-msgstr "அமர்விலிருந்து விலகு"
-
-#: xfce4-session/shutdown.c:221
-#, c-format
-msgid "End session for <b>%s</b>"
-msgstr "<b>%s</b> க்கு அமர்வு முடிந்தது"
-
-#.
-#: xfce4-session/shutdown.c:244
-msgid "What do you want to do next?"
-msgstr "உங்களுக்கு, அடுத்து என்ன செய்ய விருப்பம்?"
-
-#: xfce4-session/shutdown.c:275
+#: xfce4-session/shutdown.c:327
 msgid "_Save session for future logins"
-msgstr "_எதிர்கால உள்நுழைவுக்கு அமர்வை சேமிக்கவும்"
+msgstr ""
+"_எதிர்கால உள்நுழைவுக்கு "
+"அமர்வை சேமிக்கவும்"
 
-#: xfce4-session/shutdown.c:349
-#: xfce4-session/shutdown.c:358
+#: xfce4-session/shutdown.c:492 xfce4-session/shutdown.c:504
 #, c-format
 msgid ""
 "The following error occured while trying to shutdown the computer:\n"
 "\n"
 "%s"
 msgstr ""
-"கணிப்பொறி நிருத்தும்போது இப்பிழை நடைப்பெற்றது:\n"
+"கணிப்பொறி நிருத்தும்போது "
+"இப்பிழை நடைப்பெற்றது:\n"
 "\n"
 "%s"
 
-#.
-#: xfce4-session/splash-screen.c:271
-#, c-format
-msgid "Starting %s..."
+#: xfce4-session/xfsm-startup.c:107
+msgid "Starting the Volume Controller"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:109
+#, fuzzy
+msgid "Starting the Panel"
+msgstr ""
+"அமர்வு மேலாளர் "
+"தொடங்கப்படுகிறது..."
+
+#: xfce4-session/xfsm-startup.c:111
+#, fuzzy
+msgid "Starting the Desktop Manager"
+msgstr ""
+"அமர்வு மேலாளர் "
+"தொடங்கப்படுகிறது..."
+
+#: xfce4-session/xfsm-startup.c:113
+#, fuzzy
+msgid "Starting the Taskbar"
+msgstr ""
+"அமர்வு மேலாளர் "
+"தொடங்கப்படுகிறது..."
+
+#: xfce4-session/xfsm-startup.c:115
+#, fuzzy
+msgid "Starting the Window Manager"
+msgstr ""
+"அமர்வு மேலாளர் "
+"தொடங்கப்படுகிறது..."
+
+#: xfce4-session/xfsm-startup.c:119
+msgid "Starting the Gnome Terminal Emulator"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:123
+msgid "Starting the Beep Media Player"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:125
+msgid "Starting The Gimp"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:127
+msgid "Starting the VI Improved Editor"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:129
+#, fuzzy
+msgid "Starting the Session Management Proxy"
+msgstr ""
+"அமர்வு மேலாளர் "
+"தொடங்கப்படுகிறது..."
+
+#: xfce4-session/xfsm-startup.c:131
+msgid "Starting the X-Chat IRC Client"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:133
+msgid "Starting the X Multimedia System"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:135
+msgid "Starting the X Terminal Emulator"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:137
+#, fuzzy, c-format
+msgid "Starting %s"
 msgstr "%s தொடங்கப்படுகின்றது..."
 
-#: xfce4-session/startup.c:149
-msgid "Doing Autostart..."
-msgstr "தானே தொடங்கப்படுகின்றது..."
+#: xfce4-session/xfsm-splash-screen.c:285
+#, fuzzy
+msgid "Starting Xfce, please wait..."
+msgstr "%s தொடங்கப்படுகின்றது..."
 
-#: xfce4-session/startup.c:207
-msgid "Starting session manager..."
-msgstr "அமர்வு மேலாளர் தொடங்கப்படுகின்றது..."
+#: xfce4-session/xfsm-splash-screen.c:350
+#, fuzzy
+msgid "Please wait, loading session data..."
+msgstr ""
+"அமர்வு மேலாளர் "
+"தொடங்கப்படுகின்றது..."
 
-#: xfce4-session/session-control.c:72
-msgid "Idle"
-msgstr "முடங்கம்"
+#: xfce4-session/xfsm-splash-screen.c:562
+msgid "Pick a session or create a new one"
+msgstr ""
 
-#: xfce4-session/session-control.c:73
-msgid "Interacting"
-msgstr "ஊடாடுகிறது"
+#: xfce4-session/xfsm-chooser.c:105 xfce4-session/xfsm-chooser.c:123
+#: xfce4-session/xfsm-chooser.c:182 xfce4-session/xfsm-chooser.c:355
+msgid "Restore"
+msgstr ""
 
-#: xfce4-session/session-control.c:74
-msgid "Save completed"
-msgstr "சேமிப்பு முடிந்தது"
+#: xfce4-session/xfsm-chooser.c:189 xfce4-session/xfsm-chooser.c:364
+msgid "Create"
+msgstr ""
 
-#: xfce4-session/session-control.c:75
-msgid "Saving"
-msgstr "சேமிக்கின்றது"
+#: xfce4-session/xfsm-chooser.c:212
+msgid "Restore a previously saved session:"
+msgstr ""
 
-#. global save
-#: xfce4-session/session-control.c:76
-msgid "Saving (local)"
-msgstr "சேமிக்கின்றது (உள்ளமை)"
+#: xfce4-session/xfsm-chooser.c:214
+msgid ""
+"Choose this option if you want to restore one of your previously saved "
+"sessions. This will bring up the desktop as it was when you saved the "
+"session."
+msgstr ""
 
-#. local save
-#: xfce4-session/session-control.c:77
-msgid "Waiting to interact"
-msgstr "ஊடாடுவதட்கு காத்திருக்கின்றது"
+#: xfce4-session/xfsm-chooser.c:240
+msgid ""
+"Choose the session you want to restore. You can simply double-click the "
+"session name to restore it."
+msgstr ""
 
-#: xfce4-session/session-control.c:78
-msgid "Waiting to enter Phase2"
-msgstr "Phase2 நுழைவதட்கு காத்திருக்கின்றது"
+#: xfce4-session/xfsm-chooser.c:266
+#, fuzzy
+msgid "Create a new session:"
+msgstr "அமர்வு சேமிக்கவும்"
 
-#: xfce4-session/session-control.c:79
-msgid "Disconnecting"
-msgstr "துண்டிக்கப்படுகின்றது"
+#: xfce4-session/xfsm-chooser.c:268
+msgid ""
+"Choose this option if you want to create a new session. The new session will "
+"be started as a default desktop. XXX - better text?"
+msgstr ""
 
-#: xfce4-session/session-control.c:200
-#, c-format
-msgid "Unable to clone client: %s"
-msgstr "சேவைப்பயனர் நகல்செய்ய முடியவில்லை: %s"
+#: xfce4-session/xfsm-chooser.c:278
+msgid ""
+"Enter the name of the new session here. The name has to be unique among your "
+"session names and empty session names are not allowed."
+msgstr ""
 
-#: xfce4-session/session-control.c:299
-msgid "Priority"
-msgstr "முக்கியத்துவம்"
+#. "Logout" button
+#: xfce4-session/xfsm-chooser.c:288
+msgid "Logout"
+msgstr ""
 
-#: xfce4-session/session-control.c:304
-msgid "Program"
-msgstr "நிரல்"
+#: xfce4-session/xfsm-chooser.c:290
+msgid "Cancel the login attempt and return to the login screen."
+msgstr ""
 
-#: xfce4-session/session-control.c:309
-msgid "User"
-msgstr "பயனர்"
+#: settings/session.c:90 settings/session.c:182 settings/session.c:196
+msgid "Session management"
+msgstr "அமர்வு மேலாண்மை"
 
-#: xfce4-session/session-control.c:314
-msgid "State"
-msgstr "நிலமை"
+#. General settings
+#: settings/session.c:207
+msgid "General"
+msgstr "¦À¡ÐÅ¡É¨Å"
 
-#. kill button
-#: xfce4-session/session-control.c:333
-msgid "Kill client"
-msgstr "சேவைப்பயனர் கொல்க"
+#.
+#: settings/session.c:216
+msgid "Confirm logout"
+msgstr ""
+"கணிப்பொறியிலிருந்து "
+"வெளிச்செல்வதை உறுதிசெய்ய "
+"வேண்டும்"
 
-#. clone button
-#: xfce4-session/session-control.c:339
-msgid "Clone client"
-msgstr "சேவைப்பயனர் நகல்செய்"
+#: settings/session.c:218
+msgid ""
+"Should the session manager ask the user to confirm the logout. If disabled, "
+"the session will be closed without any further user interaction."
+msgstr ""
 
-#: xfce4-session/session-control.c:445
-#: xfce4-session/session-control.c:448
-msgid "Unknown"
-msgstr "தெரியாதது"
+#: settings/session.c:229
+msgid "Automatically save session on logout"
+msgstr ""
+"வெளிச்செல்லும்போது அமர்வு "
+"நிலையை சேமிக்கவும்"
 
-#: xfce4-shutdown/main.c:137
+#: settings/session.c:236
+msgid "Display session chooser on each login"
+msgstr ""
+
+#: xfce4-shutdown/main.c:181
 #, c-format
 msgid "Usage: %s <action>\n"
 msgstr "புழங்குதல்: %s <செயல்>\n"
 
-#: xfce4-shutdown/main.c:146
+#: xfce4-shutdown/main.c:190
 #, c-format
 msgid "%s: Unknown action %s\n"
 msgstr "%s: தெரியாத செயல் %s\n"
 
-#: xfce4-shutdown/main.c:169
+#: xfce4-shutdown/main.c:221
 #, c-format
 msgid ""
 "You are not allowed to execute the action \"%s\".\n"
@@ -327,14 +254,14 @@ msgid ""
 "adding your username to the file %s.\n"
 msgstr ""
 
-#: xfce4-shutdown/main.c:192
+#: xfce4-shutdown/main.c:270
 msgid ""
 "Unable to shutdown this box. Please check your\n"
 "installation, or contact your system administrator\n"
 "and report the problem.\n"
 msgstr ""
 
-#: xfce4-shutdown/main.c:209
+#: xfce4-shutdown/main.c:292
 #, c-format
 msgid ""
 "Got no way to shutdown the system. You should ask\n"
@@ -343,3 +270,166 @@ msgid ""
 "you the right execute reboot and halt commands.\n"
 msgstr ""
 
+#~ msgid "Default Theme"
+#~ msgstr "கொடாநிலை தோற்றம்"
+
+#~ msgid "Default splash screen"
+#~ msgstr ""
+#~ "கொடாநிலை திரை தொடக்கம் "
+#~ "ஓவியம்"
+
+#~ msgid "About %s..."
+#~ msgstr "%s பற்றி..."
+
+#~ msgid "Info:"
+#~ msgstr "தகவல்:"
+
+#~ msgid "Author:"
+#~ msgstr "எழுதியவர்:"
+
+#~ msgid "Unable to install splash theme from file %s: %s"
+#~ msgstr ""
+#~ "திரை-தொடக்க ஓவியதெதை %s "
+#~ "கோப்பிலிருந்து நிறுவிக்க "
+#~ "முடியவில்லை: %s"
+
+#~ msgid "Install new theme"
+#~ msgstr ""
+#~ "புதிய உருகாறு நிறுவிக்கவும்"
+
+#~ msgid "Show tray icon"
+#~ msgstr ""
+#~ "பட்டையில் குறும்படத்தை "
+#~ "காட்டுக"
+
+#~ msgid ""
+#~ "Show the session managers tray icon in the desktops notification area (also "
+#~ "known as the system tray)."
+#~ msgstr ""
+#~ "அமர்வு மேலாளர் "
+#~ "குறும்படத்தை பட்டையில் "
+#~ "காண்பிக்கவும்"
+
+#~ msgid "Default action on logout"
+#~ msgstr ""
+#~ "வெளிச்செல்லும்போது "
+#~ "கொடாநிலை செய்கை"
+
+#~ msgid "Splash screen theme"
+#~ msgstr ""
+#~ "திரை-தொடக்கம் ஓவிய தோற்றம்"
+
+#~ msgid ""
+#~ "Select the splash screen theme that should be displayed when the session is "
+#~ "started."
+#~ msgstr ""
+#~ "அமர்வு தொடங்கும்போது "
+#~ "காண்பிக்க வேண்டிய "
+#~ "தொடக்க-ஓவிய உருவம் "
+#~ "தெரிவுவெய்யவும்."
+
+#~ msgid "Show theme info"
+#~ msgstr ""
+#~ "தோற்றத்தின் தகவல் "
+#~ "காண்பிக்கவும்"
+
+#~ msgid "%u clients connected"
+#~ msgstr ""
+#~ "இணைப்பு கொண்ட "
+#~ "சேவைப்பயனர்கள் %u"
+
+#~ msgid "desktop"
+#~ msgstr "கணிமேசை"
+
+#~ msgid ""
+#~ "Unable to create users XFce settings\n"
+#~ "directory %s: %s"
+#~ msgstr ""
+#~ "பயனரின் XFce அமைப்பு அடைவு "
+#~ "படைக்க\n"
+#~ "முடியவில்லை %s: %s"
+
+#~ msgid ""
+#~ "Unable to create users XFce session\n"
+#~ "directory %s: %s"
+#~ msgstr ""
+#~ "பயனரின் XFce அமர்வு அடைவு "
+#~ "படைக்க\n"
+#~ "முடியவில்லை %s:·%s"
+
+#~ msgid "Session control"
+#~ msgstr "அமர்வு கட்டுப்பாடு"
+
+#~ msgid "Quit session"
+#~ msgstr ""
+#~ "அமர்விலிருந்து வெளிச்செல்"
+
+#~ msgid "Unable to create MCS client"
+#~ msgstr ""
+#~ "MCS சேவைப்பயனர் படைக்க "
+#~ "முடியவில்லை"
+
+#~ msgid "Logout session"
+#~ msgstr "அமர்விலிருந்து விலகு"
+
+#~ msgid "End session for <b>%s</b>"
+#~ msgstr ""
+#~ "<b>%s</b> க்கு அமர்வு முடிந்தது"
+
+#~ msgid "Doing Autostart..."
+#~ msgstr ""
+#~ "தானே தொடங்கப்படுகின்றது..."
+
+#~ msgid "Idle"
+#~ msgstr "முடங்கம்"
+
+#~ msgid "Interacting"
+#~ msgstr "ஊடாடுகிறது"
+
+#~ msgid "Save completed"
+#~ msgstr "சேமிப்பு முடிந்தது"
+
+#~ msgid "Saving"
+#~ msgstr "சேமிக்கின்றது"
+
+#~ msgid "Saving (local)"
+#~ msgstr "சேமிக்கின்றது (உள்ளமை)"
+
+#~ msgid "Waiting to interact"
+#~ msgstr ""
+#~ "ஊடாடுவதட்கு "
+#~ "காத்திருக்கின்றது"
+
+#~ msgid "Waiting to enter Phase2"
+#~ msgstr ""
+#~ "Phase2 நுழைவதட்கு "
+#~ "காத்திருக்கின்றது"
+
+#~ msgid "Disconnecting"
+#~ msgstr "துண்டிக்கப்படுகின்றது"
+
+#~ msgid "Unable to clone client: %s"
+#~ msgstr ""
+#~ "சேவைப்பயனர் நகல்செய்ய "
+#~ "முடியவில்லை: %s"
+
+#~ msgid "Priority"
+#~ msgstr "முக்கியத்துவம்"
+
+#~ msgid "Program"
+#~ msgstr "நிரல்"
+
+#~ msgid "User"
+#~ msgstr "பயனர்"
+
+#~ msgid "State"
+#~ msgstr "நிலமை"
+
+#~ msgid "Kill client"
+#~ msgstr "சேவைப்பயனர் கொல்க"
+
+#~ msgid "Clone client"
+#~ msgstr "சேவைப்பயனர் நகல்செய்"
+
+#~ msgid "Unknown"
+#~ msgstr "தெரியாதது"

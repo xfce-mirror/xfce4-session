@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2003-07-19 13:15+0200\n"
+"POT-Creation-Date: 2004-05-17 20:27+0200\n"
 "PO-Revision-Date: 2003-10-22 14:27+0800\n"
 "Last-Translator: umm <umm@pchome.com.tw>\n"
 "Language-Team: \n"
@@ -13,210 +13,35 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: settings/session.c:227
-msgid "Default Theme"
-msgstr "預設主題"
-
-#: settings/session.c:232
-msgid "Default splash screen"
-msgstr "預設起動畫面"
-
-#: settings/session.c:271
-#, c-format
-msgid "About %s..."
-msgstr "關於 %s..."
-
-#: settings/session.c:293
-msgid "Info:"
-msgstr "資訊："
-
-#: settings/session.c:301
-msgid "Author:"
-msgstr "作者："
-
-#: settings/session.c:377
-#, c-format
-msgid "Unable to install splash theme from file %s: %s"
-msgstr "無法從檔案 %s 中安裝啟動畫面主題：%s"
-
-#: settings/session.c:398
-#: settings/session.c:740
-msgid "Install new theme"
-msgstr "安裝新主題"
-
-#: settings/session.c:477
-#: settings/session.c:600
-#: settings/session.c:614
-msgid "Session management"
-msgstr "工作階段管理"
-
-#. General settings
-#: settings/session.c:625
-msgid "General"
-msgstr "一般"
-
-#.
-#: settings/session.c:634
-msgid "Confirm logout"
-msgstr "登出確認"
-
-#: settings/session.c:636
-msgid "Should the session manager ask the user to confirm the logout. If disabled, the session will be closed without any further user interaction."
-msgstr "工作階段管理程式是否要求用戶於登出時確認。如果關閉該選項，工作階段將於沒有任何進一步操作的情況下關閉。"
-
-#: settings/session.c:647
-msgid "Automatically save session on logout"
-msgstr "登出時自動儲存工作階段"
-
-#.
-#: settings/session.c:654
-msgid "Show tray icon"
-msgstr "顯示工具列圖示"
-
-#: settings/session.c:656
-msgid "Show the session managers tray icon in the desktops notification area (also known as the system tray)."
-msgstr "在桌面提示區（或稱系統工具列）中顯示工作階段管理程式。"
-
-#. Logout action settings
-#: settings/session.c:665
-msgid "Default action on logout"
-msgstr "登出時預設的動作"
-
-#.
-#: settings/session.c:677
-#: xfce4-session/shutdown.c:252
-msgid "_Quit current session"
-msgstr "退出目前工作階段(_Q)"
-
-#.
-#: settings/session.c:681
-#: xfce4-session/shutdown.c:257
-msgid "_Reboot the computer"
-msgstr "重新啟動電腦(_R)"
-
-#.
-#: settings/session.c:685
-#: xfce4-session/shutdown.c:262
-msgid "_Turn off computer"
-msgstr "關閉電腦(_T)"
-
-#. Logout action settings
-#: settings/session.c:697
-msgid "Splash screen theme"
-msgstr "啟動畫面主題"
-
-#: settings/session.c:721
-msgid "Select the splash screen theme that should be displayed when the session is started."
-msgstr "選擇開始工作階段時的啟動畫面主題"
-
-#: settings/session.c:731
-msgid "Show theme info"
-msgstr "顯示主題資訊"
-
-#. update the tray icon tip
-#: xfce4-session/ice-layer.c:133
-#: xfce4-session/manager.c:525
-#: xfce4-session/manager.c:835
-#, c-format
-msgid "%u clients connected"
-msgstr "%u 個用戶端已連線"
-
-#: xfce4-session/main.c:93
-msgid "desktop"
-msgstr "桌面"
-
-#: xfce4-session/main.c:120
-msgid "Starting session manager.."
-msgstr "啟動工作階段管理程式.."
-
-#: xfce4-session/main.c:140
-#, c-format
-msgid ""
-"Unable to create users XFce settings\n"
-"directory %s: %s"
-msgstr "無法建立使用者的 XFce 設定目錄 %s：%s"
-
-#: xfce4-session/main.c:149
-#, c-format
-msgid ""
-"Unable to create users XFce session\n"
-"directory %s: %s"
-msgstr "無法建立使用者的 XFce 工作階段目錄 %s：%s"
-
-#.
-#: xfce4-session/main.c:295
-#: xfce4-session/session-control.c:268
-msgid "Session control"
-msgstr "工作階段控制"
-
-#.
-#: xfce4-session/main.c:310
-msgid "Save session"
-msgstr "儲存工作階段"
-
-#.
-#: xfce4-session/main.c:319
-msgid "Quit session"
-msgstr "退出工作階段"
-
-#: xfce4-session/main.c:415
-msgid ""
-"The session manager was unable to start the\n"
-"Multi-Channel settings manager. This is most\n"
-"often caused by a broken XFce installation.\n"
-"Please contact your local system administrator\n"
-"and report the problem."
+#: xfce4-session/main.c:125
+msgid "Restoring the desktop settings, please wait..."
 msgstr ""
-"工作階段管理程式無法啟動多通道設定管理程式。\n"
-"這很可能是 XFce 安裝不正確所導致的。請聯繫\n"
-"您的系統管理員並回報此問題。"
-
-#: xfce4-session/main.c:432
-msgid "Unable to create MCS client"
-msgstr "無法建立 MCS 用戶端"
-
-#: xfce4-session/manager.c:342
-msgid ""
-"The session manager was unable to restore your\n"
-"previous session. It'll therefore start a default\n"
-"session."
-msgstr ""
-"工作階段管理程式無法回復您前一次的工作階段。\n"
-"因此將啟動預設的工作階段。"
-
-#: xfce4-session/manager.c:824
-#, c-format
-msgid ""
-"The client \"%s\" closed the connection\n"
-"to the session manager. The following reason\n"
-"was given:\n"
-"\n"
-"%s"
-msgstr ""
-"用戶端 \"%s\" 關閉了工作階段管理程式的連線。原因如下：\n"
-"\n"
-"%s"
-
-#: xfce4-session/shutdown.c:191
-msgid "Logout session"
-msgstr "登出工作階段"
-
-#: xfce4-session/shutdown.c:221
-#, c-format
-msgid "End session for <b>%s</b>"
-msgstr "結束工作階段 <b>%s</b>"
 
 #.
-#: xfce4-session/shutdown.c:244
+#: xfce4-session/shutdown.c:300
 msgid "What do you want to do next?"
 msgstr "下一步您要做什麼？"
 
-#: xfce4-session/shutdown.c:275
+#: xfce4-session/shutdown.c:309
+#, fuzzy
+msgid "Quit current session"
+msgstr "退出目前工作階段(_Q)"
+
+#: xfce4-session/shutdown.c:315
+#, fuzzy
+msgid "Reboot the computer"
+msgstr "重新啟動電腦(_R)"
+
+#: xfce4-session/shutdown.c:320
+#, fuzzy
+msgid "Turn off the computer"
+msgstr "關閉電腦(_T)"
+
+#: xfce4-session/shutdown.c:327
 msgid "_Save session for future logins"
 msgstr "為往後的登入儲存工作階段(_S)"
 
-#: xfce4-session/shutdown.c:349
-#: xfce4-session/shutdown.c:358
+#: xfce4-session/shutdown.c:492 xfce4-session/shutdown.c:504
 #, c-format
 msgid ""
 "The following error occured while trying to shutdown the computer:\n"
@@ -227,101 +52,175 @@ msgstr ""
 "\n"
 "%s"
 
-#.
-#: xfce4-session/splash-screen.c:271
-#, c-format
-msgid "Starting %s..."
+#: xfce4-session/xfsm-startup.c:107
+msgid "Starting the Volume Controller"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:109
+#, fuzzy
+msgid "Starting the Panel"
+msgstr "啟動工作階段管理程式.."
+
+#: xfce4-session/xfsm-startup.c:111
+#, fuzzy
+msgid "Starting the Desktop Manager"
+msgstr "啟動工作階段管理程式.."
+
+#: xfce4-session/xfsm-startup.c:113
+#, fuzzy
+msgid "Starting the Taskbar"
+msgstr "啟動工作階段管理程式.."
+
+#: xfce4-session/xfsm-startup.c:115
+#, fuzzy
+msgid "Starting the Window Manager"
+msgstr "啟動工作階段管理程式.."
+
+#: xfce4-session/xfsm-startup.c:119
+msgid "Starting the Gnome Terminal Emulator"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:123
+msgid "Starting the Beep Media Player"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:125
+msgid "Starting The Gimp"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:127
+msgid "Starting the VI Improved Editor"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:129
+#, fuzzy
+msgid "Starting the Session Management Proxy"
+msgstr "啟動工作階段管理程式.."
+
+#: xfce4-session/xfsm-startup.c:131
+msgid "Starting the X-Chat IRC Client"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:133
+msgid "Starting the X Multimedia System"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:135
+msgid "Starting the X Terminal Emulator"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:137
+#, fuzzy, c-format
+msgid "Starting %s"
 msgstr "啟動 %s..."
 
-#: xfce4-session/startup.c:149
-msgid "Doing Autostart..."
-msgstr "執行自動啟動..."
+#: xfce4-session/xfsm-splash-screen.c:285
+#, fuzzy
+msgid "Starting Xfce, please wait..."
+msgstr "啟動 %s..."
 
-#: xfce4-session/startup.c:207
-msgid "Starting session manager..."
+#: xfce4-session/xfsm-splash-screen.c:350
+#, fuzzy
+msgid "Please wait, loading session data..."
 msgstr "啟動工作階段管理程式..."
 
-#: xfce4-session/session-control.c:72
-msgid "Idle"
-msgstr "閒置"
+#: xfce4-session/xfsm-splash-screen.c:562
+msgid "Pick a session or create a new one"
+msgstr ""
 
-#: xfce4-session/session-control.c:73
-msgid "Interacting"
-msgstr "互動"
+#: xfce4-session/xfsm-chooser.c:105 xfce4-session/xfsm-chooser.c:123
+#: xfce4-session/xfsm-chooser.c:182 xfce4-session/xfsm-chooser.c:355
+msgid "Restore"
+msgstr ""
 
-#: xfce4-session/session-control.c:74
-msgid "Save completed"
-msgstr "儲存完成"
+#: xfce4-session/xfsm-chooser.c:189 xfce4-session/xfsm-chooser.c:364
+msgid "Create"
+msgstr ""
 
-#: xfce4-session/session-control.c:75
-msgid "Saving"
-msgstr "儲存中"
+#: xfce4-session/xfsm-chooser.c:212
+msgid "Restore a previously saved session:"
+msgstr ""
 
-#. global save
-#: xfce4-session/session-control.c:76
-msgid "Saving (local)"
-msgstr "儲存中（本地）"
+#: xfce4-session/xfsm-chooser.c:214
+msgid ""
+"Choose this option if you want to restore one of your previously saved "
+"sessions. This will bring up the desktop as it was when you saved the "
+"session."
+msgstr ""
 
-#. local save
-#: xfce4-session/session-control.c:77
-msgid "Waiting to interact"
-msgstr "等待互動"
+#: xfce4-session/xfsm-chooser.c:240
+msgid ""
+"Choose the session you want to restore. You can simply double-click the "
+"session name to restore it."
+msgstr ""
 
-#: xfce4-session/session-control.c:78
-msgid "Waiting to enter Phase2"
-msgstr "等待進入第二階段"
+#: xfce4-session/xfsm-chooser.c:266
+#, fuzzy
+msgid "Create a new session:"
+msgstr "儲存工作階段"
 
-#: xfce4-session/session-control.c:79
-msgid "Disconnecting"
-msgstr "斷線中"
+#: xfce4-session/xfsm-chooser.c:268
+msgid ""
+"Choose this option if you want to create a new session. The new session will "
+"be started as a default desktop. XXX - better text?"
+msgstr ""
 
-#: xfce4-session/session-control.c:200
-#, c-format
-msgid "Unable to clone client: %s"
-msgstr "無法複製用戶端：%s"
+#: xfce4-session/xfsm-chooser.c:278
+msgid ""
+"Enter the name of the new session here. The name has to be unique among your "
+"session names and empty session names are not allowed."
+msgstr ""
 
-#: xfce4-session/session-control.c:299
-msgid "Priority"
-msgstr "優先等級"
+#. "Logout" button
+#: xfce4-session/xfsm-chooser.c:288
+msgid "Logout"
+msgstr ""
 
-#: xfce4-session/session-control.c:304
-msgid "Program"
-msgstr "程式"
+#: xfce4-session/xfsm-chooser.c:290
+msgid "Cancel the login attempt and return to the login screen."
+msgstr ""
 
-#: xfce4-session/session-control.c:309
-msgid "User"
-msgstr "使用者"
+#: settings/session.c:90 settings/session.c:182 settings/session.c:196
+msgid "Session management"
+msgstr "工作階段管理"
 
-#: xfce4-session/session-control.c:314
-msgid "State"
-msgstr "狀態"
+#. General settings
+#: settings/session.c:207
+msgid "General"
+msgstr "一般"
 
-#. kill button
-#: xfce4-session/session-control.c:333
-msgid "Kill client"
-msgstr "中止用戶端"
+#.
+#: settings/session.c:216
+msgid "Confirm logout"
+msgstr "登出確認"
 
-#. clone button
-#: xfce4-session/session-control.c:339
-msgid "Clone client"
-msgstr "複製用戶端"
+#: settings/session.c:218
+msgid ""
+"Should the session manager ask the user to confirm the logout. If disabled, "
+"the session will be closed without any further user interaction."
+msgstr ""
+"工作階段管理程式是否要求用戶於登出時確認。如果關閉�"
+"�選項，工作階段將於沒有任何進一步操作的情況下關閉。"
 
-#: xfce4-session/session-control.c:445
-#: xfce4-session/session-control.c:448
-msgid "Unknown"
-msgstr "未知"
+#: settings/session.c:229
+msgid "Automatically save session on logout"
+msgstr "登出時自動儲存工作階段"
 
-#: xfce4-shutdown/main.c:137
+#: settings/session.c:236
+msgid "Display session chooser on each login"
+msgstr ""
+
+#: xfce4-shutdown/main.c:181
 #, c-format
 msgid "Usage: %s <action>\n"
 msgstr "用法：%s <action>\n"
 
-#: xfce4-shutdown/main.c:146
+#: xfce4-shutdown/main.c:190
 #, c-format
 msgid "%s: Unknown action %s\n"
 msgstr "%s：未知的動作 %s\n"
 
-#: xfce4-shutdown/main.c:169
+#: xfce4-shutdown/main.c:221
 #, c-format
 msgid ""
 "You are not allowed to execute the action \"%s\".\n"
@@ -333,7 +232,7 @@ msgstr ""
 "將您的使用者名稱增加到檔案 %s 中，使您有\n"
 "關閉電腦的權限。\n"
 
-#: xfce4-shutdown/main.c:192
+#: xfce4-shutdown/main.c:270
 msgid ""
 "Unable to shutdown this box. Please check your\n"
 "installation, or contact your system administrator\n"
@@ -342,7 +241,7 @@ msgstr ""
 "無法關閉此對話框。請檢查您的安裝是否正確，\n"
 "或者聯繫您的系統管理員並回報此問題。\n"
 
-#: xfce4-shutdown/main.c:209
+#: xfce4-shutdown/main.c:292
 #, c-format
 msgid ""
 "Got no way to shutdown the system. You should ask\n"
@@ -350,6 +249,165 @@ msgid ""
 "name to %s or to install sudo(8) and grant\n"
 "you the right execute reboot and halt commands.\n"
 msgstr ""
-"無法關閉此系統。您應該要求系統管理員將您的使用者名稱增加到檔案 %s 中，\n"
-"或者安裝 sudo(8) 並允許你執行重新啟動和關閉電腦的指令。\n"
+"無法關閉此系統。您應該要求系統管理員將您的使用者名�"
+"�增加到檔案 %s 中，\n"
+"或者安裝 sudo(8) "
+"並允許你執行重新啟動和關閉電腦的指令。\n"
 
+#~ msgid "Default Theme"
+#~ msgstr "預設主題"
+
+#~ msgid "Default splash screen"
+#~ msgstr "預設起動畫面"
+
+#~ msgid "About %s..."
+#~ msgstr "關於 %s..."
+
+#~ msgid "Info:"
+#~ msgstr "資訊："
+
+#~ msgid "Author:"
+#~ msgstr "作者："
+
+#~ msgid "Unable to install splash theme from file %s: %s"
+#~ msgstr "無法從檔案 %s 中安裝啟動畫面主題：%s"
+
+#~ msgid "Install new theme"
+#~ msgstr "安裝新主題"
+
+#~ msgid "Show tray icon"
+#~ msgstr "顯示工具列圖示"
+
+#~ msgid ""
+#~ "Show the session managers tray icon in the desktops notification area (also "
+#~ "known as the system tray)."
+#~ msgstr ""
+#~ "在桌面提示區（或稱系統工具列）中顯示工作階段管理程�"
+#~ "�。"
+
+#~ msgid "Default action on logout"
+#~ msgstr "登出時預設的動作"
+
+#~ msgid "Splash screen theme"
+#~ msgstr "啟動畫面主題"
+
+#~ msgid ""
+#~ "Select the splash screen theme that should be displayed when the session is "
+#~ "started."
+#~ msgstr "選擇開始工作階段時的啟動畫面主題"
+
+#~ msgid "Show theme info"
+#~ msgstr "顯示主題資訊"
+
+#~ msgid "%u clients connected"
+#~ msgstr "%u 個用戶端已連線"
+
+#~ msgid "desktop"
+#~ msgstr "桌面"
+
+#~ msgid ""
+#~ "Unable to create users XFce settings\n"
+#~ "directory %s: %s"
+#~ msgstr "無法建立使用者的 XFce 設定目錄 %s：%s"
+
+#~ msgid ""
+#~ "Unable to create users XFce session\n"
+#~ "directory %s: %s"
+#~ msgstr "無法建立使用者的 XFce 工作階段目錄 %s：%s"
+
+#~ msgid "Session control"
+#~ msgstr "工作階段控制"
+
+#~ msgid "Quit session"
+#~ msgstr "退出工作階段"
+
+#~ msgid ""
+#~ "The session manager was unable to start the\n"
+#~ "Multi-Channel settings manager. This is most\n"
+#~ "often caused by a broken XFce installation.\n"
+#~ "Please contact your local system administrator\n"
+#~ "and report the problem."
+#~ msgstr ""
+#~ "工作階段管理程式無法啟動多通道設定管理程式。\n"
+#~ "這很可能是 XFce 安裝不正確所導致的。請聯繫\n"
+#~ "您的系統管理員並回報此問題。"
+
+#~ msgid "Unable to create MCS client"
+#~ msgstr "無法建立 MCS 用戶端"
+
+#~ msgid ""
+#~ "The session manager was unable to restore your\n"
+#~ "previous session. It'll therefore start a default\n"
+#~ "session."
+#~ msgstr ""
+#~ "工作階段管理程式無法回復您前一次的工作階段。\n"
+#~ "因此將啟動預設的工作階段。"
+
+#~ msgid ""
+#~ "The client \"%s\" closed the connection\n"
+#~ "to the session manager. The following reason\n"
+#~ "was given:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "用戶端 \"%s\" "
+#~ "關閉了工作階段管理程式的連線。原因如下：\n"
+#~ "\n"
+#~ "%s"
+
+#~ msgid "Logout session"
+#~ msgstr "登出工作階段"
+
+#~ msgid "End session for <b>%s</b>"
+#~ msgstr "結束工作階段 <b>%s</b>"
+
+#~ msgid "Doing Autostart..."
+#~ msgstr "執行自動啟動..."
+
+#~ msgid "Idle"
+#~ msgstr "閒置"
+
+#~ msgid "Interacting"
+#~ msgstr "互動"
+
+#~ msgid "Save completed"
+#~ msgstr "儲存完成"
+
+#~ msgid "Saving"
+#~ msgstr "儲存中"
+
+#~ msgid "Saving (local)"
+#~ msgstr "儲存中（本地）"
+
+#~ msgid "Waiting to interact"
+#~ msgstr "等待互動"
+
+#~ msgid "Waiting to enter Phase2"
+#~ msgstr "等待進入第二階段"
+
+#~ msgid "Disconnecting"
+#~ msgstr "斷線中"
+
+#~ msgid "Unable to clone client: %s"
+#~ msgstr "無法複製用戶端：%s"
+
+#~ msgid "Priority"
+#~ msgstr "優先等級"
+
+#~ msgid "Program"
+#~ msgstr "程式"
+
+#~ msgid "User"
+#~ msgstr "使用者"
+
+#~ msgid "State"
+#~ msgstr "狀態"
+
+#~ msgid "Kill client"
+#~ msgstr "中止用戶端"
+
+#~ msgid "Clone client"
+#~ msgstr "複製用戶端"
+
+#~ msgid "Unknown"
+#~ msgstr "未知"

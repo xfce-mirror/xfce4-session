@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2003-07-19 13:15+0200\n"
+"POT-Creation-Date: 2004-05-17 20:27+0200\n"
 "PO-Revision-Date: 2003-12-09 20:00+0900\n"
 "Last-Translator: Zhao Ji <zhao-ji@awz.ne.jp>\n"
 "Language-Team: xfce-users-jp <xfce-users-jp@ml.fdiary.net>\n"
@@ -15,325 +15,216 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: settings/session.c:227
-msgid "Default Theme"
-msgstr "標準のテーマ"
-
-#: settings/session.c:232
-msgid "Default splash screen"
-msgstr "標準の装飾スクリーン"
-
-#: settings/session.c:271
-#, c-format
-msgid "About %s..."
-msgstr "%s について..."
-
-#: settings/session.c:293
-msgid "Info:"
-msgstr "情報:"
-
-#: settings/session.c:301
-msgid "Author:"
-msgstr "製作者"
-
-#: settings/session.c:377
-#, c-format
-msgid "Unable to install splash theme from file %s: %s"
-msgstr "装飾テーマを、ファイルからインストールできません %s: %s"
-
-#: settings/session.c:398 settings/session.c:740
-msgid "Install new theme"
-msgstr "新しいテーマのインストール"
-
-#: settings/session.c:477 settings/session.c:600 settings/session.c:614
-msgid "Session management"
-msgstr "セッション・マネージメント"
-
-#. General settings
-#: settings/session.c:625
-msgid "General"
-msgstr "全般"
-
-#.
-#: settings/session.c:634
-msgid "Confirm logout"
-msgstr "logout確認"
-
-#: settings/session.c:636
-msgid ""
-"Should the session manager ask the user to confirm the logout. If disabled, "
-"the session will be closed without any further user interaction."
+#: xfce4-session/main.c:125
+msgid "Restoring the desktop settings, please wait..."
 msgstr ""
-"セッション・マネージャには、ユーザーへlogout確認する設定をするべきです。"
-"もし、無効にすればユーザー設定へセッション間相互作用を処理せずに終了します。"
-
-#: settings/session.c:647
-msgid "Automatically save session on logout"
-msgstr "自動的にセッションを保存して、logout"
 
 #.
-#: settings/session.c:654
-msgid "Show tray icon"
-msgstr "アイコン・トレイの表示"
-
-#: settings/session.c:656
-msgid ""
-"Show the session managers tray icon in the desktops notification area (also "
-"known as the system tray)."
-msgstr ""
-"デスクトップ通知エリア（システム・トレー）で、セッション・マネージャの"
-"アイコン・トレーを表示"
-
-#. Logout action settings
-#: settings/session.c:665
-msgid "Default action on logout"
-msgstr "logout時の標準動作"
-
-#.
-#: settings/session.c:677 xfce4-session/shutdown.c:252
-msgid "_Quit current session"
-msgstr "現在のセッションの終了(_Q)"
-
-#.
-#: settings/session.c:681 xfce4-session/shutdown.c:257
-msgid "_Reboot the computer"
-msgstr "コンピュータの再起動(_R)"
-
-#.
-#: settings/session.c:685 xfce4-session/shutdown.c:262
-msgid "_Turn off computer"
-msgstr "コンピュータの終了(_T)"
-
-#. Logout action settings
-#: settings/session.c:697
-msgid "Splash screen theme"
-msgstr "装飾スクリーン・テーマ"
-
-#: settings/session.c:721
-msgid ""
-"Select the splash screen theme that should be displayed when the session is "
-"started."
-msgstr ""
-"セッション開始時に使用される、装飾スクリーン・テーマの選択"
-
-#: settings/session.c:731
-msgid "Show theme info"
-msgstr "テーマの情報表示"
-
-#. update the tray icon tip
-#: xfce4-session/ice-layer.c:133 xfce4-session/manager.c:525
-#: xfce4-session/manager.c:835
-#, c-format
-msgid "%u clients connected"
-msgstr "%u クライアントが接続しました"
-
-#: xfce4-session/main.c:93
-msgid "desktop"
-msgstr "デスクトップ"
-
-#: xfce4-session/main.c:120
-msgid "Starting session manager.."
-msgstr "セッション・マネージャ起動中.."
-
-#: xfce4-session/main.c:140
-#, c-format
-msgid ""
-"Unable to create users XFce settings\n"
-"directory %s: %s"
-msgstr ""
-"ユーザーのXFce設定ディレクトリが\n"
-"作成できません %s: %s"
-
-#: xfce4-session/main.c:149
-#, c-format
-msgid ""
-"Unable to create users XFce session\n"
-"directory %s: %s"
-msgstr ""
-"ユーザーのXFceセッション・ディレクトリが\n"
-"作成できません %s: %s"
-
-#.
-#: xfce4-session/main.c:295 xfce4-session/session-control.c:268
-msgid "Session control"
-msgstr "セッション・コントロール"
-
-#.
-#: xfce4-session/main.c:310
-msgid "Save session"
-msgstr "セッション保存"
-
-#.
-#: xfce4-session/main.c:319
-msgid "Quit session"
-msgstr "セッション終了"
-
-#: xfce4-session/main.c:415
-msgid ""
-"The session manager was unable to start the\n"
-"Multi-Channel settings manager. This is most\n"
-"often caused by a broken XFce installation.\n"
-"Please contact your local system administrator\n"
-"and report the problem."
-msgstr ""
-"セッション・マネージャは、マルチ・チャネル\n"
-"設定マネージャを起動出来ませんでした。\n"
-"これは、破損したXFceによく発生します。\n"
-"あなたのシステムを管理している管理者に連絡して、\n"
-"問題を報告して下さい。"
-
-#: xfce4-session/main.c:432
-msgid "Unable to create MCS client"
-msgstr "MCSクライアントを作成出来ません"
-
-#: xfce4-session/manager.c:342
-msgid ""
-"The session manager was unable to restore your\n"
-"previous session. It'll therefore start a default\n"
-"session."
-msgstr ""
-"セッション・マネージャは、前回のあなたのセッションを\n"
-"復元できません。\n"
-"したがって、標準のセッション状態で開始します。"
-
-#: xfce4-session/manager.c:824
-#, c-format
-msgid ""
-"The client \"%s\" closed the connection\n"
-"to the session manager. The following reason\n"
-"was given:\n"
-"\n"
-"%s"
-msgstr ""
-"\"%s\"クライアントは、セッション・マネージャとの\n"
-"接続を閉じました。\n"
-"次の理由が報告されました:\n"
-"\n"
-"%s"
-
-#: xfce4-session/shutdown.c:191
-msgid "Logout session"
-msgstr "セッションのログアウト"
-
-#: xfce4-session/shutdown.c:221
-#, c-format
-msgid "End session for <b>%s</b>"
-msgstr "<b>%s</b>のセッションを終了"
-
-#.
-#: xfce4-session/shutdown.c:244
+#: xfce4-session/shutdown.c:300
 msgid "What do you want to do next?"
 msgstr "あなたは、次に何を行いますか？"
 
-#: xfce4-session/shutdown.c:275
+#: xfce4-session/shutdown.c:309
+#, fuzzy
+msgid "Quit current session"
+msgstr "現在のセッションの終了(_Q)"
+
+#: xfce4-session/shutdown.c:315
+#, fuzzy
+msgid "Reboot the computer"
+msgstr "コンピュータの再起動(_R)"
+
+#: xfce4-session/shutdown.c:320
+#, fuzzy
+msgid "Turn off the computer"
+msgstr "コンピュータの終了(_T)"
+
+#: xfce4-session/shutdown.c:327
 msgid "_Save session for future logins"
 msgstr "次回のログインへ、セッションを保存"
 
-#: xfce4-session/shutdown.c:349 xfce4-session/shutdown.c:358
+#: xfce4-session/shutdown.c:492 xfce4-session/shutdown.c:504
 #, c-format
 msgid ""
 "The following error occured while trying to shutdown the computer:\n"
 "\n"
 "%s"
 msgstr ""
-"次のエラーが、コンピュータをシャットダウン中に発生しました:\n"
+"次のエラーが、コンピュータをシャットダウン中に発生�"
+"�ました:\n"
 "\n"
 "%s"
 
-#.
-#: xfce4-session/splash-screen.c:271
-#, c-format
-msgid "Starting %s..."
+#: xfce4-session/xfsm-startup.c:107
+msgid "Starting the Volume Controller"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:109
+#, fuzzy
+msgid "Starting the Panel"
+msgstr "セッション・マネージャ起動中.."
+
+#: xfce4-session/xfsm-startup.c:111
+#, fuzzy
+msgid "Starting the Desktop Manager"
+msgstr "セッション・マネージャ起動中.."
+
+#: xfce4-session/xfsm-startup.c:113
+#, fuzzy
+msgid "Starting the Taskbar"
+msgstr "セッション・マネージャ起動中.."
+
+#: xfce4-session/xfsm-startup.c:115
+#, fuzzy
+msgid "Starting the Window Manager"
+msgstr "セッション・マネージャ起動中.."
+
+#: xfce4-session/xfsm-startup.c:119
+msgid "Starting the Gnome Terminal Emulator"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:123
+msgid "Starting the Beep Media Player"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:125
+msgid "Starting The Gimp"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:127
+msgid "Starting the VI Improved Editor"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:129
+#, fuzzy
+msgid "Starting the Session Management Proxy"
+msgstr "セッション・マネージャ起動中.."
+
+#: xfce4-session/xfsm-startup.c:131
+msgid "Starting the X-Chat IRC Client"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:133
+msgid "Starting the X Multimedia System"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:135
+msgid "Starting the X Terminal Emulator"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:137
+#, fuzzy, c-format
+msgid "Starting %s"
 msgstr "%s 起動中..."
 
-#: xfce4-session/startup.c:149
-msgid "Doing Autostart..."
-msgstr "自動起動中..."
+#: xfce4-session/xfsm-splash-screen.c:285
+#, fuzzy
+msgid "Starting Xfce, please wait..."
+msgstr "%s 起動中..."
 
-#: xfce4-session/startup.c:207
-msgid "Starting session manager..."
+#: xfce4-session/xfsm-splash-screen.c:350
+#, fuzzy
+msgid "Please wait, loading session data..."
 msgstr "セッション・マネージャ起動中..."
 
-#: xfce4-session/session-control.c:72
-msgid "Idle"
-msgstr "待機"
+#: xfce4-session/xfsm-splash-screen.c:562
+msgid "Pick a session or create a new one"
+msgstr ""
 
-#: xfce4-session/session-control.c:73
-msgid "Interacting"
-msgstr "相互影響"
+#: xfce4-session/xfsm-chooser.c:105 xfce4-session/xfsm-chooser.c:123
+#: xfce4-session/xfsm-chooser.c:182 xfce4-session/xfsm-chooser.c:355
+msgid "Restore"
+msgstr ""
 
-#: xfce4-session/session-control.c:74
-msgid "Save completed"
-msgstr "保存完了"
+#: xfce4-session/xfsm-chooser.c:189 xfce4-session/xfsm-chooser.c:364
+msgid "Create"
+msgstr ""
 
-#: xfce4-session/session-control.c:75
-msgid "Saving"
-msgstr "保存中"
+#: xfce4-session/xfsm-chooser.c:212
+msgid "Restore a previously saved session:"
+msgstr ""
 
-#. global save
-#: xfce4-session/session-control.c:76
-msgid "Saving (local)"
-msgstr "保存中 (local)"
+#: xfce4-session/xfsm-chooser.c:214
+msgid ""
+"Choose this option if you want to restore one of your previously saved "
+"sessions. This will bring up the desktop as it was when you saved the "
+"session."
+msgstr ""
 
-#. local save
-#: xfce4-session/session-control.c:77
-msgid "Waiting to interact"
-msgstr "セッション間相互作用 処理待ち"
+#: xfce4-session/xfsm-chooser.c:240
+msgid ""
+"Choose the session you want to restore. You can simply double-click the "
+"session name to restore it."
+msgstr ""
 
-#: xfce4-session/session-control.c:78
-msgid "Waiting to enter Phase2"
-msgstr "Phase2の実行待ち"
+#: xfce4-session/xfsm-chooser.c:266
+#, fuzzy
+msgid "Create a new session:"
+msgstr "セッション保存"
 
-#: xfce4-session/session-control.c:79
-msgid "Disconnecting"
-msgstr "接続解除中"
+#: xfce4-session/xfsm-chooser.c:268
+msgid ""
+"Choose this option if you want to create a new session. The new session will "
+"be started as a default desktop. XXX - better text?"
+msgstr ""
 
-#: xfce4-session/session-control.c:200
-#, c-format
-msgid "Unable to clone client: %s"
-msgstr "クライアント: %s を複製出来ません"
+#: xfce4-session/xfsm-chooser.c:278
+msgid ""
+"Enter the name of the new session here. The name has to be unique among your "
+"session names and empty session names are not allowed."
+msgstr ""
 
-#: xfce4-session/session-control.c:299
-msgid "Priority"
-msgstr "優先度"
+#. "Logout" button
+#: xfce4-session/xfsm-chooser.c:288
+msgid "Logout"
+msgstr ""
 
-#: xfce4-session/session-control.c:304
-msgid "Program"
-msgstr "プログラム"
+#: xfce4-session/xfsm-chooser.c:290
+msgid "Cancel the login attempt and return to the login screen."
+msgstr ""
 
-#: xfce4-session/session-control.c:309
-msgid "User"
-msgstr "ユーザ"
+#: settings/session.c:90 settings/session.c:182 settings/session.c:196
+msgid "Session management"
+msgstr "セッション・マネージメント"
 
-#: xfce4-session/session-control.c:314
-msgid "State"
-msgstr "状態"
+#. General settings
+#: settings/session.c:207
+msgid "General"
+msgstr "全般"
 
-#. kill button
-#: xfce4-session/session-control.c:333
-msgid "Kill client"
-msgstr "クライアント削除"
+#.
+#: settings/session.c:216
+msgid "Confirm logout"
+msgstr "logout確認"
 
-#. clone button
-#: xfce4-session/session-control.c:339
-msgid "Clone client"
-msgstr "クライアント複製"
+#: settings/session.c:218
+msgid ""
+"Should the session manager ask the user to confirm the logout. If disabled, "
+"the session will be closed without any further user interaction."
+msgstr ""
+"セッション・マネージャには、ユーザーへlogout確認する�"
+"�定をするべきです。もし、無効にすればユーザー設定へ�"
+"��ッション間相互作用を処理せずに終了します。"
 
-#: xfce4-session/session-control.c:445 xfce4-session/session-control.c:448
-msgid "Unknown"
-msgstr "不明"
+#: settings/session.c:229
+msgid "Automatically save session on logout"
+msgstr "自動的にセッションを保存して、logout"
 
-#: xfce4-shutdown/main.c:137
+#: settings/session.c:236
+msgid "Display session chooser on each login"
+msgstr ""
+
+#: xfce4-shutdown/main.c:181
 #, c-format
 msgid "Usage: %s <action>\n"
 msgstr "使い方: %s <動作>\n"
 
-#: xfce4-shutdown/main.c:146
+#: xfce4-shutdown/main.c:190
 #, c-format
 msgid "%s: Unknown action %s\n"
 msgstr "%s: 不明な動作 %s\n"
 
-#: xfce4-shutdown/main.c:169
+#: xfce4-shutdown/main.c:221
 #, c-format
 msgid ""
 "You are not allowed to execute the action \"%s\".\n"
@@ -346,17 +237,19 @@ msgstr ""
 "許可するように、あなたのユーザ名を %s ファイルへ\n"
 "追加する事を頼んで下さい。\n"
 
-#: xfce4-shutdown/main.c:192
+#: xfce4-shutdown/main.c:270
 msgid ""
 "Unable to shutdown this box. Please check your\n"
 "installation, or contact your system administrator\n"
 "and report the problem.\n"
 msgstr ""
-"シャットダウンできません。インストール状態を調べるか\n"
-"あなたのシステムの管理者へ連絡をとり、問題を報告して\n"
+"シャットダウンできません。インストール状態を調べる�"
+"�\n"
+"あなたのシステムの管理者へ連絡をとり、問題を報告し�"
+"�\n"
 "下さい。\n"
 
-#: xfce4-shutdown/main.c:209
+#: xfce4-shutdown/main.c:292
 #, c-format
 msgid ""
 "Got no way to shutdown the system. You should ask\n"
@@ -364,7 +257,181 @@ msgid ""
 "name to %s or to install sudo(8) and grant\n"
 "you the right execute reboot and halt commands.\n"
 msgstr ""
-"システムをシャットダウンする方法がありません。あなたは\n"
-"システム管理者へあなたのアカウントを %s へ追加するか、\n"
-"sudo(8)をインストールする事を依頼し、正しい再起動・停止\n"
+"システムをシャットダウンする方法がありません。あな�"
+"�は\n"
+"システム管理者へあなたのアカウントを %s "
+"へ追加するか、\n"
+"sudo(8)をインストールする事を依頼し、正しい再起動・停�"
+"��\n"
 "のコマンドを許可してもらって下さい。\n"
+
+#~ msgid "Default Theme"
+#~ msgstr "標準のテーマ"
+
+#~ msgid "Default splash screen"
+#~ msgstr "標準の装飾スクリーン"
+
+#~ msgid "About %s..."
+#~ msgstr "%s について..."
+
+#~ msgid "Info:"
+#~ msgstr "情報:"
+
+#~ msgid "Author:"
+#~ msgstr "製作者"
+
+#~ msgid "Unable to install splash theme from file %s: %s"
+#~ msgstr ""
+#~ "装飾テーマを、ファイルからインストールできません %s: "
+#~ "%s"
+
+#~ msgid "Install new theme"
+#~ msgstr "新しいテーマのインストール"
+
+#~ msgid "Show tray icon"
+#~ msgstr "アイコン・トレイの表示"
+
+#~ msgid ""
+#~ "Show the session managers tray icon in the desktops notification area (also "
+#~ "known as the system tray)."
+#~ msgstr ""
+#~ "デスクトップ通知エリア（システム・トレー）で、セッ�"
+#~ "�ョン・マネージャのアイコン・トレーを表示"
+
+#~ msgid "Default action on logout"
+#~ msgstr "logout時の標準動作"
+
+#~ msgid "Splash screen theme"
+#~ msgstr "装飾スクリーン・テーマ"
+
+#~ msgid ""
+#~ "Select the splash screen theme that should be displayed when the session is "
+#~ "started."
+#~ msgstr ""
+#~ "セッション開始時に使用される、装飾スクリーン・テー�"
+#~ "�の選択"
+
+#~ msgid "Show theme info"
+#~ msgstr "テーマの情報表示"
+
+#~ msgid "%u clients connected"
+#~ msgstr "%u クライアントが接続しました"
+
+#~ msgid "desktop"
+#~ msgstr "デスクトップ"
+
+#~ msgid ""
+#~ "Unable to create users XFce settings\n"
+#~ "directory %s: %s"
+#~ msgstr ""
+#~ "ユーザーのXFce設定ディレクトリが\n"
+#~ "作成できません %s: %s"
+
+#~ msgid ""
+#~ "Unable to create users XFce session\n"
+#~ "directory %s: %s"
+#~ msgstr ""
+#~ "ユーザーのXFceセッション・ディレクトリが\n"
+#~ "作成できません %s: %s"
+
+#~ msgid "Session control"
+#~ msgstr "セッション・コントロール"
+
+#~ msgid "Quit session"
+#~ msgstr "セッション終了"
+
+#~ msgid ""
+#~ "The session manager was unable to start the\n"
+#~ "Multi-Channel settings manager. This is most\n"
+#~ "often caused by a broken XFce installation.\n"
+#~ "Please contact your local system administrator\n"
+#~ "and report the problem."
+#~ msgstr ""
+#~ "セッション・マネージャは、マルチ・チャネル\n"
+#~ "設定マネージャを起動出来ませんでした。\n"
+#~ "これは、破損したXFceによく発生します。\n"
+#~ "あなたのシステムを管理している管理者に連絡して、\n"
+#~ "問題を報告して下さい。"
+
+#~ msgid "Unable to create MCS client"
+#~ msgstr "MCSクライアントを作成出来ません"
+
+#~ msgid ""
+#~ "The session manager was unable to restore your\n"
+#~ "previous session. It'll therefore start a default\n"
+#~ "session."
+#~ msgstr ""
+#~ "セッション・マネージャは、前回のあなたのセッション�"
+#~ "�\n"
+#~ "復元できません。\n"
+#~ "したがって、標準のセッション状態で開始します。"
+
+#~ msgid ""
+#~ "The client \"%s\" closed the connection\n"
+#~ "to the session manager. The following reason\n"
+#~ "was given:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "\"%s\"クライアントは、セッション・マネージャとの\n"
+#~ "接続を閉じました。\n"
+#~ "次の理由が報告されました:\n"
+#~ "\n"
+#~ "%s"
+
+#~ msgid "Logout session"
+#~ msgstr "セッションのログアウト"
+
+#~ msgid "End session for <b>%s</b>"
+#~ msgstr "<b>%s</b>のセッションを終了"
+
+#~ msgid "Doing Autostart..."
+#~ msgstr "自動起動中..."
+
+#~ msgid "Idle"
+#~ msgstr "待機"
+
+#~ msgid "Interacting"
+#~ msgstr "相互影響"
+
+#~ msgid "Save completed"
+#~ msgstr "保存完了"
+
+#~ msgid "Saving"
+#~ msgstr "保存中"
+
+#~ msgid "Saving (local)"
+#~ msgstr "保存中 (local)"
+
+#~ msgid "Waiting to interact"
+#~ msgstr "セッション間相互作用 処理待ち"
+
+#~ msgid "Waiting to enter Phase2"
+#~ msgstr "Phase2の実行待ち"
+
+#~ msgid "Disconnecting"
+#~ msgstr "接続解除中"
+
+#~ msgid "Unable to clone client: %s"
+#~ msgstr "クライアント: %s を複製出来ません"
+
+#~ msgid "Priority"
+#~ msgstr "優先度"
+
+#~ msgid "Program"
+#~ msgstr "プログラム"
+
+#~ msgid "User"
+#~ msgstr "ユーザ"
+
+#~ msgid "State"
+#~ msgstr "状態"
+
+#~ msgid "Kill client"
+#~ msgstr "クライアント削除"
+
+#~ msgid "Clone client"
+#~ msgstr "クライアント複製"
+
+#~ msgid "Unknown"
+#~ msgstr "不明"
