@@ -1,0 +1,21 @@
+- Zum zwischenspeichern von Previews nicht mehr PNG verwenden, sondern
+  pixdata serialisieren!!! siehe gdk_pixbuf -> gdk_pixdata, geht deutlich
+  schneller
+
+- Dazu zwei funktionen in libxfcegui4 einbauen:
+
+	gboolean xfce_gdk_pixbuf_serialize (GdkPixbuf *pixbuf,
+					    const gchar *path,
+					    GError **error);
+
+	GdkPixbuf *xfce_gdk_pixbuf_deserialize (const gchar *path,
+						GError **error);
+
+   wobei die deserialize zur Optimierung zunächst versucht die Datei
+   zu mmap'en und dann auf open() umschwenkt. serialize verwendet nur
+   open(), write(), close(), rename() für Atomic-Writing!
+
+
+- Man könnte zur Optimierung versuchen, statt jedem Fenster ein Pixmap
+  als Backbuf zu geben, einen Pixbuf nehmen, der bei Expose neu gezeichnet
+  wird. (Das Gradient Füllen könnte MMX optimiert werden)

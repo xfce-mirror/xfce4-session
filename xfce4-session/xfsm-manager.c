@@ -49,11 +49,13 @@
 
 #include <libxfcegui4/libxfcegui4.h>
 
+#include <xfce4-session/chooser-icon.h>
 #include <xfce4-session/shutdown.h>
 #include <xfce4-session/xfsm-chooser.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-legacy.h>
 #include <xfce4-session/xfsm-manager.h>
+#include <xfce4-session/xfsm-splash-engine.h>
 #include <xfce4-session/xfsm-startup.h>
 #include <xfce4-session/xfsm-util.h>
 
@@ -64,18 +66,20 @@
 /*
    Prototypes
  */
-static gboolean xfsm_manager_startup (void);
-static void     xfsm_manager_handle_failed (void);
-static void     xfsm_manager_startup_continue (const gchar *previous_id);
-static gboolean xfsm_manager_startup_timedout (gpointer user_data);
-static void     xfsm_manager_load_settings (XfceRc *rc);
-static gboolean xfsm_manager_load_session (void);
+static gboolean   xfsm_manager_startup (void);
+static void       xfsm_manager_handle_failed (void);
+static void       xfsm_manager_startup_continue (const gchar *previous_id);
+static gboolean   xfsm_manager_startup_timedout (gpointer user_data);
+static void       xfsm_manager_load_settings (XfceRc *rc);
+static gboolean   xfsm_manager_load_session (void);
+static GdkPixbuf *xfsm_manager_load_session_preview (const gchar *name);
 
 
 /*
    Static data
  */
 static XfsmManagerState state = XFSM_MANAGER_STARTUP;
+static gboolean         session_chooser = FALSE;
 static guint            die_timeout_id = 0;
 static guint            startup_timeout_id = 0;
 
@@ -131,16 +135,19 @@ xfsm_manager_handle_failed (void)
     {
       properties = XFSM_PROPERTIES (lp->data);
 
-      xfsm_verbose ("Client Id = %s failed to start, running discard "
-                    "command now.\n\n", properties->client_id);
+      if (properties->discard_command != NULL)
+        {
+          xfsm_verbose ("Client Id = %s failed to start, running discard "
+                        "command now.\n\n", properties->client_id);
 
-      g_spawn_sync (properties->current_directory,
-                    properties->discard_command,
-                    properties->environment,
-                    G_SPAWN_SEARCH_PATH,
-                    NULL, NULL,
-                    NULL, NULL,
-                    NULL, NULL);
+          g_spawn_sync (properties->current_directory,
+                        properties->discard_command,
+                        properties->environment,
+                        G_SPAWN_SEARCH_PATH,
+                        NULL, NULL,
+                        NULL, NULL,
+                        NULL, NULL);
+        }
 
       xfsm_properties_free (properties);
     }
@@ -219,27 +226,75 @@ xfsm_manager_startup_timedout (gpointer user_data)
 static gboolean
 xfsm_manager_choose_session (XfceRc *rc)
 {
-  gchar *name;
-  gboolean load;
-  gchar **groups;
-  gint n;
-  gint sessions = 0;
+  XfsmSessionInfo *session;
+  GdkPixbuf       *preview_default = NULL;
+  gboolean         load = FALSE;
+  GList           *sessions = NULL;
+  GList           *lp;
+  gchar          **groups;
+  gchar           *name;
+  gint             result;
+  gint             n;
 
-  /* check if there are any sessions to load */
   groups = xfce_rc_get_groups (rc);
   for (n = 0; groups[n] != NULL; ++n)
-    if (strncmp (groups[n], "Session: ", 9) == 0)
-      ++sessions;
+    {
+      if (strncmp (groups[n], "Session: ", 9) == 0)
+        {
+          xfce_rc_set_group (rc, groups[n]);
+          session = g_new0 (XfsmSessionInfo, 1);
+          session->name = groups[n] + 9;
+          session->atime = xfce_rc_read_int_entry (rc, "LastAccess", 0);
+          session->preview = xfsm_manager_load_session_preview (session->name);
+
+          if (session->preview == NULL)
+            {
+              if (G_UNLIKELY (preview_default == NULL))
+                {
+                  preview_default = xfce_inline_icon_at_size (chooser_icon_data,
+                                                              52, 42);
+                }
+
+              session->preview = GDK_PIXBUF (g_object_ref (preview_default));
+            }
+
+          sessions = g_list_append (sessions, session);
+        }
+    }
+
+  if (preview_default != NULL)
+    g_object_unref (preview_default);
+
+  if (sessions != NULL)
+    {
+      result = xfsm_splash_screen_choose (splash_screen, sessions,
+                                          session_name, &name);
+
+      if (result == XFSM_CHOOSE_LOGOUT)
+        {
+          xfce_rc_close (rc);
+          exit (EXIT_SUCCESS);
+        }
+      else if (result == XFSM_CHOOSE_LOAD)
+        {
+          load = TRUE;
+        }
+
+      if (session_name != NULL)
+        g_free (session_name);
+      session_name = name;
+
+      for (lp = sessions; lp != NULL; lp = lp->next)
+        {
+          session = (XfsmSessionInfo *) lp->data;
+          g_object_unref (session->preview);
+          g_free (session);
+        }
+
+      g_list_free (sessions);
+    }
+
   g_strfreev (groups);
-
-  if (sessions == 0)
-    return FALSE;
-  
-  load = xfsm_splash_screen_choose (splash_screen, rc, session_name, &name);
-
-  if (session_name != NULL)
-    g_free (session_name);
-  session_name = name;
 
   return load;
 }
@@ -260,7 +315,7 @@ xfsm_manager_load_session (void)
   if (G_UNLIKELY (rc == NULL))
     return FALSE;
   
-  if (!xfsm_manager_choose_session (rc))
+  if (session_chooser && !xfsm_manager_choose_session (rc))
     {
       xfce_rc_close (rc);
       return FALSE;
@@ -364,6 +419,9 @@ xfsm_manager_load_settings (XfceRc *rc)
   else
     session_name = g_strdup (DEFAULT_SESSION_NAME);
 
+  xfce_rc_set_group (rc, "Chooser");
+  session_chooser = xfce_rc_read_bool_entry (rc, "AlwaysDisplay", FALSE);
+
   session_loaded = xfsm_manager_load_session ();
 
   if (session_loaded)
@@ -404,8 +462,21 @@ xfsm_manager_init (XfceRc *rc)
 gboolean
 xfsm_manager_restart (void)
 {
+  GdkPixbuf *preview;
+  unsigned   steps;
+
+  g_assert (session_name != NULL);
+
   /* setup legacy application handling */
   xfsm_legacy_init ();
+
+  /* tell splash screen that the session is starting now */
+  preview = xfsm_manager_load_session_preview (session_name);
+  if (preview != NULL)
+    preview = xfce_inline_icon_at_size (chooser_icon_data, 52, 42);
+  steps = g_list_length (failsafe_mode ? failsafe_clients : pending_properties);
+  xfsm_splash_screen_start (splash_screen, session_name, preview, steps);
+  g_object_unref (preview);
 
   g_idle_add ((GSourceFunc) xfsm_manager_startup, NULL);
   
@@ -1107,3 +1178,31 @@ xfsm_manager_store_session (void)
 }
 
 
+static GdkPixbuf*
+xfsm_manager_load_session_preview (const gchar *name)
+{
+#ifdef SESSION_SCREENSHOTS
+  GdkDisplay *display;
+  GdkPixbuf  *pb;
+  gchar *display_name;
+  gchar *resource;
+  gchar *filename;
+
+  /* determine thumb file */
+  display = gdk_display_get_default ();
+  display_name = xfce_gdk_display_get_fullname (display);
+  resource = g_strconcat ("sessions/thumbs-", display_name,
+                          "/", name, ".png", NULL);
+  filename = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource, TRUE);
+  g_free (display_name);
+  g_free (resource);
+
+  pb = gdk_pixbuf_new_from_file (filename, NULL);
+
+  g_free (filename);
+
+  return pb;
+#else
+  return NULL;
+#endif
+}

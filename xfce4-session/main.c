@@ -57,7 +57,6 @@
 #include <xfce4-session/xfsm-dns.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-manager.h>
-#include <xfce4-session/xfsm-splash-theme.h>
 #include <xfce4-session/xfsm-startup.h>
 #include <xfce4-session/xfsm-util.h>
 
@@ -126,64 +125,21 @@ usage (int exit_code)
 
 
 static void
-init_display (GdkDisplay            *dpy,
-              const XfsmSplashTheme *theme)
+init_display (GdkDisplay *dpy,
+              XfceRc     *rc)
 {
-  PangoContext *context;
-  PangoLayout *layout;
-  GdkRectangle area;
-  GdkColormap *cmap;
-  GdkCursor *cursor;
-  GdkScreen *screen;
-  GdkColor bgcolor;
-  GdkColor fgcolor;
-  GdkWindow *root;
-  char text[256];
-  int tw, th;
-  GdkGC *gc;
-  int n;
+  const gchar *engine;
+  gint n;
 
-  xfsm_splash_theme_get_bgcolor (theme, &bgcolor);
-  xfsm_splash_theme_get_fgcolor (theme, &fgcolor);
+  xfce_rc_set_group (rc, "Splash Screen");
+  engine = xfce_rc_read_entry (rc, "Engine", NULL);
 
-  g_snprintf (text, 256, "<span face=\"Sans\" size=\"x-large\">%s</span>",
-              _("Restoring the desktop settings, please wait..."));
-
-  cursor = gdk_cursor_new_for_display (dpy, GDK_LEFT_PTR);
-
-  for (n = 0; n < gdk_display_get_n_screens (dpy); ++n)
-    {
-      screen = gdk_display_get_screen (dpy, n);
-      gdk_screen_get_monitor_geometry (screen, 0, &area);
-      root = gdk_screen_get_root_window (screen);
-      cmap = gdk_drawable_get_colormap (GDK_DRAWABLE (root));
-      gdk_rgb_find_color (cmap, &bgcolor);
-      gdk_window_set_background (root, &bgcolor);
-      gdk_window_set_cursor (root, cursor);
-      gdk_window_clear (root);
-
-      gc = gdk_gc_new (GDK_DRAWABLE (root));
-      gdk_gc_set_function (gc, GDK_COPY);
-      gdk_gc_set_rgb_fg_color (gc, &fgcolor);
-
-      context = gdk_pango_context_get_for_screen (screen);
-      layout = pango_layout_new (context);
-      pango_layout_set_markup (layout, text, -1);
-      pango_layout_get_pixel_size (layout, &tw, &th);
-      gdk_draw_layout (GDK_DRAWABLE (root), gc,
-                       area.x + (area.width - tw) / 2,
-                       area.y + (area.height - th) / 2,
-                       layout);
-
-      g_object_unref (G_OBJECT (layout));
-      g_object_unref (G_OBJECT (gc));
-    }
-
-  gdk_cursor_unref (cursor);
+  splash_screen = xfsm_splash_screen_new (dpy, engine);
+  xfsm_splash_screen_next (splash_screen, _("Loading desktop settings"));
 
   gdk_flush ();
 
-  /* start a MCS manager process per screen */
+  /* start a MCS manager process per screen (FIXME: parallel to loading logo) */
   for (n = 0; n < gdk_display_get_n_screens (dpy); ++n)
     {
       mcs_client_check_manager (gdk_x11_display_get_xdisplay (dpy), n,
@@ -196,25 +152,9 @@ init_display (GdkDisplay            *dpy,
 
 
 static void
-init_splash (GdkDisplay *dpy, XfceRc *rc, XfsmSplashTheme *theme)
-{
-  gboolean display;
-  gint timeout;
-
-  /* boot the splash screen */
-  xfce_rc_set_group (rc, "Chooser");
-  display = xfce_rc_read_bool_entry (rc, "AlwaysDisplay", FALSE);
-  timeout = xfce_rc_read_int_entry (rc, "Timeout", 4);
-  splash_screen = xfsm_splash_screen_new (dpy, display, timeout, theme);
-}
-
-
-static void
 initialize (int argc, char **argv)
 {
   gboolean disable_tcp = FALSE;
-  const gchar *theme_name;
-  XfsmSplashTheme *theme;
   GdkDisplay *dpy;
   XfceRc *rc;
   
@@ -244,16 +184,14 @@ initialize (int argc, char **argv)
 
   rc = xfsm_open_config (TRUE);
 
-  /* load splash theme setting */
-  xfce_rc_set_group (rc, "Splash Theme");
-  theme_name = xfce_rc_read_entry (rc, "Name", "Default");
-  theme = xfsm_splash_theme_load (theme_name);
-
-  xfce_rc_set_group (rc, "General");
   dpy = gdk_display_get_default ();
-  init_display (dpy, theme);
+  init_display (dpy, rc);
 
-  init_splash (dpy, rc, theme);
+  /* verify that the DNS settings are ok */
+  xfsm_splash_screen_next (splash_screen, _("Verifying DNS settings"));
+  xfsm_dns_check ();
+
+  xfsm_splash_screen_next (splash_screen, _("Loading session data"));
 
   xfce_rc_set_group (rc, "Compatibility");
   compat_gnome = xfce_rc_read_bool_entry (rc, "LaunchGnome", FALSE);
@@ -287,9 +225,6 @@ main (int argc, char **argv)
   signal (SIGPIPE, SIG_IGN);
 
   gtk_init (&argc, &argv);
-
-  /* verify that the DNS settings are ok */
-  xfsm_dns_check ();
 
   /* fake a client id for the manager, so the legacy management does not
    * recognize us to be a session client.

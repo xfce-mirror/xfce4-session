@@ -45,14 +45,14 @@ static char stipple_data[] = {
 
 
 XfsmFadeout*
-xfsm_fadeout_new (GdkDisplay            *display,
-                  const XfsmSplashTheme *theme)
+xfsm_fadeout_new (GdkDisplay *display)
 {
   XfsmFadeout *fadeout;
   gint n;
 
   fadeout = g_new0 (XfsmFadeout, 1);
-  xfsm_splash_theme_get_focolors (theme, &fadeout->color1, &fadeout->color2);
+  gdk_color_parse ("#b6c4d7", &fadeout->color1);
+  gdk_color_parse ("DarkRed", &fadeout->color2);
 
   if (gdk_color_equal (&fadeout->color1, &fadeout->color2))
     {

@@ -234,7 +234,8 @@ xfsm_compat_gnome_startup (XfsmSplashScreen *splash)
   xfsm_compat_gnome_smproxy_startup ();
 
   /* fire up the keyring daemon */
-  xfsm_splash_screen_next (splash, _("Starting The Gnome Keyring Daemon"));
+  if (G_LIKELY (splash != NULL))
+    xfsm_splash_screen_next (splash, _("Starting The Gnome Keyring Daemon"));
   gnome_keyring_daemon_startup ();
 
   /* connect to the GConf daemon */
@@ -243,8 +244,11 @@ xfsm_compat_gnome_startup (XfsmSplashScreen *splash)
     {
       if (gconf_client_get_bool (gnome_conf_client, ACCESSIBILITY_KEY, NULL))
         {
-          xfsm_splash_screen_next (splash,
-                                   _("Starting Gnome Assistive Technologies"));
+          if (G_LIKELY (splash != NULL))
+            {
+              xfsm_splash_screen_next (splash, _("Starting Gnome Assistive Technologies"));
+            }
+
           gnome_ast_startup ();
         }
     }

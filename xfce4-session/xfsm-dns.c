@@ -53,6 +53,7 @@
 
 #include <libxfcegui4/libxfcegui4.h>
 
+#include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-util.h>
 
 
@@ -146,7 +147,7 @@ xfsm_dns_check (void)
                                            hostname, hostname);
 
           gtk_dialog_add_buttons (GTK_DIALOG (msgbox),
-                                  _("Log in anyway"), RESPONSE_LOG_IN,
+                                  _("Continue anyway"), RESPONSE_LOG_IN,
                                   _("Try again"), RESPONSE_TRY_AGAIN,
                                   NULL);
 
@@ -156,9 +157,11 @@ xfsm_dns_check (void)
 
       gtk_dialog_set_default_response (GTK_DIALOG (msgbox), RESPONSE_TRY_AGAIN);
 
-      response = gtk_dialog_run (GTK_DIALOG (msgbox));
+      response = xfsm_splash_screen_run (splash_screen, msgbox);
       if (response != RESPONSE_TRY_AGAIN)
         break;
+
+      gtk_widget_hide (msgbox);
     }
 
   if (msgbox != NULL)

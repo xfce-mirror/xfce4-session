@@ -69,10 +69,11 @@ xfsm_startup_init (XfceRc *rc)
 static gboolean
 destroy_splash (gpointer user_data)
 {
-  if (splash_screen != NULL) {
-    xfsm_splash_screen_destroy (splash_screen);
-    splash_screen = NULL;
-  }
+  if (G_LIKELY (splash_screen != NULL))
+    {
+      xfsm_splash_screen_free (splash_screen);
+      splash_screen = NULL;
+    }
 
   return FALSE;
 }
@@ -153,7 +154,8 @@ xfsm_startup_autostart (void)
   dirp = g_dir_open (dir, 0, NULL);
   if (dirp != NULL)
     {
-      xfsm_splash_screen_next (splash_screen, _("Performing Autostart..."));
+      if (G_LIKELY (splash_screen != NULL))
+        xfsm_splash_screen_next (splash_screen, _("Performing Autostart..."));
 
       for (;;)
         {
@@ -244,8 +246,11 @@ xfsm_startup_continue_failsafe (void)
   if (fclient != NULL)
     {
       /* let the user know whats going on */
-      xfsm_splash_screen_next (splash_screen,
-                               figure_app_name (fclient->command[0]));
+      if (G_LIKELY (splash_screen != NULL))
+        {
+          xfsm_splash_screen_next (splash_screen,
+                                   figure_app_name (fclient->command[0]));
+        }
 
       /* start the application */
       xfsm_start_application (fclient->command, NULL, fclient->screen,
@@ -270,8 +275,11 @@ xfsm_startup_continue_session (const gchar *previous_id)
   properties = (XfsmProperties *) g_list_nth_data (pending_properties, 0);
   if (properties != NULL)
     {
-      xfsm_splash_screen_next (splash_screen,
-                               figure_app_name (properties->program));
+      if (G_LIKELY (splash_screen != NULL))
+        {
+          xfsm_splash_screen_next (splash_screen,
+                                   figure_app_name (properties->program));
+        }
 
       /* restart the application */
       xfsm_start_application (properties->restart_command, NULL, NULL,

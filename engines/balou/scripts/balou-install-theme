@@ -28,7 +28,7 @@ leave()
 }
 
 if test $# -ne 2; then
-  echo "Usage: xfsm-install-theme <theme> <targetdir>" >&2
+  echo "Usage: balou-install-theme <theme> <targetdir>" >&2
   exit 1
 fi
 
@@ -47,7 +47,7 @@ fi
 
 # if the source is a file, we expect it to be a tarball
 if test -f "${themedir}"; then
-  tmpdir=`mktemp -d "/tmp/xfsm4-theme-XXXXXX"` || exit 1
+  tmpdir=`mktemp -d "/tmp/balou-theme-XXXXXX"` || exit 1
 
   if echo "${themedir}" | grep '\.tar\.gz$' >/dev/null 2>&1; then
     tar xzf "${themedir}" -C "${tmpdir}" >/dev/null 2>&1
@@ -61,10 +61,10 @@ if test -f "${themedir}"; then
   fi
 
   themerc=`ls ${tmpdir}/*/xfsm4/themerc` || leave 1
-  xfsm4dir=`dirname "${themerc}"` || leave 1
-  topdir=`dirname "${xfsm4dir}"` || leave 1
+  baloudir=`dirname "${themerc}"` || leave 1
+  topdir=`dirname "${baloudir}"` || leave 1
 
-  if test ! -d "${topdir}" -o ! -d "${topdir}/xfsm4/"; then
+  if test ! -d "${topdir}" -o ! -d "${topdir}/balou/"; then
     echo "Invalid theme file format." >&2
     leave 1
   fi
@@ -74,12 +74,12 @@ fi
 
 # verify the theme content
 if test -d "${themedir}"; then
-  if test ! -d "${themedir}/xfsm4/"; then
-    echo "No xfsm4 sub directory in theme." >&2
+  if test ! -d "${themedir}/balou/"; then
+    echo "No balou sub directory in theme." >&2
     leave 1
   fi
 
-  if test ! -r "${themedir}/xfsm4/themerc"; then
+  if test ! -r "${themedir}/balou/themerc"; then
     echo "No themerc file in theme." >&2
     leave 1
   fi
@@ -89,7 +89,7 @@ fi
 themebase=`dirname "${themedir}"`
 themename=`basename "${themedir}"`
 (cd "${themebase}" \
-   && tar cf - "${themename}/xfsm4/" \
+   && tar cf - "${themename}/balou/" \
     | (cd "${targetdir}" && tar xf -)) >/dev/null 2>&1
 if test $? -ne 0; then
   echo "Unable to install the theme ${themename} from ${themebase} to ${targetdir}." >&2

@@ -1,3 +1,17 @@
+# common library
+noinst_LTLIBRARIES = libxfsm.la
+
+libxfsm_la_SOURCES =							\
+	xfsm-splash-rc.c						\
+	xfsm-splash-rc.h						\
+	xfsm-util.h							\
+	xfsm-util.c
+
+libxfsm_la_CFLAGS =							\
+	@LIBX11_CFLAGS@							\
+	@LIBXFCEGUI4_CFLAGS@
+	
+
 man_MANS = xfce4-session.1
 
 bin_PROGRAMS = xfce4-session
@@ -11,8 +25,6 @@ xfce4_session_SOURCES =							\
 	shutdown.h							\
 	sm-layer.c							\
 	sm-layer.h							\
-	xfsm-chooser-trash.c						\
-	xfsm-chooser-trash.h						\
 	xfsm-chooser.c							\
 	xfsm-chooser.h							\
 	xfsm-client.c							\
@@ -35,14 +47,11 @@ xfce4_session_SOURCES =							\
 	xfsm-properties.h						\
 	xfsm-shutdown-helper.c						\
 	xfsm-shutdown-helper.h						\
+	xfsm-splash-engine.h						\
 	xfsm-splash-screen.c						\
 	xfsm-splash-screen.h						\
-	xfsm-splash-theme.c						\
-	xfsm-splash-theme.h						\
 	xfsm-startup.c							\
-	xfsm-startup.h							\
-	xfsm-util.h							\
-	xfsm-util.c
+	xfsm-startup.h
 
 xfce4_session_CFLAGS =							\
 	@GNOME_CFLAGS@							\
@@ -50,6 +59,7 @@ xfce4_session_CFLAGS =							\
 	@LIBX11_CFLAGS@							\
 	@LIBXFCE4MCS_CLIENT_CFLAGS@					\
 	@LIBXFCEGUI4_CFLAGS@						\
+	-DLIBDIR=\"$(libdir)\"						\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
 	-DXFSM_SHUTDOWN_HELPER=\"$(libexecdir)/xfsm-shutdown-helper\"
 
@@ -60,7 +70,22 @@ xfce4_session_LDADD =							\
 	@LIBX11_LDFLAGS@						\
 	@LIBX11_LIBS@							\
 	@LIBXFCE4MCS_CLIENT_LIBS@					\
-	@LIBXFCEGUI4_LIBS@
+	@LIBXFCEGUI4_LIBS@						\
+	libxfsm.la
+
+xfce4_session_DEPENDENCIES =						\
+	libxfsm.la
+
+
+xfce4_sessionincludedir =						\
+	$(includedir)/xfce4/xfce4-session
+
+xfce4_sessioninclude_HEADERS = 						\
+	xfsm-splash-engine.h						\
+	xfsm-splash-rc.h
+
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = xfce4-session-1.0.pc
 
 chooser-icon.h: $(srcdir)/chooser-icon.png
 	gdk-pixbuf-csource --raw --build-list                           \

@@ -9,7 +9,7 @@ dnl
 dnl Version information
 m4_define([xfsm_version_major], [4])
 m4_define([xfsm_version_minor], [1])
-m4_define([xfsm_version_micro], [10])
+m4_define([xfsm_version_micro], [11])
 m4_define([xfsm_version], [xfsm_version_major.xfsm_version_minor.xfsm_version_micro])
 
 dnl Initialize autoconf
@@ -159,6 +159,12 @@ Makefile
 xfce4-session.spec
 defaults/Makefile
 docs/Makefile
+engines/Makefile
+engines/balou/Makefile
+engines/balou/scripts/Makefile
+engines/balou/themes/Makefile
+engines/balou/themes/Default/Makefile
+engines/simple/Makefile
 icons/Makefile
 icons/48x48/Makefile
 icons/64x64/Makefile
@@ -167,8 +173,9 @@ icons/128x128/Makefile
 po/Makefile.in
 settings/Makefile
 settings/scripts/Makefile
-themes/Makefile
-themes/Default/Makefile
+settings/session/Makefile
+settings/splash/Makefile
 xfce4-session/Makefile
+xfce4-session/xfce4-session-1.0.pc
 xfsm-shutdown-helper/Makefile
 ])

@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,20 +19,22 @@
  * 02111-1307, USA.
  */
 
-#ifndef __XFSM_FADEOUT_H__
-#define __XFSM_FADEOUT_H__
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
-#include <gdk/gdk.h>
+#include <gmodule.h>
 
-
-G_BEGIN_DECLS;
-
-typedef struct _XfsmFadeout XfsmFadeout;
-
-XfsmFadeout *xfsm_fadeout_new     (GdkDisplay  *display);
-void         xfsm_fadeout_destroy (XfsmFadeout *fadeout);
-
-G_END_DECLS;
+#include <xfce4-session/xfsm-splash-engine.h>
 
 
-#endif /* !__XFSM_FADEOUT_H__ */
+G_MODULE_EXPORT void
+config_init (XfsmSplashConfig *config)
+{
+  config->name        = g_strdup ("Balou");
+  config->description = g_strdup ("Balou Splash Engine");
+  config->version     = g_strdup (VERSION);
+  config->author      = g_strdup ("Benedikt Meurer");
+  config->homepage    = g_strdup ("http://www.xfce.org/");
+}
+

@@ -1,0 +1,3 @@
+SUBDIRS =								\
+	balou								\
+	simple

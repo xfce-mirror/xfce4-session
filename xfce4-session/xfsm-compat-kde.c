@@ -44,7 +44,9 @@ xfsm_compat_kde_startup (XfsmSplashScreen *splash)
 {
   gchar command[256];
 
-  xfsm_splash_screen_next (splash, _("Starting KDE services"));
+  if (G_LIKELY (splash != NULL))
+    xfsm_splash_screen_next (splash, _("Starting KDE services"));
+
   run ("kdeinit");
 
   /* tell klauncher about the session manager */

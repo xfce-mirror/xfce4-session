@@ -116,8 +116,10 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 {
 	gboolean accessibility;
   XfsmFadeout *fadeout = NULL;
+#if 0
   const gchar *theme_name;
   XfsmSplashTheme *theme;
+#endif
   GdkScreen *screen;
 	GtkWidget *dialog;
 	GtkWidget *label;
@@ -238,11 +240,15 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 #endif
 
       /* display fadeout */
+#if 0
       xfce_rc_set_group (rc, "General");
       theme_name = xfce_rc_read_entry (rc, "SplashTheme", "Default");
       theme = xfsm_splash_theme_load (theme_name);
-      fadeout = xfsm_fadeout_new (gtk_widget_get_display (hidden), theme);
+#endif
+      fadeout = xfsm_fadeout_new (gtk_widget_get_display (hidden));
+#if 0
       xfsm_splash_theme_destroy (theme);
+#endif
       gdk_flush ();
 
       /* create confirm dialog */

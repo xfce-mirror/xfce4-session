@@ -24,18 +24,19 @@
 
 #include <gtk/gtk.h>
 
-#include <libxfce4util/libxfce4util.h>
 
-G_BEGIN_DECLS
+G_BEGIN_DECLS;
 
 #define XFSM_TYPE_CHOOSER xfsm_chooser_get_type()
 #define XFSM_CHOOSER(obj) G_TYPE_CHECK_INSTANCE_CAST(obj, XFSM_TYPE_CHOOSER, XfsmChooser)
 #define XFSM_CHOOSER_CLASS(klass) G_TYPE_CHECK_CLASS_CAST(klass, XFSM_TYPE_CHOOSER, XfsmChooserClass)
 #define XFSM_IS_CHOOSER(obj) G_TYPE_CHECK_INSTANCE_TYPE(obj, XFSM_TYPE_CHOOSER)
 
+#define XFSM_RESPONSE_LOAD  1
+#define XFSM_RESPONSE_NEW   2
+
 typedef struct _XfsmChooser XfsmChooser;
 typedef struct _XfsmChooserClass XfsmChooserClass;
-typedef struct _XfsmChooserSession XfsmChooserSession;
 
 struct _XfsmChooserClass
 {
@@ -46,34 +47,20 @@ struct _XfsmChooser
 {
   GtkDialog dialog;
 
-  GtkWidget *radio_load;
-  GtkWidget *radio_create;
   GtkWidget *tree;
-  GtkWidget *name;
-  GtkWidget *start;
 
   GtkTooltips *tooltips;
-
-  XfceRc *session_rc;
-  gchar  *session_default;
 };
-
-struct _XfsmChooserSession
-{
-  gchar *name;
-  time_t atime;
-};
-
-typedef enum _XfsmChooserReturn
-{
-  XFSM_CHOOSER_CREATE,
-  XFSM_CHOOSER_LOAD,
-  XFSM_CHOOSER_LOGOUT,
-} XfsmChooserReturn;
 
 GType xfsm_chooser_get_type (void) G_GNUC_CONST;
-XfsmChooserReturn xfsm_chooser_run (XfsmChooser *chooser, gchar **name);
+
+void xfsm_chooser_set_sessions (XfsmChooser *chooser,
+                                GList       *sessions,
+                                const gchar *default_session);
+
+gchar *xfsm_chooser_get_session (const XfsmChooser *chooser);
 
 G_END_DECLS;
+
 
 #endif /* !__XFSM_CHOOSER_H__ */

@@ -410,7 +410,17 @@ xfsm_properties_merge (XfsmProperties *properties,
             {
               if (properties->program != NULL)
                 g_free (properties->program);
-              properties->program = g_strdup ((const gchar *) prop->vals->value);
+
+              /* work-around damn f*cking xmms */
+              if (properties->restart_command != NULL
+                  && g_str_has_suffix (properties->restart_command[0], "xmms"))
+                {
+                  properties->program = g_strdup ("xmms");
+                }
+              else
+                {
+                  properties->program = g_strdup ((const gchar *) prop->vals->value);
+                }
             }
           else
             {
@@ -430,6 +440,14 @@ xfsm_properties_merge (XfsmProperties *properties,
               if (properties->restart_command != NULL)
                 g_strfreev (properties->restart_command);
               properties->restart_command = strv;
+
+              /* work-around damn f*cking xmms */
+              if (g_str_has_suffix (strv[0], "xmms"))
+                {
+                  if (properties->program != NULL)
+                    g_free (properties->program);
+                  properties->program = g_strdup ("xmms");
+                }
             }
           else
             {

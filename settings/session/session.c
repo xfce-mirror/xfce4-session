@@ -23,8 +23,6 @@
 #include <config.h>
 #endif
 
-#undef GTK_DISABLE_DEPRECATED
-
 #include <stdio.h>
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
@@ -38,16 +36,15 @@
 #include <libxfcegui4/libxfcegui4.h>
 #include <xfce-mcs-manager/manager-plugin.h>
 
-#include <settings/looknfeel.h>
-#include <settings/settings.h>
 
+#define BORDER 6
 
 
 /*
    Global variables
  */
 static GtkWidget *dialog = NULL;
-static GtkWidget *general_omenu;
+static GtkWidget *general_chooser;
 static GtkWidget *general_autosave;
 static GtkWidget *general_prompt;
 static GtkWidget *advanced_kde;
@@ -71,7 +68,6 @@ config_open (gboolean readonly)
 void
 config_store (void)
 {
-  gint history;
   XfceRc *rc;
   
   g_return_if_fail (dialog != NULL);
@@ -92,25 +88,9 @@ config_store (void)
   xfce_rc_write_bool_entry (rc, "LaunchKDE", gtk_toggle_button_get_active (
                             GTK_TOGGLE_BUTTON (advanced_kde)));
 
-  history = gtk_option_menu_get_history (GTK_OPTION_MENU (general_omenu));
   xfce_rc_set_group (rc, "Chooser");
-  if (history == 0) /* Always Display */
-    {
-      xfce_rc_write_bool_entry (rc, "AlwaysDisplay", TRUE);
-      xfce_rc_write_int_entry (rc, "Timeout", 0);
-    }
-  else if (history == 1) /* On Demand */
-    {
-      xfce_rc_write_bool_entry (rc, "AlwaysDisplay", FALSE);
-      xfce_rc_write_int_entry (rc, "Timeout", 4);
-    }
-  else /* No chooser */
-    {
-      xfce_rc_write_bool_entry (rc, "AlwaysDisplay", FALSE);
-      xfce_rc_write_int_entry (rc, "Timeout", 0);
-    }
-
-  looknfeel_store (rc);
+  xfce_rc_write_bool_entry (rc, "AlwaysDisplay", gtk_toggle_button_get_active (
+                            GTK_TOGGLE_BUTTON (general_chooser)));
 
   xfce_rc_close (rc);
 }
@@ -126,22 +106,15 @@ general_create (XfceRc *rc)
   GtkWidget *frame;
   GtkWidget *page;
   GtkWidget *vbox;
-  GtkWidget *menu;
-  GtkWidget *item;
-  gboolean autosave;
-  gboolean prompt;
-  gint history;
+  gboolean   autosave;
+  gboolean   prompt;
+  gboolean   chooser;
 
   xfce_rc_set_group (rc, "General");
   autosave = xfce_rc_read_bool_entry (rc, "AutoSave", FALSE);
   prompt = xfce_rc_read_bool_entry (rc, "PromptOnLogout", TRUE);
   xfce_rc_set_group (rc, "Chooser");
-  if (xfce_rc_read_bool_entry (rc, "AlwaysDisplay", FALSE))
-    history = 0;
-  else if (xfce_rc_read_int_entry (rc, "Timeout", 4) != 0)
-    history = 1;
-  else
-    history = 2;
+  chooser = xfce_rc_read_bool_entry (rc, "AlwaysDisplay", FALSE);
 
   page = gtk_vbox_new (FALSE, BORDER);
   gtk_container_set_border_width (GTK_CONTAINER (page), BORDER);
@@ -151,19 +124,12 @@ general_create (XfceRc *rc)
   vbox = gtk_vbox_new (FALSE, 0);
   xfce_framebox_add (XFCE_FRAMEBOX (frame), vbox);
 
-  menu = gtk_menu_new ();
-  item = gtk_menu_item_new_with_mnemonic (_("Display chooser on each login"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  item = gtk_menu_item_new_with_mnemonic (_("Display chooser on demand"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  item = gtk_menu_item_new_with_mnemonic (_("Restore last session automatically"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  general_omenu = gtk_option_menu_new ();
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (general_omenu), menu);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (general_omenu), history);
-  g_signal_connect (G_OBJECT (general_omenu), "changed",
+  general_chooser = gtk_check_button_new_with_label (_("Display chooser "
+                                                       "on login"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (general_chooser), chooser);
+  g_signal_connect (G_OBJECT (general_chooser), "toggled",
                     G_CALLBACK (config_store), NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), general_omenu, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), general_chooser, FALSE, TRUE, 0);
 
   frame = xfce_framebox_new (_("Logout settings"), TRUE);
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, TRUE, 0);
@@ -321,12 +287,6 @@ dialog_run (McsPlugin *plugin)
 
   label = gtk_label_new (_("General"));
   page = general_create (rc);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
-  gtk_widget_show_all (page);
-  gtk_widget_show (label);
-
-  label = gtk_label_new (_("Look & Feel"));
-  page = looknfeel_create (rc);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
   gtk_widget_show_all (page);
   gtk_widget_show (label);
