@@ -260,7 +260,7 @@ advanced_create (XfceRc *rc)
   gtk_widget_set_sensitive (advanced_remote, kiosk_can_security);
 #else
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (advanced_remote), TRUE);
-  gtk_widget_set_senstive (advanced_remote, FALSE);
+  gtk_widget_set_sensitive (advanced_remote, FALSE);
 #endif
   g_signal_connect (G_OBJECT (advanced_remote), "toggled",
                     G_CALLBACK (config_store), NULL);

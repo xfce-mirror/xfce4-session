@@ -210,6 +210,12 @@ module_test (Module     *module,
           gdk_flush ();
         }
 
+      if (G_LIKELY (engine.start != NULL))
+        {
+          engine.start (&engine, "Default", NULL, 4);
+          gdk_flush ();
+        }
+
       if (G_LIKELY (engine.next != NULL))
         {
           for (step = 0; steps[step] != NULL; ++step)
