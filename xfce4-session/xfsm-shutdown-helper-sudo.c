@@ -32,6 +32,9 @@
 #ifdef HAVE_SYS_RESOURCE_H
 #include <sys/resource.h>
 #endif
+#ifdef HAVE_SYS_WAIT_H
+#include <sys/wait.h>
+#endif
 
 #ifdef HAVE_MEMORY_H
 #include <memory.h>
@@ -57,8 +60,9 @@
 
 struct _XfsmShutdownHelper
 {
-  FILE *infile;
-  FILE *outfile;
+  pid_t    pid;
+  FILE    *infile;
+  FILE    *outfile;
   gboolean need_password;
 };
 
@@ -68,13 +72,12 @@ xfsm_shutdown_helper_spawn (void)
 {
 #if defined(SUDO_CMD)
   XfsmShutdownHelper *helper;
-  int parent_pipe[2];
-  int child_pipe[2];
-  struct rlimit rlp;
-  char buf[15];
-  int result;
-  pid_t pid;
-  int n;
+  struct              rlimit rlp;
+  char                buf[15];
+  int                 parent_pipe[2];
+  int                 child_pipe[2];
+  int                 result;
+  int                 n;
 
   helper = g_new0 (XfsmShutdownHelper, 1);
 
@@ -86,12 +89,12 @@ xfsm_shutdown_helper_spawn (void)
   if (result < 0)
     goto error1;
 
-  pid = fork ();
-  if (pid < 0)
+  helper->pid = fork ();
+  if (helper->pid < 0)
     {
       goto error2;
     }
-  else if (pid == 0)
+  else if (helper->pid == 0)
     {
       /* setup signals */
       signal (SIGPIPE, SIG_IGN);
@@ -298,12 +301,18 @@ xfsm_shutdown_helper_send_command (XfsmShutdownHelper *helper,
 void
 xfsm_shutdown_helper_destroy (XfsmShutdownHelper *helper)
 {
+  int status;
+
   g_return_if_fail (helper != NULL);
 
   if (helper->infile != NULL)
     fclose (helper->infile);
   if (helper->outfile != NULL)
     fclose (helper->outfile);
+
+  if (helper->pid > 0)
+    waitpid (helper->pid, &status, 0);
+
   g_free (helper);
 }
 

@@ -537,6 +537,11 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
       xfce_rc_write_entry (rc, "SessionName", session_name);
       xfce_rc_write_bool_entry (rc, "SaveOnExit", *saveSession);
     }
+  else
+    {
+      xfsm_shutdown_helper_destroy (shutdown_helper);
+      shutdown_helper = NULL;
+    }
 
 #ifdef SESSION_SCREENSHOTS
   if (screenshot_pm != NULL)
