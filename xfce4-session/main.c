@@ -316,7 +316,7 @@ show_about_dialog(void)
        G_CALLBACK(gtk_widget_destroy),
        GTK_OBJECT(dialog));
 
-   g_object_add_weak_pointer(G_OBJECT(dialog), (gpointer*)&dialog);
+   g_object_add_weak_pointer(G_OBJECT(dialog), (gpointer)&dialog);
   }
 
   gtk_widget_show(dialog);
