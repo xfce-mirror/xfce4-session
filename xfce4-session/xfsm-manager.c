@@ -264,7 +264,7 @@ xfsm_manager_load_session (void)
   gint            count;
   
   rc = xfce_rc_simple_open (session_file, TRUE);
-  if (rc == NULL)
+  if (G_UNLIKELY (rc == NULL))
     return FALSE;
   
   if (!xfsm_manager_choose_session (rc))
@@ -277,7 +277,7 @@ xfsm_manager_load_session (void)
   
   xfce_rc_set_group (rc, buffer);
   count = xfce_rc_read_int_entry (rc, "Count", 0);
-  if (count <= 0)
+  if (G_UNLIKELY (count <= 0))
     {
       xfce_rc_close (rc);
       return FALSE;
@@ -287,7 +287,7 @@ xfsm_manager_load_session (void)
     {
       g_snprintf (buffer, 1024, "Client%d_", count);
       properties = xfsm_properties_load (rc, buffer);
-      if (properties == NULL)
+      if (G_UNLIKELY (properties == NULL))
         continue;
       if (xfsm_properties_check (properties))
         pending_properties = g_list_append (pending_properties, properties);
@@ -330,7 +330,7 @@ xfsm_manager_load_failsafe (XfceRc *rc)
     {
       g_snprintf (command_entry, 256, "Client%d_Command", i);
       command = xfce_rc_read_list_entry (rc, command_entry, NULL);
-      if (command == NULL)
+      if (G_UNLIKELY (command == NULL))
         continue;
 
       g_snprintf (screen_entry, 256, "Client%d_PerScreen", i);
@@ -339,15 +339,7 @@ xfsm_manager_load_failsafe (XfceRc *rc)
           for (n_screen = 0; n_screen < gdk_display_get_n_screens (display); ++n_screen)
             {
               fclient = g_new0 (FailsafeClient, 1);
-              if (command != NULL)
-                {
-                  fclient->command = command;
-                  command = NULL;
-                }
-              else
-                {
-                  fclient->command = xfce_rc_read_list_entry (rc, command_entry, NULL);
-                }
+              fclient->command = xfce_rc_read_list_entry (rc, command_entry, NULL);
               fclient->screen = gdk_display_get_screen (display, n_screen);
               failsafe_clients = g_list_append (failsafe_clients, fclient);
             }
@@ -471,7 +463,8 @@ XfsmClient*
 xfsm_manager_new_client (SmsConn  sms_conn,
                          gchar  **error)
 {
-  if (state != XFSM_MANAGER_IDLE && state != XFSM_MANAGER_STARTUP)
+  if (G_UNLIKELY (state != XFSM_MANAGER_IDLE)
+      && G_UNLIKELY (state != XFSM_MANAGER_STARTUP))
     {
       if (error != NULL)
         *error = "We don't accept clients while in CheckPoint/Shutdown state!";
@@ -548,8 +541,16 @@ xfsm_manager_register_client (XfsmClient  *client,
                                                client);
     }
 
-  if (state == XFSM_MANAGER_STARTUP)
-    xfsm_manager_startup_continue (previous_id);
+  if ((failsafe_mode || previous_id != NULL) && state == XFSM_MANAGER_STARTUP)
+    {
+      /* Only continue the startup if we are either in Failsafe mode (which
+       * means that we don't have any previous_id at all) or the previous_id
+       * matched one of the starting_properties. If there was no match
+       * above, previous_id will be NULL here.
+       * See http://bugs.xfce.org/view_bug_page.php?f_id=212 for details.
+       */
+      xfsm_manager_startup_continue (previous_id);
+    }
 
   return TRUE;
 }
@@ -574,14 +575,15 @@ xfsm_manager_interact (XfsmClient *client,
 {
   GList *lp;
   
-  if (client->state != XFSM_CLIENT_SAVING)
+  if (G_UNLIKELY (client->state != XFSM_CLIENT_SAVING))
     {
       xfsm_verbose ("Client Id = %s, requested INTERACT, but client is not in SAVING mode\n"
                     "   Client will be disconnected now.\n\n",
                     client->id);
       xfsm_manager_close_connection (client, TRUE);
     }
-  else if (state != XFSM_MANAGER_CHECKPOINT && state != XFSM_MANAGER_SHUTDOWN)
+  else if (G_UNLIKELY (state != XFSM_MANAGER_CHECKPOINT)
+        && G_UNLIKELY (state != XFSM_MANAGER_SHUTDOWN))
     {
       xfsm_verbose ("Client Id = %s, requested INTERACT, but manager is not in CheckPoint/Shutdown mode\n"
                     "   Clinet will be disconnected now.\n\n",
@@ -608,7 +610,7 @@ xfsm_manager_interact_done (XfsmClient *client,
 {
   GList *lp;
   
-  if (client->state != XFSM_CLIENT_INTERACTING)
+  if (G_UNLIKELY (client->state != XFSM_CLIENT_INTERACTING))
     {
       xfsm_verbose ("Client Id = %s, send INTERACT DONE, but client is not in INTERACTING state\n"
                     "   Client will be disconnected now.\n\n",
@@ -616,7 +618,8 @@ xfsm_manager_interact_done (XfsmClient *client,
       xfsm_manager_close_connection (client, TRUE);
       return;
     }
-  else if (state != XFSM_MANAGER_CHECKPOINT && state != XFSM_MANAGER_SHUTDOWN)
+  else if (G_UNLIKELY (state != XFSM_MANAGER_CHECKPOINT)
+        && G_UNLIKELY (state != XFSM_MANAGER_SHUTDOWN))
     {
       xfsm_verbose ("Client Id = %s, send INTERACT DONE, but manager is not in CheckPoint/Shutdown state\n"
                     "   Client will be disconnected now.\n\n",
@@ -684,7 +687,7 @@ xfsm_manager_save_yourself (XfsmClient *client,
   gboolean shutdown_save = TRUE;
   GList   *lp;
 
-  if (client->state != XFSM_CLIENT_IDLE)
+  if (G_UNLIKELY (client->state != XFSM_CLIENT_IDLE))
     {
       xfsm_verbose ("Client Id = %s, requested SAVE YOURSELF, but client is not in IDLE mode.\n"
                     "   Client will be nuked now.\n\n",
@@ -692,7 +695,7 @@ xfsm_manager_save_yourself (XfsmClient *client,
       xfsm_manager_close_connection (client, TRUE);
       return;
     }
-  else if (state != XFSM_MANAGER_IDLE)
+  else if (G_UNLIKELY (state != XFSM_MANAGER_IDLE))
     {
       xfsm_verbose ("Client Id = %s, requested SAVE YOURSELF, but manager is not in IDLE mode.\n"
                     "   Client will be nuked now.\n\n",
@@ -1033,7 +1036,7 @@ xfsm_manager_store_session (void)
   gint           n, m;
 
   rc = xfce_rc_simple_open (session_file, FALSE);
-  if (rc == NULL)
+  if (G_UNLIKELY (rc == NULL))
     {
       fprintf (stderr,
                "xfce4-session: Unable to open session file %s for "
