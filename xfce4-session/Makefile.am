@@ -1,3 +1,5 @@
+man_MANS = xfce4-session.1
+
 bin_PROGRAMS = xfce4-session
 
 xfce4_session_SOURCES =							\
@@ -44,7 +46,8 @@ xfce4_session_LDADD =							\
 
 EXTRA_DIST =								\
 	splash-fallback.png						\
-	xfsm-marshal.list
+	xfsm-marshal.list						\
+	$(man_MANS)
 
 splash-fallback.h: $(srcdir)/splash-fallback.png
 	gdk-pixbuf-csource --raw --build-list				\

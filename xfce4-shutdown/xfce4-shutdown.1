@@ -1,0 +1,33 @@
+.TH xfce4-shutdown 1 "Dec 13, 2003"
+.SH NAME
+xfce4-shutdown \- System shutdown command used by xfce4-session(1) 
+.SH SYNOPSIS
+.B xfce4-shutdown
+.RI <action>
+.br
+.SH DESCRIPTION
+This manual page documents briefly the
+.B xfce4-shutdown
+command.
+This manual page was written for the Debian distribution
+because the original program does not have a manual page.
+.PP
+The \fBxfce4-shutdown\fP is used by \fBxfce4-session\fP to either halt,
+poweroff or reboot the system upon logout. For this to work, the users
+that are allowed to stop the system need to be allowed to do so
+via the \fBsudo\fP program or \fBxfce4-shutdown\fP needs to be setuid
+root and the users listed in the file /etc/xfce4/shutdown.allow.
+
+.SH OPTIONS
+\fBxfce4-shutdown\fP takes the action to execute as it's sole argument.
+The value is one of "halt", "poweroff" or "reboot".
+
+.SH AUTHOR
+\fBxfce4-shutdown\fP is written by Benedikt Meurer
+<benedikt.meurer@unix-ag.uni-siegen.de> as part of the XFce project.
+This manual page was written by Oliver M. Bolzer <oliver@debian.org>,
+for the Debian project (but may be used by others).
+
+.SH SEE ALSO
+.BR xfce4-session(1)
+

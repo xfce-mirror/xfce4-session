@@ -1,3 +1,8 @@
+man_MANS = xfce4-shutdown.1
+
+EXTRA_DIST = 								\
+	$(man_MANS)
+
 sbin_PROGRAMS = xfce4-shutdown
 
 xfce4_shutdown_SOURCES =						\

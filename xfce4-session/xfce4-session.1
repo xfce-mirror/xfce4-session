@@ -1,0 +1,33 @@
+.TH xfce4-session 1 "Dec 13, 2003"
+.SH NAME
+xfce4-session \- Starts up the XFce4 Desktop Environment 
+.SH SYNOPSIS
+.B xfce4-session
+.br
+.SH DESCRIPTION
+This manual page documents briefly the
+.B xfce4-session
+command.
+This manual page was written for the Debian distribution
+because the original program does not have a manual page.
+.PP
+The \fBxfce4-session\fP program starts up the XFce4 Desktop Environment and
+is typicaly executed by your login manager (e.g. xdm, gdm, kdm, wdm or from
+your X startup scripts). It will load your last session or a default session
+that includes the standard XFce4 programs if no saved session is available.
+
+\fBxfce4-session\fP is an standard X11R6 session manager that can manage
+any X11R6 SM compliant program, including GNOME and KDE programs.
+
+\fBxfce4-session\fP uses the contens of the ~/.xfce4/sessions/ directory
+for starting previously saved sessions.
+
+
+.SH OPTIONS
+\fBxfce4-session\fP does not take any command line options.
+
+.SH AUTHOR
+\fBxfce4-session\fP is written by Benedikt Meurer
+<benedikt.meurer@unix-ag.uni-siegen.de> as part of the XFce project.
+This manual page was written by Oliver M. Bolzer <oliver@debian.org>,
+for the Debian project (but may be used by others).
