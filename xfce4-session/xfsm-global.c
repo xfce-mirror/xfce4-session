@@ -36,6 +36,8 @@
 
 /* global variables */
 gboolean          verbose = FALSE;
+gboolean          compat_kde = FALSE;
+gboolean          compat_gnome = FALSE;
 GList            *starting_properties = NULL;
 GList            *pending_properties = NULL;
 GList            *restart_properties = NULL;

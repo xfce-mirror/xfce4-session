@@ -15,6 +15,10 @@ xfce4_session_SOURCES =							\
 	xfsm-chooser.h							\
 	xfsm-client.c							\
 	xfsm-client.h							\
+	xfsm-compat-gnome.c						\
+	xfsm-compat-gnome.h						\
+	xfsm-compat-kde.c						\
+	xfsm-compat-kde.h						\
 	xfsm-fadeout.c							\
 	xfsm-fadeout.h							\
 	xfsm-global.c							\
@@ -35,6 +39,7 @@ xfce4_session_SOURCES =							\
 	xfsm-util.c
 
 xfce4_session_CFLAGS =							\
+	@GNOME_CFLAGS@							\
 	@LIBSM_CFLAGS@							\
 	@LIBX11_CFLAGS@							\
 	@LIBXFCE4MCS_CLIENT_CFLAGS@					\
@@ -43,6 +48,7 @@ xfce4_session_CFLAGS =							\
 	-DXFSM_SHUTDOWN_HELPER=\"$(libexecdir)/xfsm-shutdown-helper\"
 
 xfce4_session_LDADD =							\
+	@GNOME_LIBS@							\
 	@LIBSM_LDFLAGS@							\
 	@LIBSM_LIBS@							\
 	@LIBX11_LDFLAGS@						\

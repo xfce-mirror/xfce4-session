@@ -43,14 +43,13 @@
 
 #include <libxfce4util/libxfce4util.h>
 
+#include <xfce4-session/xfsm-compat-gnome.h>
+#include <xfce4-session/xfsm-compat-kde.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-manager.h>
 #include <xfce4-session/xfsm-splash-screen.h>
 #include <xfce4-session/xfsm-util.h>
 
-
-#define KDEINIT "env DYLD_FORCE_FLAT_NAMESPACE= LD_BIND_NOW=true " \
-                "SESSION_MANAGER= kdeinit +kcminit +knotify"
 
 
 /*
@@ -60,29 +59,10 @@ static gboolean xfsm_startup_continue_failsafe (void);
 static gboolean xfsm_startup_continue_session  (const gchar *previous_id);
 
 
-/* 
-   Globals
- */
-static gchar     *splash_theme_name = NULL;
-static gboolean   startup_kde = FALSE;
-static gboolean   startup_gnome = FALSE;
-
-
 void
 xfsm_startup_init (XfceRc *rc)
 {
-  const gchar *name;
-
-  xfce_rc_set_group (rc, "Splash Theme");
-  name = xfce_rc_read_entry (rc, "Name", NULL);
-  if (name != NULL)
-    splash_theme_name = g_strdup (name);
-  else
-    splash_theme_name = NULL;
-
-  xfce_rc_set_group (rc, "Compatibility");
-  startup_gnome = xfce_rc_read_bool_entry (rc, "LaunchGnome", FALSE);
-  startup_kde = xfce_rc_read_bool_entry (rc, "LaunchKDE", FALSE);
+  /* nothing to be done here, currently */
 }
 
 
@@ -217,13 +197,13 @@ xfsm_startup_autostart (void)
 void
 xfsm_startup_foreign (void)
 {
-  if (startup_kde)
-    {
-      xfsm_splash_screen_next (splash_screen, _("Launching KDE services..."));
-      gdk_flush ();
+  if (compat_kde)
+    xfsm_compat_kde_startup (splash_screen);
 
-      g_spawn_command_line_sync (KDEINIT, NULL, NULL, NULL, NULL);
-    }
+#ifdef HAVE_GNOME
+  if (compat_gnome)
+    xfsm_compat_gnome_startup (splash_screen);
+#endif
 }
 
 
@@ -240,9 +220,7 @@ xfsm_startup_continue (const gchar *previous_id)
 
   /* perform Autostart */
   if (startup_done)
-    {
-      xfsm_startup_autostart ();
-    }
+    xfsm_startup_autostart ();
   
   return startup_done;
 }

@@ -37,6 +37,8 @@ struct _FailsafeClient
 
 
 extern gboolean          verbose;
+extern gboolean          compat_kde;
+extern gboolean          compat_gnome;
 extern GList            *starting_properties;
 extern GList            *pending_properties;
 extern GList            *restart_properties;

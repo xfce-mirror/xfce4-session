@@ -67,6 +67,10 @@ BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [4.1.0])
 dnl Configure the MCS plugins
 XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.1.0])
 
+dnl Check for gnome support
+BM_DEPEND_CHECK([GNOME], [libgnome-2.0], [2.4.0], [gnome],
+  [Gnome support], [yes])
+
 dnl Check for debugging support
 BM_DEBUG_SUPPORT
 

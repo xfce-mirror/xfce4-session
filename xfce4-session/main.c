@@ -249,6 +249,10 @@ initialize (int argc, char **argv)
 
   init_splash (dpy, rc, theme);
 
+  xfce_rc_set_group (rc, "Compatibility");
+  compat_gnome = xfce_rc_read_bool_entry (rc, "LaunchGnome", FALSE);
+  compat_kde = xfce_rc_read_bool_entry (rc, "LaunchKDE", FALSE);
+
   xfce_rc_set_group (rc, "General");
   sm_init (rc, disable_tcp);
   xfsm_startup_init (rc);

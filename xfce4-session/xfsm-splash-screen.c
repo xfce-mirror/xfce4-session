@@ -592,6 +592,11 @@ display_chooser_text (XfsmSplashScreen *splash,
 
   if (text != NULL)
     {
+      /* prevent from flicker */
+      gdk_draw_rectangle (GDK_DRAWABLE (splash->backbuf), splash->set_gc,
+                          TRUE, 0, splash->screen_h -splash->text_h,
+                          splash->screen_w, splash->text_h);
+
       g_snprintf (markup,256,"<span face=\"Sans\" size=\"xx-large\">%s</span>",
                   text);
       context = gdk_pango_context_get_for_screen (splash->main_screen);
@@ -600,7 +605,8 @@ display_chooser_text (XfsmSplashScreen *splash,
       pango_layout_get_pixel_size (layout, &tw, &th);
       gdk_draw_layout (GDK_DRAWABLE (splash->backbuf), splash->copy_gc,
                        (splash->screen_w - tw) / 2,
-                       splash->screen_h - splash->text_h,
+                       splash->screen_h - splash->text_h
+                        + (splash->text_h - th) / 2,
                        layout);
 
       if (splash->skip_pm != NULL)
@@ -650,8 +656,6 @@ static void
 chooser_timeout_display (XfsmSplashScreen *splash)
 {
   char buffer[256];
-
-  display_chooser_text (splash, NULL);
 
   g_snprintf (buffer, 256, "Restoring <b>%s</b> in %d seconds",
               splash->chooser_session,
@@ -733,11 +737,7 @@ xfsm_splash_screen_choose (XfsmSplashScreen *splash,
       return (lp != NULL);
     }
 
-#if 0
-  display_chooser_text (splash, _("Pick a session or create a new one"));
-#else
   display_chooser_text (splash, NULL);
-#endif
 
   chooser = g_object_new (XFSM_TYPE_CHOOSER,
                           "type", GTK_WINDOW_POPUP,

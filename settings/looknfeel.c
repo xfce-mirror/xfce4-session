@@ -195,6 +195,8 @@ looknfeel_reload_theme (const gchar *name)
       return FALSE;
     }
 
+  looknfeel_select_theme (name);
+
   return TRUE;
 }
 

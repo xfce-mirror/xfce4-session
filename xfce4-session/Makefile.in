@@ -57,6 +57,8 @@ am_xfce4_session_OBJECTS = xfce4_session-ice-layer.$(OBJEXT) \
 	xfce4_session-sm-layer.$(OBJEXT) \
 	xfce4_session-xfsm-chooser.$(OBJEXT) \
 	xfce4_session-xfsm-client.$(OBJEXT) \
+	xfce4_session-xfsm-compat-gnome.$(OBJEXT) \
+	xfce4_session-xfsm-compat-kde.$(OBJEXT) \
 	xfce4_session-xfsm-fadeout.$(OBJEXT) \
 	xfce4_session-xfsm-global.$(OBJEXT) \
 	xfce4_session-xfsm-manager.$(OBJEXT) \
@@ -77,6 +79,8 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-sm-layer.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-chooser.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-client.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-compat-kde.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-fadeout.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-global.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-manager.Po \
@@ -137,6 +141,9 @@ FFLAGS = @FFLAGS@
 GETTEXT_PACKAGE = @GETTEXT_PACKAGE@
 GMOFILES = @GMOFILES@
 GMSGFMT = @GMSGFMT@
+GNOME_CFLAGS = @GNOME_CFLAGS@
+GNOME_LIBS = @GNOME_LIBS@
+GNOME_REQUIRED_VERSION = @GNOME_REQUIRED_VERSION@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
@@ -255,6 +262,10 @@ xfce4_session_SOURCES = \
 	xfsm-chooser.h							\
 	xfsm-client.c							\
 	xfsm-client.h							\
+	xfsm-compat-gnome.c						\
+	xfsm-compat-gnome.h						\
+	xfsm-compat-kde.c						\
+	xfsm-compat-kde.h						\
 	xfsm-fadeout.c							\
 	xfsm-fadeout.h							\
 	xfsm-global.c							\
@@ -275,6 +286,7 @@ xfce4_session_SOURCES = \
 	xfsm-util.c
 
 xfce4_session_CFLAGS = \
+	@GNOME_CFLAGS@							\
 	@LIBSM_CFLAGS@							\
 	@LIBX11_CFLAGS@							\
 	@LIBXFCE4MCS_CLIENT_CFLAGS@					\
@@ -283,6 +295,7 @@ xfce4_session_CFLAGS = \
 	-DXFSM_SHUTDOWN_HELPER=\"$(libexecdir)/xfsm-shutdown-helper\"
 
 xfce4_session_LDADD = \
+	@GNOME_LIBS@							\
 	@LIBSM_LDFLAGS@							\
 	@LIBSM_LIBS@							\
 	@LIBX11_LDFLAGS@						\
@@ -371,6 +384,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-sm-layer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-chooser.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-client.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-compat-kde.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-fadeout.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-global.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-manager.Po@am__quote@
@@ -548,6 +563,54 @@ xfce4_session-xfsm-client.lo: xfsm-client.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-client.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-client.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-client.lo `test -f 'xfsm-client.c' || echo '$(srcdir)/'`xfsm-client.c
+
+xfce4_session-xfsm-compat-gnome.o: xfsm-compat-gnome.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-compat-gnome.o -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Tpo" -c -o xfce4_session-xfsm-compat-gnome.o `test -f 'xfsm-compat-gnome.c' || echo '$(srcdir)/'`xfsm-compat-gnome.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Tpo" "$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Po"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-compat-gnome.c' object='xfce4_session-xfsm-compat-gnome.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-compat-gnome.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-compat-gnome.o `test -f 'xfsm-compat-gnome.c' || echo '$(srcdir)/'`xfsm-compat-gnome.c
+
+xfce4_session-xfsm-compat-gnome.obj: xfsm-compat-gnome.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-compat-gnome.obj -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Tpo" -c -o xfce4_session-xfsm-compat-gnome.obj `if test -f 'xfsm-compat-gnome.c'; then $(CYGPATH_W) 'xfsm-compat-gnome.c'; else $(CYGPATH_W) '$(srcdir)/xfsm-compat-gnome.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Tpo" "$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Po"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-compat-gnome.c' object='xfce4_session-xfsm-compat-gnome.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-compat-gnome.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-compat-gnome.obj `if test -f 'xfsm-compat-gnome.c'; then $(CYGPATH_W) 'xfsm-compat-gnome.c'; else $(CYGPATH_W) '$(srcdir)/xfsm-compat-gnome.c'; fi`
+
+xfce4_session-xfsm-compat-gnome.lo: xfsm-compat-gnome.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-compat-gnome.lo -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Tpo" -c -o xfce4_session-xfsm-compat-gnome.lo `test -f 'xfsm-compat-gnome.c' || echo '$(srcdir)/'`xfsm-compat-gnome.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Tpo" "$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Plo"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-compat-gnome.c' object='xfce4_session-xfsm-compat-gnome.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-compat-gnome.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-compat-gnome.lo `test -f 'xfsm-compat-gnome.c' || echo '$(srcdir)/'`xfsm-compat-gnome.c
+
+xfce4_session-xfsm-compat-kde.o: xfsm-compat-kde.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-compat-kde.o -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-compat-kde.Tpo" -c -o xfce4_session-xfsm-compat-kde.o `test -f 'xfsm-compat-kde.c' || echo '$(srcdir)/'`xfsm-compat-kde.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-compat-kde.Tpo" "$(DEPDIR)/xfce4_session-xfsm-compat-kde.Po"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-compat-kde.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-compat-kde.c' object='xfce4_session-xfsm-compat-kde.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-compat-kde.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-compat-kde.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-compat-kde.o `test -f 'xfsm-compat-kde.c' || echo '$(srcdir)/'`xfsm-compat-kde.c
+
+xfce4_session-xfsm-compat-kde.obj: xfsm-compat-kde.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-compat-kde.obj -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-compat-kde.Tpo" -c -o xfce4_session-xfsm-compat-kde.obj `if test -f 'xfsm-compat-kde.c'; then $(CYGPATH_W) 'xfsm-compat-kde.c'; else $(CYGPATH_W) '$(srcdir)/xfsm-compat-kde.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-compat-kde.Tpo" "$(DEPDIR)/xfce4_session-xfsm-compat-kde.Po"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-compat-kde.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-compat-kde.c' object='xfce4_session-xfsm-compat-kde.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-compat-kde.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-compat-kde.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-compat-kde.obj `if test -f 'xfsm-compat-kde.c'; then $(CYGPATH_W) 'xfsm-compat-kde.c'; else $(CYGPATH_W) '$(srcdir)/xfsm-compat-kde.c'; fi`
+
+xfce4_session-xfsm-compat-kde.lo: xfsm-compat-kde.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-compat-kde.lo -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-compat-kde.Tpo" -c -o xfce4_session-xfsm-compat-kde.lo `test -f 'xfsm-compat-kde.c' || echo '$(srcdir)/'`xfsm-compat-kde.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-compat-kde.Tpo" "$(DEPDIR)/xfce4_session-xfsm-compat-kde.Plo"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-compat-kde.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-compat-kde.c' object='xfce4_session-xfsm-compat-kde.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-compat-kde.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-compat-kde.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-compat-kde.lo `test -f 'xfsm-compat-kde.c' || echo '$(srcdir)/'`xfsm-compat-kde.c
 
 xfce4_session-xfsm-fadeout.o: xfsm-fadeout.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-fadeout.o -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-fadeout.Tpo" -c -o xfce4_session-xfsm-fadeout.o `test -f 'xfsm-fadeout.c' || echo '$(srcdir)/'`xfsm-fadeout.c; \
