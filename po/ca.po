@@ -1,0 +1,367 @@
+# xfce4-session for XFce4 desktop environment.
+# Copyright (C) 2003 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the xfce4-session package.
+# Carles Muñoz Gorriz <carlesmu@internautas.org>, 2003.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: XFce 4\n"
+"POT-Creation-Date: 2003-07-19 13:15+0200\n"
+"PO-Revision-Date: 2003-08-06 15:10+0100\n"
+"Last-Translator: Carles Mu-oz Gorriz <carlesmu@internautas.org>\n"
+"Language-Team: ca <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: settings/session.c:227
+msgid "Default Theme"
+msgstr "Tema per defecte"
+
+#: settings/session.c:232
+msgid "Default splash screen"
+msgstr "Pantalla de presentació per defecte"
+
+#: settings/session.c:271
+#, c-format
+msgid "About %s..."
+msgstr "Quant a %s..."
+
+#: settings/session.c:293
+msgid "Info:"
+msgstr "Informació:"
+
+#: settings/session.c:301
+msgid "Author:"
+msgstr "Autor:"
+
+#: settings/session.c:377
+#, c-format
+msgid "Unable to install splash theme from file %s: %s"
+msgstr "No es pot instal·lar la pantalla de presentació del tema %s: %s"
+
+#: settings/session.c:398
+#: settings/session.c:740
+msgid "Install new theme"
+msgstr "Instal·la un tema nou"
+
+#: settings/session.c:477
+#: settings/session.c:600
+#: settings/session.c:614
+msgid "Session management"
+msgstr "Gestió de sessió"
+
+#. General settings
+#: settings/session.c:625
+msgid "General"
+msgstr "General"
+
+#.
+#: settings/session.c:634
+msgid "Confirm logout"
+msgstr "Confirmar Sortir"
+
+#: settings/session.c:636
+msgid "Should the session manager ask the user to confirm the logout. If disabled, the session will be closed without any further user interaction."
+msgstr "S'ha de demanar la conformitat de l'usuari per sortir. Si s'inhabilita, la sessió es tancarà sense cap tipus d'interacció."
+
+#: settings/session.c:647
+msgid "Automatically save session on logout"
+msgstr "Guardar de forma automàtica la sessió al sortir"
+
+#.
+#: settings/session.c:654
+msgid "Show tray icon"
+msgstr "Mostrar la safata de icones"
+
+#: settings/session.c:656
+msgid "Show the session managers tray icon in the desktops notification area (also known as the system tray)."
+msgstr "Mostrar la safata de icones del gestor de sessió en l'àrea de notificacions de l'escriptori (també coneguda com safata del sistema)."
+
+#. Logout action settings
+#: settings/session.c:665
+msgid "Default action on logout"
+msgstr "Acció per omissió al sortir"
+
+#.
+#: settings/session.c:677
+#: xfce4-session/shutdown.c:252
+msgid "_Quit current session"
+msgstr "_Surt de la sessió actual"
+
+#.
+#: settings/session.c:681
+#: xfce4-session/shutdown.c:257
+msgid "_Reboot the computer"
+msgstr "A_rrenca de nou l'ordinador"
+
+#.
+#: settings/session.c:685
+#: xfce4-session/shutdown.c:262
+msgid "_Turn off computer"
+msgstr "_Atura l'ordinador"
+
+#. Logout action settings
+#: settings/session.c:697
+msgid "Splash screen theme"
+msgstr "Tema de la pantalla de presentació"
+
+#: settings/session.c:721
+msgid "Select the splash screen theme that should be displayed when the session is started."
+msgstr "Seleccioneu la pantalla de presentació que es mostrarà quan s'inicii la sessió."
+
+#: settings/session.c:731
+msgid "Show theme info"
+msgstr "Mostra informació del tema"
+
+#. update the tray icon tip
+#: xfce4-session/ice-layer.c:133
+#: xfce4-session/manager.c:525
+#: xfce4-session/manager.c:835
+#, c-format
+msgid "%u clients connected"
+msgstr "%u clients connectats"
+
+#: xfce4-session/main.c:93
+msgid "desktop"
+msgstr "escriptori"
+
+#: xfce4-session/main.c:120
+msgid "Starting session manager.."
+msgstr "Iniciant gestor de sessió..."
+
+#: xfce4-session/main.c:140
+#, c-format
+msgid ""
+"Unable to create users XFce settings\n"
+"directory %s: %s"
+msgstr ""
+"No es pot crear la configuració d'usuari de\n"
+"XFce; directori %s: %s"
+
+#: xfce4-session/main.c:149
+#, c-format
+msgid ""
+"Unable to create users XFce session\n"
+"directory %s: %s"
+msgstr ""
+"No es pot crear la sessió d'usuari de XFce\n"
+"directori %s: %s"
+
+#.
+#: xfce4-session/main.c:295
+#: xfce4-session/session-control.c:268
+msgid "Session control"
+msgstr "Control de sessió"
+
+#.
+#: xfce4-session/main.c:310
+msgid "Save session"
+msgstr "Desa la sessió"
+
+#.
+#: xfce4-session/main.c:319
+msgid "Quit session"
+msgstr "Surt de la sessió"
+
+#: xfce4-session/main.c:415
+msgid ""
+"The session manager was unable to start the\n"
+"Multi-Channel settings manager. This is most\n"
+"often caused by a broken XFce installation.\n"
+"Please contact your local system administrator\n"
+"and report the problem."
+msgstr ""
+"El estor de sessió no ha pogut iniciar el\n"
+"gestor d'ajustaments Multi-Canal. Això pot ser\n"
+"causa d'una mala instal·lació de XFce.\n"
+"Contacteu amb el vostre administrador del\n"
+"sistema per informar-lo del problema."
+
+#: xfce4-session/main.c:432
+msgid "Unable to create MCS client"
+msgstr "No es pot crear el client MCS"
+
+#: xfce4-session/manager.c:342
+msgid ""
+"The session manager was unable to restore your\n"
+"previous session. It'll therefore start a default\n"
+"session."
+msgstr ""
+"El gestor de sessió no ha pogut restaurar la sessió\n"
+"prèvia. Ara iniciarà una sessió per defecte."
+
+#: xfce4-session/manager.c:824
+#, c-format
+msgid ""
+"The client \"%s\" closed the connection\n"
+"to the session manager. The following reason\n"
+"was given:\n"
+"\n"
+"%s"
+msgstr ""
+"El client \"%s\" ha tancat la connexió amb\n"
+"el gestor de sessió. La raó és:\n"
+"\n"
+"%s"
+
+#: xfce4-session/shutdown.c:191
+msgid "Logout session"
+msgstr "Surt de la sessió"
+
+#: xfce4-session/shutdown.c:221
+#, c-format
+msgid "End session for <b>%s</b>"
+msgstr "Acaba la sessió de <b>%s</b>"
+
+#.
+#: xfce4-session/shutdown.c:244
+msgid "What do you want to do next?"
+msgstr "Què vols fer a continuació?"
+
+#: xfce4-session/shutdown.c:275
+msgid "_Save session for future logins"
+msgstr "_Desa la sessió per futures entrades"
+
+#: xfce4-session/shutdown.c:349
+#: xfce4-session/shutdown.c:358
+#, c-format
+msgid ""
+"The following error occured while trying to shutdown the computer:\n"
+"\n"
+"%s"
+msgstr ""
+"Hi ha hagut un error intentant apagar l'ordinador:\n"
+"\n"
+"%s"
+
+#.
+#: xfce4-session/splash-screen.c:271
+#, c-format
+msgid "Starting %s..."
+msgstr "S'està iniciant %s..."
+
+#: xfce4-session/startup.c:149
+msgid "Doing Autostart..."
+msgstr "S'està Iniciant automàticament..."
+
+#: xfce4-session/startup.c:207
+msgid "Starting session manager..."
+msgstr "S'està arrancant el gestor de sessió..."
+
+#: xfce4-session/session-control.c:72
+msgid "Idle"
+msgstr "Inactiu"
+
+#: xfce4-session/session-control.c:73
+msgid "Interacting"
+msgstr "S'està interaccionant"
+
+#: xfce4-session/session-control.c:74
+msgid "Save completed"
+msgstr "S'ha completat el desar"
+
+#: xfce4-session/session-control.c:75
+msgid "Saving"
+msgstr "S'està desant"
+
+#. global save
+#: xfce4-session/session-control.c:76
+msgid "Saving (local)"
+msgstr "S'està desant (local)"
+
+#. local save
+#: xfce4-session/session-control.c:77
+msgid "Waiting to interact"
+msgstr "S'està esperant per interaccionar"
+
+#: xfce4-session/session-control.c:78
+msgid "Waiting to enter Phase2"
+msgstr "S'està esperant per entrar a la fase 2"
+
+#: xfce4-session/session-control.c:79
+msgid "Disconnecting"
+msgstr "S'està desconnectant"
+
+#: xfce4-session/session-control.c:200
+#, c-format
+msgid "Unable to clone client: %s"
+msgstr "No s'ha pogut clonar el client: %s"
+
+#: xfce4-session/session-control.c:299
+msgid "Priority"
+msgstr "Prioritat"
+
+#: xfce4-session/session-control.c:304
+msgid "Program"
+msgstr "Programa"
+
+#: xfce4-session/session-control.c:309
+msgid "User"
+msgstr "Usuari"
+
+#: xfce4-session/session-control.c:314
+msgid "State"
+msgstr "Estat"
+
+#. kill button
+#: xfce4-session/session-control.c:333
+msgid "Kill client"
+msgstr "Suprimeix el client"
+
+#. clone button
+#: xfce4-session/session-control.c:339
+msgid "Clone client"
+msgstr "Clona el client"
+
+#: xfce4-session/session-control.c:445
+#: xfce4-session/session-control.c:448
+msgid "Unknown"
+msgstr "Desconegut/da"
+
+#: xfce4-shutdown/main.c:137
+#, c-format
+msgid "Usage: %s <action>\n"
+msgstr "Us: %s <acció>\n"
+
+#: xfce4-shutdown/main.c:146
+#, c-format
+msgid "%s: Unknown action %s\n"
+msgstr "%s: acció desconeguda %s\n"
+
+#: xfce4-shutdown/main.c:169
+#, c-format
+msgid ""
+"You are not allowed to execute the action \"%s\".\n"
+"Ask your system adminitrator to add you to the list\n"
+"of people allowed to execute shutdown actions, by\n"
+"adding your username to the file %s.\n"
+msgstr ""
+"No teniu permís per executar aquesta commanda \"%s\".\n"
+"Demaneu al administrador del sistema que us afegeixi a la\n"
+"llista d'usuaris amb permisos per executar comandes\n"
+"d'apagada, afegint el vostre nom d'usuari al fitxer %s.\n"
+
+#: xfce4-shutdown/main.c:192
+msgid ""
+"Unable to shutdown this box. Please check your\n"
+"installation, or contact your system administrator\n"
+"and report the problem.\n"
+msgstr ""
+"INo es pot apagar el sistema. Comproveu la vostra\n"
+"instal·lació, o contacteu amb l'administrador del\n"
+"sistema per informar-lo del problema.\n"
+
+#: xfce4-shutdown/main.c:209
+#, c-format
+msgid ""
+"Got no way to shutdown the system. You should ask\n"
+"your system administrator to either add your account\n"
+"name to %s or to install sudo(8) and grant\n"
+"you the right execute reboot and halt commands.\n"
+msgstr ""
+"No s'ha trobat cap forma d'apagar el sistema. Demaneu\n"
+"al administrador del sistema que afegeixi el vostre compte\n"
+"a %s, o que instal·li sudo(8) i us doni permisos per\n"
+"executar les commandes reboot i halt.\n"
+
