@@ -129,7 +129,7 @@ simple_setup (XfsmSplashEngine *engine,
   metrics = pango_context_get_metrics (context, description, NULL);
   text_height = (pango_font_metrics_get_ascent (metrics)
                  + pango_font_metrics_get_descent (metrics)) / PANGO_SCALE
-                + 3;
+                + 4;
 
   simple->area.width = logo_width + 2 * BORDER;
   simple->area.height = logo_height + text_height + 3 * BORDER;
@@ -198,8 +198,8 @@ static void
 simple_next (XfsmSplashEngine *engine, const gchar *text)
 {
   Simple *simple = (Simple *) engine->user_data;
+  GdkColor shcolor;
   gint tw, th, tx, ty;
-  //GdkGC *gc;
 
   pango_layout_set_text (simple->layout, text, -1);
   pango_layout_get_pixel_size (simple->layout, &tw, &th);
@@ -209,20 +209,22 @@ simple_next (XfsmSplashEngine *engine, const gchar *text)
   gdk_gc_set_rgb_fg_color (simple->gc, &simple->bgcolor);
   gdk_draw_rectangle (simple->pixmap,
                       simple->gc, TRUE,
-                      simple->textbox.x,
+                      simple->textbox.x - BORDER,
                       simple->textbox.y,
-                      simple->textbox.width,
+                      simple->textbox.width + 2 * BORDER,
                       simple->textbox.height);
 
-  // FIXME: draw shadow?
-#if 0
-  gdk_color_parse ("#333333", &color);
-  gc = gdk_gc_new (simple->pixmap);
-  gdk_gc_set_function (gc, GDK_COPY);
-  gdk_gc_set_rgb_fg_color (gc, &color);
-  gdk_draw_layout (simple->pixmap, gc, tx + 1, ty + 1, simple->layout);
-  g_object_unref (gc);
-#endif
+  /* draw shadow */
+  shcolor.red = (simple->fgcolor.red + simple->bgcolor.red) / 2;
+  shcolor.green = (simple->fgcolor.green + simple->bgcolor.green) / 2;
+  shcolor.blue = (simple->fgcolor.blue + simple->bgcolor.blue) / 2;
+  shcolor.red = (shcolor.red + shcolor.green + shcolor.blue) / 3;
+  shcolor.green = shcolor.red;
+  shcolor.blue = shcolor.red;
+
+  gdk_gc_set_rgb_fg_color (simple->gc, &shcolor);
+  gdk_draw_layout (simple->pixmap, simple->gc,
+                   tx + 2, ty + 2, simple->layout);
 
   gdk_gc_set_rgb_fg_color (simple->gc, &simple->fgcolor);
   gdk_draw_layout (simple->pixmap,
@@ -231,9 +233,9 @@ simple_next (XfsmSplashEngine *engine, const gchar *text)
                    simple->layout);
 
   gdk_window_clear_area (simple->window,
-                         simple->textbox.x,
+                         simple->textbox.x - BORDER,
                          simple->textbox.y,
-                         simple->textbox.width,
+                         simple->textbox.width + 2 * BORDER,
                          simple->textbox.height);
 }
 
