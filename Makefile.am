@@ -13,6 +13,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 EXTRA_DIST =								\
 	AUTHORS								\
+	ChangeLog.pre-xfce-devel					\
 	INSTALL								\
 	NEWS								\
 	README								\
