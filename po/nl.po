@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2003-07-15 18:17+0200\n"
+"POT-Creation-Date: 2003-07-19 13:15+0200\n"
 "PO-Revision-Date: 2003-07-08 15:00+0200\n"
 "Last-Translator: Jasper Huijsmans <huysmans@users.sourceforge.net>\n"
 "Language-Team: Nederlands <NL@li.org>\n"
@@ -64,8 +64,8 @@ msgid ""
 "Should the session manager ask the user to confirm the logout. If disabled, "
 "the session will be closed without any further user interaction."
 msgstr ""
-"Om bevestiging vragen bij uitloggen. Indien uitgeschakeld wordt de sessie"
-"beëindigd zonder verdere interactie."
+"Om bevestiging vragen bij uitloggen. Indien uitgeschakeld wordt de "
+"sessiebeëindigd zonder verdere interactie."
 
 #: settings/session.c:647
 msgid "Automatically save session on logout"
@@ -80,8 +80,7 @@ msgstr "Status pictogram tonen"
 msgid ""
 "Show the session managers tray icon in the desktops notification area (also "
 "known as the system tray)."
-msgstr ""
-"Status pictogram tonen"
+msgstr "Status pictogram tonen"
 
 #. Logout action settings
 #: settings/session.c:665
@@ -112,11 +111,18 @@ msgstr "Splash screen thema"
 msgid ""
 "Select the splash screen theme that should be displayed when the session is "
 "started."
-msgstr ""
-"Thema selecteren voor opstartscherm"
+msgstr "Thema selecteren voor opstartscherm"
+
 #: settings/session.c:731
 msgid "Show theme info"
 msgstr "Thema informatie"
+
+#. update the tray icon tip
+#: xfce4-session/ice-layer.c:133 xfce4-session/manager.c:525
+#: xfce4-session/manager.c:835
+#, c-format
+msgid "%u clients connected"
+msgstr "%u clienten verbonden"
 
 #: xfce4-session/main.c:93
 msgid "desktop"
@@ -145,7 +151,7 @@ msgstr ""
 "XFce sessie niet creëren: %s: %s"
 
 #.
-#: xfce4-session/main.c:295 xfce4-session/client-list.c:267
+#: xfce4-session/main.c:295 xfce4-session/session-control.c:268
 msgid "Session control"
 msgstr "Sessie beheren"
 
@@ -172,7 +178,7 @@ msgstr ""
 "door een onvolledige installatie. Meldt het probleem\n"
 "a.u.b. aan uw systeembeheerder."
 
-#: xfce4-session/main.c:431
+#: xfce4-session/main.c:432
 msgid "Unable to create MCS client"
 msgstr "Kan MCS client niet creëren"
 
@@ -185,13 +191,7 @@ msgstr ""
 "De sessiebeheerder kon uw vorige sessie niet herstellen.\n"
 "Een standaard sessie zal worden gestart."
 
-#. update the tray icon tooltip
-#: xfce4-session/manager.c:524 xfce4-session/manager.c:833
-#, c-format
-msgid "%u clients connected"
-msgstr "%u clienten verbonden"
-
-#: xfce4-session/manager.c:822
+#: xfce4-session/manager.c:824
 #, c-format
 msgid ""
 "The client \"%s\" closed the connection\n"
@@ -248,72 +248,72 @@ msgstr "Bezig met uitvoeren Autostart..."
 msgid "Starting session manager..."
 msgstr "Bezig met starten sesiebeheerder"
 
-#: xfce4-session/client-list.c:72
+#: xfce4-session/session-control.c:72
 msgid "Idle"
 msgstr "Inactief"
 
-#: xfce4-session/client-list.c:73
+#: xfce4-session/session-control.c:73
 msgid "Interacting"
 msgstr "Bezig"
 
-#: xfce4-session/client-list.c:74
+#: xfce4-session/session-control.c:74
 msgid "Save completed"
 msgstr "Opslaan voltooid"
 
-#: xfce4-session/client-list.c:75
+#: xfce4-session/session-control.c:75
 msgid "Saving"
 msgstr "Bezig met opslaan"
 
 #. global save
-#: xfce4-session/client-list.c:76
+#: xfce4-session/session-control.c:76
 msgid "Saving (local)"
 msgstr "Bezig met opslaan (lokaal)"
 
 #. local save
-#: xfce4-session/client-list.c:77
+#: xfce4-session/session-control.c:77
 msgid "Waiting to interact"
 msgstr "Wachtend op input"
 
-#: xfce4-session/client-list.c:78
+#: xfce4-session/session-control.c:78
 msgid "Waiting to enter Phase2"
 msgstr "Wachtend voor Fase 2"
 
-#: xfce4-session/client-list.c:79
+#: xfce4-session/session-control.c:79
 msgid "Disconnecting"
 msgstr "Verbinding verbreken"
 
-#: xfce4-session/client-list.c:199
+#: xfce4-session/session-control.c:200
 #, c-format
 msgid "Unable to clone client: %s"
 msgstr "Kan client niet klonen: %s"
 
-#: xfce4-session/client-list.c:296
-msgid "Program"
-msgstr "Programma"
-
-#: xfce4-session/client-list.c:301
-msgid "User"
-msgstr "Gebruiker"
-
-#: xfce4-session/client-list.c:308
+#: xfce4-session/session-control.c:299
 msgid "Priority"
 msgstr "Prioriteit"
 
-#: xfce4-session/client-list.c:313
+#: xfce4-session/session-control.c:304
+msgid "Program"
+msgstr "Programma"
+
+#: xfce4-session/session-control.c:309
+msgid "User"
+msgstr "Gebruiker"
+
+#: xfce4-session/session-control.c:314
 msgid "State"
 msgstr "Status"
 
 #. kill button
-#: xfce4-session/client-list.c:332
+#: xfce4-session/session-control.c:333
 msgid "Kill client"
 msgstr "Client termineren"
 
 #. clone button
-#: xfce4-session/client-list.c:338
+#: xfce4-session/session-control.c:339
 msgid "Clone client"
 msgstr "Client klonen"
 
-#: xfce4-session/client-list.c:444 xfce4-session/client-list.c:447
+#: xfce4-session/session-control.c:445 xfce4-session/session-control.c:448
 msgid "Unknown"
 msgstr "Onbekend"
 

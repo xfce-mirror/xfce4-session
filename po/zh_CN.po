@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XFSession 0.0.15\n"
-"POT-Creation-Date: 2003-07-15 18:17+0200\n"
+"POT-Creation-Date: 2003-07-19 13:15+0200\n"
 "PO-Revision-Date: 2003-07-10 13:10+0200\n"
 "Last-Translator: Yongtao Yang <yongtao.yang@telia.com>\n"
 "Language-Team: none <none@none>\n"
@@ -118,6 +118,13 @@ msgstr ""
 msgid "Show theme info"
 msgstr "显示主题信息"
 
+#. update the tray icon tip
+#: xfce4-session/ice-layer.c:133 xfce4-session/manager.c:525
+#: xfce4-session/manager.c:835
+#, c-format
+msgid "%u clients connected"
+msgstr ""
+
 #: xfce4-session/main.c:93
 msgid "desktop"
 msgstr "桌面"
@@ -141,7 +148,7 @@ msgid ""
 msgstr "msgstr \"无法创建用户的XFce会话目录 %s: %s\""
 
 #.
-#: xfce4-session/main.c:295 xfce4-session/client-list.c:267
+#: xfce4-session/main.c:295 xfce4-session/session-control.c:268
 msgid "Session control"
 msgstr "会话控制"
 
@@ -169,7 +176,7 @@ msgstr ""
 "是 XFce 安装不正确导致的。请联系你的系统管理\n"
 "员并报告问题。"
 
-#: xfce4-session/main.c:431
+#: xfce4-session/main.c:432
 msgid "Unable to create MCS client"
 msgstr "无法创建 MCS 客户"
 
@@ -182,13 +189,7 @@ msgstr ""
 "会话管理器无法回复你的前一次会话，所以它将启动一个\n"
 "默认会话。"
 
-#. update the tray icon tooltip
-#: xfce4-session/manager.c:524 xfce4-session/manager.c:833
-#, c-format
-msgid "%u clients connected"
-msgstr ""
-
-#: xfce4-session/manager.c:822
+#: xfce4-session/manager.c:824
 #, c-format
 msgid ""
 "The client \"%s\" closed the connection\n"
@@ -244,72 +245,72 @@ msgstr "执行自动启动..."
 msgid "Starting session manager..."
 msgstr "启动会话管理器..."
 
-#: xfce4-session/client-list.c:72
+#: xfce4-session/session-control.c:72
 msgid "Idle"
 msgstr ""
 
-#: xfce4-session/client-list.c:73
+#: xfce4-session/session-control.c:73
 msgid "Interacting"
 msgstr ""
 
-#: xfce4-session/client-list.c:74
+#: xfce4-session/session-control.c:74
 msgid "Save completed"
 msgstr ""
 
-#: xfce4-session/client-list.c:75
+#: xfce4-session/session-control.c:75
 msgid "Saving"
 msgstr ""
 
 #. global save
-#: xfce4-session/client-list.c:76
+#: xfce4-session/session-control.c:76
 msgid "Saving (local)"
 msgstr ""
 
 #. local save
-#: xfce4-session/client-list.c:77
+#: xfce4-session/session-control.c:77
 msgid "Waiting to interact"
 msgstr ""
 
-#: xfce4-session/client-list.c:78
+#: xfce4-session/session-control.c:78
 msgid "Waiting to enter Phase2"
 msgstr ""
 
-#: xfce4-session/client-list.c:79
+#: xfce4-session/session-control.c:79
 msgid "Disconnecting"
 msgstr ""
 
-#: xfce4-session/client-list.c:199
+#: xfce4-session/session-control.c:200
 #, c-format
 msgid "Unable to clone client: %s"
 msgstr "无法复制客户：%s"
 
-#: xfce4-session/client-list.c:296
-msgid "Program"
-msgstr "程序"
-
-#: xfce4-session/client-list.c:301
-msgid "User"
-msgstr "用户"
-
-#: xfce4-session/client-list.c:308
+#: xfce4-session/session-control.c:299
 msgid "Priority"
 msgstr "优先级"
 
-#: xfce4-session/client-list.c:313
+#: xfce4-session/session-control.c:304
+msgid "Program"
+msgstr "程序"
+
+#: xfce4-session/session-control.c:309
+msgid "User"
+msgstr "用户"
+
+#: xfce4-session/session-control.c:314
 msgid "State"
 msgstr ""
 
 #. kill button
-#: xfce4-session/client-list.c:332
+#: xfce4-session/session-control.c:333
 msgid "Kill client"
 msgstr "中止客户程序"
 
 #. clone button
-#: xfce4-session/client-list.c:338
+#: xfce4-session/session-control.c:339
 msgid "Clone client"
 msgstr "复制客户程序"
 
-#: xfce4-session/client-list.c:444 xfce4-session/client-list.c:447
+#: xfce4-session/session-control.c:445 xfce4-session/session-control.c:448
 msgid "Unknown"
 msgstr "未知"
 

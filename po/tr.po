@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
-"POT-Creation-Date: 2003-07-15 18:17+0200\n"
+"POT-Creation-Date: 2003-07-19 13:15+0200\n"
 "PO-Revision-Date: 2003-07-17 00:47+0300\n"
 "Last-Translator: Erçin EKER <erc.caldera@gmx.net>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -119,6 +119,13 @@ msgstr "Oturum açılırken görüntülenmesini istediğiniz açılış ekranın
 msgid "Show theme info"
 msgstr "Tema bilgsini göster"
 
+#. update the tray icon tip
+#: xfce4-session/ice-layer.c:133 xfce4-session/manager.c:525
+#: xfce4-session/manager.c:835
+#, c-format
+msgid "%u clients connected"
+msgstr "%u istemci bağlı"
+
 #: xfce4-session/main.c:93
 msgid "desktop"
 msgstr "masaüstü"
@@ -146,7 +153,7 @@ msgstr ""
 "dizini·oluşturulamıyor·%s:·%s"
 
 #.
-#: xfce4-session/main.c:295 xfce4-session/client-list.c:267
+#: xfce4-session/main.c:295 xfce4-session/session-control.c:268
 msgid "Session control"
 msgstr "Oturum Yönetimi"
 
@@ -173,7 +180,7 @@ msgstr ""
 "nedeniyle·olur.·Lütfen·yerel·sistem\n"
 "yöneticinizle·temasa·geçin·ve·sorunu·bildirin."
 
-#: xfce4-session/main.c:431
+#: xfce4-session/main.c:432
 msgid "Unable to create MCS client"
 msgstr "MCS·istemcisi·oluşturulamıyor"
 
@@ -186,13 +193,7 @@ msgstr ""
 "Oturum·yöneticisi·önceki·oturumunuzu·yükleyemedi.\n"
 "Bu·nedenle·öntanımlı·bir·oturum·açılacak."
 
-#. update the tray icon tooltip
-#: xfce4-session/manager.c:524 xfce4-session/manager.c:833
-#, c-format
-msgid "%u clients connected"
-msgstr "%u istemci bağlı"
-
-#: xfce4-session/manager.c:822
+#: xfce4-session/manager.c:824
 #, c-format
 msgid ""
 "The client \"%s\" closed the connection\n"
@@ -249,72 +250,72 @@ msgstr "Oto·başlat·devrede..."
 msgid "Starting session manager..."
 msgstr "Oturum·yöneticisi·başlatılıyor..."
 
-#: xfce4-session/client-list.c:72
+#: xfce4-session/session-control.c:72
 msgid "Idle"
 msgstr "Eklemede"
 
-#: xfce4-session/client-list.c:73
+#: xfce4-session/session-control.c:73
 msgid "Interacting"
 msgstr "Eylemde"
 
-#: xfce4-session/client-list.c:74
+#: xfce4-session/session-control.c:74
 msgid "Save completed"
 msgstr "Kaydetme tamamlandı"
 
-#: xfce4-session/client-list.c:75
+#: xfce4-session/session-control.c:75
 msgid "Saving"
 msgstr "Kaydediliyor"
 
 #. global save
-#: xfce4-session/client-list.c:76
+#: xfce4-session/session-control.c:76
 msgid "Saving (local)"
 msgstr "Kaydediliyor (yerel)"
 
 #. local save
-#: xfce4-session/client-list.c:77
+#: xfce4-session/session-control.c:77
 msgid "Waiting to interact"
 msgstr "Eylem bekleniyor"
 
-#: xfce4-session/client-list.c:78
+#: xfce4-session/session-control.c:78
 msgid "Waiting to enter Phase2"
 msgstr "2. evre bekleniyor"
 
-#: xfce4-session/client-list.c:79
+#: xfce4-session/session-control.c:79
 msgid "Disconnecting"
 msgstr "Kağlantı kesiliyor"
 
-#: xfce4-session/client-list.c:199
+#: xfce4-session/session-control.c:200
 #, c-format
 msgid "Unable to clone client: %s"
 msgstr "İstemci ikizlenemedi: %s"
 
-#: xfce4-session/client-list.c:296
-msgid "Program"
-msgstr "Uygulama"
-
-#: xfce4-session/client-list.c:301
-msgid "User"
-msgstr "Kullanıcı"
-
-#: xfce4-session/client-list.c:308
+#: xfce4-session/session-control.c:299
 msgid "Priority"
 msgstr "Öncelik"
 
-#: xfce4-session/client-list.c:313
+#: xfce4-session/session-control.c:304
+msgid "Program"
+msgstr "Uygulama"
+
+#: xfce4-session/session-control.c:309
+msgid "User"
+msgstr "Kullanıcı"
+
+#: xfce4-session/session-control.c:314
 msgid "State"
 msgstr "Durum"
 
 #. kill button
-#: xfce4-session/client-list.c:332
+#: xfce4-session/session-control.c:333
 msgid "Kill client"
 msgstr "İstemciyi öldür"
 
 #. clone button
-#: xfce4-session/client-list.c:338
+#: xfce4-session/session-control.c:339
 msgid "Clone client"
 msgstr "İstemciyi ikizle"
 
-#: xfce4-session/client-list.c:444 xfce4-session/client-list.c:447
+#: xfce4-session/session-control.c:445 xfce4-session/session-control.c:448
 msgid "Unknown"
 msgstr "Bilinmeyen"
 
@@ -363,4 +364,3 @@ msgstr ""
 "konuşup kullandığınız hesap ismini %s dosyasına\n"
 "ekletin ya da sudo(8) kurarak reboot ve halt komutları\n"
 "için doğru yetkileri edinin.\n"
-

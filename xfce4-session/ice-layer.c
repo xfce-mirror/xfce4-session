@@ -51,9 +51,11 @@
 #include <X11/SM/SMlib.h>
 
 #include <glib.h>
+#include <libxfce4util/i18n.h>
 
 #include <xfce4-session/client.h>
 #include <xfce4-session/session-control.h>
+#include <xfce4-session/xfce_trayicon.h>
 #include "ice-layer.h"
 #include "manager.h"
 
@@ -104,8 +106,10 @@ ice_process_messages(GIOChannel *channel, GIOCondition condition,
 {
 	/* XXX */
 	extern GtkWidget *sessionControl;
+	extern XfceTrayIcon *trayIcon;
 	IceProcessMessagesStatus status;
 	SmsConn smsConn;
+	gchar *tip;
 	GList *lp;
 
 	status = IceProcessMessages(iceConn, NULL, NULL);
@@ -124,6 +128,12 @@ ice_process_messages(GIOChannel *channel, GIOCondition condition,
 			SmsCleanUp(smsConn);
 			clients = g_list_delete_link(clients, lp);
 		}
+
+		/* update the tray icon tip */
+		tip = g_strdup_printf(_("%u clients connected"),
+				g_list_length(clients));
+		xfce_tray_icon_set_tooltip(trayIcon, tip, NULL);
+		g_free(tip);
 
 		IceSetShutdownNegotiation(iceConn, False);
 		(void)IceCloseConnection(iceConn);
