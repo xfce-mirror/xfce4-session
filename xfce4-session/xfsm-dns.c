@@ -108,10 +108,10 @@ check_for_dns (void)
 #else
 #ifdef HAVE_GETHOSTBYNAME
   if (gethostbyname (hostname) == NULL)
-#endif
     {
       return FALSE;
     }
+#endif
 #endif
 
   return TRUE;
