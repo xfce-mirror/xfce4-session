@@ -69,6 +69,8 @@ GdkPixbuf *xfsm_splash_theme_generate_preview (const XfsmSplashTheme *theme,
                                                gint width,
                                                gint height);
 
+gboolean xfsm_splash_theme_is_writable (const XfsmSplashTheme *theme);
+
 void xfsm_splash_theme_destroy (XfsmSplashTheme *theme);
 
 G_END_DECLS;

@@ -15,7 +15,6 @@
 @SET_MAKE@
 
 
-
 SOURCES = $(session_settings_la_SOURCES)
 
 srcdir = @srcdir@
@@ -50,7 +49,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
-am__installdirs = $(DESTDIR)$(sessiondir) $(DESTDIR)$(libexecdir) $(DESTDIR)$(appsdir)
+am__installdirs = $(DESTDIR)$(sessiondir) $(DESTDIR)$(appsdir)
 sessionLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(session_LTLIBRARIES)
 session_settings_la_LIBADD =
@@ -59,8 +58,6 @@ am_session_settings_la_OBJECTS = session_settings_la-gnome-uri.lo \
 	session_settings_la-session.lo \
 	session_settings_la-xfsm-splash-theme.lo
 session_settings_la_OBJECTS = $(am_session_settings_la_OBJECTS)
-libexecSCRIPT_INSTALL = $(INSTALL_SCRIPT)
-SCRIPTS = $(libexec_SCRIPTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -78,10 +75,17 @@ LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(session_settings_la_SOURCES)
 DIST_SOURCES = $(session_settings_la_SOURCES)
+RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
+	html-recursive info-recursive install-data-recursive \
+	install-exec-recursive install-info-recursive \
+	install-recursive installcheck-recursive installdirs-recursive \
+	pdf-recursive ps-recursive uninstall-info-recursive \
+	uninstall-recursive
 appsDATA_INSTALL = $(INSTALL_DATA)
 DATA = $(apps_DATA) $(noinst_DATA)
 ETAGS = etags
 CTAGS = ctags
+DIST_SUBDIRS = $(SUBDIRS)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMDEP_FALSE = @AMDEP_FALSE@
@@ -169,6 +173,7 @@ POSUB = @POSUB@
 PO_IN_DATADIR_FALSE = @PO_IN_DATADIR_FALSE@
 PO_IN_DATADIR_TRUE = @PO_IN_DATADIR_TRUE@
 RANLIB = @RANLIB@
+RM = @RM@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -226,6 +231,7 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
+SUBDIRS = scripts
 sessiondir = @XFCE_MCS_MANAGER_PLUGINSDIR@
 session_LTLIBRARIES = \
 	session_settings.la
@@ -235,6 +241,7 @@ session_settings_la_LDFLAGS = \
 	-module
 
 session_settings_la_SOURCES = \
+	gnome-kde-logo.h						\
 	gnome-uri.c							\
 	gnome-uri.h							\
 	looknfeel.c							\
@@ -246,9 +253,9 @@ session_settings_la_SOURCES = \
 session_settings_la_CFLAGS = \
 	@XFCE_MCS_MANAGER_CFLAGS@					\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
+	-DXFSM_EXPORT_THEME=\"$(libexecdir)/xfsm-export-theme\"		\
 	-DXFSM_INSTALL_THEME=\"$(libexecdir)/xfsm-install-theme\"
 
-libexec_SCRIPTS = xfsm-install-theme
 noinst_DATA = \
 	session-icon.h
 
@@ -258,7 +265,7 @@ EXTRA_DIST = \
 
 appsdir = $(datadir)/applications
 apps_DATA = xfce-session-settings.desktop
-all: all-am
+all: all-recursive
 
 .SUFFIXES:
 .SUFFIXES: .c .lo .o .obj
@@ -320,25 +327,6 @@ clean-sessionLTLIBRARIES:
 	done
 session_settings.la: $(session_settings_la_OBJECTS) $(session_settings_la_DEPENDENCIES) 
 	$(LINK) -rpath $(sessiondir) $(session_settings_la_LDFLAGS) $(session_settings_la_OBJECTS) $(session_settings_la_LIBADD) $(LIBS)
-install-libexecSCRIPTS: $(libexec_SCRIPTS)
-	@$(NORMAL_INSTALL)
-	$(mkdir_p) $(DESTDIR)$(libexecdir)
-	@list='$(libexec_SCRIPTS)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  if test -f $$d$$p; then \
-	    f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
-	    echo " $(libexecSCRIPT_INSTALL) $$d$$p $(DESTDIR)$(libexecdir)/$$f"; \
-	    $(libexecSCRIPT_INSTALL) $$d$$p $(DESTDIR)$(libexecdir)/$$f; \
-	  else :; fi; \
-	done
-
-uninstall-libexecSCRIPTS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(libexec_SCRIPTS)'; for p in $$list; do \
-	  f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
-	  echo " rm -f $(DESTDIR)$(libexecdir)/$$f"; \
-	  rm -f $(DESTDIR)$(libexecdir)/$$f; \
-	done
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -498,6 +486,65 @@ uninstall-appsDATA:
 	  rm -f $(DESTDIR)$(appsdir)/$$f; \
 	done
 
+# This directory's subdirectories are mostly independent; you can cd
+# into them and run `make' without going through this Makefile.
+# To change the values of `make' variables: instead of editing Makefiles,
+# (1) if the variable is set in `config.status', edit `config.status'
+#     (which will cause the Makefiles to be regenerated when you run `make');
+# (2) otherwise, pass the desired values on the `make' command line.
+$(RECURSIVE_TARGETS):
+	@set fnord $$MAKEFLAGS; amf=$$2; \
+	dot_seen=no; \
+	target=`echo $@ | sed s/-recursive//`; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    dot_seen=yes; \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done; \
+	if test "$$dot_seen" = "no"; then \
+	  $(MAKE) $(AM_MAKEFLAGS) "$$target-am" || exit 1; \
+	fi; test -z "$$fail"
+
+mostlyclean-recursive clean-recursive distclean-recursive \
+maintainer-clean-recursive:
+	@set fnord $$MAKEFLAGS; amf=$$2; \
+	dot_seen=no; \
+	case "$@" in \
+	  distclean-* | maintainer-clean-*) list='$(DIST_SUBDIRS)' ;; \
+	  *) list='$(SUBDIRS)' ;; \
+	esac; \
+	rev=''; for subdir in $$list; do \
+	  if test "$$subdir" = "."; then :; else \
+	    rev="$$subdir $$rev"; \
+	  fi; \
+	done; \
+	rev="$$rev ."; \
+	target=`echo $@ | sed s/-recursive//`; \
+	for subdir in $$rev; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+tags-recursive:
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) tags); \
+	done
+ctags-recursive:
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) ctags); \
+	done
+
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
 	unique=`for i in $$list; do \
@@ -508,10 +555,21 @@ ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	mkid -fID $$unique
 tags: TAGS
 
-TAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
+TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
 		$(TAGS_FILES) $(LISP)
 	tags=; \
 	here=`pwd`; \
+	if (etags --etags-include --version) >/dev/null 2>&1; then \
+	  include_option=--etags-include; \
+	else \
+	  include_option=--include; \
+	fi; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  if test "$$subdir" = .; then :; else \
+	    test -f $$subdir/TAGS && \
+	      tags="$$tags $$include_option=$$here/$$subdir/TAGS"; \
+	  fi; \
+	done; \
 	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
 	unique=`for i in $$list; do \
 	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
@@ -522,7 +580,7 @@ TAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
 	  || $(ETAGS) $(ETAGSFLAGS) $(AM_ETAGSFLAGS) $(ETAGS_ARGS) \
 	     $$tags $$unique
 ctags: CTAGS
-CTAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
+CTAGS: ctags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
 		$(TAGS_FILES) $(LISP)
 	tags=; \
 	here=`pwd`; \
@@ -571,20 +629,34 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	  fi; \
 	done
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  if test "$$subdir" = .; then :; else \
+	    test -d "$(distdir)/$$subdir" \
+	    || mkdir "$(distdir)/$$subdir" \
+	    || exit 1; \
+	    (cd $$subdir && \
+	      $(MAKE) $(AM_MAKEFLAGS) \
+	        top_distdir="../$(top_distdir)" \
+	        distdir="../$(distdir)/$$subdir" \
+	        distdir) \
+	      || exit 1; \
+	  fi; \
+	done
 check-am: all-am
-check: check-am
-all-am: Makefile $(LTLIBRARIES) $(SCRIPTS) $(DATA)
-installdirs:
-	$(mkdir_p) $(DESTDIR)$(sessiondir) $(DESTDIR)$(libexecdir) $(DESTDIR)$(appsdir)
-install: install-am
-install-exec: install-exec-am
-install-data: install-data-am
-uninstall: uninstall-am
+check: check-recursive
+all-am: Makefile $(LTLIBRARIES) $(DATA)
+installdirs: installdirs-recursive
+installdirs-am:
+	$(mkdir_p) $(DESTDIR)$(sessiondir) $(DESTDIR)$(appsdir)
+install: install-recursive
+install-exec: install-exec-recursive
+install-data: install-data-recursive
+uninstall: uninstall-recursive
 
 install-am: all-am
 	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
 
-installcheck: installcheck-am
+installcheck: installcheck-recursive
 install-strip:
 	$(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
 	  install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \
@@ -600,77 +672,84 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
-clean: clean-am
+clean: clean-recursive
 
 clean-am: clean-generic clean-libtool clean-sessionLTLIBRARIES \
 	mostlyclean-am
 
-distclean: distclean-am
+distclean: distclean-recursive
 	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-libtool distclean-tags
 
-dvi: dvi-am
+dvi: dvi-recursive
 
 dvi-am:
 
-html: html-am
+html: html-recursive
 
-info: info-am
+info: info-recursive
 
 info-am:
 
 install-data-am: install-appsDATA install-sessionLTLIBRARIES
 
-install-exec-am: install-libexecSCRIPTS
+install-exec-am:
 
-install-info: install-info-am
+install-info: install-info-recursive
 
 install-man:
 
 installcheck-am:
 
-maintainer-clean: maintainer-clean-am
+maintainer-clean: maintainer-clean-recursive
 	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
-mostlyclean: mostlyclean-am
+mostlyclean: mostlyclean-recursive
 
 mostlyclean-am: mostlyclean-compile mostlyclean-generic \
 	mostlyclean-libtool
 
-pdf: pdf-am
+pdf: pdf-recursive
 
 pdf-am:
 
-ps: ps-am
+ps: ps-recursive
 
 ps-am:
 
 uninstall-am: uninstall-appsDATA uninstall-info-am \
-	uninstall-libexecSCRIPTS uninstall-sessionLTLIBRARIES
-
-.PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
-	clean-libtool clean-sessionLTLIBRARIES ctags distclean \
-	distclean-compile distclean-generic distclean-libtool \
-	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-appsDATA install-data \
-	install-data-am install-exec install-exec-am install-info \
-	install-info-am install-libexecSCRIPTS install-man \
-	install-sessionLTLIBRARIES install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am uninstall-appsDATA \
-	uninstall-info-am uninstall-libexecSCRIPTS \
 	uninstall-sessionLTLIBRARIES
+
+uninstall-info: uninstall-info-recursive
+
+.PHONY: $(RECURSIVE_TARGETS) CTAGS GTAGS all all-am check check-am \
+	clean clean-generic clean-libtool clean-recursive \
+	clean-sessionLTLIBRARIES ctags ctags-recursive distclean \
+	distclean-compile distclean-generic distclean-libtool \
+	distclean-recursive distclean-tags distdir dvi dvi-am html \
+	html-am info info-am install install-am install-appsDATA \
+	install-data install-data-am install-exec install-exec-am \
+	install-info install-info-am install-man \
+	install-sessionLTLIBRARIES install-strip installcheck \
+	installcheck-am installdirs installdirs-am maintainer-clean \
+	maintainer-clean-generic maintainer-clean-recursive \
+	mostlyclean mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool mostlyclean-recursive pdf pdf-am ps ps-am \
+	tags tags-recursive uninstall uninstall-am uninstall-appsDATA \
+	uninstall-info-am uninstall-sessionLTLIBRARIES
 
 
 session-icon.h: $(srcdir)/session.png
 	gdk-pixbuf-csource --raw --build-list				\
 	session_icon_data $(srcdir)/session.png > session-icon.h
+
+gnome-kde-logo.h: $(srcdir)/gnome-kde-logo.png
+	gdk-pixbuf-csource --raw --build-list				\
+	gnome_kde_logo_data $(srcdir)/gnome-kde-logo.png > gnome-kde-logo.h
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

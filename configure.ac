@@ -9,7 +9,7 @@ dnl
 dnl Version information
 m4_define([xfsm_version_major], [4])
 m4_define([xfsm_version_minor], [1])
-m4_define([xfsm_version_micro], [8])
+m4_define([xfsm_version_micro], [9])
 m4_define([xfsm_version], [xfsm_version_major.xfsm_version_minor.xfsm_version_micro])
 
 dnl Initialize autoconf
@@ -88,6 +88,12 @@ if test x"$SUDO" != x""; then
   AC_DEFINE_UNQUOTED([SUDO_CMD], ["$SUDO"], [path to sudo])
 fi
 
+dnl Check for rm
+AC_PATH_PROG([RM], [rm])
+if test x"$RM" != x""; then
+  AC_DEFINE_UNQUOTED([RM_CMD], ["$RM"], [path to rm])
+fi
+
 dnl Check for legacy session management
 AC_ARG_ENABLE([legacy-sm],
 AC_HELP_STRING([--enable-legacy-sm], [Enable X11R5 session management])
@@ -155,6 +161,7 @@ docs/Makefile
 icons/Makefile
 po/Makefile.in
 settings/Makefile
+settings/scripts/Makefile
 themes/Makefile
 themes/Default/Makefile
 xfce4-session/Makefile

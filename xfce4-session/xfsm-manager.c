@@ -253,6 +253,9 @@ xfsm_manager_load_session (void)
   XfceRc         *rc;
   gint            count;
   
+  if (!g_file_test (session_file, G_FILE_TEST_IS_REGULAR))
+    return FALSE;
+
   rc = xfce_rc_simple_open (session_file, FALSE);
   if (G_UNLIKELY (rc == NULL))
     return FALSE;
@@ -373,6 +376,7 @@ xfsm_manager_load_settings (XfceRc *rc)
       if (!xfsm_manager_load_failsafe (rc))
         {
           fprintf (stderr, "xfce4-session: Unable to load failsafe session, exiting.\n");
+          xfce_rc_close (rc);
           exit (EXIT_FAILURE);
         }
       failsafe_mode = TRUE;

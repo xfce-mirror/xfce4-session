@@ -92,7 +92,7 @@ themename=`basename "${themedir}"`
    && tar cf - "${themename}/xfsm4/" \
     | (cd "${targetdir}" && tar xf -)) >/dev/null 2>&1
 if test $? -ne 0; then
-  echo "Unable to install the theme ${themename} from ${themebase} to ${targetdir}."
+  echo "Unable to install the theme ${themename} from ${themebase} to ${targetdir}." >&2
   leave 1
 fi
 

@@ -1,3 +1,101 @@
+2004-06-05 14:46  benny
+
+	* Makefile.am, Makefile.in, config.h.in, configure, configure.ac,
+	xfce4-session.rc, defaults/Makefile.in, docs/Makefile.in,
+	icons/Makefile.am, icons/Makefile.in, icons/xfsm-trash-hilight.png,
+	icons/xfsm-trash-normal.png, po/POTFILES.in, po/ar.po, po/az.po,
+	po/ca.po, po/de.po, po/es.po, po/es_MX.po, po/eu.po, po/fa_IR.po,
+	po/fr.gmo, po/fr.po, po/hi.po, po/it.po, po/ja.po, po/ko.po,
+	po/ms.po, po/nl.po, po/no.po, po/pl.po, po/pt_BR.po, po/sv.po,
+	po/ta.po, po/tr.po, po/xfce4-session.pot, po/zh_CN.po, po/zh_TW.po,
+	settings/Makefile.in, themes/Makefile.in,
+	themes/Default/Makefile.in, xfce4-session/Makefile.am,
+	xfce4-session/Makefile.in, xfce4-session/ice-layer.c,
+	xfce4-session/xfsm-chooser-trash.c,
+	xfce4-session/xfsm-chooser-trash.h, xfce4-session/xfsm-chooser.c,
+	xfce4-session/xfsm-chooser.h, xfce4-session/xfsm-manager.c,
+	xfce4-session/xfsm-splash-screen.c,
+	xfce4-session/xfsm-splash-screen.h, xfce4-session/xfsm-startup.c,
+	xfce4-session/xfsm-util.c, xfce4-session/xfsm-util.h,
+	xfsm-shutdown-helper/Makefile.in: Added ability to remove sessions
+	(using the session chooser). New ca translations from Carles Muñoz
+	Gorriz. Updated po files. Check for iceauth in configure. Warn the
+	user if iceauth failes to create authentication data.
+
+2004-06-04 21:45  pollux
+
+	* po/fr.po: french translations update
+
+2004-06-01 17:58  benny
+
+	* xfce4-session/xfsm-manager.c: Fix #212.
+
+2004-05-30 19:49  benny
+
+	* xfce4-session/xfsm-properties.c: Verify properties after
+	restoring, might fix the crash reported by olivier.
+
+2004-05-30 19:42  benny
+
+	* xfce4-session/xfsm-startup.c: Code block moved to xfsm-manager.c
+	in previous commit.
+
+2004-05-30 19:40  benny
+
+	* xfce4-session/: xfsm-client.c, xfsm-manager.c, xfsm-manager.h:
+	Run discard command for apps that failed to start.
+
+2004-05-30 15:36  benny
+
+	* xfce4-session/: sm-layer.c, sm-layer.h, xfsm-compat-gnome.c,
+	xfsm-legacy.c, xfsm-legacy.h, xfsm-manager.c: Added a work-around
+	to get broken CDE apps working with legacy session management and
+	set GNOME_SM_PROXY on startup, some apps - like OOo - rely on this
+	to be set.
+
+2004-05-28 00:16  benny
+
+	* BUGS, configure, settings/looknfeel.c, xfce4-session/main.c,
+	xfce4-session/xfsm-chooser.c, xfce4-session/xfsm-splash-screen.c,
+	xfce4-session/xfsm-splash-theme.c, xfce4-session/xfsm-util.h: Cache
+	splash theme previews, so the settings dialog starts up faster (the
+	second time :). Fix a few bugs (e.g. PangoContext's weren't freed
+	properly).
+
+2004-05-26 18:47  benny
+
+	* BUGS, config.h.in, configure, configure.ac,
+	xfce4-session/chooser-icon.h, xfce4-session/chooser-icon.png,
+	xfce4-session/shutdown.c, xfce4-session/xfsm-chooser.c,
+	xfce4-session/xfsm-chooser.h, xfce4-session/xfsm-legacy.c,
+	xfce4-session/xfsm-manager.c, xfce4-session/xfsm-properties.c,
+	xfce4-session/xfsm-splash-screen.c: Fixed legacy check for XSMP
+	support. Added support for session screenshots, if enabled, a
+	screenshot of your session will be shot on logout and displayed in
+	the chooser on next login (disabled by default, since its a bit
+	expensive to transfer large root window screenshots, enable with
+	--enable-session-screenshots at compile time).
+
+2004-05-26 15:29  benny
+
+	* configure, xfce4-session/xfsm-legacy.c: Workaround xmms bug.
+
+2004-05-26 14:56  benny
+
+	* AUTHORS, BUGS, ChangeLog, README, config.h.in, configure,
+	configure.ac, xfce4-session/Makefile.am, xfce4-session/Makefile.in,
+	xfce4-session/main.c, xfce4-session/shutdown.c,
+	xfce4-session/shutdown.h, xfce4-session/xfsm-compat-kde.c,
+	xfce4-session/xfsm-compat-kde.h, xfce4-session/xfsm-legacy.c,
+	xfce4-session/xfsm-legacy.h, xfce4-session/xfsm-manager.c: Renamed
+	shutdown() -> xfsm_shutdown(), since it causes trouble with
+	functions, that use the libc shutdown(), like XCloseDisplay, really
+	a weird bug.
+	
+	Added legacy session management based upon the one found in
+	ksmserver. So from now on, do NOT EVER run smproxy, or you will be
+	assimilated :-).
+
 2004-05-25 23:29  benny
 
 	* Makefile.in, config.h.in, configure, configure.ac,

@@ -185,6 +185,9 @@ init_display (GdkDisplay            *dpy,
       mcs_client_check_manager (gdk_x11_display_get_xdisplay (dpy), n,
                                 "xfce-mcs-manager");
     }
+
+  /* gtk resource files may have changed */
+  gtk_rc_reparse_all ();
 }
 
 

@@ -38,6 +38,7 @@
 #include <libxfcegui4/libxfcegui4.h>
 #include <xfce-mcs-manager/manager-plugin.h>
 
+#include <settings/gnome-kde-logo.h>
 #include <settings/looknfeel.h>
 #include <settings/session-icon.h>
 #include <settings/settings.h>
@@ -196,8 +197,11 @@ static GtkWidget*
 advanced_create (XfceRc *rc)
 {
   GtkWidget *frame;
+  GtkWidget *image;
   GtkWidget *page;
+  GtkWidget *hbox;
   GtkWidget *vbox;
+  GdkPixbuf *icon;
   gboolean gnome;
   gboolean kde;
   gboolean remote;
@@ -213,8 +217,11 @@ advanced_create (XfceRc *rc)
 
   frame = xfce_framebox_new (_("Compatibility"), TRUE);
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, TRUE, 0);
+  hbox = gtk_hbox_new (FALSE, 0);
+  xfce_framebox_add (XFCE_FRAMEBOX (frame), hbox);
+
   vbox = gtk_vbox_new (FALSE, 0);
-  xfce_framebox_add (XFCE_FRAMEBOX (frame), vbox);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
 
   advanced_gnome = gtk_check_button_new_with_label (_("Launch Gnome services on startup"));
 #ifdef HAVE_GNOME
@@ -231,6 +238,11 @@ advanced_create (XfceRc *rc)
   g_signal_connect (G_OBJECT (advanced_kde), "toggled",
                     G_CALLBACK (config_store), NULL);
   gtk_box_pack_start (GTK_BOX (vbox), advanced_kde, FALSE, TRUE, 0);
+
+  icon = xfce_inline_icon_at_size (gnome_kde_logo_data, 64, 64);
+  image = gtk_image_new_from_pixbuf (icon);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, TRUE, 0);
+  g_object_unref (icon);
 
   frame = xfce_framebox_new (_("Security"), TRUE);
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, TRUE, 0);

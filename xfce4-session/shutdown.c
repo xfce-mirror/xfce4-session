@@ -135,6 +135,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 	GtkWidget *hidden;
   GtkWidget *ok_button;
   GtkWidget *cancel_button;
+  GdkPixbuf *icon;
   gboolean saveonexit;
   gboolean autosave;
   gint monitor;
@@ -271,10 +272,11 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 	gtk_box_pack_start(GTK_BOX(dbox), hbox, TRUE, TRUE, BORDER);
 	gtk_widget_show(hbox);
 
-	image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_QUESTION,
-                                    GTK_ICON_SIZE_DIALOG);
+  icon = xfce_themed_icon_load ("xfsm-shutdown", 48);
+	image = gtk_image_new_from_pixbuf (icon);
 	gtk_box_pack_start(GTK_BOX(hbox), image, FALSE, TRUE, BORDER);
 	gtk_widget_show(image);
+  g_object_unref (icon);
 
 	vbox = gtk_vbox_new(FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(hbox), vbox, TRUE, TRUE, BORDER);
