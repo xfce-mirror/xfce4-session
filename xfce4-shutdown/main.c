@@ -55,6 +55,7 @@
 #endif
 
 #include <libxfce4util/i18n.h>
+#include <libxfce4util/util.h>
 #include <glib.h>
 
 /*
@@ -186,11 +187,11 @@ main(int argc, char **argv)
 		clearenv();
 #endif
 #if defined(HAVE_SETENV)
-		setenv("PATH", "/bin:/sbin:/usr/bin:/usr/sbin", 1);
-		setenv("IFS", " \t\n", 1);
+		xfce_setenv("PATH", "/bin:/sbin:/usr/bin:/usr/sbin", 1);
+		xfce_setenv("IFS", " \t\n", 1);
 #elif defined(HAVE_PUTENV)
-		putenv("PATH=/bin:/sbin:/usr/bin:/usr/sbin");
-		putenv("IFS= \t\n");
+		xfce_putenv("PATH=/bin:/sbin:/usr/bin:/usr/sbin");
+		xfce_putenv("IFS= \t\n");
 #endif
 #endif
 

@@ -3,6 +3,8 @@ dnl
 dnl Copyright (c) 2003,2003
 dnl         The XFce development team. All rights reserved.
 dnl
+dnl Written for XFce by Benedikt Meurer <benny@xfce.org>.
+dnl
 
 dnl Version information
 m4_define([xfsm_version_major], [4])
@@ -12,7 +14,9 @@ m4_define([xfsm_version], [xfsm_version_major.xfsm_version_minor.xfsm_version_mi
 
 dnl Initialize autoconf
 AC_COPYRIGHT([Copyright (c) 2003,2004
-        The XFce development team. All rights reserved.])
+        The XFce development team. All rights reserved.
+        
+Written for XFce by Benedikt Meurer <benny@xfce.org>.])
 AC_INIT([xfce4-session], [xfsm_version], [xfce4-dev@xfce.org])
 AC_PREREQ([2.50])
 AC_REVISION([$Id$])
@@ -35,7 +39,7 @@ AC_PROG_LIBTOOL
 
 dnl check for standard header files
 AC_HEADER_STDC
-AC_CHECK_FUNCS([mkdir clearenv putenv setenv sigaction])
+AC_CHECK_FUNCS([mkdir clearenv sigaction])
 AC_CHECK_HEADERS([errno.h fcntl.h limits.h signal.h sys/param.h sys/utsname.h \
   sys/wait.h time.h unistd.h])
 
