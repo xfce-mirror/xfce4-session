@@ -134,6 +134,62 @@ figure_app_name (const gchar *program_path)
 }
 
 
+static void
+xfsm_startup_autostart (void)
+{
+  const gchar *entry;
+  gchar *argv[] = { NULL, NULL };
+  GError *err;
+  gchar *file;
+  gchar *dir;
+  GDir *dirp;
+  gint n = 0;
+
+  dir = xfce_get_homefile ("Desktop", "Autostart", NULL);
+  dirp = g_dir_open (dir, 0, NULL);
+  if (dirp != NULL)
+    {
+      xfsm_splash_screen_next (splash_screen, _("Performing Autostart..."));
+
+      for (;;)
+        {
+          entry = g_dir_read_name (dirp);
+          if (entry == NULL)
+            break;
+
+          file = g_build_filename (dir, entry, NULL);
+
+          if (g_file_test (file, G_FILE_TEST_IS_EXECUTABLE))
+            {
+              *argv = file;
+              err = NULL;
+
+              if (!g_spawn_async (NULL, argv, NULL, 0, NULL, NULL, NULL, &err))
+                {
+                  g_warning ("Unable to launch %s: %s", file, err->message);
+                  g_error_free (err);
+                }
+              else
+                {
+                  ++n;
+                }
+            }
+
+          g_free (file);
+        }
+
+      g_dir_close (dirp);
+    }
+
+  if (n > 0)
+    g_timeout_add (2000, destroy_splash, NULL);
+  else
+    g_timeout_add (1000, destroy_splash, NULL);
+
+  g_free (dir);
+}
+
+
 /* Returns TRUE if done, else FALSE */
 gboolean
 xfsm_startup_continue (const gchar *previous_id)
@@ -145,9 +201,11 @@ xfsm_startup_continue (const gchar *previous_id)
   else
     startup_done = xfsm_startup_continue_session (previous_id);
 
-  /* get rid of the splash screen once finished */
+  /* perform Autostart */
   if (startup_done)
-    g_timeout_add (1500, destroy_splash, NULL);
+    {
+      xfsm_startup_autostart ();
+    }
   
   return startup_done;
 }
