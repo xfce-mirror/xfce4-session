@@ -38,23 +38,9 @@
 #include <libxfcegui4/libxfcegui4.h>
 #include <xfce-mcs-manager/manager-plugin.h>
 
-#include <xfce4-session/xfsm-splash-theme.h>
+#include <settings/looknfeel.h>
 #include <settings/session-icon.h>
-
-
-#define BORDER  6
-
-
-/*
-   Columns in the splash theme treeview
- */
-enum
-{
-  PREVIEW_COLUMN,
-  TITLE_COLUMN,
-  NAME_COLUMN,
-  N_COLUMNS,
-};
+#include <settings/settings.h>
 
 
 
@@ -65,7 +51,6 @@ static GtkWidget *dialog = NULL;
 static GtkWidget *general_omenu;
 static GtkWidget *general_autosave;
 static GtkWidget *general_prompt;
-static GtkWidget *looknfeel_treeview;
 static GtkWidget *advanced_kde;
 static GtkWidget *advanced_gnome;
 static GtkWidget *advanced_remote;
@@ -84,14 +69,10 @@ config_open (gboolean readonly)
 }
 
 
-static void
+void
 config_store (void)
 {
-  GtkTreeSelection *selection;
-  GtkTreeModel *model;
-  GtkTreeIter iter;
   gint history;
-  gchar *name;
   XfceRc *rc;
   
   g_return_if_fail (dialog != NULL);
@@ -130,17 +111,7 @@ config_store (void)
       xfce_rc_write_int_entry (rc, "Timeout", 0);
     }
 
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (looknfeel_treeview));
-  if (gtk_tree_selection_get_selected (selection, &model, &iter))
-    {
-      gtk_tree_model_get (model, &iter, NAME_COLUMN, &name, -1);
-      if (name != NULL)
-        {
-          xfce_rc_set_group (rc, "Splash Theme");
-          xfce_rc_write_entry (rc, "Name", name);
-          g_free (name);
-        }
-    }
+  looknfeel_store (rc);
 
   xfce_rc_close (rc);
 }
@@ -212,152 +183,6 @@ general_create (XfceRc *rc)
                     G_CALLBACK (config_store), NULL);
   gtk_widget_set_sensitive (general_prompt, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox), general_prompt, FALSE, TRUE, 0);
-
-  return page;
-}
-
-
-
-/*
-   Look and feel
- */
-static GtkTreeModel*
-looknfeel_load_themelist (void)
-{
-  XfsmSplashTheme *theme;
-  GtkListStore    *store;
-  GtkTreeIter      iter;
-  GdkPixbuf       *preview;
-  gchar            title[128];
-  gchar          **themes;
-  gchar           *name;
-  gchar           *endp;
-  guint            n;
-
-  store = gtk_list_store_new (N_COLUMNS,
-                              GDK_TYPE_PIXBUF,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING);
-
-  themes = xfce_resource_match (XFCE_RESOURCE_THEMES, "*/xfsm4/themerc", TRUE);
-  for (n = 0; themes[n] != NULL; ++n)
-    {
-      name = themes[n];
-      endp = strchr (name, '/');
-
-      if (endp == NULL)
-        continue;
-      else
-        *endp = '\0';
-
-      theme = xfsm_splash_theme_load (name);
-      if (theme == NULL)
-        continue;
-
-      g_snprintf (title, 128, "<b>%s</b>\n<small><i>%s</i></small>",
-                  xfsm_splash_theme_get_name (theme),
-                  xfsm_splash_theme_get_description (theme));
-      preview = xfsm_splash_theme_generate_preview (theme, 52, 43);
-
-      gtk_list_store_append (store, &iter);
-      gtk_list_store_set (store, &iter,
-                          PREVIEW_COLUMN, preview,
-                          TITLE_COLUMN, title,
-                          NAME_COLUMN, name,
-                          -1);
-
-      xfsm_splash_theme_destroy (theme);
-      g_object_unref (preview);
-    }
-
-  return GTK_TREE_MODEL (store);
-}
-
-
-static void
-looknfeel_select_theme (const gchar *selected_theme)
-{
-  GtkTreeSelection *selection;
-  GtkTreeModel     *model;
-  GtkTreeIter       iter;
-  gboolean          match;
-  gchar            *name;
-
-  g_return_if_fail (dialog != NULL);
-
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (looknfeel_treeview));
-  model = gtk_tree_view_get_model (GTK_TREE_VIEW (looknfeel_treeview));
-
-  if (gtk_tree_model_get_iter_first (model, &iter))
-    {
-      do
-        {
-          gtk_tree_model_get (model, &iter, NAME_COLUMN, &name, -1);
-          match = (strcmp (name, selected_theme) == 0);
-          g_free (name);
-
-          if (match)
-            {
-              gtk_tree_selection_select_iter (selection, &iter);
-              return;
-            }
-        }
-      while (gtk_tree_model_iter_next (model, &iter));
-    }
-
-  if (gtk_tree_model_get_iter_first (model, &iter))
-    gtk_tree_selection_select_iter (selection, &iter);
-}
-
-
-static GtkWidget*
-looknfeel_create (XfceRc *rc)
-{
-  GtkTreeSelection *selection;
-  GtkTreeModel     *model;
-  GtkWidget        *frame;
-  GtkWidget        *page;
-  GtkWidget        *swin;
-  GtkWidget        *vbox;
-  const gchar      *theme;
-
-  xfce_rc_set_group (rc, "Splash Theme");
-  theme = xfce_rc_read_entry (rc, "Name", "Default");
-
-  page = gtk_vbox_new (FALSE, BORDER);
-  gtk_container_set_border_width (GTK_CONTAINER (page), BORDER);
-
-  frame = xfce_framebox_new (_("Splash theme"), TRUE);
-  gtk_box_pack_start (GTK_BOX (page), frame, TRUE, TRUE, 0);
-  vbox = gtk_vbox_new (FALSE, 0);
-  xfce_framebox_add (XFCE_FRAMEBOX (frame), vbox);
-
-  swin = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swin), 
-                                  GTK_POLICY_NEVER,
-                                  GTK_POLICY_AUTOMATIC);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (swin),
-                                       GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), swin, TRUE, TRUE, 0);
-  gtk_widget_show (swin);
-
-  model = looknfeel_load_themelist ();
-  looknfeel_treeview = gtk_tree_view_new_with_model (model);
-  g_object_unref (G_OBJECT (model));
-  looknfeel_select_theme (theme);
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (looknfeel_treeview));
-  gtk_tree_selection_set_mode (GTK_TREE_SELECTION (selection),
-                               GTK_SELECTION_SINGLE);
-  g_signal_connect (G_OBJECT (selection), "changed",
-                    G_CALLBACK (config_store), NULL);
-  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (looknfeel_treeview), FALSE);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (looknfeel_treeview),
-      gtk_tree_view_column_new_with_attributes ("Preview",
-        gtk_cell_renderer_pixbuf_new (), "pixbuf", PREVIEW_COLUMN, NULL));
-  gtk_tree_view_append_column (GTK_TREE_VIEW (looknfeel_treeview),
-      gtk_tree_view_column_new_with_attributes ("Description",
-        gtk_cell_renderer_text_new (), "markup", TITLE_COLUMN, NULL));
-  gtk_container_add (GTK_CONTAINER (swin), looknfeel_treeview);
 
   return page;
 }

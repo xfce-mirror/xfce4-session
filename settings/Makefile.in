@@ -15,6 +15,7 @@
 @SET_MAKE@
 
 
+
 SOURCES = $(session_settings_la_SOURCES)
 
 srcdir = @srcdir@
@@ -49,17 +50,23 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
-am__installdirs = $(DESTDIR)$(sessiondir) $(DESTDIR)$(appsdir)
+am__installdirs = $(DESTDIR)$(sessiondir) $(DESTDIR)$(libexecdir) $(DESTDIR)$(appsdir)
 sessionLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(session_LTLIBRARIES)
 session_settings_la_LIBADD =
-am_session_settings_la_OBJECTS = session_settings_la-session.lo \
+am_session_settings_la_OBJECTS = session_settings_la-gnome-uri.lo \
+	session_settings_la-looknfeel.lo \
+	session_settings_la-session.lo \
 	session_settings_la-xfsm-splash-theme.lo
 session_settings_la_OBJECTS = $(am_session_settings_la_OBJECTS)
+libexecSCRIPT_INSTALL = $(INSTALL_SCRIPT)
+SCRIPTS = $(libexec_SCRIPTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/session_settings_la-session.Plo \
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/session_settings_la-gnome-uri.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/session_settings_la-looknfeel.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/session_settings_la-session.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/session_settings_la-xfsm-splash-theme.Plo
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -224,14 +231,20 @@ session_settings_la_LDFLAGS = \
 	-module
 
 session_settings_la_SOURCES = \
+	gnome-uri.c							\
+	gnome-uri.h							\
+	looknfeel.c							\
+	looknfeel.h							\
 	session-icon.h							\
 	session.c							\
 	../xfce4-session/xfsm-splash-theme.c
 
 session_settings_la_CFLAGS = \
 	@XFCE_MCS_MANAGER_CFLAGS@					\
-	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"
+	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
+	-DXFSM_INSTALL_THEME=\"$(libexecdir)/xfsm-install-theme\"
 
+libexec_SCRIPTS = xfsm-install-theme
 noinst_DATA = \
 	session-icon.h
 
@@ -303,6 +316,25 @@ clean-sessionLTLIBRARIES:
 	done
 session_settings.la: $(session_settings_la_OBJECTS) $(session_settings_la_DEPENDENCIES) 
 	$(LINK) -rpath $(sessiondir) $(session_settings_la_LDFLAGS) $(session_settings_la_OBJECTS) $(session_settings_la_LIBADD) $(LIBS)
+install-libexecSCRIPTS: $(libexec_SCRIPTS)
+	@$(NORMAL_INSTALL)
+	$(mkdir_p) $(DESTDIR)$(libexecdir)
+	@list='$(libexec_SCRIPTS)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  if test -f $$d$$p; then \
+	    f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
+	    echo " $(libexecSCRIPT_INSTALL) $$d$$p $(DESTDIR)$(libexecdir)/$$f"; \
+	    $(libexecSCRIPT_INSTALL) $$d$$p $(DESTDIR)$(libexecdir)/$$f; \
+	  else :; fi; \
+	done
+
+uninstall-libexecSCRIPTS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(libexec_SCRIPTS)'; for p in $$list; do \
+	  f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
+	  echo " rm -f $(DESTDIR)$(libexecdir)/$$f"; \
+	  rm -f $(DESTDIR)$(libexecdir)/$$f; \
+	done
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -310,6 +342,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/session_settings_la-gnome-uri.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/session_settings_la-looknfeel.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/session_settings_la-session.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/session_settings_la-xfsm-splash-theme.Plo@am__quote@
 
@@ -336,6 +370,54 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/$*.Plo' tmpdepfile='$(DEPDIR)/$*.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
+
+session_settings_la-gnome-uri.o: gnome-uri.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -MT session_settings_la-gnome-uri.o -MD -MP -MF "$(DEPDIR)/session_settings_la-gnome-uri.Tpo" -c -o session_settings_la-gnome-uri.o `test -f 'gnome-uri.c' || echo '$(srcdir)/'`gnome-uri.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/session_settings_la-gnome-uri.Tpo" "$(DEPDIR)/session_settings_la-gnome-uri.Po"; else rm -f "$(DEPDIR)/session_settings_la-gnome-uri.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='gnome-uri.c' object='session_settings_la-gnome-uri.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/session_settings_la-gnome-uri.Po' tmpdepfile='$(DEPDIR)/session_settings_la-gnome-uri.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -c -o session_settings_la-gnome-uri.o `test -f 'gnome-uri.c' || echo '$(srcdir)/'`gnome-uri.c
+
+session_settings_la-gnome-uri.obj: gnome-uri.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -MT session_settings_la-gnome-uri.obj -MD -MP -MF "$(DEPDIR)/session_settings_la-gnome-uri.Tpo" -c -o session_settings_la-gnome-uri.obj `if test -f 'gnome-uri.c'; then $(CYGPATH_W) 'gnome-uri.c'; else $(CYGPATH_W) '$(srcdir)/gnome-uri.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/session_settings_la-gnome-uri.Tpo" "$(DEPDIR)/session_settings_la-gnome-uri.Po"; else rm -f "$(DEPDIR)/session_settings_la-gnome-uri.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='gnome-uri.c' object='session_settings_la-gnome-uri.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/session_settings_la-gnome-uri.Po' tmpdepfile='$(DEPDIR)/session_settings_la-gnome-uri.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -c -o session_settings_la-gnome-uri.obj `if test -f 'gnome-uri.c'; then $(CYGPATH_W) 'gnome-uri.c'; else $(CYGPATH_W) '$(srcdir)/gnome-uri.c'; fi`
+
+session_settings_la-gnome-uri.lo: gnome-uri.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -MT session_settings_la-gnome-uri.lo -MD -MP -MF "$(DEPDIR)/session_settings_la-gnome-uri.Tpo" -c -o session_settings_la-gnome-uri.lo `test -f 'gnome-uri.c' || echo '$(srcdir)/'`gnome-uri.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/session_settings_la-gnome-uri.Tpo" "$(DEPDIR)/session_settings_la-gnome-uri.Plo"; else rm -f "$(DEPDIR)/session_settings_la-gnome-uri.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='gnome-uri.c' object='session_settings_la-gnome-uri.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/session_settings_la-gnome-uri.Plo' tmpdepfile='$(DEPDIR)/session_settings_la-gnome-uri.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -c -o session_settings_la-gnome-uri.lo `test -f 'gnome-uri.c' || echo '$(srcdir)/'`gnome-uri.c
+
+session_settings_la-looknfeel.o: looknfeel.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -MT session_settings_la-looknfeel.o -MD -MP -MF "$(DEPDIR)/session_settings_la-looknfeel.Tpo" -c -o session_settings_la-looknfeel.o `test -f 'looknfeel.c' || echo '$(srcdir)/'`looknfeel.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/session_settings_la-looknfeel.Tpo" "$(DEPDIR)/session_settings_la-looknfeel.Po"; else rm -f "$(DEPDIR)/session_settings_la-looknfeel.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='looknfeel.c' object='session_settings_la-looknfeel.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/session_settings_la-looknfeel.Po' tmpdepfile='$(DEPDIR)/session_settings_la-looknfeel.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -c -o session_settings_la-looknfeel.o `test -f 'looknfeel.c' || echo '$(srcdir)/'`looknfeel.c
+
+session_settings_la-looknfeel.obj: looknfeel.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -MT session_settings_la-looknfeel.obj -MD -MP -MF "$(DEPDIR)/session_settings_la-looknfeel.Tpo" -c -o session_settings_la-looknfeel.obj `if test -f 'looknfeel.c'; then $(CYGPATH_W) 'looknfeel.c'; else $(CYGPATH_W) '$(srcdir)/looknfeel.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/session_settings_la-looknfeel.Tpo" "$(DEPDIR)/session_settings_la-looknfeel.Po"; else rm -f "$(DEPDIR)/session_settings_la-looknfeel.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='looknfeel.c' object='session_settings_la-looknfeel.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/session_settings_la-looknfeel.Po' tmpdepfile='$(DEPDIR)/session_settings_la-looknfeel.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -c -o session_settings_la-looknfeel.obj `if test -f 'looknfeel.c'; then $(CYGPATH_W) 'looknfeel.c'; else $(CYGPATH_W) '$(srcdir)/looknfeel.c'; fi`
+
+session_settings_la-looknfeel.lo: looknfeel.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -MT session_settings_la-looknfeel.lo -MD -MP -MF "$(DEPDIR)/session_settings_la-looknfeel.Tpo" -c -o session_settings_la-looknfeel.lo `test -f 'looknfeel.c' || echo '$(srcdir)/'`looknfeel.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/session_settings_la-looknfeel.Tpo" "$(DEPDIR)/session_settings_la-looknfeel.Plo"; else rm -f "$(DEPDIR)/session_settings_la-looknfeel.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='looknfeel.c' object='session_settings_la-looknfeel.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/session_settings_la-looknfeel.Plo' tmpdepfile='$(DEPDIR)/session_settings_la-looknfeel.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -c -o session_settings_la-looknfeel.lo `test -f 'looknfeel.c' || echo '$(srcdir)/'`looknfeel.c
 
 session_settings_la-session.o: session.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(session_settings_la_CFLAGS) $(CFLAGS) -MT session_settings_la-session.o -MD -MP -MF "$(DEPDIR)/session_settings_la-session.Tpo" -c -o session_settings_la-session.o `test -f 'session.c' || echo '$(srcdir)/'`session.c; \
@@ -487,9 +569,9 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LTLIBRARIES) $(DATA)
+all-am: Makefile $(LTLIBRARIES) $(SCRIPTS) $(DATA)
 installdirs:
-	$(mkdir_p) $(DESTDIR)$(sessiondir) $(DESTDIR)$(appsdir)
+	$(mkdir_p) $(DESTDIR)$(sessiondir) $(DESTDIR)$(libexecdir) $(DESTDIR)$(appsdir)
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -537,7 +619,7 @@ info-am:
 
 install-data-am: install-appsDATA install-sessionLTLIBRARIES
 
-install-exec-am:
+install-exec-am: install-libexecSCRIPTS
 
 install-info: install-info-am
 
@@ -564,7 +646,7 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-appsDATA uninstall-info-am \
-	uninstall-sessionLTLIBRARIES
+	uninstall-libexecSCRIPTS uninstall-sessionLTLIBRARIES
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
 	clean-libtool clean-sessionLTLIBRARIES ctags distclean \
@@ -572,12 +654,13 @@ uninstall-am: uninstall-appsDATA uninstall-info-am \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
 	install install-am install-appsDATA install-data \
 	install-data-am install-exec install-exec-am install-info \
-	install-info-am install-man install-sessionLTLIBRARIES \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags uninstall uninstall-am \
-	uninstall-appsDATA uninstall-info-am \
+	install-info-am install-libexecSCRIPTS install-man \
+	install-sessionLTLIBRARIES install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags uninstall uninstall-am uninstall-appsDATA \
+	uninstall-info-am uninstall-libexecSCRIPTS \
 	uninstall-sessionLTLIBRARIES
 
 

@@ -113,7 +113,7 @@ figure_app_name (const gchar *program_path)
     return _("Starting the Panel");
   else if (strcmp (prog, "xfdesktop") == 0)
     return _("Starting the Desktop Manager");
-  else if (strcmp (prog, "xftasbar4") == 0)
+  else if (strcmp (prog, "xftaskbar4") == 0)
     return _("Starting the Taskbar");
   else if (strcmp (prog, "xfwm4") == 0)
     return _("Starting the Window Manager");
