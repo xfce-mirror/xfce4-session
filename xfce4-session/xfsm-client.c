@@ -9,6 +9,18 @@
 #include <xfce4-session/xfsm-client.h>
 
 
+XfsmClient*
+xfsm_client_new (SmsConn sms_conn)
+{
+  XfsmClient *client;
+  
+  client = g_new0 (XfsmClient, 1);
+  client->sms_conn = sms_conn;
+  client->state = XFSM_CLIENT_IDLE;
+  
+  return client;
+}
+
 void
 xfsm_client_free (XfsmClient *client)
 {

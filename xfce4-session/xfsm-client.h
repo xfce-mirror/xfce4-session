@@ -35,16 +35,7 @@ struct _XfsmClient
 #define XFSM_CLIENT(c) ((XfsmClient *) (c))
 
 
-G_INLINE_FUNC XfsmClient *xfsm_client_new (SmsConn sms_conn)
-{
-  XfsmClient *client;
-  
-  client = g_new0 (XfsmClient, 1);
-  client->sms_conn = sms_conn;
-  client->state = XFSM_CLIENT_IDLE;
-  
-  return client;
-}
+XfsmClient *xfsm_client_new (SmsConn sms_conn);
 
 void xfsm_client_free (XfsmClient *client);
 
