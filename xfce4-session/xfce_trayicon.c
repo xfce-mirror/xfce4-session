@@ -28,6 +28,9 @@
 #include <config.h>
 #endif /* !HAVE_CONFIG_H */
 
+#include <X11/Xlib.h>
+
+#include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 
 #include <xfce_trayicon.h>
@@ -179,8 +182,7 @@ xfce_tray_icon_embedded(GtkWidget *widget, XfceTrayIcon *icon)
 static void
 xfce_tray_icon_reconnect(XfceTrayIcon *icon)
 {
-	icon->tray = netk_tray_icon_new(GDK_SCREEN_XSCREEN(
-				gdk_screen_get_default()));
+	icon->tray = netk_tray_icon_new(DefaultScreenOfDisplay(GDK_DISPLAY()));
 	(void)g_signal_connect(G_OBJECT(icon->tray), "embedded",
 			G_CALLBACK(xfce_tray_icon_embedded), icon);
 	gtk_widget_show(icon->tray);
