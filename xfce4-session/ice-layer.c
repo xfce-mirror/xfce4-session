@@ -53,7 +53,7 @@
 #include <glib.h>
 
 #include <xfce4-session/client.h>
-#include <xfce4-session/client-list.h>
+#include <xfce4-session/session-control.h>
 #include "ice-layer.h"
 #include "manager.h"
 
@@ -103,7 +103,7 @@ ice_process_messages(GIOChannel *channel, GIOCondition condition,
                      IceConn iceConn)
 {
 	/* XXX */
-	extern GtkWidget *clientList;
+	extern GtkWidget *sessionControl;
 	IceProcessMessagesStatus status;
 	SmsConn smsConn;
 	GList *lp;
@@ -117,7 +117,8 @@ ice_process_messages(GIOChannel *channel, GIOCondition condition,
 
 		if (lp != NULL) {
 			smsConn = CLIENT(lp->data)->smsConn;
-			xfsm_client_list_remove(XFSM_CLIENT_LIST(clientList),
+			xfsm_session_control_remove(
+					XFSM_SESSION_CONTROL(sessionControl),
 					CLIENT(lp->data));
 			client_free(CLIENT(lp->data));
 			SmsCleanUp(smsConn);

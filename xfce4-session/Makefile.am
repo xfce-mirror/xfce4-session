@@ -3,13 +3,13 @@ bin_PROGRAMS = xfce4-session
 xfce4_session_SOURCES =							\
 	client.c							\
 	client.h							\
-	client-list.c							\
-	client-list.h							\
 	ice-layer.c							\
 	ice-layer.h							\
 	main.c								\
 	manager.c							\
 	manager.h							\
+	session-control.c						\
+	session-control.h						\
 	shutdown.c							\
 	shutdown.h							\
 	splash-fallback.h						\

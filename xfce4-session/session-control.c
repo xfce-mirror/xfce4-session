@@ -34,7 +34,7 @@
 
 #include <settings/session-icon.h>
 #include <xfce4-session/client.h>
-#include <xfce4-session/client-list.h>
+#include <xfce4-session/session-control.h>
 #include <xfce4-session/util.h>
 
 /* default border */
@@ -60,9 +60,9 @@ typedef struct
 #define LIST_ITEM(obj)		((ListItem *)(obj))
 
 /* static prototypes */
-static void	xfsm_client_list_class_init(XfsmClientListClass *);
-static void	xfsm_client_list_init(XfsmClientList *);
-static void	xfsm_client_list_finalize(GObject *);
+static void	xfsm_session_control_class_init(XfsmSessionControlClass *);
+static void	xfsm_session_control_init(XfsmSessionControl *);
+static void	xfsm_session_control_finalize(GObject *);
 
 /* parent class */
 static GObjectClass	*parent_class;
@@ -83,46 +83,46 @@ static const gchar *state_names[] = {
 /*
  */
 GType
-xfsm_client_list_get_type(void)
+xfsm_session_control_get_type(void)
 {
-	static GType client_list_type = 0;
+	static GType session_control_type = 0;
 
-	if (!client_list_type) {
-		static const GTypeInfo client_list_info = {
-			sizeof(XfsmClientListClass),
+	if (!session_control_type) {
+		static const GTypeInfo session_control_info = {
+			sizeof(XfsmSessionControlClass),
 			NULL,
 			NULL,
-			(GClassInitFunc)xfsm_client_list_class_init,
+			(GClassInitFunc)xfsm_session_control_class_init,
 			NULL,
 			NULL,
-			sizeof(XfsmClientList),
+			sizeof(XfsmSessionControl),
 			0,
-			(GInstanceInitFunc)xfsm_client_list_init
+			(GInstanceInitFunc)xfsm_session_control_init
 		};
 
-		client_list_type = g_type_register_static(GTK_TYPE_DIALOG,
-				"XfsmClientList", &client_list_info, 0);
+		session_control_type = g_type_register_static(GTK_TYPE_DIALOG,
+				"XfsmSessionControl", &session_control_info, 0);
 	}
 
-	return(client_list_type);
+	return(session_control_type);
 }
 
 /*
  */
 static void
-xfsm_client_list_class_init(XfsmClientListClass *klass)
+xfsm_session_control_class_init(XfsmSessionControlClass *klass)
 {
 	GObjectClass *gobject_class;
 
 	gobject_class = G_OBJECT_CLASS(klass);
-	gobject_class->finalize = xfsm_client_list_finalize;
+	gobject_class->finalize = xfsm_session_control_finalize;
 	parent_class = gtk_type_class(gtk_dialog_get_type());
 }
 
 /*
  */
 static ListItem *
-xfsm_client_list_get_selected(XfsmClientList *list, GtkTreeSelection *selection)
+xfsm_session_control_get_selected(XfsmSessionControl *list, GtkTreeSelection *selection)
 {
 	GtkTreeModel *store;
 	GtkTreePath *cpath;
@@ -161,35 +161,36 @@ xfsm_client_list_get_selected(XfsmClientList *list, GtkTreeSelection *selection)
 /*
  */
 static void
-xfsm_client_list_selection_changed(GtkTreeSelection *selection,
-                                   XfsmClientList *list)
+xfsm_session_control_selection_changed(GtkTreeSelection *selection,
+                                       XfsmSessionControl *control)
 {
 	ListItem *item;
 	gchar **argv;
 
-	if ((item = xfsm_client_list_get_selected(list, selection)) != NULL) {
+	if ((item = xfsm_session_control_get_selected(control, selection))
+			!= NULL) {
 		/* activate kill button */
-		gtk_widget_set_sensitive(list->killButton, TRUE);
+		gtk_widget_set_sensitive(control->killButton, TRUE);
 
 		/* check whether to activate clone button */
 		if ((argv = client_get_command(item->client, SmCloneCommand))) {
-			gtk_widget_set_sensitive(list->cloneButton, TRUE);
+			gtk_widget_set_sensitive(control->cloneButton, TRUE);
 			g_strfreev(argv);
 		}
 		else
-			gtk_widget_set_sensitive(list->cloneButton, FALSE);
+			gtk_widget_set_sensitive(control->cloneButton, FALSE);
 	}
 	else {
 		/* no client selected */
-		gtk_widget_set_sensitive(list->cloneButton, FALSE);
-		gtk_widget_set_sensitive(list->killButton, FALSE);
+		gtk_widget_set_sensitive(control->cloneButton, FALSE);
+		gtk_widget_set_sensitive(control->killButton, FALSE);
 	}
 }
 
 /*
  */
 static gboolean
-xfsm_client_list_clone_real(const Client *client)
+xfsm_session_control_clone_real(const Client *client)
 {
 	GError *error;
 
@@ -206,30 +207,30 @@ xfsm_client_list_clone_real(const Client *client)
 /*
  */
 static void
-xfsm_client_list_clone(GtkWidget *button, XfsmClientList *list)
+xfsm_session_control_clone(GtkWidget *button, XfsmSessionControl *list)
 {
 	GtkTreeSelection *selection;
 	ListItem *item;
 
 	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(list->tree));
 
-	if ((item = xfsm_client_list_get_selected(list, selection)) == NULL)
+	if ((item = xfsm_session_control_get_selected(list, selection)) == NULL)
 		return;
 
-	g_idle_add((GSourceFunc)xfsm_client_list_clone_real, item->client);
+	g_idle_add((GSourceFunc)xfsm_session_control_clone_real, item->client);
 }
 
 /*
  */
 static void
-xfsm_client_list_kill(GtkWidget *button, XfsmClientList *list)
+xfsm_session_control_kill(GtkWidget *button, XfsmSessionControl *list)
 {
 	GtkTreeSelection *selection;
 	ListItem *item;
 
 	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(list->tree));
 
-	if ((item = xfsm_client_list_get_selected(list, selection)) != NULL) {
+	if ((item = xfsm_session_control_get_selected(list, selection)) != NULL) {
 		/* send SmDie to client */
 		client_kill(item->client);
 	}
@@ -240,7 +241,7 @@ xfsm_client_list_kill(GtkWidget *button, XfsmClientList *list)
  */
 /* ARGSUSED */
 static gboolean
-xfsm_client_list_delete(GtkWidget *widget, GdkEvent *ev, XfsmClientList *list)
+xfsm_session_control_delete(GtkWidget *widget, GdkEvent *ev, XfsmSessionControl *list)
 {
 	/* hide the dialog */
 	gtk_widget_hide(GTK_WIDGET(list));
@@ -250,7 +251,7 @@ xfsm_client_list_delete(GtkWidget *widget, GdkEvent *ev, XfsmClientList *list)
 /*
  */
 static void
-xfsm_client_list_init(XfsmClientList *list)
+xfsm_session_control_init(XfsmSessionControl *list)
 {
 	GtkTreeSelection *selection;
 	GtkCellRenderer *renderer;
@@ -348,29 +349,29 @@ xfsm_client_list_init(XfsmClientList *list)
 
 	/* */
 	g_signal_connect(G_OBJECT(list->cloneButton), "clicked",
-			G_CALLBACK(xfsm_client_list_clone), list);
+			G_CALLBACK(xfsm_session_control_clone), list);
 	g_signal_connect(G_OBJECT(list->killButton), "clicked",
-			G_CALLBACK(xfsm_client_list_kill), list);
+			G_CALLBACK(xfsm_session_control_kill), list);
 	g_signal_connect(G_OBJECT(selection), "changed", 
-			G_CALLBACK(xfsm_client_list_selection_changed), list);
+			G_CALLBACK(xfsm_session_control_selection_changed), list);
 	g_signal_connect_swapped(G_OBJECT(list->closeButton), "clicked",
 			G_CALLBACK(gtk_widget_hide), list);
 	g_signal_connect_swapped(G_OBJECT(list), "close",
 			G_CALLBACK(gtk_widget_hide), list);
 	g_signal_connect(G_OBJECT(list), "delete-event",
-			G_CALLBACK(xfsm_client_list_delete), list);
+			G_CALLBACK(xfsm_session_control_delete), list);
 }
 
 /*
  */
 static void
-xfsm_client_list_finalize(GObject *object)
+xfsm_session_control_finalize(GObject *object)
 {
-	XfsmClientList *list;
+	XfsmSessionControl *list;
 
-	g_return_if_fail(XFSM_IS_CLIENT_LIST(object));
+	g_return_if_fail(XFSM_IS_SESSION_CONTROL(object));
 
-	list = XFSM_CLIENT_LIST(object);
+	list = XFSM_SESSION_CONTROL(object);
 
 	/* free all list items */
 	g_list_foreach(list->clients, (GFunc)g_free, NULL);
@@ -382,15 +383,15 @@ xfsm_client_list_finalize(GObject *object)
 /*
  */
 GtkWidget *
-xfsm_client_list_new(void)
+xfsm_session_control_new(void)
 {
-	return(GTK_WIDGET(g_object_new(xfsm_client_list_get_type(), NULL)));
+	return(GTK_WIDGET(g_object_new(xfsm_session_control_get_type(), NULL)));
 }
 
 /*
  */
 void
-xfsm_client_list_append(XfsmClientList *list, Client *client)
+xfsm_session_control_append(XfsmSessionControl *list, Client *client)
 {
 	GtkTreeModel *store;
 	ListItem *item;
@@ -408,13 +409,13 @@ xfsm_client_list_append(XfsmClientList *list, Client *client)
 	gtk_list_store_append(GTK_LIST_STORE(store), &item->iter);
 
 	/* */
-	xfsm_client_list_update(list, client);
+	xfsm_session_control_update(list, client);
 }
 
 /*
  */
 void
-xfsm_client_list_update(XfsmClientList *list, Client *client)
+xfsm_session_control_update(XfsmSessionControl *list, Client *client)
 {
 	GtkTreeModel *store;
 	gchar *program;
@@ -463,7 +464,7 @@ xfsm_client_list_update(XfsmClientList *list, Client *client)
 /*
  */
 void
-xfsm_client_list_remove(XfsmClientList *list, Client *client)
+xfsm_session_control_remove(XfsmSessionControl *list, Client *client)
 {
 	GtkTreeModel *store;
 	GList *lp;

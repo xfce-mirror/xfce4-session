@@ -178,13 +178,13 @@ bin_PROGRAMS = xfce4-session
 xfce4_session_SOURCES = \
 	client.c							\
 	client.h							\
-	client-list.c							\
-	client-list.h							\
 	ice-layer.c							\
 	ice-layer.h							\
 	main.c								\
 	manager.c							\
 	manager.h							\
+	session-control.c						\
+	session-control.h						\
 	shutdown.c							\
 	shutdown.h							\
 	splash-fallback.h						\
@@ -230,9 +230,9 @@ bin_PROGRAMS = xfce4-session$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 
 am_xfce4_session_OBJECTS = xfce4_session-client.$(OBJEXT) \
-	xfce4_session-client-list.$(OBJEXT) \
 	xfce4_session-ice-layer.$(OBJEXT) xfce4_session-main.$(OBJEXT) \
 	xfce4_session-manager.$(OBJEXT) \
+	xfce4_session-session-control.$(OBJEXT) \
 	xfce4_session-shutdown.$(OBJEXT) \
 	xfce4_session-splash-screen.$(OBJEXT) \
 	xfce4_session-startup.$(OBJEXT) xfce4_session-util.$(OBJEXT) \
@@ -244,11 +244,11 @@ xfce4_session_LDFLAGS =
 DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/xfce4_session-client-list.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-client.Po \
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/xfce4_session-client.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-ice-layer.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-main.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-manager.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-session-control.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-shutdown.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-splash-screen.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-startup.Po \
@@ -313,11 +313,11 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-client-list.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-client.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-ice-layer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-manager.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-session-control.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-shutdown.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-splash-screen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-startup.Po@am__quote@
@@ -392,39 +392,6 @@ xfce4_session-client.lo: client.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-client.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-client.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-client.lo `test -f 'client.c' || echo '$(srcdir)/'`client.c
-
-xfce4_session-client-list.o: client-list.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-client-list.o -MD -MP -MF "$(DEPDIR)/xfce4_session-client-list.Tpo" \
-@am__fastdepCC_TRUE@	  -c -o xfce4_session-client-list.o `test -f 'client-list.c' || echo '$(srcdir)/'`client-list.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-client-list.Tpo" "$(DEPDIR)/xfce4_session-client-list.Po"; \
-@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/xfce4_session-client-list.Tpo"; exit 1; \
-@am__fastdepCC_TRUE@	fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='client-list.c' object='xfce4_session-client-list.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-client-list.Po' tmpdepfile='$(DEPDIR)/xfce4_session-client-list.TPo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-client-list.o `test -f 'client-list.c' || echo '$(srcdir)/'`client-list.c
-
-xfce4_session-client-list.obj: client-list.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-client-list.obj -MD -MP -MF "$(DEPDIR)/xfce4_session-client-list.Tpo" \
-@am__fastdepCC_TRUE@	  -c -o xfce4_session-client-list.obj `if test -f 'client-list.c'; then $(CYGPATH_W) 'client-list.c'; else $(CYGPATH_W) '$(srcdir)/client-list.c'; fi`; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-client-list.Tpo" "$(DEPDIR)/xfce4_session-client-list.Po"; \
-@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/xfce4_session-client-list.Tpo"; exit 1; \
-@am__fastdepCC_TRUE@	fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='client-list.c' object='xfce4_session-client-list.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-client-list.Po' tmpdepfile='$(DEPDIR)/xfce4_session-client-list.TPo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-client-list.obj `if test -f 'client-list.c'; then $(CYGPATH_W) 'client-list.c'; else $(CYGPATH_W) '$(srcdir)/client-list.c'; fi`
-
-xfce4_session-client-list.lo: client-list.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-client-list.lo -MD -MP -MF "$(DEPDIR)/xfce4_session-client-list.Tpo" \
-@am__fastdepCC_TRUE@	  -c -o xfce4_session-client-list.lo `test -f 'client-list.c' || echo '$(srcdir)/'`client-list.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-client-list.Tpo" "$(DEPDIR)/xfce4_session-client-list.Plo"; \
-@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/xfce4_session-client-list.Tpo"; exit 1; \
-@am__fastdepCC_TRUE@	fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='client-list.c' object='xfce4_session-client-list.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-client-list.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-client-list.TPlo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-client-list.lo `test -f 'client-list.c' || echo '$(srcdir)/'`client-list.c
 
 xfce4_session-ice-layer.o: ice-layer.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-ice-layer.o -MD -MP -MF "$(DEPDIR)/xfce4_session-ice-layer.Tpo" \
@@ -524,6 +491,39 @@ xfce4_session-manager.lo: manager.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-manager.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-manager.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-manager.lo `test -f 'manager.c' || echo '$(srcdir)/'`manager.c
+
+xfce4_session-session-control.o: session-control.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-session-control.o -MD -MP -MF "$(DEPDIR)/xfce4_session-session-control.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o xfce4_session-session-control.o `test -f 'session-control.c' || echo '$(srcdir)/'`session-control.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-session-control.Tpo" "$(DEPDIR)/xfce4_session-session-control.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/xfce4_session-session-control.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='session-control.c' object='xfce4_session-session-control.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-session-control.Po' tmpdepfile='$(DEPDIR)/xfce4_session-session-control.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-session-control.o `test -f 'session-control.c' || echo '$(srcdir)/'`session-control.c
+
+xfce4_session-session-control.obj: session-control.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-session-control.obj -MD -MP -MF "$(DEPDIR)/xfce4_session-session-control.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o xfce4_session-session-control.obj `if test -f 'session-control.c'; then $(CYGPATH_W) 'session-control.c'; else $(CYGPATH_W) '$(srcdir)/session-control.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-session-control.Tpo" "$(DEPDIR)/xfce4_session-session-control.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/xfce4_session-session-control.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='session-control.c' object='xfce4_session-session-control.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-session-control.Po' tmpdepfile='$(DEPDIR)/xfce4_session-session-control.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-session-control.obj `if test -f 'session-control.c'; then $(CYGPATH_W) 'session-control.c'; else $(CYGPATH_W) '$(srcdir)/session-control.c'; fi`
+
+xfce4_session-session-control.lo: session-control.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-session-control.lo -MD -MP -MF "$(DEPDIR)/xfce4_session-session-control.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o xfce4_session-session-control.lo `test -f 'session-control.c' || echo '$(srcdir)/'`session-control.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-session-control.Tpo" "$(DEPDIR)/xfce4_session-session-control.Plo"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/xfce4_session-session-control.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='session-control.c' object='xfce4_session-session-control.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-session-control.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-session-control.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-session-control.lo `test -f 'session-control.c' || echo '$(srcdir)/'`session-control.c
 
 xfce4_session-shutdown.o: shutdown.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-shutdown.o -MD -MP -MF "$(DEPDIR)/xfce4_session-shutdown.Tpo" \

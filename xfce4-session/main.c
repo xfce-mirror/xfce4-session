@@ -275,7 +275,7 @@ static XfceTrayIcon *
 create_tray_icon(void)
 {
 	/* XXX */
-	extern GtkWidget *clientList;
+	extern GtkWidget *sessionControl;
 	GtkWidget *menuItem;
 	XfceTrayIcon *icon;
 	GtkWidget *menu;
@@ -297,7 +297,7 @@ create_tray_icon(void)
 		gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO,
 			GTK_ICON_SIZE_MENU));
 	g_signal_connect_swapped(menuItem, "activate",
-			G_CALLBACK(gtk_widget_show), clientList);
+			G_CALLBACK(gtk_widget_show), sessionControl);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
 	gtk_widget_show_all(menuItem);
 
@@ -330,7 +330,7 @@ create_tray_icon(void)
 
 	/* connect the double action */
 	g_signal_connect_swapped(G_OBJECT(icon), "clicked",
-			G_CALLBACK(toggle_visible_cb), clientList);
+			G_CALLBACK(toggle_visible_cb), sessionControl);
 
 	return(icon);
 }

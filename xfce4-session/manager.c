@@ -69,7 +69,7 @@
 #include "shutdown.h"
 #include "util.h"
 
-#include <xfce4-session/client-list.h>
+#include <xfce4-session/session-control.h>
 #include <xfce4-session/xfce_trayicon.h>
 
 #define XFSM_VERSION	2
@@ -95,7 +95,7 @@ static int numListeners;
 static IceListenObj *listenObjs;
 
 /* client list GUI */
-GtkWidget	*clientList = NULL;
+GtkWidget	*sessionControl = NULL;
 
 /* system tray icon */
 extern XfceTrayIcon	*trayIcon;
@@ -127,7 +127,7 @@ do {									\
 #define	client_set_state(_client, _state)				\
 do {									\
 	CLIENT((_client))->state = _state;				\
-	xfsm_client_list_update(XFSM_CLIENT_LIST(clientList),		\
+	xfsm_session_control_update(XFSM_SESSION_CONTROL(sessionControl),\
 			CLIENT((_client)));				\
 } while (0)
 
@@ -175,7 +175,7 @@ manager_init(void)
 	free(sessionManager);
 
 	/* XXX */
-	clientList = xfsm_client_list_new();
+	sessionControl = xfsm_session_control_new();
 
 	return(TRUE);
 }
@@ -518,7 +518,8 @@ register_client(SmsConn smsConn, Client *client, char *previousId)
 	}
 
 	/* XXX */
-	xfsm_client_list_append(XFSM_CLIENT_LIST(clientList), client);
+	xfsm_session_control_append(XFSM_SESSION_CONTROL(sessionControl),
+			client);
 
 	/* update the tray icon tooltip */
 	tip = g_strdup_printf(_("%u clients connected"),
@@ -783,7 +784,8 @@ close_connection(SmsConn smsConn, Client *client, int nReasons, char **reasons)
 	GList *lp;
 
 	/* XXX */
-	xfsm_client_list_remove(XFSM_CLIENT_LIST(clientList), client);
+	xfsm_session_control_remove(XFSM_SESSION_CONTROL(sessionControl),
+			client);
 
 	/* shutdown the XSMP/ICE connection */
 	iceConn = SmsGetIceConnection(smsConn);
@@ -885,7 +887,8 @@ set_properties(SmsConn smsConn, Client *client, int nProps, SmProp **props)
 	free(props);
 
 	/* update client list GUI */
-	xfsm_client_list_update(XFSM_CLIENT_LIST(clientList), client);
+	xfsm_session_control_update(XFSM_SESSION_CONTROL(sessionControl),
+			client);
 }
 
 /*
@@ -924,7 +927,8 @@ delete_properties(SmsConn smsConn, Client *client, int numProps,
 	free(propNames);
 
 	/* update client list GUI */
-	xfsm_client_list_update(XFSM_CLIENT_LIST(clientList), client);
+	xfsm_session_control_update(XFSM_SESSION_CONTROL(sessionControl),
+			client);
 }
 
 /*

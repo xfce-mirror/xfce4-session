@@ -24,8 +24,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __XFSM_CLIENT_LIST_H__
-#define __XFSM_CLIENT_LIST_H__
+#ifndef __XFSM_SESSION_CONTROL_H__
+#define __XFSM_SESSION_CONTROL_H__
 
 #include <gtk/gtk.h>
 
@@ -33,24 +33,24 @@
 
 G_BEGIN_DECLS
 
-#define	XFSM_CLIENT_LIST(obj)						\
-	G_TYPE_CHECK_INSTANCE_CAST(obj, xfsm_client_list_get_type(),	\
-			XfsmClientList)
-#define XFSM_CLIENT_LIST_CLASS(klass)					\
-	G_TYPE_CHECK_CLASS_CAST(klass, xfsm_client_list_get_type(),	\
-			XfsmClientListClass)
-#define XFSM_IS_CLIENT_LIST(obj)					\
-	G_TYPE_CHECK_INSTANCE_TYPE(obj, xfsm_client_list_get_type())
+#define	XFSM_SESSION_CONTROL(obj)					\
+	G_TYPE_CHECK_INSTANCE_CAST(obj, xfsm_session_control_get_type(),\
+			XfsmSessionControl)
+#define XFSM_SESSION_CONTROL_CLASS(klass)				\
+	G_TYPE_CHECK_CLASS_CAST(klass, xfsm_session_control_get_type(),	\
+			XfsmSessionControlClass)
+#define XFSM_IS_SESSION_CONTROL(obj)					\
+	G_TYPE_CHECK_INSTANCE_TYPE(obj, xfsm_session_control_get_type())
 
-typedef struct	_XfsmClientList		XfsmClientList;
-typedef struct	_XfsmClientListClass	XfsmClientListClass;
+typedef struct	_XfsmSessionControl		XfsmSessionControl;
+typedef struct	_XfsmSessionControlClass	XfsmSessionControlClass;
 
-struct _XfsmClientListClass
+struct _XfsmSessionControlClass
 {
 	GtkDialogClass	parent_class;
 };
 
-struct _XfsmClientList
+struct _XfsmSessionControl
 {
 	GtkDialog	dialog;
 
@@ -67,12 +67,15 @@ struct _XfsmClientList
 };
 
 /* prototypes */
-extern GType		xfsm_client_list_get_type(void);
-extern GtkWidget	*xfsm_client_list_new(void);
-extern void		xfsm_client_list_append(XfsmClientList *, Client *);
-extern void		xfsm_client_list_update(XfsmClientList *, Client *);
-extern void		xfsm_client_list_remove(XfsmClientList *, Client *);
+extern GType		xfsm_session_control_get_type(void);
+extern GtkWidget	*xfsm_session_control_new(void);
+extern void		xfsm_session_control_append(XfsmSessionControl *,
+				Client *);
+extern void		xfsm_session_control_update(XfsmSessionControl *,
+				Client *);
+extern void		xfsm_session_control_remove(XfsmSessionControl *,
+				Client *);
 
 G_END_DECLS
 
-#endif	/* !__XFSM_CLIENT_LIST_H__ */
+#endif	/* !__XFSM_SESSION_CONTROL_H__ */
