@@ -239,6 +239,7 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 man_MANS = xfce4-session.1
 xfce4_session_SOURCES = \
+	chooser-icon.h							\
 	ice-layer.c							\
 	ice-layer.h							\
 	main.c								\
@@ -285,7 +286,8 @@ pixmapdir = $(datadir)/pixmaps
 pixmap_DATA = xfce4-splash.png
 EXTRA_DIST = \
 	$(man_MANS)							\
-	$(pixmap_DATA)
+	$(pixmap_DATA)							\
+	chooser-icon.png
 
 all: all-am
 
@@ -924,6 +926,10 @@ uninstall-man: uninstall-man1
 	uninstall-info-am uninstall-man uninstall-man1 \
 	uninstall-pixmapDATA
 
+
+chooser-icon.h: $(srcdir)/chooser-icon.png
+	gdk-pixbuf-csource --raw --build-list                           \
+	chooser_icon_data $^ > $@
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

@@ -3,6 +3,7 @@ man_MANS = xfce4-session.1
 bin_PROGRAMS = xfce4-session
 
 xfce4_session_SOURCES =							\
+	chooser-icon.h							\
 	ice-layer.c							\
 	ice-layer.h							\
 	main.c								\
@@ -45,8 +46,14 @@ xfce4_session_LDADD =							\
 	@LIBXFCE4MCS_CLIENT_LIBS@					\
 	@LIBXFCEGUI4_LIBS@
 
+chooser-icon.h: $(srcdir)/chooser-icon.png
+	gdk-pixbuf-csource --raw --build-list                           \
+	chooser_icon_data $^ > $@
+
 pixmapdir = $(datadir)/pixmaps
 pixmap_DATA = xfce4-splash.png
+
 EXTRA_DIST =								\
 	$(man_MANS)							\
-	$(pixmap_DATA)
+	$(pixmap_DATA)							\
+	chooser-icon.png

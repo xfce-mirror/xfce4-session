@@ -131,6 +131,7 @@ again:
 #if 0
 	result = g_spawn_command_line_sync(command, &outbuf, &errbuf, &status, &err);
 #else
+  /* XXX - replace with g_spawn_sync using /dev/null for the fds */
   close (STDIN_FILENO);
   close (STDOUT_FILENO);
   close (STDERR_FILENO);

@@ -37,7 +37,9 @@
 #endif
 
 #include <libxfce4util/libxfce4util.h>
+#include <libxfcegui4/libxfcegui4.h>
 
+#include <xfce4-session/chooser-icon.h>
 #include <xfce4-session/xfsm-chooser.h>
 #include <xfce4-session/xfsm-util.h>
 
@@ -46,6 +48,7 @@
 
 enum
 {
+  ICON_COLUMN,
   NAME_COLUMN,
   N_COLUMNS,
 };
@@ -233,7 +236,7 @@ xfsm_chooser_init (XfsmChooser *chooser)
   gtk_widget_show (swin);
 
   /* tree view */
-  model = gtk_list_store_new (N_COLUMNS, G_TYPE_STRING);
+  model = gtk_list_store_new (N_COLUMNS, GDK_TYPE_PIXBUF, G_TYPE_STRING);
   chooser->tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL(model));
   g_object_unref (G_OBJECT (model));
   gtk_tooltips_set_tip (chooser->tooltips, chooser->tree,
@@ -242,6 +245,9 @@ xfsm_chooser_init (XfsmChooser *chooser)
                           "name to restore it."),
                         NULL);
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (chooser->tree), FALSE);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (chooser->tree),
+      gtk_tree_view_column_new_with_attributes ("Icon",
+        gtk_cell_renderer_pixbuf_new (), "pixbuf", ICON_COLUMN, NULL));
   gtk_tree_view_append_column (GTK_TREE_VIEW (chooser->tree),
       gtk_tree_view_column_new_with_attributes ("Sessions",
         gtk_cell_renderer_text_new (), "text", NAME_COLUMN, NULL));
@@ -325,6 +331,7 @@ xfsm_chooser_set_sessions (XfsmChooser *chooser,
   GtkTreeModel *model;
   GtkTreeIter diter;
   GtkTreeIter iter;
+  GdkPixbuf *pb;
   GList *lp;
 
   g_return_if_fail (XFSM_IS_CHOOSER (chooser));
@@ -334,10 +341,13 @@ xfsm_chooser_set_sessions (XfsmChooser *chooser,
 
   if (sessions != NULL)
     {
+      pb = xfce_inline_icon_at_size (chooser_icon_data, 16, 16);
+
       for (lp = sessions; lp != NULL; lp = lp->next)
         {
           gtk_list_store_append (GTK_LIST_STORE (model), &iter);
           gtk_list_store_set (GTK_LIST_STORE (model), &iter,
+                              ICON_COLUMN, pb,
                               NAME_COLUMN, (const gchar *) lp->data,
                               -1);
 
@@ -347,6 +357,8 @@ xfsm_chooser_set_sessions (XfsmChooser *chooser,
               diter = iter;
             }
         }
+
+      g_object_unref (G_OBJECT (pb));
 
       gtk_tree_selection_select_iter (selection, &diter);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (chooser->radio_load),
