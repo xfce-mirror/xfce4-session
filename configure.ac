@@ -39,7 +39,7 @@ AC_PROG_LIBTOOL
 
 dnl check for standard header files
 AC_HEADER_STDC
-AC_CHECK_FUNCS([mkdir clearenv sigaction])
+AC_CHECK_FUNCS([mkdir clearenv sigaction strdup])
 AC_CHECK_HEADERS([errno.h fcntl.h limits.h signal.h sys/param.h sys/utsname.h \
   sys/wait.h time.h unistd.h])
 
