@@ -278,7 +278,11 @@ xfsm_splash_screen_load (XfsmSplashScreen *splash,
   gchar *filename;
 
   filename = g_module_build_path (LIBDIR "/xfce4/splash/engines", engine);
+#if GLIB_CHECK_VERSION(2,4,0)
   splash->module = g_module_open (filename, G_MODULE_BIND_LOCAL);
+#else
+  splash->module = g_module_open (filename, 0);
+#endif
   g_free (filename);
 
   if (G_LIKELY (splash->module != NULL))

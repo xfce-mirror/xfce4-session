@@ -53,7 +53,7 @@ run_timeout (gpointer user_data)
 {
   int status;
   int result;
-  GPid pid = *((GPid *) user_data);
+  pid_t pid = *((pid_t *) user_data);
 
   result = waitpid (pid, &status, WNOHANG);
 
@@ -79,7 +79,7 @@ run (const gchar *command)
   GError *error = NULL;
   gchar **argv;
   gint    argc;
-  GPid    pid;
+  pid_t   pid;
 
   g_snprintf (buffer, 2048, "env DYLD_FORCE_FLAT_NAMESPACE= LD_BIND_NOW=true "
               "SESSION_MANAGER= %s", command);

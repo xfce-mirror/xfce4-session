@@ -52,7 +52,11 @@ module_load (const gchar *path,
 
   /* load module */
   module = g_new0 (Module, 1);
+#if GLIB_CHECK_VERSION(2,4,0)
   module->handle = g_module_open (path, G_MODULE_BIND_LOCAL);
+#else
+  module->handle = g_module_open (path, 0);
+#endif
   if (G_UNLIKELY (module->handle == NULL))
     goto error0;
   if (!g_module_symbol (module->handle, "config_init", (gpointer)&init))
