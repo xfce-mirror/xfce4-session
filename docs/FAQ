@@ -20,8 +20,11 @@ Session manager FAQ:
      with XFce4?
 
    Answer:
-     Copy the file $sysconfdir/xfce4/xinitrc.xfce4-session to ~/.xfce4/xinitrc
-     and start your X session using the startxfce4 script.
+     If you have a recent xfce-utils (post 20030708) then xfce4-session
+     is automatically started by startxfce4 as long as you don't have
+     a file ~/.xfce4/xinitrc in your home directory. Alternatively you
+     can copy the file $sysconfdir/xfce4/xinitrc.xfce4-session to
+     ~/.xfce4/xinitrc and start your X session using the startxfce4 script.
 
 
 3) Question:
