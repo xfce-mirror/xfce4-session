@@ -726,6 +726,14 @@ xfsm_manager_save_yourself (XfsmClient *client,
             {
               XfsmClient *client = XFSM_CLIENT (lp->data);
 
+              /* xterm's session management is broken, so we won't
+               * send a SAVE YOURSELF to xterms */
+              if (client->properties->program != NULL
+                  && strcasecmp (client->properties->program, "xterm") == 0)
+                {
+                  continue;
+                }
+
               if (client->state != XFSM_CLIENT_SAVINGLOCAL)
                 {
                   SmsSaveYourself (client->sms_conn, save_type, shutdown,

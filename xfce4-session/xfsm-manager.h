@@ -28,7 +28,7 @@
 
 
 #define DIE_TIMEOUT     ( 7 * 1000)
-#define SAVE_TIMEOUT    (15 * 1000)
+#define SAVE_TIMEOUT    (10 * 1000)
 #define STARTUP_TIMEOUT ( 8 * 1000)
 
 typedef enum
