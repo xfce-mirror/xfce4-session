@@ -242,6 +242,7 @@ static gboolean
 xfsm_startup_continue_session (const gchar *previous_id)
 {
   XfsmProperties *properties;
+  GList *lp;
   
   properties = (XfsmProperties *) g_list_nth_data (pending_properties, 0);
   if (properties != NULL)
@@ -253,11 +254,17 @@ xfsm_startup_continue_session (const gchar *previous_id)
       xfsm_start_application (properties->restart_command, NULL, NULL,
                               NULL, NULL, NULL);
       pending_properties = g_list_remove (pending_properties, properties);
-      xfsm_properties_free (properties);
+      starting_properties = g_list_append (starting_properties, properties);
 
       /* more to come... */
       return FALSE;
     }
+
+  /* start up done, free all properties that failed to restart correctly */
+  for (lp = starting_properties; lp != NULL; lp = lp->next)
+    xfsm_properties_free (XFSM_PROPERTIES (lp->data));
+  g_list_free (starting_properties);
+  starting_properties = NULL;
   
   return TRUE;
 }

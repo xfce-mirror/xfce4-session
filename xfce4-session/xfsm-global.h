@@ -37,6 +37,7 @@ struct _FailsafeClient
 
 
 extern gboolean          verbose;
+extern GList            *starting_properties;
 extern GList            *pending_properties;
 extern GList            *restart_properties;
 extern GList            *running_clients;

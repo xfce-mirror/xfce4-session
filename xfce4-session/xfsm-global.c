@@ -36,6 +36,7 @@
 
 /* global variables */
 gboolean          verbose = FALSE;
+GList            *starting_properties = NULL;
 GList            *pending_properties = NULL;
 GList            *restart_properties = NULL;
 GList            *running_clients = NULL;

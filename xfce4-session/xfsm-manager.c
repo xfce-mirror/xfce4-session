@@ -388,7 +388,7 @@ xfsm_manager_generate_client_id (SmsConn sms_conn)
           addr = g_strdup_printf ("0%.8x", g_random_int ());
         }
 
-      id = (char *) malloc (50);
+      id = (char *) g_malloc (50);
       g_snprintf (id, 50, "1%s%.13ld%.10d%.4d", addr,
                   (long) time (NULL), (int) getpid (), sequence);
       sequence = (sequence + 1) % 10000;
@@ -417,26 +417,45 @@ gboolean
 xfsm_manager_register_client (XfsmClient  *client,
                               const gchar *previous_id)
 {
-  XfsmProperties *properties;
+  XfsmProperties *properties = NULL;
   gchar          *client_id;
   GList          *lp;
   
   if (previous_id != NULL)
     {
-      for (lp = pending_properties; lp != NULL; lp = lp->next)
-        if (strcmp (XFSM_PROPERTIES (lp->data)->client_id, previous_id) == 0)
-          break;
-      
+      for (lp = starting_properties; lp != NULL; lp = lp->next)
+        {
+          if (strcmp (XFSM_PROPERTIES (lp->data)->client_id, previous_id) == 0)
+            {
+              properties = XFSM_PROPERTIES (lp->data);
+              starting_properties = g_list_remove (starting_properties,
+                                                   properties);
+              break;
+            }
+        }
+
+      if (properties == NULL)
+        {
+          for (lp = pending_properties; lp != NULL; lp = lp->next)
+            {
+              if (!strcmp (XFSM_PROPERTIES (lp->data)->client_id, previous_id))
+                {
+                  properties = XFSM_PROPERTIES (lp->data);
+                  pending_properties = g_list_remove (pending_properties,
+                                                      properties);
+                  break;
+                }
+            }
+        }
+
       /* If previous_id is invalid, the SM will send a BadValue error message
        * to the client and reverts to register state waiting for another
        * RegisterClient message.
        */
-      if (lp == NULL)
+      if (properties == NULL)
         return FALSE;
 
-      properties = XFSM_PROPERTIES (lp->data);
       xfsm_client_set_initial_properties (client, properties);
-      pending_properties = g_list_remove (pending_properties, properties);
     }
   else
     {
