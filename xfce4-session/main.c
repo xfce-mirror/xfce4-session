@@ -274,6 +274,54 @@ quit_session_cb(void)
 	manager_saveyourself(SmSaveBoth, True, SmInteractStyleAny, False);
 }
 
+static void
+show_about_dialog(void)
+{
+  static GtkWidget *dialog = NULL;
+  XfceAboutInfo *info;
+  GdkPixbuf *pb;
+
+  if (dialog == NULL) {
+    info = xfce_about_info_new(
+        PACKAGE_NAME,
+        PACKAGE_VERSION,
+        _("XFce desktop session manager"),
+        XFCE_COPYRIGHT_TEXT("2003,2004", "The XFce development team"),
+        XFCE_LICENSE_BSD);
+    xfce_about_info_set_homepage(info, "http://www.xfce.org/");
+    xfce_about_info_add_credit(info,
+        "Benedikt Meurer",
+        "benny@xfce.org",
+        "Application development");
+    xfce_about_info_add_credit(info,
+        "Oliver M. Bolzer",
+        "oliver@debian.org",
+        "Manual pages");
+    xfce_about_info_add_credit(info,
+        "Craig A. Betts",
+        "craig.betts@dfrc.nasa.gov",
+        "Solaris testing");
+    xfce_about_info_add_credit(info,
+        "Chris Greenman",
+        "chris.greenman@dfrc.nasa.gov",
+        "Solaris testing");
+
+    pb = inline_icon_at_size(session_icon_data, 48, 48);
+    dialog = xfce_about_dialog_new(NULL, info, pb);
+    g_object_unref(G_OBJECT(pb));
+
+   g_signal_connect_swapped(
+       GTK_OBJECT(dialog),
+       "response",
+       G_CALLBACK(gtk_widget_destroy),
+       GTK_OBJECT(dialog));
+
+   g_object_add_weak_pointer(G_OBJECT(dialog), (gpointer*)&dialog);
+  }
+
+  gtk_widget_show(dialog);
+}
+
 /*
  */
 static XfceTrayIcon *
@@ -289,6 +337,20 @@ create_tray_icon(void)
 	menu = gtk_menu_new();
 
 	/* */
+	menuItem = gtk_image_menu_item_new_with_mnemonic(_("About xfce4-session"));
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
+		gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_MENU));
+	g_signal_connect_swapped(menuItem, "activate",
+			G_CALLBACK(show_about_dialog), NULL);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
+	gtk_widget_show_all(menuItem);
+
+	/* */
+	menuItem = gtk_separator_menu_item_new();
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
+	gtk_widget_show(menuItem);
+
+	/* */
 	menuItem = gtk_image_menu_item_new_from_stock(GTK_STOCK_PREFERENCES,
 			NULL);
 	g_signal_connect(menuItem, "activate", 
@@ -299,8 +361,7 @@ create_tray_icon(void)
 	/* */
 	menuItem = gtk_image_menu_item_new_with_mnemonic(_("Session control"));
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuItem),
-		gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO,
-			GTK_ICON_SIZE_MENU));
+		gtk_image_new_from_stock(GTK_STOCK_EXECUTE, GTK_ICON_SIZE_MENU));
 	g_signal_connect_swapped(menuItem, "activate",
 			G_CALLBACK(gtk_widget_show), sessionControl);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
