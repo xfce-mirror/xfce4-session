@@ -23,19 +23,89 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_SYS_TYPES_H
+#include <sys/types.h>
+#endif
+#ifdef HAVE_SYS_WAIT_H
+#include <sys/wait.h>
+#endif
+#ifdef HAVE_SYS_TIME_H
+#include <sys/time.h>
+#endif
+#ifdef HAVE_SYS_RESOURCE_H
+#include <sys/resource.h>
+#endif
+
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 #include <libxfce4util/libxfce4util.h>
 
 #include <xfce4-session/xfsm-compat-kde.h>
+
+
+static gboolean
+run_timeout (gpointer user_data)
+{
+  int status;
+  int result;
+  GPid pid = *((GPid *) user_data);
+
+  result = waitpid (pid, &status, WNOHANG);
+
+  if (result == pid)
+    {
+      gtk_main_quit ();
+    }
+  else if (result == -1)
+    {
+      g_warning ("Failed to wait for process %d: %s",
+                 (int)pid, g_strerror (errno));
+      gtk_main_quit ();
+    }
+
+  return TRUE;
+}
 
 
 static void
 run (const gchar *command)
 {
   gchar buffer[2048];
+  GError *error = NULL;
+  gchar **argv;
+  gint    argc;
+  GPid    pid;
 
   g_snprintf (buffer, 2048, "env DYLD_FORCE_FLAT_NAMESPACE= LD_BIND_NOW=true "
               "SESSION_MANAGER= %s", command);
-  g_spawn_command_line_sync (buffer, NULL, NULL, NULL, NULL);
+
+  if (!g_shell_parse_argv (buffer, &argc, &argv, &error))
+    {
+      g_warning ("Unable to parse \"%s\": %s", buffer, error->message);
+      g_error_free (error);
+      return;
+    }
+
+  if (g_spawn_async (NULL, argv, NULL,
+                     G_SPAWN_DO_NOT_REAP_CHILD | G_SPAWN_SEARCH_PATH,
+                     NULL, NULL, &pid, &error))
+    {
+      guint id = g_timeout_add (300, run_timeout, &pid);
+      gtk_main ();
+      g_source_remove (id);
+    }
+  else
+    {
+      g_warning ("Unable to exec \"%s\": %s", buffer, error->message);
+      g_error_free (error);
+    }
+
+  g_strfreev (argv);
 }
 
 
