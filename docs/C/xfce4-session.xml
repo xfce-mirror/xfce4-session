@@ -2,7 +2,7 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
           "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY date "Aug 2004"> 
-  <!ENTITY appversion "4.1.x"> 
+  <!ENTITY appversion "4.1.90">
   <!ENTITY app "<application>xfce4-session</application>"> 
 ]>
 
@@ -14,7 +14,9 @@
   <title>Xfce 4 Session Manager</title>
   
   <copyright>
-    <year>2004</year> <holder>Benedikt Meurer</holder>
+    <year>2003</year>
+    <year>2004</year>
+    <holder>Benedikt Meurer</holder>
   </copyright>
 
 <!-- translators: uncomment this:
@@ -26,21 +28,22 @@
 
  -->
 
-<!-- I don;t know about this
   <legalnotice id="legalnotice">
     <para>
       This document is provided under the terms of the GNU GPL, version
       2 or (at your option) any later version.
     </para>
   </legalnotice>
--->
   
   <authorgroup>
-
     <author>
-      <firstname>Benedikt</firstname> <surname>Meurer</surname>
+      <firstname>Benedikt</firstname>
+      <surname>Meurer</surname>
       <affiliation>
 	      <address><email>benny@xfce.org</email></address>
+        <orgname>os-cillation</orgname>
+        <orgdiv>System development</orgdiv>
+        <jobtitle>Software developer</jobtitle>
       </affiliation>
     </author>
 
@@ -57,16 +60,6 @@ maintainers, etc. Commented out by default.
 -->
 
   </authorgroup>
-
-  <!--
-  <revhistory>
-    <revision>
-      <revnumber>0.3</revnumber> 
-      <date>May 2003</date>
-      <authorinitials>jbh</authorinitials>
-    </revision>
-  </revhistory>
-  -->
 
   <releaseinfo>This manual describes the &app; package, version &appversion;.
   </releaseinfo>
@@ -87,10 +80,10 @@ maintainers, etc. Commented out by default.
   <para>&app; provides session management for both X11R6 and 
   legacy X11R5 protocols. If you don't need legacy session management 
   support, you can disable it at compile time, giving 
-  --disable-legacy-sm to ./configure. Do NOT EVER run smproxy in 
-  session that is managed by xfce4-session, or weird things will happen. 
-  The included legacy session management does everything that smproxy 
-  would do, and besides that, it also support multiscreen display.</para>
+  --disable-legacy-sm to ./configure. Do <emphasis>NOT EVER</emphasis> run <application>smproxy</application> in 
+  session that is managed by &app;, or weird things will happen. 
+  The included legacy session management does everything that <application>smproxy</application>
+  would do, and besides that, it also supports multiscreen display.</para>
 
 </sect1>
 
@@ -174,6 +167,17 @@ maintainers, etc. Commented out by default.
 	  	<variablelist>
 
       <varlistentry>
+	<term>Launch Gnome services on startup</term> 
+	<listitem>
+      <para>Enable this option if you need the GNOME keyring daemon to be run
+      on startup. This option also instructs &app; to bring up the GNOME assistive
+      technologies at startup (if enabled in the GNOME control center). See the
+       GNOME documentation for more information on this topic.</para>
+	</listitem>
+		</varlistentry>
+
+
+      <varlistentry>
 	<term>Launch KDE services on startup</term> 
 	<listitem>
       <para>Enable this option if you plan to run KDE applications as part of 
@@ -212,19 +216,19 @@ maintainers, etc. Commented out by default.
 		<title>Splash screen settings</title>
 		
 			  	  <figure id="splash-screen-settings-fig">
-    <title>Splash screen settings dialog</title>
-    <screenshot>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/xfsm-splash.png" format="PNG" />
-        </imageobject>
+              <title>Splash screen settings dialog</title>
+              <screenshot>
+                <mediaobject>
+                  <imageobject>
+                    <imagedata fileref="images/xfsm-splash.png" format="PNG" />
+                  </imageobject>
 
-        <textobject>
-          <phrase>Shows the &app; splash screen settings dialog.</phrase>
-        </textobject>
-      </mediaobject>
-    </screenshot>
-  </figure>
+                  <textobject>
+                    <phrase>Shows the &app; splash screen settings dialog.</phrase>
+                  </textobject>
+                </mediaobject>
+              </screenshot>
+            </figure>
 		
 				<para>On the left, the dialog shows a list of all installed themes. 
 				Select a theme, and you will see, if available, a preview 
@@ -333,18 +337,18 @@ maintainers, etc. Commented out by default.
   <title>About &app;</title>
 
   <para>&app; was written by Benedikt Meurer 
-  (<email>benedikt.meurer@unix-ag.uni-siegen.de</email>).
+  (<email>benny@xfce.org</email>).
     To find more information, please visit the 
     <ulink url="http://www.xfce.org" type="http">Xfce web site</ulink>. 
   </para>
 
   <para>To report a bug or make a suggestion regarding this application or
     this manual, send an email to the 
-    <ulink url="http://lunar-linux.org/mailman/listinfo/xfce"
+    <ulink url="http://lunar-linux.org/mailman/listinfo/xfce4-dev"
       type="http">xfce4-dev</ulink> mailing list &mdash; this is the preferred
     method &mdash; or use the bug tracking system at the
-    <ulink url="http://bugs.xfce.org/" 
-      type="http">http://bugs.xfce.org/</ulink>. 
+    <ulink url="http://bugzilla.xfce.org/" 
+      type="http">http://bugzilla.xfce.org/</ulink>. 
     If you have questions about the use or installation of this package,
     please ask on the 
     <ulink url="http://lunar-linux.org/mailman/listinfo/xfce"

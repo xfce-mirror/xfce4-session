@@ -28,6 +28,7 @@ file"
 
 <xsl:template match="releaseinfo" mode="titlepage.mode">
   <span class="{name(.)}">
+    <br/>
     <xsl:apply-templates mode="titlepage.mode"/>
     <br/>
   </span>
