@@ -42,15 +42,15 @@
 #include <libxfce4mcs/mcs-client.h>
 #include <libxfce4util/i18n.h>
 #include <libxfce4util/util.h>
-#include <libxfcegui4/dialogs.h>
+#include <libxfcegui4/libxfcegui4.h>
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
-#include "ice-layer.h"
-#include "manager.h"
-#include "shutdown.h"
-
+#include <xfce4-session/ice-layer.h>
+#include <xfce4-session/manager.h>
+#include <xfce4-session/shutdown.h>
 #include <xfce4-session/splash-screen.h>
+#include <xfce4-session/tray-icon.h>
 
 /* */
 #define	CHANNEL	"session"
@@ -212,6 +212,59 @@ settings_watch(Window xwindow, Bool starting, long mask, void *data)
 
 /*
  */
+static void
+toggle_visible(GtkWidget *widget)
+{
+	if (GTK_WIDGET_VISIBLE(widget))
+		gtk_widget_hide(widget);
+	else
+		gtk_widget_show(widget);
+}
+
+/*
+ */
+static void
+show_preferences(void)
+{
+	(void)g_spawn_command_line_async("xfce-setting-show session", NULL);
+}
+
+/*
+ */
+static GtkWidget *
+create_tray_icon(void)
+{
+	/* XXX */
+	extern GtkWidget *clientList;
+	GtkWidget *defaultItem;
+	GtkWidget *menuItem;
+	GtkWidget *menu;
+	GtkWidget *icon;
+
+	menu = gtk_menu_new();
+
+	/* */
+	menuItem = gtk_image_menu_item_new_from_stock(GTK_STOCK_PREFERENCES,
+			NULL);
+	g_signal_connect(menuItem, "activate", 
+			G_CALLBACK(show_preferences), NULL);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
+	gtk_widget_show(menuItem);
+
+	/* */
+	defaultItem = gtk_menu_item_new_with_mnemonic(_("Session control"));
+	g_signal_connect_swapped(defaultItem, "activate",
+			G_CALLBACK(toggle_visible), clientList);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), defaultItem);
+	gtk_widget_show(defaultItem);
+
+	icon = xfsm_tray_icon_new(GTK_MENU(menu), defaultItem);
+
+	return(icon);
+}
+
+/*
+ */
 int
 main(int argc, char **argv)
 {
@@ -280,6 +333,10 @@ main(int argc, char **argv)
 	 */
 	if (!manager_restart())
 		g_idle_add((GSourceFunc)start_default_session, NULL);
+
+	/*
+	 */
+	gtk_widget_show(create_tray_icon());
 
 	gtk_main();
 

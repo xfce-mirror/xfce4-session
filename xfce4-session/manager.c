@@ -69,6 +69,8 @@
 #include "shutdown.h"
 #include "util.h"
 
+#include <xfce4-session/client-list.h>
+
 #define XFSM_VERSION	2
 
 /* current manager status */
@@ -90,6 +92,9 @@ static guint	dieTimeoutId = 0;
 /* ICE socket listener objects */
 static int numListeners;
 static IceListenObj *listenObjs;
+
+/* client list GUI */
+GtkWidget	*clientList = NULL;
 
 /* prototypes */
 static char	*manager_generate_client_id(SmsConn);
@@ -140,6 +145,9 @@ manager_init(void)
 	sessionManager = IceComposeNetworkIdList(numListeners, listenObjs);
 	setenv("SESSION_MANAGER", sessionManager, TRUE);
 	free(sessionManager);
+
+	/* XXX */
+	clientList = xfsm_client_list_new();
 
 	return(TRUE);
 }
@@ -430,6 +438,9 @@ register_client(SmsConn smsConn, Client *client, char *previousId)
 		SmsSaveYourself(smsConn, SmSaveLocal, False,
 				SmInteractStyleNone, False);
 	}
+
+	/* XXX */
+	xfsm_client_list_append(XFSM_CLIENT_LIST(clientList), client);
 
 	return(True);
 }
@@ -725,6 +736,9 @@ close_connection(SmsConn smsConn, Client *client, int nReasons, char **reasons)
 	gchar *reason;
 	GList *lp;
 
+	/* XXX */
+	xfsm_client_list_remove(XFSM_CLIENT_LIST(clientList), client);
+
 	/* shutdown the XSMP/ICE connection */
 	iceConn = SmsGetIceConnection(smsConn);
 	SmsCleanUp(smsConn);
@@ -817,6 +831,9 @@ set_properties(SmsConn smsConn, Client *client, int nProps, SmProp **props)
 			client->props[n++] = props[j];
 
 	free(props);
+
+	/* update client list GUI */
+	xfsm_client_list_update(XFSM_CLIENT_LIST(clientList), client);
 }
 
 /*
@@ -853,6 +870,9 @@ delete_properties(SmsConn smsConn, Client *client, int numProps,
 	for (name = propNames; name < propNames + numProps; name++)
 		free(*name);
 	free(propNames);
+
+	/* update client list GUI */
+	xfsm_client_list_update(XFSM_CLIENT_LIST(clientList), client);
 }
 
 /*

@@ -101,8 +101,7 @@ xfsm_splash_screen_class_init(XfsmSplashScreenClass *klass)
 
 	gobject_class = G_OBJECT_CLASS(klass);
 	gobject_class->finalize = xfsm_splash_screen_finalize;
-
-	parent_class = gtk_type_class(gtk_dialog_get_type());
+	parent_class = gtk_type_class(gtk_window_get_type());
 }
 
 /*
@@ -158,7 +157,6 @@ xfsm_splash_screen_finalize(GObject *object)
 	XfsmSplashScreen *splash;
 	guint n;
 
-	g_return_if_fail(object != NULL);
 	g_return_if_fail(XFSM_IS_SPLASH_SCREEN(object));
 
 	splash = XFSM_SPLASH_SCREEN(object);
@@ -222,9 +220,6 @@ xfsm_splash_screen_new(const gchar *splashTheme, guint progressMax,
 				(GSourceFunc)xfsm_splash_screen_timeout,
 				splash);
 	}
-
-	/* */
-	(void)g_main_context_iteration(NULL, FALSE);
 
 	return(GTK_WIDGET(splash));
 }

@@ -78,12 +78,15 @@ extern gboolean	client_save(const Client *, FILE *fp);
 extern Client	*client_load(FILE *fp);
 extern gchar	*client_get_current_directory(const Client *);
 extern gchar	*client_get_program(const Client *);
+extern gchar	*client_get_userid(const Client *);
 extern gchar	**client_get_restart_command(const Client *);
 extern gint	client_get_priority(const Client *);
 extern gint	client_get_restart_style_hint(const Client *);
 extern gint	client_compare_priority(const Client *, const Client *);
-
+extern gchar 	**client_get_command(const Client *, const gchar *);
 extern gboolean	client_run_command(const Client *, const gchar *, GError **);
+
+extern void	client_kill(const Client *);
 
 #define	client_get_id(client)		(g_strdup(CLIENT((client))->id))
 #define	client_get_hostname(client)	(g_strdup(CLIENT((client))->hostname))

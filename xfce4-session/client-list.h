@@ -24,21 +24,55 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __XFSM_UTIL_H__
-#define __XFSM_UTIL_H__
-
-#include <stdio.h>
+#ifndef __XFSM_CLIENT_LIST_H__
+#define __XFSM_CLIENT_LIST_H__
 
 #include <gtk/gtk.h>
 
+#include <xfce4-session/client.h>
+
+G_BEGIN_DECLS
+
+#define	XFSM_CLIENT_LIST(obj)						\
+	G_TYPE_CHECK_INSTANCE_CAST(obj, xfsm_client_list_get_type(),	\
+			XfsmClientList)
+#define XFSM_CLIENT_LIST_CLASS(klass)					\
+	G_TYPE_CHECK_CLASS_CAST(klass, xfsm_client_list_get_type(),	\
+			XfsmClientListClass)
+#define XFSM_IS_CLIENT_LIST(obj)					\
+	G_TYPE_CHECK_INSTANCE_TYPE(obj, xfsm_client_list_get_type())
+
+typedef struct	_XfsmClientList		XfsmClientList;
+typedef struct	_XfsmClientListClass	XfsmClientListClass;
+
+struct _XfsmClientListClass
+{
+	GtkDialogClass	parent_class;
+};
+
+struct _XfsmClientList
+{
+	GtkDialog	dialog;
+
+	/* */
+	GList		*clients;
+
+	/* */
+	GtkWidget	*tree;
+
+	/* buttons */
+	GtkWidget	*cloneButton;
+	GtkWidget	*closeButton;
+	GtkWidget	*killButton;
+};
+
 /* prototypes */
-extern char	*fstrread(FILE *);
-extern void	fstrwrite(FILE *, const char *);
+extern GType		xfsm_client_list_get_type(void);
+extern GtkWidget	*xfsm_client_list_new(void);
+extern void		xfsm_client_list_append(XfsmClientList *, Client *);
+extern void		xfsm_client_list_update(XfsmClientList *, Client *);
+extern void		xfsm_client_list_remove(XfsmClientList *, Client *);
 
-extern gchar	*xfce_strjoin(gchar *, gchar **, gint);
-extern gchar	*xfce_gethostname(void);
+G_END_DECLS
 
-extern GtkWidget	*xfsm_imgbtn_new(const gchar *, const gchar *);
-
-#endif	/* !__XFSM_UTIL_H__ */
-
+#endif	/* !__XFSM_CLIENT_LIST_H__ */

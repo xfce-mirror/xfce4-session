@@ -239,6 +239,19 @@ client_get_program(const Client *client)
 
 /*
  */
+gchar *
+client_get_userid(const Client *client)
+{
+	SmProp *p;
+
+	if ((p = client_get_property(client, SmUserID)) != NULL)
+		return(g_strdup(p->vals->value));
+
+	return(NULL);
+}
+
+/*
+ */
 gchar **
 client_get_restart_command(const Client *client)
 {
@@ -353,3 +366,14 @@ client_compare_priority(const Client *a, const Client *b)
 {
 	return(client_get_priority(a) - client_get_priority(b));
 }
+
+/*
+ */
+void
+client_kill(const Client *client)
+{
+	g_return_if_fail(client != NULL);
+
+	SmsDie(client->smsConn);
+}
+

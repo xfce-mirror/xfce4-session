@@ -127,6 +127,9 @@ gchar *
 xfce_gethostname(void)
 {
 #ifdef HAVE_GETHOSTNAME
+#ifdef MAXHOSTNAMELEN
+#define MAXHOSTNAMELEN		256
+#endif
 	char hostname[MAXHOSTNAMELEN];
 
 	if (gethostname(hostname, MAXHOSTNAMELEN) == 0)
@@ -140,5 +143,42 @@ xfce_gethostname(void)
 	g_error("Unable to determine your hostname: %s", g_strerror(errno));
 	/* NOT REACHED */
 	return(NULL);
+}
+
+/*
+ */
+GtkWidget *
+xfsm_imgbtn_new(const gchar *text, const gchar *icon)
+{
+	GtkWidget *button;
+	GtkWidget *align;
+	GtkWidget *image;
+	GtkWidget *label;
+	GtkWidget *hbox;
+
+	/* */
+	button = gtk_button_new();
+
+	/* */
+	align = gtk_alignment_new(0.5f, 0.5f, 0.0f, 0.0f);
+	gtk_container_add(GTK_CONTAINER(button), align);
+	gtk_widget_show(align);
+
+	/* */
+	hbox = gtk_hbox_new(FALSE, 0);
+	gtk_container_add(GTK_CONTAINER(align), hbox);
+	gtk_widget_show(hbox);
+
+	/* */
+	image = gtk_image_new_from_stock(icon, GTK_ICON_SIZE_BUTTON);
+	gtk_box_pack_start(GTK_BOX(hbox), image, FALSE, FALSE, 2);
+	gtk_widget_show(image);
+
+	/* */
+	label = gtk_label_new_with_mnemonic(text);
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 2);
+	gtk_widget_show(label);
+
+	return(button);
 }
 

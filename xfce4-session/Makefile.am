@@ -3,6 +3,8 @@ bin_PROGRAMS = xfce4-session
 xfce4_session_SOURCES =							\
 	client.c							\
 	client.h							\
+	client-list.c							\
+	client-list.h							\
 	ice-layer.c							\
 	ice-layer.h							\
 	main.c								\
@@ -15,6 +17,8 @@ xfce4_session_SOURCES =							\
 	splash-screen.h							\
 	startup.c							\
 	startup.h							\
+	tray-icon.c							\
+	tray-icon.h							\
 	util.c								\
 	util.h
 

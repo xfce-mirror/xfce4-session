@@ -24,21 +24,46 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __XFSM_UTIL_H__
-#define __XFSM_UTIL_H__
+#ifndef __XFSM_TRAY_ICON_H__
+#define __XFSM_TRAY_ICON_H__
 
-#include <stdio.h>
-
+#include <libxfcegui4/netk-trayicon.h>
 #include <gtk/gtk.h>
 
+G_BEGIN_DECLS
+
+#define XFSM_TRAY_ICON(obj)						\
+	G_TYPE_CHECK_INSTANCE_CAST(obj, xfsm_tray_icon_get_type(),	\
+			XfsmTrayIcon)
+#define	XFSM_TRAY_ICON_CLASS(klass)					\
+	G_TYPE_CHECK_CLASS_CAST(klass, xfsm_tray_icon_get_type(),	\
+			XfsmTrayIconClass)
+#define	XFSM_IS_TRAY_ICON(obj)						\
+	G_TYPE_CHECK_INSTANCE_TYPE(obj, xfsm_tray_icon_get_type())
+
+typedef struct	_XfsmTrayIcon		XfsmTrayIcon;
+typedef struct	_XfsmTrayIconClass	XfsmTrayIconClass;
+
+struct _XfsmTrayIconClass
+{
+	NetkTrayIconClass	parent_class;
+};
+
+struct _XfsmTrayIcon
+{
+	NetkTrayIcon	icon;
+
+	/* */
+	GtkMenu		*menu;
+
+	/* */
+	GtkWidget	*defaultItem;
+};
+
 /* prototypes */
-extern char	*fstrread(FILE *);
-extern void	fstrwrite(FILE *, const char *);
+extern GType		xfsm_tray_icon_get_type(void);
+extern GtkWidget	*xfsm_tray_icon_new(GtkMenu *, GtkWidget *);
 
-extern gchar	*xfce_strjoin(gchar *, gchar **, gint);
-extern gchar	*xfce_gethostname(void);
+G_END_DECLS
 
-extern GtkWidget	*xfsm_imgbtn_new(const gchar *, const gchar *);
-
-#endif	/* !__XFSM_UTIL_H__ */
-
+#endif	/* !__XFSM_TRAY_ICON_H__ */
