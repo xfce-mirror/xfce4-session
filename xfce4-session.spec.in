@@ -36,10 +36,13 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS COPYING ChangeLog ChangeLog.pre-xfce-devel NEWS README TODO
 %{_sysconfdir}/xdg/
 %{_sysconfdir}/xfce4/
+%{_datadir}/applications/
+%{_datadir}/icons/
 %{_datadir}/themes/
 %{_datadir}/locale/
 %{_mandir}/man1/*
 %{_bindir}/*
 %{_libdir}/xfce4/mcs-plugins/
+%{_libexecdir}/xfsm-export-theme
 %{_libexecdir}/xfsm-install-theme
 %{_libexecdir}/xfsm-shutdown-helper

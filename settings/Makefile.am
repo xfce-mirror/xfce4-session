@@ -15,6 +15,7 @@ session_settings_la_SOURCES =						\
 	looknfeel.c							\
 	looknfeel.h							\
 	session.c							\
+	settings.h							\
 	../xfce4-session/xfsm-splash-theme.c
 
 session_settings_la_CFLAGS =						\

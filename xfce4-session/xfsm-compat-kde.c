@@ -45,7 +45,7 @@ xfsm_compat_kde_startup (XfsmSplashScreen *splash)
   gchar command[256];
 
   xfsm_splash_screen_next (splash, _("Starting KDE services"));
-  run ("kdeinit +kcminit +knotify");
+  run ("kdeinit");
 
   /* tell klauncher about the session manager */
   g_snprintf (command, 256, "dcop klauncher klauncher setLaunchEnv "
