@@ -37,6 +37,11 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 host_triplet = @host@
+@HAVE_CYGWIN_TRUE@am__append_1 = \
+@HAVE_CYGWIN_TRUE@	-no-undefined							\
+@HAVE_CYGWIN_TRUE@	-export-symbols $(top_srcdir)/xfce4-session/xfsm-splash-rc.def	\
+@HAVE_CYGWIN_TRUE@	@XFCE_MCS_MANAGER_LDFLAGS@
+
 subdir = engines/balou
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in TODO
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -52,7 +57,7 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(baloudir)"
 balouLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(balou_LTLIBRARIES)
-libbalou_la_LIBADD =
+libbalou_la_DEPENDENCIES =
 am_libbalou_la_OBJECTS = libbalou_la-balou-theme.lo \
 	libbalou_la-balou.lo libbalou_la-config.lo \
 	libbalou_la-engine.lo libbalou_la-gnome-uri.lo
@@ -123,6 +128,8 @@ GMSGFMT = @GMSGFMT@
 GNOME_CFLAGS = @GNOME_CFLAGS@
 GNOME_LIBS = @GNOME_LIBS@
 GNOME_REQUIRED_VERSION = @GNOME_REQUIRED_VERSION@
+HAVE_CYGWIN_FALSE = @HAVE_CYGWIN_FALSE@
+HAVE_CYGWIN_TRUE = @HAVE_CYGWIN_TRUE@
 ICEAUTH = @ICEAUTH@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -252,7 +259,10 @@ libbalou_la_CFLAGS = \
 
 libbalou_la_LDFLAGS = \
 	-avoid-version							\
-	-module
+	-module\
+$(am__append_1)
+@HAVE_CYGWIN_TRUE@libbalou_la_LIBADD = \
+@HAVE_CYGWIN_TRUE@	@XFCE_MCS_MANAGER_LIBS@
 
 all: all-recursive
 

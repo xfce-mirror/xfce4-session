@@ -37,6 +37,11 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 host_triplet = @host@
+@HAVE_CYGWIN_TRUE@am__append_1 = \
+@HAVE_CYGWIN_TRUE@	-no-undefined							\
+@HAVE_CYGWIN_TRUE@	-export-symbols $(top_srcdir)/xfce4-session/xfsm-splash-rc.def	\
+@HAVE_CYGWIN_TRUE@	@XFCE_MCS_MANAGER_LDFLAGS@
+
 subdir = engines/simple
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -52,7 +57,7 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(simpledir)"
 simpleLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(simple_LTLIBRARIES)
-libsimple_la_LIBADD =
+libsimple_la_DEPENDENCIES =
 am_libsimple_la_OBJECTS = libsimple_la-simple.lo
 libsimple_la_OBJECTS = $(am_libsimple_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
@@ -110,6 +115,8 @@ GMSGFMT = @GMSGFMT@
 GNOME_CFLAGS = @GNOME_CFLAGS@
 GNOME_LIBS = @GNOME_LIBS@
 GNOME_REQUIRED_VERSION = @GNOME_REQUIRED_VERSION@
+HAVE_CYGWIN_FALSE = @HAVE_CYGWIN_FALSE@
+HAVE_CYGWIN_TRUE = @HAVE_CYGWIN_TRUE@
 ICEAUTH = @ICEAUTH@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -229,7 +236,10 @@ libsimple_la_CFLAGS = \
 
 libsimple_la_LDFLAGS = \
 	-avoid-version							\
-	-module
+	-module\
+$(am__append_1)
+@HAVE_CYGWIN_TRUE@libsimple_la_LIBADD = \
+@HAVE_CYGWIN_TRUE@	@XFCE_MCS_MANAGER_LIBS@
 
 EXTRA_DIST = \
 	fallback.h							\

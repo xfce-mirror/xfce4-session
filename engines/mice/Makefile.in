@@ -38,6 +38,11 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 host_triplet = @host@
+@HAVE_CYGWIN_TRUE@am__append_1 = \
+@HAVE_CYGWIN_TRUE@	-no-undefined							\
+@HAVE_CYGWIN_TRUE@	-export-symbols $(top_srcdir)/xfce4-session/xfsm-splash-rc.def	\
+@HAVE_CYGWIN_TRUE@	@XFCE_MCS_MANAGER_LDFLAGS@
+
 noinst_PROGRAMS = generate$(EXEEXT)
 subdir = engines/mice
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
@@ -54,7 +59,7 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(micedir)"
 miceLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(mice_LTLIBRARIES)
-libmice_la_LIBADD =
+libmice_la_DEPENDENCIES =
 am_libmice_la_OBJECTS = libmice_la-mice.lo
 libmice_la_OBJECTS = $(am_libmice_la_OBJECTS)
 PROGRAMS = $(noinst_PROGRAMS)
@@ -117,6 +122,8 @@ GMSGFMT = @GMSGFMT@
 GNOME_CFLAGS = @GNOME_CFLAGS@
 GNOME_LIBS = @GNOME_LIBS@
 GNOME_REQUIRED_VERSION = @GNOME_REQUIRED_VERSION@
+HAVE_CYGWIN_FALSE = @HAVE_CYGWIN_FALSE@
+HAVE_CYGWIN_TRUE = @HAVE_CYGWIN_TRUE@
 ICEAUTH = @ICEAUTH@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -235,7 +242,10 @@ libmice_la_CFLAGS = \
 
 libmice_la_LDFLAGS = \
 	-avoid-version							\
-	-module
+	-module\
+$(am__append_1)
+@HAVE_CYGWIN_TRUE@libmice_la_LIBADD = \
+@HAVE_CYGWIN_TRUE@	@XFCE_MCS_MANAGER_LIBS@
 
 generate_SOURCES = \
 	generate.c

@@ -38,6 +38,11 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 host_triplet = @host@
+@HAVE_CYGWIN_TRUE@am__append_1 = \
+@HAVE_CYGWIN_TRUE@	-no-undefined							\
+@HAVE_CYGWIN_TRUE@	-export-symbols $(datadir)/xfce4/devel/mcs-manager.def		\
+@HAVE_CYGWIN_TRUE@	@XFCE_MCS_MANAGER_LDFLAGS@
+
 subdir = settings/session
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -53,7 +58,7 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(sessiondir)" "$(DESTDIR)$(appsdir)"
 sessionLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(session_LTLIBRARIES)
-session_settings_la_LIBADD =
+session_settings_la_DEPENDENCIES =
 am_session_settings_la_OBJECTS = session_settings_la-session.lo
 session_settings_la_OBJECTS = $(am_session_settings_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
@@ -113,6 +118,8 @@ GMSGFMT = @GMSGFMT@
 GNOME_CFLAGS = @GNOME_CFLAGS@
 GNOME_LIBS = @GNOME_LIBS@
 GNOME_REQUIRED_VERSION = @GNOME_REQUIRED_VERSION@
+HAVE_CYGWIN_FALSE = @HAVE_CYGWIN_FALSE@
+HAVE_CYGWIN_TRUE = @HAVE_CYGWIN_TRUE@
 ICEAUTH = @ICEAUTH@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -225,14 +232,17 @@ session_LTLIBRARIES = \
 
 session_settings_la_LDFLAGS = \
 	-avoid-version							\
-	-module
-
+	-module\
+$(am__append_1)
 session_settings_la_SOURCES = \
 	session.c
 
 session_settings_la_CFLAGS = \
 	@XFCE_MCS_MANAGER_CFLAGS@					\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"
+
+@HAVE_CYGWIN_TRUE@session_settings_la_LIBADD = \
+@HAVE_CYGWIN_TRUE@	@XFCE_MCS_MANAGER_LIBS@
 
 EXTRA_DIST = \
 	xfce-session-settings.desktop
