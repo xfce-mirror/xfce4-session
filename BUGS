@@ -1,16 +1,8 @@
 * xfce4-session does no longer work with smproxy. We have to write our own
   multihead-safe smproxy replacement.
+
 * Make the logout dialog icon themable through GtkIconTheme
 
+* xfce4-session sometimes exits with X error when trying to logout from
+  the second screen. This is likely to be a bug in the gtk-engine.
 
-How to support several sessions:
---------------------------------
-
- * On startup, display "Press F2 for session chooser", the session menu
-   contains the saved sessions + Failsafe, if no F2, then start the
-   last session. Also support an option "Always display session chooser".
-   The session chooser should also offer the ability to remove/rename
-   sessions.
-
- * If Failsafe was started, then display a "Save as" before saving
-   the session, so the user can choose a name

@@ -3,26 +3,20 @@
  * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *                                                                              
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *                                                                              
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -111,10 +105,11 @@ sudo(const gchar *action)
 {
 	gboolean result;
 	gchar *command;
-/*  gchar *errbuf;*/
-/*  gchar *outbuf;*/
+  gchar **argv;
+  gchar **envp;
 	GError *err;
 	gint status;
+  gint argc;
 
 again:
 	err = NULL;
@@ -128,30 +123,38 @@ again:
 #else
 	command = g_strdup_printf("sudo -S -u root /sbin/%s", action);
 #endif
-#if 0
-	result = g_spawn_command_line_sync(command, &outbuf, &errbuf, &status, &err);
-#else
-  /* XXX - replace with g_spawn_sync using /dev/null for the fds */
-  close (STDIN_FILENO);
-  close (STDOUT_FILENO);
-  close (STDERR_FILENO);
-  result = (system (command) == 0);
-#endif
+
+  result = g_shell_parse_argv (command, &argc, &argv, &err);
+
+  if (result)
+    {
+      envp = g_new0 (gchar *, 1);
+  
+      result = g_spawn_sync (NULL, argv, envp,
+                             G_SPAWN_SEARCH_PATH | G_SPAWN_STDOUT_TO_DEV_NULL |
+                             G_SPAWN_STDERR_TO_DEV_NULL,
+                             NULL, NULL, NULL, NULL, &status, &err);
+
+      g_strfreev (envp);
+      g_strfreev (argv);
+    }
+
 	g_free(command);
 
-	if (!result) {
-/*    g_error_free(err);*/
+	if (!result)
+    {
+      g_error_free (err);
 
-    if (strcmp (action, "poweroff") == 0)
-      {
-        action = "halt";
-        goto again;
-      }
+      if (strcmp (action, "poweroff") == 0)
+        {
+          action = "halt";
+          goto again;
+        }
 
-		return(FALSE);
-	}
+      return FALSE;
+	  }
 
-	return(WIFEXITED(status) && WEXITSTATUS(status) == 0);
+	return (WIFEXITED (status) && WEXITSTATUS (status) == 0);
 }
 
 #ifdef HAVE_SIGPROCMASK
@@ -200,6 +203,9 @@ main(int argc, char **argv)
   block_signals ();
 #endif
 
+  /* XXX - get rid of the shutdown.allow and replace it w/ something
+   * more convenient!
+   */
 	if (geteuid() == 0) {
 		if (stat(PATH_SHUTDOWNALLOW, &sb) < 0) {
 			fprintf(stderr, "Unable to stat file %s: %s\n",

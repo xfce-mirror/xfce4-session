@@ -3,26 +3,20 @@
  * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *                                                                              
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *                                                                              
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -65,11 +59,9 @@
 /* prototypes */
 static void	run_dialog(McsPlugin *);
 static void	save_settings(void);
-static void	confirmLogoutChangedCB(GtkToggleButton *, McsPlugin *);
 static void	autoSaveChangedCB(GtkToggleButton *, McsPlugin *);
 
 /* settings */
-static gboolean	confirmLogout = TRUE;
 static gboolean	autoSave = FALSE;
 static gboolean	displayChooser = FALSE;
 
@@ -106,20 +98,10 @@ save_settings(void)
                             FALSE);
 
   xfce_rc_set_group (rc, "General");
-  xfce_rc_write_bool_entry (rc, "ConfirmLogout", confirmLogout);
   xfce_rc_write_bool_entry (rc, "AutoSave", autoSave);
   xfce_rc_write_bool_entry (rc, "AlwaysDisplayChooser", displayChooser);
 
   xfce_rc_close (rc);
-}
-
-/*
- */
-static void
-confirmLogoutChangedCB(GtkToggleButton *button, McsPlugin *plugin)
-{
-	confirmLogout = gtk_toggle_button_get_active(button);
-	save_settings();
 }
 
 /*
@@ -170,7 +152,6 @@ run_dialog(McsPlugin *plugin)
                             "xfce4-session/xfce4-session.rc",
                             TRUE);
   xfce_rc_set_group (rc, "General");
-  confirmLogout = xfce_rc_read_bool_entry (rc, "ConfirmLogout", TRUE);
   autoSave = xfce_rc_read_bool_entry (rc, "AutoSave", TRUE);
   displayChooser = xfce_rc_read_bool_entry (rc, "AlwaysDisplayChooser", FALSE);
   xfce_rc_close (rc);
@@ -211,18 +192,6 @@ run_dialog(McsPlugin *plugin)
 	vbox = gtk_vbox_new(FALSE, BORDER);
 	gtk_container_set_border_width(GTK_CONTAINER(vbox), BORDER);
 	xfce_framebox_add(XFCE_FRAMEBOX(frame), vbox);
-
-	/* */
-	checkbox = gtk_check_button_new_with_label(_("Confirm logout"));
-	gtk_tooltips_set_tip(tooltips, checkbox, _(
-			"Should the session manager ask the user to confirm "
-			"the logout. If disabled, the session will be closed "
-			"without any further user interaction."), NULL);
-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbox),
-			confirmLogout);
-	g_signal_connect(checkbox, "toggled",G_CALLBACK(confirmLogoutChangedCB),
-			plugin);
-	gtk_box_pack_start(GTK_BOX(vbox), checkbox, FALSE, TRUE, 0);
 
 	/* */
 	checkbox = gtk_check_button_new_with_label(

@@ -1,49 +1,25 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003,2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *                                                                              
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *                                                                              
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
  *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
-/* Parts of this file where taken from logout.c
-
-   Written by Owen Taylor <otaylor@redhat.com>
-   Copyright (C) Red Hat
-
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2, or (at your option)
-   any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
-   02111-1307, USA.
+ * Parts of this file where taken from gnome-session/logout.c, which
+ * was written by Owen Taylor <otaylor@redhat.com>.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -120,6 +96,17 @@ fadeout_screen (GdkScreen *screen)
 }
 
 static void
+show_fadeout_windows (void)
+{
+  GdkDisplay *display;
+  int n;
+
+  display = gdk_display_get_default ();
+  for (n = 0; n < gdk_display_get_n_screens (display); ++n)
+    fadeout_screen (gdk_display_get_screen (display, n));
+}
+
+static void
 hide_fadeout_windows (void)
 {
   GdkWindowAttr attr;
@@ -175,7 +162,6 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 	GtkWidget *hidden;
   gboolean saveonexit;
   gboolean autosave;
-  gboolean confirm;
   gint monitor;
 	gint result;
   XfceRc *rc;
@@ -190,54 +176,45 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   xfce_rc_set_group (rc, "General");
   saveonexit = xfce_rc_read_bool_entry (rc, "SaveOnExit", TRUE);
   autosave = xfce_rc_read_bool_entry (rc, "AutoSave", FALSE);
-  confirm = xfce_rc_read_bool_entry (rc, "ConfirmLogout", TRUE);
 
-	/*
-	 * The user do not want to see a "shutdown dialog", so lets assume,
-	 * he's willing to execute the default (whatever that be)
-	 */
-	if (!confirm) {
-		*saveSession = autosave || saveonexit;
-		*shutdownType = SHUTDOWN_LOGOUT; /* XXX - configurable? */
-		return(TRUE);
-	}
-
-  /* give the logout button some time to change its visual state */
-	g_main_context_iteration (NULL, FALSE);
+  /* It's really bad here if someone else has the pointer
+   * grabbed, so we first grab the pointer and keyboard
+   * to an offscreen window, and then once we have the
+   * server grabbed, move that to our dialog.
+   */
+  gtk_rc_reparse_all ();
 
   /* get screen with pointer */
   screen = xfsm_locate_screen_with_pointer (&monitor);
   if (screen == NULL)
     {
-      monitor = 0;
       screen = gdk_screen_get_default ();
+      monitor = 0;
     }
 
 	/* Try to grab Input on a hidden window first */
 	hidden = gtk_invisible_new_for_screen (screen);
 	gtk_widget_show_now (hidden);
-  gdk_flush ();
-        
+
 	accessibility = GTK_IS_ACCESSIBLE (gtk_widget_get_accessible (hidden));
 
   if (!accessibility) 
     {
       for (;;)
         {
-          if (gdk_pointer_grab(hidden->window, FALSE, 0, NULL, NULL,
-                               GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS)
+          if (gdk_pointer_grab (hidden->window, FALSE, 0, NULL, NULL,
+                                GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS)
             {
               if (gdk_keyboard_grab (hidden->window, FALSE, GDK_CURRENT_TIME)
                   == GDK_GRAB_SUCCESS)
                 {
-                  gtk_widget_destroy(hidden);
                   break;
                 }
           
-              gdk_pointer_ungrab(GDK_CURRENT_TIME);
+              gdk_pointer_ungrab (GDK_CURRENT_TIME);
             }
 
-          g_usleep(50 * 1000);
+          g_usleep (50 * 1000);
         }
 
       dialog = g_object_new (GTK_TYPE_DIALOG,
@@ -256,28 +233,10 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   gtk_dialog_add_button (GTK_DIALOG (dialog), GTK_STOCK_OK,
                          GTK_RESPONSE_OK);
 
-	gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_CANCEL);
-	gtk_window_set_resizable(GTK_WINDOW(dialog), FALSE);
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
+  gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
+	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
   gtk_window_set_screen (GTK_WINDOW (dialog), screen);
-
-  if (!accessibility)
-    {
-      GdkDisplay *dpy;
-      int n, i;
-
-      gdk_x11_grab_server ();
-
-      dpy = gdk_display_get_default ();
-
-      n = gdk_display_get_n_screens (dpy);
-      for (i = 0; i < n; ++i)
-        {
-          GdkScreen *screen = gdk_display_get_screen (dpy, i);
-          fadeout_screen (screen);
-        }
-
-      gdk_flush ();
-    }
 
 	dbox = GTK_DIALOG(dialog)->vbox;
 
@@ -334,42 +293,34 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
     checkbox = NULL;
   }
 
+  /* create small border */
+  if (!accessibility)
+    xfsm_window_add_border (GTK_WINDOW (dialog));
+	
   /* center dialog on target monitor */
   xfsm_center_window_on_screen (GTK_WINDOW (dialog), screen, monitor);
 
+  if (!accessibility)
+    {
+      gdk_x11_grab_server ();
+
+      show_fadeout_windows ();
+    }
+
 	/* need to realize the dialog first! */
-	gtk_widget_show_now(dialog);
+	gtk_widget_show_now (dialog);
 
 	/* Grab Keyboard and Mouse pointer */
   if (!accessibility) 
     {
-	    gdk_pointer_grab(dialog->window, TRUE, 0, NULL, NULL, GDK_CURRENT_TIME);
-    	gdk_keyboard_grab(dialog->window, FALSE, GDK_CURRENT_TIME);
-    	XSetInputFocus(GDK_DISPLAY(), GDK_WINDOW_XWINDOW(dialog->window),
-		                 RevertToNone, CurrentTime);
+	    gdk_pointer_grab (dialog->window, TRUE, 0, NULL, NULL, GDK_CURRENT_TIME);
+    	gdk_keyboard_grab (dialog->window, FALSE, GDK_CURRENT_TIME);
+    	XSetInputFocus (GDK_DISPLAY (), GDK_WINDOW_XWINDOW (dialog->window),
+		                  RevertToParent, CurrentTime);
     }
 
-  /* create small border */
-  {
-    GtkWidget *box1, *box2;
-
-    box1 = gtk_event_box_new ();
-    gtk_widget_modify_bg (box1, GTK_STATE_NORMAL, 
-                          &(box1->style->bg [GTK_STATE_SELECTED]));
-    gtk_widget_show (box1);
-	
-    box2 = gtk_event_box_new ();
-    gtk_widget_show (box2);
-    gtk_container_add (GTK_CONTAINER (box1), box2);
-	
-    gtk_container_set_border_width (GTK_CONTAINER (box2), 3);
-    gtk_widget_reparent (GTK_BIN (dialog)->child, box2);
-
-    gtk_container_add (GTK_CONTAINER (dialog), box1);
-  }
-	
 	/* run the logout dialog */
-	result = gtk_dialog_run(GTK_DIALOG(dialog));
+	result = gtk_dialog_run (GTK_DIALOG(dialog));
 
 	if (result == GTK_RESPONSE_OK) {
 		*saveSession = autosave || gtk_toggle_button_get_active(
@@ -383,18 +334,17 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 	}
 
 	gtk_widget_destroy(dialog);
+  gtk_widget_destroy(hidden);
 
 	/* Release Keyboard/Mouse pointer grab */
   if (!accessibility)
     {
-      gdk_x11_ungrab_server ();
-
-      gdk_keyboard_ungrab(GDK_CURRENT_TIME);
-      gdk_pointer_ungrab(GDK_CURRENT_TIME);
-
       hide_fadeout_windows ();
 
-      gdk_flush();
+      gdk_x11_ungrab_server ();
+      gdk_pointer_ungrab (GDK_CURRENT_TIME);
+      gdk_keyboard_ungrab (GDK_CURRENT_TIME);
+      gdk_flush ();
     }
 
 	/*
@@ -410,69 +360,13 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
     {
       xfce_rc_write_entry (rc, "SessionName", session_name);
       xfce_rc_write_bool_entry (rc, "SaveOnExit", *saveSession);
-      xfce_rc_close (rc);
-
-      return TRUE;
     }
 
-	return FALSE;
+  xfce_rc_close (rc);
+
+	return (result == GTK_RESPONSE_OK);
 }
 
-
-#if 0
-static void
-display_shutdown_text_for_monitor (GdkScreen *screen, int monitor)
-{
-  PangoContext *context;
-  PangoLayout *layout;
-  GdkRectangle area;
-  GdkWindow *root;
-  int tw, th;
-  GdkGC *gc;
-
-  root = gdk_screen_get_root_window (screen);
-  gdk_screen_get_monitor_geometry (screen, monitor, &area);
-
-  context = gdk_pango_context_get_for_screen (screen);
-  layout = pango_layout_new (context);
-  pango_layout_set_markup (layout, "<span face=\"Sans\" size=\"x-large\">"
-                           "Shutting down, please wait...</span>", -1);
-  pango_layout_get_pixel_size (layout, &tw, &th);
-
-  gc = gdk_gc_new (GDK_DRAWABLE (root));
-  gdk_gc_set_function (gc, GDK_COPY);
-  gdk_gc_set_subwindow (gc, TRUE);
-
-  gdk_draw_layout (GDK_DRAWABLE (root), gc,
-                   area.x + (area.width - tw) / 2,
-                   area.y + (area.height - th) / 2,
-                   layout);
-
-  g_object_unref (G_OBJECT (gc));
-  g_object_unref (G_OBJECT (layout));
-}
-
-
-static void
-display_shutdown_text (void)
-{
-  GdkDisplay *display;
-  GdkScreen *screen;
-  int n, m;
-
-  display = gdk_display_get_default ();
-
-  for (n = 0; n < gdk_display_get_n_screens (display); ++n)
-    {
-      screen = gdk_display_get_screen (display, n);
-
-      for (m = 0; m < gdk_screen_get_n_monitors (screen); ++m)
-        display_shutdown_text_for_monitor (screen, m);
-    }
-
-  gdk_flush ();
-}
-#endif
 
 /*
  */
@@ -502,8 +396,6 @@ shutdown(gint type)
 		return(EXIT_SUCCESS);
 	}
 
-/*  display_shutdown_text ();*/
-
 again:
 	if (!g_spawn_command_line_sync(command, NULL, &buf, &status, &error)) {
     if (fallback != NULL)
@@ -531,7 +423,7 @@ again:
 	return(EXIT_SUCCESS);
 
 try_fallback:
-  // try using fallback command
+  /* try using fallback command */
   g_free(command);
   command = fallback;
   fallback = NULL;
