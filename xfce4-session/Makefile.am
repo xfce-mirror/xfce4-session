@@ -68,13 +68,13 @@ xfce4_session_CFLAGS =							\
 
 xfce4_session_LDADD =							\
 	libxfsm.la							\
-	@GNOME_LIBS@							\
 	@LIBSM_LDFLAGS@							\
 	@LIBSM_LIBS@							\
 	@LIBX11_LDFLAGS@						\
 	@LIBX11_LIBS@							\
 	@LIBXFCE4MCS_CLIENT_LIBS@					\
-	@LIBXFCEGUI4_LIBS@
+	@LIBXFCEGUI4_LIBS@						\
+	@GNOME_LIBS@
 
 xfce4_session_DEPENDENCIES =						\
 	libxfsm.la
