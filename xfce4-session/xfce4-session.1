@@ -1,4 +1,4 @@
-.TH xfce4-session 1 "Dec 13, 2003"
+.TH xfce4-session 1 "Jan 25, 2004"
 .SH NAME
 xfce4-session \- Starts up the XFce4 Desktop Environment 
 .SH SYNOPSIS
@@ -22,9 +22,25 @@ for starting previously saved sessions.
 
 
 .SH OPTIONS
-\fBxfce4-session\fP does not take any command line options.
+\fBxfce4-session\fP takes the following command line options:
+.TP
+.B \-\-disable\-tcp
+Disable binding to TCP ports in the ICE layer. This is not possible on every
+plattform. If you use this option on a plattform that does not support it,
+\fBxfce4-session\fP will print a warning message and ignore the setting.
+.TP
+.B \-\-help
+Print a help screen and exit.
+.TP
+.B \-\-version
+Output version information and exit.
 
 .SH AUTHOR
 \fBxfce4-session\fP is written by Benedikt Meurer
 <benedikt.meurer@unix-ag.uni-siegen.de> as part of the XFce project.
-This manual page was written by Oliver M. Bolzer <oliver@debian.org>.
+This manual page was written by Oliver M. Bolzer <oliver@debian.org>
+and Benedikt Meurer <benedikt.meurer@unix-ag.uni-siegen.de>.
+.SH "REPORTING BUGS"
+Report bugs to <xfce4-dev@xfce.org>.
+.SH COPYRIGHT
+Copyright \(co 2003-2004 Benedikt Meurer.

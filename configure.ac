@@ -7,7 +7,7 @@ AC_INIT([configure.ac])
 
 AM_CONFIG_HEADER([config.h])
 
-AM_INIT_AUTOMAKE([xfce4-session], [0.2.0])
+AM_INIT_AUTOMAKE([xfce4-session], [0.2.1])
 
 AM_MAINTAINER_MODE
 
@@ -46,11 +46,11 @@ BM_I18N([xfce4-session], [az ca de es es_MX fa_IR fr hi it ja ko nl no pl
 
 dnl Check for required packages
 BM_DEPEND([LIBXFCE4UTIL], [libxfce4util-1.0], [4.1.0])
-BM_DEPEND([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.0.0])
-BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [4.0.0])
+BM_DEPEND([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.1.0])
+BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [4.1.0])
 
 dnl Configure the MCS plugins
-XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.0.0])
+XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.1.0])
 
 dnl Check for debugging support
 BM_DEBUG_SUPPORT

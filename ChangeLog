@@ -1,3 +1,76 @@
+2004-01-25 01:07  olivier
+
+	* Makefile.in, aclocal.m4, compile, config.guess, config.sub,
+	configure, depcomp, install-sh, ltmain.sh, missing, mkinstalldirs,
+	defaults/Makefile.in, defaults/splash/Makefile.in,
+	docs/Makefile.in, settings/Makefile.in, xfce4-session/Makefile.in,
+	xfce4-shutdown/Makefile.in: Update libtool and other automake,
+	autoconf and gettext packages
+
+2004-01-23 14:19  benny
+
+	* xfce4-session/manager.c: Ooops.
+
+2004-01-23 14:00  benny
+
+	* xfce4-session/manager.c: Fixes Solaris problem with
+	SESSION_MANAGER not set (indeed a weird problem on Slowlaris).
+
+2004-01-21 14:43  jasper
+
+	* configure, configure.ac, po/es.gmo, po/es.po, po/fa_IR.gmo,
+	po/fa_IR.po, po/ja.gmo, po/ja.po, po/ko.gmo, po/ko.po,
+	po/pt_BR.gmo, po/pt_BR.po: Translations added/updated for spanish,
+	persian, japanese, korean, brasilian and chinese
+
+2004-01-17 19:14  benny
+
+	* TODO, configure, configure.ac, xfce4-session/manager.c: Make this
+	depend on libxfce4util >= 4.1.0!
+
+2004-01-15 23:53  benny
+
+	* xfce4-session/manager.c: Bugfix: Session wasn't saved correctly
+	under certain conditions. Added new code to handle timeouts of
+	bogus session clients (not yet enabled by default)
+
+2004-01-15 22:47  benny
+
+	* TODO, xfce4-session/session-control.h: Note problem with
+	xfce4-session on Solaris as reported by Chris Greenman on xfce4-dev
+	at 20030115
+
+2004-01-13 23:07  benny
+
+	* NEWS, TODO, config.h.in, configure, configure.ac,
+	xfce4-session/client.c, xfce4-session/client.h,
+	xfce4-session/main.c, xfce4-session/manager.c,
+	xfce4-session/manager.h: Added --disable-tcp command line option
+
+2004-01-13 20:42  benny
+
+	* xfce4-session/main.c, xfce4-session/shutdown.c,
+	xfce4-shutdown/main.c: Fix missing string.h includes.
+
+2004-01-10 19:43  benny
+
+	* NEWS, TODO, config.h.in, configure, configure.ac,
+	xfce4-session/util.c, xfce4-session/util.h, xfce4-shutdown/main.c:
+	Imported patches from Brian J. Tarricone regarding custom
+	halt/poweroff/reboot commands with some modifications and bumped
+	version to 0.2.0
+
+2004-01-05 13:33  benny
+
+	* ChangeLog, Makefile.in, aclocal.m4, config.guess, config.sub,
+	configure, configure.ac, depcomp, install-sh, ltmain.sh,
+	defaults/Makefile.in, defaults/splash/Makefile.in,
+	docs/Makefile.in, po/fr.gmo, po/fr.po, settings/Makefile.in,
+	xfce4-session/Makefile.in, xfce4-session/shutdown.c,
+	xfce4-shutdown/Makefile.in: Added french translations, thanks to
+	Jean-François Wauthy <pollux@castor.be>. Make "poweroff" the
+	default shutdown operation
+
 2003-12-29 16:18  olivier
 
 	* po/: no.gmo, no.po: Fix missing CHARSET in potfiles
