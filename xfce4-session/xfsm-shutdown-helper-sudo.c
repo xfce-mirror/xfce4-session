@@ -60,6 +60,7 @@
 
 struct _XfsmShutdownHelper
 {
+  gchar   *sudo;
   pid_t    pid;
   FILE    *infile;
   FILE    *outfile;
@@ -70,16 +71,25 @@ struct _XfsmShutdownHelper
 XfsmShutdownHelper*
 xfsm_shutdown_helper_spawn (void)
 {
-#if defined(SUDO_CMD)
   XfsmShutdownHelper *helper;
   struct              rlimit rlp;
+  char               *sudo;
   char                buf[15];
   int                 parent_pipe[2];
   int                 child_pipe[2];
   int                 result;
   int                 n;
 
+  sudo = g_find_program_in_path ("sudo");
+  if (G_UNLIKELY (sudo == NULL))
+    {
+      g_warning ("sudo was not found. You will not be able to shutdown your "
+                 "system from within Xfce.");
+      return NULL;
+    }
+
   helper = g_new0 (XfsmShutdownHelper, 1);
+  helper->sudo = sudo;
 
   result = pipe (parent_pipe);
   if (result < 0)
@@ -118,7 +128,7 @@ xfsm_shutdown_helper_spawn (void)
         }
 
       /* execute sudo with the helper */
-      execl (SUDO_CMD, "sudo", "-H", "-S", "-p",
+      execl (helper->sudo, "sudo", "-H", "-S", "-p",
              "XFSM_SUDO_PASS ", "--", XFSM_SHUTDOWN_HELPER, NULL);
       _exit (127);
     }
@@ -171,10 +181,6 @@ error1:
 error0:
   g_free (helper);
   return NULL;
-#else
-  /* won't work without sudo */
-  return NULL;
-#endif
 }
 
 
@@ -313,6 +319,7 @@ xfsm_shutdown_helper_destroy (XfsmShutdownHelper *helper)
   if (helper->pid > 0)
     waitpid (helper->pid, &status, 0);
 
+  g_free (helper->sudo);
   g_free (helper);
 }
 

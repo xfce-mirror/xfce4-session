@@ -88,12 +88,6 @@ else
   AC_MSG_ERROR([iceauth missing, please check your X11 installation])
 fi
 
-dnl Check for sudo
-AC_PATH_PROG([SUDO], [sudo])
-if test x"$SUDO" != x""; then
-  AC_DEFINE_UNQUOTED([SUDO_CMD], ["$SUDO"], [path to sudo])
-fi
-
 dnl Check for rm
 AC_PATH_PROG([RM], [rm])
 if test x"$RM" != x""; then
@@ -131,11 +125,7 @@ AC_HELP_STRING([--with-shutdown-style=auto/none/sudo], [Shutdown style]),
   [with_shutdown=$withval], [with_shutdown=auto])
 AC_MSG_CHECKING([what shutdown style should be used])
 if test x"$with_shutdown" != x"sudo" -a x"$with_shutdown" != x"none"; then
-  if test x"$SUDO" != x""; then
-    with_shutdown="sudo"
-  else
-    with_shutdown="none"
-  fi
+  with_shutdown="sudo"
 fi
 AC_DEFINE_UNQUOTED([XFSM_SHUTDOWN_HELPER_IMPL_C],
                    [<xfce4-session/xfsm-shutdown-helper-$with_shutdown.c>],
