@@ -1,3 +1,60 @@
+2004-05-20 22:51  benny
+
+	* configure, themes/.cvsignore, themes/Default/.cvsignore,
+	xfsm-shutdown-helper/.cvsignore: Some more cvsignore files.
+
+2004-05-20 22:45  benny
+
+	* BUGS, Makefile.am, Makefile.in, README, config.h.in, configure,
+	configure.ac, xfce4-session.spec.in, defaults/Makefile.in,
+	docs/FAQ, docs/Makefile.in, settings/Makefile.in,
+	themes/Makefile.in, themes/Default/Makefile.in,
+	xfce4-session/Makefile.am, xfce4-session/Makefile.in,
+	xfce4-session/shutdown.c, xfce4-session/xfsm-shutdown-helper.c,
+	xfce4-session/xfsm-shutdown-helper.h, xfce4-session/xfsm-util.c,
+	xfce4-session/xfsm-util.h, xfce4-shutdown/Makefile.am,
+	xfce4-shutdown/Makefile.in, xfce4-shutdown/main.c,
+	xfce4-shutdown/xfce4-shutdown.1, xfsm-shutdown-helper/Makefile.am,
+	xfsm-shutdown-helper/Makefile.in, xfsm-shutdown-helper/main.c: New
+	shutdown code, is now sudo(8) only. Bumped version to 4.1.5.
+	Several bugfixes.
+
+2004-05-19 23:37  benny
+
+	* xfce4-session/: xfsm-fadeout.c, xfsm-fadeout.h: cut&paste error,
+	no gnome code in here.
+
+2004-05-19 23:28  benny
+
+	* xfce4-session/: Makefile.am, Makefile.in, shutdown.c,
+	xfsm-fadeout.c, xfsm-fadeout.h: Cleanup the shutdown dialog.
+
+2004-05-19 22:28  benny
+
+	* BUGS, xfce4-session.rc, settings/session.c, xfce4-session/main.c,
+	xfce4-session/xfsm-splash-screen.c,
+	xfce4-session/xfsm-splash-screen.h,
+	xfce4-session/xfsm-splash-theme.c,
+	xfce4-session/xfsm-splash-theme.h: Make the timeout configurable
+	and added two buttons to the splash window that allow the user to
+	run the chooser or skip the timeout (these two must be explicitly
+	set by the theme).
+
+2004-05-19 01:28  benny
+
+	* xfce4-session/xfce4-splash.png: Moved to the Default theme.
+
+2004-05-19 01:25  benny
+
+	* BUGS, ChangeLog, configure, settings/Makefile.am,
+	settings/Makefile.in, themes/Default/themerc,
+	xfce4-session/Makefile.am, xfce4-session/Makefile.in,
+	xfce4-session/main.c, xfce4-session/shutdown.c,
+	xfce4-session/xfsm-splash-theme.c,
+	xfce4-session/xfsm-splash-theme.h, xfce4-session/xfsm-util.c,
+	xfce4-session/xfsm-util.h: Further tweaks to the theming stuff, the
+	fadeout color is now configurable as well.
+
 2004-05-19 00:41  benny
 
 	* BUGS, Makefile.am, Makefile.in, configure, configure.ac,
