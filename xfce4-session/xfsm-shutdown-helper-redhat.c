@@ -164,7 +164,7 @@ xfsm_shutdown_helper_send_command (XfsmShutdownHelper  *helper,
             close (fd);
         }
 
-      execv (argv[0], argv);
+      execv (argv[0], argv + 1);
       _exit (127);
     }
 
