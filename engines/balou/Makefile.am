@@ -12,10 +12,14 @@ libbalou_la_SOURCES =							\
 	balou.c								\
 	balou.h								\
 	config.c							\
-	engine.c
+	engine.c							\
+	gnome-uri.c							\
+	gnome-uri.h
 
 libbalou_la_CFLAGS =							\
-	@LIBXFCEGUI4_CFLAGS@
+	@LIBXFCEGUI4_CFLAGS@						\
+	-DBALOU_EXPORT_THEME=\"$(libexecdir)/balou-export-theme\"	\
+	-DBALOU_INSTALL_THEME=\"$(libexecdir)/balou-install-theme\"
 
 libbalou_la_LDFLAGS =							\
 	-avoid-version							\

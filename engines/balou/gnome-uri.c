@@ -8,7 +8,7 @@
 #include <string.h>
 #endif
 
-#include <settings/gnome-uri.h>
+#include <engines/balou/gnome-uri.h>
 
 /*** the next three routines are taken straight from gnome-libs so that the
      gtk-only version can receive drag and drops as well ***/

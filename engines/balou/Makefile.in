@@ -54,7 +54,7 @@ LTLIBRARIES = $(balou_LTLIBRARIES)
 libbalou_la_LIBADD =
 am_libbalou_la_OBJECTS = libbalou_la-balou-theme.lo \
 	libbalou_la-balou.lo libbalou_la-config.lo \
-	libbalou_la-engine.lo
+	libbalou_la-engine.lo libbalou_la-gnome-uri.lo
 libbalou_la_OBJECTS = $(am_libbalou_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -62,7 +62,8 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/libbalou_la-balou-theme.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/libbalou_la-balou.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/libbalou_la-config.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/libbalou_la-engine.Plo
+@AMDEP_TRUE@	./$(DEPDIR)/libbalou_la-engine.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/libbalou_la-gnome-uri.Plo
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) \
@@ -239,10 +240,14 @@ libbalou_la_SOURCES = \
 	balou.c								\
 	balou.h								\
 	config.c							\
-	engine.c
+	engine.c							\
+	gnome-uri.c							\
+	gnome-uri.h
 
 libbalou_la_CFLAGS = \
-	@LIBXFCEGUI4_CFLAGS@
+	@LIBXFCEGUI4_CFLAGS@						\
+	-DBALOU_EXPORT_THEME=\"$(libexecdir)/balou-export-theme\"	\
+	-DBALOU_INSTALL_THEME=\"$(libexecdir)/balou-install-theme\"
 
 libbalou_la_LDFLAGS = \
 	-avoid-version							\
@@ -321,6 +326,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbalou_la-balou.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbalou_la-config.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbalou_la-engine.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbalou_la-gnome-uri.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
@@ -441,6 +447,30 @@ libbalou_la-engine.lo: engine.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libbalou_la-engine.Plo' tmpdepfile='$(DEPDIR)/libbalou_la-engine.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libbalou_la_CFLAGS) $(CFLAGS) -c -o libbalou_la-engine.lo `test -f 'engine.c' || echo '$(srcdir)/'`engine.c
+
+libbalou_la-gnome-uri.o: gnome-uri.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libbalou_la_CFLAGS) $(CFLAGS) -MT libbalou_la-gnome-uri.o -MD -MP -MF "$(DEPDIR)/libbalou_la-gnome-uri.Tpo" -c -o libbalou_la-gnome-uri.o `test -f 'gnome-uri.c' || echo '$(srcdir)/'`gnome-uri.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libbalou_la-gnome-uri.Tpo" "$(DEPDIR)/libbalou_la-gnome-uri.Po"; else rm -f "$(DEPDIR)/libbalou_la-gnome-uri.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='gnome-uri.c' object='libbalou_la-gnome-uri.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libbalou_la-gnome-uri.Po' tmpdepfile='$(DEPDIR)/libbalou_la-gnome-uri.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libbalou_la_CFLAGS) $(CFLAGS) -c -o libbalou_la-gnome-uri.o `test -f 'gnome-uri.c' || echo '$(srcdir)/'`gnome-uri.c
+
+libbalou_la-gnome-uri.obj: gnome-uri.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libbalou_la_CFLAGS) $(CFLAGS) -MT libbalou_la-gnome-uri.obj -MD -MP -MF "$(DEPDIR)/libbalou_la-gnome-uri.Tpo" -c -o libbalou_la-gnome-uri.obj `if test -f 'gnome-uri.c'; then $(CYGPATH_W) 'gnome-uri.c'; else $(CYGPATH_W) '$(srcdir)/gnome-uri.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libbalou_la-gnome-uri.Tpo" "$(DEPDIR)/libbalou_la-gnome-uri.Po"; else rm -f "$(DEPDIR)/libbalou_la-gnome-uri.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='gnome-uri.c' object='libbalou_la-gnome-uri.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libbalou_la-gnome-uri.Po' tmpdepfile='$(DEPDIR)/libbalou_la-gnome-uri.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libbalou_la_CFLAGS) $(CFLAGS) -c -o libbalou_la-gnome-uri.obj `if test -f 'gnome-uri.c'; then $(CYGPATH_W) 'gnome-uri.c'; else $(CYGPATH_W) '$(srcdir)/gnome-uri.c'; fi`
+
+libbalou_la-gnome-uri.lo: gnome-uri.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libbalou_la_CFLAGS) $(CFLAGS) -MT libbalou_la-gnome-uri.lo -MD -MP -MF "$(DEPDIR)/libbalou_la-gnome-uri.Tpo" -c -o libbalou_la-gnome-uri.lo `test -f 'gnome-uri.c' || echo '$(srcdir)/'`gnome-uri.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libbalou_la-gnome-uri.Tpo" "$(DEPDIR)/libbalou_la-gnome-uri.Plo"; else rm -f "$(DEPDIR)/libbalou_la-gnome-uri.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='gnome-uri.c' object='libbalou_la-gnome-uri.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libbalou_la-gnome-uri.Plo' tmpdepfile='$(DEPDIR)/libbalou_la-gnome-uri.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libbalou_la_CFLAGS) $(CFLAGS) -c -o libbalou_la-gnome-uri.lo `test -f 'gnome-uri.c' || echo '$(srcdir)/'`gnome-uri.c
 
 mostlyclean-libtool:
 	-rm -f *.lo

@@ -23,7 +23,23 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_SYS_STAT_H
+#include <sys/stat.h>
+#endif
+
 #include <math.h>
+#ifdef HAVE_MEMORY_H
+#include <memory.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+#ifdef HAVE_TIME_H
+#include <time.h>
+#endif
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
 #include <libxfce4util/libxfce4util.h>
 
@@ -38,6 +54,10 @@ static void       load_color_pair (const XfceRc *rc,
 static GdkPixbuf  *load_pixbuf    (const gchar *path,
                                    gint         available_width,
                                    gint         available_height);
+static time_t mtime (const gchar *path);
+static GdkPixbuf *load_cached_preview (const BalouTheme *theme);
+static void store_cached_preview (const BalouTheme *theme,
+                                  GdkPixbuf        *pixbuf);
 
 
 struct _BalouTheme
@@ -226,6 +246,90 @@ balou_theme_draw_gradient (const BalouTheme *theme,
 }
 
 
+GdkPixbuf*
+balou_theme_generate_preview (const BalouTheme *theme,
+                              gint              width,
+                              gint              height)
+{
+#define WIDTH   320
+#define HEIGHT  240
+
+  GdkRectangle logobox;
+  GdkRectangle textbox;
+  GdkPixmap *pixmap;
+  GdkPixbuf *pixbuf;
+  GdkPixbuf *scaled;
+  GdkWindow *root;
+  GdkGC     *gc;
+  gint       pw, ph;
+
+  /* check for a cached preview first */
+  pixbuf = load_cached_preview (theme);
+  if (pixbuf != NULL)
+    {
+      pw = gdk_pixbuf_get_width (pixbuf);
+      ph = gdk_pixbuf_get_height (pixbuf);
+
+      if (pw == width && ph == height)
+        {
+          return pixbuf;
+        }
+      else if (pw >= width && ph >= height)
+        {
+          scaled = gdk_pixbuf_scale_simple (pixbuf, width, height,
+                                            GDK_INTERP_BILINEAR);
+          g_object_unref (pixbuf);
+          return scaled;
+        }
+
+      g_object_unref (pixbuf);
+    }
+
+  root = gdk_screen_get_root_window (gdk_screen_get_default ());
+  pixmap = gdk_pixmap_new (GDK_DRAWABLE (root), WIDTH, HEIGHT, -1);
+  gc = gdk_gc_new (pixmap);
+  gdk_gc_set_function (gc, GDK_COPY);
+
+  logobox.x = 0;
+  logobox.y = 0;
+  logobox.width = WIDTH;
+  logobox.height = HEIGHT;
+  textbox.x = 0;
+  textbox.y = 0;
+  balou_theme_draw_gradient (theme, GDK_DRAWABLE (pixmap),
+                             gc, logobox, textbox);
+
+  pixbuf = balou_theme_get_logo (theme, WIDTH, HEIGHT);
+  if (pixbuf != NULL)
+    {
+      pw = gdk_pixbuf_get_width (pixbuf);
+      ph = gdk_pixbuf_get_height (pixbuf);
+
+      gdk_draw_pixbuf (GDK_DRAWABLE (pixmap), gc, pixbuf, 0, 0,
+                       (WIDTH - pw) / 2, (HEIGHT - ph) / 2,
+                       pw, ph, GDK_RGB_DITHER_NONE, 0, 0);
+
+      g_object_unref (G_OBJECT (pixbuf));
+    }
+
+  pixbuf = gdk_pixbuf_get_from_drawable (NULL, GDK_DRAWABLE (pixmap),
+                                         NULL, 0, 0, 0, 0, WIDTH, HEIGHT);
+  scaled = gdk_pixbuf_scale_simple (pixbuf, width, height, GDK_INTERP_BILINEAR);
+
+  g_object_unref (pixbuf);
+  g_object_unref (pixmap);
+  g_object_unref (gc);
+
+  /* store preview */
+  store_cached_preview (theme, scaled);
+
+  return scaled;
+
+#undef WIDTH
+#undef HEIGHT
+}
+
+
 void
 balou_theme_destroy (BalouTheme *theme)
 {
@@ -347,5 +451,69 @@ load_pixbuf (const gchar *path,
 
   return pb;
 }
+
+
+static time_t
+mtime (const gchar *path)
+{
+  struct stat sb;
+
+  if (path == NULL || stat (path, &sb) < 0)
+    return (time_t) 0;
+
+  return sb.st_mtime;
+}
+
+
+static GdkPixbuf*
+load_cached_preview (const BalouTheme *theme)
+{
+  GdkPixbuf *pixbuf;
+  gchar     *resource;
+  gchar     *preview;
+
+  resource = g_strconcat ("splash-theme-preview-", theme->name, ".png", NULL);
+  preview = xfce_resource_lookup (XFCE_RESOURCE_CACHE, resource);
+  g_free (resource);
+
+  if (preview == NULL)
+    return NULL;
+
+  if ((mtime (preview) < mtime (theme->theme_file))
+      || (theme->logo_file != NULL
+        && (mtime (preview) < mtime (theme->logo_file))))
+    {
+      /* preview is outdated, need to regenerate preview */
+      unlink (preview);
+      g_free (preview);
+
+      return NULL;
+    }
+
+  pixbuf = gdk_pixbuf_new_from_file (preview, NULL);
+  g_free (preview);
+
+  return pixbuf;
+}
+
+
+static void
+store_cached_preview (const BalouTheme *theme,
+                      GdkPixbuf        *pixbuf)
+{
+  gchar *resource;
+  gchar *preview;
+
+  resource = g_strconcat ("splash-theme-preview-", theme->name, ".png", NULL);
+  preview = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource, TRUE);
+  g_free (resource);
+
+  if (preview != NULL)
+    {
+      gdk_pixbuf_save (pixbuf, preview, "png", NULL, NULL);
+      g_free (preview);
+    }
+}
+
 
 

@@ -56,6 +56,9 @@ gboolean     module_can_configure (const Module *module);
 void         module_configure     (Module       *module,
                                    GtkWidget    *parent);
 
+void         module_test          (Module       *module,
+                                   GdkDisplay   *display);
+
 void         module_free          (Module       *module);
 
 G_END_DECLS;

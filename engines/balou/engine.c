@@ -40,7 +40,7 @@ engine_setup (XfsmSplashEngine *engine,
   const gchar *theme_name;
   BalouTheme  *theme;
 
-  theme_name = xfsm_splash_rc_read_entry (rc, "theme", DEFAULT_THEME);
+  theme_name = xfsm_splash_rc_read_entry (rc, "Theme", DEFAULT_THEME);
   theme = balou_theme_load (theme_name);
 
   balou_init (BALOU (engine->user_data),

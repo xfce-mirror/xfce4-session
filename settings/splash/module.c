@@ -25,6 +25,8 @@
 
 #include <gmodule.h>
 
+#include <libxfcegui4/libxfcegui4.h>
+
 #include <xfce4-session/xfsm-splash-engine.h>
 #include <xfce4-session/xfsm-splash-rc.h>
 
@@ -161,6 +163,67 @@ module_configure (Module    *module,
 {
   if (G_LIKELY (module->config.configure != NULL))
     module->config.configure (&module->config, parent);
+}
+
+
+void
+module_test (Module     *module,
+             GdkDisplay *display)
+{
+  static char *steps[] = 
+  {
+    "Starting the Window Manager",
+    "Starting the Desktop Manager",
+    "Starting the Taskbar",
+    "Starting the Panel",
+    NULL,
+  };
+
+  void (*init) (XfsmSplashEngine *engine);
+  XfsmSplashEngine  engine;
+  GdkScreen        *screen;
+  guint             id;
+  int               monitor;
+  int               step;
+
+  /* locate monitor with pointer */
+  screen = xfce_gdk_display_locate_monitor_with_pointer (display, &monitor);
+  if (G_UNLIKELY (screen == NULL))
+    {
+      screen  = gdk_display_get_screen (display, 0);
+      monitor = 0;
+    }
+
+  /* initialize engine struct */
+  engine.display          = display;
+  engine.primary_screen   = screen;
+  engine.primary_monitor  = monitor;
+
+  /* load and setup the engine */
+  if (g_module_symbol (module->handle, "engine_init", (gpointer)&init))
+    {
+      init (&engine);
+
+      if (G_LIKELY (engine.setup != NULL))
+        {
+          engine.setup (&engine, module->config.rc);
+          gdk_flush ();
+        }
+
+      if (G_LIKELY (engine.next != NULL))
+        {
+          for (step = 0; steps[step] != NULL; ++step)
+            {
+              engine.next (&engine, steps[step]);
+              id = g_timeout_add (1000, (GSourceFunc) gtk_main_quit, NULL);
+              gtk_main ();
+              g_source_remove (id);
+            }
+        }
+
+      if (G_LIKELY (engine.destroy != NULL))
+        engine.destroy (&engine);
+    }
 }
 
 

@@ -46,6 +46,12 @@
 
 
 /*
+   Prototypes
+ */
+static void splash_selection_changed (GtkTreeSelection *selection);
+
+
+/*
    Declarations
  */
 enum
@@ -167,7 +173,27 @@ splash_configure (void)
     {
       gtk_tree_model_get (model, &iter, COLUMN_MODULE, &module, -1);
       module_configure (module, splash_dialog);
+      splash_selection_changed (selection);
       xfce_rc_flush (modules_rc);
+    }
+}
+
+
+static void
+splash_test (void)
+{
+  GtkTreeSelection *selection;
+  GtkTreeModel     *model;
+  GtkTreeIter       iter;
+  Module           *module;
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (splash_treeview));
+  if (gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      gtk_tree_model_get (model, &iter, COLUMN_MODULE, &module, -1);
+      gtk_widget_set_sensitive (splash_dialog, FALSE);
+      module_test (module, gtk_widget_get_display (splash_dialog));
+      gtk_widget_set_sensitive (splash_dialog, TRUE);
     }
 }
 
@@ -260,6 +286,7 @@ splash_selection_changed (GtkTreeSelection *selection)
 
           gtk_widget_set_sensitive (splash_button_cfg,
                                     module_can_configure (module));
+          gtk_widget_set_sensitive (splash_button_test, TRUE);
         }
       else
         {
@@ -280,6 +307,7 @@ splash_selection_changed (GtkTreeSelection *selection)
           gtk_widget_set_sensitive (splash_www1, FALSE);
 
           gtk_widget_set_sensitive (splash_button_cfg, FALSE);
+          gtk_widget_set_sensitive (splash_button_test, FALSE);
 
           xfce_rc_write_entry (rc, "Engine", "");
         }
@@ -409,6 +437,8 @@ splash_run (McsPlugin *plugin)
 
   splash_button_test = xfsm_imgbtn_new (_("Test"), GTK_STOCK_EXECUTE, NULL);
   gtk_widget_set_sensitive (splash_button_test, FALSE);
+  g_signal_connect (G_OBJECT (splash_button_test), "clicked",
+                    splash_test, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), splash_button_test, FALSE, FALSE, 0);
   gtk_widget_show (splash_button_test);
 

@@ -46,6 +46,9 @@ void         balou_theme_draw_gradient    (const BalouTheme *theme,
                                            GdkGC            *gc,
                                            GdkRectangle      logobox,
                                            GdkRectangle      textbox);
+GdkPixbuf   *balou_theme_generate_preview (const BalouTheme *theme,
+                                           gint              width,
+                                           gint              height);
 void         balou_theme_destroy          (BalouTheme       *theme);
 
 G_END_DECLS;
