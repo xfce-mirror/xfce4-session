@@ -55,6 +55,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/icons/*
 %{_datadir}/xfce4/*
 %{_datadir}/locale/*
+%{_libdir}/lib*.so.*
 %{_libdir}/xfce4/mcs-plugins/*
 %{_libdir}/xfce4/splash/engines/libmice.*
 %{_libexecdir}/xfsm-shutdown-helper
@@ -64,6 +65,8 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(-,root,root)
 %{_includedir}/xfce4/xfce4-session/*.h
+%{_libdir}/lib*.so
+%{_libdir}/*a
 %{_libdir}/pkgconfig/*.pc
 
 %files engines

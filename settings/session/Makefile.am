@@ -5,6 +5,7 @@ session_LTLIBRARIES = 							\
 
 session_settings_la_LDFLAGS =						\
 	-avoid-version							\
+	-no-undefined							\
 	-module
 
 session_settings_la_SOURCES =						\
@@ -15,11 +16,10 @@ session_settings_la_CFLAGS =						\
 	@XFCE_MCS_MANAGER_CFLAGS@					\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"
 
-if HAVE_CYGWIN
+if HAVE_OS_CYGWIN
 session_settings_la_LDFLAGS +=						\
-	-no-undefined							\
-	-export-symbols $(datadir)/xfce4/devel/mcs-manager.def		\
-	@XFCE_MCS_MANAGER_LDFLAGS@
+	-export-symbols $(datadir)/xfce4/devel/mcs-manager.def
+
 session_settings_la_LIBADD =						\
 	@XFCE_MCS_MANAGER_LIBS@
 endif

@@ -13,16 +13,19 @@ libmice_la_CFLAGS =							\
 
 libmice_la_LDFLAGS =							\
 	-avoid-version							\
+	-no-undefined							\
 	-module
 
-if HAVE_CYGWIN
-libmice_la_LDFLAGS +=							\
-	-no-undefined							\
-	-export-symbols $(top_srcdir)/xfce4-session/xfsm-splash-rc.def	\
-	@XFCE_MCS_MANAGER_LDFLAGS@
 libmice_la_LIBADD =							\
+	$(top_builddir)/xfce4-session/libxfsm-4.2.la
+
+if HAVE_OS_CYGWIN
+libmice_la_LIBADD +=							\
 	@XFCE_MCS_MANAGER_LIBS@
 endif
+
+libmice_la_DEPENDENCIES =						\
+	$(top_builddir)/xfce4-session/libxfsm-4.2.la
 
 noinst_PROGRAMS =							\
 	generate

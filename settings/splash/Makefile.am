@@ -5,7 +5,8 @@ splash_LTLIBRARIES = 							\
 
 splash_settings_la_LDFLAGS =						\
 	-avoid-version							\
-	-module
+	-module								\
+	-no-undefined
 
 splash_settings_la_SOURCES =						\
 	module.c							\
@@ -20,19 +21,19 @@ splash_settings_la_CFLAGS =						\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"
 
 splash_settings_la_LIBADD =						\
-	$(top_builddir)/xfce4-session/libxfsm.la
+	$(top_builddir)/xfce4-session/libxfsm-4.2.la
 
-if HAVE_CYGWIN
+if HAVE_OS_CYGWIN
 splash_settings_la_LDFLAGS +=						\
-	-no-undefined							\
 	-export-symbols $(datadir)/xfce4/devel/mcs-manager.def
+
 splash_settings_la_LIBADD +=						\
 	@XFCE_MCS_MANAGER_LIBS@						\
 	@LIBX11_LIBS@
 endif
 
 splash_settings_la_DEPENDENCIES =					\
-	$(top_builddir)/xfce4-session/libxfsm.la
+	$(top_builddir)/xfce4-session/libxfsm-4.2.la
 
 
 EXTRA_DIST =								\

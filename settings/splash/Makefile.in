@@ -38,13 +38,12 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 host_triplet = @host@
-@HAVE_CYGWIN_TRUE@am__append_1 = \
-@HAVE_CYGWIN_TRUE@	-no-undefined							\
-@HAVE_CYGWIN_TRUE@	-export-symbols $(datadir)/xfce4/devel/mcs-manager.def
+@HAVE_OS_CYGWIN_TRUE@am__append_1 = \
+@HAVE_OS_CYGWIN_TRUE@	-export-symbols $(datadir)/xfce4/devel/mcs-manager.def
 
-@HAVE_CYGWIN_TRUE@am__append_2 = \
-@HAVE_CYGWIN_TRUE@	@XFCE_MCS_MANAGER_LIBS@						\
-@HAVE_CYGWIN_TRUE@	@LIBX11_LIBS@
+@HAVE_OS_CYGWIN_TRUE@am__append_2 = \
+@HAVE_OS_CYGWIN_TRUE@	@XFCE_MCS_MANAGER_LIBS@						\
+@HAVE_OS_CYGWIN_TRUE@	@LIBX11_LIBS@
 
 subdir = settings/splash
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
@@ -123,8 +122,8 @@ GMSGFMT = @GMSGFMT@
 GNOME_CFLAGS = @GNOME_CFLAGS@
 GNOME_LIBS = @GNOME_LIBS@
 GNOME_REQUIRED_VERSION = @GNOME_REQUIRED_VERSION@
-HAVE_CYGWIN_FALSE = @HAVE_CYGWIN_FALSE@
-HAVE_CYGWIN_TRUE = @HAVE_CYGWIN_TRUE@
+HAVE_OS_CYGWIN_FALSE = @HAVE_OS_CYGWIN_FALSE@
+HAVE_OS_CYGWIN_TRUE = @HAVE_OS_CYGWIN_TRUE@
 ICEAUTH = @ICEAUTH@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -237,7 +236,8 @@ splash_LTLIBRARIES = \
 
 splash_settings_la_LDFLAGS = \
 	-avoid-version							\
-	-module\
+	-module								\
+	-no-undefined\
 $(am__append_1)
 splash_settings_la_SOURCES = \
 	module.c							\
@@ -252,10 +252,10 @@ splash_settings_la_CFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"
 
 splash_settings_la_LIBADD = \
-	$(top_builddir)/xfce4-session/libxfsm.la\
+	$(top_builddir)/xfce4-session/libxfsm-4.2.la\
 $(am__append_2)
 splash_settings_la_DEPENDENCIES = \
-	$(top_builddir)/xfce4-session/libxfsm.la
+	$(top_builddir)/xfce4-session/libxfsm-4.2.la
 
 EXTRA_DIST = \
 	nopreview.h							\

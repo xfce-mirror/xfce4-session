@@ -24,13 +24,16 @@ libbalou_la_CFLAGS =							\
 
 libbalou_la_LDFLAGS =							\
 	-avoid-version							\
+	-no-undefined							\
 	-module
 
-if HAVE_CYGWIN
-libbalou_la_LDFLAGS +=							\
-	-no-undefined							\
-	-export-symbols $(top_srcdir)/xfce4-session/xfsm-splash-rc.def	\
-	@XFCE_MCS_MANAGER_LDFLAGS@
 libbalou_la_LIBADD =							\
+	$(top_builddir)/xfce4-session/libxfsm-4.2.la
+
+if HAVE_OS_CYGWIN
+libbalou_la_LIBADD +=							\
 	@XFCE_MCS_MANAGER_LIBS@
 endif
+
+libbalou_la_DEPENDENCIES =						\
+	$(top_builddir)/xfce4-session/libxfsm-4.2.la

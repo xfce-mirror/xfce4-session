@@ -14,17 +14,20 @@ libsimple_la_CFLAGS =							\
 
 libsimple_la_LDFLAGS =							\
 	-avoid-version							\
+	-no-undefined							\
 	-module
 
-if HAVE_CYGWIN
-libsimple_la_LDFLAGS +=							\
-	-no-undefined							\
-	-export-symbols $(top_srcdir)/xfce4-session/xfsm-splash-rc.def	\
-	@XFCE_MCS_MANAGER_LDFLAGS@
 libsimple_la_LIBADD =							\
+	$(top_builddir)/xfce4-session/libxfsm-4.2.la
+
+if HAVE_OS_CYGWIN
+libsimple_la_LIBADD +=							\
 	@XFCE_MCS_MANAGER_LIBS@
 endif
 
+libsimple_la_DEPENDENCIES =						\
+	$(top_builddir)/xfce4-session/libxfsm-4.2.la
+	
 EXTRA_DIST =								\
 	fallback.h							\
 	fallback.png							\

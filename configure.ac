@@ -31,9 +31,8 @@ dnl check for UNIX variants
 AC_AIX
 AC_ISC_POSIX
 AC_MINIX
-AM_CONDITIONAL([HAVE_CYGWIN], [test "`uname | grep \"CYGWIN\"`" != ""])
-if test `uname | grep "CYGWIN"` != ""
-then
+AM_CONDITIONAL([HAVE_OS_CYGWIN], [test x"`uname | grep \"CYGWIN\"`" != x""])
+if test x"`uname | grep \"CYGWIN\"`" != x""; then
 	AC_DEFINE([HAVE_OS_CYGWIN], [1], [Compiling under cygwin])
 fi
 

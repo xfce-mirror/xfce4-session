@@ -1,9 +1,9 @@
 SUBDIRS =								\
+	xfce4-session							\
 	docs								\
 	engines								\
 	icons								\
 	po								\
-	xfce4-session							\
 	settings							\
 	xfsm-shutdown-helper
 
