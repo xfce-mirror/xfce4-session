@@ -9,7 +9,7 @@ dnl
 dnl Version information
 m4_define([xfsm_version_major], [4])
 m4_define([xfsm_version_minor], [1])
-m4_define([xfsm_version_micro], [6])
+m4_define([xfsm_version_micro], [7])
 m4_define([xfsm_version], [xfsm_version_major.xfsm_version_minor.xfsm_version_micro])
 
 dnl Initialize autoconf
@@ -39,9 +39,9 @@ AC_PROG_LIBTOOL
 
 dnl check for standard header files
 AC_HEADER_STDC
-AC_CHECK_FUNCS([mkdir clearenv sigaction strdup])
+AC_CHECK_FUNCS([sigaction strdup sync])
 AC_CHECK_HEADERS([errno.h fcntl.h limits.h signal.h stdarg.h sys/param.h \
-  sys/resource.h sys/wait.h time.h unistd.h])
+  sys/resource.h sys/time.h sys/wait.h time.h unistd.h])
 
 dnl Check for X11 installed
 BM_LIBX11_REQUIRE
@@ -78,6 +78,19 @@ dnl check for sudo
 AC_PATH_PROG([SUDO], [sudo])
 if test x"$SUDO" != x""; then
   AC_DEFINE_UNQUOTED([SUDO_CMD], ["$SUDO"], [path to sudo])
+fi
+
+dnl Check for legacy session management
+AC_ARG_ENABLE([legacy-sm],
+AC_HELP_STRING([--enable-legacy-sm], [Enable X11R5 session management])
+AC_HELP_STRING([--disable-legacy-sm], [Disable X11R5 session management]),
+  [], [enable_legacy_sm=yes])
+AC_MSG_CHECKING([whether to enable X11R5 session management])
+if test x"$enable_legacy_sm" != x"yes"; then
+  AC_MSG_RESULT([no])
+else
+  AC_DEFINE([LEGACY_SESSION_MANAGEMENT], [1], [Define for X11R5 sm compat])
+  AC_MSG_RESULT([yes])
 fi
 
 dnl

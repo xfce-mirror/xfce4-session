@@ -15,3 +15,19 @@ $libexecdir/xfsm-shutdown-helper as user root (where $libexecdir is the
 libexec subdir in the prefix you installed xfce4-session, for example
 /usr/local/libexec).
 
+
+Legacy session management:
+--------------------------
+As of version 4.1.7, the session manager includes native support for
+applications that don't support the X11R6 session management protocol,
+but support legacy (X11R5) session management. If you don't need legacy
+session management support, you can disable it at compile time, giving
+--disable-legacy-sm to ./configure.
+
+The legacy sm code is ment as a replacement for smproxy (the X11 session
+management proxy), which caused all kinds of trouble. That says, do NOT
+EVER run smproxy in session that is managed by xfce4-session, or weird
+things will happen. The included legacy session management does everything
+that smproxy would do, and besides that, it also support multiscreen
+display and it is less error prone compared to smproxy (atleast once
+the various bugs I introduced are fixed :-).

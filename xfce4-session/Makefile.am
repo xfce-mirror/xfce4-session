@@ -23,6 +23,8 @@ xfce4_session_SOURCES =							\
 	xfsm-fadeout.h							\
 	xfsm-global.c							\
 	xfsm-global.h							\
+	xfsm-legacy.c							\
+	xfsm-legacy.h							\
 	xfsm-manager.c							\
 	xfsm-manager.h							\
 	xfsm-properties.c						\

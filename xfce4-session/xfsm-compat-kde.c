@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2004 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -45,7 +45,7 @@ xfsm_compat_kde_startup (XfsmSplashScreen *splash)
   gchar command[256];
 
   xfsm_splash_screen_next (splash, _("Starting KDE services"));
-  run ("kdeinit +kcminit");
+  run ("kdeinit +kcminit +knotify");
 
   /* tell klauncher about the session manager */
   g_snprintf (command, 256, "dcop klauncher klauncher setLaunchEnv "

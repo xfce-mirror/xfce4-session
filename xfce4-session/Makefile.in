@@ -61,6 +61,7 @@ am_xfce4_session_OBJECTS = xfce4_session-ice-layer.$(OBJEXT) \
 	xfce4_session-xfsm-compat-kde.$(OBJEXT) \
 	xfce4_session-xfsm-fadeout.$(OBJEXT) \
 	xfce4_session-xfsm-global.$(OBJEXT) \
+	xfce4_session-xfsm-legacy.$(OBJEXT) \
 	xfce4_session-xfsm-manager.$(OBJEXT) \
 	xfce4_session-xfsm-properties.$(OBJEXT) \
 	xfce4_session-xfsm-shutdown-helper.$(OBJEXT) \
@@ -83,6 +84,7 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-compat-kde.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-fadeout.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-global.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-legacy.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-manager.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-properties.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Po \
@@ -270,6 +272,8 @@ xfce4_session_SOURCES = \
 	xfsm-fadeout.h							\
 	xfsm-global.c							\
 	xfsm-global.h							\
+	xfsm-legacy.c							\
+	xfsm-legacy.h							\
 	xfsm-manager.c							\
 	xfsm-manager.h							\
 	xfsm-properties.c						\
@@ -388,6 +392,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-compat-kde.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-fadeout.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-global.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-legacy.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-manager.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-properties.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-shutdown-helper.Po@am__quote@
@@ -659,6 +664,30 @@ xfce4_session-xfsm-global.lo: xfsm-global.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-global.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-global.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-global.lo `test -f 'xfsm-global.c' || echo '$(srcdir)/'`xfsm-global.c
+
+xfce4_session-xfsm-legacy.o: xfsm-legacy.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-legacy.o -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-legacy.Tpo" -c -o xfce4_session-xfsm-legacy.o `test -f 'xfsm-legacy.c' || echo '$(srcdir)/'`xfsm-legacy.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-legacy.Tpo" "$(DEPDIR)/xfce4_session-xfsm-legacy.Po"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-legacy.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-legacy.c' object='xfce4_session-xfsm-legacy.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-legacy.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-legacy.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-legacy.o `test -f 'xfsm-legacy.c' || echo '$(srcdir)/'`xfsm-legacy.c
+
+xfce4_session-xfsm-legacy.obj: xfsm-legacy.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-legacy.obj -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-legacy.Tpo" -c -o xfce4_session-xfsm-legacy.obj `if test -f 'xfsm-legacy.c'; then $(CYGPATH_W) 'xfsm-legacy.c'; else $(CYGPATH_W) '$(srcdir)/xfsm-legacy.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-legacy.Tpo" "$(DEPDIR)/xfce4_session-xfsm-legacy.Po"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-legacy.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-legacy.c' object='xfce4_session-xfsm-legacy.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-legacy.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-legacy.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-legacy.obj `if test -f 'xfsm-legacy.c'; then $(CYGPATH_W) 'xfsm-legacy.c'; else $(CYGPATH_W) '$(srcdir)/xfsm-legacy.c'; fi`
+
+xfce4_session-xfsm-legacy.lo: xfsm-legacy.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-legacy.lo -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-legacy.Tpo" -c -o xfce4_session-xfsm-legacy.lo `test -f 'xfsm-legacy.c' || echo '$(srcdir)/'`xfsm-legacy.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-legacy.Tpo" "$(DEPDIR)/xfce4_session-xfsm-legacy.Plo"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-legacy.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-legacy.c' object='xfce4_session-xfsm-legacy.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-legacy.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-legacy.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-legacy.lo `test -f 'xfsm-legacy.c' || echo '$(srcdir)/'`xfsm-legacy.c
 
 xfce4_session-xfsm-manager.o: xfsm-manager.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-manager.o -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-manager.Tpo" -c -o xfce4_session-xfsm-manager.o `test -f 'xfsm-manager.c' || echo '$(srcdir)/'`xfsm-manager.c; \

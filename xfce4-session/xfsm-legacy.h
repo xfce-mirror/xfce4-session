@@ -19,13 +19,16 @@
  * 02111-1307, USA.
  */
 
-#ifndef __XFSM_COMPAT_KDE_H__
-#define __XFSM_COMPAT_KDE_H__
+#ifndef __XFSM_LEGACY_H__
+#define __XFSM_LEGACY_H__
 
-#include <xfce4-session/xfsm-splash-screen.h>
+#include <libxfce4util/libxfce4util.h>
 
 
-void xfsm_compat_kde_startup (XfsmSplashScreen *splash);
-void xfsm_compat_kde_shutdown (void);
+void xfsm_legacy_perform_session_save (void);
+void xfsm_legacy_store_session (XfceRc *rc);
+void xfsm_legacy_load_session (XfceRc *rc);
+void xfsm_legacy_startup (void);
+void xfsm_legacy_shutdown (void);
 
-#endif /* !__XFSM_COMPAT_KDE_H__ */
+#endif /* !__XFSM_LEGACY_H__ */

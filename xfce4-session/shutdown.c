@@ -36,6 +36,9 @@
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
 #include <libxfce4util/libxfce4util.h>
 #include <libxfcegui4/libxfcegui4.h>
@@ -44,8 +47,9 @@
 #include <xfce4-session/shutdown.h>
 #include <xfce4-session/xfsm-compat-gnome.h>
 #include <xfce4-session/xfsm-compat-kde.h>
-#include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-fadeout.h>
+#include <xfce4-session/xfsm-global.h>
+#include <xfce4-session/xfsm-legacy.h>
 #include <xfce4-session/xfsm-shutdown-helper.h>
 #include <xfce4-session/xfsm-util.h>
 
@@ -464,7 +468,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 /*
  */
 gint
-shutdown(gint type)
+xfsm_shutdown(gint type)
 {
   gboolean result;
 
@@ -475,6 +479,14 @@ shutdown(gint type)
 
   if (compat_kde)
     xfsm_compat_kde_shutdown ();
+
+  /* kill legacy clients */
+  xfsm_legacy_shutdown ();
+
+#ifdef HAVE_SYNC
+  /* sync disk block in-core status with that on disk */
+  sync ();
+#endif
 
   if (type == SHUTDOWN_LOGOUT)
     return EXIT_SUCCESS;

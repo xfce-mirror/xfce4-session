@@ -1,3 +1,82 @@
+2004-05-25 23:29  benny
+
+	* Makefile.in, config.h.in, configure, configure.ac,
+	xfce4-session.spec.in, defaults/Makefile.in, docs/Makefile.in,
+	settings/Makefile.in, settings/looknfeel.c, settings/session.c,
+	themes/Makefile.in, themes/Default/Makefile.in,
+	xfce4-session/Makefile.am, xfce4-session/Makefile.in,
+	xfce4-session/main.c, xfce4-session/shutdown.c,
+	xfce4-session/xfsm-compat-gnome.c,
+	xfce4-session/xfsm-compat-gnome.h, xfce4-session/xfsm-compat-kde.c,
+	xfce4-session/xfsm-compat-kde.h, xfce4-session/xfsm-global.c,
+	xfce4-session/xfsm-global.h, xfce4-session/xfsm-splash-screen.c,
+	xfce4-session/xfsm-startup.c, xfsm-shutdown-helper/Makefile.in:
+	Added Gnome compatibility. Improved KDE compatibility (Konqueror
+	seems somewhat broken, though, dunno why). Some cosmetic fixes on
+	the splash screen (avoid flicker, same y pos for all texts).
+
+2004-05-25 20:07  benny
+
+	* TODO, settings/Makefile.am, settings/Makefile.in,
+	settings/gnome-uri.c, settings/gnome-uri.h, settings/looknfeel.c,
+	settings/looknfeel.h, settings/session.c, settings/settings.h,
+	settings/xfce-session-settings.desktop,
+	settings/xfsm-install-theme, xfce4-session/xfsm-startup.c: Enable
+	installation of new themes by dragging&dropping a theme from a file
+	manager (tested with rox so far) to the theme treeview, currently
+	only theme directories (that are directories that contain a subdir
+	"xfsm4" and atleast a file "xfsm4/themerc") and theme tarballs
+	(actuall .tar.gz, which contents match the theme directory layout
+	described above) are supported.  The "installation" of the theme is
+	done using the xfsm-install-theme script, so it should be easy to
+	add support for further "file formats", just send me a patch (but
+	remember that the stuff has to be plattform-independend, so no
+	bashism or GNUism).
+
+2004-05-25 14:27  pollux
+
+	* settings/session.c: when enlarging settings window, the Security
+	frame stay close to the Compatibility one
+
+2004-05-25 00:34  benny
+
+	* xfce4-session/xfsm-startup.c: Added some KDE application names.
+
+2004-05-25 00:25  benny
+
+	* settings/session.c, xfce4-session/xfsm-manager.c,
+	xfce4-session/xfsm-splash-screen.c, xfce4-session/xfsm-startup.c,
+	xfce4-session/xfsm-startup.h: Initial KDE support, will be improved
+	further soon.
+
+2004-05-24 23:57  benny
+
+	* BUGS, settings/Makefile.am, settings/Makefile.in,
+	settings/session.c, themes/Default/skip_icon.png,
+	themes/Default/skip_icon.svg, themes/Default/themerc,
+	xfce4-session/main.c, xfce4-session/shutdown.c,
+	xfce4-session/xfsm-splash-theme.c,
+	xfce4-session/xfsm-splash-theme.h: Mo[e]dified the settings dialog
+	based on some ideas I discussed with Moe.  Changed the skip icon to
+	the new icon from Francois.
+
+2004-05-24 19:25  benny
+
+	* themes/Default/themerc: Francois prefers this gradient :-)
+
+2004-05-24 18:12  benny
+
+	* BUGS, ChangeLog, themes/Default/Makefile.am,
+	themes/Default/Makefile.in, themes/Default/chooser_icon.png,
+	themes/Default/chooser_icon.svg, themes/Default/logo.png,
+	themes/Default/skip_icon.png, themes/Default/skip_icon.svg,
+	themes/Default/themerc, xfce4-session/xfsm-fadeout.c,
+	xfce4-session/xfsm-splash-screen.c,
+	xfce4-session/xfsm-splash-theme.c,
+	xfce4-session/xfsm-splash-theme.h: New splash theme file format.
+	Added gradient option for bgcolor and focolor, as per Francois'
+	request. New default theme based on the one by Francois.
+
 2004-05-22 08:52  benny
 
 	* xfce4-session/shutdown.c: Fix #200, using the gtk auth icon only

@@ -51,6 +51,7 @@
 
 #include <xfce4-session/shutdown.h>
 #include <xfce4-session/xfsm-global.h>
+#include <xfce4-session/xfsm-legacy.h>
 #include <xfce4-session/xfsm-manager.h>
 #include <xfce4-session/xfsm-startup.h>
 #include <xfce4-session/xfsm-util.h>
@@ -154,6 +155,9 @@ xfsm_manager_startup_continue (const gchar *previous_id)
           xfce_rc_set_group (rc, buffer);
           xfsm_manager_restore_active_workspace (rc);
           xfce_rc_close (rc);
+
+          /* start legacy applications now */
+          xfsm_legacy_startup ();
         }
     }
   else
@@ -246,6 +250,9 @@ xfsm_manager_load_session (void)
       else
         xfsm_properties_free (properties);
     }
+
+  /* load legacy applications */
+  xfsm_legacy_load_session (rc);
 
   xfce_rc_close (rc);
 
@@ -668,6 +675,9 @@ xfsm_manager_save_yourself (XfsmClient *client,
         {
           state = shutdown ? XFSM_MANAGER_SHUTDOWN : XFSM_MANAGER_CHECKPOINT;
           
+          /* handle legacy applications first! */
+          xfsm_legacy_perform_session_save ();
+
           for (lp = running_clients; lp != NULL; lp = lp->next)
             {
               XfsmClient *client = XFSM_CLIENT (lp->data);
@@ -1010,6 +1020,9 @@ xfsm_manager_store_session (void)
     }
 
   xfce_rc_write_int_entry (rc, "Count", count);
+
+  /* store legacy applications state */
+  xfsm_legacy_store_session (rc);
 
   /* store current workspace numbers */
   display = gdk_display_get_default ();

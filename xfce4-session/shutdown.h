@@ -31,6 +31,6 @@
 
 /* prototypes */
 extern gboolean	shutdownDialog(gint *, gboolean *);
-extern gint	shutdown(gint);
+extern gint	xfsm_shutdown(gint);
 
 #endif	/* !__XFSM_SHUTDOWN_H__ */

@@ -292,5 +292,5 @@ main (int argc, char **argv)
   
   ice_cleanup ();
 
-  return shutdown (shutdown_type);
+  return xfsm_shutdown (shutdown_type);
 }
