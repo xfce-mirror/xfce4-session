@@ -338,7 +338,7 @@ shutdown(gint type)
 		break;
 
 	case SHUTDOWN_HALT:
-		command = g_strdup_printf("%s halt", SHUTDOWN_COMMAND);
+		command = g_strdup_printf("%s poweroff", SHUTDOWN_COMMAND);
 		break;
 
 	default:
