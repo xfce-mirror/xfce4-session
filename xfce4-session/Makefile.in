@@ -14,7 +14,6 @@
 
 @SET_MAKE@
 
-
 SOURCES = $(xfce4_session_SOURCES)
 
 srcdir = @srcdir@
@@ -50,7 +49,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
-am__installdirs = $(DESTDIR)$(bindir) $(DESTDIR)$(man1dir) $(DESTDIR)$(pixmapdir)
+am__installdirs = $(DESTDIR)$(bindir) $(DESTDIR)$(man1dir)
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
 am_xfce4_session_OBJECTS = xfce4_session-ice-layer.$(OBJEXT) \
@@ -62,6 +61,7 @@ am_xfce4_session_OBJECTS = xfce4_session-ice-layer.$(OBJEXT) \
 	xfce4_session-xfsm-manager.$(OBJEXT) \
 	xfce4_session-xfsm-properties.$(OBJEXT) \
 	xfce4_session-xfsm-splash-screen.$(OBJEXT) \
+	xfce4_session-xfsm-splash-theme.$(OBJEXT) \
 	xfce4_session-xfsm-startup.$(OBJEXT) \
 	xfce4_session-xfsm-util.$(OBJEXT)
 xfce4_session_OBJECTS = $(am_xfce4_session_OBJECTS)
@@ -79,6 +79,7 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-manager.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-properties.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-splash-screen.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-splash-theme.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-startup.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-util.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
@@ -94,8 +95,6 @@ DIST_SOURCES = $(xfce4_session_SOURCES)
 man1dir = $(mandir)/man1
 NROFF = nroff
 MANS = $(man_MANS)
-pixmapDATA_INSTALL = $(INSTALL_DATA)
-DATA = $(pixmap_DATA)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -259,6 +258,8 @@ xfce4_session_SOURCES = \
 	xfsm-properties.h						\
 	xfsm-splash-screen.c						\
 	xfsm-splash-screen.h						\
+	xfsm-splash-theme.c						\
+	xfsm-splash-theme.h						\
 	xfsm-startup.c							\
 	xfsm-startup.h							\
 	xfsm-util.h							\
@@ -271,8 +272,7 @@ xfce4_session_CFLAGS = \
 	@LIBXFCEGUI4_CFLAGS@						\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
 	-DSHUTDOWN_COMMAND=\"$(sbindir)/xfce4-shutdown\"		\
-	-DSPLASH_THEMES_DIR=\"$(datadir)/xfce4/splash\"			\
-	-DSPLASH_THEME_LOGO=\"$(datadir)/pixmaps/xfce4-splash.png\"
+	-DSPLASH_THEMES_DIR=\"$(datadir)/xfce4/splash\"
 
 xfce4_session_LDADD = \
 	@LIBSM_LDFLAGS@							\
@@ -282,11 +282,8 @@ xfce4_session_LDADD = \
 	@LIBXFCE4MCS_CLIENT_LIBS@					\
 	@LIBXFCEGUI4_LIBS@
 
-pixmapdir = $(datadir)/pixmaps
-pixmap_DATA = xfce4-splash.png
 EXTRA_DIST = \
 	$(man_MANS)							\
-	$(pixmap_DATA)							\
 	chooser-icon.png
 
 all: all-am
@@ -370,6 +367,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-manager.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-properties.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-splash-screen.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-splash-theme.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-startup.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-util.Po@am__quote@
 
@@ -637,6 +635,30 @@ xfce4_session-xfsm-splash-screen.lo: xfsm-splash-screen.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-splash-screen.lo `test -f 'xfsm-splash-screen.c' || echo '$(srcdir)/'`xfsm-splash-screen.c
 
+xfce4_session-xfsm-splash-theme.o: xfsm-splash-theme.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-splash-theme.o -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-splash-theme.Tpo" -c -o xfce4_session-xfsm-splash-theme.o `test -f 'xfsm-splash-theme.c' || echo '$(srcdir)/'`xfsm-splash-theme.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-splash-theme.Tpo" "$(DEPDIR)/xfce4_session-xfsm-splash-theme.Po"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-splash-theme.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-splash-theme.c' object='xfce4_session-xfsm-splash-theme.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-splash-theme.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-splash-theme.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-splash-theme.o `test -f 'xfsm-splash-theme.c' || echo '$(srcdir)/'`xfsm-splash-theme.c
+
+xfce4_session-xfsm-splash-theme.obj: xfsm-splash-theme.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-splash-theme.obj -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-splash-theme.Tpo" -c -o xfce4_session-xfsm-splash-theme.obj `if test -f 'xfsm-splash-theme.c'; then $(CYGPATH_W) 'xfsm-splash-theme.c'; else $(CYGPATH_W) '$(srcdir)/xfsm-splash-theme.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-splash-theme.Tpo" "$(DEPDIR)/xfce4_session-xfsm-splash-theme.Po"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-splash-theme.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-splash-theme.c' object='xfce4_session-xfsm-splash-theme.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-splash-theme.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-splash-theme.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-splash-theme.obj `if test -f 'xfsm-splash-theme.c'; then $(CYGPATH_W) 'xfsm-splash-theme.c'; else $(CYGPATH_W) '$(srcdir)/xfsm-splash-theme.c'; fi`
+
+xfce4_session-xfsm-splash-theme.lo: xfsm-splash-theme.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-splash-theme.lo -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-splash-theme.Tpo" -c -o xfce4_session-xfsm-splash-theme.lo `test -f 'xfsm-splash-theme.c' || echo '$(srcdir)/'`xfsm-splash-theme.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-splash-theme.Tpo" "$(DEPDIR)/xfce4_session-xfsm-splash-theme.Plo"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-splash-theme.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-splash-theme.c' object='xfce4_session-xfsm-splash-theme.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-splash-theme.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-splash-theme.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-splash-theme.lo `test -f 'xfsm-splash-theme.c' || echo '$(srcdir)/'`xfsm-splash-theme.c
+
 xfce4_session-xfsm-startup.o: xfsm-startup.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-startup.o -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-startup.Tpo" -c -o xfce4_session-xfsm-startup.o `test -f 'xfsm-startup.c' || echo '$(srcdir)/'`xfsm-startup.c; \
 @am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-startup.Tpo" "$(DEPDIR)/xfce4_session-xfsm-startup.Po"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-startup.Tpo"; exit 1; fi
@@ -739,23 +761,6 @@ uninstall-man1:
 	  echo " rm -f $(DESTDIR)$(man1dir)/$$inst"; \
 	  rm -f $(DESTDIR)$(man1dir)/$$inst; \
 	done
-install-pixmapDATA: $(pixmap_DATA)
-	@$(NORMAL_INSTALL)
-	$(mkdir_p) $(DESTDIR)$(pixmapdir)
-	@list='$(pixmap_DATA)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f="`echo $$p | sed -e 's|^.*/||'`"; \
-	  echo " $(pixmapDATA_INSTALL) $$d$$p $(DESTDIR)$(pixmapdir)/$$f"; \
-	  $(pixmapDATA_INSTALL) $$d$$p $(DESTDIR)$(pixmapdir)/$$f; \
-	done
-
-uninstall-pixmapDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(pixmap_DATA)'; for p in $$list; do \
-	  f="`echo $$p | sed -e 's|^.*/||'`"; \
-	  echo " rm -f $(DESTDIR)$(pixmapdir)/$$f"; \
-	  rm -f $(DESTDIR)$(pixmapdir)/$$f; \
-	done
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -832,9 +837,9 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(PROGRAMS) $(MANS) $(DATA)
+all-am: Makefile $(PROGRAMS) $(MANS)
 installdirs:
-	$(mkdir_p) $(DESTDIR)$(bindir) $(DESTDIR)$(man1dir) $(DESTDIR)$(pixmapdir)
+	$(mkdir_p) $(DESTDIR)$(bindir) $(DESTDIR)$(man1dir)
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -879,7 +884,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-man install-pixmapDATA
+install-data-am: install-man
 
 install-exec-am: install-binPROGRAMS
 
@@ -907,8 +912,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-binPROGRAMS uninstall-info-am uninstall-man \
-	uninstall-pixmapDATA
+uninstall-am: uninstall-binPROGRAMS uninstall-info-am uninstall-man
 
 uninstall-man: uninstall-man1
 
@@ -918,13 +922,12 @@ uninstall-man: uninstall-man1
 	dvi-am html html-am info info-am install install-am \
 	install-binPROGRAMS install-data install-data-am install-exec \
 	install-exec-am install-info install-info-am install-man \
-	install-man1 install-pixmapDATA install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am uninstall-binPROGRAMS \
-	uninstall-info-am uninstall-man uninstall-man1 \
-	uninstall-pixmapDATA
+	install-man1 install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool pdf pdf-am ps ps-am tags uninstall \
+	uninstall-am uninstall-binPROGRAMS uninstall-info-am \
+	uninstall-man uninstall-man1
 
 
 chooser-icon.h: $(srcdir)/chooser-icon.png

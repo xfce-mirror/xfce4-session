@@ -111,6 +111,8 @@ defaults/Makefile
 docs/Makefile
 po/Makefile.in
 settings/Makefile
+themes/Makefile
+themes/Default/Makefile
 xfce4-session/Makefile
 xfce4-shutdown/Makefile
 ])

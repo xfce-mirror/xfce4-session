@@ -3,6 +3,7 @@ SUBDIRS =								\
 	docs								\
 	po								\
 	settings							\
+	themes								\
 	xfce4-session							\
 	xfce4-shutdown
 

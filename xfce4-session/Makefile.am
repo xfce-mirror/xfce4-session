@@ -23,6 +23,8 @@ xfce4_session_SOURCES =							\
 	xfsm-properties.h						\
 	xfsm-splash-screen.c						\
 	xfsm-splash-screen.h						\
+	xfsm-splash-theme.c						\
+	xfsm-splash-theme.h						\
 	xfsm-startup.c							\
 	xfsm-startup.h							\
 	xfsm-util.h							\
@@ -35,8 +37,7 @@ xfce4_session_CFLAGS =							\
 	@LIBXFCEGUI4_CFLAGS@						\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
 	-DSHUTDOWN_COMMAND=\"$(sbindir)/xfce4-shutdown\"		\
-	-DSPLASH_THEMES_DIR=\"$(datadir)/xfce4/splash\"			\
-	-DSPLASH_THEME_LOGO=\"$(datadir)/pixmaps/xfce4-splash.png\"
+	-DSPLASH_THEMES_DIR=\"$(datadir)/xfce4/splash\"
 
 xfce4_session_LDADD =							\
 	@LIBSM_LDFLAGS@							\
@@ -50,10 +51,6 @@ chooser-icon.h: $(srcdir)/chooser-icon.png
 	gdk-pixbuf-csource --raw --build-list                           \
 	chooser_icon_data $^ > $@
 
-pixmapdir = $(datadir)/pixmaps
-pixmap_DATA = xfce4-splash.png
-
 EXTRA_DIST =								\
 	$(man_MANS)							\
-	$(pixmap_DATA)							\
 	chooser-icon.png

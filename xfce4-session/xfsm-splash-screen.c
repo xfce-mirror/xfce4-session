@@ -74,6 +74,8 @@ struct _XfsmSplashScreen
   int current_x;
 
   guint idle_id;
+
+  XfsmSplashTheme *theme;
 };
 
 
@@ -192,15 +194,21 @@ xfsm_splash_screen_fadeout (XfsmSplashScreen *splash)
 
 
 static GdkWindow*
-create_fullscreen_window (GdkScreen *screen, int monitor)
+create_fullscreen_window (GdkScreen *screen,
+                          int monitor,
+                          const GdkColor *bgcolor)
 {
   GdkRectangle geometry;
   GdkWindowAttr attr;
   GdkWindow *window;
-  GdkColor color;
+  GdkCursor *cursor;
+  GdkColor *color;
 
   /* acquire monitor geometry */
   gdk_screen_get_monitor_geometry (screen, monitor, &geometry);
+
+  /* set watch cursor */
+  cursor = gdk_cursor_new (GDK_WATCH);
 
   /* init window attributes */
   attr.x = geometry.x;
@@ -209,21 +217,24 @@ create_fullscreen_window (GdkScreen *screen, int monitor)
   attr.width = geometry.width;
   attr.height = geometry.height;
   attr.wclass = GDK_INPUT_OUTPUT;
-  attr.window_type = GDK_WINDOW_CHILD;
-  attr.cursor = gdk_cursor_new (GDK_WATCH);
+  attr.window_type = GDK_WINDOW_TOPLEVEL;
+  attr.cursor = cursor;
   attr.override_redirect = TRUE;
 
   window = gdk_window_new (gdk_screen_get_root_window (screen),
                            &attr, GDK_WA_X | GDK_WA_Y | GDK_WA_NOREDIR |
                            GDK_WA_CURSOR);
   
-  gdk_color_parse ("White", &color);
-  gdk_rgb_find_color (gdk_screen_get_rgb_colormap (screen), &color);
-  gdk_window_set_background (window, &color);
+  /* set background color */
+  color = gdk_color_copy (bgcolor);
+  gdk_rgb_find_color (gdk_drawable_get_colormap (window), color);
+  gdk_window_set_background (window, color);
+  gdk_color_free (color);
+
   gdk_window_show (window);
 
   /* the window now holds a reference on the cursor */
-  gdk_cursor_unref (attr.cursor);
+  gdk_cursor_unref (cursor);
 
   return window;
 }
@@ -267,7 +278,9 @@ splash_window_filter (GdkXEvent *xevent,
 
 
 XfsmSplashScreen*
-xfsm_splash_screen_new (GdkDisplay *display, gboolean display_chooser)
+xfsm_splash_screen_new (GdkDisplay *display,
+                        gboolean display_chooser,
+                        const XfsmSplashTheme *theme)
 {
   XfsmSplashScreen *splash;
   char buffer[128];
@@ -277,67 +290,83 @@ xfsm_splash_screen_new (GdkDisplay *display, gboolean display_chooser)
 
   splash = g_new0 (XfsmSplashScreen, 1);
   splash->chooser_always = display_chooser;
+  splash->theme = xfsm_splash_theme_copy (theme);
 
   /* the other screens */
-  for (n = 0; n < gdk_display_get_n_screens (display); ++n) {
-    PangoLayout *layout;
-    GdkWindow *window;
-    GdkScreen *screen;
-    GdkGC *gc;
-    int w, h;
-    int m;
+  for (n = 0; n < gdk_display_get_n_screens (display); ++n)
+    {
+      PangoLayout *layout;
+      GdkWindow *window;
+      GdkScreen *screen;
+      GdkGC *gc;
+      int w, h;
+      int m;
 
-    screen = gdk_display_get_screen (display, n);
+      screen = gdk_display_get_screen (display, n);
 
-    layout = pango_layout_new (gdk_pango_context_get_for_screen (screen));
-    g_snprintf (buffer, 128, "<span face=\"Sans\" size=\"x-large\">%s</span>",
-        _("Starting Xfce, please wait..."));
-    pango_layout_set_markup (layout, buffer, -1);
-    pango_layout_get_pixel_size (layout, &w, &h);
+      layout = pango_layout_new (gdk_pango_context_get_for_screen (screen));
+      g_snprintf (buffer, 128, "<span face=\"Sans\" size=\"x-large\">%s</span>",
+          _("Starting Xfce, please wait..."));
+      pango_layout_set_markup (layout, buffer, -1);
+      pango_layout_get_pixel_size (layout, &w, &h);
 
-    for (m = 0; m < gdk_screen_get_n_monitors (screen); ++m) {
-      window = create_fullscreen_window (screen, m);
+      for (m = 0; m < gdk_screen_get_n_monitors (screen); ++m)
+        {
+          xfsm_splash_theme_get_bgcolor (theme, &color);
+          window = create_fullscreen_window (screen, m, &color);
 
-      gc = gdk_gc_new (GDK_DRAWABLE (window));
-      gdk_color_parse ("Black", &color);
-      gdk_rgb_find_color (gdk_screen_get_rgb_colormap (screen), &color);
-      gdk_gc_set_foreground (gc, &color);
-      gdk_gc_set_function (gc, GDK_COPY);
+          gc = gdk_gc_new (GDK_DRAWABLE (window));
+          xfsm_splash_theme_get_fgcolor (theme, &color);
+          gdk_gc_set_rgb_fg_color (gc, &color);
+          gdk_gc_set_function (gc, GDK_COPY);
 
-      if (n == 0 && m == 0) {
-        /* first window is handled special */
-        splash->main_screen = screen;
-        splash->main_monitor = m;
-        splash->window = window;
-        splash->copy_gc = gc;
-        gdk_drawable_get_size (GDK_DRAWABLE (splash->window),
-                               &splash->screen_w,
-                               &splash->screen_h);
-        splash->colormap = gdk_screen_get_rgb_colormap (screen);
+          if (n == 0 && m == 0) {
+            /* first window is handled special */
+            splash->main_screen = screen;
+            splash->main_monitor = m;
+            splash->window = window;
+            splash->copy_gc = gc;
+            gdk_drawable_get_size (GDK_DRAWABLE (splash->window),
+                                   &splash->screen_w,
+                                   &splash->screen_h);
+            splash->colormap = gdk_screen_get_rgb_colormap (screen);
 
-        splash->backbuf = gdk_pixmap_new (GDK_DRAWABLE (splash->window),
-                                          splash->screen_w,
-                                          splash->screen_h,
-                                          -1);
-      }
-      else {
-        gdk_draw_layout (GDK_DRAWABLE (window), gc,
-                         (gdk_screen_get_width (screen) - w) / 2,
-                         (gdk_screen_get_height (screen) - h) / 2,
-                         layout);
+            splash->backbuf = gdk_pixmap_new (GDK_DRAWABLE (splash->window),
+                                              splash->screen_w,
+                                              splash->screen_h,
+                                              -1);
+          }
+          else {
+            GdkRectangle area;
 
-        splash->other_windows = g_list_append (splash->other_windows, window);
+            gdk_screen_get_monitor_geometry (screen, m, &area);
 
-        g_object_unref (G_OBJECT (gc));
-      }
+            gdk_draw_layout (GDK_DRAWABLE (window), gc,
+                             area.x + (area.width - w) / 2,
+                             area.y + (area.height - h) / 2,
+                             layout);
+
+            splash->other_windows = g_list_append (splash->other_windows,
+                                                   window);
+
+            g_object_unref (G_OBJECT (gc));
+          }
+        }
+
+      g_object_unref (G_OBJECT (layout));
     }
-
-    g_object_unref (G_OBJECT (layout));
-  }
 
   splash->set_gc = gdk_gc_new (GDK_DRAWABLE (splash->window));
   gdk_gc_copy (splash->set_gc, splash->copy_gc);
+#if 0
   gdk_gc_set_function (splash->set_gc, GDK_SET);
+#else
+  /* swap fg/bg colors */
+  xfsm_splash_theme_get_fgcolor (theme, &color);
+  gdk_gc_set_rgb_bg_color (splash->set_gc, &color);
+  xfsm_splash_theme_get_bgcolor (theme, &color);
+  gdk_gc_set_rgb_fg_color (splash->set_gc, &color);
+#endif
 
   /* clear back buffer */
   gdk_draw_rectangle (GDK_DRAWABLE (splash->backbuf), splash->set_gc, TRUE,
@@ -369,62 +398,40 @@ xfsm_splash_screen_new (GdkDisplay *display, gboolean display_chooser)
     g_object_unref (l);
   }
 
-  pb = gdk_pixbuf_new_from_file (SPLASH_THEME_LOGO, NULL);
-  if (pb != NULL) {
-    int aw, ah;
-    int pw, ph;
+  pb = xfsm_splash_theme_get_logo (theme,
+                                   splash->screen_w,
+                                   splash->screen_h - splash->text_h);
+  if (pb != NULL)
+    {
+      int pw, ph;
 
-    /* determine available geometry */
-    aw = splash->screen_w;
-    ah = splash->screen_h - splash->text_h;
+      pw = gdk_pixbuf_get_width (pb);
+      ph = gdk_pixbuf_get_height (pb);
 
-    pw = gdk_pixbuf_get_width (pb);
-    ph = gdk_pixbuf_get_height (pb);
-
-    /* check if we need to scale down */
-    if (pw > aw || ph > ah) {
-      double wratio, hratio;
-      GdkPixbuf *opb = pb;
-
-      wratio = (double)pw / (double)aw;
-      hratio = (double)ph / (double)ah;
-
-      if (hratio > wratio) {
-        pw = rint (pw / hratio);
-        ph = ah;
-      }
-      else {
-        pw = aw;
-        ph = rint (ph / wratio);
-      }
-      
-      pb = gdk_pixbuf_scale_simple (opb, pw, ph, GDK_INTERP_BILINEAR);
-      g_object_unref (opb);
-    }
-
-    gdk_draw_pixbuf (GDK_DRAWABLE (splash->backbuf),
-                     splash->copy_gc,
-                     pb,
-                     0, 0,
-                     (aw - pw) / 2, (ah - ph) / 2,
-                     pw, ph,
-                     GDK_RGB_DITHER_NONE,
-                     0, 0);
-
-    gdk_draw_drawable (GDK_DRAWABLE (splash->window),
+      gdk_draw_pixbuf (GDK_DRAWABLE (splash->backbuf),
                        splash->copy_gc,
-                       GDK_DRAWABLE (splash->backbuf),
-                       0, 0,
-                       0, 0,
-                       splash->screen_w, splash->screen_h);
+                       pb, 0, 0,
+                       (splash->screen_w - pw) / 2,
+                       ((splash->screen_h - splash->text_h) - ph) / 2,
+                       pw, ph,
+                       GDK_RGB_DITHER_NONE,
+                       0, 0);
 
-    g_object_unref (pb);
-  }
-  else {
-    gdk_draw_rectangle (GDK_DRAWABLE (splash->window),
-                        splash->set_gc, TRUE, 0, 0,
-                        splash->screen_w, splash->screen_h);
-  }
+      gdk_draw_drawable (GDK_DRAWABLE (splash->window),
+                         splash->copy_gc,
+                         GDK_DRAWABLE (splash->backbuf),
+                         0, 0,
+                         0, 0,
+                         splash->screen_w, splash->screen_h);
+
+      g_object_unref (pb);
+    }
+  else
+    {
+      gdk_draw_rectangle (GDK_DRAWABLE (splash->window),
+                          splash->set_gc, TRUE, 0, 0,
+                          splash->screen_w, splash->screen_h);
+    }
 
   gdk_window_add_filter (splash->window, splash_window_filter, splash);
   gdk_window_set_events (splash->window, GDK_EXPOSURE_MASK);
@@ -616,6 +623,8 @@ xfsm_splash_screen_destroy (XfsmSplashScreen *splash)
 
   for (lp = splash->other_windows; lp != NULL; lp = lp->next)
     gdk_window_destroy (GDK_WINDOW (lp->data));
+
+  xfsm_splash_theme_destroy (splash->theme);
 
   gdk_window_destroy (GDK_WINDOW (splash->window));
   g_object_unref (G_OBJECT (splash->copy_gc));

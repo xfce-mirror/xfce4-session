@@ -53,6 +53,7 @@
 #include <xfce4-session/sm-layer.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-manager.h>
+#include <xfce4-session/xfsm-splash-theme.h>
 #include <xfce4-session/xfsm-startup.h>
 
 
@@ -119,7 +120,8 @@ usage (int exit_code)
 
 
 static void
-init_display (GdkDisplay *dpy)
+init_display (GdkDisplay            *dpy,
+              const XfsmSplashTheme *theme)
 {
   PangoContext *context;
   PangoLayout *layout;
@@ -127,16 +129,16 @@ init_display (GdkDisplay *dpy)
   GdkColormap *cmap;
   GdkCursor *cursor;
   GdkScreen *screen;
+  GdkColor bgcolor;
+  GdkColor fgcolor;
   GdkWindow *root;
-  GdkColor black;
-  GdkColor white;
   char text[256];
   int tw, th;
   GdkGC *gc;
   int n;
 
-  gdk_color_parse ("Black", &black);
-  gdk_color_parse ("White", &white);
+  xfsm_splash_theme_get_bgcolor (theme, &bgcolor);
+  xfsm_splash_theme_get_fgcolor (theme, &fgcolor);
 
   g_snprintf (text, 256, "<span face=\"Sans\" size=\"x-large\">%s</span>",
               _("Restoring the desktop settings, please wait..."));
@@ -149,14 +151,14 @@ init_display (GdkDisplay *dpy)
       gdk_screen_get_monitor_geometry (screen, 0, &area);
       root = gdk_screen_get_root_window (screen);
       cmap = gdk_drawable_get_colormap (GDK_DRAWABLE (root));
-      gdk_rgb_find_color (cmap, &white);
-      gdk_window_set_background (root, &white);
+      gdk_rgb_find_color (cmap, &bgcolor);
+      gdk_window_set_background (root, &bgcolor);
       gdk_window_set_cursor (root, cursor);
       gdk_window_clear (root);
 
       gc = gdk_gc_new (GDK_DRAWABLE (root));
       gdk_gc_set_function (gc, GDK_COPY);
-      gdk_gc_set_rgb_fg_color (gc, &black);
+      gdk_gc_set_rgb_fg_color (gc, &fgcolor);
 
       gdk_flush ();
 
@@ -187,13 +189,13 @@ init_display (GdkDisplay *dpy)
 
 
 static void
-init_splash (GdkDisplay *dpy, XfceRc *rc)
+init_splash (GdkDisplay *dpy, XfceRc *rc, XfsmSplashTheme *theme)
 {
   gboolean chooser;
 
   /* boot the splash screen */
   chooser = xfce_rc_read_bool_entry (rc, "AlwaysDisplayChooser", FALSE);
-  splash_screen = xfsm_splash_screen_new (dpy, chooser);
+  splash_screen = xfsm_splash_screen_new (dpy, chooser, theme);
 }
 
 
@@ -201,6 +203,8 @@ static void
 initialize (int argc, char **argv)
 {
   gboolean disable_tcp = FALSE;
+  const gchar *theme_name;
+  XfsmSplashTheme *theme;
   GdkDisplay *dpy;
   XfceRc *rc;
   
@@ -228,15 +232,19 @@ initialize (int argc, char **argv)
 
   setup_environment ();
 
-  dpy = gdk_display_get_default ();
-  init_display (dpy);
-
   rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG,
                             "xfce4-session/xfce4-session.rc",
                             TRUE);
   xfce_rc_set_group (rc, "General");
 
-  init_splash (dpy, rc);
+  /* load splash theme setting */
+  theme_name = xfce_rc_read_entry (rc, "SplashTheme", "Default");
+  theme = xfsm_splash_theme_load (theme_name);
+
+  dpy = gdk_display_get_default ();
+  init_display (dpy, theme);
+
+  init_splash (dpy, rc, theme);
   sm_init (rc, disable_tcp);
   xfsm_startup_init (rc);
   xfsm_manager_init (rc);
