@@ -1,0 +1,468 @@
+<?xml version='1.0'?> 
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY date "November 2004"> 
+  <!ENTITY appversion "4.2">
+  <!ENTITY app "<application>xfce4-session</application>"> 
+]>
+
+<article id="xfce4-session" lang="en">
+
+<!-- Header --> 
+<articleinfo>
+
+  <title>Xfce 4 Session Manager</title>
+  
+  <copyright>
+    <year>2003</year>
+    <year>2004</year>
+    <holder>Benedikt Meurer</holder>
+  </copyright>
+
+
+
+  <copyright>
+   <year>2005</year> <holder>François Le Clainche (French 
+   translation)</holder>
+  </copyright>
+
+
+
+  <legalnotice id="legalnotice">
+    <para>
+      This document is provided under the terms of the GNU GPL, version
+      2 or (at your option) any later version.
+    </para>
+  </legalnotice>
+  
+  <authorgroup>
+    <author>
+      <firstname>Benedikt</firstname>
+      <surname>Meurer</surname>
+      <affiliation>
+	      <address><email>benny@xfce.org</email></address>
+        <orgname>os-cillation</orgname>
+        <orgdiv>System development</orgdiv>
+        <jobtitle>Software developer</jobtitle>
+      </affiliation>
+    </author>
+
+<!-- This is appropriate place for other contributors: translators,
+maintainers, etc. Commented out by default.
+
+    <othercredit role="translator">
+      <firstname>Latin</firstname> <surname>Translator 1</surname>
+      <affiliation>
+	<orgname>Latin Translation Team</orgname>
+	<address><email>translator@gnome.org</email> </address>
+      </affiliation> <contrib>Latin translation</contrib>
+    </othercredit>
+-->
+
+  </authorgroup>
+
+  <releaseinfo>
+    <para>&nbsp;</para>
+   Ce manuel décrit la version &appversion; de &app;. Dernière mise à jour: &date;
+  </releaseinfo>
+
+</articleinfo>
+
+<para>&nbsp;</para>
+
+<sect1 id="xfsm-intro">
+  <title>Introduction</title>
+
+  <para>&app; est un gestionnaire de session pour Xfce 4. Son rôle est de sauvegarder l'état de votre environnement 
+  (les applications ouvertes et leur position) afin de les restaurer lors de la session suivante. Vous pouvez créer plusieurs 
+  sessions et choisir parmi elles au démarrage.
+  </para>
+  
+  <para>&app; offre la gestion de session pour le protocole X11R6 ainsi que pour l'ancien protocole X11R5. 
+  Si vous n'avez pas besoin du second, vous pouvez le désactiver au moment de la compilation en passant l'option 
+  de configuration --disable-legacy-sm à ./configure. Ne lancez <emphasis>JAMAIS</emphasis>  <application>smproxy</application> au cours d'une session gérée par &app;, sinon des choses bizarres 
+  se produiront. La gestion de session selon le protocole X11R5 inclut tout ce que <application>smproxy</application>
+  ferait, avec en plus le support de l'affichage sur plusieurs moniteurs.</para>
+
+</sect1>
+
+<para>&nbsp;</para>
+
+<sect1 id="xfce4-session-settings">
+  <title>Préférences du gestionnaire de session</title>
+    
+  <sect2 id="xfsm-general-settings">
+  	<title>Préférences générales</title>
+  	
+    <figure id="xfsm-general-fig">
+      <title>Préférences générales de &app;</title>
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/xfsm-general.png" format="PNG" />
+          </imageobject>
+
+          <textobject>
+            <phrase>Montre l'onglet des préférences générales de &app;</phrase>
+          </textobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
+  	
+  	<variablelist>
+      <varlistentry>
+        <term>Afficher le sélecteur de session à chaque connexion</term> 
+        <listitem>
+            <para>Si cette option est sélectionnée, le gestionnaire de session vous demandera de choisir une session 
+            à chacune des connexions à Xfce.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Enregistrer automatiquement la session lors de la fermeture</term> 
+        <listitem>
+          <para>Cette option indique au gestionnaire de session de sauvegarder automatiquement la session lors de 
+          la déconnexion. Si vous ne sélectionnez pas cette option, la question vous sera posée à chaque fois.</para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>Demander à la déconnexion</term> 
+        <listitem>
+          <para>Cette option désactive la fenêtre de confirmation de la déconnexion. La sauvegarde de la session 
+          dépend alors du choix de l'option de sauvegarde automatique de la session.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+	</sect2>
+		
+	<sect2 id="xfsm-advanced settings">
+	  <title>Préférences avancées</title>
+	
+    <figure id="xfsm-advanced-fig">
+      <title>Préférences avancées de &app;</title>
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/xfsm-advanced.png" format="PNG" />
+          </imageobject>
+
+          <textobject>
+            <phrase>Montre l'onglet des préférences avancées de &app;.</phrase>
+          </textobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
+	
+    <variablelist>
+      <varlistentry>
+        <term>Charger les services Gnome au démarrage</term> 
+        <listitem>
+          <para>Activer cette option si vous avez besoin d'exécuer le démon GNOME keyring au démarrage. Cette 
+          option indique également à &app; de lancer les technologies d'assistance de GNOME au démarrage (si elles 
+          sont activées dans le centre de contrôle de GNOME). Consultez la documentation de GNOME pour plus 
+          d'informations à ce sujet.</para>
+        </listitem>
+		  </varlistentry>
+
+      <varlistentry>
+        <term>Charger les services KDE au démarrage</term> 
+        <listitem>
+          <para>Activez cette option si vous prévoyer de lancer des applications KDE au sein de votre session Xfce. 
+          Cela augmentera sensiblement le temps de démarrage de Xfce, mais d'un autre côté, les applications KDE 
+          démarreront plus rapidement. Certaines applications KDE peuvent ne pas fonctionner du tout si vous 
+          n'activez pas cette option.</para>
+        </listitem>
+  		</varlistentry>
+
+      <varlistentry>
+        <term>Gérer le applications distantes</term> 
+        <listitem>
+          <para>Autorise le gestionnaire de session à gérer les applications en cours de fonctionnement sur des 
+          hôtes distants. Cette option peut représenter un risque en termes de sécurité, en activant un port TCP sur 
+          votre système. Ne l'activez pas sans savoir ce que vous faites.</para>
+          <para>Les administrateurs système qui souhaitent désactiver cette option globalement peuvent pour cela 
+          utiliser le mode <ulink url="#xfsm-kiosk-mode" type="html">KIOSK</ulink>.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+	
+	</sect2>
+</sect1>
+    
+<para>&nbsp;</para>
+ 
+<sect1 id="xfsm-customize">
+	<title>Personnaliser le gestionnaire de session</title>
+	
+	<para>Vous pouvez personnaliser l'écran démarrage que &app; affichera lors de la connexion à Xfce 4. Une fenêtre 
+	de configuration dédiée est disponible depuis le <emphasis>gestionnaire de paramètres de Xfce 4</emphasis>.</para>
+	
+	<sect2 id="xfsm-engines">
+		<title>Paramètres de l'écran de démarrage</title>
+		
+    <figure id="splash-screen-settings-fig">
+      <title>La fenêtre de paramétrage de l'écran de démarrage</title>
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/xfsm-splash.png" format="PNG" />
+          </imageobject>
+
+          <textobject>
+            <phrase>Montre la fenêtre de paramétrage de l'écran de démarrage de &app; </phrase>
+          </textobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
+		
+    <para>Sur la gauche, la fenêtre montre une liste de tous les moteurs de thème installés. Sélectionnez un moteur, 
+    et vous verrez, si elle est disponible, une prévisualisation et des informations le concernant. Vous pouvez cliquer sur 
+    le bouton <guibutton>Tester</guibutton> pour voir une démonstration du thème d'écran de démarrage 
+    sélectionné.</para>
+				
+    <para>&app; fournit par défaut trois moteurs de thème d'écran de démarrage. Leurs options de configuration 
+    respectives - si disponibles - sont disponibles en cliquant sur le bouton <guibutton>Configurer</guibutton>.</para>
+	</sect2>
+	
+	<sect2 id="xfsm-shutdown">
+		<title>Les options d'arrêt/redémarrage</title>
+	
+    <para>&app; supporte l'arrêt de votre ordinateur lors de la déconnexion de la session. Pour cela, vous devez 
+    être listé dans le fichier <filename>sudoers</filename> du système, et vous devez en particulier être autorisé 
+    à exécuter la commande <filename>${libexecdir}/xfsm-shutdown-helper</filename>
+    (<filename>/usr/sbin/xfsm-shutdown-helper</filename> sous Debian GNU/Linux)
+    en tant qu'utilisateur root (où <filename>${libexecdir}</filename> est le sous répertoire <filename
+    role="directory">libexec</filename> selon le préfixe utilisé pour installer &app;, par exemple 
+    <filename role="directory">/usr/local/libexec</filename>).</para>
+
+    <para>pas exemple, si vous avez installé &app; dans <filename
+    role="directory">/usr/local</filename>, que votre nom d'hôte est <emphasis>myhost</emphasis>
+    et que votre compte utilisateur est nommé<emphasis>myuser</emphasis>, alors vous devez ajouter la ligne 
+    suivante au fichier <filename>sudoers</filename> (souvenez-vous d'utiliser <application>visudo</application> 
+    pour éditer ce fichier):</para>
+
+<programlisting>
+myuser myhost=/usr/local/libexec/xfsm-shutdown-helper
+</programlisting>
+	</sect2>
+	
+</sect1>
+ 
+<para>&nbsp;</para>
+
+<sect1 id="xfsm-advanced">
+  <title>Avancé</title>
+
+  <sect2 id="files-and-env-vars">
+    <title>Fichiers et variables d'environnement</title>
+
+    <para>Xfce utilise maintenant la spécification Basedir telle que définie sur <ulink
+    url="http://freedesktop.org/" type="http">Freedesktop.org</ulink> pour chercher ses données et ses fichiers de 
+    configuration. Cela signifie que les emplacements de ces fichiers seront indiqués selon un chemin relatif aux 
+    répertoires décrits dans cette spécification.</para>
+
+    <variablelist>
+      <varlistentry>
+        <term>${XDG_CONFIG_HOME}</term>
+        <listitem>
+          <para>Le premier répertoire où il faut rechercher les fichiers de configuration. Par défaut, c'est 
+          <filename role="directory">~/.config/</filename>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>${XDG_CONFIG_DIRS}</term>
+        <listitem>
+          <para>Une liste des répertoires contenant des données de configuration. Par défaut, le panneau cherchera 
+          dans <filename role="directory">${sysconfdir}/xdg/</filename> et 
+          <filename role="directory">/etc/xdg/</filename>. La valeur de ${sysconfdir} dépend de la façon suivant 
+          laquelle le programme a été compilé et sera souvent <filename role="directory">/etc/</filename> 
+          pour les paquets binaires.
+          packages.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>${XDG_CACHE_HOME}</term>
+        <listitem>
+          <para>Indique la racine de toutes les données en cache des utilisateurs. Si cette variable d'environnement 
+          n'est pas renseignée, elle correspond par défaut à <filename
+          role="directory">~/.cache</filename>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>${XDG_CONFIG_DIRS}/xfce4-session/xfce4-session.rc</term>
+        <listitem>
+          <para>Ceci est l'emplacement du fichier de configuration qui contient les différents paramètres de &app;, 
+          qui peuvent être modifiés depuis le gestionnaire de paramètres.</para>
+        </listitem>
+      </varlistentry>
+    
+      <varlistentry>
+        <term>${XDG_CONFIG_DIRS}/xfce4-session/xfce4-splash.rc</term>
+        <listitem>
+          <para>Ceci est l'emplacement du fichier de configuration de l'écran de démarrage, qui peut être modifié depuis 
+          le gestionnaire de paramètres.</para>
+        </listitem>
+      </varlistentry>
+    
+      <varlistentry>
+        <term>${XDG_CACHE_HOME}/sessions/</term>
+        <listitem>
+          <para>Le répertoire dans lequel &app; et <application>xfwm4</application> enregistrent le données sur 
+          les sessions.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>${sysconfdir}/xdg/xfce4/kiosk/kioskrc</term>
+        <listitem>
+          <para>Le fichier de configuration du mode Kiosk. Consultez <ulink url="#xfsm-kiosk-mode">la section 
+          suivante</ulink> pour une explication.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+
+    <para>Aucun fichier de configuration, excepté le <filename>kioskrc</filename>,
+    ne sont conçus pour être édités à la main au cours d'une session Xfce; en fait, les changement apportés seraient 
+    écrasés par le gestionnaire de session ou le gestionnaire de paramètres s'ils sont en cours de fonctionnement.</para>
+
+    <para>les administrateurs système sont susceptibles de vouloir personnaliser le fichier 
+    <filename>${sysconfdir}/xdg/xfce4-session/xfce4-session.rc</filename> afin de changer les applications lancées 
+    par défaut au démarrage de Xfce. Par exemple, si vous souhautez lancer <application>xfce4-iconbox</application> 
+    au lieu de <application>xftaskbar4</application>, vous devrez modifier la section <emphasis>[Failsafe
+    Session]</emphasis> pour qu'elle ressemble à cela:</para>
+
+<programlisting>
+[Failsafe Session]
+Count=4
+Client0_Command=xfwm4
+Client0_PerScreen=False
+Client1_Command=xfce4-panel
+Client1_PerScreen=True
+Client2_Command=xfce4-iconbox
+Client2_PerScreen=True
+Client3_Command=xfdesktop
+Client3_PerScreen=False
+</programlisting>
+  </sect2>
+
+  <sect2 id="xfsm-kiosk-mode">
+    <title>Le mode Kiosk</title>
+
+    <para>Le gestionnaire de session supporte le mode Kiosk qui peut empêcher les utilisateurs de modifier les 
+    paramètres de session. Pour l'utiliser, vous devez éditer ou créer le fichier 
+    <filename>${sysconfdir}/xdg/xfce4/kiosk/kioskrc</filename>.</para>
+    
+    <para>Le meilleur moyen d'expliquer le format utilisé dans ce fichier est de fournir un exemple. La section 
+    xfce4-session de votre <filename>kioskrc</filename> peut ressembler à cela:</para>
+
+<programlisting>
+[xfce4-session]
+CustomizeSplash=ALL
+CustomizeChooser=ALL
+CustomizeLogout=ALL
+CustomizeCompatibility=%wheel
+Shutdown=%wheel
+CustomizeSecurity=NONE
+</programlisting>
+
+    <para>Cela autorise tous les utilisateurs à modifier leur écran de démarrage, les paramètres du sélecteur de session 
+    et de la fenêtre de déconnexion, mais n'autorise que les utilisateurs appartenant au goupe <emphasis>wheel</emphasis> à modifier les paramètres de compatibilité et d'arrêt du système. Personne ne sera autorisé à modifier 
+    les paramètres de sécurité.</para>
+
+    <para>Le gestionnaire de session supporte les fonctionnalités KIOSK suivantes:</para>
+
+    <variablelist>
+      <varlistentry>
+        <term>CustomizeSplash</term>
+        <listitem>
+          <para>Détermine si l'utilisateur est autorisé à personnaliser l'écran de démarrage.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>CustomizeChooser</term>
+        <listitem>
+          <para>Détermine si l'utilisateur est autorisé à personnaliser les paramètres du sélecteur de session.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>CustomizeLogout</term>
+        <listitem>
+          <para>Détermine si l'utilisateur est autorisé à modifier les paramètres de déconnexion.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>CustomizeCompatibility</term>
+        <listitem>
+          <para>Détermine si l'utilisateur est autorisé à modifier les paramètres de compatibilité 
+          (avec KDE/Gnome)</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>CustomizeSecurity</term>
+        <listitem>
+          <para>Détermine si l'utilisateur est autorisé à modifier les paramètres de sécurité.
+          Ceci est l'un des paramètres les plus <emphasis>IMPORTANTS</emphasis>, puisqu'il empêche 
+          les utilisateurs (en fait, <filename>libICE</filename>) à ouvrir un port TCP.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Shutdown</term>
+        <listitem>
+          <para>Détermine si l'utilisateur est autorisé à éteindre (ou redémarrer) le système. Si un utilisateur n'y est 
+          pas autorisé, les options correspondantes seront grisées dans sa fenêtre de déconnexion.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>
+
+<para>&nbsp;</para>
+
+<sect1 id="xfsm-copyright">
+  <title>À propos de &app;</title>
+
+  <para>&app; a été écrit par Benedikt Meurer 
+  (<email>benny@xfce.org</email>).
+    Pour obtenir plus d'informations, visitez le 
+    <ulink url="http://www.xfce.org" type="http">site officiel de Xfce</ulink>. 
+  </para>
+
+  <para>Pour signaler un bogue ou faire une suggestion concernant cette application ou ce manuel, utilisez le 
+  gestionnaire de bogues à l'adresse suivante <ulink 
+      url="http://bugzilla.xfce.org/" 
+      type="http">http://bugzilla.xfce.org/</ulink>. 
+  </para>
+
+  <para>Si vous avez des questions à propos de l'installation ou de l'utilisation de ce programme, merci de les poser 
+  sur la liste de diffusion de <ulink 
+      url="http://lunar-linux.org/mailman/listinfo/xfce"
+      type="http">xfce</ulink>. Les discussions sur le développement de Xfce ont lieu sur la liste de diffusion 
+      <ulink 
+      url="http://lunar-linux.org/mailman/listinfo/xfce4-dev"
+      type="http">xfce4-dev</ulink>.
+  </para>
+    
+  <para> This program is distributed under the terms of the
+    GNU General Public License as published by the Free Software Foundation; 
+    either version 2 of the License, or (at your option) any later version.
+  </para>
+
+  <para>You should have received a copy of the GNU General Public License 
+    along with this program; if not, write to the Free Software 
+    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
+    USA.
+  </para>
+
+</sect1>
+
+</article>
+

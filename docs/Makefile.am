@@ -1,7 +1,8 @@
 @SET_MAKE@
 
 SUBDIRS =								\
-	C
+	C								\
+	fr
 
 noinst_DATA =								\
 	FAQ								\
@@ -12,3 +13,4 @@ EXTRA_DIST =								\
 
 html:
 	(cd C && $(MAKE) $(AM_MAKEFLAGS) html)
+	(cd fr && $(MAKE) $(AM_MAKEFLAGS) html)

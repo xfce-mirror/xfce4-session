@@ -174,6 +174,8 @@ xfce4-session.spec
 docs/Makefile
 docs/C/Makefile
 docs/C/images/Makefile
+docs/fr/Makefile
+docs/fr/images/Makefile
 engines/Makefile
 engines/balou/Makefile
 engines/balou/scripts/Makefile
