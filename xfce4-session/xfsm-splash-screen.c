@@ -40,7 +40,10 @@
 #include <string.h>
 #endif
 
+#include <X11/Xatom.h>
 #include <X11/Xlib.h>
+
+#include <gdk/gdkx.h>
 
 #include <libxfce4util/libxfce4util.h>
 
@@ -419,10 +422,6 @@ xfsm_splash_screen_new (GdkDisplay *display, gboolean display_chooser)
 
   gdk_window_add_filter (splash->window, splash_window_filter, splash);
   gdk_window_set_events (splash->window, GDK_EXPOSURE_MASK);
-
-#if 0
-  xfsm_splash_screen_fadein (splash, initial_text);
-#endif
 
   return splash;
 }
