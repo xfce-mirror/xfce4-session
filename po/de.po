@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XFSession 0.0.15\n"
-"POT-Creation-Date: 2003-07-07 19:24+0200\n"
+"POT-Creation-Date: 2003-07-07 23:25+0200\n"
 "PO-Revision-Date: 2003-07-07 20:10+0100\n"
 "Last-Translator: Moritz Heiber <moritz-heiber@arcor.de>\n"
 "Language-Team: none <none@none>\n"
@@ -13,78 +13,82 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: settings/session.c:216
+#: settings/session.c:219
 msgid "Default Theme"
 msgstr "Default Theme"
 
-#: settings/session.c:221
+#: settings/session.c:224
 msgid "Default splash screen"
 msgstr "Default Splashscreen"
 
-#: settings/session.c:260
+#: settings/session.c:263
 #, c-format
 msgid "About %s..."
 msgstr "Über %s..."
 
-#: settings/session.c:282
+#: settings/session.c:285
 msgid "Info:"
 msgstr "Info:"
 
-#: settings/session.c:290
+#: settings/session.c:293
 msgid "Author:"
 msgstr "Autor:"
 
-#: settings/session.c:352
-msgid "Install new theme"
-msgstr "Neues Theme installieren"
-
-#: settings/session.c:368
+#: settings/session.c:360
 #, c-format
 msgid "Unable to install splash theme from file %s: %s"
 msgstr "Kann Splashtheme aus %s nicht installieren: %s"
 
-#: settings/session.c:432 settings/session.c:539 settings/session.c:553
+#: settings/session.c:381 settings/session.c:684
+msgid "Install new theme"
+msgstr "Neues Theme installieren"
+
+#: settings/session.c:450 settings/session.c:561 settings/session.c:575
 msgid "Session management"
 msgstr "Sitzungsmanagement"
 
 #. General settings
-#: settings/session.c:564
+#: settings/session.c:586
 msgid "General"
 msgstr "Allgemeine Einstellungen"
 
 #.
-#: settings/session.c:573
+#: settings/session.c:595
 msgid "Confirm logout"
 msgstr "Ausloggen bestätigen"
 
-#: settings/session.c:582
+#: settings/session.c:604
 msgid "Automatically save session on logout"
 msgstr "Sitzung automatisch beim Beenden speichern"
 
 #. Logout action settings
-#: settings/session.c:590
+#: settings/session.c:612
 msgid "Default action on logout"
 msgstr "Standardaktion beim Beenden"
 
 #.
-#: settings/session.c:602 xfce4-session/shutdown.c:252
+#: settings/session.c:624 xfce4-session/shutdown.c:252
 msgid "_Quit current session"
 msgstr "_Beende laufende Sitzung"
 
 #.
-#: settings/session.c:606 xfce4-session/shutdown.c:257
+#: settings/session.c:628 xfce4-session/shutdown.c:257
 msgid "_Reboot the computer"
 msgstr "Computer _rebooten"
 
 #.
-#: settings/session.c:610 xfce4-session/shutdown.c:262
+#: settings/session.c:632 xfce4-session/shutdown.c:262
 msgid "_Turn off computer"
 msgstr "Computer _herunterfahren"
 
 #. Logout action settings
-#: settings/session.c:622
+#: settings/session.c:644
 msgid "Splash screen theme"
 msgstr "Splashscreen Theme"
+
+#: settings/session.c:675
+msgid "Show theme info"
+msgstr ""
 
 #: xfce4-session/main.c:75
 msgid "desktop"
@@ -240,7 +244,9 @@ msgid ""
 "name to %s or to install sudo(8) and grant\n"
 "you the right execute reboot and halt commands.\n"
 msgstr ""
-"Es wurde keine Möglichkeit gefunden, den Computer herunterzufahren. Sie sollten\n"
-"den Systemadministrator bitten, entweder Ihren Namen zu der Liste %s hinzuzu-\n"
+"Es wurde keine Möglichkeit gefunden, den Computer herunterzufahren. Sie "
+"sollten\n"
+"den Systemadministrator bitten, entweder Ihren Namen zu der Liste %s "
+"hinzuzu-\n"
 "fügen oder sudo(8) zu installieren und Ihnen die Rechte zum Herunterfahren\n"
 "und/oder Rebooten des Rechners zu gewähren.\n"
