@@ -17,9 +17,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
  * 02111-1307, USA.
- *
- * The permission check was taken from gnome-session/logout.c, originally
- * written by Owen Taylor <otaylor@redhat.com>.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -27,5 +24,48 @@
 #endif
 
 
-#include XFSM_SHUTDOWN_HELPER_IMPL_C
+#include <xfce4-session/xfsm-shutdown-helper.h>
+
+
+struct _XfmShutdownHelper
+{
+  gint dummy;
+};
+
+
+XfsmShutdownHelper*
+xfsm_shutdown_helper_spawn (void)
+{
+  return NULL;
+}
+
+
+gboolean
+xfsm_shutdown_helper_need_password (const XfsmShutdownHelper *helper)
+{
+  return FALSE;
+}
+
+
+gboolean
+xfsm_shutdown_helper_send_password (XfsmShutdownHelper *helper,
+                                    const gchar        *password)
+{
+  return TRUE;
+}
+
+
+gboolean
+xfsm_shutdown_helper_send_command (XfsmShutdownHelper  *helper,
+                                   XfsmShutdownCommand  command)
+{
+  return FALSE;
+}
+
+
+void
+xfsm_shutdown_helper_destroy (XfsmShutdownHelper *helper)
+{
+}
+
 

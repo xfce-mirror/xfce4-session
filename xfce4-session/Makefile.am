@@ -14,6 +14,7 @@ libxfsm_la_CFLAGS =							\
 
 man_MANS = xfce4-session.1
 
+
 bin_PROGRAMS = xfce4-session
 
 xfce4_session_SOURCES =							\
@@ -93,4 +94,8 @@ chooser-icon.h: $(srcdir)/chooser-icon.png
 
 EXTRA_DIST =								\
 	$(man_MANS)							\
-	chooser-icon.png
+	chooser-icon.png						\
+	xfsm-shutdown-helper-none.c					\
+	xfsm-shutdown-helper-redhat.c					\
+	xfsm-shutdown-helper-sudo.c
+

@@ -296,7 +296,6 @@ engine_init (XfsmSplashEngine *engine)
 
 
 
-#if GTK_CHECK_VERSION(2,4,0)
 /* FIXME: 2.4.x only because of missing GtkColorButton! Add XfceColorButton
    to libxfcegui4? */
 static void
@@ -395,7 +394,7 @@ config_configure (XfsmSplashConfig *config,
 
   gdk_color_parse (xfsm_splash_rc_read_entry (config->rc, "BgColor",
                                               DEFAULT_BGCOLOR), &color);
-  sel_bg = gtk_color_button_new_with_color (&color);
+  sel_bg = xfce_color_button_new_with_color (&color);
   gtk_table_attach (GTK_TABLE (table), sel_bg, 1, 2, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (sel_bg);
@@ -407,7 +406,7 @@ config_configure (XfsmSplashConfig *config,
 
   gdk_color_parse (xfsm_splash_rc_read_entry (config->rc, "FgColor",
                                               DEFAULT_FGCOLOR), &color);
-  sel_fg = gtk_color_button_new_with_color (&color);
+  sel_fg = xfce_color_button_new_with_color (&color);
   gtk_table_attach (GTK_TABLE (table), sel_fg, 1, 2, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (sel_fg);
@@ -466,14 +465,14 @@ config_configure (XfsmSplashConfig *config,
   font = gtk_font_button_get_font_name (GTK_FONT_BUTTON (btn_font));
   xfsm_splash_rc_write_entry (config->rc, "Font", font);
 
-  gtk_color_button_get_color (GTK_COLOR_BUTTON (sel_bg), &color);
+  xfce_color_button_get_color (XFCE_COLOR_BUTTON (sel_bg), &color);
   g_snprintf (buffer, 32, "#%02x%02x%02x",
               (unsigned) color.red >> 8,
               (unsigned) color.green >> 8,
               (unsigned) color.blue >> 8);
   xfsm_splash_rc_write_entry (config->rc, "BgColor", buffer);
 
-  gtk_color_button_get_color (GTK_COLOR_BUTTON (sel_fg), &color);
+  xfce_color_button_get_color (XFCE_COLOR_BUTTON (sel_fg), &color);
   g_snprintf (buffer, 32, "#%02x%02x%02x",
               (unsigned) color.red >> 8,
               (unsigned) color.green >> 8,
@@ -493,7 +492,6 @@ config_configure (XfsmSplashConfig *config,
   
   gtk_widget_destroy (dialog);
 }
-#endif
 
 
 static GdkPixbuf*
@@ -512,9 +510,7 @@ config_init (XfsmSplashConfig *config)
   config->author      = g_strdup ("Benedikt Meurer");
   config->homepage    = g_strdup ("http://www.xfce.org/");
   
-#if GTK_CHECK_VERSION(2,4,0)
   config->configure   = config_configure;
-#endif
   config->preview     = config_preview;
 }
 

@@ -63,7 +63,7 @@ BM_I18N([xfce4-session], [ar az ca de es es_MX eu fa_IR fr hi it ja ko lt
 dnl Check for required packages
 BM_DEPEND([LIBXFCE4UTIL], [libxfce4util-1.0], [4.1.11])
 BM_DEPEND([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.1.0])
-BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [4.1.20])
+BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [4.1.24])
 
 dnl Configure the MCS plugins
 XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.1.0])
@@ -120,6 +120,25 @@ else
   AC_MSG_RESULT([yes])
 fi
 
+dnl Check for shutdown method
+AC_ARG_WITH([shutdown-style],
+AC_HELP_STRING([--with-shutdown-style=auto/none/redhat/sudo], [Shutdown style]),
+  [with_shutdown=$withval], [with_shutdown=auto])
+AC_MSG_CHECKING([what shutdown style should be used])
+if test x"$with_shutdown" != x"redhat" -a x"$with_shutdown" != x"sudo" -a x"$with_shutdown" != x"none"; then
+  if test -d "/var/lock/console" -o -d "/var/run/console"; then
+    with_shutdown="redhat"
+  elif test x"$SUDO" != x""; then
+    with_shutdown="sudo"
+  else
+    with_shutdown="none"
+  fi
+fi
+AC_DEFINE_UNQUOTED([XFSM_SHUTDOWN_HELPER_IMPL_C],
+                   [<xfce4-session/xfsm-shutdown-helper-$with_shutdown.c>],
+                   [Shutdown helper implementation])
+AC_MSG_RESULT([$with_shutdown])
+
 dnl
 dnl arguments to set shutdown commands
 dnl
@@ -157,7 +176,6 @@ dnl AC_MSG_RESULT([$with_reboot])
 AC_OUTPUT([
 Makefile
 xfce4-session.spec
-defaults/Makefile
 docs/Makefile
 engines/Makefile
 engines/balou/Makefile

@@ -350,7 +350,10 @@ pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = xfce4-session-1.0.pc
 EXTRA_DIST = \
 	$(man_MANS)							\
-	chooser-icon.png
+	chooser-icon.png						\
+	xfsm-shutdown-helper-none.c					\
+	xfsm-shutdown-helper-redhat.c					\
+	xfsm-shutdown-helper-sudo.c
 
 all: all-am
 

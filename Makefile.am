@@ -1,5 +1,4 @@
 SUBDIRS =								\
-	defaults							\
 	docs								\
 	engines								\
 	icons								\
