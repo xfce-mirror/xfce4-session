@@ -1,7 +1,7 @@
  * run SmDiscardCommand when necessary (e.g. pending clients do not fire up,
    or we reach another checkpoint/shutdown)
  * add a SaveYourself timeout, so bogus clients do not prevent the desktop
-   from shutdown
+   from shutdown [Initial code exists in manager.c SEE BELOW]
  * Multiscreen support is missing (e.g. with the logout screen)
  * Save to XML instead of this binary format.
  * Honor SmRestartStyleHint
@@ -17,3 +17,18 @@
  * Remember last selected "Logout action" and make that the default for 
    the next session.
  * Fix the problem with xfce4-session not working on Solaris 9!
+ * Use full display string as session identifier instead of hostname only.
+ * Move "setenv()" from manager.c to libxfce4util as xfce_setenv()
+
+
+Solution for the TIMEOUT in SAVEYOURSELF problem:
+-------------------------------------------------
+
+ * Handle the interacting clients first
+ * Then wait some period of time (e.g. 5-10 seconds) and if some clients
+   having finished the SAVE YOURSELF phase during that time, display a
+   window with a the list of "sucking" clients and a button "Terminate".
+   Pressing terminate will terminate the session regardless of the state
+   of the given clients. In addition to the window there should be a timer
+   that counts from 60 to 0 seconds and once 0 is reached the session is
+   automatically terminated.

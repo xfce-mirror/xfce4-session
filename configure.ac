@@ -44,7 +44,7 @@ BM_I18N([xfce4-session], [az ca de es es_MX fr hi it ko nl no pl sv ta tr zh_CN
 	 zh_TW])
 
 dnl Check for required packages
-BM_DEPEND([LIBXFCE4UTIL], [libxfce4util-1.0], [4.0.0])
+BM_DEPEND([LIBXFCE4UTIL], [libxfce4util-1.0], [4.1.0])
 BM_DEPEND([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.0.0])
 BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [4.0.0])
 

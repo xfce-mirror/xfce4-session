@@ -140,14 +140,19 @@ do {									\
  * Provide a setenv function for systems that lack it
  */
 #ifndef HAVE_SETENV
-static void
+static int
 setenv(const gchar *name, const gchar *value, gboolean overwrite)
 {
+  int result = 0;
 	gchar *buf;
 
-	buf = g_strdup_printf("%s=%s", name, value);
-	putenv(buf);
-	g_free(buf);
+  if (g_getenv(name) == NULL || overwrite) {
+	  buf = g_strdup_printf("%s=%s", name, value);
+	  result = putenv(buf);
+	  g_free(buf);
+  }
+
+  return(result);
 }
 #endif	/* !HAVE_SETENV */
 
@@ -160,7 +165,7 @@ manager_init(gboolean disable_tcp)
 	char error[2048];
 
   /* check if theres already a session manager running */
-  if (getenv("SESSION_MANAGER") != NULL) {
+  if (g_getenv("SESSION_MANAGER") != NULL) {
     g_warning("Another session manager is already running, unable to continue");
     return(FALSE);
   }
