@@ -79,6 +79,7 @@ gnome_keyring_daemon_startup (void)
   gchar  *pid_str;
   gchar  *end;
   
+  // FIXME: use async spawn!
   g_spawn_command_line_sync ("gnome-keyring-daemon",
                              &sout, NULL, &status, &error);
 

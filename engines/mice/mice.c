@@ -283,7 +283,7 @@ mice_setup (XfsmSplashEngine *engine,
 static void
 mice_next (XfsmSplashEngine *engine, const gchar *text)
 {
-  g_print ("NEXT: \"%s\"\n", text);
+  // FIXME
 }
 
 

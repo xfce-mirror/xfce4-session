@@ -214,6 +214,8 @@ again:
                                                 GTK_STOCK_OK, 
                                                 GTK_RESPONSE_OK,
                                                 NULL);
+          gtk_dialog_set_default_response (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK);
 
           g_snprintf (title, 256, "<big>%s</big>",
                       _("Choose a name for the new session:"));

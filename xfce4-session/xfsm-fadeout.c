@@ -52,7 +52,7 @@ xfsm_fadeout_new (GdkDisplay *display)
 
   fadeout = g_new0 (XfsmFadeout, 1);
   gdk_color_parse ("#b6c4d7", &fadeout->color1);
-  gdk_color_parse ("DarkRed", &fadeout->color2);
+  gdk_color_parse ("#7991ae", &fadeout->color2);
 
   if (gdk_color_equal (&fadeout->color1, &fadeout->color2))
     {
