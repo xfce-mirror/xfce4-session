@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: XFSession 0.0.15\n"
 "POT-Creation-Date: 2003-07-11 00:56+0200\n"
-"PO-Revision-Date: 2003-07-07 20:10+0100\n"
+"PO-Revision-Date: 2003-07-011 20:10+0100\n"
 "Last-Translator: Moritz Heiber <moritz-heiber@arcor.de>\n"
 "Language-Team: none <none@none>\n"
 "MIME-Version: 1.0\n"
@@ -95,7 +95,6 @@ msgid "desktop"
 msgstr "Arbeitsplatz"
 
 #: xfce4-session/main.c:119
-#, fuzzy
 msgid "Starting session manager.."
 msgstr "Starte Sitzungsmanager..."
 
@@ -190,13 +189,13 @@ msgid "_Save session for future logins"
 msgstr "_Speichere Sitzung für weitere Logins"
 
 #: xfce4-session/shutdown.c:349 xfce4-session/shutdown.c:358
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The following error occured while trying to shutdown the computer:\n"
 "\n"
 "%s"
 msgstr ""
-"Der folgende Fehler trat beim %s des Computers auf:\n"
+"Der folgende Fehler trat beim herunterfahren des Computers auf:\n"
 "\n"
 "%s"
 
@@ -211,17 +210,16 @@ msgid "Doing Autostart..."
 msgstr "Durchlaufe Autostart..."
 
 #: xfce4-session/startup.c:207
-#, fuzzy
 msgid "Starting session manager..."
 msgstr "Starte Sitzungsmanager..."
 
 #: xfce4-session/client-list.c:71
 msgid "Idle"
-msgstr "Im Leerlauf"
+msgstr "Leerlauf"
 
 #: xfce4-session/client-list.c:72
 msgid "Interacting"
-msgstr "Interagiert"
+msgstr "Interagiere"
 
 #: xfce4-session/client-list.c:73
 msgid "Save completed"
@@ -230,29 +228,29 @@ msgstr "Gespeichert"
 #. global save
 #: xfce4-session/client-list.c:74 xfce4-session/client-list.c:75
 msgid "Saving"
-msgstr "Speichert"
+msgstr "Speichere"
 
 #. local save
 #: xfce4-session/client-list.c:76
 msgid "Waiting to interact"
-msgstr ""
+msgstr "Warte auf Interaktion"
 
 #: xfce4-session/client-list.c:77
 msgid "Waiting to enter Phase2"
-msgstr ""
+msgstr "Warte auf Phase 2"
 
 #: xfce4-session/client-list.c:78
 msgid "Saving (Phase2)"
-msgstr ""
+msgstr "Speichere (Phase2)"
 
 #: xfce4-session/client-list.c:79
 msgid "Disconnecting"
-msgstr "Trennen"
+msgstr "Trenne Verbindung"
 
 #: xfce4-session/client-list.c:199
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to clone client: %s"
-msgstr "Konnte keine Verbindung zum Einstellungsmanager herstellen"
+msgstr "Konnte Client %s nicht duplizieren"
 
 #: xfce4-session/client-list.c:288
 msgid "Program"
@@ -308,17 +306,15 @@ msgstr ""
 "dürfen. Die Liste befindet sich in dieser Datei: %s.\n"
 
 #: xfce4-shutdown/main.c:192
-#, fuzzy
 msgid ""
 "Unable to shutdown this box. Please check your\n"
 "installation, or contact your system administrator\n"
 "and report the problem.\n"
 msgstr ""
-"Der Sitzungsmanager konnte den\n"
-"Einstellungsmanager nicht starten. Das hängt meistens\n"
-"mit einer falschen XFce-Installation zusammen.\n"
-"Bitte kontaktieren Sie Ihren Administrator und informieren\n"
-"Sie ihn über das Problem."
+"Kann den Computer nicht herunterfahren.\n"
+"Bitte überprüfen Sie ihre Installation oder\n"
+"kontaktieren Sie Ihren Administrator und\n"
+"informieren Sie ihn über das Problem.\n"
 
 #: xfce4-shutdown/main.c:209
 #, c-format
