@@ -154,6 +154,12 @@ manager_init(void)
 	char *sessionManager;
 	char error[2048];
 
+  /* check if theres already a session manager running */
+  if (getenv("SESSION_MANAGER") != NULL) {
+    g_warning("Another session manager is already running, unable to continue");
+    return(FALSE);
+  }
+
 	if (!SmsInitialize(PACKAGE, VERSION, new_client, NULL, ice_auth_proc,
 				2048, error)) {
 		g_warning("Unable to register XSM protocol: %s", error);
