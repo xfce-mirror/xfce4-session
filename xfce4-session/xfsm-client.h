@@ -29,6 +29,7 @@ struct _XfsmClient
   XfsmProperties *properties;
   SmsConn sms_conn;
   guint save_timeout_id;
+  gchar **old_discard_command;
 };
 
 
@@ -41,5 +42,9 @@ void xfsm_client_free (XfsmClient *client);
 
 void xfsm_client_set_initial_properties (XfsmClient     *client,
                                          XfsmProperties *properties);
+
+void xfsm_client_remember_discard_command (XfsmClient *client);
+
+void xfsm_client_maybe_run_old_discard_command (XfsmClient *client);
   
 #endif /* !__XFSM_CLIENT_H__ */

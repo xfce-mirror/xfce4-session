@@ -53,6 +53,10 @@ void xfsm_center_window_on_screen (GtkWindow *window,
                                    GdkScreen *screen,
                                    gint       monitor);
 
+gchar **xfsm_strv_copy (gchar **v);
+
+gboolean xfsm_strv_equal (gchar **a, gchar **b);
+
 G_END_DECLS;
 
 #endif /* !__XFSM_UTIL_H__ */

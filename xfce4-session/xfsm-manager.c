@@ -50,6 +50,8 @@
 
 #include <gtk/gtk.h>
 
+#include <libxfcegui4/libxfcegui4.h>
+
 #include <xfce4-session/shutdown.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-manager.h>
@@ -89,9 +91,40 @@ xfsm_manager_startup (void)
 
 
 static void
+xfsm_manager_restore_active_workspace (XfceRc *rc)
+{
+  NetkWorkspace  *workspace;
+  GdkDisplay     *display;
+  NetkScreen     *screen;
+  gchar           buffer[1024];
+  gint            n, m;
+
+  display = gdk_display_get_default ();
+  for (n = 0; n < gdk_display_get_n_screens (display); ++n)
+    {
+      g_snprintf (buffer, 1024, "Screen%d_ActiveWorkspace", n);
+      if (!xfce_rc_has_entry (rc, buffer))
+        continue;
+      m = xfce_rc_read_int_entry (rc, buffer, 0);
+
+      screen = netk_screen_get (n);
+      netk_screen_force_update (screen);
+
+      if (netk_screen_get_workspace_count (screen) > m)
+        {
+          workspace = netk_screen_get_workspace (screen, m);
+          netk_workspace_activate (workspace);
+        }
+    }
+}
+
+
+static void
 xfsm_manager_startup_continue (const gchar *previous_id)
 {
   gboolean startup_done = FALSE;
+  gchar buffer[1024];
+  XfceRc *rc;
 
   xfsm_verbose ("Manager startup continues [Previous Id = %s]\n\n",
                 previous_id != NULL ? previous_id : "None");
@@ -112,6 +145,18 @@ xfsm_manager_startup_continue (const gchar *previous_id)
     {
       xfsm_verbose ("Manager finished startup, entering IDLE mode now\n\n");
       state = XFSM_MANAGER_IDLE;
+
+      /* restore active workspace, this has to be done after the
+       * window manager is up, so we do it last.
+       */
+      if (!failsafe_mode)
+        {
+          g_snprintf (buffer, 1024, "Session: %s", session_name);
+          rc = xfce_rc_simple_open (session_file, TRUE);
+          xfce_rc_set_group (rc, buffer);
+          xfsm_manager_restore_active_workspace (rc);
+          xfce_rc_close (rc);
+        }
     }
   else
     {
@@ -203,7 +248,7 @@ xfsm_manager_load_session (void)
       else
         xfsm_properties_free (properties);
     }
-  
+
   xfce_rc_close (rc);
 
   return pending_properties != NULL;
@@ -585,6 +630,7 @@ xfsm_manager_save_yourself (XfsmClient *client,
       client->save_timeout_id = g_timeout_add (SAVE_TIMEOUT,
                                                xfsm_manager_save_timeout,
                                                client);
+      xfsm_client_remember_discard_command (client);
     }
   else
     {
@@ -609,6 +655,7 @@ xfsm_manager_save_yourself (XfsmClient *client,
               client->save_timeout_id = g_timeout_add (SAVE_TIMEOUT,
                                                        xfsm_manager_save_timeout,
                                                        client);
+              xfsm_client_remember_discard_command (client);
             } 
         }
       else
@@ -660,6 +707,9 @@ xfsm_manager_save_yourself_done (XfsmClient *client,
   /* remove client save timeout, as client responded in time */  
   g_source_remove (client->save_timeout_id);
   client->save_timeout_id = 0;
+
+  /* run old discard command if necessary */
+  xfsm_client_maybe_run_old_discard_command (client);
 
   if (client->state == XFSM_CLIENT_SAVINGLOCAL)
     {
@@ -830,6 +880,9 @@ xfsm_manager_maybe_enter_phase2 (void)
           client->save_timeout_id = g_timeout_add (SAVE_TIMEOUT,
                                                    xfsm_manager_save_timeout,
                                                    client);
+
+          xfsm_verbose ("Client Id = %s enters SAVE YOURSELF PHASE2.\n\n",
+                        client->id);
         }
     }
 
@@ -889,11 +942,15 @@ xfsm_manager_save_timeout (gpointer client_data)
 void
 xfsm_manager_store_session (void)
 {
-  XfceRc *rc;
-  GList  *lp;
-  gchar   prefix[32];
-  gchar  *group;
-  gint    count = 0;
+  NetkWorkspace *workspace;
+  GdkDisplay    *display;
+  NetkScreen    *screen;
+  XfceRc        *rc;
+  GList         *lp;
+  gchar          prefix[64];
+  gchar         *group;
+  gint           count = 0;
+  gint           n, m;
 
   rc = xfce_rc_simple_open (session_file, FALSE);
   if (rc == NULL)
@@ -913,7 +970,7 @@ xfsm_manager_store_session (void)
 
   for (lp = restart_properties; lp != NULL; lp = lp->next)
     {
-      g_snprintf (prefix, 32, "Client%d_", count);
+      g_snprintf (prefix, 64, "Client%d_", count);
       xfsm_properties_store (XFSM_PROPERTIES (lp->data), rc, prefix);
       ++count;
     }
@@ -924,12 +981,27 @@ xfsm_manager_store_session (void)
           || !xfsm_properties_check (XFSM_CLIENT (lp->data)->properties))
         continue;
       
-      g_snprintf (prefix, 32, "Client%d_", count);
+      g_snprintf (prefix, 64, "Client%d_", count);
       xfsm_properties_store (XFSM_CLIENT (lp->data)->properties, rc, prefix);
       ++count;
     }
 
   xfce_rc_write_int_entry (rc, "Count", count);
+
+  /* store current workspace numbers */
+  display = gdk_display_get_default ();
+  for (n = 0; n < gdk_display_get_n_screens (display); ++n)
+    {
+      screen = netk_screen_get (n);
+      netk_screen_force_update (screen);
+      
+      workspace = netk_screen_get_active_workspace (screen);
+      m = netk_workspace_get_number (workspace);
+
+      g_snprintf (prefix, 64, "Screen%d_ActiveWorkspace", n);
+      xfce_rc_write_int_entry (rc, prefix, m);
+    }
+
   xfce_rc_close (rc);
 }
 

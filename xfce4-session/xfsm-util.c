@@ -295,3 +295,43 @@ xfsm_center_window_on_screen (GtkWindow *window,
 
 	gtk_window_move (window, x, y);
 }
+
+
+gchar**
+xfsm_strv_copy (gchar **v)
+{
+  gchar **rv;
+  gsize len;
+  gsize n;
+
+  for (len = 0; v[len] != NULL; ++len) ;
+
+  rv = g_new (gchar *, len + 1);
+  for (n = 0; n < len; ++n)
+    rv[n] = g_strdup (v[n]);
+  rv[n] = NULL;
+
+  return rv;
+}
+
+
+gboolean
+xfsm_strv_equal (gchar **a, gchar **b)
+{
+  if ((a == NULL && b != NULL) || (a != NULL && b == NULL))
+    return FALSE;
+  else if (a == NULL || b == NULL)
+    return TRUE;
+
+  while (*a != NULL && *b != NULL)
+    {
+      if (strcmp (*a, *b) != 0)
+        return FALSE;
+
+      ++a;
+      ++b;
+    }
+
+  return (*a == NULL && *b == NULL);
+}
+
