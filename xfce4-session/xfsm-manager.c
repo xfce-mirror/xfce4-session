@@ -473,7 +473,7 @@ xfsm_manager_restart (void)
 
   /* tell splash screen that the session is starting now */
   preview = xfsm_manager_load_session_preview (session_name);
-  if (preview != NULL)
+  if (preview == NULL)
     preview = gdk_pixbuf_from_pixdata (&chooser_icon_data, FALSE, NULL);
   steps = g_list_length (failsafe_mode ? failsafe_clients : pending_properties);
   xfsm_splash_screen_start (splash_screen, session_name, preview, steps);
