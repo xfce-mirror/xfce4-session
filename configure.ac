@@ -9,7 +9,7 @@ dnl
 dnl Version information
 m4_define([xfsm_version_major], [4])
 m4_define([xfsm_version_minor], [1])
-m4_define([xfsm_version_micro], [7])
+m4_define([xfsm_version_micro], [8])
 m4_define([xfsm_version], [xfsm_version_major.xfsm_version_minor.xfsm_version_micro])
 
 dnl Initialize autoconf
@@ -62,7 +62,7 @@ BM_I18N([xfce4-session], [ar az ca de es es_MX eu fa_IR fr hi it ja ko ms nl no
 dnl Check for required packages
 BM_DEPEND([LIBXFCE4UTIL], [libxfce4util-1.0], [4.1.11])
 BM_DEPEND([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.1.0])
-BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [4.1.0])
+BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [4.1.19])
 
 dnl Configure the MCS plugins
 XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.1.0])
@@ -74,7 +74,15 @@ BM_DEPEND_CHECK([GNOME], [libgnome-2.0], [2.4.0], [gnome],
 dnl Check for debugging support
 BM_DEBUG_SUPPORT
 
-dnl check for sudo
+dnl Check for iceauth
+AC_PATH_PROG([ICEAUTH], [iceauth])
+if test x"$ICEAUTH" != x""; then
+  AC_DEFINE_UNQUOTED([ICEAUTH_CMD], ["$ICEAUTH"], [path to iceauth])
+else
+  AC_MSG_ERROR([iceauth missing, please check your X11 installation])
+fi
+
+dnl Check for sudo
 AC_PATH_PROG([SUDO], [sudo])
 if test x"$SUDO" != x""; then
   AC_DEFINE_UNQUOTED([SUDO_CMD], ["$SUDO"], [path to sudo])
@@ -109,41 +117,42 @@ dnl
 dnl arguments to set shutdown commands
 dnl
 
-AC_MSG_CHECKING([for custom 'poweroff' command])
-AC_ARG_WITH([poweroff],
-	AC_HELP_STRING([--with-poweroff=cmd], [command used to power down (full path with arguments)]),
-	[with_poweroff="$withval"],
-	[with_poweroff="no"])
-if test "x$with_poweroff" != "xno"; then
-	AC_DEFINE_UNQUOTED(POWEROFF_CMD, "$with_poweroff", [poweroff command])
-fi
-AC_MSG_RESULT([$with_poweroff])
-
-AC_MSG_CHECKING([for custom 'halt' command])
-AC_ARG_WITH([halt],
-	AC_HELP_STRING([--with-halt=cmd], [command used to halt (full path with arguments)]),
-	[with_halt="$withval"],
-	[with_halt="no"])
-if test "x$with_halt" != "xno"; then
-	AC_DEFINE_UNQUOTED(HALT_CMD, "$with_halt", [halt command])
-fi
-AC_MSG_RESULT([$with_halt])
-
-AC_MSG_CHECKING([for custom 'reboot' command])
-AC_ARG_WITH([reboot],
-	AC_HELP_STRING([--with-reboot=cmd], [command used to reboot (full path with arguments)]),
-	[with_reboot="$withval"],
-	[with_reboot="no"])
-if test "x$with_reboot" != "xno"; then
-	AC_DEFINE_UNQUOTED(REBOOT_CMD, "$with_reboot", [reboot command])
-fi
-AC_MSG_RESULT([$with_reboot])
+dnl AC_MSG_CHECKING([for custom 'poweroff' command])
+dnl AC_ARG_WITH([poweroff],
+dnl   AC_HELP_STRING([--with-poweroff=cmd], [command used to power down (full path with arguments)]),
+dnl   [with_poweroff="$withval"],
+dnl   [with_poweroff="no"])
+dnl if test "x$with_poweroff" != "xno"; then
+dnl   AC_DEFINE_UNQUOTED(POWEROFF_CMD, "$with_poweroff", [poweroff command])
+dnl fi
+dnl AC_MSG_RESULT([$with_poweroff])
+dnl 
+dnl AC_MSG_CHECKING([for custom 'halt' command])
+dnl AC_ARG_WITH([halt],
+dnl   AC_HELP_STRING([--with-halt=cmd], [command used to halt (full path with arguments)]),
+dnl   [with_halt="$withval"],
+dnl   [with_halt="no"])
+dnl if test "x$with_halt" != "xno"; then
+dnl   AC_DEFINE_UNQUOTED(HALT_CMD, "$with_halt", [halt command])
+dnl fi
+dnl AC_MSG_RESULT([$with_halt])
+dnl 
+dnl AC_MSG_CHECKING([for custom 'reboot' command])
+dnl AC_ARG_WITH([reboot],
+dnl   AC_HELP_STRING([--with-reboot=cmd], [command used to reboot (full path with arguments)]),
+dnl   [with_reboot="$withval"],
+dnl   [with_reboot="no"])
+dnl if test "x$with_reboot" != "xno"; then
+dnl   AC_DEFINE_UNQUOTED(REBOOT_CMD, "$with_reboot", [reboot command])
+dnl fi
+dnl AC_MSG_RESULT([$with_reboot])
 
 AC_OUTPUT([
 Makefile
 xfce4-session.spec
 defaults/Makefile
 docs/Makefile
+icons/Makefile
 po/Makefile.in
 settings/Makefile
 themes/Makefile

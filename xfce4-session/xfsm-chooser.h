@@ -24,6 +24,8 @@
 
 #include <gtk/gtk.h>
 
+#include <libxfce4util/libxfce4util.h>
+
 G_BEGIN_DECLS
 
 #define XFSM_TYPE_CHOOSER xfsm_chooser_get_type()
@@ -51,6 +53,9 @@ struct _XfsmChooser
   GtkWidget *start;
 
   GtkTooltips *tooltips;
+
+  XfceRc *session_rc;
+  gchar  *session_default;
 };
 
 struct _XfsmChooserSession
@@ -67,8 +72,6 @@ typedef enum _XfsmChooserReturn
 } XfsmChooserReturn;
 
 GType xfsm_chooser_get_type (void) G_GNUC_CONST;
-void xfsm_chooser_set_sessions (XfsmChooser *chooser, GList *sessions,
-                               const gchar *default_session);
 XfsmChooserReturn xfsm_chooser_run (XfsmChooser *chooser, gchar **name);
 
 G_END_DECLS;

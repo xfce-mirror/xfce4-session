@@ -322,8 +322,12 @@ ice_setup_listeners (int           num_listeners,
   fclose (cleanup_fp);
 
   /* setup ICE authority and remove setup file */
-  command = g_strdup_printf ("iceauth source %s", auth_setup_file);
-  system (command);
+  command = g_strdup_printf ("%s source %s", ICEAUTH_CMD, auth_setup_file);
+  if (system (command) != 0)
+    {
+      g_warning ("Failed to setup the ICE authentication data, session "
+                 "management might not work properly.");
+    }
   g_free (command);
   unlink (auth_setup_file);
   g_free (auth_setup_file);
@@ -339,13 +343,14 @@ ice_cleanup (void)
   g_return_if_fail (auth_cleanup_file != NULL);
 
   /* remove newly added ICE authority entries */
-  command = g_strdup_printf ("iceauth source %s", auth_cleanup_file);
+  command = g_strdup_printf ("%s source %s", ICEAUTH_CMD, auth_cleanup_file);
   system (command);
   g_free (command);
 
   /* remove the cleanup file, no longer needed */
   unlink (auth_cleanup_file);
   g_free (auth_cleanup_file);
+  auth_cleanup_file = NULL;
 }
 
 

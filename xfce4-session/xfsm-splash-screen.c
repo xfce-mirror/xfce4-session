@@ -44,6 +44,7 @@
 #include <libxfce4util/libxfce4util.h>
 
 #include <xfce4-session/xfsm-chooser.h>
+#include <xfce4-session/xfsm-chooser-trash.h>
 #include <xfce4-session/xfsm-splash-screen.h>
 #include <xfce4-session/xfsm-util.h>
 
@@ -690,15 +691,17 @@ chooser_timeout (gpointer user_data)
 
 gboolean
 xfsm_splash_screen_choose (XfsmSplashScreen *splash,
-                           GList *sessions,
+                           XfceRc *sessionrc,
                            const gchar *default_session,
                            gchar **name_return)
 {
   XfsmChooserReturn result;
+  GdkRectangle geometry;
   XfsmChooser *chooser;
+  GtkWidget *trash;
   GdkEventMask mask;
   GdkCursor *cursor;
-  GList *lp;
+  gchar group[256];
   guint id;
 
   g_assert (default_session != NULL);
@@ -734,41 +737,57 @@ xfsm_splash_screen_choose (XfsmSplashScreen *splash,
       if (name_return != NULL)
         *name_return = g_strdup (default_session);
 
-      for (lp = sessions; lp != NULL; lp = lp->next)
-        {
-          XfsmChooserSession *session = (XfsmChooserSession *) lp->data;
-        
-          if (strcmp (session->name, default_session) == 0)
-            break;
-        }
-
-      return (lp != NULL);
+      g_snprintf (group, 256, "Session: %s", default_session);
+      return xfce_rc_has_group (sessionrc, group);
     }
 
   display_chooser_text (splash, NULL);
 
+  gdk_screen_get_monitor_geometry (splash->main_screen,
+                                   splash->main_monitor,
+                                   &geometry);
+
+  trash = g_object_new (XFSM_TYPE_CHOOSER_TRASH, 
+                        "background", splash->backbuf,
+                        "screen", splash->main_screen,
+                        "type", GTK_WINDOW_POPUP,
+                        NULL);
+  gtk_widget_realize (GTK_WIDGET (trash));
+  xfsm_place_trash_window (GTK_WINDOW (trash),
+                           splash->main_screen,
+                           splash->main_monitor);
+
   chooser = g_object_new (XFSM_TYPE_CHOOSER,
                           "type", GTK_WINDOW_POPUP,
+                          "session-default", default_session,
+                          "session-rc", sessionrc,
                           NULL);
-  xfsm_chooser_set_sessions (chooser, sessions, default_session);
 
   xfsm_window_add_border (GTK_WINDOW (chooser));
   gtk_window_set_screen (GTK_WINDOW (chooser), splash->main_screen);
   xfsm_center_window_on_screen (GTK_WINDOW (chooser),
                                 splash->main_screen,
                                 splash->main_monitor);
+
+  gtk_widget_show_now (GTK_WIDGET (trash));
   gtk_widget_show_now (GTK_WIDGET (chooser));
 
   result = xfsm_chooser_run (chooser, name_return);
 
   gtk_widget_destroy (GTK_WIDGET (chooser));
+  gtk_widget_destroy (GTK_WIDGET (trash));
 
   display_chooser_text (splash, NULL);
 
   g_main_context_iteration (NULL, FALSE);
 
   if (result == XFSM_CHOOSER_LOGOUT)
-    exit (EXIT_SUCCESS);
+    {
+      if (sessionrc != NULL)
+        xfce_rc_close (sessionrc);
+
+      exit (EXIT_SUCCESS);
+    }
 
   cursor = gdk_cursor_new (GDK_WATCH);
   gdk_window_set_cursor (splash->window, cursor);

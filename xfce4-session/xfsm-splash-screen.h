@@ -22,6 +22,8 @@
 #ifndef __XFSM_SPLASH_SCREEN_H__
 #define __XFSM_SPLASH_SCREEN_H__
 
+#include <libxfce4util/libxfce4util.h>
+
 #include <xfce4-session/xfsm-splash-theme.h>
 
 G_BEGIN_DECLS
@@ -35,7 +37,7 @@ XfsmSplashScreen *xfsm_splash_screen_new (GdkDisplay *display,
 void xfsm_splash_screen_next (XfsmSplashScreen *splash,
                               const gchar *text);
 gboolean xfsm_splash_screen_choose (XfsmSplashScreen *splash,
-                                    GList *sessions,
+                                    XfceRc *sessionrc,
                                     const gchar *default_session,
                                     gchar **name_return);
 void xfsm_splash_screen_destroy (XfsmSplashScreen *splash);

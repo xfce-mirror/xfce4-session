@@ -55,6 +55,7 @@ PROGRAMS = $(bin_PROGRAMS)
 am_xfce4_session_OBJECTS = xfce4_session-ice-layer.$(OBJEXT) \
 	xfce4_session-main.$(OBJEXT) xfce4_session-shutdown.$(OBJEXT) \
 	xfce4_session-sm-layer.$(OBJEXT) \
+	xfce4_session-xfsm-chooser-trash.$(OBJEXT) \
 	xfce4_session-xfsm-chooser.$(OBJEXT) \
 	xfce4_session-xfsm-client.$(OBJEXT) \
 	xfce4_session-xfsm-compat-gnome.$(OBJEXT) \
@@ -78,6 +79,7 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-main.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-shutdown.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-sm-layer.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-chooser-trash.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-chooser.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-client.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Po \
@@ -146,6 +148,7 @@ GMSGFMT = @GMSGFMT@
 GNOME_CFLAGS = @GNOME_CFLAGS@
 GNOME_LIBS = @GNOME_LIBS@
 GNOME_REQUIRED_VERSION = @GNOME_REQUIRED_VERSION@
+ICEAUTH = @ICEAUTH@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
@@ -260,6 +263,8 @@ xfce4_session_SOURCES = \
 	shutdown.h							\
 	sm-layer.c							\
 	sm-layer.h							\
+	xfsm-chooser-trash.c						\
+	xfsm-chooser-trash.h						\
 	xfsm-chooser.c							\
 	xfsm-chooser.h							\
 	xfsm-client.c							\
@@ -386,6 +391,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-shutdown.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-sm-layer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-chooser-trash.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-chooser.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-client.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-compat-gnome.Po@am__quote@
@@ -520,6 +526,30 @@ xfce4_session-sm-layer.lo: sm-layer.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-sm-layer.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-sm-layer.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-sm-layer.lo `test -f 'sm-layer.c' || echo '$(srcdir)/'`sm-layer.c
+
+xfce4_session-xfsm-chooser-trash.o: xfsm-chooser-trash.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-chooser-trash.o -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-chooser-trash.Tpo" -c -o xfce4_session-xfsm-chooser-trash.o `test -f 'xfsm-chooser-trash.c' || echo '$(srcdir)/'`xfsm-chooser-trash.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-chooser-trash.Tpo" "$(DEPDIR)/xfce4_session-xfsm-chooser-trash.Po"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-chooser-trash.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-chooser-trash.c' object='xfce4_session-xfsm-chooser-trash.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-chooser-trash.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-chooser-trash.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-chooser-trash.o `test -f 'xfsm-chooser-trash.c' || echo '$(srcdir)/'`xfsm-chooser-trash.c
+
+xfce4_session-xfsm-chooser-trash.obj: xfsm-chooser-trash.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-chooser-trash.obj -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-chooser-trash.Tpo" -c -o xfce4_session-xfsm-chooser-trash.obj `if test -f 'xfsm-chooser-trash.c'; then $(CYGPATH_W) 'xfsm-chooser-trash.c'; else $(CYGPATH_W) '$(srcdir)/xfsm-chooser-trash.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-chooser-trash.Tpo" "$(DEPDIR)/xfce4_session-xfsm-chooser-trash.Po"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-chooser-trash.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-chooser-trash.c' object='xfce4_session-xfsm-chooser-trash.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-chooser-trash.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-chooser-trash.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-chooser-trash.obj `if test -f 'xfsm-chooser-trash.c'; then $(CYGPATH_W) 'xfsm-chooser-trash.c'; else $(CYGPATH_W) '$(srcdir)/xfsm-chooser-trash.c'; fi`
+
+xfce4_session-xfsm-chooser-trash.lo: xfsm-chooser-trash.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-chooser-trash.lo -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-chooser-trash.Tpo" -c -o xfce4_session-xfsm-chooser-trash.lo `test -f 'xfsm-chooser-trash.c' || echo '$(srcdir)/'`xfsm-chooser-trash.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-chooser-trash.Tpo" "$(DEPDIR)/xfce4_session-xfsm-chooser-trash.Plo"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-chooser-trash.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-chooser-trash.c' object='xfce4_session-xfsm-chooser-trash.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-chooser-trash.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-chooser-trash.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-chooser-trash.lo `test -f 'xfsm-chooser-trash.c' || echo '$(srcdir)/'`xfsm-chooser-trash.c
 
 xfce4_session-xfsm-chooser.o: xfsm-chooser.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-chooser.o -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-chooser.Tpo" -c -o xfce4_session-xfsm-chooser.o `test -f 'xfsm-chooser.c' || echo '$(srcdir)/'`xfsm-chooser.c; \

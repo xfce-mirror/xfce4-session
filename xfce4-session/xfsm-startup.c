@@ -257,7 +257,6 @@ static gboolean
 xfsm_startup_continue_session (const gchar *previous_id)
 {
   XfsmProperties *properties;
-  GList *lp;
   
   properties = (XfsmProperties *) g_list_nth_data (pending_properties, 0);
   if (properties != NULL)

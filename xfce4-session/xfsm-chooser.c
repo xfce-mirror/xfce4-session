@@ -43,24 +43,48 @@
 
 #define BORDER 6
 
-enum
-{
-  ICON_COLUMN,
-  TITLE_COLUMN,
-  NAME_COLUMN,
-  N_COLUMNS,
-};
-
 static void xfsm_chooser_class_init (XfsmChooserClass *klass);
 static void xfsm_chooser_init (XfsmChooser *chooser);
 static void xfsm_chooser_finalize (GObject *object);
+static void xfsm_chooser_set_property (GObject      *object,
+                                       guint         prop_id,
+                                       const GValue *value,
+                                       GParamSpec   *pspec);
+static void xfsm_chooser_update_drag_icon (XfsmChooser *chooser);
+static void xfsm_chooser_rebuild_list_store (XfsmChooser *chooser);
+static void xfsm_chooser_update_list_store (XfsmChooser *chooser);
+
 
 #ifdef SESSION_SCREENSHOTS
-static GdkPixbuf*load_thumbnail (const gchar *name);
+static GdkPixbuf *load_thumbnail (const gchar *name);
 #endif
-static gint session_compare (XfsmChooserSession *a, XfsmChooserSession *b);
+/*static gint session_compare (XfsmChooserSession *a, XfsmChooserSession *b);*/
+
+enum
+{
+  PROP_ZERO,
+  PROP_SESSION_RC,
+  PROP_SESSION_DEFAULT,
+};
+
+enum
+{
+  PREVIEW_COLUMN,
+  NAME_COLUMN,
+  TITLE_COLUMN,
+  ATIME_COLUMN,
+  N_COLUMNS,
+};
+
 
 static GObjectClass *parent_class;
+
+static GtkTargetEntry dnd_targets[] =
+{
+  { "application/xfsm4-session", 0, 0 },
+};
+
+static guint dnd_ntargets = sizeof (dnd_targets) / sizeof (*dnd_targets);
 
 
 GType
@@ -91,6 +115,7 @@ xfsm_chooser_get_type (void)
   return chooser_type;
 }
 
+
 static void
 xfsm_chooser_class_init (XfsmChooserClass *klass)
 {
@@ -98,8 +123,69 @@ xfsm_chooser_class_init (XfsmChooserClass *klass)
 
   gobject_class = G_OBJECT_CLASS (klass);
   gobject_class->finalize = xfsm_chooser_finalize;
+  gobject_class->set_property = xfsm_chooser_set_property;
+
   parent_class = gtk_type_class (gtk_dialog_get_type ());
+
+  g_object_class_install_property (gobject_class, PROP_SESSION_DEFAULT,
+      g_param_spec_string ("session-default", _("Default session"),
+        _("Default session"), NULL, G_PARAM_WRITABLE));
+
+  g_object_class_install_property (gobject_class, PROP_SESSION_RC,
+      g_param_spec_pointer ("session-rc", _("Session rc object"),
+        _("Session rc object"), G_PARAM_WRITABLE));
 }
+
+
+static void
+xfsm_chooser_set_property (GObject      *object,
+                           guint         prop_id,
+                           const GValue *value,
+                           GParamSpec   *pspec)
+{
+  XfsmChooser *chooser;
+
+  chooser = XFSM_CHOOSER (object);
+
+  switch (prop_id)
+    {
+    case PROP_SESSION_DEFAULT:
+      if (chooser->session_default != NULL)
+        g_free (chooser->session_default);
+      chooser->session_default = g_value_dup_string (value);
+      xfsm_chooser_update_list_store (chooser);
+      break;
+
+    case PROP_SESSION_RC:
+      chooser->session_rc = XFCE_RC (g_value_get_pointer (value));
+      xfsm_chooser_rebuild_list_store (chooser);
+      xfsm_chooser_update_list_store (chooser);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      break;
+    }
+}
+
+
+static void
+xfsm_chooser_update_drag_icon (XfsmChooser *chooser)
+{
+  GtkTreeSelection *selection;
+  GtkTreeModel     *model;
+  GtkTreeIter       iter;
+  GdkPixbuf        *icon;
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (chooser->tree));
+  if (gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      gtk_tree_model_get (model, &iter, PREVIEW_COLUMN, &icon, -1);
+      gtk_drag_source_set_icon_pixbuf (chooser->tree, icon);
+      g_object_unref (G_OBJECT (icon));
+    }
+}
+
 
 static void
 xfsm_chooser_focus_in (GtkWidget *widget,
@@ -109,7 +195,9 @@ xfsm_chooser_focus_in (GtkWidget *widget,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (chooser->radio_load),
                                 TRUE);
   gtk_label_set_text (GTK_LABEL (chooser->start), _("Restore"));
+  xfsm_chooser_update_drag_icon (chooser);
 }
+
 
 static void
 xfsm_chooser_row_activated (GtkTreeView       *treeview,
@@ -120,6 +208,7 @@ xfsm_chooser_row_activated (GtkTreeView       *treeview,
   gtk_dialog_response (GTK_DIALOG (chooser), GTK_RESPONSE_OK);
 }
 
+
 static void
 xfsm_chooser_selection_changed (GtkTreeSelection *selection,
                                 XfsmChooser *chooser)
@@ -127,7 +216,9 @@ xfsm_chooser_selection_changed (GtkTreeSelection *selection,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (chooser->radio_load),
                                 TRUE);
   gtk_label_set_text (GTK_LABEL (chooser->start), _("Restore"));
+  xfsm_chooser_update_drag_icon (chooser);
 }
+
 
 static void
 xfsm_chooser_name_changed (GtkEditable *name,
@@ -175,6 +266,7 @@ xfsm_chooser_name_changed (GtkEditable *name,
   g_free (text);
 }
 
+
 static void
 xfsm_chooser_load_toggled (GtkToggleButton *radio_load,
                            XfsmChooser *chooser)
@@ -186,6 +278,7 @@ xfsm_chooser_load_toggled (GtkToggleButton *radio_load,
                                          GTK_RESPONSE_OK,
                                          TRUE);
       gtk_label_set_text (GTK_LABEL (chooser->start), _("Restore"));
+      xfsm_chooser_update_drag_icon (chooser);
     }
   else
     {
@@ -195,6 +288,37 @@ xfsm_chooser_load_toggled (GtkToggleButton *radio_load,
       gtk_label_set_text (GTK_LABEL (chooser->start), _("Create"));
     }
 }
+
+
+static void
+xfsm_chooser_drag_data_delete (GtkWidget      *treeview,
+                               GdkDragContext *context,
+                               XfsmChooser    *chooser)
+{
+  GtkTreeSelection *selection;
+  GtkTreeModel     *model;
+  GtkTreeIter       iter;
+  GValue            value;
+  gchar             group[256];
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (chooser->tree));
+  if (gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      if (G_LIKELY (chooser->session_rc != NULL))
+        {
+          bzero (&value, sizeof (value));
+          gtk_tree_model_get_value (model, &iter, NAME_COLUMN, &value);
+          g_snprintf (group, 256, "Session: %s", g_value_get_string (&value));
+          g_value_unset (&value);
+
+          xfce_rc_delete_group (chooser->session_rc, group, TRUE);
+          xfce_rc_flush (chooser->session_rc);
+        }
+
+      gtk_list_store_remove (GTK_LIST_STORE (model), &iter);
+    }
+}
+
 
 static void
 xfsm_chooser_init (XfsmChooser *chooser)
@@ -244,7 +368,8 @@ xfsm_chooser_init (XfsmChooser *chooser)
   model = gtk_list_store_new (N_COLUMNS,
                               GDK_TYPE_PIXBUF,
                               G_TYPE_STRING,
-                              G_TYPE_STRING);
+                              G_TYPE_STRING,
+                              G_TYPE_INT);
   chooser->tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL(model));
   g_object_unref (G_OBJECT (model));
   gtk_tooltips_set_tip (chooser->tooltips, chooser->tree,
@@ -252,12 +377,15 @@ xfsm_chooser_init (XfsmChooser *chooser)
                           "You can simply double-click the session "
                           "name to restore it."),
                         NULL);
+  gtk_drag_source_set (chooser->tree, GDK_BUTTON1_MASK,
+                       dnd_targets, dnd_ntargets,
+                       GDK_ACTION_MOVE);
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (chooser->tree), FALSE);
   column = gtk_tree_view_column_new ();
   renderer = gtk_cell_renderer_pixbuf_new ();
   gtk_tree_view_column_pack_start (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column, renderer,
-                                       "pixbuf", ICON_COLUMN,
+                                       "pixbuf", PREVIEW_COLUMN,
                                        NULL);
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_column_pack_start (column, renderer, TRUE);
@@ -273,6 +401,8 @@ xfsm_chooser_init (XfsmChooser *chooser)
                     G_CALLBACK (xfsm_chooser_row_activated), chooser);
   g_signal_connect (G_OBJECT (chooser->tree), "focus-in-event",
                     G_CALLBACK (xfsm_chooser_focus_in), chooser);
+  g_signal_connect (G_OBJECT (chooser->tree), "drag-data-delete",
+                    G_CALLBACK (xfsm_chooser_drag_data_delete), chooser);
   gtk_container_add (GTK_CONTAINER (swin), chooser->tree);
   gtk_widget_set_size_request (chooser->tree, -1, 90);
   gtk_widget_show (chooser->tree);
@@ -331,12 +461,130 @@ xfsm_chooser_finalize (GObject *object)
   g_return_if_fail (XFSM_IS_CHOOSER (object));
 
   chooser = XFSM_CHOOSER (object);
-  g_object_unref (G_OBJECT (chooser->tooltips));
+  g_object_unref (chooser->tooltips);
+
+  if (chooser->session_default != NULL)
+    g_free (chooser->session_default);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 
+static void
+xfsm_chooser_rebuild_list_store (XfsmChooser *chooser)
+{
+  GdkPixbuf    *preview_default = NULL;
+  GdkPixbuf    *preview;
+  GtkTreeModel *model;
+  GtkTreeIter   iter;
+  gchar       **groups;
+  gchar        *title;
+  gchar        *name;
+  guint         n;
+  time_t        time;
+
+  model = gtk_tree_view_get_model (GTK_TREE_VIEW (chooser->tree));
+
+  /* clear list store */
+  gtk_list_store_clear (GTK_LIST_STORE (model));
+
+  if (G_LIKELY (chooser->session_rc != NULL))
+    {
+      groups = xfce_rc_get_groups (chooser->session_rc);
+      for (n = 0; groups[n] != NULL; ++n)
+        {
+          if (G_UNLIKELY (strncmp (groups[n], "Session: ", 9) != 0)
+              || G_UNLIKELY (strlen (groups[n]) == 9))
+            {
+              continue;
+            }
+
+          xfce_rc_set_group (chooser->session_rc, groups[n]);
+          time = xfce_rc_read_int_entry (chooser->session_rc, "LastAccess", 0);
+          name = groups[n] + 9;
+
+#ifdef SESSION_SCREENSHOTS
+          preview = load_thumbnail (name);
+#else
+          preview = NULL;
+#endif
+
+          if (preview == NULL)
+            {
+              if (G_UNLIKELY (preview_default == NULL))
+                {
+                  preview_default = xfce_inline_icon_at_size (chooser_icon_data,
+                                                              52, 42);
+                }
+
+              preview = GDK_PIXBUF (g_object_ref (preview_default));
+            }
+
+          title = g_strdup_printf ("<b><big>%s</big></b>\n"
+                                   "<small><i>Last access: %s</i></small>",
+                                   name, ctime (&time));
+
+          gtk_list_store_append (GTK_LIST_STORE (model), &iter);
+          gtk_list_store_set (GTK_LIST_STORE (model), &iter,
+                              PREVIEW_COLUMN, preview,
+                              NAME_COLUMN, name,
+                              TITLE_COLUMN, title,
+                              ATIME_COLUMN, time,
+                              -1);
+
+          g_object_unref (preview);
+          g_free (title);
+        }
+
+      if (preview_default != NULL)
+        g_object_unref (preview_default);
+      g_strfreev (groups);
+
+      /* XXX sort the model */
+    }
+}
+
+
+static void
+xfsm_chooser_update_list_store (XfsmChooser *chooser)
+{
+  GtkTreeSelection *selection;
+  GtkTreeModel     *model;
+  GtkTreeIter       iter;
+  gboolean          match;
+  GValue            value;
+
+  if (G_UNLIKELY (chooser->session_default == NULL))
+    return;
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (chooser->tree));
+  model = gtk_tree_view_get_model (GTK_TREE_VIEW (chooser->tree));
+
+  if (gtk_tree_model_get_iter_first (model, &iter))
+    {
+      bzero (&value, sizeof (value));
+
+      do
+        {
+          gtk_tree_model_get_value (model, &iter, NAME_COLUMN, &value);
+
+          match = (strcmp (chooser->session_default,
+                           g_value_get_string (&value)) == 0);
+
+          g_value_unset (&value);
+
+          if (match)
+            {
+              gtk_tree_selection_select_iter (selection, &iter);
+              break;
+            }
+        }
+      while (gtk_tree_model_iter_next (model, &iter));
+    }
+}
+
+
+#if 0
 void
 xfsm_chooser_set_sessions (XfsmChooser *chooser,
                            GList *sessions,
@@ -420,6 +668,7 @@ xfsm_chooser_set_sessions (XfsmChooser *chooser,
 
   xfsm_chooser_load_toggled (GTK_TOGGLE_BUTTON (chooser->radio_load), chooser);
 }
+#endif
 
 
 XfsmChooserReturn
@@ -486,13 +735,13 @@ load_thumbnail (const gchar *name)
 #endif
 
 
-static gint
-session_compare (XfsmChooserSession *a, XfsmChooserSession *b)
-{
-  if (a->atime > b->atime)
-    return -1;
-  return 1;
-}
+/*static gint*/
+/*session_compare (XfsmChooserSession *a, XfsmChooserSession *b)*/
+/*{*/
+/*  if (a->atime > b->atime)*/
+/*    return -1;*/
+/*  return 1;*/
+/*}*/
 
 
 

@@ -219,11 +219,12 @@ xfsm_manager_startup_timedout (gpointer user_data)
 static gboolean
 xfsm_manager_choose_session (XfceRc *rc)
 {
+  gchar *name;
+  gboolean load;
+#if 0
   XfsmChooserSession *session;
   gchar **groups;
   GList *sessions, *lp;
-  gboolean load;
-  gchar *name;
   int n;
 
   groups = xfce_rc_get_groups (rc);
@@ -238,18 +239,20 @@ xfsm_manager_choose_session (XfceRc *rc)
           sessions = g_list_append (sessions, session);
         }
     }
+#endif
 
-  load = xfsm_splash_screen_choose (splash_screen, sessions,
-                                    session_name, &name);
+  load = xfsm_splash_screen_choose (splash_screen, rc, session_name, &name);
 
   if (session_name != NULL)
     g_free (session_name);
   session_name = name;
 
+#if 0
   for (lp = sessions; lp != NULL; lp = lp->next)
     g_free (lp->data);
   g_list_free (sessions);
   g_strfreev (groups);
+#endif
 
   return load;
 }
@@ -263,7 +266,7 @@ xfsm_manager_load_session (void)
   XfceRc         *rc;
   gint            count;
   
-  rc = xfce_rc_simple_open (session_file, TRUE);
+  rc = xfce_rc_simple_open (session_file, FALSE);
   if (G_UNLIKELY (rc == NULL))
     return FALSE;
   

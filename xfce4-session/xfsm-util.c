@@ -271,6 +271,21 @@ xfsm_center_window_on_screen (GtkWindow *window,
 }
 
 
+void
+xfsm_place_trash_window (GtkWindow *window,
+                         GdkScreen *screen,
+                         gint       monitor)
+{
+  GtkRequisition requisition;
+  GdkRectangle   geometry;
+
+  gdk_screen_get_monitor_geometry (screen, monitor, &geometry);
+  gtk_widget_size_request (GTK_WIDGET (window), &requisition);
+
+  gtk_window_move (window, 0, geometry.height - requisition.height);
+}
+
+
 gchar**
 xfsm_strv_copy (gchar **v)
 {

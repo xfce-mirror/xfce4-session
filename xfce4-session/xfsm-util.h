@@ -46,6 +46,10 @@ void xfsm_center_window_on_screen (GtkWindow *window,
                                    GdkScreen *screen,
                                    gint       monitor);
 
+void xfsm_place_trash_window (GtkWindow *window,
+                              GdkScreen *screen,
+                              gint       monitor);
+
 /* XXX - move to libxfce4util? */
 gchar **xfsm_strv_copy (gchar **v);
 gboolean xfsm_strv_equal (gchar **a, gchar **b);

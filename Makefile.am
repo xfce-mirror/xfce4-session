@@ -1,6 +1,7 @@
 SUBDIRS =								\
 	defaults							\
 	docs								\
+	icons								\
 	po								\
 	settings							\
 	themes								\

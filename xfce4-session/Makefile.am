@@ -11,6 +11,8 @@ xfce4_session_SOURCES =							\
 	shutdown.h							\
 	sm-layer.c							\
 	sm-layer.h							\
+	xfsm-chooser-trash.c						\
+	xfsm-chooser-trash.h						\
 	xfsm-chooser.c							\
 	xfsm-chooser.h							\
 	xfsm-client.c							\
