@@ -122,6 +122,20 @@ figure_app_name (const gchar *program_path)
   if (strcmp (prog, "gnome-terminal") == 0)
     return _("Starting the Gnome Terminal Emulator");
 
+  /* KDE applications */
+  if (strcmp (prog, "kate") == 0)
+    return _("Starting the KDE Advanced Text Editor");
+  else if (strcmp (prog, "klipper") == 0)
+    return _("Starting the KDE Clipboard Manager");
+  else if (strcmp (prog, "kmail") == 0)
+    return _("Starting the KDE Mail Reader");
+  else if (strcmp (prog, "knews") == 0)
+    return _("Starting the KDE News Reader");
+  else if (strcmp (prog, "konqueror") == 0)
+    return _("Starting the Konqueror");
+  else if (strcmp (prog, "konsole") == 0)
+    return _("Starting the KDE Terminal Emulator");
+
   /* 3rd party applications */
   if (strcmp (prog, "beep-media-player") == 0)
     return _("Starting the Beep Media Player");
