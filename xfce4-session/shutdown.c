@@ -329,11 +329,13 @@ gint
 shutdown(gint type)
 {
 	gchar *command;
+	gchar *fallback;
 	gchar *buf;
 	GError *error;
 	gint status;
 
 	error = NULL;
+  fallback = NULL;
 
 	switch (type) {
 	case SHUTDOWN_REBOOT:
@@ -342,13 +344,18 @@ shutdown(gint type)
 
 	case SHUTDOWN_HALT:
 		command = g_strdup_printf("%s poweroff", SHUTDOWN_COMMAND);
+    fallback = g_strdup_printf("%s halt", SHUTDOWN_COMMAND);
 		break;
 
 	default:
 		return(EXIT_SUCCESS);
 	}
 
+again:
 	if (!g_spawn_command_line_sync(command, NULL, &buf, &status, &error)) {
+    if (fallback != NULL)
+      goto try_fallback;
+
 		xfce_err(_("The following error occured while trying to "
 			   "shutdown the computer:\n\n%s"), error->message);
 		g_error_free(error);
@@ -357,6 +364,9 @@ shutdown(gint type)
 	}
 
 	if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
+    if (fallback != NULL)
+      goto try_fallback;
+
 		xfce_err(_(
 			"The following error occured while trying to "
 			"shutdown the computer:\n\n%s"), buf);
@@ -366,5 +376,12 @@ shutdown(gint type)
 
 	g_free(command);
 	return(EXIT_SUCCESS);
+
+try_fallback:
+  // try using fallback command
+  g_free(command);
+  command = fallback;
+  fallback = NULL;
+  goto again;
 }
 
