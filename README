@@ -1,0 +1,17 @@
+Session manager for the XFce desktop environment.
+
+Using xfce4-shutdown:
+---------------------
+In order to use xfce4-shutdown with xfce4-session to reboot/halt the computer,
+you have two options:
+
+	a) make $sbindir/xfce4-shutdown setuid to root and add the users
+	   that you want to allow to reboot/halt to the file 
+	   $sysconfdir/xfce4/shutdown.allow
+
+	b) install sudo(8) and allow the users to execute /sbin/poweroff,
+	   /sbin/halt and/or /sbin/reboot.
+
+How to start the session manager:
+---------------------------------
+See the sample xinitrc file in $sysconfdir/xfce4/xinitrc.xfce4-session.

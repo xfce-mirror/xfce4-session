@@ -1,0 +1,20 @@
+20030706:
+---------
+
+	- the session manager now takes care of starting files in
+	  ~/Desktop/Autostart/ after all session aware apps are restarted.
+	  This should make live easier, esp. with apps that depend on
+	  the window manager already running.
+
+	- the splash screen is now themable. See docs/SplashThemes.txt for
+	  further information. In addition, the splash screen also appears
+	  when starting a default session, and not only when restoring a
+	  previously saved session.
+
+20030702:
+---------
+
+	- session file naming scheme has changed from
+		~/.xfce4/sessions/session-<hostname>
+	  to
+		~/.xfce4/sessions/xfsm-<hostname>

@@ -1,0 +1,14 @@
+Splash Screen Themes:
+---------------------
+
+You can now specify a splash screen theme to be used by xfce4-session when
+logging into your session. A splash screen theme can be either a single
+logo image, or a sequence of images.
+
+xfce4-session looks up splash screen themes in
+~/.xfce4/splash/$XFSM_SPLASH_THEME/ first, then if not found in
+$datadir/xfce4/splash/$XFSM_SPLASH_THEME/. If $XFSM_SPLASH_THEME is not set,
+"Default" is taken.
+
+For an example, of how to create a splash screen theme, see the default
+one in defaults/splash/.

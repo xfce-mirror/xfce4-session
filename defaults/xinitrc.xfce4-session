@@ -1,0 +1,26 @@
+#!/bin/sh
+
+xsetroot -solid black -cursor_name watch
+
+# Those are my settings, change them as appropriate...
+# Xft DPI: 96
+# Xft.hintstyle: hintnone/hintslight/hintmedium/hintfull
+# Xft hinting: 1/0
+
+xrdb -merge - << EOF
+Xft.dpi: 96
+Xft.hinting: 1
+Xft.hintstyle: hintmedium
+EOF
+
+# Launch xscreensaver (if available), but only as non-root user
+test $UID -gt 0 && xscreensaver -no-splash &
+
+if test -f $HOME/.Xmodmap; then
+	xmodmap $HOME/.Xmodmap
+fi
+
+# launch the session manager
+xfce4-session
+
+xsetroot -solid black -cursor_name watch
