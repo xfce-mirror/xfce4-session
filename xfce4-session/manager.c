@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003 Benedikt Meurer <benedikt.meurer@unix-ag.uni-siegen.de>
+ * Copyright (c) 2003,2004 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -137,32 +137,6 @@ do {									\
 } while (0)
 
 /*
- * Provide a setenv function for systems that lack it
- */
-#ifndef HAVE_SETENV
-static int
-setenv(const gchar *name, const gchar *value, gboolean overwrite)
-{
-  int result = 0;
-	gchar *buf;
-
-  if (g_getenv(name) == NULL || overwrite) {
-	  buf = g_strdup_printf("%s=%s", name, value);
-	  result = putenv(buf);
-#if !defined(sun) && !defined(__sun)
-    /* Solaris requires the memory not to be freed for some weird
-     * reason.
-     *                               -- 20040123, bm
-     */
-	  g_free(buf);
-#endif
-  }
-
-  return(result);
-}
-#endif	/* !HAVE_SETENV */
-
-/*
  */
 gboolean
 manager_init(gboolean disable_tcp)
@@ -200,7 +174,7 @@ manager_init(gboolean disable_tcp)
 
 	/* set SESSION_MANAGER environment variable */
 	sessionManager = IceComposeNetworkIdList(numListeners, listenObjs);
-	setenv("SESSION_MANAGER", sessionManager, TRUE);
+	xfce_setenv("SESSION_MANAGER", sessionManager, TRUE);
 	free(sessionManager);
 
 	/* XXX */

@@ -1,5 +1,4 @@
 /* $Id$ */
-
 /*-
  * Copyright (c) 2003 Benedikt Meurer <benedikt.meurer@unix-ag.uni-siegen.de>
  * All rights reserved.

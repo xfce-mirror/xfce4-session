@@ -1,14 +1,26 @@
-dnl configure.ac
+dnl $Id$
 dnl
-dnl Copyright (c) 2003 Benedikt Meurer <benedikt.meurer@unix-ag.uni-siegen.de>
+dnl Copyright (c) 2003,2003
+dnl         The XFce development team. All rights reserved.
 dnl
 
-AC_INIT([configure.ac])
+dnl Version information
+m4_define([xfsm_version_major], [4])
+m4_define([xfsm_version_minor], [1])
+m4_define([xfsm_version_micro], [1])
+m4_define([xfsm_version], [xfsm_version_major.xfsm_version_minor.xfsm_version_micro])
 
+dnl Initialize autoconf
+AC_COPYRIGHT([Copyright (c) 2003,2004
+        The XFce development team. All rights reserved.])
+AC_INIT([xfce4-session], [xfsm_version], [xfce4-dev@xfce.org])
+AC_PREREQ([2.50])
+AC_REVISION([$Id$])
+
+dnl Initialize automake
+XFSM_VERSION=xfsm_version
+AM_INIT_AUTOMAKE([xfce4-session], [$XFSM_VERSION])
 AM_CONFIG_HEADER([config.h])
-
-AM_INIT_AUTOMAKE([xfce4-session], [0.2.1])
-
 AM_MAINTAINER_MODE
 
 dnl check for UNIX variants
@@ -45,7 +57,7 @@ BM_I18N([xfce4-session], [az ca de es es_MX fa_IR fr hi it ja ko nl no pl
 	 zh_TW])
 
 dnl Check for required packages
-BM_DEPEND([LIBXFCE4UTIL], [libxfce4util-1.0], [4.1.0])
+BM_DEPEND([LIBXFCE4UTIL], [libxfce4util-1.0], [4.1.1])
 BM_DEPEND([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.1.0])
 BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [4.1.0])
 

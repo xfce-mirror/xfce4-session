@@ -1,5 +1,6 @@
-/*
- * Copyright (c) 2003 Benedikt Meurer <benedikt.meurer@unix-ag.uni-siegen.de>
+/* $Id$ */
+/*-
+ * Copyright (c) 2003,2004 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -399,7 +400,14 @@ main(int argc, char **argv)
 
   for (++argv; --argc > 0; ++argv) {
     if (strcmp(*argv, "--version") == 0) {
-      printf("XFce %s %s\n", PACKAGE, VERSION);
+      printf(
+          "XFce %s\n"
+          "\n"
+          "Copyright (c) 2003,2004\n"
+          "        The XFce development team. All rights reserved.\n"
+          "\n"
+          "Please report bugs to <%s>.\n",
+          PACKAGE_STRING, PACKAGE_BUGREPORT);
       return(EXIT_SUCCESS);
     }
     else if (strcmp(*argv, "--disable-tcp") == 0) {
