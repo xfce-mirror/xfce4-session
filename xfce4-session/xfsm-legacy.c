@@ -214,10 +214,16 @@ static gchar**
 get_wmcommand (Window window)
 {
   gchar **result = NULL;
+  Status status;
   char **argv;
   int argc, i;
 
-  if (XGetCommand (gdk_display, window, &argv, &argc) && argv && argc > 0)
+  gdk_error_trap_push ();
+  status = XGetCommand (gdk_display, window, &argv, &argc);
+  if (gdk_error_trap_pop ())
+    return NULL;
+
+  if (status && argv && argc > 0)
     {
       result = g_new0 (gchar *, argc + 1);
       for (i = 0; i < argc; ++i)
@@ -234,8 +240,14 @@ get_wmclientmachine (Window window)
 {
   XTextProperty tp;
   gchar *result = NULL;
+  Status status;
 
-  if (XGetWMClientMachine (gdk_display, window, &tp))
+  gdk_error_trap_push ();
+  status = XGetWMClientMachine (gdk_display, window, &tp);
+  if (gdk_error_trap_pop ())
+    return NULL;
+  
+  if (status)
     {
       if (tp.encoding == XA_STRING && tp.format == 8 && tp.nitems != 0)
         result = g_strdup ((char *) tp.value);
@@ -457,6 +469,8 @@ xfsm_legacy_perform_session_save (void)
         {
           sm_window->wm_command = get_wmcommand (sm_window->wid);
           sm_window->wm_client_machine = get_wmclientmachine (sm_window->wid);
+          if (sm_window->wm_command == NULL || sm_window->wm_client_machine == NULL)
+            sm_window->type = SM_ERROR;
         }
     }
 #endif
