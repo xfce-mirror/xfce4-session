@@ -23,6 +23,13 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_MEMORY_H
+#include <memory.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+
 #include <gmodule.h>
 
 #include <libxfcegui4/libxfcegui4.h>
@@ -185,6 +192,9 @@ module_test (Module     *module,
   guint             id;
   int               monitor;
   int               step;
+
+  /* properly initialize the engine struct with zeros! */
+  bzero (&engine, sizeof (engine));
 
   /* locate monitor with pointer */
   screen = xfce_gdk_display_locate_monitor_with_pointer (display, &monitor);
