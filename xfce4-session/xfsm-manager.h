@@ -48,9 +48,9 @@ gboolean xfsm_manager_restart (void);
 gchar* xfsm_manager_generate_client_id (SmsConn sms_conn) G_GNUC_PURE;
 
 XfsmClient* xfsm_manager_new_client           (SmsConn      sms_conn,
-                                          gchar      **error);
+                                               gchar      **error);
 gboolean        xfsm_manager_register_client      (XfsmClient  *client,
-                                          const gchar *previous_id);
+                                                   const gchar *previous_id);
 void xfsm_manager_start_interact (XfsmClient *client);
 void xfsm_manager_interact             (XfsmClient *client,
                                    gint        dialog_type);

@@ -65,6 +65,7 @@
    Prototypes
  */
 static gboolean xfsm_manager_startup (void);
+static void     xfsm_manager_handle_failed (void);
 static void     xfsm_manager_startup_continue (const gchar *previous_id);
 static gboolean xfsm_manager_startup_timedout (gpointer user_data);
 static void     xfsm_manager_load_settings (XfceRc *rc);
@@ -120,6 +121,36 @@ xfsm_manager_restore_active_workspace (XfceRc *rc)
 
 
 static void
+xfsm_manager_handle_failed (void)
+{
+  /* Handle apps that failed to start here */
+  XfsmProperties *properties;
+  GList          *lp;
+
+  for (lp = starting_properties; lp != NULL; lp = lp->next)
+    {
+      properties = XFSM_PROPERTIES (lp->data);
+
+      xfsm_verbose ("Client Id = %s failed to start, running discard "
+                    "command now.\n\n", properties->client_id);
+
+      g_spawn_sync (properties->current_directory,
+                    properties->discard_command,
+                    properties->environment,
+                    G_SPAWN_SEARCH_PATH,
+                    NULL, NULL,
+                    NULL, NULL,
+                    NULL, NULL);
+
+      xfsm_properties_free (properties);
+    }
+
+  g_list_free (starting_properties);
+  starting_properties = NULL;
+}
+
+
+static void
 xfsm_manager_startup_continue (const gchar *previous_id)
 {
   gboolean startup_done = FALSE;
@@ -146,11 +177,14 @@ xfsm_manager_startup_continue (const gchar *previous_id)
       xfsm_verbose ("Manager finished startup, entering IDLE mode now\n\n");
       state = XFSM_MANAGER_IDLE;
 
-      /* restore active workspace, this has to be done after the
-       * window manager is up, so we do it last.
-       */
       if (!failsafe_mode)
         {
+          /* handle apps that failed to start */
+          xfsm_manager_handle_failed ();
+
+          /* restore active workspace, this has to be done after the
+           * window manager is up, so we do it last.
+           */
           g_snprintf (buffer, 1024, "Session: %s", session_name);
           rc = xfce_rc_simple_open (session_file, TRUE);
           xfce_rc_set_group (rc, buffer);
