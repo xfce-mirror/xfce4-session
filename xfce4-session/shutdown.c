@@ -317,9 +317,11 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
       gtk_box_pack_start (GTK_BOX (vbox), entry_vbox, TRUE, TRUE, 0);
       gtk_widget_show (entry_vbox);
 
+#if GTK_CHECK_VERSION(2,4,0)
       gtk_image_set_from_stock (GTK_IMAGE (image),
                                 GTK_STOCK_DIALOG_AUTHENTICATION,
                                 GTK_ICON_SIZE_DIALOG);
+#endif
 
       gtk_label_set_text (GTK_LABEL (label), _("Please enter your password:"));
 
