@@ -88,8 +88,8 @@ pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = xfce4-session-1.0.pc
 
 chooser-icon.h: $(srcdir)/chooser-icon.png
-	gdk-pixbuf-csource --raw --build-list                           \
-	chooser_icon_data $^ > $@
+	gdk-pixbuf-csource --struct --name=chooser_icon_data		\
+		$(srcdir)/chooser-icon.png > chooser-icon.h
 
 EXTRA_DIST =								\
 	$(man_MANS)							\

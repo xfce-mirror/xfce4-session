@@ -1202,8 +1202,8 @@ uninstall-man: uninstall-man1
 
 
 chooser-icon.h: $(srcdir)/chooser-icon.png
-	gdk-pixbuf-csource --raw --build-list                           \
-	chooser_icon_data $^ > $@
+	gdk-pixbuf-csource --struct --name=chooser_icon_data		\
+		$(srcdir)/chooser-icon.png > chooser-icon.h
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

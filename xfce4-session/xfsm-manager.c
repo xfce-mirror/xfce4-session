@@ -45,6 +45,7 @@
 #include <X11/ICE/ICElib.h>
 #include <X11/SM/SMlib.h>
 
+#include <gdk-pixbuf/gdk-pixdata.h>
 #include <gtk/gtk.h>
 
 #include <libxfcegui4/libxfcegui4.h>
@@ -251,8 +252,8 @@ xfsm_manager_choose_session (XfceRc *rc)
             {
               if (G_UNLIKELY (preview_default == NULL))
                 {
-                  preview_default = xfce_inline_icon_at_size (chooser_icon_data,
-                                                              52, 42);
+                  preview_default = gdk_pixbuf_from_pixdata (&chooser_icon_data,
+                                                             FALSE, NULL);
                 }
 
               session->preview = GDK_PIXBUF (g_object_ref (preview_default));
@@ -473,7 +474,7 @@ xfsm_manager_restart (void)
   /* tell splash screen that the session is starting now */
   preview = xfsm_manager_load_session_preview (session_name);
   if (preview != NULL)
-    preview = xfce_inline_icon_at_size (chooser_icon_data, 52, 42);
+    preview = gdk_pixbuf_from_pixdata (&chooser_icon_data, FALSE, NULL);
   steps = g_list_length (failsafe_mode ? failsafe_clients : pending_properties);
   xfsm_splash_screen_start (splash_screen, session_name, preview, steps);
   g_object_unref (preview);
