@@ -532,6 +532,12 @@ xfsm_properties_load (XfceRc      *rc,
   if (value != NULL)
     properties->user_id = g_strdup (value);
   
+  if (!xfsm_properties_check (properties))
+    {
+      xfsm_properties_free (properties);
+      return NULL;
+    }
+
   return properties;
   
 #undef ENTRY
