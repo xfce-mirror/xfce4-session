@@ -303,7 +303,6 @@ dialog_run (McsPlugin *plugin)
                                         NULL);
 
   gtk_window_set_icon (GTK_WINDOW (dialog), plugin->icon);
-  xfce_gtk_window_center_on_monitor_with_pointer (GTK_WINDOW (dialog));
 
   g_signal_connect (G_OBJECT (dialog), "response",
                     G_CALLBACK (dialog_response), NULL);
@@ -314,23 +313,32 @@ dialog_run (McsPlugin *plugin)
 
   header = xfce_create_header (plugin->icon, _("Sessions and Startup"));
   gtk_box_pack_start (GTK_BOX (dbox), header, FALSE, TRUE, 0);
+  gtk_widget_show (header);
 
   notebook = gtk_notebook_new ();
   gtk_box_pack_start (GTK_BOX (dbox), notebook, TRUE, TRUE, 0);
+  gtk_widget_show (notebook);
 
   label = gtk_label_new (_("General"));
   page = general_create (rc);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
+  gtk_widget_show_all (page);
+  gtk_widget_show (label);
 
   label = gtk_label_new (_("Look & Feel"));
   page = looknfeel_create (rc);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
+  gtk_widget_show_all (page);
+  gtk_widget_show (label);
 
   label = gtk_label_new (_("Advanced"));
   page = advanced_create (rc);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
+  gtk_widget_show_all (page);
+  gtk_widget_show (label);
 
-  gtk_widget_show_all (dialog);
+  xfce_gtk_window_center_on_monitor_with_pointer (GTK_WINDOW (dialog));
+  gtk_widget_show (dialog);
 
   xfce_rc_close (rc);
 }
