@@ -1,6 +1,6 @@
 Summary: 	Xfce Session manager
-Name: 		xfce4-session
-Version: 	@VERSION@
+Name: 		@PACKAGE_TARNAME@
+Version: 	@PACKAGE_VERSION@
 Release: 	1
 License:	GPL
 URL: 		http://www.xfce.org/
@@ -20,7 +20,7 @@ xfce4-session is the session manager for the Xfce desktop environment.
 %package devel
 Summary:	Development files for xfce4-session
 Group:		Development/Libraries
-Requires:	xfce4-session
+Requires:	@PACKAGE_TARNAME@ >= @PACKAGE_VERSION@
 
 %description devel
 Header files for the Xfce Session Manager.
@@ -28,7 +28,7 @@ Header files for the Xfce Session Manager.
 %package engines
 Summary:	Additional engines for xfce4-session
 Group:		User Interface/Desktops
-Requires:	xfce4-session
+Requires:	@PACKAGE_TARNAME@ >= @PACKAGE_VERSION@
 
 %description engines
 Additional splash screen engines for the Xfce Session Manager.

@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2004-2005 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -52,7 +52,7 @@
 
 #include <libxfce4util/libxfce4util.h>
 
-#ifdef HAVE_GCONF
+#ifdef HAVE_GNOME
 #include <libgnome/libgnome.h>
 #include <gconf/gconf-client.h>
 #endif
@@ -60,7 +60,7 @@
 #include <xfce4-session/xfsm-compat-gnome.h>
 
 
-#ifdef HAVE_GCONF
+#ifdef HAVE_GNOME
 #define ACCESSIBILITY_KEY "/desktop/gnome/interface/accessibility"
 #define AT_STARTUP_KEY    "/desktop/gnome/accessibility/startup/exec_ats"
 
@@ -136,7 +136,7 @@ gnome_keyring_daemon_shutdown (void)
 }
 
 
-#ifdef HAVE_GCONF
+#ifdef HAVE_GNOME
 static void
 gnome_ast_startup (void)
 {
@@ -245,7 +245,7 @@ xfsm_compat_gnome_startup (XfsmSplashScreen *splash)
     xfsm_splash_screen_next (splash, _("Starting The Gnome Keyring Daemon"));
   gnome_keyring_daemon_startup ();
 
-#ifdef HAVE_GCONF
+#ifdef HAVE_GNOME
   /* connect to the GConf daemon */
   gnome_conf_client = gconf_client_get_default ();
   if (gnome_conf_client != NULL)
@@ -273,7 +273,7 @@ xfsm_compat_gnome_shutdown (void)
   /* shutdown the keyring daemon */
   gnome_keyring_daemon_shutdown ();
 
-#ifdef HAVE_GCONF
+#ifdef HAVE_GNOME
   if (gnome_conf_client != NULL)
     {
       g_object_unref (G_OBJECT (gnome_conf_client));

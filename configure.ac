@@ -1,6 +1,6 @@
 dnl $Id$
 dnl
-dnl Copyright (c) 2003-2004
+dnl Copyright (c) 2003-2005
 dnl         The Xfce development team. All rights reserved.
 dnl
 dnl Written for Xfce by Benedikt Meurer <benny@xfce.org>.
@@ -10,36 +10,38 @@ dnl Version information
 m4_define([xfsm_version_major], [4])
 m4_define([xfsm_version_minor], [2])
 m4_define([xfsm_version_micro], [0])
-m4_define([xfsm_version], [xfsm_version_major.xfsm_version_minor.xfsm_version_micro])
+m4_define([xfsm_version_tag], [cvs])
+m4_define([xfsm_version], [xfsm_version_major().xfsm_version_minor().xfsm_version_micro()xfsm_version_tag()])
 
 dnl Initialize autoconf
-AC_COPYRIGHT([Copyright (c) 2003-2004
+AC_COPYRIGHT([Copyright (c) 2003-2005
         The Xfce development team. All rights reserved.
         
 Written for Xfce by Benedikt Meurer <benny@xfce.org>.])
 AC_INIT([xfce4-session], [xfsm_version], [xfce4-dev@xfce.org])
 AC_PREREQ([2.50])
 AC_REVISION([$Id$])
+AC_PROG_MAKE_SET()
 
 dnl Initialize automake
-XFSM_VERSION=xfsm_version
-AM_INIT_AUTOMAKE([xfce4-session], [$XFSM_VERSION])
+AM_INIT_AUTOMAKE([AC_PACKAGE_TARNAME()], [AC_PACKAGE_VERSION()])
 AM_CONFIG_HEADER([config.h])
-AM_MAINTAINER_MODE
+AM_MAINTAINER_MODE()
 
 dnl check for UNIX variants
-AC_AIX
-AC_ISC_POSIX
-AC_MINIX
+AC_AIX()
+AC_ISC_POSIX()
+AC_MINIX()
 AM_CONDITIONAL([HAVE_OS_CYGWIN], [test x"`uname | grep \"CYGWIN\"`" != x""])
 if test x"`uname | grep \"CYGWIN\"`" != x""; then
 	AC_DEFINE([HAVE_OS_CYGWIN], [1], [Compiling under cygwin])
 fi
 
 dnl check for basic programs
-AC_PROG_CC
-AC_PROG_INSTALL
-AC_PROG_LIBTOOL
+AC_PROG_CC()
+AC_PROG_INSTALL()
+AC_PROG_INTLTOOL()
+AC_PROG_LIBTOOL()
 
 dnl check for standard header files
 AC_HEADER_STDC
@@ -49,10 +51,10 @@ AC_CHECK_HEADERS([errno.h fcntl.h limits.h netdb.h signal.h stdarg.h \
   time.h unistd.h])
 
 dnl Check for X11 installed
-BM_LIBX11_REQUIRE
+XDT_CHECK_LIBX11_REQUIRE()
 
 dnl Check for session management support
-BM_LIBSM
+XDT_CHECK_LIBSM()
 
 dnl Check for _IceTransNoListen
 ac_LIBS="$LIBS"
@@ -61,24 +63,24 @@ AC_CHECK_FUNCS([_IceTransNoListen])
 LIBS="$ac_LIBS"
 
 dnl Check for i18n support
-BM_I18N([xfce4-session], [ar az be ca cs de en_GB es es_MX et eu fa fi fr gu he
-			  hi it ja ko lt ms nl nb_NO pa pl pt_BR pt_PT ro ru sv
-			  sk ta tr uk vi zh_CN zh_TW])
+XDT_I18N([ar az be ca cs de en_GB es es_MX et eu fa fi fr gu he \
+          hi it ja ko lt ms nl nb_NO pa pl pt_BR pt_PT ro ru sv \
+          sk ta tr uk vi zh_CN zh_TW])
 
 dnl Check for required packages
-BM_DEPEND([LIBXFCE4UTIL], [libxfce4util-1.0], [4.1.91])
-BM_DEPEND([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.1.91])
-BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [4.1.91])
+XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.2.0])
+XDT_CHECK_PACKAGE([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.2.0])
+XDT_CHECK_PACKAGE([LIBXFCEGUI4], [libxfcegui4-1.0], [4.2.0])
 
 dnl Configure the MCS plugins
-XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.1.0])
+XDT_XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.2.0])
 
 dnl Check for gnome support
-BM_DEPEND_CHECK([GCONF], [gconf-2.0], [2.4.0], [gconf],
-  [Assistive technologies support], [no])
+XDT_CHECK_OPTIONAL_PACKAGE([GNOME], [libgnome-2.0], [2.4.0], [gnome],
+                           [Assistive technologies support], [no])
 
 dnl Check for debugging support
-BM_DEBUG_SUPPORT
+BM_DEBUG_SUPPORT()
 
 dnl Check for iceauth
 AC_PATH_PROG([ICEAUTH], [iceauth])

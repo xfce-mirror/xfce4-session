@@ -35,15 +35,20 @@ endif
 splash_settings_la_DEPENDENCIES =					\
 	$(top_builddir)/libxfsm/libxfsm-4.2.la
 
-
-EXTRA_DIST =								\
-	nopreview.h							\
-	nopreview.png							\
-	xfce-splash-settings.desktop
-
 nopreview.h: $(srcdir)/nopreview.png
 	gdk-pixbuf-csource --struct --name=nopreview			\
 		$(srcdir)/nopreview.png > nopreview.h
 
-appsdir = $(datadir)/applications
-apps_DATA = xfce-splash-settings.desktop
+desktopdir = $(datadir)/applications
+desktop_in_files = xfce-splash-settings.desktop.in
+desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
+@INTLTOOL_DESKTOP_RULE@
+
+EXTRA_DIST =								\
+	nopreview.h							\
+	nopreview.png							\
+	$(desktop_in_files)
+
+DISTCLEANFILES =							\
+	$(desktop_DATA)
+

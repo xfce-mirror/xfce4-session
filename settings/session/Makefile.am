@@ -24,8 +24,14 @@ session_settings_la_LIBADD =						\
 	@XFCE_MCS_MANAGER_LIBS@
 endif
 
-EXTRA_DIST =								\
-	xfce-session-settings.desktop
+desktopdir = $(datadir)/applications
+desktop_in_files = xfce-session-settings.desktop.in
+desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
+@INTLTOOL_DESKTOP_RULE@
 
-appsdir = $(datadir)/applications
-apps_DATA = xfce-session-settings.desktop
+EXTRA_DIST =								\
+	$(desktop_in_files)
+
+DISTCLEANFILES =							\
+	$(desktop_DATA)
+

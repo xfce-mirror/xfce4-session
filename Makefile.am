@@ -1,3 +1,5 @@
+@SET_MAKE@
+
 SUBDIRS =								\
 	libxfsm								\
 	docs								\
@@ -16,28 +18,30 @@ distclean-local:
 	rm -rf xfce4-session.spec *.cache *~
 
 EXTRA_DIST =								\
-	$(config_DATA)							\
-	AUTHORS								\
 	BUGS								\
 	ChangeLog.pre-xfce-devel					\
-	INSTALL								\
-	NEWS								\
-	README								\
-	TODO								\
+	intltool-extract.in						\
+	intltool-merge.in						\
+	intltool-update.in						\
 	xfce4-session.spec						\
-	xfce4-session.spec.in
+	$(config_DATA)
+
+DISTCLEANFILES =							\
+	intltool-extract						\
+	intltool-merge							\
+	intltool-update
 
 html:
-	make -C docs html
+	(cd docs && $(MAKE) $(AM_MAKEFLAGS) html)
 
 rpm: dist
 	rpmbuild -ta $(PACKAGE)-$(VERSION).tar.gz
 	@rm -f $(PACKAGE)-$(VERSION).tar.gz
 
-ACLOCAL_AMFLAGS = -I m4
-
 dist-bz2: dist
-	zcat $(PACKAGE)-$(VERSION).tar.gz | bzip2 --best -c > $(PACKAGE)-$(VERSION).tar.bz2
+	zcat $(PACKAGE)-$(VERSION).tar.gz | \
+	 bzip2 --best -c > $(PACKAGE)-$(VERSION).tar.bz2
 
 distcheck-bz2: distcheck
-	zcat $(PACKAGE)-$(VERSION).tar.gz | bzip2 --best -c > $(PACKAGE)-$(VERSION).tar.bz2
+	zcat $(PACKAGE)-$(VERSION).tar.gz | \
+	 bzip2 --best -c > $(PACKAGE)-$(VERSION).tar.bz2
