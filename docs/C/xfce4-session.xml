@@ -1,8 +1,8 @@
 <?xml version='1.0'?> 
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
           "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-  <!ENTITY date "Aug 2004"> 
-  <!ENTITY appversion "4.1.90">
+  <!ENTITY date "November 2004"> 
+  <!ENTITY appversion "4.2">
   <!ENTITY app "<application>xfce4-session</application>"> 
 ]>
 
@@ -61,7 +61,9 @@ maintainers, etc. Commented out by default.
 
   </authorgroup>
 
-  <releaseinfo>This manual describes the &app; package, version &appversion;.
+  <releaseinfo>
+    <para>&nbsp;</para>
+    This manual describes the &app; package, version &appversion;. Last updated: &date;
   </releaseinfo>
 
 </articleinfo>
@@ -90,246 +92,363 @@ maintainers, etc. Commented out by default.
 <para>&nbsp;</para>
 
 <sect1 id="xfce4-session-settings">
-  <title>&app; settings</title>
+  <title>Session Manager settings</title>
     
   <sect2 id="xfsm-general-settings">
   	<title>General preferences</title>
   	
-  	  	  <figure id="xfsm-general-fig">
-    <title>&app; general preferences</title>
-    <screenshot>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/xfsm-general.png" format="PNG" />
-        </imageobject>
+    <figure id="xfsm-general-fig">
+      <title>&app; general preferences</title>
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/xfsm-general.png" format="PNG" />
+          </imageobject>
 
-        <textobject>
-          <phrase>Shows the General tab of the &app; settings dialog.</phrase>
-        </textobject>
-      </mediaobject>
-    </screenshot>
-  </figure>
-  	
+          <textobject>
+            <phrase>Shows the General tab of the &app; settings dialog.</phrase>
+          </textobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
   	
   	<variablelist>
+      <varlistentry>
+        <term>Display chooser on login</term> 
+        <listitem>
+            <para>If set, the session manager will ask you to choose a session every 
+            time you log in to Xfce.</para>
+        </listitem>
+      </varlistentry>
 
       <varlistentry>
-	<term>Display chooser on login</term> 
-	<listitem>
-      <para>If set, the session manager will ask you to choose a session every 
-      time you log in to Xfce.</para>
-	</listitem>
-		</varlistentry>
-
-      <varlistentry>
-	<term>Automatically save session on logout</term> 
-	<listitem>
-	  <para>This option instructs the session manager to save the current 
-	  session automatically when you log out. If you don't select this option 
-	  you'll be prompted whether you want to save the current session on 
-	  each logout.
-	  </para>
-	</listitem>
+        <term>Automatically save session on logout</term> 
+        <listitem>
+          <para>This option instructs the session manager to save the current 
+          session automatically when you log out. If you don't select this option 
+          you'll be prompted whether you want to save the current session on 
+          each logout.</para>
+        </listitem>
       </varlistentry>
       
       <varlistentry>
-	<term>Prompt on logout</term> 
-	<listitem>
-	  <para>This option disables the logout confirmation dialog. Whether 
-	  the session will be saved or not depends on whether you enabled the 
-	  automatic saving of sessions on logout or not.
-	  </para>
-	</listitem>
+        <term>Prompt on logout</term> 
+        <listitem>
+          <para>This option disables the logout confirmation dialog. Whether 
+          the session will be saved or not depends on whether you enabled the 
+          automatic saving of sessions on logout or not.</para>
+        </listitem>
       </varlistentry>
-      
-</variablelist>
-  	
+    </variablelist>
 	</sect2>
 		
 	<sect2 id="xfsm-advanced settings">
-	<title>Advanced preferences</title>
+	  <title>Advanced preferences</title>
 	
-		  	  <figure id="xfsm-advanced-fig">
-    <title>&app; advanced preferences</title>
-    <screenshot>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/xfsm-advanced.png" format="PNG" />
-        </imageobject>
+    <figure id="xfsm-advanced-fig">
+      <title>&app; advanced preferences</title>
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/xfsm-advanced.png" format="PNG" />
+          </imageobject>
 
-        <textobject>
-          <phrase>Shows Advanced tab of the &app; settings dialog.</phrase>
-        </textobject>
-      </mediaobject>
-    </screenshot>
-  </figure>
+          <textobject>
+            <phrase>Shows Advanced tab of the &app; settings dialog.</phrase>
+          </textobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
 	
-	  	<variablelist>
+    <variablelist>
+      <varlistentry>
+        <term>Launch Gnome services on startup</term> 
+        <listitem>
+          <para>Enable this option if you need the GNOME keyring daemon to be run
+          on startup. This option also instructs &app; to bring up the GNOME assistive
+          technologies at startup (if enabled in the GNOME control center). See the
+           GNOME documentation for more information on this topic.</para>
+        </listitem>
+		  </varlistentry>
 
       <varlistentry>
-	<term>Launch Gnome services on startup</term> 
-	<listitem>
-      <para>Enable this option if you need the GNOME keyring daemon to be run
-      on startup. This option also instructs &app; to bring up the GNOME assistive
-      technologies at startup (if enabled in the GNOME control center). See the
-       GNOME documentation for more information on this topic.</para>
-	</listitem>
-		</varlistentry>
-
-
-      <varlistentry>
-	<term>Launch KDE services on startup</term> 
-	<listitem>
-      <para>Enable this option if you plan to run KDE applications as part of 
-      your Xfce Desktop session. This will notably increase the startup time, 
-      but on the other hand, KDE applications will startup faster. Some KDE 
-      applications may not work at all if you don't enable this option.
-      </para>
-	</listitem>
-		</varlistentry>
-
+        <term>Launch KDE services on startup</term> 
+        <listitem>
+          <para>Enable this option if you plan to run KDE applications as part of 
+          your Xfce Desktop session. This will notably increase the startup time, 
+          but on the other hand, KDE applications will startup faster. Some KDE 
+          applications may not work at all if you don't enable this option.</para>
+        </listitem>
+  		</varlistentry>
 
       <varlistentry>
-	<term>Manage remote applications</term> 
-	<listitem>
-	  <para>Allow the session manager to manage applications running on 
-	  remote hosts. Since this option may constitute a security risk, by listening to  
-	  a TCP port on your system, do not enable it unless you know what you are doing.
-	  </para>
-	</listitem>
+        <term>Manage remote applications</term> 
+        <listitem>
+          <para>Allow the session manager to manage applications running on 
+          remote hosts. Since this option may constitute a security risk, by listening to  
+          a TCP port on your system, do not enable it unless you know what you are
+          doing.</para>
+          <para>System administrators may want to disable this option globally using the
+          session managers <ulink url="#xfsm-kiosk-mode" type="html">KIOSK
+          capabilities</ulink>.</para>
+        </listitem>
       </varlistentry>
-      
-</variablelist>
+    </variablelist>
 	
 	</sect2>
-	
 </sect1>
     
+<para>&nbsp;</para>
  
 <sect1 id="xfsm-customize">
-	<title>Customizing &app;</title>
+	<title>Customizing the Session Manager</title>
 	
-	<para>You can customize the splash-screen that &app; will use when you log in 
-	Xfce 4. There is a dedicated dialog available from the <emphasis>Xfce 4 Settings Manager</emphasis>.</para>
+	<para>You can customize the splash-screen that &app; will use when you log in to
+	Xfce 4. There is a dedicated dialog available from the <emphasis>Xfce 4
+  Settings Manager</emphasis>.</para>
 	
-	<sect2 id="xfsm-theme">
+	<sect2 id="xfsm-engines">
 		<title>Splash screen settings</title>
 		
-			  	  <figure id="splash-screen-settings-fig">
-              <title>Splash screen settings dialog</title>
-              <screenshot>
-                <mediaobject>
-                  <imageobject>
-                    <imagedata fileref="images/xfsm-splash.png" format="PNG" />
-                  </imageobject>
+    <figure id="splash-screen-settings-fig">
+      <title>Splash screen settings dialog</title>
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/xfsm-splash.png" format="PNG" />
+          </imageobject>
 
-                  <textobject>
-                    <phrase>Shows the &app; splash screen settings dialog.</phrase>
-                  </textobject>
-                </mediaobject>
-              </screenshot>
-            </figure>
+          <textobject>
+            <phrase>Shows the &app; splash screen settings dialog.</phrase>
+          </textobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
 		
-				<para>On the left, the dialog shows a list of all installed themes. 
-				Select a theme, and you will see, if available, a preview 
-				and informations about it. You can click on the "Test" button to 
-				see a demonstration of the selected splash screen.
-				</para>
+    <para>On the left, the dialog shows a list of all installed engines.
+    Select an engine, and you will see, if available, a preview and
+    information about it. You can click on the <guibutton>Test</guibutton>
+    button to see a demonstration of the selected splash screen
+    engine.</para>
 				
-				<para>&app; provides three Splash themes engines. Their respective 
-				configuration options are available from the "Configure" button.
-				</para>
-
+    <para>&app; provides three Splash themes engines by default. Their
+    respective configuration options - if any - are available from the
+    <guibutton>Configure</guibutton> button.</para>
 	</sect2>
 	
 	<sect2 id="xfsm-shutdown">
 		<title>Shutdown/reboot options</title>
 	
-	<para>&app; supports sudo-based shutdown. Other method can be added 
-	by packagers if desired, just by replacing XfsmShutdownHelper with their code. 
-	To be able to shutdown the computer, you must be listed in the systems 
-	sudoers file, in particular, you must be allowed to execute 
-	$libexecdir/xfsm-shutdown-helper as user root (where $libexecdir is the 
-	libexec subdir in the prefix you installed xfce4-session, for example 
-	/usr/local/libexec).</para>
-	
-	<para>&app; supports the KIOSK mode. 
-	It provides the following KIOSK capabilities:</para>
-	
-	  	<variablelist>
+    <para>&app; supports shutting down your computer when you log out
+    of your desktop session. To be able to shutdown the computer, you
+    have to be listed in the systems <filename>sudoers</filename> file,
+    in particular, you must be allowed to execute the command
+    <filename>${libexecdir}/xfsm-shutdown-helper</filename>
+    (<filename>/usr/sbin/xfsm-shutdown-helper</filename> on Debian GNU/Linux)
+    as user root (where <filename>${libexecdir}</filename> is the <filename
+    role="directory">libexec</filename> sub directory in the prefix you
+    installed &app;, for example
+    <filename role="directory">/usr/local/libexec</filename>).</para>
 
-      <varlistentry>
-	<term>CustomizeSplash</term> 
-	<listitem>
-      <para>whether or not the user is allowed to customize
-				the splash screen.</para>
-	</listitem>
-		</varlistentry>
+    <para>For example, lets say, you installed &app; into <filename
+    role="directory">/usr/local</filename>, your hostname is <emphasis>myhost</emphasis>
+    and your user account is named <emphasis>myuser</emphasis>, then you
+    would have to add the following line to your <filename>sudoers</filename>
+    file (remember to use <application>visudo</application> to edit
+    that file):</para>
 
-
-      <varlistentry>
-	<term>CustomizeChooser</term> 
-	<listitem>
-	  <para>whether or not the user is allowed to customize
-				the session chooser settings
-	  </para>
-	</listitem>
-      </varlistentry>
-      
-      <varlistentry>
-	<term>CustomizeLogout</term> 
-	<listitem>
-	  <para>whether or not the user is allowed to customize
-				the logout settings
-	  </para>
-	</listitem>
-      </varlistentry>
-      
-      <varlistentry>
-	<term>CustomizeCompatibility</term> 
-	<listitem>
-	  <para>whether or not the user is allowed to customize
-				the compatibility settings (KDE/Gnome compat)
-	  </para>
-	</listitem>
-      </varlistentry>      
-
-		<varlistentry>
-	<term>CustomizeSecurity</term> 
-	<listitem>
-	  <para>whether or not the user is allowed to customize
-				the security settings. This is one of the most
-				IMPORTANT settings, since it prevents users
-				(actually libICE) from binding to a TCP port.
-	  </para>
-	</listitem>
-      </varlistentry>
-
-		<varlistentry>
-	<term>Shutdown</term> 
-	<listitem>
-	  <para>whether or not the user is allowed to shutdown
-				(reboot or poweroff) the system. If a user lacks
-				this capability the reboot and poweroff options
-				in the shutdown dialog will be greyed out.
-	  </para>
-	</listitem>
-      </varlistentry>
-
-</variablelist>
-
-	<para>A sample kioskrc is available in the README.Kiosk file provided with the
-	&app; source code.</para>
-
-	<para>This allows all users to change their splash, chooser and logout settings, 
-		but allows only users in the group wheel to customize the the compatibility 
-		settings and shutdown the system. No one will be allowed to adjust the 
-		security settings.</para>
-		
+<programlisting>
+myuser myhost=/usr/local/libexec/xfsm-shutdown-helper
+</programlisting>
 	</sect2>
 	
- </sect1>
+</sect1>
  
+<para>&nbsp;</para>
+
+<sect1 id="xfsm-advanced">
+  <title>Advanced</title>
+
+  <sect2 id="files-and-env-vars">
+    <title>Files and Environment Variables</title>
+
+    <para>Xfce now uses the Basedir Specification as defined on <ulink
+    url="http://freedesktop.org/" type="http">Freedesktop.org</ulink> to
+    locate its data and configuration files. This means that file locations
+    will be specified as a path relative to the directories described in
+    the specification.</para>
+
+    <variablelist>
+      <varlistentry>
+        <term>${XDG_CONFIG_HOME}</term>
+        <listitem>
+          <para>The first base directory to look for configuration 
+          files. By default this is set to <filename
+          role="directory">~/.config/</filename>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>${XDG_CONFIG_DIRS}</term>
+        <listitem>
+          <para>A list of system directories that contain configuration
+          data. By default the panel will look in <filename 
+          role="directory">${sysconfdir}/xdg/</filename> and 
+          <filename role="directory">/etc/xdg/</filename>. The value of
+          ${sysconfdir} depends on how the program was build and will often be
+          <filename role="directory">/etc/</filename> for binary
+          packages.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>${XDG_CACHE_HOME}</term>
+        <listitem>
+          <para>Specifies the root for all user-specific cache data. If
+          this environment variable is unset, it defaults to <filename
+          role="directory">~/.cache</filename>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>$[XDG_CONFIG_DIRS}/xfce4-session/xfce4-session.rc</term>
+        <listitem>
+          <para>This is the location of the configuration file that
+          includes the various settings for &app;, which can be changed
+          from the settings dialog.</para>
+        </listitem>
+      </varlistentry>
+    
+      <varlistentry>
+        <term>$[XDG_CONFIG_DIRS}/xfce4-session/xfce4-splash.rc</term>
+        <listitem>
+          <para>This is the location of the configuration file that
+          includes the configuration for the splash screen, which
+          can be changed from the settings dialog.</para>
+        </listitem>
+      </varlistentry>
+    
+      <varlistentry>
+        <term>${XDG_CACHE_HOME}/sessions/</term>
+        <listitem>
+          <para>The directory where &app; and <application>xfwm4</application>
+          store the session data to.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>${sysconfdir}/xdg/xfce4/kiosk/kioskrc</term>
+        <listitem>
+          <para>Kiosk mode configuration file. See <ulink url="#xfsm-kiosk-mode">next
+          section</ulink> for an explanation.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+
+    <para>None of the configuration files, except the <filename>kioskrc</filename>,
+    are designed to be edited by hand during a Xfce session; in fact, the changes will
+    be overwritten if you edit them while the session manager or the settings managers
+    are running.</para>
+
+    <para>System administrators might want to customize the file
+    <filename>${sysconfdir}/xdg/xfce4-session/xfce4-session.rc</filename> to change
+    the default applications that are run on Xfce startup. For example, if you want to
+    start the <application>xfce4-iconbox</application> instead of the 
+    <application>xftaskbar4</application>, you would change the <emphasis>[Failsafe
+    Session]</emphasis> section like to something like this:</para>
+
+<programlisting>
+[Failsafe Session]
+Count=4
+Client0_Command=xfwm4
+Client0_PerScreen=False
+Client1_Command=xfce4-panel
+Client1_PerScreen=True
+Client2_Command=xfce4-iconbox
+Client2_PerScreen=True
+Client3_Command=xfdesktop
+Client3_PerScreen=False
+</programlisting>
+  </sect2>
+
+  <sect2 id="xfsm-kiosk-mode">
+    <title>Kiosk Mode</title>
+
+    <para>The session manager offers support for the Kiosk Mode, that helps to
+    prevent users from making changes to their session settings. To use it you
+    have to edit or create the file
+    <filename>${sysconfdir}/xdg/xfce4/kiosk/kioskrc</filename>.</para>
+
+    <para>The way to explain the format of this file is by using an example. The
+    xfce4-session section of your <filename>kioskrc</filename> might look like
+    this:</para>
+
+<programlisting>
+[xfce4-session]
+CustomizeSplash=ALL
+CustomizeChooser=ALL
+CustomizeLogout=ALL
+CustomizeCompatibility=%wheel
+CustomizeSecurity=NONE
+</programlisting>
+
+    <para>This allows all users to change their splash, chooser and logout settings,
+    but allows only users in the group <emphasis>wheel</emphasis> to customize the 
+    compatibility settings and shutdown the system. No one will be allowed to adjust
+    the security settings.</para>
+
+    <para>The session manager supports the following KIOSK capabilities:</para>
+
+    <variablelist>
+      <varlistentry>
+        <term>CustomizeSplash</term>
+        <listitem>
+          <para>Whether or not the user is allowed to customize the splash screen.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>CustomizeChooser</term>
+        <listitem>
+          <para>Whether or not the user is allowed to customize the session chooser settings.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>CustomizeLogout</term>
+        <listitem>
+          <para>Whether or not the user is allowed to customize the logout settings.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>CustomizeCompatibility</term>
+        <listitem>
+          <para>Whether or not the user is allowed to customize the compatibility
+          settings (KDE/Gnome compat)</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>CustomizeSecurity</term>
+        <listitem>
+          <para>Whether or not the user is allowed to customize the security settings.
+          This is one of the most <emphasis>IMPORTANT</emphasis> settings, since it
+          prevents users (actually <filename>libICE</filename>) from binding to a TCP port.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Shutdown</term>
+        <listitem>
+          <para>Whether or not the user is allowed to shutdown (reboot or poweroff) the system.
+          If a user lacks this capability the reboot and poweroff options in the shutdown
+          dialog will be greyed out.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>
 
 <para>&nbsp;</para>
 
