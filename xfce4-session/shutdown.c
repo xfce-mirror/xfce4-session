@@ -348,6 +348,25 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 		                 RevertToParent, CurrentTime);
     }
 
+  /* create small border */
+  {
+    GtkWidget *box1, *box2;
+
+    box1 = gtk_event_box_new ();
+    gtk_widget_modify_bg (box1, GTK_STATE_NORMAL, 
+                          &(box1->style->bg [GTK_STATE_SELECTED]));
+    gtk_widget_show (box1);
+	
+    box2 = gtk_event_box_new ();
+    gtk_widget_show (box2);
+    gtk_container_add (GTK_CONTAINER (box1), box2);
+	
+    gtk_container_set_border_width (GTK_CONTAINER (box2), 3);
+    gtk_widget_reparent (GTK_BIN (dialog)->child, box2);
+
+    gtk_container_add (GTK_CONTAINER (dialog), box1);
+  }
+	
 	/* run the logout dialog */
 	result = gtk_dialog_run(GTK_DIALOG(dialog));
 
