@@ -10,6 +10,7 @@ splash_settings_la_LDFLAGS =						\
 splash_settings_la_SOURCES =						\
 	module.c							\
 	module.h							\
+	nopreview.h							\
 	splash.c
 
 splash_settings_la_CFLAGS =						\
@@ -25,7 +26,13 @@ splash_settings_la_DEPENDENCIES =					\
 
 
 EXTRA_DIST =								\
+	nopreview.h							\
+	nopreview.png							\
 	xfce-splash-settings.desktop
+
+nopreview.h: $(srcdir)/nopreview.png
+	gdk-pixbuf-csource --struct --name=nopreview			\
+		$(srcdir)/nopreview.png > nopreview.h
 
 appsdir = $(datadir)/applications
 apps_DATA = xfce-splash-settings.desktop

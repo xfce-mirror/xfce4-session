@@ -1,3 +1,4 @@
 SUBDIRS =								\
 	balou								\
+	mice								\
 	simple

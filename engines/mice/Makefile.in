@@ -15,7 +15,7 @@
 @SET_MAKE@
 
 
-SOURCES = $(splash_settings_la_SOURCES)
+SOURCES = $(libmice_la_SOURCES) $(generate_SOURCES)
 
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
@@ -38,7 +38,8 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 host_triplet = @host@
-subdir = settings/splash
+noinst_PROGRAMS = generate$(EXEEXT)
+subdir = engines/mice
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/X11.m4 \
@@ -49,17 +50,21 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
-am__installdirs = "$(DESTDIR)$(splashdir)" "$(DESTDIR)$(appsdir)"
-splashLTLIBRARIES_INSTALL = $(INSTALL)
-LTLIBRARIES = $(splash_LTLIBRARIES)
-am_splash_settings_la_OBJECTS = splash_settings_la-module.lo \
-	splash_settings_la-splash.lo
-splash_settings_la_OBJECTS = $(am_splash_settings_la_OBJECTS)
+am__installdirs = "$(DESTDIR)$(micedir)"
+miceLTLIBRARIES_INSTALL = $(INSTALL)
+LTLIBRARIES = $(mice_LTLIBRARIES)
+libmice_la_LIBADD =
+am_libmice_la_OBJECTS = libmice_la-mice.lo
+libmice_la_OBJECTS = $(am_libmice_la_OBJECTS)
+PROGRAMS = $(noinst_PROGRAMS)
+am_generate_OBJECTS = generate-generate.$(OBJEXT)
+generate_OBJECTS = $(am_generate_OBJECTS)
+generate_DEPENDENCIES =
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/splash_settings_la-module.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/splash_settings_la-splash.Plo
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/generate-generate.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/libmice_la-mice.Plo
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) \
@@ -68,10 +73,8 @@ LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) \
 CCLD = $(CC)
 LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(splash_settings_la_SOURCES)
-DIST_SOURCES = $(splash_settings_la_SOURCES)
-appsDATA_INSTALL = $(INSTALL_DATA)
-DATA = $(apps_DATA)
+SOURCES = $(libmice_la_SOURCES) $(generate_SOURCES)
+DIST_SOURCES = $(libmice_la_SOURCES) $(generate_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -219,38 +222,35 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-splashdir = @XFCE_MCS_MANAGER_PLUGINSDIR@
-splash_LTLIBRARIES = \
-	splash_settings.la
+micedir = $(libdir)/xfce4/splash/engines
+mice_LTLIBRARIES = libmice.la
+libmice_la_SOURCES = \
+	preview.h							\
+	slide.h								\
+	mice.c
 
-splash_settings_la_LDFLAGS = \
+libmice_la_CFLAGS = \
+	@LIBXFCEGUI4_CFLAGS@
+
+libmice_la_LDFLAGS = \
 	-avoid-version							\
 	-module
 
-splash_settings_la_SOURCES = \
-	module.c							\
-	module.h							\
-	nopreview.h							\
-	splash.c
+generate_SOURCES = \
+	generate.c
 
-splash_settings_la_CFLAGS = \
-	@XFCE_MCS_MANAGER_CFLAGS@					\
-	-DMODULESDIR=\"$(libdir)/xfce4/splash/engines\"			\
-	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"
+generate_CFLAGS = \
+	@LIBXFCEGUI4_CFLAGS@
 
-splash_settings_la_LIBADD = \
-	$(top_builddir)/xfce4-session/libxfsm.la
-
-splash_settings_la_DEPENDENCIES = \
-	$(top_builddir)/xfce4-session/libxfsm.la
+generate_LDADD = \
+	@LIBXFCEGUI4_LIBS@
 
 EXTRA_DIST = \
-	nopreview.h							\
-	nopreview.png							\
-	xfce-splash-settings.desktop
+	preview.h							\
+	preview.png							\
+	slide.h								\
+	slide.png
 
-appsdir = $(datadir)/applications
-apps_DATA = xfce-splash-settings.desktop
 all: all-am
 
 .SUFFIXES:
@@ -264,9 +264,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  settings/splash/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  engines/mice/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  settings/splash/Makefile
+	  $(AUTOMAKE) --foreign  engines/mice/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -284,35 +284,45 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
-install-splashLTLIBRARIES: $(splash_LTLIBRARIES)
+install-miceLTLIBRARIES: $(mice_LTLIBRARIES)
 	@$(NORMAL_INSTALL)
-	test -z "$(splashdir)" || $(mkdir_p) "$(DESTDIR)$(splashdir)"
-	@list='$(splash_LTLIBRARIES)'; for p in $$list; do \
+	test -z "$(micedir)" || $(mkdir_p) "$(DESTDIR)$(micedir)"
+	@list='$(mice_LTLIBRARIES)'; for p in $$list; do \
 	  if test -f $$p; then \
 	    f="`echo $$p | sed -e 's|^.*/||'`"; \
-	    echo " $(LIBTOOL) --mode=install $(splashLTLIBRARIES_INSTALL) $(INSTALL_STRIP_FLAG) '$$p' '$(DESTDIR)$(splashdir)/$$f'"; \
-	    $(LIBTOOL) --mode=install $(splashLTLIBRARIES_INSTALL) $(INSTALL_STRIP_FLAG) "$$p" "$(DESTDIR)$(splashdir)/$$f"; \
+	    echo " $(LIBTOOL) --mode=install $(miceLTLIBRARIES_INSTALL) $(INSTALL_STRIP_FLAG) '$$p' '$(DESTDIR)$(micedir)/$$f'"; \
+	    $(LIBTOOL) --mode=install $(miceLTLIBRARIES_INSTALL) $(INSTALL_STRIP_FLAG) "$$p" "$(DESTDIR)$(micedir)/$$f"; \
 	  else :; fi; \
 	done
 
-uninstall-splashLTLIBRARIES:
+uninstall-miceLTLIBRARIES:
 	@$(NORMAL_UNINSTALL)
-	@list='$(splash_LTLIBRARIES)'; for p in $$list; do \
+	@list='$(mice_LTLIBRARIES)'; for p in $$list; do \
 	    p="`echo $$p | sed -e 's|^.*/||'`"; \
-	  echo " $(LIBTOOL) --mode=uninstall rm -f '$(DESTDIR)$(splashdir)/$$p'"; \
-	  $(LIBTOOL) --mode=uninstall rm -f "$(DESTDIR)$(splashdir)/$$p"; \
+	  echo " $(LIBTOOL) --mode=uninstall rm -f '$(DESTDIR)$(micedir)/$$p'"; \
+	  $(LIBTOOL) --mode=uninstall rm -f "$(DESTDIR)$(micedir)/$$p"; \
 	done
 
-clean-splashLTLIBRARIES:
-	-test -z "$(splash_LTLIBRARIES)" || rm -f $(splash_LTLIBRARIES)
-	@list='$(splash_LTLIBRARIES)'; for p in $$list; do \
+clean-miceLTLIBRARIES:
+	-test -z "$(mice_LTLIBRARIES)" || rm -f $(mice_LTLIBRARIES)
+	@list='$(mice_LTLIBRARIES)'; for p in $$list; do \
 	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
 	  test "$$dir" = "$$p" && dir=.; \
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-splash_settings.la: $(splash_settings_la_OBJECTS) $(splash_settings_la_DEPENDENCIES) 
-	$(LINK) -rpath $(splashdir) $(splash_settings_la_LDFLAGS) $(splash_settings_la_OBJECTS) $(splash_settings_la_LIBADD) $(LIBS)
+libmice.la: $(libmice_la_OBJECTS) $(libmice_la_DEPENDENCIES) 
+	$(LINK) -rpath $(micedir) $(libmice_la_LDFLAGS) $(libmice_la_OBJECTS) $(libmice_la_LIBADD) $(LIBS)
+
+clean-noinstPROGRAMS:
+	@list='$(noinst_PROGRAMS)'; for p in $$list; do \
+	  f=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
+	  echo " rm -f $$p $$f"; \
+	  rm -f $$p $$f ; \
+	done
+generate$(EXEEXT): $(generate_OBJECTS) $(generate_DEPENDENCIES) 
+	@rm -f generate$(EXEEXT)
+	$(LINK) $(generate_LDFLAGS) $(generate_OBJECTS) $(generate_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -320,8 +330,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/splash_settings_la-module.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/splash_settings_la-splash.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generate-generate.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmice_la-mice.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
@@ -347,53 +357,53 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
-splash_settings_la-module.o: module.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(splash_settings_la_CFLAGS) $(CFLAGS) -MT splash_settings_la-module.o -MD -MP -MF "$(DEPDIR)/splash_settings_la-module.Tpo" -c -o splash_settings_la-module.o `test -f 'module.c' || echo '$(srcdir)/'`module.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/splash_settings_la-module.Tpo" "$(DEPDIR)/splash_settings_la-module.Po"; else rm -f "$(DEPDIR)/splash_settings_la-module.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='module.c' object='splash_settings_la-module.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/splash_settings_la-module.Po' tmpdepfile='$(DEPDIR)/splash_settings_la-module.TPo' @AMDEPBACKSLASH@
+libmice_la-mice.o: mice.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmice_la_CFLAGS) $(CFLAGS) -MT libmice_la-mice.o -MD -MP -MF "$(DEPDIR)/libmice_la-mice.Tpo" -c -o libmice_la-mice.o `test -f 'mice.c' || echo '$(srcdir)/'`mice.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libmice_la-mice.Tpo" "$(DEPDIR)/libmice_la-mice.Po"; else rm -f "$(DEPDIR)/libmice_la-mice.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mice.c' object='libmice_la-mice.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libmice_la-mice.Po' tmpdepfile='$(DEPDIR)/libmice_la-mice.TPo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(splash_settings_la_CFLAGS) $(CFLAGS) -c -o splash_settings_la-module.o `test -f 'module.c' || echo '$(srcdir)/'`module.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmice_la_CFLAGS) $(CFLAGS) -c -o libmice_la-mice.o `test -f 'mice.c' || echo '$(srcdir)/'`mice.c
 
-splash_settings_la-module.obj: module.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(splash_settings_la_CFLAGS) $(CFLAGS) -MT splash_settings_la-module.obj -MD -MP -MF "$(DEPDIR)/splash_settings_la-module.Tpo" -c -o splash_settings_la-module.obj `if test -f 'module.c'; then $(CYGPATH_W) 'module.c'; else $(CYGPATH_W) '$(srcdir)/module.c'; fi`; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/splash_settings_la-module.Tpo" "$(DEPDIR)/splash_settings_la-module.Po"; else rm -f "$(DEPDIR)/splash_settings_la-module.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='module.c' object='splash_settings_la-module.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/splash_settings_la-module.Po' tmpdepfile='$(DEPDIR)/splash_settings_la-module.TPo' @AMDEPBACKSLASH@
+libmice_la-mice.obj: mice.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmice_la_CFLAGS) $(CFLAGS) -MT libmice_la-mice.obj -MD -MP -MF "$(DEPDIR)/libmice_la-mice.Tpo" -c -o libmice_la-mice.obj `if test -f 'mice.c'; then $(CYGPATH_W) 'mice.c'; else $(CYGPATH_W) '$(srcdir)/mice.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libmice_la-mice.Tpo" "$(DEPDIR)/libmice_la-mice.Po"; else rm -f "$(DEPDIR)/libmice_la-mice.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mice.c' object='libmice_la-mice.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libmice_la-mice.Po' tmpdepfile='$(DEPDIR)/libmice_la-mice.TPo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(splash_settings_la_CFLAGS) $(CFLAGS) -c -o splash_settings_la-module.obj `if test -f 'module.c'; then $(CYGPATH_W) 'module.c'; else $(CYGPATH_W) '$(srcdir)/module.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmice_la_CFLAGS) $(CFLAGS) -c -o libmice_la-mice.obj `if test -f 'mice.c'; then $(CYGPATH_W) 'mice.c'; else $(CYGPATH_W) '$(srcdir)/mice.c'; fi`
 
-splash_settings_la-module.lo: module.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(splash_settings_la_CFLAGS) $(CFLAGS) -MT splash_settings_la-module.lo -MD -MP -MF "$(DEPDIR)/splash_settings_la-module.Tpo" -c -o splash_settings_la-module.lo `test -f 'module.c' || echo '$(srcdir)/'`module.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/splash_settings_la-module.Tpo" "$(DEPDIR)/splash_settings_la-module.Plo"; else rm -f "$(DEPDIR)/splash_settings_la-module.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='module.c' object='splash_settings_la-module.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/splash_settings_la-module.Plo' tmpdepfile='$(DEPDIR)/splash_settings_la-module.TPlo' @AMDEPBACKSLASH@
+libmice_la-mice.lo: mice.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmice_la_CFLAGS) $(CFLAGS) -MT libmice_la-mice.lo -MD -MP -MF "$(DEPDIR)/libmice_la-mice.Tpo" -c -o libmice_la-mice.lo `test -f 'mice.c' || echo '$(srcdir)/'`mice.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libmice_la-mice.Tpo" "$(DEPDIR)/libmice_la-mice.Plo"; else rm -f "$(DEPDIR)/libmice_la-mice.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mice.c' object='libmice_la-mice.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libmice_la-mice.Plo' tmpdepfile='$(DEPDIR)/libmice_la-mice.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(splash_settings_la_CFLAGS) $(CFLAGS) -c -o splash_settings_la-module.lo `test -f 'module.c' || echo '$(srcdir)/'`module.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmice_la_CFLAGS) $(CFLAGS) -c -o libmice_la-mice.lo `test -f 'mice.c' || echo '$(srcdir)/'`mice.c
 
-splash_settings_la-splash.o: splash.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(splash_settings_la_CFLAGS) $(CFLAGS) -MT splash_settings_la-splash.o -MD -MP -MF "$(DEPDIR)/splash_settings_la-splash.Tpo" -c -o splash_settings_la-splash.o `test -f 'splash.c' || echo '$(srcdir)/'`splash.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/splash_settings_la-splash.Tpo" "$(DEPDIR)/splash_settings_la-splash.Po"; else rm -f "$(DEPDIR)/splash_settings_la-splash.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='splash.c' object='splash_settings_la-splash.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/splash_settings_la-splash.Po' tmpdepfile='$(DEPDIR)/splash_settings_la-splash.TPo' @AMDEPBACKSLASH@
+generate-generate.o: generate.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(generate_CFLAGS) $(CFLAGS) -MT generate-generate.o -MD -MP -MF "$(DEPDIR)/generate-generate.Tpo" -c -o generate-generate.o `test -f 'generate.c' || echo '$(srcdir)/'`generate.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/generate-generate.Tpo" "$(DEPDIR)/generate-generate.Po"; else rm -f "$(DEPDIR)/generate-generate.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='generate.c' object='generate-generate.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/generate-generate.Po' tmpdepfile='$(DEPDIR)/generate-generate.TPo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(splash_settings_la_CFLAGS) $(CFLAGS) -c -o splash_settings_la-splash.o `test -f 'splash.c' || echo '$(srcdir)/'`splash.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(generate_CFLAGS) $(CFLAGS) -c -o generate-generate.o `test -f 'generate.c' || echo '$(srcdir)/'`generate.c
 
-splash_settings_la-splash.obj: splash.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(splash_settings_la_CFLAGS) $(CFLAGS) -MT splash_settings_la-splash.obj -MD -MP -MF "$(DEPDIR)/splash_settings_la-splash.Tpo" -c -o splash_settings_la-splash.obj `if test -f 'splash.c'; then $(CYGPATH_W) 'splash.c'; else $(CYGPATH_W) '$(srcdir)/splash.c'; fi`; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/splash_settings_la-splash.Tpo" "$(DEPDIR)/splash_settings_la-splash.Po"; else rm -f "$(DEPDIR)/splash_settings_la-splash.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='splash.c' object='splash_settings_la-splash.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/splash_settings_la-splash.Po' tmpdepfile='$(DEPDIR)/splash_settings_la-splash.TPo' @AMDEPBACKSLASH@
+generate-generate.obj: generate.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(generate_CFLAGS) $(CFLAGS) -MT generate-generate.obj -MD -MP -MF "$(DEPDIR)/generate-generate.Tpo" -c -o generate-generate.obj `if test -f 'generate.c'; then $(CYGPATH_W) 'generate.c'; else $(CYGPATH_W) '$(srcdir)/generate.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/generate-generate.Tpo" "$(DEPDIR)/generate-generate.Po"; else rm -f "$(DEPDIR)/generate-generate.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='generate.c' object='generate-generate.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/generate-generate.Po' tmpdepfile='$(DEPDIR)/generate-generate.TPo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(splash_settings_la_CFLAGS) $(CFLAGS) -c -o splash_settings_la-splash.obj `if test -f 'splash.c'; then $(CYGPATH_W) 'splash.c'; else $(CYGPATH_W) '$(srcdir)/splash.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(generate_CFLAGS) $(CFLAGS) -c -o generate-generate.obj `if test -f 'generate.c'; then $(CYGPATH_W) 'generate.c'; else $(CYGPATH_W) '$(srcdir)/generate.c'; fi`
 
-splash_settings_la-splash.lo: splash.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(splash_settings_la_CFLAGS) $(CFLAGS) -MT splash_settings_la-splash.lo -MD -MP -MF "$(DEPDIR)/splash_settings_la-splash.Tpo" -c -o splash_settings_la-splash.lo `test -f 'splash.c' || echo '$(srcdir)/'`splash.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/splash_settings_la-splash.Tpo" "$(DEPDIR)/splash_settings_la-splash.Plo"; else rm -f "$(DEPDIR)/splash_settings_la-splash.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='splash.c' object='splash_settings_la-splash.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/splash_settings_la-splash.Plo' tmpdepfile='$(DEPDIR)/splash_settings_la-splash.TPlo' @AMDEPBACKSLASH@
+generate-generate.lo: generate.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(generate_CFLAGS) $(CFLAGS) -MT generate-generate.lo -MD -MP -MF "$(DEPDIR)/generate-generate.Tpo" -c -o generate-generate.lo `test -f 'generate.c' || echo '$(srcdir)/'`generate.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/generate-generate.Tpo" "$(DEPDIR)/generate-generate.Plo"; else rm -f "$(DEPDIR)/generate-generate.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='generate.c' object='generate-generate.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/generate-generate.Plo' tmpdepfile='$(DEPDIR)/generate-generate.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(splash_settings_la_CFLAGS) $(CFLAGS) -c -o splash_settings_la-splash.lo `test -f 'splash.c' || echo '$(srcdir)/'`splash.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(generate_CFLAGS) $(CFLAGS) -c -o generate-generate.lo `test -f 'generate.c' || echo '$(srcdir)/'`generate.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -404,23 +414,6 @@ clean-libtool:
 distclean-libtool:
 	-rm -f libtool
 uninstall-info-am:
-install-appsDATA: $(apps_DATA)
-	@$(NORMAL_INSTALL)
-	test -z "$(appsdir)" || $(mkdir_p) "$(DESTDIR)$(appsdir)"
-	@list='$(apps_DATA)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f="`echo $$p | sed -e 's|^.*/||'`"; \
-	  echo " $(appsDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(appsdir)/$$f'"; \
-	  $(appsDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(appsdir)/$$f"; \
-	done
-
-uninstall-appsDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(apps_DATA)'; for p in $$list; do \
-	  f="`echo $$p | sed -e 's|^.*/||'`"; \
-	  echo " rm -f '$(DESTDIR)$(appsdir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(appsdir)/$$f"; \
-	done
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -497,9 +490,9 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LTLIBRARIES) $(DATA)
+all-am: Makefile $(LTLIBRARIES) $(PROGRAMS)
 installdirs:
-	for dir in "$(DESTDIR)$(splashdir)" "$(DESTDIR)$(appsdir)"; do \
+	for dir in "$(DESTDIR)$(micedir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: install-am
@@ -528,8 +521,8 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-libtool clean-splashLTLIBRARIES \
-	mostlyclean-am
+clean-am: clean-generic clean-libtool clean-miceLTLIBRARIES \
+	clean-noinstPROGRAMS mostlyclean-am
 
 distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
@@ -547,7 +540,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-appsDATA install-splashLTLIBRARIES
+install-data-am: install-miceLTLIBRARIES
 
 install-exec-am:
 
@@ -575,27 +568,29 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-appsDATA uninstall-info-am \
-	uninstall-splashLTLIBRARIES
+uninstall-am: uninstall-info-am uninstall-miceLTLIBRARIES
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
-	clean-libtool clean-splashLTLIBRARIES ctags distclean \
-	distclean-compile distclean-generic distclean-libtool \
-	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-appsDATA install-data \
+	clean-libtool clean-miceLTLIBRARIES clean-noinstPROGRAMS ctags \
+	distclean distclean-compile distclean-generic \
+	distclean-libtool distclean-tags distdir dvi dvi-am html \
+	html-am info info-am install install-am install-data \
 	install-data-am install-exec install-exec-am install-info \
-	install-info-am install-man install-splashLTLIBRARIES \
+	install-info-am install-man install-miceLTLIBRARIES \
 	install-strip installcheck installcheck-am installdirs \
 	maintainer-clean maintainer-clean-generic mostlyclean \
 	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
 	pdf pdf-am ps ps-am tags uninstall uninstall-am \
-	uninstall-appsDATA uninstall-info-am \
-	uninstall-splashLTLIBRARIES
+	uninstall-info-am uninstall-miceLTLIBRARIES
 
 
-nopreview.h: $(srcdir)/nopreview.png
-	gdk-pixbuf-csource --struct --name=nopreview			\
-		$(srcdir)/nopreview.png > nopreview.h
+preview.h: $(srcdir)/preview.png
+	gdk-pixbuf-csource --struct --name=preview			\
+		$(srcdir)/preview.png > preview.h
+
+slide.h: $(srcdir)/slide.png
+	gdk-pixbuf-csource --struct --name=slide			\
+		$(srcdir)/slide.png > slide.h
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

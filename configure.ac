@@ -164,6 +164,7 @@ engines/balou/Makefile
 engines/balou/scripts/Makefile
 engines/balou/themes/Makefile
 engines/balou/themes/Default/Makefile
+engines/mice/Makefile
 engines/simple/Makefile
 icons/Makefile
 icons/48x48/Makefile

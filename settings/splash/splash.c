@@ -30,6 +30,7 @@
 #include <string.h>
 #endif
 
+#include <gdk-pixbuf/gdk-pixdata.h>
 #include <gmodule.h>
 #include <gtk/gtk.h>
 
@@ -41,6 +42,7 @@
 #include <xfce4-session/xfsm-util.h>
 
 #include <settings/splash/module.h>
+#include <settings/splash/nopreview.h>
 
 
 /*
@@ -230,16 +232,19 @@ splash_selection_changed (GtkTreeSelection *selection)
           gtk_widget_set_sensitive (splash_www1, TRUE);
 
           preview = module_preview (module);
-          if (G_LIKELY (preview != NULL))
-            {
-              gtk_image_set_from_pixbuf (GTK_IMAGE (splash_image), preview);
-              g_object_unref (G_OBJECT (preview));
-            }
+          if (G_UNLIKELY (preview == NULL))
+            preview = gdk_pixbuf_from_pixdata (&nopreview, FALSE, NULL);
+          gtk_image_set_from_pixbuf (GTK_IMAGE (splash_image), preview);
+          g_object_unref (G_OBJECT (preview));
 
           xfce_rc_write_entry (rc, "Engine", module_engine (module));
         }
       else
         {
+          preview = gdk_pixbuf_from_pixdata (&nopreview, FALSE, NULL);
+          gtk_image_set_from_pixbuf (GTK_IMAGE (splash_image), preview);
+          g_object_unref (G_OBJECT (preview));
+
           gtk_label_set_text (GTK_LABEL (splash_descr1), _("None"));
           gtk_widget_set_sensitive (splash_descr1, FALSE);
 
