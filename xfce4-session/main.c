@@ -422,6 +422,7 @@ main(int argc, char **argv)
 
 	/* */
 	trayIcon = create_tray_icon();
+	xfce_tray_icon_connect(trayIcon);
 
 	/* connect to the settings manager */
 	if ((settingsClient = mcs_client_new(GDK_DISPLAY(),
