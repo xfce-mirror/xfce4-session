@@ -17,6 +17,22 @@ BuildRequires:	xfce-mcs-manager-devel >= @XFCE_MCS_MANAGER_REQUIRED_VERSION@
 %description
 xfce4-session is the session manager for the Xfce desktop environment.
 
+%package devel
+Summary:	Development files for xfce4-session
+Group:		Development/Libraries
+Requires:	xfce4-session
+
+%description devel
+Header files for the Xfce Session Manager.
+
+%package engines
+Summary:	Additional engines for xfce4-session
+Group:		User Interface/Desktops
+Requires:	xfce4-session
+
+%description engines
+Additional splash screen engines for the Xfce Session Manager.
+
 %prep
 %setup -q
 
@@ -34,15 +50,24 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 %doc AUTHORS COPYING ChangeLog ChangeLog.pre-xfce-devel NEWS README TODO
-%{_sysconfdir}/xdg/
-%{_sysconfdir}/xfce4/
-%{_datadir}/applications/
-%{_datadir}/icons/
-%{_datadir}/themes/
-%{_datadir}/locale/
-%{_mandir}/man1/*
 %{_bindir}/*
-%{_libdir}/xfce4/mcs-plugins/
-%{_libexecdir}/xfsm-export-theme
-%{_libexecdir}/xfsm-install-theme
+%{_datadir}/applications/*
+%{_datadir}/icons/
+%{_datadir}/locale/
+%{_libdir}/xfce4/mcs-plugins/*
+%{_libdir}/xfce4/splash/engines/libmice.*
 %{_libexecdir}/xfsm-shutdown-helper
+%{_mandir}/man1/*
+%{_sysconfdir}/xdg/xfce4-session/*
+
+%files devel
+%defattr(-,root,root)
+%{_includedir}/xfce4/xfce4-session/*.h
+%{_libdir}/pkgconfig/*.pc
+
+%files engines
+%defattr(-,root,root)
+%{_datadir}/themes/Default/balou/*
+%{_libdir}/xfce4/splash/engines/libbalou.*
+%{_libdir}/xfce4/splash/engines/libsimple.*
+%{_libexecdir}/balou-*
