@@ -22,6 +22,15 @@ splash_settings_la_CFLAGS =						\
 splash_settings_la_LIBADD =						\
 	$(top_builddir)/xfce4-session/libxfsm.la
 
+if HAVE_CYGWIN
+splash_settings_la_LDFLAGS +=						\
+	-no-undefined							\
+	-export-symbols $(datadir)/xfce4/devel/mcs-manager.def
+splash_settings_la_LIBADD +=						\
+	@XFCE_MCS_MANAGER_LIBS@						\
+	@LIBX11_LIBS@
+endif
+
 splash_settings_la_DEPENDENCIES =					\
 	$(top_builddir)/xfce4-session/libxfsm.la
 
