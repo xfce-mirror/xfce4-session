@@ -23,12 +23,20 @@
  * An error leads to a session close on Linux when running several xterms
    as reported by Olivier.
 
+Freezes in Shutdown Screen:
+---------------------------
+
+ * Select "poweroff" from the option menu, click outside the dialog -> frozen!
+ * Sole solution for now: get rid of the option menu and use radio buttons or
+   something else that does not create new toplevel windows.
+
+
 Solution for the TIMEOUT in SAVEYOURSELF problem:
 -------------------------------------------------
 
  * Handle the interacting clients first
  * Then wait some period of time (e.g. 5-10 seconds) and if some clients
-   having finished the SAVE YOURSELF phase during that time, display a
+   haven't finished the SAVE YOURSELF phase during that time, display a
    window with a the list of "sucking" clients and a button "Terminate".
    Pressing terminate will terminate the session regardless of the state
    of the given clients. In addition to the window there should be a timer
