@@ -1,0 +1,368 @@
+<?xml version='1.0'?> 
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY date "Aug 2004"> 
+  <!ENTITY appversion "4.1.x"> 
+  <!ENTITY app "<application>xfce4-session</application>"> 
+]>
+
+<article id="xfce4-session" lang="en">
+
+<!-- Header --> 
+<articleinfo>
+
+  <title>Xfce 4 Session Manager</title>
+  
+  <copyright>
+    <year>2004</year> <holder>Benedikt Meurer</holder>
+  </copyright>
+
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year> <holder>ME-THE-TRANSLATOR (Latin
+   translation)</holder>
+  </copyright>
+
+ -->
+
+<!-- I don;t know about this
+  <legalnotice id="legalnotice">
+    <para>
+      This document is provided under the terms of the GNU GPL, version
+      2 or (at your option) any later version.
+    </para>
+  </legalnotice>
+-->
+  
+  <authorgroup>
+
+    <author>
+      <firstname>Benedikt</firstname> <surname>Meurer</surname>
+      <affiliation>
+	      <address><email>benny@xfce.org</email></address>
+      </affiliation>
+    </author>
+
+<!-- This is appropriate place for other contributors: translators,
+maintainers, etc. Commented out by default.
+
+    <othercredit role="translator">
+      <firstname>Latin</firstname> <surname>Translator 1</surname>
+      <affiliation>
+	<orgname>Latin Translation Team</orgname>
+	<address><email>translator@gnome.org</email> </address>
+      </affiliation> <contrib>Latin translation</contrib>
+    </othercredit>
+-->
+
+  </authorgroup>
+
+  <!--
+  <revhistory>
+    <revision>
+      <revnumber>0.3</revnumber> 
+      <date>May 2003</date>
+      <authorinitials>jbh</authorinitials>
+    </revision>
+  </revhistory>
+  -->
+
+  <releaseinfo>This manual describes the &app; package, version &appversion;.
+  </releaseinfo>
+
+</articleinfo>
+
+<para>&nbsp;</para>
+
+<sect1 id="xfsm-intro">
+  <title>Introduction</title>
+
+  <para>&app; is a session manager for Xfce 4. Its task is to save the state of 
+  your desktop (opened applications and their location) and restore it during a next 
+  startup. You can create several different sessions and choose one of them on 
+  startup.
+  </para>
+  
+  <para>&app; provides session management for both X11R6 and 
+  legacy X11R5 protocols. If you don't need legacy session management 
+  support, you can disable it at compile time, giving 
+  --disable-legacy-sm to ./configure. Do NOT EVER run smproxy in 
+  session that is managed by xfce4-session, or weird things will happen. 
+  The included legacy session management does everything that smproxy 
+  would do, and besides that, it also support multiscreen display.</para>
+
+</sect1>
+
+<para>&nbsp;</para>
+
+<sect1 id="xfce4-session-settings">
+  <title>&app; settings</title>
+    
+  <sect2 id="xfsm-general-settings">
+  	<title>General preferences</title>
+  	
+  	  	  <figure id="xfsm-general-fig">
+    <title>&app; general preferences</title>
+    <screenshot>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/xfsm-general.png" format="PNG" />
+        </imageobject>
+
+        <textobject>
+          <phrase>Shows the General tab of the &app; settings dialog.</phrase>
+        </textobject>
+      </mediaobject>
+    </screenshot>
+  </figure>
+  	
+  	
+  	<variablelist>
+
+      <varlistentry>
+	<term>Display chooser on login</term> 
+	<listitem>
+      <para>If set, the session manager will ask you to choose a session every 
+      time you log in to Xfce.</para>
+	</listitem>
+		</varlistentry>
+
+      <varlistentry>
+	<term>Automatically save session on logout</term> 
+	<listitem>
+	  <para>This option instructs the session manager to save the current 
+	  session automatically when you log out. If you don't select this option 
+	  you'll be prompted whether you want to save the current session on 
+	  each logout.
+	  </para>
+	</listitem>
+      </varlistentry>
+      
+      <varlistentry>
+	<term>Prompt on logout</term> 
+	<listitem>
+	  <para>This option disables the logout confirmation dialog. Whether 
+	  the session will be saved or not depends on whether you enabled the 
+	  automatic saving of sessions on logout or not.
+	  </para>
+	</listitem>
+      </varlistentry>
+      
+</variablelist>
+  	
+	</sect2>
+		
+	<sect2 id="xfsm-advanced settings">
+	<title>Advanced preferences</title>
+	
+		  	  <figure id="xfsm-advanced-fig">
+    <title>&app; advanced preferences</title>
+    <screenshot>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/xfsm-advanced.png" format="PNG" />
+        </imageobject>
+
+        <textobject>
+          <phrase>Shows Advanced tab of the &app; settings dialog.</phrase>
+        </textobject>
+      </mediaobject>
+    </screenshot>
+  </figure>
+	
+	  	<variablelist>
+
+      <varlistentry>
+	<term>Launch KDE services on startup</term> 
+	<listitem>
+      <para>Enable this option if you plan to run KDE applications as part of 
+      your Xfce Desktop session. This will notably increase the startup time, 
+      but on the other hand, KDE applications will startup faster. Some KDE 
+      applications may not work at all if you don't enable this option.
+      </para>
+	</listitem>
+		</varlistentry>
+
+
+      <varlistentry>
+	<term>Manage remote applications</term> 
+	<listitem>
+	  <para>Allow the session manager to manage applications running on 
+	  remote hosts. Since this option may constitute a security risk, by listening to  
+	  a TCP port on your system, do not enable it unless you know what you are doing.
+	  </para>
+	</listitem>
+      </varlistentry>
+      
+</variablelist>
+	
+	</sect2>
+	
+</sect1>
+    
+ 
+<sect1 id="xfsm-customize">
+	<title>Customizing &app;</title>
+	
+	<para>You can customize the splash-screen that &app; will use when you log in 
+	Xfce 4. There is a dedicated dialog available from the <emphasis>Xfce 4 Settings Manager</emphasis>.</para>
+	
+	<sect2 id="xfsm-theme">
+		<title>Splash screen settings</title>
+		
+			  	  <figure id="splash-screen-settings-fig">
+    <title>Splash screen settings dialog</title>
+    <screenshot>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/xfsm-splash.png" format="PNG" />
+        </imageobject>
+
+        <textobject>
+          <phrase>Shows the &app; splash screen settings dialog.</phrase>
+        </textobject>
+      </mediaobject>
+    </screenshot>
+  </figure>
+		
+				<para>On the left, the dialog shows a list of all installed themes. 
+				Select a theme, and you will see, if available, a preview 
+				and informations about it. You can click on the "Test" button to 
+				see a demonstration of the selected splash screen.
+				</para>
+				
+				<para>&app; provides three Splash themes engines. Their respective 
+				configuration options are available from the "Configure" button.
+				</para>
+
+	</sect2>
+	
+	<sect2 id="xfsm-shutdown">
+		<title>Shutdown/reboot options</title>
+	
+	<para>&app; supports sudo-based shutdown. Other method can be added 
+	by packagers if desired, just by replacing XfsmShutdownHelper with their code. 
+	To be able to shutdown the computer, you must be listed in the systems 
+	sudoers file, in particular, you must be allowed to execute 
+	$libexecdir/xfsm-shutdown-helper as user root (where $libexecdir is the 
+	libexec subdir in the prefix you installed xfce4-session, for example 
+	/usr/local/libexec).</para>
+	
+	<para>&app; supports the KIOSK mode. 
+	It provides the following KIOSK capabilities:</para>
+	
+	  	<variablelist>
+
+      <varlistentry>
+	<term>CustomizeSplash</term> 
+	<listitem>
+      <para>whether or not the user is allowed to customize
+				the splash screen.</para>
+	</listitem>
+		</varlistentry>
+
+
+      <varlistentry>
+	<term>CustomizeChooser</term> 
+	<listitem>
+	  <para>whether or not the user is allowed to customize
+				the session chooser settings
+	  </para>
+	</listitem>
+      </varlistentry>
+      
+      <varlistentry>
+	<term>CustomizeLogout</term> 
+	<listitem>
+	  <para>whether or not the user is allowed to customize
+				the logout settings
+	  </para>
+	</listitem>
+      </varlistentry>
+      
+      <varlistentry>
+	<term>CustomizeCompatibility</term> 
+	<listitem>
+	  <para>whether or not the user is allowed to customize
+				the compatibility settings (KDE/Gnome compat)
+	  </para>
+	</listitem>
+      </varlistentry>      
+
+		<varlistentry>
+	<term>CustomizeSecurity</term> 
+	<listitem>
+	  <para>whether or not the user is allowed to customize
+				the security settings. This is one of the most
+				IMPORTANT settings, since it prevents users
+				(actually libICE) from binding to a TCP port.
+	  </para>
+	</listitem>
+      </varlistentry>
+
+		<varlistentry>
+	<term>Shutdown</term> 
+	<listitem>
+	  <para>whether or not the user is allowed to shutdown
+				(reboot or poweroff) the system. If a user lacks
+				this capability the reboot and poweroff options
+				in the shutdown dialog will be greyed out.
+	  </para>
+	</listitem>
+      </varlistentry>
+
+</variablelist>
+
+	<para>A sample kioskrc is available in the README.Kiosk file provided with the
+	&app; source code.</para>
+
+	<para>This allows all users to change their splash, chooser and logout settings, 
+		but allows only users in the group wheel to customize the the compatibility 
+		settings and shutdown the system. No one will be allowed to adjust the 
+		security settings.</para>
+		
+	</sect2>
+	
+ </sect1>
+ 
+
+<para>&nbsp;</para>
+
+<sect1 id="xfsm-copyright">
+  <title>About &app;</title>
+
+  <para>&app; was written by Benedikt Meurer 
+  (<email>benedikt.meurer@unix-ag.uni-siegen.de</email>).
+    To find more information, please visit the 
+    <ulink url="http://www.xfce.org" type="http">Xfce web site</ulink>. 
+  </para>
+
+  <para>To report a bug or make a suggestion regarding this application or
+    this manual, send an email to the 
+    <ulink url="http://lunar-linux.org/mailman/listinfo/xfce"
+      type="http">xfce4-dev</ulink> mailing list &mdash; this is the preferred
+    method &mdash; or use the bug tracking system at the
+    <ulink url="http://bugs.xfce.org/" 
+      type="http">http://bugs.xfce.org/</ulink>. 
+    If you have questions about the use or installation of this package,
+    please ask on the 
+    <ulink url="http://lunar-linux.org/mailman/listinfo/xfce"
+      type="http">xfce</ulink> mailing list. 
+  </para>
+    
+  <para> This program is distributed under the terms of the
+    GNU General Public License as published by the Free Software Foundation; 
+    either version 2 of the License, or (at your option) any later version.
+  </para>
+
+  <para>You should have received a copy of the GNU General Public License 
+    along with this program; if not, write to the Free Software 
+    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
+    USA.
+  </para>
+
+</sect1>
+
+</article>
+

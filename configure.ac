@@ -9,7 +9,7 @@ dnl
 dnl Version information
 m4_define([xfsm_version_major], [4])
 m4_define([xfsm_version_minor], [1])
-m4_define([xfsm_version_micro], [13])
+m4_define([xfsm_version_micro], [14])
 m4_define([xfsm_version], [xfsm_version_major.xfsm_version_minor.xfsm_version_micro])
 
 dnl Initialize autoconf
@@ -175,6 +175,8 @@ AC_OUTPUT([
 Makefile
 xfce4-session.spec
 docs/Makefile
+docs/C/Makefile
+docs/C/images/Makefile
 engines/Makefile
 engines/balou/Makefile
 engines/balou/scripts/Makefile
