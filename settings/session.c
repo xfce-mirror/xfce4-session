@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003,2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -45,20 +45,13 @@
 #endif
 
 #include <libxfce4mcs/mcs-manager.h>
-#include <libxfce4util/debug.h>
-#include <libxfce4util/i18n.h>
-#include <libxfce4util/util.h>
+#include <libxfce4util/libxfce4util.h>
 #include <libxfcegui4/libxfcegui4.h>
 #include <xfce-mcs-manager/manager-plugin.h>
 
 #include <xfce4-session/shutdown.h>
 
 #include "session-icon.h"
-
-/* */
-#define	RCDIR		"settings"
-#define CHANNEL		"session"
-#define	RCFILE		"session.xml"
 
 /* */
 #define BORDER		6
@@ -71,431 +64,53 @@
 
 /* prototypes */
 static void	run_dialog(McsPlugin *);
-static gboolean	save_settings(McsPlugin *);
+static void	save_settings(void);
 static void	confirmLogoutChangedCB(GtkToggleButton *, McsPlugin *);
 static void	autoSaveChangedCB(GtkToggleButton *, McsPlugin *);
-static void	defaultActionChangedCB(GtkOptionMenu *, McsPlugin *);
 
 /* settings */
 static gboolean	confirmLogout = TRUE;
 static gboolean	autoSave = FALSE;
-static gboolean	trayIcon = TRUE;
-static gint	defaultAction = SHUTDOWN_LOGOUT;
+static gboolean	displayChooser = FALSE;
 
 /* */
 static GtkWidget	 *dialog = NULL;
 
-/* themes option menu */
-static GtkWidget	 *themesMenu = NULL;
-
 /* */
 static GtkTooltips	*tooltips = NULL;
-
-/* */
-typedef struct {
-	gchar	name[MAXTHEMELEN];
-	gchar	title[MAXTHEMELEN];
-	gchar	preview[PATH_MAX];
-	gchar	info[MAXINFOLEN];
-	gchar	author[MAXINFOLEN];
-} SplashTheme;
-
-#define MAX_THEMES		25
-
-/* list of installed splash themes */
-static gint		themeCount = 0;
-static gint		themeCurrent = 0;
-static SplashTheme	themes[MAX_THEMES];
-
-/*
- */
-static gboolean
-read_theme(const gchar *file, SplashTheme *theme)
-{
-	gchar buffer[LINE_MAX];
-	gchar *dir;
-	gchar *p;
-	gchar *s;
-	FILE *fp;
-
-	if ((fp = fopen(file, "r")) == NULL)
-		return(FALSE);
-
-	if (fgets(buffer, LINE_MAX, fp) == NULL ||
-	    strncmp(buffer, "[Splash Theme]", 14) != 0)
-		goto failed;
-
-	/* init theme info */
-	memset(theme, 0, sizeof(*theme));
-
-	while (fgets(buffer, LINE_MAX, fp) != NULL) {
-		/* strip leading and trailing whitespace */
-		p = g_strstrip(buffer);
-
-		if (strncmp(p, "name=", 5) == 0 && strlen(p + 5) > 0)
-			g_strlcpy(theme->title, p + 5, MAXTHEMELEN);
-		else if (strncmp(p, "info=", 5) == 0 && strlen(p + 5) > 0) {
-			s = g_strcompress(p + 5);
-			g_strlcpy(theme->info, s, MAXINFOLEN);
-			g_free(s);
-		}
-		else if (strncmp(p, "author=", 7) == 0 && strlen(p + 7) > 0) {
-			s = g_strcompress(p + 7);
-			g_strlcpy(theme->author, s, MAXINFOLEN);
-			g_free(s);
-		}
-		else if (strncmp(p, "preview=", 8) == 0 && strlen(p + 8) > 0) {
-			dir = g_path_get_dirname(file);
-			g_snprintf(theme->preview, PATH_MAX, "%s%s%s", dir,
-					G_DIR_SEPARATOR_S, p + 8);
-			g_free(dir);
-		}
-	}
-
-	/* check if a name was given */
-	if (strlen(theme->title) == 0)
-		goto failed;
-
-	(void)fclose(fp);
-	return(TRUE);
-
-failed:
-	(void)fclose(fp);
-	return(FALSE);
-}
-
-/*
- */
-static void
-find_themes(McsPlugin *plugin)
-{
-	McsSetting *setting;
-	const gchar *entry;
-	gchar *file;
-	gchar *dir;
-	GDir *dp;
-	gint n;
-
-	themeCount = 0;
-	themeCurrent = 0;
-
-	/* find themes in users ~/.xfce4/splash/ dir */
-	dir = xfce_get_userfile("splash", NULL);
-	if ((dp = g_dir_open(dir, 0, NULL)) != NULL) {
-		while ((entry = g_dir_read_name(dp)) && themeCount<MAX_THEMES) {
-			file = g_build_filename(dir, entry,"splash.theme",NULL);
-
-			if (read_theme(file, themes + themeCount)) {
-				g_strlcpy(themes[themeCount++].name, entry,
-						MAXTHEMELEN);
-			}
-
-			g_free(file);
-		}
-	}
-	g_free(dir);
-
-	/* find system wide splash themes */
-	dir = SPLASH_THEMES_DIR;
-	if ((dp = g_dir_open(dir, 0, NULL)) != NULL) {
-		while ((entry = g_dir_read_name(dp)) && themeCount<MAX_THEMES) {
-			file = g_build_filename(dir, entry,"splash.theme",NULL);
-
-			/* check if theme is already listed */
-			for (n = 0; n < themeCount; n++)
-				    if (!strcmp(themes[n].name, entry))
-					break;
-
-			/* It was already listed */
-			if (n < themeCount) {
-				g_free(file);
-				continue;
-			}
-
-			if (read_theme(file, themes + themeCount)) {
-				g_strlcpy(themes[themeCount++].name, entry,
-						MAXTHEMELEN);
-			}
-
-			g_free(file);
-		}
-	}
-
-	/* */
-	if (themeCount == 0) {
-		/* XXX - add "pseudo" Default theme */
-		g_strlcpy(themes->name, "Default", MAXTHEMELEN);
-		g_strlcpy(themes->title, _("Default Theme"), MAXTHEMELEN);
-		g_strlcpy(themes->author,
-				"Benedikt Meurer\n"
-				"<benedikt.meurer@unix-ag.org>",
-				MAXINFOLEN);
-		g_strlcpy(themes->info, _("Default splash screen"), MAXINFOLEN);
-		themes->preview[0] = '\0';
-		themeCount = 1;
-	}
-	
-	/* update MCS setting */
-	if ((setting = mcs_manager_setting_lookup(plugin->manager,
-					"Session/StartupSplashTheme",
-					CHANNEL)) != NULL) {
-		for (n = 0; n < themeCount; n++) {
-			if (!strcmp(themes[n].name, setting->data.v_string)) {
-				themeCurrent = n;
-				break;
-			}
-		}
-	}
-	else {
-		mcs_manager_set_string(plugin->manager,
-				"Session/StartupSplashTheme",
-				CHANNEL, themes[themeCurrent].name);
-	}
-
-}
-
-/*
- */
-static void
-show_info_dialog(void)
-{
-	SplashTheme *theme;
-	gchar title[256];
-	GtkWidget *dialog;
-	GtkWidget *vbox;
-	GtkWidget *hbox;
-	GtkWidget *image;
-	GtkWidget *label;
-	GtkWidget *button;
-
-	theme = themes + themeCurrent;
-	g_snprintf(title, 256, _("About %s..."), theme->title);
-
-	dialog = gtk_dialog_new_with_buttons(title, NULL,
-			GTK_DIALOG_MODAL | GTK_DIALOG_NO_SEPARATOR,
-			NULL);
-	gtk_window_set_resizable(GTK_WINDOW(dialog), FALSE);
-
-	/* */
-	gtk_button_box_set_layout(
-			GTK_BUTTON_BOX(GTK_DIALOG(dialog)->action_area),
-			GTK_BUTTONBOX_EDGE);
-
-	/* */
-	vbox = GTK_DIALOG(dialog)->vbox;
-
-	/* */
-	image = gtk_image_new_from_file(theme->preview);
-	gtk_box_pack_start(GTK_BOX(vbox), image, TRUE, TRUE, BORDER);
-
-	/* */
-	hbox = gtk_hbox_new(FALSE, BORDER);
-	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, TRUE, BORDER);
-	label = gtk_label_new(_("Info:"));
-	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, TRUE, BORDER);
-	label = gtk_label_new(theme->info);
-	gtk_box_pack_start(GTK_BOX(hbox), label, TRUE, TRUE, BORDER);
-
-	/* */
-	hbox = gtk_hbox_new(FALSE, BORDER);
-	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, TRUE, BORDER);
-	label = gtk_label_new(_("Author:"));
-	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, TRUE, BORDER);
-	label = gtk_label_new(theme->author);
-	gtk_box_pack_start(GTK_BOX(hbox), label, TRUE, TRUE, BORDER);
-
-	/* */
-	button = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
-	g_signal_connect_swapped(button, "clicked",
-			G_CALLBACK(gtk_widget_destroy),
-			dialog);
-	gtk_dialog_add_action_widget(GTK_DIALOG(dialog), button,
-			GTK_RESPONSE_OK);
-
-	/* */
-	gtk_widget_show_all(dialog);
-
-	/* */
-	g_signal_connect_swapped(dialog, "response",
-			G_CALLBACK(gtk_widget_destroy),
-			dialog);
-	g_signal_connect_swapped(dialog, "delete-event",
-			G_CALLBACK(gtk_widget_destroy),
-			dialog);
-}
-
-/*
- */
-static void
-rebuild_themes_menu(void)
-{
-	GtkWidget *menu;
-	GtkWidget *item;
-	gint n;
-
-	gtk_widget_destroy(gtk_option_menu_get_menu(
-				GTK_OPTION_MENU(themesMenu)));
-
-	menu = gtk_menu_new();
-
-	/* */
-	for (n = 0; n < themeCount; n++) {
-		item = gtk_menu_item_new_with_label(themes[n].title);
-		gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
-		gtk_widget_show(item);
-	}
-
-	gtk_option_menu_set_menu(GTK_OPTION_MENU(themesMenu), menu);
-}
-
-/*
- * XXX - "tar" execution could be done better :-)
- */
-static void
-do_install_theme(GtkWidget *dialog, gpointer data)
-{
-	gchar * argv[] = { "tar", "xzf", NULL, NULL };
-	const gchar *filename;
-	GError *error;
-	gchar *dir;
-	
-	filename = gtk_file_selection_get_filename(GTK_FILE_SELECTION(dialog));
-	argv[2] = (gchar *)filename;
-	dir = xfce_get_userfile("splash", NULL);
-	error = NULL;
-
-	/* check if users splash themes directory exists */
-	if (!g_file_test(dir, G_FILE_TEST_IS_DIR)) {
-#ifdef HAVE_MKDIR
-		(void)mkdir(dir, 0755);
-#else
-		(void)execlp("mkdir", "mkdir", dir, NULL);
-#endif
-	}
-
-	if (!g_spawn_sync(dir, argv, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL,
-				NULL, NULL, NULL, &error)) {
-		xfce_err(_("Unable to install splash theme from file %s: %s"),
-				filename, error->message);
-		g_error_free(error);
-	}
-	else {
-		/* rescan themes */
-		find_themes((McsPlugin *)g_object_get_data(G_OBJECT(dialog),
-					"user-data"));
-		rebuild_themes_menu();
-	}
-	
-	g_free(dir);
-}
-
-/*
- */
-static void
-install_theme(GtkWidget *button, McsPlugin *plugin)
-{
-	GtkWidget *dialog;
-
-	dialog = gtk_file_selection_new(_("Install new theme"));
-	gtk_file_selection_complete(GTK_FILE_SELECTION(dialog), "*.tar.gz");
-	g_object_set_data(G_OBJECT(dialog), "user-data", plugin);
-
-	g_signal_connect_swapped(GTK_FILE_SELECTION(dialog)->ok_button,
-			"clicked", G_CALLBACK(do_install_theme), dialog);
-
-	/*
-	 * Ensure that the dialog box is destroyed when the user clicks a
-	 * button.
-	 */
-	g_signal_connect_swapped(GTK_FILE_SELECTION(dialog)->ok_button,
-			"clicked", G_CALLBACK(gtk_widget_destroy), dialog);
-
-	g_signal_connect_swapped(GTK_FILE_SELECTION(dialog)->cancel_button,
-			"clicked", G_CALLBACK(gtk_widget_destroy), dialog);
-   
-	/* Display that dialog */
-	gtk_widget_show(dialog);
-}
 
 /*
  */
 McsPluginInitResult
 mcs_plugin_init(McsPlugin *plugin)
 {
-	McsSetting *setting;
-	gchar *file;
-
 	xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
-
-	file = xfce_get_userfile(RCDIR, RCFILE, NULL);
-	mcs_manager_add_channel_from_file(plugin->manager, CHANNEL, file);
-	g_free(file);
-
-	/* search installed splash themes */
-	find_themes(plugin);
-
-	if ((setting = mcs_manager_setting_lookup(plugin->manager,
-					"Session/ConfirmLogout",
-					CHANNEL)) != NULL) {
-		confirmLogout = setting->data.v_int;
-	}
-	else {
-		mcs_manager_set_int(plugin->manager, "Session/ConfirmLogout",
-				CHANNEL, confirmLogout);
-	}
-
-	if ((setting = mcs_manager_setting_lookup(plugin->manager,
-					"Session/AutoSave",
-					CHANNEL)) != NULL) {
-		autoSave = setting->data.v_int;
-	}
-	else {
-		mcs_manager_set_int(plugin->manager, "Session/AutoSave",
-				CHANNEL, autoSave);
-	}
-
-	if ((setting = mcs_manager_setting_lookup(plugin->manager,
-					"Session/DefaultAction",
-					CHANNEL)) != NULL) {
-		defaultAction = setting->data.v_int;
-	}
-	else {
-		mcs_manager_set_int(plugin->manager, "Session/DefaultAction",
-				CHANNEL, defaultAction);
-	}
-
-	if ((setting = mcs_manager_setting_lookup(plugin->manager,
-					"Session/TrayIcon",
-					CHANNEL)) != NULL) {
-		trayIcon = setting->data.v_int;
-	}
-	else {
-		mcs_manager_set_int(plugin->manager, "Session/TrayIcon",
-				CHANNEL, trayIcon);
-	}
 
 	plugin->plugin_name = g_strdup("session");
 	plugin->caption = g_strdup(_("Session management"));
 	plugin->run_dialog = run_dialog;
-	plugin->icon = inline_icon_at_size(session_icon_data, 48, 48);
+	plugin->icon = xfce_inline_icon_at_size(session_icon_data, 48, 48);
 
 	return(MCS_PLUGIN_INIT_OK);
 }
 
 /*
  */
-static gboolean
-save_settings(McsPlugin *plugin)
+static void
+save_settings(void)
 {
-	gboolean result;
-	gchar *file;
+  XfceRc *rc;
 
-	file = xfce_get_userfile(RCDIR, RCFILE, NULL);
-	result = mcs_manager_save_channel_to_file(plugin->manager, CHANNEL,
-			file);
-	g_free(file);
+  rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG,
+                            "xfce4-session/xfce4-session.rc",
+                            FALSE);
 
-	return(result);
+  xfce_rc_set_group (rc, "General");
+  xfce_rc_write_bool_entry (rc, "ConfirmLogout", confirmLogout);
+  xfce_rc_write_bool_entry (rc, "AutoSave", autoSave);
+  xfce_rc_write_bool_entry (rc, "AlwaysDisplayChooser", displayChooser);
+
+  xfce_rc_close (rc);
 }
 
 /*
@@ -504,10 +119,7 @@ static void
 confirmLogoutChangedCB(GtkToggleButton *button, McsPlugin *plugin)
 {
 	confirmLogout = gtk_toggle_button_get_active(button);
-	mcs_manager_set_int(plugin->manager, "Session/ConfirmLogout",
-			CHANNEL, confirmLogout);
-	mcs_manager_notify(plugin->manager, CHANNEL);
-	save_settings(plugin);
+	save_settings();
 }
 
 /*
@@ -516,46 +128,14 @@ static void
 autoSaveChangedCB(GtkToggleButton *button, McsPlugin *plugin)
 {
 	autoSave = gtk_toggle_button_get_active(button);
-	mcs_manager_set_int(plugin->manager, "Session/AutoSave",
-			CHANNEL, autoSave);
-	mcs_manager_notify(plugin->manager, CHANNEL);
-	save_settings(plugin);
+	save_settings();
 }
 
-/*
- */
 static void
-trayIconChangedCB(GtkToggleButton *button, McsPlugin *plugin)
+displayChooserChangedCB(GtkToggleButton *button, McsPlugin *plugin)
 {
-	trayIcon = gtk_toggle_button_get_active(button);
-	mcs_manager_set_int(plugin->manager, "Session/TrayIcon", CHANNEL,
-			trayIcon);
-	mcs_manager_notify(plugin->manager, CHANNEL);
-	save_settings(plugin);
-}
-
-/*
- */
-static void
-defaultActionChangedCB(GtkOptionMenu *omenu, McsPlugin *plugin)
-{
-	defaultAction = gtk_option_menu_get_history(omenu);
-	mcs_manager_set_int(plugin->manager, "Session/DefaultAction",
-			CHANNEL, defaultAction);
-	mcs_manager_notify(plugin->manager, CHANNEL);
-	save_settings(plugin);
-}
-
-/*
- */
-static void
-splashThemeChangedCB(GtkOptionMenu *omenu, McsPlugin *plugin)
-{
-	themeCurrent = gtk_option_menu_get_history(omenu);
-	mcs_manager_set_string(plugin->manager, "Session/StartupSplashTheme",
-			CHANNEL, themes[themeCurrent].name);
-	mcs_manager_notify(plugin->manager, CHANNEL);
-	save_settings(plugin);
+  displayChooser = gtk_toggle_button_get_active (button);
+  save_settings ();
 }
 
 /*
@@ -563,7 +143,7 @@ splashThemeChangedCB(GtkOptionMenu *omenu, McsPlugin *plugin)
 static void
 responseCB(McsPlugin *plugin)
 {
-	save_settings(plugin);
+	save_settings();
 	gtk_widget_destroy(dialog);
 	dialog = NULL;
 }
@@ -578,21 +158,22 @@ run_dialog(McsPlugin *plugin)
 	GtkWidget *align;
 	GtkWidget *frame;
 	GtkWidget *vbox;
-	GtkWidget *hbox;
-	GtkWidget *menu;
-	GtkWidget *omenu;
-	GtkWidget *mitem;
-	GtkWidget *button;
-	GtkWidget *image;
-	gint n;
+  XfceRc *rc;
 
 	if (dialog != NULL) {
 		gtk_window_present(GTK_WINDOW(dialog));
 		return;
 	}
 
-	/* search installed splash themes */
-	find_themes(plugin);
+	/* load settings */
+  rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG,
+                            "xfce4-session/xfce4-session.rc",
+                            TRUE);
+  xfce_rc_set_group (rc, "General");
+  confirmLogout = xfce_rc_read_bool_entry (rc, "ConfirmLogout", TRUE);
+  autoSave = xfce_rc_read_bool_entry (rc, "AutoSave", TRUE);
+  displayChooser = xfce_rc_read_bool_entry (rc, "AlwaysDisplayChooser", FALSE);
+  xfce_rc_close (rc);
 
 	/* */
 	if (tooltips == NULL)
@@ -612,7 +193,7 @@ run_dialog(McsPlugin *plugin)
 	g_signal_connect_swapped(dialog, "delete-event",G_CALLBACK(responseCB),
 			plugin);
 
-	header = create_header(plugin->icon, _("Session management"));
+	header = xfce_create_header(plugin->icon, _("Session management"));
 	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), header, FALSE,
 			TRUE, 0);
 
@@ -651,98 +232,12 @@ run_dialog(McsPlugin *plugin)
 			plugin);
 	gtk_box_pack_start(GTK_BOX(vbox), checkbox, FALSE, TRUE, 0);
 
-	/* */
-	checkbox = gtk_check_button_new_with_label(_("Show tray icon"));
-	gtk_tooltips_set_tip(tooltips, checkbox, _(
-			"Show the session managers tray icon in the "
-			"desktops notification area (also known as the "
-			"system tray)."),	NULL);
-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbox), trayIcon);
-	g_signal_connect(checkbox, "toggled", G_CALLBACK(trayIconChangedCB),
-			plugin);
+  checkbox = gtk_check_button_new_with_label(
+      _("Display session chooser on each login"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbox), displayChooser);
+  g_signal_connect (checkbox, "toggled", G_CALLBACK (displayChooserChangedCB),
+      plugin);
 	gtk_box_pack_start(GTK_BOX(vbox), checkbox, FALSE, TRUE, 0);
-
-	/* Logout action settings */
-	frame = xfce_framebox_new(_("Default action on logout"), TRUE);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), frame, TRUE,
-			TRUE, 0);
-
-	vbox = gtk_vbox_new(FALSE, BORDER);
-	gtk_container_set_border_width(GTK_CONTAINER(vbox), BORDER);
-	xfce_framebox_add(XFCE_FRAMEBOX(frame), vbox);
-
-	/* */
-	menu = gtk_menu_new();
-
-	/* */
-	mitem = gtk_menu_item_new_with_mnemonic(_("_Quit current session"));
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), mitem);
-
-	/* */
-	mitem = gtk_menu_item_new_with_mnemonic(_("_Reboot the computer"));
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), mitem);
-
-	/* */
-	mitem = gtk_menu_item_new_with_mnemonic(_("_Turn off computer"));
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), mitem);
-
-	/* */
-	omenu = gtk_option_menu_new();
-	gtk_option_menu_set_menu(GTK_OPTION_MENU(omenu), menu);
-	gtk_option_menu_set_history(GTK_OPTION_MENU(omenu), defaultAction);
-	g_signal_connect(omenu, "changed", G_CALLBACK(defaultActionChangedCB),
-			plugin);
-	gtk_box_pack_start(GTK_BOX(vbox), omenu, FALSE, TRUE, BORDER);
-
-	/* Logout action settings */
-	frame = xfce_framebox_new(_("Splash screen theme"), TRUE);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), frame, TRUE,
-			TRUE, 0);
-
-	vbox = gtk_vbox_new(FALSE, BORDER);
-	gtk_container_set_border_width(GTK_CONTAINER(vbox), BORDER);
-	xfce_framebox_add(XFCE_FRAMEBOX(frame), vbox);
-
-	/* */
-	menu = gtk_menu_new();
-
-	/* */
-	for (n = 0; n < themeCount; n++) {
-		mitem = gtk_menu_item_new_with_label(themes[n].title);
-		gtk_menu_shell_append(GTK_MENU_SHELL(menu), mitem);
-	}
-
-	/* */
-	hbox = gtk_hbox_new(FALSE, BORDER);
-	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, TRUE, BORDER);
-
-	/* */
-	themesMenu = gtk_option_menu_new();
-	gtk_tooltips_set_tip(tooltips, themesMenu, _(
-			"Select the splash screen theme that should "
-			"be displayed when the session is started."), NULL);
-	gtk_option_menu_set_menu(GTK_OPTION_MENU(themesMenu), menu);
-	gtk_option_menu_set_history(GTK_OPTION_MENU(themesMenu), themeCurrent);
-	g_signal_connect(themesMenu,"changed", G_CALLBACK(splashThemeChangedCB),
-			plugin);
-	gtk_box_pack_start(GTK_BOX(hbox), themesMenu, TRUE, TRUE, 0);
-
-	/* Info button */
-	button = gtk_button_new();
-	gtk_tooltips_set_tip(tooltips, button, _("Show theme info"), NULL);
-	image = gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO,
-			GTK_ICON_SIZE_BUTTON);
-	gtk_container_add(GTK_CONTAINER(button), image);
-	g_signal_connect(button, "clicked", G_CALLBACK(show_info_dialog), NULL);
-	gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, TRUE, 0);
-
-	/* Install button */
-	button = gtk_button_new();
-	gtk_tooltips_set_tip(tooltips, button, _("Install new theme"), NULL);
-	image = gtk_image_new_from_stock(GTK_STOCK_OPEN, GTK_ICON_SIZE_BUTTON);
-	gtk_container_add(GTK_CONTAINER(button), image);
-	g_signal_connect(button, "clicked", G_CALLBACK(install_theme), plugin);
-	gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, TRUE, 0);
 
 	/* */
 	gtk_widget_show_all(dialog);

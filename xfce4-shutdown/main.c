@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003,2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -43,6 +43,9 @@
 #ifdef HAVE_LIMITS_H
 #include <limits.h>
 #endif
+#ifdef HAVE_SIGNAL_H
+#include <signal.h>
+#endif
 #include <stdio.h>
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
@@ -54,9 +57,7 @@
 #include <unistd.h>
 #endif
 
-#include <libxfce4util/i18n.h>
-#include <libxfce4util/util.h>
-#include <glib.h>
+#include <libxfce4util/libxfce4util.h>
 
 /*
  * Check if a user is allowed to issue shutdown commands (when running
@@ -110,23 +111,62 @@ sudo(const gchar *action)
 {
 	gboolean result;
 	gchar *command;
-	gchar *errbuf;
-	gchar *outbuf;
+/*  gchar *errbuf;*/
+/*  gchar *outbuf;*/
 	GError *err;
 	gint status;
 
+again:
 	err = NULL;
+#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
+  if (strcmp (action, "poweroff") == 0)
+    command = g_strdup ("sudo -S -u root /sbin/shutdown -p now");
+  else if (strcmp (action, "halt") == 0)
+    command = g_strdup ("sudo -S -u root /sbin/shutdown -h now");
+  else
+    command = g_strdup ("sudo -S -u root /sbin/shutdown -r now");
+#else
 	command = g_strdup_printf("sudo -S -u root /sbin/%s", action);
+#endif
+#if 0
 	result = g_spawn_command_line_sync(command, &outbuf, &errbuf, &status, &err);
+#else
+  close (STDIN_FILENO);
+  close (STDOUT_FILENO);
+  close (STDERR_FILENO);
+  result = (system (command) == 0);
+#endif
 	g_free(command);
 
 	if (!result) {
-		g_error_free(err);
+/*    g_error_free(err);*/
+
+    if (strcmp (action, "poweroff") == 0)
+      {
+        action = "halt";
+        goto again;
+      }
+
 		return(FALSE);
 	}
 
 	return(WIFEXITED(status) && WEXITSTATUS(status) == 0);
 }
+
+#ifdef HAVE_SIGPROCMASK
+static void
+block_signals (void)
+{
+  sigset_t set;
+
+  sigemptyset (&set);
+  sigaddset (&set, SIGHUP);
+  sigaddset (&set, SIGINT);
+  /*sigaddset (&set, SIGKILL);*/
+
+  sigprocmask (SIG_BLOCK, &set, NULL);
+}
+#endif
 
 /*
  */
@@ -150,6 +190,14 @@ main(int argc, char **argv)
 		fprintf(stderr, _("%s: Unknown action %s\n"), action, *argv);
 		return(EXIT_FAILURE);
 	}
+
+#ifdef HAVE_SETSID
+  setsid ();
+#endif
+
+#ifdef HAVE_SIGPROCMASK
+  block_signals ();
+#endif
 
 	if (geteuid() == 0) {
 		if (stat(PATH_SHUTDOWNALLOW, &sb) < 0) {
@@ -186,13 +234,8 @@ main(int argc, char **argv)
 #ifdef HAVE_CLEARENV
 		clearenv();
 #endif
-#if defined(HAVE_SETENV)
 		xfce_setenv("PATH", "/bin:/sbin:/usr/bin:/usr/sbin", 1);
 		xfce_setenv("IFS", " \t\n", 1);
-#elif defined(HAVE_PUTENV)
-		xfce_putenv("PATH=/bin:/sbin:/usr/bin:/usr/sbin");
-		xfce_putenv("IFS= \t\n");
-#endif
 #endif
 
 		/* Ok, lets get this box down */
