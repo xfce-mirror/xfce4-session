@@ -1,0 +1,353 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: XFce4-Session\n"
+"POT-Creation-Date: 2003-07-19 13:15+0200\n"
+"PO-Revision-Date: 2003-10-13 23:51+0900\n"
+"Last-Translator: ByungHyun Choi<byunghyunchoi@hotmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: settings/session.c:227
+msgid "Default Theme"
+msgstr "기본 테마"
+
+#: settings/session.c:232
+msgid "Default splash screen"
+msgstr "기본 시작화면"
+
+#: settings/session.c:271
+#, c-format
+msgid "About %s..."
+msgstr "%s에 대하여..."
+
+#: settings/session.c:293
+msgid "Info:"
+msgstr "정보:"
+
+#: settings/session.c:301
+msgid "Author:"
+msgstr "저자:"
+
+#: settings/session.c:377
+#, c-format
+msgid "Unable to install splash theme from file %s: %s"
+msgstr "화일 %s에서 시작화면을 설지할 수 없습니다.: %s"
+
+#: settings/session.c:398 settings/session.c:740
+msgid "Install new theme"
+msgstr "새로운 테마 설치"
+
+#: settings/session.c:477 settings/session.c:600 settings/session.c:614
+msgid "Session management"
+msgstr "세션 관리"
+
+#. General settings
+#: settings/session.c:625
+msgid "General"
+msgstr "일반"
+
+#.
+#: settings/session.c:634
+msgid "Confirm logout"
+msgstr "로그아웃 확인"
+
+#: settings/session.c:636
+msgid ""
+"Should the session manager ask the user to confirm the logout. If disabled, "
+"the session will be closed without any further user interaction."
+msgstr ""
+"세션 관리자가 사용자에게 로그아웃할 것인지 확인합니다. 설정하지 않으면,"
+"사용자에게 아무런 통보없이 세션을 종료시킵니다."
+
+#: settings/session.c:647
+msgid "Automatically save session on logout"
+msgstr "로그아웃 할 때 세션을 자동으로 저장"
+
+#.
+#: settings/session.c:654
+msgid "Show tray icon"
+msgstr "트레이 아이콘 보이기"
+
+#: settings/session.c:656
+msgid ""
+"Show the session managers tray icon in the desktops notification area (also "
+"known as the system tray)."
+msgstr ""
+"데스크탑 알림 영역(시스템 트레이)에 세션관리자 트레이 아이콘 보이기"
+
+#. Logout action settings
+#: settings/session.c:665
+msgid "Default action on logout"
+msgstr "로그아웃할 때 기본 동작"
+
+#.
+#: settings/session.c:677 xfce4-session/shutdown.c:252
+msgid "_Quit current session"
+msgstr "현재 세션 종료(_Q)"
+
+#.
+#: settings/session.c:681 xfce4-session/shutdown.c:257
+msgid "_Reboot the computer"
+msgstr "컴퓨터 재시작(_R)" 
+
+#.
+#: settings/session.c:685 xfce4-session/shutdown.c:262
+msgid "_Turn off computer"
+msgstr "컴퓨터 끄기(_T)"
+
+#. Logout action settings
+#: settings/session.c:697
+msgid "Splash screen theme"
+msgstr "시작화면 테마"
+
+#: settings/session.c:721
+msgid ""
+"Select the splash screen theme that should be displayed when the session is "
+"started."
+msgstr ""
+"세션이 시작될 때 보여 줄 시작화면 테마 선택"
+
+#: settings/session.c:731
+msgid "Show theme info"
+msgstr "테마 정보 보기"
+
+#. update the tray icon tip
+#: xfce4-session/ice-layer.c:133 xfce4-session/manager.c:525
+#: xfce4-session/manager.c:835
+#, c-format
+msgid "%u clients connected"
+msgstr "클라이언트 %u개가 연결되었습니다."
+
+#: xfce4-session/main.c:93
+msgid "desktop"
+msgstr "데스크탑"
+
+#: xfce4-session/main.c:120
+msgid "Starting session manager.."
+msgstr "세션 관리자 시작.."
+
+#: xfce4-session/main.c:140
+#, c-format
+msgid ""
+"Unable to create users XFce settings\n"
+"directory %s: %s"
+msgstr ""
+"사용자의 XFce 설정 화일을 만들지 못 했습니다.\n"
+"위치 - directory %s: %s"
+
+#: xfce4-session/main.c:149
+#, c-format
+msgid ""
+"Unable to create users XFce session\n"
+"directory %s: %s"
+msgstr "사용장의 XFce 세션을 생성하지 못했습니다.\n"
+"위치 - directory %s: %s"
+
+#.
+#: xfce4-session/main.c:295 xfce4-session/session-control.c:268
+msgid "Session control"
+msgstr "세션 관리자"
+
+#.
+#: xfce4-session/main.c:310
+msgid "Save session"
+msgstr "세션 저장"
+
+#.
+#: xfce4-session/main.c:319
+msgid "Quit session"
+msgstr "세션 종료"
+
+#: xfce4-session/main.c:415
+msgid ""
+"The session manager was unable to start the\n"
+"Multi-Channel settings manager. This is most\n"
+"often caused by a broken XFce installation.\n"
+"Please contact your local system administrator\n"
+"and report the problem."
+msgstr ""
+"세션 관리자에서 멀티채널 관리자를 기동시키지 못했습니다.\n"
+"아마 XFce의 설치과정에 문제가 있었던 것 같습니다.\n"
+"시스템관리자에게 이 문제를 알리고 상의해 보시기 바랍니다."
+
+#: xfce4-session/main.c:432
+msgid "Unable to create MCS client"
+msgstr "MCS 클라이언트를 생성하지 못 했습니다."
+
+#: xfce4-session/manager.c:342
+msgid ""
+"The session manager was unable to restore your\n"
+"previous session. It'll therefore start a default\n"
+"session."
+msgstr ""
+"세션 관리자에서 사용자의 이전 세션을 복원시키지 못 했기 때문에,\n"
+"기본 세션으로 시작하겠습니다."
+
+#: xfce4-session/manager.c:824
+#, c-format
+msgid ""
+"The client \"%s\" closed the connection\n"
+"to the session manager. The following reason\n"
+"was given:\n"
+"\n"
+"%s"
+msgstr ""
+"클라이언트 \"%s\"에서 세션 관리자와의 연결을 종료했습니다.\n"
+"원인은 다음과 같습니다.:\n"
+"\n"
+"%s"
+
+#: xfce4-session/shutdown.c:191
+msgid "Logout session"
+msgstr "세션 종료"
+
+#: xfce4-session/shutdown.c:221
+#, c-format
+msgid "End session for <b>%s</b>"
+msgstr "<b>%s</b>에 대한 세션 종료"
+
+#.
+#: xfce4-session/shutdown.c:244
+msgid "What do you want to do next?"
+msgstr "이제 무엇을 하시렵니까?"
+
+#: xfce4-session/shutdown.c:275
+msgid "_Save session for future logins"
+msgstr "다음 로그인에 대비하여 세션 저장(_S)"
+
+#: xfce4-session/shutdown.c:349 xfce4-session/shutdown.c:358
+#, c-format
+msgid ""
+"The following error occured while trying to shutdown the computer:\n"
+"\n"
+"%s"
+msgstr ""
+"컴퓨터를 종료시키는 중 다음과 같은 오류가 발생했습니다:\n"
+"\n"
+"%s"
+
+#.
+#: xfce4-session/splash-screen.c:271
+#, c-format
+msgid "Starting %s..."
+msgstr "%s를(을) 기동 시키고 있습니다."
+
+#: xfce4-session/startup.c:149
+msgid "Doing Autostart..."
+msgstr "자동실행을 수행 중입니다."
+
+#: xfce4-session/startup.c:207
+msgid "Starting session manager..."
+msgstr "세션 관리자를 기동시키고 있습니다."
+
+#: xfce4-session/session-control.c:72
+msgid "Idle"
+msgstr "놀고 있습니다."
+
+#: xfce4-session/session-control.c:73
+msgid "Interacting"
+msgstr ""
+
+#: xfce4-session/session-control.c:74
+msgid "Save completed"
+msgstr "저장 완료"
+
+#: xfce4-session/session-control.c:75
+msgid "Saving"
+msgstr "저장하고 있습니다."
+
+#. global save
+#: xfce4-session/session-control.c:76
+msgid "Saving (local)"
+msgstr "로컬에 저장하고 있습니다."
+
+#. local save
+#: xfce4-session/session-control.c:77
+msgid "Waiting to interact"
+msgstr ""
+
+#: xfce4-session/session-control.c:78
+msgid "Waiting to enter Phase2"
+msgstr ""
+
+#: xfce4-session/session-control.c:79
+msgid "Disconnecting"
+msgstr "연결을 끊고 있습니다."
+
+#: xfce4-session/session-control.c:200
+#, c-format
+msgid "Unable to clone client: %s"
+msgstr "클라이언트를 종료시키지 못했습니다: %s"
+
+#: xfce4-session/session-control.c:299
+msgid "Priority"
+msgstr "우선 순위"
+
+#: xfce4-session/session-control.c:304
+msgid "Program"
+msgstr "프로그램"
+
+#: xfce4-session/session-control.c:309
+msgid "User"
+msgstr "사용자"
+
+#: xfce4-session/session-control.c:314
+msgid "State"
+msgstr "상태"
+
+#. kill button
+#: xfce4-session/session-control.c:333
+msgid "Kill client"
+msgstr "클라이언트 죽이기"
+
+#. clone button
+#: xfce4-session/session-control.c:339
+msgid "Clone client"
+msgstr "클라이언트 복제"
+
+#: xfce4-session/session-control.c:445 xfce4-session/session-control.c:448
+msgid "Unknown"
+msgstr ""
+
+#: xfce4-shutdown/main.c:137
+#, c-format
+msgid "Usage: %s <action>\n"
+msgstr ""
+
+#: xfce4-shutdown/main.c:146
+#, c-format
+msgid "%s: Unknown action %s\n"
+msgstr ""
+
+#: xfce4-shutdown/main.c:169
+#, c-format
+msgid ""
+"You are not allowed to execute the action \"%s\".\n"
+"Ask your system adminitrator to add you to the list\n"
+"of people allowed to execute shutdown actions, by\n"
+"adding your username to the file %s.\n"
+msgstr ""
+
+#: xfce4-shutdown/main.c:192
+msgid ""
+"Unable to shutdown this box. Please check your\n"
+"installation, or contact your system administrator\n"
+"and report the problem.\n"
+msgstr ""
+
+#: xfce4-shutdown/main.c:209
+#, c-format
+msgid ""
+"Got no way to shutdown the system. You should ask\n"
+"your system administrator to either add your account\n"
+"name to %s or to install sudo(8) and grant\n"
+"you the right execute reboot and halt commands.\n"
+msgstr ""
