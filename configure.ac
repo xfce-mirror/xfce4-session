@@ -56,7 +56,7 @@ AC_CHECK_FUNCS([_IceTransNoListen])
 LIBS="$ac_LIBS"
 
 dnl Check for i18n support
-BM_I18N([xfce4-session], [ar az ca de es es_MX eu fa_IR fr hi it ja ko ms nl no
+BM_I18N([xfce4-session], [ar az ca de es es_MX eu fa_IR fr hi it ja ko lt ms nl no
 	 pl pt_BR sv ta tr zh_CN zh_TW])
 
 dnl Check for required packages
