@@ -10,12 +10,10 @@ session_settings_la_LDFLAGS =						\
 	-module
 
 session_settings_la_SOURCES =						\
-	gnome-kde-logo.h						\
 	gnome-uri.c							\
 	gnome-uri.h							\
 	looknfeel.c							\
 	looknfeel.h							\
-	session-icon.h							\
 	session.c							\
 	../xfce4-session/xfsm-splash-theme.c
 
@@ -25,19 +23,7 @@ session_settings_la_CFLAGS =						\
 	-DXFSM_EXPORT_THEME=\"$(libexecdir)/xfsm-export-theme\"		\
 	-DXFSM_INSTALL_THEME=\"$(libexecdir)/xfsm-install-theme\"
 
-session-icon.h: $(srcdir)/session.png
-	gdk-pixbuf-csource --raw --build-list				\
-	session_icon_data $(srcdir)/session.png > session-icon.h
-
-gnome-kde-logo.h: $(srcdir)/gnome-kde-logo.png
-	gdk-pixbuf-csource --raw --build-list				\
-	gnome_kde_logo_data $(srcdir)/gnome-kde-logo.png > gnome-kde-logo.h
-
-noinst_DATA =								\
-	session-icon.h
-
 EXTRA_DIST =								\
-	session.png								\
 	xfce-session-settings.desktop
 
 appsdir = $(datadir)/applications

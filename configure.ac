@@ -159,6 +159,10 @@ xfce4-session.spec
 defaults/Makefile
 docs/Makefile
 icons/Makefile
+icons/48x48/Makefile
+icons/64x64/Makefile
+icons/72x72/Makefile
+icons/128x128/Makefile
 po/Makefile.in
 settings/Makefile
 settings/scripts/Makefile

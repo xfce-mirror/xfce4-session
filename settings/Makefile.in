@@ -82,7 +82,7 @@ RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	pdf-recursive ps-recursive uninstall-info-recursive \
 	uninstall-recursive
 appsDATA_INSTALL = $(INSTALL_DATA)
-DATA = $(apps_DATA) $(noinst_DATA)
+DATA = $(apps_DATA)
 ETAGS = etags
 CTAGS = ctags
 DIST_SUBDIRS = $(SUBDIRS)
@@ -241,12 +241,10 @@ session_settings_la_LDFLAGS = \
 	-module
 
 session_settings_la_SOURCES = \
-	gnome-kde-logo.h						\
 	gnome-uri.c							\
 	gnome-uri.h							\
 	looknfeel.c							\
 	looknfeel.h							\
-	session-icon.h							\
 	session.c							\
 	../xfce4-session/xfsm-splash-theme.c
 
@@ -256,11 +254,7 @@ session_settings_la_CFLAGS = \
 	-DXFSM_EXPORT_THEME=\"$(libexecdir)/xfsm-export-theme\"		\
 	-DXFSM_INSTALL_THEME=\"$(libexecdir)/xfsm-install-theme\"
 
-noinst_DATA = \
-	session-icon.h
-
 EXTRA_DIST = \
-	session.png								\
 	xfce-session-settings.desktop
 
 appsdir = $(datadir)/applications
@@ -742,14 +736,6 @@ uninstall-info: uninstall-info-recursive
 	tags tags-recursive uninstall uninstall-am uninstall-appsDATA \
 	uninstall-info-am uninstall-sessionLTLIBRARIES
 
-
-session-icon.h: $(srcdir)/session.png
-	gdk-pixbuf-csource --raw --build-list				\
-	session_icon_data $(srcdir)/session.png > session-icon.h
-
-gnome-kde-logo.h: $(srcdir)/gnome-kde-logo.png
-	gdk-pixbuf-csource --raw --build-list				\
-	gnome_kde_logo_data $(srcdir)/gnome-kde-logo.png > gnome-kde-logo.h
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

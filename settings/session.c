@@ -38,9 +38,7 @@
 #include <libxfcegui4/libxfcegui4.h>
 #include <xfce-mcs-manager/manager-plugin.h>
 
-#include <settings/gnome-kde-logo.h>
 #include <settings/looknfeel.h>
-#include <settings/session-icon.h>
 #include <settings/settings.h>
 
 
@@ -239,7 +237,7 @@ advanced_create (XfceRc *rc)
                     G_CALLBACK (config_store), NULL);
   gtk_box_pack_start (GTK_BOX (vbox), advanced_kde, FALSE, TRUE, 0);
 
-  icon = xfce_inline_icon_at_size (gnome_kde_logo_data, 64, 64);
+  icon = xfce_themed_icon_load ("xfsm-gnome-kde-logo", 64);
   image = gtk_image_new_from_pixbuf (icon);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, TRUE, 0);
   g_object_unref (icon);
@@ -350,7 +348,7 @@ mcs_plugin_init (McsPlugin *plugin)
   plugin->plugin_name = g_strdup ("session");
   plugin->caption = g_strdup (_("Sessions and Startup"));
   plugin->run_dialog = dialog_run;
-  plugin->icon = xfce_inline_icon_at_size (session_icon_data, 48, 48);
+  plugin->icon = xfce_themed_icon_load ("xfce4-session", 48);
 
   return MCS_PLUGIN_INIT_OK;
 }
