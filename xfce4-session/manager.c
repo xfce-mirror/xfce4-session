@@ -161,7 +161,7 @@ setenv(const gchar *name, const gchar *value, gboolean overwrite)
   return(result);
 }
 #endif	/* !HAVE_SETENV */
-when another instance
+
 /*
  */
 gboolean
