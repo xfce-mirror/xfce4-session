@@ -6,132 +6,132 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
-"POT-Creation-Date: 2003-12-23 18:14+0100\n"
-"PO-Revision-Date: 2003-12-29 20:15+0100\n"
+"POT-Creation-Date: 2004-02-13 12:28+0100\n"
+"PO-Revision-Date: 2004-02-13 12:30+0100\n"
 "Last-Translator: Jean-François Wauthy <pollux@castor.be>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: settings/session.c:227
+#: settings/session.c:228
 msgid "Default Theme"
 msgstr "Thème par défaut"
 
-#: settings/session.c:232
+#: settings/session.c:233
 msgid "Default splash screen"
 msgstr "Splashscreen par défaut"
 
-#: settings/session.c:271
+#: settings/session.c:272
 #, c-format
 msgid "About %s..."
 msgstr "A propos de %s..."
 
-#: settings/session.c:293
+#: settings/session.c:294
 msgid "Info:"
 msgstr "Info:"
 
-#: settings/session.c:301
+#: settings/session.c:302
 msgid "Author:"
 msgstr "Auteur:"
 
-#: settings/session.c:377
+#: settings/session.c:378
 #, c-format
 msgid "Unable to install splash theme from file %s: %s"
 msgstr "Impossible d'installer le thème de splash depuis le fichier %s:%s"
 
-#: settings/session.c:398
-#: settings/session.c:740
+#: settings/session.c:399
+#: settings/session.c:741
 msgid "Install new theme"
 msgstr "Installer un nouveau thème"
 
-#: settings/session.c:477
-#: settings/session.c:600
-#: settings/session.c:614
+#: settings/session.c:478
+#: settings/session.c:601
+#: settings/session.c:615
 msgid "Session management"
 msgstr "Gestionnaire de session"
 
 #. General settings
-#: settings/session.c:625
+#: settings/session.c:626
 msgid "General"
 msgstr "Général"
 
 #.
-#: settings/session.c:634
+#: settings/session.c:635
 msgid "Confirm logout"
 msgstr "Confirmer la fin de session"
 
-#: settings/session.c:636
+#: settings/session.c:637
 msgid "Should the session manager ask the user to confirm the logout. If disabled, the session will be closed without any further user interaction."
 msgstr "Est-ce que le gestionnaire de session demande à l'utilisateur de confirmer la fin de session. Si désactivé, la session sera fermée sans autre interaction de l'utilisateur"
 
-#: settings/session.c:647
+#: settings/session.c:648
 msgid "Automatically save session on logout"
 msgstr "Enregistre automatiquement la session lors de la fermeture"
 
 #.
-#: settings/session.c:654
+#: settings/session.c:655
 #, fuzzy
 msgid "Show tray icon"
 msgstr "Affiche l'icône dans le tray"
 
-#: settings/session.c:656
+#: settings/session.c:657
 msgid "Show the session managers tray icon in the desktops notification area (also known as the system tray)."
 msgstr ""
 
 #. Logout action settings
-#: settings/session.c:665
+#: settings/session.c:666
 msgid "Default action on logout"
 msgstr "Action par défaut à la sortie de session"
 
 #.
-#: settings/session.c:677
-#: xfce4-session/shutdown.c:252
+#: settings/session.c:678
+#: xfce4-session/shutdown.c:256
 msgid "_Quit current session"
-msgstr "_Quitte la session courante"
+msgstr "_Quitter la session courante"
 
 #.
-#: settings/session.c:681
-#: xfce4-session/shutdown.c:257
+#: settings/session.c:682
+#: xfce4-session/shutdown.c:261
 msgid "_Reboot the computer"
-msgstr "_Redémarre l'ordinateur"
+msgstr "_Redémarrer l'ordinateur"
 
 #.
-#: settings/session.c:685
-#: xfce4-session/shutdown.c:262
+#: settings/session.c:686
+#: xfce4-session/shutdown.c:266
 msgid "_Turn off computer"
-msgstr "_Arrête l'ordinateur"
+msgstr "_Arrêter l'ordinateur"
 
 #. Logout action settings
-#: settings/session.c:697
-#, fuzzy
+#: settings/session.c:698
 msgid "Splash screen theme"
 msgstr "Thème du Splashscreen"
 
-#: settings/session.c:721
+#: settings/session.c:722
 msgid "Select the splash screen theme that should be displayed when the session is started."
 msgstr "Sélectionnez the thème de splashscreen que vous souhaitez voir s'afficher quand la session est démarrée."
 
-#: settings/session.c:731
+#: settings/session.c:732
 msgid "Show theme info"
 msgstr "Affiche les informations du thème"
 
 #. update the tray icon tip
-#: xfce4-session/ice-layer.c:133
-#: xfce4-session/manager.c:545
-#: xfce4-session/manager.c:855
+#: xfce4-session/ice-layer.c:134
+#: xfce4-session/manager.c:546
+#: xfce4-session/manager.c:904
 #, c-format
 msgid "%u clients connected"
 msgstr "%u clients connectés"
 
-#: xfce4-session/main.c:93
+#: xfce4-session/main.c:98
 msgid "desktop"
 msgstr "bureau"
 
-#: xfce4-session/main.c:120
+#: xfce4-session/main.c:125
 msgid "Starting session manager.."
 msgstr "Démarrage du gestionnaire de session..."
 
-#: xfce4-session/main.c:140
+#: xfce4-session/main.c:145
 #, c-format
 msgid ""
 "Unable to create users XFce settings\n"
@@ -140,7 +140,7 @@ msgstr ""
 "Impossible de créer le répertoire utilisateur\n"
 "des paramètres de XFCE %s:%s "
 
-#: xfce4-session/main.c:149
+#: xfce4-session/main.c:154
 #, c-format
 msgid ""
 "Unable to create users XFce session\n"
@@ -149,23 +149,32 @@ msgstr ""
 "Impossible de créer le répertoire utilisateur\n"
 "de la session XFCE %s:%s"
 
+#: xfce4-session/main.c:288
+msgid "XFce desktop session manager"
+msgstr "Gestionnaire de session pour XFce"
+
 #.
-#: xfce4-session/main.c:295
-#: xfce4-session/session-control.c:268
+#: xfce4-session/main.c:341
+msgid "About xfce4-session"
+msgstr "A propos de xfce4-session"
+
+#.
+#: xfce4-session/main.c:363
+#: xfce4-session/session-control.c:269
 msgid "Session control"
 msgstr "Contrôle de session"
 
 #.
-#: xfce4-session/main.c:310
+#: xfce4-session/main.c:377
 msgid "Save session"
 msgstr "Enregistre la session"
 
 #.
-#: xfce4-session/main.c:319
+#: xfce4-session/main.c:386
 msgid "Quit session"
 msgstr "Quitte la session"
 
-#: xfce4-session/main.c:415
+#: xfce4-session/main.c:521
 #, fuzzy
 msgid ""
 "The session manager was unable to start the\n"
@@ -179,11 +188,11 @@ msgstr ""
 "Ceci est le plus souvent causé par un problème avec\n"
 "l'installation de XFCE. Contacter votre administrateur système."
 
-#: xfce4-session/main.c:432
+#: xfce4-session/main.c:538
 msgid "Unable to create MCS client"
 msgstr "Impossible de créer le client MCS"
 
-#: xfce4-session/manager.c:362
+#: xfce4-session/manager.c:359
 msgid ""
 "The session manager was unable to restore your\n"
 "previous session. It'll therefore start a default\n"
@@ -193,7 +202,7 @@ msgstr ""
 "votre session précédente. Il va donc démarrer\n"
 "une session par défaut."
 
-#: xfce4-session/manager.c:844
+#: xfce4-session/manager.c:893
 #, c-format
 msgid ""
 "The client \"%s\" closed the connection\n"
@@ -208,26 +217,26 @@ msgstr ""
 "\n"
 "%s"
 
-#: xfce4-session/shutdown.c:191
+#: xfce4-session/shutdown.c:195
 msgid "Logout session"
 msgstr "Fermeture de la session"
 
-#: xfce4-session/shutdown.c:221
+#: xfce4-session/shutdown.c:225
 #, c-format
 msgid "End session for <b>%s</b>"
 msgstr "Termine la session pour <b>%s</b>"
 
 #.
-#: xfce4-session/shutdown.c:244
+#: xfce4-session/shutdown.c:248
 msgid "What do you want to do next?"
 msgstr "Que souhaitez-vous faire maintenant ?"
 
-#: xfce4-session/shutdown.c:275
+#: xfce4-session/shutdown.c:279
 msgid "_Save session for future logins"
 msgstr "_Enregistre la session pour les prochains login"
 
-#: xfce4-session/shutdown.c:349
-#: xfce4-session/shutdown.c:358
+#: xfce4-session/shutdown.c:360
+#: xfce4-session/shutdown.c:372
 #, c-format
 msgid ""
 "The following error occured while trying to shutdown the computer:\n"
@@ -239,100 +248,100 @@ msgstr ""
 "%s"
 
 #.
-#: xfce4-session/splash-screen.c:271
+#: xfce4-session/splash-screen.c:272
 #, c-format
 msgid "Starting %s..."
 msgstr "Démarrage de %s..."
 
-#: xfce4-session/startup.c:149
+#: xfce4-session/startup.c:150
 msgid "Doing Autostart..."
 msgstr "Autodémarrage en cours..."
 
-#: xfce4-session/startup.c:207
+#: xfce4-session/startup.c:208
 msgid "Starting session manager..."
 msgstr "Démarrage du gestionnaire de session"
 
-#: xfce4-session/session-control.c:72
+#: xfce4-session/session-control.c:73
 msgid "Idle"
 msgstr "Prêt"
 
-#: xfce4-session/session-control.c:73
+#: xfce4-session/session-control.c:74
 msgid "Interacting"
 msgstr "Interagit"
 
-#: xfce4-session/session-control.c:74
+#: xfce4-session/session-control.c:75
 msgid "Save completed"
 msgstr "Enregistrement terminé"
 
-#: xfce4-session/session-control.c:75
+#: xfce4-session/session-control.c:76
 msgid "Saving"
 msgstr "Enregistre"
 
 #. global save
-#: xfce4-session/session-control.c:76
+#: xfce4-session/session-control.c:77
 msgid "Saving (local)"
 msgstr "Enregistre (local)"
 
 #. local save
-#: xfce4-session/session-control.c:77
+#: xfce4-session/session-control.c:78
 msgid "Waiting to interact"
 msgstr "Attend pour interagir"
 
-#: xfce4-session/session-control.c:78
+#: xfce4-session/session-control.c:79
 msgid "Waiting to enter Phase2"
 msgstr "Attend pour passer en Phase 2"
 
-#: xfce4-session/session-control.c:79
+#: xfce4-session/session-control.c:80
 msgid "Disconnecting"
 msgstr "En cours de déconnexion"
 
-#: xfce4-session/session-control.c:200
+#: xfce4-session/session-control.c:201
 #, c-format
 msgid "Unable to clone client: %s"
 msgstr "Impossible de cloner le client : %s"
 
-#: xfce4-session/session-control.c:299
+#: xfce4-session/session-control.c:300
 msgid "Priority"
 msgstr "Priorité"
 
-#: xfce4-session/session-control.c:304
+#: xfce4-session/session-control.c:305
 msgid "Program"
 msgstr "Programme"
 
-#: xfce4-session/session-control.c:309
+#: xfce4-session/session-control.c:310
 msgid "User"
 msgstr "Utilisateur"
 
-#: xfce4-session/session-control.c:314
+#: xfce4-session/session-control.c:315
 msgid "State"
 msgstr "Etat"
 
 #. kill button
-#: xfce4-session/session-control.c:333
+#: xfce4-session/session-control.c:334
 msgid "Kill client"
 msgstr "Tue le client"
 
 #. clone button
-#: xfce4-session/session-control.c:339
+#: xfce4-session/session-control.c:340
 msgid "Clone client"
 msgstr "Clone le client"
 
-#: xfce4-session/session-control.c:445
-#: xfce4-session/session-control.c:448
+#: xfce4-session/session-control.c:446
+#: xfce4-session/session-control.c:449
 msgid "Unknown"
 msgstr "Inconnu"
 
-#: xfce4-shutdown/main.c:137
+#: xfce4-shutdown/main.c:141
 #, c-format
 msgid "Usage: %s <action>\n"
 msgstr "Utilisation: %s <action>\n"
 
-#: xfce4-shutdown/main.c:146
+#: xfce4-shutdown/main.c:150
 #, c-format
 msgid "%s: Unknown action %s\n"
 msgstr "%s: Action inconnue %s\n"
 
-#: xfce4-shutdown/main.c:169
+#: xfce4-shutdown/main.c:173
 #, c-format
 msgid ""
 "You are not allowed to execute the action \"%s\".\n"
@@ -345,17 +354,17 @@ msgstr ""
 "dans la liste des utilisateurs autorisés à effectuer des actions\n"
 "d'arrêt, en vous ajoutant dans le fichier %s.\n"
 
-#: xfce4-shutdown/main.c:192
+#: xfce4-shutdown/main.c:227
 msgid ""
 "Unable to shutdown this box. Please check your\n"
 "installation, or contact your system administrator\n"
 "and report the problem.\n"
 msgstr ""
-"Impossible d'arrêter cette boîte. Vérifiez votre\n"
+"Impossible d'arrêter. Vérifiez votre\n"
 "installation ou contacter votre administrateur\n"
 "et reportez-lui le problème.\n"
 
-#: xfce4-shutdown/main.c:209
+#: xfce4-shutdown/main.c:249
 #, c-format
 msgid ""
 "Got no way to shutdown the system. You should ask\n"
