@@ -221,38 +221,25 @@ xfsm_manager_choose_session (XfceRc *rc)
 {
   gchar *name;
   gboolean load;
-#if 0
-  XfsmChooserSession *session;
   gchar **groups;
-  GList *sessions, *lp;
-  int n;
+  gint n;
+  gint sessions = 0;
 
+  /* check if there are any sessions to load */
   groups = xfce_rc_get_groups (rc);
-  for (n = 0, sessions = NULL; groups[n] != NULL; ++n)
-    {
-      if (strncmp (groups[n], "Session: ", 9) == 0)
-        {
-          session = g_new0 (XfsmChooserSession, 1);
-          session->name = groups[n] + 9;
-          xfce_rc_set_group (rc, groups[n]);
-          session->atime = xfce_rc_read_int_entry (rc, "LastAccess", 0);
-          sessions = g_list_append (sessions, session);
-        }
-    }
-#endif
+  for (n = 0; groups[n] != NULL; ++n)
+    if (strncmp (groups[n], "Session: ", 9) == 0)
+      ++sessions;
+  g_strfreev (groups);
 
+  if (sessions == 0)
+    return FALSE;
+  
   load = xfsm_splash_screen_choose (splash_screen, rc, session_name, &name);
 
   if (session_name != NULL)
     g_free (session_name);
   session_name = name;
-
-#if 0
-  for (lp = sessions; lp != NULL; lp = lp->next)
-    g_free (lp->data);
-  g_list_free (sessions);
-  g_strfreev (groups);
-#endif
 
   return load;
 }
