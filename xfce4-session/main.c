@@ -192,11 +192,14 @@ init_display (GdkDisplay            *dpy,
 static void
 init_splash (GdkDisplay *dpy, XfceRc *rc, XfsmSplashTheme *theme)
 {
-  gboolean chooser;
+  gboolean display;
+  gint timeout;
 
   /* boot the splash screen */
-  chooser = xfce_rc_read_bool_entry (rc, "AlwaysDisplayChooser", FALSE);
-  splash_screen = xfsm_splash_screen_new (dpy, chooser, theme);
+  xfce_rc_set_group (rc, "Chooser");
+  display = xfce_rc_read_bool_entry (rc, "AlwaysDisplay", FALSE);
+  timeout = xfce_rc_read_int_entry (rc, "Timeout", 4);
+  splash_screen = xfsm_splash_screen_new (dpy, display, timeout, theme);
 }
 
 
@@ -244,6 +247,8 @@ initialize (int argc, char **argv)
   init_display (dpy, theme);
 
   init_splash (dpy, rc, theme);
+
+  xfce_rc_set_group (rc, "General");
   sm_init (rc, disable_tcp);
   xfsm_startup_init (rc);
   xfsm_manager_init (rc);
@@ -251,9 +256,9 @@ initialize (int argc, char **argv)
   /* cleanup obsolete entries */
   xfce_rc_set_group (rc, "General");
   if (xfce_rc_has_entry (rc, "ConfirmLogout"))
-    {
-      xfce_rc_delete_entry (rc, "ConfirmLogout", TRUE);
-    }
+    xfce_rc_delete_entry (rc, "ConfirmLogout", FALSE);
+  if (xfce_rc_has_entry (rc, "AlwaysDisplayChooser"))
+    xfce_rc_delete_entry (rc, "AlwaysDisplayChooser", FALSE);
 
   xfce_rc_close (rc);
 }

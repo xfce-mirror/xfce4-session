@@ -47,14 +47,21 @@ struct _XfsmSplashTheme
   GdkColor fgcolor;
   GdkColor focolor;
   gchar   *logo_file;
+  gchar   *chooser_icon_file;
+  gchar   *skip_icon_file;
 };
+
+
+static GdkPixbuf *xfsm_splash_theme_load_pixbuf (const gchar *path,
+                                                 gint         available_width,
+                                                 gint         available_height);
 
 
 XfsmSplashTheme*
 xfsm_splash_theme_load (const gchar *name)
 {
   XfsmSplashTheme *theme;
-  const gchar *logo_file;
+  const gchar *image_file;
   const gchar *spec;
   gchar *resource;
   gchar *file = NULL;
@@ -95,17 +102,41 @@ xfsm_splash_theme_load (const gchar *name)
       if (!gdk_color_parse (spec, &theme->focolor))
         gdk_color_parse (DEFAULT_FOCOLOR, &theme->focolor);
 
-      logo_file = xfce_rc_read_entry (rc, "logo", NULL);
-
-      if (logo_file != NULL)
+      image_file = xfce_rc_read_entry (rc, "logo", NULL);
+      if (image_file != NULL)
         {
           resource = g_path_get_dirname (file);
-          theme->logo_file = g_build_filename (resource, logo_file, NULL);
+          theme->logo_file = g_build_filename (resource, image_file, NULL);
           g_free (resource);
         }
       else
         {
           theme->logo_file = NULL;
+        }
+
+      image_file = xfce_rc_read_entry (rc, "chooser_icon", NULL);
+      if (image_file != NULL)
+        {
+          resource = g_path_get_dirname (file);
+          theme->chooser_icon_file = g_build_filename (resource, image_file,
+                                                       NULL);
+          g_free (resource);
+        }
+      else
+        {
+          theme->chooser_icon_file = NULL;
+        }
+
+      image_file = xfce_rc_read_entry (rc, "skip_icon", NULL);
+      if (image_file != NULL)
+        {
+          resource = g_path_get_dirname (file);
+          theme->skip_icon_file = g_build_filename (resource, image_file, NULL);
+          g_free (resource);
+        }
+      else
+        {
+          theme->skip_icon_file = NULL;
         }
 
       xfce_rc_close (rc);
@@ -134,6 +165,12 @@ xfsm_splash_theme_copy (const XfsmSplashTheme *theme)
 
   if (theme->logo_file != NULL)
     new_theme->logo_file = g_strdup (theme->logo_file);
+
+  if (theme->chooser_icon_file != NULL)
+    new_theme->chooser_icon_file = g_strdup (theme->chooser_icon_file);
+
+  if (theme->skip_icon_file != NULL)
+    new_theme->skip_icon_file = g_strdup (theme->skip_icon_file);
 
   return new_theme;
 }
@@ -168,64 +205,31 @@ xfsm_splash_theme_get_logo (const XfsmSplashTheme *theme,
                             gint available_width,
                             gint available_height)
 {
-  static char *prefixes[] = { "svg", "png", "jpeg", "xpm", NULL };
-  GdkPixbuf *scaled;
-  GdkPixbuf *logo = NULL;
-  gint logo_width;
-  gint logo_height;
-  gdouble wratio;
-  gdouble hratio;
-  gchar *file;
-  guint n;
+  return xfsm_splash_theme_load_pixbuf (theme->logo_file,
+                                        available_width,
+                                        available_height);
+}
 
-  if (theme->logo_file == NULL)
-    return NULL;
 
-  if (g_file_test (theme->logo_file, G_FILE_TEST_IS_REGULAR))
-    {
-      logo = gdk_pixbuf_new_from_file (theme->logo_file, NULL);
-    }
-  else
-    {
-      for (n = 0; logo == NULL && prefixes[n] != NULL; ++n)
-        {
-          file = g_strdup_printf ("%s.%s", theme->logo_file, prefixes[n]);
-          logo = gdk_pixbuf_new_from_file (file, NULL);
-          g_free (file);
-        }
-    }
+GdkPixbuf*
+xfsm_splash_theme_get_skip_icon (const XfsmSplashTheme *theme,
+                                 gint available_width,
+                                 gint available_height)
+{
+  return xfsm_splash_theme_load_pixbuf (theme->skip_icon_file,
+                                        available_width,
+                                        available_height);
+}
 
-  if (logo == NULL)
-    return NULL;
 
-  logo_width = gdk_pixbuf_get_width (logo);
-  logo_height = gdk_pixbuf_get_height (logo);
-
-  if (logo_width > available_width || logo_height > available_height)
-    {
-      wratio = (gdouble) logo_width / (gdouble) available_width;
-      hratio = (gdouble) logo_height / (gdouble) available_height;
-
-      if (hratio > wratio)
-        {
-          logo_width = rint (logo_width / hratio);
-          logo_height = available_height;
-        }
-      else
-        {
-          logo_width = available_width;
-          logo_height = rint (logo_height / wratio);
-        }
-
-      scaled = gdk_pixbuf_scale_simple (logo,
-                                        logo_width,
-                                        logo_height,
-                                        GDK_INTERP_BILINEAR);
-      g_object_unref (logo);
-      logo = scaled;
-    }
-
-  return logo;
+GdkPixbuf*
+xfsm_splash_theme_get_chooser_icon (const XfsmSplashTheme *theme,
+                                    gint available_width,
+                                    gint available_height)
+{
+  return xfsm_splash_theme_load_pixbuf (theme->chooser_icon_file,
+                                        available_width,
+                                        available_height);
 }
 
 
@@ -234,7 +238,79 @@ xfsm_splash_theme_destroy (XfsmSplashTheme *theme)
 {
   if (theme->logo_file != NULL)
     g_free (theme->logo_file);
+  if (theme->chooser_icon_file != NULL)
+    g_free (theme->chooser_icon_file);
+  if (theme->skip_icon_file != NULL)
+    g_free (theme->skip_icon_file);
   g_free (theme);
 }
+
+
+static GdkPixbuf*
+xfsm_splash_theme_load_pixbuf (const gchar *path,
+                               gint available_width,
+                               gint available_height)
+{
+  static char *suffixes[] = { "svg", "png", "jpeg", "xpm", NULL };
+  GdkPixbuf *scaled;
+  GdkPixbuf *pb = NULL;
+  gint pb_width;
+  gint pb_height;
+  gdouble wratio;
+  gdouble hratio;
+  gchar *file;
+  guint n;
+
+  if (path == NULL)
+    return NULL;
+
+  if (g_file_test (path, G_FILE_TEST_IS_REGULAR))
+    {
+      pb = gdk_pixbuf_new_from_file (path, NULL);
+    }
+
+  if (pb == NULL)
+    {
+      for (n = 0; pb == NULL && suffixes[n] != NULL; ++n)
+        {
+          file = g_strdup_printf ("%s.%s", path, suffixes[n]);
+          pb = gdk_pixbuf_new_from_file (file, NULL);
+          g_free (file);
+        }
+    }
+
+  if (pb == NULL)
+    return NULL;
+
+  pb_width = gdk_pixbuf_get_width (pb);
+  pb_height = gdk_pixbuf_get_height (pb);
+
+  if (pb_width > available_width || pb_height > available_height)
+    {
+      wratio = (gdouble) pb_width / (gdouble) available_width;
+      hratio = (gdouble) pb_height / (gdouble) available_height;
+
+      if (hratio > wratio)
+        {
+          pb_width = rint (pb_width / hratio);
+          pb_height = available_height;
+        }
+      else
+        {
+          pb_width = available_width;
+          pb_height = rint (pb_height / wratio);
+        }
+
+      scaled = gdk_pixbuf_scale_simple (pb,
+                                        pb_width,
+                                        pb_height,
+                                        GDK_INTERP_BILINEAR);
+      g_object_unref (pb);
+      pb = scaled;
+    }
+
+  return pb;
+}
+
 
 

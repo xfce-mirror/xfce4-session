@@ -45,6 +45,14 @@ GdkPixbuf *xfsm_splash_theme_get_logo (const XfsmSplashTheme *theme,
                                        gint available_width,
                                        gint available_height);
 
+GdkPixbuf *xfsm_splash_theme_get_skip_icon (const XfsmSplashTheme *theme,
+                                            gint available_width,
+                                            gint available_height);
+
+GdkPixbuf *xfsm_splash_theme_get_chooser_icon (const XfsmSplashTheme *theme,
+                                               gint available_width,
+                                               gint available_height);
+
 void xfsm_splash_theme_destroy (XfsmSplashTheme *theme);
 
 G_END_DECLS;

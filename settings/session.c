@@ -59,11 +59,10 @@
 /* prototypes */
 static void	run_dialog(McsPlugin *);
 static void	save_settings(void);
-static void	autoSaveChangedCB(GtkToggleButton *, McsPlugin *);
 
 /* settings */
 static gboolean	autoSave = FALSE;
-static gboolean	displayChooser = FALSE;
+static gint chooserTimeout = 4;
 
 /* */
 static GtkWidget	 *dialog = NULL;
@@ -83,7 +82,7 @@ mcs_plugin_init(McsPlugin *plugin)
 	plugin->run_dialog = run_dialog;
 	plugin->icon = xfce_inline_icon_at_size(session_icon_data, 48, 48);
 
-	return(MCS_PLUGIN_INIT_OK);
+	return MCS_PLUGIN_INIT_OK;
 }
 
 /*
@@ -99,7 +98,8 @@ save_settings(void)
 
   xfce_rc_set_group (rc, "General");
   xfce_rc_write_bool_entry (rc, "AutoSave", autoSave);
-  xfce_rc_write_bool_entry (rc, "AlwaysDisplayChooser", displayChooser);
+  xfce_rc_set_group (rc, "Chooser");
+  xfce_rc_write_int_entry (rc, "Timeout", chooserTimeout);
 
   xfce_rc_close (rc);
 }
@@ -109,16 +109,18 @@ save_settings(void)
 static void
 autoSaveChangedCB(GtkToggleButton *button, McsPlugin *plugin)
 {
-	autoSave = gtk_toggle_button_get_active(button);
-	save_settings();
+	autoSave = gtk_toggle_button_get_active (button);
+	save_settings ();
 }
 
 static void
-displayChooserChangedCB(GtkToggleButton *button, McsPlugin *plugin)
+chooserTimeoutChangedCB (GtkSpinButton *spinner,
+                         gpointer user_data)
 {
-  displayChooser = gtk_toggle_button_get_active (button);
+  chooserTimeout = (gint) gtk_spin_button_get_value (spinner);
   save_settings ();
 }
+
 
 /*
  */
@@ -136,10 +138,13 @@ static void
 run_dialog(McsPlugin *plugin)
 {
 	GtkWidget *checkbox;
+	GtkWidget *spinner;
 	GtkWidget *header;
 	GtkWidget *align;
 	GtkWidget *frame;
+	GtkWidget *label;
 	GtkWidget *vbox;
+	GtkWidget *hbox;
   XfceRc *rc;
 
 	if (dialog != NULL) {
@@ -153,7 +158,8 @@ run_dialog(McsPlugin *plugin)
                             TRUE);
   xfce_rc_set_group (rc, "General");
   autoSave = xfce_rc_read_bool_entry (rc, "AutoSave", TRUE);
-  displayChooser = xfce_rc_read_bool_entry (rc, "AlwaysDisplayChooser", FALSE);
+  xfce_rc_set_group (rc, "Chooser");
+  chooserTimeout = xfce_rc_read_int_entry (rc, "Timeout", 4);
   xfce_rc_close (rc);
 
 	/* */
@@ -181,13 +187,11 @@ run_dialog(McsPlugin *plugin)
 	/* */
 	align = gtk_alignment_new(0, 0, 0, 0);
 	gtk_widget_set_size_request(align, BORDER, BORDER);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), align, FALSE,
-			TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), align, FALSE, TRUE, 0);
 
 	/* General settings */
 	frame = xfce_framebox_new(_("General"), TRUE);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), frame, TRUE,
-			TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), frame, TRUE, TRUE, 0);
 
 	vbox = gtk_vbox_new(FALSE, BORDER);
 	gtk_container_set_border_width(GTK_CONTAINER(vbox), BORDER);
@@ -201,12 +205,26 @@ run_dialog(McsPlugin *plugin)
 			plugin);
 	gtk_box_pack_start(GTK_BOX(vbox), checkbox, FALSE, TRUE, 0);
 
-  checkbox = gtk_check_button_new_with_label(
-      _("Display session chooser on each login"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbox), displayChooser);
-  g_signal_connect (checkbox, "toggled", G_CALLBACK (displayChooserChangedCB),
-      plugin);
-	gtk_box_pack_start(GTK_BOX(vbox), checkbox, FALSE, TRUE, 0);
+ 	/* Startup settings */
+	frame = xfce_framebox_new(_("Startup"), TRUE);
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), frame, TRUE, TRUE, 0);
+
+	vbox = gtk_vbox_new(FALSE, BORDER);
+	gtk_container_set_border_width(GTK_CONTAINER(vbox), BORDER);
+	xfce_framebox_add(XFCE_FRAMEBOX(frame), vbox);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
+
+  label = gtk_label_new (_("Chooser timeout in seconds:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
+
+  spinner = gtk_spin_button_new_with_range (0.0, 180.0, 1.0);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (spinner), chooserTimeout);
+  gtk_box_pack_start (GTK_BOX (hbox), spinner, FALSE, TRUE, 0);
+
+  g_signal_connect (spinner, "value-changed",
+                    G_CALLBACK (chooserTimeoutChangedCB), NULL);
 
 	/* */
 	gtk_widget_show_all(dialog);

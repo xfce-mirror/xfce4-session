@@ -30,6 +30,7 @@ typedef struct _XfsmSplashScreen XfsmSplashScreen;
 
 XfsmSplashScreen *xfsm_splash_screen_new (GdkDisplay *display,
                                           gboolean display_chooser,
+                                          gint timeout,
                                           const XfsmSplashTheme *theme);
 void xfsm_splash_screen_next (XfsmSplashScreen *splash,
                               const gchar *text);

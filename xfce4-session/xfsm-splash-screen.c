@@ -17,6 +17,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
  * 02111-1307, USA.
+ *
+ * XXX - this code is brain damage, needs to be rewritten before 4.2!
  */
 
 #ifdef HAVE_CONFIG_H
@@ -62,6 +64,7 @@ struct _XfsmSplashScreen
   GList *other_windows;
 
   gboolean chooser_always;
+  gint chooser_timeout;
   gboolean chooser_display; /* temp. variable */
   gint chooser_seconds_left; /* temp. variable */
   const gchar *chooser_session; /* temp. variable */
@@ -76,6 +79,12 @@ struct _XfsmSplashScreen
   guint idle_id;
 
   XfsmSplashTheme *theme;
+
+  /* icons */
+  GdkPixmap *skip_pm;
+  GdkPixmap *chooser_pm;
+  GdkRectangle skip_area;
+  GdkRectangle chooser_area;
 };
 
 
@@ -240,21 +249,35 @@ create_fullscreen_window (GdkScreen *screen,
 }
 
 
+/* XXX - move away!!! */
+static gboolean
+xfsm_area_contains (const GdkRectangle *area, int x, int y)
+{
+  if ((x >= area->x) && (x < area->x + area->width)
+      && (y >= area->y) && (y < area->y + area->height))
+    return TRUE;
+  return FALSE;
+}
+
+
 static GdkFilterReturn
 splash_window_filter (GdkXEvent *xevent,
                       GdkEvent *event,
                       gpointer data)
 {
   XfsmSplashScreen *splash = (XfsmSplashScreen *)data;
-  XExposeEvent *xev = (XExposeEvent *)xevent;
+  XExposeEvent *expose = (XExposeEvent *)xevent;
+  XMotionEvent *motion = (XMotionEvent *)xevent;
+  XButtonEvent *button = (XButtonEvent *)xevent;
   GdkRectangle clip_rect;
+  GdkCursor *cursor;
 
-  switch (xev->type) {
+  switch (expose->type) {
   case Expose:
-    clip_rect.x = xev->x;
-    clip_rect.y = xev->y;
-    clip_rect.width = xev->width;
-    clip_rect.height = xev->height;
+    clip_rect.x = expose->x;
+    clip_rect.y = expose->y;
+    clip_rect.width = expose->width;
+    clip_rect.height = expose->height;
 
     gdk_gc_set_clip_rectangle (splash->copy_gc, &clip_rect);
     gdk_draw_drawable (GDK_DRAWABLE (splash->window),
@@ -265,8 +288,41 @@ splash_window_filter (GdkXEvent *xevent,
 
     return GDK_FILTER_REMOVE;
 
-  case KeyPress:
-    gtk_main_quit ();
+  case MotionNotify:
+    if (xfsm_area_contains (&splash->skip_area, motion->x, motion->y)
+        || xfsm_area_contains (&splash->chooser_area, motion->x, motion->y))
+      {
+        cursor = gdk_cursor_new (GDK_HAND2);
+        gdk_window_set_cursor (splash->window, cursor);
+        gdk_cursor_unref (cursor);
+      }
+    else
+      {
+        cursor = gdk_cursor_new (GDK_WATCH);
+        gdk_window_set_cursor (splash->window, cursor);
+        gdk_cursor_unref (cursor);
+      }
+    break;
+
+  case ButtonPress:
+    if (xfsm_area_contains (&splash->skip_area, button->x, button->y))
+      {
+        splash->chooser_display = FALSE;
+        gtk_main_quit ();
+
+        cursor = gdk_cursor_new (GDK_WATCH);
+        gdk_window_set_cursor (splash->window, cursor);
+        gdk_cursor_unref (cursor);
+      }
+    else if (xfsm_area_contains (&splash->chooser_area, button->x, button->y))
+      {
+        splash->chooser_display = TRUE;
+        gtk_main_quit ();
+
+        cursor = gdk_cursor_new (GDK_WATCH);
+        gdk_window_set_cursor (splash->window, cursor);
+        gdk_cursor_unref (cursor);
+      }
     break;
 
   default:
@@ -280,16 +336,19 @@ splash_window_filter (GdkXEvent *xevent,
 XfsmSplashScreen*
 xfsm_splash_screen_new (GdkDisplay *display,
                         gboolean display_chooser,
+                        gint chooser_timeout,
                         const XfsmSplashTheme *theme)
 {
   XfsmSplashScreen *splash;
   char buffer[128];
   GdkColor color;
+  GdkPixbuf *skip_pb, *chooser_pb;
   GdkPixbuf *pb;
   int n;
 
   splash = g_new0 (XfsmSplashScreen, 1);
   splash->chooser_always = display_chooser;
+  splash->chooser_timeout = chooser_timeout;
   splash->theme = xfsm_splash_theme_copy (theme);
 
   /* the other screens */
@@ -356,17 +415,13 @@ xfsm_splash_screen_new (GdkDisplay *display,
       g_object_unref (G_OBJECT (layout));
     }
 
+  /* duplicate gc and swap fg/bg colors */
   splash->set_gc = gdk_gc_new (GDK_DRAWABLE (splash->window));
   gdk_gc_copy (splash->set_gc, splash->copy_gc);
-#if 0
-  gdk_gc_set_function (splash->set_gc, GDK_SET);
-#else
-  /* swap fg/bg colors */
   xfsm_splash_theme_get_fgcolor (theme, &color);
   gdk_gc_set_rgb_bg_color (splash->set_gc, &color);
   xfsm_splash_theme_get_bgcolor (theme, &color);
   gdk_gc_set_rgb_fg_color (splash->set_gc, &color);
-#endif
 
   /* clear back buffer */
   gdk_draw_rectangle (GDK_DRAWABLE (splash->backbuf), splash->set_gc, TRUE,
@@ -433,6 +488,71 @@ xfsm_splash_screen_new (GdkDisplay *display,
                           splash->screen_w, splash->screen_h);
     }
 
+  skip_pb = xfsm_splash_theme_get_skip_icon (splash->theme,
+                                             splash->screen_w / 3,
+                                             splash->text_h);
+
+  if (skip_pb != NULL)
+    {
+      GdkRectangle area;
+      int realh;
+
+      realh = gdk_pixbuf_get_height (skip_pb);
+      area.width = gdk_pixbuf_get_width (skip_pb);
+      area.height = splash->text_h;
+      area.x = splash->screen_w - area.width;
+      area.y = splash->screen_h - splash->text_h;
+
+      splash->skip_pm = gdk_pixmap_new (GDK_DRAWABLE (splash->window),
+                                        area.width, area.height, -1);
+
+      gdk_draw_rectangle (GDK_DRAWABLE (splash->skip_pm), splash->set_gc,
+                          TRUE, 0, 0, area.width, area.height);
+
+      gdk_draw_pixbuf (GDK_DRAWABLE (splash->skip_pm), splash->copy_gc,
+                       skip_pb, 0, 0,
+                       0, (splash->text_h - realh) / 2,
+                       area.width, realh,
+                       GDK_RGB_DITHER_NONE, 0, 0);
+
+      splash->skip_area = area;
+
+      g_object_unref (G_OBJECT (skip_pb));
+    }
+
+  chooser_pb = xfsm_splash_theme_get_chooser_icon (splash->theme,
+                                                   splash->screen_w / 3,
+                                                   splash->text_h);
+
+  if (chooser_pb != NULL)
+    {
+      GdkRectangle area;
+      int realh;
+
+      realh = gdk_pixbuf_get_height (chooser_pb);
+      area.width = gdk_pixbuf_get_width (chooser_pb);
+      area.height = splash->text_h;
+      area.x = splash->screen_w - (area.width + splash->skip_area.width);
+      area.y = splash->screen_h - splash->text_h;
+
+      splash->chooser_pm = gdk_pixmap_new (GDK_DRAWABLE (splash->window),
+                                           area.width, area.height, -1);
+
+      gdk_draw_rectangle (GDK_DRAWABLE (splash->chooser_pm), splash->set_gc,
+                          TRUE, 0, 0, area.width, splash->text_h);
+
+      gdk_draw_pixbuf (GDK_DRAWABLE (splash->chooser_pm), splash->copy_gc,
+                       chooser_pb, 0, 0,
+                       0, (splash->text_h - realh) / 2,
+                       area.width, realh,
+                       GDK_RGB_DITHER_NONE, 0, 0);
+
+      splash->chooser_area = area;
+
+      g_object_unref (G_OBJECT (chooser_pb));
+    }
+
+
   gdk_window_add_filter (splash->window, splash_window_filter, splash);
   gdk_window_set_events (splash->window, GDK_EXPOSURE_MASK);
 
@@ -471,9 +591,32 @@ display_chooser_text (XfsmSplashScreen *splash,
       pango_layout_set_markup (layout, markup, -1);
       pango_layout_get_pixel_size (layout, &tw, &th);
       gdk_draw_layout (GDK_DRAWABLE (splash->backbuf), splash->copy_gc,
-                       (splash->screen_w - tw) / 2, 
+                       (splash->screen_w - tw) / 2,
                        splash->screen_h - splash->text_h,
                        layout);
+
+      if (splash->skip_pm != NULL)
+        {
+          gdk_draw_drawable (GDK_DRAWABLE (splash->backbuf), splash->copy_gc,
+                             GDK_DRAWABLE (splash->skip_pm),
+                             0, 0,
+                             splash->skip_area.x,
+                             splash->skip_area.y,
+                             splash->skip_area.width,
+                             splash->skip_area.height);
+        }
+
+      if (splash->chooser_pm != NULL)
+        {
+          gdk_draw_drawable (GDK_DRAWABLE (splash->backbuf), splash->copy_gc,
+                             GDK_DRAWABLE (splash->chooser_pm),
+                             0, 0,
+                             splash->chooser_area.x,
+                             splash->chooser_area.y,
+                             splash->chooser_area.width,
+                             splash->chooser_area.height);
+        }
+
       gdk_draw_drawable (GDK_DRAWABLE (splash->window), splash->copy_gc,
                          GDK_DRAWABLE (splash->backbuf),
                          0, splash->screen_h - splash->text_h,
@@ -502,8 +645,8 @@ chooser_timeout_display (XfsmSplashScreen *splash)
 
   display_chooser_text (splash, NULL);
 
-  g_snprintf (buffer, 256, "Restoring <b>%s</b> in %d seconds, press any "
-              "key to interrupt.", splash->chooser_session,
+  g_snprintf (buffer, 256, "Restoring <b>%s</b> in %d seconds",
+              splash->chooser_session,
               splash->chooser_seconds_left);
 
   display_chooser_text (splash, buffer);
@@ -547,21 +690,26 @@ xfsm_splash_screen_choose (XfsmSplashScreen *splash,
 
   if (!splash->chooser_always)
     {
-      splash->chooser_seconds_left = 4;
-      splash->chooser_session = default_session;
+      if (splash->chooser_timeout > 0)
+        {
+          splash->chooser_seconds_left = splash->chooser_timeout;
+          splash->chooser_session = default_session;
 
-      chooser_timeout_display (splash);
-      
-      mask = gdk_window_get_events (splash->window);
-      gdk_window_set_events (splash->window, mask | GDK_KEY_PRESS_MASK);
+          chooser_timeout_display (splash);
+          
+          mask = gdk_window_get_events (splash->window);
+          gdk_window_set_events (splash->window, mask | GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK);
 
-      id = g_timeout_add (1000, chooser_timeout, splash);
-      gtk_main ();
-      g_source_remove (id);
+          id = g_timeout_add (1000, chooser_timeout, splash);
+          gtk_main ();
+          g_source_remove (id);
 
-      gdk_window_set_events (splash->window, mask);
+          gdk_window_set_events (splash->window, mask);
 
-      display_chooser_text (splash, NULL);
+          display_chooser_text (splash, NULL);
+        }
+      else
+        splash->chooser_display = FALSE;
     }
 
   if (!splash->chooser_display)
@@ -576,7 +724,11 @@ xfsm_splash_screen_choose (XfsmSplashScreen *splash,
       return (lp != NULL);
     }
 
+#if 0
   display_chooser_text (splash, _("Pick a session or create a new one"));
+#else
+  display_chooser_text (splash, NULL);
+#endif
 
   chooser = g_object_new (XFSM_TYPE_CHOOSER,
                           "type", GTK_WINDOW_POPUP,
@@ -625,6 +777,12 @@ xfsm_splash_screen_destroy (XfsmSplashScreen *splash)
     gdk_window_destroy (GDK_WINDOW (lp->data));
 
   xfsm_splash_theme_destroy (splash->theme);
+
+  if (splash->skip_pm != NULL)
+    g_object_unref (G_OBJECT (splash->skip_pm));
+
+  if (splash->chooser_pm != NULL)
+    g_object_unref (G_OBJECT (splash->chooser_pm));
 
   gdk_window_destroy (GDK_WINDOW (splash->window));
   g_object_unref (G_OBJECT (splash->copy_gc));
