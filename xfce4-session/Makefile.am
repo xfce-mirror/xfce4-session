@@ -17,10 +17,10 @@ xfce4_session_SOURCES =							\
 	splash-screen.h							\
 	startup.c							\
 	startup.h							\
-	tray-icon.c							\
-	tray-icon.h							\
 	util.c								\
-	util.h
+	util.h								\
+	xfce_trayicon.c							\
+	xfce_trayicon.h
 
 xfce4_session_CFLAGS =							\
 	@LIBSM_CFLAGS@							\

@@ -24,46 +24,67 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __XFSM_TRAY_ICON_H__
-#define __XFSM_TRAY_ICON_H__
+/*
+ * This is a wrapper class to NetkTrayIcon.
+ */
+
+#ifndef __XFCE_TRAY_ICON_H__
+#define __XFCE_TRAY_ICON_H__
 
 #include <libxfcegui4/netk-trayicon.h>
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
-#define XFSM_TRAY_ICON(obj)						\
-	G_TYPE_CHECK_INSTANCE_CAST(obj, xfsm_tray_icon_get_type(),	\
-			XfsmTrayIcon)
-#define	XFSM_TRAY_ICON_CLASS(klass)					\
-	G_TYPE_CHECK_CLASS_CAST(klass, xfsm_tray_icon_get_type(),	\
-			XfsmTrayIconClass)
-#define	XFSM_IS_TRAY_ICON(obj)						\
-	G_TYPE_CHECK_INSTANCE_TYPE(obj, xfsm_tray_icon_get_type())
+#define	XFCE_TRAY_ICON(obj)						\
+	G_TYPE_CHECK_INSTANCE_CAST(obj, xfce_tray_icon_get_type(),	\
+			XfceTrayIcon)
+#define	XFCE_TRAY_ICON_CLASS(klass)					\
+	G_TYPE_CHECK_CLASS_CAST(klass, xfce_tray_icon_get_type(),	\
+			XfceTrayIconClass)
+#define	XFCE_IS_TRAY_ICON(obj)						\
+	G_TYPE_CHECK_INSTANCE_TYPE(obj, xfce_tray_icon_get_type())
 
-typedef struct	_XfsmTrayIcon		XfsmTrayIcon;
-typedef struct	_XfsmTrayIconClass	XfsmTrayIconClass;
+typedef struct	_XfceTrayIconClass	XfceTrayIconClass;
+typedef struct	_XfceTrayIcon		XfceTrayIcon;
 
-struct _XfsmTrayIconClass
+struct _XfceTrayIconClass
 {
-	NetkTrayIconClass	parent_class;
+	GtkObjectClass		parent_class;
 
 	/* user double-clicked the tray icon */
-	void (*clicked)(XfsmTrayIcon *);
+	void (*clicked)(XfceTrayIcon *);
 };
 
-struct _XfsmTrayIcon
+struct _XfceTrayIcon
 {
-	NetkTrayIcon	icon;
+	GtkObject		object;
 
 	/* */
-	GtkMenu		*menu;
+	GtkWidget		*tray;
+
+	/* */
+	GtkWidget		*image;
+
+	/* */
+	GtkWidget		*menu;
+
+	/* Tooltips */
+	GtkTooltips		*tooltips;
 };
 
 /* prototypes */
-extern GType		xfsm_tray_icon_get_type(void);
-extern GtkWidget	*xfsm_tray_icon_new(GtkMenu *);
+extern GType		xfce_tray_icon_get_type(void);
+extern XfceTrayIcon	*xfce_tray_icon_new(void);
+extern XfceTrayIcon	*xfce_tray_icon_new_with_menu_from_pixbuf(GtkWidget *,
+				GdkPixbuf *);
+extern GtkWidget	*xfce_tray_icon_get_menu(XfceTrayIcon *);
+extern void		xfce_tray_icon_set_menu(XfceTrayIcon *, GtkWidget *);
+extern void		xfce_tray_icon_set_from_pixbuf(XfceTrayIcon *,
+				GdkPixbuf *);
+extern void		xfce_tray_icon_set_tooltip(XfceTrayIcon *,
+				const gchar *, const gchar *);
 
 G_END_DECLS
 
-#endif	/* !__XFSM_TRAY_ICON_H__ */
+#endif	/* !__XFCE_TRAY_ICON_H__ */

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2003-07-11 00:56+0200\n"
+"POT-Creation-Date: 2003-07-12 20:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,22 +92,22 @@ msgstr "Tema del desplegado"
 msgid "Show theme info"
 msgstr "Mostrar información del tema"
 
-#: xfce4-session/main.c:92
+#: xfce4-session/main.c:93
 msgid "desktop"
 msgstr "escritorio"
 
-#: xfce4-session/main.c:119
+#: xfce4-session/main.c:120
 msgid "Starting session manager.."
 msgstr "Comenzando administrador de sessión"
 
-#: xfce4-session/main.c:139
+#: xfce4-session/main.c:140
 #, c-format
 msgid ""
 "Unable to create users XFce settings\n"
 "directory %s: %s"
 msgstr "Imposible crear configuracion de usuariodirectorio %s: %s"
 
-#: xfce4-session/main.c:148
+#: xfce4-session/main.c:149
 #, c-format
 msgid ""
 "Unable to create users XFce session\n"
@@ -115,24 +115,24 @@ msgid ""
 msgstr "Imposible crear session de usuariodirectorio %s: %s"
 
 #.
-#: xfce4-session/main.c:287 xfce4-session/client-list.c:264
+#: xfce4-session/main.c:289 xfce4-session/client-list.c:264
 #, fuzzy
 msgid "Session control"
 msgstr "Administración de session"
 
 #.
-#: xfce4-session/main.c:302
+#: xfce4-session/main.c:304
 #, fuzzy
 msgid "Save session"
 msgstr "Salir de sessión"
 
 #.
-#: xfce4-session/main.c:311
+#: xfce4-session/main.c:313
 #, fuzzy
 msgid "Quit session"
 msgstr "Salir de sessión"
 
-#: xfce4-session/main.c:408
+#: xfce4-session/main.c:409
 msgid ""
 "The session manager was unable to start the\n"
 "Multi-Channel settings manager. This is most\n"
@@ -143,7 +143,7 @@ msgstr ""
 "Imposible comenzar el administrador de configuración\n"
 "Verifique su instalación de XFCE."
 
-#: xfce4-session/main.c:421
+#: xfce4-session/main.c:422
 msgid "Unable to create MCS client"
 msgstr "Imposible comenzar el cliente MCS"
 
@@ -154,7 +154,13 @@ msgid ""
 "session."
 msgstr ""
 
-#: xfce4-session/manager.c:816
+#. update the tray icon tooltip
+#: xfce4-session/manager.c:524 xfce4-session/manager.c:835
+#, c-format
+msgid "%u clients connected"
+msgstr ""
+
+#: xfce4-session/manager.c:824
 #, c-format
 msgid ""
 "The client \"%s\" closed the connection\n"

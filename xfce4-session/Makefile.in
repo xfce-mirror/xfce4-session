@@ -192,10 +192,10 @@ xfce4_session_SOURCES = \
 	splash-screen.h							\
 	startup.c							\
 	startup.h							\
-	tray-icon.c							\
-	tray-icon.h							\
 	util.c								\
-	util.h
+	util.h								\
+	xfce_trayicon.c							\
+	xfce_trayicon.h
 
 
 xfce4_session_CFLAGS = \
@@ -235,8 +235,8 @@ am_xfce4_session_OBJECTS = xfce4_session-client.$(OBJEXT) \
 	xfce4_session-manager.$(OBJEXT) \
 	xfce4_session-shutdown.$(OBJEXT) \
 	xfce4_session-splash-screen.$(OBJEXT) \
-	xfce4_session-startup.$(OBJEXT) \
-	xfce4_session-tray-icon.$(OBJEXT) xfce4_session-util.$(OBJEXT)
+	xfce4_session-startup.$(OBJEXT) xfce4_session-util.$(OBJEXT) \
+	xfce4_session-xfce_trayicon.$(OBJEXT)
 xfce4_session_OBJECTS = $(am_xfce4_session_OBJECTS)
 xfce4_session_DEPENDENCIES =
 xfce4_session_LDFLAGS =
@@ -252,8 +252,8 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-shutdown.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-splash-screen.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-startup.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-tray-icon.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-util.Po
+@AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-util.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfce_trayicon.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) \
@@ -321,8 +321,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-shutdown.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-splash-screen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-startup.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-tray-icon.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-util.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfce_trayicon.Po@am__quote@
 
 distclean-depend:
 	-rm -rf ./$(DEPDIR)
@@ -624,39 +624,6 @@ xfce4_session-startup.lo: startup.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-startup.lo `test -f 'startup.c' || echo '$(srcdir)/'`startup.c
 
-xfce4_session-tray-icon.o: tray-icon.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-tray-icon.o -MD -MP -MF "$(DEPDIR)/xfce4_session-tray-icon.Tpo" \
-@am__fastdepCC_TRUE@	  -c -o xfce4_session-tray-icon.o `test -f 'tray-icon.c' || echo '$(srcdir)/'`tray-icon.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-tray-icon.Tpo" "$(DEPDIR)/xfce4_session-tray-icon.Po"; \
-@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/xfce4_session-tray-icon.Tpo"; exit 1; \
-@am__fastdepCC_TRUE@	fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='tray-icon.c' object='xfce4_session-tray-icon.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-tray-icon.Po' tmpdepfile='$(DEPDIR)/xfce4_session-tray-icon.TPo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-tray-icon.o `test -f 'tray-icon.c' || echo '$(srcdir)/'`tray-icon.c
-
-xfce4_session-tray-icon.obj: tray-icon.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-tray-icon.obj -MD -MP -MF "$(DEPDIR)/xfce4_session-tray-icon.Tpo" \
-@am__fastdepCC_TRUE@	  -c -o xfce4_session-tray-icon.obj `if test -f 'tray-icon.c'; then $(CYGPATH_W) 'tray-icon.c'; else $(CYGPATH_W) '$(srcdir)/tray-icon.c'; fi`; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-tray-icon.Tpo" "$(DEPDIR)/xfce4_session-tray-icon.Po"; \
-@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/xfce4_session-tray-icon.Tpo"; exit 1; \
-@am__fastdepCC_TRUE@	fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='tray-icon.c' object='xfce4_session-tray-icon.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-tray-icon.Po' tmpdepfile='$(DEPDIR)/xfce4_session-tray-icon.TPo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-tray-icon.obj `if test -f 'tray-icon.c'; then $(CYGPATH_W) 'tray-icon.c'; else $(CYGPATH_W) '$(srcdir)/tray-icon.c'; fi`
-
-xfce4_session-tray-icon.lo: tray-icon.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-tray-icon.lo -MD -MP -MF "$(DEPDIR)/xfce4_session-tray-icon.Tpo" \
-@am__fastdepCC_TRUE@	  -c -o xfce4_session-tray-icon.lo `test -f 'tray-icon.c' || echo '$(srcdir)/'`tray-icon.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-tray-icon.Tpo" "$(DEPDIR)/xfce4_session-tray-icon.Plo"; \
-@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/xfce4_session-tray-icon.Tpo"; exit 1; \
-@am__fastdepCC_TRUE@	fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='tray-icon.c' object='xfce4_session-tray-icon.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-tray-icon.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-tray-icon.TPlo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-tray-icon.lo `test -f 'tray-icon.c' || echo '$(srcdir)/'`tray-icon.c
-
 xfce4_session-util.o: util.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-util.o -MD -MP -MF "$(DEPDIR)/xfce4_session-util.Tpo" \
 @am__fastdepCC_TRUE@	  -c -o xfce4_session-util.o `test -f 'util.c' || echo '$(srcdir)/'`util.c; \
@@ -689,6 +656,39 @@ xfce4_session-util.lo: util.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-util.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-util.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-util.lo `test -f 'util.c' || echo '$(srcdir)/'`util.c
+
+xfce4_session-xfce_trayicon.o: xfce_trayicon.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfce_trayicon.o -MD -MP -MF "$(DEPDIR)/xfce4_session-xfce_trayicon.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o xfce4_session-xfce_trayicon.o `test -f 'xfce_trayicon.c' || echo '$(srcdir)/'`xfce_trayicon.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfce_trayicon.Tpo" "$(DEPDIR)/xfce4_session-xfce_trayicon.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/xfce4_session-xfce_trayicon.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfce_trayicon.c' object='xfce4_session-xfce_trayicon.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfce_trayicon.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfce_trayicon.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfce_trayicon.o `test -f 'xfce_trayicon.c' || echo '$(srcdir)/'`xfce_trayicon.c
+
+xfce4_session-xfce_trayicon.obj: xfce_trayicon.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfce_trayicon.obj -MD -MP -MF "$(DEPDIR)/xfce4_session-xfce_trayicon.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o xfce4_session-xfce_trayicon.obj `if test -f 'xfce_trayicon.c'; then $(CYGPATH_W) 'xfce_trayicon.c'; else $(CYGPATH_W) '$(srcdir)/xfce_trayicon.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfce_trayicon.Tpo" "$(DEPDIR)/xfce4_session-xfce_trayicon.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/xfce4_session-xfce_trayicon.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfce_trayicon.c' object='xfce4_session-xfce_trayicon.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfce_trayicon.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfce_trayicon.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfce_trayicon.obj `if test -f 'xfce_trayicon.c'; then $(CYGPATH_W) 'xfce_trayicon.c'; else $(CYGPATH_W) '$(srcdir)/xfce_trayicon.c'; fi`
+
+xfce4_session-xfce_trayicon.lo: xfce_trayicon.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfce_trayicon.lo -MD -MP -MF "$(DEPDIR)/xfce4_session-xfce_trayicon.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o xfce4_session-xfce_trayicon.lo `test -f 'xfce_trayicon.c' || echo '$(srcdir)/'`xfce_trayicon.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfce_trayicon.Tpo" "$(DEPDIR)/xfce4_session-xfce_trayicon.Plo"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/xfce4_session-xfce_trayicon.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfce_trayicon.c' object='xfce4_session-xfce_trayicon.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfce_trayicon.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-xfce_trayicon.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfce_trayicon.lo `test -f 'xfce_trayicon.c' || echo '$(srcdir)/'`xfce_trayicon.c
 
 mostlyclean-libtool:
 	-rm -f *.lo

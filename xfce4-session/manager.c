@@ -70,7 +70,7 @@
 #include "util.h"
 
 #include <xfce4-session/client-list.h>
-#include <xfce4-session/tray-icon.h>
+#include <xfce4-session/xfce_trayicon.h>
 
 #define XFSM_VERSION	2
 
@@ -98,7 +98,7 @@ static IceListenObj *listenObjs;
 GtkWidget	*clientList = NULL;
 
 /* system tray icon */
-extern GtkWidget	*trayIcon;
+extern XfceTrayIcon	*trayIcon;
 
 /* prototypes */
 static Status	new_client(SmsConn, SmPointer, unsigned long *, SmsCallbacks *,
@@ -461,6 +461,7 @@ new_client(SmsConn smsConn, SmPointer managerData, unsigned long *mask,
 static Status
 register_client(SmsConn smsConn, Client *client, char *previousId)
 {
+	gchar *tip;
 	GList *lp;
 
 	if (previousId != NULL) {
@@ -518,6 +519,12 @@ register_client(SmsConn smsConn, Client *client, char *previousId)
 
 	/* XXX */
 	xfsm_client_list_append(XFSM_CLIENT_LIST(clientList), client);
+
+	/* update the tray icon tooltip */
+	tip = g_strdup_printf(_("%u clients connected"),
+			g_list_length(clients));
+	xfce_tray_icon_set_tooltip(trayIcon, tip, NULL);
+	g_free(tip);
 
 	return(True);
 }
@@ -774,6 +781,7 @@ close_connection(SmsConn smsConn, Client *client, int nReasons, char **reasons)
 	IceConn iceConn;
 	gchar *program;
 	gchar *reason;
+	gchar *tip;
 	GList *lp;
 
 	/* XXX */
@@ -822,6 +830,12 @@ close_connection(SmsConn smsConn, Client *client, int nReasons, char **reasons)
 
 		g_free(program);
 	}
+
+	/* update the tray icon tooltip */
+	tip = g_strdup_printf(_("%u clients connected"),
+			g_list_length(clients));
+	xfce_tray_icon_set_tooltip(trayIcon, tip, NULL);
+	g_free(tip);
 
 	if (nReasons)
 		SmFreeReasons(nReasons, reasons);

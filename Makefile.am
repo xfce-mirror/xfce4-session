@@ -16,7 +16,8 @@ EXTRA_DIST =								\
 	NEWS								\
 	README								\
 	TODO								\
-	xfce4-session.spec
+	xfce4-session.spec						\
+	xfce4-session.spec.in
 
 rpm: dist
 	rpmbuild -ta $(PACKAGE)-$(VERSION).tar.gz

@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XFSession 0.0.15\n"
-"POT-Creation-Date: 2003-07-09 00:33+0200\n"
+"POT-Creation-Date: 2003-07-12 20:26+0200\n"
 "PO-Revision-Date: 2003-07-10 13:10+0200\n"
 "Last-Translator: Yongtao Yang <yongtao.yang@telia.com>\n"
 "Language-Team: none <none@none>\n"
@@ -94,22 +94,22 @@ msgstr "飞溅屏幕主题"
 msgid "Show theme info"
 msgstr "显示主题信息"
 
-#: xfce4-session/main.c:75
+#: xfce4-session/main.c:93
 msgid "desktop"
 msgstr "桌面"
 
-#: xfce4-session/main.c:102
+#: xfce4-session/main.c:120
 msgid "Starting session manager.."
 msgstr "启动会话管理器..."
 
-#: xfce4-session/main.c:122
+#: xfce4-session/main.c:140
 #, c-format
 msgid ""
 "Unable to create users XFce settings\n"
 "directory %s: %s"
 msgstr "无法创建用户的XFce配置目录 %s: %s"
 
-#: xfce4-session/main.c:131
+#: xfce4-session/main.c:149
 #, c-format
 msgid ""
 "Unable to create users XFce session\n"
@@ -117,11 +117,23 @@ msgid ""
 msgstr "msgstr \"无法创建用户的XFce会话目录 %s: %s\""
 
 #.
-#: xfce4-session/main.c:254 xfce4-session/client-list.c:249
+#: xfce4-session/main.c:289 xfce4-session/client-list.c:264
 msgid "Session control"
 msgstr "会话控制"
 
-#: xfce4-session/main.c:305
+#.
+#: xfce4-session/main.c:304
+#, fuzzy
+msgid "Save session"
+msgstr "注销会话"
+
+#.
+#: xfce4-session/main.c:313
+#, fuzzy
+msgid "Quit session"
+msgstr "注销会话"
+
+#: xfce4-session/main.c:409
 msgid ""
 "The session manager was unable to start the\n"
 "Multi-Channel settings manager. This is most\n"
@@ -133,11 +145,11 @@ msgstr ""
 "是 XFce 安装不正确导致的。请联系你的系统管理\n"
 "员并报告问题。"
 
-#: xfce4-session/main.c:318
+#: xfce4-session/main.c:422
 msgid "Unable to create MCS client"
 msgstr "无法创建 MCS 客户"
 
-#: xfce4-session/manager.c:313
+#: xfce4-session/manager.c:342
 msgid ""
 "The session manager was unable to restore your\n"
 "previous session. It'll therefore start a default\n"
@@ -146,7 +158,13 @@ msgstr ""
 "会话管理器无法回复你的前一次会话，所以它将启动一个\n"
 "默认会话。"
 
-#: xfce4-session/manager.c:773
+#. update the tray icon tooltip
+#: xfce4-session/manager.c:524 xfce4-session/manager.c:835
+#, c-format
+msgid "%u clients connected"
+msgstr ""
+
+#: xfce4-session/manager.c:824
 #, c-format
 msgid ""
 "The client \"%s\" closed the connection\n"
@@ -178,6 +196,7 @@ msgid "_Save session for future logins"
 msgstr "为以后的登陆保存会话(_S)"
 
 #: xfce4-session/shutdown.c:349 xfce4-session/shutdown.c:358
+#, c-format
 msgid ""
 "The following error occured while trying to shutdown the computer:\n"
 "\n"
@@ -201,47 +220,86 @@ msgstr "执行自动启动..."
 msgid "Starting session manager..."
 msgstr "启动会话管理器..."
 
-#: xfce4-session/client-list.c:184
+#: xfce4-session/client-list.c:71
+msgid "Idle"
+msgstr ""
+
+#: xfce4-session/client-list.c:72
+msgid "Interacting"
+msgstr ""
+
+#: xfce4-session/client-list.c:73
+msgid "Save completed"
+msgstr ""
+
+#. global save
+#: xfce4-session/client-list.c:74 xfce4-session/client-list.c:75
+msgid "Saving"
+msgstr ""
+
+#. local save
+#: xfce4-session/client-list.c:76
+msgid "Waiting to interact"
+msgstr ""
+
+#: xfce4-session/client-list.c:77
+msgid "Waiting to enter Phase2"
+msgstr ""
+
+#: xfce4-session/client-list.c:78
+msgid "Saving (Phase2)"
+msgstr ""
+
+#: xfce4-session/client-list.c:79
+msgid "Disconnecting"
+msgstr ""
+
+#: xfce4-session/client-list.c:199
+#, c-format
 msgid "Unable to clone client: %s"
 msgstr "无法复制客户：%s"
 
-#: xfce4-session/client-list.c:272
+#: xfce4-session/client-list.c:288
 msgid "Program"
 msgstr "程序"
 
-#: xfce4-session/client-list.c:277
+#: xfce4-session/client-list.c:293
 msgid "User"
 msgstr "用户"
 
-#: xfce4-session/client-list.c:284
+#: xfce4-session/client-list.c:300
 msgid "Priority"
 msgstr "优先级"
 
+#: xfce4-session/client-list.c:305
+msgid "State"
+msgstr ""
+
 #. kill button
-#: xfce4-session/client-list.c:303
+#: xfce4-session/client-list.c:324
 msgid "Kill client"
 msgstr "中止客户程序"
 
 #. clone button
-#: xfce4-session/client-list.c:309
+#: xfce4-session/client-list.c:330
 msgid "Clone client"
 msgstr "复制客户程序"
 
-#: xfce4-session/client-list.c:411 xfce4-session/client-list.c:414
+#: xfce4-session/client-list.c:436 xfce4-session/client-list.c:439
 msgid "Unknown"
 msgstr "未知"
 
-#: xfce4-shutdown/main.c:136
+#: xfce4-shutdown/main.c:137
 #, c-format
 msgid "Usage: %s <action>\n"
 msgstr "用途: %s <动作>\n"
 
-#: xfce4-shutdown/main.c:145
+#: xfce4-shutdown/main.c:146
 #, c-format
 msgid "%s: Unknown action %s\n"
 msgstr "%s: 未知动作 %s\n"
 
-#: xfce4-shutdown/main.c:156
+#: xfce4-shutdown/main.c:169
 #, c-format
 msgid ""
 "You are not allowed to execute the action \"%s\".\n"
@@ -253,7 +311,7 @@ msgstr ""
 "您的用户名添加到文件 %s 中，这样使您有权关闭\n"
 "计算机。\n"
 
-#: xfce4-shutdown/main.c:179
+#: xfce4-shutdown/main.c:192
 msgid ""
 "Unable to shutdown this box. Please check your\n"
 "installation, or contact your system administrator\n"
@@ -262,7 +320,7 @@ msgstr ""
 "无法关闭计算机。请检查您的安装正确与否，\n"
 "或者向您的系统管理员报告问题。\n"
 
-#: xfce4-shutdown/main.c:196
+#: xfce4-shutdown/main.c:209
 #, c-format
 msgid ""
 "Got no way to shutdown the system. You should ask\n"

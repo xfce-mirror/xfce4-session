@@ -49,11 +49,12 @@
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
+#include <settings/session-icon.h>
 #include <xfce4-session/ice-layer.h>
 #include <xfce4-session/manager.h>
 #include <xfce4-session/shutdown.h>
 #include <xfce4-session/splash-screen.h>
-#include <xfce4-session/tray-icon.h>
+#include <xfce4-session/xfce_trayicon.h>
 
 /* */
 #define	CHANNEL	"session"
@@ -73,7 +74,7 @@ static gint	signalState = SIGNAL_NONE;
 McsClient	*settingsClient;
 
 /* system tray icon */
-GtkWidget	*trayIcon;
+XfceTrayIcon	*trayIcon;
 
 /*
  */
@@ -264,14 +265,15 @@ quit_session_cb(void)
 
 /*
  */
-static GtkWidget *
+static XfceTrayIcon *
 create_tray_icon(void)
 {
 	/* XXX */
 	extern GtkWidget *clientList;
 	GtkWidget *menuItem;
+	XfceTrayIcon *icon;
 	GtkWidget *menu;
-	GtkWidget *icon;
+	GdkPixbuf *pb;
 
 	menu = gtk_menu_new();
 
@@ -316,14 +318,13 @@ create_tray_icon(void)
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
 	gtk_widget_show_all(menuItem);
 
-	icon = xfsm_tray_icon_new(GTK_MENU(menu));
+	pb = inline_icon_at_size(session_icon_data, 16, 16);
+	icon = xfce_tray_icon_new_with_menu_from_pixbuf(menu, pb);
+	g_object_unref(pb);
 
 	/* connect the double action */
 	g_signal_connect_swapped(G_OBJECT(icon), "clicked",
 			G_CALLBACK(toggle_visible_cb), clientList);
-
-	/* the tray icon now keeps a ref on the menu */
-	gtk_object_sink(GTK_OBJECT(menu));
 
 	return(icon);
 }
@@ -450,7 +451,6 @@ main(int argc, char **argv)
 
 	/* */
 	trayIcon = create_tray_icon();
-	gtk_widget_show(trayIcon);
 
 	/*
 	 * Connect UNIX signals
