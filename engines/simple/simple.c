@@ -209,10 +209,12 @@ simple_next (XfsmSplashEngine *engine, const gchar *text)
   gdk_gc_set_rgb_fg_color (simple->gc, &simple->bgcolor);
   gdk_draw_rectangle (simple->pixmap,
                       simple->gc, TRUE,
-                      simple->textbox.x - BORDER,
+                      simple->textbox.x,
                       simple->textbox.y,
-                      simple->textbox.width + 2 * BORDER,
+                      simple->textbox.width,
                       simple->textbox.height);
+
+  gdk_gc_set_clip_rectangle (simple->gc, &simple->textbox);
 
   /* draw shadow */
   shcolor.red = (simple->fgcolor.red + simple->bgcolor.red) / 2;
@@ -233,9 +235,9 @@ simple_next (XfsmSplashEngine *engine, const gchar *text)
                    simple->layout);
 
   gdk_window_clear_area (simple->window,
-                         simple->textbox.x - BORDER,
+                         simple->textbox.x,
                          simple->textbox.y,
-                         simple->textbox.width + 2 * BORDER,
+                         simple->textbox.width,
                          simple->textbox.height);
 }
 
