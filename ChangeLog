@@ -1,3 +1,114 @@
+2004-11-05 17:34  benny
+
+	* settings/splash/xfce-splash-settings.desktop: Fix typos.
+
+2004-11-05 16:18  pollux
+
+	* settings/splash/xfce-splash-settings.desktop: update FI
+	  translations
+
+2004-11-03 22:09  benny
+
+	* xfce4-session/xfsm-manager.h: Raise SaveYourself timeout to
+	  60secs.
+
+2004-11-02 17:52  benny
+
+	* configure, xfce4-session/Makefile.am, xfce4-session/Makefile.in,
+	  xfce4-session/xfsm-compat-gnome.c: Ups.
+
+2004-11-02 17:43  benny
+
+	* Makefile.in, config.h.in, configure, configure.ac,
+	  docs/Makefile.in, docs/C/Makefile.in, docs/C/images/Makefile.in,
+	  engines/Makefile.in, engines/balou/Makefile.in,
+	  engines/balou/scripts/Makefile.in,
+	  engines/balou/themes/Makefile.in,
+	  engines/balou/themes/Default/Makefile.in,
+	  engines/mice/Makefile.in, engines/simple/Makefile.in,
+	  icons/Makefile.in, icons/128x128/Makefile.in,
+	  icons/48x48/Makefile.in, icons/64x64/Makefile.in,
+	  icons/72x72/Makefile.in, icons/scalable/Makefile.in,
+	  libxfsm/Makefile.in, settings/Makefile.in,
+	  settings/session/Makefile.in, settings/session/session.c,
+	  settings/splash/Makefile.in, xfce4-session/Makefile.in,
+	  xfce4-session/shutdown.c, xfce4-session/xfsm-compat-gnome.c,
+	  xfce4-session/xfsm-startup.c, xfce4-session-logout/Makefile.in,
+	  xfsm-shutdown-helper/Makefile.in: Rework GNOME compat a bit.
+	  Disable AST (which requires gconf) by default.
+
+2004-11-01 22:00  benny
+
+	* Makefile.in, config.h.in, configure, configure.ac,
+	  docs/Makefile.in, docs/C/Makefile.in, docs/C/images/Makefile.in,
+	  engines/Makefile.in, engines/balou/Makefile.in,
+	  engines/balou/scripts/Makefile.in,
+	  engines/balou/themes/Makefile.in,
+	  engines/balou/themes/Default/Makefile.in,
+	  engines/mice/Makefile.in, engines/simple/Makefile.in,
+	  icons/Makefile.in, icons/128x128/Makefile.in,
+	  icons/48x48/Makefile.in, icons/64x64/Makefile.in,
+	  icons/72x72/Makefile.in, icons/scalable/Makefile.in,
+	  libxfsm/Makefile.in, settings/Makefile.in,
+	  settings/session/Makefile.in, settings/splash/Makefile.in,
+	  xfce4-session/Makefile.in,
+	  xfce4-session/xfsm-shutdown-helper-sudo.c,
+	  xfce4-session-logout/Makefile.in,
+	  xfsm-shutdown-helper/Makefile.in: Replace the compile time check
+	  for sudo with a runtime check.
+
+2004-11-01 17:10  benny
+
+	* AUTHORS, Makefile.am, Makefile.in, configure, configure.ac,
+	  ltmain.sh, xfce4-session.spec.in, engines/balou/Makefile.am,
+	  engines/balou/Makefile.in, engines/balou/config.c,
+	  engines/balou/engine.c, engines/mice/Makefile.am,
+	  engines/mice/Makefile.in, engines/mice/mice.c,
+	  engines/simple/Makefile.am, engines/simple/Makefile.in,
+	  engines/simple/simple.c, libxfsm/.cvsignore, libxfsm/Makefile.am,
+	  libxfsm/Makefile.in, libxfsm/xfce4-session-1.0.pc.in,
+	  libxfsm/xfsm-splash-engine.h, libxfsm/xfsm-splash-rc.c,
+	  libxfsm/xfsm-splash-rc.h, libxfsm/xfsm-util.c,
+	  libxfsm/xfsm-util.h, po/POTFILES.in, po/ar.gmo, po/ar.po,
+	  po/az.gmo, po/az.po, po/be.gmo, po/be.po, po/ca.gmo, po/ca.po,
+	  po/de.gmo, po/de.po, po/es.gmo, po/es.po, po/es_MX.gmo,
+	  po/es_MX.po, po/et.gmo, po/et.po, po/eu.gmo, po/eu.po, po/fa.gmo,
+	  po/fa.po, po/fi.gmo, po/fi.po, po/fr.gmo, po/fr.po, po/gu.gmo,
+	  po/gu.po, po/he.gmo, po/he.po, po/hi.gmo, po/hi.po, po/it.gmo,
+	  po/it.po, po/ja.gmo, po/ja.po, po/ko.gmo, po/ko.po, po/lt.gmo,
+	  po/lt.po, po/ms.gmo, po/ms.po, po/nl.gmo, po/nl.po, po/no.gmo,
+	  po/no.po, po/pa.gmo, po/pa.po, po/pl.gmo, po/pl.po, po/pt_BR.gmo,
+	  po/pt_BR.po, po/pt_PT.gmo, po/pt_PT.po, po/ru.gmo, po/ru.po,
+	  po/sk.gmo, po/sk.po, po/sv.gmo, po/sv.po, po/ta.gmo, po/ta.po,
+	  po/tr.gmo, po/tr.po, po/vi.gmo, po/vi.po, po/xfce4-session.pot,
+	  po/zh_CN.gmo, po/zh_CN.po, po/zh_TW.gmo, po/zh_TW.po,
+	  settings/splash/Makefile.am, settings/splash/Makefile.in,
+	  settings/splash/module.c, settings/splash/splash.c,
+	  xfce4-session/Makefile.am, xfce4-session/Makefile.in,
+	  xfce4-session/main.c, xfce4-session/shutdown.c,
+	  xfce4-session/xfce4-session-1.0.pc.in,
+	  xfce4-session/xfce4-session.1, xfce4-session/xfsm-chooser.c,
+	  xfce4-session/xfsm-client.c, xfce4-session/xfsm-dns.c,
+	  xfce4-session/xfsm-legacy.c, xfce4-session/xfsm-manager.c,
+	  xfce4-session/xfsm-properties.c,
+	  xfce4-session/xfsm-splash-engine.h,
+	  xfce4-session/xfsm-splash-rc.c, xfce4-session/xfsm-splash-rc.h,
+	  xfce4-session/xfsm-splash-screen.c, xfce4-session/xfsm-startup.c,
+	  xfce4-session/xfsm-util.c, xfce4-session/xfsm-util.h,
+	  xfce4-session-logout/.cvsignore,
+	  xfce4-session-logout/Makefile.am,
+	  xfce4-session-logout/Makefile.in, xfce4-session-logout/main.c,
+	  xfce4-session-logout/xfce4-session-logout.1: Resolve the libxfsm
+	  build order problem. Issue a detailed message if the failsafe
+	  session couldn't be loaded. Imported the xfce4-session-logout
+	  hack from Brian, requested too often to ignore. Update the man
+	  pages, esp.  mention the XDG variables in the xfce4-session man
+	  page. Update the po files.
+
+2004-10-30 21:03  olivier
+
+	* ChangeLog, configure: Global update for 4.1.91 (Xfce 4.2 beta 2)
+
 2004-10-30 16:00  pollux
 
 	* po/: lt.gmo, lt.po: update LT translations
