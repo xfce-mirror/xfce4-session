@@ -28,6 +28,10 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_SYS_STAT_H
+#include <sys/stat.h>
+#endif
+
 #include <stdio.h>
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
@@ -355,6 +359,10 @@ do_install_theme(GtkWidget *dialog, gpointer data)
 	dir = xfce_get_userfile("splash", NULL);
 	error = NULL;
 
+	/* check if users splash themes directory exists */
+	if (!g_file_test(dir, G_FILE_TEST_IS_DIR))
+		(void)mkdir(dir, 0755);
+
 	if (!g_spawn_sync(dir, argv, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL,
 				NULL, NULL, NULL, &error)) {
 		xfce_err(_("Unable to install splash theme from file %s: %s"),
@@ -363,8 +371,8 @@ do_install_theme(GtkWidget *dialog, gpointer data)
 	}
 	else {
 		/* rescan themes */
-		find_themes((McsPlugin *)g_object_get_data(
-					G_OBJECT(dialog), "user-data"));
+		find_themes((McsPlugin *)g_object_get_data(G_OBJECT(dialog),
+					"user-data"));
 		rebuild_themes_menu();
 	}
 	
