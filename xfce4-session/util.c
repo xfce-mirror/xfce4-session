@@ -130,7 +130,7 @@ gchar *
 xfce_gethostname(void)
 {
 #ifdef HAVE_GETHOSTNAME
-#ifdef MAXHOSTNAMELEN
+#ifndef MAXHOSTNAMELEN
 #define MAXHOSTNAMELEN		256
 #endif
 	char hostname[MAXHOSTNAMELEN];
