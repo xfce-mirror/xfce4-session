@@ -1,6 +1,6 @@
 dnl $Id$
 dnl
-dnl Copyright (c) 2003-2004
+dnl Copyright (c) 2003-2005
 dnl         The Xfce development team. All rights reserved.
 dnl
 dnl Written for Xfce by Benedikt Meurer <benny@xfce.org>.
@@ -13,7 +13,7 @@ m4_define([xfsm_version_micro], [0])
 m4_define([xfsm_version], [xfsm_version_major.xfsm_version_minor.xfsm_version_micro])
 
 dnl Initialize autoconf
-AC_COPYRIGHT([Copyright (c) 2003-2004
+AC_COPYRIGHT([Copyright (c) 2003-2005
         The Xfce development team. All rights reserved.
         
 Written for Xfce by Benedikt Meurer <benny@xfce.org>.])
@@ -62,16 +62,16 @@ LIBS="$ac_LIBS"
 
 dnl Check for i18n support
 BM_I18N([xfce4-session], [ar az be ca cs de en_GB es es_MX et eu fa fi fr gu he
-			  hi it ja ko lt ms nl nb_NO pa pl pt_BR pt_PT ro ru sv
-			  sk ta tr vi zh_CN zh_TW])
+			  hi hu it ja ko lt ms nl nb_NO pa pl pt_BR pt_PT ro ru
+			  sv sk ta tr uk vi zh_CN zh_TW])
 
 dnl Check for required packages
-BM_DEPEND([LIBXFCE4UTIL], [libxfce4util-1.0], [4.1.91])
-BM_DEPEND([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.1.91])
-BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [4.1.91])
+BM_DEPEND([LIBXFCE4UTIL], [libxfce4util-1.0], [4.2.0])
+BM_DEPEND([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.2.0])
+BM_DEPEND([LIBXFCEGUI4], [libxfcegui4-1.0], [4.2.0])
 
 dnl Configure the MCS plugins
-XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.1.0])
+XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.2.0])
 
 dnl Check for gnome support
 BM_DEPEND_CHECK([GCONF], [gconf-2.0], [2.4.0], [gconf],

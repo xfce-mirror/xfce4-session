@@ -1,27 +1,27 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Xfce 4 Session Manager</title><link rel="stylesheet" href="../xfce.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.67.0"><link rel="start" href="#xfce4-session" title="Xfce 4 Session Manager"><link rel="next" href="#xfsm-intro" title="Introduction"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="xfce4-session"></a>Xfce 4 Session Manager</h1></div><div><div class="authorgroup"><div class="author"><h3 class="author"><span class="firstname">Benedikt</span> <span class="surname">Meurer</span></h3><div class="affiliation"><div class="address"><p><code class="email">&lt;<a href="mailto:benny@xfce.org">benny@xfce.org</a>&gt;</code></p></div><span class="orgname">os-cillation<br></span><span class="orgdiv">System development<br></span><span class="jobtitle">Software developer<br></span></div></div></div></div><div><span xmlns="http://www.w3.org/TR/xhtml1/transitional" class="releaseinfo">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Xfce 4 Session Manager</title><link rel="stylesheet" href="../xfce.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.66.1"><link rel="start" href="#xfce4-session" title="Xfce 4 Session Manager"><link rel="next" href="#xfsm-intro" title="Introduction"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="xfce4-session"></a>Xfce 4 Session Manager</h1></div><div><div class="authorgroup"><div class="author"><h3 class="author"><span class="firstname">Benedikt</span> <span class="surname">Meurer</span></h3><div class="affiliation"><div class="address"><p><tt class="email">&lt;<a href="mailto:benny@xfce.org">benny@xfce.org</a>&gt;</tt></p></div><span class="orgname">os-cillation<br></span><span class="orgdiv">System development<br></span><span class="jobtitle">Software developer<br></span></div></div></div></div><div><span xmlns="http://www.w3.org/TR/xhtml1/transitional" class="releaseinfo">
     <p xmlns=""> </p>
-    This manual describes the <strong xmlns="" class="application"><code>xfce4-session</code></strong> package, version 4.2. Last updated: November 2004
+    This manual describes the <b xmlns="" class="application"><tt>xfce4-session</tt></b> package, version 4.2.0. Last updated: Jan 2005
   <br></br></span></div><div><p class="copyright">Copyright © 2003, 2004 Benedikt Meurer</p></div><div><div class="legalnotice"><a name="legalnotice"></a><p>
       This document is provided under the terms of the GNU GPL, version
       2 or (at your option) any later version.
-    </p></div></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#xfsm-intro">Introduction</a></span></dt><dt><span class="sect1"><a href="#xfce4-session-settings">Session Manager settings</a></span></dt><dd><dl><dt><span class="sect2"><a href="#xfsm-general-settings">General preferences</a></span></dt><dt><span class="sect2"><a href="#xfsm-advanced%20settings">Advanced preferences</a></span></dt></dl></dd><dt><span class="sect1"><a href="#xfsm-customize">Customizing the Session Manager</a></span></dt><dd><dl><dt><span class="sect2"><a href="#xfsm-engines">Splash screen settings</a></span></dt><dt><span class="sect2"><a href="#xfsm-shutdown">Shutdown/reboot options</a></span></dt></dl></dd><dt><span class="sect1"><a href="#xfsm-advanced">Advanced</a></span></dt><dd><dl><dt><span class="sect2"><a href="#files-and-env-vars">Files and Environment Variables</a></span></dt><dt><span class="sect2"><a href="#xfsm-kiosk-mode">Kiosk Mode</a></span></dt></dl></dd><dt><span class="sect1"><a href="#xfsm-copyright">About <strong class="application"><code>xfce4-session</code></strong></a></span></dt></dl></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfsm-intro"></a>Introduction</h2></div></div></div><p><strong class="application"><code>xfce4-session</code></strong> is a session manager for Xfce 4. Its task is to save the state of 
+    </p></div></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#xfsm-intro">Introduction</a></span></dt><dt><span class="sect1"><a href="#xfce4-session-settings">Session Manager settings</a></span></dt><dd><dl><dt><span class="sect2"><a href="#xfsm-general-settings">General preferences</a></span></dt><dt><span class="sect2"><a href="#xfsm-advanced%20settings">Advanced preferences</a></span></dt></dl></dd><dt><span class="sect1"><a href="#xfsm-customize">Customizing the Session Manager</a></span></dt><dd><dl><dt><span class="sect2"><a href="#xfsm-engines">Splash screen settings</a></span></dt><dt><span class="sect2"><a href="#xfsm-shutdown">Shutdown/reboot options</a></span></dt></dl></dd><dt><span class="sect1"><a href="#xfsm-advanced">Advanced</a></span></dt><dd><dl><dt><span class="sect2"><a href="#files-and-env-vars">Files and Environment Variables</a></span></dt><dt><span class="sect2"><a href="#xfsm-kiosk-mode">Kiosk Mode</a></span></dt></dl></dd><dt><span class="sect1"><a href="#xfsm-copyright">About <b class="application"><tt>xfce4-session</tt></b></a></span></dt></dl></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfsm-intro"></a>Introduction</h2></div></div></div><p><b class="application"><tt>xfce4-session</tt></b> is a session manager for Xfce 4. Its task is to save the state of 
   your desktop (opened applications and their location) and restore it during a next 
   startup. You can create several different sessions and choose one of them on 
   startup.
-  </p><p><strong class="application"><code>xfce4-session</code></strong> provides session management for both X11R6 and 
+  </p><p><b class="application"><tt>xfce4-session</tt></b> provides session management for both X11R6 and 
   legacy X11R5 protocols. If you don't need legacy session management 
   support, you can disable it at compile time, giving 
-  --disable-legacy-sm to ./configure. Do <span class="emphasis"><em>NOT EVER</em></span> run <strong class="application"><code>smproxy</code></strong> in 
-  session that is managed by <strong class="application"><code>xfce4-session</code></strong>, or weird things will happen. 
-  The included legacy session management does everything that <strong class="application"><code>smproxy</code></strong>
-  would do, and besides that, it also supports multiscreen display.</p></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfce4-session-settings"></a>Session Manager settings</h2></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfsm-general-settings"></a>General preferences</h3></div></div></div><div class="figure"><a name="xfsm-general-fig"></a><p class="title"><b>Figure 1. <code class="application">xfce4-session</code> general preferences</b></p><div class="screenshot"><div class="mediaobject"><img src="images/xfsm-general.png" alt="Shows the General tab of the xfce4-session settings dialog."></div></div></div><div class="variablelist"><dl><dt><span class="term">Display chooser on login</span></dt><dd><p>If set, the session manager will ask you to choose a session every 
+  --disable-legacy-sm to ./configure. Do <span class="emphasis"><em>NOT EVER</em></span> run <b class="application"><tt>smproxy</tt></b> in 
+  session that is managed by <b class="application"><tt>xfce4-session</tt></b>, or weird things will happen. 
+  The included legacy session management does everything that <b class="application"><tt>smproxy</tt></b>
+  would do, and besides that, it also supports multiscreen display.</p></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfce4-session-settings"></a>Session Manager settings</h2></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfsm-general-settings"></a>General preferences</h3></div></div></div><div class="figure"><a name="xfsm-general-fig"></a><p class="title"><b>Figure 1. <tt class="application">xfce4-session</tt> general preferences</b></p><div class="screenshot"><div class="mediaobject"><img src="images/xfsm-general.png" alt="Shows the General tab of the xfce4-session settings dialog."></div></div></div><div class="variablelist"><dl><dt><span class="term">Display chooser on login</span></dt><dd><p>If set, the session manager will ask you to choose a session every 
             time you log in to Xfce.</p></dd><dt><span class="term">Automatically save session on logout</span></dt><dd><p>This option instructs the session manager to save the current 
           session automatically when you log out. If you don't select this option 
           you'll be prompted whether you want to save the current session on 
           each logout.</p></dd><dt><span class="term">Prompt on logout</span></dt><dd><p>This option disables the logout confirmation dialog. Whether 
           the session will be saved or not depends on whether you enabled the 
-          automatic saving of sessions on logout or not.</p></dd></dl></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfsm-advanced settings"></a>Advanced preferences</h3></div></div></div><div class="figure"><a name="xfsm-advanced-fig"></a><p class="title"><b>Figure 2. <code class="application">xfce4-session</code> advanced preferences</b></p><div class="screenshot"><div class="mediaobject"><img src="images/xfsm-advanced.png" alt="Shows Advanced tab of the xfce4-session settings dialog."></div></div></div><div class="variablelist"><dl><dt><span class="term">Launch Gnome services on startup</span></dt><dd><p>Enable this option if you need the GNOME keyring daemon to be run
-          on startup. This option also instructs <strong class="application"><code>xfce4-session</code></strong> to bring up the GNOME assistive
+          automatic saving of sessions on logout or not.</p></dd></dl></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfsm-advanced settings"></a>Advanced preferences</h3></div></div></div><div class="figure"><a name="xfsm-advanced-fig"></a><p class="title"><b>Figure 2. <tt class="application">xfce4-session</tt> advanced preferences</b></p><div class="screenshot"><div class="mediaobject"><img src="images/xfsm-advanced.png" alt="Shows Advanced tab of the xfce4-session settings dialog."></div></div></div><div class="variablelist"><dl><dt><span class="term">Launch Gnome services on startup</span></dt><dd><p>Enable this option if you need the GNOME keyring daemon to be run
+          on startup. This option also instructs <b class="application"><tt>xfce4-session</tt></b> to bring up the GNOME assistive
           technologies at startup (if enabled in the GNOME control center). See the
            GNOME documentation for more information on this topic.</p></dd><dt><span class="term">Launch KDE services on startup</span></dt><dd><p>Enable this option if you plan to run KDE applications as part of 
           your Xfce Desktop session. This will notably increase the startup time, 
@@ -31,53 +31,53 @@
           a TCP port on your system, do not enable it unless you know what you are
           doing.</p><p>System administrators may want to disable this option globally using the
           session managers <a href="#xfsm-kiosk-mode" target="_top">KIOSK
-          capabilities</a>.</p></dd></dl></div></div></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfsm-customize"></a>Customizing the Session Manager</h2></div></div></div><p>You can customize the splash-screen that <strong class="application"><code>xfce4-session</code></strong> will use when you log in to
+          capabilities</a>.</p></dd></dl></div></div></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfsm-customize"></a>Customizing the Session Manager</h2></div></div></div><p>You can customize the splash-screen that <b class="application"><tt>xfce4-session</tt></b> will use when you log in to
 	Xfce 4. There is a dedicated dialog available from the <span class="emphasis"><em>Xfce 4
   Settings Manager</em></span>.</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfsm-engines"></a>Splash screen settings</h3></div></div></div><div class="figure"><a name="splash-screen-settings-fig"></a><p class="title"><b>Figure 3. Splash screen settings dialog</b></p><div class="screenshot"><div class="mediaobject"><img src="images/xfsm-splash.png" alt="Shows the xfce4-session splash screen settings dialog."></div></div></div><p>On the left, the dialog shows a list of all installed engines.
     Select an engine, and you will see, if available, a preview and
-    information about it. You can click on the <span><strong class="guibutton">Test</strong></span>
+    information about it. You can click on the <span><b class="guibutton">Test</b></span>
     button to see a demonstration of the selected splash screen
-    engine.</p><p><strong class="application"><code>xfce4-session</code></strong> provides three Splash themes engines by default. Their
+    engine.</p><p><b class="application"><tt>xfce4-session</tt></b> provides three Splash themes engines by default. Their
     respective configuration options - if any - are available from the
-    <span><strong class="guibutton">Configure</strong></span> button.</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfsm-shutdown"></a>Shutdown/reboot options</h3></div></div></div><p><strong class="application"><code>xfce4-session</code></strong> supports shutting down your computer when you log out
+    <span><b class="guibutton">Configure</b></span> button.</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfsm-shutdown"></a>Shutdown/reboot options</h3></div></div></div><p><b class="application"><tt>xfce4-session</tt></b> supports shutting down your computer when you log out
     of your desktop session. To be able to shutdown the computer, you
-    have to be listed in the systems <code class="filename">sudoers</code> file,
+    have to be listed in the systems <tt class="filename">sudoers</tt> file,
     in particular, you must be allowed to execute the command
-    <code class="filename">${libexecdir}/xfsm-shutdown-helper</code>
-    (<code class="filename">/usr/sbin/xfsm-shutdown-helper</code> on Debian GNU/Linux)
-    as user root (where <code class="filename">${libexecdir}</code> is the <code class="filename">libexec</code> sub directory in the prefix you
-    installed <strong class="application"><code>xfce4-session</code></strong>, for example
-    <code class="filename">/usr/local/libexec</code>).</p><p>For example, lets say, you installed <strong class="application"><code>xfce4-session</code></strong> into <code class="filename">/usr/local</code>, your hostname is <span class="emphasis"><em>myhost</em></span>
+    <tt class="filename">${libexecdir}/xfsm-shutdown-helper</tt>
+    (<tt class="filename">/usr/sbin/xfsm-shutdown-helper</tt> on Debian GNU/Linux)
+    as user root (where <tt class="filename">${libexecdir}</tt> is the <tt class="filename">libexec</tt> sub directory in the prefix you
+    installed <b class="application"><tt>xfce4-session</tt></b>, for example
+    <tt class="filename">/usr/local/libexec</tt>).</p><p>For example, lets say, you installed <b class="application"><tt>xfce4-session</tt></b> into <tt class="filename">/usr/local</tt>, your hostname is <span class="emphasis"><em>myhost</em></span>
     and your user account is named <span class="emphasis"><em>myuser</em></span>, then you
-    would have to add the following line to your <code class="filename">sudoers</code>
-    file (remember to use <strong class="application"><code>visudo</code></strong> to edit
-    that file):</p><pre class="programlisting">
+    would have to add the following line to your <tt class="filename">sudoers</tt>
+    file (remember to use <b class="application"><tt>visudo</tt></b> to edit
+    that file):</p><table border="0" bgcolor="#F3F4F8" width="100%"><tr><td><pre class="programlisting">
 myuser myhost=/usr/local/libexec/xfsm-shutdown-helper
-</pre></div></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfsm-advanced"></a>Advanced</h2></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="files-and-env-vars"></a>Files and Environment Variables</h3></div></div></div><p>Xfce now uses the Basedir Specification as defined on <a href="http://freedesktop.org/" target="_top">Freedesktop.org</a> to
+</pre></td></tr></table></div></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfsm-advanced"></a>Advanced</h2></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="files-and-env-vars"></a>Files and Environment Variables</h3></div></div></div><p>Xfce now uses the Basedir Specification as defined on <a href="http://freedesktop.org/" target="_top">Freedesktop.org</a> to
     locate its data and configuration files. This means that file locations
     will be specified as a path relative to the directories described in
     the specification.</p><div class="variablelist"><dl><dt><span class="term">${XDG_CONFIG_HOME}</span></dt><dd><p>The first base directory to look for configuration 
-          files. By default this is set to <code class="filename">~/.config/</code>.</p></dd><dt><span class="term">${XDG_CONFIG_DIRS}</span></dt><dd><p>A list of system directories that contain configuration
-          data. By default the panel will look in <code class="filename">${sysconfdir}/xdg/</code> and 
-          <code class="filename">/etc/xdg/</code>. The value of
+          files. By default this is set to <tt class="filename">~/.config/</tt>.</p></dd><dt><span class="term">${XDG_CONFIG_DIRS}</span></dt><dd><p>A list of system directories that contain configuration
+          data. By default the panel will look in <tt class="filename">${sysconfdir}/xdg/</tt> and 
+          <tt class="filename">/etc/xdg/</tt>. The value of
           ${sysconfdir} depends on how the program was build and will often be
-          <code class="filename">/etc/</code> for binary
+          <tt class="filename">/etc/</tt> for binary
           packages.</p></dd><dt><span class="term">${XDG_CACHE_HOME}</span></dt><dd><p>Specifies the root for all user-specific cache data. If
-          this environment variable is unset, it defaults to <code class="filename">~/.cache</code>.</p></dd><dt><span class="term">${XDG_CONFIG_DIRS}/xfce4-session/xfce4-session.rc</span></dt><dd><p>This is the location of the configuration file that
-          includes the various settings for <strong class="application"><code>xfce4-session</code></strong>, which can be changed
+          this environment variable is unset, it defaults to <tt class="filename">~/.cache</tt>.</p></dd><dt><span class="term">${XDG_CONFIG_DIRS}/xfce4-session/xfce4-session.rc</span></dt><dd><p>This is the location of the configuration file that
+          includes the various settings for <b class="application"><tt>xfce4-session</tt></b>, which can be changed
           from the settings dialog.</p></dd><dt><span class="term">${XDG_CONFIG_DIRS}/xfce4-session/xfce4-splash.rc</span></dt><dd><p>This is the location of the configuration file that
           includes the configuration for the splash screen, which
-          can be changed from the settings dialog.</p></dd><dt><span class="term">${XDG_CACHE_HOME}/sessions/</span></dt><dd><p>The directory where <strong class="application"><code>xfce4-session</code></strong> and <strong class="application"><code>xfwm4</code></strong>
+          can be changed from the settings dialog.</p></dd><dt><span class="term">${XDG_CACHE_HOME}/sessions/</span></dt><dd><p>The directory where <b class="application"><tt>xfce4-session</tt></b> and <b class="application"><tt>xfwm4</tt></b>
           store the session data to.</p></dd><dt><span class="term">${sysconfdir}/xdg/xfce4/kiosk/kioskrc</span></dt><dd><p>Kiosk mode configuration file. See <a href="#xfsm-kiosk-mode" target="_top">next
-          section</a> for an explanation.</p></dd></dl></div><p>None of the configuration files, except the <code class="filename">kioskrc</code>,
+          section</a> for an explanation.</p></dd></dl></div><p>None of the configuration files, except the <tt class="filename">kioskrc</tt>,
     are designed to be edited by hand during a Xfce session; in fact, the changes will
     be overwritten if you edit them while the session manager or the settings managers
     are running.</p><p>System administrators might want to customize the file
-    <code class="filename">${sysconfdir}/xdg/xfce4-session/xfce4-session.rc</code> to change
+    <tt class="filename">${sysconfdir}/xdg/xfce4-session/xfce4-session.rc</tt> to change
     the default applications that are run on Xfce startup. For example, if you want to
-    start the <strong class="application"><code>xfce4-iconbox</code></strong> instead of the 
-    <strong class="application"><code>xftaskbar4</code></strong>, you would change the <span class="emphasis"><em>[Failsafe
-    Session]</em></span> section like to something like this:</p><pre class="programlisting">
+    start the <b class="application"><tt>xfce4-iconbox</tt></b> instead of the 
+    <b class="application"><tt>xftaskbar4</tt></b>, you would change the <span class="emphasis"><em>[Failsafe
+    Session]</em></span> section like to something like this:</p><table border="0" bgcolor="#F3F4F8" width="100%"><tr><td><pre class="programlisting">
 [Failsafe Session]
 Count=4
 Client0_Command=xfwm4
@@ -88,12 +88,12 @@ Client2_Command=xfce4-iconbox
 Client2_PerScreen=True
 Client3_Command=xfdesktop
 Client3_PerScreen=False
-</pre></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfsm-kiosk-mode"></a>Kiosk Mode</h3></div></div></div><p>The session manager offers support for the Kiosk Mode, that helps to
+</pre></td></tr></table></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfsm-kiosk-mode"></a>Kiosk Mode</h3></div></div></div><p>The session manager offers support for the Kiosk Mode, that helps to
     prevent users from making changes to their session settings. To use it you
     have to edit or create the file
-    <code class="filename">${sysconfdir}/xdg/xfce4/kiosk/kioskrc</code>.</p><p>The way to explain the format of this file is by using an example. The
-    xfce4-session section of your <code class="filename">kioskrc</code> might look like
-    this:</p><pre class="programlisting">
+    <tt class="filename">${sysconfdir}/xdg/xfce4/kiosk/kioskrc</tt>.</p><p>The way to explain the format of this file is by using an example. The
+    xfce4-session section of your <tt class="filename">kioskrc</tt> might look like
+    this:</p><table border="0" bgcolor="#F3F4F8" width="100%"><tr><td><pre class="programlisting">
 [xfce4-session]
 CustomizeSplash=ALL
 CustomizeChooser=ALL
@@ -101,16 +101,16 @@ CustomizeLogout=ALL
 CustomizeCompatibility=%wheel
 Shutdown=%wheel
 CustomizeSecurity=NONE
-</pre><p>This allows all users to change their splash, chooser and logout settings,
+</pre></td></tr></table><p>This allows all users to change their splash, chooser and logout settings,
     but allows only users in the group <span class="emphasis"><em>wheel</em></span> to customize the 
     compatibility settings and shutdown the system. No one will be allowed to adjust
     the security settings.</p><p>The session manager supports the following KIOSK capabilities:</p><div class="variablelist"><dl><dt><span class="term">CustomizeSplash</span></dt><dd><p>Whether or not the user is allowed to customize the splash screen.</p></dd><dt><span class="term">CustomizeChooser</span></dt><dd><p>Whether or not the user is allowed to customize the session chooser settings.</p></dd><dt><span class="term">CustomizeLogout</span></dt><dd><p>Whether or not the user is allowed to customize the logout settings.</p></dd><dt><span class="term">CustomizeCompatibility</span></dt><dd><p>Whether or not the user is allowed to customize the compatibility
           settings (KDE/Gnome compat)</p></dd><dt><span class="term">CustomizeSecurity</span></dt><dd><p>Whether or not the user is allowed to customize the security settings.
           This is one of the most <span class="emphasis"><em>IMPORTANT</em></span> settings, since it
-          prevents users (actually <code class="filename">libICE</code>) from binding to a TCP port.</p></dd><dt><span class="term">Shutdown</span></dt><dd><p>Whether or not the user is allowed to shutdown (reboot or poweroff) the system.
+          prevents users (actually <tt class="filename">libICE</tt>) from binding to a TCP port.</p></dd><dt><span class="term">Shutdown</span></dt><dd><p>Whether or not the user is allowed to shutdown (reboot or poweroff) the system.
           If a user lacks this capability the reboot and poweroff options in the shutdown
-          dialog will be greyed out.</p></dd></dl></div></div></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfsm-copyright"></a>About <strong class="application"><code>xfce4-session</code></strong></h2></div></div></div><p><strong class="application"><code>xfce4-session</code></strong> was written by Benedikt Meurer 
-  (<code class="email">&lt;<a href="mailto:benny@xfce.org">benny@xfce.org</a>&gt;</code>).
+          dialog will be greyed out.</p></dd></dl></div></div></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfsm-copyright"></a>About <b class="application"><tt>xfce4-session</tt></b></h2></div></div></div><p><b class="application"><tt>xfce4-session</tt></b> was written by Benedikt Meurer 
+  (<tt class="email">&lt;<a href="mailto:benny@xfce.org">benny@xfce.org</a>&gt;</tt>).
     To find more information, please visit the 
     <a href="http://www.xfce.org" target="_top">Xfce web site</a>. 
   </p><p>To report a bug or make a suggestion regarding this application or
