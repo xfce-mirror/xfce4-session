@@ -25,3 +25,6 @@ noinst_DATA =								\
 
 EXTRA_DIST =								\
 	session.png
+
+appsdir = $(datadir)/applications
+apps_DATA = xfce-session-settings.desktop
