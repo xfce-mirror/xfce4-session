@@ -209,11 +209,11 @@ pending_continue(Client *client)
 		gtk_widget_show(splash);
 
 		/* XXX - give time to the splash screen to appear */
-		g_idle_add((GSourceFunc)pending_timeout, NULL);
+		(void)g_timeout_add(100, (GSourceFunc)pending_timeout, NULL);
 		return;
 	}
 
-	g_idle_add((GSourceFunc)pending_launch, NULL);
+	(void)g_timeout_add(100, (GSourceFunc)pending_launch, NULL);
 }
 
 
