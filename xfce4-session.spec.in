@@ -52,8 +52,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS COPYING ChangeLog ChangeLog.pre-xfce-devel NEWS README TODO
 %{_bindir}/*
 %{_datadir}/applications/*
-%{_datadir}/icons/
-%{_datadir}/locale/
+%{_datadir}/icons/*
+%{_datadir}/xfce4/*
+%{_datadir}/locale/*
 %{_libdir}/xfce4/mcs-plugins/*
 %{_libdir}/xfce4/splash/engines/libmice.*
 %{_libexecdir}/xfsm-shutdown-helper
