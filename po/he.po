@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-07 11:12+0200\n"
+"POT-Creation-Date: 2004-08-24 14:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,39 +17,197 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: xfce4-session/main.c:146
-msgid "Restoring the desktop settings, please wait..."
-msgstr "משחזר את הגדרות שולחן העבודה, אנא המתן..."
+#: settings/session/session.c:133
+msgid "Session chooser"
+msgstr "בוחר ההפעלה"
 
-#: xfce4-session/shutdown.c:285
+#: settings/session/session.c:138
+#, fuzzy
+msgid "Display chooser on login"
+msgstr "הצג בוחר בכל היתנתקות"
+
+#: settings/session/session.c:146
+msgid ""
+"If set, the session manager will ask you to choose a session every time you "
+"log in to Xfce."
+msgstr ""
+
+#: settings/session/session.c:150
+msgid "Logout settings"
+msgstr "הגדרות היתנתקות"
+
+#: settings/session/session.c:156
+msgid "Automatically save session on logout"
+msgstr "שמור הפעלה באופן אוטומטי בהיתנתקות"
+
+#: settings/session/session.c:162
+msgid ""
+"This option instructs the session manager to save the current session "
+"automatically when you log out. If you don't select this option you'll be "
+"prompted whether you want to save the current session on each logout."
+msgstr ""
+
+#: settings/session/session.c:169
+msgid "Prompt on logout"
+msgstr "הקפץ בהיתנתקות"
+
+#: settings/session/session.c:175
+msgid ""
+"This option disables the logout confirmation dialog. Whether the session "
+"will be saved or not depends on whether you enabled the automatic saving of "
+"sessions on logout or not."
+msgstr ""
+
+#: settings/session/session.c:211
+msgid "Compatibility"
+msgstr ""
+
+#: settings/session/session.c:220
+msgid "Launch Gnome services on startup"
+msgstr "הפעל אוטומטית את שרותי ה Gnome"
+
+#: settings/session/session.c:230
+msgid ""
+"Enable this if you plan to use Gnome applications. This will instruct the "
+"session manager to start some vital Gnome services for you. You should also "
+"enable this if you want to use the Assistive Technologies that ship with "
+"Gnome."
+msgstr ""
+
+#: settings/session/session.c:237
+msgid "Launch KDE services on startup"
+msgstr "הפעל אוטומטית את שרותי ה KDE"
+
+#: settings/session/session.c:243
+msgid ""
+"Enable this option if you plan to run KDE applications as part of your Xfce "
+"Desktop session. This will notably increase the startup time, but on the "
+"other hand, KDE applications will startup faster. Some KDE applications may "
+"not work at all if you don't enable this option."
+msgstr ""
+
+#: settings/session/session.c:256
+msgid "Security"
+msgstr "אבטחה"
+
+#: settings/session/session.c:261
+msgid "Manage remote applications"
+msgstr "נהל ישום מרחוק"
+
+#: settings/session/session.c:273
+msgid ""
+"Allow the session manager to manage applications running on remote hosts. Do "
+"not enable this option unless you know what you are doing."
+msgstr ""
+
+#: settings/session/session.c:332 settings/session/session.c:347
+#: settings/session/session.c:384
+msgid "Sessions and Startup"
+msgstr "הפעלות והפעלה אוטומטית"
+
+#: settings/session/session.c:355
+msgid "General"
+msgstr "כללי"
+
+#: settings/session/session.c:361
+msgid "Advanced"
+msgstr "מתקדם"
+
+#: settings/splash/splash.c:305 settings/splash/splash.c:308
+#: settings/splash/splash.c:311 settings/splash/splash.c:314
+#: settings/splash/splash.c:381
+msgid "None"
+msgstr ""
+
+#: settings/splash/splash.c:404 settings/splash/splash.c:418
+msgid "Splash Screen Settings"
+msgstr ""
+
+#: settings/splash/splash.c:458
+msgid "Configure"
+msgstr ""
+
+#: settings/splash/splash.c:466
+msgid "Opens the configuration panel for the selected splash screen."
+msgstr ""
+
+#: settings/splash/splash.c:470
+msgid "Test"
+msgstr ""
+
+#: settings/splash/splash.c:477
+msgid "Demonstrates the selected splash screen."
+msgstr ""
+
+#: settings/splash/splash.c:494
+msgid "Information"
+msgstr ""
+
+#: settings/splash/splash.c:505
+msgid "<b>Description:</b>"
+msgstr ""
+
+#: settings/splash/splash.c:519
+msgid "<b>Version:</b>"
+msgstr ""
+
+#: settings/splash/splash.c:533
+msgid "<b>Author:</b>"
+msgstr ""
+
+#: settings/splash/splash.c:547
+msgid "<b>Homepage:</b>"
+msgstr ""
+
+#: settings/splash/splash.c:584
+#, fuzzy
+msgid "Splash Screen"
+msgstr "ערכת נושא של מסך הפתיחה"
+
+#: xfce4-session/main.c:138
+#, fuzzy
+msgid "Loading desktop settings"
+msgstr "הגדרות היתנתקות"
+
+#. verify that the DNS settings are ok
+#: xfce4-session/main.c:191
+msgid "Verifying DNS settings"
+msgstr ""
+
+#: xfce4-session/main.c:194
+#, fuzzy
+msgid "Loading session data"
+msgstr "אנא המתן, טוען קובצי הפעלה"
+
+#: xfce4-session/shutdown.c:298
 msgid "What do you want to do next?"
 msgstr "מה אתה רוצה לעשות?"
 
-#: xfce4-session/shutdown.c:294
+#: xfce4-session/shutdown.c:307
 msgid "Quit current session"
 msgstr "עזוב הפעלה זו"
 
-#: xfce4-session/shutdown.c:300
+#: xfce4-session/shutdown.c:313
 msgid "Reboot the computer"
 msgstr "הפעל מחדש את המחשב"
 
-#: xfce4-session/shutdown.c:305
+#: xfce4-session/shutdown.c:318
 msgid "Turn off the computer"
 msgstr "כבה את המחשב"
 
-#: xfce4-session/shutdown.c:312
+#: xfce4-session/shutdown.c:325
 msgid "_Save session for future logins"
 msgstr "_שמור הפעלה להיתחברויות עתדיות"
 
-#: xfce4-session/shutdown.c:406
+#: xfce4-session/shutdown.c:419
 msgid "Please enter your password:"
 msgstr "אנא הקלד את הסיסמה שלך:"
 
-#: xfce4-session/shutdown.c:461
+#: xfce4-session/shutdown.c:474
 msgid "<b>An error occured</b>"
 msgstr "<b>אראה תקלה</b>"
 
-#: xfce4-session/shutdown.c:475
+#: xfce4-session/shutdown.c:488
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
@@ -60,279 +218,283 @@ msgstr ""
 msgid "Background window"
 msgstr "חלון רקע"
 
-#: xfce4-session/xfsm-startup.c:91
-msgid "Starting the Volume Controller"
-msgstr "מפעיל את מנהל השמע"
-
-#: xfce4-session/xfsm-startup.c:93
-msgid "Starting the Panel"
-msgstr "מפעיל את הלוח"
-
-#: xfce4-session/xfsm-startup.c:95
-msgid "Starting the Desktop Manager"
-msgstr "מפעל את מנהל שולחן העבודה"
-
-#: xfce4-session/xfsm-startup.c:97
-msgid "Starting the Taskbar"
-msgstr "מפעיל את שורת המשימות"
-
-#: xfce4-session/xfsm-startup.c:99
-msgid "Starting the Window Manager"
-msgstr "מפעיל את מנהל החלונות"
-
-#: xfce4-session/xfsm-startup.c:103
-msgid "Starting the Gnome Terminal Emulator"
-msgstr ""
-
-#: xfce4-session/xfsm-startup.c:107
-msgid "Starting the KDE Advanced Text Editor"
-msgstr "מפעיל את עורך הטקסט המתקדם של KDE" 
-
-#: xfce4-session/xfsm-startup.c:109
-msgid "Starting the KDE Clipboard Manager"
-msgstr "מפעיל את מנהל העריכה של KDE"
-
-#: xfce4-session/xfsm-startup.c:111
-msgid "Starting the KDE Mail Reader"
-msgstr "מפעיל את קורא הדואר של KDE"
-
-#: xfce4-session/xfsm-startup.c:113
-msgid "Starting the KDE News Reader"
-msgstr "מפעיל את קורא החדשות של KDE"
-
-#: xfce4-session/xfsm-startup.c:115
-msgid "Starting the Konqueror"
-msgstr "מפעיל את Konqueror"
-
-#: xfce4-session/xfsm-startup.c:117
-msgid "Starting the KDE Terminal Emulator"
-msgstr ""
-
-#: xfce4-session/xfsm-startup.c:121
-msgid "Starting the Beep Media Player"
-msgstr "מפעיל את Beep Media Player"
-
-#: xfce4-session/xfsm-startup.c:123
-msgid "Starting The Gimp"
-msgstr "מפעיל את Gimp"
-
-#: xfce4-session/xfsm-startup.c:125
-msgid "Starting the VI Improved Editor"
-msgstr "מפעיל את  VI"
-
-#: xfce4-session/xfsm-startup.c:127
-msgid "Starting the Session Management Proxy"
-msgstr ""
-
-#: xfce4-session/xfsm-startup.c:129
-msgid "Starting the X-Chat IRC Client"
-msgstr "מפעיל את X-Chat לקוח ה IRC"
-
-#: xfce4-session/xfsm-startup.c:131
-msgid "Starting the X Multimedia System"
-msgstr "מפעיל את מערכת המולטימדיה של מערכת ה X"
-
-#: xfce4-session/xfsm-startup.c:133
-msgid "Starting the X Terminal Emulator"
-msgstr ""
-
-#: xfce4-session/xfsm-startup.c:135
-#, c-format
-msgid "Starting %s"
-msgstr "מפעיל את %s"
-
-#: xfce4-session/xfsm-startup.c:156
-msgid "Performing Autostart..."
-msgstr "מבצע הפעלה אוטומטית"
-
-#: xfce4-session/xfsm-splash-screen.c:363
-msgid "Starting Xfce, please wait..."
-msgstr "מפעיל את Xfce, אנא המתן..."
-
-#: xfce4-session/xfsm-splash-screen.c:446
-msgid "Please wait, loading session data..."
-msgstr "אנא המתן, טוען קובצי הפעלה"
-
-#: xfce4-session/xfsm-chooser.c:131 xfce4-session/xfsm-chooser.c:132
-msgid "Default session"
-msgstr "הפעלת ברירת מחדל"
-
-#: xfce4-session/xfsm-chooser.c:135 xfce4-session/xfsm-chooser.c:136
-msgid "Session rc object"
-msgstr ""
-
-#: xfce4-session/xfsm-chooser.c:197 xfce4-session/xfsm-chooser.c:218
-#: xfce4-session/xfsm-chooser.c:280 xfce4-session/xfsm-chooser.c:657
-msgid "Restore"
-msgstr "משחזר"
-
-#: xfce4-session/xfsm-chooser.c:288 xfce4-session/xfsm-chooser.c:666
-msgid "Create"
-msgstr "יוצר"
-
-#: xfce4-session/xfsm-chooser.c:344
-msgid "Restore a previously saved session:"
-msgstr "שחזר הפעלה שמורה:"
-
-#: xfce4-session/xfsm-chooser.c:346
-msgid ""
-"Choose this option if you want to restore one of your previously saved "
-"sessions. This will bring up the desktop as it was when you saved the "
-"session."
-msgstr ""
-"בחר באפשרות זו אם אתה רוצה לשחזר"
-"הפעלה שמורה. זה יחזיר את שולחן העבודה למצב שבו נישמרה ההפעלה."
-
-#: xfce4-session/xfsm-chooser.c:376
+#: xfce4-session/xfsm-chooser.c:208
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr ""
-"בחר את ההפעלה אשר בירצונך לשחזר. אתה יכול לילחוץ לחיצה כפולה"
-"על שם ההפעלה כדאי לשחזר אותה."
-
-#: xfce4-session/xfsm-chooser.c:417
-msgid "Create a new session:"
-msgstr "צור הפעלה חדשה:"
-
-#: xfce4-session/xfsm-chooser.c:419
-msgid ""
-"Choose this option if you want to create a new session. The new session will "
-"be started as a default desktop. XXX - better text?"
-msgstr ""
-"בחר אפשרות זו אם בירצונך ליצור הפעלה חדשה. ההפעלה החדשה"
-"תופעל כשולחן ברירת המחדל. XXX - טקסט טוב יותר?"
-
-#: xfce4-session/xfsm-chooser.c:429
-msgid ""
-"Enter the name of the new session here. The name has to be unique among your "
-"session names and empty session names are not allowed."
-msgstr ""
+"בחר את ההפעלה אשר בירצונך לשחזר. אתה יכול לילחוץ לחיצה כפולהעל שם ההפעלה "
+"כדאי לשחזר אותה."
 
 #. "Logout" button
-#: xfce4-session/xfsm-chooser.c:439
+#: xfce4-session/xfsm-chooser.c:234
 msgid "Logout"
 msgstr "היתנתקות"
 
-#: xfce4-session/xfsm-chooser.c:441
+#: xfce4-session/xfsm-chooser.c:236
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "בטל את אפשרויות ההיתחברות וחזור למסך ההיתחברות."
 
-#. fire up the keyring daemon
-#: xfce4-session/xfsm-compat-gnome.c:237
+#. "New" button
+#: xfce4-session/xfsm-chooser.c:244
+#, fuzzy
+msgid "New session"
+msgstr "הפעלת ברירת מחדל"
+
+#: xfce4-session/xfsm-chooser.c:246
+#, fuzzy
+msgid "Create a new session."
+msgstr "צור הפעלה חדשה:"
+
+#: xfce4-session/xfsm-dns.c:76
+msgid "(Unknown)"
+msgstr ""
+
+#: xfce4-session/xfsm-dns.c:143
+#, c-format
+msgid ""
+"Could not look up internet address for %s.\n"
+"This will prevent Xfce from operating correctly.\n"
+"It may be possible to correct the problem by adding\n"
+"%s to the file /etc/hosts on your system."
+msgstr ""
+
+#: xfce4-session/xfsm-dns.c:150
+msgid "Continue anyway"
+msgstr ""
+
+#: xfce4-session/xfsm-dns.c:151
+msgid "Try again"
+msgstr ""
+
+#: xfce4-session/xfsm-compat-gnome.c:239
 msgid "Starting The Gnome Keyring Daemon"
 msgstr ""
 
-#: xfce4-session/xfsm-compat-gnome.c:247
+#: xfce4-session/xfsm-compat-gnome.c:250
 msgid "Starting Gnome Assistive Technologies"
 msgstr ""
 
-#: xfce4-session/xfsm-splash-theme.c:113
-msgid "No description given"
-msgstr "לא ניתן תיאור"
-
-#: xfce4-session/xfsm-compat-kde.c:47
+#: xfce4-session/xfsm-compat-kde.c:118
 msgid "Starting KDE services"
 msgstr "מפעיל את שרותי ה KDE"
 
-#: settings/session.c:149
-msgid "Session chooser"
-msgstr "בוחר ההפעלה"
+#: xfce4-session/xfsm-splash-screen.c:177
+#, fuzzy
+msgid "Choose session"
+msgstr "הפעלת ברירת מחדל"
 
-#: settings/session.c:155
-msgid "Display chooser on each login"
-msgstr "הצג בוחר בכל היתנתקות"
+#: xfce4-session/xfsm-splash-screen.c:207
+#, fuzzy
+msgid "Choose session name"
+msgstr "בחר שם לערכת הנושא..."
 
-#: settings/session.c:157
-msgid "Display chooser on demand"
-msgstr "הצג בוחר רק בדרישה"
+#: xfce4-session/xfsm-splash-screen.c:221
+#, fuzzy
+msgid "Choose a name for the new session:"
+msgstr "צור הפעלה חדשה:"
 
-#: settings/session.c:159
-msgid "Restore last session automatically"
-msgstr "שחזר הפעלה אחרונה אוטומטית"
+#: xfce4-session/xfsm-startup.c:92
+msgid "Starting the Volume Controller"
+msgstr "מפעיל את מנהל השמע"
 
-#: settings/session.c:168
-msgid "Logout settings"
-msgstr "הגדרות היתנתקות"
+#: xfce4-session/xfsm-startup.c:94
+msgid "Starting the Panel"
+msgstr "מפעיל את הלוח"
 
-#: settings/session.c:173
-msgid "Automatically save session on logout"
-msgstr "שמור הפעלה באופן אוטומטי בהיתנתקות"
+#: xfce4-session/xfsm-startup.c:96
+msgid "Starting the Desktop Manager"
+msgstr "מפעל את מנהל שולחן העבודה"
 
-#: settings/session.c:179
-msgid "Prompt on logout"
-msgstr "הקפץ בהיתנתקות"
+#: xfce4-session/xfsm-startup.c:98
+msgid "Starting the Taskbar"
+msgstr "מפעיל את שורת המשימות"
 
-#: settings/session.c:216
-msgid "Compatibility"
+#: xfce4-session/xfsm-startup.c:100
+msgid "Starting the Window Manager"
+msgstr "מפעיל את מנהל החלונות"
+
+#: xfce4-session/xfsm-startup.c:104
+msgid "Starting the Gnome Terminal Emulator"
 msgstr ""
 
-#: settings/session.c:224
-msgid "Launch Gnome services on startup"
-msgstr "הפעל אוטומטית את שרותי ה Gnome"
+#: xfce4-session/xfsm-startup.c:108
+msgid "Starting the KDE Advanced Text Editor"
+msgstr "מפעיל את עורך הטקסט המתקדם של KDE"
 
-#: settings/session.c:234
-msgid "Launch KDE services on startup"
-msgstr "הפעל אוטומטית את שרותי ה KDE"
+#: xfce4-session/xfsm-startup.c:110
+msgid "Starting the KDE Clipboard Manager"
+msgstr "מפעיל את מנהל העריכה של KDE"
 
-#: settings/session.c:245
-msgid "Security"
-msgstr "אבטחה"
+#: xfce4-session/xfsm-startup.c:112
+msgid "Starting the KDE Mail Reader"
+msgstr "מפעיל את קורא הדואר של KDE"
 
-#: settings/session.c:250
-msgid "Manage remote applications"
-msgstr "נהל ישום מרחוק"
+#: xfce4-session/xfsm-startup.c:114
+msgid "Starting the KDE News Reader"
+msgstr "מפעיל את קורא החדשות של KDE"
 
-#: settings/session.c:299 settings/session.c:315 settings/session.c:349
-msgid "Sessions and Startup"
-msgstr "הפעלות והפעלה אוטומטית"
+#: xfce4-session/xfsm-startup.c:116
+msgid "Starting the Konqueror"
+msgstr "מפעיל את Konqueror"
 
-#: settings/session.c:321
-msgid "General"
-msgstr "כללי"
+#: xfce4-session/xfsm-startup.c:118
+msgid "Starting the KDE Terminal Emulator"
+msgstr ""
 
-#: settings/session.c:325
-msgid "Look & Feel"
-msgstr "מראה ותחושה"
+#: xfce4-session/xfsm-startup.c:122
+msgid "Starting the Beep Media Player"
+msgstr "מפעיל את Beep Media Player"
 
-#: settings/session.c:329
-msgid "Advanced"
-msgstr "מתקדם"
+#: xfce4-session/xfsm-startup.c:124
+msgid "Starting The Gimp"
+msgstr "מפעיל את Gimp"
 
-#: settings/looknfeel.c:307
+#: xfce4-session/xfsm-startup.c:126
+msgid "Starting the VI Improved Editor"
+msgstr "מפעיל את  VI"
+
+#: xfce4-session/xfsm-startup.c:128
+msgid "Starting the Session Management Proxy"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:130
+msgid "Starting the X-Chat IRC Client"
+msgstr "מפעיל את X-Chat לקוח ה IRC"
+
+#: xfce4-session/xfsm-startup.c:132
+msgid "Starting the X Multimedia System"
+msgstr "מפעיל את מערכת המולטימדיה של מערכת ה X"
+
+#: xfce4-session/xfsm-startup.c:134
+msgid "Starting the X Terminal Emulator"
+msgstr ""
+
+#: xfce4-session/xfsm-startup.c:136
+#, c-format
+msgid "Starting %s"
+msgstr "מפעיל את %s"
+
+#: xfce4-session/xfsm-startup.c:158
+msgid "Performing Autostart..."
+msgstr "מבצע הפעלה אוטומטית"
+
+#: engines/balou/balou-theme.c:110
+msgid "No description given"
+msgstr "לא ניתן תיאור"
+
+#: engines/balou/config.c:317
 msgid "Choose theme file to install..."
 msgstr "בחר קובץ ערכת נושא להתקנה..."
 
-#: settings/looknfeel.c:320
+#: engines/balou/config.c:329
 #, c-format
 msgid ""
 "Unable to install splash theme from file %s, please check that the file is a "
 "valid splash theme archive."
 msgstr ""
-"לא יכול להתקין עיצוב מסך הפתיחה מהקובץ %s,אנא בדוק שהקובץ"
-"הינו ערכת נושא למסך הפתיחה תקין"
+"לא יכול להתקין עיצוב מסך הפתיחה מהקובץ %s,אנא בדוק שהקובץהינו ערכת נושא למסך "
+"הפתיחה תקין"
 
-#: settings/looknfeel.c:369
+#: engines/balou/config.c:382
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "לא יכול להסיר ערכת נושא של מסך הפתיחה \"%s\" מהתיקיה %s"
 
-#: settings/looknfeel.c:449
+#: engines/balou/config.c:467
 msgid "Choose theme filename..."
 msgstr "בחר שם לערכת הנושא..."
 
-#: settings/looknfeel.c:583
+#: engines/balou/config.c:600
 msgid "_Install new theme"
 msgstr "_התקן ערכת נושא חדשה"
 
-#: settings/looknfeel.c:592
+#: engines/balou/config.c:609
 msgid "_Remove theme"
 msgstr "_הסר ערכת נושא"
 
-#: settings/looknfeel.c:609
+#: engines/balou/config.c:626
 msgid "_Export theme"
 msgstr "_יצא ערכת נושא"
 
-#: settings/looknfeel.c:800
-msgid "Splash theme"
+#: engines/balou/config.c:841
+#, fuzzy
+msgid "Balou theme"
 msgstr "ערכת נושא של מסך הפתיחה"
+
+#: engines/balou/config.c:924
+msgid "Configure Balou..."
+msgstr ""
+
+#: engines/simple/simple.c:315
+#, fuzzy
+msgid "Choose image..."
+msgstr "בחר שם לערכת הנושא..."
+
+#: engines/simple/simple.c:360
+msgid "Configure Simple..."
+msgstr ""
+
+#: engines/simple/simple.c:371
+msgid "Font"
+msgstr ""
+
+#: engines/simple/simple.c:380
+msgid "Colors"
+msgstr ""
+
+#: engines/simple/simple.c:388
+#, fuzzy
+msgid "Background color:"
+msgstr "חלון רקע"
+
+#: engines/simple/simple.c:400
+msgid "Text color:"
+msgstr ""
+
+#: engines/simple/simple.c:412
+msgid "Image"
+msgstr ""
+
+#: engines/simple/simple.c:420
+msgid "Use custom image"
+msgstr ""
+
+#~ msgid "Restoring the desktop settings, please wait..."
+#~ msgstr "משחזר את הגדרות שולחן העבודה, אנא המתן..."
+
+#~ msgid "Starting Xfce, please wait..."
+#~ msgstr "מפעיל את Xfce, אנא המתן..."
+
+#~ msgid "Restore"
+#~ msgstr "משחזר"
+
+#~ msgid "Create"
+#~ msgstr "יוצר"
+
+#~ msgid "Restore a previously saved session:"
+#~ msgstr "שחזר הפעלה שמורה:"
+
+#~ msgid ""
+#~ "Choose this option if you want to restore one of your previously saved "
+#~ "sessions. This will bring up the desktop as it was when you saved the "
+#~ "session."
+#~ msgstr ""
+#~ "בחר באפשרות זו אם אתה רוצה לשחזרהפעלה שמורה. זה יחזיר את שולחן העבודה "
+#~ "למצב שבו נישמרה ההפעלה."
+
+#~ msgid ""
+#~ "Choose this option if you want to create a new session. The new session "
+#~ "will be started as a default desktop. XXX - better text?"
+#~ msgstr ""
+#~ "בחר אפשרות זו אם בירצונך ליצור הפעלה חדשה. ההפעלה החדשהתופעל כשולחן ברירת "
+#~ "המחדל. XXX - טקסט טוב יותר?"
+
+#~ msgid "Display chooser on demand"
+#~ msgstr "הצג בוחר רק בדרישה"
+
+#~ msgid "Restore last session automatically"
+#~ msgstr "שחזר הפעלה אחרונה אוטומטית"
+
+#~ msgid "Look & Feel"
+#~ msgstr "מראה ותחושה"

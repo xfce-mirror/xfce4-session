@@ -357,10 +357,7 @@ balou_destroy (Balou *balou)
   balou_theme_destroy (balou->theme);
 
   for (i = 0; i < balou->nwindows; ++i)
-    {
-      // FIXME: animate
-      balou_window_destroy (balou->windows + i);
-    }
+    balou_window_destroy (balou->windows + i);
   g_free (balou->windows);
 
   if (balou->fader_pm != NULL)

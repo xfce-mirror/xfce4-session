@@ -1,3 +1,102 @@
+2004-08-24 12:04  pollux
+
+	* configure, configure.ac, po/ru.gmo, po/ru.po: RU translations
+	update from Anthony Ivanoff <a-i@bk.ru>
+
+2004-08-22 17:03  benny
+
+	* xfce4-session/xfsm-manager.c: Fix crash reported by
+	bile@landofbile.com.
+
+2004-08-15 21:39  olivier
+
+	* po/fr.gmo, po/fr.po,
+	settings/session/xfce-session-settings.desktop,
+	settings/splash/xfce-splash-settings.desktop: Resync with
+	repository, most notably: - libxfcegui4 fixes with gtk 2.2 - xfwm4
+	updates - Present panel plugins in alphabetical order - Fix add
+	plugin dialog being placed over the panel when using SM - French po
+	updates - Other various small bug fixes
+
+2004-08-15 11:02  pollux
+
+	* aclocal.m4, configure, configure.ac, po/he.gmo, po/he.po: Hebrew
+	translations from Yuval Tanny <tanai@int.gov.il>
+
+2004-08-08 15:54  benny
+
+	* docs/xfce-nochunk.xsl: Missing from the previous commit.
+
+2004-08-08 15:54  benny
+
+	* configure, configure.ac, docs/Makefile.am, docs/Makefile.in,
+	docs/C/Makefile.am, docs/C/Makefile.in, docs/C/xfce4-session.html,
+	docs/C/xfce4-session.xml, docs/C/images/Makefile.am,
+	docs/C/images/Makefile.in, docs/C/images/xfsm-advanced.png,
+	docs/C/images/xfsm-general.png, docs/C/images/xfsm-splash.png:
+	Added html documentation, thanks to Francois.
+
+2004-07-28 23:22  benny
+
+	* m4/depends.m4: Fixed (module)_FOUND bug reported by brian.
+	Hopefully nothing else broke this time.
+
+2004-07-27 20:25  benny
+
+	* configure, configure.ac, icons/Makefile.am, icons/Makefile.in,
+	icons/scalable/Makefile.am, icons/scalable/Makefile.in,
+	icons/scalable/xfce4-session.svg, icons/scalable/xfsm-shutdown.svg:
+	Added scalable icons from Francois.
+
+2004-07-26 21:03  benny
+
+	* docs/README.Kiosk: typo
+
+2004-07-26 20:46  benny
+
+	* configure, configure.ac, docs/README.Kiosk, po/ar.gmo, po/az.gmo,
+	po/ca.gmo, po/es.gmo, po/es_MX.gmo, po/eu.gmo, po/fa_IR.gmo,
+	po/fr.gmo, po/hi.gmo, po/it.gmo, po/ja.gmo, po/ko.gmo, po/lt.gmo,
+	po/ms.gmo, po/nl.gmo, po/no.gmo, po/pl.gmo, po/pt_BR.gmo,
+	po/sv.gmo, po/ta.gmo, po/tr.gmo, po/zh_CN.gmo, po/zh_TW.gmo,
+	settings/session/session.c, settings/splash/splash.c,
+	xfce4-session/shutdown.c: Added KIOSK mode functionality.
+
+2004-07-26 19:07  benny
+
+	* xfce4-session/main.c: Place Xfce version in --version output.
+
+2004-07-24 20:52  benny
+
+	* m4/depends.m4: Readded XFCE_MCS_PLUGIN() again, dunno how I
+	manage to remove it everytime I edit depends.m4!
+
+2004-07-24 19:30  benny
+
+	* m4/depends.m4: XFCE_PANEL_PLUGIN had wrong panel version for the
+	threaded test.
+
+2004-07-24 19:28  benny
+
+	* m4/depends.m4: Extended the XFCE_PANEL_PLUGIN macro to include
+	some magic for threaded panels.
+
+2004-07-23 22:11  benny
+
+	* po/: ar.po, az.po, ca.po, de.gmo, de.po, es.po, es_MX.po, eu.po,
+	fa_IR.po, fr.po, hi.po, it.po, ja.po, ko.po, lt.po, ms.po, nl.po,
+	no.po, pl.po, pt_BR.po, sv.po, ta.po, tr.po, xfce4-session.pot,
+	zh_CN.po, zh_TW.po: update-po.
+
+2004-07-23 19:17  benny
+
+	* COPYING, ChangeLog, configure, configure.ac, xfce4-session.rc,
+	engines/balou/config.c, settings/session/session.c,
+	settings/splash/splash.c: Updated ChangeLog. Bumped version to
+	4.1.13. Fix balou config treeview drag icon. Added several
+	tooltips. Added scrolled window and frames to the splash mcs
+	dialog.
+
 2004-07-23 19:09  benny
 
 	* xfce4-session.spec.in: Fixed .spec file.

@@ -296,8 +296,6 @@ engine_init (XfsmSplashEngine *engine)
 
 
 
-/* FIXME: 2.4.x only because of missing GtkColorButton! Add XfceColorButton
-   to libxfcegui4? */
 static void
 config_toggled (GtkWidget *button, GtkWidget *widget)
 {
