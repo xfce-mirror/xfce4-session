@@ -162,12 +162,12 @@ initialize (int argc, char **argv)
     {
       if (strcmp (*argv, "--version") == 0)
         {
-          printf ("Xfce %s\n\n"
+          printf ("%s (Xfce %s)\n\n"
                   "Copyright (c) 2003-2004\n"
                   "        The Xfce development team. All rights reserved.\n\n"
                   "Written for Xfce by Benedikt Meurer <benny@xfce.org>.\n\n"
                   "Please report bugs to <%s>.\n",
-                  PACKAGE_STRING, PACKAGE_BUGREPORT);
+                  PACKAGE_STRING, xfce_version_string (), PACKAGE_BUGREPORT);
           exit (EXIT_SUCCESS);
         }
       else if (strcmp (*argv, "--disable-tcp") == 0)
