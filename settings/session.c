@@ -303,7 +303,7 @@ dialog_run (McsPlugin *plugin)
                                         NULL);
 
   gtk_window_set_icon (GTK_WINDOW (dialog), plugin->icon);
-  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
+  xfce_gtk_window_center_on_monitor_with_pointer (GTK_WINDOW (dialog));
 
   g_signal_connect (G_OBJECT (dialog), "response",
                     G_CALLBACK (dialog_response), NULL);
