@@ -275,12 +275,6 @@ xfsm_startup_continue_session (const gchar *previous_id)
       return FALSE;
     }
 
-  /* start up done, free all properties that failed to restart correctly */
-  for (lp = starting_properties; lp != NULL; lp = lp->next)
-    xfsm_properties_free (XFSM_PROPERTIES (lp->data));
-  g_list_free (starting_properties);
-  starting_properties = NULL;
-  
   return TRUE;
 }
 
