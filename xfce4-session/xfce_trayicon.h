@@ -71,6 +71,11 @@ struct _XfceTrayIcon
 
 	/* Tooltips */
 	GtkTooltips		*tooltips;
+	gchar			*tip_text;
+	gchar			*tip_private;
+
+	/* */
+	gulong			destroyId;
 };
 
 /* prototypes */
@@ -78,6 +83,8 @@ extern GType		xfce_tray_icon_get_type(void);
 extern XfceTrayIcon	*xfce_tray_icon_new(void);
 extern XfceTrayIcon	*xfce_tray_icon_new_with_menu_from_pixbuf(GtkWidget *,
 				GdkPixbuf *);
+extern void		xfce_tray_icon_connect(XfceTrayIcon *);
+extern void		xfce_tray_icon_disconnect(XfceTrayIcon *);
 extern GtkWidget	*xfce_tray_icon_get_menu(XfceTrayIcon *);
 extern void		xfce_tray_icon_set_menu(XfceTrayIcon *, GtkWidget *);
 extern void		xfce_tray_icon_set_from_pixbuf(XfceTrayIcon *,

@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XFSession 0.0.15\n"
-"POT-Creation-Date: 2003-07-13 18:14+0200\n"
+"POT-Creation-Date: 2003-07-15 18:17+0200\n"
 "PO-Revision-Date: 2003-07-10 13:10+0200\n"
 "Last-Translator: Yongtao Yang <yongtao.yang@telia.com>\n"
 "Language-Team: none <none@none>\n"
@@ -17,80 +17,104 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: settings/session.c:226
+#: settings/session.c:227
 msgid "Default Theme"
 msgstr "默认主题"
 
-#: settings/session.c:231
+#: settings/session.c:232
 msgid "Default splash screen"
 msgstr "默认飞溅屏幕"
 
-#: settings/session.c:270
+#: settings/session.c:271
 #, c-format
 msgid "About %s..."
 msgstr "关于 %s..."
 
-#: settings/session.c:292
+#: settings/session.c:293
 msgid "Info:"
 msgstr "信息:"
 
-#: settings/session.c:300
+#: settings/session.c:301
 msgid "Author:"
 msgstr "作者:"
 
-#: settings/session.c:376
+#: settings/session.c:377
 #, c-format
 msgid "Unable to install splash theme from file %s: %s"
 msgstr "无法从文件 %s 中安装飞溅屏幕主题: %s"
 
-#: settings/session.c:397 settings/session.c:700
+#: settings/session.c:398 settings/session.c:740
 msgid "Install new theme"
 msgstr "安装新主题"
 
-#: settings/session.c:466 settings/session.c:577 settings/session.c:591
+#: settings/session.c:477 settings/session.c:600 settings/session.c:614
 msgid "Session management"
 msgstr "会话管理"
 
 #. General settings
-#: settings/session.c:602
+#: settings/session.c:625
 msgid "General"
 msgstr "通用"
 
 #.
-#: settings/session.c:611
+#: settings/session.c:634
 msgid "Confirm logout"
 msgstr "注销确认"
 
-#: settings/session.c:620
+#: settings/session.c:636
+msgid ""
+"Should the session manager ask the user to confirm the logout. If disabled, "
+"the session will be closed without any further user interaction."
+msgstr ""
+
+#: settings/session.c:647
 msgid "Automatically save session on logout"
 msgstr "注销时自动保存会话"
 
+#.
+#: settings/session.c:654
+#, fuzzy
+msgid "Show tray icon"
+msgstr "显示主题信息"
+
+#: settings/session.c:656
+msgid ""
+"Show the session managers tray icon in the desktops notification area (also "
+"known as the system tray)."
+msgstr ""
+
 #. Logout action settings
-#: settings/session.c:628
+#: settings/session.c:665
 msgid "Default action on logout"
 msgstr "注销时的默认动作"
 
 #.
-#: settings/session.c:640 xfce4-session/shutdown.c:252
+#: settings/session.c:677 xfce4-session/shutdown.c:252
 msgid "_Quit current session"
 msgstr "退出当前会话(_Q)"
 
 #.
-#: settings/session.c:644 xfce4-session/shutdown.c:257
+#: settings/session.c:681 xfce4-session/shutdown.c:257
 msgid "_Reboot the computer"
 msgstr "重新启动计算机(_R)"
 
 #.
-#: settings/session.c:648 xfce4-session/shutdown.c:262
+#: settings/session.c:685 xfce4-session/shutdown.c:262
 msgid "_Turn off computer"
 msgstr "关闭计算机(_T)"
 
 #. Logout action settings
-#: settings/session.c:660
+#: settings/session.c:697
 msgid "Splash screen theme"
 msgstr "飞溅屏幕主题"
 
-#: settings/session.c:691
+#: settings/session.c:721
+msgid ""
+"Select the splash screen theme that should be displayed when the session is "
+"started."
+msgstr ""
+
+#: settings/session.c:731
 msgid "Show theme info"
 msgstr "显示主题信息"
 
@@ -117,23 +141,23 @@ msgid ""
 msgstr "msgstr \"无法创建用户的XFce会话目录 %s: %s\""
 
 #.
-#: xfce4-session/main.c:289 xfce4-session/client-list.c:265
+#: xfce4-session/main.c:295 xfce4-session/client-list.c:267
 msgid "Session control"
 msgstr "会话控制"
 
 #.
-#: xfce4-session/main.c:304
+#: xfce4-session/main.c:310
 #, fuzzy
 msgid "Save session"
 msgstr "注销会话"
 
 #.
-#: xfce4-session/main.c:313
+#: xfce4-session/main.c:319
 #, fuzzy
 msgid "Quit session"
 msgstr "注销会话"
 
-#: xfce4-session/main.c:409
+#: xfce4-session/main.c:415
 msgid ""
 "The session manager was unable to start the\n"
 "Multi-Channel settings manager. This is most\n"
@@ -145,7 +169,7 @@ msgstr ""
 "是 XFce 安装不正确导致的。请联系你的系统管理\n"
 "员并报告问题。"
 
-#: xfce4-session/main.c:422
+#: xfce4-session/main.c:431
 msgid "Unable to create MCS client"
 msgstr "无法创建 MCS 客户"
 
@@ -259,33 +283,33 @@ msgstr ""
 msgid "Unable to clone client: %s"
 msgstr "无法复制客户：%s"
 
-#: xfce4-session/client-list.c:293
+#: xfce4-session/client-list.c:296
 msgid "Program"
 msgstr "程序"
 
-#: xfce4-session/client-list.c:298
+#: xfce4-session/client-list.c:301
 msgid "User"
 msgstr "用户"
 
-#: xfce4-session/client-list.c:305
+#: xfce4-session/client-list.c:308
 msgid "Priority"
 msgstr "优先级"
 
-#: xfce4-session/client-list.c:310
+#: xfce4-session/client-list.c:313
 msgid "State"
 msgstr ""
 
 #. kill button
-#: xfce4-session/client-list.c:329
+#: xfce4-session/client-list.c:332
 msgid "Kill client"
 msgstr "中止客户程序"
 
 #. clone button
-#: xfce4-session/client-list.c:335
+#: xfce4-session/client-list.c:338
 msgid "Clone client"
 msgstr "复制客户程序"
 
-#: xfce4-session/client-list.c:441 xfce4-session/client-list.c:444
+#: xfce4-session/client-list.c:444 xfce4-session/client-list.c:447
 msgid "Unknown"
 msgstr "未知"
 

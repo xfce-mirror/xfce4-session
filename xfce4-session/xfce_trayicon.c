@@ -47,7 +47,7 @@ static void	xfce_tray_icon_class_init(XfceTrayIconClass *);
 static void	xfce_tray_icon_init(XfceTrayIcon *);
 static void	xfce_tray_icon_finalize(GObject *);
 static void	xfce_tray_icon_reconnect(XfceTrayIcon *);
-static gboolean	xfce_tray_icon_disconnect(GtkWidget *, XfceTrayIcon *);
+static void	xfce_tray_icon_destroy(GtkWidget *, XfceTrayIcon *);
 static void	xfce_tray_icon_press(GtkWidget *, GdkEventButton *,
 			XfceTrayIcon *);
 static void	xfce_tray_icon_popup(GtkWidget *, XfceTrayIcon *);
@@ -125,6 +125,13 @@ xfce_tray_icon_init(XfceTrayIcon *icon)
 	/* */
 	icon->tray = NULL;
 
+	/* */
+	icon->tip_text = NULL;
+	icon->tip_private = NULL;
+
+	/* */
+	icon->destroyId = 0;
+
 	/* no icon image set */
 	icon->image = gtk_image_new();
 	g_object_ref(G_OBJECT(icon->image));
@@ -153,6 +160,11 @@ xfce_tray_icon_finalize(GObject *object)
 	g_object_unref(G_OBJECT(icon->image));
 	g_object_unref(G_OBJECT(icon->tooltips));
 
+	if (icon->tip_text != NULL)
+		g_free(icon->tip_text);
+	if (icon->tip_private != NULL)
+		g_free(icon->tip_private);
+
 	G_OBJECT_CLASS(parent_class)->finalize(object);
 }
 
@@ -168,11 +180,15 @@ xfce_tray_icon_embedded(GtkWidget *widget, XfceTrayIcon *icon)
 	/* */
 	gtk_container_add(GTK_CONTAINER(icon->tray), icon->image);
 
+	/* add tooltips */
+	gtk_tooltips_set_tip(icon->tooltips, icon->tray, icon->tip_text,
+			icon->tip_private);
+
 	/* */
 	(void)g_signal_connect(G_OBJECT(icon->tray), "button_press_event",
 			G_CALLBACK(xfce_tray_icon_press), icon);
-	(void)g_signal_connect(G_OBJECT(icon->tray), "destroy",
-			G_CALLBACK(xfce_tray_icon_disconnect), icon);
+	icon->destroyId = g_signal_connect(G_OBJECT(icon->tray), "destroy",
+			G_CALLBACK(xfce_tray_icon_destroy), icon);
 	(void)g_signal_connect(G_OBJECT(icon->tray), "popup_menu",
 			G_CALLBACK(xfce_tray_icon_popup), icon);
 }
@@ -191,45 +207,17 @@ xfce_tray_icon_reconnect(XfceTrayIcon *icon)
 /*
  * The tray just disappeared
  */
-static gboolean
-xfce_tray_icon_disconnect(GtkWidget *tray, XfceTrayIcon *icon)
+static void
+xfce_tray_icon_destroy(GtkWidget *tray, XfceTrayIcon *icon)
 {
-	GtkTooltipsData *data;
-	gchar *private;
-	gchar *text;
-
-	/* */
-	private = NULL;
-	text = NULL;
-
-	/* remember tooltips */
-	if ((data = gtk_tooltips_data_get(tray)) != NULL) {
-		if (data->tip_private != NULL)
-			private = g_strdup(data->tip_private);
-
-		if (data->tip_text != NULL)
-			text = g_strdup(data->tip_text);
-	}
+	/* destroy handler was fired, so the destroyId is no longer valid */
+	icon->destroyId = 0;
 
 	/* remove us from the tray icon */
 	gtk_container_remove(GTK_CONTAINER(tray), icon->image);
 
 	/* */
 	xfce_tray_icon_reconnect(icon);
-
-	/* set tooltip */
-	if (private != NULL || text != NULL) {
-		gtk_tooltips_set_tip(icon->tooltips, icon->tray, text, private);
-
-		if (private != NULL)
-			g_free(private);
-
-		if (text != NULL)
-			g_free(text);
-	}
-
-	/* keep the destroy going... */
-	return(TRUE);
 }
 
 /*
@@ -285,6 +273,44 @@ xfce_tray_icon_new_with_menu_from_pixbuf(GtkWidget *menu, GdkPixbuf *pixbuf)
 
 /*
  */
+void
+xfce_tray_icon_connect(XfceTrayIcon *icon)
+{
+	g_return_if_fail(XFCE_IS_TRAY_ICON(icon));
+
+	/* check if icon is not already connected */
+	if (!NETK_IS_TRAY_ICON(icon->tray))
+		xfce_tray_icon_reconnect(icon);
+}
+
+/*
+ */
+void
+xfce_tray_icon_disconnect(XfceTrayIcon *icon)
+{
+	g_return_if_fail(XFCE_IS_TRAY_ICON(icon));
+
+	/* check if icon is already connected */
+	if (NETK_IS_TRAY_ICON(icon->tray)) {
+		/* disconnect destroy handler (REQUIRED)! */
+		if (icon->destroyId != 0) {
+			g_signal_handler_disconnect(G_OBJECT(icon->tray),
+					icon->destroyId);
+			icon->destroyId = 0;
+		}
+
+		if (gtk_bin_get_child(GTK_BIN(icon->tray)) == icon->image) {
+			gtk_container_remove(GTK_CONTAINER(icon->tray),
+					icon->image);
+		}
+
+		gtk_widget_destroy(icon->tray);
+		icon->tray = NULL;
+	}
+}
+
+/*
+ */
 GtkWidget *
 xfce_tray_icon_get_menu(XfceTrayIcon *icon)
 {
@@ -323,6 +349,23 @@ xfce_tray_icon_set_tooltip(XfceTrayIcon *icon, const gchar *text,
 {
 	g_return_if_fail(XFCE_IS_TRAY_ICON(icon));
 
-	gtk_tooltips_set_tip(icon->tooltips, icon->tray, text, private);
+	if (icon->tip_text != NULL) {
+		g_free(icon->tip_text);
+		icon->tip_text = NULL;
+	}
+
+	if (icon->tip_private != NULL) {
+		g_free(icon->tip_private);
+		icon->tip_private = NULL;
+	}
+
+	if (NETK_IS_TRAY_ICON(icon->tray))
+		gtk_tooltips_set_tip(icon->tooltips, icon->tray, text, private);
+
+	if (text != NULL)
+		icon->tip_text = g_strdup(text);
+
+	if (private != NULL)
+		icon->tip_private = g_strdup(private);
 }
 

@@ -78,6 +78,7 @@ static void	defaultActionChangedCB(GtkOptionMenu *, McsPlugin *);
 /* settings */
 static gboolean	confirmLogout = TRUE;
 static gboolean	autoSave = FALSE;
+static gboolean	trayIcon = TRUE;
 static gint	defaultAction = SHUTDOWN_LOGOUT;
 
 /* */
@@ -462,6 +463,16 @@ mcs_plugin_init(McsPlugin *plugin)
 				CHANNEL, defaultAction);
 	}
 
+	if ((setting = mcs_manager_setting_lookup(plugin->manager,
+					"Session/TrayIcon",
+					CHANNEL)) != NULL) {
+		trayIcon = setting->data.v_int;
+	}
+	else {
+		mcs_manager_set_int(plugin->manager, "Session/TrayIcon",
+				CHANNEL, trayIcon);
+	}
+
 	plugin->plugin_name = g_strdup("session");
 	plugin->caption = g_strdup(_("Session management"));
 	plugin->run_dialog = run_dialog;
@@ -506,6 +517,18 @@ autoSaveChangedCB(GtkToggleButton *button, McsPlugin *plugin)
 	autoSave = gtk_toggle_button_get_active(button);
 	mcs_manager_set_int(plugin->manager, "Session/AutoSave",
 			CHANNEL, autoSave);
+	mcs_manager_notify(plugin->manager, CHANNEL);
+	save_settings(plugin);
+}
+
+/*
+ */
+static void
+trayIconChangedCB(GtkToggleButton *button, McsPlugin *plugin)
+{
+	trayIcon = gtk_toggle_button_get_active(button);
+	mcs_manager_set_int(plugin->manager, "Session/TrayIcon", CHANNEL,
+			trayIcon);
 	mcs_manager_notify(plugin->manager, CHANNEL);
 	save_settings(plugin);
 }
@@ -609,6 +632,10 @@ run_dialog(McsPlugin *plugin)
 
 	/* */
 	checkbox = gtk_check_button_new_with_label(_("Confirm logout"));
+	gtk_tooltips_set_tip(tooltips, checkbox, _(
+			"Should the session manager ask the user to confirm "
+			"the logout. If disabled, the session will be closed "
+			"without any further user interaction."), NULL);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbox),
 			confirmLogout);
 	g_signal_connect(checkbox, "toggled",G_CALLBACK(confirmLogoutChangedCB),
@@ -618,9 +645,19 @@ run_dialog(McsPlugin *plugin)
 	/* */
 	checkbox = gtk_check_button_new_with_label(
 			_("Automatically save session on logout"));
-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbox),
-			autoSave);
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbox), autoSave);
 	g_signal_connect(checkbox, "toggled", G_CALLBACK(autoSaveChangedCB),
+			plugin);
+	gtk_box_pack_start(GTK_BOX(vbox), checkbox, FALSE, TRUE, 0);
+
+	/* */
+	checkbox = gtk_check_button_new_with_label(_("Show tray icon"));
+	gtk_tooltips_set_tip(tooltips, checkbox, _(
+			"Show the session managers tray icon in the "
+			"desktops notification area (also known as the "
+			"system tray)."),	NULL);
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbox), trayIcon);
+	g_signal_connect(checkbox, "toggled", G_CALLBACK(trayIconChangedCB),
 			plugin);
 	gtk_box_pack_start(GTK_BOX(vbox), checkbox, FALSE, TRUE, 0);
 
@@ -680,6 +717,9 @@ run_dialog(McsPlugin *plugin)
 
 	/* */
 	themesMenu = gtk_option_menu_new();
+	gtk_tooltips_set_tip(tooltips, themesMenu, _(
+			"Select the splash screen theme that should "
+			"be displayed when the session is started."), NULL);
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(themesMenu), menu);
 	gtk_option_menu_set_history(GTK_OPTION_MENU(themesMenu), themeCurrent);
 	g_signal_connect(themesMenu,"changed", G_CALLBACK(splashThemeChangedCB),

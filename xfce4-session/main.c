@@ -178,6 +178,12 @@ settings_notify(const char *name, const char *channel, McsAction action,
 				shutdownAutoSave = setting->data.v_int;
 			else if (!strcmp(name, "Session/DefaultAction"))
 				shutdownDefault = setting->data.v_int;
+			else if (!strcmp(name, "Session/TrayIcon")) {
+				if ((gboolean)setting->data.v_int)
+					xfce_tray_icon_connect(trayIcon);
+				else
+					xfce_tray_icon_disconnect(trayIcon);
+			}
 		}
 		else if (setting->type == MCS_TYPE_STRING) {
 			if (!strcmp(name, "Session/StartupSplashTheme")) {
@@ -414,6 +420,9 @@ main(int argc, char **argv)
 		return(EXIT_FAILURE);
 	}
 
+	/* */
+	trayIcon = create_tray_icon();
+
 	/* connect to the settings manager */
 	if ((settingsClient = mcs_client_new(GDK_DISPLAY(),
 				DefaultScreen(GDK_DISPLAY()),
@@ -448,9 +457,6 @@ main(int argc, char **argv)
 	 */
 	if (!manager_restart())
 		g_idle_add((GSourceFunc)start_default_session, NULL);
-
-	/* */
-	trayIcon = create_tray_icon();
 
 	/*
 	 * Connect UNIX signals

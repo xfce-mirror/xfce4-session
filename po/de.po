@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: XFSession 0.0.15\n"
-"POT-Creation-Date: 2003-07-13 18:14+0200\n"
+"POT-Creation-Date: 2003-07-15 18:17+0200\n"
 "PO-Revision-Date: 2003-07-011 20:10+0100\n"
 "Last-Translator: Moritz Heiber <moritz-heiber@arcor.de>\n"
 "Language-Team: none <none@none>\n"
@@ -13,80 +13,103 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: settings/session.c:226
+#: settings/session.c:227
 msgid "Default Theme"
 msgstr "Default Theme"
 
-#: settings/session.c:231
+#: settings/session.c:232
 msgid "Default splash screen"
 msgstr "Default Splashscreen"
 
-#: settings/session.c:270
+#: settings/session.c:271
 #, c-format
 msgid "About %s..."
 msgstr "Über %s..."
 
-#: settings/session.c:292
+#: settings/session.c:293
 msgid "Info:"
 msgstr "Info:"
 
-#: settings/session.c:300
+#: settings/session.c:301
 msgid "Author:"
 msgstr "Autor:"
 
-#: settings/session.c:376
+#: settings/session.c:377
 #, c-format
 msgid "Unable to install splash theme from file %s: %s"
 msgstr "Kann Splashtheme aus %s nicht installieren: %s"
 
-#: settings/session.c:397 settings/session.c:700
+#: settings/session.c:398 settings/session.c:740
 msgid "Install new theme"
 msgstr "Neues Theme installieren"
 
-#: settings/session.c:466 settings/session.c:577 settings/session.c:591
+#: settings/session.c:477 settings/session.c:600 settings/session.c:614
 msgid "Session management"
 msgstr "Sitzungsmanagement"
 
 #. General settings
-#: settings/session.c:602
+#: settings/session.c:625
 msgid "General"
 msgstr "Allgemeine Einstellungen"
 
 #.
-#: settings/session.c:611
+#: settings/session.c:634
 msgid "Confirm logout"
 msgstr "Ausloggen bestätigen"
 
-#: settings/session.c:620
+#: settings/session.c:636
+msgid ""
+"Should the session manager ask the user to confirm the logout. If disabled, "
+"the session will be closed without any further user interaction."
+msgstr ""
+
+#: settings/session.c:647
 msgid "Automatically save session on logout"
 msgstr "Sitzung automatisch beim Beenden speichern"
 
+#.
+#: settings/session.c:654
+msgid "Show tray icon"
+msgstr "Tray icon anzeigen"
+
+#: settings/session.c:656
+msgid ""
+"Show the session managers tray icon in the desktops notification area (also "
+"known as the system tray)."
+msgstr ""
+
 #. Logout action settings
-#: settings/session.c:628
+#: settings/session.c:665
 msgid "Default action on logout"
 msgstr "Standardaktion beim Beenden"
 
 #.
-#: settings/session.c:640 xfce4-session/shutdown.c:252
+#: settings/session.c:677 xfce4-session/shutdown.c:252
 msgid "_Quit current session"
 msgstr "_Beende laufende Sitzung"
 
 #.
-#: settings/session.c:644 xfce4-session/shutdown.c:257
+#: settings/session.c:681 xfce4-session/shutdown.c:257
 msgid "_Reboot the computer"
 msgstr "Computer _rebooten"
 
 #.
-#: settings/session.c:648 xfce4-session/shutdown.c:262
+#: settings/session.c:685 xfce4-session/shutdown.c:262
 msgid "_Turn off computer"
 msgstr "Computer _herunterfahren"
 
 #. Logout action settings
-#: settings/session.c:660
+#: settings/session.c:697
 msgid "Splash screen theme"
 msgstr "Splashscreen Theme"
 
-#: settings/session.c:691
+#: settings/session.c:721
+msgid ""
+"Select the splash screen theme that should be displayed when the session is "
+"started."
+msgstr ""
+
+#: settings/session.c:731
 msgid "Show theme info"
 msgstr "Information zu diesem Thema anzeigen"
 
@@ -113,21 +136,21 @@ msgid ""
 msgstr "Kann Sitzungsverzeichnis %s nicht erstellen: %s"
 
 #.
-#: xfce4-session/main.c:289 xfce4-session/client-list.c:265
+#: xfce4-session/main.c:295 xfce4-session/client-list.c:267
 msgid "Session control"
 msgstr "Sitzungsübersicht"
 
 #.
-#: xfce4-session/main.c:304
+#: xfce4-session/main.c:310
 msgid "Save session"
 msgstr "Sitzung speichern"
 
 #.
-#: xfce4-session/main.c:313
+#: xfce4-session/main.c:319
 msgid "Quit session"
 msgstr "Sitzung beenden"
 
-#: xfce4-session/main.c:409
+#: xfce4-session/main.c:415
 msgid ""
 "The session manager was unable to start the\n"
 "Multi-Channel settings manager. This is most\n"
@@ -141,7 +164,7 @@ msgstr ""
 "Bitte kontaktieren Sie Ihren Administrator und informieren\n"
 "Sie ihn über das Problem."
 
-#: xfce4-session/main.c:422
+#: xfce4-session/main.c:431
 msgid "Unable to create MCS client"
 msgstr "Konnte keine Verbindung zum Einstellungsmanager herstellen"
 
@@ -258,33 +281,33 @@ msgstr "Trenne Verbindung"
 msgid "Unable to clone client: %s"
 msgstr "Konnte Client %s nicht duplizieren"
 
-#: xfce4-session/client-list.c:293
+#: xfce4-session/client-list.c:296
 msgid "Program"
 msgstr "Programm"
 
-#: xfce4-session/client-list.c:298
+#: xfce4-session/client-list.c:301
 msgid "User"
 msgstr "Benutzer"
 
-#: xfce4-session/client-list.c:305
+#: xfce4-session/client-list.c:308
 msgid "Priority"
 msgstr "Priorität"
 
-#: xfce4-session/client-list.c:310
+#: xfce4-session/client-list.c:313
 msgid "State"
 msgstr "Status"
 
 #. kill button
-#: xfce4-session/client-list.c:329
+#: xfce4-session/client-list.c:332
 msgid "Kill client"
 msgstr "Töte Client"
 
 #. clone button
-#: xfce4-session/client-list.c:335
+#: xfce4-session/client-list.c:338
 msgid "Clone client"
 msgstr "Client duplizieren"
 
-#: xfce4-session/client-list.c:441 xfce4-session/client-list.c:444
+#: xfce4-session/client-list.c:444 xfce4-session/client-list.c:447
 msgid "Unknown"
 msgstr "Unbekannt"
 

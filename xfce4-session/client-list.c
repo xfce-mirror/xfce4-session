@@ -236,13 +236,15 @@ xfsm_client_list_kill(GtkWidget *button, XfsmClientList *list)
 }
 
 /*
+ * Delete event callback, just hide the window.
  */
 /* ARGSUSED */
-static void
+static gboolean
 xfsm_client_list_delete(GtkWidget *widget, GdkEvent *ev, XfsmClientList *list)
 {
 	/* hide the dialog */
 	gtk_widget_hide(GTK_WIDGET(list));
+	return(TRUE);
 }
 
 /*
@@ -263,6 +265,7 @@ xfsm_client_list_init(XfsmClientList *list)
 	/* window options */
 	gtk_window_set_position(GTK_WINDOW(list), GTK_WIN_POS_CENTER_ALWAYS);
 	gtk_window_set_title(GTK_WINDOW(list), _("Session control"));
+	gtk_window_stick(GTK_WINDOW(list));
 
 	/* set window icon */
 	icon = gdk_pixbuf_new_from_inline(-1, session_icon_data, FALSE, NULL);
