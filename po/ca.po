@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-05 14:43+0200\n"
+"POT-Creation-Date: 2004-07-14 20:18+0200\n"
 "PO-Revision-Date: 2004-05-31 16:40+0100\n"
 "Last-Translator: Carles Muñoz Gorriz <carlesmu@internautas.org>\n"
 "Language-Team: català <ca@li.org>\n"
@@ -16,39 +16,143 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: xfce4-session/main.c:146
-msgid "Restoring the desktop settings, please wait..."
-msgstr "S'està recuperant la configuració de l'escriptori, espereu..."
+#: settings/session/session.c:122
+msgid "Session chooser"
+msgstr ""
 
-#: xfce4-session/shutdown.c:283
+#: settings/session/session.c:127
+#, fuzzy
+msgid "Display chooser on login"
+msgstr "Mostra el seleccionador de sessió en cada inici de sessió"
+
+#: settings/session/session.c:134
+msgid "Logout settings"
+msgstr ""
+
+#: settings/session/session.c:139
+msgid "Automatically save session on logout"
+msgstr "Guardar de forma automàtica la sessió al sortir"
+
+#: settings/session/session.c:145
+msgid "Prompt on logout"
+msgstr ""
+
+#: settings/session/session.c:182
+msgid "Compatibility"
+msgstr ""
+
+#: settings/session/session.c:190
+msgid "Launch Gnome services on startup"
+msgstr ""
+
+#: settings/session/session.c:200
+msgid "Launch KDE services on startup"
+msgstr ""
+
+#: settings/session/session.c:211
+msgid "Security"
+msgstr ""
+
+#: settings/session/session.c:216
+msgid "Manage remote applications"
+msgstr ""
+
+#: settings/session/session.c:265 settings/session/session.c:280
+#: settings/session/session.c:317
+#, fuzzy
+msgid "Sessions and Startup"
+msgstr "Gestió de sessió"
+
+#: settings/session/session.c:288
+msgid "General"
+msgstr "General"
+
+#: settings/session/session.c:294
+msgid "Advanced"
+msgstr ""
+
+#: settings/splash/splash.c:270 settings/splash/splash.c:273
+#: settings/splash/splash.c:276 settings/splash/splash.c:279
+#: settings/splash/splash.c:335
+msgid "None"
+msgstr ""
+
+#: settings/splash/splash.c:358 settings/splash/splash.c:372
+msgid "Splash Screen Settings"
+msgstr ""
+
+#: settings/splash/splash.c:402
+#, fuzzy
+msgid "Configure"
+msgstr "Confirmar Sortir"
+
+#: settings/splash/splash.c:410
+msgid "Test"
+msgstr ""
+
+#: settings/splash/splash.c:429
+msgid "<b>Description:</b>"
+msgstr ""
+
+#: settings/splash/splash.c:443
+msgid "<b>Version:</b>"
+msgstr ""
+
+#: settings/splash/splash.c:457
+msgid "<b>Author:</b>"
+msgstr ""
+
+#: settings/splash/splash.c:471
+msgid "<b>Homepage:</b>"
+msgstr ""
+
+#: settings/splash/splash.c:508
+msgid "Splash Screen"
+msgstr ""
+
+#: xfce4-session/main.c:138
+msgid "Loading desktop settings"
+msgstr ""
+
+#. verify that the DNS settings are ok
+#: xfce4-session/main.c:191
+msgid "Verifying DNS settings"
+msgstr ""
+
+#: xfce4-session/main.c:194
+#, fuzzy
+msgid "Loading session data"
+msgstr "Espereu, carregant les dades de la sessió..."
+
+#: xfce4-session/shutdown.c:292
 msgid "What do you want to do next?"
 msgstr "Què vols fer a continuació?"
 
-#: xfce4-session/shutdown.c:292
+#: xfce4-session/shutdown.c:301
 msgid "Quit current session"
 msgstr "Surt de la sessió actual"
 
-#: xfce4-session/shutdown.c:298
+#: xfce4-session/shutdown.c:307
 msgid "Reboot the computer"
 msgstr "Arrenca de nou l'ordinador"
 
-#: xfce4-session/shutdown.c:303
+#: xfce4-session/shutdown.c:312
 msgid "Turn off the computer"
 msgstr "Atura l'ordinador"
 
-#: xfce4-session/shutdown.c:310
+#: xfce4-session/shutdown.c:319
 msgid "_Save session for future logins"
 msgstr "_Desa la sessió per futurs inicis de sessió"
 
-#: xfce4-session/shutdown.c:404
+#: xfce4-session/shutdown.c:413
 msgid "Please enter your password:"
 msgstr ""
 
-#: xfce4-session/shutdown.c:459
+#: xfce4-session/shutdown.c:468
 msgid "<b>An error occured</b>"
 msgstr ""
 
-#: xfce4-session/shutdown.c:473
+#: xfce4-session/shutdown.c:482
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
@@ -59,142 +163,7 @@ msgstr ""
 msgid "Background window"
 msgstr ""
 
-#: xfce4-session/xfsm-startup.c:91
-msgid "Starting the Volume Controller"
-msgstr "S'està iniciant el controlador de volum"
-
-#: xfce4-session/xfsm-startup.c:93
-msgid "Starting the Panel"
-msgstr "S'està iniciant el plafó"
-
-#: xfce4-session/xfsm-startup.c:95
-msgid "Starting the Desktop Manager"
-msgstr "S'està iniciant el gestor de l'escriptori"
-
-#: xfce4-session/xfsm-startup.c:97
-msgid "Starting the Taskbar"
-msgstr "S'està iniciant la barra de tasques"
-
-#: xfce4-session/xfsm-startup.c:99
-msgid "Starting the Window Manager"
-msgstr "S'està iniciat el gestor de finestres"
-
-#: xfce4-session/xfsm-startup.c:103
-#, fuzzy
-msgid "Starting the Gnome Terminal Emulator"
-msgstr "S'està iniciant l'emulador de terminal de «gnome»"
-
-#: xfce4-session/xfsm-startup.c:107
-#, fuzzy
-msgid "Starting the KDE Advanced Text Editor"
-msgstr "S'està iniciant «vi», «Improved Editor»"
-
-#: xfce4-session/xfsm-startup.c:109
-#, fuzzy
-msgid "Starting the KDE Clipboard Manager"
-msgstr "S'està iniciat el gestor de finestres"
-
-#: xfce4-session/xfsm-startup.c:111
-#, fuzzy
-msgid "Starting the KDE Mail Reader"
-msgstr "S'està iniciant el gestor de l'escriptori"
-
-#: xfce4-session/xfsm-startup.c:113
-#, fuzzy
-msgid "Starting the KDE News Reader"
-msgstr "S'està iniciant el gestor de l'escriptori"
-
-#: xfce4-session/xfsm-startup.c:115
-#, fuzzy
-msgid "Starting the Konqueror"
-msgstr "S'està iniciant el plafó"
-
-#: xfce4-session/xfsm-startup.c:117
-#, fuzzy
-msgid "Starting the KDE Terminal Emulator"
-msgstr "S'està iniciant l'emulador del terminal de les X"
-
-#: xfce4-session/xfsm-startup.c:121
-#, fuzzy
-msgid "Starting the Beep Media Player"
-msgstr "S'està iniciant el «Beep Media Player»"
-
-#: xfce4-session/xfsm-startup.c:123
-#, fuzzy
-msgid "Starting The Gimp"
-msgstr "S'està inician el «gimp»"
-
-#: xfce4-session/xfsm-startup.c:125
-#, fuzzy
-msgid "Starting the VI Improved Editor"
-msgstr "S'està iniciant «vi», «Improved Editor»"
-
-#: xfce4-session/xfsm-startup.c:127
-msgid "Starting the Session Management Proxy"
-msgstr "S'està iniciant el servidor intermediari del gestor de sessió"
-
-#: xfce4-session/xfsm-startup.c:129
-#, fuzzy
-msgid "Starting the X-Chat IRC Client"
-msgstr "S'està iniciant el client IRC d'«X-Chat»"
-
-#: xfce4-session/xfsm-startup.c:131
-msgid "Starting the X Multimedia System"
-msgstr "S'està iniciant el sistema multimèdia de les X"
-
-#: xfce4-session/xfsm-startup.c:133
-msgid "Starting the X Terminal Emulator"
-msgstr "S'està iniciant l'emulador del terminal de les X"
-
-#: xfce4-session/xfsm-startup.c:135
-#, c-format
-msgid "Starting %s"
-msgstr "S'està iniciant %s"
-
-#: xfce4-session/xfsm-startup.c:156
-msgid "Performing Autostart..."
-msgstr ""
-
-#: xfce4-session/xfsm-splash-screen.c:363
-msgid "Starting Xfce, please wait..."
-msgstr "S'està iniciant Xfce, espereu..."
-
-#: xfce4-session/xfsm-splash-screen.c:446
-msgid "Please wait, loading session data..."
-msgstr "Espereu, carregant les dades de la sessió..."
-
-#: xfce4-session/xfsm-chooser.c:131 xfce4-session/xfsm-chooser.c:132
-#, fuzzy
-msgid "Default session"
-msgstr "Creauna nova sessió:"
-
-#: xfce4-session/xfsm-chooser.c:135 xfce4-session/xfsm-chooser.c:136
-msgid "Session rc object"
-msgstr ""
-
-#: xfce4-session/xfsm-chooser.c:197 xfce4-session/xfsm-chooser.c:218
-#: xfce4-session/xfsm-chooser.c:280 xfce4-session/xfsm-chooser.c:657
-msgid "Restore"
-msgstr "Restaura"
-
-#: xfce4-session/xfsm-chooser.c:288 xfce4-session/xfsm-chooser.c:666
-msgid "Create"
-msgstr "Crea"
-
-#: xfce4-session/xfsm-chooser.c:344
-msgid "Restore a previously saved session:"
-msgstr "Restaura una sessió desada previament:"
-
-#: xfce4-session/xfsm-chooser.c:346
-msgid ""
-"Choose this option if you want to restore one of your previously saved "
-"sessions. This will bring up the desktop as it was when you saved the "
-"session."
-msgstr ""
-"Escolliu aquesta opció si voleu recuperar alguna de les sessions desades.  "
-"Això recuperarà l'escriptori tal i com el teníeu quan veu desar la sessió."
-
-#: xfce4-session/xfsm-chooser.c:376
+#: xfce4-session/xfsm-chooser.c:208
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
@@ -202,139 +171,252 @@ msgstr ""
 "Escolliu la sessió que voleu recuperar.  Podeu limitar-vos a fer doble clic "
 "sobre la sessió a recuperar."
 
-#: xfce4-session/xfsm-chooser.c:417
-msgid "Create a new session:"
-msgstr "Creauna nova sessió:"
-
-#: xfce4-session/xfsm-chooser.c:419
-msgid ""
-"Choose this option if you want to create a new session. The new session will "
-"be started as a default desktop. XXX - better text?"
-msgstr ""
-"Escolliu aquesta opció si voleu crear una nova sessió.  La nova sessió "
-"s'inicialitzarà amb l'escriptori per defecte."
-
-#: xfce4-session/xfsm-chooser.c:429
-msgid ""
-"Enter the name of the new session here. The name has to be unique among your "
-"session names and empty session names are not allowed."
-msgstr ""
-"Introduïu aquí el nom de la nova sessió.  El nom ha de ser únic entre els "
-"diversos noms de sessió i tampoc es permet un nom de sessió en blanc."
-
 #. "Logout" button
-#: xfce4-session/xfsm-chooser.c:439
+#: xfce4-session/xfsm-chooser.c:234
 msgid "Logout"
 msgstr "Surt"
 
-#: xfce4-session/xfsm-chooser.c:441
+#: xfce4-session/xfsm-chooser.c:236
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Cancel·la l'intent d'inici de sessió i torna a la finestra d'inici."
 
-#. fire up the keyring daemon
-#: xfce4-session/xfsm-compat-gnome.c:237
+#. "New" button
+#: xfce4-session/xfsm-chooser.c:244
+#, fuzzy
+msgid "New session"
+msgstr "Creauna nova sessió:"
+
+#: xfce4-session/xfsm-chooser.c:246
+#, fuzzy
+msgid "Create a new session."
+msgstr "Creauna nova sessió:"
+
+#: xfce4-session/xfsm-dns.c:76
+msgid "(Unknown)"
+msgstr ""
+
+#: xfce4-session/xfsm-dns.c:143
+#, c-format
+msgid ""
+"Could not look up internet address for %s.\n"
+"This will prevent Xfce from operating correctly.\n"
+"It may be possible to correct the problem by adding\n"
+"%s to the file /etc/hosts on your system."
+msgstr ""
+
+#: xfce4-session/xfsm-dns.c:150
+msgid "Continue anyway"
+msgstr ""
+
+#: xfce4-session/xfsm-dns.c:151
+msgid "Try again"
+msgstr ""
+
+#: xfce4-session/xfsm-compat-gnome.c:238
 #, fuzzy
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "S'està iniciant l'emulador de terminal de «gnome»"
 
-#: xfce4-session/xfsm-compat-gnome.c:247
+#: xfce4-session/xfsm-compat-gnome.c:249
 msgid "Starting Gnome Assistive Technologies"
 msgstr ""
 
-#: xfce4-session/xfsm-splash-theme.c:113
-msgid "No description given"
-msgstr ""
-
-#: xfce4-session/xfsm-compat-kde.c:47
+#: xfce4-session/xfsm-compat-kde.c:118
 #, fuzzy
 msgid "Starting KDE services"
 msgstr "S'està iniciant %s"
 
-#: settings/session.c:150
-msgid "Session chooser"
-msgstr ""
-
-#: settings/session.c:156
+#: xfce4-session/xfsm-splash-screen.c:177
 #, fuzzy
-msgid "Display chooser on each login"
-msgstr "Mostra el seleccionador de sessió en cada inici de sessió"
+msgid "Choose session"
+msgstr "Creauna nova sessió:"
 
-#: settings/session.c:158
+#: xfce4-session/xfsm-splash-screen.c:207
+msgid "Choose session name"
+msgstr ""
+
+#: xfce4-session/xfsm-splash-screen.c:219
 #, fuzzy
-msgid "Display chooser on demand"
-msgstr "Mostra el seleccionador de sessió en cada inici de sessió"
+msgid "Choose a name for the new session:"
+msgstr "Creauna nova sessió:"
 
-#: settings/session.c:160
-msgid "Restore last session automatically"
-msgstr ""
+#: xfce4-session/xfsm-startup.c:92
+msgid "Starting the Volume Controller"
+msgstr "S'està iniciant el controlador de volum"
 
-#: settings/session.c:169
-msgid "Logout settings"
-msgstr ""
+#: xfce4-session/xfsm-startup.c:94
+msgid "Starting the Panel"
+msgstr "S'està iniciant el plafó"
 
-#: settings/session.c:174 settings/old-session.c:202
-msgid "Automatically save session on logout"
-msgstr "Guardar de forma automàtica la sessió al sortir"
+#: xfce4-session/xfsm-startup.c:96
+msgid "Starting the Desktop Manager"
+msgstr "S'està iniciant el gestor de l'escriptori"
 
-#: settings/session.c:180
-msgid "Prompt on logout"
-msgstr ""
+#: xfce4-session/xfsm-startup.c:98
+msgid "Starting the Taskbar"
+msgstr "S'està iniciant la barra de tasques"
 
-#: settings/session.c:214
-msgid "Compatibility"
-msgstr ""
+#: xfce4-session/xfsm-startup.c:100
+msgid "Starting the Window Manager"
+msgstr "S'està iniciat el gestor de finestres"
 
-#: settings/session.c:219
-msgid "Launch Gnome services on startup"
-msgstr ""
-
-#: settings/session.c:229
-msgid "Launch KDE services on startup"
-msgstr ""
-
-#: settings/session.c:235
-msgid "Security"
-msgstr ""
-
-#: settings/session.c:240
-msgid "Manage remote applications"
-msgstr ""
-
-#: settings/session.c:289 settings/session.c:305 settings/session.c:339
+#: xfce4-session/xfsm-startup.c:104
 #, fuzzy
-msgid "Sessions and Startup"
-msgstr "Gestió de sessió"
+msgid "Starting the Gnome Terminal Emulator"
+msgstr "S'està iniciant l'emulador de terminal de «gnome»"
 
-#. General settings
-#: settings/session.c:311 settings/old-session.c:193
-msgid "General"
-msgstr "General"
+#: xfce4-session/xfsm-startup.c:108
+#, fuzzy
+msgid "Starting the KDE Advanced Text Editor"
+msgstr "S'està iniciant «vi», «Improved Editor»"
 
-#: settings/session.c:315
-msgid "Look & Feel"
+#: xfce4-session/xfsm-startup.c:110
+#, fuzzy
+msgid "Starting the KDE Clipboard Manager"
+msgstr "S'està iniciat el gestor de finestres"
+
+#: xfce4-session/xfsm-startup.c:112
+#, fuzzy
+msgid "Starting the KDE Mail Reader"
+msgstr "S'està iniciant el gestor de l'escriptori"
+
+#: xfce4-session/xfsm-startup.c:114
+#, fuzzy
+msgid "Starting the KDE News Reader"
+msgstr "S'està iniciant el gestor de l'escriptori"
+
+#: xfce4-session/xfsm-startup.c:116
+#, fuzzy
+msgid "Starting the Konqueror"
+msgstr "S'està iniciant el plafó"
+
+#: xfce4-session/xfsm-startup.c:118
+#, fuzzy
+msgid "Starting the KDE Terminal Emulator"
+msgstr "S'està iniciant l'emulador del terminal de les X"
+
+#: xfce4-session/xfsm-startup.c:122
+#, fuzzy
+msgid "Starting the Beep Media Player"
+msgstr "S'està iniciant el «Beep Media Player»"
+
+#: xfce4-session/xfsm-startup.c:124
+#, fuzzy
+msgid "Starting The Gimp"
+msgstr "S'està inician el «gimp»"
+
+#: xfce4-session/xfsm-startup.c:126
+#, fuzzy
+msgid "Starting the VI Improved Editor"
+msgstr "S'està iniciant «vi», «Improved Editor»"
+
+#: xfce4-session/xfsm-startup.c:128
+msgid "Starting the Session Management Proxy"
+msgstr "S'està iniciant el servidor intermediari del gestor de sessió"
+
+#: xfce4-session/xfsm-startup.c:130
+#, fuzzy
+msgid "Starting the X-Chat IRC Client"
+msgstr "S'està iniciant el client IRC d'«X-Chat»"
+
+#: xfce4-session/xfsm-startup.c:132
+msgid "Starting the X Multimedia System"
+msgstr "S'està iniciant el sistema multimèdia de les X"
+
+#: xfce4-session/xfsm-startup.c:134
+msgid "Starting the X Terminal Emulator"
+msgstr "S'està iniciant l'emulador del terminal de les X"
+
+#: xfce4-session/xfsm-startup.c:136
+#, c-format
+msgid "Starting %s"
+msgstr "S'està iniciant %s"
+
+#: xfce4-session/xfsm-startup.c:158
+msgid "Performing Autostart..."
 msgstr ""
 
-#: settings/session.c:319
-msgid "Advanced"
+#: engines/balou/balou-theme.c:90
+msgid "No description given"
 msgstr ""
 
-#: settings/old-session.c:81 settings/old-session.c:169
-#: settings/old-session.c:183
-msgid "Session management"
-msgstr "Gestió de sessió"
-
-#. Startup settings
-#: settings/old-session.c:209
-msgid "Startup"
+#: engines/simple/simple.c:314
+msgid "Choose image..."
 msgstr ""
 
-#: settings/old-session.c:219
-msgid "Chooser timeout in seconds:"
+#: engines/simple/simple.c:359
+#, fuzzy
+msgid "Configure Simple..."
+msgstr "Confirmar Sortir"
+
+#: engines/simple/simple.c:370
+msgid "Font"
 msgstr ""
 
-#: settings/looknfeel.c:304
-msgid "Splash theme"
+#: engines/simple/simple.c:379
+msgid "Colors"
 msgstr ""
+
+#: engines/simple/simple.c:387
+msgid "Background color:"
+msgstr ""
+
+#: engines/simple/simple.c:399
+msgid "Text color:"
+msgstr ""
+
+#: engines/simple/simple.c:411
+msgid "Image"
+msgstr ""
+
+#: engines/simple/simple.c:419
+msgid "Use custom image"
+msgstr ""
+
+#~ msgid "Restoring the desktop settings, please wait..."
+#~ msgstr "S'està recuperant la configuració de l'escriptori, espereu..."
+
+#~ msgid "Starting Xfce, please wait..."
+#~ msgstr "S'està iniciant Xfce, espereu..."
+
+#~ msgid "Restore"
+#~ msgstr "Restaura"
+
+#~ msgid "Create"
+#~ msgstr "Crea"
+
+#~ msgid "Restore a previously saved session:"
+#~ msgstr "Restaura una sessió desada previament:"
+
+#~ msgid ""
+#~ "Choose this option if you want to restore one of your previously saved "
+#~ "sessions. This will bring up the desktop as it was when you saved the "
+#~ "session."
+#~ msgstr ""
+#~ "Escolliu aquesta opció si voleu recuperar alguna de les sessions "
+#~ "desades.  Això recuperarà l'escriptori tal i com el teníeu quan veu desar "
+#~ "la sessió."
+
+#~ msgid ""
+#~ "Choose this option if you want to create a new session. The new session "
+#~ "will be started as a default desktop. XXX - better text?"
+#~ msgstr ""
+#~ "Escolliu aquesta opció si voleu crear una nova sessió.  La nova sessió "
+#~ "s'inicialitzarà amb l'escriptori per defecte."
+
+#~ msgid ""
+#~ "Enter the name of the new session here. The name has to be unique among "
+#~ "your session names and empty session names are not allowed."
+#~ msgstr ""
+#~ "Introduïu aquí el nom de la nova sessió.  El nom ha de ser únic entre els "
+#~ "diversos noms de sessió i tampoc es permet un nom de sessió en blanc."
+
+#, fuzzy
+#~ msgid "Display chooser on demand"
+#~ msgstr "Mostra el seleccionador de sessió en cada inici de sessió"
+
+#~ msgid "Session management"
+#~ msgstr "Gestió de sessió"
 
 #~ msgid ""
 #~ "The following error occured while trying to shutdown the computer:\n"
@@ -347,9 +429,6 @@ msgstr ""
 
 #~ msgid "Pick a session or create a new one"
 #~ msgstr "Escull una sessió o crea una de nova"
-
-#~ msgid "Confirm logout"
-#~ msgstr "Confirmar Sortir"
 
 #~ msgid ""
 #~ "Should the session manager ask the user to confirm the logout. If "

@@ -90,7 +90,7 @@ splash_load_modules (void)
 
   modules_rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG,
                                     "xfce4-session/xfce4-splash.rc",
-                                    TRUE);
+                                    FALSE);
 
   dir = g_dir_open (MODULESDIR, 0, NULL);
   if (G_LIKELY (dir != NULL))
@@ -151,6 +151,24 @@ splash_response (void)
   splash_unload_modules ();
 
   return TRUE;
+}
+
+
+static void
+splash_configure (void)
+{
+  GtkTreeSelection *selection;
+  GtkTreeModel     *model;
+  GtkTreeIter       iter;
+  Module           *module;
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (splash_treeview));
+  if (gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      gtk_tree_model_get (model, &iter, COLUMN_MODULE, &module, -1);
+      module_configure (module, splash_dialog);
+      xfce_rc_flush (modules_rc);
+    }
 }
 
 
@@ -238,6 +256,10 @@ splash_selection_changed (GtkTreeSelection *selection)
           g_object_unref (G_OBJECT (preview));
 
           xfce_rc_write_entry (rc, "Engine", module_engine (module));
+          xfce_rc_flush (rc);
+
+          gtk_widget_set_sensitive (splash_button_cfg,
+                                    module_can_configure (module));
         }
       else
         {
@@ -256,6 +278,8 @@ splash_selection_changed (GtkTreeSelection *selection)
 
           gtk_label_set_text (GTK_LABEL (splash_www1), _("None"));
           gtk_widget_set_sensitive (splash_www1, FALSE);
+
+          gtk_widget_set_sensitive (splash_button_cfg, FALSE);
 
           xfce_rc_write_entry (rc, "Engine", "");
         }
@@ -378,6 +402,8 @@ splash_run (McsPlugin *plugin)
   splash_button_cfg = xfsm_imgbtn_new (_("Configure"), GTK_STOCK_PREFERENCES,
                                        NULL);
   gtk_widget_set_sensitive (splash_button_cfg, FALSE);
+  g_signal_connect (G_OBJECT (splash_button_cfg), "clicked",
+                    splash_configure, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), splash_button_cfg, FALSE, FALSE, 0);
   gtk_widget_show (splash_button_cfg);
 

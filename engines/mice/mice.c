@@ -359,7 +359,7 @@ engine_init (XfsmSplashEngine *engine)
 static GdkPixbuf*
 config_preview (XfsmSplashConfig *config)
 {
-  return gdk_pixbuf_from_pixdata (&preview, TRUE, NULL);
+  return gdk_pixbuf_from_pixdata (&preview, FALSE, NULL);
 }
 
 

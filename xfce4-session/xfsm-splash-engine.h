@@ -100,7 +100,7 @@ struct _XfsmSplashConfig
   /* config internals (config is responsible for freeing during destroy) */
   gpointer user_data;
 
-  /* generate preview for engine (OPTIONAL) */
+  /* generate preview for engine, should be 320x240! (OPTIONAL) */
   GdkPixbuf *(*preview) (XfsmSplashConfig *config);
 
   /* display a configuration dialog (OPTIONAL) */

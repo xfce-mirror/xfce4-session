@@ -219,9 +219,11 @@ simpledir = $(libdir)/xfce4/splash/engines
 simple_LTLIBRARIES = libsimple.la
 libsimple_la_SOURCES = \
 	fallback.h							\
+	preview.h							\
 	simple.c
 
 libsimple_la_CFLAGS = \
+	@LIBX11_CFLAGS@							\
 	@LIBXFCEGUI4_CFLAGS@
 
 libsimple_la_LDFLAGS = \
@@ -230,7 +232,9 @@ libsimple_la_LDFLAGS = \
 
 EXTRA_DIST = \
 	fallback.h							\
-	fallback.png
+	fallback.png							\
+	preview.h							\
+	preview.png
 
 all: all-am
 
@@ -533,6 +537,10 @@ uninstall-am: uninstall-info-am uninstall-simpleLTLIBRARIES
 fallback.h: $(srcdir)/fallback.png
 	gdk-pixbuf-csource --struct --name=fallback			\
 		$(srcdir)/fallback.png > fallback.h
+
+preview.h: $(srcdir)/preview.png
+	gdk-pixbuf-csource --struct --name=preview			\
+		$(srcdir)/preview.png > preview.h
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

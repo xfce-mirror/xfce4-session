@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: XFSession 0.0.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-05 14:43+0200\n"
+"POT-Creation-Date: 2004-07-14 20:18+0200\n"
 "PO-Revision-Date: 2004-06-11 16:50+0200\n"
 "Last-Translator: Yongtao Yang <yongtao.yang@telia.com>\n"
 "Language-Team: none <none@none>\n"
@@ -18,39 +18,145 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: xfce4-session/main.c:146
-msgid "Restoring the desktop settings, please wait..."
-msgstr "正在恢复桌面设置，请等候 ... "
+#: settings/session/session.c:122
+msgid "Session chooser"
+msgstr "会话选择"
 
-#: xfce4-session/shutdown.c:283
+#: settings/session/session.c:127
+#, fuzzy
+msgid "Display chooser on login"
+msgstr "在每次登录时显示选择器"
+
+#: settings/session/session.c:134
+msgid "Logout settings"
+msgstr "注销设置"
+
+#: settings/session/session.c:139
+msgid "Automatically save session on logout"
+msgstr "注销时自动保存会话"
+
+#: settings/session/session.c:145
+msgid "Prompt on logout"
+msgstr "注销时提示"
+
+#: settings/session/session.c:182
+msgid "Compatibility"
+msgstr "兼容性"
+
+#: settings/session/session.c:190
+msgid "Launch Gnome services on startup"
+msgstr "启动时启动 Gnome 服务"
+
+#: settings/session/session.c:200
+msgid "Launch KDE services on startup"
+msgstr "启动时启动 KDE 服务"
+
+#: settings/session/session.c:211
+msgid "Security"
+msgstr "安全"
+
+#: settings/session/session.c:216
+msgid "Manage remote applications"
+msgstr "管理远程应用"
+
+#: settings/session/session.c:265 settings/session/session.c:280
+#: settings/session/session.c:317
+msgid "Sessions and Startup"
+msgstr "会话管理"
+
+#: settings/session/session.c:288
+msgid "General"
+msgstr "通用"
+
+#: settings/session/session.c:294
+msgid "Advanced"
+msgstr "高级"
+
+#: settings/splash/splash.c:270 settings/splash/splash.c:273
+#: settings/splash/splash.c:276 settings/splash/splash.c:279
+#: settings/splash/splash.c:335
+msgid "None"
+msgstr ""
+
+#: settings/splash/splash.c:358 settings/splash/splash.c:372
+msgid "Splash Screen Settings"
+msgstr ""
+
+#: settings/splash/splash.c:402
+#, fuzzy
+msgid "Configure"
+msgstr "注销确认"
+
+#: settings/splash/splash.c:410
+msgid "Test"
+msgstr ""
+
+#: settings/splash/splash.c:429
+msgid "<b>Description:</b>"
+msgstr ""
+
+#: settings/splash/splash.c:443
+msgid "<b>Version:</b>"
+msgstr ""
+
+#: settings/splash/splash.c:457
+#, fuzzy
+msgid "<b>Author:</b>"
+msgstr "作者:"
+
+#: settings/splash/splash.c:471
+msgid "<b>Homepage:</b>"
+msgstr ""
+
+#: settings/splash/splash.c:508
+#, fuzzy
+msgid "Splash Screen"
+msgstr "飞溅屏幕主题"
+
+#: xfce4-session/main.c:138
+#, fuzzy
+msgid "Loading desktop settings"
+msgstr "注销设置"
+
+#. verify that the DNS settings are ok
+#: xfce4-session/main.c:191
+msgid "Verifying DNS settings"
+msgstr ""
+
+#: xfce4-session/main.c:194
+#, fuzzy
+msgid "Loading session data"
+msgstr "请等候，正在读取会话数据..."
+
+#: xfce4-session/shutdown.c:292
 msgid "What do you want to do next?"
 msgstr "下一步您要干什么?"
 
-#: xfce4-session/shutdown.c:292
+#: xfce4-session/shutdown.c:301
 msgid "Quit current session"
 msgstr "退出当前会话"
 
-#: xfce4-session/shutdown.c:298
+#: xfce4-session/shutdown.c:307
 msgid "Reboot the computer"
 msgstr "重新启动计算机"
 
-#: xfce4-session/shutdown.c:303
+#: xfce4-session/shutdown.c:312
 msgid "Turn off the computer"
 msgstr "关闭计算机"
 
-#: xfce4-session/shutdown.c:310
+#: xfce4-session/shutdown.c:319
 msgid "_Save session for future logins"
 msgstr "为以后的登陆保存会话(_S)"
 
-#: xfce4-session/shutdown.c:404
+#: xfce4-session/shutdown.c:413
 msgid "Please enter your password:"
 msgstr "请输入您的密码："
 
-#: xfce4-session/shutdown.c:459
+#: xfce4-session/shutdown.c:468
 msgid "<b>An error occured</b>"
 msgstr "<b>出现错误</b>"
 
-#: xfce4-session/shutdown.c:473
+#: xfce4-session/shutdown.c:482
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
@@ -61,257 +167,257 @@ msgstr "或者您所输入的密码不正确，或者系统管理员不允许您
 msgid "Background window"
 msgstr "背景窗口"
 
-#: xfce4-session/xfsm-startup.c:91
-msgid "Starting the Volume Controller"
-msgstr "启动音量控制器"
-
-#: xfce4-session/xfsm-startup.c:93
-msgid "Starting the Panel"
-msgstr "正在启动面板"
-
-#: xfce4-session/xfsm-startup.c:95
-msgid "Starting the Desktop Manager"
-msgstr "正在启动桌面管理器"
-
-#: xfce4-session/xfsm-startup.c:97
-msgid "Starting the Taskbar"
-msgstr "正在启动任务条"
-
-#: xfce4-session/xfsm-startup.c:99
-msgid "Starting the Window Manager"
-msgstr "正在启动窗口管理器"
-
-#: xfce4-session/xfsm-startup.c:103
-msgid "Starting the Gnome Terminal Emulator"
-msgstr "正在启动Gnome终端仿真程序"
-
-#: xfce4-session/xfsm-startup.c:107
-msgid "Starting the KDE Advanced Text Editor"
-msgstr "正在启动KDE高级文本编辑器"
-
-#: xfce4-session/xfsm-startup.c:109
-msgid "Starting the KDE Clipboard Manager"
-msgstr "正在启动KDE剪贴板管理器"
-
-#: xfce4-session/xfsm-startup.c:111
-msgid "Starting the KDE Mail Reader"
-msgstr "正在启动KDE邮件阅读程序"
-
-#: xfce4-session/xfsm-startup.c:113
-msgid "Starting the KDE News Reader"
-msgstr "正在启动KDE新闻阅读程序"
-
-#: xfce4-session/xfsm-startup.c:115
-msgid "Starting the Konqueror"
-msgstr "正在启动Konqueror"
-
-#: xfce4-session/xfsm-startup.c:117
-msgid "Starting the KDE Terminal Emulator"
-msgstr "正在启动KDE终端仿真程序"
-
-#: xfce4-session/xfsm-startup.c:121
-msgid "Starting the Beep Media Player"
-msgstr "正在启动 Beep 媒体播放器"
-
-#: xfce4-session/xfsm-startup.c:123
-msgid "Starting The Gimp"
-msgstr "正在启动Gimp"
-
-#: xfce4-session/xfsm-startup.c:125
-msgid "Starting the VI Improved Editor"
-msgstr "正在启动 VIM 编辑器"
-
-#: xfce4-session/xfsm-startup.c:127
-msgid "Starting the Session Management Proxy"
-msgstr "正在启动会话管理代理"
-
-#: xfce4-session/xfsm-startup.c:129
-msgid "Starting the X-Chat IRC Client"
-msgstr "正在启动 X-Chat IRC 客户程序"
-
-#: xfce4-session/xfsm-startup.c:131
-msgid "Starting the X Multimedia System"
-msgstr "正在启动 X 多媒体系统"
-
-#: xfce4-session/xfsm-startup.c:133
-msgid "Starting the X Terminal Emulator"
-msgstr "正在启动 X 终端仿真器"
-
-#: xfce4-session/xfsm-startup.c:135
-#, c-format
-msgid "Starting %s"
-msgstr "正在启动 %s"
-
-#: xfce4-session/xfsm-startup.c:156
-msgid "Performing Autostart..."
-msgstr "正在执行自动启动..."
-
-#: xfce4-session/xfsm-splash-screen.c:363
-msgid "Starting Xfce, please wait..."
-msgstr "正在启动 Xfce，请等候..."
-
-#: xfce4-session/xfsm-splash-screen.c:446
-msgid "Please wait, loading session data..."
-msgstr "请等候，正在读取会话数据..."
-
-#: xfce4-session/xfsm-chooser.c:131 xfce4-session/xfsm-chooser.c:132
-msgid "Default session"
-msgstr "默认会话"
-
-#: xfce4-session/xfsm-chooser.c:135 xfce4-session/xfsm-chooser.c:136
-msgid "Session rc object"
-msgstr ""
-
-#: xfce4-session/xfsm-chooser.c:197 xfce4-session/xfsm-chooser.c:218
-#: xfce4-session/xfsm-chooser.c:280 xfce4-session/xfsm-chooser.c:657
-msgid "Restore"
-msgstr "恢复"
-
-#: xfce4-session/xfsm-chooser.c:288 xfce4-session/xfsm-chooser.c:666
-msgid "Create"
-msgstr "创建"
-
-#: xfce4-session/xfsm-chooser.c:344
-msgid "Restore a previously saved session:"
-msgstr "恢复以前一个保存的会话："
-
-#: xfce4-session/xfsm-chooser.c:346
-msgid ""
-"Choose this option if you want to restore one of your previously saved "
-"sessions. This will bring up the desktop as it was when you saved the "
-"session."
-msgstr "如果您希望恢复到您以前保存的某个会话，请选择该项。这样您的桌面就会恢复到您保存会话时的状态。"
-
-#: xfce4-session/xfsm-chooser.c:376
+#: xfce4-session/xfsm-chooser.c:208
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr "选择您希望恢复的会话。您可以简单地双击会话名来恢复该会话。"
 
-#: xfce4-session/xfsm-chooser.c:417
-msgid "Create a new session:"
-msgstr "创建一个新的会话："
-
-#: xfce4-session/xfsm-chooser.c:419
-msgid ""
-"Choose this option if you want to create a new session. The new session will "
-"be started as a default desktop. XXX - better text?"
-msgstr "如果您希望创建一个新的会话，请选择该项。新的会话将会被用作启动时的默认桌面。XXX - 好一点的名字?"
-
-#: xfce4-session/xfsm-chooser.c:429
-msgid ""
-"Enter the name of the new session here. The name has to be unique among your "
-"session names and empty session names are not allowed."
-msgstr "请在此输入新会话的名称。会话名称必须在所有的会话名称中唯一确定，而且不允许为空。"
-
 #. "Logout" button
-#: xfce4-session/xfsm-chooser.c:439
+#: xfce4-session/xfsm-chooser.c:234
 msgid "Logout"
 msgstr "注销"
 
-#: xfce4-session/xfsm-chooser.c:441
+#: xfce4-session/xfsm-chooser.c:236
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "取消本次登录并且返回到登录屏幕。"
 
-#. fire up the keyring daemon
-#: xfce4-session/xfsm-compat-gnome.c:237
+#. "New" button
+#: xfce4-session/xfsm-chooser.c:244
+#, fuzzy
+msgid "New session"
+msgstr "默认会话"
+
+#: xfce4-session/xfsm-chooser.c:246
+#, fuzzy
+msgid "Create a new session."
+msgstr "创建一个新的会话："
+
+#: xfce4-session/xfsm-dns.c:76
+#, fuzzy
+msgid "(Unknown)"
+msgstr "未知"
+
+#: xfce4-session/xfsm-dns.c:143
+#, c-format
+msgid ""
+"Could not look up internet address for %s.\n"
+"This will prevent Xfce from operating correctly.\n"
+"It may be possible to correct the problem by adding\n"
+"%s to the file /etc/hosts on your system."
+msgstr ""
+
+#: xfce4-session/xfsm-dns.c:150
+msgid "Continue anyway"
+msgstr ""
+
+#: xfce4-session/xfsm-dns.c:151
+msgid "Try again"
+msgstr ""
+
+#: xfce4-session/xfsm-compat-gnome.c:238
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "正在启动 Gnome Keyring 守护进程"
 
-#: xfce4-session/xfsm-compat-gnome.c:247
+#: xfce4-session/xfsm-compat-gnome.c:249
 msgid "Starting Gnome Assistive Technologies"
 msgstr "正在启动 Gnome Assistive Technologies"
 
-#: xfce4-session/xfsm-splash-theme.c:113
-msgid "No description given"
-msgstr "未提供描述"
-
-#: xfce4-session/xfsm-compat-kde.c:47
+#: xfce4-session/xfsm-compat-kde.c:118
 msgid "Starting KDE services"
 msgstr "正在启动 KDE 服务"
 
-#: settings/session.c:150
-msgid "Session chooser"
-msgstr "会话选择"
+#: xfce4-session/xfsm-splash-screen.c:177
+#, fuzzy
+msgid "Choose session"
+msgstr "默认会话"
 
-#: settings/session.c:156
-msgid "Display chooser on each login"
-msgstr "在每次登录时显示选择器"
+#: xfce4-session/xfsm-splash-screen.c:207
+msgid "Choose session name"
+msgstr ""
 
-#: settings/session.c:158
-msgid "Display chooser on demand"
-msgstr "根据要求显示选择器"
+#: xfce4-session/xfsm-splash-screen.c:219
+#, fuzzy
+msgid "Choose a name for the new session:"
+msgstr "创建一个新的会话："
 
-#: settings/session.c:160
-msgid "Restore last session automatically"
-msgstr "自动恢复上次会话"
+#: xfce4-session/xfsm-startup.c:92
+msgid "Starting the Volume Controller"
+msgstr "启动音量控制器"
 
-#: settings/session.c:169
-msgid "Logout settings"
-msgstr "注销设置"
+#: xfce4-session/xfsm-startup.c:94
+msgid "Starting the Panel"
+msgstr "正在启动面板"
 
-#: settings/session.c:174 settings/old-session.c:202
-msgid "Automatically save session on logout"
-msgstr "注销时自动保存会话"
+#: xfce4-session/xfsm-startup.c:96
+msgid "Starting the Desktop Manager"
+msgstr "正在启动桌面管理器"
 
-#: settings/session.c:180
-msgid "Prompt on logout"
-msgstr "注销时提示"
+#: xfce4-session/xfsm-startup.c:98
+msgid "Starting the Taskbar"
+msgstr "正在启动任务条"
 
-#: settings/session.c:214
-msgid "Compatibility"
-msgstr "兼容性"
+#: xfce4-session/xfsm-startup.c:100
+msgid "Starting the Window Manager"
+msgstr "正在启动窗口管理器"
 
-#: settings/session.c:219
-msgid "Launch Gnome services on startup"
-msgstr "启动时启动 Gnome 服务"
+#: xfce4-session/xfsm-startup.c:104
+msgid "Starting the Gnome Terminal Emulator"
+msgstr "正在启动Gnome终端仿真程序"
 
-#: settings/session.c:229
-msgid "Launch KDE services on startup"
-msgstr "启动时启动 KDE 服务"
+#: xfce4-session/xfsm-startup.c:108
+msgid "Starting the KDE Advanced Text Editor"
+msgstr "正在启动KDE高级文本编辑器"
 
-#: settings/session.c:235
-msgid "Security"
-msgstr "安全"
+#: xfce4-session/xfsm-startup.c:110
+msgid "Starting the KDE Clipboard Manager"
+msgstr "正在启动KDE剪贴板管理器"
 
-#: settings/session.c:240
-msgid "Manage remote applications"
-msgstr "管理远程应用"
+#: xfce4-session/xfsm-startup.c:112
+msgid "Starting the KDE Mail Reader"
+msgstr "正在启动KDE邮件阅读程序"
 
-#: settings/session.c:289 settings/session.c:305 settings/session.c:339
-msgid "Sessions and Startup"
-msgstr "会话管理"
+#: xfce4-session/xfsm-startup.c:114
+msgid "Starting the KDE News Reader"
+msgstr "正在启动KDE新闻阅读程序"
 
-#. General settings
-#: settings/session.c:311 settings/old-session.c:193
-msgid "General"
-msgstr "通用"
+#: xfce4-session/xfsm-startup.c:116
+msgid "Starting the Konqueror"
+msgstr "正在启动Konqueror"
 
-#: settings/session.c:315
-msgid "Look & Feel"
-msgstr "外观"
+#: xfce4-session/xfsm-startup.c:118
+msgid "Starting the KDE Terminal Emulator"
+msgstr "正在启动KDE终端仿真程序"
 
-#: settings/session.c:319
-msgid "Advanced"
-msgstr "高级"
+#: xfce4-session/xfsm-startup.c:122
+msgid "Starting the Beep Media Player"
+msgstr "正在启动 Beep 媒体播放器"
 
-#: settings/old-session.c:81 settings/old-session.c:169
-#: settings/old-session.c:183
-msgid "Session management"
-msgstr "会话管理"
+#: xfce4-session/xfsm-startup.c:124
+msgid "Starting The Gimp"
+msgstr "正在启动Gimp"
 
-#. Startup settings
-#: settings/old-session.c:209
-msgid "Startup"
-msgstr "启动"
+#: xfce4-session/xfsm-startup.c:126
+msgid "Starting the VI Improved Editor"
+msgstr "正在启动 VIM 编辑器"
 
-#: settings/old-session.c:219
-msgid "Chooser timeout in seconds:"
-msgstr "选择器超时秒数："
+#: xfce4-session/xfsm-startup.c:128
+msgid "Starting the Session Management Proxy"
+msgstr "正在启动会话管理代理"
 
-#: settings/looknfeel.c:304
-msgid "Splash theme"
-msgstr "飞溅屏幕主题"
+#: xfce4-session/xfsm-startup.c:130
+msgid "Starting the X-Chat IRC Client"
+msgstr "正在启动 X-Chat IRC 客户程序"
+
+#: xfce4-session/xfsm-startup.c:132
+msgid "Starting the X Multimedia System"
+msgstr "正在启动 X 多媒体系统"
+
+#: xfce4-session/xfsm-startup.c:134
+msgid "Starting the X Terminal Emulator"
+msgstr "正在启动 X 终端仿真器"
+
+#: xfce4-session/xfsm-startup.c:136
+#, c-format
+msgid "Starting %s"
+msgstr "正在启动 %s"
+
+#: xfce4-session/xfsm-startup.c:158
+msgid "Performing Autostart..."
+msgstr "正在执行自动启动..."
+
+#: engines/balou/balou-theme.c:90
+msgid "No description given"
+msgstr "未提供描述"
+
+#: engines/simple/simple.c:314
+msgid "Choose image..."
+msgstr ""
+
+#: engines/simple/simple.c:359
+#, fuzzy
+msgid "Configure Simple..."
+msgstr "注销确认"
+
+#: engines/simple/simple.c:370
+msgid "Font"
+msgstr ""
+
+#: engines/simple/simple.c:379
+msgid "Colors"
+msgstr ""
+
+#: engines/simple/simple.c:387
+#, fuzzy
+msgid "Background color:"
+msgstr "背景窗口"
+
+#: engines/simple/simple.c:399
+msgid "Text color:"
+msgstr ""
+
+#: engines/simple/simple.c:411
+msgid "Image"
+msgstr ""
+
+#: engines/simple/simple.c:419
+msgid "Use custom image"
+msgstr ""
+
+#~ msgid "Restoring the desktop settings, please wait..."
+#~ msgstr "正在恢复桌面设置，请等候 ... "
+
+#~ msgid "Starting Xfce, please wait..."
+#~ msgstr "正在启动 Xfce，请等候..."
+
+#~ msgid "Restore"
+#~ msgstr "恢复"
+
+#~ msgid "Create"
+#~ msgstr "创建"
+
+#~ msgid "Restore a previously saved session:"
+#~ msgstr "恢复以前一个保存的会话："
+
+#~ msgid ""
+#~ "Choose this option if you want to restore one of your previously saved "
+#~ "sessions. This will bring up the desktop as it was when you saved the "
+#~ "session."
+#~ msgstr ""
+#~ "如果您希望恢复到您以前保存的某个会话，请选择该项。这样您的桌面就会恢复到您"
+#~ "保存会话时的状态。"
+
+#~ msgid ""
+#~ "Choose this option if you want to create a new session. The new session "
+#~ "will be started as a default desktop. XXX - better text?"
+#~ msgstr ""
+#~ "如果您希望创建一个新的会话，请选择该项。新的会话将会被用作启动时的默认桌"
+#~ "面。XXX - 好一点的名字?"
+
+#~ msgid ""
+#~ "Enter the name of the new session here. The name has to be unique among "
+#~ "your session names and empty session names are not allowed."
+#~ msgstr ""
+#~ "请在此输入新会话的名称。会话名称必须在所有的会话名称中唯一确定，而且不允许"
+#~ "为空。"
+
+#~ msgid "Display chooser on demand"
+#~ msgstr "根据要求显示选择器"
+
+#~ msgid "Restore last session automatically"
+#~ msgstr "自动恢复上次会话"
+
+#~ msgid "Look & Feel"
+#~ msgstr "外观"
+
+#~ msgid "Session management"
+#~ msgstr "会话管理"
+
+#~ msgid "Startup"
+#~ msgstr "启动"
+
+#~ msgid "Chooser timeout in seconds:"
+#~ msgstr "选择器超时秒数："
 
 #~ msgid ""
 #~ "The following error occured while trying to shutdown the computer:\n"
@@ -321,9 +427,6 @@ msgstr "飞溅屏幕主题"
 #~ "关闭计算机时发生以下错误：\n"
 #~ "\n"
 #~ "%s"
-
-#~ msgid "Confirm logout"
-#~ msgstr "注销确认"
 
 #~ msgid ""
 #~ "Should the session manager ask the user to confirm the logout. If "
@@ -376,9 +479,6 @@ msgstr "飞溅屏幕主题"
 
 #~ msgid "Info:"
 #~ msgstr "信息:"
-
-#~ msgid "Author:"
-#~ msgstr "作者:"
 
 #~ msgid "Unable to install splash theme from file %s: %s"
 #~ msgstr "无法从文件 %s 中安装飞溅屏幕主题: %s"
@@ -498,6 +598,3 @@ msgstr "飞溅屏幕主题"
 
 #~ msgid "Clone client"
 #~ msgstr "复制客户程序"
-
-#~ msgid "Unknown"
-#~ msgstr "未知"

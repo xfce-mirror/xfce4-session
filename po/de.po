@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-session 4.1.8\n"
+"Project-Id-Version: xfce4-session 4.1.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-05 14:43+0200\n"
+"POT-Creation-Date: 2004-07-14 20:18+0200\n"
 "PO-Revision-Date: 2003-07-011 20:10+0100\n"
 "Last-Translator: Moritz Heiber <moritz-heiber@arcor.de>\n"
 "Language-Team: none <none@none>\n"
@@ -14,42 +14,141 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: xfce4-session/main.c:146
-msgid "Restoring the desktop settings, please wait..."
-msgstr "Desktop Einstellungen werden geladen, bitte warten..."
+#: settings/session/session.c:122
+msgid "Session chooser"
+msgstr "Sitzungsübersicht"
 
-#: xfce4-session/shutdown.c:283
+#: settings/session/session.c:127
+msgid "Display chooser on login"
+msgstr ""
+
+#: settings/session/session.c:134
+#, fuzzy
+msgid "Logout settings"
+msgstr "Sitzung beenden"
+
+#: settings/session/session.c:139
+msgid "Automatically save session on logout"
+msgstr "Sitzung automatisch beim Beenden speichern"
+
+#: settings/session/session.c:145
+msgid "Prompt on logout"
+msgstr ""
+
+#: settings/session/session.c:182
+msgid "Compatibility"
+msgstr "Kompatibilität"
+
+#: settings/session/session.c:190
+msgid "Launch Gnome services on startup"
+msgstr "Gnome Laufzeitumgebung beim Start laden"
+
+#: settings/session/session.c:200
+msgid "Launch KDE services on startup"
+msgstr "KDE Laufzeitumgebung beim Start laden"
+
+#: settings/session/session.c:211
+msgid "Security"
+msgstr "Sicherheit"
+
+#: settings/session/session.c:216
+msgid "Manage remote applications"
+msgstr "Anwendungen auf entfernten\nRechnern verwalten"
+
+#: settings/session/session.c:265 settings/session/session.c:280
+#: settings/session/session.c:317
+#, fuzzy
+msgid "Sessions and Startup"
+msgstr "Sitzungsmanagement"
+
+#: settings/session/session.c:288
+msgid "General"
+msgstr "Allgemeine Einstellungen"
+
+#: settings/session/session.c:294
+msgid "Advanced"
+msgstr "Fortgeschritten"
+
+#: settings/splash/splash.c:270 settings/splash/splash.c:273
+#: settings/splash/splash.c:276 settings/splash/splash.c:279
+#: settings/splash/splash.c:335
+msgid "None"
+msgstr "Keiner"
+
+#: settings/splash/splash.c:358 settings/splash/splash.c:372
+msgid "Splash Screen Settings"
+msgstr ""
+
+#: settings/splash/splash.c:402
+msgid "Configure"
+msgstr "Konfigurieren"
+
+#: settings/splash/splash.c:410
+msgid "Test"
+msgstr "Testen"
+
+#: settings/splash/splash.c:429
+msgid "<b>Description:</b>"
+msgstr "<b>Beschreibung:</b>"
+
+#: settings/splash/splash.c:443
+msgid "<b>Version:</b>"
+msgstr "<b>Version:</b>"
+
+#: settings/splash/splash.c:457
+msgid "<b>Author:</b>"
+msgstr "<b>Autor:</b>"
+
+#: settings/splash/splash.c:471
+msgid "<b>Homepage:</b>"
+msgstr "<b>Webseite:</b>"
+
+#: settings/splash/splash.c:508
+msgid "Splash Screen"
+msgstr "Splash Screen"
+
+#: xfce4-session/main.c:138
+msgid "Loading desktop settings"
+msgstr "Lade Desktop Einstellungen"
+
+#. verify that the DNS settings are ok
+#: xfce4-session/main.c:191
+msgid "Verifying DNS settings"
+msgstr "DNS Einstellungen werden geprüft"
+
+#: xfce4-session/main.c:194
+msgid "Loading session data"
+msgstr "Lade Sitzungsdaten"
+
+#: xfce4-session/shutdown.c:292
 msgid "What do you want to do next?"
 msgstr "Was wollen Sie als nächstes machen?"
 
-#: xfce4-session/shutdown.c:292
-#, fuzzy
+#: xfce4-session/shutdown.c:301
 msgid "Quit current session"
-msgstr "_Beende laufende Sitzung"
+msgstr "Beende laufende Sitzung"
 
-#: xfce4-session/shutdown.c:298
-#, fuzzy
+#: xfce4-session/shutdown.c:307
 msgid "Reboot the computer"
-msgstr "Computer _rebooten"
+msgstr "Computer rebooten"
 
-#: xfce4-session/shutdown.c:303
-#, fuzzy
+#: xfce4-session/shutdown.c:312
 msgid "Turn off the computer"
-msgstr "Computer _herunterfahren"
+msgstr "Computer herunterfahren"
 
-#: xfce4-session/shutdown.c:310
+#: xfce4-session/shutdown.c:319
 msgid "_Save session for future logins"
 msgstr "_Speichere Sitzung für weitere Logins"
 
-#: xfce4-session/shutdown.c:404
+#: xfce4-session/shutdown.c:413
 msgid "Please enter your password:"
 msgstr "Bitte geben Sie Ihr Passwort ein:"
 
-#: xfce4-session/shutdown.c:459
+#: xfce4-session/shutdown.c:468
 msgid "<b>An error occured</b>"
 msgstr "<b>Es ist ein Fehler aufgetreten</b>"
 
-#: xfce4-session/shutdown.c:473
+#: xfce4-session/shutdown.c:482
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
@@ -60,276 +159,228 @@ msgstr ""
 msgid "Background window"
 msgstr ""
 
-#: xfce4-session/xfsm-startup.c:91
-msgid "Starting the Volume Controller"
-msgstr "Lautstärkeregler wird gestartet"
-
-#: xfce4-session/xfsm-startup.c:93
-#, fuzzy
-msgid "Starting the Panel"
-msgstr "Starte Sitzungsmanager..."
-
-#: xfce4-session/xfsm-startup.c:95
-#, fuzzy
-msgid "Starting the Desktop Manager"
-msgstr "Starte Sitzungsmanager..."
-
-#: xfce4-session/xfsm-startup.c:97
-#, fuzzy
-msgid "Starting the Taskbar"
-msgstr "Starte Sitzungsmanager..."
-
-#: xfce4-session/xfsm-startup.c:99
-#, fuzzy
-msgid "Starting the Window Manager"
-msgstr "Starte Sitzungsmanager..."
-
-#: xfce4-session/xfsm-startup.c:103
-msgid "Starting the Gnome Terminal Emulator"
-msgstr "Gnome Terminal Emulator wird gestartet"
-
-#: xfce4-session/xfsm-startup.c:107
-msgid "Starting the KDE Advanced Text Editor"
-msgstr "KDE Advanced Text Editor wird gestartet"
-
-#: xfce4-session/xfsm-startup.c:109
-#, fuzzy
-msgid "Starting the KDE Clipboard Manager"
-msgstr "Starte Sitzungsmanager..."
-
-#: xfce4-session/xfsm-startup.c:111
-#, fuzzy
-msgid "Starting the KDE Mail Reader"
-msgstr "Starte Sitzungsmanager..."
-
-#: xfce4-session/xfsm-startup.c:113
-#, fuzzy
-msgid "Starting the KDE News Reader"
-msgstr "Starte Sitzungsmanager..."
-
-#: xfce4-session/xfsm-startup.c:115
-#, fuzzy
-msgid "Starting the Konqueror"
-msgstr "Starte Sitzungsmanager..."
-
-#: xfce4-session/xfsm-startup.c:117
-#, fuzzy
-msgid "Starting the KDE Terminal Emulator"
-msgstr "Starte Sitzungsmanager..."
-
-#: xfce4-session/xfsm-startup.c:121
-msgid "Starting the Beep Media Player"
-msgstr "Beep Media Player wird gestartet"
-
-#: xfce4-session/xfsm-startup.c:123
-msgid "Starting The Gimp"
-msgstr "The Gimp wird gestartet"
-
-#: xfce4-session/xfsm-startup.c:125
-msgid "Starting the VI Improved Editor"
-msgstr ""
-
-#: xfce4-session/xfsm-startup.c:127
-#, fuzzy
-msgid "Starting the Session Management Proxy"
-msgstr "Starte Sitzungsmanager..."
-
-#: xfce4-session/xfsm-startup.c:129
-msgid "Starting the X-Chat IRC Client"
-msgstr "X-Chat IRC Client wird gestartet"
-
-#: xfce4-session/xfsm-startup.c:131
-msgid "Starting the X Multimedia System"
-msgstr "X Multimedia System wird gestartet"
-
-#: xfce4-session/xfsm-startup.c:133
-msgid "Starting the X Terminal Emulator"
-msgstr "X Terminal Emulator wird gestartet"
-
-#: xfce4-session/xfsm-startup.c:135
-msgid "Starting %s"
-msgstr "Starte %s"
-
-#: xfce4-session/xfsm-startup.c:156
-msgid "Performing Autostart..."
-msgstr "Durchlaufe Autostart..."
-
-#: xfce4-session/xfsm-splash-screen.c:363
-#, fuzzy
-msgid "Starting Xfce, please wait..."
-msgstr "Starte %s..."
-
-#: xfce4-session/xfsm-splash-screen.c:446
-#, fuzzy
-msgid "Please wait, loading session data..."
-msgstr "Starte Sitzungsmanager..."
-
-#: xfce4-session/xfsm-chooser.c:131 xfce4-session/xfsm-chooser.c:132
-#, fuzzy
-msgid "Default session"
-msgstr "Sitzung beenden"
-
-#: xfce4-session/xfsm-chooser.c:135 xfce4-session/xfsm-chooser.c:136
-#, fuzzy
-msgid "Session rc object"
-msgstr "Sitzungsübersicht"
-
-#: xfce4-session/xfsm-chooser.c:197 xfce4-session/xfsm-chooser.c:218
-#: xfce4-session/xfsm-chooser.c:280 xfce4-session/xfsm-chooser.c:657
-msgid "Restore"
-msgstr "Wiederherstellen"
-
-#: xfce4-session/xfsm-chooser.c:288 xfce4-session/xfsm-chooser.c:666
-msgid "Create"
-msgstr "Erstellen"
-
-#: xfce4-session/xfsm-chooser.c:344
-msgid "Restore a previously saved session:"
-msgstr "Eine gespeicherte Sitzung wiederherstellen:"
-
-#: xfce4-session/xfsm-chooser.c:346
-msgid ""
-"Choose this option if you want to restore one of your previously saved "
-"sessions. This will bring up the desktop as it was when you saved the "
-"session."
-msgstr ""
-
-#: xfce4-session/xfsm-chooser.c:376
+#: xfce4-session/xfsm-chooser.c:208
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr ""
 
-#: xfce4-session/xfsm-chooser.c:417
-#, fuzzy
-msgid "Create a new session:"
-msgstr "Sitzung speichern"
-
-#: xfce4-session/xfsm-chooser.c:419
-msgid ""
-"Choose this option if you want to create a new session. The new session will "
-"be started as a default desktop. XXX - better text?"
-msgstr ""
-
-#: xfce4-session/xfsm-chooser.c:429
-msgid ""
-"Enter the name of the new session here. The name has to be unique among your "
-"session names and empty session names are not allowed."
-msgstr ""
-
 #. "Logout" button
-#: xfce4-session/xfsm-chooser.c:439
+#: xfce4-session/xfsm-chooser.c:234
 msgid "Logout"
 msgstr "Abmelden"
 
-#: xfce4-session/xfsm-chooser.c:441
+#: xfce4-session/xfsm-chooser.c:236
 msgid "Cancel the login attempt and return to the login screen."
+msgstr "Den Loginvorgang abbrechen und zum Anmeldebildschirm zurückkehren."
+
+#. "New" button
+#: xfce4-session/xfsm-chooser.c:244
+msgid "New session"
+msgstr "Neue Sitzung"
+
+#: xfce4-session/xfsm-chooser.c:246
+msgid "Create a new session."
+msgstr "Eine neue Sitzung erstellen."
+
+#: xfce4-session/xfsm-dns.c:76
+msgid "(Unknown)"
+msgstr "(Unbekannt)"
+
+#: xfce4-session/xfsm-dns.c:143
+#, c-format
+msgid ""
+"Could not look up internet address for %s.\n"
+"This will prevent Xfce from operating correctly.\n"
+"It may be possible to correct the problem by adding\n"
+"%s to the file /etc/hosts on your system."
 msgstr ""
 
-#. fire up the keyring daemon
-#: xfce4-session/xfsm-compat-gnome.c:237
+#: xfce4-session/xfsm-dns.c:150
+msgid "Continue anyway"
+msgstr "Trotzdem fortfahren"
+
+#: xfce4-session/xfsm-dns.c:151
+msgid "Try again"
+msgstr "Nochmal versuchen"
+
+#: xfce4-session/xfsm-compat-gnome.c:238
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "Gnome Keyring Daemon wird gestartet"
 
-#: xfce4-session/xfsm-compat-gnome.c:247
+#: xfce4-session/xfsm-compat-gnome.c:249
 msgid "Starting Gnome Assistive Technologies"
 msgstr ""
 
-#: xfce4-session/xfsm-splash-theme.c:113
-msgid "No description given"
-msgstr "Keine Beschreibung verfügbar"
-
-#: xfce4-session/xfsm-compat-kde.c:47
+#: xfce4-session/xfsm-compat-kde.c:118
 msgid "Starting KDE services"
 msgstr "KDE Laufzeitumbegung wird gestartet"
 
-#: settings/session.c:150
+#: xfce4-session/xfsm-splash-screen.c:177
+msgid "Choose session"
+msgstr "Sitzung wählen"
+
+#: xfce4-session/xfsm-splash-screen.c:207
+msgid "Choose session name"
+msgstr "Sitzungsname wählen"
+
+#: xfce4-session/xfsm-splash-screen.c:219
+msgid "Choose a name for the new session:"
+msgstr "Wählen Sie einen Namen für die neue Sitzung:"
+
+#: xfce4-session/xfsm-startup.c:92
+msgid "Starting the Volume Controller"
+msgstr "Lautstärkeregler wird gestartet"
+
+#: xfce4-session/xfsm-startup.c:94
 #, fuzzy
-msgid "Session chooser"
-msgstr "Sitzungsübersicht"
+msgid "Starting the Panel"
+msgstr "Starte Sitzungsmanager..."
 
-#: settings/session.c:156
-msgid "Display chooser on each login"
-msgstr ""
-
-#: settings/session.c:158
-msgid "Display chooser on demand"
-msgstr ""
-
-#: settings/session.c:160
-msgid "Restore last session automatically"
-msgstr ""
-
-#: settings/session.c:169
+#: xfce4-session/xfsm-startup.c:96
 #, fuzzy
-msgid "Logout settings"
-msgstr "Sitzung beenden"
+msgid "Starting the Desktop Manager"
+msgstr "Starte Sitzungsmanager..."
 
-#: settings/session.c:174 settings/old-session.c:202
-msgid "Automatically save session on logout"
-msgstr "Sitzung automatisch beim Beenden speichern"
-
-#: settings/session.c:180
-msgid "Prompt on logout"
-msgstr ""
-
-#: settings/session.c:214
-msgid "Compatibility"
-msgstr "Kompatibilität"
-
-#: settings/session.c:219
-msgid "Launch Gnome services on startup"
-msgstr "Gnome Laufzeitumgebung beim Start laden"
-
-#: settings/session.c:229
-msgid "Launch KDE services on startup"
-msgstr "KDE Laufzeitumgebung beim Start laden"
-
-#: settings/session.c:235
-msgid "Security"
-msgstr "Sicherheit"
-
-#: settings/session.c:240
-msgid "Manage remote applications"
-msgstr ""
-
-#: settings/session.c:289 settings/session.c:305 settings/session.c:339
+#: xfce4-session/xfsm-startup.c:98
 #, fuzzy
-msgid "Sessions and Startup"
-msgstr "Sitzungsmanagement"
+msgid "Starting the Taskbar"
+msgstr "Starte Sitzungsmanager..."
 
-#. General settings
-#: settings/session.c:311 settings/old-session.c:193
-msgid "General"
-msgstr "Allgemeine Einstellungen"
+#: xfce4-session/xfsm-startup.c:100
+msgid "Starting the Window Manager"
+msgstr "Starte den Fenstermanager"
 
-#: settings/session.c:315
-msgid "Look & Feel"
-msgstr ""
+#: xfce4-session/xfsm-startup.c:104
+msgid "Starting the Gnome Terminal Emulator"
+msgstr "Gnome Terminal Emulator wird gestartet"
 
-#: settings/session.c:319
-msgid "Advanced"
-msgstr "Fortgeschritten"
+#: xfce4-session/xfsm-startup.c:108
+msgid "Starting the KDE Advanced Text Editor"
+msgstr "KDE Advanced Text Editor wird gestartet"
 
-#: settings/old-session.c:81 settings/old-session.c:169
-#: settings/old-session.c:183
-msgid "Session management"
-msgstr "Sitzungsmanagement"
+#: xfce4-session/xfsm-startup.c:110
+msgid "Starting the KDE Clipboard Manager"
+msgstr "Starte den KDE Clipboard Manager"
 
-#. Startup settings
-#: settings/old-session.c:209
+#: xfce4-session/xfsm-startup.c:112
+msgid "Starting the KDE Mail Reader"
+msgstr "Starte das KDE Mail Programm"
+
+#: xfce4-session/xfsm-startup.c:114
 #, fuzzy
-msgid "Startup"
-msgstr "Status"
+msgid "Starting the KDE News Reader"
+msgstr "Starte Sitzungsmanager..."
 
-#: settings/old-session.c:219
-msgid "Chooser timeout in seconds:"
-msgstr ""
-
-#: settings/looknfeel.c:304
+#: xfce4-session/xfsm-startup.c:116
 #, fuzzy
-msgid "Splash theme"
-msgstr "Splashscreen Theme"
+msgid "Starting the Konqueror"
+msgstr "Starte Sitzungsmanager..."
+
+#: xfce4-session/xfsm-startup.c:118
+msgid "Starting the KDE Terminal Emulator"
+msgstr "Starte den KDE Terminal Emulator"
+
+#: xfce4-session/xfsm-startup.c:122
+msgid "Starting the Beep Media Player"
+msgstr "Beep Media Player wird gestartet"
+
+#: xfce4-session/xfsm-startup.c:124
+msgid "Starting The Gimp"
+msgstr "The Gimp wird gestartet"
+
+#: xfce4-session/xfsm-startup.c:126
+msgid "Starting the VI Improved Editor"
+msgstr "Starte den VI Improved Editor"
+
+#: xfce4-session/xfsm-startup.c:128
+#, fuzzy
+msgid "Starting the Session Management Proxy"
+msgstr "Starte Sitzungsmanager..."
+
+#: xfce4-session/xfsm-startup.c:130
+msgid "Starting the X-Chat IRC Client"
+msgstr "X-Chat IRC Client wird gestartet"
+
+#: xfce4-session/xfsm-startup.c:132
+msgid "Starting the X Multimedia System"
+msgstr "X Multimedia System wird gestartet"
+
+#: xfce4-session/xfsm-startup.c:134
+msgid "Starting the X Terminal Emulator"
+msgstr "X Terminal Emulator wird gestartet"
+
+#: xfce4-session/xfsm-startup.c:136
+#, c-format
+msgid "Starting %s"
+msgstr "Starte %s"
+
+#: xfce4-session/xfsm-startup.c:158
+msgid "Performing Autostart..."
+msgstr "Durchlaufe Autostart..."
+
+#: engines/balou/balou-theme.c:90
+msgid "No description given"
+msgstr "Keine Beschreibung verfügbar"
+
+#: engines/simple/simple.c:314
+msgid "Choose image..."
+msgstr "Bild auswählen..."
+
+#: engines/simple/simple.c:359
+msgid "Configure Simple..."
+msgstr "Konfiguriere Simple..."
+
+#: engines/simple/simple.c:370
+msgid "Font"
+msgstr "Font"
+
+#: engines/simple/simple.c:379
+msgid "Colors"
+msgstr "Farben"
+
+#: engines/simple/simple.c:387
+msgid "Background color:"
+msgstr "Hintergrundfarbe:"
+
+#: engines/simple/simple.c:399
+msgid "Text color:"
+msgstr "Textfarbe:"
+
+#: engines/simple/simple.c:411
+msgid "Image"
+msgstr "Bild"
+
+#: engines/simple/simple.c:419
+msgid "Use custom image"
+msgstr "Eigenes Bild verwenden"
+
+#~ msgid "Restoring the desktop settings, please wait..."
+#~ msgstr "Desktop Einstellungen werden geladen, bitte warten..."
+
+#, fuzzy
+#~ msgid "Starting Xfce, please wait..."
+#~ msgstr "Starte %s..."
+
+#, fuzzy
+#~ msgid "Session rc object"
+#~ msgstr "Sitzungsübersicht"
+
+#~ msgid "Restore"
+#~ msgstr "Wiederherstellen"
+
+#~ msgid "Create"
+#~ msgstr "Erstellen"
+
+#~ msgid "Restore a previously saved session:"
+#~ msgstr "Eine gespeicherte Sitzung wiederherstellen:"
+
+#~ msgid "Session management"
+#~ msgstr "Sitzungsmanagement"
+
+#, fuzzy
+#~ msgid "Startup"
+#~ msgstr "Status"
 
 #~ msgid ""
 #~ "The following error occured while trying to shutdown the computer:\n"
@@ -339,9 +390,6 @@ msgstr "Splashscreen Theme"
 #~ "Der folgende Fehler trat beim herunterfahren des Computers auf:\n"
 #~ "\n"
 #~ "%s"
-
-#~ msgid "Confirm logout"
-#~ msgstr "Ausloggen bestätigen"
 
 #~ msgid "Usage: %s <action>\n"
 #~ msgstr "Verwendung: %s <action>\n"
@@ -395,9 +443,6 @@ msgstr "Splashscreen Theme"
 
 #~ msgid "Info:"
 #~ msgstr "Info:"
-
-#~ msgid "Author:"
-#~ msgstr "Autor:"
 
 #~ msgid "Unable to install splash theme from file %s: %s"
 #~ msgstr "Kann Splashtheme aus %s nicht installieren: %s"
@@ -512,6 +557,3 @@ msgstr "Splashscreen Theme"
 
 #~ msgid "Clone client"
 #~ msgstr "Client duplizieren"
-
-#~ msgid "Unknown"
-#~ msgstr "Unbekannt"
