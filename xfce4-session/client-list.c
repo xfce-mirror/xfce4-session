@@ -43,9 +43,9 @@
 /* */
 enum 
 {
+	PRIORITY_COLUMN,
 	PROGRAM_COLUMN,
 	USERID_COLUMN,
-	PRIORITY_COLUMN,
 	STATE_COLUMN,
 	N_COLUMNS
 };
@@ -277,9 +277,9 @@ xfsm_client_list_init(XfsmClientList *list)
 
 	/* create the list store */
 	store = gtk_list_store_new(N_COLUMNS,
-			G_TYPE_STRING,
-			G_TYPE_STRING,
 			G_TYPE_INT,
+			G_TYPE_STRING,
+			G_TYPE_STRING,
 			G_TYPE_STRING);
 
 	/* */
@@ -292,6 +292,13 @@ xfsm_client_list_init(XfsmClientList *list)
 	g_object_unref(G_OBJECT(store));
 
 	/* add the columns */
+	renderer = gtk_cell_renderer_text_new();
+	g_object_set(renderer, "xalign", 1.0, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(list->tree),
+		gtk_tree_view_column_new_with_attributes(_("Priority"),
+			renderer,
+			"text", PRIORITY_COLUMN,
+			NULL));
 	gtk_tree_view_append_column(GTK_TREE_VIEW(list->tree),
 		gtk_tree_view_column_new_with_attributes(_("Program"),
 			gtk_cell_renderer_text_new(),
@@ -301,13 +308,6 @@ xfsm_client_list_init(XfsmClientList *list)
 		gtk_tree_view_column_new_with_attributes(_("User"),
 			gtk_cell_renderer_text_new(),
 			"text", USERID_COLUMN,
-			NULL));
-	renderer = gtk_cell_renderer_text_new();
-	g_object_set(renderer, "xalign", 1.0);
-	gtk_tree_view_append_column(GTK_TREE_VIEW(list->tree),
-		gtk_tree_view_column_new_with_attributes(_("Priority"),
-			renderer,
-			"text", PRIORITY_COLUMN,
 			NULL));
 	gtk_tree_view_append_column(GTK_TREE_VIEW(list->tree),
 		gtk_tree_view_column_new_with_attributes(_("State"),

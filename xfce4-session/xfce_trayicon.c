@@ -38,7 +38,8 @@
 /* signals provided by the tray icon */
 enum
 {
-	CLICKED,		/* user double-clicked the icon */
+	CLICKED,		/* user single-clicked the icon */
+	DBL_CLICKED,		/* user double-clicked the icon */
 	LAST_SIGNAL
 };
 
@@ -112,6 +113,15 @@ xfce_tray_icon_class_init(XfceTrayIconClass *klass)
 			g_cclosure_marshal_VOID__VOID,
 			G_TYPE_NONE,
 			0);
+	tray_signals[DBL_CLICKED] = g_signal_new("double_clicked",
+			G_OBJECT_CLASS_TYPE(klass),
+			G_SIGNAL_RUN_LAST,
+			G_STRUCT_OFFSET(XfceTrayIconClass, clicked),
+			NULL,
+			NULL,
+			g_cclosure_marshal_VOID__VOID,
+			G_TYPE_NONE,
+			0);
 }
 
 /*
@@ -141,9 +151,6 @@ xfce_tray_icon_init(XfceTrayIcon *icon)
 	icon->tooltips = gtk_tooltips_new();
 	g_object_ref(G_OBJECT(icon->tooltips));
 	gtk_object_sink(GTK_OBJECT(icon->tooltips));
-
-	/* connect to system tray */
-	(void)xfce_tray_icon_reconnect(icon);
 }
 
 /*
@@ -227,8 +234,11 @@ static void
 xfce_tray_icon_press(GtkWidget *widget, GdkEventButton *event,
                      XfceTrayIcon *icon)
 {
-	if (event->button == 1 && event->type == GDK_2BUTTON_PRESS) {
+	if (event->button == 1 && event->type == GDK_BUTTON_PRESS) {
 		g_signal_emit(G_OBJECT(icon), tray_signals[CLICKED], 0);
+	}
+	if (event->button == 1 && event->type == GDK_2BUTTON_PRESS) {
+		g_signal_emit(G_OBJECT(icon), tray_signals[DBL_CLICKED], 0);
 	}
 	else if (event->button == 3 && GTK_IS_MENU(icon->menu)) {
 		gtk_menu_popup(GTK_MENU(icon->menu), NULL, NULL, NULL, NULL,

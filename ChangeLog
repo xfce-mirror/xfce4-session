@@ -1,3 +1,43 @@
+2003-07-15 18:23  bmeurer
+
+	* NEWS, configure, configure.ac, po/de.gmo, po/de.po, po/es.gmo,
+	po/es.po, po/es_MX.gmo, po/es_MX.po, po/nl.gmo, po/nl.po,
+	po/xfce4-session.pot, po/zh_CN.gmo, po/zh_CN.po,
+	settings/session.c, xfce4-session/client-list.c,
+	xfce4-session/main.c, xfce4-session/xfce_trayicon.c,
+	xfce4-session/xfce_trayicon.h: Many improvements on the
+	XfceTrayIcon class (will be moved to libxfcegui4 soon). Session
+	managers tray icon can now be enabled/disabled from the settings
+	dialog. Added more helpful tooltips to the settings dialog
+	(translations needs to be updated). Make "session control" sticky
+	again, since the xfwm4 problem with sticky windows seems to be
+	fixed.
+
+2003-07-14 20:31  bmeurer
+
+	* xfce4-session.spec.in: Fixed spec file.
+
+2003-07-13 18:18  bmeurer
+
+	* NEWS, TODO, config.h.in, configure, configure.ac, po/de.gmo,
+	po/de.po, po/es.gmo, po/es.po, po/es_MX.gmo, po/es_MX.po,
+	po/nl.gmo, po/nl.po, po/xfce4-session.pot, po/zh_CN.gmo,
+	po/zh_CN.po, settings/session.c, xfce4-session/client-list.c,
+	xfce4-session/client.h, xfce4-session/manager.c,
+	xfce4-session/splash-screen.c, xfce4-session/util.c,
+	xfce4-session/util.h: Several updates and fixes. Version is now
+	0.1.0. See NEWS for details.
+
+2003-07-13 16:44  bmeurer
+
+	* xfce4-session/client-list.c: Do not make "session control"
+	sticky. That fixes the withdrawn issue.
+
+2003-07-13 13:54  bmeurer
+
+	* ChangeLog, settings/session.c: Create users splash themes dir
+	upon install theme request.
+
 2003-07-13 10:43  huysmans
 
 	* ChangeLog: Update ChangeLogs for release
