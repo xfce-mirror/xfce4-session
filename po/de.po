@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.1.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-14 20:18+0200\n"
+"POT-Creation-Date: 2004-07-23 22:10+0200\n"
 "PO-Revision-Date: 2003-07-011 20:10+0100\n"
 "Last-Translator: Moritz Heiber <moritz-heiber@arcor.de>\n"
 "Language-Team: none <none@none>\n"
@@ -14,96 +14,154 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: settings/session/session.c:122
+#: settings/session/session.c:123
 msgid "Session chooser"
 msgstr "Sitzungsübersicht"
 
-#: settings/session/session.c:127
+#: settings/session/session.c:128
 msgid "Display chooser on login"
+msgstr "Sitzungsauswahl beim Starten anzeigen"
+
+#: settings/session/session.c:135
+msgid ""
+"If set, the session manager will ask you to choose a session every time you "
+"log in to Xfce."
 msgstr ""
 
-#: settings/session/session.c:134
+#: settings/session/session.c:139
 #, fuzzy
 msgid "Logout settings"
 msgstr "Sitzung beenden"
 
-#: settings/session/session.c:139
+#: settings/session/session.c:144
 msgid "Automatically save session on logout"
 msgstr "Sitzung automatisch beim Beenden speichern"
 
-#: settings/session/session.c:145
+#: settings/session/session.c:150
+msgid ""
+"This option instructs the session manager to save the current session "
+"automatically when you log out. If you don't select this option you'll be "
+"prompted whether you want to save the current session on each logout."
+msgstr ""
+
+#: settings/session/session.c:157
 msgid "Prompt on logout"
 msgstr ""
 
-#: settings/session/session.c:182
+#: settings/session/session.c:163
+msgid ""
+"This option disables the logout confirmation dialog. Whether the session "
+"will be saved or not depends on whether you enabled the automatic saving of "
+"sessions on logout or not."
+msgstr ""
+
+#: settings/session/session.c:199
 msgid "Compatibility"
 msgstr "Kompatibilität"
 
-#: settings/session/session.c:190
+#: settings/session/session.c:207
 msgid "Launch Gnome services on startup"
 msgstr "Gnome Laufzeitumgebung beim Start laden"
 
-#: settings/session/session.c:200
+#: settings/session/session.c:217
+msgid ""
+"Enable this if you plan to use Gnome applications. This will instruct the "
+"session manager to start some vital Gnome services for you. You should also "
+"enable this if you want to use the Assistive Technologies that ship with "
+"Gnome."
+msgstr ""
+
+#: settings/session/session.c:224
 msgid "Launch KDE services on startup"
 msgstr "KDE Laufzeitumgebung beim Start laden"
 
-#: settings/session/session.c:211
+#: settings/session/session.c:230
+msgid ""
+"Enable this option if you plan to run KDE applications as part of your Xfce "
+"Desktop session. This will notably increase the startup time, but on the "
+"other hand, KDE applications will startup faster. Some KDE applications may "
+"not work at all if you don't enable this option."
+msgstr ""
+
+#: settings/session/session.c:243
 msgid "Security"
 msgstr "Sicherheit"
 
-#: settings/session/session.c:216
+#: settings/session/session.c:248
 msgid "Manage remote applications"
-msgstr "Anwendungen auf entfernten\nRechnern verwalten"
+msgstr ""
+"Anwendungen auf entfernten\n"
+"Rechnern verwalten"
 
-#: settings/session/session.c:265 settings/session/session.c:280
-#: settings/session/session.c:317
+#: settings/session/session.c:259
+msgid ""
+"Allow the session manager to manage applications running on remote hosts. Do "
+"not enable this option unless you know what you are doing."
+msgstr ""
+
+#: settings/session/session.c:311 settings/session/session.c:326
+#: settings/session/session.c:363
 #, fuzzy
 msgid "Sessions and Startup"
 msgstr "Sitzungsmanagement"
 
-#: settings/session/session.c:288
+#: settings/session/session.c:334
 msgid "General"
 msgstr "Allgemeine Einstellungen"
 
-#: settings/session/session.c:294
+#: settings/session/session.c:340
 msgid "Advanced"
 msgstr "Fortgeschritten"
 
-#: settings/splash/splash.c:270 settings/splash/splash.c:273
-#: settings/splash/splash.c:276 settings/splash/splash.c:279
-#: settings/splash/splash.c:335
+#: settings/splash/splash.c:304 settings/splash/splash.c:307
+#: settings/splash/splash.c:310 settings/splash/splash.c:313
+#: settings/splash/splash.c:374
 msgid "None"
 msgstr "Keiner"
 
-#: settings/splash/splash.c:358 settings/splash/splash.c:372
+#: settings/splash/splash.c:397 settings/splash/splash.c:411
 msgid "Splash Screen Settings"
 msgstr ""
 
-#: settings/splash/splash.c:402
+#: settings/splash/splash.c:450
 msgid "Configure"
 msgstr "Konfigurieren"
 
-#: settings/splash/splash.c:410
+#: settings/splash/splash.c:458
+msgid "Opens the configuration panel for the selected splash screen."
+msgstr ""
+
+#: settings/splash/splash.c:462
 msgid "Test"
 msgstr "Testen"
 
-#: settings/splash/splash.c:429
+#: settings/splash/splash.c:469
+#, fuzzy
+msgid "Demonstrates the selected splash screen."
+msgstr "Default Splashscreen"
+
+#: settings/splash/splash.c:486
+#, fuzzy
+msgid "Information"
+msgstr "Interagiere"
+
+#: settings/splash/splash.c:497
 msgid "<b>Description:</b>"
 msgstr "<b>Beschreibung:</b>"
 
-#: settings/splash/splash.c:443
+#: settings/splash/splash.c:511
 msgid "<b>Version:</b>"
 msgstr "<b>Version:</b>"
 
-#: settings/splash/splash.c:457
+#: settings/splash/splash.c:525
 msgid "<b>Author:</b>"
 msgstr "<b>Autor:</b>"
 
-#: settings/splash/splash.c:471
+#: settings/splash/splash.c:539
 msgid "<b>Homepage:</b>"
 msgstr "<b>Webseite:</b>"
 
-#: settings/splash/splash.c:508
+#: settings/splash/splash.c:576
 msgid "Splash Screen"
 msgstr "Splash Screen"
 
@@ -120,35 +178,35 @@ msgstr "DNS Einstellungen werden geprüft"
 msgid "Loading session data"
 msgstr "Lade Sitzungsdaten"
 
-#: xfce4-session/shutdown.c:292
+#: xfce4-session/shutdown.c:291
 msgid "What do you want to do next?"
 msgstr "Was wollen Sie als nächstes machen?"
 
-#: xfce4-session/shutdown.c:301
+#: xfce4-session/shutdown.c:300
 msgid "Quit current session"
 msgstr "Beende laufende Sitzung"
 
-#: xfce4-session/shutdown.c:307
+#: xfce4-session/shutdown.c:306
 msgid "Reboot the computer"
 msgstr "Computer rebooten"
 
-#: xfce4-session/shutdown.c:312
+#: xfce4-session/shutdown.c:311
 msgid "Turn off the computer"
 msgstr "Computer herunterfahren"
 
-#: xfce4-session/shutdown.c:319
+#: xfce4-session/shutdown.c:318
 msgid "_Save session for future logins"
 msgstr "_Speichere Sitzung für weitere Logins"
 
-#: xfce4-session/shutdown.c:413
+#: xfce4-session/shutdown.c:412
 msgid "Please enter your password:"
 msgstr "Bitte geben Sie Ihr Passwort ein:"
 
-#: xfce4-session/shutdown.c:468
+#: xfce4-session/shutdown.c:467
 msgid "<b>An error occured</b>"
 msgstr "<b>Es ist ein Fehler aufgetreten</b>"
 
-#: xfce4-session/shutdown.c:482
+#: xfce4-session/shutdown.c:481
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
@@ -204,11 +262,11 @@ msgstr "Trotzdem fortfahren"
 msgid "Try again"
 msgstr "Nochmal versuchen"
 
-#: xfce4-session/xfsm-compat-gnome.c:238
+#: xfce4-session/xfsm-compat-gnome.c:239
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "Gnome Keyring Daemon wird gestartet"
 
-#: xfce4-session/xfsm-compat-gnome.c:249
+#: xfce4-session/xfsm-compat-gnome.c:250
 msgid "Starting Gnome Assistive Technologies"
 msgstr ""
 
@@ -224,7 +282,7 @@ msgstr "Sitzung wählen"
 msgid "Choose session name"
 msgstr "Sitzungsname wählen"
 
-#: xfce4-session/xfsm-splash-screen.c:219
+#: xfce4-session/xfsm-splash-screen.c:221
 msgid "Choose a name for the new session:"
 msgstr "Wählen Sie einen Namen für die neue Sitzung:"
 
@@ -319,39 +377,82 @@ msgstr "Starte %s"
 msgid "Performing Autostart..."
 msgstr "Durchlaufe Autostart..."
 
-#: engines/balou/balou-theme.c:90
+#: engines/balou/balou-theme.c:110
 msgid "No description given"
 msgstr "Keine Beschreibung verfügbar"
 
-#: engines/simple/simple.c:314
+#: engines/balou/config.c:317
+msgid "Choose theme file to install..."
+msgstr ""
+
+#: engines/balou/config.c:329
+#, c-format
+msgid ""
+"Unable to install splash theme from file %s, please check that the file is a "
+"valid splash theme archive."
+msgstr ""
+
+#: engines/balou/config.c:382
+#, fuzzy, c-format
+msgid "Unable to remove splash theme \"%s\" from directory %s."
+msgstr "Kann Splashtheme aus %s nicht installieren: %s"
+
+#: engines/balou/config.c:467
+#, fuzzy
+msgid "Choose theme filename..."
+msgstr "Bild auswählen..."
+
+#: engines/balou/config.c:600
+#, fuzzy
+msgid "_Install new theme"
+msgstr "Neues Theme installieren"
+
+#: engines/balou/config.c:609
+msgid "_Remove theme"
+msgstr ""
+
+#: engines/balou/config.c:626
+msgid "_Export theme"
+msgstr ""
+
+#: engines/balou/config.c:841
+msgid "Balou theme"
+msgstr ""
+
+#: engines/balou/config.c:924
+#, fuzzy
+msgid "Configure Balou..."
+msgstr "Konfiguriere Simple..."
+
+#: engines/simple/simple.c:317
 msgid "Choose image..."
 msgstr "Bild auswählen..."
 
-#: engines/simple/simple.c:359
+#: engines/simple/simple.c:362
 msgid "Configure Simple..."
 msgstr "Konfiguriere Simple..."
 
-#: engines/simple/simple.c:370
+#: engines/simple/simple.c:373
 msgid "Font"
 msgstr "Font"
 
-#: engines/simple/simple.c:379
+#: engines/simple/simple.c:382
 msgid "Colors"
 msgstr "Farben"
 
-#: engines/simple/simple.c:387
+#: engines/simple/simple.c:390
 msgid "Background color:"
 msgstr "Hintergrundfarbe:"
 
-#: engines/simple/simple.c:399
+#: engines/simple/simple.c:402
 msgid "Text color:"
 msgstr "Textfarbe:"
 
-#: engines/simple/simple.c:411
+#: engines/simple/simple.c:414
 msgid "Image"
 msgstr "Bild"
 
-#: engines/simple/simple.c:419
+#: engines/simple/simple.c:422
 msgid "Use custom image"
 msgstr "Eigenes Bild verwenden"
 
@@ -435,20 +536,11 @@ msgstr "Eigenes Bild verwenden"
 #~ msgid "Default Theme"
 #~ msgstr "Default Theme"
 
-#~ msgid "Default splash screen"
-#~ msgstr "Default Splashscreen"
-
 #~ msgid "About %s..."
 #~ msgstr "Über %s..."
 
 #~ msgid "Info:"
 #~ msgstr "Info:"
-
-#~ msgid "Unable to install splash theme from file %s: %s"
-#~ msgstr "Kann Splashtheme aus %s nicht installieren: %s"
-
-#~ msgid "Install new theme"
-#~ msgstr "Neues Theme installieren"
 
 #~ msgid "Show tray icon"
 #~ msgstr "Tray icon anzeigen"
@@ -518,9 +610,6 @@ msgstr "Eigenes Bild verwenden"
 
 #~ msgid "Idle"
 #~ msgstr "Leerlauf"
-
-#~ msgid "Interacting"
-#~ msgstr "Interagiere"
 
 #~ msgid "Save completed"
 #~ msgstr "Gespeichert"
