@@ -17,6 +17,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
  * 02111-1307, USA.
+ *
+ * The session id generator was taken from the KDE session manager.
+ * Copyright (c) 2000 Matthias Ettrich <ettrich@kde.org>
  */
 
 #ifdef HAVE_CONFIG_H
@@ -374,9 +377,20 @@ xfsm_manager_generate_client_id (SmsConn sms_conn)
 {
   static char *addr = NULL;
   static int   sequence = 0;
-  char        *id;
+  char        *sms_id;
+  char        *id = NULL;
 
-  if (sms_conn == NULL || (id = SmsGenerateClientID (sms_conn)) == NULL)
+  if (sms_conn != NULL)
+    {
+      sms_id = SmsGenerateClientID (sms_conn);
+      if (sms_id != NULL)
+        {
+          id = g_strdup (sms_id);
+          free (sms_id);
+        }
+    }
+
+  if (id == NULL)
     {
       if (addr == NULL)
         {
