@@ -48,8 +48,6 @@
 #include <config.h>
 #endif
 
-#ifdef LEGACY_SESSION_MANAGEMENT
-
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
 #endif
@@ -77,6 +75,8 @@
 
 #include <libxfsm/xfsm-util.h>
 
+
+#ifdef LEGACY_SESSION_MANAGEMENT
 
 #define WM_SAVE_YOURSELF_TIMEOUT  4000
 
