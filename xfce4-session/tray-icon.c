@@ -34,6 +34,13 @@
 #include <settings/session-icon.h>
 #include <xfce4-session/tray-icon.h>
 
+/* signals provided by the tray icon */
+enum
+{
+	CLICKED,		/* user double-clicked the icon */
+	LAST_SIGNAL
+};
+
 /* static prototypes */
 static void	xfsm_tray_icon_class_init(XfsmTrayIconClass *);
 static void	xfsm_tray_icon_init(XfsmTrayIcon *);
@@ -41,6 +48,9 @@ static void	xfsm_tray_icon_finalize(GObject *);
 
 /* parent class */
 static GObjectClass	*parent_class;
+
+/* tray icon signals */
+static guint 		tray_signals[LAST_SIGNAL];
 
 /*
  */
@@ -79,9 +89,23 @@ xfsm_tray_icon_class_init(XfsmTrayIconClass *klass)
 {
 	GObjectClass *gobject_class;
 
+	parent_class = gtk_type_class(netk_tray_icon_get_type());
+
 	gobject_class = G_OBJECT_CLASS(klass);
 	gobject_class->finalize = xfsm_tray_icon_finalize;
-	parent_class = gtk_type_class(netk_tray_icon_get_type());
+
+	/*
+	 * create signals
+	 */
+	tray_signals[CLICKED] = g_signal_new("clicked",
+			G_OBJECT_CLASS_TYPE(klass),
+			G_SIGNAL_RUN_LAST,
+			G_STRUCT_OFFSET(XfsmTrayIconClass, clicked),
+			NULL,
+			NULL,
+			g_cclosure_marshal_VOID__VOID,
+			G_TYPE_NONE,
+			0);
 }
 
 /*
@@ -94,12 +118,7 @@ xfsm_tray_icon_press(XfsmTrayIcon *icon, GdkEventButton *event, gpointer data)
 	g_return_if_fail(GTK_IS_MENU(icon->menu));
 
 	if (event->button == 1 && event->type == GDK_2BUTTON_PRESS) {
-		/* check if menu item is connected */
-		if (!GTK_IS_MENU_ITEM(icon->defaultItem))
-			return;
-
-		gtk_menu_shell_activate_item(GTK_MENU_SHELL(icon->menu),
-				icon->defaultItem, TRUE);
+		g_signal_emit(G_OBJECT(icon), tray_signals[CLICKED], 0);
 	}
 	else if (event->button == 3) {
 		gtk_menu_popup(icon->menu, NULL, NULL, NULL, NULL,
@@ -109,6 +128,7 @@ xfsm_tray_icon_press(XfsmTrayIcon *icon, GdkEventButton *event, gpointer data)
 
 /*
  */
+/* ARGSUSED */
 static void
 xfsm_tray_icon_popup(XfsmTrayIcon *icon, gpointer data)
 {
@@ -127,7 +147,6 @@ xfsm_tray_icon_init(XfsmTrayIcon *icon)
 
 	/* no menu connected yet */
 	icon->menu = NULL;
-	icon->defaultItem = NULL;
 
 	/* set default screen for tray icon */
 	netk_tray_icon_set_screen(NETK_TRAY_ICON(icon),
@@ -168,7 +187,6 @@ xfsm_tray_icon_finalize(GObject *object)
 	icon = XFSM_TRAY_ICON(object);
 	
 	g_object_unref(G_OBJECT(icon->menu));
-	g_object_unref(G_OBJECT(icon->defaultItem));
 
 	G_OBJECT_CLASS(parent_class)->finalize(object);
 }
@@ -176,13 +194,12 @@ xfsm_tray_icon_finalize(GObject *object)
 /*
  */
 GtkWidget *
-xfsm_tray_icon_new(GtkMenu *menu, GtkWidget *defaultItem)
+xfsm_tray_icon_new(GtkMenu *menu)
 {
 	XfsmTrayIcon *icon;
 
 	icon = XFSM_TRAY_ICON(g_object_new(xfsm_tray_icon_get_type(), NULL));
 	icon->menu = GTK_MENU(g_object_ref(menu));
-	icon->defaultItem = GTK_WIDGET(g_object_ref(defaultItem));
 	
 	return(GTK_WIDGET(icon));
 }

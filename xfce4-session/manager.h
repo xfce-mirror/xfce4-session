@@ -51,5 +51,6 @@ extern gboolean	shutdownSave;
 extern gboolean	manager_init(void);
 extern gboolean	manager_save(void);
 extern gboolean	manager_restart(void);
+extern gchar	*manager_generate_client_id(SmsConn);
 
 #endif	/* !__XFSM_MANAGER_H__ */

@@ -236,7 +236,6 @@ create_tray_icon(void)
 {
 	/* XXX */
 	extern GtkWidget *clientList;
-	GtkWidget *defaultItem;
 	GtkWidget *menuItem;
 	GtkWidget *menu;
 	GtkWidget *icon;
@@ -252,13 +251,20 @@ create_tray_icon(void)
 	gtk_widget_show(menuItem);
 
 	/* */
-	defaultItem = gtk_menu_item_new_with_mnemonic(_("Session control"));
-	g_signal_connect_swapped(defaultItem, "activate",
-			G_CALLBACK(toggle_visible), clientList);
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), defaultItem);
-	gtk_widget_show(defaultItem);
+	menuItem = gtk_menu_item_new_with_mnemonic(_("Session control"));
+	g_signal_connect_swapped(menuItem, "activate",
+			G_CALLBACK(gtk_widget_show), clientList);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuItem);
+	gtk_widget_show(menuItem);
 
-	icon = xfsm_tray_icon_new(GTK_MENU(menu), defaultItem);
+	icon = xfsm_tray_icon_new(GTK_MENU(menu));
+
+	/* connect the double action */
+	g_signal_connect_swapped(G_OBJECT(icon), "clicked",
+			G_CALLBACK(toggle_visible), clientList);
+
+	/* the tray icon now keeps a ref on the menu */
+	g_object_unref(G_OBJECT(menu));
 
 	return(icon);
 }
@@ -275,6 +281,12 @@ main(int argc, char **argv)
 	xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
 	gtk_init(&argc, &argv);
+
+	/*
+	 * fake a clientID for the manager, so smproxy does not recognize
+	 * us to be a session client
+	 */
+	gdk_set_sm_client_id(manager_generate_client_id(NULL));
 
 	/* run a sanity check before we start the actual session manager */
 	if (!sanity_check(&message)) {

@@ -97,7 +97,6 @@ static IceListenObj *listenObjs;
 GtkWidget	*clientList = NULL;
 
 /* prototypes */
-static char	*manager_generate_client_id(SmsConn);
 static Status	new_client(SmsConn, SmPointer, unsigned long *, SmsCallbacks *,
                            char **);
 static Status	register_client(SmsConn, Client *, char *);
@@ -321,16 +320,14 @@ end:
 /*
  * Safe way to generate a client id, in case SmsGenerateClientID() fails
  */
-static char *
+char *
 manager_generate_client_id(SmsConn smsConn)
 {
 	static char *addr = NULL;
 	static int sequence = 0;
 	char *id;
 
-	if ((id = SmsGenerateClientID(smsConn)) == NULL) {
-		g_warning("SmsGenerateClientID() failed, faking client id");
-
+	if (smsConn == NULL || (id = SmsGenerateClientID(smsConn)) == NULL) {
 		if (addr == NULL) {
 			/*
 			 * Faking our IP address, the 0 below is "unknown"

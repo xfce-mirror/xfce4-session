@@ -47,6 +47,9 @@ typedef struct	_XfsmTrayIconClass	XfsmTrayIconClass;
 struct _XfsmTrayIconClass
 {
 	NetkTrayIconClass	parent_class;
+
+	/* user double-clicked the tray icon */
+	void (*clicked)(XfsmTrayIcon *);
 };
 
 struct _XfsmTrayIcon
@@ -55,14 +58,11 @@ struct _XfsmTrayIcon
 
 	/* */
 	GtkMenu		*menu;
-
-	/* */
-	GtkWidget	*defaultItem;
 };
 
 /* prototypes */
 extern GType		xfsm_tray_icon_get_type(void);
-extern GtkWidget	*xfsm_tray_icon_new(GtkMenu *, GtkWidget *);
+extern GtkWidget	*xfsm_tray_icon_new(GtkMenu *);
 
 G_END_DECLS
 
