@@ -35,3 +35,9 @@ rpm: dist
 	@rm -f $(PACKAGE)-$(VERSION).tar.gz
 
 ACLOCAL_AMFLAGS = -I m4
+
+dist-bz2: dist
+	zcat $(PACKAGE)-$(VERSION).tar.gz | bzip2 --best -c > $(PACKAGE)-$(VERSION).tar.bz2
+
+distcheck-bz2: distcheck
+	zcat $(PACKAGE)-$(VERSION).tar.gz | bzip2 --best -c > $(PACKAGE)-$(VERSION)$.tar.bz2
