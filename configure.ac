@@ -122,13 +122,11 @@ fi
 
 dnl Check for shutdown method
 AC_ARG_WITH([shutdown-style],
-AC_HELP_STRING([--with-shutdown-style=auto/none/redhat/sudo], [Shutdown style]),
+AC_HELP_STRING([--with-shutdown-style=auto/none/sudo], [Shutdown style]),
   [with_shutdown=$withval], [with_shutdown=auto])
 AC_MSG_CHECKING([what shutdown style should be used])
-if test x"$with_shutdown" != x"redhat" -a x"$with_shutdown" != x"sudo" -a x"$with_shutdown" != x"none"; then
-  if test -d "/var/lock/console" -o -d "/var/run/console"; then
-    with_shutdown="redhat"
-  elif test x"$SUDO" != x""; then
+if test x"$with_shutdown" != x"sudo" -a x"$with_shutdown" != x"none"; then
+  if test x"$SUDO" != x""; then
     with_shutdown="sudo"
   else
     with_shutdown="none"
