@@ -43,121 +43,10 @@
 
 #include <xfce4-session/shutdown.h>
 #include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-splash-theme.h>
+#include <xfce4-session/xfsm-fadeout.h>
 #include <xfce4-session/xfsm-util.h>
 
 #define BORDER		6
-
-static GList *fadeout_screens = NULL;
-
-static char stipple_data[] = {
-  ' ', '.',
-  '.', ' ',
-};
-
-/* XXX - Make this a module XfsmFadeout !! */
-
-static void
-fadeout_screen (GdkScreen      *screen,
-                const GdkColor *focolor)
-{
-  GdkGCValues values;
-  GdkWindow *root;
-  GdkColor *color;
-  GdkBitmap *bm;
-  GdkGC *gc;
-  int w, h;
-  int m;
-
-  root = gdk_screen_get_root_window (screen);
-  gdk_drawable_get_size (GDK_DRAWABLE (root), &w, &h);
-
-  fadeout_screens = g_list_prepend (fadeout_screens, screen);
-
-  bm = gdk_bitmap_create_from_data (root, stipple_data, 2, 2);
-
-  values.function = GDK_COPY;
-  values.fill = GDK_STIPPLED;
-  values.stipple = GDK_PIXMAP (bm);
-  values.subwindow_mode = TRUE;
-
-  gc = gdk_gc_new_with_values (GDK_DRAWABLE (root), &values,
-                               GDK_GC_FUNCTION | GDK_GC_FILL |
-                               GDK_GC_STIPPLE | GDK_GC_SUBWINDOW);
-
-  color = gdk_color_copy (focolor);
-  gdk_gc_set_rgb_fg_color (gc, color);
-  gdk_color_free (color);
-
-  for (m = 0; m < gdk_screen_get_n_monitors (screen); ++m)
-    {
-      GdkRectangle geometry;
-
-      gdk_screen_get_monitor_geometry (screen, m, &geometry);
-
-      gdk_draw_rectangle (GDK_DRAWABLE (root), gc, TRUE,
-                          geometry.x, geometry.y,
-                          geometry.width, geometry.height);
-    }
-
-  g_object_unref (G_OBJECT (gc));
-  g_object_unref (G_OBJECT (bm));
-}
-
-static void
-show_fadeout_windows (XfceRc *rc)
-{
-  const gchar *theme_name;
-  XfsmSplashTheme *theme;
-  GdkDisplay *display;
-  GdkColor focolor;
-  int n;
-
-  /* load fadeout settings */
-  xfce_rc_set_group (rc, "General");
-  theme_name = xfce_rc_read_entry (rc, "SplashTheme", "Default");
-  theme = xfsm_splash_theme_load (theme_name);
-  xfsm_splash_theme_get_focolor (theme, &focolor);
-  xfsm_splash_theme_destroy (theme);
-
-  display = gdk_display_get_default ();
-  for (n = 0; n < gdk_display_get_n_screens (display); ++n)
-    fadeout_screen (gdk_display_get_screen (display, n), &focolor);
-}
-
-static void
-hide_fadeout_windows (void)
-{
-  GdkWindowAttr attr;
-  GdkWindow *window;
-  GdkWindow *root;
-  GList *lp;
-
-  attr.x = 0;
-  attr.y = 0;
-  attr.event_mask = 0;
-  attr.window_type = GDK_WINDOW_TOPLEVEL;
-  attr.wclass = GDK_INPUT_OUTPUT;
-  attr.override_redirect = TRUE;
-
-  for (lp = fadeout_screens; lp != NULL; lp = lp->next)
-    {
-      root = gdk_screen_get_root_window (GDK_SCREEN (lp->data));
-
-      gdk_drawable_get_size (GDK_DRAWABLE (root), &attr.width, &attr.height);
-
-      window = gdk_window_new (root, &attr, GDK_WA_X | GDK_WA_Y |
-                               GDK_WA_NOREDIR);
-
-      gdk_window_show (window);
-      gdk_flush ();
-      gdk_window_hide (window);
-      g_object_unref (G_OBJECT (window));
-    }
-
-  g_list_free (fadeout_screens);
-  fadeout_screens = NULL;
-}
 
 
 /*
@@ -166,6 +55,9 @@ gboolean
 shutdownDialog(gint *shutdownType, gboolean *saveSession)
 {
 	gboolean accessibility;
+  XfsmFadeout *fadeout = NULL;
+  const gchar *theme_name;
+  XfsmSplashTheme *theme;
   GdkScreen *screen;
 	GtkWidget *dialog;
 	GtkWidget *label;
@@ -323,7 +215,12 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
     {
       gdk_x11_grab_server ();
 
-      show_fadeout_windows (rc);
+      /* display fadeout */
+      xfce_rc_set_group (rc, "General");
+      theme_name = xfce_rc_read_entry (rc, "SplashTheme", "Default");
+      theme = xfsm_splash_theme_load (theme_name);
+      fadeout = xfsm_fadeout_new (gtk_widget_get_display (dialog), theme);
+      xfsm_splash_theme_destroy (theme);
     }
 
 	/* need to realize the dialog first! */
@@ -358,7 +255,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 	/* Release Keyboard/Mouse pointer grab */
   if (!accessibility)
     {
-      hide_fadeout_windows ();
+      xfsm_fadeout_destroy (fadeout);
 
       gdk_x11_ungrab_server ();
       gdk_pointer_ungrab (GDK_CURRENT_TIME);

@@ -57,6 +57,7 @@ am_xfce4_session_OBJECTS = xfce4_session-ice-layer.$(OBJEXT) \
 	xfce4_session-sm-layer.$(OBJEXT) \
 	xfce4_session-xfsm-chooser.$(OBJEXT) \
 	xfce4_session-xfsm-client.$(OBJEXT) \
+	xfce4_session-xfsm-fadeout.$(OBJEXT) \
 	xfce4_session-xfsm-global.$(OBJEXT) \
 	xfce4_session-xfsm-manager.$(OBJEXT) \
 	xfce4_session-xfsm-properties.$(OBJEXT) \
@@ -75,6 +76,7 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-sm-layer.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-chooser.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-client.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-fadeout.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-global.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-manager.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/xfce4_session-xfsm-properties.Po \
@@ -250,6 +252,8 @@ xfce4_session_SOURCES = \
 	xfsm-chooser.h							\
 	xfsm-client.c							\
 	xfsm-client.h							\
+	xfsm-fadeout.c							\
+	xfsm-fadeout.h							\
 	xfsm-global.c							\
 	xfsm-global.h							\
 	xfsm-manager.c							\
@@ -362,6 +366,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-sm-layer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-chooser.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-client.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-fadeout.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-global.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-manager.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfce4_session-xfsm-properties.Po@am__quote@
@@ -537,6 +542,30 @@ xfce4_session-xfsm-client.lo: xfsm-client.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-client.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-client.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-client.lo `test -f 'xfsm-client.c' || echo '$(srcdir)/'`xfsm-client.c
+
+xfce4_session-xfsm-fadeout.o: xfsm-fadeout.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-fadeout.o -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-fadeout.Tpo" -c -o xfce4_session-xfsm-fadeout.o `test -f 'xfsm-fadeout.c' || echo '$(srcdir)/'`xfsm-fadeout.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-fadeout.Tpo" "$(DEPDIR)/xfce4_session-xfsm-fadeout.Po"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-fadeout.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-fadeout.c' object='xfce4_session-xfsm-fadeout.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-fadeout.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-fadeout.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-fadeout.o `test -f 'xfsm-fadeout.c' || echo '$(srcdir)/'`xfsm-fadeout.c
+
+xfce4_session-xfsm-fadeout.obj: xfsm-fadeout.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-fadeout.obj -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-fadeout.Tpo" -c -o xfce4_session-xfsm-fadeout.obj `if test -f 'xfsm-fadeout.c'; then $(CYGPATH_W) 'xfsm-fadeout.c'; else $(CYGPATH_W) '$(srcdir)/xfsm-fadeout.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-fadeout.Tpo" "$(DEPDIR)/xfce4_session-xfsm-fadeout.Po"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-fadeout.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-fadeout.c' object='xfce4_session-xfsm-fadeout.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-fadeout.Po' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-fadeout.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-fadeout.obj `if test -f 'xfsm-fadeout.c'; then $(CYGPATH_W) 'xfsm-fadeout.c'; else $(CYGPATH_W) '$(srcdir)/xfsm-fadeout.c'; fi`
+
+xfce4_session-xfsm-fadeout.lo: xfsm-fadeout.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-fadeout.lo -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-fadeout.Tpo" -c -o xfce4_session-xfsm-fadeout.lo `test -f 'xfsm-fadeout.c' || echo '$(srcdir)/'`xfsm-fadeout.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/xfce4_session-xfsm-fadeout.Tpo" "$(DEPDIR)/xfce4_session-xfsm-fadeout.Plo"; else rm -f "$(DEPDIR)/xfce4_session-xfsm-fadeout.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfsm-fadeout.c' object='xfce4_session-xfsm-fadeout.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/xfce4_session-xfsm-fadeout.Plo' tmpdepfile='$(DEPDIR)/xfce4_session-xfsm-fadeout.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -c -o xfce4_session-xfsm-fadeout.lo `test -f 'xfsm-fadeout.c' || echo '$(srcdir)/'`xfsm-fadeout.c
 
 xfce4_session-xfsm-global.o: xfsm-global.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfce4_session_CFLAGS) $(CFLAGS) -MT xfce4_session-xfsm-global.o -MD -MP -MF "$(DEPDIR)/xfce4_session-xfsm-global.Tpo" -c -o xfce4_session-xfsm-global.o `test -f 'xfsm-global.c' || echo '$(srcdir)/'`xfsm-global.c; \

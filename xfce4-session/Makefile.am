@@ -15,6 +15,8 @@ xfce4_session_SOURCES =							\
 	xfsm-chooser.h							\
 	xfsm-client.c							\
 	xfsm-client.h							\
+	xfsm-fadeout.c							\
+	xfsm-fadeout.h							\
 	xfsm-global.c							\
 	xfsm-global.h							\
 	xfsm-manager.c							\
