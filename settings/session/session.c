@@ -319,6 +319,8 @@ dialog_run (McsPlugin *plugin)
       return;
     }
 
+  xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
+
   kiosk = xfce_kiosk_new ("xfce4-session");
   kiosk_can_chooser = xfce_kiosk_query (kiosk, "Chooser");
   kiosk_can_logout = xfce_kiosk_query (kiosk, "Logout");
@@ -351,6 +353,7 @@ dialog_run (McsPlugin *plugin)
   notebook = gtk_notebook_new ();
   gtk_box_pack_start (GTK_BOX (dbox), notebook, TRUE, TRUE, 0);
   gtk_widget_show (notebook);
+  gtk_container_set_border_width (GTK_CONTAINER (notebook), 6);
 
   label = gtk_label_new (_("General"));
   page = general_create (rc);

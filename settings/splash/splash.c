@@ -358,6 +358,8 @@ splash_run (McsPlugin *plugin)
       return;
     }
 
+  xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
+
   tooltips = gtk_tooltips_new ();
 
   /* load splash modules */
