@@ -387,7 +387,7 @@ advanced_create (XfceRc *rc)
   gtk_container_set_border_width (GTK_CONTAINER (page), BORDER);
 
   frame = xfce_framebox_new (_("Compatibility"), TRUE);
-  gtk_box_pack_start (GTK_BOX (page), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (page), frame, FALSE, TRUE, 0);
   vbox = gtk_vbox_new (FALSE, 0);
   xfce_framebox_add (XFCE_FRAMEBOX (frame), vbox);
 
@@ -405,7 +405,7 @@ advanced_create (XfceRc *rc)
   gtk_box_pack_start (GTK_BOX (vbox), advanced_kde, FALSE, TRUE, 0);
 
   frame = xfce_framebox_new (_("Security"), TRUE);
-  gtk_box_pack_start (GTK_BOX (page), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (page), frame, FALSE, TRUE, 0);
   vbox = gtk_vbox_new (FALSE, 0);
   xfce_framebox_add (XFCE_FRAMEBOX (frame), vbox);
 
