@@ -43,6 +43,7 @@
 
 #include <xfce4-session/shutdown.h>
 #include <xfce4-session/xfsm-global.h>
+#include <xfce4-session/xfsm-splash-theme.h>
 #include <xfce4-session/xfsm-util.h>
 
 #define BORDER		6
@@ -54,11 +55,15 @@ static char stipple_data[] = {
   '.', ' ',
 };
 
+/* XXX - Make this a module XfsmFadeout !! */
+
 static void
-fadeout_screen (GdkScreen *screen)
+fadeout_screen (GdkScreen      *screen,
+                const GdkColor *focolor)
 {
   GdkGCValues values;
   GdkWindow *root;
+  GdkColor *color;
   GdkBitmap *bm;
   GdkGC *gc;
   int w, h;
@@ -71,7 +76,7 @@ fadeout_screen (GdkScreen *screen)
 
   bm = gdk_bitmap_create_from_data (root, stipple_data, 2, 2);
 
-  values.function = GDK_NAND;
+  values.function = GDK_COPY;
   values.fill = GDK_STIPPLED;
   values.stipple = GDK_PIXMAP (bm);
   values.subwindow_mode = TRUE;
@@ -79,6 +84,10 @@ fadeout_screen (GdkScreen *screen)
   gc = gdk_gc_new_with_values (GDK_DRAWABLE (root), &values,
                                GDK_GC_FUNCTION | GDK_GC_FILL |
                                GDK_GC_STIPPLE | GDK_GC_SUBWINDOW);
+
+  color = gdk_color_copy (focolor);
+  gdk_gc_set_rgb_fg_color (gc, color);
+  gdk_color_free (color);
 
   for (m = 0; m < gdk_screen_get_n_monitors (screen); ++m)
     {
@@ -96,14 +105,24 @@ fadeout_screen (GdkScreen *screen)
 }
 
 static void
-show_fadeout_windows (void)
+show_fadeout_windows (XfceRc *rc)
 {
+  const gchar *theme_name;
+  XfsmSplashTheme *theme;
   GdkDisplay *display;
+  GdkColor focolor;
   int n;
+
+  /* load fadeout settings */
+  xfce_rc_set_group (rc, "General");
+  theme_name = xfce_rc_read_entry (rc, "SplashTheme", "Default");
+  theme = xfsm_splash_theme_load (theme_name);
+  xfsm_splash_theme_get_focolor (theme, &focolor);
+  xfsm_splash_theme_destroy (theme);
 
   display = gdk_display_get_default ();
   for (n = 0; n < gdk_display_get_n_screens (display); ++n)
-    fadeout_screen (gdk_display_get_screen (display, n));
+    fadeout_screen (gdk_display_get_screen (display, n), &focolor);
 }
 
 static void
@@ -169,9 +188,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 	g_return_val_if_fail(saveSession != NULL, FALSE);
 	g_return_val_if_fail(shutdownType != NULL, FALSE);
 
-  rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG,
-                            "xfce4-session/xfce4-session.rc",
-                            FALSE);
+  rc = xfsm_open_config (FALSE);
 
   xfce_rc_set_group (rc, "General");
   saveonexit = xfce_rc_read_bool_entry (rc, "SaveOnExit", TRUE);
@@ -282,16 +299,18 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   gtk_widget_show (radio_halt);
 
 	/* */
-  if (!autosave) {
-    checkbox = gtk_check_button_new_with_mnemonic(
-        _("_Save session for future logins"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbox), saveonexit);
-    gtk_box_pack_start(GTK_BOX(vbox), checkbox, FALSE, TRUE, BORDER);
-    gtk_widget_show(checkbox);
-  }
-  else {
-    checkbox = NULL;
-  }
+  if (!autosave)
+    {
+      checkbox = gtk_check_button_new_with_mnemonic(
+          _("_Save session for future logins"));
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbox), saveonexit);
+      gtk_box_pack_start(GTK_BOX(vbox), checkbox, FALSE, TRUE, BORDER);
+      gtk_widget_show(checkbox);
+    }
+  else
+    {
+      checkbox = NULL;
+    }
 
   /* create small border */
   if (!accessibility)
@@ -304,7 +323,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
     {
       gdk_x11_grab_server ();
 
-      show_fadeout_windows ();
+      show_fadeout_windows (rc);
     }
 
 	/* need to realize the dialog first! */
@@ -358,6 +377,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
    */
   if (result == GTK_RESPONSE_OK)
     {
+      xfce_rc_set_group (rc, "General");
       xfce_rc_write_entry (rc, "SessionName", session_name);
       xfce_rc_write_bool_entry (rc, "SaveOnExit", *saveSession);
     }

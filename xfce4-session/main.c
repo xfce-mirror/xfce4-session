@@ -55,6 +55,7 @@
 #include <xfce4-session/xfsm-manager.h>
 #include <xfce4-session/xfsm-splash-theme.h>
 #include <xfce4-session/xfsm-startup.h>
+#include <xfce4-session/xfsm-util.h>
 
 
 void
@@ -232,9 +233,7 @@ initialize (int argc, char **argv)
 
   setup_environment ();
 
-  rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG,
-                            "xfce4-session/xfce4-session.rc",
-                            TRUE);
+  rc = xfsm_open_config (TRUE);
   xfce_rc_set_group (rc, "General");
 
   /* load splash theme setting */
@@ -248,6 +247,13 @@ initialize (int argc, char **argv)
   sm_init (rc, disable_tcp);
   xfsm_startup_init (rc);
   xfsm_manager_init (rc);
+
+  /* cleanup obsolete entries */
+  xfce_rc_set_group (rc, "General");
+  if (xfce_rc_has_entry (rc, "ConfirmLogout"))
+    {
+      xfce_rc_delete_entry (rc, "ConfirmLogout", TRUE);
+    }
 
   xfce_rc_close (rc);
 }

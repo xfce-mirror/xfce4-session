@@ -24,6 +24,8 @@
 
 #include <gtk/gtk.h>
 
+#include <libxfce4util/libxfce4util.h>
+
 G_BEGIN_DECLS;
 
 GtkWidget	*xfsm_imgbtn_new(const gchar *, const gchar *, GtkWidget **);
@@ -52,6 +54,8 @@ gchar **xfsm_strv_copy (gchar **v);
 gboolean xfsm_strv_equal (gchar **a, gchar **b);
 
 void xfsm_window_add_border (GtkWindow *window);
+
+XfceRc *xfsm_open_config (gboolean readonly);
 
 G_END_DECLS;
 

@@ -13,8 +13,7 @@ session_settings_la_SOURCES =						\
 
 session_settings_la_CFLAGS =						\
 	@XFCE_MCS_MANAGER_CFLAGS@					\
-	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
-	-DSPLASH_THEMES_DIR=\"$(datadir)/xfce4/splash\"
+	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"
 
 session-icon.h: $(srcdir)/session.png
 	gdk-pixbuf-csource --raw --build-list				\

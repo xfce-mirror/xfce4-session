@@ -1,11 +1,325 @@
+2004-05-19 00:41  benny
+
+	* BUGS, Makefile.am, Makefile.in, configure, configure.ac,
+	themes/Makefile.am, themes/Makefile.in, themes/Default/Makefile.am,
+	themes/Default/Makefile.in, themes/Default/logo.png,
+	themes/Default/themerc, xfce4-session/Makefile.am,
+	xfce4-session/Makefile.in, xfce4-session/main.c,
+	xfce4-session/xfsm-splash-screen.c,
+	xfce4-session/xfsm-splash-screen.h,
+	xfce4-session/xfsm-splash-theme.c,
+	xfce4-session/xfsm-splash-theme.h: Added theme support. Suggestings
+	for things that are required to create nice splash themes are
+	welcome.
+
+2004-05-18 23:06  benny
+
+	* xfce4-session/xfsm-startup.c: Added Autostart support.
+
+2004-05-18 20:07  benny
+
+	* BUGS, COPYING, xfce4-session.spec.in, settings/session.c,
+	xfce4-session/ice-layer.c, xfce4-session/ice-layer.h,
+	xfce4-session/main.c, xfce4-session/shutdown.c,
+	xfce4-session/shutdown.h, xfce4-session/sm-layer.c,
+	xfce4-session/sm-layer.h, xfce4-session/xfce_trayicon.c,
+	xfce4-session/xfce_trayicon.h, xfce4-session/xfsm-chooser.c,
+	xfce4-session/xfsm-chooser.h, xfce4-session/xfsm-client.c,
+	xfce4-session/xfsm-client.h, xfce4-session/xfsm-global.c,
+	xfce4-session/xfsm-global.h, xfce4-session/xfsm-manager.c,
+	xfce4-session/xfsm-manager.h, xfce4-session/xfsm-properties.c,
+	xfce4-session/xfsm-properties.h,
+	xfce4-session/xfsm-splash-screen.c,
+	xfce4-session/xfsm-splash-screen.h, xfce4-session/xfsm-startup.c,
+	xfce4-session/xfsm-startup.h, xfce4-session/xfsm-util.c,
+	xfce4-session/xfsm-util.h, xfce4-shutdown/main.c: Changed license
+	to GPL. Added Jaspers border to the chooser window (looks way
+	better). Removed the "Confirm logout" option, its more or less
+	useless. Use g_spawn_sync() in xfce4-shutdown redirecting all fds
+	to /dev/null, that should shutdown every machine correctly now.
+	Save SmEnvironment for clients. Simplify the SmDiscardCommand
+	handling a bit. Fixed broken gdk_pointer_ungrab(). Reset input
+	focus handling in shutdown dialog to RevertToParent. Ensure that
+	the sessions rc file is really closed in all cases. Remove some C++
+	comments. Fixed some memory leaks.
+
+2004-05-18 17:18  benny
+
+	* xfce4-session/: main.c, shutdown.c, xfsm-splash-screen.c: Fix
+	indentation. Check for access to ~/.ICEauthority on startup.
+
+2004-05-18 12:42  benny
+
+	* xfce4-session/: shutdown.c, xfsm-splash-screen.c: Set event_mask
+	for the new windows!
+
+2004-05-18 12:26  benny
+
+	* xfce4-session/shutdown.c: Use TOPLEVEL window instead of TEMP
+	window, maybe that fixes the bug reported by brian.
+
+2004-05-18 00:31  benny
+
+	* xfce4-session/: xfsm-client.c, xfsm-client.h, xfsm-manager.c,
+	xfsm-util.c, xfsm-util.h: Run DiscardCommand if it changes during a
+	SAVE YOURSELF to cleanup unneeded session files.
+	
+	Remember ActiveWorkspace for all Screens and restore it after the
+	session is restored.
+
+2004-05-17 23:32  benny
+
+	* xfce4-session/shutdown.c: Added border patch from jasper.
+
+2004-05-17 23:02  benny
+
+	* xfce4-session/xfsm-splash-screen.c: Keep the window above at any
+	rate!
+
+2004-05-17 22:45  benny
+
+	* xfce4-session/: xfsm-client.c, xfsm-client.h: Inline func ->
+	func.
+
+2004-05-17 22:39  benny
+
+	* po/ar.gmo, po/ar.po, po/az.gmo, po/az.po, po/ca.gmo, po/ca.po,
+	po/de.gmo, po/de.po, po/es.gmo, po/es.po, po/es_MX.gmo,
+	po/es_MX.po, po/eu.gmo, po/eu.po, po/fa_IR.gmo, po/fa_IR.po,
+	po/fr.gmo, po/fr.po, po/hi.gmo, po/hi.po, po/it.gmo, po/it.po,
+	po/ja.gmo, po/ja.po, po/ko.gmo, po/ko.po, po/ms.gmo, po/ms.po,
+	po/nl.gmo, po/nl.po, po/no.gmo, po/no.po, po/pl.gmo, po/pl.po,
+	po/pt_BR.gmo, po/pt_BR.po, po/sv.gmo, po/sv.po, po/ta.gmo,
+	po/ta.po, po/tr.gmo, po/tr.po, po/xfce4-session.pot, po/zh_CN.gmo,
+	po/zh_CN.po, po/zh_TW.gmo, po/zh_TW.po,
+	xfce4-session/xfsm-splash-screen.c: Use new gettext, reverted
+	broken .po files.
+
+2004-05-17 21:24  benny
+
+	* configure, xfce4-session/Makefile.am, xfce4-session/Makefile.in,
+	xfce4-session/chooser-icon.h, xfce4-session/chooser-icon.png,
+	xfce4-session/xfsm-chooser.c, xfce4-shutdown/main.c: Add nice icon
+	to the session chooser dialog.
+
+2004-05-17 20:52  benny
+
+	* Makefile.am, Makefile.in, configure, configure.ac:	       (__)
+		  (oo)
+	    /------\/
+	   / |	  ||
+	  *  /\---/\
+	     ~~   ~~
+	...."Have you mooed today?"...
+
+2004-05-17 20:44  benny
+
+	* Makefile.am, Makefile.in, config.h.in, configure, configure.ac:
+	Why wasn't this committed, when I said it? I want SVN now!
+
+2004-05-17 20:40  benny
+
+	* xfce4-session.rc: Correct wrong count.
+
+2004-05-17 20:39  benny
+
+	* docs/.cvsignore, po/.cvsignore: Additional .cvsignore's
+
+2004-05-17 20:36  benny
+
+	* config.h.in, configure, configure.ac: One should not skip
+	configure tests :)
+
+2004-05-17 20:33  benny
+
+	* .cvsignore, settings/.cvsignore, xfce4-session/.cvsignore,
+	xfce4-shutdown/.cvsignore: Shut up CVS!
+
+2004-05-17 20:30  benny
+
+	* Makefile.in, aclocal.m4, config.guess, config.sub, configure,
+	configure.ac, install-sh, ltmain.sh, defaults/Makefile.am,
+	defaults/Makefile.in, defaults/default.session, docs/FAQ,
+	docs/Makefile.am, docs/Makefile.in, docs/SessionFileFormat.txt,
+	docs/SplashThemes.txt, po/POTFILES.in, po/ar.gmo, po/ar.po,
+	po/az.gmo, po/az.po, po/ca.gmo, po/ca.po, po/de.gmo, po/de.po,
+	po/es.gmo, po/es.po, po/es_MX.gmo, po/es_MX.po, po/eu.gmo,
+	po/eu.po, po/fa_IR.gmo, po/fa_IR.po, po/fr.gmo, po/fr.po,
+	po/hi.gmo, po/hi.po, po/it.gmo, po/it.po, po/ja.gmo, po/ja.po,
+	po/ko.gmo, po/ko.po, po/ms.gmo, po/ms.po, po/nl.gmo, po/nl.po,
+	po/no.gmo, po/no.po, po/pl.gmo, po/pl.po, po/pt_BR.gmo,
+	po/pt_BR.po, po/sv.gmo, po/sv.po, po/ta.gmo, po/ta.po, po/tr.gmo,
+	po/tr.po, po/xfce4-session.pot, po/zh_CN.gmo, po/zh_CN.po,
+	po/zh_TW.gmo, po/zh_TW.po: Updated po files, removed further
+	obsolete files.
+
+2004-05-17 20:26  benny
+
+	* xfce4-session/: session-control.c, session-control.h: Obsolete.
+
+2004-05-17 20:25  benny
+
+	* xfce4-session/: Makefile.am, Makefile.in, client.c, client.h,
+	ice-layer.c, ice-layer.h, main.c, manager.c, manager.h, shutdown.c,
+	sm-layer.c, sm-layer.h, splash-fallback.h, splash-fallback.png,
+	splash-screen.c, splash-screen.h, startup.c, startup.h, util.c,
+	util.h, xfce4-splash.png, xfsm-chooser.c, xfsm-chooser.h,
+	xfsm-client.c, xfsm-client.h, xfsm-global.c, xfsm-global.h,
+	xfsm-manager.c, xfsm-manager.h, xfsm-marshal.c, xfsm-marshal.h,
+	xfsm-marshal.list, xfsm-properties.c, xfsm-properties.h,
+	xfsm-splash-screen.c, xfsm-splash-screen.h, xfsm-startup.c,
+	xfsm-startup.h, xfsm-util.c, xfsm-util.h: Remark: One should not
+	ever commit from a dirty sandbox!
+
+2004-05-17 20:07  benny
+
+	* BUGS, TODO, mkinstalldirs, xfce4-session.rc,
+	settings/Makefile.in, settings/session.c,
+	xfce4-shutdown/Makefile.in, xfce4-shutdown/main.c: New session
+	manager code, version is now 4.1.5
+
+2004-05-03 23:44  olivier
+
+	* Makefile.in, aclocal.m4, config.guess, config.sub, configure,
+	install-sh, ltmain.sh, mkinstalldirs, defaults/Makefile.in,
+	docs/Makefile.in, xfce4-session/Makefile.in,
+	xfce4-shutdown/Makefile.in: Update zh_TW translations from umm
+	<umm@pchome.com.tw>
+
+2004-05-03 22:21  kelnos
+
+	* settings/: Makefile.am, Makefile.in: EXTRA_DIST
+
+2004-04-30 06:13  kelnos
+
+	* settings/: Makefile.am, Makefile.in,
+	xfce-session-settings.desktop: session settings .desktop file
+
+2004-03-18 00:17  olivier
+
+	* configure: The configure script got updated for some reason.
+
+2004-03-18 00:13  olivier
+
+	* configure, configure.ac, xfce4-session/shutdown.c: Use dynamic
+	detection of gtk version
+
+2004-03-15 08:36  olivier
+
+	* aclocal.m4, configure, configure.ac, ltmain.sh, po/ar.gmo,
+	po/ar.po: Add/update i18n for: Bulgarian from Miroslav Yordanov
+	<miordanov@i-space.org> and Peter Slavov <peshka@i-space.org>
+	Italian from Alex Dupre <ale@FreeBSD.org> Arabic from Saleh Hathal
+	<hathalsal@hotmail.com>
+
+2004-03-13 19:09  benny
+
+	* xfce4-session/shutdown.c: Fixed problem with gtk2.3.
+
+2004-03-11 22:29  benny
+
+	* TODO: Note about Shutdown Screen freeze bug.
+
+2004-03-01 22:09  benny
+
+	* m4/debug.m4: Added --enable-gcov to compile xfce with support for
+	coverage tests. Very useful.
+
+2004-02-27 18:19  benny
+
+	* xfce4-session/main.c: Make gcc happy about the cast :)
+
+2004-02-20 22:43  benny
+
+	* TODO: Next round in the "Linux don't like my xterms" course as
+	requested by Olivier :-)
+
+2004-02-17 20:36  jasper
+
+	* aclocal.m4, configure, configure.ac, po/ms.gmo, po/ms.po: Update
+	Malay translations
+
+2004-02-15 10:36  benny
+
+	* configure, configure.ac: "eu"-commit missed configure.ac.
+
+2004-02-15 10:33  benny
+
+	* autogen.sh, configure, po/fr.gmo, po/fr.po: Updated french
+	translation, thanks to Jean-François Wauthy <pollux@castor.be>. 
+	Make --enable-maintainer-mode default for autogen.sh.
+
+2004-02-11 21:44  jasper
+
+	* configure, po/eu.gmo, po/eu.po: Add Basque (eu) translations
+
+2004-02-03 14:42  benny
+
+	* xfce4-session/main.c: Present about dialog to the user in any
+	case.
+
+2004-02-03 12:31  benny
+
+	* NEWS, TODO, configure, configure.ac, xfce4-session/main.c: Added
+	About dialog. Icon changes in the tray icon menu. Version 4.1.2.
+
+2004-01-29 23:52  benny
+
+	* config.h.in, configure, configure.ac, po/xfce4-session.pot,
+	xfce4-shutdown/main.c: Removed unnecessary configure checks and use
+	xfce_{set,put}env() in xfce4-shutdown as well! Now all thats
+	unclear is the call to clearenv(). I don't like itsudo gmake
+	install
+
+2004-01-29 23:36  benny
+
+	* AUTHORS, COPYING, NEWS, aclocal.m4, configure, configure.ac,
+	ltmain.sh, settings/session.c, xfce4-session/client.c,
+	xfce4-session/client.h, xfce4-session/ice-layer.c,
+	xfce4-session/ice-layer.h, xfce4-session/main.c,
+	xfce4-session/manager.c, xfce4-session/manager.h,
+	xfce4-session/session-control.c, xfce4-session/session-control.h,
+	xfce4-session/shutdown.c, xfce4-session/shutdown.h,
+	xfce4-session/splash-screen.c, xfce4-session/splash-screen.h,
+	xfce4-session/startup.c, xfce4-session/startup.h,
+	xfce4-session/util.c, xfce4-session/util.h,
+	xfce4-session/xfce_trayicon.c, xfce4-session/xfce_trayicon.h,
+	xfce4-shutdown/main.c: Version 4.1.1 (indeed a huge jump). Working
+	setenv()/putenv() stuff moved to libxfce4util. Cleanups and
+	Updates.
+
+2004-01-29 16:51  jasper
+
+	* po/: fa_IR.gmo, fa_IR.po: Update Persian translations
+
+2004-01-28 22:41  benny
+
+	* xfce4-session/shutdown.c: Try to fallback to using "halt" if
+	"poweroff" didn't do the job. That should fix the problem reported
+	by Francois, telling that halting the machine does not work.
+
+2004-01-25 11:35  olivier
+
+	* aclocal.m4, configure, ltmain.sh: Fix auto* tools for
+	xfce4-session
+
+2004-01-25 10:55  benny
+
+	* aclocal.m4, configure, ltmain.sh: Hm, previous autogen run used
+	wrong libtool binary.
+
+2004-01-25 10:40  benny
+
+	* ChangeLog, NEWS, aclocal.m4, configure, configure.ac, ltmain.sh,
+	po/xfce4-session.pot, xfce4-session/xfce4-session.1: Version 0.2.1
+
 2004-01-25 01:07  olivier
 
 	* Makefile.in, aclocal.m4, compile, config.guess, config.sub,
 	configure, depcomp, install-sh, ltmain.sh, missing, mkinstalldirs,
-	defaults/Makefile.in, defaults/splash/Makefile.in,
-	docs/Makefile.in, settings/Makefile.in, xfce4-session/Makefile.in,
-	xfce4-shutdown/Makefile.in: Update libtool and other automake,
-	autoconf and gettext packages
+	defaults/Makefile.in, docs/Makefile.in, settings/Makefile.in,
+	xfce4-session/Makefile.in, xfce4-shutdown/Makefile.in: Update
+	libtool and other automake, autoconf and gettext packages
 
 2004-01-23 14:19  benny
 
@@ -64,12 +378,11 @@
 
 	* ChangeLog, Makefile.in, aclocal.m4, config.guess, config.sub,
 	configure, configure.ac, depcomp, install-sh, ltmain.sh,
-	defaults/Makefile.in, defaults/splash/Makefile.in,
-	docs/Makefile.in, po/fr.gmo, po/fr.po, settings/Makefile.in,
-	xfce4-session/Makefile.in, xfce4-session/shutdown.c,
-	xfce4-shutdown/Makefile.in: Added french translations, thanks to
-	Jean-François Wauthy <pollux@castor.be>. Make "poweroff" the
-	default shutdown operation
+	defaults/Makefile.in, docs/Makefile.in, po/fr.gmo, po/fr.po,
+	settings/Makefile.in, xfce4-session/Makefile.in,
+	xfce4-session/shutdown.c, xfce4-shutdown/Makefile.in: Added french
+	translations, thanks to Jean-François Wauthy <pollux@castor.be>.
+	Make "poweroff" the default shutdown operation
 
 2003-12-29 16:18  olivier
 
@@ -89,8 +402,7 @@
 
 	* Makefile.in, aclocal.m4, config.guess, config.sub, configure,
 	configure.ac, depcomp, install-sh, ltmain.sh, defaults/Makefile.in,
-	defaults/splash/Makefile.in, docs/Makefile.in,
-	po/xfce4-session.pot, settings/Makefile.in,
+	docs/Makefile.in, po/xfce4-session.pot, settings/Makefile.in,
 	xfce4-session/Makefile.in, xfce4-session/splash-fallback.h,
 	xfce4-shutdown/Makefile.in: Bump version number for tarball release
 
@@ -146,10 +458,9 @@
 
 	* Makefile.in, aclocal.m4, config.guess, config.sub, configure,
 	configure.ac, depcomp, install-sh, ltmain.sh, defaults/Makefile.in,
-	defaults/splash/Makefile.in, docs/Makefile.in, po/ko.gmo, po/ko.po,
-	settings/Makefile.in, xfce4-session/Makefile.in,
-	xfce4-shutdown/Makefile.in: Added korean translations, thanks to
-	byunghyunchoi@hotmail.com.
+	docs/Makefile.in, po/ko.gmo, po/ko.po, settings/Makefile.in,
+	xfce4-session/Makefile.in, xfce4-shutdown/Makefile.in: Added korean
+	translations, thanks to byunghyunchoi@hotmail.com.
 
 2003-11-16 22:49  olivier
 
@@ -172,11 +483,6 @@
 
 	* configure, configure.ac: Update tamil and chinese traditional
 	translations
-
-2003-10-15 23:04  jasper
-
-	* defaults/splash/: logo.png, preview.png, splash.theme: New
-	default splash screen by Francois
 
 2003-10-13 20:51  jasper
 
@@ -522,26 +828,25 @@
 	ChangeLog.pre-xfce-devel, NEWS, defaults/Makefile.am,
 	defaults/Makefile.in, defaults/default.session,
 	defaults/shutdown.allow, defaults/xinitrc.xfce4-session,
-	defaults/splash/Makefile.am, defaults/splash/Makefile.in,
 	docs/Makefile.am, docs/Makefile.in, docs/SessionFileFormat.txt,
-	docs/SplashThemes.txt, defaults/splash/logo.png,
-	defaults/splash/preview.png, defaults/splash/splash.theme,
-	xfce4-session/Makefile.in, xfce4-session/client.c,
-	xfce4-session/client.h, xfce4-session/ice-layer.c,
-	xfce4-session/ice-layer.h, xfce4-session/main.c,
-	xfce4-session/manager.c, xfce4-session/manager.h,
-	xfce4-session/util.h, xfce4-session/shutdown.c,
-	xfce4-session/shutdown.h, xfce4-session/splash-fallback.h,
-	settings/Makefile.am, xfce4-session/Makefile.am,
-	xfce4-session/splash-fallback.png, xfce4-session/splash-screen.c,
-	xfce4-session/splash-screen.h, xfce4-session/startup.c,
-	xfce4-session/startup.h, xfce4-session/util.c,
-	settings/Makefile.in, settings/session-icon.h, settings/session.c,
-	m4/X11.m4, m4/debug.m4, m4/depends.m4, m4/i18n.m4, po/ChangeLog,
+	docs/SplashThemes.txt, xfce4-session/Makefile.in,
+	xfce4-session/client.c, xfce4-session/client.h,
+	xfce4-session/ice-layer.c, xfce4-session/ice-layer.h,
+	xfce4-session/main.c, xfce4-session/manager.c,
+	xfce4-session/manager.h, xfce4-session/util.h,
+	xfce4-session/shutdown.c, xfce4-session/shutdown.h,
+	xfce4-session/splash-fallback.h, settings/Makefile.am,
+	xfce4-session/Makefile.am, xfce4-session/splash-fallback.png,
+	xfce4-session/splash-screen.c, xfce4-session/splash-screen.h,
+	xfce4-session/startup.c, xfce4-session/startup.h,
+	xfce4-session/util.c, settings/Makefile.in,
+	settings/session-icon.h, settings/session.c, m4/X11.m4,
+	m4/debug.m4, m4/depends.m4, m4/i18n.m4, po/ChangeLog,
 	po/Makefile.in.in, po/POTFILES.in, po/de.gmo, po/de.po,
 	po/xfce4-session.pot, settings/session.png,
 	xfce4-shutdown/Makefile.am, xfce4-shutdown/Makefile.in,
-	xfce4-shutdown/main.c: Initial revision
+	xfce4-shutdown/main.c: Initial import of the new session manager
+	with version 0.0.20.
 
 2003-07-07 19:27  bmeurer
 
@@ -552,25 +857,22 @@
 	ChangeLog.pre-xfce-devel, NEWS, defaults/Makefile.am,
 	defaults/Makefile.in, defaults/default.session,
 	defaults/shutdown.allow, defaults/xinitrc.xfce4-session,
-	defaults/splash/Makefile.am, defaults/splash/Makefile.in,
 	docs/Makefile.am, docs/Makefile.in, docs/SessionFileFormat.txt,
-	docs/SplashThemes.txt, defaults/splash/logo.png,
-	defaults/splash/preview.png, defaults/splash/splash.theme,
-	xfce4-session/Makefile.in, xfce4-session/client.c,
-	xfce4-session/client.h, xfce4-session/ice-layer.c,
-	xfce4-session/ice-layer.h, xfce4-session/main.c,
-	xfce4-session/manager.c, xfce4-session/manager.h,
-	xfce4-session/util.h, xfce4-session/shutdown.c,
-	xfce4-session/shutdown.h, xfce4-session/splash-fallback.h,
-	settings/Makefile.am, xfce4-session/Makefile.am,
-	xfce4-session/splash-fallback.png, xfce4-session/splash-screen.c,
-	xfce4-session/splash-screen.h, xfce4-session/startup.c,
-	xfce4-session/startup.h, xfce4-session/util.c,
-	settings/Makefile.in, settings/session-icon.h, settings/session.c,
-	m4/X11.m4, m4/debug.m4, m4/depends.m4, m4/i18n.m4, po/ChangeLog,
+	docs/SplashThemes.txt, xfce4-session/Makefile.in,
+	xfce4-session/client.c, xfce4-session/client.h,
+	xfce4-session/ice-layer.c, xfce4-session/ice-layer.h,
+	xfce4-session/main.c, xfce4-session/manager.c,
+	xfce4-session/manager.h, xfce4-session/util.h,
+	xfce4-session/shutdown.c, xfce4-session/shutdown.h,
+	xfce4-session/splash-fallback.h, settings/Makefile.am,
+	xfce4-session/Makefile.am, xfce4-session/splash-fallback.png,
+	xfce4-session/splash-screen.c, xfce4-session/splash-screen.h,
+	xfce4-session/startup.c, xfce4-session/startup.h,
+	xfce4-session/util.c, settings/Makefile.in,
+	settings/session-icon.h, settings/session.c, m4/X11.m4,
+	m4/debug.m4, m4/depends.m4, m4/i18n.m4, po/ChangeLog,
 	po/Makefile.in.in, po/POTFILES.in, po/de.gmo, po/de.po,
 	po/xfce4-session.pot, settings/session.png,
 	xfce4-shutdown/Makefile.am, xfce4-shutdown/Makefile.in,
-	xfce4-shutdown/main.c: Initial import of the new session manager
-	with version 0.0.20.
+	xfce4-shutdown/main.c: Initial revision
 

@@ -36,8 +36,7 @@ xfce4_session_CFLAGS =							\
 	@LIBXFCE4MCS_CLIENT_CFLAGS@					\
 	@LIBXFCEGUI4_CFLAGS@						\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
-	-DSHUTDOWN_COMMAND=\"$(sbindir)/xfce4-shutdown\"		\
-	-DSPLASH_THEMES_DIR=\"$(datadir)/xfce4/splash\"
+	-DSHUTDOWN_COMMAND=\"$(sbindir)/xfce4-shutdown\"
 
 xfce4_session_LDADD =							\
 	@LIBSM_LDFLAGS@							\

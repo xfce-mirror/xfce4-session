@@ -38,11 +38,14 @@
 
 #define DEFAULT_BGCOLOR   "White"
 #define DEFAULT_FGCOLOR   "Black"
+#define DEFAULT_FOCOLOR   "White"
+
 
 struct _XfsmSplashTheme
 {
   GdkColor bgcolor;
   GdkColor fgcolor;
+  GdkColor focolor;
   gchar   *logo_file;
 };
 
@@ -52,6 +55,7 @@ xfsm_splash_theme_load (const gchar *name)
 {
   XfsmSplashTheme *theme;
   const gchar *logo_file;
+  const gchar *spec;
   gchar *resource;
   gchar *file = NULL;
   XfceRc *rc;
@@ -79,10 +83,17 @@ xfsm_splash_theme_load (const gchar *name)
           goto set_defaults;
         }
 
-      gdk_color_parse (xfce_rc_read_entry (rc, "bgcolor", DEFAULT_BGCOLOR),
-                       &theme->bgcolor);
-      gdk_color_parse (xfce_rc_read_entry (rc, "fgcolor", DEFAULT_FGCOLOR),
-                       &theme->fgcolor);
+      spec = xfce_rc_read_entry (rc, "bgcolor", DEFAULT_BGCOLOR);
+      if (!gdk_color_parse (spec, &theme->bgcolor))
+        gdk_color_parse (DEFAULT_BGCOLOR, &theme->bgcolor);
+
+      spec = xfce_rc_read_entry (rc, "fgcolor", DEFAULT_FGCOLOR);
+      if (!gdk_color_parse (spec, &theme->fgcolor))
+        gdk_color_parse (DEFAULT_FGCOLOR, &theme->fgcolor);
+
+      spec = xfce_rc_read_entry (rc, "focolor", DEFAULT_FOCOLOR);
+      if (!gdk_color_parse (spec, &theme->focolor))
+        gdk_color_parse (DEFAULT_FOCOLOR, &theme->focolor);
 
       logo_file = xfce_rc_read_entry (rc, "logo", NULL);
 
@@ -144,22 +155,46 @@ xfsm_splash_theme_get_fgcolor (const XfsmSplashTheme *theme,
 }
 
 
+void
+xfsm_splash_theme_get_focolor (const XfsmSplashTheme *theme,
+                               GdkColor *color_return)
+{
+  memcpy (color_return, &theme->focolor, sizeof (*color_return));
+}
+
+
 GdkPixbuf*
 xfsm_splash_theme_get_logo (const XfsmSplashTheme *theme,
                             gint available_width,
                             gint available_height)
 {
+  static char *prefixes[] = { "svg", "png", "jpeg", "xpm", NULL };
   GdkPixbuf *scaled;
-  GdkPixbuf *logo;
+  GdkPixbuf *logo = NULL;
   gint logo_width;
   gint logo_height;
   gdouble wratio;
   gdouble hratio;
+  gchar *file;
+  guint n;
 
   if (theme->logo_file == NULL)
     return NULL;
 
-  logo = gdk_pixbuf_new_from_file (theme->logo_file, NULL);
+  if (g_file_test (theme->logo_file, G_FILE_TEST_IS_REGULAR))
+    {
+      logo = gdk_pixbuf_new_from_file (theme->logo_file, NULL);
+    }
+  else
+    {
+      for (n = 0; logo == NULL && prefixes[n] != NULL; ++n)
+        {
+          file = g_strdup_printf ("%s.%s", theme->logo_file, prefixes[n]);
+          logo = gdk_pixbuf_new_from_file (file, NULL);
+          g_free (file);
+        }
+    }
+
   if (logo == NULL)
     return NULL;
 

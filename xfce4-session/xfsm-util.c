@@ -38,8 +38,6 @@
 
 #include <gdk/gdkx.h>
 
-#include <libxfce4util/libxfce4util.h>
-
 #include <xfce4-session/xfsm-util.h>
 
 
@@ -330,5 +328,14 @@ xfsm_window_add_border (GtkWindow *window)
   gtk_widget_reparent (GTK_BIN (window)->child, box2);
 
   gtk_container_add (GTK_CONTAINER (window), box1);
+}
+
+
+XfceRc*
+xfsm_open_config (gboolean readonly)
+{
+  return xfce_rc_config_open (XFCE_RESOURCE_CONFIG,
+                              "xfce4-session/xfce4-session.rc",
+                              readonly);
 }
 

@@ -38,6 +38,9 @@ void xfsm_splash_theme_get_bgcolor (const XfsmSplashTheme *theme,
 void xfsm_splash_theme_get_fgcolor (const XfsmSplashTheme *theme,
                                     GdkColor *color_return);
 
+void xfsm_splash_theme_get_focolor (const XfsmSplashTheme *theme,
+                                    GdkColor *color_return);
+
 GdkPixbuf *xfsm_splash_theme_get_logo (const XfsmSplashTheme *theme,
                                        gint available_width,
                                        gint available_height);
