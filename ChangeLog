@@ -1,3 +1,33 @@
+2003-08-03 20:37  bmeurer
+
+	* m4/X11.m4: grep -q does not work with Solaris grep, fixed it.
+
+2003-08-03 18:55  bmeurer
+
+	* xfce4-session/util.c: Fix stupid typo: #ifdef -> #ifndef
+
+2003-07-24 18:30  bmeurer
+
+	* TODO: Added note about Autostart with default.session (thanks to
+	Bernhard).
+
+2003-07-23 18:00  bmeurer
+
+	* xfce4-session/: xfsm-marshal.c, xfsm-marshal.h,
+	xfsm-marshal.list: Added initial marshallers stuff.
+
+2003-07-22 13:07  bmeurer
+
+	* xfce4-session/xfsm-marshal.list: Added a dummy file to get it
+	working again.
+
+2003-07-21 23:23  bmeurer
+
+	* ChangeLog, NEWS, configure, configure.ac,
+	xfce4-session/Makefile.am, xfce4-session/Makefile.in,
+	xfce4-session/ice-layer.c, xfce4-session/main.c,
+	xfce4-session/manager.c: Use mcs_setting_free() where appriotate.
+
 2003-07-19 13:16  bmeurer
 
 	* po/POTFILES.in, po/de.gmo, po/de.po, po/es.gmo, po/es.po,
