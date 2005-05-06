@@ -62,7 +62,7 @@ LIBS="$ac_LIBS"
 
 dnl Check for i18n support
 BM_I18N([xfce4-session], [ar az be bn_IN ca cs da de el en_GB es es_MX et eu fa
-                          fi fr gu he hi hu it ja ko lt ms nl nb_NO pa
+                          fi fr gu he hi hu it ja ko lt mr ms nl nb_NO pa
 			  pl pt_BR pt_PT ro ru sv sk ta tr uk vi zh_CN zh_TW])
 
 dnl Check for required packages
