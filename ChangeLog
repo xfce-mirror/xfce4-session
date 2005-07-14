@@ -1,5 +1,16 @@
 2005-07-15	Benedikt Meurer <benny@xfce.org>
 
+	* xfce4-tips/, NEWS: Import the xfce4-tips from the xfce4-toys and
+	  modify it to support the new autostart mechanism.
+	* po/POTFILES.in: Add new translateable files here.
+	* po/*.po, po/xfce4-session.pot: Merge translations.
+	* configure.in.in, Makefile.am: Add the xfce4-tips to the build
+	  framework.
+	* xfce4-session.spec.in: Include the default autostart directory as
+	  well.
+
+2005-07-15	Benedikt Meurer <benny@xfce.org>
+
 	* xfce4-autostart-editor/, NEWS: Add a simple editor for the autostart
 	  mechanism. Currently supports only the basics. The idea is to turn
 	  this into a full-featured "session editor" once xfce4-session

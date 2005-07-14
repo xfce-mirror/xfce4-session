@@ -1,0 +1,139 @@
+Theres a volume changer plugin for the panel available. Its name is 
+xfce4-mixer.
+%
+Numerous plugins are available for the Xfce panel from the Xfce Goodies 
+Project page : http://xfce-goodies.berlios.de
+%
+You can move windows between workspaces by simply dragging them in the 
+pager applet.
+%
+You don't want that new windows and maximized windows cover some area 
+of the screen? Just use the "Workspaces and Margins" component in the 
+Xfce Settings Manager to customize the desktop margins.
+%
+You can use some keyboard shortcuts to start applications. To do this, 
+you can use the Command Shortcuts section of the keyboard shortcuts 
+editor available in the window manager settings dialog.
+%
+There is a hidden option that allows the panel, and apps such as 
+Gkrellm, to be included when you switch the focus from a window to 
+others using the Alt+Tab shortcut. Just edit your 
+$HOME/.config/xfce4/xfwm4/xfwm4rc (or create an new one) and add this 
+line:
+
+cycle_minimum=false
+%
+You can disable the the ability to move and resize windows using the 
+Alt button + mouse click shortcut. Just edit your 
+$HOME/.config/xfce4/xfwm4/xfwm4rc (or create an new one) and add this 
+line:
+
+easy_click=false
+%
+You can change the mouse menu that appears when you click the desktop 
+background by using the graphical menu  editor available from the Menu 
+tab of the Desktop settings dialog.
+%
+The background settings dialog allows you to create a list of background
+ images that will be randomly used when xfdesktop starts.
+%
+There is a notification area available for the panel or the taskbar. 
+Its name is xfce4-systray.
+%
+You can start xfrun4 (the application launcher dialog) with the Alt+F2 
+keyboard shortcut.
+%
+To learn more about Xfce 4, you can visit Xfce official website : 
+www.xfce.org
+%
+Just run xfhelp4 to open Xfce 4 manual in Mozilla.
+
+You can change that to use your browser of choice by setting the 
+$BROWSER environmental variable. For instance in your ~/.bashrc put the 
+following line:
+
+export BROWSER="galeon -w"
+%
+The xflock4 script is used by the panel to lock the screen using 
+xscreensaver if available, and falling back to xlock.
+
+Just click on the "Lock the screen" system button of the panel, or use 
+the Control+Alt+Delete keyboard shortcut to execute xflock4.
+%
+The xfterm4 script is a convenient terminal script that uses the 
+$TERMCMD environmental variable as terminal command if available, and 
+falls back to using xterm.
+
+Especially useful in the panel where you can drag file or directories 
+to it that will be viewed by the appropriate console application (less 
+for text files, lynx for html).
+%
+The "xfmountdev4 /dev/mountpoint" command will mount the given 
+mountpoint and open xffm in that location. When you close the xffm 
+window the filesystem will be unmounted.
+
+Note that you can use xfstab provided with xffm for the same purpose.
+%
+You can use the Alt+F10 keyboard shortcut to stick or unstick a window.
+%
+In the window manager settings dialog, you can select what must be the 
+behaviour of the window manager when you double-click on the title bar 
+of a window.
+%
+You can use keyboard shortcuts to move a window to another workspace :
+
+Alt + Control + End will move a window to the next workspace
+Alt + Control + Home will move a window to the previous workspace
+Alt + Control + Keypad-Number will move the current window to 
+corresponding workspace
+%
+The xffm file manager can be driven with the keyboard.
+Have a look at Xfce 4 manual to learn more about its commands.
+%
+xfprint4 provides a graphical frontend for printing. It supports either 
+CUPS, BSD-LPR or a file as destination, and printers are retrieved from 
+the printing system you choosed.
+
+Just configure your printer with the xfprint-manager application, then 
+use drag and drop to xfprint4 icon on the panel (or the 'xfprint4 file' 
+command) to print.
+%
+Select the "Always on top" option in the Xfce Panel settings dialog if 
+your want the panel to always stay above all other windows, and keep its
+area uncovered by maximized applications. Selecting this option will 
+make the panel use real transparency, if you are running X.org server 
+with the xfwm4 compositor enabled.
+%
+xftaskbar and Xfce 4 panel both offer an autohide feature.
+Use it to free some space on your desktop !
+%
+If you want to delete multiple files in the File manager in one step, 
+you have to press CTRL while doing right click on the last file. This 
+will select the last file and bring up the popup without unselecting 
+anything previous. You can also use the Delete key, main menu entry or 
+toolbar button to delete all without unselecting.
+%
+You can switch the workspaces by using the mouse
+    - and click at the pager
+    - use the mouse wheel at the pager or desktop background
+    - move the mouse over the workspace edge (if this is activated)
+or the keyboard with
+    - Alt + Control + Left or Right to step one workspace left or right
+    - Control + F<Number> to jump to the workspace
+%
+There are some shortcuts to alter your window size or position:
+    - Alt + Control + Shift + Cursor moves the window around
+    - Alt + Shift + Cursor alters the size of the window
+%
+xfce4-appfinder is an application finder, which allows you to search, 
+launch and find information about applications installed on your system.
+You can drag and drop from it to the Xfce desktop menu editor to 
+customize your menu.
+%
+There is an "Always on top" option available in the window titlebar 
+menu. Select this option if you want a window to always appear above all
+ other windows.
+%
+If you click on an entry of the taskbar with the right button of your 
+mouse, an action menu similar to the window titlebar menu will appear.
+%
