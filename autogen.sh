@@ -3,7 +3,7 @@
 # $Id$
 #
 # Copyright (c) 2002-2005
-#         The Thunar development team. All rights reserved.
+#         The Xfce development team. All rights reserved.
 #
 # Written for Xfce by Benedikt Meurer <benny@xfce.org>.
 #
