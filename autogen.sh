@@ -3,7 +3,7 @@
 # $Id$
 #
 # Copyright (c) 2002-2005
-#         The Xfce development team. All rights reserved.
+#         The Thunar development team. All rights reserved.
 #
 # Written for Xfce by Benedikt Meurer <benny@xfce.org>.
 #
@@ -17,6 +17,11 @@ autogen.sh: You don't seem to have the Xfce development tools installed on
 EOF
   exit 1
 }
+
+# substitute revision and date
+revision=`svn info $0 | awk '/^Revision: / {printf "%05d\n", $2}'`
+sed -e "s/@REVISION@/${revision}/g" \
+  < "configure.in.in" > "configure.in"
 
 exec xdt-autogen $@
 

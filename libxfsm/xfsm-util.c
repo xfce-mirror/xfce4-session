@@ -203,10 +203,12 @@ void
 xfsm_window_add_border (GtkWindow *window)
 {
   GtkWidget *box1, *box2;
+  
+  gtk_widget_realize(GTK_WIDGET(window));
 
   box1 = gtk_event_box_new ();
   gtk_widget_modify_bg (box1, GTK_STATE_NORMAL, 
-                        &(box1->style->bg [GTK_STATE_SELECTED]));
+                        &(GTK_WIDGET(window)->style->bg [GTK_STATE_SELECTED]));
   gtk_widget_show (box1);
 
   box2 = gtk_event_box_new ();
