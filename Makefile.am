@@ -9,6 +9,7 @@ SUBDIRS =								\
 	settings							\
 	xfce4-session							\
 	xfce4-session-logout						\
+	xfce4-autostart-editor						\
 	xfsm-shutdown-helper
 
 configdir = $(sysconfdir)/xdg/xfce4-session
