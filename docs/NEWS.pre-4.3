@@ -1,0 +1,136 @@
+	$Id$
+
+20040924:
+---------
+
+	* Version 4.1.16
+	* Don't grab the display on logout, as it doesn't work well with
+	  compositors.
+
+20040203:
+---------
+
+	* Version 4.1.2
+	* Icon changes in the tray icon menu (the session control icon)
+	* Added about dialog now that XfceAboutDialog is in libxfcegui4.
+
+20040129:
+---------
+
+	* Version 4.1.1 (big jump indeed, but need to catch up with the rest
+	  of the desktop :-))
+	* Finally moved xfce_setenv()/xfce_putenv() to libxfce4util and
+	  we are now secured from stupid native implementations of both
+	  functions.
+	* Some autotools and copyright updates.
+
+20040125:
+---------
+	* Version 0.2.1
+	* Updated the xfce4-session manual page to reflect the latest
+	  changes.
+
+20040113:
+---------
+	* Added --disable-tcp option to disable binding to TCP ports. This
+	  is no new configure option, but a runtime option, that is, it can
+	  be supplied to xfce4-session at startup.
+
+20040110:
+---------
+	* Version 0.2.0
+	* Added support for user defined poweroff/halt/reboot commands,
+	  and some cleanups, thanks to Brian Tarricone.
+	* Various fixes in the meantime, too bad I have no spare time for
+	  xfce :-(
+
+20030721:
+---------
+	* Fix problem with Xrandr MCS plugin and splash screen not using
+	  the new screen height/width.
+
+20030716:
+---------
+	* XfceTrayIcon now both provides "clicked" (a single left button
+	  click) and "double_clicked" (double left button click) signals
+	* XfceTrayIcon no longer autoconnects, you'll need to call
+	  xfce_tray_icon_connect() explicitly
+
+20030715:
+---------
+	* Version 0.1.1
+	* Make "session control" sticky again, since the xfwm4 problem with
+	  sticky windows seems to be fixed
+	* Many improvements on the XfceTrayIcon class (will be moved to
+	  libxfcegui4 soon)
+	* Session managers tray icon can now be enabled/disabled from
+	  the settings dialog
+	* Added more helpful tooltips to the settings dialog (translations
+	  needs to be updated)
+
+20030713:
+---------
+	* Version 0.1.0
+	* Fixed problem with SaveYourself Phase2 being aborted (that
+	  should also correct the xfwm4 save problem).
+	* Fixed problem with "session control" window beeing undecorated
+	* Fix problem with users splash themes directory not being created
+	  when installing new themes
+	* Skip the splash screen window in tasklists and pagers (Gdk >= 2.2
+	  only for now, a netk version is on the way, see util.c)
+
+20030712:
+---------
+	* Fixed tray icon problem
+	* New tray icon wrapper XfceTrayIcon, will be moved to libxfcegui4
+	  later
+
+20030710:
+---------
+	* Added spec file
+	* Two Solaris fixes
+	* State is now displayed in "session control"
+	* added "Quit session" and "Save session" to the tray menu
+	  (GtkImageMenuItem's now working btw.)
+	* Fixed bug in SaveYourselfDone code (manager does not entered
+	  IDLE state after a succesfull checkpoint)
+	* Added UNIX signals support: SIGUSR1 saves current session, SIGINT
+	  quits current session
+	* Added security check to xfce4-shutdown (shutdown.allow is only used
+	  if owned by root)
+	* Honor fast SaveYourself requests
+
+20030708:
+---------
+	* startxfce4 in xfce-utils was altered to automatically use
+	  xfce4-session by default if installed.
+	* Added "session control" dialog and tray icon. Made several
+	  improvements. Now requires libxfcegui4 >= 3.92.2
+	* smproxy now works with xfce4-session, that says, X11R5 session
+	  apps are now managed by the session manager as well (e.g. xcalc,
+	  xedit, xbiff or even apps like gimp and gqview)
+
+20030707:
+---------
+	* Splash screen themes can now be selected from the settings plugin,
+	  and in addition, you can also install new themes from the settings
+	  plugin.
+	* Added docs/FAQ file.
+
+20030706:
+---------
+	* the session manager now takes care of starting files in
+	  ~/Desktop/Autostart/ after all session aware apps are restarted.
+	  This should make live easier, esp. with apps that depend on
+	  the window manager already running.
+	* the splash screen is now themable. See docs/SplashThemes.txt for
+	  further information. In addition, the splash screen also appears
+	  when starting a default session, and not only when restoring a
+	  previously saved session.
+
+20030702:
+---------
+	* session file naming scheme has changed from
+		~/.xfce4/sessions/session-<hostname>
+	  to
+		~/.xfce4/sessions/xfsm-<hostname>

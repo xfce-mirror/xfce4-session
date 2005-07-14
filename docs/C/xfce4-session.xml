@@ -1,8 +1,8 @@
 <?xml version='1.0'?> 
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
           "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-  <!ENTITY date "November 2004"> 
-  <!ENTITY appversion "4.2">
+  <!ENTITY date "July 2005"> 
+  <!ENTITY appversion "4.3">
   <!ENTITY app "<application>xfce4-session</application>"> 
 ]>
 
@@ -16,6 +16,7 @@
   <copyright>
     <year>2003</year>
     <year>2004</year>
+    <year>2005</year>
     <holder>Benedikt Meurer</holder>
   </copyright>
 
@@ -30,8 +31,12 @@
 
   <legalnotice id="legalnotice">
     <para>
-      This document is provided under the terms of the GNU GPL, version
-      2 or (at your option) any later version.
+      Permission is granted to copy, distribute and/or modify this document
+      under the terms of the GNU Free Documentation License, Version 1.1 or
+      any later version published by the Free Software Foundation; with no
+      Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+      Texts. The complete license text is available from the <ulink
+      type="http" url="http://www.gnu.org/">Free Software Foundation</ulink>.
     </para>
   </legalnotice>
   
@@ -62,13 +67,12 @@ maintainers, etc. Commented out by default.
   </authorgroup>
 
   <releaseinfo>
-    <para>&nbsp;</para>
-    This manual describes the &app; package, version &appversion;. Last updated: &date;
+    This manual describes the &app; package, version &appversion;.
   </releaseinfo>
 
-</articleinfo>
+  <pubdate>&date;</pubdate>
 
-<para>&nbsp;</para>
+</articleinfo>
 
 <sect1 id="xfsm-intro">
   <title>Introduction</title>
@@ -88,8 +92,6 @@ maintainers, etc. Commented out by default.
   would do, and besides that, it also supports multiscreen display.</para>
 
 </sect1>
-
-<para>&nbsp;</para>
 
 <sect1 id="xfce4-session-settings">
   <title>Session Manager settings</title>
@@ -198,8 +200,6 @@ maintainers, etc. Commented out by default.
 	</sect2>
 </sect1>
     
-<para>&nbsp;</para>
- 
 <sect1 id="xfsm-customize">
 	<title>Customizing the Session Manager</title>
 	
@@ -264,8 +264,6 @@ myuser myhost=/usr/local/libexec/xfsm-shutdown-helper
 	
 </sect1>
  
-<para>&nbsp;</para>
-
 <sect1 id="xfsm-advanced">
   <title>Advanced</title>
 
@@ -307,6 +305,25 @@ myuser myhost=/usr/local/libexec/xfsm-shutdown-helper
           <para>Specifies the root for all user-specific cache data. If
           this environment variable is unset, it defaults to <filename
           role="directory">~/.cache</filename>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>${XDG_CONFIG_DIRS}/autostart/</term>
+        <listitem>
+          <para>This is the location where the list of applications that
+          should be automatically run on login is stored. Each autostarted
+          application is represented by a <filename>.desktop</filename>
+          file (see the <ulink type="http"
+          url="http://standards.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html">Desktop
+          Entry Specification</ulink> for details).</para>
+          <para>Prior to Xfce 4.3, the list of autostarted applications
+          was stored in <filename role="directory">~/Desktop/Autostart</filename>,
+          which contained scripts and symbolic links to applications. If
+          you run &app; &appversion; or above for the first time, it will
+          automatically migrate the autostart items from the old location
+          to the standard location and place a <filename>LOCATION-CHANGED.txt</filename>
+          file in the old directory, that describes the location change.</para>
         </listitem>
       </varlistentry>
 
@@ -450,8 +467,6 @@ CustomizeSecurity=NONE
     </variablelist>
   </sect2>
 </sect1>
-
-<para>&nbsp;</para>
 
 <sect1 id="xfsm-copyright">
   <title>About &app;</title>

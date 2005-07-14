@@ -1,5 +1,17 @@
 2005-07-14	Benedikt Meurer <benny@xfce.org>
 
+	* xfce4-session/xfsm-startup.c: Implement Waldos second draft of the
+	  autostart specification. Autostart items from the old location will
+	  automatically be migrated to the new standard location on first run
+	  of the new session manager. This fixes bug #1045.
+	* docs/C/xfce4-session.{html,xml}: Describe the new autostart location.
+	* configure.in.in: Bump version to 4.3.1.
+	* NEWS, docs/Makefile.am, docs/NEWS.pre-4.3: Start NEWS file for
+	  Xfce 4.4.
+	* po/*.po, po/xfce4-session.pot: Merge new strings.
+
+2005-07-14	Benedikt Meurer <benny@xfce.org>
+
 	* autogen.sh: Fix copyright typo.
 
 2005-07-14	Benedikt Meurer <benny@xfce.org>

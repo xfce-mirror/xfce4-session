@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2003-2005 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,13 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
 #ifdef HAVE_MEMORY_H
 #include <memory.h>
 #endif
+#include <stdio.h>
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
@@ -39,9 +43,11 @@
 #include <unistd.h>
 #endif
 
+#include <glib/gstdio.h>
+
 #include <gtk/gtk.h>
 
-#include <libxfce4util/libxfce4util.h>
+#include <libxfcegui4/libxfcegui4.h>
 
 #include <libxfsm/xfsm-util.h>
 
@@ -140,70 +146,274 @@ figure_app_name (const gchar *program_path)
 }
 
 
+
+static gboolean
+xfsm_check_valid_exec (const gchar *exec)
+{
+  gboolean result = TRUE;
+  gchar   *tmp;
+  gchar   *p;
+
+  if (*exec == '/')
+    {
+      result = (access (exec, X_OK) == 0);
+    }
+  else
+    {
+      tmp = g_strdup (exec);
+      p = strchr (tmp, ' ');
+      if (G_UNLIKELY (p != NULL))
+        *p = '\0';
+
+      p = g_find_program_in_path (tmp);
+      g_free (tmp);
+
+      if (G_UNLIKELY (p == NULL))
+        {
+          result = FALSE;
+        }
+      else
+        {
+          result = (access (p, X_OK) == 0);
+          g_free (p);
+        }
+    }
+
+  return result;
+}
+
+
+
+static void
+xfsm_startup_autostart_migrate (void)
+{
+  const gchar *entry;
+  gchar        source_path[4096];
+  gchar        target_path[4096];
+  gchar       *source;
+  gchar       *target;
+  FILE        *fp;
+  GDir        *dp;
+
+  /* migrate the content */
+  source = xfce_get_homefile ("Desktop", "Autostart/", NULL);
+  dp = g_dir_open (source, 0, NULL);
+  if (G_UNLIKELY (dp != NULL))
+    {
+      /* check if the LOCATION-CHANGED.txt file exists and the target can be opened */
+      g_snprintf (source_path, 4096, "%s/LOCATION-CHANGED.txt", source);
+      target = xfce_resource_save_location (XFCE_RESOURCE_CONFIG, "autostart/", TRUE);
+      if (G_LIKELY (target != NULL && !g_file_test (source_path, G_FILE_TEST_IS_REGULAR)))
+        {
+          g_message ("Trying to migrate autostart items from %s to %s...", source, target);
+
+          for (;;)
+            {
+              entry = g_dir_read_name (dp);
+              if (entry == NULL)
+                break;
+
+              /* determine full source and dest paths */
+              g_snprintf (source_path, 4096, "%s%s", source, entry);
+              g_snprintf (target_path, 4096, "%s%s", target, entry);
+
+              /* try to move the file */
+              if (rename (source_path, target_path) < 0)
+                {
+                  g_warning ("Failed to rename %s to %s: %s",
+                              source_path, target_path,
+                              g_strerror (errno));
+                  continue;
+                }
+
+              /* check if the file is executable */
+              if (!g_file_test (target_path, G_FILE_TEST_IS_EXECUTABLE))
+                continue;
+
+              /* generate a .desktop file for the executable file */
+              g_snprintf (source_path, 4096, "%s.desktop", target_path);
+              if (!g_file_test (source_path, G_FILE_TEST_IS_REGULAR))
+                {
+                  fp = fopen (source_path, "w");
+                  if (G_LIKELY (fp != NULL))
+                    {
+                      fprintf (fp,
+                               "# This file was automatically generated for the autostart\n"
+                               "# item %s\n"
+                               "[Desktop Entry]\n"
+                               "Type=Application\n"
+                               "Exec=%s\n"
+                               "Hidden=False\n"
+                               "Terminal=False\n"
+                               "StartupNotify=False\n"
+                               "Version=0.9.4\n"
+                               "Encoding=UTF-8\n"
+                               "Name=%s\n",
+                               entry, target_path, entry);
+                      fclose (fp);
+                    }
+                  else
+                    {
+                      g_warning ("Failed to create a .desktop file for %s: %s",
+                                 target_path, g_strerror (errno));
+                    }
+                }
+            }
+
+          /* create the LOCATION-CHANGED.txt file to let the user know */
+          g_snprintf (source_path, 4096, "%s/LOCATION-CHANGED.txt", source);
+          fp = fopen (source_path, "w");
+          if (G_LIKELY (fp != NULL))
+            {
+              g_fprintf (fp, _("The location and the format of the autostart directory has changed.\n"
+                               "The new location is\n"
+                               "\n"
+                               "  %s\n"
+                               "\n"
+                               "where you can place .desktop files to, that describe the applications\n"
+                               "to start when you login to your Xfce desktop. The files in your old\n"
+                               "autostart directory have been successfully migrated to the new\n"
+                               "location.\n"
+                               "You should delete this directory now.\n"), target);
+              fclose (fp);
+            }
+
+          g_free (target);
+        }
+
+      g_dir_close (dp);
+    }
+}
+
+
+
+static gint
+xfsm_startup_autostart_xdg (void)
+{
+  const gchar *try_exec;
+  const gchar *type;
+  const gchar *exec;
+  gboolean     startup_notify;
+  gboolean     terminal;
+  gboolean     skip;
+  GError      *error = NULL;
+  XfceRc      *rc;
+  gchar      **files;
+  gchar      **only_show_in;
+  gchar      **not_show_in;
+  gint         started = 0;
+  gint         n, m;
+
+  /* migrate the old autostart location (if still present) */
+  xfsm_startup_autostart_migrate ();
+
+  files = xfce_resource_match (XFCE_RESOURCE_CONFIG, "autostart/*.desktop", TRUE);
+  for (n = 0; files[n] != NULL; ++n)
+    {
+      rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG, files[n], TRUE);
+      if (G_UNLIKELY (rc == NULL))
+        continue;
+
+      xfce_rc_set_group (rc, "Desktop Entry");
+
+      /* check the Hidden key */
+      skip = xfce_rc_read_bool_entry (rc, "Hidden", FALSE);
+      if (G_LIKELY (!skip))
+        {
+          /* check the OnlyShowIn setting */
+          only_show_in = xfce_rc_read_list_entry (rc, "OnlyShowIn", ";");
+          if (G_UNLIKELY (only_show_in != NULL))
+            {
+              /* check if "Xfce" is specified */
+              for (m = 0, skip = TRUE; only_show_in[m] != NULL; ++m)
+                if (g_ascii_strcasecmp (only_show_in[m], "Xfce") == 0)
+                  {
+                    skip = FALSE;
+                    break;
+                  }
+
+              g_strfreev (only_show_in);
+            }
+          else
+            {
+              /* check the NotShowIn setting */
+              not_show_in = xfce_rc_read_list_entry (rc, "NotShowIn", ";");
+              if (G_UNLIKELY (not_show_in != NULL))
+                {
+                  /* check if "Xfce" is not specified */
+                  for (m = 0; not_show_in[m] != NULL; ++m)
+                    if (g_ascii_strcasecmp (not_show_in[m], "Xfce") == 0)
+                      {
+                        skip = TRUE;
+                        break;
+                      }
+
+                  g_strfreev (not_show_in);
+                }
+            }
+        }
+
+      /* check the "Type" key */
+      type = xfce_rc_read_entry (rc, "Type", NULL);
+      if (G_UNLIKELY (!skip && type != NULL && g_ascii_strcasecmp (type, "Application") != 0))
+        skip = TRUE;
+
+      /* check the "TryExec" key */
+      try_exec = xfce_rc_read_entry (rc, "TryExec", NULL);
+      if (G_UNLIKELY (!skip && try_exec != NULL))
+        skip = !xfsm_check_valid_exec (try_exec);
+
+      /* execute the item */
+      exec = xfce_rc_read_entry (rc, "Exec", NULL);
+      if (G_LIKELY (!skip && exec != NULL))
+        {
+          /* query launch parameters */
+          startup_notify = xfce_rc_read_bool_entry (rc, "StartupNotify", FALSE);
+          terminal = xfce_rc_read_bool_entry (rc, "Terminal", FALSE);
+
+          /* try to launch the command */
+          if (!xfce_exec (exec, terminal, startup_notify, &error))
+            {
+              g_warning ("Unable to launch \"%s\" (specified by %s): %s", exec, files[n], error->message);
+              g_error_free (error);
+              error = NULL;
+            }
+          else
+            {
+              ++started;
+            }
+        }
+
+      /* cleanup */
+      xfce_rc_close (rc);
+    }
+  g_strfreev (files);
+
+  return started;
+}
+
+
+
 static void
 xfsm_startup_autostart (void)
 {
-  const gchar *entry;
-  gchar *argv[3];
-  GError *err;
-  gchar  file[1024];
-  gchar *dir;
-  GDir *dirp;
-  gint n = 0;
+  gint n;
 
-  dir = xfce_get_homefile ("Desktop", "Autostart", NULL);
-  dirp = g_dir_open (dir, 0, NULL);
-  if (dirp != NULL)
+  n = xfsm_startup_autostart_xdg ();
+
+  if (n > 0)
     {
       if (G_LIKELY (splash_screen != NULL))
         xfsm_splash_screen_next (splash_screen, _("Performing Autostart..."));
 
-      for (;;)
-        {
-          entry = g_dir_read_name (dirp);
-          if (entry == NULL)
-            break;
-
-          g_snprintf (file, 1024, "%s/%s", dir, entry);
-
-          err = NULL;
-
-          if (g_file_test (file, G_FILE_TEST_IS_EXECUTABLE))
-            {
-              argv[0] = file;
-              argv[1] = NULL;
-
-            }
-          else if (g_file_test (file, G_FILE_TEST_IS_REGULAR))
-            {
-              argv[0] = "/bin/sh";
-              argv[1] = file;
-              argv[2] = NULL;
-            }
-          else
-            continue;
-
-          if (!g_spawn_async (NULL, argv, NULL, 0, NULL, NULL, NULL, &err))
-            {
-              g_warning ("Unable to launch %s: %s", file, err->message);
-              g_error_free (err);
-            }
-          else
-            {
-              ++n;
-            }
-        }
-
-      g_dir_close (dirp);
+      g_timeout_add (2000, destroy_splash, NULL);
     }
-
-  if (n > 0)
-    g_timeout_add (2000, destroy_splash, NULL);
   else
-    g_timeout_add (1000, destroy_splash, NULL);
-
-  g_free (dir);
+    {
+      g_timeout_add (1000, destroy_splash, NULL);
+    }
 }
+
 
 
 void
