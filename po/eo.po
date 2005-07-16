@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-07-15 01:29+0200\n"
-"PO-Revision-Date: 2005-07-07 04:26+0200\n"
+"PO-Revision-Date: 2005-07-15 16:50+0200\n"
 "Last-Translator: Sylvain Vedrenne <sylvain.vedrenne@free.fr>\n"
 "Language-Team:\n"
 "MIME-Version: 1.0\n"
@@ -124,11 +124,9 @@ msgid ""
 "automatically when you log out. If you don't select this option you'll be "
 "prompted whether you want to save the current session on each logout."
 msgstr ""
-"Ĉi tiu opcio signifas ke la seancadministrilo konservas la kurantan "
-"seancon \n"
-"aŭtomate kiam vi elsalutas. Se vi ne elektas tiun opcion, vi estos "
-"demandita \n"
-"ĉu vi volas konservi la kurantan seancon ĉe ĉiu elsaluto."
+"Ĉi tiu opcio signifas ke la seancadministrilo konservas la kurantan \n"
+"seancon aŭtomate kiam vi elsalutas. Se vi ne elektas tiun opcion, vi estos\n"
+"demandita ĉu vi volas konservi la kurantan seancon ĉe ĉiu elsaluto."
 
 #: ../settings/session/session.c:169
 msgid "Prompt on logout"
@@ -200,6 +198,8 @@ msgid ""
 "Allow the session manager to manage applications running on remote hosts. Do "
 "not enable this option unless you know what you are doing."
 msgstr ""
+"Permesas ke la seancadministrilo administras aplikaĵojn ĉe foraj gastigaj \n"
+"komputiloj. Se vi elektas ĉi tiun opcion, ne faru tion hazarde."
 
 #: ../settings/session/session.c:330 ../settings/session/session.c:345
 #: ../settings/session/session.c:383
@@ -489,6 +489,15 @@ msgid ""
 "location.\n"
 "You should delete this directory now.\n"
 msgstr ""
+"La loko kaj la modelo de la aŭtolanĉa dosierujo ŝanĝis.\n"
+"La nova loko estas\n"
+"\n"
+"  %s\n"
+"\n"
+"tie ĉi vi povas enmeti .desktop dosierojn, kiuj priskribas la aplikaĵojn\n"
+"startindajn kiam vi ensalutas en vian Xfce'an labortablon. La dosieroj de via\n"
+"malnova aŭtolanĉa dosierujo sukcese estis movigitaj al la nova loko.\n"
+"Vi devus viŝi la malnovan dosierujon nun.\n"
 
 #: ../xfce4-session/xfsm-startup.c:407
 msgid "Performing Autostart..."
@@ -496,50 +505,48 @@ msgstr "Plenumante Aŭtolanĉo..."
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:99
 msgid "Add application"
-msgstr ""
+msgstr "Aldoni aplikaĵon"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:113
 msgid "Name:"
-msgstr ""
+msgstr "Nomo:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:130
-#, fuzzy
 msgid "Description:"
-msgstr "<b>Priskribo:</b>"
+msgstr "Priskribo:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:145
 msgid "Command:"
-msgstr ""
+msgstr "Komando:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:205
 msgid "Select a command"
-msgstr ""
+msgstr "Elektu komandon"
 
 #: ../xfce4-autostart-editor/xfae-model.c:515
 #, c-format
 msgid "Failed to unlink %s: %s"
-msgstr ""
+msgstr "Malsukcesis malligi %s: %s"
 
 #: ../xfce4-autostart-editor/xfae-model.c:603
 #, c-format
 msgid "Failed to create file %s"
-msgstr ""
+msgstr "Malsukcesis krei la dosieron %s"
 
 #: ../xfce4-autostart-editor/xfae-model.c:625
 #, c-format
 msgid "Failed to write file %s"
-msgstr ""
+msgstr "Malsukcesis surdiskigi la dosieron %s"
 
 #: ../xfce4-autostart-editor/xfae-model.c:724
 #, c-format
 msgid "Failed to open %s for writing"
-msgstr ""
+msgstr "Malsukcesis malfermi %s por skribadi"
 
 #: ../xfce4-autostart-editor/xfae-window.c:89
 #: ../xfce4-autostart-editor/xfae-window.c:106
-#, fuzzy
 msgid "Autostarted applications"
-msgstr "Administri forajn aplikaĵojn"
+msgstr "Aŭtolanĉindaj aplikaĵoj"
 
 #: ../xfce4-autostart-editor/xfae-window.c:124
 msgid ""
@@ -548,27 +555,31 @@ msgid ""
 "in addition to the applications that were saved when\n"
 "you logged out last time:"
 msgstr ""
+"Malsupre estas la listo de la aplikaĵoj kiuj estos startigitaj\n"
+"aŭtomate kiam vi ensalutos en vian Xfce'an labortablon,\n"
+"aldonitaj al la aplikaĵoj kiuj jam estis konservitaj kiam\n"
+"vi ensalutis la antaŭan fojon:"
 
 #: ../xfce4-tips/main.c:45 ../xfce4-tips/main.c:185 ../xfce4-tips/main.c:226
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
 msgid "Tips and tricks"
-msgstr ""
+msgstr "Arkanoj"
 
 #: ../xfce4-tips/main.c:46 ../xfce4-tips/main.c:234
 msgid "Fortunes"
-msgstr ""
+msgstr "Fortunoj"
 
 #: ../xfce4-tips/main.c:174
 msgid "Xfce tips and tricks"
-msgstr ""
+msgstr "Xfce'aj arkanoj"
 
 #: ../xfce4-tips/main.c:211
 msgid "Display tips on _startup"
-msgstr ""
+msgstr "Montri arkaneron dum la _komenco"
 
 #: ../xfce4-tips/main.c:247
 msgid "Next"
-msgstr ""
+msgstr "Sekvanta"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:1
 msgid "Session and Startup Settings"
@@ -587,18 +598,17 @@ msgid "Xfce 4 Splash Screen Settings"
 msgstr "Xfce 4 Ekaperantektranaj Parametroj"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:1
-#, fuzzy
 msgid "Autostarted Applications"
-msgstr "Administri forajn aplikaĵojn"
+msgstr "Aŭtolanĉindaj aplikaĵoj"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:2
 msgid "Edit the list of autostarted applications"
-msgstr ""
+msgstr "Modifi la liston de aŭtolanĉindaj aplikaĵoj"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:3
 msgid "Xfce 4 Autostarted Applications"
-msgstr ""
+msgstr "Xfce 4 Aŭtolanĉindaj Aplikaĵoj"
 
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
-msgstr ""
+msgstr "xfce4-arkaneroj"
