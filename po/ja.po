@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-session 4.2.0cvs\n"
+"Project-Id-Version: xfce4-session 4.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-15 01:29+0200\n"
-"PO-Revision-Date: 2005-04-29 18:07+0900\n"
+"POT-Creation-Date: 2005-07-18 15:55+0900\n"
+"PO-Revision-Date: 2005-07-18 15:54+0900\n"
 "Last-Translator: Daichi Kawahata <daichik@users.sourceforge.net>\n"
 "Language-Team: xfce-users-jp <xfce-users-jp@ml.fdiary.net>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: ../engines/balou/balou-theme.c:110
 msgid "No description given"
-msgstr "何も記述されていません"
+msgstr "説明はありません"
 
 #: ../engines/balou/config.c:317
 msgid "Choose theme file to install..."
@@ -30,13 +30,13 @@ msgid ""
 "Unable to install splash theme from file %s, please check that the file is a "
 "valid splash theme archive."
 msgstr ""
-"ファイル %s からスプラッシュテーマをインストールできません、ファイルが適切な"
-"スプラッシュテーマアーカイブか確認して下さい。"
+"ファイル %s からスプラッシュ・テーマをインストールできません、ファイルが適切"
+"なスプラッシュテーマ・アーカイブか確認して下さい。"
 
 #: ../engines/balou/config.c:382
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
-msgstr "スプラッシュテーマ \"%s\" をディレクトリ %s から削除できません。"
+msgstr "スプラッシュ・テーマ \"%s\" をフォルダ %s から削除できません。"
 
 #: ../engines/balou/config.c:467
 msgid "Choose theme filename..."
@@ -61,6 +61,14 @@ msgstr "Balou テーマ"
 #: ../engines/balou/config.c:924
 msgid "Configure Balou..."
 msgstr "Balou の設定..."
+
+#: ../engines/balou/config.c:965
+msgid "Balou"
+msgstr "Balou"
+
+#: ../engines/balou/config.c:966
+msgid "Balou Splash Engine"
+msgstr "Balou スプラッシュ・エンジン"
 
 #: ../engines/simple/simple.c:315
 msgid "Choose image..."
@@ -94,6 +102,22 @@ msgstr "画像"
 msgid "Use custom image"
 msgstr "指定画像を使用する"
 
+#: ../engines/simple/simple.c:505
+msgid "Simple"
+msgstr "シンプル"
+
+#: ../engines/simple/simple.c:506
+msgid "Simple Splash Engine"
+msgstr "シンプルなスプラッシュ・エンジン"
+
+#: ../engines/mice/mice.c:369
+msgid "Mice"
+msgstr "マイス"
+
+#: ../engines/mice/mice.c:370
+msgid "Mice Splash Engine"
+msgstr "マイス・スプラッシュ・エンジン"
+
 #: ../settings/session/session.c:133
 msgid "Session chooser"
 msgstr "セッションの選択"
@@ -107,8 +131,7 @@ msgid ""
 "If set, the session manager will ask you to choose a session every time you "
 "log in to Xfce."
 msgstr ""
-"設定すると、Xfce へログインする度にセッションを選択するようセッションマネー"
-"ジャが尋ねるようになります。"
+"有効にすると Xfce へログインする度にセッションを選択するよう尋ねられます。"
 
 #: ../settings/session/session.c:150
 msgid "Logout settings"
@@ -307,37 +330,46 @@ msgstr ""
 "あなたの入力したパスワードが不適切であるか、システム管理者があなたのユーザア"
 "カウントでのコンピュータのシャットダウンを許可していません。"
 
-#: ../xfce4-session/xfsm-chooser.c:209
+#: ../xfce4-session/xfsm-chooser.c:122
+#, c-format
+msgid ""
+"<b><big>%s</big></b>\n"
+"<small><i>Last access: %s</i></small>"
+msgstr ""
+"<b><big>%s</big></b>\n"
+"<small><i>最終アクセス時刻: %s</i></small>"
+
+#: ../xfce4-session/xfsm-chooser.c:212
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr ""
-"復元したいセッションを選択して下さい。復元したいセッション名を単にダブルク"
-"リックします。"
+"復元したいセッションを選択して下さい。セッション名を単にダブルクリックしま"
+"す。"
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:235
+#: ../xfce4-session/xfsm-chooser.c:238
 msgid "Logout"
 msgstr "ログアウト"
 
-#: ../xfce4-session/xfsm-chooser.c:237
+#: ../xfce4-session/xfsm-chooser.c:240
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "ログインを取消してログイン画面に戻ります。"
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:245
+#: ../xfce4-session/xfsm-chooser.c:248
 msgid "New session"
 msgstr "新規セッション"
 
-#: ../xfce4-session/xfsm-chooser.c:247
+#: ../xfce4-session/xfsm-chooser.c:250
 msgid "Create a new session."
 msgstr "新規セッションを作成します。"
 
-#: ../xfce4-session/xfsm-dns.c:77
+#: ../xfce4-session/xfsm-dns.c:79
 msgid "(Unknown)"
 msgstr "(不明)"
 
-#: ../xfce4-session/xfsm-dns.c:144
+#: ../xfce4-session/xfsm-dns.c:146
 #, c-format
 msgid ""
 "Could not look up internet address for %s.\n"
@@ -350,11 +382,11 @@ msgstr ""
 "でしょう。あなたのシステムのファイル /etc/hosts に\n"
 "%s を加えることで問題を解決できるかもしれません。"
 
-#: ../xfce4-session/xfsm-dns.c:151
+#: ../xfce4-session/xfsm-dns.c:153
 msgid "Continue anyway"
 msgstr "いずれにせよ続行する"
 
-#: ../xfce4-session/xfsm-dns.c:152
+#: ../xfce4-session/xfsm-dns.c:154
 msgid "Try again"
 msgstr "再び試す"
 
@@ -368,19 +400,19 @@ msgstr "GNOME の障碍者支援プログラムを起動しています"
 
 #: ../xfce4-session/xfsm-compat-kde.c:118
 msgid "Starting KDE services"
-msgstr "KDE のサービスを起動しています"
+msgstr "KDE サービスを開始しています"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
-msgstr "セッションの選択"
+msgstr "セッションを選択して下さい"
 
 #: ../xfce4-session/xfsm-splash-screen.c:208
 msgid "Choose session name"
-msgstr "セッション名の選択"
+msgstr "セッション名を選択して下さい"
 
 #: ../xfce4-session/xfsm-splash-screen.c:222
 msgid "Choose a name for the new session:"
-msgstr "新規セッションの名前を選択:"
+msgstr "新規セッション名を選択して下さい:"
 
 #: ../xfce4-session/xfsm-startup.c:99
 msgid "Starting the Volume Controller"
@@ -440,7 +472,7 @@ msgstr "GIMP を起動しています"
 
 #: ../xfce4-session/xfsm-startup.c:133
 msgid "Starting the VI Improved Editor"
-msgstr "改良型 VI エディタを起動しています"
+msgstr "エディタ Vim を起動しています"
 
 #: ../xfce4-session/xfsm-startup.c:135
 msgid "Starting the Session Management Proxy"
@@ -452,7 +484,7 @@ msgstr "IRC クライアント X-Chat を起動しています"
 
 #: ../xfce4-session/xfsm-startup.c:139
 msgid "Starting the X Multimedia System"
-msgstr "X マルチメディアシステムを起動しています"
+msgstr "XMMS を起動しています"
 
 #: ../xfce4-session/xfsm-startup.c:141
 msgid "Starting the X Terminal Emulator"
@@ -477,57 +509,65 @@ msgid ""
 "location.\n"
 "You should delete this directory now.\n"
 msgstr ""
+"自動開始フォルダの場所と形式が変更されています。\n"
+"新しい場所は\n"
+"\n"
+"  %s\n"
+"\n"
+"にあり、ここに .desktop ファイルを置くことができます。このファイルに\n"
+"あなたが Xfce デスクトップにログインする時に開始するアプリケーションを\n"
+"記述します。以前の自動開始フォルダにあるファイルは問題なく新しい場所に\n"
+"移行されています。\n"
+"このフォルダは削除する方がよいでしょう。\n"
 
 #: ../xfce4-session/xfsm-startup.c:407
 msgid "Performing Autostart..."
-msgstr "自動的に開始しています..."
+msgstr "自動開始アプリケーションを実行しています..."
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:99
 msgid "Add application"
-msgstr ""
+msgstr "アプリケーションを追加して下さい"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:113
 msgid "Name:"
-msgstr ""
+msgstr "名前:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:130
-#, fuzzy
 msgid "Description:"
-msgstr "<b>説明:</b>"
+msgstr "説明:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:145
 msgid "Command:"
-msgstr ""
+msgstr "コマンド:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:205
 msgid "Select a command"
-msgstr ""
+msgstr "コマンドを選択して下さい"
 
 #: ../xfce4-autostart-editor/xfae-model.c:515
 #, c-format
 msgid "Failed to unlink %s: %s"
-msgstr ""
+msgstr "%s のリンク解除に失敗しました: %s"
 
 #: ../xfce4-autostart-editor/xfae-model.c:603
 #, c-format
 msgid "Failed to create file %s"
-msgstr ""
+msgstr "ファイル %s の作成に失敗しました"
 
 #: ../xfce4-autostart-editor/xfae-model.c:625
 #, c-format
 msgid "Failed to write file %s"
-msgstr ""
+msgstr "ファイル %s の書き込みに失敗しました"
 
 #: ../xfce4-autostart-editor/xfae-model.c:724
 #, c-format
 msgid "Failed to open %s for writing"
-msgstr ""
+msgstr "読み込むために %s を開くのに失敗しました"
 
 #: ../xfce4-autostart-editor/xfae-window.c:89
 #: ../xfce4-autostart-editor/xfae-window.c:106
-#, fuzzy
 msgid "Autostarted applications"
-msgstr "遠隔アプリケーションの管理"
+msgstr "自動的に開始するアプリケーション"
 
 #: ../xfce4-autostart-editor/xfae-window.c:124
 msgid ""
@@ -536,27 +576,30 @@ msgid ""
 "in addition to the applications that were saved when\n"
 "you logged out last time:"
 msgstr ""
+"以下は Xfce デスクトップにログインする時に自動的に開始\n"
+"されるアプリケーションのリストです。最後にログアウトした\n"
+"時に保存されたアプリケーションも加わります:"
 
 #: ../xfce4-tips/main.c:45 ../xfce4-tips/main.c:185 ../xfce4-tips/main.c:226
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
 msgid "Tips and tricks"
-msgstr ""
+msgstr "チップとトリック"
 
 #: ../xfce4-tips/main.c:46 ../xfce4-tips/main.c:234
 msgid "Fortunes"
-msgstr ""
+msgstr "フォーチュン"
 
 #: ../xfce4-tips/main.c:174
 msgid "Xfce tips and tricks"
-msgstr ""
+msgstr "Xfce チップとトリック"
 
 #: ../xfce4-tips/main.c:211
 msgid "Display tips on _startup"
-msgstr ""
+msgstr "起動時にチップを表示(_S)"
 
 #: ../xfce4-tips/main.c:247
 msgid "Next"
-msgstr ""
+msgstr "次へ"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:1
 msgid "Session and Startup Settings"
@@ -575,18 +618,17 @@ msgid "Xfce 4 Splash Screen Settings"
 msgstr "Xfce 4 スプラッシュ画面設定"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:1
-#, fuzzy
 msgid "Autostarted Applications"
-msgstr "遠隔アプリケーションの管理"
+msgstr "自動開始アプリケーション"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:2
 msgid "Edit the list of autostarted applications"
-msgstr ""
+msgstr "自動的に開始するアプリケーションのリストを編集します"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:3
 msgid "Xfce 4 Autostarted Applications"
-msgstr ""
+msgstr "Xfce 4 自動起動アプリケーション"
 
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
-msgstr ""
+msgstr "Xfce チップ"
