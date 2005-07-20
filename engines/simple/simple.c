@@ -502,8 +502,8 @@ config_preview (XfsmSplashConfig *config)
 G_MODULE_EXPORT void
 config_init (XfsmSplashConfig *config)
 {
-  config->name        = g_strdup ("Simple");
-  config->description = g_strdup ("Simple Splash Engine");
+  config->name        = g_strdup (_("Simple"));
+  config->description = g_strdup (_("Simple Splash Engine"));
   config->version     = g_strdup (VERSION);
   config->author      = g_strdup ("Benedikt Meurer");
   config->homepage    = g_strdup ("http://www.xfce.org/");

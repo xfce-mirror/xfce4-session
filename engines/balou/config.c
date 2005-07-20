@@ -962,8 +962,8 @@ config_preview (XfsmSplashConfig *config)
 G_MODULE_EXPORT void
 config_init (XfsmSplashConfig *config)
 {
-  config->name        = g_strdup ("Balou");
-  config->description = g_strdup ("Balou Splash Engine");
+  config->name        = g_strdup (_("Balou"));
+  config->description = g_strdup (_("Balou Splash Engine"));
   config->version     = g_strdup (VERSION);
   config->author      = g_strdup ("Benedikt Meurer");
   config->homepage    = g_strdup ("http://www.xfce.org/");

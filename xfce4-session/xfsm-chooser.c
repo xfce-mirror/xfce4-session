@@ -106,6 +106,7 @@ xfsm_chooser_set_sessions (XfsmChooser *chooser,
   XfsmSessionInfo *session;
   GtkTreeModel    *model;
   GtkTreeIter      iter;
+  gchar           *accessed;
   gchar           *title;
   GList           *lp;
 
@@ -116,9 +117,11 @@ xfsm_chooser_set_sessions (XfsmChooser *chooser,
     {
       session = (XfsmSessionInfo *) lp->data;
 
+      accessed = g_strdup_printf (_("Last accessed: %s"),
+                                  ctime (&session->atime));
       title = g_strdup_printf ("<b><big>%s</big></b>\n"
-                               "<small><i>Last access: %s</i></small>",
-                               session->name, ctime (&session->atime));
+                               "<small><i>%s</i></small>",
+                               session->name, accessed);
 
       gtk_list_store_append (GTK_LIST_STORE (model), &iter);
       gtk_list_store_set (GTK_LIST_STORE (model), &iter,
@@ -128,6 +131,7 @@ xfsm_chooser_set_sessions (XfsmChooser *chooser,
                           ATIME_COLUMN, session->atime,
                           -1);
 
+      g_free (accessed);
       g_free (title);
     }
 }
