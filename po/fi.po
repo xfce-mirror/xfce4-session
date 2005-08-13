@@ -1,7 +1,6 @@
-# translation of Xfce4 session to Finnish
-# This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
-#
+# Translation of xfce4-session to Finnish.
+# This file is distributed under the same license as the xfce4-session package.
+# Copyright (C) 2003-2005 The Xfce Development Team
 # Juha Kautto <kautto.juha@kolumbus.fi>, 2004.
 #
 msgid ""
@@ -9,7 +8,7 @@ msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-07-15 01:29+0200\n"
-"PO-Revision-Date: 2005-01-20 13:52+0200\n"
+"PO-Revision-Date: 2005-08-11 17:37+0200\n"
 "Last-Translator: Jari Rahkonen <jari.rahkonen@pp1.inet.fi>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -60,7 +59,7 @@ msgstr "Balou-teema"
 
 #: ../engines/balou/config.c:924
 msgid "Configure Balou..."
-msgstr "Säädä Balou..."
+msgstr "Baloun asetukset..."
 
 #: ../engines/simple/simple.c:315
 msgid "Choose image..."
@@ -68,7 +67,7 @@ msgstr "Valitse kuva..."
 
 #: ../engines/simple/simple.c:360
 msgid "Configure Simple..."
-msgstr "Säädä Simple..."
+msgstr "Simplen asetukset..."
 
 #: ../engines/simple/simple.c:371
 msgid "Font"
@@ -107,7 +106,7 @@ msgid ""
 "If set, the session manager will ask you to choose a session every time you "
 "log in to Xfce."
 msgstr ""
-"Jos valitset tämän asetuksen, sinua pyydetään valitsemaan istunto aina "
+"Tämän ollessa valittuna istunnonhallinta pyytää valitsemaan istunnon aina "
 "kirjautuessasi Xfce:hen."
 
 #: ../settings/session/session.c:150
@@ -124,13 +123,13 @@ msgid ""
 "automatically when you log out. If you don't select this option you'll be "
 "prompted whether you want to save the current session on each logout."
 msgstr ""
-"Jos tämä valinta on voimassa, istuntosi tallennetaan automaattisesti aina "
-"kirjautuessasi ulos Xfce:stä. Muussa tapauksessa sinulta kysytään aina "
+"Tämä ollessa valittuna istuntosi tallennetaan automaattisesti aina "
+"kirjautuessasi ulos. Muussa tapauksessa sinulta kysytään jokaisen "
 "uloskirjautumisen yhteydessä, haluatko tallentaa nykyisen istunnon."
 
 #: ../settings/session/session.c:169
 msgid "Prompt on logout"
-msgstr "Kysy lopetettaessa"
+msgstr "Näytä uloskirjausdialogi"
 
 #: ../settings/session/session.c:175
 msgid ""
@@ -140,7 +139,7 @@ msgid ""
 msgstr ""
 "Tämä valinta poistaa uloskirjausdialogin käytöstä. Istunto tallennetaan "
 "tässä tapauksessa vain, jos olet ottanut käyttöön istunnon automaattisen "
-"tallentamisen uloskirjautumisen yhteydessä. "
+"tallentamisen uloskirjautumisen yhteydessä."
 
 #: ../settings/session/session.c:211
 msgid "Compatibility"
@@ -173,7 +172,7 @@ msgid ""
 "not work at all if you don't enable this option."
 msgstr ""
 "Valitse tämä, jos aiot käyttää KDE-sovelluksia osana Xfce-"
-"työpöytäistuntoasi. Tämä lisää käynnistysaikaa huomattavasti, mutta "
+"työpöytäistuntoasi. Tämä kasvattaa käynnistysaikaa huomattavasti, mutta "
 "toisaalta KDE:n sovellukset käynnistyvät nopeammin. Saattaa olla, etteivät "
 "jotkin KDE-sovellukset toimi ollenkaan ilman tätä asetusta."
 
@@ -196,7 +195,7 @@ msgstr ""
 #: ../settings/session/session.c:330 ../settings/session/session.c:345
 #: ../settings/session/session.c:383
 msgid "Sessions and Startup"
-msgstr "Istunnot ja Käynnistys"
+msgstr "Istunnot ja käynnistys"
 
 #: ../settings/session/session.c:354
 msgid "General"
@@ -223,11 +222,11 @@ msgstr "Säädä"
 
 #: ../settings/splash/splash.c:468
 msgid "Opens the configuration panel for the selected splash screen."
-msgstr "Avaa valitun käynnistykuvan asetusvalikko."
+msgstr "Avaa valitun käynnistykuvan asetuspaneeli."
 
 #: ../settings/splash/splash.c:472
 msgid "Test"
-msgstr "Testaa"
+msgstr "Kokeile"
 
 #: ../settings/splash/splash.c:479
 msgid "Demonstrates the selected splash screen."
@@ -288,7 +287,7 @@ msgstr "Sulje tietokone"
 
 #: ../xfce4-session/shutdown.c:318
 msgid "_Save session for future logins"
-msgstr "_Talleta istunto"
+msgstr "_Tallenna istunto"
 
 #: ../xfce4-session/shutdown.c:393
 msgid "Please enter your password:"
@@ -296,7 +295,7 @@ msgstr "Anna salasanasi:"
 
 #: ../xfce4-session/shutdown.c:425
 msgid "<b>An error occured</b>"
-msgstr "<b>Tapahtu virhe</b>"
+msgstr "<b>Tapahtui virhe</b>"
 
 #: ../xfce4-session/shutdown.c:439
 msgid ""
@@ -344,7 +343,7 @@ msgid ""
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
 msgstr ""
-"%s:n internetosoitetta ei pystytty selvittämään.\n"
+"%s:n internetosoitetta ei voitu selvittää.\n"
 "Tämä estää Xfce:tä toimimasta oikein.\n"
 "Ongelman voi ehkä korjata lisäämällä %s tiedostoon\n"
 "/etc/hosts järjestelmässäsi."
@@ -476,6 +475,15 @@ msgid ""
 "location.\n"
 "You should delete this directory now.\n"
 msgstr ""
+"Automaattikäynnistyshakemiston sijainti ja muoto on muuttunut.\n"
+"Uusi sijainti on\n"
+"\n"
+"  %s\n"
+"\n"
+"ja sinne voit asettaa Xfce-työpöydälle kirjautuessasi suoritettavien\n"
+"sovellusten .desktop-tiedostot. Vanhassa hakemistossasi olleet tiedostot\n"
+"on onnistuneesti haettu uuteen sijaintiin.\n"
+"Vanha hakemisto pitäisi nyt poistaa.\n"
 
 #: ../xfce4-session/xfsm-startup.c:407
 msgid "Performing Autostart..."
@@ -483,50 +491,48 @@ msgstr "Suoritetaan automaattinen käynnistys..."
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:99
 msgid "Add application"
-msgstr ""
+msgstr "Lisää sovellus"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:113
 msgid "Name:"
-msgstr ""
+msgstr "Nimi:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:130
-#, fuzzy
 msgid "Description:"
-msgstr "<b>Kuvaus:</b>"
+msgstr "Kuvaus:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:145
 msgid "Command:"
-msgstr ""
+msgstr "Komento:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:205
 msgid "Select a command"
-msgstr ""
+msgstr "Valitse komento"
 
 #: ../xfce4-autostart-editor/xfae-model.c:515
 #, c-format
 msgid "Failed to unlink %s: %s"
-msgstr ""
+msgstr "Kohteen %s irroitus epäonnistui: %s"
 
 #: ../xfce4-autostart-editor/xfae-model.c:603
 #, c-format
 msgid "Failed to create file %s"
-msgstr ""
+msgstr "Tiedostoa %s ei voitu luoda"
 
 #: ../xfce4-autostart-editor/xfae-model.c:625
 #, c-format
 msgid "Failed to write file %s"
-msgstr ""
+msgstr "Tiedostoon %s ei voitu kirjoittaa"
 
 #: ../xfce4-autostart-editor/xfae-model.c:724
 #, c-format
 msgid "Failed to open %s for writing"
-msgstr ""
+msgstr "Tiedostoa %s ei voitu avata kirjoitettavaksi"
 
 #: ../xfce4-autostart-editor/xfae-window.c:89
 #: ../xfce4-autostart-editor/xfae-window.c:106
-#, fuzzy
 msgid "Autostarted applications"
-msgstr "Hallitse etäsovelluksia"
+msgstr "Sovellusten automaattikäynnistys"
 
 #: ../xfce4-autostart-editor/xfae-window.c:124
 msgid ""
@@ -535,57 +541,60 @@ msgid ""
 "in addition to the applications that were saved when\n"
 "you logged out last time:"
 msgstr ""
+"Alla on lista sovelluksista, jotka käynnistetään\n"
+"automaattisesti kirjautuessasi Xfce-työpöydällesi\n"
+"sekä sovelluksista, jotka tallennettiin edellisen\n"
+"uloskirjautumisen yhteydessä:"
 
 #: ../xfce4-tips/main.c:45 ../xfce4-tips/main.c:185 ../xfce4-tips/main.c:226
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
 msgid "Tips and tricks"
-msgstr ""
+msgstr "Vinkkejä ja kikkoja"
 
 #: ../xfce4-tips/main.c:46 ../xfce4-tips/main.c:234
 msgid "Fortunes"
-msgstr ""
+msgstr "Onnenkeksit"
 
 #: ../xfce4-tips/main.c:174
 msgid "Xfce tips and tricks"
-msgstr ""
+msgstr "Xfce vinkkejä ja kikkoja"
 
 #: ../xfce4-tips/main.c:211
 msgid "Display tips on _startup"
-msgstr ""
+msgstr "Näytä vinkkejä _käynnistyksen yhteydessä"
 
 #: ../xfce4-tips/main.c:247
 msgid "Next"
-msgstr ""
+msgstr "Seuraava"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:1
 msgid "Session and Startup Settings"
-msgstr "Käynnistys- ja istuntoasetukset"
+msgstr "Istunto- ja käynnistysasetukset"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:2
 msgid "Sessions and Startup Settings"
-msgstr "Käynnistys- ja istuntoasetukset"
+msgstr "Istuntojen ja käynnistyksen asetukset"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:3
 msgid "Xfce 4 Sessions and Startup Settings"
-msgstr "Xfce 4 käynnistys- ja istuntoasetukset"
+msgstr "Xfce 4 istuntojen ja käynnistyksen asetukset"
 
 #: ../settings/splash/xfce-splash-settings.desktop.in.h:2
 msgid "Xfce 4 Splash Screen Settings"
-msgstr "Xfce 4 käynnistyskuvan asetukset"
+msgstr "Xfce 4 käynnistyskuva-asetukset"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:1
-#, fuzzy
 msgid "Autostarted Applications"
-msgstr "Hallitse etäsovelluksia"
+msgstr "Sovellusten automaattikäynnistys"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:2
 msgid "Edit the list of autostarted applications"
-msgstr ""
+msgstr "Muokkaa automaattikäynnistyslistaa"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:3
 msgid "Xfce 4 Autostarted Applications"
-msgstr ""
+msgstr "Xfce 4 sovellusten automaattikäynnistys"
 
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
-msgstr ""
+msgstr "xfce4-vinkit"
