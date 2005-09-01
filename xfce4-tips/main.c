@@ -35,7 +35,6 @@
 
 #include <gtk/gtk.h>
 
-#include <libxfce4util/i18n.h>
 #include <libxfcegui4/libxfcegui4.h>
 
 #define OPTION_TIPS 0
