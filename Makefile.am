@@ -2,7 +2,7 @@
 
 SUBDIRS =								\
 	libxfsm								\
-	docs								\
+	doc								\
 	engines								\
 	icons								\
 	po								\
@@ -34,7 +34,7 @@ DISTCLEANFILES =							\
 	intltool-update
 
 html:
-	(cd docs && $(MAKE) $(AM_MAKEFLAGS) html)
+	(cd doc && $(MAKE) $(AM_MAKEFLAGS) html)
 
 rpm: dist
 	rpmbuild -ta $(PACKAGE)-$(VERSION).tar.gz
