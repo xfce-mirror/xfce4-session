@@ -1,0 +1,422 @@
+<?xml version='1.0'?> 
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY date "Jan 2005"> 
+  <!ENTITY appversion "4.2.0">
+  <!ENTITY app "<application>xfce4-session</application>"> 
+]>
+
+<article id="xfce4-session" lang="he">
+
+<!-- Header --> 
+<articleinfo>
+
+  <title>מנהל ההפעלה של Xfce 4</title>
+  
+  <copyright>
+    <year>2003</year>
+    <year>2004</year>
+    <holder>Benedikt Meurer</holder>
+  </copyright>
+
+<!-- translators: uncomment this: -->
+
+  <copyright>
+   <year>2005</year> <holder>Dotan Kamber (Hebrew
+   translation)</holder>
+  </copyright>
+
+  <legalnotice id="legalnotice">
+    <para>
+      מסמך זה מופץ תחת תנאי רישיון GPL (GNU General Public Liscense) כפי שהם מפורסמים על ידי קרן התוכנה החופשית; גרסה 2 של הרישיון או (לבחירתך) כל גרסה מאוחרת יותר.
+    </para>
+  </legalnotice>
+  
+  <authorgroup>
+    <author>
+      <firstname>Benedikt</firstname>
+      <surname>Meurer</surname>
+      <affiliation>
+	      <address><email>benny@xfce.org</email></address>
+        <orgname>os-cillation</orgname>
+        <orgdiv>System development</orgdiv>
+        <jobtitle>Software developer</jobtitle>
+      </affiliation>
+    </author>
+
+<!-- This is appropriate place for other contributors: translators,
+maintainers, etc. Commented out by default. -->
+
+    <othercredit role="translator">
+      <firstname>דותן</firstname> <surname>קמבר</surname>
+      <affiliation>
+	<orgname></orgname>
+	<address><email>kamberd@yahoo.com</email> </address>
+      </affiliation> <contrib>תרגום עברי</contrib>
+    </othercredit>
+
+
+  </authorgroup>
+
+<releaseinfo>מדריך זה מתאר את &app; גרסה &appversion; עידכון אחרון : &date;
+</releaseinfo>
+
+
+</articleinfo>
+
+<para>&nbsp;</para>
+
+<sect1 id="xfsm-intro">
+  <title>מבוא</title>
+
+  <para>&app; הוא מנהל הפעלה ל- Xfce 4. משימתו היא לשמור את מצב שולחן העבודה שלך (ישומים פתוחים ומיקומם) ולשחזרו בעליה הבאה. ניתן ליצור מספר הפעלות שונות ולבחור אחת מהן בעת העליה.
+  </para>
+  
+  <para>&app; מספק ניהול הפעלה הן עבור פרוטוקול X11R6 והן עבור X11R5 המסורתי. אם אין לך צורך בתמיכה בניהול הפעלה מסורתית ביכולתך לבטל אפשרות זו בעת ההידור על ידי מתן --disable-legacy-sm ל- ./configure. <emphasis>אסור לעולם</emphasis> להריץ את <application>smproxy</application> בהפעלה שמנוהלת על ידי &app;, שאם לא כן יקרו דברים מוזרים. ניהול ההפעלה המסורתית עושה כל דבר ש-<application>smproxy</application>
+   יעשה ופרט לכך הוא תומך גם בתצוגה על מסכים מרובים.</para>
+
+</sect1>
+
+<para>&nbsp;</para>
+
+<sect1 id="xfce4-session-settings">
+  <title>הגדרות מנהל ההפעלה</title>
+    
+  <sect2 id="xfsm-general-settings">
+  	<title>העדפות כלליות</title>
+  	
+    <figure id="xfsm-general-fig">
+      <title>העדפות כלליות של &app;</title>
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/xfsm-general.png" format="PNG" />
+          </imageobject>
+
+          <textobject>
+            <phrase>מציג את הכרטיסיה הכללית של תיבת האפשרויות של &app;</phrase>
+          </textobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
+  	
+  	<variablelist>
+      <varlistentry>
+        <term>הצג בורר בכניסה</term> 
+        <listitem>
+            <para>אם יוגדר, מנהל ההפעלה יבקש ממך לבחור הפעלה בכל כניסה ל- Xfce.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>שמור הפעלה ביציאה באופן אוטומטי</term> 
+        <listitem>
+          <para>אפשרות זו מנחה את מנהל ההפעלה לשמור את ההפעלה הנוכחית באופן אוטומטי בעת יציאתך. אם לא תבחר אפשרות זו תהיה פניה אליך לבחור אם לשמור את הפעלה הנוכחית בכל יציאה.</para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>פניה בעת יציאה</term> 
+        <listitem>
+          <para>אפשרות זו מבטלת את תיבת הדו-שיח לאישור בעת יציאה. האם ההפעלה תשמר או שמא לאו תלוי אם בחרת להפעיל את שמירת ההפעלה ביציאה באופן אוטומטי או לא.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+	</sect2>
+		
+	<sect2 id="xfsm-advanced settings">
+	  <title>העדפות מתקדמות</title>
+	
+    <figure id="xfsm-advanced-fig">
+      <title>העדפות מתקדמות של &app;</title>
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/xfsm-advanced.png" format="PNG" />
+          </imageobject>
+
+          <textobject>
+            <phrase>מציג את כרטיסית האפשרויות המתקדמות של &app; בתיבת הדו-שיח להגדרות.</phrase>
+          </textobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
+	
+    <variablelist>
+      <varlistentry>
+        <term>הפעל אוטומטית את שירותי - GNOME</term> 
+        <listitem>
+          <para>יש לאפשר אפשרות זו אם יש לך צורך בהרצת אשפי GNOME בעליה. אפשרות זו גם מנחה את &app; להפעיל את טכנולוגיות הסיוע של GNOME בעליה (אם אופשרו במרכז הבקרה של GNOME). יש לפנות לתיעוד GNOME למידע נוסף על נושא זה.</para>
+        </listitem>
+		  </varlistentry>
+
+      <varlistentry>
+        <term>הפעל אוטומטית את שירותי - KDE</term> 
+        <listitem>
+          <para>יש לאפשר אפשרות זאת אם בכוונתך להפעיל ישומי KDE כחלק מההפעלה של שולחן העבודה של Xfce. אפשרות זו תגדיל באופן ניכר את משך העליה אך מצד שני ישומי KDE יעלו מהר יותר. יתכן כי חלק מישומי KDE כלל לא יעבדו ללא איפשור אפשרות זו.</para>
+        </listitem>
+  		</varlistentry>
+
+      <varlistentry>
+        <term>נהל ישומים מרוחקים</term> 
+        <listitem>
+          <para>מאפשר למנהל ההפעלה לנהל ישומים שרצים על שרתים מרוחקים. היות ואפשרות זו עלולה להוות סיכון אבטחתי, על ידי רישום לשער TCP במערכת שלך, אין לאפשרה אלא אם ידוע לך מה מעשיך.</para>
+          <para>יתכן כי מנהלי מערכת ירצו לבטל אפשרות זאת באופן כוללני על ידי שימוש<ulink url="#xfsm-kiosk-mode" type="html">ביכולות KIOSK</ulink> של מנהל ההפעלה.
+
+.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+	
+	</sect2>
+</sect1>
+    
+<para>&nbsp;</para>
+ 
+<sect1 id="xfsm-customize">
+	<title>התאמה אישית של מנהל ההפעלה</title>
+	
+	<para>ביכולתך להתאים באופן אישי את מסך הפתיחה שבו ישתמש &app; בעת כניסתך ל- Xfce 4. קיימת לצורך זה תיבת דו-שיח יעודית <emphasis>במנהל ההגדרות של Xfce 4</emphasis>.</para>
+	
+	<sect2 id="xfsm-engines">
+		<title>הגדרות מסך הפתיחה</title>
+		
+    <figure id="splash-screen-settings-fig">
+      <title>תיבת הדו-שיח להגדרת מסך הפתיחה</title>
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/xfsm-splash.png" format="PNG" />
+          </imageobject>
+
+          <textobject>
+            <phrase>מציג את תיבת הגדרות מסך הפתיחה של &app;.</phrase>
+          </textobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
+		
+    <para>בצד ימין תיבת הדו-שיח מציגה את רשימת המנועים המותקנים. בחירה במנוע תציג, אם הוא זמין, תצוגה מקדימה ומידע אודותיו. ניתן ללחוץ על כפתור ה- <guibutton>בדיקה</guibutton>
+    כדי לראות הדגמה של מנוע מסך הפתיחה שנבחר.</para>
+				
+    <para>כברירת מחדל &app; מספק מנועים לשלוש ערכות נושא. אפשרויות האפיון שלהם, אם יש כאלו, זמינות מכפתור ה- <guibutton>הגדר</guibutton>.</para>
+	</sect2>
+	
+	<sect2 id="xfsm-shutdown">
+		<title>אפשרויות כיבוי/איתחול</title>
+	
+    <para>&app; תומך בכיבוי מחשבך בעת יציאה מהפעלת שולחן העבודה. כדי שניתן יהיה לכבות את המחשב עליך להרשם בקובץ ה- <filename>sudoers</filename>ובאופן ספציפי עליך להיות עם הרשאות להפעלת הפקודה <filename>${libexecdir}/xfsm-shutdown-helper</filename>
+    (במערכת דביאן גנו/לינוקס מדובר על<filename>/usr/sbin/xfsm-shutdown-helper</filename>)
+    כמשתמש העל (כש- <filename>${libexecdir}</filename> היא תת-ספרית<filename
+    role="directory">libexec</filename> במיקום בו הותקן &app;, לדוגמה
+    <filename role="directory">/usr/local/libexec</filename>).</para>
+
+    <para>לדוגמה, הבה נאמר כי התקנת &app; ב-<filename
+    role="directory">/usr/local</filename>, שם המארח שלך הוא <emphasis>myhost</emphasis>
+    וחשבון המשתמש שלך נקרא <emphasis>myuser</emphasis>, אם כן יהיה עליך להוסיף את השורה הבאה לקובץ ה- <filename>sudoers</filename>
+    (יש לזכור להשתמש ב- <application>visudo</application> לעריכת הקובץ):
+</para>
+
+<programlisting>
+myuser myhost=/usr/local/libexec/xfsm-shutdown-helper
+</programlisting>
+	</sect2>
+	
+</sect1>
+ 
+<para>&nbsp;</para>
+
+<sect1 id="xfsm-advanced">
+  <title>מתקדם</title>
+
+  <sect2 id="files-and-env-vars">
+    <title>משתני סביבה וקבצים</title>
+
+    <para> משתמש עתה בהגדרות ספריות הבסיס כפי שאלו נקבעו על ידי <ulink
+    url="http://freedesktop.org/" type="http">Freedesktop.org</ulink> כדי לאתר את המידע וקבצי האפיון הקשורים שלו. משמעות הדבר היא שמיקומי קבצים יבוטאו כנתיב ביחס לספריות המצוינות במפרט.</para>
+
+    <variablelist>
+      <varlistentry>
+        <term>${XDG_CONFIG_HOME}</term>
+        <listitem>
+          <para>ספריית הבסיס הראשונה בה יערך חיפוש לקבצי אפיון. כברירת מחדל תהיה זו הספריה <filename
+          role="directory">~/.config/</filename>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>${XDG_CONFIG_DIRS}</term>
+        <listitem>
+          <para>רשימת ספריות מערכת המכילות נתוני אפיון. כברירת מחדל הלוח יחפש ב- <filename 
+          role="directory">${sysconfdir}/xdg/</filename> וב- 
+          <filename role="directory">/etc/xdg/</filename>. הערך של
+          ${sysconfdir} תלוי באופן בו נבנתה התוכנית ופעמים תכופות יהיה
+          <filename role="directory">/etc/</filename> עבור חבילות בינאריות.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>${XDG_CACHE_HOME}</term>
+        <listitem>
+          <para>מציין את השורש עבור כל קבצי המידע האגור של משתמש מסויים. אם משתנה סביבה זה אינו מוגדר ברירת המחדל שלוו תהיה <filename
+          role="directory">~/.cache</filename>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>${XDG_CONFIG_DIRS}/xfce4-session/xfce4-session.rc</term>
+        <listitem>
+          <para>זהו מיקום קובץ האפיון הכולל את מגוון ההגדרות עבור &app;,שניתן לשנות מתיבת הדו-שיח של ההגדרות.</para>
+        </listitem>
+      </varlistentry>
+    
+      <varlistentry>
+        <term>${XDG_CONFIG_DIRS}/xfce4-session/xfce4-splash.rc</term>
+        <listitem>
+          <para>זהו מיקום קובץ האפיון הכולל את מגוון ההגדרות עבור מסך האיתחול, שניתן לשנות מתיבת הדו-שיח של ההגדרות.</para>
+        </listitem>
+      </varlistentry>
+    
+      <varlistentry>
+        <term>${XDG_CACHE_HOME}/sessions/</term>
+        <listitem>
+          <para>הספריה בה &app; ו- <application>xfwm4</application>
+          מאכסנים את נתוני ההפעלה.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>${sysconfdir}/xdg/xfce4/kiosk/kioskrc</term>
+        <listitem>
+          <para>קובץ הגדרות מצב Kiosk. ניתן לעיין <ulink url="#xfsm-kiosk-mode">בחלק הבא</ulink> להסבר.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+
+    <para>אף אחד מקבצי האפיון, למעט <filename>kioskrc</filename>,
+    אינו מיועד לעריכה ידנית במהלך הפעלת ה- Xfce. למעשה השינויים שיעשו ימחקו אם הם יערכו בעת שמנהל ההפעלה או מנהל ההגדרות רצים.</para>
+
+    <para>ייתכן שמנהלי מערכות ירצו לערוך את הקובץ
+    <filename>${sysconfdir}/xdg/xfce4-session/xfce4-session.rc</filename> כדי לשנות את הישומים שרצים כברירת מחדל בהפעלת Xfce. לדוגמה, אם ברצונך להפעיל את <application>xfce4-iconbox</application> במקום את
+    <application>xftaskbar4</application>,  יהיה עליך לשנות את חלק ה- <emphasis>[Failsafe
+    Session]</emphasis> למשהו דוגמת:</para>
+
+<programlisting>
+[Failsafe Session]
+Count=4
+Client0_Command=xfwm4
+Client0_PerScreen=False
+Client1_Command=xfce4-panel
+Client1_PerScreen=True
+Client2_Command=xfce4-iconbox
+Client2_PerScreen=True
+Client3_Command=xfdesktop
+Client3_PerScreen=False
+</programlisting>
+  </sect2>
+
+  <sect2 id="xfsm-kiosk-mode">
+    <title>מצב Kiosk</title>
+
+    <para>מנהל ההפעלה מציע תמיכה במצב Kiosk המסיע למנוע ממשתמשים לבצע שינויים בהגדרות ההפעלה שלהם. כדי להשתמש במצב זה יש לערוך או ליצור את הקובץ
+    <filename>${sysconfdir}/xdg/xfce4/kiosk/kioskrc</filename>.</para>
+
+    <para>נסביר את מבנה הקובץ על ידי דוגמה. חלק ה- <filename>kioskrc</filename>שלך יכול להראות כמו:</para>
+
+<programlisting>
+[xfce4-session]
+CustomizeSplash=ALL
+CustomizeChooser=ALL
+CustomizeLogout=ALL
+CustomizeCompatibility=%wheel
+Shutdown=%wheel
+CustomizeSecurity=NONE
+</programlisting>
+
+    <para>בצורה זו כל המשתמשים יכולים לשנות את מסך האיתחול שלהם את הבורר ואת הגדרות היציאה אך רק משתמשים מקבוצת <emphasis>wheel</emphasis>יכולים להתאים לעצמם את הגדרות התאימות ולכבות את המערכת. לאף אחד לא יותר לכוון את הגדרות האבטחה.</para>
+
+    <para>מנהל ההפעלה תומך ביכולות KIOSK הבאות:</para>
+
+    <variablelist>
+      <varlistentry>
+        <term>CustomizeSplash</term>
+        <listitem>
+          <para>האם יותר או יאסר על המשתמש לשנות את מסך האיתחול שלו.
+</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>CustomizeChooser</term>
+        <listitem>
+          <para>האם יותר או יאסר על המשתמש להתאים לעצמו את בורר ההפעלות.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>CustomizeLogout</term>
+        <listitem>
+          <para>האם יותר או יאסר על המתשתמש לשנות את הגדרות היציאה.
+</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>CustomizeCompatibility</term>
+        <listitem>
+          <para>האם יותר או יאסר על המשתמש להתאים את הגדרות התאימות (תאימות ל-Gnome/KDE)</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>CustomizeSecurity</term>
+        <listitem>
+          <para>האם יותר או יאסר על המשתמש להתאים את הגדרות האבטחה. זוהי אחת ההגדרות <emphasis>החשובות ביותר</emphasis> היות והיא מונעת ממשתמשים (למעשה מ- <filename>libICE</filename>) להתקשר לשער TCP.
+</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Shutdown</term>
+        <listitem>
+          <para>האם יותר או יאסר על המשתמש לכבות (לאתחל או להפסיק את הפעולה כליל) את המערכת. למשתמש ללא יכולת כזו יוצגו אפשרויות האיתחול והפסקת הפעולה באפור.
+</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </sect2>
+</sect1>
+
+<para>&nbsp;</para>
+
+<sect1 id="xfsm-copyright">
+  <title>אודות &app;</title>
+
+  <para>&app; נכתב על ידי Benedikt Meurer 
+  (<email>benny@xfce.org</email>).
+    למידע נוסף ניתן לבקר ב <ulink url="http://www.xfce.org" type="http">אתר Xfce</ulink>. 
+  </para>
+
+  <para>לדיווח על תקלה או כדי להציע דבר מה בנוגע ליישום זה או למדריך זה יש להשתמש במערכת המעקב אחר תקלות ב- <ulink 
+      url="http://bugzilla.xfce.org/" 
+      type="http">http://bugzilla.xfce.org/</ulink>. 
+  </para>
+
+  <para>אם יש לך שאלות בנוגע לשימוש או להתקנת ישום זה ניתן להפנותן <ulink 
+      url="http://lunar-linux.org/mailman/listinfo/xfce"
+      type="http">לרשימת הדיוור של Xfce</ulink>. דיונים אודות הפיתוח נערכים ברשימת הדיוור <ulink 
+      url="http://lunar-linux.org/mailman/listinfo/xfce4-dev"
+      type="http">xfce4-dev</ulink>.
+  </para>
+    
+  <para> תוכנית זו מופצת תחת תנאי רישיון GPL (GNU General Public Liscense) כפי שהם מפורסמים על ידי קרן התוכנה החופשית; גרסה 2 של הרישיון או (לבחירתך) כל גרסה מאוחרת יותר.
+  </para>
+
+  <para>עותק של רישיון ה- GNU General Public Liscense אמור היה להיות מצורף לתוכנית זו; אם לא כך, ניתן לכתוב לקרן התוכנה החופשית: Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
+    USA.
+  </para>
+
+</sect1>
+
+</article>
+

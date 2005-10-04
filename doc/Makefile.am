@@ -1,9 +1,10 @@
-SUBDIRS =								\
-	C								\
-	fr
+SUBDIRS =				\
+	C				\
+	fr				\
+	he
 
-noinst_DATA =								\
-	FAQ								\
+noinst_DATA =				\
+	FAQ				\
 	README.Kiosk
 
 EXTRA_DIST = $(noinst_DATA)
