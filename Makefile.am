@@ -1,6 +1,6 @@
 SUBDIRS =								\
 	libxfsm								\
-	docs								\
+	doc								\
 	engines								\
 	icons								\
 	po								\
@@ -28,7 +28,7 @@ EXTRA_DIST =								\
 	xfce4-session.spec.in
 
 html:
-	make -C docs html
+	make -C doc html
 
 rpm: dist
 	rpmbuild -ta $(PACKAGE)-$(VERSION).tar.gz
