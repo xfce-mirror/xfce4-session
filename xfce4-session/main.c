@@ -164,10 +164,10 @@ initialize (int argc, char **argv)
       if (strcmp (*argv, "--version") == 0)
         {
           printf ("%s (Xfce %s)\n\n"
-                  "Copyright (c) 2003-2004\n"
+                  "Copyright (c) 2003-2005\n"
                   "        The Xfce development team. All rights reserved.\n\n"
                   "Written for Xfce by Benedikt Meurer <benny@xfce.org>.\n\n"
-                  "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d%d.\n\n"
+                  "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d.\n\n"
                   "Please report bugs to <%s>.\n",
                   PACKAGE_STRING, xfce_version_string (),
                   GTK_MAJOR_VERSION, GTK_MINOR_VERSION, GTK_MICRO_VERSION,
