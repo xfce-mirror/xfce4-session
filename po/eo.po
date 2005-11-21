@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-17 07:04+0900\n"
+"POT-Creation-Date: 2005-11-22 00:19+0900\n"
 "PO-Revision-Date: 2005-07-15 16:50+0200\n"
 "Last-Translator: Sylvain Vedrenne <sylvain.vedrenne@free.fr>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
@@ -71,6 +71,14 @@ msgstr "Balou'a etoso"
 msgid "Balou Splash Engine"
 msgstr ""
 
+#: ../engines/mice/mice.c:369
+msgid "Mice"
+msgstr ""
+
+#: ../engines/mice/mice.c:370
+msgid "Mice Splash Engine"
+msgstr ""
+
 #: ../engines/simple/simple.c:315
 msgid "Choose image..."
 msgstr "Elekti bildon..."
@@ -109,14 +117,6 @@ msgstr ""
 
 #: ../engines/simple/simple.c:506
 msgid "Simple Splash Engine"
-msgstr ""
-
-#: ../engines/mice/mice.c:369
-msgid "Mice"
-msgstr ""
-
-#: ../engines/mice/mice.c:370
-msgid "Mice Splash Engine"
 msgstr ""
 
 #: ../settings/session/session.c:133
@@ -290,6 +290,63 @@ msgstr "<b>Hejmpaĝo:</b>"
 msgid "Splash Screen"
 msgstr "Ekaperantekrano"
 
+#: ../xfce4-autostart-editor/xfae-dialog.c:99
+msgid "Add application"
+msgstr "Aldoni aplikaĵon"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:113
+msgid "Name:"
+msgstr "Nomo:"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:130
+msgid "Description:"
+msgstr "Priskribo:"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:145
+msgid "Command:"
+msgstr "Komando:"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:205
+msgid "Select a command"
+msgstr "Elektu komandon"
+
+#: ../xfce4-autostart-editor/xfae-model.c:515
+#, c-format
+msgid "Failed to unlink %s: %s"
+msgstr "Malsukcesis malligi %s: %s"
+
+#: ../xfce4-autostart-editor/xfae-model.c:603
+#, c-format
+msgid "Failed to create file %s"
+msgstr "Malsukcesis krei la dosieron %s"
+
+#: ../xfce4-autostart-editor/xfae-model.c:625
+#, c-format
+msgid "Failed to write file %s"
+msgstr "Malsukcesis surdiskigi la dosieron %s"
+
+#: ../xfce4-autostart-editor/xfae-model.c:724
+#, c-format
+msgid "Failed to open %s for writing"
+msgstr "Malsukcesis malfermi %s por skribadi"
+
+#: ../xfce4-autostart-editor/xfae-window.c:89
+#: ../xfce4-autostart-editor/xfae-window.c:106
+msgid "Autostarted applications"
+msgstr "Aŭtolanĉindaj aplikaĵoj"
+
+#: ../xfce4-autostart-editor/xfae-window.c:124
+msgid ""
+"Below is the list of applications that will be started\n"
+"automatically when you login to your Xfce desktop,\n"
+"in addition to the applications that were saved when\n"
+"you logged out last time:"
+msgstr ""
+"Malsupre estas la listo de la aplikaĵoj kiuj estos startigitaj\n"
+"aŭtomate kiam vi ensalutos en vian Xfce'an labortablon,\n"
+"aldonitaj al la aplikaĵoj kiuj jam estis konservitaj kiam\n"
+"vi ensalutis la antaŭan fojon:"
+
 #: ../xfce4-session/main.c:139
 msgid "Loading desktop settings"
 msgstr "Ŝargante labortablajn parametrojn"
@@ -370,6 +427,20 @@ msgstr "Novan seancon"
 msgid "Create a new session."
 msgstr "Krei novan seancon."
 
+#: ../xfce4-session/xfsm-compat-gnome.c:245
+msgid "Starting The Gnome Keyring Daemon"
+msgstr "Lanĉante la Gnome'an Ŝlosilaran Demonon (\"The Gnome Keyring Daemon\")"
+
+#: ../xfce4-session/xfsm-compat-gnome.c:257
+msgid "Starting Gnome Assistive Technologies"
+msgstr ""
+"Lanĉante la Gnome'ajn Asistantajn Teknologiojn (\"Gnome Assistive "
+"Technologies\")"
+
+#: ../xfce4-session/xfsm-compat-kde.c:118
+msgid "Starting KDE services"
+msgstr "Lanĉante KDE'ajn servojn"
+
 #: ../xfce4-session/xfsm-dns.c:77
 msgid "(Unknown)"
 msgstr "(Nekonata)"
@@ -394,20 +465,6 @@ msgstr "Daŭrigi tamen"
 #: ../xfce4-session/xfsm-dns.c:152
 msgid "Try again"
 msgstr "Provi denove"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:245
-msgid "Starting The Gnome Keyring Daemon"
-msgstr "Lanĉante la Gnome'an Ŝlosilaran Demonon (\"The Gnome Keyring Daemon\")"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:257
-msgid "Starting Gnome Assistive Technologies"
-msgstr ""
-"Lanĉante la Gnome'ajn Asistantajn Teknologiojn (\"Gnome Assistive "
-"Technologies\")"
-
-#: ../xfce4-session/xfsm-compat-kde.c:118
-msgid "Starting KDE services"
-msgstr "Lanĉante KDE'ajn servojn"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -533,63 +590,6 @@ msgstr ""
 #: ../xfce4-session/xfsm-startup.c:407
 msgid "Performing Autostart..."
 msgstr "Plenumante Aŭtolanĉo..."
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:99
-msgid "Add application"
-msgstr "Aldoni aplikaĵon"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:113
-msgid "Name:"
-msgstr "Nomo:"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:130
-msgid "Description:"
-msgstr "Priskribo:"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:145
-msgid "Command:"
-msgstr "Komando:"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:205
-msgid "Select a command"
-msgstr "Elektu komandon"
-
-#: ../xfce4-autostart-editor/xfae-model.c:515
-#, c-format
-msgid "Failed to unlink %s: %s"
-msgstr "Malsukcesis malligi %s: %s"
-
-#: ../xfce4-autostart-editor/xfae-model.c:603
-#, c-format
-msgid "Failed to create file %s"
-msgstr "Malsukcesis krei la dosieron %s"
-
-#: ../xfce4-autostart-editor/xfae-model.c:625
-#, c-format
-msgid "Failed to write file %s"
-msgstr "Malsukcesis surdiskigi la dosieron %s"
-
-#: ../xfce4-autostart-editor/xfae-model.c:724
-#, c-format
-msgid "Failed to open %s for writing"
-msgstr "Malsukcesis malfermi %s por skribadi"
-
-#: ../xfce4-autostart-editor/xfae-window.c:89
-#: ../xfce4-autostart-editor/xfae-window.c:106
-msgid "Autostarted applications"
-msgstr "Aŭtolanĉindaj aplikaĵoj"
-
-#: ../xfce4-autostart-editor/xfae-window.c:124
-msgid ""
-"Below is the list of applications that will be started\n"
-"automatically when you login to your Xfce desktop,\n"
-"in addition to the applications that were saved when\n"
-"you logged out last time:"
-msgstr ""
-"Malsupre estas la listo de la aplikaĵoj kiuj estos startigitaj\n"
-"aŭtomate kiam vi ensalutos en vian Xfce'an labortablon,\n"
-"aldonitaj al la aplikaĵoj kiuj jam estis konservitaj kiam\n"
-"vi ensalutis la antaŭan fojon:"
 
 #: ../xfce4-tips/main.c:44 ../xfce4-tips/main.c:184 ../xfce4-tips/main.c:225
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1

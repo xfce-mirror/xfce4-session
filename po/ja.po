@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-21 17:33+0900\n"
+"POT-Creation-Date: 2005-11-22 00:19+0900\n"
 "PO-Revision-Date: 2005-10-21 21:00+0900\n"
 "Last-Translator: Daichi Kawahata <daichi@xfce.org>\n"
 "Language-Team: Japanese <xfce-users-jp@ml.fdiary.net>\n"
@@ -72,6 +72,14 @@ msgstr "Balou"
 msgid "Balou Splash Engine"
 msgstr "Balou スプラッシュエンジン"
 
+#: ../engines/mice/mice.c:369
+msgid "Mice"
+msgstr "マイス"
+
+#: ../engines/mice/mice.c:370
+msgid "Mice Splash Engine"
+msgstr "マイス・スプラッシュエンジン"
+
 #: ../engines/simple/simple.c:315
 msgid "Choose image..."
 msgstr "画像を選択して下さい..."
@@ -111,14 +119,6 @@ msgstr "シンプル"
 #: ../engines/simple/simple.c:506
 msgid "Simple Splash Engine"
 msgstr "シンプルなスプラッシュエンジン"
-
-#: ../engines/mice/mice.c:369
-msgid "Mice"
-msgstr "マイス"
-
-#: ../engines/mice/mice.c:370
-msgid "Mice Splash Engine"
-msgstr "マイス・スプラッシュエンジン"
 
 #: ../settings/session/session.c:133
 msgid "Session chooser"
@@ -283,6 +283,62 @@ msgstr "<b>ホームページ:</b>"
 msgid "Splash Screen"
 msgstr "スプラッシュ画面"
 
+#: ../xfce4-autostart-editor/xfae-dialog.c:99
+msgid "Add application"
+msgstr "アプリケーションを追加して下さい"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:113
+msgid "Name:"
+msgstr "名前:"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:130
+msgid "Description:"
+msgstr "説明:"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:145
+msgid "Command:"
+msgstr "コマンド:"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:205
+msgid "Select a command"
+msgstr "コマンドを選択して下さい"
+
+#: ../xfce4-autostart-editor/xfae-model.c:515
+#, c-format
+msgid "Failed to unlink %s: %s"
+msgstr "%s のリンク解除に失敗しました: %s"
+
+#: ../xfce4-autostart-editor/xfae-model.c:603
+#, c-format
+msgid "Failed to create file %s"
+msgstr "ファイル %s の作成に失敗しました"
+
+#: ../xfce4-autostart-editor/xfae-model.c:625
+#, c-format
+msgid "Failed to write file %s"
+msgstr "ファイル %s の書き込みに失敗しました"
+
+#: ../xfce4-autostart-editor/xfae-model.c:724
+#, c-format
+msgid "Failed to open %s for writing"
+msgstr "読み込むために %s を開くのに失敗しました"
+
+#: ../xfce4-autostart-editor/xfae-window.c:89
+#: ../xfce4-autostart-editor/xfae-window.c:106
+msgid "Autostarted applications"
+msgstr "自動的に開始するアプリケーション"
+
+#: ../xfce4-autostart-editor/xfae-window.c:124
+msgid ""
+"Below is the list of applications that will be started\n"
+"automatically when you login to your Xfce desktop,\n"
+"in addition to the applications that were saved when\n"
+"you logged out last time:"
+msgstr ""
+"以下は Xfce デスクトップにログインする時に自動的に開始\n"
+"されるアプリケーションのリストです。最後にログアウトした\n"
+"時に保存されたアプリケーションも加わります:"
+
 #: ../xfce4-session/main.c:139
 msgid "Loading desktop settings"
 msgstr "デスクトップ設定をロードしています"
@@ -363,6 +419,18 @@ msgstr "新規セッション"
 msgid "Create a new session."
 msgstr "新規セッションを作成します。"
 
+#: ../xfce4-session/xfsm-compat-gnome.c:245
+msgid "Starting The Gnome Keyring Daemon"
+msgstr "GNOME の鍵輪デーモンを起動しています"
+
+#: ../xfce4-session/xfsm-compat-gnome.c:257
+msgid "Starting Gnome Assistive Technologies"
+msgstr "GNOME の障碍者支援プログラムを起動しています"
+
+#: ../xfce4-session/xfsm-compat-kde.c:118
+msgid "Starting KDE services"
+msgstr "KDE サービスを開始しています"
+
 #: ../xfce4-session/xfsm-dns.c:77
 msgid "(Unknown)"
 msgstr "(不明)"
@@ -387,18 +455,6 @@ msgstr "いずれにせよ続行する"
 #: ../xfce4-session/xfsm-dns.c:152
 msgid "Try again"
 msgstr "再び試す"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:245
-msgid "Starting The Gnome Keyring Daemon"
-msgstr "GNOME の鍵輪デーモンを起動しています"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:257
-msgid "Starting Gnome Assistive Technologies"
-msgstr "GNOME の障碍者支援プログラムを起動しています"
-
-#: ../xfce4-session/xfsm-compat-kde.c:118
-msgid "Starting KDE services"
-msgstr "KDE サービスを開始しています"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -521,62 +577,6 @@ msgstr ""
 #: ../xfce4-session/xfsm-startup.c:407
 msgid "Performing Autostart..."
 msgstr "自動開始アプリケーションを実行しています..."
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:99
-msgid "Add application"
-msgstr "アプリケーションを追加して下さい"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:113
-msgid "Name:"
-msgstr "名前:"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:130
-msgid "Description:"
-msgstr "説明:"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:145
-msgid "Command:"
-msgstr "コマンド:"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:205
-msgid "Select a command"
-msgstr "コマンドを選択して下さい"
-
-#: ../xfce4-autostart-editor/xfae-model.c:515
-#, c-format
-msgid "Failed to unlink %s: %s"
-msgstr "%s のリンク解除に失敗しました: %s"
-
-#: ../xfce4-autostart-editor/xfae-model.c:603
-#, c-format
-msgid "Failed to create file %s"
-msgstr "ファイル %s の作成に失敗しました"
-
-#: ../xfce4-autostart-editor/xfae-model.c:625
-#, c-format
-msgid "Failed to write file %s"
-msgstr "ファイル %s の書き込みに失敗しました"
-
-#: ../xfce4-autostart-editor/xfae-model.c:724
-#, c-format
-msgid "Failed to open %s for writing"
-msgstr "読み込むために %s を開くのに失敗しました"
-
-#: ../xfce4-autostart-editor/xfae-window.c:89
-#: ../xfce4-autostart-editor/xfae-window.c:106
-msgid "Autostarted applications"
-msgstr "自動的に開始するアプリケーション"
-
-#: ../xfce4-autostart-editor/xfae-window.c:124
-msgid ""
-"Below is the list of applications that will be started\n"
-"automatically when you login to your Xfce desktop,\n"
-"in addition to the applications that were saved when\n"
-"you logged out last time:"
-msgstr ""
-"以下は Xfce デスクトップにログインする時に自動的に開始\n"
-"されるアプリケーションのリストです。最後にログアウトした\n"
-"時に保存されたアプリケーションも加わります:"
 
 #: ../xfce4-tips/main.c:44 ../xfce4-tips/main.c:184 ../xfce4-tips/main.c:225
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1

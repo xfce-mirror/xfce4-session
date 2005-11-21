@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-17 07:04+0900\n"
+"POT-Creation-Date: 2005-11-22 00:19+0900\n"
 "PO-Revision-Date: 2005-10-08 20:36+0900\n"
 "Last-Translator: Jari Rahkonen <jari.rahkonen@pp1.inet.fi>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -71,6 +71,14 @@ msgstr "Balou-teema"
 msgid "Balou Splash Engine"
 msgstr ""
 
+#: ../engines/mice/mice.c:369
+msgid "Mice"
+msgstr ""
+
+#: ../engines/mice/mice.c:370
+msgid "Mice Splash Engine"
+msgstr ""
+
 #: ../engines/simple/simple.c:315
 msgid "Choose image..."
 msgstr "Valitse kuva..."
@@ -109,14 +117,6 @@ msgstr ""
 
 #: ../engines/simple/simple.c:506
 msgid "Simple Splash Engine"
-msgstr ""
-
-#: ../engines/mice/mice.c:369
-msgid "Mice"
-msgstr ""
-
-#: ../engines/mice/mice.c:370
-msgid "Mice Splash Engine"
 msgstr ""
 
 #: ../settings/session/session.c:133
@@ -282,6 +282,63 @@ msgstr "<b>Kotisivu:</b>"
 msgid "Splash Screen"
 msgstr "Käynnistyskuva"
 
+#: ../xfce4-autostart-editor/xfae-dialog.c:99
+msgid "Add application"
+msgstr "Lisää sovellus"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:113
+msgid "Name:"
+msgstr "Nimi:"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:130
+msgid "Description:"
+msgstr "Kuvaus:"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:145
+msgid "Command:"
+msgstr "Komento:"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:205
+msgid "Select a command"
+msgstr "Valitse komento"
+
+#: ../xfce4-autostart-editor/xfae-model.c:515
+#, c-format
+msgid "Failed to unlink %s: %s"
+msgstr "Kohteen %s irroitus epäonnistui: %s"
+
+#: ../xfce4-autostart-editor/xfae-model.c:603
+#, c-format
+msgid "Failed to create file %s"
+msgstr "Tiedostoa %s ei voitu luoda"
+
+#: ../xfce4-autostart-editor/xfae-model.c:625
+#, c-format
+msgid "Failed to write file %s"
+msgstr "Tiedostoon %s ei voitu kirjoittaa"
+
+#: ../xfce4-autostart-editor/xfae-model.c:724
+#, c-format
+msgid "Failed to open %s for writing"
+msgstr "Tiedostoa %s ei voitu avata kirjoitettavaksi"
+
+#: ../xfce4-autostart-editor/xfae-window.c:89
+#: ../xfce4-autostart-editor/xfae-window.c:106
+msgid "Autostarted applications"
+msgstr "Sovellusten automaattikäynnistys"
+
+#: ../xfce4-autostart-editor/xfae-window.c:124
+msgid ""
+"Below is the list of applications that will be started\n"
+"automatically when you login to your Xfce desktop,\n"
+"in addition to the applications that were saved when\n"
+"you logged out last time:"
+msgstr ""
+"Alla on lista sovelluksista, jotka käynnistetään\n"
+"automaattisesti kirjautuessasi Xfce-työpöydällesi\n"
+"sekä sovelluksista, jotka tallennettiin edellisen\n"
+"uloskirjautumisen yhteydessä:"
+
 #: ../xfce4-session/main.c:139
 msgid "Loading desktop settings"
 msgstr "Ladataan näytön asetuksia"
@@ -362,6 +419,18 @@ msgstr "Uusi istunto"
 msgid "Create a new session."
 msgstr "Luo uusi istunto."
 
+#: ../xfce4-session/xfsm-compat-gnome.c:245
+msgid "Starting The Gnome Keyring Daemon"
+msgstr "Käynnistetään Gnomen avainrengaspalvelu"
+
+#: ../xfce4-session/xfsm-compat-gnome.c:257
+msgid "Starting Gnome Assistive Technologies"
+msgstr "Käynnistetään Gnomen apuvälineteknologiat"
+
+#: ../xfce4-session/xfsm-compat-kde.c:118
+msgid "Starting KDE services"
+msgstr "Käynnistetään KDE-palvelut"
+
 #: ../xfce4-session/xfsm-dns.c:77
 msgid "(Unknown)"
 msgstr "(Tuntematon)"
@@ -386,18 +455,6 @@ msgstr "Jatka kuitenkin"
 #: ../xfce4-session/xfsm-dns.c:152
 msgid "Try again"
 msgstr "Yritä uudelleen"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:245
-msgid "Starting The Gnome Keyring Daemon"
-msgstr "Käynnistetään Gnomen avainrengaspalvelu"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:257
-msgid "Starting Gnome Assistive Technologies"
-msgstr "Käynnistetään Gnomen apuvälineteknologiat"
-
-#: ../xfce4-session/xfsm-compat-kde.c:118
-msgid "Starting KDE services"
-msgstr "Käynnistetään KDE-palvelut"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -519,63 +576,6 @@ msgstr ""
 #: ../xfce4-session/xfsm-startup.c:407
 msgid "Performing Autostart..."
 msgstr "Suoritetaan automaattinen käynnistys..."
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:99
-msgid "Add application"
-msgstr "Lisää sovellus"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:113
-msgid "Name:"
-msgstr "Nimi:"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:130
-msgid "Description:"
-msgstr "Kuvaus:"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:145
-msgid "Command:"
-msgstr "Komento:"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:205
-msgid "Select a command"
-msgstr "Valitse komento"
-
-#: ../xfce4-autostart-editor/xfae-model.c:515
-#, c-format
-msgid "Failed to unlink %s: %s"
-msgstr "Kohteen %s irroitus epäonnistui: %s"
-
-#: ../xfce4-autostart-editor/xfae-model.c:603
-#, c-format
-msgid "Failed to create file %s"
-msgstr "Tiedostoa %s ei voitu luoda"
-
-#: ../xfce4-autostart-editor/xfae-model.c:625
-#, c-format
-msgid "Failed to write file %s"
-msgstr "Tiedostoon %s ei voitu kirjoittaa"
-
-#: ../xfce4-autostart-editor/xfae-model.c:724
-#, c-format
-msgid "Failed to open %s for writing"
-msgstr "Tiedostoa %s ei voitu avata kirjoitettavaksi"
-
-#: ../xfce4-autostart-editor/xfae-window.c:89
-#: ../xfce4-autostart-editor/xfae-window.c:106
-msgid "Autostarted applications"
-msgstr "Sovellusten automaattikäynnistys"
-
-#: ../xfce4-autostart-editor/xfae-window.c:124
-msgid ""
-"Below is the list of applications that will be started\n"
-"automatically when you login to your Xfce desktop,\n"
-"in addition to the applications that were saved when\n"
-"you logged out last time:"
-msgstr ""
-"Alla on lista sovelluksista, jotka käynnistetään\n"
-"automaattisesti kirjautuessasi Xfce-työpöydällesi\n"
-"sekä sovelluksista, jotka tallennettiin edellisen\n"
-"uloskirjautumisen yhteydessä:"
 
 #: ../xfce4-tips/main.c:44 ../xfce4-tips/main.c:184 ../xfce4-tips/main.c:225
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1

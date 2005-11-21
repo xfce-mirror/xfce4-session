@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-17 07:04+0900\n"
+"POT-Creation-Date: 2005-11-22 00:19+0900\n"
 "PO-Revision-Date: 2005-10-09 14:51+0800\n"
 "Last-Translator: Hydonsingore Cia <hydonsingore@mail.educities.edu.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -71,6 +71,14 @@ msgstr "Balou"
 msgid "Balou Splash Engine"
 msgstr "Balou Splash 引擎"
 
+#: ../engines/mice/mice.c:369
+msgid "Mice"
+msgstr "Mice"
+
+#: ../engines/mice/mice.c:370
+msgid "Mice Splash Engine"
+msgstr "Mice Splash 引擎"
+
 #: ../engines/simple/simple.c:315
 msgid "Choose image..."
 msgstr "選擇圖像..."
@@ -110,14 +118,6 @@ msgstr "Simple"
 #: ../engines/simple/simple.c:506
 msgid "Simple Splash Engine"
 msgstr "Simple Splash 引擎"
-
-#: ../engines/mice/mice.c:369
-msgid "Mice"
-msgstr "Mice"
-
-#: ../engines/mice/mice.c:370
-msgid "Mice Splash Engine"
-msgstr "Mice Splash 引擎"
 
 #: ../settings/session/session.c:133
 msgid "Session chooser"
@@ -280,6 +280,61 @@ msgstr "<b>網頁：</b>"
 msgid "Splash Screen"
 msgstr "啟動畫面"
 
+#: ../xfce4-autostart-editor/xfae-dialog.c:99
+msgid "Add application"
+msgstr "新增應用程式"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:113
+msgid "Name:"
+msgstr "名稱："
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:130
+msgid "Description:"
+msgstr "敘述："
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:145
+msgid "Command:"
+msgstr "指令"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:205
+msgid "Select a command"
+msgstr "選擇一個指令"
+
+#: ../xfce4-autostart-editor/xfae-model.c:515
+#, c-format
+msgid "Failed to unlink %s: %s"
+msgstr "無法去連結 %s: %s"
+
+#: ../xfce4-autostart-editor/xfae-model.c:603
+#, c-format
+msgid "Failed to create file %s"
+msgstr "無法建立檔案 %s"
+
+#: ../xfce4-autostart-editor/xfae-model.c:625
+#, c-format
+msgid "Failed to write file %s"
+msgstr "無法寫入檔案 %s"
+
+#: ../xfce4-autostart-editor/xfae-model.c:724
+#, c-format
+msgid "Failed to open %s for writing"
+msgstr "無法開啟 %s 以便寫入"
+
+#: ../xfce4-autostart-editor/xfae-window.c:89
+#: ../xfce4-autostart-editor/xfae-window.c:106
+msgid "Autostarted applications"
+msgstr "自動開啟的應用程式"
+
+#: ../xfce4-autostart-editor/xfae-window.c:124
+msgid ""
+"Below is the list of applications that will be started\n"
+"automatically when you login to your Xfce desktop,\n"
+"in addition to the applications that were saved when\n"
+"you logged out last time:"
+msgstr ""
+"以下是當您登入 Xfce 桌面時，會自動啟動的應用程式清單\n"
+"(除了您上次登出時儲存的應用程式之外)："
+
 #: ../xfce4-session/main.c:139
 msgid "Loading desktop settings"
 msgstr "載入卓面設定中"
@@ -357,6 +412,18 @@ msgstr "新增工作階段"
 msgid "Create a new session."
 msgstr "建立一個新的工作階段。"
 
+#: ../xfce4-session/xfsm-compat-gnome.c:245
+msgid "Starting The Gnome Keyring Daemon"
+msgstr "啟動 Gnome Keyring Daemon 中"
+
+#: ../xfce4-session/xfsm-compat-gnome.c:257
+msgid "Starting Gnome Assistive Technologies"
+msgstr "啟動 Gnome Assistive Technologies 中"
+
+#: ../xfce4-session/xfsm-compat-kde.c:118
+msgid "Starting KDE services"
+msgstr "啟動 KDE 服務中..."
+
 #: ../xfce4-session/xfsm-dns.c:77
 msgid "(Unknown)"
 msgstr "(不明)"
@@ -381,18 +448,6 @@ msgstr "暫且繼續"
 #: ../xfce4-session/xfsm-dns.c:152
 msgid "Try again"
 msgstr "重試"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:245
-msgid "Starting The Gnome Keyring Daemon"
-msgstr "啟動 Gnome Keyring Daemon 中"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:257
-msgid "Starting Gnome Assistive Technologies"
-msgstr "啟動 Gnome Assistive Technologies 中"
-
-#: ../xfce4-session/xfsm-compat-kde.c:118
-msgid "Starting KDE services"
-msgstr "啟動 KDE 服務中..."
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -513,61 +568,6 @@ msgstr ""
 #: ../xfce4-session/xfsm-startup.c:407
 msgid "Performing Autostart..."
 msgstr "執行自動啟動中..."
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:99
-msgid "Add application"
-msgstr "新增應用程式"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:113
-msgid "Name:"
-msgstr "名稱："
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:130
-msgid "Description:"
-msgstr "敘述："
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:145
-msgid "Command:"
-msgstr "指令"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:205
-msgid "Select a command"
-msgstr "選擇一個指令"
-
-#: ../xfce4-autostart-editor/xfae-model.c:515
-#, c-format
-msgid "Failed to unlink %s: %s"
-msgstr "無法去連結 %s: %s"
-
-#: ../xfce4-autostart-editor/xfae-model.c:603
-#, c-format
-msgid "Failed to create file %s"
-msgstr "無法建立檔案 %s"
-
-#: ../xfce4-autostart-editor/xfae-model.c:625
-#, c-format
-msgid "Failed to write file %s"
-msgstr "無法寫入檔案 %s"
-
-#: ../xfce4-autostart-editor/xfae-model.c:724
-#, c-format
-msgid "Failed to open %s for writing"
-msgstr "無法開啟 %s 以便寫入"
-
-#: ../xfce4-autostart-editor/xfae-window.c:89
-#: ../xfce4-autostart-editor/xfae-window.c:106
-msgid "Autostarted applications"
-msgstr "自動開啟的應用程式"
-
-#: ../xfce4-autostart-editor/xfae-window.c:124
-msgid ""
-"Below is the list of applications that will be started\n"
-"automatically when you login to your Xfce desktop,\n"
-"in addition to the applications that were saved when\n"
-"you logged out last time:"
-msgstr ""
-"以下是當您登入 Xfce 桌面時，會自動啟動的應用程式清單\n"
-"(除了您上次登出時儲存的應用程式之外)："
 
 #: ../xfce4-tips/main.c:44 ../xfce4-tips/main.c:184 ../xfce4-tips/main.c:225
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1

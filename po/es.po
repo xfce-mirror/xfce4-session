@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-07 22:10+0900\n"
+"POT-Creation-Date: 2005-11-22 00:19+0900\n"
 "PO-Revision-Date: 2005-11-07 21:57+0900\n"
 "Last-Translator: Rudy Godoy <rudy@kernel-panik.org>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -70,6 +70,14 @@ msgstr "Balou"
 msgid "Balou Splash Engine"
 msgstr "Motor de pantalla de inicio Balou"
 
+#: ../engines/mice/mice.c:369
+msgid "Mice"
+msgstr "Mice"
+
+#: ../engines/mice/mice.c:370
+msgid "Mice Splash Engine"
+msgstr "Motor de pantalla de inicio Mice"
+
 #: ../engines/simple/simple.c:315
 msgid "Choose image..."
 msgstr "Escoger imagen..."
@@ -109,14 +117,6 @@ msgstr "Simple"
 #: ../engines/simple/simple.c:506
 msgid "Simple Splash Engine"
 msgstr "Motor de Splash Simple"
-
-#: ../engines/mice/mice.c:369
-msgid "Mice"
-msgstr "Mice"
-
-#: ../engines/mice/mice.c:370
-msgid "Mice Splash Engine"
-msgstr "Motor de pantalla de inicio Mice"
 
 #: ../settings/session/session.c:133
 msgid "Session chooser"
@@ -283,6 +283,62 @@ msgstr "<b>Sitio web:</b>"
 msgid "Splash Screen"
 msgstr "Imagen de arranque"
 
+#: ../xfce4-autostart-editor/xfae-dialog.c:99
+msgid "Add application"
+msgstr "Añadir aplicación"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:113
+msgid "Name:"
+msgstr "Nombre:"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:130
+msgid "Description:"
+msgstr "Descripción:"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:145
+msgid "Command:"
+msgstr "Orden:"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:205
+msgid "Select a command"
+msgstr "Elija una orden"
+
+#: ../xfce4-autostart-editor/xfae-model.c:515
+#, c-format
+msgid "Failed to unlink %s: %s"
+msgstr "No se pudo eliminar %s: %s"
+
+#: ../xfce4-autostart-editor/xfae-model.c:603
+#, c-format
+msgid "Failed to create file %s"
+msgstr "No se pudo crear el fichero %s"
+
+#: ../xfce4-autostart-editor/xfae-model.c:625
+#, c-format
+msgid "Failed to write file %s"
+msgstr "No se pudo escribir en fichero %s"
+
+#: ../xfce4-autostart-editor/xfae-model.c:724
+#, c-format
+msgid "Failed to open %s for writing"
+msgstr "No se pudo abrir %s para escritura"
+
+#: ../xfce4-autostart-editor/xfae-window.c:89
+#: ../xfce4-autostart-editor/xfae-window.c:106
+msgid "Autostarted applications"
+msgstr "Aplicaciones para autoarranque"
+
+#: ../xfce4-autostart-editor/xfae-window.c:124
+msgid ""
+"Below is the list of applications that will be started\n"
+"automatically when you login to your Xfce desktop,\n"
+"in addition to the applications that were saved when\n"
+"you logged out last time:"
+msgstr ""
+"La siguiente es una lista de aplicaciones que iniciarán\n"
+"automáticamente cuando ingrese al escritorio Xfce, adicionalmente a\n"
+"las aplicaciones que han sido guardadas en su última sesión."
+
 #: ../xfce4-session/main.c:139
 msgid "Loading desktop settings"
 msgstr "Cargando configuración de escritorio"
@@ -365,6 +421,18 @@ msgstr "Nueva sesión"
 msgid "Create a new session."
 msgstr "Crear una nueva sesión"
 
+#: ../xfce4-session/xfsm-compat-gnome.c:245
+msgid "Starting The Gnome Keyring Daemon"
+msgstr "Iniciando Gnome Keyring Daemon"
+
+#: ../xfce4-session/xfsm-compat-gnome.c:257
+msgid "Starting Gnome Assistive Technologies"
+msgstr "Iniciando Gnome Assistive Technologies"
+
+#: ../xfce4-session/xfsm-compat-kde.c:118
+msgid "Starting KDE services"
+msgstr "Iniciando servicios KDE"
+
 #: ../xfce4-session/xfsm-dns.c:77
 msgid "(Unknown)"
 msgstr "(Desconocido)"
@@ -389,18 +457,6 @@ msgstr "¿Continuar de todos modos?"
 #: ../xfce4-session/xfsm-dns.c:152
 msgid "Try again"
 msgstr "¿Intentar nuevamente?"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:245
-msgid "Starting The Gnome Keyring Daemon"
-msgstr "Iniciando Gnome Keyring Daemon"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:257
-msgid "Starting Gnome Assistive Technologies"
-msgstr "Iniciando Gnome Assistive Technologies"
-
-#: ../xfce4-session/xfsm-compat-kde.c:118
-msgid "Starting KDE services"
-msgstr "Iniciando servicios KDE"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -523,62 +579,6 @@ msgstr ""
 #: ../xfce4-session/xfsm-startup.c:407
 msgid "Performing Autostart..."
 msgstr "Realizando autoarranque..."
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:99
-msgid "Add application"
-msgstr "Añadir aplicación"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:113
-msgid "Name:"
-msgstr "Nombre:"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:130
-msgid "Description:"
-msgstr "Descripción:"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:145
-msgid "Command:"
-msgstr "Orden:"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:205
-msgid "Select a command"
-msgstr "Elija una orden"
-
-#: ../xfce4-autostart-editor/xfae-model.c:515
-#, c-format
-msgid "Failed to unlink %s: %s"
-msgstr "No se pudo eliminar %s: %s"
-
-#: ../xfce4-autostart-editor/xfae-model.c:603
-#, c-format
-msgid "Failed to create file %s"
-msgstr "No se pudo crear el fichero %s"
-
-#: ../xfce4-autostart-editor/xfae-model.c:625
-#, c-format
-msgid "Failed to write file %s"
-msgstr "No se pudo escribir en fichero %s"
-
-#: ../xfce4-autostart-editor/xfae-model.c:724
-#, c-format
-msgid "Failed to open %s for writing"
-msgstr "No se pudo abrir %s para escritura"
-
-#: ../xfce4-autostart-editor/xfae-window.c:89
-#: ../xfce4-autostart-editor/xfae-window.c:106
-msgid "Autostarted applications"
-msgstr "Aplicaciones para autoarranque"
-
-#: ../xfce4-autostart-editor/xfae-window.c:124
-msgid ""
-"Below is the list of applications that will be started\n"
-"automatically when you login to your Xfce desktop,\n"
-"in addition to the applications that were saved when\n"
-"you logged out last time:"
-msgstr ""
-"La siguiente es una lista de aplicaciones que iniciarán\n"
-"automáticamente cuando ingrese al escritorio Xfce, adicionalmente a\n"
-"las aplicaciones que han sido guardadas en su última sesión."
 
 #: ../xfce4-tips/main.c:44 ../xfce4-tips/main.c:184 ../xfce4-tips/main.c:225
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1

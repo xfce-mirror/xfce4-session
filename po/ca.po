@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-17 07:04+0900\n"
+"POT-Creation-Date: 2005-11-22 00:19+0900\n"
 "PO-Revision-Date: 2005-10-27 22:30+0200\n"
 "Last-Translator: paurullan <paurullan@bulma.net>\n"
 "Language-Team: català\n"
@@ -29,8 +29,7 @@ msgid "Choose theme file to install..."
 msgstr "Seleccioneu el fitxer de tema a instal·lar..."
 
 #: ../engines/balou/config.c:329
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Unable to install splash theme from file %s, please check that the file is a "
 "valid splash theme archive."
@@ -39,8 +38,7 @@ msgstr ""
 "favor comproveu que el fitxer és un tema d'entrada vàlid."
 
 #: ../engines/balou/config.c:382
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "No s'ha pogut eliminar el tema d'entrada \"%s\" del directori %s."
 
@@ -80,6 +78,14 @@ msgstr ""
 
 #: ../engines/balou/config.c:966
 msgid "Balou Splash Engine"
+msgstr ""
+
+#: ../engines/mice/mice.c:369
+msgid "Mice"
+msgstr ""
+
+#: ../engines/mice/mice.c:370
+msgid "Mice Splash Engine"
 msgstr ""
 
 #: ../engines/simple/simple.c:315
@@ -131,14 +137,6 @@ msgstr "Simple"
 #, fuzzy
 msgid "Simple Splash Engine"
 msgstr "Simple"
-
-#: ../engines/mice/mice.c:369
-msgid "Mice"
-msgstr ""
-
-#: ../engines/mice/mice.c:370
-msgid "Mice Splash Engine"
-msgstr ""
 
 #: ../settings/session/session.c:133
 #, fuzzy
@@ -335,6 +333,65 @@ msgstr "<b>Pàgina principal:</b>"
 msgid "Splash Screen"
 msgstr "Pantalla d'inici"
 
+#: ../xfce4-autostart-editor/xfae-dialog.c:99
+#, fuzzy
+msgid "Add application"
+msgstr "Afegeix una aplicació"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:113
+#, fuzzy
+msgid "Name:"
+msgstr "Nom:"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:130
+#, fuzzy
+msgid "Description:"
+msgstr "Descripció:"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:145
+#, fuzzy
+msgid "Command:"
+msgstr "Ordre:"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:205
+#, fuzzy
+msgid "Select a command"
+msgstr "Seleccioneu a"
+
+#: ../xfce4-autostart-editor/xfae-model.c:515
+#, fuzzy, c-format
+msgid "Failed to unlink %s: %s"
+msgstr "Ha fallat a "
+
+#: ../xfce4-autostart-editor/xfae-model.c:603
+#, fuzzy, c-format
+msgid "Failed to create file %s"
+msgstr "Ha fallat a  fitxer"
+
+#: ../xfce4-autostart-editor/xfae-model.c:625
+#, fuzzy, c-format
+msgid "Failed to write file %s"
+msgstr "Ha fallat a  fitxer"
+
+#: ../xfce4-autostart-editor/xfae-model.c:724
+#, fuzzy, c-format
+msgid "Failed to open %s for writing"
+msgstr "Ha fallat a  obre per a"
+
+#: ../xfce4-autostart-editor/xfae-window.c:89
+#: ../xfce4-autostart-editor/xfae-window.c:106
+msgid "Autostarted applications"
+msgstr ""
+
+#: ../xfce4-autostart-editor/xfae-window.c:124
+#, fuzzy
+msgid ""
+"Below is the list of applications that will be started\n"
+"automatically when you login to your Xfce desktop,\n"
+"in addition to the applications that were saved when\n"
+"you logged out last time:"
+msgstr "Sota és   llista de tu a  a    últim time:"
+
 #: ../xfce4-session/main.c:139
 #, fuzzy
 msgid "Loading desktop settings"
@@ -396,8 +453,7 @@ msgstr ""
 "permet aturar la computadora amb aquest compte d'usuari."
 
 #: ../xfce4-session/xfsm-chooser.c:120
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Last accessed: %s"
 msgstr "Últim"
 
@@ -432,14 +488,28 @@ msgstr "Sessió nova"
 msgid "Create a new session."
 msgstr "Crea una sessió nova."
 
+#: ../xfce4-session/xfsm-compat-gnome.c:245
+#, fuzzy
+msgid "Starting The Gnome Keyring Daemon"
+msgstr "S'està iniciant el Dimoni d'Anell de Claus de Gnome"
+
+#: ../xfce4-session/xfsm-compat-gnome.c:257
+#, fuzzy
+msgid "Starting Gnome Assistive Technologies"
+msgstr "S'està iniciant les Tecnologies d'Assistència Gnome"
+
+#: ../xfce4-session/xfsm-compat-kde.c:118
+#, fuzzy
+msgid "Starting KDE services"
+msgstr "S'està iniciant els serveis KDE"
+
 #: ../xfce4-session/xfsm-dns.c:77
 #, fuzzy
 msgid "(Unknown)"
 msgstr "(Desconegut)"
 
 #: ../xfce4-session/xfsm-dns.c:144
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Could not look up internet address for %s.\n"
 "This will prevent Xfce from operating correctly.\n"
@@ -460,21 +530,6 @@ msgstr "Continuar igualment"
 #, fuzzy
 msgid "Try again"
 msgstr "Torneu-ho a provar"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:245
-#, fuzzy
-msgid "Starting The Gnome Keyring Daemon"
-msgstr "S'està iniciant el Dimoni d'Anell de Claus de Gnome"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:257
-#, fuzzy
-msgid "Starting Gnome Assistive Technologies"
-msgstr "S'està iniciant les Tecnologies d'Assistència Gnome"
-
-#: ../xfce4-session/xfsm-compat-kde.c:118
-#, fuzzy
-msgid "Starting KDE services"
-msgstr "S'està iniciant els serveis KDE"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 #, fuzzy
@@ -587,14 +642,12 @@ msgid "Starting the X Terminal Emulator"
 msgstr "S'està iniciant l'emulador del terminal de les X"
 
 #: ../xfce4-session/xfsm-startup.c:143
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Starting %s"
 msgstr "S'està iniciant %s"
 
 #: ../xfce4-session/xfsm-startup.c:268
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
 "The new location is\n"
@@ -614,69 +667,6 @@ msgstr ""
 #, fuzzy
 msgid "Performing Autostart..."
 msgstr "S'està realitzant la càrrega automàtica..."
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:99
-#, fuzzy
-msgid "Add application"
-msgstr "Afegeix una aplicació"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:113
-#, fuzzy
-msgid "Name:"
-msgstr "Nom:"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:130
-#, fuzzy
-msgid "Description:"
-msgstr "Descripció:"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:145
-#, fuzzy
-msgid "Command:"
-msgstr "Ordre:"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:205
-#, fuzzy
-msgid "Select a command"
-msgstr "Seleccioneu a"
-
-#: ../xfce4-autostart-editor/xfae-model.c:515
-#, c-format
-#, fuzzy
-msgid "Failed to unlink %s: %s"
-msgstr "Ha fallat a "
-
-#: ../xfce4-autostart-editor/xfae-model.c:603
-#, c-format
-#, fuzzy
-msgid "Failed to create file %s"
-msgstr "Ha fallat a  fitxer"
-
-#: ../xfce4-autostart-editor/xfae-model.c:625
-#, c-format
-#, fuzzy
-msgid "Failed to write file %s"
-msgstr "Ha fallat a  fitxer"
-
-#: ../xfce4-autostart-editor/xfae-model.c:724
-#, c-format
-#, fuzzy
-msgid "Failed to open %s for writing"
-msgstr "Ha fallat a  obre per a"
-
-#: ../xfce4-autostart-editor/xfae-window.c:89
-#: ../xfce4-autostart-editor/xfae-window.c:106
-msgid "Autostarted applications"
-msgstr ""
-
-#: ../xfce4-autostart-editor/xfae-window.c:124
-#, fuzzy
-msgid ""
-"Below is the list of applications that will be started\n"
-"automatically when you login to your Xfce desktop,\n"
-"in addition to the applications that were saved when\n"
-"you logged out last time:"
-msgstr "Sota és   llista de tu a  a    últim time:"
 
 #: ../xfce4-tips/main.c:44 ../xfce4-tips/main.c:184 ../xfce4-tips/main.c:225
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
@@ -742,4 +732,3 @@ msgstr "Aplicacions"
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
 msgstr ""
-

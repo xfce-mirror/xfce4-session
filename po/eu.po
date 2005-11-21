@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-17 07:04+0900\n"
+"POT-Creation-Date: 2005-11-22 00:19+0900\n"
 "PO-Revision-Date: 2005-10-27 22:10+0200\n"
 "Last-Translator: Piarres Beobide <pi@beobide.net>\n"
 "Language-Team: librezale.org <librezale@librezale.org>\n"
@@ -72,6 +72,14 @@ msgstr "Balou"
 msgid "Balou Splash Engine"
 msgstr "Balou Abiarazte Errobota"
 
+#: ../engines/mice/mice.c:369
+msgid "Mice"
+msgstr "Sagua"
+
+#: ../engines/mice/mice.c:370
+msgid "Mice Splash Engine"
+msgstr "Sagu Abiarazte Errobota"
+
 #: ../engines/simple/simple.c:315
 msgid "Choose image..."
 msgstr "Irudia aukeratu..."
@@ -111,14 +119,6 @@ msgstr "Sinplea"
 #: ../engines/simple/simple.c:506
 msgid "Simple Splash Engine"
 msgstr "Abiarazte Errobot Sinplea"
-
-#: ../engines/mice/mice.c:369
-msgid "Mice"
-msgstr "Sagua"
-
-#: ../engines/mice/mice.c:370
-msgid "Mice Splash Engine"
-msgstr "Sagu Abiarazte Errobota"
 
 #: ../settings/session/session.c:133
 msgid "Session chooser"
@@ -284,6 +284,59 @@ msgstr "<b>Etxegunea:</b>"
 msgid "Splash Screen"
 msgstr "Abiarazpen pantaila"
 
+#: ../xfce4-autostart-editor/xfae-dialog.c:99
+msgid "Add application"
+msgstr "Aplikazio gehitu"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:113
+msgid "Name:"
+msgstr "Izena:"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:130
+msgid "Description:"
+msgstr "Azalpena:"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:145
+msgid "Command:"
+msgstr "Komandoa:"
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:205
+msgid "Select a command"
+msgstr "Hautatu komando bat"
+
+#: ../xfce4-autostart-editor/xfae-model.c:515
+#, c-format
+msgid "Failed to unlink %s: %s"
+msgstr "Ezinda %s lotura ezabatu: %s"
+
+#: ../xfce4-autostart-editor/xfae-model.c:603
+#, c-format
+msgid "Failed to create file %s"
+msgstr "Ezin da %s fitxategia sortu"
+
+#: ../xfce4-autostart-editor/xfae-model.c:625
+#, c-format
+msgid "Failed to write file %s"
+msgstr "Ezin da %s fitxategia idatzi"
+
+#: ../xfce4-autostart-editor/xfae-model.c:724
+#, c-format
+msgid "Failed to open %s for writing"
+msgstr "Ezin da %s fitxategia idazketarako ireki"
+
+#: ../xfce4-autostart-editor/xfae-window.c:89
+#: ../xfce4-autostart-editor/xfae-window.c:106
+msgid "Autostarted applications"
+msgstr "Autoabiarazitako aplikazioak"
+
+#: ../xfce4-autostart-editor/xfae-window.c:124
+msgid ""
+"Below is the list of applications that will be started\n"
+"automatically when you login to your Xfce desktop,\n"
+"in addition to the applications that were saved when\n"
+"you logged out last time:"
+msgstr ""
+
 #: ../xfce4-session/main.c:139
 msgid "Loading desktop settings"
 msgstr "Idazmahai ezarpenak kargatzen"
@@ -364,6 +417,18 @@ msgstr "Saio berria"
 msgid "Create a new session."
 msgstr "Saio berria sortu."
 
+#: ../xfce4-session/xfsm-compat-gnome.c:245
+msgid "Starting The Gnome Keyring Daemon"
+msgstr "\"Gnome Keyring Daemon\" abiarazten"
+
+#: ../xfce4-session/xfsm-compat-gnome.c:257
+msgid "Starting Gnome Assistive Technologies"
+msgstr "\"Gnome Assistive Technologies\" abiarazten"
+
+#: ../xfce4-session/xfsm-compat-kde.c:118
+msgid "Starting KDE services"
+msgstr "KDE zerbitzuak abiarazten"
+
 #: ../xfce4-session/xfsm-dns.c:77
 msgid "(Unknown)"
 msgstr "(Ezezaguna)"
@@ -388,18 +453,6 @@ msgstr "Jarraitu halaere"
 #: ../xfce4-session/xfsm-dns.c:152
 msgid "Try again"
 msgstr "Saiatu berriz"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:245
-msgid "Starting The Gnome Keyring Daemon"
-msgstr "\"Gnome Keyring Daemon\" abiarazten"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:257
-msgid "Starting Gnome Assistive Technologies"
-msgstr "\"Gnome Assistive Technologies\" abiarazten"
-
-#: ../xfce4-session/xfsm-compat-kde.c:118
-msgid "Starting KDE services"
-msgstr "KDE zerbitzuak abiarazten"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -513,59 +566,6 @@ msgstr ""
 msgid "Performing Autostart..."
 msgstr "Autoabiarazten..."
 
-#: ../xfce4-autostart-editor/xfae-dialog.c:99
-msgid "Add application"
-msgstr "Aplikazio gehitu"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:113
-msgid "Name:"
-msgstr "Izena:"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:130
-msgid "Description:"
-msgstr "Azalpena:"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:145
-msgid "Command:"
-msgstr "Komandoa:"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:205
-msgid "Select a command"
-msgstr "Hautatu komando bat"
-
-#: ../xfce4-autostart-editor/xfae-model.c:515
-#, c-format
-msgid "Failed to unlink %s: %s"
-msgstr "Ezinda %s lotura ezabatu: %s"
-
-#: ../xfce4-autostart-editor/xfae-model.c:603
-#, c-format
-msgid "Failed to create file %s"
-msgstr "Ezin da %s fitxategia sortu"
-
-#: ../xfce4-autostart-editor/xfae-model.c:625
-#, c-format
-msgid "Failed to write file %s"
-msgstr "Ezin da %s fitxategia idatzi"
-
-#: ../xfce4-autostart-editor/xfae-model.c:724
-#, c-format
-msgid "Failed to open %s for writing"
-msgstr "Ezin da %s fitxategia idazketarako ireki"
-
-#: ../xfce4-autostart-editor/xfae-window.c:89
-#: ../xfce4-autostart-editor/xfae-window.c:106
-msgid "Autostarted applications"
-msgstr "Autoabiarazitako aplikazioak"
-
-#: ../xfce4-autostart-editor/xfae-window.c:124
-msgid ""
-"Below is the list of applications that will be started\n"
-"automatically when you login to your Xfce desktop,\n"
-"in addition to the applications that were saved when\n"
-"you logged out last time:"
-msgstr ""
-
 #: ../xfce4-tips/main.c:44 ../xfce4-tips/main.c:184 ../xfce4-tips/main.c:225
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
 msgid "Tips and tricks"
@@ -618,4 +618,3 @@ msgstr "Xfce 4 Autoabiaraziriko aplikazioak"
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
 msgstr "xfce4-gomendioak"
-

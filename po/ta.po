@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-17 07:04+0900\n"
+"POT-Creation-Date: 2005-11-22 00:19+0900\n"
 "PO-Revision-Date: 2005-10-08 20:46+0900\n"
 "Last-Translator: Dinesh Nadarajah <dinesh_list@sbcglobal.net>\n"
 "Language-Team: Tamil <tamillinux-user@lists.sourceforge.net>\n"
@@ -69,6 +69,14 @@ msgstr ""
 msgid "Balou Splash Engine"
 msgstr ""
 
+#: ../engines/mice/mice.c:369
+msgid "Mice"
+msgstr ""
+
+#: ../engines/mice/mice.c:370
+msgid "Mice Splash Engine"
+msgstr ""
+
 #: ../engines/simple/simple.c:315
 msgid "Choose image..."
 msgstr ""
@@ -108,14 +116,6 @@ msgstr ""
 
 #: ../engines/simple/simple.c:506
 msgid "Simple Splash Engine"
-msgstr ""
-
-#: ../engines/mice/mice.c:369
-msgid "Mice"
-msgstr ""
-
-#: ../engines/mice/mice.c:370
-msgid "Mice Splash Engine"
 msgstr ""
 
 #: ../settings/session/session.c:133
@@ -272,6 +272,59 @@ msgstr ""
 msgid "Splash Screen"
 msgstr "திரை-தொடக்கம் ஓவிய தோற்றம்"
 
+#: ../xfce4-autostart-editor/xfae-dialog.c:99
+msgid "Add application"
+msgstr ""
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:113
+msgid "Name:"
+msgstr ""
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:130
+msgid "Description:"
+msgstr ""
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:145
+msgid "Command:"
+msgstr ""
+
+#: ../xfce4-autostart-editor/xfae-dialog.c:205
+msgid "Select a command"
+msgstr ""
+
+#: ../xfce4-autostart-editor/xfae-model.c:515
+#, fuzzy, c-format
+msgid "Failed to unlink %s: %s"
+msgstr "சேவைப்பயனர் நகல்செய்ய முடியவில்லை: %s"
+
+#: ../xfce4-autostart-editor/xfae-model.c:603
+#, fuzzy, c-format
+msgid "Failed to create file %s"
+msgstr "MCS சேவைப்பயனர் படைக்க முடியவில்லை"
+
+#: ../xfce4-autostart-editor/xfae-model.c:625
+#, c-format
+msgid "Failed to write file %s"
+msgstr ""
+
+#: ../xfce4-autostart-editor/xfae-model.c:724
+#, c-format
+msgid "Failed to open %s for writing"
+msgstr ""
+
+#: ../xfce4-autostart-editor/xfae-window.c:89
+#: ../xfce4-autostart-editor/xfae-window.c:106
+msgid "Autostarted applications"
+msgstr ""
+
+#: ../xfce4-autostart-editor/xfae-window.c:124
+msgid ""
+"Below is the list of applications that will be started\n"
+"automatically when you login to your Xfce desktop,\n"
+"in addition to the applications that were saved when\n"
+"you logged out last time:"
+msgstr ""
+
 #: ../xfce4-session/main.c:139
 #, fuzzy
 msgid "Loading desktop settings"
@@ -355,6 +408,19 @@ msgstr "அமர்விலிருந்து வெளிச்செல�
 msgid "Create a new session."
 msgstr "அமர்வு சேமிக்கவும்"
 
+#: ../xfce4-session/xfsm-compat-gnome.c:245
+msgid "Starting The Gnome Keyring Daemon"
+msgstr ""
+
+#: ../xfce4-session/xfsm-compat-gnome.c:257
+msgid "Starting Gnome Assistive Technologies"
+msgstr ""
+
+#: ../xfce4-session/xfsm-compat-kde.c:118
+#, fuzzy
+msgid "Starting KDE services"
+msgstr "%s தொடங்கப்படுகின்றது..."
+
 #: ../xfce4-session/xfsm-dns.c:77
 #, fuzzy
 msgid "(Unknown)"
@@ -376,19 +442,6 @@ msgstr ""
 #: ../xfce4-session/xfsm-dns.c:152
 msgid "Try again"
 msgstr ""
-
-#: ../xfce4-session/xfsm-compat-gnome.c:245
-msgid "Starting The Gnome Keyring Daemon"
-msgstr ""
-
-#: ../xfce4-session/xfsm-compat-gnome.c:257
-msgid "Starting Gnome Assistive Technologies"
-msgstr ""
-
-#: ../xfce4-session/xfsm-compat-kde.c:118
-#, fuzzy
-msgid "Starting KDE services"
-msgstr "%s தொடங்கப்படுகின்றது..."
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 #, fuzzy
@@ -514,59 +567,6 @@ msgstr ""
 #, fuzzy
 msgid "Performing Autostart..."
 msgstr "தானே தொடங்கப்படுகின்றது..."
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:99
-msgid "Add application"
-msgstr ""
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:113
-msgid "Name:"
-msgstr ""
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:130
-msgid "Description:"
-msgstr ""
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:145
-msgid "Command:"
-msgstr ""
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:205
-msgid "Select a command"
-msgstr ""
-
-#: ../xfce4-autostart-editor/xfae-model.c:515
-#, fuzzy, c-format
-msgid "Failed to unlink %s: %s"
-msgstr "சேவைப்பயனர் நகல்செய்ய முடியவில்லை: %s"
-
-#: ../xfce4-autostart-editor/xfae-model.c:603
-#, fuzzy, c-format
-msgid "Failed to create file %s"
-msgstr "MCS சேவைப்பயனர் படைக்க முடியவில்லை"
-
-#: ../xfce4-autostart-editor/xfae-model.c:625
-#, c-format
-msgid "Failed to write file %s"
-msgstr ""
-
-#: ../xfce4-autostart-editor/xfae-model.c:724
-#, c-format
-msgid "Failed to open %s for writing"
-msgstr ""
-
-#: ../xfce4-autostart-editor/xfae-window.c:89
-#: ../xfce4-autostart-editor/xfae-window.c:106
-msgid "Autostarted applications"
-msgstr ""
-
-#: ../xfce4-autostart-editor/xfae-window.c:124
-msgid ""
-"Below is the list of applications that will be started\n"
-"automatically when you login to your Xfce desktop,\n"
-"in addition to the applications that were saved when\n"
-"you logged out last time:"
-msgstr ""
 
 #: ../xfce4-tips/main.c:44 ../xfce4-tips/main.c:184 ../xfce4-tips/main.c:225
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
