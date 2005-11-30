@@ -318,10 +318,10 @@ dialog_run (McsPlugin *plugin)
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
   kiosk = xfce_kiosk_new ("xfce4-session");
-  kiosk_can_chooser = xfce_kiosk_query (kiosk, "Chooser");
-  kiosk_can_logout = xfce_kiosk_query (kiosk, "Logout");
-  kiosk_can_compat = xfce_kiosk_query (kiosk, "Compatibility");
-  kiosk_can_security = xfce_kiosk_query (kiosk, "Security");
+  kiosk_can_chooser = xfce_kiosk_query (kiosk, "Chooser") || xfce_kiosk_query (kiosk, "CustomizeChooser");
+  kiosk_can_logout = xfce_kiosk_query (kiosk, "Logout") || xfce_kiosk_query (kiosk, "CustomizeLogout");
+  kiosk_can_compat = xfce_kiosk_query (kiosk, "Compatibility") || xfce_kiosk_query (kiosk, "CustomizeCompatibility");
+  kiosk_can_security = xfce_kiosk_query (kiosk, "Security") || xfce_kiosk_query (kiosk, "CustomizeSecurity");
   xfce_kiosk_free (kiosk);
   tooltips = gtk_tooltips_new ();
 
