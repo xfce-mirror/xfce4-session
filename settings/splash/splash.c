@@ -367,7 +367,7 @@ splash_run (McsPlugin *plugin)
 
   /* query kiosk settings */
   kiosk = xfce_kiosk_new ("xfce4-session");
-  kiosk_can_splash = xfce_kiosk_query (kiosk, "Splash");
+  kiosk_can_splash = xfce_kiosk_query (kiosk, "Splash") || xfce_kiosk_query (kiosk, "CustomizeSplash");
   xfce_kiosk_free (kiosk);
 
   /* load config */
