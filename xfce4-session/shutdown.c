@@ -59,6 +59,7 @@
 
 static XfsmShutdownHelper *shutdown_helper = NULL;
 
+static GtkWidget *shutdown_dialog = NULL;
 
 #ifdef SESSION_SCREENSHOTS
 static void
@@ -109,6 +110,29 @@ entry_activate_cb (GtkWidget *entry, GtkDialog *dialog)
   gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 }
 
+static void
+logout_button_clicked (GtkWidget *b, gint *shutdownType)
+{
+    *shutdownType = SHUTDOWN_LOGOUT;
+
+    gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
+}
+
+static void
+reboot_button_clicked (GtkWidget *b, gint *shutdownType)
+{
+    *shutdownType = SHUTDOWN_REBOOT;
+
+    gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
+}
+
+static void
+halt_button_clicked (GtkWidget *b, gint *shutdownType)
+{
+    *shutdownType = SHUTDOWN_HALT;
+
+    gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
+}
 
 /*
  */
@@ -123,17 +147,18 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 	GtkWidget *dbox;
 	GtkWidget *hbox;
 	GtkWidget *vbox;
+	GtkWidget *vbox2;
 	GtkWidget *image;
-  GtkWidget *radio_vbox;
-  GtkWidget *radio_logout;
-  GtkWidget *radio_reboot;
-  GtkWidget *radio_halt;
 	GtkWidget *checkbox;
   GtkWidget *entry_vbox;
   GtkWidget *entry;
 	GtkWidget *hidden;
-  GtkWidget *ok_button;
+  GtkWidget *logout_button;
+  GtkWidget *reboot_button;
+  GtkWidget *halt_button;
   GtkWidget *cancel_button;
+  GtkWidget *ok_button;
+  GtkWidget *header;
   GdkPixbuf *icon;
   gboolean saveonexit;
   gboolean autosave;
@@ -262,10 +287,15 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
       gtk_window_set_decorated (GTK_WINDOW (dialog), FALSE);
     }
 
+  shutdown_dialog = dialog;
+
   cancel_button = gtk_dialog_add_button (GTK_DIALOG (dialog), GTK_STOCK_CANCEL,
                                          GTK_RESPONSE_CANCEL);
+
   ok_button = gtk_dialog_add_button (GTK_DIALOG (dialog), GTK_STOCK_OK,
                                      GTK_RESPONSE_OK);
+
+  gtk_widget_hide (ok_button);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
   gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
@@ -274,44 +304,91 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 
 	dbox = GTK_DIALOG(dialog)->vbox;
 
-	hbox = gtk_hbox_new(FALSE, 0);
-	gtk_box_pack_start(GTK_BOX(dbox), hbox, TRUE, TRUE, BORDER);
-	gtk_widget_show(hbox);
-
-  icon = xfce_themed_icon_load ("xfsm-shutdown", 48);
-	image = gtk_image_new_from_pixbuf (icon);
-	gtk_box_pack_start(GTK_BOX(hbox), image, FALSE, TRUE, BORDER);
-	gtk_widget_show(image);
-  g_object_unref (icon);
-
-	vbox = gtk_vbox_new(FALSE, 0);
-	gtk_box_pack_start(GTK_BOX(hbox), vbox, TRUE, TRUE, BORDER);
+  header = xfce_create_header (NULL, _("End Session"));
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_BIN (header)->child), 
+                                  BORDER+2);
+  gtk_widget_show (header);
+  gtk_box_pack_start (GTK_BOX (dbox), header, TRUE, TRUE, 0);
+  
+ 	vbox = gtk_vbox_new(FALSE, BORDER);
+	gtk_box_pack_start(GTK_BOX(dbox), vbox, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), BORDER);
 	gtk_widget_show(vbox);
 
-	label = gtk_label_new(_("What do you want to do next?"));
-	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, TRUE, BORDER);
-	gtk_widget_show(label);
+  hbox = gtk_hbox_new (TRUE, BORDER);
+  gtk_widget_show (hbox);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  
+  /* logout */
+  logout_button = gtk_button_new ();
+  gtk_widget_show (logout_button);
+  gtk_box_pack_start (GTK_BOX (hbox), logout_button, TRUE, TRUE, 0);
 
-  radio_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), radio_vbox, TRUE, FALSE, BORDER);
-  gtk_widget_show (radio_vbox);
+  g_signal_connect (logout_button, "clicked", 
+                    G_CALLBACK (logout_button_clicked), shutdownType);
 
-  radio_logout = gtk_radio_button_new_with_label (
-      NULL, _("Quit current session"));
-  gtk_box_pack_start (GTK_BOX (radio_vbox), radio_logout, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_logout), TRUE);
-  gtk_widget_show (radio_logout);
+  vbox2 = gtk_vbox_new (FALSE, BORDER);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), BORDER);
+  gtk_widget_show (vbox2);
+  gtk_container_add (GTK_CONTAINER (logout_button), vbox2);
 
-  radio_reboot = gtk_radio_button_new_with_label_from_widget (
-      GTK_RADIO_BUTTON (radio_logout), _("Reboot the computer"));
-  gtk_box_pack_start (GTK_BOX (radio_vbox), radio_reboot, FALSE, FALSE, 0);
-  gtk_widget_show (radio_reboot);
+  icon = xfce_themed_icon_load ("xfsm-logout", 32);
+  image = gtk_image_new_from_pixbuf (icon);
+  gtk_widget_show (image);
+  gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
+  g_object_unref (icon);
 
-  radio_halt = gtk_radio_button_new_with_label_from_widget (
-      GTK_RADIO_BUTTON (radio_logout), _("Turn off the computer"));
-  gtk_box_pack_start (GTK_BOX (radio_vbox), radio_halt, FALSE, FALSE, 0);
-  gtk_widget_show (radio_halt);
+  label = gtk_label_new (_("Log Out"));
+  gtk_widget_show (label);
+  gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
+  
+  /* reboot */
+  reboot_button = gtk_button_new ();
+  gtk_widget_show (reboot_button);
+  gtk_box_pack_start (GTK_BOX (hbox), reboot_button, TRUE, TRUE, 0);
 
+  g_signal_connect (reboot_button, "clicked", 
+                    G_CALLBACK (reboot_button_clicked), shutdownType);
+
+  vbox2 = gtk_vbox_new (FALSE, BORDER);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), BORDER);
+  gtk_widget_show (vbox2);
+  gtk_container_add (GTK_CONTAINER (reboot_button), vbox2);
+
+  icon = xfce_themed_icon_load ("xfsm-reboot", 32);
+  image = gtk_image_new_from_pixbuf (icon);
+  gtk_widget_show (image);
+  gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
+  g_object_unref (icon);
+
+  label = gtk_label_new (_("Restart"));
+  gtk_widget_show (label);
+  gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
+  
+  /* halt */
+  halt_button = gtk_button_new ();
+  gtk_widget_show (halt_button);
+  gtk_box_pack_start (GTK_BOX (hbox), halt_button, TRUE, TRUE, 0);
+
+  g_signal_connect (halt_button, "clicked", 
+                    G_CALLBACK (halt_button_clicked), shutdownType);
+
+  vbox2 = gtk_vbox_new (FALSE, BORDER);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), BORDER);
+  gtk_widget_show (vbox2);
+  gtk_container_add (GTK_CONTAINER (halt_button), vbox2);
+
+  icon = xfce_themed_icon_load ("xfsm-shutdown", 32);
+  image = gtk_image_new_from_pixbuf (icon);
+  gtk_widget_show (image);
+  gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
+  g_object_unref (icon);
+  
+  label = gtk_label_new (_("Shut Down"));
+  gtk_widget_show (label);
+  gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
+  
+  /* save session */
   if (!autosave)
     {
       checkbox = gtk_check_button_new_with_mnemonic(
@@ -333,11 +410,11 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   xfce_gtk_window_center_on_monitor (GTK_WINDOW (dialog), screen, monitor);
 
   /* connect to the shutdown helper */
-  shutdown_helper = xfsm_shutdown_helper_spawn ();
-  if (shutdown_helper == NULL || !kiosk_can_shutdown)
+  if (!kiosk_can_shutdown || 
+      (shutdown_helper = xfsm_shutdown_helper_spawn ()) == NULL)
     {
-      gtk_widget_set_sensitive (radio_reboot, FALSE);
-      gtk_widget_set_sensitive (radio_halt, FALSE);
+      gtk_widget_set_sensitive (reboot_button, FALSE);
+      gtk_widget_set_sensitive (halt_button, FALSE);
     }
 
   /* save portion of the root window covered by the dialog */
@@ -350,7 +427,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 
 	/* need to realize the dialog first! */
 	gtk_widget_show_now (dialog);
-  gtk_widget_grab_focus (ok_button);
+  gtk_widget_grab_focus (logout_button);
 
 	/* Grab Keyboard and Mouse pointer */
   if (!accessibility)
@@ -362,12 +439,6 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 	if (result == GTK_RESPONSE_OK) {
 		*saveSession = autosave || gtk_toggle_button_get_active(
 				GTK_TOGGLE_BUTTON(checkbox));
-    if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (radio_logout)))
-      *shutdownType = SHUTDOWN_LOGOUT;
-    else if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (radio_reboot)))
-      *shutdownType = SHUTDOWN_REBOOT;
-    else
-      *shutdownType = SHUTDOWN_HALT;
 	}
 
   gtk_widget_hide (dialog);
@@ -376,12 +447,14 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   if (result == GTK_RESPONSE_OK && *shutdownType != SHUTDOWN_LOGOUT
       && xfsm_shutdown_helper_need_password (shutdown_helper))
     {
+      gtk_widget_show (ok_button);
+
       if (checkbox != NULL)
         gtk_widget_destroy (checkbox);
-      gtk_widget_destroy (radio_vbox);
+      gtk_widget_destroy (vbox);
 
       entry_vbox = gtk_vbox_new (FALSE, BORDER);
-      gtk_box_pack_start (GTK_BOX (vbox), entry_vbox, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (dbox), entry_vbox, TRUE, TRUE, BORDER);
       gtk_widget_show (entry_vbox);
 
 #if GTK_CHECK_VERSION(2,4,0)
@@ -417,10 +490,6 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 
           if (!xfsm_shutdown_helper_send_password (shutdown_helper, pw))
             {
-              gtk_image_set_from_stock (GTK_IMAGE (image),
-                                        GTK_STOCK_DIALOG_ERROR,
-                                        GTK_ICON_SIZE_DIALOG);
-
               gtk_label_set_text (GTK_LABEL (label),
                                   _("<b>An error occured</b>"));
               gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
@@ -463,6 +532,8 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 
 	gtk_widget_destroy(dialog);
   gtk_widget_destroy(hidden);
+
+  shutdown_dialog = NULL;
 
 	/* Release Keyboard/Mouse pointer grab */
   if (!accessibility)

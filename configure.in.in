@@ -9,7 +9,7 @@ dnl
 dnl Version information
 m4_define([xfsm_version_major], [4])
 m4_define([xfsm_version_minor], [3])
-m4_define([xfsm_version_micro], [1])
+m4_define([xfsm_version_micro], [2])
 m4_define([xfsm_version_build], [@REVISION@])
 m4_define([xfsm_version_tag], [svn])
 m4_define([xfsm_version], [xfsm_version_major().xfsm_version_minor().xfsm_version_micro()ifelse(xfsm_version_build(), [], [], [xfsm_version_tag()[-r]xfsm_version_build()])])
@@ -46,10 +46,10 @@ AC_PROG_LIBTOOL()
 
 dnl check for standard header files
 AC_HEADER_STDC
-AC_CHECK_FUNCS([getaddrinfo gethostbyname gethostname sigaction strdup sync])
 AC_CHECK_HEADERS([errno.h fcntl.h limits.h netdb.h signal.h stdarg.h \
   sys/param.h sys/resource.h sys/socket.h sys/time.h sys/wait.h sys/utsname.h \
   time.h unistd.h])
+AC_CHECK_FUNCS([getaddrinfo gethostbyname gethostname sigaction strdup sync])
 
 dnl Check for X11 installed
 XDT_CHECK_LIBX11_REQUIRE()
