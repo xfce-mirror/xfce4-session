@@ -455,7 +455,10 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
       gtk_box_pack_start (GTK_BOX (dbox), entry_vbox, TRUE, TRUE, BORDER);
       gtk_widget_show (entry_vbox);
 
-      gtk_label_set_text (GTK_LABEL (label), _("Please enter your password:"));
+      label = gtk_label_new (_("Please enter your password:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+      gtk_widget_show (label);
+      gtk_box_pack_start (GTK_BOX (entry_vbox), label, FALSE, FALSE, 0);
 
       entry = gtk_entry_new ();
       gtk_entry_set_visibility(GTK_ENTRY(entry), FALSE);
