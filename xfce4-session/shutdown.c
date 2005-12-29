@@ -437,8 +437,8 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 	result = gtk_dialog_run (GTK_DIALOG(dialog));
 
 	if (result == GTK_RESPONSE_OK) {
-		*saveSession = autosave || gtk_toggle_button_get_active(
-				GTK_TOGGLE_BUTTON(checkbox));
+		*saveSession = autosave ? autosave : 
+            gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkbox));
 	}
 
   gtk_widget_hide (dialog);
@@ -449,19 +449,11 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
     {
       gtk_widget_show (ok_button);
 
-      if (checkbox != NULL)
-        gtk_widget_destroy (checkbox);
       gtk_widget_destroy (vbox);
 
       entry_vbox = gtk_vbox_new (FALSE, BORDER);
       gtk_box_pack_start (GTK_BOX (dbox), entry_vbox, TRUE, TRUE, BORDER);
       gtk_widget_show (entry_vbox);
-
-#if GTK_CHECK_VERSION(2,4,0)
-      gtk_image_set_from_stock (GTK_IMAGE (image),
-                                GTK_STOCK_DIALOG_AUTHENTICATION,
-                                GTK_ICON_SIZE_DIALOG);
-#endif
 
       gtk_label_set_text (GTK_LABEL (label), _("Please enter your password:"));
 
