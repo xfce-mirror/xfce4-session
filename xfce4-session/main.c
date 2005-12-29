@@ -127,8 +127,7 @@ usage (int exit_code)
 
 static void
 init_display (GdkDisplay *dpy,
-              XfceRc     *rc,
-              gboolean disable_tcp)
+              XfceRc     *rc)
 {
   const gchar *engine;
   gint n;
@@ -136,14 +135,11 @@ init_display (GdkDisplay *dpy,
   xfce_rc_set_group (rc, "Splash Screen");
   engine = xfce_rc_read_entry (rc, "Engine", NULL);
 
-  splash_screen = xfsm_splash_screen_new (dpy, engine);  
+  splash_screen = xfsm_splash_screen_new (dpy, engine);
   xfsm_splash_screen_next (splash_screen, _("Loading desktop settings"));
 
   gdk_flush ();
 
-  xfce_rc_set_group (rc, "General");
-  sm_init (rc, disable_tcp);
-  
   /* start a MCS manager process per screen (FIXME: parallel to loading logo) */
   for (n = 0; n < gdk_display_get_n_screens (dpy); ++n)
     {
@@ -194,7 +190,7 @@ initialize (int argc, char **argv)
   rc = xfsm_open_config (TRUE);
 
   dpy = gdk_display_get_default ();
-  init_display (dpy, rc, disable_tcp);
+  init_display (dpy, rc);
 
   /* verify that the DNS settings are ok */
   xfsm_splash_screen_next (splash_screen, _("Verifying DNS settings"));
@@ -207,6 +203,7 @@ initialize (int argc, char **argv)
   compat_kde = xfce_rc_read_bool_entry (rc, "LaunchKDE", FALSE);
 
   xfce_rc_set_group (rc, "General");
+  sm_init (rc, disable_tcp);
   xfsm_startup_init (rc);
   xfsm_manager_init (rc);
 
