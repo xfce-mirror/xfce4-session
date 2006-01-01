@@ -6,12 +6,16 @@
 # Zhao Ji <zhao-ji@awz.ne.jp>, 2003.
 # Daichi Kawahata <daichi@xfce.org>, 2005.
 #
+# 対訳一覧:
+#
+# splash (screen) 起動画面
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-session 4.3.1\n"
+"Project-Id-Version: xfce4-session 4.3.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-02 02:28+0900\n"
-"PO-Revision-Date: 2005-11-30 00:21+0900\n"
+"POT-Creation-Date: 2005-12-31 02:42+0900\n"
+"PO-Revision-Date: 2005-12-31 01:17+0900\n"
 "Last-Translator: Daichi Kawahata <daichi@xfce.org>\n"
 "Language-Team: Japanese <xfce-users-jp@ml.fdiary.net>\n"
 "MIME-Version: 1.0\n"
@@ -32,13 +36,13 @@ msgid ""
 "Unable to install splash theme from file %s, please check that the file is a "
 "valid splash theme archive."
 msgstr ""
-"ファイル %s からスプラッシュ・テーマをインストールできません、ファイルが適切"
-"なスプラッシュテーマ・アーカイブか確認して下さい。"
+"ファイル %s から起動画面のテーマをインストールできません、正しいアーカイブか"
+"確認して下さい。"
 
 #: ../engines/balou/config.c:382
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
-msgstr "スプラッシュ・テーマ \"%s\" をフォルダ %s から削除できません。"
+msgstr "起動画面のテーマ \"%s\" をフォルダ %s から削除できません。"
 
 #: ../engines/balou/config.c:467
 msgid "Choose theme filename..."
@@ -70,15 +74,15 @@ msgstr "Balou"
 
 #: ../engines/balou/config.c:966
 msgid "Balou Splash Engine"
-msgstr "Balou スプラッシュエンジン"
+msgstr "Balou 起動画面エンジン"
 
 #: ../engines/mice/mice.c:369
 msgid "Mice"
-msgstr "マイス"
+msgstr "Mice"
 
 #: ../engines/mice/mice.c:370
 msgid "Mice Splash Engine"
-msgstr "マイス・スプラッシュエンジン"
+msgstr "Mice 起動画面エンジン"
 
 #: ../engines/simple/simple.c:315
 msgid "Choose image..."
@@ -86,7 +90,7 @@ msgstr "画像を選択して下さい..."
 
 #: ../engines/simple/simple.c:360
 msgid "Configure Simple..."
-msgstr "Simple の設定..."
+msgstr "シンプルの設定..."
 
 #: ../engines/simple/simple.c:371
 msgid "Font"
@@ -118,7 +122,7 @@ msgstr "シンプル"
 
 #: ../engines/simple/simple.c:506
 msgid "Simple Splash Engine"
-msgstr "シンプルなスプラッシュエンジン"
+msgstr "シンプルな起動画面エンジン"
 
 #: ../settings/session/session.c:133
 msgid "Session chooser"
@@ -243,7 +247,7 @@ msgstr "無し"
 #: ../settings/splash/splash.c:406 ../settings/splash/splash.c:420
 #: ../settings/splash/xfce-splash-settings.desktop.in.h:1
 msgid "Splash Screen Settings"
-msgstr "スプラッシュ画面"
+msgstr "起動画面"
 
 #: ../settings/splash/splash.c:460
 msgid "Configure"
@@ -251,7 +255,7 @@ msgstr "設定"
 
 #: ../settings/splash/splash.c:468
 msgid "Opens the configuration panel for the selected splash screen."
-msgstr "選択したスプラッシュ画面の設定パネルを開きます。"
+msgstr "選択した起動画面の設定パネルを開きます。"
 
 #: ../settings/splash/splash.c:472
 msgid "Test"
@@ -259,7 +263,7 @@ msgstr "テスト"
 
 #: ../settings/splash/splash.c:479
 msgid "Demonstrates the selected splash screen."
-msgstr "選択したスプラッシュ画面を実演します。"
+msgstr "選択した起動画面を実演します。"
 
 #: ../settings/splash/splash.c:496
 msgid "Information"
@@ -283,7 +287,7 @@ msgstr "<b>ホームページ:</b>"
 
 #: ../settings/splash/splash.c:586
 msgid "Splash Screen"
-msgstr "スプラッシュ画面"
+msgstr "起動画面"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:99
 msgid "Add application"
@@ -355,22 +359,20 @@ msgid "Loading session data"
 msgstr "セッションデータをロードしています"
 
 #: ../xfce4-session/shutdown.c:307
-#, fuzzy
 msgid "End Session"
-msgstr "新規セッション"
+msgstr "セッションの終了"
 
 #: ../xfce4-session/shutdown.c:341
-#, fuzzy
 msgid "Log Out"
 msgstr "ログアウト"
 
 #: ../xfce4-session/shutdown.c:364
 msgid "Restart"
-msgstr ""
+msgstr "再起動"
 
 #: ../xfce4-session/shutdown.c:387
 msgid "Shut Down"
-msgstr ""
+msgstr "シャットダウン"
 
 #: ../xfce4-session/shutdown.c:395
 msgid "_Save session for future logins"
@@ -395,7 +397,7 @@ msgstr ""
 #: ../xfce4-session/xfsm-chooser.c:120
 #, c-format
 msgid "Last accessed: %s"
-msgstr "最終アクセス時刻: %s"
+msgstr "最終アクセス日時: %s"
 
 #: ../xfce4-session/xfsm-chooser.c:213
 msgid ""
@@ -425,11 +427,11 @@ msgstr "新規セッションを作成します。"
 
 #: ../xfce4-session/xfsm-compat-gnome.c:245
 msgid "Starting The Gnome Keyring Daemon"
-msgstr "GNOME の鍵輪デーモンを起動しています"
+msgstr "GNOME 鍵輪デーモンを起動しています"
 
 #: ../xfce4-session/xfsm-compat-gnome.c:257
 msgid "Starting Gnome Assistive Technologies"
-msgstr "GNOME の障碍者支援プログラムを起動しています"
+msgstr "GNOME 障碍者支援プログラムを起動しています"
 
 #: ../xfce4-session/xfsm-compat-kde.c:118
 msgid "Starting KDE services"
@@ -474,7 +476,7 @@ msgstr "新規セッション名を選択して下さい:"
 
 #: ../xfce4-session/xfsm-startup.c:99
 msgid "Starting the Volume Controller"
-msgstr "音量コントローラを起動しています"
+msgstr "音量コントローラーを起動しています"
 
 #: ../xfce4-session/xfsm-startup.c:101
 msgid "Starting the Panel"
@@ -530,7 +532,7 @@ msgstr "GIMP を起動しています"
 
 #: ../xfce4-session/xfsm-startup.c:133
 msgid "Starting the VI Improved Editor"
-msgstr "エディター Vim を起動しています"
+msgstr "Vim エディターを起動しています"
 
 #: ../xfce4-session/xfsm-startup.c:135
 msgid "Starting the Session Management Proxy"
@@ -617,7 +619,7 @@ msgstr "Xfce 4 セッションと起動の設定"
 
 #: ../settings/splash/xfce-splash-settings.desktop.in.h:2
 msgid "Xfce 4 Splash Screen Settings"
-msgstr "Xfce 4 スプラッシュ画面の設定"
+msgstr "Xfce 4 起動画面の設定"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:1
 msgid "Autostarted Applications"
@@ -634,15 +636,3 @@ msgstr "Xfce 4 自動起動アプリケーション"
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
 msgstr "Xfce チップ"
-
-#~ msgid "What do you want to do next?"
-#~ msgstr "この後どうしますか?"
-
-#~ msgid "Quit current session"
-#~ msgstr "現在のセッションを終了する"
-
-#~ msgid "Reboot the computer"
-#~ msgstr "コンピュータを再起動する"
-
-#~ msgid "Turn off the computer"
-#~ msgstr "コンピュータの電源を切る"
