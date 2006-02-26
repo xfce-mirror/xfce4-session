@@ -54,7 +54,7 @@
 #include <xfce4-session/xfsm-legacy.h>
 #include <xfce4-session/xfsm-shutdown-helper.h>
 
-#define BORDER		6
+#define BORDER    6
 
 
 static XfsmShutdownHelper *shutdown_helper = NULL;
@@ -139,20 +139,20 @@ halt_button_clicked (GtkWidget *b, gint *shutdownType)
 gboolean
 shutdownDialog(gint *shutdownType, gboolean *saveSession)
 {
-	gboolean accessibility;
+  gboolean accessibility;
   XfsmFadeout *fadeout = NULL;
   GdkScreen *screen;
-	GtkWidget *dialog;
-	GtkWidget *label;
-	GtkWidget *dbox;
-	GtkWidget *hbox;
-	GtkWidget *vbox;
-	GtkWidget *vbox2;
-	GtkWidget *image;
-	GtkWidget *checkbox;
+  GtkWidget *dialog;
+  GtkWidget *label;
+  GtkWidget *dbox;
+  GtkWidget *hbox;
+  GtkWidget *vbox;
+  GtkWidget *vbox2;
+  GtkWidget *image;
+  GtkWidget *checkbox;
   GtkWidget *entry_vbox;
   GtkWidget *entry;
-	GtkWidget *hidden;
+  GtkWidget *hidden;
   GtkWidget *logout_button;
   GtkWidget *reboot_button;
   GtkWidget *halt_button;
@@ -164,7 +164,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   gboolean autosave;
   gboolean prompt;
   gint monitor;
-	gint result;
+  gint result;
   XfceKiosk *kiosk;
   gboolean kiosk_can_shutdown;
   XfceRc *rc;
@@ -175,8 +175,8 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   GdkGC *screenshot_gc;
 #endif
 
-	g_return_val_if_fail(saveSession != NULL, FALSE);
-	g_return_val_if_fail(shutdownType != NULL, FALSE);
+  g_return_val_if_fail(saveSession != NULL, FALSE);
+  g_return_val_if_fail(shutdownType != NULL, FALSE);
 
   /* destroy any previously running shutdown helper first */
   if (shutdown_helper != NULL)
@@ -223,11 +223,11 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
       monitor = 0;
     }
 
-	/* Try to grab Input on a hidden window first */
-	hidden = gtk_invisible_new_for_screen (screen);
-	gtk_widget_show_now (hidden);
+  /* Try to grab Input on a hidden window first */
+  hidden = gtk_invisible_new_for_screen (screen);
+  gtk_widget_show_now (hidden);
 
-	accessibility = GTK_IS_ACCESSIBLE (gtk_widget_get_accessible (hidden));
+  accessibility = GTK_IS_ACCESSIBLE (gtk_widget_get_accessible (hidden));
 
   if (!accessibility) 
     {
@@ -297,12 +297,12 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 
   gtk_widget_hide (ok_button);
 
-	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
   gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
-	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
   gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 
-	dbox = GTK_DIALOG(dialog)->vbox;
+  dbox = GTK_DIALOG(dialog)->vbox;
 
   header = xfce_create_header (NULL, _("End Session"));
   gtk_container_set_border_width (GTK_CONTAINER (GTK_BIN (header)->child), 
@@ -310,10 +310,10 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   gtk_widget_show (header);
   gtk_box_pack_start (GTK_BOX (dbox), header, TRUE, TRUE, 0);
   
- 	vbox = gtk_vbox_new(FALSE, BORDER);
-	gtk_box_pack_start(GTK_BOX(dbox), vbox, TRUE, TRUE, 0);
+  vbox = gtk_vbox_new(FALSE, BORDER);
+  gtk_box_pack_start(GTK_BOX(dbox), vbox, TRUE, TRUE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), BORDER);
-	gtk_widget_show(vbox);
+  gtk_widget_show(vbox);
 
   hbox = gtk_hbox_new (TRUE, BORDER);
   gtk_widget_show (hbox);
@@ -405,7 +405,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   /* create small border */
   if (!accessibility)
     xfsm_window_add_border (GTK_WINDOW (dialog));
-	
+  
   /* center dialog on target monitor */
   xfce_gtk_window_center_on_monitor (GTK_WINDOW (dialog), screen, monitor);
 
@@ -425,21 +425,21 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
       gdk_window_raise (dialog->window);
     }
 
-	/* need to realize the dialog first! */
-	gtk_widget_show_now (dialog);
+  /* need to realize the dialog first! */
+  gtk_widget_show_now (dialog);
   gtk_widget_grab_focus (logout_button);
 
-	/* Grab Keyboard and Mouse pointer */
+  /* Grab Keyboard and Mouse pointer */
   if (!accessibility)
     xfsm_window_grab_input (GTK_WINDOW (dialog));
 
-	/* run the logout dialog */
-	result = gtk_dialog_run (GTK_DIALOG(dialog));
+  /* run the logout dialog */
+  result = gtk_dialog_run (GTK_DIALOG(dialog));
 
-	if (result == GTK_RESPONSE_OK) {
-		*saveSession = autosave ? autosave : 
+  if (result == GTK_RESPONSE_OK) {
+    *saveSession = autosave ? autosave : 
             gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkbox));
-	}
+  }
 
   gtk_widget_hide (dialog);
 
@@ -525,12 +525,12 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
         }
     }
 
-	gtk_widget_destroy(dialog);
+  gtk_widget_destroy(dialog);
   gtk_widget_destroy(hidden);
 
   shutdown_dialog = NULL;
 
-	/* Release Keyboard/Mouse pointer grab */
+  /* Release Keyboard/Mouse pointer grab */
   if (!accessibility)
     {
       xfsm_fadeout_destroy (fadeout);
@@ -571,7 +571,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 
   xfce_rc_close (rc);
 
-	return (result == GTK_RESPONSE_OK);
+  return (result == GTK_RESPONSE_OK);
 }
 
 
