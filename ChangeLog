@@ -1,7 +1,128 @@
-2005-11-30	Benedikt Meurer <benny@xfce.org>
+2006-03-05 06:23  daichi
 
-	* settings/session/session.c, settings/splash/splash.c: Backport fix
+	* libxfcegui4/branches/xfce_4_2/configure.ac,
+	  libxfcegui4/branches/xfce_4_2/po/sq.po,
+	  xfcalendar/branches/xfce_4_2/configure.ac,
+	  xfcalendar/branches/xfce_4_2/po/sq.po,
+	  xfce-mcs-manager/branches/xfce_4_2/configure.ac,
+	  xfce-mcs-manager/branches/xfce_4_2/po/sq.po,
+	  xfce-mcs-plugins/branches/xfce_4_2/configure.ac,
+	  xfce-mcs-plugins/branches/xfce_4_2/po/sq.po,
+	  xfce-utils/branches/xfce_4_2/configure.ac,
+	  xfce-utils/branches/xfce_4_2/po/sq.po,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.az,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.ca,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.de,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.es,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.eu,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.fi,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.fr,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.he,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.html,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.html.az,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.html.ca,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.html.de,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.html.es,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.html.eu,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.html.fi,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.html.fr,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.html.it,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.html.ja,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.html.lt,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.html.ro,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.html.ru,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.html.sk,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.html.vi,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.html.zh_TW,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.it,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.ja,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.lt,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.ro,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.ru,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.sk,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.uk,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.vi,
+	  xfce-utils/branches/xfce_4_2/xfce4-about/AUTHORS.zh_TW,
+	  xfce4-appfinder/branches/xfce_4_2/configure.ac,
+	  xfce4-appfinder/branches/xfce_4_2/po/sq.po,
+	  xfce4-iconbox/branches/xfce_4_2/configure.ac,
+	  xfce4-iconbox/branches/xfce_4_2/po/sq.po,
+	  xfce4-mixer/branches/xfce_4_2/configure.ac,
+	  xfce4-mixer/branches/xfce_4_2/po/sq.po,
+	  xfce4-panel/branches/xfce_4_2/configure.ac,
+	  xfce4-panel/branches/xfce_4_2/po/sq.po,
+	  xfce4-session/branches/xfce_4_2/configure.ac,
+	  xfce4-session/branches/xfce_4_2/po/sq.po,
+	  xfce4-toys/branches/xfce_4_2/configure.ac,
+	  xfce4-toys/branches/xfce_4_2/po/sq.po,
+	  xfce4-trigger-launcher/branches/xfce_4_2/configure.ac,
+	  xfce4-trigger-launcher/branches/xfce_4_2/po/sq.po,
+	  xfdesktop/branches/xfce_4_2/configure.ac,
+	  xfdesktop/branches/xfce_4_2/po/sq.po,
+	  xffm/branches/xfce_4_2/configure.ac,
+	  xffm/branches/xfce_4_2/po/sq.po,
+	  xfprint/branches/xfce_4_2/configure.ac,
+	  xfprint/branches/xfce_4_2/po/sq.po,
+	  xfwm4/branches/xfce_4_2/configure.ac,
+	  xfwm4/branches/xfce_4_2/po/sq.po: Added Albanian translations by
+	  Besnik Bleta <besnik@spymac.com>.
+
+2005-11-30 20:24  benny
+
+	* xfce4-session/branches/xfce_4_2/ChangeLog,
+	  xfce4-session/branches/xfce_4_2/settings/session/session.c,
+	  xfce4-session/branches/xfce_4_2/settings/splash/splash.c:
+	  2005-11-30 Benedikt Meurer <benny@xfce.org>
+	  
+	  * settings/session/session.c, settings/splash/splash.c:
+	  Backport fix
 	  for bug #1246 to stable branch.
+
+2005-11-29 21:45  daichi
+
+	* xfcalendar/trunk/po/ja.po, xfce-mcs-plugins/trunk/po/ja.po,
+	  xfce4-mailwatch-plugin/trunk/po/ja.po,
+	  xfce4-mixer/trunk/po/ja.po,
+	  xfce4-session/branches/xfce_4_2/po/ja.po,
+	  xfce4-session/trunk/po/ja.po, xfdesktop/trunk/po/ja.po,
+	  xffm/trunk/xffm-gui/po/ja.po,
+	  xfprint/branches/xfce_4_2/po/ja.po, xfprint/trunk/po/ja.po,
+	  xfwm4/trunk/po/ja.po: Fixed mistranslations.
+	  Revised some translations.
+
+2005-11-29 19:09  hydonsingore
+
+	* xfce4-session/branches/xfce_4_2/po/zh_TW.po: zh_TW translation
+	  minor correction
+
+2005-11-14 23:54  daichi
+
+	* libxfcegui4/branches/xfce_4_2/po/ChangeLog,
+	  xfcalendar/branches/xfce_4_2/po/ChangeLog,
+	  xfce-mcs-manager/branches/xfce_4_2/po/ChangeLog,
+	  xfce-mcs-plugins/branches/xfce_4_2/po/ChangeLog,
+	  xfce-utils/branches/xfce_4_2/po/ChangeLog,
+	  xfce4-appfinder/branches/xfce_4_2/po/ChangeLog,
+	  xfce4-iconbox/branches/xfce_4_2/po/ChangeLog,
+	  xfce4-mixer/branches/xfce_4_2/po/ChangeLog,
+	  xfce4-panel/branches/xfce_4_2/po/ChangeLog,
+	  xfce4-session/branches/xfce_4_2/po/ChangeLog,
+	  xfce4-toys/branches/xfce_4_2/po/ChangeLog,
+	  xfce4-trigger-launcher/branches/xfce_4_2/po/ChangeLog,
+	  xfdesktop/branches/xfce_4_2/po/ChangeLog,
+	  xffm/branches/xfce_4_2/po/ChangeLog,
+	  xfprint/branches/xfce_4_2/po/ChangeLog,
+	  xfwm4/branches/xfce_4_2/po/ChangeLog: Updated.
+
+2005-11-06 09:26  olivier
+
+	* xfce4-session/branches/xfce_4_2/po/hu.po: Update Hungarian
+	  translation by Attila SZERVÁC <sas@321.hu>
+
+2005-11-05 14:12  olivier
+
+	* xfce4-session/branches/xfce_4_2/ChangeLog: Update ChangeLog
 
 2005-11-03 13:26  daichi
 
@@ -54,8 +175,9 @@
 	  xfce4-mailwatch-plugin/trunk/po/eu.po,
 	  xfce4-panel/branches/xfce_4_2/po/it.po,
 	  xfce4-session/branches/xfce_4_2/po/it.po: * Modified initial
-	  header strings using template by `msginit'. * Modified initial
-	  comment strings using template by `msginit'.
+	  header strings using template by `msginit'.
+	  
+	  * Modified initial comment strings using template by `msginit'.
 
 2005-10-20 12:37  alex
 
@@ -214,20 +336,29 @@
 2005-10-09 09:13  daichi
 
 	* xfce-mcs-manager/branches/xfce_4_2/xfce-setting-show/xfce-settings-manager.desktop,
+	  
 	  xfce-mcs-plugins/branches/xfce_4_2/plugins/display_plugin/xfce-display-settings.desktop,
+	  
 	  xfce-mcs-plugins/branches/xfce_4_2/plugins/keyboard_plugin/xfce-keyboard-settings.desktop,
+	  
 	  xfce-mcs-plugins/branches/xfce_4_2/plugins/mouse_plugin/xfce-mouse-settings.desktop,
+	  
 	  xfce-mcs-plugins/branches/xfce_4_2/plugins/ui_plugin/xfce-ui-settings.desktop,
 	  xfce-utils/branches/xfce_4_2/gdm/xfce.desktop,
 	  xfce-utils/branches/xfce_4_2/xftaskbar/plugin/xfce-taskbar-settings.desktop,
 	  xfce4-appfinder/branches/xfce_4_2/src/xfce4-appfinder.desktop,
 	  xfce4-iconbox/branches/xfce_4_2/settings/xfce-iconbox-settings.desktop,
+	  
 	  xfce4-mixer/branches/xfce_4_2/settings/xfce-mixer-settings.desktop,
+	  
 	  xfce4-panel/branches/xfce_4_2/settings/xfce-panel-settings.desktop,
+	  
 	  xfce4-session/branches/xfce_4_2/settings/session/xfce-session-settings.desktop,
+	  
 	  xfce4-session/branches/xfce_4_2/settings/splash/xfce-splash-settings.desktop,
 	  xfdesktop/branches/xfce_4_2/menueditor/xfce-menueditor.desktop,
 	  xfdesktop/branches/xfce_4_2/settings/xfce-backdrop-settings.desktop,
+	  
 	  xffm/branches/xfce_4_2/plugin-mcs/xfce-filemanager-settings.desktop,
 	  xffm/branches/xfce_4_2/src/Xfbook.desktop,
 	  xffm/branches/xfce_4_2/src/Xfdiff.desktop,
@@ -238,21 +369,35 @@
 	  xffm/branches/xfce_4_2/src/Xfsamba.desktop,
 	  xffm/branches/xfce_4_2/src/Xftree.desktop,
 	  xfprint/branches/xfce_4_2/mcs-plugin/xfce-xfprint-settings.desktop,
+	  
 	  xfprint/branches/xfce_4_2/xfprint-manager/xfprint-manager.desktop,
 	  xfprint/branches/xfce_4_2/xfprint/xfprint.desktop,
 	  xfwm4/branches/xfce_4_2/mcs-plugin/xfce-wm-settings.desktop,
 	  xfwm4/branches/xfce_4_2/mcs-plugin/xfce-workspaces-settings.desktop:
-	  .desktop * Added Swedish translations by Alexander Toresson
-	  <alexander.toresson@gmail.com>. * Added Japanese translations by
-	  Daichi Kawahata <daichi@xfce.org>. * Changed orders
-	  alphabetically at each places. * Fixed errors emitted by
-	  'desktop-file-validate', however there're still errors:
-	  Xfmime_edit.desktop: warning: the fields "Name" and "Comment"
-	  have the same value xfce-settings-manager.desktop: warning: the
-	  fields "Name" and "Comment" have the same value
+	  .desktop
+	  
+	  * Added Swedish translations by
+	  Alexander Toresson <alexander.toresson@gmail.com>.
+	  
+	  * Added Japanese translations by
+	  Daichi Kawahata <daichi@xfce.org>.
+	  
+	  * Changed orders alphabetically at each places.
+	  
+	  * Fixed errors emitted by 'desktop-file-validate', however
+	  there're
+	  still errors:
+	  
+	  Xfmime_edit.desktop: warning: the fields "Name" and
+	  "Comment" have the same value
+	  xfce-settings-manager.desktop: warning: the fields "Name"
+	  and "Comment" have the same value
 	  xfce4-appfinder.desktop: warning: the fields "Name" and
-	  "Comment" have the same value xfce.desktop * Removed executable
-	  attribute.
+	  "Comment" have the same value
+	  
+	  xfce.desktop
+	  
+	  * Removed executable attribute.
 
 2005-10-09 07:00  daichi
 
@@ -275,8 +420,8 @@
 	  xffm/branches/xfce_4_2/po/sv.po,
 	  xfprint/branches/xfce_4_2/po/sv.po,
 	  xfwm4/branches/xfce_4_2/po/sv.po: Added and updated Swedish
-	  translations by Alexander Toresson
-	  <alexander.toresson@gmail.com>.
+	  translations by
+	  Alexander Toresson <alexander.toresson@gmail.com>.
 
 2005-10-07 21:46  daichi
 
@@ -1119,9 +1264,13 @@
 	  xfce4-session/branches/xfce_4_2/po/vi.po,
 	  xfce4-session/branches/xfce_4_2/po/zh_CN.po,
 	  xfce4-session/branches/xfce_4_2/po/zh_TW.po: * Bumped version at
-	  the "Project-Id-Version: " for the next release. * Added fall
-	  back address at the "Language-Team: ", according to the
+	  the "Project-Id-Version: " for the next release.
+	  
+	  * Added fall back address at the "Language-Team: ", according to
+	  the
+	  
 	  http://www.iro.umontreal.ca/translation/registry.cgi?team=index
+	  
 	  * Modified initial comment strings using template by "msginit".
 
 2005-09-27 05:40  daichi
@@ -1845,7 +1994,9 @@
 	  xfwm4/branches/xfce_4_2/po/vi.po,
 	  xfwm4/branches/xfce_4_2/po/zh_CN.po,
 	  xfwm4/branches/xfce_4_2/po/zh_TW.po: Sorry, I really hope this
-	  doesn't cause disaster. * Updated with the re-created POT files.
+	  doesn't cause disaster.
+	  
+	  * Updated with the re-created POT files.
 	  * Discarded obsolete translations.
 
 2005-09-21 02:20  daichi
@@ -1865,8 +2016,10 @@
 	  xfdesktop/branches/xfce_4_2/po/ja.po,
 	  xffm/branches/xfce_4_2/po/ja.po,
 	  xfprint/branches/xfce_4_2/po/ja.po,
-	  xfwm4/branches/xfce_4_2/po/ja.po: Added initial '$Id$'. Bumped
-	  version at the 'Project-Id-Version: ' for the next release.
+	  xfwm4/branches/xfce_4_2/po/ja.po: Added initial '$Id$'.
+	  
+	  Bumped version at the 'Project-Id-Version: ' for the next
+	  release.
 
 2005-09-21 02:04  daichi
 
@@ -1887,12 +2040,19 @@
 	  xffm/branches/xfce_4_2/po/pl.po,
 	  xfprint/branches/xfce_4_2/po/pl.po,
 	  xfwm4/branches/xfce_4_2/po/pl.po: Added Polish translations by
-	  by Piotr Malinski. Updated Polish translations by Piotr
-	  Malinski. Added fall back address at the 'Language-Team: ',
-	  according to the
+	  by Piotr Malinski.
+	  
+	  Updated Polish translations by Piotr Malinski.
+	  
+	  Added fall back address at the 'Language-Team: ', according to
+	  the
+	  
 	  http://www.iro.umontreal.ca/translation/registry.cgi?team=index
+	  
 	  Bumped version at the 'Project-Id-Version: ' for the next
-	  release. Modified initial comment strings.
+	  release.
+	  
+	  Modified initial comment strings.
 
 2005-09-10 16:57  daichi
 
@@ -1911,8 +2071,11 @@
 	  xfdesktop/branches/xfce_4_2/po/pt_BR.po,
 	  xffm/branches/xfce_4_2/po/pt_BR.po,
 	  xfprint/branches/xfce_4_2/po/pt_BR.po,
-	  xfwm4/branches/xfce_4_2/po/pt_BR.po: Corrected a typo. Bumped
-	  version at the 'Project-Id-Version: ' for the next release.
+	  xfwm4/branches/xfce_4_2/po/pt_BR.po: Corrected a typo.
+	  
+	  Bumped version at the 'Project-Id-Version: ' for the next
+	  release.
+	  
 	  Modified initial comment strings.
 
 2005-09-09 16:53  stavrosg
@@ -1933,19 +2096,27 @@
 2005-09-02 16:26  pollux
 
 	* xfce-mcs-manager/branches/xfce_4_2/xfce-setting-show/xfce-settings-manager.desktop,
+	  
 	  xfce-mcs-plugins/branches/xfce_4_2/plugins/display_plugin/xfce-display-settings.desktop,
+	  
 	  xfce-mcs-plugins/branches/xfce_4_2/plugins/keyboard_plugin/xfce-keyboard-settings.desktop,
+	  
 	  xfce-mcs-plugins/branches/xfce_4_2/plugins/mouse_plugin/xfce-mouse-settings.desktop,
+	  
 	  xfce-mcs-plugins/branches/xfce_4_2/plugins/ui_plugin/xfce-ui-settings.desktop,
 	  xfce-utils/branches/xfce_4_2/gdm/xfce.desktop,
 	  xfce-utils/branches/xfce_4_2/xftaskbar/plugin/xfce-taskbar-settings.desktop,
 	  xfce4-appfinder/branches/xfce_4_2/src/xfce4-appfinder.desktop,
 	  xfce4-mixer/branches/xfce_4_2/settings/xfce-mixer-settings.desktop,
+	  
 	  xfce4-panel/branches/xfce_4_2/settings/xfce-panel-settings.desktop,
+	  
 	  xfce4-session/branches/xfce_4_2/settings/session/xfce-session-settings.desktop,
+	  
 	  xfce4-session/branches/xfce_4_2/settings/splash/xfce-splash-settings.desktop,
 	  xfdesktop/branches/xfce_4_2/menueditor/xfce-menueditor.desktop,
 	  xfdesktop/branches/xfce_4_2/settings/xfce-backdrop-settings.desktop,
+	  
 	  xffm/branches/xfce_4_2/plugin-mcs/xfce-filemanager-settings.desktop,
 	  xffm/branches/xfce_4_2/src/Xfbook.desktop,
 	  xffm/branches/xfce_4_2/src/Xfdiff.desktop,
@@ -1958,9 +2129,9 @@
 	  xfprint/branches/xfce_4_2/xfprint-manager/xfprint-manager.desktop,
 	  xfwm4/branches/xfce_4_2/mcs-plugin/xfce-wm-settings.desktop,
 	  xfwm4/branches/xfce_4_2/mcs-plugin/xfce-workspaces-settings.desktop:
-	  * Added Greek translations by Stavros Giannouris. * Changed
-	  language order alphabetically. * Removed extra trailer white
-	  space.
+	  * Added Greek translations by Stavros Giannouris.
+	  * Changed language order alphabetically.
+	  * Removed extra trailer white space.
 
 2005-08-29 21:48  daichi
 
@@ -2004,8 +2175,8 @@
 	  xffm/branches/xfce_4_2/po/ku.po,
 	  xfprint/branches/xfce_4_2/po/ku.po,
 	  xfwm4/branches/xfce_4_2/po/ku.po: Added Kurdish translations by
-	  Erdal Ronahi, in which removed unnecessary strings from initial
-	  comments.
+	  Erdal Ronahi, in which
+	  removed unnecessary strings from initial comments.
 
 2005-08-29 21:34  daichi
 
@@ -2024,8 +2195,8 @@
 	  xffm/branches/xfce_4_2/configure.ac,
 	  xfprint/branches/xfce_4_2/configure.ac,
 	  xfwm4/branches/xfce_4_2/configure.ac: Added 'ku' at BM_I18N().
-	  Changed language code order alphabetically. Wrapped lines so
-	  they're within the 72 characters per line.
+	  Changed language code order alphabetically.
+	  Wrapped lines so they're within the 72 characters per line.
 
 2005-08-25 15:58  yuvaltanny
 
@@ -2064,10 +2235,15 @@
 	  xfce4-session/branches/xfce_4_2/po/pl.po,
 	  xfce4-session/branches/xfce_4_2/po/pt_BR.po,
 	  xfce4-session/branches/xfce_4_2/po/zh_CN.po: Fixed errors
-	  emitted by 'msgfmt -c'. Added fall back address at the
-	  'Language-Team: ', according to the
+	  emitted by 'msgfmt -c'.
+	  
+	  Added fall back address at the 'Language-Team: ', according to
+	  the
+	  
 	  http://www.iro.umontreal.ca/translation/registry.cgi?team=index
+	  
 	  Modified initial comment strings with template by 'msginit'.
+	  
 	  Discarded obsolete translations.
 
 2005-08-18 12:08  daichi
@@ -2257,10 +2433,13 @@
 	  xfce4-appfinder/branches/xfce_4_2/src/xfce4-appfinder.desktop,
 	  xfce4-panel/branches/xfce_4_2/contents.xml.ro,
 	  xfce4-panel/branches/xfce_4_2/settings/xfce-panel-settings.desktop,
+	  
 	  xfce4-session/branches/xfce_4_2/settings/session/xfce-session-settings.desktop,
+	  
 	  xfce4-session/branches/xfce_4_2/settings/splash/xfce-splash-settings.desktop,
 	  xfdesktop/branches/xfce_4_2/po/ro.po,
 	  xfprint/branches/xfce_4_2/mcs-plugin/xfce-xfprint-settings.desktop,
+	  
 	  xfprint/branches/xfce_4_2/xfprint-manager/xfprint-manager.desktop,
 	  xfprint/branches/xfce_4_2/xfprint/xfprint.desktop,
 	  xfwm4/branches/xfce_4_2/mcs-plugin/xfce-wm-settings.desktop,
@@ -2335,7 +2514,9 @@
 	  xfce4-session/branches/xfce_4_2/engines/Makefile.in,
 	  xfce4-session/branches/xfce_4_2/engines/balou/Makefile.in,
 	  xfce4-session/branches/xfce_4_2/engines/balou/scripts/Makefile.in,
+	  
 	  xfce4-session/branches/xfce_4_2/engines/balou/themes/Default/Makefile.in,
+	  
 	  xfce4-session/branches/xfce_4_2/engines/balou/themes/Makefile.in,
 	  xfce4-session/branches/xfce_4_2/engines/mice/Makefile.in,
 	  xfce4-session/branches/xfce_4_2/engines/simple/Makefile.in,
@@ -2466,6 +2647,7 @@
 	  xfce4-session/branches/xfce_4_2/engines/.cvsignore,
 	  xfce4-session/branches/xfce_4_2/engines/balou/.cvsignore,
 	  xfce4-session/branches/xfce_4_2/engines/balou/scripts/.cvsignore,
+	  
 	  xfce4-session/branches/xfce_4_2/engines/balou/themes/.cvsignore,
 	  xfce4-session/branches/xfce_4_2/engines/balou/themes/Default/.cvsignore,
 	  xfce4-session/branches/xfce_4_2/engines/mice/.cvsignore,
@@ -2504,6 +2686,7 @@
 	  xfce4-session/branches/xfce_4_2/docs/fr/images/Makefile.am,
 	  xfce4-session/branches/xfce_4_2/docs/fr/images/Makefile.in,
 	  xfce4-session/branches/xfce_4_2/docs/fr/images/xfsm-advanced.png,
+	  
 	  xfce4-session/branches/xfce_4_2/docs/fr/images/xfsm-general.png,
 	  xfce4-session/branches/xfce_4_2/docs/fr/images/xfsm-splash.png,
 	  xfce4-session/branches/xfce_4_2/docs/fr/xfce4-session.html,
@@ -2539,7 +2722,8 @@
 
 	* xfce4-session/branches/xfce_4_2/settings/splash/module.c:
 	  Backport from HEAD: Properly initialize the engine structure in
-	  module_test(). Else, xfce-mcs-manager crashes.
+	  module_test().
+	  Else, xfce-mcs-manager crashes.
 
 2005-03-12 14:53  olivier
 
@@ -2571,6 +2755,7 @@
 2005-03-09 15:40  pollux
 
 	* xfce4-session/branches/xfce_4_2/settings/session/xfce-session-settings.desktop,
+	  
 	  xfce4-session/branches/xfce_4_2/settings/splash/xfce-splash-settings.desktop:
 	  update SK translations
 
@@ -2598,6 +2783,7 @@
 2005-03-05 10:42  pollux
 
 	* xfce4-session/branches/xfce_4_2/settings/session/xfce-session-settings.desktop,
+	  
 	  xfce4-session/branches/xfce_4_2/settings/splash/xfce-splash-settings.desktop:
 	  update EU translations
 
@@ -2610,7 +2796,8 @@
 
 	* xfce4-session/branches/xfce_4_2/settings/splash/module.c: Call
 	  start() routine if given, so splash engine developers can
-	  properly test their stuff.
+	  properly
+	  test their stuff.
 
 2005-02-21 09:12  pollux
 
@@ -2626,6 +2813,7 @@
 
 	* xfce4-session/branches/xfce_4_2/po/fi.gmo,
 	  xfce4-session/branches/xfce_4_2/settings/session/xfce-session-settings.desktop,
+	  
 	  xfce4-session/branches/xfce_4_2/settings/splash/xfce-splash-settings.desktop:
 	  update zh_CN translations
 
@@ -2692,6 +2880,7 @@
 2005-01-10 12:23  pollux
 
 	* xfce4-session/branches/xfce_4_2/settings/session/xfce-session-settings.desktop,
+	  
 	  xfce4-session/branches/xfce_4_2/settings/splash/xfce-splash-settings.desktop:
 	  update LT translations
 
@@ -2703,6 +2892,7 @@
 2005-01-09 13:42  pollux
 
 	* xfce4-session/branches/xfce_4_2/settings/session/xfce-session-settings.desktop,
+	  
 	  xfce4-session/branches/xfce_4_2/settings/splash/xfce-splash-settings.desktop:
 	  update RO translations
 
@@ -2804,6 +2994,7 @@
 
 	* xfce4-session/trunk/po/et.gmo, xfce4-session/trunk/po/et.po,
 	  xfce4-session/trunk/settings/session/xfce-session-settings.desktop,
+	  
 	  xfce4-session/trunk/settings/splash/xfce-splash-settings.desktop:
 	  update ET translations
 
@@ -2878,6 +3069,7 @@
 2004-12-05 20:50  pollux
 
 	* xfce4-session/trunk/settings/session/xfce-session-settings.desktop,
+	  
 	  xfce4-session/trunk/settings/splash/xfce-splash-settings.desktop:
 	  update KO translations and add screenshots in xfprint doc
 
@@ -2911,8 +3103,8 @@
 2004-11-23 10:37  benny
 
 	* xfce4-session/trunk/xfce4-session/xfsm-legacy.c: Fix possible
-	  crash when a legacy application exits/crashes before querying
-	  the WM_COMMAND and WM_CLIENT_MACHINE properties.
+	  crash when a legacy application exits/crashes before
+	  querying the WM_COMMAND and WM_CLIENT_MACHINE properties.
 
 2004-11-19 00:59  benny
 
@@ -2920,7 +3112,8 @@
 	  xfce4-session/trunk/xfce4-session/xfsm-compat-kde.c: Include
 	  LISTofARRAY8 values in the verbose output. Export KDE_MULTIHEAD
 	  if running in multihead mode, this makes KDE apps set the
-	  -display command line switch correctly in RestartCommand.
+	  -display
+	  command line switch correctly in RestartCommand.
 
 2004-11-16 07:12  jasper
 
@@ -2979,8 +3172,9 @@
 	  xfce4-session/trunk/xfce4-session/Makefile.in,
 	  xfce4-session/trunk/xfsm-shutdown-helper/Makefile.in: Update
 	  automake/autoconf/libtool/gettext versions to generate the
-	  configure scripts and Makefiles, Update versions of all packages
-	  to 4.1.99.1 (ie 4.2 RC1), Update ChangeLogs.
+	  configure scripts and Makefiles,
+	  Update versions of all packages to 4.1.99.1 (ie 4.2 RC1),
+	  Update ChangeLogs.
 
 2004-11-05 16:34  benny
 
@@ -3168,9 +3362,12 @@
 	  xfce4-session/trunk/xfce4-session/xfsm-util.h: Resolve the
 	  libxfsm build order problem. Issue a detailed message if the
 	  failsafe session couldn't be loaded. Imported the
-	  xfce4-session-logout hack from Brian, requested too often to
-	  ignore. Update the man pages, esp. mention the XDG variables in
-	  the xfce4-session man page. Update the po files.
+	  xfce4-session-logout
+	  hack from Brian, requested too often to ignore. Update the man
+	  pages, esp.
+	  mention the XDG variables in the xfce4-session man page. Update
+	  the po
+	  files.
 
 2004-10-30 19:03  olivier
 
@@ -3186,6 +3383,7 @@
 
 	* xfce4-session/trunk/po/he.gmo, xfce4-session/trunk/po/he.po,
 	  xfce4-session/trunk/settings/session/xfce-session-settings.desktop,
+	  
 	  xfce4-session/trunk/settings/splash/xfce-splash-settings.desktop:
 	  update HE translations
 
@@ -3245,6 +3443,7 @@
 	  xfce4-session/trunk/po/vi.gmo, xfce4-session/trunk/po/zh_CN.gmo,
 	  xfce4-session/trunk/po/zh_TW.gmo,
 	  xfce4-session/trunk/settings/session/xfce-session-settings.desktop,
+	  
 	  xfce4-session/trunk/settings/splash/xfce-splash-settings.desktop:
 	  update FI translations
 
@@ -3302,8 +3501,8 @@
 2004-10-08 14:55  edscott
 
 	* xfce4-session/trunk/po/es.po, xfce4-session/trunk/po/es_MX.po:
-	  update translations. Note to Benny: there are too many "starting
-	  this-or-that" while a "starting %s" is also provided.
+	  update translations. Note to Benny: there are too many
+	  "starting this-or-that" while a "starting %s" is also provided.
 
 2004-10-08 12:17  pollux
 
@@ -3314,7 +3513,8 @@
 
 	* xfce4-session/trunk/configure, xfce4-session/trunk/m4/debug.m4:
 	  Added --enable-final (-O1 for GNU ld) as per Jaspers request.
-	  Added missing m4 files.
+	  Added missing
+	  m4 files.
 
 2004-10-06 14:03  benny
 
@@ -3353,8 +3553,8 @@
 	  xfce4-session/trunk/xfce4-session/xfce4-session-1.0.pc.in,
 	  xfce4-session/trunk/xfce4-session/xfsm-splash-rc.def,
 	  xfce4-session/trunk/xfsm-shutdown-helper/Makefile.in: Workaround
-	  cygwin splash engine problem by installing libxfsm as a shared
-	  library. Maarten, please verify that this actually works.
+	  cygwin splash engine problem by installing libxfsm as a
+	  shared library. Maarten, please verify that this actually works.
 
 2004-10-05 12:54  benny
 
@@ -3399,6 +3599,7 @@
 2004-10-03 15:43  pollux
 
 	* xfce4-session/trunk/settings/session/xfce-session-settings.desktop,
+	  
 	  xfce4-session/trunk/settings/splash/xfce-splash-settings.desktop:
 	  zh_TW translations of desktop files from Ambrose Li
 	  <acli@ada.dhs.org>
@@ -3495,18 +3696,21 @@
 
 	* xfce4-session/trunk/po/nl.po,
 	  xfce4-session/trunk/settings/session/xfce-session-settings.desktop,
+	  
 	  xfce4-session/trunk/settings/splash/xfce-splash-settings.desktop:
 	  Better translation
 
 2004-09-23 08:22  jasper
 
 	* xfce4-session/trunk/settings/session/xfce-session-settings.desktop,
+	  
 	  xfce4-session/trunk/settings/splash/xfce-splash-settings.desktop:
 	  Add nl translations
 
 2004-09-22 03:18  kelnos
 
 	* xfce4-session/trunk/settings/session/xfce-session-settings.desktop,
+	  
 	  xfce4-session/trunk/settings/splash/xfce-splash-settings.desktop:
 	  add GenericName tags to settings .desktop files
 
@@ -3616,9 +3820,9 @@
 2004-09-18 00:02  moe
 
 	* xfce4-session/trunk/po/de.po: Updating these for alpha release.
-	  Not yet finished .. but I'm just too tired to continue. Needs
-	  extensive spell checking and approvement (Note to myself: Write
-	  mail to the list!).
+	  Not yet finished .. but I'm
+	  just too tired to continue. Needs extensive spell checking
+	  and approvement (Note to myself: Write mail to the list!).
 
 2004-09-16 22:10  pollux
 
@@ -3737,7 +3941,8 @@
 	  xfce4-session/trunk/xfsm-shutdown-helper/Makefile.in: Cleanups.
 	  'gmake dist' checked. Added all required M4 files. Removed
 	  obsolete files. Updated several documents. Updated german
-	  translations. Version 4.1.15.
+	  translations.
+	  Version 4.1.15.
 
 2004-08-24 10:04  pollux
 
@@ -3754,11 +3959,15 @@
 
 	* xfce4-session/trunk/po/fr.gmo, xfce4-session/trunk/po/fr.po,
 	  xfce4-session/trunk/settings/session/xfce-session-settings.desktop,
+	  
 	  xfce4-session/trunk/settings/splash/xfce-splash-settings.desktop:
-	  Resync with repository, most notably: - libxfcegui4 fixes with
-	  gtk 2.2 - xfwm4 updates - Present panel plugins in alphabetical
-	  order - Fix add plugin dialog being placed over the panel when
-	  using SM - French po updates - Other various small bug fixes
+	  Resync with repository, most notably:
+	  - libxfcegui4 fixes with gtk 2.2
+	  - xfwm4 updates
+	  - Present panel plugins in alphabetical order
+	  - Fix add plugin dialog being placed over the panel when using SM
+	  - French po updates
+	  - Other various small bug fixes
 
 2004-08-15 09:02  pollux
 
@@ -3790,7 +3999,8 @@
 2004-07-28 21:22  benny
 
 	* xfce4-session/trunk/m4/depends.m4: Fixed (module)_FOUND bug
-	  reported by brian. Hopefully nothing else broke this time.
+	  reported by brian. Hopefully nothing else broke
+	  this time.
 
 2004-07-27 18:25  benny
 
@@ -3837,8 +4047,8 @@
 2004-07-24 18:52  benny
 
 	* xfce4-session/trunk/m4/depends.m4: Readded XFCE_MCS_PLUGIN()
-	  again, dunno how I manage to remove it everytime I edit
-	  depends.m4!
+	  again, dunno how I manage to remove it everytime
+	  I edit depends.m4!
 
 2004-07-24 17:30  benny
 
@@ -3877,8 +4087,9 @@
 	  xfce4-session/trunk/settings/session/session.c,
 	  xfce4-session/trunk/settings/splash/splash.c,
 	  xfce4-session/trunk/xfce4-session.rc: Updated ChangeLog. Bumped
-	  version to 4.1.13. Fix balou config treeview drag icon. Added
-	  several tooltips. Added scrolled window and frames to the splash
+	  version to 4.1.13. Fix balou config treeview drag
+	  icon. Added several tooltips. Added scrolled window and frames
+	  to the splash
 	  mcs dialog.
 
 2004-07-23 17:09  benny
@@ -3908,7 +4119,8 @@
 	  xfce4-session/trunk/xfce4-session/shutdown.c,
 	  xfce4-session/trunk/xfce4-session/xfsm-shutdown-helper-sudo.c:
 	  Reap the shutdown helper, so no zombies are created if the user
-	  cancels the shutdown attempt.
+	  cancels the
+	  shutdown attempt.
 
 2004-07-23 12:33  benny
 
@@ -3924,8 +4136,8 @@
 2004-07-20 20:58  benny
 
 	* xfce4-session/trunk/m4/depends.m4: Modifed panel plugin check,
-	  so one (the installer) can choose to install into a different
-	  plugin dir.
+	  so one (the installer) can choose to install
+	  into a different plugin dir.
 
 2004-07-16 14:08  benny
 
@@ -3974,11 +4186,14 @@
 	  xfce4-session/trunk/xfce4-session/xfsm-shutdown-helper-sudo.c,
 	  xfce4-session/trunk/xfce4-session/xfsm-shutdown-helper.c: Added
 	  simple redhat shutdown code (dunno if this works actually,
-	  copied from gnome-session) per botsie's request. Added lots of
-	  .cvsignore files. Use Brians XfceColorButton instead of the
-	  2.4-only GtkColorButton widget. Removed the custom xinitrc
-	  script, its no longer required, since xinitrc starts
-	  xfce4-session automatically.
+	  copied from
+	  gnome-session) per botsie's request. Added lots of .cvsignore
+	  files. Use
+	  Brians XfceColorButton instead of the 2.4-only GtkColorButton
+	  widget.
+	  Removed the custom xinitrc script, its no longer required, since
+	  xinitrc
+	  starts xfce4-session automatically.
 
 2004-07-15 20:37  benny
 
@@ -4027,7 +4242,8 @@
 	  xfce4-session/trunk/settings/splash/module.c,
 	  xfce4-session/trunk/settings/splash/module.h,
 	  xfce4-session/trunk/settings/splash/splash.c: Implemented "Test"
-	  for splash engines. Added configure dialog for the balou engine.
+	  for splash engines. Added configure dialog for the
+	  balou engine.
 
 2004-07-14 18:26  benny
 
@@ -4070,7 +4286,8 @@
 	  xfce4-session/trunk/settings/splash/splash.c,
 	  xfce4-session/trunk/xfce4-session/xfsm-splash-engine.h: Added
 	  configure dialog for the simple engine, currently Gtk 2.4 only
-	  because of missing GtkColorButton in 2.2 *argh*.
+	  because
+	  of missing GtkColorButton in 2.2 *argh*.
 
 2004-07-14 16:16  benny
 
@@ -4100,8 +4317,8 @@
 	  xfce4-session/trunk/settings/splash/nopreview.png,
 	  xfce4-session/trunk/settings/splash/splash.c,
 	  xfce4-session/trunk/xfce4-session.rc: New (fast!) default splash
-	  engine ready for import. Fixes to the splash settings dialog.
-	  And new splash screen icon from Francois.
+	  engine ready for import. Fixes to the splash
+	  settings dialog. And new splash screen icon from Francois.
 
 2004-07-14 15:15  benny
 
@@ -4289,7 +4506,8 @@
 
 	* xfce4-session/trunk/xfce4-session/xfsm-shutdown-helper.c:
 	  FreeBSD requires <sys/time.h> prior to <sys/resource.h>, thanks
-	  to Josh Howard.
+	  to
+	  Josh Howard.
 
 2004-06-11 19:59  pollux
 
@@ -4316,7 +4534,8 @@
 	* xfce4-session/trunk/po/POTFILES.in,
 	  xfce4-session/trunk/po/fr.gmo, xfce4-session/trunk/po/fr.po,
 	  xfce4-session/trunk/po/xfce4-session.pot: - fix POTFILES.in for
-	  missing settings/old-session.c - update French translations
+	  missing settings/old-session.c
+	  - update French translations
 
 2004-06-06 12:13  benny
 
@@ -4404,10 +4623,12 @@
 	  xfce4-session/trunk/xfce4-session/xfsm-manager.c,
 	  xfce4-session/trunk/xfce4-session/xfsm-splash-theme.h,
 	  xfce4-session/trunk/xfsm-shutdown-helper/Makefile.in: Added
-	  popup menu to the splash theme list, also added the possiblity
-	  to do XDS (XDirectSave) w/ rox (and probably other fms) to
-	  export themes. Logout icon is now themable. Added KDE/Gnome icon
-	  to the settings dialog. Other fixes.
+	  popup menu to the splash theme list, also added the possiblity to
+	  do XDS (XDirectSave) w/ rox (and probably other fms) to export
+	  themes.
+	  Logout icon is now themable. Added KDE/Gnome icon to the
+	  settings dialog.
+	  Other fixes.
 
 2004-06-05 13:49  benny
 
@@ -4465,9 +4686,10 @@
 	  xfce4-session/trunk/xfce4-session/xfsm-util.h,
 	  xfce4-session/trunk/xfsm-shutdown-helper/Makefile.in: Added
 	  ability to remove sessions (using the session chooser). New ca
-	  translations from Carles Mu&#65533;oz Gorriz. Updated po files. Check
-	  for iceauth in configure. Warn the user if iceauth failes to
-	  create authentication data.
+	  translations from Carles Mu�oz Gorriz. Updated po files. Check
+	  for iceauth
+	  in configure. Warn the user if iceauth failes to create
+	  authentication data.
 
 2004-06-04 19:45  pollux
 
@@ -4505,7 +4727,8 @@
 	  xfce4-session/trunk/xfce4-session/xfsm-manager.c: Added a
 	  work-around to get broken CDE apps working with legacy session
 	  management and set GNOME_SM_PROXY on startup, some apps - like
-	  OOo - rely on this to be set.
+	  OOo - rely
+	  on this to be set.
 
 2004-05-27 22:16  benny
 
@@ -4534,10 +4757,12 @@
 	  xfce4-session/trunk/xfce4-session/xfsm-properties.c,
 	  xfce4-session/trunk/xfce4-session/xfsm-splash-screen.c: Fixed
 	  legacy check for XSMP support. Added support for session
-	  screenshots, if enabled, a screenshot of your session will be
-	  shot on logout and displayed in the chooser on next login
-	  (disabled by default, since its a bit expensive to transfer
-	  large root window screenshots, enable with
+	  screenshots,
+	  if enabled, a screenshot of your session will be shot on logout
+	  and displayed
+	  in the chooser on next login (disabled by default, since its a
+	  bit expensive
+	  to transfer large root window screenshots, enable with
 	  --enable-session-screenshots at compile time).
 
 2004-05-26 13:29  benny
@@ -4564,9 +4789,13 @@
 	  xfce4-session/trunk/xfce4-session/xfsm-manager.c: Renamed
 	  shutdown() -> xfsm_shutdown(), since it causes trouble with
 	  functions, that use the libc shutdown(), like XCloseDisplay,
-	  really a weird bug. Added legacy session management based upon
-	  the one found in ksmserver. So from now on, do NOT EVER run
-	  smproxy, or you will be assimilated :-).
+	  really a
+	  weird bug.
+	  
+	  Added legacy session management based upon the one found in
+	  ksmserver. So
+	  from now on, do NOT EVER run smproxy, or you will be assimilated
+	  :-).
 
 2004-05-25 21:29  benny
 
@@ -4596,7 +4825,8 @@
 	  xfce4-session/trunk/xfsm-shutdown-helper/Makefile.in: Added
 	  Gnome compatibility. Improved KDE compatibility (Konqueror seems
 	  somewhat broken, though, dunno why). Some cosmetic fixes on the
-	  splash screen (avoid flicker, same y pos for all texts).
+	  splash
+	  screen (avoid flicker, same y pos for all texts).
 
 2004-05-25 18:07  benny
 
@@ -4613,15 +4843,22 @@
 	  xfce4-session/trunk/settings/xfsm-install-theme,
 	  xfce4-session/trunk/xfce4-session/xfsm-startup.c: Enable
 	  installation of new themes by dragging&dropping a theme from a
-	  file manager (tested with rox so far) to the theme treeview,
-	  currently only theme directories (that are directories that
-	  contain a subdir "xfsm4" and atleast a file "xfsm4/themerc") and
-	  theme tarballs (actuall .tar.gz, which contents match the theme
-	  directory layout described above) are supported. The
-	  "installation" of the theme is done using the xfsm-install-theme
-	  script, so it should be easy to add support for further "file
-	  formats", just send me a patch (but remember that the stuff has
-	  to be plattform-independend, so no bashism or GNUism).
+	  file
+	  manager (tested with rox so far) to the theme treeview,
+	  currently only
+	  theme directories (that are directories that contain a subdir
+	  "xfsm4"
+	  and atleast a file "xfsm4/themerc") and theme tarballs (actuall
+	  .tar.gz, which
+	  contents match the theme directory layout described above) are
+	  supported.
+	  The "installation" of the theme is done using the
+	  xfsm-install-theme script,
+	  so it should be easy to add support for further "file formats",
+	  just send
+	  me a patch (but remember that the stuff has to be
+	  plattform-independend,
+	  so no bashism or GNUism).
 
 2004-05-25 12:27  pollux
 
@@ -4656,7 +4893,8 @@
 	  xfce4-session/trunk/xfce4-session/xfsm-splash-theme.c,
 	  xfce4-session/trunk/xfce4-session/xfsm-splash-theme.h:
 	  Mo[e]dified the settings dialog based on some ideas I discussed
-	  with Moe. Changed the skip icon to the new icon from Francois.
+	  with Moe.
+	  Changed the skip icon to the new icon from Francois.
 
 2004-05-24 17:25  benny
 
@@ -4679,8 +4917,9 @@
 	  xfce4-session/trunk/xfce4-session/xfsm-splash-theme.c,
 	  xfce4-session/trunk/xfce4-session/xfsm-splash-theme.h: New
 	  splash theme file format. Added gradient option for bgcolor and
-	  focolor, as per Francois' request. New default theme based on
-	  the one by Francois.
+	  focolor,
+	  as per Francois' request. New default theme based on the one by
+	  Francois.
 
 2004-05-22 06:52  benny
 
@@ -4691,7 +4930,8 @@
 
 	* xfce4-session/trunk/xfce4-session/xfsm-shutdown-helper.c:
 	  FreeBSD requires sys/types.h before including sys/resource.h,
-	  thanks to Pawel Worach.
+	  thanks to
+	  Pawel Worach.
 
 2004-05-21 07:54  benny
 
@@ -4708,9 +4948,12 @@
 	  xfce4-session/trunk/xfce4-session/xfsm-startup.c: Fix a nasty
 	  bug. Until now each application was assigned a new session id,
 	  regardless of whether the application was freshly started or
-	  restored. This fixes the problem, that xfwm4 wasn't able to
-	  restore window attributes on startup. When updating, you need to
-	  rm -f ~/.cache/xfce4-session/xfce4-session* to get it fixed.
+	  restored. This
+	  fixes the problem, that xfwm4 wasn't able to restore window
+	  attributes on
+	  startup. When updating, you need to rm -f
+	  ~/.cache/xfce4-session/xfce4-session*
+	  to get it fixed.
 
 2004-05-20 21:16  benny
 
@@ -4793,7 +5036,8 @@
 	  xfce4-session/trunk/xfce4-session/xfsm-splash-theme.h: Make the
 	  timeout configurable and added two buttons to the splash window
 	  that allow the user to run the chooser or skip the timeout
-	  (these two must be explicitly set by the theme).
+	  (these two
+	  must be explicitly set by the theme).
 
 2004-05-18 23:28  benny
 
@@ -4815,7 +5059,8 @@
 	  xfce4-session/trunk/xfce4-session/xfsm-splash-theme.h,
 	  xfce4-session/trunk/xfce4-session/xfsm-util.c,
 	  xfce4-session/trunk/xfce4-session/xfsm-util.h: Further tweaks to
-	  the theming stuff, the fadeout color is now configurable as well.
+	  the theming stuff, the fadeout color is now configurable
+	  as well.
 
 2004-05-18 22:41  benny
 
@@ -4837,7 +5082,8 @@
 	  xfce4-session/trunk/xfce4-session/xfsm-splash-theme.c,
 	  xfce4-session/trunk/xfce4-session/xfsm-splash-theme.h: Added
 	  theme support. Suggestings for things that are required to
-	  create nice splash themes are welcome.
+	  create nice
+	  splash themes are welcome.
 
 2004-05-18 21:06  benny
 
@@ -4877,14 +5123,18 @@
 	  xfce4-session/trunk/xfce4-shutdown/main.c: Changed license to
 	  GPL. Added Jaspers border to the chooser window (looks way
 	  better). Removed the "Confirm logout" option, its more or less
-	  useless. Use g_spawn_sync() in xfce4-shutdown redirecting all
-	  fds to /dev/null, that should shutdown every machine correctly
-	  now. Save SmEnvironment for clients. Simplify the
-	  SmDiscardCommand handling a bit. Fixed broken
+	  useless. Use
+	  g_spawn_sync() in xfce4-shutdown redirecting all fds to
+	  /dev/null, that
+	  should shutdown every machine correctly now. Save SmEnvironment
+	  for
+	  clients. Simplify the SmDiscardCommand handling a bit. Fixed
+	  broken
 	  gdk_pointer_ungrab(). Reset input focus handling in shutdown
-	  dialog to RevertToParent. Ensure that the sessions rc file is
-	  really closed in all cases. Remove some C++ comments. Fixed some
-	  memory leaks.
+	  dialog to
+	  RevertToParent. Ensure that the sessions rc file is really
+	  closed in
+	  all cases. Remove some C++ comments. Fixed some memory leaks.
 
 2004-05-18 15:18  benny
 
@@ -4902,8 +5152,8 @@
 2004-05-18 10:26  benny
 
 	* xfce4-session/trunk/xfce4-session/shutdown.c: Use TOPLEVEL
-	  window instead of TEMP window, maybe that fixes the bug reported
-	  by brian.
+	  window instead of TEMP window, maybe that fixes the bug
+	  reported by brian.
 
 2004-05-17 22:31  benny
 
@@ -4913,8 +5163,10 @@
 	  xfce4-session/trunk/xfce4-session/xfsm-util.c,
 	  xfce4-session/trunk/xfce4-session/xfsm-util.h: Run
 	  DiscardCommand if it changes during a SAVE YOURSELF to cleanup
-	  unneeded session files. Remember ActiveWorkspace for all Screens
-	  and restore it after the session is restored.
+	  unneeded session files.
+	  
+	  Remember ActiveWorkspace for all Screens and restore it after the
+	  session is restored.
 
 2004-05-17 21:32  benny
 
@@ -4979,8 +5231,13 @@
 
 	* xfce4-session/trunk/Makefile.am,
 	  xfce4-session/trunk/Makefile.in, xfce4-session/trunk/configure,
-	  xfce4-session/trunk/configure.ac: (__) (oo) /------\/ / | || *
-	  /\---/\ ~~ ~~ ...."Have you mooed today?"...
+	  xfce4-session/trunk/configure.ac: (__)
+	  (oo)
+	  /------\/
+	  / | ||
+	  * /\---/\
+	  ~~ ~~
+	  ...."Have you mooed today?"...
 
 2004-05-17 18:44  benny
 
@@ -5164,10 +5421,11 @@
 	* xfce4-session/trunk/aclocal.m4, xfce4-session/trunk/configure,
 	  xfce4-session/trunk/configure.ac, xfce4-session/trunk/ltmain.sh,
 	  xfce4-session/trunk/po/ar.gmo, xfce4-session/trunk/po/ar.po:
-	  Add/update i18n for: Bulgarian from Miroslav Yordanov
-	  <miordanov@i-space.org> and Peter Slavov <peshka@i-space.org>
-	  Italian from Alex Dupre <ale@FreeBSD.org> Arabic from Saleh
-	  Hathal <hathalsal@hotmail.com>
+	  Add/update i18n for:
+	  Bulgarian from Miroslav Yordanov <miordanov@i-space.org> and
+	  Peter Slavov <peshka@i-space.org>
+	  Italian from Alex Dupre <ale@FreeBSD.org>
+	  Arabic from Saleh Hathal <hathalsal@hotmail.com>
 
 2004-03-13 18:09  benny
 
@@ -5181,7 +5439,8 @@
 2004-03-01 21:09  benny
 
 	* xfce4-session/trunk/m4/debug.m4: Added --enable-gcov to compile
-	  xfce with support for coverage tests. Very useful.
+	  xfce with support for coverage tests. Very
+	  useful.
 
 2004-02-27 17:19  benny
 
@@ -5191,7 +5450,8 @@
 2004-02-20 21:43  benny
 
 	* xfce4-session/trunk/TODO: Next round in the "Linux don't like my
-	  xterms" course as requested by Olivier :-)
+	  xterms" course as requested by
+	  Olivier :-)
 
 2004-02-17 19:36  jasper
 
@@ -5208,9 +5468,9 @@
 
 	* xfce4-session/trunk/autogen.sh, xfce4-session/trunk/configure,
 	  xfce4-session/trunk/po/fr.gmo, xfce4-session/trunk/po/fr.po:
-	  Updated french translation, thanks to Jean-Fran&#65533;ois Wauthy
-	  <pollux@castor.be>. Make --enable-maintainer-mode default for
-	  autogen.sh.
+	  Updated french translation, thanks to Jean-Fran�ois Wauthy
+	  <pollux@castor.be>.
+	  Make --enable-maintainer-mode default for autogen.sh.
 
 2004-02-11 20:44  jasper
 
@@ -5277,9 +5537,10 @@
 2004-01-28 21:41  benny
 
 	* xfce4-session/trunk/xfce4-session/shutdown.c: Try to fallback to
-	  using "halt" if "poweroff" didn't do the job. That should fix
-	  the problem reported by Francois, telling that halting the
-	  machine does not work.
+	  using "halt" if "poweroff" didn't do the job. That should
+	  fix the problem reported by Francois, telling that halting the
+	  machine does
+	  not work.
 
 2004-01-25 10:35  olivier
 
@@ -5323,8 +5584,8 @@
 2004-01-23 13:00  benny
 
 	* xfce4-session/trunk/xfce4-session/manager.c: Fixes Solaris
-	  problem with SESSION_MANAGER not set (indeed a weird problem on
-	  Slowlaris).
+	  problem with SESSION_MANAGER not set (indeed a weird problem
+	  on Slowlaris).
 
 2004-01-21 13:44  jasper
 
@@ -5347,9 +5608,9 @@
 2004-01-15 22:53  benny
 
 	* xfce4-session/trunk/xfce4-session/manager.c: Bugfix: Session
-	  wasn't saved correctly under certain conditions. Added new code
-	  to handle timeouts of bogus session clients (not yet enabled by
-	  default)
+	  wasn't saved correctly under certain conditions. Added new
+	  code to handle timeouts of bogus session clients (not yet
+	  enabled by default)
 
 2004-01-15 21:47  benny
 
@@ -5405,7 +5666,7 @@
 	  xfce4-session/trunk/xfce4-session/Makefile.in,
 	  xfce4-session/trunk/xfce4-session/shutdown.c,
 	  xfce4-session/trunk/xfce4-shutdown/Makefile.in: Added french
-	  translations, thanks to Jean-Fran&#65533;ois Wauthy <pollux@castor.be>.
+	  translations, thanks to Jean-Fran�ois Wauthy <pollux@castor.be>.
 	  Make "poweroff" the default shutdown operation
 
 2003-12-29 15:18  olivier
@@ -5831,8 +6092,8 @@
 	  xfce4-session/trunk/xfce4-session/tray-icon.c: Fixed some
 	  problems with the tray-icon (also fixed stuff in libxfcegui4).
 	  The g_object_unref() error message was caused by the menu:
-	  gtk_menu_new() -> g_object_ref() -> g_object_unref() ->
-	  g_object_unref() *PLONK*
+	  gtk_menu_new() ->
+	  g_object_ref() -> g_object_unref() -> g_object_unref() *PLONK*
 
 2003-07-10 09:56  huysmans
 
@@ -5842,9 +6103,10 @@
 
 	* xfce4-session/trunk/ChangeLog, xfce4-session/trunk/TODO,
 	  xfce4-session/trunk/xfce4-session/startup.c: Give clients more
-	  time to restart: g_idle_add(..) -> g_timeout_add(50,..) This
-	  fixes some problems with clients being restarted too fast and
-	  xfwm4 failing to restore window properties correct.
+	  time to restart: g_idle_add(..) -> g_timeout_add(50,..)
+	  This fixes some problems with clients being restarted too fast
+	  and xfwm4
+	  failing to restore window properties correct.
 
 2003-07-09 22:51  bmeurer
 
@@ -5875,10 +6137,11 @@
 	  xfce4-session/trunk/xfce4-shutdown/Makefile.am,
 	  xfce4-session/trunk/xfce4-shutdown/Makefile.in,
 	  xfce4-session/trunk/xfce4-shutdown/main.c: Added spec file. 2
-	  Solaris fixes. State is now displayed in session control. Added
-	  Quit and Save entries to the tray menu. Fixed bug in
-	  SaveYourselfDone. Added UNIX signals support. Added security
-	  check to xfce4-shutdown.
+	  Solaris fixes. State is now displayed in session control.
+	  Added Quit and Save entries to the tray menu. Fixed bug in
+	  SaveYourselfDone.
+	  Added UNIX signals support. Added security check to
+	  xfce4-shutdown.
 
 2003-07-09 07:28  bmeurer
 
