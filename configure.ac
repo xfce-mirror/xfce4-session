@@ -1,6 +1,6 @@
 dnl $Id$
 dnl
-dnl Copyright (c) 2003-2005
+dnl Copyright (c) 2003-2006
 dnl         The Xfce development team. All rights reserved.
 dnl
 dnl Written for Xfce by Benedikt Meurer <benny@xfce.org>.
@@ -9,11 +9,11 @@ dnl
 dnl Version information
 m4_define([xfsm_version_major], [4])
 m4_define([xfsm_version_minor], [2])
-m4_define([xfsm_version_micro], [3])
+m4_define([xfsm_version_micro], [4])
 m4_define([xfsm_version], [xfsm_version_major.xfsm_version_minor.xfsm_version_micro])
 
 dnl Initialize autoconf
-AC_COPYRIGHT([Copyright (c) 2003-2005
+AC_COPYRIGHT([Copyright (c) 2003-2006
         The Xfce development team. All rights reserved.
         
 Written for Xfce by Benedikt Meurer <benny@xfce.org>.])
