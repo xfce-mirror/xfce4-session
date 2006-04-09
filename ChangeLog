@@ -1,3 +1,9 @@
+2006-04-09	Benedikt Meurer <benny@xfce.org>
+
+	* icons/Makefile.am: Be sure to run gtk-update-icon-cache after
+	  installing new icons into the hicolor icon theme (skipped if $DESTDIR
+	  is set).
+
 2006-02-26	Benedikt Meurer <benny@xfce.org>
 
 	* xfce4-session/shutdown.c: Fix indentation.
