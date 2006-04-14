@@ -233,7 +233,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
     {
       for (;;)
         {
-          if (gdk_pointer_grab (hidden->window, FALSE, 0, NULL, NULL,
+          if (gdk_pointer_grab (hidden->window, TRUE, 0, NULL, NULL,
                                 GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS)
             {
               if (gdk_keyboard_grab (hidden->window, FALSE, GDK_CURRENT_TIME)
