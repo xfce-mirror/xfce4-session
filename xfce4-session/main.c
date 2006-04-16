@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2003-2006 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -168,7 +168,7 @@ initialize (int argc, char **argv)
       if (strcmp (*argv, "--version") == 0)
         {
           printf ("%s (Xfce %s)\n\n"
-                  "Copyright (c) 2003-2005\n"
+                  "Copyright (c) 2003-2006\n"
                   "        The Xfce development team. All rights reserved.\n\n"
                   "Written for Xfce by Benedikt Meurer <benny@xfce.org>.\n\n"
                   "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d.\n\n"
