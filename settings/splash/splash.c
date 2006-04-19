@@ -583,7 +583,8 @@ mcs_plugin_init (McsPlugin *plugin)
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
   plugin->plugin_name = g_strdup ("splash");
-  plugin->caption = g_strdup (_("Splash Screen"));
+  /* the button label in the xfce-mcs-manager dialog */
+  plugin->caption = g_strdup (Q_ ("Button Label|Splash Screen"));
   plugin->run_dialog = splash_run;
   plugin->icon = xfce_themed_icon_load ("xfce4-splash", 48);
 

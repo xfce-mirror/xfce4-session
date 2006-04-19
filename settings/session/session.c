@@ -380,7 +380,8 @@ mcs_plugin_init (McsPlugin *plugin)
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
   plugin->plugin_name = g_strdup ("session");
-  plugin->caption = g_strdup (_("Sessions and Startup"));
+  /* the button label in the xfce-mcs-manager dialog */
+  plugin->caption = g_strdup (Q_("Button Label|Sessions and Startup"));
   plugin->run_dialog = dialog_run;
   plugin->icon = xfce_themed_icon_load ("xfce4-session", 48);
 
