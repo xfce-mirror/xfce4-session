@@ -1,15 +1,15 @@
 # Ukrainian translation of xfce4-session.
 # Copyright (C) 2003-2006 The Xfce development team.
 # This file is distributed under the same license as the xfce4-session package.
-# Maxim V. Dziumanenko <mvd@mylinux.com.ua>, 2005.
+# Maxim V. Dziumanenko <mvd@mylinux.ua>, 2005-2006.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-session 4.3.90.1\n"
+"Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-16 14:15+0200\n"
-"PO-Revision-Date: 2005-01-06 00:34+ZONE\n"
-"Last-Translator: Maxim V. Dziumanenko <mvd@mylinux.com.ua>\n"
+"POT-Creation-Date: 2006-04-25 20:02+0300\n"
+"PO-Revision-Date: 2006-04-23 12:34+02000\n"
+"Last-Translator: Maxim V. Dziumanenko <mvd@mylinux.ua>\n"
 "Language-Team: Ukrainian <translation-team-uk@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -55,28 +55,27 @@ msgstr "_Експортувати тему"
 
 #: ../engines/balou/config.c:841
 msgid "Balou theme"
-msgstr "Тема Balou"
+msgstr "Тема Балу"
 
 #: ../engines/balou/config.c:924
 msgid "Configure Balou..."
-msgstr "Налаштувати Balou..."
+msgstr "Налаштувати Балу..."
 
 #: ../engines/balou/config.c:965
-#, fuzzy
 msgid "Balou"
-msgstr "Тема Balou"
+msgstr "Балу"
 
 #: ../engines/balou/config.c:966
 msgid "Balou Splash Engine"
-msgstr ""
+msgstr "Заставка Балу"
 
 #: ../engines/mice/mice.c:369
 msgid "Mice"
-msgstr ""
+msgstr "Миша"
 
 #: ../engines/mice/mice.c:370
 msgid "Mice Splash Engine"
-msgstr ""
+msgstr "Заставка Миша"
 
 #: ../engines/simple/simple.c:315
 msgid "Choose image..."
@@ -112,11 +111,11 @@ msgstr "Використовувати інше зображення"
 
 #: ../engines/simple/simple.c:505
 msgid "Simple"
-msgstr ""
+msgstr "Проста"
 
 #: ../engines/simple/simple.c:506
 msgid "Simple Splash Engine"
-msgstr ""
+msgstr "Заставка Проста"
 
 #: ../settings/session/session.c:133
 msgid "Session chooser"
@@ -220,7 +219,6 @@ msgstr ""
 "параметр."
 
 #: ../settings/session/session.c:330 ../settings/session/session.c:345
-#: ../settings/session/session.c:383
 msgid "Sessions and Startup"
 msgstr "Сеанси та запуск"
 
@@ -231,6 +229,11 @@ msgstr "Загальні"
 #: ../settings/session/session.c:360
 msgid "Advanced"
 msgstr "Додаткові"
+
+#. the button label in the xfce-mcs-manager dialog
+#: ../settings/session/session.c:384
+msgid "Button Label|Sessions and Startup"
+msgstr "Сеанси та запуск"
 
 #: ../settings/splash/splash.c:305 ../settings/splash/splash.c:308
 #: ../settings/splash/splash.c:311 ../settings/splash/splash.c:314
@@ -279,56 +282,55 @@ msgstr "<b>Автор:</b>"
 msgid "<b>Homepage:</b>"
 msgstr "<b>Домашня сторінка:</b>"
 
-#: ../settings/splash/splash.c:586
-msgid "Splash Screen"
+#. the button label in the xfce-mcs-manager dialog
+#: ../settings/splash/splash.c:587
+msgid "Button Label|Splash Screen"
 msgstr "Заставка"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:99
 msgid "Add application"
-msgstr ""
+msgstr "Додати програму"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:113
 msgid "Name:"
-msgstr ""
+msgstr "Назва:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:130
-#, fuzzy
 msgid "Description:"
-msgstr "<b>Опис:</b>"
+msgstr "Опис:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:145
 msgid "Command:"
-msgstr ""
+msgstr "Команда:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:205
 msgid "Select a command"
-msgstr ""
+msgstr "Виберіть команду"
 
 #: ../xfce4-autostart-editor/xfae-model.c:515
 #, c-format
 msgid "Failed to unlink %s: %s"
-msgstr ""
+msgstr "Не вдається видалити %s: %s"
 
 #: ../xfce4-autostart-editor/xfae-model.c:603
 #, c-format
 msgid "Failed to create file %s"
-msgstr ""
+msgstr "Не вдається створити файл %s"
 
 #: ../xfce4-autostart-editor/xfae-model.c:625
 #, c-format
 msgid "Failed to write file %s"
-msgstr ""
+msgstr "Не вдається записати файл %s"
 
 #: ../xfce4-autostart-editor/xfae-model.c:724
 #, c-format
 msgid "Failed to open %s for writing"
-msgstr ""
+msgstr "Не вдається відкрити файл %s для запису"
 
 #: ../xfce4-autostart-editor/xfae-window.c:89
 #: ../xfce4-autostart-editor/xfae-window.c:106
-#, fuzzy
 msgid "Autostarted applications"
-msgstr "Керувати віддаленими програмами"
+msgstr "Автозапуск"
 
 #: ../xfce4-autostart-editor/xfae-window.c:124
 msgid ""
@@ -337,10 +339,14 @@ msgid ""
 "in addition to the applications that were saved when\n"
 "you logged out last time:"
 msgstr ""
+"Нижче розташований список програм, які будуть\n"
+"запущені автоматично на початку сеансу, додатково до\n"
+"програм, які були збережені під час останнього\n"
+"завершення сеансу:"
 
 #: ../xfce4-session/main.c:140
 msgid "Loading desktop settings"
-msgstr "Завантаження параметрів робочої стільниці"
+msgstr "Завантаження параметрів робочого столу"
 
 #. verify that the DNS settings are ok
 #: ../xfce4-session/main.c:200
@@ -352,22 +358,20 @@ msgid "Loading session data"
 msgstr "Завантаження відомостей про сеанс"
 
 #: ../xfce4-session/shutdown.c:307
-#, fuzzy
 msgid "End Session"
-msgstr "Новий сеанс"
+msgstr "Завершити сеанс"
 
 #: ../xfce4-session/shutdown.c:341
-#, fuzzy
 msgid "Log Out"
 msgstr "Вийти"
 
 #: ../xfce4-session/shutdown.c:364
 msgid "Restart"
-msgstr ""
+msgstr "Перезавантажити"
 
 #: ../xfce4-session/shutdown.c:387
 msgid "Shut Down"
-msgstr ""
+msgstr "Вимкнути"
 
 #: ../xfce4-session/shutdown.c:395
 msgid "_Save session for future logins"
@@ -392,7 +396,7 @@ msgstr ""
 #: ../xfce4-session/xfsm-chooser.c:120
 #, c-format
 msgid "Last accessed: %s"
-msgstr ""
+msgstr "Запущено останній раз: %s"
 
 #: ../xfce4-session/xfsm-chooser.c:213
 msgid ""
@@ -479,7 +483,7 @@ msgstr "Запуск панелі"
 
 #: ../xfce4-session/xfsm-startup.c:103
 msgid "Starting the Desktop Manager"
-msgstr "Запуск менеджера стільниці"
+msgstr "Запуск менеджера робочого столу"
 
 #: ../xfce4-session/xfsm-startup.c:105
 msgid "Starting the Taskbar"
@@ -519,7 +523,7 @@ msgstr "Запуск емулятора термінала KDE"
 
 #: ../xfce4-session/xfsm-startup.c:129
 msgid "Starting the Beep Media Player"
-msgstr "Запуск музичного програвача Beep"
+msgstr "Запуск музичного програвача Bmp"
 
 #: ../xfce4-session/xfsm-startup.c:131
 msgid "Starting The Gimp"
@@ -564,6 +568,16 @@ msgid ""
 "location.\n"
 "You should delete this directory now.\n"
 msgstr ""
+"Розташування та формат каталогу автозапуску змінились.\n"
+"Тепер він знаходиться у\n"
+"\n"
+"  %s\n"
+"\n"
+"Там ви можете розмістити файл .desktop, що описують програми,\n"
+"які будуть запускатися при вході у Xfce. Файли зі старого каталогу\n"
+"автозапуску були успішно перенесені в нове місце.\n"
+"\n"
+"Тепер ви маєте видалити старий каталог.\n"
 
 #: ../xfce4-session/xfsm-startup.c:407
 msgid "Performing Autostart..."
@@ -572,57 +586,52 @@ msgstr "Автозавантаження програм..."
 #: ../xfce4-tips/main.c:44 ../xfce4-tips/main.c:184 ../xfce4-tips/main.c:225
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
 msgid "Tips and tricks"
-msgstr ""
+msgstr "Корисні поради"
 
 #: ../xfce4-tips/main.c:45 ../xfce4-tips/main.c:233
 msgid "Fortunes"
-msgstr ""
+msgstr "Передрікання"
 
 #: ../xfce4-tips/main.c:173
 msgid "Xfce tips and tricks"
-msgstr ""
+msgstr "Корисні поради Xfce"
 
 #: ../xfce4-tips/main.c:210
 msgid "Display tips on _startup"
-msgstr ""
+msgstr "Показувати на _старті"
 
 #: ../xfce4-tips/main.c:246
 msgid "Next"
-msgstr ""
+msgstr "Далі"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:1
-#, fuzzy
 msgid "Session and Startup Settings"
 msgstr "Сеанси та запуск"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:2
-#, fuzzy
 msgid "Sessions and Startup Settings"
 msgstr "Сеанси та запуск"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:3
-#, fuzzy
 msgid "Xfce 4 Sessions and Startup Settings"
-msgstr "Сеанси та запуск"
+msgstr "Параметри сеансів та запуску Xfce 4"
 
 #: ../settings/splash/xfce-splash-settings.desktop.in.h:2
-#, fuzzy
 msgid "Xfce 4 Splash Screen Settings"
-msgstr "Параметри заставки"
+msgstr "Параметри заставки Xfce 4"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:1
-#, fuzzy
 msgid "Autostarted Applications"
-msgstr "Керувати віддаленими програмами"
+msgstr "Автозапуск"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:2
 msgid "Edit the list of autostarted applications"
-msgstr ""
+msgstr "Редагувати список програм, що запускаються автоматично"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:3
 msgid "Xfce 4 Autostarted Applications"
-msgstr ""
+msgstr "Програми, що запускаються при старті Xfce 4"
 
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
-msgstr ""
+msgstr "підказки xfce4"
