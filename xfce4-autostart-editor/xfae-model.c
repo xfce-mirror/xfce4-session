@@ -401,9 +401,13 @@ xfae_item_new (const gchar *relpath)
 {
   const gchar *value;
   XfaeItem    *item = NULL;
+  gboolean     skip = FALSE;
   XfceRc      *rc;
+  gchar      **only_show_in;
+  gchar      **not_show_in;
   gchar      **args;
   gchar       *icon_name;
+  gint         n, m;
 
   rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG, relpath, TRUE);
   if (G_LIKELY (rc != NULL))
@@ -451,7 +455,46 @@ xfae_item_new (const gchar *relpath)
           item->hidden = xfce_rc_read_bool_entry (rc, "Hidden", FALSE);
         }
 
+      /* check the OnlyShowIn setting */
+      only_show_in = xfce_rc_read_list_entry (rc, "OnlyShowIn", ";");
+      if (G_UNLIKELY (only_show_in != NULL))
+        {
+          /* check if "Xfce" is specified */
+          for (m = 0, skip = TRUE; only_show_in[m] != NULL; ++m)
+            if (g_ascii_strcasecmp (only_show_in[m], "Xfce") == 0)
+              {
+                skip = FALSE;
+                break;
+              }
+
+          g_strfreev (only_show_in);
+        }
+      else
+        {
+          /* check the NotShowIn setting */
+          not_show_in = xfce_rc_read_list_entry (rc, "NotShowIn", ";");
+          if (G_UNLIKELY (not_show_in != NULL))
+            {
+              /* check if "Xfce" is not specified */
+              for (m = 0; not_show_in[m] != NULL; ++m)
+                if (g_ascii_strcasecmp (not_show_in[m], "Xfce") == 0)
+                  {
+                    skip = TRUE;
+                    break;
+                  }
+
+              g_strfreev (not_show_in);
+            }
+        }
+
       xfce_rc_close (rc);
+
+      /* check if we should skip the item */
+      if (G_UNLIKELY (skip))
+        {
+          xfae_item_free (item);
+          item = NULL;
+        }
     }
 
   return item;
