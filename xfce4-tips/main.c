@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003-2005 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2003-2006 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,30 +23,35 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_MEMORY_H
+#include <memory.h>
+#endif
 #include <stdio.h>
-#include <string.h>
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
-
-#ifdef GTK_DISABLE_DEPRECATED
-#undef GTK_DISABLE_DEPRECATED
+#ifdef HAVE_STRING_H
+#include <string.h>
 #endif
 
-#include <gtk/gtk.h>
-
 #include <libxfcegui4/libxfcegui4.h>
+
+
 
 #define OPTION_TIPS 0
 #define OPTION_FORTUNES 1
 
+
+
 static const gchar *titles[] = {
-  N_("Tips and tricks"),
+  N_("Tips and Tricks"),
   N_("Fortunes")
 };
 
-static guint option = OPTION_TIPS;
-static GtkWidget *header = NULL;
+
+
+static GtkWidget *dlg = NULL;
+static guint      option = OPTION_TIPS;
 
 
 
@@ -87,30 +92,14 @@ autostart_toggled (GtkToggleButton *button)
 
 
 static void
-title_cb(GtkWidget *w, const gchar *title)
+item_cb (GtkWidget *btn,
+         gpointer   data)
 {
-  gchar *str;
-
-  if (GTK_IS_LABEL(w)) {
-    str = g_strconcat("<span size=\"larger\" weight=\"bold\">",
-        _(title), "</span>", NULL);
-    gtk_label_set_markup(GTK_LABEL(w), str);
-    g_free(str);
-  }
-}
-
-static void
-item_cb(GtkWidget *btn, gpointer data)
-{
-  GtkWidget *wid;
-
   option = GPOINTER_TO_UINT(data);
-
-  /* XXX - this should be improved in libxfcegui4 */
-  wid = gtk_bin_get_child(GTK_BIN(header));
-  gtk_container_foreach(GTK_CONTAINER(wid), (GtkCallback)title_cb,
-      (gpointer)titles[option]);
+  gtk_window_set_title (GTK_WINDOW (dlg), _(titles[option]));
 }
+
+
 
 static void
 next_cb(GtkWidget *btn, GtkTextBuffer *textbuf)
@@ -147,51 +136,39 @@ next_cb(GtkWidget *btn, GtkTextBuffer *textbuf)
   pclose (fp);
 }
 
+
+
 int
 main (int argc, char **argv)
 {
-  GtkWidget *dlg;
   GtkWidget *sw;
   GtkWidget *view;
-  GtkWidget *vbox1;
   GtkWidget *vbox2;
   GtkWidget *check;
-  GtkWidget *bbox;
   GtkWidget *item;
   GtkWidget *menu;
   GtkWidget *opt;
   GtkWidget *next;
   GtkWidget *close;
-  GdkPixbuf *logo;
-  gchar *text;
 
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
   
   gtk_init (&argc, &argv);
 
-  dlg = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Xfce tips and tricks"));
-  gtk_window_stick (GTK_WINDOW (dlg));
+  dlg = xfce_titled_dialog_new_with_buttons (_("Tips and Tricks"), NULL,
+                                             GTK_DIALOG_NO_SEPARATOR,
+                                             NULL);
+  gtk_window_set_icon_name (GTK_WINDOW (dlg), "xfce4-logo");
   gtk_window_set_default_size (GTK_WINDOW (dlg), 600, 400);
   gtk_window_set_position (GTK_WINDOW (dlg), GTK_WIN_POS_CENTER);
+  gtk_window_stick (GTK_WINDOW (dlg));
 
-  vbox1 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_show (vbox1);
-  gtk_container_add (GTK_CONTAINER (dlg), vbox1);
-
-  logo = xfce_themed_icon_load ("xfce4-logo", 48);
-  gtk_window_set_icon (GTK_WINDOW (dlg), logo);
-  text = g_strdup_printf (_("Tips and tricks"));
-  header = xfce_create_header (logo, text);
-  gtk_widget_show (header);
-  gtk_box_pack_start (GTK_BOX (vbox1), header, FALSE, FALSE, 0);
-  g_object_unref (logo);
-  g_free (text);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (GTK_DIALOG (dlg)->action_area), GTK_BUTTONBOX_EDGE);
 
   vbox2 = gtk_vbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox2, TRUE, TRUE, 0);
   gtk_widget_show (vbox2);
-  gtk_box_pack_start (GTK_BOX (vbox1), vbox2, TRUE, TRUE, 0);
 
   sw = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw),
@@ -209,59 +186,48 @@ main (int argc, char **argv)
 
   check = gtk_check_button_new_with_mnemonic (_("Display tips on _startup"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), autostart_enabled ());
-  g_signal_connect (G_OBJECT (check), "toggled",
-                    G_CALLBACK (autostart_toggled), NULL);
-  gtk_box_pack_start (GTK_BOX (vbox2), check, FALSE, FALSE, 6);
+  g_signal_connect (G_OBJECT (check), "toggled", G_CALLBACK (autostart_toggled), NULL);
+  gtk_box_pack_start (GTK_BOX (vbox2), check, FALSE, FALSE, 0);
   gtk_widget_show (check);
 
-  /* button box */
-  bbox = gtk_hbutton_box_new();
-  gtk_widget_show(bbox);
-  gtk_box_pack_start(GTK_BOX(vbox2), bbox, FALSE, FALSE, 0);
-
-  menu = gtk_menu_new();
-  gtk_widget_show(menu);
+  menu = gtk_menu_new ();
+  gtk_widget_show (menu);
   
-  item = gtk_menu_item_new_with_label(_("Tips and tricks"));
-  g_signal_connect(item, "activate", G_CALLBACK(item_cb),
-      GUINT_TO_POINTER(OPTION_TIPS));
-  g_signal_connect(item, "activate", G_CALLBACK(next_cb),
-      gtk_text_view_get_buffer(GTK_TEXT_VIEW(view)));
-  gtk_widget_show(item);
-  gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
+  item = gtk_menu_item_new_with_label (_("Tips and tricks"));
+  g_signal_connect (item, "activate", G_CALLBACK (item_cb), GUINT_TO_POINTER (OPTION_TIPS));
+  g_signal_connect (item, "activate", G_CALLBACK (next_cb), gtk_text_view_get_buffer (GTK_TEXT_VIEW (view)));
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  gtk_widget_show (item);
 
-  item = gtk_menu_item_new_with_label(_("Fortunes"));
-  g_signal_connect(item, "activate", G_CALLBACK(item_cb),
-      GUINT_TO_POINTER(OPTION_FORTUNES));
-  g_signal_connect(item, "activate", G_CALLBACK(next_cb),
-      gtk_text_view_get_buffer(GTK_TEXT_VIEW(view)));
-  gtk_widget_show(item);
-  gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
+  item = gtk_menu_item_new_with_label (_("Fortunes"));
+  g_signal_connect (item, "activate", G_CALLBACK (item_cb), GUINT_TO_POINTER (OPTION_FORTUNES));
+  g_signal_connect (item, "activate", G_CALLBACK (next_cb), gtk_text_view_get_buffer (GTK_TEXT_VIEW (view)));
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  gtk_widget_show (item);
 
   opt = gtk_option_menu_new();
   gtk_option_menu_set_menu(GTK_OPTION_MENU(opt), menu);
+  gtk_dialog_add_action_widget (GTK_DIALOG (dlg), opt, GTK_RESPONSE_NONE);
   gtk_widget_show(opt);
-  gtk_box_pack_start(GTK_BOX(bbox), opt, FALSE, FALSE, 0);
 
-  next = gtk_button_new_with_label(_("Next"));
-  gtk_widget_show(next);
-  gtk_box_pack_start(GTK_BOX(bbox), next, FALSE, FALSE, 0);
+  next = gtk_button_new_with_label (_("Next"));
+  gtk_dialog_add_action_widget (GTK_DIALOG (dlg), next, GTK_RESPONSE_NONE);
+  gtk_widget_show (next);
 
-  close = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
-  gtk_widget_show(close);
-  gtk_box_pack_start(GTK_BOX(bbox), close, FALSE, FALSE, 0);
+  close = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+  gtk_dialog_add_action_widget (GTK_DIALOG (dlg), close, GTK_RESPONSE_DELETE_EVENT);
+  gtk_widget_show (close);
 
-  g_signal_connect(dlg, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
-  g_signal_connect(dlg, "destroy-event", G_CALLBACK(gtk_main_quit), NULL);
-  g_signal_connect(close, "clicked", G_CALLBACK(gtk_main_quit), NULL);
-  g_signal_connect(next, "clicked", G_CALLBACK(next_cb),
-      gtk_text_view_get_buffer(GTK_TEXT_VIEW(view)));
+  g_signal_connect (dlg, "delete-event", G_CALLBACK (gtk_main_quit), NULL);
+  g_signal_connect (dlg, "destroy-event", G_CALLBACK (gtk_main_quit), NULL);
+  g_signal_connect (close, "clicked", G_CALLBACK (gtk_main_quit), NULL);
+  g_signal_connect (next, "clicked", G_CALLBACK (next_cb), gtk_text_view_get_buffer (GTK_TEXT_VIEW (view)));
 
-  next_cb(next, gtk_text_view_get_buffer(GTK_TEXT_VIEW(view)));
+  next_cb (next, gtk_text_view_get_buffer (GTK_TEXT_VIEW (view)));
 
-  gtk_widget_show(dlg);
+  gtk_widget_show (dlg);
 
-  gtk_main();
+  gtk_main ();
 
-  return(0);
+  return EXIT_SUCCESS;
 }

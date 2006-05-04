@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.3.90.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-01 15:09+0900\n"
+"POT-Creation-Date: 2006-05-05 00:08+0200\n"
 "PO-Revision-Date: 2006-05-01 09:20+0100\n"
 "Last-Translator: SZERVÑC Attila <sas@321.hu>\n"
 "Language-Team: hu\n"
@@ -23,8 +23,12 @@ msgstr "Válassz telepítendő témafájlt..."
 
 #: ../engines/balou/config.c:329
 #, c-format
-msgid "Unable to install splash theme from file %s, please check that the file is a valid splash theme archive."
-msgstr "Sikertelen nyitókép-téma telepítés innen: %s, ellenőrizd, a fájl valódi nyitókép-téma archívum voltát."
+msgid ""
+"Unable to install splash theme from file %s, please check that the file is a "
+"valid splash theme archive."
+msgstr ""
+"Sikertelen nyitókép-téma telepítés innen: %s, ellenőrizd, a fájl valódi "
+"nyitókép-téma archívum voltát."
 
 #: ../engines/balou/config.c:382
 #, c-format
@@ -111,140 +115,171 @@ msgstr "Egyszerű"
 msgid "Simple Splash Engine"
 msgstr "Egyszerű téma motor"
 
-#: ../settings/session/session.c:133
+#: ../settings/session/session.c:137
 msgid "Session chooser"
 msgstr "Folyamat választó"
 
-#: ../settings/session/session.c:138
+#: ../settings/session/session.c:142
 msgid "Display chooser on login"
 msgstr "Választó megjelenítése a bejelentkezéskor"
 
-#: ../settings/session/session.c:146
-msgid "If set, the session manager will ask you to choose a session every time you log in to Xfce."
-msgstr "Ha beállítod, a folyamatkezelő minden Xfce bejelentkezésnél lehetőséget ad egy folyamat választására."
-
 #: ../settings/session/session.c:150
+msgid ""
+"If set, the session manager will ask you to choose a session every time you "
+"log in to Xfce."
+msgstr ""
+"Ha beállítod, a folyamatkezelő minden Xfce bejelentkezésnél lehetőséget ad "
+"egy folyamat választására."
+
+#: ../settings/session/session.c:154
 msgid "Logout settings"
 msgstr "Kijelentkezés beállításai"
 
-#: ../settings/session/session.c:156
+#: ../settings/session/session.c:160
 msgid "Automatically save session on logout"
 msgstr "Folyamat mentése kijelentkezéskor"
 
-#: ../settings/session/session.c:162
-msgid "This option instructs the session manager to save the current session automatically when you log out. If you don't select this option you'll be prompted whether you want to save the current session on each logout."
-msgstr "E lehetőség arra utasítja a Folyamatkezelőt, hogy automatikusan mentse a folyamatot kijelentkezésnél. Ha nem használod, de a kijelentkezés megerősítését igen, akkor minden kijelentkezésnél van lehetőséged a döntésre."
+#: ../settings/session/session.c:166
+msgid ""
+"This option instructs the session manager to save the current session "
+"automatically when you log out. If you don't select this option you'll be "
+"prompted whether you want to save the current session on each logout."
+msgstr ""
+"E lehetőség arra utasítja a Folyamatkezelőt, hogy automatikusan mentse a "
+"folyamatot kijelentkezésnél. Ha nem használod, de a kijelentkezés "
+"megerősítését igen, akkor minden kijelentkezésnél van lehetőséged a döntésre."
 
-#: ../settings/session/session.c:169
+#: ../settings/session/session.c:173
 msgid "Prompt on logout"
 msgstr "Kijelentkezés megerősítése"
 
-#: ../settings/session/session.c:175
-msgid "This option disables the logout confirmation dialog. Whether the session will be saved or not depends on whether you enabled the automatic saving of sessions on logout or not."
-msgstr "Ezzel állíthatod be, hogy legyen-e kijelentkezés-megerősítés. Ha kikapcsolod, a folyamat mentése azon fog múlni, előtte milyen állapotban hagytad a mentési beállítást."
+#: ../settings/session/session.c:179
+msgid ""
+"This option disables the logout confirmation dialog. Whether the session "
+"will be saved or not depends on whether you enabled the automatic saving of "
+"sessions on logout or not."
+msgstr ""
+"Ezzel állíthatod be, hogy legyen-e kijelentkezés-megerősítés. Ha "
+"kikapcsolod, a folyamat mentése azon fog múlni, előtte milyen állapotban "
+"hagytad a mentési beállítást."
 
-#: ../settings/session/session.c:211
+#: ../settings/session/session.c:215
 msgid "Compatibility"
 msgstr "Kompatibilitás"
 
-#: ../settings/session/session.c:220
+#: ../settings/session/session.c:224
 msgid "Launch Gnome services on startup"
 msgstr "GNOME szolgáltatások futtatása indításkor"
 
-#: ../settings/session/session.c:226
-msgid "Enable this if you plan to use Gnome applications. This will instruct the session manager to start some vital Gnome services for you. You should also enable this if you want to use the Assistive Technologies that ship with Gnome."
-msgstr "Akkor állítsd be, ha GNOME alkalmazások futtatását tervezed. Ennek hatására a folyamatkezelő néhány alapvető GNOME szolgáltatást indít el. Akkor is állítsd be, ha a GNOME kisegítő lehetőségek használatát tervezed."
+#: ../settings/session/session.c:230
+msgid ""
+"Enable this if you plan to use Gnome applications. This will instruct the "
+"session manager to start some vital Gnome services for you. You should also "
+"enable this if you want to use the Assistive Technologies that ship with "
+"Gnome."
+msgstr ""
+"Akkor állítsd be, ha GNOME alkalmazások futtatását tervezed. Ennek hatására "
+"a folyamatkezelő néhány alapvető GNOME szolgáltatást indít el. Akkor is "
+"állítsd be, ha a GNOME kisegítő lehetőségek használatát tervezed."
 
-#: ../settings/session/session.c:233
+#: ../settings/session/session.c:237
 msgid "Launch KDE services on startup"
 msgstr "KDE szolgáltatások futtatása indításkor"
 
-#: ../settings/session/session.c:239
-msgid "Enable this option if you plan to run KDE applications as part of your Xfce Desktop session. This will notably increase the startup time, but on the other hand, KDE applications will startup faster. Some KDE applications may not work at all if you don't enable this option."
-msgstr "Akkor állítsd be, ha az Xfce Munkakörnyezeted munkafolyamatának részeként KDE alkalmazások futtatását tervezed. Ez jelentősen meg fogja növelni az indulást, viszont a KDE alkalmazások gyorsabban indulnak. Egyes KDE alkalmazások teljesen képtelenek működni e nélkül."
+#: ../settings/session/session.c:243
+msgid ""
+"Enable this option if you plan to run KDE applications as part of your Xfce "
+"Desktop session. This will notably increase the startup time, but on the "
+"other hand, KDE applications will startup faster. Some KDE applications may "
+"not work at all if you don't enable this option."
+msgstr ""
+"Akkor állítsd be, ha az Xfce Munkakörnyezeted munkafolyamatának részeként "
+"KDE alkalmazások futtatását tervezed. Ez jelentősen meg fogja növelni az "
+"indulást, viszont a KDE alkalmazások gyorsabban indulnak. Egyes KDE "
+"alkalmazások teljesen képtelenek működni e nélkül."
 
-#: ../settings/session/session.c:252
+#: ../settings/session/session.c:256
 msgid "Security"
 msgstr "Biztonság"
 
-#: ../settings/session/session.c:257
+#: ../settings/session/session.c:261
 msgid "Manage remote applications"
 msgstr "Távoli alkalmazások kezelése"
 
-#: ../settings/session/session.c:269
-msgid "Allow the session manager to manage applications running on remote hosts. Do not enable this option unless you know what you are doing."
-msgstr "Távoli gépeken való alkalmazásfuttatás engedélyezése a folyamatkezelőnek. Ne használd ezt, míg nem vagy képben."
+#: ../settings/session/session.c:273
+msgid ""
+"Allow the session manager to manage applications running on remote hosts. Do "
+"not enable this option unless you know what you are doing."
+msgstr ""
+"Távoli gépeken való alkalmazásfuttatás engedélyezése a folyamatkezelőnek. Ne "
+"használd ezt, míg nem vagy képben."
 
-#: ../settings/session/session.c:330
-#: ../settings/session/session.c:345
+#: ../settings/session/session.c:333
 msgid "Sessions and Startup"
 msgstr "Munkafolyamatok is indulás"
 
-#: ../settings/session/session.c:354
+#: ../settings/session/session.c:352
 msgid "General"
 msgstr "Általános"
 
-#: ../settings/session/session.c:360
+#: ../settings/session/session.c:358
 msgid "Advanced"
 msgstr "Haladó"
 
 #. the button label in the xfce-mcs-manager dialog
-#: ../settings/session/session.c:384
+#: ../settings/session/session.c:382
 msgid "Button Label|Sessions and Startup"
 msgstr "Munkafolyamatok is indulás"
 
-#: ../settings/splash/splash.c:305
-#: ../settings/splash/splash.c:308
-#: ../settings/splash/splash.c:311
-#: ../settings/splash/splash.c:314
-#: ../settings/splash/splash.c:383
+#: ../settings/splash/splash.c:309 ../settings/splash/splash.c:312
+#: ../settings/splash/splash.c:315 ../settings/splash/splash.c:318
+#: ../settings/splash/splash.c:386
 msgid "None"
 msgstr "Nincs"
 
-#: ../settings/splash/splash.c:406
-#: ../settings/splash/splash.c:420
+#: ../settings/splash/splash.c:409
 #: ../settings/splash/xfce-splash-settings.desktop.in.h:1
 msgid "Splash Screen Settings"
 msgstr "Nyitókép beállítások"
 
-#: ../settings/splash/splash.c:460
+#: ../settings/splash/splash.c:457
 msgid "Configure"
 msgstr "Beállítás"
 
-#: ../settings/splash/splash.c:468
+#: ../settings/splash/splash.c:465
 msgid "Opens the configuration panel for the selected splash screen."
 msgstr "A kijelölt nyitókép beállításainak megnyitása"
 
-#: ../settings/splash/splash.c:472
+#: ../settings/splash/splash.c:469
 msgid "Test"
 msgstr "Próba"
 
-#: ../settings/splash/splash.c:479
+#: ../settings/splash/splash.c:476
 msgid "Demonstrates the selected splash screen."
 msgstr "A kijelölt nyitókép bemutatása"
 
-#: ../settings/splash/splash.c:496
+#: ../settings/splash/splash.c:493
 msgid "Information"
 msgstr "Információ"
 
-#: ../settings/splash/splash.c:507
+#: ../settings/splash/splash.c:504
 msgid "<b>Description:</b>"
 msgstr "<b>Leírás:</b>"
 
-#: ../settings/splash/splash.c:521
+#: ../settings/splash/splash.c:518
 msgid "<b>Version:</b>"
 msgstr "<b>Verzió:</b>"
 
-#: ../settings/splash/splash.c:535
+#: ../settings/splash/splash.c:532
 msgid "<b>Author:</b>"
 msgstr "<b>Szerző:</b>"
 
-#: ../settings/splash/splash.c:549
+#: ../settings/splash/splash.c:546
 msgid "<b>Homepage:</b>"
 msgstr "<b>Honlap:</b>"
 
 #. the button label in the xfce-mcs-manager dialog
-#: ../settings/splash/splash.c:587
+#: ../settings/splash/splash.c:584
 msgid "Button Label|Splash Screen"
 msgstr "Nyitókép"
 
@@ -268,22 +303,22 @@ msgstr "Parancs:"
 msgid "Select a command"
 msgstr "Válassz parancsot"
 
-#: ../xfce4-autostart-editor/xfae-model.c:515
+#: ../xfce4-autostart-editor/xfae-model.c:558
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "%s leválasztása sikertelen: %s"
 
-#: ../xfce4-autostart-editor/xfae-model.c:603
+#: ../xfce4-autostart-editor/xfae-model.c:646
 #, c-format
 msgid "Failed to create file %s"
 msgstr "%s fájl létrehozása sikertelen"
 
-#: ../xfce4-autostart-editor/xfae-model.c:625
+#: ../xfce4-autostart-editor/xfae-model.c:668
 #, c-format
 msgid "Failed to write file %s"
 msgstr "%s fájl írása sikertelen"
 
-#: ../xfce4-autostart-editor/xfae-model.c:724
+#: ../xfce4-autostart-editor/xfae-model.c:767
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "%s megnyitása írásra sikertelen"
@@ -347,8 +382,12 @@ msgid "<b>An error occured</b>"
 msgstr "<b>Hiba történt</b>"
 
 #: ../xfce4-session/shutdown.c:503
-msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
-msgstr "Hibás jelszó, vagy a rendszergazda nem engedélyezte a gép kikapcsolását az általad használt hozzáféréssel."
+msgid ""
+"Either the password you entered is invalid, or the system administrator "
+"disallows shutting down this computer with your user account."
+msgstr ""
+"Hibás jelszó, vagy a rendszergazda nem engedélyezte a gép kikapcsolását az "
+"általad használt hozzáféréssel."
 
 #: ../xfce4-session/xfsm-chooser.c:120
 #, c-format
@@ -356,8 +395,11 @@ msgid "Last accessed: %s"
 msgstr "Utolsó megnyitás: %s"
 
 #: ../xfce4-session/xfsm-chooser.c:213
-msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
-msgstr "Válaszd ki a visszaállítandó folyamatot. Egyszerűen kattints duplán a nevére."
+msgid ""
+"Choose the session you want to restore. You can simply double-click the "
+"session name to restore it."
+msgstr ""
+"Válaszd ki a visszaállítandó folyamatot. Egyszerűen kattints duplán a nevére."
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:239
@@ -522,7 +564,8 @@ msgstr ""
 "\n"
 "  %s\n"
 "\n"
-"ahova a .desktop fájlok rakhatók, melyek leírják az indítandó alkalmazásokat\n"
+"ahova a .desktop fájlok rakhatók, melyek leírják az indítandó "
+"alkalmazásokat\n"
 "az Xfce munkakörnyezetbe való bejelentkezéskor. A régi autostart\n"
 "könyvtár fájljai sikeresen az új helyre költöztek.\n"
 "Töröld e régi könyvtárat most.\n"
@@ -531,27 +574,24 @@ msgstr ""
 msgid "Performing Autostart..."
 msgstr "Azonnali alkalmazások indítása..."
 
-#: ../xfce4-tips/main.c:44
-#: ../xfce4-tips/main.c:184
-#: ../xfce4-tips/main.c:225
-#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
-msgid "Tips and tricks"
+#: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:158
+#, fuzzy
+msgid "Tips and Tricks"
 msgstr "Tippek és trükkök"
 
-#: ../xfce4-tips/main.c:45
-#: ../xfce4-tips/main.c:233
+#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:202
 msgid "Fortunes"
 msgstr "Szerencsesütik"
 
-#: ../xfce4-tips/main.c:173
-msgid "Xfce tips and tricks"
-msgstr "Xfce tippek és trükkök"
-
-#: ../xfce4-tips/main.c:210
+#: ../xfce4-tips/main.c:187
 msgid "Display tips on _startup"
 msgstr "Tippek mutatá_sa induláskor"
 
-#: ../xfce4-tips/main.c:246
+#: ../xfce4-tips/main.c:196 ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
+msgid "Tips and tricks"
+msgstr "Tippek és trükkök"
+
+#: ../xfce4-tips/main.c:213
 msgid "Next"
 msgstr "Következő"
 
@@ -587,3 +627,5 @@ msgstr "Xfce 4 Azonnali Alkalmazások"
 msgid "xfce4-tips"
 msgstr "xfce-tippek"
 
+#~ msgid "Xfce tips and tricks"
+#~ msgstr "Xfce tippek és trükkök"

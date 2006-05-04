@@ -70,12 +70,12 @@ XDT_I18N([ar az be bn_IN ca cs de el en_GB eo es es_MX et eu fa fi fr gu \
           sk ta tr uk vi zh_CN zh_TW])
 
 dnl Check for required packages
-XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.3.90.1])
+XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.3.90.2])
 XDT_CHECK_PACKAGE([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.3.90.1])
-XDT_CHECK_PACKAGE([LIBXFCEGUI4], [libxfcegui4-1.0], [4.3.90.1])
+XDT_CHECK_PACKAGE([LIBXFCEGUI4], [libxfcegui4-1.0], [4.3.90.2])
 
 dnl Configure the MCS plugins
-XDT_XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.3.90.1])
+XDT_XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.3.90.2])
 
 dnl Check for gnome support
 XDT_CHECK_OPTIONAL_PACKAGE([GNOME], [libgnome-2.0], [2.4.0], [gnome],

@@ -407,7 +407,7 @@ xfae_item_new (const gchar *relpath)
   gchar      **not_show_in;
   gchar      **args;
   gchar       *icon_name;
-  gint         n, m;
+  gint         m;
 
   rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG, relpath, TRUE);
   if (G_LIKELY (rc != NULL))

@@ -1,5 +1,17 @@
 2006-05-04	Benedikt Meurer <benny@xfce.org>
 
+	* xfce4-tips/main.c: Use newly added XfceTitledDialog.
+	* configure.in.in: Bump required package versions.
+	* settings/session/session.c, settings/splash/splash.c: Use newly
+	  added XfceTitledDialog.
+	* engines/balou/config.c, engines/simple/simple.c: Make sure we can
+	  still use XfceFramebox for now. Will be updated later.
+	* xfce4-autostart-editor/xfae-model.c(xfae_item_new): Remove unused
+	  variable.
+	* po/xfce4-session.pot, po/*.po: Updated.
+
+2006-05-04	Benedikt Meurer <benny@xfce.org>
+
 	* xfce4-autostart-editor/xfae-model.c(xfae_item_new): Properly handle
 	  OnlyShowIn and NotShowIn in the autostart editor.
 

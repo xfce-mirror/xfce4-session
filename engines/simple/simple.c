@@ -23,6 +23,10 @@
 #include <config.h>
 #endif
 
+#ifdef XFCE_DISABLE_DEPRECATED
+#undef XFCE_DISABLE_DEPRECATED
+#endif
+
 #include <X11/Xlib.h>
 
 #include <gdk-pixbuf/gdk-pixdata.h>

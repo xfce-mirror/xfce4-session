@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2003-2006 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -29,6 +29,10 @@
 #endif
 #ifdef HAVE_STRING_H
 #include <string.h>
+#endif
+
+#ifdef XFCE_DISABLE_DEPRECATED
+#undef XFCE_DISABLE_DEPRECATED
 #endif
 
 #include <libxfce4mcs/mcs-manager.h>
@@ -302,7 +306,6 @@ static void
 dialog_run (McsPlugin *plugin)
 {
   GtkWidget *notebook;
-  GtkWidget *header;
   GtkWidget *label;
   GtkWidget *page;
   GtkWidget *dbox;
@@ -327,13 +330,12 @@ dialog_run (McsPlugin *plugin)
 
   rc = config_open (TRUE);
 
-  dialog = gtk_dialog_new_with_buttons (_("Sessions and Startup"),
-                                        NULL,
-                                        GTK_DIALOG_NO_SEPARATOR,
-                                        GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
-                                        NULL);
-
-  gtk_window_set_icon (GTK_WINDOW (dialog), plugin->icon);
+  dialog = xfce_titled_dialog_new_with_buttons (_("Sessions and Startup"),
+                                                NULL,
+                                                GTK_DIALOG_NO_SEPARATOR,
+                                                GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
+                                                NULL);
+  gtk_window_set_icon_name (GTK_WINDOW (dialog), "xfce4-session");
 
   g_signal_connect (G_OBJECT (dialog), "response",
                     G_CALLBACK (dialog_response), NULL);
@@ -341,10 +343,6 @@ dialog_run (McsPlugin *plugin)
                     G_CALLBACK (dialog_response), NULL);
 
   dbox = GTK_DIALOG (dialog)->vbox;
-
-  header = xfce_create_header (plugin->icon, _("Sessions and Startup"));
-  gtk_box_pack_start (GTK_BOX (dbox), header, FALSE, TRUE, 0);
-  gtk_widget_show (header);
 
   notebook = gtk_notebook_new ();
   gtk_box_pack_start (GTK_BOX (dbox), notebook, TRUE, TRUE, 0);
@@ -384,6 +382,8 @@ mcs_plugin_init (McsPlugin *plugin)
   plugin->caption = g_strdup (Q_("Button Label|Sessions and Startup"));
   plugin->run_dialog = dialog_run;
   plugin->icon = xfce_themed_icon_load ("xfce4-session", 48);
+  if (G_LIKELY (plugin->icon != NULL))
+    g_object_set_data_full (G_OBJECT (plugin->icon), "mcs-plugin-icon-name", g_strdup ("xfce4-session"), g_free);
 
   return MCS_PLUGIN_INIT_OK;
 }

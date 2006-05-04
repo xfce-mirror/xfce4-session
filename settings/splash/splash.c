@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2003-2006 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -28,6 +28,10 @@
 #endif
 #ifndef HAVE_STRING_H
 #include <string.h>
+#endif
+
+#ifdef XFCE_DISABLE_DEPRECATED
+#undef XFCE_DISABLE_DEPRECATED
 #endif
 
 #include <gdk-pixbuf/gdk-pixdata.h>
@@ -342,7 +346,6 @@ splash_run (McsPlugin *plugin)
   const gchar       *engine;
   GtkTreePath       *path;
   GtkTreeIter        iter;
-  GtkWidget         *header;
   GtkWidget         *hbox;
   GtkWidget         *vbox;
   GtkWidget         *swin;
@@ -403,24 +406,18 @@ splash_run (McsPlugin *plugin)
   xfce_rc_close (rc);
 
   splash_centered = FALSE;
-  splash_dialog = gtk_dialog_new_with_buttons (_("Splash Screen Settings"),
-                                               NULL,
-                                               GTK_DIALOG_NO_SEPARATOR,
-                                               GTK_STOCK_CLOSE,
-                                               GTK_RESPONSE_CLOSE,
-                                               NULL);
-
-  gtk_window_set_icon (GTK_WINDOW (splash_dialog), plugin->icon);
+  splash_dialog = xfce_titled_dialog_new_with_buttons (_("Splash Screen Settings"),
+                                                       NULL,
+                                                       GTK_DIALOG_NO_SEPARATOR,
+                                                       GTK_STOCK_CLOSE,
+                                                       GTK_RESPONSE_CLOSE,
+                                                       NULL);
+  gtk_window_set_icon_name (GTK_WINDOW (splash_dialog), "xfce4-splash");
 
   g_signal_connect (G_OBJECT (splash_dialog), "response",
                     G_CALLBACK (splash_response), NULL);
   g_signal_connect (G_OBJECT (splash_dialog), "delete-event",
                     G_CALLBACK (splash_response), NULL);
-
-  header = xfce_create_header (plugin->icon, _("Splash Screen Settings"));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (splash_dialog)->vbox), header,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (header);
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (splash_dialog)->vbox), hbox,
@@ -587,6 +584,8 @@ mcs_plugin_init (McsPlugin *plugin)
   plugin->caption = g_strdup (Q_ ("Button Label|Splash Screen"));
   plugin->run_dialog = splash_run;
   plugin->icon = xfce_themed_icon_load ("xfce4-splash", 48);
+  if (G_LIKELY (plugin->icon != NULL))
+    g_object_set_data_full (G_OBJECT (plugin->icon), "mcs-plugin-icon-name", g_strdup ("xfce4-splash"), g_free);
 
   return MCS_PLUGIN_INIT_OK;
 }
