@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: xfce4-session 4.3.90.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-05-05 00:08+0200\n"
-"PO-Revision-Date: 2005-10-08 20:31+0900\n"
-"Last-Translator: Alois Nespor <Alois.Nespor@seznam.cz>\n"
+"PO-Revision-Date: 2006-05-04 21:13+0100\n"
+"Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +22,7 @@ msgstr "Bez popisu"
 
 #: ../engines/balou/config.c:317
 msgid "Choose theme file to install..."
-msgstr "Vyber soubor s tématem k nainstalovaní"
+msgstr "Vyberte soubor s tématem k nainstalování"
 
 #: ../engines/balou/config.c:329
 #, c-format
@@ -30,13 +30,13 @@ msgid ""
 "Unable to install splash theme from file %s, please check that the file is a "
 "valid splash theme archive."
 msgstr ""
-"Nelze nainstalovat téma s úvodní obrazovkou ze souboru%s, prosím "
+"Nelze nainstalovat téma s úvodní obrazovkou ze souboru %s, prosím "
 "zkontrolujte, zda je soubor platným archivem s tématem."
 
 #: ../engines/balou/config.c:382
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
-msgstr "Nelze přesunout téma s úvodní obrazovkou\"%s\" z adresáře %s."
+msgstr "Nelze přesunout téma s úvodní obrazovkou \"%s\" z adresáře %s."
 
 #: ../engines/balou/config.c:467
 msgid "Choose theme filename..."
@@ -56,28 +56,27 @@ msgstr "_Exportovat téma"
 
 #: ../engines/balou/config.c:841
 msgid "Balou theme"
-msgstr "Balou téma"
+msgstr "Téma Balou"
 
 #: ../engines/balou/config.c:924
 msgid "Configure Balou..."
 msgstr "Konfigurovat Balou"
 
 #: ../engines/balou/config.c:965
-#, fuzzy
 msgid "Balou"
-msgstr "Balou téma"
+msgstr "Balou "
 
 #: ../engines/balou/config.c:966
 msgid "Balou Splash Engine"
-msgstr ""
+msgstr "Spouštěcí obrazovka tématu Balou"
 
 #: ../engines/mice/mice.c:369
 msgid "Mice"
-msgstr ""
+msgstr "Mice"
 
 #: ../engines/mice/mice.c:370
 msgid "Mice Splash Engine"
-msgstr ""
+msgstr "Spouštěcí obrazovka Mice"
 
 #: ../engines/simple/simple.c:315
 msgid "Choose image..."
@@ -113,11 +112,11 @@ msgstr "Použít vlastní obrázek"
 
 #: ../engines/simple/simple.c:505
 msgid "Simple"
-msgstr ""
+msgstr "Jednoduchá"
 
 #: ../engines/simple/simple.c:506
 msgid "Simple Splash Engine"
-msgstr ""
+msgstr "Jednoduchá spouštěcí obrazovka"
 
 #: ../settings/session/session.c:137
 msgid "Session chooser"
@@ -132,7 +131,7 @@ msgid ""
 "If set, the session manager will ask you to choose a session every time you "
 "log in to Xfce."
 msgstr ""
-"Když je nastaveno, manažer sezení se ptá na výběr sezení při každém "
+"Když je nastaveno, správce sezení se ptá na výběr sezení při každém "
 "přihlášení do Xfce."
 
 #: ../settings/session/session.c:154
@@ -149,13 +148,13 @@ msgid ""
 "automatically when you log out. If you don't select this option you'll be "
 "prompted whether you want to save the current session on each logout."
 msgstr ""
-"Při této volbě manažer sezení uloží právě spuštěné sezení automaticky při "
-"odhlášení. Jestliže se nevybere tato volba, manažer se zeptá ,zda uložit "
+"Při této volbě správce sezení uloží právě spuštěné sezení automaticky při "
+"odhlášení. Jestliže se nevybere tato volba, správce  se zeptá, zda uložit "
 "aktuální sezení při každém odhlášení."
 
 #: ../settings/session/session.c:173
 msgid "Prompt on logout"
-msgstr "Vzívat při odhlášení."
+msgstr "Dotazovat se při odhlášení."
 
 #: ../settings/session/session.c:179
 msgid ""
@@ -164,12 +163,12 @@ msgid ""
 "sessions on logout or not."
 msgstr ""
 "Tato volba vypíná potvrzovací dialog při odhlášení.Zda bude sezení uložené "
-"nebo ne závisí zda-li bude povolené automatické ukládání sezení při "
-"odhlášení nebo ne. "
+"nebo ne, závisí na povoleném nebo zakázaném automatickém ukládání sezení při "
+"odhlášení."
 
 #: ../settings/session/session.c:215
 msgid "Compatibility"
-msgstr "Kompaktibilita"
+msgstr "Kompatibilita"
 
 #: ../settings/session/session.c:224
 msgid "Launch Gnome services on startup"
@@ -181,7 +180,11 @@ msgid ""
 "session manager to start some vital Gnome services for you. You should also "
 "enable this if you want to use the Assistive Technologies that ship with "
 "Gnome."
-msgstr "Povolit, pokud plánujete používat Gnome aplikace."
+msgstr ""
+"Povolte tuto volbu, pokud budete používat aplikace z prostředí Gnome. Tato "
+"volba umožní správci sezení spustit některé důležité služby prostředí Gnome. "
+"Tuto volbu byste měli zapnout, pokud chcete používat Assistive Technologies "
+"v Gnome."
 
 #: ../settings/session/session.c:237
 msgid "Launch KDE services on startup"
@@ -195,8 +198,8 @@ msgid ""
 "not work at all if you don't enable this option."
 msgstr ""
 "Pokud chcete spouštět KDE aplikace jako součást sezení desktopu Xfce, "
-"zapněte tuto volbu.Toto sice může znatelně prodloužit čas při startu, na "
-"druhé straně KDE aplikace budou startovat rychleji.Některé KDE aplikace "
+"zapněte tuto volbu. Toto sice může znatelně prodloužit čas při startu, na "
+"druhou stranu budou KDE aplikace startovat rychleji. Některé KDE aplikace "
 "nemusí při zapnutí této volby správně pracovat."
 
 #: ../settings/session/session.c:256
@@ -205,15 +208,15 @@ msgstr "Bezpečnost"
 
 #: ../settings/session/session.c:261
 msgid "Manage remote applications"
-msgstr "Ovládat vzdálené aplikace"
+msgstr "Spravovat vzdálené aplikace"
 
 #: ../settings/session/session.c:273
 msgid ""
 "Allow the session manager to manage applications running on remote hosts. Do "
 "not enable this option unless you know what you are doing."
 msgstr ""
-"Povolit manažera sezení k ovládání aplikací běžících na vzdálených strojích. "
-"Nezapínat pokud nevíte k čemu tato volba slouží."
+"Povolit správce sezení k ovládání aplikací běžících na vzdálených strojích. "
+"Nepovolujte tuto volbu, pokud si nejste jisti, k čemu tato volba slouží."
 
 #: ../settings/session/session.c:333
 msgid "Sessions and Startup"
@@ -229,15 +232,14 @@ msgstr "Vylepšení"
 
 #. the button label in the xfce-mcs-manager dialog
 #: ../settings/session/session.c:382
-#, fuzzy
 msgid "Button Label|Sessions and Startup"
-msgstr "Sezení a Start"
+msgstr "Popisek tlačítka|Sezení a spouštění"
 
 #: ../settings/splash/splash.c:309 ../settings/splash/splash.c:312
 #: ../settings/splash/splash.c:315 ../settings/splash/splash.c:318
 #: ../settings/splash/splash.c:386
 msgid "None"
-msgstr "Žádné"
+msgstr "Žádná"
 
 #: ../settings/splash/splash.c:409
 #: ../settings/splash/xfce-splash-settings.desktop.in.h:1
@@ -250,7 +252,7 @@ msgstr "Konfigurovat"
 
 #: ../settings/splash/splash.c:465
 msgid "Opens the configuration panel for the selected splash screen."
-msgstr "Otevřít konfigurační panel pro výběr úvodní obrazovky."
+msgstr "Otevře konfigurační panel pro výběr úvodní obrazovky."
 
 #: ../settings/splash/splash.c:469
 msgid "Test"
@@ -258,7 +260,7 @@ msgstr "Test"
 
 #: ../settings/splash/splash.c:476
 msgid "Demonstrates the selected splash screen."
-msgstr "Vybrat úvodní obrazovku pro ukázku."
+msgstr "Ukázka vybrané spouštěcí obrazovky."
 
 #: ../settings/splash/splash.c:493
 msgid "Information"
@@ -282,56 +284,53 @@ msgstr "<b>Domovská stránka:</b>"
 
 #. the button label in the xfce-mcs-manager dialog
 #: ../settings/splash/splash.c:584
-#, fuzzy
 msgid "Button Label|Splash Screen"
-msgstr "Úvodní obrazovka"
+msgstr "Popisek tlačítka|Úvodní obrazovka"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:99
 msgid "Add application"
-msgstr ""
+msgstr "Přidat aplikaci"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:113
 msgid "Name:"
-msgstr ""
+msgstr "Název:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:130
-#, fuzzy
 msgid "Description:"
-msgstr "<b>Popis:</b>"
+msgstr "Popis:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:145
 msgid "Command:"
-msgstr ""
+msgstr "Příkaz:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:205
 msgid "Select a command"
-msgstr ""
+msgstr "Vyberte příkaz"
 
 #: ../xfce4-autostart-editor/xfae-model.c:558
 #, c-format
 msgid "Failed to unlink %s: %s"
-msgstr ""
+msgstr "Odstranění symbolického odkazu %s selhalo: %s"
 
 #: ../xfce4-autostart-editor/xfae-model.c:646
 #, c-format
 msgid "Failed to create file %s"
-msgstr ""
+msgstr "Vytvoření souboru %s selhalo"
 
 #: ../xfce4-autostart-editor/xfae-model.c:668
 #, c-format
 msgid "Failed to write file %s"
-msgstr ""
+msgstr "Zápis do souboru %s selhal"
 
 #: ../xfce4-autostart-editor/xfae-model.c:767
 #, c-format
 msgid "Failed to open %s for writing"
-msgstr ""
+msgstr "Otevření souboru %s pro zápis selhalo"
 
 #: ../xfce4-autostart-editor/xfae-window.c:89
 #: ../xfce4-autostart-editor/xfae-window.c:106
-#, fuzzy
 msgid "Autostarted applications"
-msgstr "Ovládat vzdálené aplikace"
+msgstr "Automaticky spouštěné aplikace"
 
 #: ../xfce4-autostart-editor/xfae-window.c:124
 msgid ""
@@ -340,37 +339,39 @@ msgid ""
 "in addition to the applications that were saved when\n"
 "you logged out last time:"
 msgstr ""
+"Níže najdete seznam aplikací, které budou spouštěny\n"
+"automaticky po přihlášení do prostředí Xfce, včetně\n"
+"aplikací, které byly uloženy při Vašem posledním\n"
+"odhlášení."
 
 #: ../xfce4-session/main.c:140
 msgid "Loading desktop settings"
-msgstr "Načítání nastavení desktopu"
+msgstr "Načítání nastavení pracovního prostředí"
 
 #. verify that the DNS settings are ok
 #: ../xfce4-session/main.c:200
 msgid "Verifying DNS settings"
-msgstr "Ověřování DNS nastavení"
+msgstr "Ověřování nastavení serverů DNS"
 
 #: ../xfce4-session/main.c:203
 msgid "Loading session data"
 msgstr "Načítání dat sezení"
 
 #: ../xfce4-session/shutdown.c:307
-#, fuzzy
 msgid "End Session"
-msgstr "Nové sezení"
+msgstr "Ukončit sezení"
 
 #: ../xfce4-session/shutdown.c:341
-#, fuzzy
 msgid "Log Out"
 msgstr "Odhlášení "
 
 #: ../xfce4-session/shutdown.c:364
 msgid "Restart"
-msgstr ""
+msgstr "Restartovat"
 
 #: ../xfce4-session/shutdown.c:387
 msgid "Shut Down"
-msgstr ""
+msgstr "Vypnout"
 
 #: ../xfce4-session/shutdown.c:395
 msgid "_Save session for future logins"
@@ -395,7 +396,7 @@ msgstr ""
 #: ../xfce4-session/xfsm-chooser.c:120
 #, c-format
 msgid "Last accessed: %s"
-msgstr ""
+msgstr "Poslední přístup: %s"
 
 #: ../xfce4-session/xfsm-chooser.c:213
 msgid ""
@@ -447,14 +448,14 @@ msgid ""
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
 msgstr ""
-"Nelze najít internetovou adresu pro %s.\n"
-"Toto zabrání správnému ovládání Xfce.\n"
-"Možností opravy problému může být  přidáním\n"
-"%s do souboru /etc/hosts v systému."
+"Nelze najít internetovou adresu pro %s,\n"
+"což brání správnému fungování Xfce.\n"
+"Problém může být vyřešen přidáním\n"
+"%s do systémového souboru /etc/hosts."
 
 #: ../xfce4-session/xfsm-dns.c:151
 msgid "Continue anyway"
-msgstr "Pokračujte"
+msgstr "Přesto pokračovat"
 
 #: ../xfce4-session/xfsm-dns.c:152
 msgid "Try again"
@@ -466,92 +467,92 @@ msgstr "Vyberte sezení"
 
 #: ../xfce4-session/xfsm-splash-screen.c:208
 msgid "Choose session name"
-msgstr "Vyberte jméno sezení"
+msgstr "Vyberte název sezení"
 
 #: ../xfce4-session/xfsm-splash-screen.c:222
 msgid "Choose a name for the new session:"
-msgstr "Vyberte jméno pro nové sezení:"
+msgstr "Vyberte název pro nové sezení:"
 
 #: ../xfce4-session/xfsm-startup.c:99
 msgid "Starting the Volume Controller"
-msgstr "Startuje ovladač hlasitosti"
+msgstr "Spouští ovladač hlasitosti"
 
 #: ../xfce4-session/xfsm-startup.c:101
 msgid "Starting the Panel"
-msgstr "Startuje panel"
+msgstr "Spouští panel"
 
 #: ../xfce4-session/xfsm-startup.c:103
 msgid "Starting the Desktop Manager"
-msgstr "Startuje manažer "
+msgstr "Spouští správce"
 
 #: ../xfce4-session/xfsm-startup.c:105
 msgid "Starting the Taskbar"
-msgstr "Startuje panel úloh"
+msgstr "Spouští panel úloh"
 
 #: ../xfce4-session/xfsm-startup.c:107
 msgid "Starting the Window Manager"
-msgstr "Startuje Správce oken"
+msgstr "Spouští Správce oken"
 
 #: ../xfce4-session/xfsm-startup.c:111
 msgid "Starting the Gnome Terminal Emulator"
-msgstr "Startuje Gnome emulátor terminálu"
+msgstr "Spouští Emulátor terminálu prostředí Gnome"
 
 #: ../xfce4-session/xfsm-startup.c:115
 msgid "Starting the KDE Advanced Text Editor"
-msgstr "Startuje KDE rozšířený textový editor"
+msgstr "Spouští Rozšířený textový editor KDE"
 
 #: ../xfce4-session/xfsm-startup.c:117
 msgid "Starting the KDE Clipboard Manager"
-msgstr "Startuje KDE manažer schránky"
+msgstr "Spouští Manažer schránky KDE"
 
 #: ../xfce4-session/xfsm-startup.c:119
 msgid "Starting the KDE Mail Reader"
-msgstr "Startuje KDE čtení pošty"
+msgstr "Spouští čtení pošty KDE"
 
 #: ../xfce4-session/xfsm-startup.c:121
 msgid "Starting the KDE News Reader"
-msgstr "Startuje KDE čtení novin"
+msgstr "Spouští čtení novin KDE"
 
 #: ../xfce4-session/xfsm-startup.c:123
 msgid "Starting the Konqueror"
-msgstr "Startuje Konqueror"
+msgstr "Spouští Konqueror"
 
 #: ../xfce4-session/xfsm-startup.c:125
 msgid "Starting the KDE Terminal Emulator"
-msgstr "Startuje KDE emulátor terminálu"
+msgstr "Spouští Emulátor terminálu prostředí KDE"
 
 #: ../xfce4-session/xfsm-startup.c:129
 msgid "Starting the Beep Media Player"
-msgstr "Startuje Beep Media přehrávač"
+msgstr "Spouští přehrávač Beep Media Player"
 
 #: ../xfce4-session/xfsm-startup.c:131
 msgid "Starting The Gimp"
-msgstr "Startuje GIMP"
+msgstr "Spouští GIMP"
 
 #: ../xfce4-session/xfsm-startup.c:133
 msgid "Starting the VI Improved Editor"
-msgstr "Startuje VI editor"
+msgstr "Spouští editor VIM"
 
 #: ../xfce4-session/xfsm-startup.c:135
 msgid "Starting the Session Management Proxy"
-msgstr "Startuje Správce řízení proxy"
+msgstr "Spouští Správce řízení proxy"
 
 #: ../xfce4-session/xfsm-startup.c:137
 msgid "Starting the X-Chat IRC Client"
-msgstr "Startuje X-Chat IRC klient"
+msgstr "Spouští IRC klient X-Chat"
 
 #: ../xfce4-session/xfsm-startup.c:139
 msgid "Starting the X Multimedia System"
-msgstr "Startuje XMMS"
+msgstr "Spouští přehrávač XMMS"
 
 #: ../xfce4-session/xfsm-startup.c:141
 msgid "Starting the X Terminal Emulator"
-msgstr "Startuje X emulátor terminálu"
+msgstr "Spouští emulátor terminálu xterm"
 
 #: ../xfce4-session/xfsm-startup.c:143
 #, c-format
 msgid "Starting %s"
-msgstr "Startuje %s"
+msgstr "Spouští %s"
 
 #: ../xfce4-session/xfsm-startup.c:268
 #, c-format
@@ -567,64 +568,68 @@ msgid ""
 "location.\n"
 "You should delete this directory now.\n"
 msgstr ""
+"Umístění a formát adresáře pro automatické spouštění se změnili.\n"
+"Nové umístění je v\n"
+"\n"
+"  %s,\n"
+"\n"
+"kam můžete umístit soubory .desktop, které popisují aplikace, spouštěné\n"
+"po přihlášeni do prostředí Xfce. Soubory v dříve používaném adresáři\n"
+" autostart byly úspěšně převedeny do nového umístění.\n"
+"Tento adresář byste nyní měli smazat.\n"
 
 #: ../xfce4-session/xfsm-startup.c:407
 msgid "Performing Autostart..."
-msgstr "Vykonání automatického startování..."
+msgstr "Probíhá automatické spuštění..."
 
 #: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:158
 msgid "Tips and Tricks"
-msgstr ""
+msgstr "Tipy a triky"
 
 #: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:202
 msgid "Fortunes"
-msgstr ""
+msgstr "Citáty"
 
 #: ../xfce4-tips/main.c:187
 msgid "Display tips on _startup"
-msgstr ""
+msgstr "Tipy a triky pro Xfce"
 
 #: ../xfce4-tips/main.c:196 ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
 msgid "Tips and tricks"
-msgstr ""
+msgstr "Zobrazovat tipy při _spuštění"
 
 #: ../xfce4-tips/main.c:213
 msgid "Next"
-msgstr ""
+msgstr "Další"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:1
-#, fuzzy
 msgid "Session and Startup Settings"
-msgstr "Sezení a Start"
+msgstr "Nastavení spouštění a sezení"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:2
-#, fuzzy
 msgid "Sessions and Startup Settings"
-msgstr "Sezení a Start"
+msgstr "Nastavení spouštění a sezení"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:3
-#, fuzzy
 msgid "Xfce 4 Sessions and Startup Settings"
-msgstr "Sezení a Start"
+msgstr "Nastavení spouštění a sezení Xfce4"
 
 #: ../settings/splash/xfce-splash-settings.desktop.in.h:2
-#, fuzzy
 msgid "Xfce 4 Splash Screen Settings"
-msgstr "Nastavení úvodní obrazovky"
+msgstr "Nastavení úvodní obrazovky Xfce4"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:1
-#, fuzzy
 msgid "Autostarted Applications"
-msgstr "Ovládat vzdálené aplikace"
+msgstr "Automaticky spouštěné aplikace"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:2
 msgid "Edit the list of autostarted applications"
-msgstr ""
+msgstr "Upravit seznam automaticky spouštěných aplikací"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:3
 msgid "Xfce 4 Autostarted Applications"
-msgstr ""
+msgstr "Automaticky spouštěné aplikace Xfce4"
 
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
-msgstr ""
+msgstr "xfce4-tips"
