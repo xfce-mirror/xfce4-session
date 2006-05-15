@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2003-2006 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -978,6 +978,29 @@ xfsm_manager_close_connection (XfsmClient *client,
                   client->properties = NULL;
                 }
 #endif
+            }
+
+          /* Run the SmDiscardCommand after the client exited in IDLE state.
+           * FIXME: Need to handle this better when we support restarting
+           * immediately properly.
+           * Unfortunately the spec isn't clear about the usage of the discard
+           * command. Have to check ksmserver/gnome-session, and come up with
+           * consistent behaviour.
+           * But for now, this work-around fixes the problem of the evergrowing
+           * number of xfwm4 session files when restarting xfwm4 within a session.
+           */
+          if (state == XFSM_MANAGER_IDLE && properties->discard_command != NULL)
+            {
+              xfsm_verbose ("Client Id = %s exited while in IDLE state, running "
+                            "discard command now.\n\n", properties->client_id);
+
+              g_spawn_sync (properties->current_directory,
+                            properties->discard_command,
+                            properties->environment,
+                            G_SPAWN_SEARCH_PATH,
+                            NULL, NULL,
+                            NULL, NULL,
+                            NULL, NULL);
             }
         }
 

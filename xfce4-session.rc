@@ -2,7 +2,7 @@
 #
 # Default xfce4-session configuration file.
 #
-# Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+# Copyright (c) 2003-2006 Benedikt Meurer <benny@xfce.org>
 # All rights reserved.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -35,13 +35,15 @@ DisableTcp=True
 # This the default session launched by xfce4-session if the
 # user hasn't saved any session yet or creates a new session.
 [Failsafe Session]
-Count=3
+Count=4
 Client0_Command=xfwm4
 Client0_PerScreen=False
 Client1_Command=xfce4-panel
 Client1_PerScreen=False
 Client2_Command=xfdesktop
 Client2_PerScreen=False
+Client3_Command=Thunar,--daemon
+Client3_PerScreen=False
 
 
 # Default splash screen selection.
