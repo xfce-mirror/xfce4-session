@@ -705,7 +705,7 @@ config_drag_begin (GtkWidget      *treeview,
   gdk_property_change (context->source_window,
                        gdk_atom_intern ("XdndDirectSave0", FALSE),
                        gdk_atom_intern ("text/plain", FALSE), 8,
-                       GDK_PROP_MODE_REPLACE, filename, strlen (filename));
+                       GDK_PROP_MODE_REPLACE, (const guchar *)filename, strlen (filename));
 
   g_free (filename);
   g_free (name);
@@ -748,7 +748,7 @@ config_drag_data_get (GtkWidget        *treeview,
           prop_text = g_realloc (prop_text, prop_len + 1);
           prop_text[prop_len] = '\0';
 
-          localpath = extract_local_path (prop_text);
+          localpath = extract_local_path ((gchar *)prop_text);
 
           if (localpath != NULL)
             {
@@ -766,7 +766,7 @@ config_drag_data_get (GtkWidget        *treeview,
     }
 
   gtk_selection_data_set (selection_data, gdk_atom_intern ("XA_STRING", FALSE),
-                          8, to_send, 1);
+                          8, (const guchar *)to_send, 1);
 
   g_free (name);
 }

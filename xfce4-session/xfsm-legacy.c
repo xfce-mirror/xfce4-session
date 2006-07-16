@@ -578,9 +578,9 @@ xfsm_legacy_init (void)
     {
       root = RootWindow (dpy, n);
       XChangeProperty (dpy, root, dt_save_mode, XA_STRING, 8,
-                       PropModeReplace, "xfce4", sizeof ("xfce4"));
+                       PropModeReplace, (unsigned char *)"xfce4", sizeof ("xfce4"));
       XChangeProperty (dpy, root, dt_restore_mode, XA_STRING, 8,
-                       PropModeReplace, "xfce4", sizeof ("xfce4"));
+                       PropModeReplace, (unsigned char *)"xfce4", sizeof ("xfce4"));
     }
 #endif
 }
