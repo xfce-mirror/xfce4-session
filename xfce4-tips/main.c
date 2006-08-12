@@ -155,6 +155,9 @@ main (int argc, char **argv)
   
   gtk_init (&argc, &argv);
 
+  /* fake a SM client id, so the session manager does not restart us */
+  gdk_set_sm_client_id ("FAKED CLIENTID");
+
   dlg = xfce_titled_dialog_new_with_buttons (_("Tips and Tricks"), NULL,
                                              GTK_DIALOG_NO_SEPARATOR,
                                              NULL);
