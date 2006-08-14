@@ -47,6 +47,8 @@ xfce4_session_CFLAGS =							\
 	@LIBX11_CFLAGS@							\
 	@LIBXFCE4MCS_CLIENT_CFLAGS@					\
 	@LIBXFCEGUI4_CFLAGS@						\
+	@DBUS_CFLAGS@							\
+	-DDBUS_API_SUBJECT_TO_CHANGE					\
 	-DLIBDIR=\"$(libdir)\"						\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
 	-DSYSCONFDIR=\"$(sysconfdir)\"					\
@@ -60,6 +62,7 @@ xfce4_session_LDADD =							\
 	@LIBX11_LIBS@							\
 	@LIBXFCE4MCS_CLIENT_LIBS@					\
 	@LIBXFCEGUI4_LIBS@						\
+	@DBUS_LIBS@							\
 	@GNOME_LIBS@
 
 xfce4_session_DEPENDENCIES =						\
@@ -75,5 +78,6 @@ EXTRA_DIST =								\
 	chooser-icon.png						\
 	xfsm-shutdown-helper-none.c					\
 	xfsm-shutdown-helper-redhat.c					\
+	xfsm-shutdown-helper-hal.c					\
 	xfsm-shutdown-helper-sudo.c
 

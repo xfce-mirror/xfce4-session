@@ -17,6 +17,12 @@ that file):
 
   myuser	myhost=/usr/local/libexec/xfsm-shutdown-helper
 
+Starting with xfce4-session 4.3.90.3 it is also possible to use HAL to
+shutdown/reboot the computer. Therefore pass --with-shutdown-style=hal
+to configure/autogen.sh and be sure to have D-BUS 0.34 or above (including
+the development files) installed and hald running. You will also need to
+allow users to shutdown the computer using HAL (see your system documentation
+for details here).
 
 
 Legacy session management:

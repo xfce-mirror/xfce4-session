@@ -1,3 +1,12 @@
+2006-08-14	Benedikt Meurer <benny@xfce.org>
+
+	* xfce4-session/main.c: Reap child processes to avoid sudo zombies
+	  when cancelling the logout dialog. Bug #2088.
+	* xfce4-session/xfsm-shutdown-helper-hal.c, AUTHORS, NEWS, README,
+	  configure.in.in, xfce4-session/Makefile.am: Add support for HAL
+	  to shutdown/reboot the computer, based on the Xubuntu patch by
+	  Jani Monoses <jani@ubuntu.com>. Bug #2046.
+
 2006-08-12	Benedikt Meurer <benny@xfce.org>
 
 	* xfce4-tips/main.c(main): Fake a session id, so the session manager

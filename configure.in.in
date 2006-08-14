@@ -123,16 +123,21 @@ fi
 
 dnl Check for shutdown method
 AC_ARG_WITH([shutdown-style],
-AC_HELP_STRING([--with-shutdown-style=auto/none/sudo], [Shutdown style]),
+AC_HELP_STRING([--with-shutdown-style=auto/none/hal/sudo], [Shutdown style]),
   [with_shutdown=$withval], [with_shutdown=auto])
 AC_MSG_CHECKING([what shutdown style should be used])
-if test x"$with_shutdown" != x"sudo" -a x"$with_shutdown" != x"none"; then
+if test x"$with_shutdown" != x"sudo" -a x"$with_shutdown" != x"hal" -a x"$with_shutdown" != x"none"; then
   with_shutdown="sudo"
 fi
 AC_DEFINE_UNQUOTED([XFSM_SHUTDOWN_HELPER_IMPL_C],
                    [<xfce4-session/xfsm-shutdown-helper-$with_shutdown.c>],
                    [Shutdown helper implementation])
 AC_MSG_RESULT([$with_shutdown])
+
+dnl Check for dbus for hal support
+if test x"$with_shutdown" = x"hal"; then
+  XDT_CHECK_PACKAGE([DBUS], [dbus-1], [0.34])
+fi
 
 dnl
 dnl arguments to set shutdown commands

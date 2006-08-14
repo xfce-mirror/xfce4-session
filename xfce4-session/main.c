@@ -23,6 +23,13 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_SYS_TYPES_H
+#include <sys/types.h>
+#endif
+#ifdef HAVE_SYS_WAIT_H
+#include <sys/wait.h>
+#endif
+
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
 #endif
@@ -222,6 +229,14 @@ initialize (int argc, char **argv)
 }
 
 
+static void
+sigchld (gint signo)
+{
+  gint status;
+  wait (&status);
+}
+
+
 int
 main (int argc, char **argv)
 {
@@ -230,8 +245,9 @@ main (int argc, char **argv)
 
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
   
-  /* stupid, damn f*ck*ng stupid linux! */
+  /* install required signal handlers */
   signal (SIGPIPE, SIG_IGN);
+  signal (SIGCHLD, sigchld);
 
   gtk_init (&argc, &argv);
 
