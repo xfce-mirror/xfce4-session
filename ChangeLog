@@ -1,3 +1,10 @@
+2006-08-15	Benedikt Meurer <benny@xfce.org>
+
+	* xfce4-session/main.c: Revert previous change to reap child processes
+	  as the sudo processes are already reaped in the sudo shutdown-helper
+	  and the patch attached to bug #2088 causes xfce4-session to hang on
+	  logout. Bug #2173.
+
 2006-08-14	Benedikt Meurer <benny@xfce.org>
 
 	* xfce4-session/main.c: Reap child processes to avoid sudo zombies
