@@ -2,14 +2,15 @@
 # Copyright (C) 2003-2006 The Xfce development team.
 # This file is distributed under the same license as the xfce4-session package.
 # Moritz Heiber <moe@xfce.org>, 2003.
+# Fabian Nowak <timystery@arcor.de>, 2006
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.3.90.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-05-06 04:22+0900\n"
-"PO-Revision-Date: 2005-10-08 20:32+0900\n"
-"Last-Translator: Moritz Heiber <moe@xfce.org>\n"
+"PO-Revision-Date: 2006-06-18 11:19+0100\n"
+"Last-Translator: Fabian Nowak <timystery@arcor.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,13 +30,13 @@ msgid ""
 "Unable to install splash theme from file %s, please check that the file is a "
 "valid splash theme archive."
 msgstr ""
-"Konnte Theme aus Datei %s nicht installieren. Stellen Sie sicher, daß die "
+"Konnte Theme aus Datei »%s« nicht installieren. Stellen Sie sicher, daß die "
 "Datei ein Splash-Thema Archiv ist."
 
 #: ../engines/balou/config.c:386
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
-msgstr "Konnte Splash Thema \"%s\" nicht aus Verzeichnis %s entfernen."
+msgstr "Konnte Startbildschirmthema »%s« nicht aus Verzeichnis »%s« entfernen."
 
 #: ../engines/balou/config.c:471
 msgid "Choose theme filename..."
@@ -43,7 +44,7 @@ msgstr "Wählen Sie die Themadatei, die Sie installieren möchten..."
 
 #: ../engines/balou/config.c:604
 msgid "_Install new theme"
-msgstr "Neues Thema installieren"
+msgstr "Neues Thema _installieren"
 
 #: ../engines/balou/config.c:613
 msgid "_Remove theme"
@@ -62,21 +63,20 @@ msgid "Configure Balou..."
 msgstr "Konfiguriere Balou..."
 
 #: ../engines/balou/config.c:969
-#, fuzzy
 msgid "Balou"
-msgstr "Balou Thema"
+msgstr "Balou"
 
 #: ../engines/balou/config.c:970
 msgid "Balou Splash Engine"
-msgstr ""
+msgstr "Startbildschirm »Balou«"
 
 #: ../engines/mice/mice.c:369
 msgid "Mice"
-msgstr ""
+msgstr "Mice"
 
 #: ../engines/mice/mice.c:370
 msgid "Mice Splash Engine"
-msgstr ""
+msgstr "Startbildschirm »Balou«"
 
 #: ../engines/simple/simple.c:319
 msgid "Choose image..."
@@ -112,11 +112,11 @@ msgstr "Eigenes Bild verwenden"
 
 #: ../engines/simple/simple.c:509
 msgid "Simple"
-msgstr ""
+msgstr "Einfach"
 
 #: ../engines/simple/simple.c:510
 msgid "Simple Splash Engine"
-msgstr ""
+msgstr "Einfacher Startbildschirm"
 
 #: ../settings/session/session.c:137
 msgid "Session chooser"
@@ -132,7 +132,7 @@ msgid ""
 "log in to Xfce."
 msgstr ""
 "Der Sitzungsmanager wird Sie bei jedem Login eine Sitzung auswählen lassen,"
-"falls Sie diese Option ankreuzen"
+"falls Sie diese Option ankreuzen."
 
 #: ../settings/session/session.c:154
 msgid "Logout settings"
@@ -164,7 +164,7 @@ msgid ""
 msgstr ""
 "Diese Option schaltet den Logoutdialog ab. Ob die Sitzung gespeichert wird "
 "oder nicht, hängt davon ab, ob Sie das automatische Speichern beim Logout "
-"aktiviert haben oder nicht"
+"aktiviert haben oder nicht."
 
 #: ../settings/session/session.c:215
 msgid "Compatibility"
@@ -172,7 +172,7 @@ msgstr "Kompatibilität"
 
 #: ../settings/session/session.c:224
 msgid "Launch Gnome services on startup"
-msgstr "Gnome Laufzeitumgebung beim Starten laden"
+msgstr "Laufzeitumgebung für Gnome beim Starten laden"
 
 #: ../settings/session/session.c:230
 msgid ""
@@ -182,7 +182,7 @@ msgid ""
 "Gnome."
 msgstr ""
 "Wählen Sie dies aus, wenn Sie Gnome Programme verwenden. Der Sitzungsmanager "
-"wird dann einige wichtige Gnome Laufzeitprogramme für Sie starten"
+"wird dann einige wichtige Gnome Laufzeitprogramme für Sie starten."
 
 #: ../settings/session/session.c:237
 msgid "Launch KDE services on startup"
@@ -198,7 +198,7 @@ msgstr ""
 "Wählen Sie dies aus, wenn Sie KDE Programme verwenden. Der Sitzungsmanager "
 "wird dann einige wichtige KDE Laufzeitprogramme für Sie starten. Dadurch "
 "wird der Start des Systems um einiges verlangsamt. Allerdings starten dann "
-"alle KDE basierenden Programme schneller"
+"alle KDE basierenden Programme schneller."
 
 #: ../settings/session/session.c:256
 msgid "Security"
@@ -206,9 +206,7 @@ msgstr "Sicherheit"
 
 #: ../settings/session/session.c:261
 msgid "Manage remote applications"
-msgstr ""
-"Anwendungen auf entfernten\n"
-"Rechnern verwalten"
+msgstr "Anwendungen auf entfernten Rechnern verwalten"
 
 #: ../settings/session/session.c:273
 msgid ""
@@ -216,7 +214,7 @@ msgid ""
 "not enable this option unless you know what you are doing."
 msgstr ""
 "Erlaubt dem Sitzungsmanager, Programme auf entfernten Rechnern zu verwalten. "
-"Aktivieren Sie diese Option nur, wenn Sie wissen, was Sie tun"
+"Aktivieren Sie diese Option nur, wenn Sie wissen, was Sie tun."
 
 #: ../settings/session/session.c:333
 msgid "Sessions and Startup"
@@ -232,7 +230,6 @@ msgstr "Fortgeschritten"
 
 #. the button label in the xfce-mcs-manager dialog
 #: ../settings/session/session.c:382
-#, fuzzy
 msgid "Button Label|Sessions and Startup"
 msgstr "Sitzungs- und Starteinstellungen"
 
@@ -245,7 +242,7 @@ msgstr "Keiner"
 #: ../settings/splash/splash.c:409
 #: ../settings/splash/xfce-splash-settings.desktop.in.h:1
 msgid "Splash Screen Settings"
-msgstr "Startbildschirmeinstellungen"
+msgstr "Einstellungen für den Startbildschirm"
 
 #: ../settings/splash/splash.c:457
 msgid "Configure"
@@ -285,58 +282,53 @@ msgstr "<b>Webseite:</b>"
 
 #. the button label in the xfce-mcs-manager dialog
 #: ../settings/splash/splash.c:584
-#, fuzzy
 msgid "Button Label|Splash Screen"
-msgstr "Splash Screen"
+msgstr "Startbildschirm"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:99
 msgid "Add application"
-msgstr ""
+msgstr "Anwendung hinzufügen"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:113
 msgid "Name:"
-msgstr ""
+msgstr "Name:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:130
-#, fuzzy
 msgid "Description:"
-msgstr "<b>Beschreibung:</b>"
+msgstr "Beschreibung:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:145
 msgid "Command:"
-msgstr ""
+msgstr "Befehl:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:205
 msgid "Select a command"
-msgstr ""
+msgstr "Wählen Sie einen Befehl aus"
 
 #: ../xfce4-autostart-editor/xfae-model.c:558
 #, c-format
 msgid "Failed to unlink %s: %s"
-msgstr ""
+msgstr "Konnte »%s« nicht löschen: %s"
 
 #: ../xfce4-autostart-editor/xfae-model.c:646
 #, c-format
 msgid "Failed to create file %s"
-msgstr ""
+msgstr "Konnte Datei »%s« nicht erstellen"
 
 #: ../xfce4-autostart-editor/xfae-model.c:668
 #, c-format
 msgid "Failed to write file %s"
-msgstr ""
+msgstr "Konnte Datei »%s« nicht schreiben"
 
 #: ../xfce4-autostart-editor/xfae-model.c:767
 #, c-format
 msgid "Failed to open %s for writing"
-msgstr ""
+msgstr "Konnte »%s« nicht zum Lesen öffnen"
 
 #: ../xfce4-autostart-editor/xfae-window.c:89
 #: ../xfce4-autostart-editor/xfae-window.c:106
-#, fuzzy
 msgid "Autostarted applications"
-msgstr ""
-"Anwendungen auf entfernten\n"
-"Rechnern verwalten"
+msgstr "Automatisch gestartete Anwendungen"
 
 #: ../xfce4-autostart-editor/xfae-window.c:124
 msgid ""
@@ -345,6 +337,10 @@ msgid ""
 "in addition to the applications that were saved when\n"
 "you logged out last time:"
 msgstr ""
+"Unten ist eine Liste der Anwendungen, die automatisch\n"
+"gestartet werden, wenn Sie sich an Ihrem Xfce Desktop\n"
+"anmelden, zusätzlich zu den beim Abmelden gespeicherten\n"
+"Anwendungen:"
 
 #: ../xfce4-session/main.c:140
 msgid "Loading desktop settings"
@@ -353,29 +349,27 @@ msgstr "Lade Desktop Einstellungen"
 #. verify that the DNS settings are ok
 #: ../xfce4-session/main.c:200
 msgid "Verifying DNS settings"
-msgstr "DNS Einstellungen werden geprüft"
+msgstr "DNS-Einstellungen werden geprüft"
 
 #: ../xfce4-session/main.c:203
 msgid "Loading session data"
 msgstr "Lade Sitzungsdaten"
 
 #: ../xfce4-session/shutdown.c:307
-#, fuzzy
 msgid "End Session"
-msgstr "Neue Sitzung"
+msgstr "Sitzung beenden"
 
 #: ../xfce4-session/shutdown.c:341
-#, fuzzy
 msgid "Log Out"
 msgstr "Abmelden"
 
 #: ../xfce4-session/shutdown.c:364
 msgid "Restart"
-msgstr ""
+msgstr "Neu starten"
 
 #: ../xfce4-session/shutdown.c:387
 msgid "Shut Down"
-msgstr ""
+msgstr "Herunterfahren"
 
 #: ../xfce4-session/shutdown.c:395
 msgid "_Save session for future logins"
@@ -401,7 +395,7 @@ msgstr ""
 #: ../xfce4-session/xfsm-chooser.c:120
 #, c-format
 msgid "Last accessed: %s"
-msgstr ""
+msgstr "Zuletzt zugegriffen: %s"
 
 #: ../xfce4-session/xfsm-chooser.c:213
 msgid ""
@@ -573,6 +567,15 @@ msgid ""
 "location.\n"
 "You should delete this directory now.\n"
 msgstr ""
+"Der ort und das Format des Autostart-Verzeichnisses haben sich geändert.\n"
+"Der neue Ort ist\n"
+"\n"
+"  %s\n"
+"\n"
+"wo .desktop-Dateien abgelegt werden können, die die Anwendungen festlegen,\n"
+"die beim Anmelden am Xfce Desktop gestartet werden sollen. Die Dateien im\n"
+"alten Autostart-Verzeichnis wurden erfolgreich zum neuen Ort übertragen.\n"
+"Sie sollten dieses Verzeichnis jetzt löschen.\n"
 
 #: ../xfce4-session/xfsm-startup.c:407
 msgid "Performing Autostart..."
@@ -580,32 +583,31 @@ msgstr "Führe Autostart aus..."
 
 #: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:158
 msgid "Tips and Tricks"
-msgstr ""
+msgstr "Tipps und Tricks"
 
 #: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:202
 msgid "Fortunes"
-msgstr ""
+msgstr "Fortunes"
 
 #: ../xfce4-tips/main.c:187
 msgid "Display tips on _startup"
-msgstr ""
+msgstr "Xfce Tipps und Tricks"
 
 #: ../xfce4-tips/main.c:196 ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
 msgid "Tips and tricks"
-msgstr ""
+msgstr "Tipps beim _Starten anzeigen"
 
 #: ../xfce4-tips/main.c:213
 msgid "Next"
-msgstr ""
+msgstr "Nächster"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:1
 msgid "Session and Startup Settings"
 msgstr "Sitzungs- und Starteinstellungen"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:2
-#, fuzzy
 msgid "Sessions and Startup Settings"
-msgstr "Sitzungs- und Starteinstellungen"
+msgstr "Sitzungen und Starteinstellungen"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:3
 msgid "Xfce 4 Sessions and Startup Settings"
@@ -616,20 +618,17 @@ msgid "Xfce 4 Splash Screen Settings"
 msgstr "Xfce 4 Startbildschirm"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:1
-#, fuzzy
 msgid "Autostarted Applications"
-msgstr ""
-"Anwendungen auf entfernten\n"
-"Rechnern verwalten"
+msgstr "Automatisch gestartete Anwendungen"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:2
 msgid "Edit the list of autostarted applications"
-msgstr ""
+msgstr "Ändern Sie die Liste der automatisch gestarteten Anwendungen"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:3
 msgid "Xfce 4 Autostarted Applications"
-msgstr ""
+msgstr "Xfce 4 Automatisch gestartete Anwendungen"
 
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
-msgstr ""
+msgstr "Xfce 4 Tipps"
