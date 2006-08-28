@@ -60,6 +60,9 @@
 #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
 #define POWEROFF_CMD  "/sbin/shutdown -p now"
 #define REBOOT_CMD    "/sbin/shutdown -r now"
+#elif defined(sun) || defined(__sun)
+#define POWEROFF_CMD  "/usr/sbin/shutdown -i 5 -g 0 -y"
+#define REBOOT_CMD    "/usr/sbin/shutdown -i 6 -g 0 -y"
 #else
 #define POWEROFF_CMD  "/sbin/shutdown -h now"
 #define REBOOT_CMD    "/sbin/shutdown -r now"
