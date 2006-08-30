@@ -53,7 +53,6 @@
 #include <libxfce4util/libxfce4util.h>
 
 #ifdef HAVE_GNOME
-#include <libgnome/libgnome.h>
 #include <gconf/gconf-client.h>
 #endif
 
