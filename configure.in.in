@@ -9,10 +9,10 @@ dnl
 dnl Version information
 m4_define([xfsm_version_major], [4])
 m4_define([xfsm_version_minor], [3])
-m4_define([xfsm_version_micro], [90])
-m4_define([xfsm_version_nano], [3])
+m4_define([xfsm_version_micro], [99])
+m4_define([xfsm_version_nano], [1])
 m4_define([xfsm_version_build], [@REVISION@])
-m4_define([xfsm_version_tag], [svn])
+m4_define([xfsm_version_tag], [])
 m4_define([xfsm_version], [xfsm_version_major().xfsm_version_minor().xfsm_version_micro()ifelse(xfsm_version_nano(), [], [], [.xfsm_version_nano()])ifelse(xfsm_version_tag(), [svn], [xfsm_version_tag()[-r]xfsm_version_build()], [])])
 
 dnl Initialize autoconf
@@ -68,12 +68,12 @@ dnl Check for i18n support
 XDT_I18N([@LINGUAS@])
 
 dnl Check for required packages
-XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.3.90.2])
-XDT_CHECK_PACKAGE([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.3.90.2])
-XDT_CHECK_PACKAGE([LIBXFCEGUI4], [libxfcegui4-1.0], [4.3.90.2])
+XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.3.99.1])
+XDT_CHECK_PACKAGE([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.3.99.1])
+XDT_CHECK_PACKAGE([LIBXFCEGUI4], [libxfcegui4-1.0], [4.3.99.1])
 
 dnl Configure the MCS plugins
-XDT_XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.3.90.2])
+XDT_XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.3.99.1])
 
 dnl Check for gnome support
 XDT_CHECK_OPTIONAL_PACKAGE([GNOME], [gconf-2.0], [2.4.0], [gnome],

@@ -1,13 +1,18 @@
-4.3.90.3svn
-===========
+4.3.99.1
+========
 - Add support for HAL to shutdown/reboot the computer. Must be enabled
-  explicitly using --with-shutdown-style=hal to configure/autogen.sh.
+  explicitly using --with-shutdown-style=hal to configure (Bug #2046).
+- Do not try to save the xfce4-tips as part of the session (Bug #1089).
+- Add shutdown/reboot support for Solaris (Bug #2230, Moinak Ghosh).
+- Drop libgnome dependency for assistive technologies support.
+
 
 4.3.90.2
 ========
 - Update dialogs to use the new XfceTitledDialog.
 - Properly handle OnlyShowIn and NotShowIn in the autostart editor.
 - Run discard command when client terminates unexpectedly.
+
 
 4.3.90.1
 ========
