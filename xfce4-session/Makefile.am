@@ -1,4 +1,7 @@
+# $Id$
+
 INCLUDES =								\
+	-I$(top_builddir)						\
 	-I$(top_srcdir)
 
 man_MANS = xfce4-session.1
@@ -42,12 +45,12 @@ xfce4_session_SOURCES =							\
 	xfsm-startup.h
 
 xfce4_session_CFLAGS =							\
-	@GNOME_CFLAGS@							\
-	@LIBSM_CFLAGS@							\
-	@LIBX11_CFLAGS@							\
-	@LIBXFCE4MCS_CLIENT_CFLAGS@					\
-	@LIBXFCEGUI4_CFLAGS@						\
-	@DBUS_CFLAGS@							\
+	$(GNOME_CFLAGS)							\
+	$(LIBSM_CFLAGS)							\
+	$(LIBX11_CFLAGS)						\
+	$(LIBXFCE4MCS_CLIENT_CFLAGS)					\
+	$(LIBXFCEGUI4_CFLAGS)						\
+	$(DBUS_CFLAGS)							\
 	-DDBUS_API_SUBJECT_TO_CHANGE					\
 	-DLIBDIR=\"$(libdir)\"						\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
@@ -56,14 +59,14 @@ xfce4_session_CFLAGS =							\
 
 xfce4_session_LDADD =							\
 	$(top_builddir)/libxfsm/libxfsm-4.2.la				\
-	@LIBSM_LDFLAGS@							\
-	@LIBSM_LIBS@							\
-	@LIBX11_LDFLAGS@						\
-	@LIBX11_LIBS@							\
-	@LIBXFCE4MCS_CLIENT_LIBS@					\
-	@LIBXFCEGUI4_LIBS@						\
-	@DBUS_LIBS@							\
-	@GNOME_LIBS@
+	$(LIBSM_LDFLAGS)						\
+	$(LIBSM_LIBS)							\
+	$(LIBX11_LDFLAGS)						\
+	$(LIBX11_LIBS)							\
+	$(LIBXFCE4MCS_CLIENT_LIBS)					\
+	$(LIBXFCEGUI4_LIBS)						\
+	$(DBUS_LIBS)							\
+	$(GNOME_LIBS)
 
 xfce4_session_DEPENDENCIES =						\
 	$(top_builddir)/libxfsm/libxfsm-4.2.la
@@ -75,9 +78,5 @@ chooser-icon.h: $(srcdir)/chooser-icon.png
 
 EXTRA_DIST =								\
 	$(man_MANS)							\
-	chooser-icon.png						\
-	xfsm-shutdown-helper-none.c					\
-	xfsm-shutdown-helper-redhat.c					\
-	xfsm-shutdown-helper-hal.c					\
-	xfsm-shutdown-helper-sudo.c
+	chooser-icon.png
 

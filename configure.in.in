@@ -75,6 +75,10 @@ XDT_CHECK_PACKAGE([LIBXFCEGUI4], [libxfcegui4-1.0], [4.3.99.1])
 dnl Configure the MCS plugins
 XDT_XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.3.99.1])
 
+dnl Check for D-Bus support (for HAL shutdown support)
+XDT_CHECK_OPTIONAL_PACKAGE([DBUS], [dbus-1], [0.34], [dbus],
+                           [Hal shutdown support], [yes])
+
 dnl Check for gnome support
 XDT_CHECK_OPTIONAL_PACKAGE([GNOME], [gconf-2.0], [2.4.0], [gnome],
                            [Assistive technologies support], [no])
@@ -120,58 +124,6 @@ else
   AC_DEFINE([SESSION_SCREENSHOTS], [1], [Define for session screenshots])
   AC_MSG_RESULT([yes])
 fi
-
-dnl Check for shutdown method
-AC_ARG_WITH([shutdown-style],
-AC_HELP_STRING([--with-shutdown-style=auto/none/hal/sudo], [Shutdown style]),
-  [with_shutdown=$withval], [with_shutdown=auto])
-AC_MSG_CHECKING([what shutdown style should be used])
-if test x"$with_shutdown" != x"sudo" -a x"$with_shutdown" != x"hal" -a x"$with_shutdown" != x"none"; then
-  with_shutdown="sudo"
-fi
-AC_DEFINE_UNQUOTED([XFSM_SHUTDOWN_HELPER_IMPL_C],
-                   [<xfce4-session/xfsm-shutdown-helper-$with_shutdown.c>],
-                   [Shutdown helper implementation])
-AC_MSG_RESULT([$with_shutdown])
-
-dnl Check for dbus for hal support
-if test x"$with_shutdown" = x"hal"; then
-  XDT_CHECK_PACKAGE([DBUS], [dbus-1], [0.34])
-fi
-
-dnl
-dnl arguments to set shutdown commands
-dnl
-
-dnl AC_MSG_CHECKING([for custom 'poweroff' command])
-dnl AC_ARG_WITH([poweroff],
-dnl   AC_HELP_STRING([--with-poweroff=cmd], [command used to power down (full path with arguments)]),
-dnl   [with_poweroff="$withval"],
-dnl   [with_poweroff="no"])
-dnl if test "x$with_poweroff" != "xno"; then
-dnl   AC_DEFINE_UNQUOTED(POWEROFF_CMD, "$with_poweroff", [poweroff command])
-dnl fi
-dnl AC_MSG_RESULT([$with_poweroff])
-dnl 
-dnl AC_MSG_CHECKING([for custom 'halt' command])
-dnl AC_ARG_WITH([halt],
-dnl   AC_HELP_STRING([--with-halt=cmd], [command used to halt (full path with arguments)]),
-dnl   [with_halt="$withval"],
-dnl   [with_halt="no"])
-dnl if test "x$with_halt" != "xno"; then
-dnl   AC_DEFINE_UNQUOTED(HALT_CMD, "$with_halt", [halt command])
-dnl fi
-dnl AC_MSG_RESULT([$with_halt])
-dnl 
-dnl AC_MSG_CHECKING([for custom 'reboot' command])
-dnl AC_ARG_WITH([reboot],
-dnl   AC_HELP_STRING([--with-reboot=cmd], [command used to reboot (full path with arguments)]),
-dnl   [with_reboot="$withval"],
-dnl   [with_reboot="no"])
-dnl if test "x$with_reboot" != "xno"; then
-dnl   AC_DEFINE_UNQUOTED(REBOOT_CMD, "$with_reboot", [reboot command])
-dnl fi
-dnl AC_MSG_RESULT([$with_reboot])
 
 AC_OUTPUT([
 Makefile
