@@ -70,7 +70,6 @@
  */
 static gboolean   xfsm_manager_startup (void);
 static void       xfsm_manager_handle_failed (void);
-static void       xfsm_manager_startup_continue (const gchar *previous_id);
 static gboolean   xfsm_manager_startup_timedout (gpointer user_data);
 static void       xfsm_manager_load_settings (XfceRc *rc);
 static gboolean   xfsm_manager_load_session (void);
@@ -156,72 +155,6 @@ xfsm_manager_handle_failed (void)
 
   g_list_free (starting_properties);
   starting_properties = NULL;
-}
-
-
-static void
-xfsm_manager_startup_continue (const gchar *previous_id)
-{
-  gboolean startup_done = FALSE;
-  gchar buffer[1024];
-  XfceRc *rc;
-
-  xfsm_verbose ("Manager startup continues [Previous Id = %s]\n\n",
-                previous_id != NULL ? previous_id : "None");
-
-  if (startup_timeout_id != 0)
-    {
-      g_source_remove (startup_timeout_id);
-      startup_timeout_id = 0;
-
-      /* work around broken clients */
-      if (state != XFSM_MANAGER_STARTUP)
-        return;
-    }
-
-  startup_done = xfsm_startup_continue (previous_id);
-
-  if (startup_done)
-    {
-      xfsm_verbose ("Manager finished startup, entering IDLE mode now\n\n");
-      state = XFSM_MANAGER_IDLE;
-
-      if (!failsafe_mode)
-        {
-          /* handle apps that failed to start */
-          xfsm_manager_handle_failed ();
-
-          /* restore active workspace, this has to be done after the
-           * window manager is up, so we do it last.
-           */
-          g_snprintf (buffer, 1024, "Session: %s", session_name);
-          rc = xfce_rc_simple_open (session_file, TRUE);
-          xfce_rc_set_group (rc, buffer);
-          xfsm_manager_restore_active_workspace (rc);
-          xfce_rc_close (rc);
-
-          /* start legacy applications now */
-          xfsm_legacy_startup ();
-        }
-    }
-  else
-    {
-      startup_timeout_id = g_timeout_add (STARTUP_TIMEOUT,
-                                          xfsm_manager_startup_timedout,
-                                          NULL);
-    }
-}
-
-
-static gboolean
-xfsm_manager_startup_timedout (gpointer user_data)
-{
-  xfsm_verbose ("Manager startup timed out\n\n");
-
-  startup_timeout_id = 0; /* will be removed automagically once we return */
-  xfsm_manager_startup_continue (NULL);
-  
-  return FALSE;
 }
 
 
@@ -498,6 +431,72 @@ xfsm_manager_restart (void)
   g_idle_add ((GSourceFunc) xfsm_manager_startup, NULL);
   
   return TRUE;
+}
+
+
+void
+xfsm_manager_startup_continue (const gchar *previous_id)
+{
+  gboolean startup_done = FALSE;
+  gchar buffer[1024];
+  XfceRc *rc;
+
+  xfsm_verbose ("Manager startup continues [Previous Id = %s]\n\n",
+                previous_id != NULL ? previous_id : "None");
+
+  if (startup_timeout_id != 0)
+    {
+      g_source_remove (startup_timeout_id);
+      startup_timeout_id = 0;
+
+      /* work around broken clients */
+      if (state != XFSM_MANAGER_STARTUP)
+        return;
+    }
+
+  startup_done = xfsm_startup_continue (previous_id);
+
+  if (startup_done)
+    {
+      xfsm_verbose ("Manager finished startup, entering IDLE mode now\n\n");
+      state = XFSM_MANAGER_IDLE;
+
+      if (!failsafe_mode)
+        {
+          /* handle apps that failed to start */
+          xfsm_manager_handle_failed ();
+
+          /* restore active workspace, this has to be done after the
+           * window manager is up, so we do it last.
+           */
+          g_snprintf (buffer, 1024, "Session: %s", session_name);
+          rc = xfce_rc_simple_open (session_file, TRUE);
+          xfce_rc_set_group (rc, buffer);
+          xfsm_manager_restore_active_workspace (rc);
+          xfce_rc_close (rc);
+
+          /* start legacy applications now */
+          xfsm_legacy_startup ();
+        }
+    }
+  else
+    {
+      startup_timeout_id = g_timeout_add (STARTUP_TIMEOUT,
+                                          xfsm_manager_startup_timedout,
+                                          NULL);
+    }
+}
+
+
+static gboolean
+xfsm_manager_startup_timedout (gpointer user_data)
+{
+  xfsm_verbose ("Manager startup timed out\n\n");
+
+  startup_timeout_id = 0; /* will be removed automagically once we return */
+  xfsm_manager_startup_continue (NULL);
+  
+  return FALSE;
 }
 
 

@@ -50,7 +50,8 @@ AC_HEADER_STDC
 AC_CHECK_HEADERS([errno.h fcntl.h limits.h netdb.h signal.h stdarg.h \
   sys/param.h sys/resource.h sys/socket.h sys/time.h sys/wait.h sys/utsname.h \
   time.h unistd.h])
-AC_CHECK_FUNCS([getaddrinfo gethostbyname gethostname sigaction strdup sync])
+AC_CHECK_FUNCS([getaddrinfo gethostbyname gethostname sigaction strdup sync \
+                vfork])
 
 dnl Check for X11 installed
 XDT_CHECK_LIBX11_REQUIRE()

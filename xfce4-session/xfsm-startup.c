@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003-2005 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2003-2006 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -45,8 +45,6 @@
 
 #include <glib/gstdio.h>
 
-#include <gtk/gtk.h>
-
 #include <libxfcegui4/libxfcegui4.h>
 
 #include <libxfsm/xfsm-util.h>
@@ -62,8 +60,12 @@
 /*
    Prototypes
  */
-static gboolean xfsm_startup_continue_failsafe (void);
-static gboolean xfsm_startup_continue_session  (const gchar *previous_id);
+static gboolean xfsm_startup_continue_failsafe    (void);
+static gboolean xfsm_startup_continue_session     (const gchar *previous_id);
+static void     xfsm_startup_child_watch          (GPid         pid,
+                                                   gint         status,
+                                                   gpointer     user_data);
+static void     xfsm_startup_child_watch_destroy  (gpointer     user_data);
 
 
 void
@@ -480,7 +482,12 @@ static gboolean
 xfsm_startup_continue_session (const gchar *previous_id)
 {
   XfsmProperties *properties;
+  gchar         **argv;
+  gint            argc;
+  GPid            pid;
+  gint            n;
   
+again:
   properties = (XfsmProperties *) g_list_nth_data (pending_properties, 0);
   if (properties != NULL)
     {
@@ -490,11 +497,52 @@ xfsm_startup_continue_session (const gchar *previous_id)
                                    figure_app_name (properties->program));
         }
 
-      /* restart the application */
-      xfsm_start_application (properties->restart_command, NULL, NULL,
-                              NULL, NULL, NULL);
+      /* drop the properties from the pending list */
       pending_properties = g_list_remove (pending_properties, properties);
+
+      /* generate the argument vector for the application (expanding variables) */
+      argc = g_strv_length (properties->restart_command);
+      argv = g_new (gchar *, argc);
+      for (n = 0; n < argc; ++n)
+        argv[n] = xfce_expand_variables (properties->restart_command[n], NULL);
+      argv[n] = NULL;
+
+      /* fork a new process for the application */
+#ifdef HAVE_VFORK
+      pid = vfork ();
+#else
+      pid = fork ();
+#endif
+
+      /* handle the child process */
+      if (pid == 0)
+        {
+          /* execute the application here */
+          execvp (argv[0], argv);
+          _exit (127);
+        }
+
+      /* check if we failed to fork */
+      if (G_UNLIKELY (pid < 0))
+        {
+          /* tell the user that we failed to fork */
+          perror ("Failed to fork new process");
+        }
+      else
+        {
+          /* watch the child process */
+          g_child_watch_add_full (G_PRIORITY_LOW, pid, xfsm_startup_child_watch, g_strdup (properties->client_id), xfsm_startup_child_watch_destroy);
+        }
+
+      /* cleanup */
+      g_strfreev (argv);
+
+      /* move the properties to the list of starting applications */
       starting_properties = g_list_append (starting_properties, properties);
+
+      /* try with the next pending if fork() failed */
+      if (G_UNLIKELY (pid < 0))
+        goto again;
 
       /* more to come... */
       return FALSE;
@@ -502,4 +550,39 @@ xfsm_startup_continue_session (const gchar *previous_id)
 
   return TRUE;
 }
+
+
+static void
+xfsm_startup_child_watch (GPid     pid,
+                          gint     status,
+                          gpointer user_data)
+{
+  XfsmProperties *properties;
+  const gchar    *client_id = user_data;
+  GList          *lp;
+
+  /* check if we have a starting process with the given client_id */
+  for (lp = starting_properties; lp != NULL; lp = lp->next)
+    {
+      /* check if this properties matches */
+      properties = (XfsmProperties *) lp->data;
+      if (strcmp (properties->client_id, client_id) == 0)
+        {
+          /* continue startup, this client failed most probably */
+          xfsm_manager_startup_continue (NULL);
+          break;
+        }
+    }
+}
+
+
+static void
+xfsm_startup_child_watch_destroy (gpointer user_data)
+{
+  /* release the client_id */
+  g_free (user_data);
+}
+
+
+
 

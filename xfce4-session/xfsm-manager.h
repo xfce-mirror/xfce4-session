@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2003-2006 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -44,6 +44,8 @@ typedef enum
 void xfsm_manager_init (XfceRc *rc);
 
 gboolean xfsm_manager_restart (void);
+
+void xfsm_manager_startup_continue (const gchar *previous_id);
 
 gchar* xfsm_manager_generate_client_id (SmsConn sms_conn) G_GNUC_PURE;
 
