@@ -1,5 +1,10 @@
 2006-09-13	Benedikt Meurer <benny@xfce.org>
 
+	* xfce4-session/xfsm-startup.c(xfsm_startup_continue_session): Fix
+	  argv array allocation. Bug #2315.
+
+2006-09-13	Benedikt Meurer <benny@xfce.org>
+
 	* xfce4-session/xfsm-splash-screen.c: Drop GLib 2.2 compat code.
 	* configure.in.in, xfce4-session/xfsm-manager.{c,h},
 	  xfce4-session/xfsm-startup.c: Handle failed applications faster on

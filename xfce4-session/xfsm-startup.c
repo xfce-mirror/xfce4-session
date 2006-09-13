@@ -502,7 +502,7 @@ again:
 
       /* generate the argument vector for the application (expanding variables) */
       argc = g_strv_length (properties->restart_command);
-      argv = g_new (gchar *, argc);
+      argv = g_new (gchar *, argc + 1);
       for (n = 0; n < argc; ++n)
         argv[n] = xfce_expand_variables (properties->restart_command[n], NULL);
       argv[n] = NULL;
