@@ -1,3 +1,9 @@
+2006-10-28	Benedikt Meurer <benny@xfce.org>
+
+	* xfce4-session.rc: Be sure to start Thunar prior to xfdesktop on
+	  first login to avoid the trash error from xfdesktop if the session
+	  bus is not configured properly. Bug #2447.
+
 2006-09-13	Benedikt Meurer <benny@xfce.org>
 
 	* xfce4-session/xfsm-startup.c(xfsm_startup_continue_session): Fix
