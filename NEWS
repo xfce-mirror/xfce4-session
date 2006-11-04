@@ -1,3 +1,20 @@
+4.3.99.2
+========
+- Remove references to xftaskbar4 and xfce4-iconbox and rename xffm to Thunar
+  for the Tips'n'Tricks displayed on startup (#1332).
+- Be sure to start Thunar prior to xfdesktop on first login to avoid the trash
+  error from xfdesktop if the session bus is not configured properly (#2447).
+- Applications that fail to startup on login do no longer time out, but are
+  dropped immediately from the session, which results in faster startup in
+  that case.
+- Merge the sudo and the HAL shutdown helpers into a single shutdown helper,
+  which tries to use HAL first, and falls back to sudo.
+- Drop GLib 2.2.x compatibility code.
+- Updated translations: Pau Rul-lan Ferragut (ca), Sylvain Vedrenne (eo),
+			ByungHyun Choi (ko), Phan Vĩnh Thịnh (vi)
+- New translations: Sonam Rinchen (dz)
+
+
 4.3.99.1
 ========
 - Add support for HAL to shutdown/reboot the computer. Must be enabled
