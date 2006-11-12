@@ -57,7 +57,7 @@
 #undef REBOOT_CMD
 #endif
 
-#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
 #define POWEROFF_CMD  "/sbin/shutdown -p now"
 #define REBOOT_CMD    "/sbin/shutdown -r now"
 #elif defined(sun) || defined(__sun)
