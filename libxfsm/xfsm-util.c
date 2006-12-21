@@ -215,7 +215,7 @@ xfsm_window_add_border (GtkWindow *window)
   gtk_widget_show (box2);
   gtk_container_add (GTK_CONTAINER (box1), box2);
 
-  gtk_container_set_border_width (GTK_CONTAINER (box2), 3);
+  gtk_container_set_border_width (GTK_CONTAINER (box2), 6);
   gtk_widget_reparent (GTK_BIN (window)->child, box2);
 
   gtk_container_add (GTK_CONTAINER (window), box1);

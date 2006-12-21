@@ -158,7 +158,6 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   GtkWidget *halt_button;
   GtkWidget *cancel_button;
   GtkWidget *ok_button;
-  GtkWidget *header;
   GdkPixbuf *icon;
   gboolean saveonexit;
   gboolean autosave;
@@ -304,12 +303,6 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
 
   dbox = GTK_DIALOG(dialog)->vbox;
 
-  header = xfce_create_header (NULL, _("End Session"));
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_BIN (header)->child), 
-                                  BORDER+2);
-  gtk_widget_show (header);
-  gtk_box_pack_start (GTK_BOX (dbox), header, TRUE, TRUE, 0);
-  
   vbox = gtk_vbox_new(FALSE, BORDER);
   gtk_box_pack_start(GTK_BOX(dbox), vbox, TRUE, TRUE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), BORDER);

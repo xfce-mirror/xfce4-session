@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2004-2006 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -22,6 +22,8 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+
+#include <gtk/gtk.h>
 
 #include <xfce4-session/xfsm-fadeout.h>
 
@@ -80,6 +82,14 @@ xfsm_fadeout_new (GdkDisplay *display)
 
   cursor = gdk_cursor_new (GDK_WATCH);
 
+  attr.x = 0;
+  attr.y = 0;
+  attr.event_mask = 0;
+  attr.wclass = GDK_INPUT_OUTPUT;
+  attr.window_type = GDK_WINDOW_TEMP;
+  attr.cursor = cursor;
+  attr.override_redirect = TRUE;
+
   for (n = 0; n < gdk_display_get_n_screens (display); ++n)
     {
       screen = g_new (FoScreen, 1);
@@ -98,15 +108,8 @@ xfsm_fadeout_new (GdkDisplay *display)
                          0, 0, 0, 0, width, height);
       xfsm_fadeout_drawable_mono (fadeout, GDK_DRAWABLE (screen->backbuf));
 
-      attr.x = 0;
-      attr.y = 0;
       attr.width = width;
       attr.height = height;
-      attr.event_mask = 0;
-      attr.wclass = GDK_INPUT_OUTPUT;
-      attr.window_type = GDK_WINDOW_TEMP;
-      attr.cursor = cursor;
-      attr.override_redirect = TRUE;
 
       screen->window = gdk_window_new (root, &attr, GDK_WA_X | GDK_WA_Y
                                        | GDK_WA_NOREDIR | GDK_WA_CURSOR);
@@ -150,6 +153,15 @@ static void
 xfsm_fadeout_drawable_mono (XfsmFadeout *fadeout,
                             GdkDrawable *drawable)
 {
+#if GTK_CHECK_VERSION(2,8,0)
+  cairo_t *cr;
+
+  /* using Xrender gives better results */
+  cr = gdk_cairo_create (drawable);
+  gdk_cairo_set_source_color (cr, &fadeout->color);
+  cairo_paint_with_alpha (cr, 0.5);
+  cairo_destroy (cr);
+#else
   GdkGCValues  values;
   GdkBitmap   *bm;
   GdkGC       *gc;
@@ -175,5 +187,6 @@ xfsm_fadeout_drawable_mono (XfsmFadeout *fadeout,
 
   g_object_unref (G_OBJECT (gc));
   g_object_unref (G_OBJECT (bm));
+#endif
 }
 
