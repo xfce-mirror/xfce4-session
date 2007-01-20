@@ -56,10 +56,13 @@ struct _XfsmFadeout
 
 
 
+#if !GTK_CHECK_VERSION(2,8,0)
 static char stipple_data[] = {
   ' ', '.',
   '.', ' ',
 };
+#endif
+
 
 
 XfsmFadeout*

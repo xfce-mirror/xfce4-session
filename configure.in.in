@@ -1,6 +1,6 @@
 dnl $Id$
 dnl
-dnl Copyright (c) 2003-2006
+dnl Copyright (c) 2003-2007
 dnl         The Xfce development team. All rights reserved.
 dnl
 dnl Written for Xfce by Benedikt Meurer <benny@xfce.org>.
@@ -8,15 +8,15 @@ dnl
 
 dnl Version information
 m4_define([xfsm_version_major], [4])
-m4_define([xfsm_version_minor], [3])
-m4_define([xfsm_version_micro], [99])
-m4_define([xfsm_version_nano], [3])
+m4_define([xfsm_version_minor], [4])
+m4_define([xfsm_version_micro], [0])
+m4_define([xfsm_version_nano], [])
 m4_define([xfsm_version_build], [@REVISION@])
-m4_define([xfsm_version_tag], [svn])
+m4_define([xfsm_version_tag], [])
 m4_define([xfsm_version], [xfsm_version_major().xfsm_version_minor().xfsm_version_micro()ifelse(xfsm_version_nano(), [], [], [.xfsm_version_nano()])ifelse(xfsm_version_tag(), [svn], [xfsm_version_tag()[-r]xfsm_version_build()], [])])
 
 dnl Initialize autoconf
-AC_COPYRIGHT([Copyright (c) 2003-2006
+AC_COPYRIGHT([Copyright (c) 2003-2007
         The Xfce development team. All rights reserved.
         
 Written for Xfce by Benedikt Meurer <benny@xfce.org>.])
@@ -69,12 +69,12 @@ dnl Check for i18n support
 XDT_I18N([@LINGUAS@])
 
 dnl Check for required packages
-XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.3.99.2])
-XDT_CHECK_PACKAGE([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.3.99.2])
-XDT_CHECK_PACKAGE([LIBXFCEGUI4], [libxfcegui4-1.0], [4.3.99.2])
+XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.4.0])
+XDT_CHECK_PACKAGE([LIBXFCE4MCS_CLIENT], [libxfce4mcs-client-1.0], [4.4.0])
+XDT_CHECK_PACKAGE([LIBXFCEGUI4], [libxfcegui4-1.0], [4.4..0])
 
 dnl Configure the MCS plugins
-XDT_XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.3.99.2])
+XDT_XFCE_MCS_PLUGIN([XFCE_MCS_MANAGER], [4.4.0])
 
 dnl Check for D-Bus support (for HAL shutdown support)
 XDT_CHECK_OPTIONAL_PACKAGE([DBUS], [dbus-1], [0.34], [dbus],
