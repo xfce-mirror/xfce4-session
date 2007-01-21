@@ -1,20 +1,20 @@
 # Romanian translation of xfce4-session
 # Copyright (C) 2003-2006 The Xfce development team.
 # This file is distributed under the same license as the xfce4-session package.
-# Mişu Moldovan <dumol@gnome.ro>, 2004.
+# Mişu Moldovan <dumol@gnome.ro>, 2004-2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-05-06 04:22+0900\n"
-"PO-Revision-Date: 2005-10-08 20:44+0900\n"
+"PO-Revision-Date: 2007-01-20 21:34+0200\n"
 "Last-Translator: Mişu Moldovan <dumol@gnome.ro>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=3;plural=(n==1?0:(n==0||((n%100)>0&&(n%100)<20))?1:2)\n"
 
 #: ../engines/balou/balou-theme.c:110
 msgid "No description given"
@@ -30,13 +30,13 @@ msgid ""
 "Unable to install splash theme from file %s, please check that the file is a "
 "valid splash theme archive."
 msgstr ""
-"Nu am reuşit să instalez tema imaginii de pornire din fişierul %s, "
+"Nu s-a putut instala tema imaginii de pornire din fişierul %s, "
 "verificaţi dacă fişierul este arhiva validă a unei teme de pornire"
 
 #: ../engines/balou/config.c:386
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
-msgstr "Nu am reuşit să şterg tema de pornire „%s” din directorul %s."
+msgstr "Nu s-a putut şterge tema de pornire „%s” din directorul %s."
 
 #: ../engines/balou/config.c:471
 msgid "Choose theme filename..."
@@ -63,21 +63,20 @@ msgid "Configure Balou..."
 msgstr "Configurare Balou..."
 
 #: ../engines/balou/config.c:969
-#, fuzzy
 msgid "Balou"
-msgstr "Tema Balou"
+msgstr "Balou"
 
 #: ../engines/balou/config.c:970
 msgid "Balou Splash Engine"
-msgstr ""
+msgstr "Motorul „Balou”"
 
 #: ../engines/mice/mice.c:369
 msgid "Mice"
-msgstr ""
+msgstr "Şoricel"
 
 #: ../engines/mice/mice.c:370
 msgid "Mice Splash Engine"
-msgstr ""
+msgstr "Motorul „Şoricel”"
 
 #: ../engines/simple/simple.c:319
 msgid "Choose image..."
@@ -85,7 +84,7 @@ msgstr "Selectaţi o imagine..."
 
 #: ../engines/simple/simple.c:364
 msgid "Configure Simple..."
-msgstr "Configurare Simple..."
+msgstr "Configurare Simplu..."
 
 #: ../engines/simple/simple.c:375
 msgid "Font"
@@ -113,11 +112,11 @@ msgstr "Imagine personalizată"
 
 #: ../engines/simple/simple.c:509
 msgid "Simple"
-msgstr ""
+msgstr "Simplu"
 
 #: ../engines/simple/simple.c:510
 msgid "Simple Splash Engine"
-msgstr ""
+msgstr "Motorul „Simplu”"
 
 #: ../settings/session/session.c:137
 msgid "Session chooser"
@@ -199,7 +198,7 @@ msgid ""
 "other hand, KDE applications will startup faster. Some KDE applications may "
 "not work at all if you don't enable this option."
 msgstr ""
-"Activaţi această opţiune dacă doriţi să oferiţi aplicaţiilor KDE un medi cât "
+"Activaţi această opţiune dacă doriţi să oferiţi aplicaţiilor KDE un mediu cât "
 "mai apropiat de cel nativ. Aceasta va mări sensibil timpul de pornire, dar "
 "apoi aplicaţiile KDE vor porni mai rapid. Unele aplicaţii KDE nu vor "
 "funcţiona decât dacă activaţi această opţiune."
@@ -235,7 +234,6 @@ msgstr "Avansate"
 
 #. the button label in the xfce-mcs-manager dialog
 #: ../settings/session/session.c:382
-#, fuzzy
 msgid "Button Label|Sessions and Startup"
 msgstr "Sesiuni şi pornire"
 
@@ -288,56 +286,53 @@ msgstr "<b>Adresă:</b>"
 
 #. the button label in the xfce-mcs-manager dialog
 #: ../settings/splash/splash.c:584
-#, fuzzy
 msgid "Button Label|Splash Screen"
 msgstr "Imagine de pornire"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:99
 msgid "Add application"
-msgstr ""
+msgstr "Adăugare aplicaţie"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:113
 msgid "Name:"
-msgstr ""
+msgstr "Nume:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:130
-#, fuzzy
 msgid "Description:"
-msgstr "<b>Descriere:</b>"
+msgstr "Descriere:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:145
 msgid "Command:"
-msgstr ""
+msgstr "Comandă:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:205
 msgid "Select a command"
-msgstr ""
+msgstr "Selectaţi o comandă..."
 
 #: ../xfce4-autostart-editor/xfae-model.c:558
 #, c-format
 msgid "Failed to unlink %s: %s"
-msgstr ""
+msgstr "Nu s-a putut desface legătura %s: %s"
 
 #: ../xfce4-autostart-editor/xfae-model.c:646
 #, c-format
 msgid "Failed to create file %s"
-msgstr ""
+msgstr "Nu s-a putut crea fişierul %s"
 
 #: ../xfce4-autostart-editor/xfae-model.c:668
 #, c-format
 msgid "Failed to write file %s"
-msgstr ""
+msgstr "Nu s-a putut scrie fişierul %s"
 
 #: ../xfce4-autostart-editor/xfae-model.c:767
 #, c-format
 msgid "Failed to open %s for writing"
-msgstr ""
+msgstr "Nu s-a putut deschide %s la scriere"
 
 #: ../xfce4-autostart-editor/xfae-window.c:89
 #: ../xfce4-autostart-editor/xfae-window.c:106
-#, fuzzy
 msgid "Autostarted applications"
-msgstr "Administrează aplicaţii la distanţă"
+msgstr "Aplicaţii pornite automat"
 
 #: ../xfce4-autostart-editor/xfae-window.c:124
 msgid ""
@@ -346,37 +341,39 @@ msgid ""
 "in addition to the applications that were saved when\n"
 "you logged out last time:"
 msgstr ""
+"Aceasta este lista aplicaţiilor ce vor fi pornite\n"
+"automat când vă veţi autentifica în Xfce pe lângă\n"
+"aplicaţiile salvate la ultima deautentificare\n"
+"din Xfce:"
 
 #: ../xfce4-session/main.c:140
 msgid "Loading desktop settings"
-msgstr "Încarc setările desktopului"
+msgstr "Se încarcă setările desktopului"
 
 #. verify that the DNS settings are ok
 #: ../xfce4-session/main.c:200
 msgid "Verifying DNS settings"
-msgstr "Verific setările DNS"
+msgstr "Se verifică setările DNS"
 
 #: ../xfce4-session/main.c:203
 msgid "Loading session data"
-msgstr "Încarc datele sesiunii"
+msgstr "Se încarcă datele sesiunii"
 
 #: ../xfce4-session/shutdown.c:307
-#, fuzzy
 msgid "End Session"
-msgstr "Sesiune nouă"
+msgstr "Terminare Sesiune"
 
 #: ../xfce4-session/shutdown.c:341
-#, fuzzy
 msgid "Log Out"
-msgstr "Deautentificare"
+msgstr "Ieşire"
 
 #: ../xfce4-session/shutdown.c:364
 msgid "Restart"
-msgstr ""
+msgstr "Repornire"
 
 #: ../xfce4-session/shutdown.c:387
 msgid "Shut Down"
-msgstr ""
+msgstr "Oprire"
 
 #: ../xfce4-session/shutdown.c:395
 msgid "_Save session for future logins"
@@ -396,12 +393,12 @@ msgid ""
 "disallows shutting down this computer with your user account."
 msgstr ""
 "Parola introdusă este invalidă ori administratorul sistemului nu permite "
-"închiderea calculatorul de către utilizatorul curent."
+"închiderea calculatorului de către utilizatorul curent."
 
 #: ../xfce4-session/xfsm-chooser.c:120
 #, c-format
 msgid "Last accessed: %s"
-msgstr ""
+msgstr "Ultimul access: %s"
 
 #: ../xfce4-session/xfsm-chooser.c:213
 msgid ""
@@ -409,12 +406,12 @@ msgid ""
 "session name to restore it."
 msgstr ""
 "Alegeţi sesiunea pe care doriţi să o restauraţi. Puteţi face asta printr-un "
-"simplu dublu-click."
+"simplu dublu-clic."
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:239
 msgid "Logout"
-msgstr "Deautentificare"
+msgstr "Ieşire"
 
 #: ../xfce4-session/xfsm-chooser.c:241
 msgid "Cancel the login attempt and return to the login screen."
@@ -427,19 +424,19 @@ msgstr "Sesiune nouă"
 
 #: ../xfce4-session/xfsm-chooser.c:251
 msgid "Create a new session."
-msgstr "Creeză o nouă sesiune."
+msgstr "Creează o nouă sesiune."
 
 #: ../xfce4-session/xfsm-compat-gnome.c:245
 msgid "Starting The Gnome Keyring Daemon"
-msgstr "Pornesc daemonul GNOME Keyring"
+msgstr "Se porneşte daemonul GNOME Keyring"
 
 #: ../xfce4-session/xfsm-compat-gnome.c:257
 msgid "Starting Gnome Assistive Technologies"
-msgstr "Pornesc facilităţile de accesibilitate GNOME"
+msgstr "Se pornesc facilităţile de accesibilitate GNOME"
 
 #: ../xfce4-session/xfsm-compat-kde.c:118
 msgid "Starting KDE services"
-msgstr "Pornesc serviciile KDE"
+msgstr "Se pornesc serviciile KDE"
 
 #: ../xfce4-session/xfsm-dns.c:77
 msgid "(Unknown)"
@@ -453,7 +450,7 @@ msgid ""
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
 msgstr ""
-"Nu am reuşit să determin o adresă validă pentru %s.\n"
+"Nu s-a putut determina o adresă validă pentru %s.\n"
 "Aceasta va împiedica funcţionarea corectă a mediului Xfce.\n"
 "Probabil că problema poate fi corectată prin adăugarea\n"
 "%s în fişierul /etc/hosts al acestui sistem."
@@ -480,84 +477,84 @@ msgstr "Alegeţi un nume pentru noua sesiune:"
 
 #: ../xfce4-session/xfsm-startup.c:99
 msgid "Starting the Volume Controller"
-msgstr "Pornesc controlul de volum"
+msgstr "Se iniţializează controlul de volum"
 
 #: ../xfce4-session/xfsm-startup.c:101
 msgid "Starting the Panel"
-msgstr "Pornesc panoul"
+msgstr "Se iniţializează panoul"
 
 #: ../xfce4-session/xfsm-startup.c:103
 msgid "Starting the Desktop Manager"
-msgstr "Pornesc administratorul desktopului"
+msgstr "Se iniţializează administratorul desktopului"
 
 #: ../xfce4-session/xfsm-startup.c:105
 msgid "Starting the Taskbar"
-msgstr "Pornesc bara aplicaţiilor"
+msgstr "Se iniţializează bara aplicaţiilor"
 
 #: ../xfce4-session/xfsm-startup.c:107
 msgid "Starting the Window Manager"
-msgstr "Pornesc administratorul de ferestre"
+msgstr "Se iniţializează administratorul de ferestre"
 
 #: ../xfce4-session/xfsm-startup.c:111
 msgid "Starting the Gnome Terminal Emulator"
-msgstr "Pornesc terminalul GNOME"
+msgstr "Se porneşte terminalul GNOME"
 
 #: ../xfce4-session/xfsm-startup.c:115
 msgid "Starting the KDE Advanced Text Editor"
-msgstr "Pornesc editorul de text KDE"
+msgstr "Se porneşte editorul de text KDE"
 
 #: ../xfce4-session/xfsm-startup.c:117
 msgid "Starting the KDE Clipboard Manager"
-msgstr "Pornesc administratorul clipboard-ului KDE"
+msgstr "Se porneşte administratorul clipboard-ului KDE"
 
 #: ../xfce4-session/xfsm-startup.c:119
 msgid "Starting the KDE Mail Reader"
-msgstr "Pornesc clientul de mail KDE"
+msgstr "Se porneşte clientul de mail KDE"
 
 #: ../xfce4-session/xfsm-startup.c:121
 msgid "Starting the KDE News Reader"
-msgstr "Pornesc clientul de news KDE"
+msgstr "Se porneşte clientul de news KDE"
 
 #: ../xfce4-session/xfsm-startup.c:123
 msgid "Starting the Konqueror"
-msgstr "Pornesc Konqueror"
+msgstr "Se porneşte Konqueror"
 
 #: ../xfce4-session/xfsm-startup.c:125
 msgid "Starting the KDE Terminal Emulator"
-msgstr "Pornesc terminalul KDE"
+msgstr "Se porneşte terminalul KDE"
 
 #: ../xfce4-session/xfsm-startup.c:129
 msgid "Starting the Beep Media Player"
-msgstr "Pornesc Beep Media Player"
+msgstr "Se porneşte Beep Media Player"
 
 #: ../xfce4-session/xfsm-startup.c:131
 msgid "Starting The Gimp"
-msgstr "Pornesc GIMP"
+msgstr "Se porneşte GIMP"
 
 #: ../xfce4-session/xfsm-startup.c:133
 msgid "Starting the VI Improved Editor"
-msgstr "Pornesc editorul VIM"
+msgstr "Se porneşte editorul VIM"
 
 #: ../xfce4-session/xfsm-startup.c:135
 msgid "Starting the Session Management Proxy"
-msgstr "Pornesc proxy-ul administratorului de sesiuni"
+msgstr "Se porneşte proxy-ul administratorului de sesiuni"
 
 #: ../xfce4-session/xfsm-startup.c:137
 msgid "Starting the X-Chat IRC Client"
-msgstr "Pornesc clientul IRC X-Chat"
+msgstr "Se porneşte clientul IRC X-Chat"
 
 #: ../xfce4-session/xfsm-startup.c:139
 msgid "Starting the X Multimedia System"
-msgstr "Pornesc XMMS"
+msgstr "Se porneşte XMMS"
 
 #: ../xfce4-session/xfsm-startup.c:141
 msgid "Starting the X Terminal Emulator"
-msgstr "Pornesc terminalul X"
+msgstr "Se porneşte terminalul X"
 
 #: ../xfce4-session/xfsm-startup.c:143
 #, c-format
 msgid "Starting %s"
-msgstr "Pornesc %s"
+msgstr "Se porneşte %s"
 
 #: ../xfce4-session/xfsm-startup.c:268
 #, c-format
@@ -573,64 +570,69 @@ msgid ""
 "location.\n"
 "You should delete this directory now.\n"
 msgstr ""
+"Locaţia şi formatul directorului pentru aplicaţii pornite automat\n"
+"s-a schimbat. Noua locaţie este:\n"
+"\n"
+" %s\n"
+"\n"
+"unde puteţi plasa fişiere .desktop ce descriu aplicaţiile de pornit\n"
+"automat la iniţializarea desktopului Xfce. Fişierele din vechiul\n"
+"director au fost migrate cu succes în noua locaţie.\n"
+"Puteţi şterge acest director acum.\n"
 
 #: ../xfce4-session/xfsm-startup.c:407
 msgid "Performing Autostart..."
-msgstr "Se execută fişierul Autostart..."
+msgstr "Se lansează aplicaţiile de pornit automat..."
 
 #: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:158
 msgid "Tips and Tricks"
-msgstr ""
+msgstr "Sugestii şi ponturi"
 
 #: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:202
 msgid "Fortunes"
-msgstr ""
+msgstr "Ziceri"
 
 #: ../xfce4-tips/main.c:187
 msgid "Display tips on _startup"
-msgstr ""
+msgstr "Arată _sugestii la pornire"
 
 #: ../xfce4-tips/main.c:196 ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
 msgid "Tips and tricks"
-msgstr ""
+msgstr "Sugestii şi ponturi"
 
 #: ../xfce4-tips/main.c:213
 msgid "Next"
-msgstr ""
+msgstr "Alta"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:1
-#, fuzzy
 msgid "Session and Startup Settings"
-msgstr "Sesiuni şi pornire"
+msgstr "Preferinţe sesiuni şi pornire"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:2
-#, fuzzy
 msgid "Sessions and Startup Settings"
-msgstr "Sesiuni şi pornire"
+msgstr "Preferinţe sesiuni şi pornire"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:3
-#, fuzzy
 msgid "Xfce 4 Sessions and Startup Settings"
-msgstr "Sesiuni şi pornire"
+msgstr "Preferinţe sesiuni şi pornire Xfce 4"
 
 #: ../settings/splash/xfce-splash-settings.desktop.in.h:2
-#, fuzzy
 msgid "Xfce 4 Splash Screen Settings"
-msgstr "Setări imagine de pornire"
+msgstr "Setări imagine de pornire Xfce 4"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:1
-#, fuzzy
 msgid "Autostarted Applications"
-msgstr "Administrează aplicaţii la distanţă"
+msgstr "Aplicaţii pornite automat"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:2
 msgid "Edit the list of autostarted applications"
-msgstr ""
+msgstr "Editaţi lista aplicaţiilor pornite automat"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:3
 msgid "Xfce 4 Autostarted Applications"
-msgstr ""
+msgstr "Aplicaţii Xfce 4 pornite automat"
 
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
-msgstr ""
+msgstr "xfce4-tips"
+
