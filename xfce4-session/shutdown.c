@@ -479,7 +479,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
           if (!xfsm_shutdown_helper_send_password (shutdown_helper, pw))
             {
               gtk_label_set_text (GTK_LABEL (label),
-                                  _("<b>An error occured</b>"));
+                                  _("<b>An error occurred</b>"));
               gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
 
               gtk_container_remove (GTK_CONTAINER (
