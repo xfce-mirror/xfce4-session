@@ -2,6 +2,7 @@
 # Copyright (C) 2003-2006 The Xfce development team.
 # This file is distributed under the same license as the xfce4-session package.
 # Eskild Hustvedt <eskild@goldenfiles.com>, 2004.
+# Terje Uriansrud <ter@operamail.com>, 2007
 #
 msgid ""
 msgstr ""
@@ -9,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-20 16:58+0200\n"
 "PO-Revision-Date: 2005-08-18 01:33+0900\n"
-"Last-Translator: Eskild Hustvedt <eskild@goldenfiles.com>\n"
+"Last-Translator: Terje Uriansrud <ter@operamail.com>\n"
 "Language-Team: Norwegian Bokmal <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,11 +18,11 @@ msgstr ""
 
 #: ../engines/balou/balou-theme.c:110
 msgid "No description given"
-msgstr ""
+msgstr "Ingen beskrivelse gitt"
 
 #: ../engines/balou/config.c:321
 msgid "Choose theme file to install..."
-msgstr ""
+msgstr "Velg temafil som skal installeres ..."
 
 #: ../engines/balou/config.c:333
 #, c-format
@@ -29,114 +30,112 @@ msgid ""
 "Unable to install splash theme from file %s, please check that the file is a "
 "valid splash theme archive."
 msgstr ""
+"Klarte ikke installere velkomstbilde fra filen %s. Kontroller at filen er et "
+"gyldig velkomstbildearkiv."
 
 #: ../engines/balou/config.c:386
-#, fuzzy, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
-msgstr "Ikke i stand til å installere oppstarts tema fra fil %s: %s"
+msgstr "Ikke i stand til å installere oppstarts tema fra mappen %s: %s"
 
 #: ../engines/balou/config.c:471
 msgid "Choose theme filename..."
-msgstr ""
+msgstr "Velg tema filnavn ..."
 
 #: ../engines/balou/config.c:604
-#, fuzzy
 msgid "_Install new theme"
-msgstr "Installer nytt tema"
+msgstr "_Installer nytt tema"
 
 #: ../engines/balou/config.c:613
 msgid "_Remove theme"
-msgstr ""
+msgstr "_Fjern tema"
 
 #: ../engines/balou/config.c:630
 msgid "_Export theme"
-msgstr ""
+msgstr "_Eksporter tema"
 
 #: ../engines/balou/config.c:845
 msgid "Balou theme"
-msgstr ""
+msgstr "Balou tema"
 
 #: ../engines/balou/config.c:928
-#, fuzzy
 msgid "Configure Balou..."
-msgstr "Bekreft utlogging"
+msgstr "Balou innstillinger ..."
 
 #: ../engines/balou/config.c:969
 msgid "Balou"
-msgstr ""
+msgstr "Balou"
 
 #: ../engines/balou/config.c:970
 msgid "Balou Splash Engine"
-msgstr ""
+msgstr "Balou velkomstbilde motor"
 
 #: ../engines/mice/mice.c:369
 msgid "Mice"
-msgstr ""
+msgstr "Mus"
 
 #: ../engines/mice/mice.c:370
 msgid "Mice Splash Engine"
-msgstr ""
+msgstr "Mus velkomstbilde motor"
 
 #: ../engines/simple/simple.c:319
 msgid "Choose image..."
-msgstr ""
+msgstr "Velg bilde ..."
 
 #: ../engines/simple/simple.c:364
-#, fuzzy
 msgid "Configure Simple..."
-msgstr "Bekreft utlogging"
+msgstr "Enkelt oppsett ..."
 
 #: ../engines/simple/simple.c:375
 msgid "Font"
-msgstr ""
+msgstr "Skrift"
 
 #: ../engines/simple/simple.c:384
 msgid "Colors"
-msgstr ""
+msgstr "Farger"
 
 #: ../engines/simple/simple.c:392
 msgid "Background color:"
-msgstr ""
+msgstr "Bakgrunnsfarge:"
 
 #: ../engines/simple/simple.c:404
 msgid "Text color:"
-msgstr ""
+msgstr "Tekstfarge:"
 
 #: ../engines/simple/simple.c:416
 msgid "Image"
-msgstr ""
+msgstr "Bilde"
 
 #: ../engines/simple/simple.c:424
 msgid "Use custom image"
-msgstr ""
+msgstr "Bruk selvvalgt bilde"
 
 #: ../engines/simple/simple.c:509
 msgid "Simple"
-msgstr ""
+msgstr "Enkel"
 
 #: ../engines/simple/simple.c:510
 msgid "Simple Splash Engine"
-msgstr ""
+msgstr "Enkel velkomstbilde motor"
 
 #: ../settings/session/session.c:137
-#, fuzzy
 msgid "Session chooser"
-msgstr "Økt kontroll"
+msgstr "Innlogging"
 
 #: ../settings/session/session.c:142
 msgid "Display chooser on login"
-msgstr ""
+msgstr "Vis øktvelger ved innlogging"
 
 #: ../settings/session/session.c:150
 msgid ""
 "If set, the session manager will ask you to choose a session every time you "
 "log in to Xfce."
 msgstr ""
+"Hvis satt vil øktbehandleren be deg velge en økt hver gang du "
+"logger inn i Xfce."
 
 #: ../settings/session/session.c:154
-#, fuzzy
 msgid "Logout settings"
-msgstr "Loggut av økt"
+msgstr "Utlogging"
 
 #: ../settings/session/session.c:160
 msgid "Automatically save session on logout"
@@ -159,14 +158,17 @@ msgid ""
 "will be saved or not depends on whether you enabled the automatic saving of "
 "sessions on logout or not."
 msgstr ""
+"Dette alternativet instruerer øktbehandleren å lagre nåværende økt "
+"automatisk når du logger ut. Hvis du ikke velger dette alternativet vil du "
+"bli spurt om du ønsker å lagre økten hver gang du logger ut."
 
 #: ../settings/session/session.c:215
 msgid "Compatibility"
-msgstr ""
+msgstr "Samspill"
 
 #: ../settings/session/session.c:224
 msgid "Launch Gnome services on startup"
-msgstr ""
+msgstr "Start Gnome tjenester ved oppstart"
 
 #: ../settings/session/session.c:230
 msgid ""
@@ -175,10 +177,14 @@ msgid ""
 "enable this if you want to use the Assistive Technologies that ship with "
 "Gnome."
 msgstr ""
+"Aktiver denne hvis du  bruker Gnome programmer. Valget vil instruere "
+"øktbehandleren til å starte vitale Gnome tjenester for deg. Du burde også "
+"aktivere denne hvis du ønsker å bruke hjelpemiddelteknologiene som følger "
+"med Gnome."
 
 #: ../settings/session/session.c:237
 msgid "Launch KDE services on startup"
-msgstr ""
+msgstr "Start KDE tjenester ved oppstart"
 
 #: ../settings/session/session.c:243
 msgid ""
@@ -187,37 +193,41 @@ msgid ""
 "other hand, KDE applications will startup faster. Some KDE applications may "
 "not work at all if you don't enable this option."
 msgstr ""
+"Aktiver denne hvis du bruker KDE programmer som del av Xfce skrivebordsmiljø-"
+"økten. Dette vil merkbart øke Xfce sin oppstarttid, men KDE programmer "
+"vil starte raskere. Enkelte KDE programmer vil ikke fungere dersom "
+"dette valget ikke er aktivert."
 
 #: ../settings/session/session.c:256
 msgid "Security"
-msgstr ""
+msgstr "Sikkerhet"
 
 #: ../settings/session/session.c:261
 msgid "Manage remote applications"
-msgstr ""
+msgstr "Håndtere eksterne programmer"
 
 #: ../settings/session/session.c:273
 msgid ""
 "Allow the session manager to manage applications running on remote hosts. Do "
 "not enable this option unless you know what you are doing."
 msgstr ""
+"Tillate øktbehandleren å håndtere programmer som kjører på eksterne tjenere. "
+"Ikke aktiver dette med mindre du vet helt sikkert hva du gjør."
 
 #: ../settings/session/session.c:333
-#, fuzzy
 msgid "Sessions and Startup"
-msgstr "Økt administrering"
+msgstr "Økter og oppstart"
 
 #: ../settings/session/session.c:352
 msgid "General"
-msgstr "Generellt"
+msgstr "Generelt"
 
 #: ../settings/session/session.c:358
 msgid "Advanced"
-msgstr ""
+msgstr "Avansert"
 
 #. the button label in the xfce-mcs-manager dialog
 #: ../settings/session/session.c:382
-#, fuzzy
 msgid "Button Label|Sessions and Startup"
 msgstr "Økt administrering"
 
@@ -225,103 +235,96 @@ msgstr "Økt administrering"
 #: ../settings/splash/splash.c:315 ../settings/splash/splash.c:318
 #: ../settings/splash/splash.c:386
 msgid "None"
-msgstr ""
+msgstr "Økter og oppstart"
 
 #: ../settings/splash/splash.c:409
 #: ../settings/splash/xfce-splash-settings.desktop.in.h:1
 msgid "Splash Screen Settings"
-msgstr ""
+msgstr "Innstillinger for Velkomstbilde"
 
 #: ../settings/splash/splash.c:457
-#, fuzzy
 msgid "Configure"
-msgstr "Bekreft utlogging"
+msgstr "Innstillinger"
 
 #: ../settings/splash/splash.c:465
 msgid "Opens the configuration panel for the selected splash screen."
-msgstr ""
+msgstr "Åpner oppsettbilde for det valgte velkomstbilde."
 
 #: ../settings/splash/splash.c:469
 msgid "Test"
-msgstr ""
+msgstr "Prøv"
 
 #: ../settings/splash/splash.c:476
-#, fuzzy
 msgid "Demonstrates the selected splash screen."
-msgstr "Standard oppstartsbilde"
+msgstr "Demonstrerer det valgte velkomstbildet"
 
 #: ../settings/splash/splash.c:493
-#, fuzzy
 msgid "Information"
-msgstr "Interaktiv"
+msgstr "Informasjon"
 
 #: ../settings/splash/splash.c:504
 msgid "<b>Description:</b>"
-msgstr ""
+msgstr "<b>Beskrivelse:</b>"
 
 #: ../settings/splash/splash.c:518
 msgid "<b>Version:</b>"
-msgstr ""
+msgstr "<b>Versjon:</b>"
 
 #: ../settings/splash/splash.c:532
-#, fuzzy
 msgid "<b>Author:</b>"
-msgstr "Forfatter:"
+msgstr "<b>Forfatter:</b>"
 
 #: ../settings/splash/splash.c:546
 msgid "<b>Homepage:</b>"
-msgstr ""
+msgstr "<b>Hjemmeside:</b>"
 
 #. the button label in the xfce-mcs-manager dialog
 #: ../settings/splash/splash.c:584
-#, fuzzy
 msgid "Button Label|Splash Screen"
-msgstr "Oppstartsbilde tema"
+msgstr "Velkomstbilde"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:99
 msgid "Add application"
-msgstr ""
+msgstr "Legg til program"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:113
 msgid "Name:"
-msgstr ""
+msgstr "Navn:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:130
 msgid "Description:"
-msgstr ""
+msgstr "Beskrivelse:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:145
 msgid "Command:"
-msgstr ""
+msgstr "Kommando:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:205
 msgid "Select a command"
-msgstr ""
+msgstr "Velg en kommando"
 
 #: ../xfce4-autostart-editor/xfae-model.c:558
-#, fuzzy, c-format
 msgid "Failed to unlink %s: %s"
-msgstr "Ikke i stand til å klone klient: %s"
+msgstr "Klarte ikke å kople fra %s: %s"
 
 #: ../xfce4-autostart-editor/xfae-model.c:646
-#, fuzzy, c-format
 msgid "Failed to create file %s"
-msgstr "Ikke i stand til å skape MCS klient"
+msgstr "Klarte ikke å opprette filen %s"
 
 #: ../xfce4-autostart-editor/xfae-model.c:668
 #, c-format
 msgid "Failed to write file %s"
-msgstr ""
+msgstr "Klarte ikke å skrive filen %s"
 
 #: ../xfce4-autostart-editor/xfae-model.c:767
 #, c-format
 msgid "Failed to open %s for writing"
-msgstr ""
+msgstr "Klarte ikke å åpne %s for skriving"
 
 #: ../xfce4-autostart-editor/xfae-window.c:89
 #: ../xfce4-autostart-editor/xfae-window.c:106
 msgid "Autostarted applications"
-msgstr ""
+msgstr "Automatisk startede programmer"
 
 #: ../xfce4-autostart-editor/xfae-window.c:124
 msgid ""
@@ -330,33 +333,35 @@ msgid ""
 "in addition to the applications that were saved when\n"
 "you logged out last time:"
 msgstr ""
+"Dette er en liste over programmer som vil bli startet\n"
+"automatisk når du logger inn i Xfce skrivebordsmiljøet.\n"
+"Programmene som ble lagret i økten sist du logget ut vil \n"
+"også bli startet:"
 
 #: ../xfce4-session/main.c:140
-#, fuzzy
 msgid "Loading desktop settings"
-msgstr "Loggut av økt"
+msgstr "Laster inn skrivebordsinnstillinger"
 
 #. verify that the DNS settings are ok
 #: ../xfce4-session/main.c:200
 msgid "Verifying DNS settings"
-msgstr ""
+msgstr "Kontrollerer DNS innstillinger"
 
 #: ../xfce4-session/main.c:203
-#, fuzzy
 msgid "Loading session data"
-msgstr "Starter økt håndterer..."
+msgstr "Laster inn øktdata"
 
 #: ../xfce4-session/shutdown.c:334
 msgid "Log Out"
-msgstr ""
+msgstr "Logg ut"
 
 #: ../xfce4-session/shutdown.c:357
 msgid "Restart"
-msgstr ""
+msgstr "Starte på nytt"
 
 #: ../xfce4-session/shutdown.c:380
 msgid "Shut Down"
-msgstr ""
+msgstr "Avslutt"
 
 #: ../xfce4-session/shutdown.c:388
 msgid "_Save session for future logins"
@@ -364,66 +369,66 @@ msgstr "_Lagre økt for fremtidige innlogginger"
 
 #: ../xfce4-session/shutdown.c:451
 msgid "Please enter your password:"
-msgstr ""
+msgstr "Skriv inn passordet ditt:"
 
 #: ../xfce4-session/shutdown.c:482
 msgid "<b>An error occurred</b>"
-msgstr ""
+msgstr "<b>En feil oppsto</b>"
 
 #: ../xfce4-session/shutdown.c:496
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
 msgstr ""
+"Du har enten angitt feil passord, eller systemadministratoren "
+"tillater ikke å skru av maskinen fra din brukerkonto."
 
 #: ../xfce4-session/xfsm-chooser.c:120
 #, c-format
 msgid "Last accessed: %s"
-msgstr ""
+msgstr "Sist åpnet: %s"
 
 #: ../xfce4-session/xfsm-chooser.c:213
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr ""
+"Velg økten du ønsker å gjenopprette. Du kan dobbeltklikke øktnavnet "
+"for å gjenopprette økten."
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:239
 msgid "Logout"
-msgstr ""
+msgstr "Logg ut"
 
 #: ../xfce4-session/xfsm-chooser.c:241
 msgid "Cancel the login attempt and return to the login screen."
-msgstr ""
+msgstr "Avbryt innloggingsforsøket og returner til innloggingsbildet."
 
 #. "New" button
 #: ../xfce4-session/xfsm-chooser.c:249
-#, fuzzy
 msgid "New session"
-msgstr "Avslutt økt"
+msgstr "Ny økt"
 
 #: ../xfce4-session/xfsm-chooser.c:251
-#, fuzzy
 msgid "Create a new session."
-msgstr "Lagre økt"
+msgstr "Lag ny økt"
 
 #: ../xfce4-session/xfsm-compat-gnome.c:244
 msgid "Starting The Gnome Keyring Daemon"
-msgstr ""
+msgstr "Starter Gnome nøkkelring prosess"
 
 #: ../xfce4-session/xfsm-compat-gnome.c:256
 msgid "Starting Gnome Assistive Technologies"
-msgstr ""
+msgstr "Starter Gnome hjelpemiddelteknologier"
 
 #: ../xfce4-session/xfsm-compat-kde.c:118
-#, fuzzy
 msgid "Starting KDE services"
-msgstr "Starter %s..."
+msgstr "Starter KDE tjenester"
 
 #: ../xfce4-session/xfsm-dns.c:77
-#, fuzzy
 msgid "(Unknown)"
-msgstr "Ukjent"
+msgstr "(Ukjent)"
 
 #: ../xfce4-session/xfsm-dns.c:144
 #, c-format
@@ -433,119 +438,110 @@ msgid ""
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
 msgstr ""
+"Klarte ikke å slå opp internettadressen for %s.\n"
+"Dette hindrer Xfce fra å fungere korrekt.\n"
+"Det kan være mulig å rette dette ved å legge til\n"
+"%s til filen /etc/hosts i filsystemet ditt."
 
 #: ../xfce4-session/xfsm-dns.c:151
 msgid "Continue anyway"
-msgstr ""
+msgstr "Fortsett allikevel"
 
 #: ../xfce4-session/xfsm-dns.c:152
 msgid "Try again"
-msgstr ""
+msgstr "Prøv på nytt"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
-#, fuzzy
 msgid "Choose session"
-msgstr "Avslutt økt"
+msgstr "Velg økt"
 
 #: ../xfce4-session/xfsm-splash-screen.c:208
 msgid "Choose session name"
-msgstr ""
+msgstr "Velg øktnavn"
 
 #: ../xfce4-session/xfsm-splash-screen.c:222
-#, fuzzy
 msgid "Choose a name for the new session:"
-msgstr "Lagre økt"
+msgstr "Velg et navn for den nye økten"
 
 #: ../xfce4-session/xfsm-startup.c:101
 msgid "Starting the Volume Controller"
-msgstr ""
+msgstr "Starter volumkontroll"
 
 #: ../xfce4-session/xfsm-startup.c:103
-#, fuzzy
 msgid "Starting the Panel"
-msgstr "Starter økt administrator.."
+msgstr "Starter panelet"
 
 #: ../xfce4-session/xfsm-startup.c:105
-#, fuzzy
 msgid "Starting the Desktop Manager"
-msgstr "Starter økt administrator.."
+msgstr "Starter skrivebordsbehandling"
 
 #: ../xfce4-session/xfsm-startup.c:107
-#, fuzzy
 msgid "Starting the Taskbar"
-msgstr "Starter økt administrator.."
+msgstr "Starter oppgavelinjen"
 
 #: ../xfce4-session/xfsm-startup.c:109
-#, fuzzy
 msgid "Starting the Window Manager"
-msgstr "Starter økt administrator.."
+msgstr "Starter vindusbehandler"
 
 #: ../xfce4-session/xfsm-startup.c:113
 msgid "Starting the Gnome Terminal Emulator"
-msgstr ""
+msgstr "Starter Gnome terminalemulering"
 
 #: ../xfce4-session/xfsm-startup.c:117
 msgid "Starting the KDE Advanced Text Editor"
-msgstr ""
+msgstr "Starter KDE avansert tekstbehandler"
 
 #: ../xfce4-session/xfsm-startup.c:119
-#, fuzzy
 msgid "Starting the KDE Clipboard Manager"
-msgstr "Starter økt administrator.."
+msgstr "Starter KDE utklippstavle"
 
 #: ../xfce4-session/xfsm-startup.c:121
-#, fuzzy
 msgid "Starting the KDE Mail Reader"
-msgstr "Starter økt administrator.."
+msgstr "Starter KDE epostleser"
 
 #: ../xfce4-session/xfsm-startup.c:123
-#, fuzzy
 msgid "Starting the KDE News Reader"
-msgstr "Starter økt administrator.."
+msgstr "Starter KDE news-leser"
 
 #: ../xfce4-session/xfsm-startup.c:125
-#, fuzzy
 msgid "Starting the Konqueror"
-msgstr "Starter økt administrator.."
+msgstr "Starter KDE Konqueror"
 
 #: ../xfce4-session/xfsm-startup.c:127
-#, fuzzy
 msgid "Starting the KDE Terminal Emulator"
-msgstr "Starter økt administrator.."
+msgstr "Starter KDE terminalemulator"
 
 #: ../xfce4-session/xfsm-startup.c:131
 msgid "Starting the Beep Media Player"
-msgstr ""
+msgstr "Starter Beep Media Player"
 
 #: ../xfce4-session/xfsm-startup.c:133
 msgid "Starting The Gimp"
-msgstr ""
+msgstr "Starter The Gimp"
 
 #: ../xfce4-session/xfsm-startup.c:135
 msgid "Starting the VI Improved Editor"
-msgstr ""
+msgstr "Starter VI Improved tekstbehandler"
 
 #: ../xfce4-session/xfsm-startup.c:137
-#, fuzzy
 msgid "Starting the Session Management Proxy"
-msgstr "Starter økt administrator.."
+msgstr "Starter øktbehandler mellomtjener"
 
 #: ../xfce4-session/xfsm-startup.c:139
 msgid "Starting the X-Chat IRC Client"
-msgstr ""
+msgstr "Starter X-Chat irc klient"
 
 #: ../xfce4-session/xfsm-startup.c:141
 msgid "Starting the X Multimedia System"
-msgstr ""
+msgstr "Starter X multimedia system"
 
 #: ../xfce4-session/xfsm-startup.c:143
 msgid "Starting the X Terminal Emulator"
-msgstr ""
+msgstr "Starter X terminalemulator"
 
 #: ../xfce4-session/xfsm-startup.c:145
-#, fuzzy, c-format
 msgid "Starting %s"
-msgstr "Starter %s..."
+msgstr "Starter %s"
 
 #: ../xfce4-session/xfsm-startup.c:270
 #, c-format
@@ -561,68 +557,71 @@ msgid ""
 "location.\n"
 "You should delete this directory now.\n"
 msgstr ""
+"Plasseringen og formatet for mappen autostart er endret.\n"
+"Ny plassering er\n"
+"\n"
+"  %s\n"
+"\n"
+"hvor du kan plassere .desktop filer, som beskriver programmene\n"
+"som startes når du logger inn i Xfce miljøet. Filene i din gamle \n"
+"autostart mappe har blitt vellykket flyttet til ny plassering.\n"
+"Du burde slette denne katalogen nå.\n"
 
 #: ../xfce4-session/xfsm-startup.c:409
-#, fuzzy
 msgid "Performing Autostart..."
 msgstr "Kjører autostart..."
 
 #: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:161
 msgid "Tips and Tricks"
-msgstr ""
+msgstr "Tips og triks"
 
 #: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:205
 msgid "Fortunes"
-msgstr ""
+msgstr "Lykkekaker"
 
 #: ../xfce4-tips/main.c:190
 msgid "Display tips on _startup"
-msgstr ""
+msgstr "Vis tips ved _oppstart"
 
 #: ../xfce4-tips/main.c:199 ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
 msgid "Tips and tricks"
-msgstr ""
+msgstr "Tips og triks"
 
 #: ../xfce4-tips/main.c:216
 msgid "Next"
-msgstr ""
+msgstr "Neste"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:1
-#, fuzzy
 msgid "Session and Startup Settings"
-msgstr "Økt administrering"
+msgstr "Innstillinger for Økter og Oppstart"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:2
-#, fuzzy
 msgid "Sessions and Startup Settings"
 msgstr "Økt administrering"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:3
-#, fuzzy
 msgid "Xfce 4 Sessions and Startup Settings"
-msgstr "Økt administrering"
+msgstr "Innstillinger for Økt og Oppstart"
 
 #: ../settings/splash/xfce-splash-settings.desktop.in.h:2
-#, fuzzy
 msgid "Xfce 4 Splash Screen Settings"
-msgstr "Oppstartsbilde tema"
+msgstr "Xfce 4 velkomstbilde innstillinger"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:1
 msgid "Autostarted Applications"
-msgstr ""
+msgstr "Innstillinger for Autostartede programmer"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:2
 msgid "Edit the list of autostarted applications"
-msgstr ""
+msgstr "Rediger listen over automatisk startede programmer"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:3
 msgid "Xfce 4 Autostarted Applications"
-msgstr ""
+msgstr "Xfce 4 automastisk startede programmer"
 
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
-msgstr ""
+msgstr "xfce4-tips"
 
-#, fuzzy
 #~ msgid "End Session"
 #~ msgstr "Avslutt økt"
