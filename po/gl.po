@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-16 13:06+0000\n"
+"POT-Creation-Date: 2006-05-06 04:22+0900\n"
 "PO-Revision-Date: 2006-07-25 19:00+0000\n"
 "Last-Translator: Iván_one2 <talivan.ivan@gmail.com>\n"
 "Language-Team: Galician <gl@li.org>\n"
@@ -117,15 +117,15 @@ msgstr "Simple"
 msgid "Simple Splash Engine"
 msgstr "Motor de arrinque Simple"
 
-#: ../settings/session/session.c:146
+#: ../settings/session/session.c:137
 msgid "Session chooser"
 msgstr "Selector de sesión"
 
-#: ../settings/session/session.c:151
+#: ../settings/session/session.c:142
 msgid "Display chooser on login"
 msgstr "Amosar selector de sesión ó inicio"
 
-#: ../settings/session/session.c:159
+#: ../settings/session/session.c:150
 msgid ""
 "If set, the session manager will ask you to choose a session every time you "
 "log in to Xfce."
@@ -133,15 +133,15 @@ msgstr ""
 "Se se seleciona, o xestor de sesión pediralle que escolla unha sesión sempre "
 "que entre no Xfce."
 
-#: ../settings/session/session.c:163
+#: ../settings/session/session.c:154
 msgid "Logout settings"
 msgstr "Axustes do remate de sesión"
 
-#: ../settings/session/session.c:169
+#: ../settings/session/session.c:160
 msgid "Automatically save session on logout"
 msgstr "Gardar sesión automaticamente ó saír"
 
-#: ../settings/session/session.c:175
+#: ../settings/session/session.c:166
 msgid ""
 "This option instructs the session manager to save the current session "
 "automatically when you log out. If you don't select this option you'll be "
@@ -151,11 +151,11 @@ msgstr ""
 "automático cando saia. Se non selecciona esta opción daquela preguntaráselle "
 "sempre que saia se desexa garda-la sesión."
 
-#: ../settings/session/session.c:182
+#: ../settings/session/session.c:173
 msgid "Prompt on logout"
 msgstr "Preguntar ó saír"
 
-#: ../settings/session/session.c:188
+#: ../settings/session/session.c:179
 msgid ""
 "This option disables the logout confirmation dialog. Whether the session "
 "will be saved or not depends on whether you enabled the automatic saving of "
@@ -165,41 +165,15 @@ msgstr ""
 "non gardada dependendo de se habilitou ou non o gardado automático de sesión "
 "na saída."
 
-#: ../settings/session/session.c:194
-msgid "Show hibernate button"
-msgstr "Amosar botón de hibernar"
-
-#: ../settings/session/session.c:200
-msgid ""
-"This option adds a hibernate button to the logout dialog. Only enable if you "
-"known your system suspends todisk and resumes correctly."
-msgstr ""
-"Esta opción engade un botón de hibernar ó diálogo de finalización. Habilíteo "
-"só se sabe que o seu sistema pode suspender a disco e reanudarse "
-"correctamente."
-
-#: ../settings/session/session.c:205
-msgid "Show suspend button"
-msgstr "Amosar botón de suspensión"
-
-#: ../settings/session/session.c:211
-msgid ""
-"This option adds a suspend button to the logout dialog. Only enable if you "
-"known your system suspends toRAM and resumes correctly."
-msgstr ""
-"Esta opción engade un botón de suspender na xanela de finalización da "
-"sesión. Habilíteo só se sabe que o seu sistema se suspende á RAM e se "
-"reanuda correctamente."
-
-#: ../settings/session/session.c:247
+#: ../settings/session/session.c:215
 msgid "Compatibility"
 msgstr "Compatibilidade"
 
-#: ../settings/session/session.c:256
+#: ../settings/session/session.c:224
 msgid "Launch Gnome services on startup"
 msgstr "Executa-los servizos do Gnome no arrinque"
 
-#: ../settings/session/session.c:262
+#: ../settings/session/session.c:230
 msgid ""
 "Enable this if you plan to use Gnome applications. This will instruct the "
 "session manager to start some vital Gnome services for you. You should also "
@@ -211,11 +185,11 @@ msgstr ""
 "Tamén debe habilitar esta opción se pretende usa-las tecnoloxías de "
 "asistencia que veñen co Gnome."
 
-#: ../settings/session/session.c:269
+#: ../settings/session/session.c:237
 msgid "Launch KDE services on startup"
 msgstr "Executa-los servizos do KDE no arrinque"
 
-#: ../settings/session/session.c:275
+#: ../settings/session/session.c:243
 msgid ""
 "Enable this option if you plan to run KDE applications as part of your Xfce "
 "Desktop session. This will notably increase the startup time, but on the "
@@ -227,15 +201,15 @@ msgstr ""
 "pola outra banda, as aplicacións do KDE iniciaranse máis axiña. Pode que "
 "algunhas aplicacións do KDE non funcionen se non habilita esta opción."
 
-#: ../settings/session/session.c:288
+#: ../settings/session/session.c:256
 msgid "Security"
 msgstr "Seguranza"
 
-#: ../settings/session/session.c:293
+#: ../settings/session/session.c:261
 msgid "Manage remote applications"
 msgstr "Xestionar aplicacións remotas"
 
-#: ../settings/session/session.c:305
+#: ../settings/session/session.c:273
 msgid ""
 "Allow the session manager to manage applications running on remote hosts. Do "
 "not enable this option unless you know what you are doing."
@@ -244,19 +218,20 @@ msgstr ""
 "máquinas remotas. Non habilite esta opción se non está certo do que está a "
 "facer."
 
-#: ../settings/session/session.c:365
+#: ../settings/session/session.c:333
 msgid "Sessions and Startup"
 msgstr "Sesións e arrinque"
 
-#: ../settings/session/session.c:384
+#: ../settings/session/session.c:352
 msgid "General"
 msgstr "Xeral"
 
-#: ../settings/session/session.c:390
+#: ../settings/session/session.c:358
 msgid "Advanced"
 msgstr "Avanzado"
 
-#: ../settings/session/session.c:414
+#. the button label in the xfce-mcs-manager dialog
+#: ../settings/session/session.c:382
 msgid "Button Label|Sessions and Startup"
 msgstr "Texto do botón|Sesións e arrinque"
 
@@ -277,8 +252,7 @@ msgstr "Configurar"
 
 #: ../settings/splash/splash.c:465
 msgid "Opens the configuration panel for the selected splash screen."
-msgstr ""
-"Abre o panel de configuración para a pantalla de inicio seleccionada."
+msgstr "Abre o panel de configuración para a pantalla de inicio seleccionada."
 
 #: ../settings/splash/splash.c:469
 msgid "Test"
@@ -308,6 +282,7 @@ msgstr "<b>Autor:</b>"
 msgid "<b>Homepage:</b>"
 msgstr "<b>Páxina web:</b>"
 
+#. the button label in the xfce-mcs-manager dialog
 #: ../settings/splash/splash.c:584
 msgid "Button Label|Splash Screen"
 msgstr "Texto do botón|Pantalla de inicio"
@@ -373,6 +348,7 @@ msgstr ""
 msgid "Loading desktop settings"
 msgstr "Cargando os axustes de escritorio"
 
+#. verify that the DNS settings are ok
 #: ../xfce4-session/main.c:200
 msgid "Verifying DNS settings"
 msgstr "Verificando os axustes do DNS"
@@ -381,43 +357,37 @@ msgstr "Verificando os axustes do DNS"
 msgid "Loading session data"
 msgstr "Cargando os datos da sesión"
 
-#: ../xfce4-session/shutdown.c:133
-msgid "Log out"
-msgstr "Rematar sesión"
-
-#: ../xfce4-session/shutdown.c:134
-msgid "Restart"
-msgstr "Reiniciar"
-
-#: ../xfce4-session/shutdown.c:135
-msgid "Shut down"
-msgstr "Apagar"
-
-#: ../xfce4-session/shutdown.c:136
-msgid "Suspend"
-msgstr "Suspender"
-
-#: ../xfce4-session/shutdown.c:137
-msgid "Hibernate"
-msgstr "Hibernar"
-
-#: ../xfce4-session/shutdown.c:311
+#: ../xfce4-session/shutdown.c:307
 msgid "End Session"
 msgstr "Finalizar sesión"
 
-#: ../xfce4-session/shutdown.c:363
+#: ../xfce4-session/shutdown.c:341
+#, fuzzy
+msgid "Log Out"
+msgstr "Salir"
+
+#: ../xfce4-session/shutdown.c:364
+msgid "Restart"
+msgstr "Reiniciar"
+
+#: ../xfce4-session/shutdown.c:387
+#, fuzzy
+msgid "Shut Down"
+msgstr "Apagar"
+
+#: ../xfce4-session/shutdown.c:395
 msgid "_Save session for future logins"
 msgstr "Garda-la _sesión para sesións futuras"
 
-#: ../xfce4-session/shutdown.c:427
+#: ../xfce4-session/shutdown.c:458
 msgid "Please enter your password:"
 msgstr "Por favor, introduza o seu contrasinal:"
 
-#: ../xfce4-session/shutdown.c:458
+#: ../xfce4-session/shutdown.c:489
 msgid "<b>An error occured</b>"
 msgstr "<b>Aconteceu un erro</b>"
 
-#: ../xfce4-session/shutdown.c:472
+#: ../xfce4-session/shutdown.c:503
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
@@ -438,6 +408,7 @@ msgstr ""
 "Escolla a sesión que quer restaurar. Pódeo facer premendo dúas veces no nome "
 "da sesión."
 
+#. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:239
 msgid "Logout"
 msgstr "Saír"
@@ -446,6 +417,7 @@ msgstr "Saír"
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Cancela a tentativa de entrada e retorna á pantalla de entrada."
 
+#. "New" button
 #: ../xfce4-session/xfsm-chooser.c:249
 msgid "New session"
 msgstr "Nova sesión"
@@ -665,6 +637,33 @@ msgstr "Aplicacións con arrinque automático do Xfce 4"
 msgid "xfce4-tips"
 msgstr "Consellos do xfce4"
 
-#, fuzzy
-#~ msgid "Log Out"
-#~ msgstr "Salir"
+#~ msgid "Show hibernate button"
+#~ msgstr "Amosar botón de hibernar"
+
+#~ msgid ""
+#~ "This option adds a hibernate button to the logout dialog. Only enable if "
+#~ "you known your system suspends todisk and resumes correctly."
+#~ msgstr ""
+#~ "Esta opción engade un botón de hibernar ó diálogo de finalización. "
+#~ "Habilíteo só se sabe que o seu sistema pode suspender a disco e "
+#~ "reanudarse correctamente."
+
+#~ msgid "Show suspend button"
+#~ msgstr "Amosar botón de suspensión"
+
+#~ msgid ""
+#~ "This option adds a suspend button to the logout dialog. Only enable if "
+#~ "you known your system suspends toRAM and resumes correctly."
+#~ msgstr ""
+#~ "Esta opción engade un botón de suspender na xanela de finalización da "
+#~ "sesión. Habilíteo só se sabe que o seu sistema se suspende á RAM e se "
+#~ "reanuda correctamente."
+
+#~ msgid "Log out"
+#~ msgstr "Rematar sesión"
+
+#~ msgid "Suspend"
+#~ msgstr "Suspender"
+
+#~ msgid "Hibernate"
+#~ msgstr "Hibernar"
