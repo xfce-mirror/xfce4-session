@@ -318,15 +318,15 @@ config_install_theme (GtkWidget *item,
 
   treeview = GTK_TREE_VIEW (g_object_get_data (G_OBJECT (menu), "tree-view"));
   toplevel = gtk_widget_get_toplevel (GTK_WIDGET (treeview));
-  chooser = xfce_file_chooser_new (_("Choose theme file to install..."),
-                                   GTK_WINDOW (toplevel),
-                                   XFCE_FILE_CHOOSER_ACTION_OPEN,
-                                   GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                   GTK_STOCK_OPEN, GTK_RESPONSE_OK,
-                                   NULL);
+  chooser = gtk_file_chooser_dialog_new (_("Choose theme file to install..."),
+                                         GTK_WINDOW (toplevel),
+                                         GTK_FILE_CHOOSER_ACTION_OPEN,
+                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                         GTK_STOCK_OPEN, GTK_RESPONSE_OK,
+                                         NULL);
   if (gtk_dialog_run (GTK_DIALOG (chooser)) == GTK_RESPONSE_OK)
     {
-      file = xfce_file_chooser_get_filename (XFCE_FILE_CHOOSER (chooser));
+      file = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
 
       if (!config_do_install_theme (file, treeview))
         {

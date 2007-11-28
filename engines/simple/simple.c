@@ -312,28 +312,29 @@ static void
 config_browse (GtkWidget *button, GtkWidget *entry)
 {
   const gchar *filename;
+  gchar       *new_filename;
   GtkWidget   *chooser;
   GtkWidget   *toplevel;
 
   toplevel = gtk_widget_get_toplevel (button);
-  chooser = xfce_file_chooser_new (_("Choose image..."),
-                                   GTK_WINDOW (toplevel),
-                                   XFCE_FILE_CHOOSER_ACTION_OPEN,
-                                   GTK_STOCK_OPEN,
-                                   GTK_RESPONSE_OK,
-                                   GTK_STOCK_CANCEL,
-                                   GTK_RESPONSE_CANCEL,
-                                   NULL);
+  chooser = gtk_file_chooser_dialog_new (_("Choose image..."),
+                                         GTK_WINDOW (toplevel),
+                                         GTK_FILE_CHOOSER_ACTION_OPEN,
+                                         GTK_STOCK_OPEN, GTK_RESPONSE_OK,
+                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                         NULL);
 
   filename = gtk_entry_get_text (GTK_ENTRY (entry));
   if (filename != NULL)
-    xfce_file_chooser_set_filename (XFCE_FILE_CHOOSER (chooser), filename);
-  xfce_file_chooser_set_select_multiple (XFCE_FILE_CHOOSER (chooser), FALSE);
+    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (chooser), filename);
+
+  gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (chooser), FALSE);
 
   if (gtk_dialog_run (GTK_DIALOG (chooser)) == GTK_RESPONSE_OK)
     {
-      filename = xfce_file_chooser_get_filename (XFCE_FILE_CHOOSER (chooser));
-      gtk_entry_set_text (GTK_ENTRY (entry), filename);
+      new_filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
+      gtk_entry_set_text (GTK_ENTRY (entry), new_filename);
+      g_free (new_filename);
     }
 
   gtk_widget_destroy (chooser);
