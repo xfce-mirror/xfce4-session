@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2003-2007 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -429,7 +429,7 @@ config_configure (XfsmSplashConfig *config,
 
   entry = gtk_entry_new ();
   gtk_table_attach (GTK_TABLE (table), entry, 0, 1, 1, 2,
-                    GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (entry);
 
   image = gtk_image_new_from_stock (GTK_STOCK_OPEN, GTK_ICON_SIZE_BUTTON);
@@ -437,7 +437,7 @@ config_configure (XfsmSplashConfig *config,
   button = gtk_button_new ();
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_table_attach (GTK_TABLE (table), button, 1, 2, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (button);
 
   path = xfsm_splash_rc_read_entry (config->rc, "Image", NULL);
