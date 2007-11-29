@@ -1,6 +1,6 @@
 /* $Id$ */
 /*-
- * Copyright (c) 2005 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2005-2007 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -39,6 +39,8 @@ main (int argc, char **argv)
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
   gtk_init (&argc, &argv);
+
+  gtk_window_set_default_icon_name ("xfce4-autostart-editor");
 
   window = xfae_window_new ();
   g_signal_connect (G_OBJECT (window), "destroy",
