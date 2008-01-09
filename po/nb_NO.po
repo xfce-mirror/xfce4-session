@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the xfce4-session package.
 # Eskild Hustvedt <eskild@goldenfiles.com>, 2004.
 # Terje Uriansrud <ter@operamail.com>, 2007
+# Christian Lomsdalen <christian@vindstille.net>, 2007.
 #
 msgid ""
 msgstr ""
@@ -10,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-20 16:58+0200\n"
 "PO-Revision-Date: 2005-08-18 01:33+0900\n"
-"Last-Translator: Terje Uriansrud <ter@operamail.com>\n"
+"Last-Translator: Christian Lomsdalen <christian@vindstille.net>\n"
 "Language-Team: Norwegian Bokmal <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -130,8 +131,8 @@ msgid ""
 "If set, the session manager will ask you to choose a session every time you "
 "log in to Xfce."
 msgstr ""
-"Hvis satt vil øktbehandleren be deg velge en økt hver gang du "
-"logger inn i Xfce."
+"Hvis satt vil øktbehandleren be deg velge en økt hver gang du logger inn i "
+"Xfce."
 
 #: ../settings/session/session.c:154
 msgid "Logout settings"
@@ -147,10 +148,13 @@ msgid ""
 "automatically when you log out. If you don't select this option you'll be "
 "prompted whether you want to save the current session on each logout."
 msgstr ""
+"Dette valger instruerer sesjonshåndteren til å lagre den aktuelle sesjonen "
+"automatisk når du logger ut. Hvis du ikke markerer dette valget her vil du "
+"bli spurt om du vil lagre den aktuelle sesjonen ved hver utlogging."
 
 #: ../settings/session/session.c:173
 msgid "Prompt on logout"
-msgstr ""
+msgstr "Bekreft ved utlogging"
 
 #: ../settings/session/session.c:179
 msgid ""
@@ -193,10 +197,10 @@ msgid ""
 "other hand, KDE applications will startup faster. Some KDE applications may "
 "not work at all if you don't enable this option."
 msgstr ""
-"Aktiver denne hvis du bruker KDE programmer som del av Xfce skrivebordsmiljø-"
-"økten. Dette vil merkbart øke Xfce sin oppstarttid, men KDE programmer "
-"vil starte raskere. Enkelte KDE programmer vil ikke fungere dersom "
-"dette valget ikke er aktivert."
+"Aktiver denne hvis du bruker KDE programmer som del av Xfce "
+"skrivebordsmiljø-økten. Dette vil merkbart øke Xfce sin oppstarttid, men "
+"KDE programmer vil starte raskere. Enkelte KDE programmer vil ikke fungere "
+"dersom dette valget ikke er aktivert."
 
 #: ../settings/session/session.c:256
 msgid "Security"
@@ -211,8 +215,8 @@ msgid ""
 "Allow the session manager to manage applications running on remote hosts. Do "
 "not enable this option unless you know what you are doing."
 msgstr ""
-"Tillate øktbehandleren å håndtere programmer som kjører på eksterne tjenere. "
-"Ikke aktiver dette med mindre du vet helt sikkert hva du gjør."
+"Tillate øktbehandleren å håndtere programmer som kjører på eksterne "
+"tjenere. Ikke aktiver dette med mindre du vet helt sikkert hva du gjør."
 
 #: ../settings/session/session.c:333
 msgid "Sessions and Startup"
@@ -380,8 +384,8 @@ msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
 msgstr ""
-"Du har enten angitt feil passord, eller systemadministratoren "
-"tillater ikke å skru av maskinen fra din brukerkonto."
+"Du har enten angitt feil passord, eller systemadministratoren tillater ikke "
+"å skru av maskinen fra din brukerkonto."
 
 #: ../xfce4-session/xfsm-chooser.c:120
 #, c-format
@@ -393,8 +397,8 @@ msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr ""
-"Velg økten du ønsker å gjenopprette. Du kan dobbeltklikke øktnavnet "
-"for å gjenopprette økten."
+"Velg økten du ønsker å gjenopprette. Du kan dobbeltklikke øktnavnet for "
+"å gjenopprette økten."
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:239
@@ -622,6 +626,3 @@ msgstr "Xfce 4 automastisk startede programmer"
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
 msgstr "xfce4-tips"
-
-#~ msgid "End Session"
-#~ msgstr "Avslutt økt"
