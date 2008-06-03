@@ -335,7 +335,7 @@ splash_selection_changed (GtkTreeSelection *selection)
 
 
 static void
-settings_splash_new ()
+settings_dialog_new ()
 {
   GtkTreeSelection  *selection;
   GtkTreeViewColumn *column;
@@ -359,7 +359,7 @@ settings_splash_new ()
       return;
     }
 
-  xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
+  xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
 
   tooltips = gtk_tooltips_new ();
 
@@ -564,40 +564,23 @@ settings_splash_new ()
   gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (splash_treeview), path, NULL,
                                 TRUE, 0.5, 0.0);
   gtk_tree_path_free (path);
-
-  gtk_widget_show (splash_dialog);
 }
 
 int
 main(int argc, char **argv)
 {
-    GError *cli_error = NULL;
-
     #ifdef ENABLE_NLS
     bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
     bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
     textdomain (GETTEXT_PACKAGE);
     #endif
 
-    if(!gtk_init_with_args(&argc, &argv, _("."), entries, PACKAGE, &cli_error))
-    {
-        if (cli_error != NULL)
-        {
-            g_print (_("%s: %s\nTry %s --help to see a full list of available command line options.\n"), PACKAGE, cli_error->message, PACKAGE_NAME);
-            g_error_free (cli_error);
-            return 1;
-        }
-    }
+    gtk_init(&argc, &argv);
 
-    if(version)
-    {
-        g_print("%s\n", PACKAGE_STRING);
-        return 0;
-    }
+    settings_dialog_new ();
     
-    dialog = settings_dialog_new();
-    
-    gtk_dialog_run(GTK_DIALOG(dialog));
+
+    gtk_dialog_run(GTK_DIALOG(splash_dialog));
 
     return 0;
     

@@ -9,11 +9,16 @@ xfce4_splash_settings_SOURCES =						\
 
 xfce4_splash_settings_CFLAGS =						\
 	-I$(top_srcdir)							\
+	$(LIBXFCEGUI4_CFLAGS)						\
+	$(LIBXFCE4UTIL_CFLAGS)						\
 	-DMODULESDIR=\"$(libdir)/xfce4/splash/engines\"			\
 	-DLOCALEDIR=\"$(localedir)\"
 
 xfce4_splash_settings_LDADD =						\
-	$(top_builddir)/libxfsm/libxfsm-4.2.la
+	$(top_builddir)/libxfsm/libxfsm-4.2.la \
+	$(LIBXFCEGUI4_LIBS)						\
+	$(LIBXFCE4UTIL_LIBS)						\
+	$(DBUS_LIBS)	
 
 xfce4_splash_settings_DEPENDENCIES =					\
 	$(top_builddir)/libxfsm/libxfsm-4.2.la

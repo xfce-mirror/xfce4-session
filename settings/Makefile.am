@@ -1,4 +1,4 @@
 SUBDIRS =								\
-	session								
-#splash
+	session		\
+	splash
 
