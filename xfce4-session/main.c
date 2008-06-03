@@ -48,7 +48,6 @@
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
-#include <libxfce4mcs/mcs-client.h>
 #include <libxfce4util/libxfce4util.h>
 
 #include <libxfsm/xfsm-util.h>
@@ -144,13 +143,6 @@ init_display (GdkDisplay *dpy,
   xfce_rc_set_group (rc, "General");
   sm_init (rc, disable_tcp);
   
-  /* start a MCS manager process per screen (FIXME: parallel to loading logo) */
-  for (n = 0; n < gdk_display_get_n_screens (dpy); ++n)
-    {
-      mcs_client_check_manager (gdk_x11_display_get_xdisplay (dpy), n,
-                                "xfce-mcs-manager");
-    }
-
   /* gtk resource files may have changed */
   gtk_rc_reparse_all ();
 }

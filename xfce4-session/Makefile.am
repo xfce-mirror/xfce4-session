@@ -48,7 +48,6 @@ xfce4_session_CFLAGS =							\
 	$(GNOME_CFLAGS)							\
 	$(LIBSM_CFLAGS)							\
 	$(LIBX11_CFLAGS)						\
-	$(LIBXFCE4MCS_CLIENT_CFLAGS)					\
 	$(LIBXFCEGUI4_CFLAGS)						\
 	$(DBUS_CFLAGS)							\
 	-DDBUS_API_SUBJECT_TO_CHANGE					\
@@ -63,7 +62,6 @@ xfce4_session_LDADD =							\
 	$(LIBSM_LIBS)							\
 	$(LIBX11_LDFLAGS)						\
 	$(LIBX11_LIBS)							\
-	$(LIBXFCE4MCS_CLIENT_LIBS)					\
 	$(LIBXFCEGUI4_LIBS)						\
 	$(DBUS_LIBS)							\
 	$(GNOME_LIBS)

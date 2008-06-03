@@ -1,38 +1,21 @@
-splashdir = $(libdir)/xfce4/mcs-plugins
+bin_PROGRAMS = xfce4-splash-settings
+	
 
-splash_LTLIBRARIES = 							\
-	splash_settings.la
-
-splash_settings_la_LDFLAGS =						\
-	-avoid-version							\
-	-module								\
-	-no-undefined
-
-splash_settings_la_SOURCES =						\
+xfce4_splash_settings_SOURCES =						\
 	module.c							\
 	module.h							\
 	nopreview.h							\
 	splash.c
 
-splash_settings_la_CFLAGS =						\
+xfce4_splash_settings_CFLAGS =						\
 	-I$(top_srcdir)							\
-	@XFCE_MCS_MANAGER_CFLAGS@					\
 	-DMODULESDIR=\"$(libdir)/xfce4/splash/engines\"			\
-	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"
+	-DLOCALEDIR=\"$(localedir)\"
 
-splash_settings_la_LIBADD =						\
+xfce4_splash_settings_LDADD =						\
 	$(top_builddir)/libxfsm/libxfsm-4.2.la
 
-if HAVE_OS_CYGWIN
-splash_settings_la_LDFLAGS +=						\
-	-export-symbols $(datadir)/xfce4/devel/mcs-manager.def
-
-splash_settings_la_LIBADD +=						\
-	@XFCE_MCS_MANAGER_LIBS@						\
-	@LIBX11_LIBS@
-endif
-
-splash_settings_la_DEPENDENCIES =					\
+xfce4_splash_settings_DEPENDENCIES =					\
 	$(top_builddir)/libxfsm/libxfsm-4.2.la
 
 nopreview.h: $(srcdir)/nopreview.png

@@ -38,9 +38,7 @@
 #include <gmodule.h>
 #include <gtk/gtk.h>
 
-#include <libxfce4mcs/mcs-manager.h>
 #include <libxfcegui4/libxfcegui4.h>
-#include <xfce-mcs-manager/manager-plugin.h>
 
 #include <libxfsm/xfsm-util.h>
 #include <libxfsm/xfsm-splash-engine.h>
@@ -337,7 +335,7 @@ splash_selection_changed (GtkTreeSelection *selection)
 
 
 static void
-splash_run (McsPlugin *plugin)
+settings_splash_new ()
 {
   GtkTreeSelection  *selection;
   GtkTreeViewColumn *column;
@@ -570,25 +568,37 @@ splash_run (McsPlugin *plugin)
   gtk_widget_show (splash_dialog);
 }
 
-
-/*
-   Mcs interface
- */
-McsPluginInitResult
-mcs_plugin_init (McsPlugin *plugin)
+int
+main(int argc, char **argv)
 {
-  xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
+    GError *cli_error = NULL;
 
-  plugin->plugin_name = g_strdup ("splash");
-  /* the button label in the xfce-mcs-manager dialog */
-  plugin->caption = g_strdup (Q_ ("Button Label|Splash Screen"));
-  plugin->run_dialog = splash_run;
-  plugin->icon = xfce_themed_icon_load ("xfce4-splash", 48);
-  if (G_LIKELY (plugin->icon != NULL))
-    g_object_set_data_full (G_OBJECT (plugin->icon), "mcs-plugin-icon-name", g_strdup ("xfce4-splash"), g_free);
+    #ifdef ENABLE_NLS
+    bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+    bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+    textdomain (GETTEXT_PACKAGE);
+    #endif
 
-  return MCS_PLUGIN_INIT_OK;
+    if(!gtk_init_with_args(&argc, &argv, _("."), entries, PACKAGE, &cli_error))
+    {
+        if (cli_error != NULL)
+        {
+            g_print (_("%s: %s\nTry %s --help to see a full list of available command line options.\n"), PACKAGE, cli_error->message, PACKAGE_NAME);
+            g_error_free (cli_error);
+            return 1;
+        }
+    }
+
+    if(version)
+    {
+        g_print("%s\n", PACKAGE_STRING);
+        return 0;
+    }
+    
+    dialog = settings_dialog_new();
+    
+    gtk_dialog_run(GTK_DIALOG(dialog));
+
+    return 0;
+    
 }
-
-
-MCS_PLUGIN_CHECK_INIT;

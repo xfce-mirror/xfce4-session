@@ -1,28 +1,21 @@
-sessiondir = $(libdir)/xfce4/mcs-plugins
+bin_PROGRAMS = xfce4-session-settings
+	
 
-session_LTLIBRARIES = 							\
-	session_settings.la
-
-session_settings_la_LDFLAGS =						\
-	-avoid-version							\
-	-no-undefined							\
-	-module
-
-session_settings_la_SOURCES =						\
+xfce4_session_settings_SOURCES =						\
 	session.c
 
-session_settings_la_CFLAGS =						\
+xfce4_session_settings_CFLAGS =						\
 	-I$(top_srcdir)							\
-	@XFCE_MCS_MANAGER_CFLAGS@					\
-	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"
+	$(LIBXFCEGUI4_CFLAGS)						\
+	$(LIBXFCE4UTIL_CFLAGS)						\
+	-DLOCALEDIR=\"$(localedir)\"
 
-if HAVE_OS_CYGWIN
-session_settings_la_LDFLAGS +=						\
-	-export-symbols $(datadir)/xfce4/devel/mcs-manager.def
+xfce4_session_settings_LDADD =						\
+	$(top_builddir)/libxfsm/libxfsm-4.2.la				\
+	$(LIBXFCEGUI4_LIBS)						\
+	$(LIBXFCE4UTIL_LIBS)						\
+	$(DBUS_LIBS)	
 
-session_settings_la_LIBADD =						\
-	@XFCE_MCS_MANAGER_LIBS@
-endif
 
 desktopdir = $(datadir)/applications
 desktop_in_files = xfce-session-settings.desktop.in

@@ -35,10 +35,8 @@
 #undef XFCE_DISABLE_DEPRECATED
 #endif
 
-#include <libxfce4mcs/mcs-manager.h>
 #include <libxfce4util/libxfce4util.h>
 #include <libxfcegui4/libxfcegui4.h>
-#include <xfce-mcs-manager/manager-plugin.h>
 
 
 #define BORDER 6
@@ -280,30 +278,8 @@ advanced_create (XfceRc *rc)
 
 
 
-/*
-   Dialog
- */
-static gboolean
-dialog_response (void)
-{
-  if (dialog != NULL)
-    {
-      gtk_widget_destroy (dialog);
-      dialog = NULL;
-    }
-
-  if (tooltips != NULL)
-    {
-      gtk_object_destroy (GTK_OBJECT (tooltips));
-      tooltips = NULL;
-    }
-
-  return TRUE;
-}
-
-
-static void
-dialog_run (McsPlugin *plugin)
+static GtkWidget * 
+settings_dialog_new()
 {
   GtkWidget *notebook;
   GtkWidget *label;
@@ -317,8 +293,6 @@ dialog_run (McsPlugin *plugin)
       gtk_window_present (GTK_WINDOW (dialog));
       return;
     }
-
-  xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
   kiosk = xfce_kiosk_new ("xfce4-session");
   kiosk_can_chooser = xfce_kiosk_query (kiosk, "Chooser") || xfce_kiosk_query (kiosk, "CustomizeChooser");
@@ -336,11 +310,6 @@ dialog_run (McsPlugin *plugin)
                                                 GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
                                                 NULL);
   gtk_window_set_icon_name (GTK_WINDOW (dialog), "xfce4-session");
-
-  g_signal_connect (G_OBJECT (dialog), "response",
-                    G_CALLBACK (dialog_response), NULL);
-  g_signal_connect (G_OBJECT (dialog), "delete-event",
-                    G_CALLBACK (dialog_response), NULL);
 
   dbox = GTK_DIALOG (dialog)->vbox;
 
@@ -365,28 +334,27 @@ dialog_run (McsPlugin *plugin)
   gtk_widget_show (dialog);
 
   xfce_rc_close (rc);
+
+  return dialog;
 }
 
-
-
-/*
-   Mcs interface
- */
-McsPluginInitResult
-mcs_plugin_init (McsPlugin *plugin)
+int
+main(int argc, char **argv)
 {
-  xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
+    GError *cli_error = NULL;
 
-  plugin->plugin_name = g_strdup ("session");
-  /* the button label in the xfce-mcs-manager dialog */
-  plugin->caption = g_strdup (Q_("Button Label|Sessions and Startup"));
-  plugin->run_dialog = dialog_run;
-  plugin->icon = xfce_themed_icon_load ("xfce4-session", 48);
-  if (G_LIKELY (plugin->icon != NULL))
-    g_object_set_data_full (G_OBJECT (plugin->icon), "mcs-plugin-icon-name", g_strdup ("xfce4-session"), g_free);
+    #ifdef ENABLE_NLS
+    bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+    bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+    textdomain (GETTEXT_PACKAGE);
+    #endif
 
-  return MCS_PLUGIN_INIT_OK;
+    gtk_init(&argc, &argv);
+
+    dialog = settings_dialog_new();
+    
+    gtk_dialog_run(GTK_DIALOG(dialog));
+
+    return 0;
+    
 }
-
-
-MCS_PLUGIN_CHECK_INIT;
