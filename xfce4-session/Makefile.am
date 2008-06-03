@@ -50,7 +50,9 @@ xfce4_session_CFLAGS =							\
 	$(LIBX11_CFLAGS)						\
 	$(LIBXFCEGUI4_CFLAGS)						\
 	$(DBUS_CFLAGS)							\
+	$(LIBWNCK_CFLAGS)						\
 	-DDBUS_API_SUBJECT_TO_CHANGE					\
+	-DWNCK_I_KNOW_THIS_IS_UNSTABLE					\
 	-DLIBDIR=\"$(libdir)\"						\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
 	-DSYSCONFDIR=\"$(sysconfdir)\"					\
@@ -64,6 +66,7 @@ xfce4_session_LDADD =							\
 	$(LIBX11_LIBS)							\
 	$(LIBXFCEGUI4_LIBS)						\
 	$(DBUS_LIBS)							\
+	$(LIBWNCK_LIBS)							\
 	$(GNOME_LIBS)
 
 xfce4_session_DEPENDENCIES =						\

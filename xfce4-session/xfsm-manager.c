@@ -48,6 +48,8 @@
 #include <gdk-pixbuf/gdk-pixdata.h>
 #include <gtk/gtk.h>
 
+#include <libwnck/libwnck.h>
+
 #include <libxfcegui4/libxfcegui4.h>
 
 #include <libxfsm/xfsm-splash-engine.h>
@@ -99,9 +101,9 @@ xfsm_manager_startup (void)
 static void
 xfsm_manager_restore_active_workspace (XfceRc *rc)
 {
-  NetkWorkspace  *workspace;
+  WnckWorkspace  *workspace;
   GdkDisplay     *display;
-  NetkScreen     *screen;
+  WnckScreen     *screen;
   gchar           buffer[1024];
   gint            n, m;
 
@@ -113,13 +115,13 @@ xfsm_manager_restore_active_workspace (XfceRc *rc)
         continue;
       m = xfce_rc_read_int_entry (rc, buffer, 0);
 
-      screen = netk_screen_get (n);
-      netk_screen_force_update (screen);
+      screen = wnck_screen_get (n);
+      wnck_screen_force_update (screen);
 
-      if (netk_screen_get_workspace_count (screen) > m)
+      if (wnck_screen_get_workspace_count (screen) > m)
         {
-          workspace = netk_screen_get_workspace (screen, m);
-          netk_workspace_activate (workspace);
+          workspace = wnck_screen_get_workspace (screen, m);
+          wnck_workspace_activate (workspace, GDK_CURRENT_TIME);
         }
     }
 }
@@ -1137,9 +1139,9 @@ xfsm_manager_save_timeout (gpointer client_data)
 void
 xfsm_manager_store_session (void)
 {
-  NetkWorkspace *workspace;
+  WnckWorkspace *workspace;
   GdkDisplay    *display;
-  NetkScreen    *screen;
+  WnckScreen    *screen;
   XfceRc        *rc;
   GList         *lp;
   gchar          prefix[64];
@@ -1200,11 +1202,11 @@ xfsm_manager_store_session (void)
   display = gdk_display_get_default ();
   for (n = 0; n < gdk_display_get_n_screens (display); ++n)
     {
-      screen = netk_screen_get (n);
-      netk_screen_force_update (screen);
+      screen = wnck_screen_get (n);
+      wnck_screen_force_update (screen);
       
-      workspace = netk_screen_get_active_workspace (screen);
-      m = netk_workspace_get_number (workspace);
+      workspace = wnck_screen_get_active_workspace (screen);
+      m = wnck_workspace_get_number (workspace);
 
       g_snprintf (prefix, 64, "Screen%d_ActiveWorkspace", n);
       xfce_rc_write_int_entry (rc, prefix, m);

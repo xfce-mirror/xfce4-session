@@ -73,6 +73,8 @@
 
 #include <libxfcegui4/libxfcegui4.h>
 
+#include <libwnck/libwnck.h>
+
 #include <libxfsm/xfsm-util.h>
 
 
@@ -293,7 +295,7 @@ xfsm_legacy_perform_session_save (void)
 {
 #ifdef LEGACY_SESSION_MANAGEMENT
   XErrorHandler old_handler;
-  NetkScreen *screen;
+  WnckScreen *screen;
   GList *windows;
   GList *lp;
   Window leader;
@@ -331,14 +333,14 @@ xfsm_legacy_perform_session_save (void)
   /* query mapped windows on all screens */
   for (n = 0; n < ScreenCount (gdk_display); ++n)
     {
-      screen = netk_screen_get (n);
-      netk_screen_force_update (screen);
+      screen = wnck_screen_get (n);
+      wnck_screen_force_update (screen);
 
-      windows = netk_screen_get_windows (screen);
+      windows = wnck_screen_get_windows (screen);
 
       for (lp = windows; lp != NULL; lp = lp->next)
         {
-          window = netk_window_get_xid (NETK_WINDOW (lp->data));
+          window = wnck_window_get_xid (WNCK_WINDOW (lp->data));
           leader = get_clientleader (window);
           if (leader == None || sm_window_list_contains (leader)
               || has_xsmp_support (window) || has_xsmp_support (leader))

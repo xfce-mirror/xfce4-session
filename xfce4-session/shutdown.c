@@ -326,6 +326,8 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   gtk_container_add (GTK_CONTAINER (logout_button), vbox2);
 
   icon = xfce_themed_icon_load ("system-log-out", 32);
+  if (!icon)
+    icon = xfce_themed_icon_load ("xfsm-logout", 32);
   image = gtk_image_new_from_pixbuf (icon);
   gtk_widget_show (image);
   gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
@@ -349,6 +351,8 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   gtk_container_add (GTK_CONTAINER (reboot_button), vbox2);
 
   icon = xfce_themed_icon_load ("system-reboot", 32);
+  if (!icon)
+    icon = xfce_themed_icon_load ("xfsm-reboot", 32);
   image = gtk_image_new_from_pixbuf (icon);
   gtk_widget_show (image);
   gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
@@ -372,6 +376,8 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   gtk_container_add (GTK_CONTAINER (halt_button), vbox2);
 
   icon = xfce_themed_icon_load ("system-shutdown", 32);
+  if (!icon)
+    icon = xfce_themed_icon_load ("xfsm-shutdown", 32);
   image = gtk_image_new_from_pixbuf (icon);
   gtk_widget_show (image);
   gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
