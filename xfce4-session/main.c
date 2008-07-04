@@ -142,6 +142,13 @@ init_display (GdkDisplay *dpy,
 
   xfce_rc_set_group (rc, "General");
   sm_init (rc, disable_tcp);
+
+  /* start xfsettingsd */
+  if ( !g_spawn_command_line_async ("xfsettingsd", NULL))
+  {
+    g_warning ("Could not start xfsettingsd");
+  }
+  
   
   /* gtk resource files may have changed */
   gtk_rc_reparse_all ();
