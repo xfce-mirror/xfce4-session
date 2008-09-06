@@ -130,7 +130,6 @@ init_display (GdkDisplay *dpy,
               gboolean disable_tcp)
 {
   const gchar *engine;
-  gint n;
 
   xfce_rc_set_group (rc, "Splash Screen");
   engine = xfce_rc_read_entry (rc, "Engine", NULL);
