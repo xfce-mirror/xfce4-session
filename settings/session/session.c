@@ -291,7 +291,7 @@ settings_dialog_new()
   if (dialog != NULL)
     {
       gtk_window_present (GTK_WINDOW (dialog));
-      return;
+      return dialog;
     }
 
   kiosk = xfce_kiosk_new ("xfce4-session");
@@ -341,8 +341,6 @@ settings_dialog_new()
 int
 main(int argc, char **argv)
 {
-    GError *cli_error = NULL;
-
     #ifdef ENABLE_NLS
     bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
     bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
