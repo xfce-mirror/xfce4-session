@@ -1,6 +1,7 @@
 /* $Id$ */
 /*-
  * Copyright (c) 2003-2006 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2008 Jannis Pohlmann <jannis@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -58,6 +59,16 @@ static gboolean      kiosk_can_logout;
 static gboolean      kiosk_can_compat;
 static gboolean      kiosk_can_security;
 
+
+/*
+   Command line options
+ */
+static gboolean      opt_socket_id;
+static GOptionEntry  entries[] =
+{
+  { "socket-id", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_INT, &opt_socket_id, N_("Settings manager socket"), N_("SOCKET ID") },
+  { NULL }
+};
 
 
 /*
@@ -279,7 +290,7 @@ advanced_create (XfceRc *rc)
 
 
 static GtkWidget * 
-settings_dialog_new()
+settings_dialog_new(GtkWidget **plug_child)
 {
   GtkWidget *notebook;
   GtkWidget *label;
@@ -318,6 +329,8 @@ settings_dialog_new()
   gtk_widget_show (notebook);
   gtk_container_set_border_width (GTK_CONTAINER (notebook), 6);
 
+  *plug_child = notebook;
+
   label = gtk_label_new (_("General"));
   page = general_create (rc);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
@@ -331,7 +344,6 @@ settings_dialog_new()
   gtk_widget_show (label);
 
   xfce_gtk_window_center_on_monitor_with_pointer (GTK_WINDOW (dialog));
-  gtk_widget_show (dialog);
 
   xfce_rc_close (rc);
 
@@ -341,18 +353,50 @@ settings_dialog_new()
 int
 main(int argc, char **argv)
 {
-    #ifdef ENABLE_NLS
-    bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
-    bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-    textdomain (GETTEXT_PACKAGE);
-    #endif
+  GtkWidget *plug;
+  GtkWidget *plug_child;
+  GError    *error = NULL;
 
-    gtk_init(&argc, &argv);
+  #ifdef ENABLE_NLS
+  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+  textdomain (GETTEXT_PACKAGE);
+  #endif
 
-    dialog = settings_dialog_new();
-    
-    gtk_dialog_run(GTK_DIALOG(dialog));
+  if (G_UNLIKELY (!gtk_init_with_args (&argc, &argv, "", entries, PACKAGE, &error)))
+    {
+      if (G_LIKELY (error != NULL))
+        {
+          g_print ("%s: %s.\n", G_LOG_DOMAIN, error->message);
+          g_print (_("Type '%s --help' for usage."), G_LOG_DOMAIN);
+          g_print ("\n");
 
-    return 0;
-    
+          g_error_free (error);
+        }
+      
+      return EXIT_FAILURE;
+    }
+
+  dialog = settings_dialog_new(&plug_child);
+
+  if (G_UNLIKELY (opt_socket_id == 0))
+    {
+      gtk_dialog_run (GTK_DIALOG (dialog));
+      gtk_widget_destroy (dialog);
+    }
+  else
+    {
+      /* Create plug widget */
+      plug = gtk_plug_new (opt_socket_id);
+      gtk_widget_show (plug);
+
+      /* Reparent the plug child widget */
+      gtk_widget_reparent (plug_child, plug);
+      gtk_widget_show (plug_child);
+
+      /* Enter main loop */
+      gtk_main ();
+    }
+
+  return 0;
 }
