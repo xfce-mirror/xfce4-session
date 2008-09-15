@@ -1,6 +1,7 @@
 /* $Id$ */
 /*-
  * Copyright (c) 2005-2007 Benedikt Meurer <benny@xfce.org>
+ * Coprright (c) 2008 Jannis Pohlmann <jannis@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -31,21 +32,60 @@
 
 
 
+static GdkNativeWindow opt_socket_id = 0;
+static GOptionEntry    entries[] = 
+{
+  { "socket-id", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_INT, &opt_socket_id, N_("Settings manager socket"), N_("SOCKET ID") },
+  { NULL }
+};
+
+
+
 int
 main (int argc, char **argv)
 {
   GtkWidget *window;
+  GtkWidget *plug;
+  GtkWidget *plug_child;
+  GError    *error = NULL;
 
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
-  gtk_init (&argc, &argv);
+  if (G_UNLIKELY (!gtk_init_with_args (&argc, &argv, "", entries, PACKAGE, &error)))
+    {
+      if (G_LIKELY (error != NULL))
+        {
+          g_print ("%s: %s.\n", G_LOG_DOMAIN, error->message);
+          g_print (_("Type '%s --help' for usage."), G_LOG_DOMAIN);
+          g_print ("\n");
+
+          g_error_free (error);
+        }
+
+      return EXIT_FAILURE;
+    }
 
   gtk_window_set_default_icon_name ("xfce4-autostart-editor");
 
   window = xfae_window_new ();
-  g_signal_connect (G_OBJECT (window), "destroy",
-                    G_CALLBACK (gtk_main_quit), NULL);
-  gtk_widget_show (window);
+
+  if (opt_socket_id == 0)
+    {
+      g_signal_connect (G_OBJECT (window), "destroy",
+                        G_CALLBACK (gtk_main_quit), NULL);
+      gtk_widget_show (window);
+    }
+  else
+    {
+      /* Create plug widget */
+      plug = gtk_plug_new (opt_socket_id);
+      gtk_widget_show (plug);
+
+      /* Embed plug child widget */
+      plug_child = xfae_window_create_plug_child (XFAE_WINDOW (window));
+      gtk_widget_reparent (plug_child, plug);
+      gtk_widget_show (plug_child);
+    }
 
   gtk_main ();
 

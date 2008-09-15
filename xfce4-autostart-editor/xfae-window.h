@@ -1,6 +1,7 @@
 /* $Id$ */
 /*-
  * Copyright (c) 2005 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2008 Jannis Pohlmann <jannis@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -36,9 +37,10 @@ typedef struct _XfaeWindow      XfaeWindow;
 #define XFAE_IS_WINDOW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), XFAE_TYPE_WINDOW))
 #define XFAE_WINDOW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), XFAE_TYPE_WINDOW, XfaeWindowClass))
 
-GType      xfae_window_get_type (void) G_GNUC_CONST;
+GType      xfae_window_get_type          (void) G_GNUC_CONST;
 
-GtkWidget *xfae_window_new      (void);
+GtkWidget *xfae_window_new               (void) G_GNUC_MALLOC;
+GtkWidget *xfae_window_create_plug_child (XfaeWindow *window);
 
 G_END_DECLS;
 

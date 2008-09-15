@@ -1,6 +1,7 @@
 /* $Id$ */
 /*-
  * Copyright (c) 2005 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2008 Jannis Pohlmann <jannis@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -50,9 +51,12 @@ struct _XfaeWindowClass
 
 struct _XfaeWindow
 {
-  GtkWindow __parent__;
+  GtkWindow         __parent__;
 
-  GtkWidget *treeview;
+  GtkTreeSelection *selection;
+
+  GtkWidget        *treeview;
+  GtkWidget        *ibox;
 };
 
 
@@ -72,13 +76,15 @@ static void
 xfae_window_init (XfaeWindow *window)
 {
   GtkTreeViewColumn *column;
-  GtkTreeSelection  *selection;
   GtkCellRenderer   *renderer;
   GtkTreeModel      *model;
   GtkWidget         *vbox;
+  GtkWidget         *title_box;
+  GtkWidget         *heading;
+  GtkWidget         *separator;
+  GtkWidget         *content_vbox;
   GtkWidget         *frame;
   GtkWidget         *label;
-  GtkWidget         *ibox;
   GtkWidget         *swin;
   GtkWidget         *bbox;
   GtkWidget         *button;
@@ -88,46 +94,47 @@ xfae_window_init (XfaeWindow *window)
   gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
   gtk_window_set_title (GTK_WINDOW (window), _("Autostarted applications"));
 
-  vbox = g_object_new (GTK_TYPE_VBOX,
-                       "border-width", 12,
-                       "spacing", 6,
-                       NULL);
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 0);
   gtk_container_add (GTK_CONTAINER (window), vbox);
   gtk_widget_show (vbox);
 
-  frame = g_object_new (GTK_TYPE_FRAME,
-                        "label-xalign", 0.0f,
-                        "label-yalign", 0.5f,
-                        "shadow-type", GTK_SHADOW_NONE,
-                        NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  title_box = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), title_box, FALSE, TRUE, 0);
+  gtk_widget_show (title_box);
 
-  text = g_strdup_printf ("<b>%s</b>", _("Autostarted applications"));
-  label = g_object_new (GTK_TYPE_LABEL,
-                        "label", text,
-                        "use-markup", TRUE,
-                        NULL);
-  gtk_frame_set_label_widget (GTK_FRAME (frame), label);
-  gtk_widget_show (label);
-  g_free (text);
+  heading = xfce_heading_new ();
+  xfce_heading_set_icon_name (XFCE_HEADING (heading), "xfce4-autostart-editor");
+  xfce_heading_set_title (XFCE_HEADING (heading), 
+                          gtk_window_get_title (GTK_WINDOW (window)));
+  xfce_heading_set_subtitle (XFCE_HEADING (heading), 
+                             _("Edit the list of autostarted applications"));
+  gtk_box_pack_start (GTK_BOX (title_box), heading, FALSE, TRUE, 0);
+  gtk_widget_show (heading);
 
-  ibox = g_object_new (GTK_TYPE_VBOX,
-                       "border-width", 12,
-                       "spacing", 6,
-                       NULL);
-  gtk_container_add (GTK_CONTAINER (frame), ibox);
-  gtk_widget_show (ibox);
+  separator = gtk_hseparator_new ();
+  gtk_box_pack_start (GTK_BOX (title_box), separator, FALSE, TRUE, 0);
+  gtk_widget_show (separator);
+
+  content_vbox = gtk_vbox_new (FALSE, 8);
+  gtk_container_set_border_width (GTK_CONTAINER (content_vbox), 6);
+  gtk_container_add (GTK_CONTAINER (vbox), content_vbox);
+  gtk_widget_show (content_vbox);
+
+  window->ibox = gtk_vbox_new (FALSE, 6);
+  gtk_container_add (GTK_CONTAINER (content_vbox), window->ibox);
+  gtk_widget_show (window->ibox);
 
   label = g_object_new (GTK_TYPE_LABEL,
                         "justify", GTK_JUSTIFY_FILL,
-                        "label", _("Below is the list of applications that will be started\n"
-                                   "automatically when you login to your Xfce desktop,\n"
-                                   "in addition to the applications that were saved when\n"
+                        "label", _("Below is the list of applications that will be started "
+                                   "automatically when you login to your Xfce desktop, "
+                                   "in addition to the applications that were saved when "
                                    "you logged out last time:"),
                         "xalign", 0.0f,
                         NULL);
-  gtk_box_pack_start (GTK_BOX (ibox), label, FALSE, FALSE, 0);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_box_pack_start (GTK_BOX (window->ibox), label, FALSE, TRUE, 0);
   gtk_widget_show (label);
 
   swin = g_object_new (GTK_TYPE_SCROLLED_WINDOW,
@@ -137,7 +144,7 @@ xfae_window_init (XfaeWindow *window)
                        "vscrollbar-policy", GTK_POLICY_AUTOMATIC,
                        "hscrollbar-policy", GTK_POLICY_NEVER,
                        NULL);
-  gtk_box_pack_start (GTK_BOX (ibox), swin, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (window->ibox), swin, TRUE, TRUE, 0);
   gtk_widget_show (swin);
 
   window->treeview = g_object_new (GTK_TYPE_TREE_VIEW,
@@ -154,8 +161,8 @@ xfae_window_init (XfaeWindow *window)
   gtk_tree_view_set_model (GTK_TREE_VIEW (window->treeview), model);
   g_object_unref (G_OBJECT (model));
 
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->treeview));
-  gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
+  window->selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->treeview));
+  gtk_tree_selection_set_mode (window->selection, GTK_SELECTION_SINGLE);
 
   column = g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
                          "reorderable", FALSE,
@@ -188,7 +195,7 @@ xfae_window_init (XfaeWindow *window)
   gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
 
   bbox = gtk_hbutton_box_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (content_vbox), bbox, FALSE, TRUE, 0);
   gtk_widget_show (bbox);
 
   button = gtk_button_new_from_stock (GTK_STOCK_ADD);
@@ -200,9 +207,9 @@ xfae_window_init (XfaeWindow *window)
   button = gtk_button_new_from_stock (GTK_STOCK_REMOVE);
   g_signal_connect_swapped (G_OBJECT (button), "clicked",
                             G_CALLBACK (xfae_window_remove), window);
-  g_signal_connect (G_OBJECT (selection), "changed",
+  g_signal_connect (G_OBJECT (window->selection), "changed",
                     G_CALLBACK (xfae_window_selection_changed), button);
-  xfae_window_selection_changed (selection, button);
+  xfae_window_selection_changed (window->selection, button);
   gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -388,3 +395,55 @@ xfae_window_new (void)
   return g_object_new (XFAE_TYPE_WINDOW, NULL);
 }
 
+
+
+
+/**
+ * xfae_window_create_plug_child:
+ *
+ * Creates a widget that can be used to embed the window contents 
+ * into a GtkPlug widget. After this function call, the XfaeWindow can
+ * no longer be used and has to be re-created.
+ *
+ * Return value: A widget holding the most important contents of the 
+ *               window.
+ **/
+GtkWidget*
+xfae_window_create_plug_child (XfaeWindow *window)
+{
+  GtkWidget *vbox;
+  GtkWidget *bbox;
+  GtkWidget *button;
+
+  g_return_val_if_fail (XFAE_IS_WINDOW (window), NULL);
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_widget_show (vbox);
+
+  gtk_widget_reparent (window->ibox, vbox);
+  gtk_widget_show (window->ibox);
+
+  bbox = gtk_hbutton_box_new ();
+  gtk_box_set_spacing (GTK_BOX (bbox), 12);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_CENTER);
+  gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, TRUE, 0);
+  gtk_widget_show (bbox);
+
+  button = gtk_button_new_from_stock (GTK_STOCK_ADD);
+  g_signal_connect_swapped (G_OBJECT (button), "clicked",
+                            G_CALLBACK (xfae_window_add), window);
+  gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_from_stock (GTK_STOCK_REMOVE);
+  g_signal_connect_swapped (G_OBJECT (button), "clicked",
+                            G_CALLBACK (xfae_window_remove), window);
+  g_signal_connect (G_OBJECT (window->selection), "changed",
+                    G_CALLBACK (xfae_window_selection_changed), button);
+  xfae_window_selection_changed (window->selection, button);
+  gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  return vbox;
+}
