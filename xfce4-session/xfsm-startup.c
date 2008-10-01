@@ -55,18 +55,20 @@
 #include <xfce4-session/xfsm-manager.h>
 #include <xfce4-session/xfsm-splash-screen.h>
 
+#include "xfsm-startup.h"
+
 
 
 /*
    Prototypes
  */
-static gboolean xfsm_startup_continue_failsafe    (void);
-static gboolean xfsm_startup_continue_session     (const gchar *previous_id);
-static void     xfsm_startup_child_watch          (GPid         pid,
-                                                   gint         status,
-                                                   gpointer     user_data);
-static void     xfsm_startup_child_watch_destroy  (gpointer     user_data);
-
+static void     xfsm_startup_failsafe                (void);
+static gboolean xfsm_startup_session_next_prio_group (void);
+static void     xfsm_startup_child_watch             (GPid         pid,
+                                                      gint         status,
+                                                      gpointer     user_data);
+static void     xfsm_startup_child_watch_destroy     (gpointer     user_data);
+static gboolean xfsm_startup_handle_failed_client    (gpointer     data);
 
 void
 xfsm_startup_init (XfceRc *rc)
@@ -429,33 +431,31 @@ xfsm_startup_foreign (void)
 }
 
 
-/* Returns TRUE if done, else FALSE */
-gboolean
-xfsm_startup_continue (const gchar *previous_id)
+void
+xfsm_startup_begin (void)
 {
-  gboolean startup_done = FALSE;
-
   if (failsafe_mode)
-    startup_done = xfsm_startup_continue_failsafe ();
+    {
+      xfsm_startup_failsafe ();
+      xfsm_startup_autostart ();
+    }
   else
-    startup_done = xfsm_startup_continue_session (previous_id);
-
-  /* perform Autostart */
-  if (startup_done)
-    xfsm_startup_autostart ();
-  
-  return startup_done;
+    {
+      xfsm_startup_session_continue ();
+    }
 }
 
 
-static gboolean
-xfsm_startup_continue_failsafe (void)
-{  
-  FailsafeClient *fclient;
-  
-  fclient = (FailsafeClient *) g_list_nth_data (failsafe_clients, 0);
-  if (fclient != NULL)
+static void
+xfsm_startup_failsafe (void)
+{
+  GList *lp;
+
+  for (lp = failsafe_clients; lp; lp = lp->next)
     {
+      FailsafeClient *fclient = (FailsafeClient *) lp->data;
+
+      /* FIXME: splash */
       /* let the user know whats going on */
       if (G_LIKELY (splash_screen != NULL))
         {
@@ -466,89 +466,147 @@ xfsm_startup_continue_failsafe (void)
       /* start the application */
       xfsm_start_application (fclient->command, NULL, fclient->screen,
                               NULL, NULL, NULL);
-      failsafe_clients = g_list_remove (failsafe_clients, fclient);
       g_strfreev (fclient->command);
       g_free (fclient);
-
-      /* there are more to come */
-      return FALSE;
     }
 
-  return TRUE;
+  g_list_free (failsafe_clients);
+  failsafe_clients = NULL;
 }
 
 
 static gboolean
-xfsm_startup_continue_session (const gchar *previous_id)
+xfsm_startup_session_client (XfsmProperties *properties)
+{
+  gchar **argv;
+  gint    argc;
+  GPid    pid;
+  gint    n;
+
+  /* generate the argument vector for the application (expanding variables) */
+  argc = g_strv_length (properties->restart_command);
+  argv = g_new (gchar *, argc + 1);
+  for (n = 0; n < argc; ++n)
+    argv[n] = xfce_expand_variables (properties->restart_command[n], NULL);
+  argv[n] = NULL;
+
+  /* fork a new process for the application */
+#ifdef HAVE_VFORK
+  pid = vfork ();
+#else
+  pid = fork ();
+#endif
+
+  /* handle the child process */
+  if (pid == 0)
+    {
+      /* execute the application here */
+      execvp (argv[0], argv);
+      _exit (127);
+    }
+
+  /* cleanup */
+  g_strfreev (argv);
+
+  /* check if we failed to fork */
+  if (G_UNLIKELY (pid < 0))
+    {
+      /* tell the user that we failed to fork */
+      perror ("Failed to fork new process");
+      return FALSE;
+    }
+
+  /* watch the child process */
+  g_child_watch_add_full (G_PRIORITY_LOW, pid, xfsm_startup_child_watch, g_strdup (properties->client_id), xfsm_startup_child_watch_destroy);
+  properties->startup_timeout_id = g_timeout_add (STARTUP_TIMEOUT,
+                                                  xfsm_startup_handle_failed_client,
+                                                  properties);
+  return TRUE;
+}
+
+
+void
+xfsm_startup_session_continue ()
+{
+  gboolean client_started = FALSE;
+
+  /* try to start some clients.  if we fail to start anything in the current
+   * priority group, move right to the next one.  if we *did* start something,
+   * the failed/registered handlers will take care of moving us on to the
+   * next priority group */
+  while (client_started == FALSE && pending_properties != NULL)
+    client_started = xfsm_startup_session_next_prio_group ();
+
+  if (G_UNLIKELY (client_started == FALSE && pending_properties == NULL))
+    {
+      /* we failed to start anything, and we don't have anything else,
+       * to start, so just move on to the autostart items and signal
+       * the manager that we're finished */
+      xfsm_startup_autostart ();
+      xfsm_manager_signal_startup_done ();
+    }
+}
+
+
+/* returns TRUE if we started anything, FALSE if we didn't */
+static gboolean
+xfsm_startup_session_next_prio_group (void)
 {
   XfsmProperties *properties;
-  gchar         **argv;
-  gint            argc;
-  GPid            pid;
-  gint            n;
-  
-again:
-  properties = (XfsmProperties *) g_list_nth_data (pending_properties, 0);
-  if (properties != NULL)
+  gint            cur_prio_group;
+  gboolean        client_started = FALSE;
+
+  /* can this ever happen? */
+  while (G_UNLIKELY (pending_properties && pending_properties->data == NULL))
+    pending_properties = g_list_delete_link (pending_properties, pending_properties);
+
+  if (pending_properties == NULL)
+    return FALSE;
+
+  /* determine prio group for this run */
+  properties = (XfsmProperties *) pending_properties->data;
+  cur_prio_group = properties->priority;
+
+  xfsm_verbose ("Starting apps in prio group %d\n", cur_prio_group);
+
+  while (pending_properties)
     {
+      XfsmProperties *properties = (XfsmProperties *) pending_properties->data;
+
+      if (G_UNLIKELY (properties == NULL))
+        {
+          pending_properties = g_list_delete_link (pending_properties, pending_properties);
+          continue;
+        }
+
+      /* quit if we've hit all the clients in the current prio group */
+      if (properties->priority != cur_prio_group)
+        break;
+
+      /* FIXME: splash */
       if (G_LIKELY (splash_screen != NULL))
         {
           xfsm_splash_screen_next (splash_screen,
                                    figure_app_name (properties->program));
         }
 
-      /* drop the properties from the pending list */
+      /* it's not pending anymore... */
       pending_properties = g_list_remove (pending_properties, properties);
 
-      /* generate the argument vector for the application (expanding variables) */
-      argc = g_strv_length (properties->restart_command);
-      argv = g_new (gchar *, argc + 1);
-      for (n = 0; n < argc; ++n)
-        argv[n] = xfce_expand_variables (properties->restart_command[n], NULL);
-      argv[n] = NULL;
-
-      /* fork a new process for the application */
-#ifdef HAVE_VFORK
-      pid = vfork ();
-#else
-      pid = fork ();
-#endif
-
-      /* handle the child process */
-      if (pid == 0)
+      if (G_LIKELY (xfsm_startup_session_client (properties)))
         {
-          /* execute the application here */
-          execvp (argv[0], argv);
-          _exit (127);
-        }
-
-      /* check if we failed to fork */
-      if (G_UNLIKELY (pid < 0))
-        {
-          /* tell the user that we failed to fork */
-          perror ("Failed to fork new process");
+          starting_properties = g_list_append (starting_properties, properties);
+          client_started = TRUE;
         }
       else
         {
-          /* watch the child process */
-          g_child_watch_add_full (G_PRIORITY_LOW, pid, xfsm_startup_child_watch, g_strdup (properties->client_id), xfsm_startup_child_watch_destroy);
+          /* if starting the app failed, just ditch it */
+          xfsm_manager_handle_failed_client (properties);
+          xfsm_properties_free (properties);
         }
-
-      /* cleanup */
-      g_strfreev (argv);
-
-      /* move the properties to the list of starting applications */
-      starting_properties = g_list_append (starting_properties, properties);
-
-      /* try with the next pending if fork() failed */
-      if (G_UNLIKELY (pid < 0))
-        goto again;
-
-      /* more to come... */
-      return FALSE;
     }
 
-  return TRUE;
+  return client_started;
 }
 
 
@@ -568,8 +626,14 @@ xfsm_startup_child_watch (GPid     pid,
       properties = (XfsmProperties *) lp->data;
       if (strcmp (properties->client_id, client_id) == 0)
         {
+          if (properties->startup_timeout_id)
+            {
+              g_source_remove (properties->startup_timeout_id);
+              properties->startup_timeout_id = 0;
+            }
+
           /* continue startup, this client failed most probably */
-          xfsm_manager_startup_continue (NULL);
+          xfsm_startup_handle_failed_client (properties);
           break;
         }
     }
@@ -584,5 +648,25 @@ xfsm_startup_child_watch_destroy (gpointer user_data)
 }
 
 
+static gboolean
+xfsm_startup_handle_failed_client (gpointer data)
+{
+  XfsmProperties *properties = (XfsmProperties *) data;
+
+  properties->startup_timeout_id = 0;
+
+  xfsm_manager_handle_failed_client (properties);
+
+  starting_properties = g_list_remove (starting_properties, properties);
+  xfsm_properties_free (properties);
+
+  if (starting_properties == NULL)
+    {
+      /* everything has finished starting or failed; continue startup */
+      xfsm_startup_session_continue ();
+    }
+
+  return FALSE;
+}
 
 

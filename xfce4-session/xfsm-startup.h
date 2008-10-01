@@ -26,7 +26,8 @@
 
 void xfsm_startup_init (XfceRc *rc);
 void xfsm_startup_foreign (void);
-gboolean xfsm_startup_continue (const gchar *previous_id);
+void xfsm_startup_begin (void);
+void xfsm_startup_session_continue (void);
 
 #endif /* !__XFSM_STARTUP_H__ */
 

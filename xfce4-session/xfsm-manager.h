@@ -45,7 +45,11 @@ void xfsm_manager_init (XfceRc *rc);
 
 gboolean xfsm_manager_restart (void);
 
-void xfsm_manager_startup_continue (const gchar *previous_id);
+/* call when startup is finished */
+void xfsm_manager_signal_startup_done (void);
+
+/* call for each client that fails */
+void xfsm_manager_handle_failed_client (XfsmProperties *properties);
 
 gchar* xfsm_manager_generate_client_id (SmsConn sms_conn) G_GNUC_PURE;
 

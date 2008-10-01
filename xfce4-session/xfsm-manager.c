@@ -71,8 +71,6 @@
    Prototypes
  */
 static gboolean   xfsm_manager_startup (void);
-static void       xfsm_manager_handle_failed (void);
-static gboolean   xfsm_manager_startup_timedout (gpointer user_data);
 static void       xfsm_manager_load_settings (XfceRc *rc);
 static gboolean   xfsm_manager_load_session (void);
 static GdkPixbuf *xfsm_manager_load_session_preview (const gchar *name);
@@ -84,7 +82,6 @@ static GdkPixbuf *xfsm_manager_load_session_preview (const gchar *name);
 static XfsmManagerState state = XFSM_MANAGER_STARTUP;
 static gboolean         session_chooser = FALSE;
 static guint            die_timeout_id = 0;
-static guint            startup_timeout_id = 0;
 
 
 static gboolean
@@ -93,7 +90,7 @@ xfsm_manager_startup (void)
   xfsm_startup_foreign ();
   pending_properties = g_list_sort (pending_properties,
                                     (GCompareFunc) xfsm_properties_compare);
-  xfsm_manager_startup_continue (NULL);
+  xfsm_startup_begin ();
   return FALSE;
 }
 
@@ -127,36 +124,27 @@ xfsm_manager_restore_active_workspace (XfceRc *rc)
 }
 
 
-static void
-xfsm_manager_handle_failed (void)
+void
+xfsm_manager_handle_failed_client (XfsmProperties *properties)
 {
   /* Handle apps that failed to start here */
-  XfsmProperties *properties;
-  GList          *lp;
 
-  for (lp = starting_properties; lp != NULL; lp = lp->next)
+  if (properties->discard_command != NULL)
     {
-      properties = XFSM_PROPERTIES (lp->data);
+      xfsm_verbose ("Client Id = %s failed to start, running discard "
+                    "command now.\n\n", properties->client_id);
 
-      if (properties->discard_command != NULL)
-        {
-          xfsm_verbose ("Client Id = %s failed to start, running discard "
-                        "command now.\n\n", properties->client_id);
-
-          g_spawn_sync (properties->current_directory,
-                        properties->discard_command,
-                        properties->environment,
-                        G_SPAWN_SEARCH_PATH,
-                        NULL, NULL,
-                        NULL, NULL,
-                        NULL, NULL);
-        }
-
-      xfsm_properties_free (properties);
+      g_spawn_sync (properties->current_directory,
+                    properties->discard_command,
+                    properties->environment,
+                    G_SPAWN_SEARCH_PATH,
+                    NULL, NULL,
+                    NULL, NULL,
+                    NULL, NULL);
     }
 
-  g_list_free (starting_properties);
-  starting_properties = NULL;
+  if (starting_properties == NULL)
+    xfsm_startup_session_continue ();
 }
 
 
@@ -437,68 +425,28 @@ xfsm_manager_restart (void)
 
 
 void
-xfsm_manager_startup_continue (const gchar *previous_id)
+xfsm_manager_signal_startup_done (void)
 {
-  gboolean startup_done = FALSE;
   gchar buffer[1024];
   XfceRc *rc;
 
-  xfsm_verbose ("Manager startup continues [Previous Id = %s]\n\n",
-                previous_id != NULL ? previous_id : "None");
+  xfsm_verbose ("Manager finished startup, entering IDLE mode now\n\n");
+  state = XFSM_MANAGER_IDLE;
 
-  if (startup_timeout_id != 0)
+  if (!failsafe_mode)
     {
-      g_source_remove (startup_timeout_id);
-      startup_timeout_id = 0;
+      /* restore active workspace, this has to be done after the
+       * window manager is up, so we do it last.
+       */
+      g_snprintf (buffer, 1024, "Session: %s", session_name);
+      rc = xfce_rc_simple_open (session_file, TRUE);
+      xfce_rc_set_group (rc, buffer);
+      xfsm_manager_restore_active_workspace (rc);
+      xfce_rc_close (rc);
 
-      /* work around broken clients */
-      if (state != XFSM_MANAGER_STARTUP)
-        return;
+      /* start legacy applications now */
+      xfsm_legacy_startup ();
     }
-
-  startup_done = xfsm_startup_continue (previous_id);
-
-  if (startup_done)
-    {
-      xfsm_verbose ("Manager finished startup, entering IDLE mode now\n\n");
-      state = XFSM_MANAGER_IDLE;
-
-      if (!failsafe_mode)
-        {
-          /* handle apps that failed to start */
-          xfsm_manager_handle_failed ();
-
-          /* restore active workspace, this has to be done after the
-           * window manager is up, so we do it last.
-           */
-          g_snprintf (buffer, 1024, "Session: %s", session_name);
-          rc = xfce_rc_simple_open (session_file, TRUE);
-          xfce_rc_set_group (rc, buffer);
-          xfsm_manager_restore_active_workspace (rc);
-          xfce_rc_close (rc);
-
-          /* start legacy applications now */
-          xfsm_legacy_startup ();
-        }
-    }
-  else
-    {
-      startup_timeout_id = g_timeout_add (STARTUP_TIMEOUT,
-                                          xfsm_manager_startup_timedout,
-                                          NULL);
-    }
-}
-
-
-static gboolean
-xfsm_manager_startup_timedout (gpointer user_data)
-{
-  xfsm_verbose ("Manager startup timed out\n\n");
-
-  startup_timeout_id = 0; /* will be removed automagically once we return */
-  xfsm_manager_startup_continue (NULL);
-  
-  return FALSE;
 }
 
 
@@ -593,6 +541,12 @@ xfsm_manager_register_client (XfsmClient  *client,
             }
         }
 
+      if (properties != NULL && properties->startup_timeout_id != 0)
+        {
+          g_source_remove (properties->startup_timeout_id);
+          properties->startup_timeout_id = 0;
+        }
+
       /* If previous_id is invalid, the SM will send a BadValue error message
        * to the client and reverts to register state waiting for another
        * RegisterClient message.
@@ -632,7 +586,8 @@ xfsm_manager_register_client (XfsmClient  *client,
        * above, previous_id will be NULL here.
        * See http://bugs.xfce.org/view_bug_page.php?f_id=212 for details.
        */
-      xfsm_manager_startup_continue (previous_id);
+      if (starting_properties == NULL)
+        xfsm_startup_session_continue ();
     }
 
   return TRUE;

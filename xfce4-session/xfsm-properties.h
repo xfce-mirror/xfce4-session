@@ -49,6 +49,8 @@ struct _XfsmProperties
   gchar **restart_command;
   gint    restart_style_hint;
   gchar  *user_id;
+
+  guint startup_timeout_id;
 };
 
 
