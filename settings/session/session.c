@@ -354,7 +354,7 @@ int
 main(int argc, char **argv)
 {
   GtkWidget *plug;
-  GtkWidget *plug_child;
+  GtkWidget *plug_child = NULL;
   GError    *error = NULL;
 
   #ifdef ENABLE_NLS

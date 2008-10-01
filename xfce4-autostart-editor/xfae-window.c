@@ -83,12 +83,10 @@ xfae_window_init (XfaeWindow *window)
   GtkWidget         *heading;
   GtkWidget         *separator;
   GtkWidget         *content_vbox;
-  GtkWidget         *frame;
   GtkWidget         *label;
   GtkWidget         *swin;
   GtkWidget         *bbox;
   GtkWidget         *button;
-  gchar             *text;
 
   gtk_window_set_default_size (GTK_WINDOW (window), -1, 350);
   gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);

@@ -1,14 +1,15 @@
 bin_PROGRAMS = xfce4-session-settings
 	
 
-xfce4_session_settings_SOURCES =						\
+xfce4_session_settings_SOURCES =					\
 	session.c
 
 xfce4_session_settings_CFLAGS =						\
 	-I$(top_srcdir)							\
 	$(LIBXFCEGUI4_CFLAGS)						\
 	$(LIBXFCE4UTIL_CFLAGS)						\
-	-DLOCALEDIR=\"$(localedir)\"
+	-DLOCALEDIR=\"$(localedir)\"					\
+	-DG_LOG_DOMAIN=\"xfce4-session-settings\"
 
 xfce4_session_settings_LDADD =						\
 	$(top_builddir)/libxfsm/libxfsm-4.2.la				\
