@@ -236,7 +236,7 @@ main (int argc, char **argv)
   /* fake a client id for the manager, so the legacy management does not
    * recognize us to be a session client.
    */
-  gdk_set_sm_client_id (xfsm_manager_generate_client_id (NULL));
+  gdk_set_sm_client_id (xfsm_generate_client_id (NULL));
 
   manager = xfsm_manager_new ();
   initialize (manager, argc, argv);

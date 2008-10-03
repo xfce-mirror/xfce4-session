@@ -1,5 +1,11 @@
 2008-10-03	Brian Tarricone <bjt23@cornell.edu>
 
+	* xfce4-session/{main.c,xfsm-manager.{c,h},xfsm-global.{c,h}}:
+	  Move some functions that aren't really XfsmManager-related
+	  into xfsm-global.
+
+2008-10-03	Brian Tarricone <bjt23@cornell.edu>
+
 	* xfce4-session/*.[ch]: Turn XfsmManager into a GObject, and
 	  remove most of the app-global variables.  This is a first
 	  step toward fixing bug 798, as well as making xfce4-session

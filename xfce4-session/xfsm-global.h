@@ -22,6 +22,10 @@
 #ifndef __XFSM_GLOBAL_H__
 #define __XFSM_GLOBAL_H__
 
+#include <glib.h>
+
+#include <X11/SM/SMlib.h>
+
 #include <xfce4-session/xfsm-splash-screen.h>
 
 
@@ -62,6 +66,10 @@ G_STMT_START{                         \
 
 void xfsm_enable_verbose (void);
 void xfsm_verbose_real (const gchar *format, ...) G_GNUC_PRINTF (1, 2);
+
+gchar *xfsm_generate_client_id (SmsConn sms_conn) G_GNUC_PURE;
+
+GdkPixbuf *xfsm_load_session_preview (const gchar *name);
 
 
 #endif /* !__XFSM_GLOBAL_H__ */

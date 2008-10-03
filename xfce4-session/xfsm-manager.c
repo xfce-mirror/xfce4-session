@@ -111,7 +111,6 @@ static gboolean   xfsm_manager_save_timeout (gpointer client_data);
 static void       xfsm_manager_load_settings (XfsmManager *manager,
                                               XfceRc      *rc);
 static gboolean   xfsm_manager_load_session (XfsmManager *manager);
-static GdkPixbuf *xfsm_manager_load_session_preview (const gchar *name);
 
 
 G_DEFINE_TYPE(XfsmManager, xfsm_manager, G_TYPE_OBJECT)
@@ -267,7 +266,7 @@ xfsm_manager_choose_session (XfsmManager *manager,
           session = g_new0 (XfsmSessionInfo, 1);
           session->name = groups[n] + 9;
           session->atime = xfce_rc_read_int_entry (rc, "LastAccess", 0);
-          session->preview = xfsm_manager_load_session_preview (session->name);
+          session->preview = xfsm_load_session_preview (session->name);
 
           if (session->preview == NULL)
             {
@@ -515,7 +514,7 @@ xfsm_manager_restart (XfsmManager *manager)
   xfsm_legacy_init ();
 
   /* tell splash screen that the session is starting now */
-  preview = xfsm_manager_load_session_preview (manager->session_name);
+  preview = xfsm_load_session_preview (manager->session_name);
   if (preview == NULL)
     preview = gdk_pixbuf_from_pixdata (&chooser_icon_data, FALSE, NULL);
   steps = g_queue_get_length (manager->failsafe_mode ? manager->failsafe_clients : manager->pending_properties);
@@ -551,46 +550,6 @@ xfsm_manager_signal_startup_done (XfsmManager *manager)
       /* start legacy applications now */
       xfsm_legacy_startup ();
     }
-}
-
-
-gchar*
-xfsm_manager_generate_client_id (SmsConn sms_conn)
-{
-  static char *addr = NULL;
-  static int   sequence = 0;
-  char        *sms_id;
-  char        *id = NULL;
-
-  if (sms_conn != NULL)
-    {
-      sms_id = SmsGenerateClientID (sms_conn);
-      if (sms_id != NULL)
-        {
-          id = g_strdup (sms_id);
-          free (sms_id);
-        }
-    }
-
-  if (id == NULL)
-    {
-      if (addr == NULL)
-        {
-          /*
-           * Faking our IP address, the 0 below is "unknown"
-           * address format (1 would be IP, 2 would be DEC-NET
-           * format). Stolen from KDE :-)
-           */
-          addr = g_strdup_printf ("0%.8x", g_random_int ());
-        }
-
-      id = (char *) g_malloc (50);
-      g_snprintf (id, 50, "1%s%.13ld%.10d%.4d", addr,
-                  (long) time (NULL), (int) getpid (), sequence);
-      sequence = (sequence + 1) % 10000;
-    }
-
-  return id;
 }
 
 
@@ -676,7 +635,7 @@ xfsm_manager_register_client (XfsmManager *manager,
     }
   else
     {
-      client_id = xfsm_manager_generate_client_id (client->sms_conn);
+      client_id = xfsm_generate_client_id (client->sms_conn);
       properties = xfsm_properties_new (client_id,
                                         SmsClientHostName (client->sms_conn));
       xfsm_client_set_initial_properties (client, properties);
@@ -1407,34 +1366,4 @@ xfsm_manager_get_compat_startup (XfsmManager          *manager,
         g_warning ("Invalid compat startup type %d", type);
         return FALSE;
     }
-}
-
-
-static GdkPixbuf*
-xfsm_manager_load_session_preview (const gchar *name)
-{
-#ifdef SESSION_SCREENSHOTS
-  GdkDisplay *display;
-  GdkPixbuf  *pb;
-  gchar *display_name;
-  gchar *resource;
-  gchar *filename;
-
-  /* determine thumb file */
-  display = gdk_display_get_default ();
-  display_name = xfce_gdk_display_get_fullname (display);
-  resource = g_strconcat ("sessions/thumbs-", display_name,
-                          "/", name, ".png", NULL);
-  filename = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource, TRUE);
-  g_free (display_name);
-  g_free (resource);
-
-  pb = gdk_pixbuf_new_from_file (filename, NULL);
-
-  g_free (filename);
-
-  return pb;
-#else
-  return NULL;
-#endif
 }

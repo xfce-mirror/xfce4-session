@@ -81,8 +81,6 @@ void xfsm_manager_signal_startup_done (XfsmManager *manager);
 void xfsm_manager_handle_failed_client (XfsmManager    *manager,
                                         XfsmProperties *properties);
 
-gchar* xfsm_manager_generate_client_id (SmsConn sms_conn) G_GNUC_PURE;
-
 XfsmClient* xfsm_manager_new_client (XfsmManager *manager,
                                      SmsConn      sms_conn,
                                      gchar      **error);

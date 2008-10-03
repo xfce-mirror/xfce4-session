@@ -26,7 +26,20 @@
 #ifdef HAVE_STDARG_H
 #include <stdarg.h>
 #endif
+
 #include <stdio.h>
+
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+
+#ifdef HAVE_SYS_TYPE_SH
+#include <sys/types.h>
+#endif
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
 #include <libxfce4util/libxfce4util.h>
 
@@ -76,4 +89,74 @@ xfsm_verbose_real (const gchar *format, ...)
   vfprintf (fp, format, valist);
   fflush (fp);
   va_end (valist);
+}
+
+
+gchar *
+xfsm_generate_client_id (SmsConn sms_conn)
+{
+  static char *addr = NULL;
+  static int   sequence = 0;
+  char        *sms_id;
+  char        *id = NULL;
+
+  if (sms_conn != NULL)
+    {
+      sms_id = SmsGenerateClientID (sms_conn);
+      if (sms_id != NULL)
+        {
+          id = g_strdup (sms_id);
+          free (sms_id);
+        }
+    }
+
+  if (id == NULL)
+    {
+      if (addr == NULL)
+        {
+          /*
+           * Faking our IP address, the 0 below is "unknown"
+           * address format (1 would be IP, 2 would be DEC-NET
+           * format). Stolen from KDE :-)
+           */
+          addr = g_strdup_printf ("0%.8x", g_random_int ());
+        }
+
+      id = (char *) g_malloc (50);
+      g_snprintf (id, 50, "1%s%.13ld%.10d%.4d", addr,
+                  (long) time (NULL), (int) getpid (), sequence);
+      sequence = (sequence + 1) % 10000;
+    }
+
+  return id;
+}
+
+
+GdkPixbuf *
+xfsm_load_session_preview (const gchar *name)
+{
+#ifdef SESSION_SCREENSHOTS
+  GdkDisplay *display;
+  GdkPixbuf  *pb;
+  gchar *display_name;
+  gchar *resource;
+  gchar *filename;
+
+  /* determine thumb file */
+  display = gdk_display_get_default ();
+  display_name = xfce_gdk_display_get_fullname (display);
+  resource = g_strconcat ("sessions/thumbs-", display_name,
+                          "/", name, ".png", NULL);
+  filename = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource, TRUE);
+  g_free (display_name);
+  g_free (resource);
+
+  pb = gdk_pixbuf_new_from_file (filename, NULL);
+
+  g_free (filename);
+
+  return pb;
+#else
+  return NULL;
+#endif
 }
