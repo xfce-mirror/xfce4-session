@@ -349,7 +349,7 @@ xfsm_shutdown_helper_send_password (XfsmShutdownHelper *helper,
 
   if (bytes != length)
     {
-      fprintf (stderr, "Failed to write password (bytes=%u, length=%u)\n", bytes, length);
+      fprintf (stderr, "Failed to write password (bytes=%lu, length=%lu)\n", (long)bytes, (long)length);
       return FALSE;
     }
 
