@@ -26,9 +26,12 @@
 
 #include <glib.h>
 
+#include "xfsm-manager.h"
+
 Bool     ice_auth_proc       (char         *hostname);
 gboolean ice_setup_listeners (int           num_listeners,
-                              IceListenObj *listen_objs);
+                              IceListenObj *listen_objs,
+                              XfsmManager  *manager);
 void     ice_cleanup         (void);
 
 #endif	/* !__XFSM_ICE_LAYER_H__ */

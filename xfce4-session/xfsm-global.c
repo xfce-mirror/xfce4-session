@@ -36,18 +36,16 @@
 
 /* global variables */
 gboolean          verbose = FALSE;
-gboolean          compat_kde = FALSE;
-gboolean          compat_gnome = FALSE;
-GList            *starting_properties = NULL;
-GList            *pending_properties = NULL;
-GList            *restart_properties = NULL;
-GList            *running_clients = NULL;
-gchar            *session_name = NULL;
-gchar            *session_file = NULL;
-GList            *failsafe_clients = NULL;
-gboolean          failsafe_mode = TRUE;
-gint              shutdown_type = SHUTDOWN_LOGOUT;
 XfsmSplashScreen *splash_screen = NULL;
+
+void
+xfsm_failsafe_client_free (FailsafeClient *fclient)
+{
+  if (fclient->command)
+    g_strfreev (fclient->command);
+  g_free (fclient);
+}
+
 
 void
 xfsm_enable_verbose (void)

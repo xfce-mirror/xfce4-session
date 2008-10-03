@@ -24,6 +24,10 @@
 
 #include <libxfce4util/libxfce4util.h>
 
-void sm_init (XfceRc *rc, gboolean disable_tcp);
+#include "xfsm-manager.h"
+
+void sm_init (XfceRc      *rc,
+              gboolean     disable_tcp,
+              XfsmManager *manager);
 
 #endif /* !__SM_LAYER_H__ */

@@ -1,6 +1,7 @@
 /* $Id$ */
 /*-
  * Copyright (c) 2003-2006 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2008 Brian Tarricone <bjt23@cornell.edu>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -125,9 +126,10 @@ usage (int exit_code)
 
 
 static void
-init_display (GdkDisplay *dpy,
-              XfceRc     *rc,
-              gboolean disable_tcp)
+init_display (XfsmManager *manager,
+              GdkDisplay  *dpy,
+              XfceRc      *rc,
+              gboolean     disable_tcp)
 {
   const gchar *engine;
 
@@ -140,7 +142,7 @@ init_display (GdkDisplay *dpy,
   gdk_flush ();
 
   xfce_rc_set_group (rc, "General");
-  sm_init (rc, disable_tcp);
+  sm_init (rc, disable_tcp, manager);
 
   /* start xfsettingsd */
   if ( !g_spawn_command_line_async ("xfsettingsd", NULL))
@@ -155,7 +157,9 @@ init_display (GdkDisplay *dpy,
 
 
 static void
-initialize (int argc, char **argv)
+initialize (XfsmManager *manager,
+            int          argc,
+            char       **argv)
 {
   gboolean disable_tcp = FALSE;
   GdkDisplay *dpy;
@@ -192,7 +196,7 @@ initialize (int argc, char **argv)
   rc = xfsm_open_config (TRUE);
 
   dpy = gdk_display_get_default ();
-  init_display (dpy, rc, disable_tcp);
+  init_display (manager, dpy, rc, disable_tcp);
 
   /* verify that the DNS settings are ok */
   xfsm_splash_screen_next (splash_screen, _("Verifying DNS settings"));
@@ -200,13 +204,9 @@ initialize (int argc, char **argv)
 
   xfsm_splash_screen_next (splash_screen, _("Loading session data"));
 
-  xfce_rc_set_group (rc, "Compatibility");
-  compat_gnome = xfce_rc_read_bool_entry (rc, "LaunchGnome", FALSE);
-  compat_kde = xfce_rc_read_bool_entry (rc, "LaunchKDE", FALSE);
-
   xfce_rc_set_group (rc, "General");
   xfsm_startup_init (rc);
-  xfsm_manager_init (rc);
+  xfsm_manager_load (manager, rc);
 
   /* cleanup obsolete entries */
   xfce_rc_set_group (rc, "General");
@@ -223,8 +223,8 @@ initialize (int argc, char **argv)
 int
 main (int argc, char **argv)
 {
-  /* imported from xfsm-manager.c */
-  extern gint shutdown_type;
+  XfsmManager *manager;
+  gint shutdown_type;
 
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
   
@@ -238,11 +238,14 @@ main (int argc, char **argv)
    */
   gdk_set_sm_client_id (xfsm_manager_generate_client_id (NULL));
 
-  initialize (argc, argv);
-  
-  xfsm_manager_restart ();
+  manager = xfsm_manager_new ();
+  initialize (manager, argc, argv);
+  xfsm_manager_restart (manager);
   
   gtk_main ();
+
+  shutdown_type = xfsm_manager_get_shutdown_type (manager);
+  g_object_unref (manager);
   
   ice_cleanup ();
 

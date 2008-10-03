@@ -1,3 +1,10 @@
+2008-10-03	Brian Tarricone <bjt23@cornell.edu>
+
+	* xfce4-session/*.[ch]: Turn XfsmManager into a GObject, and
+	  remove most of the app-global variables.  This is a first
+	  step toward fixing bug 798, as well as making xfce4-session
+	  ready for a D-Bus interface.
+
 2008-10-01	Jannis Pohlmann <jannis@xfce.org>
 
 	* settings/session/{Makefile.am,session.c}, 

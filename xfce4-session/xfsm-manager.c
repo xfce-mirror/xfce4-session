@@ -1,6 +1,7 @@
 /* $Id$ */
 /*-
  * Copyright (c) 2003-2006 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2008 Brian Tarricone <bjt23@cornell.edu>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -67,36 +68,130 @@
 #define DEFAULT_SESSION_NAME "Default"
 
 
+struct _XfsmManager
+{
+  GObject parent;
+
+  XfsmManagerState state;
+  gint             shutdown_type;
+
+  gboolean         session_chooser;
+  gchar           *session_name;
+  gchar           *session_file;
+
+  gboolean         compat_gnome;
+  gboolean         compat_kde;
+
+  GQueue          *starting_properties;
+  GQueue          *pending_properties;
+  GQueue          *restart_properties;
+  GQueue          *running_clients;
+
+  gboolean         failsafe_mode;
+  GQueue          *failsafe_clients;
+
+  guint            die_timeout_id;
+};
+
+typedef struct _XfsmManagerClass
+{
+  GObjectClass parent;
+} XfsmManagerClass;
+
+
 /*
    Prototypes
  */
-static gboolean   xfsm_manager_startup (void);
-static void       xfsm_manager_load_settings (XfceRc *rc);
-static gboolean   xfsm_manager_load_session (void);
+static void       xfsm_manager_class_init (XfsmManagerClass *klass);
+static void       xfsm_manager_init (XfsmManager *manager);
+static void       xfsm_manager_finalize (GObject *obj);
+
+static gboolean   xfsm_manager_startup (XfsmManager *manager);
+static gboolean   xfsm_manager_save_timeout (gpointer client_data);
+static void       xfsm_manager_load_settings (XfsmManager *manager,
+                                              XfceRc      *rc);
+static gboolean   xfsm_manager_load_session (XfsmManager *manager);
 static GdkPixbuf *xfsm_manager_load_session_preview (const gchar *name);
 
 
-/*
-   Static data
- */
-static XfsmManagerState state = XFSM_MANAGER_STARTUP;
-static gboolean         session_chooser = FALSE;
-static guint            die_timeout_id = 0;
+G_DEFINE_TYPE(XfsmManager, xfsm_manager, G_TYPE_OBJECT)
+
+
+static void
+xfsm_manager_class_init (XfsmManagerClass *klass)
+{
+  GObjectClass *gobject_class = (GObjectClass *)klass;
+
+  gobject_class->finalize = xfsm_manager_finalize;
+}
+
+
+static void
+xfsm_manager_init (XfsmManager *manager)
+{
+  manager->state = XFSM_MANAGER_STARTUP;
+  manager->session_chooser = FALSE;
+  manager->failsafe_mode = TRUE;
+  manager->shutdown_type = SHUTDOWN_LOGOUT;
+
+  manager->pending_properties = g_queue_new ();
+  manager->starting_properties = g_queue_new ();
+  manager->restart_properties = g_queue_new ();
+  manager->running_clients = g_queue_new ();
+  manager->failsafe_clients = g_queue_new ();
+}
+
+
+static void
+xfsm_manager_finalize (GObject *obj)
+{
+  XfsmManager *manager = XFSM_MANAGER(obj);
+
+  if (manager->die_timeout_id != 0)
+    g_source_remove (manager->die_timeout_id);
+
+  g_queue_foreach (manager->pending_properties, (GFunc) xfsm_properties_free, NULL);
+  g_queue_free (manager->pending_properties);
+
+  g_queue_foreach (manager->starting_properties, (GFunc) xfsm_properties_free, NULL);
+  g_queue_free (manager->starting_properties);
+
+  g_queue_foreach (manager->restart_properties, (GFunc) xfsm_properties_free, NULL);
+  g_queue_free (manager->restart_properties);
+
+  g_queue_foreach (manager->running_clients, (GFunc) xfsm_client_free, NULL);
+  g_queue_free (manager->running_clients);
+
+  g_queue_foreach (manager->failsafe_clients, (GFunc) xfsm_failsafe_client_free, NULL);
+  g_queue_free (manager->failsafe_clients);
+
+  g_free (manager->session_name);
+  g_free (manager->session_file);
+
+  G_OBJECT_CLASS (xfsm_manager_parent_class)->finalize (obj);
+}
+
+
+XfsmManager *
+xfsm_manager_new (void)
+{
+  return g_object_new (XFSM_TYPE_MANAGER, NULL);
+}
 
 
 static gboolean
-xfsm_manager_startup (void)
+xfsm_manager_startup (XfsmManager *manager)
 {
-  xfsm_startup_foreign ();
-  pending_properties = g_list_sort (pending_properties,
-                                    (GCompareFunc) xfsm_properties_compare);
-  xfsm_startup_begin ();
+  xfsm_startup_foreign (manager);
+  g_queue_sort (manager->pending_properties, (GCompareDataFunc) xfsm_properties_compare, NULL);
+  xfsm_startup_begin (manager);
   return FALSE;
 }
 
 
 static void
-xfsm_manager_restore_active_workspace (XfceRc *rc)
+xfsm_manager_restore_active_workspace (XfsmManager *manager,
+                                       XfceRc      *rc)
 {
   WnckWorkspace  *workspace;
   GdkDisplay     *display;
@@ -125,7 +220,8 @@ xfsm_manager_restore_active_workspace (XfceRc *rc)
 
 
 void
-xfsm_manager_handle_failed_client (XfsmProperties *properties)
+xfsm_manager_handle_failed_client (XfsmManager    *manager,
+                                   XfsmProperties *properties)
 {
   /* Handle apps that failed to start here */
 
@@ -143,13 +239,14 @@ xfsm_manager_handle_failed_client (XfsmProperties *properties)
                     NULL, NULL);
     }
 
-  if (starting_properties == NULL)
-    xfsm_startup_session_continue ();
+  if (g_queue_peek_head (manager->starting_properties) == NULL)
+    xfsm_startup_session_continue (manager);
 }
 
 
 static gboolean
-xfsm_manager_choose_session (XfceRc *rc)
+xfsm_manager_choose_session (XfsmManager *manager,
+                             XfceRc      *rc)
 {
   XfsmSessionInfo *session;
   GdkPixbuf       *preview_default = NULL;
@@ -193,7 +290,7 @@ xfsm_manager_choose_session (XfceRc *rc)
   if (sessions != NULL)
     {
       result = xfsm_splash_screen_choose (splash_screen, sessions,
-                                          session_name, &name);
+                                          manager->session_name, &name);
 
       if (result == XFSM_CHOOSE_LOGOUT)
         {
@@ -205,9 +302,9 @@ xfsm_manager_choose_session (XfceRc *rc)
           load = TRUE;
         }
 
-      if (session_name != NULL)
-        g_free (session_name);
-      session_name = name;
+      if (manager->session_name != NULL)
+        g_free (manager->session_name);
+      manager->session_name = name;
 
       for (lp = sessions; lp != NULL; lp = lp->next)
         {
@@ -226,27 +323,27 @@ xfsm_manager_choose_session (XfceRc *rc)
 
 
 static gboolean
-xfsm_manager_load_session (void)
+xfsm_manager_load_session (XfsmManager *manager)
 {
   XfsmProperties *properties;
   gchar           buffer[1024];
   XfceRc         *rc;
   gint            count;
   
-  if (!g_file_test (session_file, G_FILE_TEST_IS_REGULAR))
+  if (!g_file_test (manager->session_file, G_FILE_TEST_IS_REGULAR))
     return FALSE;
 
-  rc = xfce_rc_simple_open (session_file, FALSE);
+  rc = xfce_rc_simple_open (manager->session_file, FALSE);
   if (G_UNLIKELY (rc == NULL))
     return FALSE;
   
-  if (session_chooser && !xfsm_manager_choose_session (rc))
+  if (manager->session_chooser && !xfsm_manager_choose_session (manager, rc))
     {
       xfce_rc_close (rc);
       return FALSE;
     }
 
-  g_snprintf (buffer, 1024, "Session: %s", session_name);
+  g_snprintf (buffer, 1024, "Session: %s", manager->session_name);
   
   xfce_rc_set_group (rc, buffer);
   count = xfce_rc_read_int_entry (rc, "Count", 0);
@@ -263,7 +360,7 @@ xfsm_manager_load_session (void)
       if (G_UNLIKELY (properties == NULL))
         continue;
       if (xfsm_properties_check (properties))
-        pending_properties = g_list_append (pending_properties, properties);
+        g_queue_push_tail (manager->pending_properties, properties);
       else
         xfsm_properties_free (properties);
     }
@@ -273,12 +370,13 @@ xfsm_manager_load_session (void)
 
   xfce_rc_close (rc);
 
-  return pending_properties != NULL;
+  return g_queue_peek_head (manager->pending_properties) != NULL;
 }
 
 
 static gboolean
-xfsm_manager_load_failsafe (XfceRc *rc)
+xfsm_manager_load_failsafe (XfsmManager *manager,
+                            XfceRc      *rc)
 {
   FailsafeClient *fclient;
   const gchar    *old_group;
@@ -314,7 +412,7 @@ xfsm_manager_load_failsafe (XfceRc *rc)
               fclient = g_new0 (FailsafeClient, 1);
               fclient->command = xfce_rc_read_list_entry (rc, command_entry, NULL);
               fclient->screen = gdk_display_get_screen (display, n_screen);
-              failsafe_clients = g_list_append (failsafe_clients, fclient);
+              g_queue_push_tail (manager->failsafe_clients, fclient);
             }
         }
       else
@@ -322,41 +420,42 @@ xfsm_manager_load_failsafe (XfceRc *rc)
           fclient = g_new0 (FailsafeClient, 1);
           fclient->command = command;
           fclient->screen = gdk_screen_get_default ();
-          failsafe_clients = g_list_append (failsafe_clients, fclient);
+          g_queue_push_tail (manager->failsafe_clients, fclient);
         }
     }
 
   xfce_rc_set_group (rc, old_group);
 
-  return failsafe_clients != NULL;
+  return g_queue_peek_head (manager->failsafe_clients) != NULL;
 }
 
 
 static void
-xfsm_manager_load_settings (XfceRc *rc)
+xfsm_manager_load_settings (XfsmManager *manager,
+                            XfceRc      *rc)
 {
   gboolean     session_loaded = FALSE;
   const gchar *name;
   
   name = xfce_rc_read_entry (rc, "SessionName", NULL);
   if (name != NULL && *name != '\0')
-    session_name = g_strdup (name);
+    manager->session_name = g_strdup (name);
   else
-    session_name = g_strdup (DEFAULT_SESSION_NAME);
+    manager->session_name = g_strdup (DEFAULT_SESSION_NAME);
 
   xfce_rc_set_group (rc, "Chooser");
-  session_chooser = xfce_rc_read_bool_entry (rc, "AlwaysDisplay", FALSE);
+  manager->session_chooser = xfce_rc_read_bool_entry (rc, "AlwaysDisplay", FALSE);
 
-  session_loaded = xfsm_manager_load_session ();
+  session_loaded = xfsm_manager_load_session (manager);
 
   if (session_loaded)
     {
-      xfsm_verbose ("Session \"%s\" loaded successfully.\n\n", session_name);
-      failsafe_mode = FALSE;
+      xfsm_verbose ("Session \"%s\" loaded successfully.\n\n", manager->session_name);
+      manager->failsafe_mode = FALSE;
     }
   else
     {
-      if (!xfsm_manager_load_failsafe (rc))
+      if (!xfsm_manager_load_failsafe (manager, rc))
         {
           fprintf (stderr, "xfce4-session: Unable to load failsafe session, exiting. Please check\n"
                            "               the value of the environment variable XDG_CONFIG_DIRS\n"
@@ -365,19 +464,24 @@ xfsm_manager_load_settings (XfceRc *rc)
           xfce_rc_close (rc);
           exit (EXIT_FAILURE);
         }
-      failsafe_mode = TRUE;
+      manager->failsafe_mode = TRUE;
     }
 }
 
 
 void
-xfsm_manager_init (XfceRc *rc)
+xfsm_manager_load (XfsmManager *manager,
+                   XfceRc *rc)
 {
   gchar *display_name;
   gchar *resource_name;
 #ifdef HAVE_OS_CYGWIN
   gchar *s;
 #endif
+
+  xfce_rc_set_group (rc, "Compatibility");
+  manager->compat_gnome = xfce_rc_read_bool_entry (rc, "LaunchGnome", FALSE);
+  manager->compat_kde = xfce_rc_read_bool_entry (rc, "LaunchKDE", FALSE);
 
   xfce_rc_set_group (rc, "General");
   display_name  = xfce_gdk_display_get_fullname (gdk_display_get_default ());
@@ -391,57 +495,57 @@ xfsm_manager_init (XfceRc *rc)
 #endif
 
   resource_name = g_strconcat ("sessions/xfce4-session-", display_name, NULL);
-  session_file  = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource_name, TRUE);
+  manager->session_file  = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource_name, TRUE);
   g_free (resource_name);
   g_free (display_name);
 
-  xfsm_manager_load_settings (rc);
+  xfsm_manager_load_settings (manager, rc);
 }
 
 
 gboolean
-xfsm_manager_restart (void)
+xfsm_manager_restart (XfsmManager *manager)
 {
   GdkPixbuf *preview;
   unsigned   steps;
 
-  g_assert (session_name != NULL);
+  g_assert (manager->session_name != NULL);
 
   /* setup legacy application handling */
   xfsm_legacy_init ();
 
   /* tell splash screen that the session is starting now */
-  preview = xfsm_manager_load_session_preview (session_name);
+  preview = xfsm_manager_load_session_preview (manager->session_name);
   if (preview == NULL)
     preview = gdk_pixbuf_from_pixdata (&chooser_icon_data, FALSE, NULL);
-  steps = g_list_length (failsafe_mode ? failsafe_clients : pending_properties);
-  xfsm_splash_screen_start (splash_screen, session_name, preview, steps);
+  steps = g_queue_get_length (manager->failsafe_mode ? manager->failsafe_clients : manager->pending_properties);
+  xfsm_splash_screen_start (splash_screen, manager->session_name, preview, steps);
   g_object_unref (preview);
 
-  g_idle_add ((GSourceFunc) xfsm_manager_startup, NULL);
+  g_idle_add ((GSourceFunc) xfsm_manager_startup, manager);
   
   return TRUE;
 }
 
 
 void
-xfsm_manager_signal_startup_done (void)
+xfsm_manager_signal_startup_done (XfsmManager *manager)
 {
   gchar buffer[1024];
   XfceRc *rc;
 
   xfsm_verbose ("Manager finished startup, entering IDLE mode now\n\n");
-  state = XFSM_MANAGER_IDLE;
+  manager->state = XFSM_MANAGER_IDLE;
 
-  if (!failsafe_mode)
+  if (!manager->failsafe_mode)
     {
       /* restore active workspace, this has to be done after the
        * window manager is up, so we do it last.
        */
-      g_snprintf (buffer, 1024, "Session: %s", session_name);
-      rc = xfce_rc_simple_open (session_file, TRUE);
+      g_snprintf (buffer, 1024, "Session: %s", manager->session_name);
+      rc = xfce_rc_simple_open (manager->session_file, TRUE);
       xfce_rc_set_group (rc, buffer);
-      xfsm_manager_restore_active_workspace (rc);
+      xfsm_manager_restore_active_workspace (manager, rc);
       xfce_rc_close (rc);
 
       /* start legacy applications now */
@@ -491,53 +595,67 @@ xfsm_manager_generate_client_id (SmsConn sms_conn)
 
 
 XfsmClient*
-xfsm_manager_new_client (SmsConn  sms_conn,
-                         gchar  **error)
+xfsm_manager_new_client (XfsmManager *manager,
+                         SmsConn      sms_conn,
+                         gchar      **error)
 {
-  if (G_UNLIKELY (state != XFSM_MANAGER_IDLE)
-      && G_UNLIKELY (state != XFSM_MANAGER_STARTUP))
+  XfsmClient *client = NULL;
+
+  if (G_UNLIKELY (manager->state != XFSM_MANAGER_IDLE)
+      && G_UNLIKELY (manager->state != XFSM_MANAGER_STARTUP))
     {
       if (error != NULL)
         *error = "We don't accept clients while in CheckPoint/Shutdown state!";
       return NULL;
     }
 
-  return xfsm_client_new (sms_conn);
+  client = xfsm_client_new (sms_conn);
+  client->manager = manager;  /* dirty hack until client is a GObject */
+  return client;
+}
+
+
+static gint
+xfsm_properties_queue_find (gconstpointer a,
+                            gconstpointer b)
+{
+  XfsmProperties *properties = XFSM_PROPERTIES (a);
+  const gchar *previous_id = (const gchar *) b;
+
+  if (strcmp (properties->client_id, previous_id) == 0)
+    return 0;
+  return 1;
 }
 
 
 gboolean
-xfsm_manager_register_client (XfsmClient  *client,
+xfsm_manager_register_client (XfsmManager *manager,
+                              XfsmClient  *client,
                               const gchar *previous_id)
 {
   XfsmProperties *properties = NULL;
   gchar          *client_id;
   GList          *lp;
-  
+
   if (previous_id != NULL)
     {
-      for (lp = starting_properties; lp != NULL; lp = lp->next)
+      lp = g_queue_find_custom (manager->starting_properties,
+                                previous_id,
+                                xfsm_properties_queue_find);
+      if (lp != NULL)
         {
-          if (strcmp (XFSM_PROPERTIES (lp->data)->client_id, previous_id) == 0)
+          properties = XFSM_PROPERTIES (lp->data);
+          g_queue_delete_link (manager->starting_properties, lp);
+        }
+      else
+        {
+          lp = g_queue_find_custom (manager->pending_properties,
+                                    previous_id,
+                                    xfsm_properties_queue_find);
+          if (lp != NULL)
             {
               properties = XFSM_PROPERTIES (lp->data);
-              starting_properties = g_list_remove (starting_properties,
-                                                   properties);
-              break;
-            }
-        }
-
-      if (properties == NULL)
-        {
-          for (lp = pending_properties; lp != NULL; lp = lp->next)
-            {
-              if (!strcmp (XFSM_PROPERTIES (lp->data)->client_id, previous_id))
-                {
-                  properties = XFSM_PROPERTIES (lp->data);
-                  pending_properties = g_list_remove (pending_properties,
-                                                      properties);
-                  break;
-                }
+              g_queue_delete_link (manager->pending_properties, lp);
             }
         }
 
@@ -565,7 +683,7 @@ xfsm_manager_register_client (XfsmClient  *client,
       g_free (client_id);
     }
 
-  running_clients = g_list_append (running_clients, client);
+  g_queue_push_tail (manager->running_clients, client);
 
   SmsRegisterClientReply (client->sms_conn, (char *) client->id);
   
@@ -578,7 +696,8 @@ xfsm_manager_register_client (XfsmClient  *client,
                                                client);
     }
 
-  if ((failsafe_mode || previous_id != NULL) && state == XFSM_MANAGER_STARTUP)
+  if ((manager->failsafe_mode || previous_id != NULL)
+      && manager->state == XFSM_MANAGER_STARTUP)
     {
       /* Only continue the startup if we are either in Failsafe mode (which
        * means that we don't have any previous_id at all) or the previous_id
@@ -586,8 +705,8 @@ xfsm_manager_register_client (XfsmClient  *client,
        * above, previous_id will be NULL here.
        * See http://bugs.xfce.org/view_bug_page.php?f_id=212 for details.
        */
-      if (starting_properties == NULL)
-        xfsm_startup_session_continue ();
+      if (g_queue_peek_head (manager->starting_properties) == NULL)
+        xfsm_startup_session_continue (manager);
     }
 
   return TRUE;
@@ -595,7 +714,8 @@ xfsm_manager_register_client (XfsmClient  *client,
 
 
 void
-xfsm_manager_start_interact (XfsmClient *client)
+xfsm_manager_start_interact (XfsmManager *manager,
+                             XfsmClient  *client)
 {
   /* notify client of interact */
   SmsInteract (client->sms_conn);
@@ -608,61 +728,68 @@ xfsm_manager_start_interact (XfsmClient *client)
 
 
 void
-xfsm_manager_interact (XfsmClient *client,
-                       int         dialog_type)
+xfsm_manager_interact (XfsmManager *manager,
+                       XfsmClient  *client,
+                       int          dialog_type)
 {
   GList *lp;
-  
+
   if (G_UNLIKELY (client->state != XFSM_CLIENT_SAVING))
     {
       xfsm_verbose ("Client Id = %s, requested INTERACT, but client is not in SAVING mode\n"
                     "   Client will be disconnected now.\n\n",
                     client->id);
-      xfsm_manager_close_connection (client, TRUE);
+      xfsm_manager_close_connection (manager, client, TRUE);
     }
-  else if (G_UNLIKELY (state != XFSM_MANAGER_CHECKPOINT)
-        && G_UNLIKELY (state != XFSM_MANAGER_SHUTDOWN))
+  else if (G_UNLIKELY (manager->state != XFSM_MANAGER_CHECKPOINT)
+        && G_UNLIKELY (manager->state != XFSM_MANAGER_SHUTDOWN))
     {
       xfsm_verbose ("Client Id = %s, requested INTERACT, but manager is not in CheckPoint/Shutdown mode\n"
-                    "   Clinet will be disconnected now.\n\n",
+                    "   Client will be disconnected now.\n\n",
                     client->id);
-      xfsm_manager_close_connection (client, TRUE);
+      xfsm_manager_close_connection (manager, client, TRUE);
     }
   else
     {
-      for (lp = running_clients; lp != NULL; lp = lp->next)
-        if (XFSM_CLIENT (lp->data)->state == XFSM_CLIENT_INTERACTING)
-          {
-            client->state = XFSM_CLIENT_WAITFORINTERACT;
-            return;
-          }
+      for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
+           lp;
+           lp = lp->next)
+        {
+          XfsmClient *client = lp->data;
+          if (client->state == XFSM_CLIENT_INTERACTING)
+            {
+              client->state = XFSM_CLIENT_WAITFORINTERACT;
+              return;
+            }
+        }
   
-      xfsm_manager_start_interact (client);
+      xfsm_manager_start_interact (manager, client);
     }
 }
 
 
 void
-xfsm_manager_interact_done (XfsmClient *client,
-                            gboolean    cancel_shutdown)
+xfsm_manager_interact_done (XfsmManager *manager,
+                            XfsmClient  *client,
+                            gboolean     cancel_shutdown)
 {
   GList *lp;
-  
+
   if (G_UNLIKELY (client->state != XFSM_CLIENT_INTERACTING))
     {
       xfsm_verbose ("Client Id = %s, send INTERACT DONE, but client is not in INTERACTING state\n"
                     "   Client will be disconnected now.\n\n",
                     client->id);
-      xfsm_manager_close_connection (client, TRUE);
+      xfsm_manager_close_connection (manager, client, TRUE);
       return;
     }
-  else if (G_UNLIKELY (state != XFSM_MANAGER_CHECKPOINT)
-        && G_UNLIKELY (state != XFSM_MANAGER_SHUTDOWN))
+  else if (G_UNLIKELY (manager->state != XFSM_MANAGER_CHECKPOINT)
+        && G_UNLIKELY (manager->state != XFSM_MANAGER_SHUTDOWN))
     {
       xfsm_verbose ("Client Id = %s, send INTERACT DONE, but manager is not in CheckPoint/Shutdown state\n"
                     "   Client will be disconnected now.\n\n",
                     client->id);
-      xfsm_manager_close_connection (client, TRUE);
+      xfsm_manager_close_connection (manager, client, TRUE);
       return;
     }
   
@@ -675,10 +802,10 @@ xfsm_manager_interact_done (XfsmClient *client,
    * for the interact-style field. Otherwise, cancel-shutdown must be
    * False.
    */
-  if (cancel_shutdown && state == XFSM_MANAGER_SHUTDOWN)
+  if (cancel_shutdown && manager->state == XFSM_MANAGER_SHUTDOWN)
     {
       /* we go into checkpoint state from here... */
-      state = XFSM_MANAGER_CHECKPOINT;
+      manager->state = XFSM_MANAGER_CHECKPOINT;
       
       /* If a shutdown is in progress, the user may have the option
        * of cancelling the shutdown. If the shutdown is cancelled
@@ -686,25 +813,33 @@ xfsm_manager_interact_done (XfsmClient *client,
        * manager should send a "Shutdown Cancelled" message to each
        * client that requested to interact.
        */
-      for (lp = running_clients; lp != NULL; lp = lp->next)
+      for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
+           lp;
+           lp = lp->next)
         {
-          if (XFSM_CLIENT (lp->data)->state != XFSM_CLIENT_WAITFORINTERACT)
+          XfsmClient *client = lp->data;
+          if (client->state != XFSM_CLIENT_WAITFORINTERACT)
             continue;
 
           /* reset all clients that are waiting for interact */
           client->state = XFSM_CLIENT_SAVING;
-          SmsShutdownCancelled (XFSM_CLIENT (lp->data)->sms_conn);
+          SmsShutdownCancelled (client->sms_conn);
         }
     }
   else
     {
       /* let next client interact */
-      for (lp = running_clients; lp != NULL; lp = lp->next)
-        if (XFSM_CLIENT (lp->data)->state == XFSM_CLIENT_WAITFORINTERACT)
-          {
-            xfsm_manager_start_interact (XFSM_CLIENT (lp->data));
-            break;
-          }
+      for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
+           lp;
+           lp = lp->next)
+        {
+          XfsmClient *client = lp->data;
+          if (client->state == XFSM_CLIENT_WAITFORINTERACT)
+            {
+              xfsm_manager_start_interact (manager, client);
+              break;
+            }
+        }
     }
 
   /* restart save yourself timeout for client */
@@ -715,30 +850,31 @@ xfsm_manager_interact_done (XfsmClient *client,
 
 
 void
-xfsm_manager_save_yourself (XfsmClient *client,
-                            gint        save_type,
-                            gboolean    shutdown,
-                            gint        interact_style,
-                            gboolean    fast,
-                            gboolean    global)
+xfsm_manager_save_yourself (XfsmManager *manager,
+                            XfsmClient  *client,
+                            gint         save_type,
+                            gboolean     shutdown,
+                            gint         interact_style,
+                            gboolean     fast,
+                            gboolean     global)
 {
   gboolean shutdown_save = TRUE;
-  GList   *lp;
+  GList *lp;
 
   if (G_UNLIKELY (client->state != XFSM_CLIENT_IDLE))
     {
       xfsm_verbose ("Client Id = %s, requested SAVE YOURSELF, but client is not in IDLE mode.\n"
                     "   Client will be nuked now.\n\n",
                     client->id);
-      xfsm_manager_close_connection (client, TRUE);
+      xfsm_manager_close_connection (manager, client, TRUE);
       return;
     }
-  else if (G_UNLIKELY (state != XFSM_MANAGER_IDLE))
+  else if (G_UNLIKELY (manager->state != XFSM_MANAGER_IDLE))
     {
       xfsm_verbose ("Client Id = %s, requested SAVE YOURSELF, but manager is not in IDLE mode.\n"
                     "   Client will be nuked now.\n\n",
                     client->id);
-      xfsm_manager_close_connection (client, TRUE);
+      xfsm_manager_close_connection (manager, client, TRUE);
       return;
     }
   
@@ -756,19 +892,26 @@ xfsm_manager_save_yourself (XfsmClient *client,
     }
   else
     {
-      if (!fast && shutdown && !shutdownDialog (&shutdown_type, &shutdown_save))
+      if (!fast && shutdown && !shutdownDialog (manager->session_name, &manager->shutdown_type, &shutdown_save))
         return;
   
       if (!shutdown || shutdown_save)
         {
-          state = shutdown ? XFSM_MANAGER_SHUTDOWN : XFSM_MANAGER_CHECKPOINT;
+          manager->state = shutdown ? XFSM_MANAGER_SHUTDOWN : XFSM_MANAGER_CHECKPOINT;
           
           /* handle legacy applications first! */
           xfsm_legacy_perform_session_save ();
 
-          for (lp = running_clients; lp != NULL; lp = lp->next)
+        if (client->state == XFSM_CLIENT_INTERACTING)
+          {
+            client->state = XFSM_CLIENT_WAITFORINTERACT;
+            return;
+          }
+          for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
+               lp;
+               lp = lp->next)
             {
-              XfsmClient *client = XFSM_CLIENT (lp->data);
+              XfsmClient *client = lp->data;
 
               /* xterm's session management is broken, so we won't
                * send a SAVE YOURSELF to xterms */
@@ -793,16 +936,17 @@ xfsm_manager_save_yourself (XfsmClient *client,
       else
         {
           /* shutdown session without saving */
-          xfsm_manager_perform_shutdown ();
+          xfsm_manager_perform_shutdown (manager);
         }
     }
 }
 
 
 void
-xfsm_manager_save_yourself_phase2 (XfsmClient *client)
+xfsm_manager_save_yourself_phase2 (XfsmManager *manager,
+                                   XfsmClient *client)
 {
-  if (state != XFSM_MANAGER_CHECKPOINT && state != XFSM_MANAGER_SHUTDOWN)
+  if (manager->state != XFSM_MANAGER_CHECKPOINT && manager->state != XFSM_MANAGER_SHUTDOWN)
     {
       SmsSaveYourselfPhase2 (client->sms_conn);
       client->state = XFSM_CLIENT_SAVINGLOCAL;
@@ -817,15 +961,16 @@ xfsm_manager_save_yourself_phase2 (XfsmClient *client)
       g_source_remove (client->save_timeout_id);
       client->save_timeout_id = 0;
 
-      if (!xfsm_manager_check_clients_saving ())
-        xfsm_manager_maybe_enter_phase2 ();
+      if (!xfsm_manager_check_clients_saving (manager))
+        xfsm_manager_maybe_enter_phase2 (manager);
     }
 }
 
 
 void
-xfsm_manager_save_yourself_done (XfsmClient *client,
-                                 gboolean    success)
+xfsm_manager_save_yourself_done (XfsmManager *manager,
+                                 XfsmClient  *client,
+                                 gboolean     success)
 {
   if (client->state != XFSM_CLIENT_SAVING && client->state != XFSM_CLIENT_SAVINGLOCAL)
     {
@@ -833,7 +978,7 @@ xfsm_manager_save_yourself_done (XfsmClient *client,
                     "in save mode. Prepare to be nuked!\n",
                     client->id);
       
-      xfsm_manager_close_connection (client, TRUE);
+      xfsm_manager_close_connection (manager, client, TRUE);
     }
 
   /* remove client save timeout, as client responded in time */  
@@ -846,27 +991,28 @@ xfsm_manager_save_yourself_done (XfsmClient *client,
       client->state = XFSM_CLIENT_IDLE;
       SmsSaveComplete (client->sms_conn);
     }
-  else if (state != XFSM_MANAGER_CHECKPOINT && state != XFSM_MANAGER_SHUTDOWN)
+  else if (manager->state != XFSM_MANAGER_CHECKPOINT && manager->state != XFSM_MANAGER_SHUTDOWN)
     {
       xfsm_verbose ("Client Id = %s, send SAVE YOURSELF DONE, but manager is not in CheckPoint/Shutdown mode.\n"
                     "   Client will be nuked now.\n\n",
                     client->id);
-      xfsm_manager_close_connection (client, TRUE);
+      xfsm_manager_close_connection (manager, client, TRUE);
     }
   else
     {
       client->state = XFSM_CLIENT_SAVEDONE;
-      xfsm_manager_complete_saveyourself ();
+      xfsm_manager_complete_saveyourself (manager);
     }
 }
 
 
 void
-xfsm_manager_close_connection (XfsmClient *client,
-                               gboolean    cleanup)
+xfsm_manager_close_connection (XfsmManager *manager,
+                               XfsmClient  *client,
+                               gboolean     cleanup)
 {
   IceConn ice_conn;
-  GList  *lp;
+  GList *lp;
   
   client->state = XFSM_CLIENT_DISCONNECTED;
   if (client->save_timeout_id > 0)
@@ -883,26 +1029,35 @@ xfsm_manager_close_connection (XfsmClient *client,
       IceCloseConnection (ice_conn);
     }
   
-  if (state == XFSM_MANAGER_SHUTDOWNPHASE2)
+  if (manager->state == XFSM_MANAGER_SHUTDOWNPHASE2)
     {
-      for (lp = running_clients; lp != NULL; lp = lp->next)
-        if (XFSM_CLIENT (lp->data)->state != XFSM_CLIENT_DISCONNECTED)
-          return;
+      for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
+           lp;
+           lp = lp->next)
+        {
+          XfsmClient *client = lp->data;
+          if (client->state != XFSM_CLIENT_DISCONNECTED)
+            return;
+        }
       
       /* all clients finished the DIE phase in time */
-      g_source_remove (die_timeout_id);
+      if (manager->die_timeout_id)
+        {
+          g_source_remove (manager->die_timeout_id);
+          manager->die_timeout_id = 0;
+        }
       gtk_main_quit ();
     }
-  else if (state == XFSM_MANAGER_SHUTDOWN || state == XFSM_MANAGER_CHECKPOINT)
+  else if (manager->state == XFSM_MANAGER_SHUTDOWN || manager->state == XFSM_MANAGER_CHECKPOINT)
     {
       xfsm_verbose ("Client Id = %s, closed connection in checkpoint state\n"
                     "   Session manager will show NO MERCY\n\n",
                     client->id);
       
       /* stupid client disconnected in CheckPoint state, prepare to be nuked! */
-      running_clients = g_list_remove (running_clients, client);
+      g_queue_remove (manager->running_clients, client);
       xfsm_client_free (client);
-      xfsm_manager_complete_saveyourself ();
+      xfsm_manager_complete_saveyourself (manager);
     }
   else
     {
@@ -912,7 +1067,7 @@ xfsm_manager_close_connection (XfsmClient *client,
         {
           if (properties->restart_style_hint == SmRestartAnyway)
             {
-              restart_properties = g_list_append (restart_properties, properties);
+              g_queue_push_tail (manager->restart_properties, properties);
               client->properties = NULL;
             }
           else if (properties->restart_style_hint == SmRestartImmediately)
@@ -923,14 +1078,14 @@ xfsm_manager_close_connection (XfsmClient *client,
                                 "   Will be re-scheduled for run on next startup\n",
                                 properties->client_id, properties->restart_attempts);
 
-                  restart_properties = g_list_append (restart_properties, properties);
+                  g_queue_push_tail (manager->restart_properties, properties);
                   client->properties = NULL;
                 }
 #if 0
               else if (xfsm_manager_run_prop_command (properties, SmRestartCommand))
                 {
                   /* XXX - add a timeout here, in case the application does not come up */
-                  pending_properties = g_list_append (pending_properties, properties);
+                  g_queue_push_tail (manager->pending_properties, properties);
                   client->properties = NULL;
                 }
 #endif
@@ -945,7 +1100,7 @@ xfsm_manager_close_connection (XfsmClient *client,
            * But for now, this work-around fixes the problem of the evergrowing
            * number of xfwm4 session files when restarting xfwm4 within a session.
            */
-          if (state == XFSM_MANAGER_IDLE && properties->discard_command != NULL)
+          if (manager->state == XFSM_MANAGER_IDLE && properties->discard_command != NULL)
             {
               xfsm_verbose ("Client Id = %s exited while in IDLE state, running "
                             "discard command now.\n\n", properties->client_id);
@@ -960,23 +1115,29 @@ xfsm_manager_close_connection (XfsmClient *client,
             }
         }
 
-      running_clients = g_list_remove (running_clients, client);
+      g_queue_remove (manager->running_clients, client);
       xfsm_client_free (client);
     }
 }
 
 
 void
-xfsm_manager_close_connection_by_ice_conn (IceConn ice_conn)
+xfsm_manager_close_connection_by_ice_conn (XfsmManager *manager,
+                                           IceConn      ice_conn)
 {
   GList *lp;
-  
-  for (lp = running_clients; lp != NULL; lp = lp->next)
-    if (SmsGetIceConnection (XFSM_CLIENT (lp->data)->sms_conn) == ice_conn)
-      {
-        xfsm_manager_close_connection (XFSM_CLIENT (lp->data), FALSE);
-        break;
-      }
+
+  for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
+       lp;
+       lp = lp->next)
+    {
+      XfsmClient *client = lp->data;
+      if (SmsGetIceConnection (client->sms_conn) == ice_conn)
+        {
+          xfsm_manager_close_connection (manager, client, FALSE);
+          break;
+        }
+    }
 
   /* be sure to close the Ice connection in any case */
   IceSetShutdownNegotiation (ice_conn, False);
@@ -985,44 +1146,56 @@ xfsm_manager_close_connection_by_ice_conn (IceConn ice_conn)
 
 
 void
-xfsm_manager_perform_shutdown (void)
-{          
+xfsm_manager_perform_shutdown (XfsmManager *manager)
+{
   GList *lp;
-  
+
   /* send SmDie message to all clients */
-  state = XFSM_MANAGER_SHUTDOWNPHASE2;
-  for (lp = running_clients; lp != NULL; lp = lp->next)
-    SmsDie (XFSM_CLIENT (lp->data)->sms_conn);
+  manager->state = XFSM_MANAGER_SHUTDOWNPHASE2;
+  for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
+       lp;
+       lp = lp->next)
+    {
+      XfsmClient *client = lp->data;
+      SmsDie (client->sms_conn);
+    }
 
   /* give all clients the chance to close the connection */
-  die_timeout_id = g_timeout_add (DIE_TIMEOUT,
-                                  (GSourceFunc) gtk_main_quit,
-                                  NULL);
+  manager->die_timeout_id = g_timeout_add (DIE_TIMEOUT,
+                                           (GSourceFunc) gtk_main_quit,
+                                           NULL);
 }
 
 
 gboolean
-xfsm_manager_check_clients_saving (void)
+xfsm_manager_check_clients_saving (XfsmManager *manager)
 {
   GList *lp;
-  
-  for (lp = running_clients; lp != NULL; lp = lp->next)
-    if (XFSM_CLIENT (lp->data)->state == XFSM_CLIENT_SAVING)
-      return TRUE;
+
+  for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
+       lp;
+       lp = lp->next)
+    {
+      XfsmClient *client = lp->data;
+      if (client->state == XFSM_CLIENT_SAVING)
+        return TRUE;
+    }
   
   return FALSE;
 }
 
 
 gboolean
-xfsm_manager_maybe_enter_phase2 (void)
+xfsm_manager_maybe_enter_phase2 (XfsmManager *manager)
 {
   gboolean entered_phase2 = FALSE;
-  GList   *lp;
+  GList *lp;
   
-  for (lp = running_clients; lp != NULL; lp = lp->next)
+  for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
+       lp;
+       lp = lp->next)
     { 
-      XfsmClient *client = XFSM_CLIENT (lp->data);
+      XfsmClient *client = lp->data;
       
       if (client->state == XFSM_CLIENT_WAITFORPHASE2)
         {
@@ -1043,40 +1216,43 @@ xfsm_manager_maybe_enter_phase2 (void)
 
 
 void
-xfsm_manager_complete_saveyourself (void)
+xfsm_manager_complete_saveyourself (XfsmManager *manager)
 {
   GList *lp;
-  
+
   /* Check if still clients in SAVING state or if we have to enter PHASE2
    * now. In either case, SaveYourself cannot be completed in this run.
    */
-  if (xfsm_manager_check_clients_saving () || xfsm_manager_maybe_enter_phase2 ())
+  if (xfsm_manager_check_clients_saving (manager) || xfsm_manager_maybe_enter_phase2 (manager))
     return;
   
   xfsm_verbose ("Manager finished SAVE YOURSELF, session data will be stored now.\n\n");
   
   /* all clients done, store session data */
-  xfsm_manager_store_session ();
+  xfsm_manager_store_session (manager);
   
-  if (state == XFSM_MANAGER_CHECKPOINT)
+  if (manager->state == XFSM_MANAGER_CHECKPOINT)
     {
       /* reset all clients to idle state */
-      state = XFSM_MANAGER_IDLE;
-      for (lp = running_clients; lp != NULL; lp = lp->next)
+      manager->state = XFSM_MANAGER_IDLE;
+      for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
+           lp;
+           lp = lp->next)
         {
-          XFSM_CLIENT (lp->data)->state = XFSM_CLIENT_IDLE;
-          SmsSaveComplete (XFSM_CLIENT (lp->data)->sms_conn);
+          XfsmClient *client = lp->data;
+          client->state = XFSM_CLIENT_IDLE;
+          SmsSaveComplete (client->sms_conn);
         }
     }
   else
     {
       /* shutdown the session */
-      xfsm_manager_perform_shutdown ();
+      xfsm_manager_perform_shutdown (manager);
     }
 }
 
 
-gboolean
+static gboolean
 xfsm_manager_save_timeout (gpointer client_data)
 {
   XfsmClient *client = XFSM_CLIENT (client_data);
@@ -1085,14 +1261,14 @@ xfsm_manager_save_timeout (gpointer client_data)
                 "   Client will be disconnected now.\n\n",
                 client->id);
 
-  xfsm_manager_close_connection (client, TRUE);
+  xfsm_manager_close_connection (client->manager, client, TRUE);
   
   return FALSE;
 }
 
 
 void
-xfsm_manager_store_session (void)
+xfsm_manager_store_session (XfsmManager *manager)
 {
   WnckWorkspace *workspace;
   GdkDisplay    *display;
@@ -1105,46 +1281,52 @@ xfsm_manager_store_session (void)
   gint           count = 0;
   gint           n, m;
 
-  rc = xfce_rc_simple_open (session_file, FALSE);
+  rc = xfce_rc_simple_open (manager->session_file, FALSE);
   if (G_UNLIKELY (rc == NULL))
     {
       fprintf (stderr,
                "xfce4-session: Unable to open session file %s for "
                "writing. Session data will not be stored. Please check "
                "your installation.\n",
-               session_file);
+               manager->session_file);
       return;
     }
 
   /* backup the old session file first */
-  if (g_file_test (session_file, G_FILE_TEST_IS_REGULAR))
+  if (g_file_test (manager->session_file, G_FILE_TEST_IS_REGULAR))
     {
-      backup = g_strconcat (session_file, ".bak", NULL);
+      backup = g_strconcat (manager->session_file, ".bak", NULL);
       unlink (backup);
-      link (session_file, backup);
+      link (manager->session_file, backup);
       g_free (backup);
     }
 
-  group = g_strconcat ("Session: ", session_name, NULL);
+  group = g_strconcat ("Session: ", manager->session_name, NULL);
   xfce_rc_delete_group (rc, group, TRUE);
   xfce_rc_set_group (rc, group);
   g_free (group);
 
-  for (lp = restart_properties; lp != NULL; lp = lp->next)
+  for (lp = g_queue_peek_nth_link (manager->restart_properties, 0);
+       lp;
+       lp = lp->next)
     {
+      XfsmProperties *properties = lp->data;
       g_snprintf (prefix, 64, "Client%d_", count);
-      xfsm_properties_store (XFSM_PROPERTIES (lp->data), rc, prefix);
+      xfsm_properties_store (properties, rc, prefix);
       ++count;
     }
 
-  for (lp = running_clients; lp != NULL; lp = lp->next)
+  for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
+       lp;
+       lp = lp->next)
     {
-      if (XFSM_CLIENT (lp->data)->properties == NULL
-          || !xfsm_properties_check (XFSM_CLIENT (lp->data)->properties))
+      XfsmClient *client = lp->data;
+      if (client->properties == NULL
+          || !xfsm_properties_check (client->properties))
         continue;
       
       g_snprintf (prefix, 64, "Client%d_", count);
-      xfsm_properties_store (XFSM_CLIENT (lp->data)->properties, rc, prefix);
+      xfsm_properties_store (client->properties, rc, prefix);
       ++count;
     }
 
@@ -1171,6 +1353,60 @@ xfsm_manager_store_session (void)
   xfce_rc_write_int_entry (rc, "LastAccess", time (NULL));
 
   xfce_rc_close (rc);
+}
+
+
+gint
+xfsm_manager_get_shutdown_type (XfsmManager *manager)
+{
+  return manager->shutdown_type;
+}
+
+
+GQueue *
+xfsm_manager_get_queue (XfsmManager         *manager,
+                        XfsmManagerQueueType q_type)
+{
+  switch(q_type)
+    {
+      case XFSM_MANAGER_QUEUE_PENDING_PROPS:
+        return manager->pending_properties;
+      case XFSM_MANAGER_QUEUE_STARTING_PROPS:
+        return manager->starting_properties;
+      case XFSM_MANAGER_QUEUE_RESTART_PROPS:
+        return manager->restart_properties;
+      case XFSM_MANAGER_QUEUE_RUNNING_CLIENTS:
+        return manager->running_clients;
+      case XFSM_MANAGER_QUEUE_FAILSAFE_CLIENTS:
+        return manager->failsafe_clients;
+      default:
+        g_warning ("Requested invalid queue type %d", (gint)q_type);
+        return NULL;
+    }
+}
+
+
+gboolean
+xfsm_manager_get_use_failsafe_mode (XfsmManager *manager)
+{
+  return manager->failsafe_mode;
+}
+
+
+gboolean
+xfsm_manager_get_compat_startup (XfsmManager          *manager,
+                                 XfsmManagerCompatType type)
+{
+  switch (type)
+    {
+      case XFSM_MANAGER_COMPAT_GNOME:
+        return manager->compat_gnome;
+      case XFSM_MANAGER_COMPAT_KDE:
+        return manager->compat_kde;
+      default:
+        g_warning ("Invalid compat startup type %d", type);
+        return FALSE;
+    }
 }
 
 

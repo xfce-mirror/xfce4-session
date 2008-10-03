@@ -658,6 +658,8 @@ xfsm_properties_free (XfsmProperties *properties)
 {
   g_return_if_fail (properties != NULL);
 
+  if (properties->startup_timeout_id != 0)
+    g_source_remove (properties->startup_timeout_id);
   if (properties->client_id != NULL)
     g_free (properties->client_id);
   if (properties->hostname != NULL)

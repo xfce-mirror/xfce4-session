@@ -30,7 +30,7 @@
 #define SHUTDOWN_HALT	2
 
 /* prototypes */
-extern gboolean	shutdownDialog(gint *, gboolean *);
+extern gboolean	shutdownDialog(const gchar *, gint *, gboolean *);
 extern gint	xfsm_shutdown(gint);
 
 #endif	/* !__XFSM_SHUTDOWN_H__ */

@@ -31,23 +31,14 @@ struct _FailsafeClient
   gchar    **command;
   GdkScreen *screen;
 };
+
+void xfsm_failsafe_client_free (FailsafeClient *fclient);
   
 
 #define DEFAULT_SESSION_NAME "Default"
 
 
 extern gboolean          verbose;
-extern gboolean          compat_kde;
-extern gboolean          compat_gnome;
-extern GList            *starting_properties;
-extern GList            *pending_properties;
-extern GList            *restart_properties;
-extern GList            *running_clients;
-extern gchar            *session_name;
-extern gchar            *session_file;
-extern GList            *failsafe_clients;
-extern gboolean          failsafe_mode;
-extern gint              shutdown_type;
 extern XfsmSplashScreen *splash_screen;
 
 

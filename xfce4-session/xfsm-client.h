@@ -46,6 +46,7 @@ struct _XfsmClient
   XfsmProperties *properties;
   SmsConn sms_conn;
   guint save_timeout_id;
+  gpointer manager;  /* (XfsmManager *) */
 };
 
 

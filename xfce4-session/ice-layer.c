@@ -1,6 +1,7 @@
 /* $Id$ */
 /*-
  * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2008 Brian Tarricone <bjt23@cornell.edu>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -51,6 +52,13 @@
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-manager.h>
 
+typedef struct
+{
+  XfsmManager *manager;
+  IceConn ice_conn;
+} XfsmIceConnData;
+
+
 /* prototypes */
 static void	 ice_error_handler     (IceConn);
 static gboolean	 ice_process_messages  (GIOChannel  *channel,
@@ -98,13 +106,14 @@ ice_process_messages (GIOChannel  *channel,
                       gpointer     user_data)
 {
   IceProcessMessagesStatus status;
-  IceConn                  ice_conn = (IceConn) user_data;
+  XfsmIceConnData         *icdata = user_data;
 
-  status = IceProcessMessages (ice_conn, NULL, NULL);
+  status = IceProcessMessages (icdata->ice_conn, NULL, NULL);
 
   if (status == IceProcessMessagesIOError)
     {
-      xfsm_manager_close_connection_by_ice_conn (ice_conn);
+      xfsm_manager_close_connection_by_ice_conn (icdata->manager,
+                                                 icdata->ice_conn);
 
       /* remove the I/O watch */
       return FALSE;
@@ -121,12 +130,17 @@ ice_connection_watch (IceConn     ice_conn,
                       Bool        opening,
                       IcePointer *watch_data)
 {
-  GIOChannel *channel;
-  guint       watchid;
-  gint        fd;
+  XfsmManager *manager = XFSM_MANAGER (client_data);
+  GIOChannel  *channel;
+  guint        watchid;
+  gint         fd;
 
   if (opening)
     {
+      XfsmIceConnData *icdata = g_new(XfsmIceConnData, 1);
+      icdata->manager = manager;
+      icdata->ice_conn = ice_conn;
+
       fd = IceConnectionNumber (ice_conn);
 
       /* Make sure we don't pass on these file descriptors to an
@@ -135,8 +149,10 @@ ice_connection_watch (IceConn     ice_conn,
       fcntl (fd, F_SETFD, fcntl (fd, F_GETFD, 0) | FD_CLOEXEC);
 
       channel = g_io_channel_unix_new (fd);
-      watchid = g_io_add_watch (channel, G_IO_ERR | G_IO_HUP | G_IO_IN,
-                                ice_process_messages, ice_conn);
+      watchid = g_io_add_watch_full (channel, G_PRIORITY_DEFAULT,
+                                     G_IO_ERR | G_IO_HUP | G_IO_IN,
+                                     ice_process_messages,
+                                     icdata, (GDestroyNotify) g_free);
       g_io_channel_unref (channel);
 
       *watch_data = (IcePointer) GUINT_TO_POINTER (watchid);
@@ -271,7 +287,8 @@ ice_auth_add (FILE        *setup_fp,
 
 gboolean
 ice_setup_listeners (int           num_listeners,
-                     IceListenObj *listen_objs)
+                     IceListenObj *listen_objs,
+                     XfsmManager  *manager)
 {
   GIOChannel *channel;
   char       *auth_setup_file;
@@ -282,7 +299,7 @@ ice_setup_listeners (int           num_listeners,
   int         n;
 
   IceSetIOErrorHandler (ice_error_handler);
-  IceAddConnectionWatch (ice_connection_watch, NULL);
+  IceAddConnectionWatch (ice_connection_watch, manager);
 
   cleanup_fp = ice_tmpfile(&auth_cleanup_file);
   if (cleanup_fp == NULL)

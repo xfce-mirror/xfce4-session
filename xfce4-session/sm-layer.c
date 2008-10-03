@@ -97,8 +97,9 @@ static IceListenObj *listen_objs;
 
 
 void
-sm_init (XfceRc  *rc,
-         gboolean disable_tcp)
+sm_init (XfceRc      *rc,
+         gboolean     disable_tcp,
+         XfsmManager *manager)
 {
   char *network_idlist;
   char  error[2048];
@@ -119,7 +120,7 @@ sm_init (XfceRc  *rc,
 #endif
     }
   
-  if (!SmsInitialize (PACKAGE, VERSION, sm_new_client, NULL, ice_auth_proc,
+  if (!SmsInitialize (PACKAGE, VERSION, sm_new_client, manager, ice_auth_proc,
                       2048, error))
     {
       fprintf (stderr, "xfce4-session: Unable to register XSM protocol: %s\n", error);
@@ -132,7 +133,7 @@ sm_init (XfceRc  *rc,
       exit (EXIT_FAILURE);
     }
   
-  ice_setup_listeners (num_listeners, listen_objs);
+  ice_setup_listeners (num_listeners, listen_objs, manager);
   
   network_idlist = IceComposeNetworkIdList (num_listeners, listen_objs);
   xfce_setenv ("SESSION_MANAGER", network_idlist, TRUE);
@@ -147,13 +148,14 @@ sm_new_client (SmsConn        sms_conn,
                SmsCallbacks  *callbacks,
                char         **failure_reason)
 {
-  XfsmClient *client;
-  gchar      *error = NULL;
+  XfsmManager *manager = XFSM_MANAGER (manager_data);
+  XfsmClient  *client;
+  gchar       *error = NULL;
 
   xfsm_verbose ("ICE connection fd = %d, received NEW CLIENT\n\n",
                 IceConnectionNumber (SmsGetIceConnection (sms_conn)));
   
-  client = xfsm_manager_new_client (sms_conn, &error);
+  client = xfsm_manager_new_client (manager, sms_conn, &error);
   if (client == NULL)
     {
       xfsm_verbose ("NEW CLIENT failed: %s\n", error);
@@ -202,7 +204,7 @@ sm_register_client (SmsConn   sms_conn,
                 IceConnectionNumber (SmsGetIceConnection (sms_conn)),
                 previous_id != NULL ? previous_id : "None");
   
-  result = xfsm_manager_register_client (client, previous_id);
+  result = xfsm_manager_register_client (client->manager, client, previous_id);
 
   if (previous_id != NULL)
     free (previous_id);
@@ -221,7 +223,7 @@ sm_interact_request (SmsConn   sms_conn,
   xfsm_verbose ("Client Id = %s, received INTERACT REQUEST [Dialog type = %s]\n\n",
                 client->id, dialog_type == SmDialogError ? "Error" : "Normal");
   
-  xfsm_manager_interact (client, dialog_type);
+  xfsm_manager_interact (client->manager, client, dialog_type);
 }
 
 
@@ -235,7 +237,7 @@ sm_interact_done (SmsConn   sms_conn,
   xfsm_verbose ("Client Id = %s, received INTERACT DONE [Cancel shutdown = %s]\n\n",
                 client->id, cancel_shutdown ? "True" : "False");
   
-  xfsm_manager_interact_done (client, cancel_shutdown);
+  xfsm_manager_interact_done (client->manager, client, cancel_shutdown);
 }
 
 
@@ -266,7 +268,7 @@ sm_save_yourself_request (SmsConn   sms_conn,
       xfsm_verbose ("\n");
     }
   
-  xfsm_manager_save_yourself (client, save_type, shutdown, interact_style, fast, global);
+  xfsm_manager_save_yourself (client->manager, client, save_type, shutdown, interact_style, fast, global);
 }
 
 
@@ -278,7 +280,7 @@ sm_save_yourself_phase2_request (SmsConn   sms_conn,
 
   xfsm_verbose ("Client Id = %s, received SAVE YOURSELF PHASE2 REQUEST\n\n", client->id);
   
-  xfsm_manager_save_yourself_phase2 (client);
+  xfsm_manager_save_yourself_phase2 (client->manager, client);
 }
 
 
@@ -292,7 +294,7 @@ sm_save_yourself_done (SmsConn   sms_conn,
   xfsm_verbose ("Client Id = %s, received SAVE YOURSELF DONE [Success = %s]\n\n",
                 client->id, success ? "True" : "False");
   
-  xfsm_manager_save_yourself_done (client, success);
+  xfsm_manager_save_yourself_done (client->manager, client, success);
 }
 
 
@@ -314,7 +316,7 @@ sm_close_connection (SmsConn   sms_conn,
       xfsm_verbose ("\n");
     }
   
-  xfsm_manager_close_connection (client, TRUE);
+  xfsm_manager_close_connection (client->manager, client, TRUE);
 
   if (num_reasons > 0)
     SmFreeReasons (num_reasons, reasons);

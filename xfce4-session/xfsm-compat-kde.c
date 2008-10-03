@@ -48,6 +48,9 @@
 #include <xfce4-session/xfsm-compat-kde.h>
 
 
+static gboolean kde_compat_started = FALSE;
+
+
 static gboolean
 run_timeout (gpointer user_data)
 {
@@ -114,6 +117,9 @@ xfsm_compat_kde_startup (XfsmSplashScreen *splash)
 {
   gchar command[256];
 
+  if (G_UNLIKELY (kde_compat_started))
+    return;
+
   if (G_LIKELY (splash != NULL))
     xfsm_splash_screen_next (splash, _("Starting KDE services"));
 
@@ -132,15 +138,22 @@ xfsm_compat_kde_startup (XfsmSplashScreen *splash)
                                 "KDE_MULTIHEAD \"true\"");
       run (command);
     }
+
+  kde_compat_started = TRUE;
 }
 
 
 void
 xfsm_compat_kde_shutdown (void)
 {
+  if (G_UNLIKELY (!kde_compat_started))
+    return;
+
   /* shutdown KDE services */
   run ("kdeinit_shutdown");
   run ("dcopserver_shutdown");
   run ("artsshell -q terminate");
+
+  kde_compat_started = FALSE;
 }
 

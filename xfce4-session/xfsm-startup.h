@@ -1,6 +1,7 @@
 /* $Id$ */
 /*-
  * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2008 Brian Tarricone <bjt23@cornell.edu>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -25,9 +26,9 @@
 #include <libxfce4util/libxfce4util.h>
 
 void xfsm_startup_init (XfceRc *rc);
-void xfsm_startup_foreign (void);
-void xfsm_startup_begin (void);
-void xfsm_startup_session_continue (void);
+void xfsm_startup_foreign (XfsmManager *manager);
+void xfsm_startup_begin (XfsmManager *manager);
+void xfsm_startup_session_continue (XfsmManager *manager);
 
 #endif /* !__XFSM_STARTUP_H__ */
 

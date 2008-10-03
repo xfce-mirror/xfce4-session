@@ -63,7 +63,7 @@ static GtkWidget *shutdown_dialog = NULL;
 
 #ifdef SESSION_SCREENSHOTS
 static void
-screenshot_save (GdkPixmap *pm, GdkRectangle *area)
+screenshot_save (const gchar *session_name, GdkPixmap *pm, GdkRectangle *area)
 {
   gchar *display_name;
   gchar *resource;
@@ -137,7 +137,7 @@ halt_button_clicked (GtkWidget *b, gint *shutdownType)
 /*
  */
 gboolean
-shutdownDialog(gint *shutdownType, gboolean *saveSession)
+shutdownDialog(const gchar *sessionName, gint *shutdownType, gboolean *saveSession)
 {
   gboolean accessibility;
   XfsmFadeout *fadeout = NULL;
@@ -549,7 +549,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   if (result == GTK_RESPONSE_OK)
     {
       xfce_rc_set_group (rc, "General");
-      xfce_rc_write_entry (rc, "SessionName", session_name);
+      xfce_rc_write_entry (rc, "SessionName", sessionName);
       xfce_rc_write_bool_entry (rc, "SaveOnExit", *saveSession);
     }
   else
@@ -562,7 +562,7 @@ shutdownDialog(gint *shutdownType, gboolean *saveSession)
   if (screenshot_pm != NULL)
     {
       if (result == GTK_RESPONSE_OK)
-        screenshot_save (screenshot_pm, &screenshot_area);
+        screenshot_save (sessionName, screenshot_pm, &screenshot_area);
 
       g_object_unref (G_OBJECT (screenshot_pm));
     }
@@ -581,11 +581,9 @@ xfsm_shutdown(gint type)
 {
   gboolean result;
 
-  if (compat_gnome)
-    xfsm_compat_gnome_shutdown ();
-
-  if (compat_kde)
-    xfsm_compat_kde_shutdown ();
+  /* these two remember if they were started or not */
+  xfsm_compat_gnome_shutdown ();
+  xfsm_compat_kde_shutdown ();
 
   /* kill legacy clients */
   xfsm_legacy_shutdown ();

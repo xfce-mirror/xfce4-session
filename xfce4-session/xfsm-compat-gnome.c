@@ -67,6 +67,7 @@ static GConfClient *gnome_conf_client = NULL;
 #endif
 
 
+static gboolean gnome_compat_started = FALSE;
 static pid_t gnome_keyring_daemon_pid = 0;
 static Window gnome_smproxy_window = None;
 
@@ -237,6 +238,9 @@ xfsm_compat_gnome_smproxy_shutdown (void)
 void
 xfsm_compat_gnome_startup (XfsmSplashScreen *splash)
 {
+  if (G_UNLIKELY (gnome_compat_started))
+    return;
+
   xfsm_compat_gnome_smproxy_startup ();
 
   /* fire up the keyring daemon */
@@ -260,6 +264,8 @@ xfsm_compat_gnome_startup (XfsmSplashScreen *splash)
         }
     }
 #endif
+
+  gnome_compat_started = TRUE;
 }
 
 
@@ -268,6 +274,9 @@ xfsm_compat_gnome_shutdown (void)
 {
   GError *error = NULL;
   gint    status;
+
+  if (G_UNLIKELY (!gnome_compat_started))
+    return;
 
   /* shutdown the keyring daemon */
   gnome_keyring_daemon_shutdown ();
@@ -295,5 +304,7 @@ xfsm_compat_gnome_shutdown (void)
     }
 
   xfsm_compat_gnome_smproxy_shutdown ();
+
+  gnome_compat_started = FALSE;
 }
 
