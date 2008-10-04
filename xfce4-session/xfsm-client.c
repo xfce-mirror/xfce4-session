@@ -23,6 +23,10 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+
 #include <libxfsm/xfsm-util.h>
 
 #include "xfsm-client.h"
@@ -279,7 +283,7 @@ xfsm_client_signal_prop_change (XfsmClient *client,
     }
   else
     {
-      xfsm_verbose ("Client Id = %d  Unhandled property change %s\n",
+      xfsm_verbose ("Client Id = %s, unhandled property change %s\n",
                     client->id, name);
       return;
     }
