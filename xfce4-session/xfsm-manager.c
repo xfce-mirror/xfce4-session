@@ -56,13 +56,14 @@
 #include <libxfsm/xfsm-splash-engine.h>
 #include <libxfsm/xfsm-util.h>
 
-#include <xfce4-session/chooser-icon.h>
-#include <xfce4-session/shutdown.h>
-#include <xfce4-session/xfsm-chooser.h>
-#include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-legacy.h>
-#include <xfce4-session/xfsm-manager.h>
-#include <xfce4-session/xfsm-startup.h>
+#include "xfsm-manager.h"
+#include "chooser-icon.h"
+#include "shutdown.h"
+#include "xfsm-chooser.h"
+#include "xfsm-global.h"
+#include "xfsm-legacy.h"
+#include "xfsm-startup.h"
+#include "xfsm-marshal.h"
 
 
 #define DEFAULT_SESSION_NAME "Default"
@@ -96,12 +97,27 @@ struct _XfsmManager
 typedef struct _XfsmManagerClass
 {
   GObjectClass parent;
+
+  /*< signals >*/
+  void (*state_changed) (XfsmManager     *manager,
+                         XfsmManagerState old_state,
+                         XfsmManagerState new_state);
+
+  void (*client_registered) (XfsmManager *manager,
+                             XfsmClient  *client);
+
+  void (*shutdown_cancelled) (XfsmManager *manager);
 } XfsmManagerClass;
 
+enum
+{
+  SIG_STATE_CHANGED = 0,
+  SIG_CLIENT_REGISTERED,
+  SIG_SHUTDOWN_CANCELLED,
+  N_SIGS,
+};
 
-/*
-   Prototypes
- */
+
 static void       xfsm_manager_class_init (XfsmManagerClass *klass);
 static void       xfsm_manager_init (XfsmManager *manager);
 static void       xfsm_manager_finalize (GObject *obj);
@@ -117,6 +133,9 @@ static void       xfsm_manager_load_settings (XfsmManager *manager,
 static gboolean   xfsm_manager_load_session (XfsmManager *manager);
 
 
+static guint signals[N_SIGS] = { 0, };
+
+
 G_DEFINE_TYPE(XfsmManager, xfsm_manager, G_TYPE_OBJECT)
 
 
@@ -126,6 +145,35 @@ xfsm_manager_class_init (XfsmManagerClass *klass)
   GObjectClass *gobject_class = (GObjectClass *)klass;
 
   gobject_class->finalize = xfsm_manager_finalize;
+
+  signals[SIG_STATE_CHANGED] = g_signal_new ("state-changed",
+                                             XFSM_TYPE_MANAGER,
+                                             G_SIGNAL_RUN_LAST,
+                                             G_STRUCT_OFFSET (XfsmManagerClass,
+                                                              state_changed),
+                                             NULL, NULL,
+                                             xfsm_marshal_VOID__UINT_UINT,
+                                             G_TYPE_NONE, 2,
+                                             G_TYPE_UINT, G_TYPE_UINT);
+
+  signals[SIG_CLIENT_REGISTERED] = g_signal_new ("client-registered",
+                                                 XFSM_TYPE_MANAGER,
+                                                 G_SIGNAL_RUN_LAST,
+                                                 G_STRUCT_OFFSET (XfsmManagerClass,
+                                                                  client_registered),
+                                                 NULL, NULL,
+                                                 g_cclosure_marshal_VOID__OBJECT,
+                                                 G_TYPE_NONE, 1,
+                                                 XFSM_TYPE_CLIENT);
+
+  signals[SIG_SHUTDOWN_CANCELLED] = g_signal_new ("shutdown-cancelled",
+                                                  XFSM_TYPE_MANAGER,
+                                                  G_SIGNAL_RUN_LAST,
+                                                  G_STRUCT_OFFSET (XfsmManagerClass,
+                                                                   shutdown_cancelled),
+                                                  NULL, NULL,
+                                                  g_cclosure_marshal_VOID__VOID,
+                                                  G_TYPE_NONE, 0);
 }
 
 
@@ -174,6 +222,28 @@ xfsm_manager_finalize (GObject *obj)
   G_OBJECT_CLASS (xfsm_manager_parent_class)->finalize (obj);
 }
 
+
+#ifdef G_CAN_INLINE
+static inline void
+#else
+static void
+#endif
+xfsm_manager_set_state (XfsmManager     *manager,
+                        XfsmManagerState state)
+{
+  XfsmManagerState old_state;
+
+  /* idea here is to use this to set state always so we don't forget
+   * to emit the signal */
+
+  if (state == manager->state)
+    return;
+
+  old_state = manager->state;
+  manager->state = state;
+
+  g_signal_emit (manager, signals[SIG_STATE_CHANGED], 0, old_state, state);
+}
 
 XfsmManager *
 xfsm_manager_new (void)
@@ -538,7 +608,7 @@ xfsm_manager_signal_startup_done (XfsmManager *manager)
   XfceRc *rc;
 
   xfsm_verbose ("Manager finished startup, entering IDLE mode now\n\n");
-  manager->state = XFSM_MANAGER_IDLE;
+  xfsm_manager_set_state (manager, XFSM_MANAGER_IDLE);
 
   if (!manager->failsafe_mode)
     {
@@ -598,6 +668,9 @@ xfsm_manager_register_client (XfsmManager *manager,
   XfsmProperties *properties = NULL;
   gchar          *client_id;
   GList          *lp;
+  SmsConn         sms_conn;
+
+  sms_conn = xfsm_client_get_sms_connection (client);
 
   if (previous_id != NULL)
     {
@@ -638,20 +711,21 @@ xfsm_manager_register_client (XfsmManager *manager,
     }
   else
     {
-      client_id = xfsm_generate_client_id (xfsm_client_get_sms_connection (client));
-      properties = xfsm_properties_new (client_id,
-                                        SmsClientHostName (xfsm_client_get_sms_connection (client)));
+      client_id = xfsm_generate_client_id (sms_conn);
+      properties = xfsm_properties_new (client_id, SmsClientHostName (sms_conn));
       xfsm_client_set_initial_properties (client, properties);
       g_free (client_id);
     }
 
   g_queue_push_tail (manager->running_clients, client);
 
-  SmsRegisterClientReply (xfsm_client_get_sms_connection (client), (char *) xfsm_client_get_id (client));
+  SmsRegisterClientReply (sms_conn, (char *) xfsm_client_get_id (client));
+
+  g_signal_emit (manager, signals[SIG_CLIENT_REGISTERED], 0, client);
   
   if (previous_id == NULL)
     {
-      SmsSaveYourself (xfsm_client_get_sms_connection (client), SmSaveLocal, False, SmInteractStyleNone, False);
+      SmsSaveYourself (sms_conn, SmSaveLocal, False, SmInteractStyleNone, False);
       xfsm_client_set_state (client, XFSM_CLIENT_SAVINGLOCAL);
       xfsm_manager_start_client_save_timeout (manager, client);
     }
@@ -764,7 +838,7 @@ xfsm_manager_interact_done (XfsmManager *manager,
   if (cancel_shutdown && manager->state == XFSM_MANAGER_SHUTDOWN)
     {
       /* we go into checkpoint state from here... */
-      manager->state = XFSM_MANAGER_CHECKPOINT;
+      xfsm_manager_set_state (manager, XFSM_MANAGER_CHECKPOINT);
       
       /* If a shutdown is in progress, the user may have the option
        * of cancelling the shutdown. If the shutdown is cancelled
@@ -783,6 +857,7 @@ xfsm_manager_interact_done (XfsmManager *manager,
           /* reset all clients that are waiting for interact */
           xfsm_client_set_state (client, XFSM_CLIENT_SAVING);
           SmsShutdownCancelled (xfsm_client_get_sms_connection (client));
+          g_signal_emit (manager, signals[SIG_SHUTDOWN_CANCELLED], 0);
         }
     }
   else
@@ -852,7 +927,10 @@ xfsm_manager_save_yourself (XfsmManager *manager,
   
       if (!shutdown || shutdown_save)
         {
-          manager->state = shutdown ? XFSM_MANAGER_SHUTDOWN : XFSM_MANAGER_CHECKPOINT;
+          xfsm_manager_set_state (manager,
+                                  shutdown
+                                  ? XFSM_MANAGER_SHUTDOWN
+                                  : XFSM_MANAGER_CHECKPOINT);
           
           /* handle legacy applications first! */
           xfsm_legacy_perform_session_save ();
@@ -1097,7 +1175,7 @@ xfsm_manager_perform_shutdown (XfsmManager *manager)
   GList *lp;
 
   /* send SmDie message to all clients */
-  manager->state = XFSM_MANAGER_SHUTDOWNPHASE2;
+  xfsm_manager_set_state (manager, XFSM_MANAGER_SHUTDOWNPHASE2);
   for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
        lp;
        lp = lp->next)
@@ -1178,7 +1256,7 @@ xfsm_manager_complete_saveyourself (XfsmManager *manager)
   if (manager->state == XFSM_MANAGER_CHECKPOINT)
     {
       /* reset all clients to idle state */
-      manager->state = XFSM_MANAGER_IDLE;
+      xfsm_manager_set_state (manager, XFSM_MANAGER_IDLE);
       for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
            lp;
            lp = lp->next)
