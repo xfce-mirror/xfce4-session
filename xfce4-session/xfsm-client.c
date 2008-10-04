@@ -28,29 +28,75 @@
 #include <xfce4-session/xfsm-client.h>
 #include <xfce4-session/xfsm-global.h>
 
+#include "xfsm-client.h"
+
+struct _XfsmClient
+{
+  GObject parent;
+
+  XfsmClientState state;
+  gchar          *id;
+  XfsmProperties *properties;
+  SmsConn         sms_conn;
+};
+
+typedef struct _XfsmClientClass
+{
+  GObjectClass parent;
+} XfsmClientClass;
+
+
+static void xfsm_client_class_init (XfsmClientClass *klass);
+static void xfsm_client_init (XfsmClient *client);
+static void xfsm_client_finalize (GObject *obj);
+
+
+G_DEFINE_TYPE(XfsmClient, xfsm_client, G_TYPE_OBJECT)
+
+
+static void
+xfsm_client_class_init (XfsmClientClass *klass)
+{
+  GObjectClass *gobject_class = (GObjectClass *) klass;
+
+  gobject_class->finalize = xfsm_client_finalize;
+}
+
+
+static void
+xfsm_client_init (XfsmClient *client)
+{
+
+}
+
+static void
+xfsm_client_finalize (GObject *obj)
+{
+  XfsmClient *client = XFSM_CLIENT (obj);
+
+  if (client->properties != NULL)
+    xfsm_properties_free (client->properties);
+
+  g_free (client->id);
+
+  G_OBJECT_CLASS (xfsm_client_parent_class)->finalize (obj);
+}
+
+
 
 XfsmClient*
 xfsm_client_new (SmsConn sms_conn)
 {
   XfsmClient *client;
-  
-  client = g_new0 (XfsmClient, 1);
+
+  g_return_val_if_fail (sms_conn, NULL);
+
+  client = g_object_new (XFSM_TYPE_CLIENT, NULL);
+
   client->sms_conn = sms_conn;
   client->state = XFSM_CLIENT_IDLE;
-  
-  return client;
-}
 
-void
-xfsm_client_free (XfsmClient *client)
-{
-  g_return_if_fail (client != NULL);
-  
-  if (client->properties != NULL)
-    xfsm_properties_free (client->properties);
-  if (client->save_timeout_id > 0)
-    g_source_remove (client->save_timeout_id);
-  g_free (client);
+  return client;
 }
 
 
@@ -58,14 +104,65 @@ void
 xfsm_client_set_initial_properties (XfsmClient     *client,
                                     XfsmProperties *properties)
 {
-  g_return_if_fail (client != NULL);
+  g_return_if_fail (XFSM_IS_CLIENT (client));
   g_return_if_fail (properties != NULL);
   
   if (client->properties != NULL)
     xfsm_properties_free (client->properties);
   client->properties = properties;
-  client->id = properties->client_id;
+  client->id = g_strdup (properties->client_id);
 }
 
 
+XfsmClientState
+xfsm_client_get_state (XfsmClient *client)
+{
+  g_return_val_if_fail (XFSM_IS_CLIENT (client), XFSM_CLIENT_DISCONNECTED);
+  return client->state;
+}
 
+
+void
+xfsm_client_set_state (XfsmClient     *client,
+                       XfsmClientState state)
+{
+  g_return_if_fail (XFSM_IS_CLIENT (client));
+  client->state = state;
+}
+
+
+G_CONST_RETURN gchar *
+xfsm_client_get_id (XfsmClient *client)
+{
+  g_return_val_if_fail (XFSM_IS_CLIENT (client), NULL);
+  return client->id;
+}
+
+
+SmsConn
+xfsm_client_get_sms_connection (XfsmClient *client)
+{
+  g_return_val_if_fail (XFSM_IS_CLIENT (client), NULL);
+  return client->sms_conn;
+}
+
+
+XfsmProperties *
+xfsm_client_get_properties (XfsmClient *client)
+{
+  g_return_val_if_fail (XFSM_IS_CLIENT (client), NULL);
+  return client->properties;
+}
+
+XfsmProperties *
+xfsm_client_steal_properties (XfsmClient *client)
+{
+  XfsmProperties *properties;
+
+  g_return_val_if_fail(XFSM_IS_CLIENT (client), NULL);
+
+  properties = client->properties;
+  client->properties = NULL;
+
+  return properties;
+}

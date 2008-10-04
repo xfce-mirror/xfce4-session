@@ -41,6 +41,7 @@
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-manager.h>
 
+#define XFSM_CLIENT_MANAGER(c)  (XFSM_MANAGER (g_object_get_data (G_OBJECT (c), "--xfsm-manager")))
 
 /* local prototypes */
 static Status sm_new_client                 (SmsConn         sms_conn,
@@ -187,6 +188,8 @@ sm_new_client (SmsConn        sms_conn,
     | SmsSaveYourselfP2RequestProcMask | SmsSaveYourselfDoneProcMask
     | SmsCloseConnectionProcMask | SmsSetPropertiesProcMask
     | SmsDeletePropertiesProcMask | SmsGetPropertiesProcMask;
+
+  g_object_set_data (G_OBJECT (client), "--xfsm-manager", manager);
                                                                                 
   return True;
 }
@@ -204,7 +207,7 @@ sm_register_client (SmsConn   sms_conn,
                 IceConnectionNumber (SmsGetIceConnection (sms_conn)),
                 previous_id != NULL ? previous_id : "None");
   
-  result = xfsm_manager_register_client (client->manager, client, previous_id);
+  result = xfsm_manager_register_client (XFSM_CLIENT_MANAGER (client), client, previous_id);
 
   if (previous_id != NULL)
     free (previous_id);
@@ -221,9 +224,9 @@ sm_interact_request (SmsConn   sms_conn,
   XfsmClient *client = (XfsmClient *) client_data;
 
   xfsm_verbose ("Client Id = %s, received INTERACT REQUEST [Dialog type = %s]\n\n",
-                client->id, dialog_type == SmDialogError ? "Error" : "Normal");
+                xfsm_client_get_id (client), dialog_type == SmDialogError ? "Error" : "Normal");
   
-  xfsm_manager_interact (client->manager, client, dialog_type);
+  xfsm_manager_interact (XFSM_CLIENT_MANAGER (client), client, dialog_type);
 }
 
 
@@ -235,9 +238,9 @@ sm_interact_done (SmsConn   sms_conn,
   XfsmClient *client = (XfsmClient *) client_data;
 
   xfsm_verbose ("Client Id = %s, received INTERACT DONE [Cancel shutdown = %s]\n\n",
-                client->id, cancel_shutdown ? "True" : "False");
+                xfsm_client_get_id (client), cancel_shutdown ? "True" : "False");
   
-  xfsm_manager_interact_done (client->manager, client, cancel_shutdown);
+  xfsm_manager_interact_done (XFSM_CLIENT_MANAGER (client), client, cancel_shutdown);
 }
 
 
@@ -255,7 +258,7 @@ sm_save_yourself_request (SmsConn   sms_conn,
   if (G_UNLIKELY (verbose))
     {
       xfsm_verbose ("Client Id = %s, received SAVE YOURSELF REQUEST\n",
-                    client->id);
+                    xfsm_client_get_id (client));
       xfsm_verbose ("   Save type:      %s\n",
                     save_type == SmSaveLocal ? "Local"
                     : (save_type == SmSaveGlobal ? "Global" : "Both"));
@@ -268,7 +271,7 @@ sm_save_yourself_request (SmsConn   sms_conn,
       xfsm_verbose ("\n");
     }
   
-  xfsm_manager_save_yourself (client->manager, client, save_type, shutdown, interact_style, fast, global);
+  xfsm_manager_save_yourself (XFSM_CLIENT_MANAGER (client), client, save_type, shutdown, interact_style, fast, global);
 }
 
 
@@ -278,9 +281,10 @@ sm_save_yourself_phase2_request (SmsConn   sms_conn,
 {
   XfsmClient *client = (XfsmClient *) client_data;
 
-  xfsm_verbose ("Client Id = %s, received SAVE YOURSELF PHASE2 REQUEST\n\n", client->id);
+  xfsm_verbose ("Client Id = %s, received SAVE YOURSELF PHASE2 REQUEST\n\n",
+                xfsm_client_get_id (client));
   
-  xfsm_manager_save_yourself_phase2 (client->manager, client);
+  xfsm_manager_save_yourself_phase2 (XFSM_CLIENT_MANAGER (client), client);
 }
 
 
@@ -292,9 +296,9 @@ sm_save_yourself_done (SmsConn   sms_conn,
   XfsmClient *client = (XfsmClient *) client_data;
 
   xfsm_verbose ("Client Id = %s, received SAVE YOURSELF DONE [Success = %s]\n\n",
-                client->id, success ? "True" : "False");
+                xfsm_client_get_id (client), success ? "True" : "False");
   
-  xfsm_manager_save_yourself_done (client->manager, client, success);
+  xfsm_manager_save_yourself_done (XFSM_CLIENT_MANAGER (client), client, success);
 }
 
 
@@ -310,13 +314,13 @@ sm_close_connection (SmsConn   sms_conn,
   if (G_UNLIKELY (verbose))
     {
       xfsm_verbose ("Client Id = %s, received CLOSE CONNECTION [Num reasons = %d]\n",
-                    client->id, num_reasons);
+                    xfsm_client_get_id (client), num_reasons);
       for (n = 0; n < num_reasons; ++n)
         xfsm_verbose ("   Reason %2d: %s\n", n, reasons[n]);
       xfsm_verbose ("\n");
     }
   
-  xfsm_manager_close_connection (client->manager, client, TRUE);
+  xfsm_manager_close_connection (XFSM_CLIENT_MANAGER (client), client, TRUE);
 
   if (num_reasons > 0)
     SmFreeReasons (num_reasons, reasons);
@@ -330,7 +334,7 @@ sm_set_properties (SmsConn   sms_conn,
                    SmProp  **props)
 {
   XfsmClient     *client     = (XfsmClient *) client_data;
-  XfsmProperties *properties = client->properties;
+  XfsmProperties *properties = xfsm_client_get_properties (client);
   int             n;
   int             i;
   
@@ -378,7 +382,7 @@ sm_delete_properties (SmsConn   sms_conn,
                       char    **prop_names)
 {
   XfsmClient     *client     = (XfsmClient *) client_data;
-  XfsmProperties *properties = client->properties;
+  XfsmProperties *properties = xfsm_client_get_properties (client);
   int             n;
 
   if (G_UNLIKELY (verbose))
@@ -403,13 +407,13 @@ sm_get_properties (SmsConn   sms_conn,
                    SmPointer client_data)
 {
   XfsmClient     *client     = (XfsmClient *) client_data;
-  XfsmProperties *properties = client->properties;
+  XfsmProperties *properties = xfsm_client_get_properties (client);
   SmProp        **props      = NULL;
   gint            num_props  = 0;
 
   xfsm_verbose ("Client Id = %s, received GET PROPERTIES\n\n", properties->client_id);
   
-  xfsm_properties_extract (client->properties, &num_props, &props);
+  xfsm_properties_extract (properties, &num_props, &props);
 
   SmsReturnProperties (sms_conn, num_props, props);
   

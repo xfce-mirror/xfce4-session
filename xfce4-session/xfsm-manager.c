@@ -107,7 +107,11 @@ static void       xfsm_manager_init (XfsmManager *manager);
 static void       xfsm_manager_finalize (GObject *obj);
 
 static gboolean   xfsm_manager_startup (XfsmManager *manager);
-static gboolean   xfsm_manager_save_timeout (gpointer client_data);
+static void       xfsm_manager_start_client_save_timeout (XfsmManager *manager,
+                                                          XfsmClient  *client);
+static void       xfsm_manager_cancel_client_save_timeout (XfsmManager *manager,
+                                                           XfsmClient  *client);
+static gboolean   xfsm_manager_save_timeout (gpointer user_data);
 static void       xfsm_manager_load_settings (XfsmManager *manager,
                                               XfceRc      *rc);
 static gboolean   xfsm_manager_load_session (XfsmManager *manager);
@@ -158,7 +162,7 @@ xfsm_manager_finalize (GObject *obj)
   g_queue_foreach (manager->restart_properties, (GFunc) xfsm_properties_free, NULL);
   g_queue_free (manager->restart_properties);
 
-  g_queue_foreach (manager->running_clients, (GFunc) xfsm_client_free, NULL);
+  g_queue_foreach (manager->running_clients, (GFunc) g_object_unref, NULL);
   g_queue_free (manager->running_clients);
 
   g_queue_foreach (manager->failsafe_clients, (GFunc) xfsm_failsafe_client_free, NULL);
@@ -569,7 +573,6 @@ xfsm_manager_new_client (XfsmManager *manager,
     }
 
   client = xfsm_client_new (sms_conn);
-  client->manager = manager;  /* dirty hack until client is a GObject */
   return client;
 }
 
@@ -635,24 +638,22 @@ xfsm_manager_register_client (XfsmManager *manager,
     }
   else
     {
-      client_id = xfsm_generate_client_id (client->sms_conn);
+      client_id = xfsm_generate_client_id (xfsm_client_get_sms_connection (client));
       properties = xfsm_properties_new (client_id,
-                                        SmsClientHostName (client->sms_conn));
+                                        SmsClientHostName (xfsm_client_get_sms_connection (client)));
       xfsm_client_set_initial_properties (client, properties);
       g_free (client_id);
     }
 
   g_queue_push_tail (manager->running_clients, client);
 
-  SmsRegisterClientReply (client->sms_conn, (char *) client->id);
+  SmsRegisterClientReply (xfsm_client_get_sms_connection (client), (char *) xfsm_client_get_id (client));
   
   if (previous_id == NULL)
     {
-      SmsSaveYourself (client->sms_conn, SmSaveLocal, False, SmInteractStyleNone, False);
-      client->state = XFSM_CLIENT_SAVINGLOCAL;
-      client->save_timeout_id = g_timeout_add (SAVE_TIMEOUT,
-                                               xfsm_manager_save_timeout,
-                                               client);
+      SmsSaveYourself (xfsm_client_get_sms_connection (client), SmSaveLocal, False, SmInteractStyleNone, False);
+      xfsm_client_set_state (client, XFSM_CLIENT_SAVINGLOCAL);
+      xfsm_manager_start_client_save_timeout (manager, client);
     }
 
   if ((manager->failsafe_mode || previous_id != NULL)
@@ -677,12 +678,11 @@ xfsm_manager_start_interact (XfsmManager *manager,
                              XfsmClient  *client)
 {
   /* notify client of interact */
-  SmsInteract (client->sms_conn);
-  client->state = XFSM_CLIENT_INTERACTING;
+  SmsInteract (xfsm_client_get_sms_connection (client));
+  xfsm_client_set_state (client, XFSM_CLIENT_INTERACTING);
   
   /* stop save yourself timeout */
-  g_source_remove (client->save_timeout_id);
-  client->save_timeout_id = 0;
+  xfsm_manager_cancel_client_save_timeout (manager, client);
 }
 
 
@@ -693,11 +693,11 @@ xfsm_manager_interact (XfsmManager *manager,
 {
   GList *lp;
 
-  if (G_UNLIKELY (client->state != XFSM_CLIENT_SAVING))
+  if (G_UNLIKELY (xfsm_client_get_state (client) != XFSM_CLIENT_SAVING))
     {
       xfsm_verbose ("Client Id = %s, requested INTERACT, but client is not in SAVING mode\n"
                     "   Client will be disconnected now.\n\n",
-                    client->id);
+                    xfsm_client_get_id (client));
       xfsm_manager_close_connection (manager, client, TRUE);
     }
   else if (G_UNLIKELY (manager->state != XFSM_MANAGER_CHECKPOINT)
@@ -705,7 +705,7 @@ xfsm_manager_interact (XfsmManager *manager,
     {
       xfsm_verbose ("Client Id = %s, requested INTERACT, but manager is not in CheckPoint/Shutdown mode\n"
                     "   Client will be disconnected now.\n\n",
-                    client->id);
+                    xfsm_client_get_id (client));
       xfsm_manager_close_connection (manager, client, TRUE);
     }
   else
@@ -715,9 +715,9 @@ xfsm_manager_interact (XfsmManager *manager,
            lp = lp->next)
         {
           XfsmClient *client = lp->data;
-          if (client->state == XFSM_CLIENT_INTERACTING)
+          if (xfsm_client_get_state (client) == XFSM_CLIENT_INTERACTING)
             {
-              client->state = XFSM_CLIENT_WAITFORINTERACT;
+              xfsm_client_set_state (client, XFSM_CLIENT_WAITFORINTERACT);
               return;
             }
         }
@@ -734,11 +734,11 @@ xfsm_manager_interact_done (XfsmManager *manager,
 {
   GList *lp;
 
-  if (G_UNLIKELY (client->state != XFSM_CLIENT_INTERACTING))
+  if (G_UNLIKELY (xfsm_client_get_state (client) != XFSM_CLIENT_INTERACTING))
     {
       xfsm_verbose ("Client Id = %s, send INTERACT DONE, but client is not in INTERACTING state\n"
                     "   Client will be disconnected now.\n\n",
-                    client->id);
+                    xfsm_client_get_id (client));
       xfsm_manager_close_connection (manager, client, TRUE);
       return;
     }
@@ -747,12 +747,12 @@ xfsm_manager_interact_done (XfsmManager *manager,
     {
       xfsm_verbose ("Client Id = %s, send INTERACT DONE, but manager is not in CheckPoint/Shutdown state\n"
                     "   Client will be disconnected now.\n\n",
-                    client->id);
+                    xfsm_client_get_id (client));
       xfsm_manager_close_connection (manager, client, TRUE);
       return;
     }
   
-  client->state = XFSM_CLIENT_SAVING;
+  xfsm_client_set_state (client, XFSM_CLIENT_SAVING);
   
   /* Setting the cancel-shutdown field to True indicates that the user
    * has requested that the entire shutdown be cancelled. Cancel-
@@ -777,12 +777,12 @@ xfsm_manager_interact_done (XfsmManager *manager,
            lp = lp->next)
         {
           XfsmClient *client = lp->data;
-          if (client->state != XFSM_CLIENT_WAITFORINTERACT)
+          if (xfsm_client_get_state (client) != XFSM_CLIENT_WAITFORINTERACT)
             continue;
 
           /* reset all clients that are waiting for interact */
-          client->state = XFSM_CLIENT_SAVING;
-          SmsShutdownCancelled (client->sms_conn);
+          xfsm_client_set_state (client, XFSM_CLIENT_SAVING);
+          SmsShutdownCancelled (xfsm_client_get_sms_connection (client));
         }
     }
   else
@@ -793,7 +793,7 @@ xfsm_manager_interact_done (XfsmManager *manager,
            lp = lp->next)
         {
           XfsmClient *client = lp->data;
-          if (client->state == XFSM_CLIENT_WAITFORINTERACT)
+          if (xfsm_client_get_state (client) == XFSM_CLIENT_WAITFORINTERACT)
             {
               xfsm_manager_start_interact (manager, client);
               break;
@@ -802,9 +802,7 @@ xfsm_manager_interact_done (XfsmManager *manager,
     }
 
   /* restart save yourself timeout for client */
-  client->save_timeout_id = g_timeout_add (SAVE_TIMEOUT,
-                                           xfsm_manager_save_timeout,
-                                           client);
+  xfsm_manager_start_client_save_timeout (manager, client);
 }
 
 
@@ -820,11 +818,11 @@ xfsm_manager_save_yourself (XfsmManager *manager,
   gboolean shutdown_save = TRUE;
   GList *lp;
 
-  if (G_UNLIKELY (client->state != XFSM_CLIENT_IDLE))
+  if (G_UNLIKELY (xfsm_client_get_state (client) != XFSM_CLIENT_IDLE))
     {
       xfsm_verbose ("Client Id = %s, requested SAVE YOURSELF, but client is not in IDLE mode.\n"
                     "   Client will be nuked now.\n\n",
-                    client->id);
+                    xfsm_client_get_id (client));
       xfsm_manager_close_connection (manager, client, TRUE);
       return;
     }
@@ -832,7 +830,7 @@ xfsm_manager_save_yourself (XfsmManager *manager,
     {
       xfsm_verbose ("Client Id = %s, requested SAVE YOURSELF, but manager is not in IDLE mode.\n"
                     "   Client will be nuked now.\n\n",
-                    client->id);
+                    xfsm_client_get_id (client));
       xfsm_manager_close_connection (manager, client, TRUE);
       return;
     }
@@ -843,11 +841,9 @@ xfsm_manager_save_yourself (XfsmManager *manager,
        * shutdown here, since it does not make sense for a local
        * checkpoint.
        */
-      SmsSaveYourself (client->sms_conn, save_type, FALSE, interact_style, fast);
-      client->state = XFSM_CLIENT_SAVINGLOCAL;
-      client->save_timeout_id = g_timeout_add (SAVE_TIMEOUT,
-                                               xfsm_manager_save_timeout,
-                                               client);
+      SmsSaveYourself (xfsm_client_get_sms_connection (client), save_type, FALSE, interact_style, fast);
+      xfsm_client_set_state (client, XFSM_CLIENT_SAVINGLOCAL);
+      xfsm_manager_start_client_save_timeout (manager, client);
     }
   else
     {
@@ -861,9 +857,9 @@ xfsm_manager_save_yourself (XfsmManager *manager,
           /* handle legacy applications first! */
           xfsm_legacy_perform_session_save ();
 
-        if (client->state == XFSM_CLIENT_INTERACTING)
+        if (xfsm_client_get_state (client) == XFSM_CLIENT_INTERACTING)
           {
-            client->state = XFSM_CLIENT_WAITFORINTERACT;
+            xfsm_client_set_state (client, XFSM_CLIENT_WAITFORINTERACT);
             return;
           }
           for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
@@ -871,25 +867,24 @@ xfsm_manager_save_yourself (XfsmManager *manager,
                lp = lp->next)
             {
               XfsmClient *client = lp->data;
+              XfsmProperties *properties = xfsm_client_get_properties (client);
 
               /* xterm's session management is broken, so we won't
                * send a SAVE YOURSELF to xterms */
-              if (client->properties->program != NULL
-                  && strcasecmp (client->properties->program, "xterm") == 0)
+              if (properties->program != NULL
+                  && strcasecmp (properties->program, "xterm") == 0)
                 {
                   continue;
                 }
 
-              if (client->state != XFSM_CLIENT_SAVINGLOCAL)
+              if (xfsm_client_get_state (client) != XFSM_CLIENT_SAVINGLOCAL)
                 {
-                  SmsSaveYourself (client->sms_conn, save_type, shutdown,
+                  SmsSaveYourself (xfsm_client_get_sms_connection (client), save_type, shutdown,
                                    interact_style, fast);
                 }
 
-              client->state = XFSM_CLIENT_SAVING;
-              client->save_timeout_id = g_timeout_add (SAVE_TIMEOUT,
-                                                       xfsm_manager_save_timeout,
-                                                       client);
+              xfsm_client_set_state (client, XFSM_CLIENT_SAVING);
+              xfsm_manager_start_client_save_timeout (manager, client);
             } 
         }
       else
@@ -907,18 +902,14 @@ xfsm_manager_save_yourself_phase2 (XfsmManager *manager,
 {
   if (manager->state != XFSM_MANAGER_CHECKPOINT && manager->state != XFSM_MANAGER_SHUTDOWN)
     {
-      SmsSaveYourselfPhase2 (client->sms_conn);
-      client->state = XFSM_CLIENT_SAVINGLOCAL;
-      g_source_remove (client->save_timeout_id);
-      client->save_timeout_id = g_timeout_add (SAVE_TIMEOUT,
-                                               xfsm_manager_save_timeout,
-                                               client);
+      SmsSaveYourselfPhase2 (xfsm_client_get_sms_connection (client));
+      xfsm_client_set_state (client, XFSM_CLIENT_SAVINGLOCAL);
+      xfsm_manager_start_client_save_timeout (manager, client);
     }
   else
     {
-      client->state = XFSM_CLIENT_WAITFORPHASE2;
-      g_source_remove (client->save_timeout_id);
-      client->save_timeout_id = 0;
+      xfsm_client_set_state (client, XFSM_CLIENT_WAITFORPHASE2);
+      xfsm_manager_cancel_client_save_timeout (manager, client);
 
       if (!xfsm_manager_check_clients_saving (manager))
         xfsm_manager_maybe_enter_phase2 (manager);
@@ -931,35 +922,34 @@ xfsm_manager_save_yourself_done (XfsmManager *manager,
                                  XfsmClient  *client,
                                  gboolean     success)
 {
-  if (client->state != XFSM_CLIENT_SAVING && client->state != XFSM_CLIENT_SAVINGLOCAL)
+  if (xfsm_client_get_state (client) != XFSM_CLIENT_SAVING && xfsm_client_get_state (client) != XFSM_CLIENT_SAVINGLOCAL)
     {
       xfsm_verbose ("Client Id = %s send SAVE YOURSELF DONE, while not being "
                     "in save mode. Prepare to be nuked!\n",
-                    client->id);
+                    xfsm_client_get_id (client));
       
       xfsm_manager_close_connection (manager, client, TRUE);
     }
 
-  /* remove client save timeout, as client responded in time */  
-  g_source_remove (client->save_timeout_id);
-  client->save_timeout_id = 0;
+  /* remove client save timeout, as client responded in time */
+  xfsm_manager_cancel_client_save_timeout (manager, client);
 
-  if (client->state == XFSM_CLIENT_SAVINGLOCAL)
+  if (xfsm_client_get_state (client) == XFSM_CLIENT_SAVINGLOCAL)
     {
       /* client completed local SaveYourself */
-      client->state = XFSM_CLIENT_IDLE;
-      SmsSaveComplete (client->sms_conn);
+      xfsm_client_set_state (client, XFSM_CLIENT_IDLE);
+      SmsSaveComplete (xfsm_client_get_sms_connection (client));
     }
   else if (manager->state != XFSM_MANAGER_CHECKPOINT && manager->state != XFSM_MANAGER_SHUTDOWN)
     {
       xfsm_verbose ("Client Id = %s, send SAVE YOURSELF DONE, but manager is not in CheckPoint/Shutdown mode.\n"
                     "   Client will be nuked now.\n\n",
-                    client->id);
+                    xfsm_client_get_id (client));
       xfsm_manager_close_connection (manager, client, TRUE);
     }
   else
     {
-      client->state = XFSM_CLIENT_SAVEDONE;
+      xfsm_client_set_state (client, XFSM_CLIENT_SAVEDONE);
       xfsm_manager_complete_saveyourself (manager);
     }
 }
@@ -973,17 +963,14 @@ xfsm_manager_close_connection (XfsmManager *manager,
   IceConn ice_conn;
   GList *lp;
   
-  client->state = XFSM_CLIENT_DISCONNECTED;
-  if (client->save_timeout_id > 0)
-    {
-      g_source_remove (client->save_timeout_id);
-      client->save_timeout_id = 0;
-    }
+  xfsm_client_set_state (client, XFSM_CLIENT_DISCONNECTED);
+  xfsm_manager_cancel_client_save_timeout (manager, client);
 
   if (cleanup)
     {
-      ice_conn = SmsGetIceConnection (client->sms_conn);
-      SmsCleanUp (client->sms_conn);
+      SmsConn sms_conn = xfsm_client_get_sms_connection (client);
+      ice_conn = SmsGetIceConnection (sms_conn);
+      SmsCleanUp (sms_conn);
       IceSetShutdownNegotiation (ice_conn, False);
       IceCloseConnection (ice_conn);
     }
@@ -995,7 +982,7 @@ xfsm_manager_close_connection (XfsmManager *manager,
            lp = lp->next)
         {
           XfsmClient *client = lp->data;
-          if (client->state != XFSM_CLIENT_DISCONNECTED)
+          if (xfsm_client_get_state (client) != XFSM_CLIENT_DISCONNECTED)
             return;
         }
       
@@ -1011,23 +998,23 @@ xfsm_manager_close_connection (XfsmManager *manager,
     {
       xfsm_verbose ("Client Id = %s, closed connection in checkpoint state\n"
                     "   Session manager will show NO MERCY\n\n",
-                    client->id);
+                    xfsm_client_get_id (client));
       
       /* stupid client disconnected in CheckPoint state, prepare to be nuked! */
       g_queue_remove (manager->running_clients, client);
-      xfsm_client_free (client);
+      g_object_unref (client);
       xfsm_manager_complete_saveyourself (manager);
     }
   else
     {
-      XfsmProperties *properties = client->properties;
+      XfsmProperties *properties = xfsm_client_get_properties (client);
       
       if (properties != NULL && xfsm_properties_check (properties))
         {
           if (properties->restart_style_hint == SmRestartAnyway)
             {
-              g_queue_push_tail (manager->restart_properties, properties);
-              client->properties = NULL;
+              g_queue_push_tail (manager->restart_properties,
+                                 xfsm_client_steal_properties (client));
             }
           else if (properties->restart_style_hint == SmRestartImmediately)
             {
@@ -1037,15 +1024,15 @@ xfsm_manager_close_connection (XfsmManager *manager,
                                 "   Will be re-scheduled for run on next startup\n",
                                 properties->client_id, properties->restart_attempts);
 
-                  g_queue_push_tail (manager->restart_properties, properties);
-                  client->properties = NULL;
+                  g_queue_push_tail (manager->restart_properties,
+                                     xfsm_client_steal_properties (client));
                 }
 #if 0
               else if (xfsm_manager_run_prop_command (properties, SmRestartCommand))
                 {
                   /* XXX - add a timeout here, in case the application does not come up */
-                  g_queue_push_tail (manager->pending_properties, properties);
-                  client->properties = NULL;
+                  g_queue_push_tail (manager->pending_properties,
+                                     xfsm_client_steal_properties (client));
                 }
 #endif
             }
@@ -1075,7 +1062,7 @@ xfsm_manager_close_connection (XfsmManager *manager,
         }
 
       g_queue_remove (manager->running_clients, client);
-      xfsm_client_free (client);
+      g_object_unref (client);
     }
 }
 
@@ -1091,7 +1078,7 @@ xfsm_manager_close_connection_by_ice_conn (XfsmManager *manager,
        lp = lp->next)
     {
       XfsmClient *client = lp->data;
-      if (SmsGetIceConnection (client->sms_conn) == ice_conn)
+      if (SmsGetIceConnection (xfsm_client_get_sms_connection (client)) == ice_conn)
         {
           xfsm_manager_close_connection (manager, client, FALSE);
           break;
@@ -1116,7 +1103,7 @@ xfsm_manager_perform_shutdown (XfsmManager *manager)
        lp = lp->next)
     {
       XfsmClient *client = lp->data;
-      SmsDie (client->sms_conn);
+      SmsDie (xfsm_client_get_sms_connection (client));
     }
 
   /* give all clients the chance to close the connection */
@@ -1136,7 +1123,7 @@ xfsm_manager_check_clients_saving (XfsmManager *manager)
        lp = lp->next)
     {
       XfsmClient *client = lp->data;
-      if (client->state == XFSM_CLIENT_SAVING)
+      if (xfsm_client_get_state (client) == XFSM_CLIENT_SAVING)
         return TRUE;
     }
   
@@ -1156,17 +1143,15 @@ xfsm_manager_maybe_enter_phase2 (XfsmManager *manager)
     { 
       XfsmClient *client = lp->data;
       
-      if (client->state == XFSM_CLIENT_WAITFORPHASE2)
+      if (xfsm_client_get_state (client) == XFSM_CLIENT_WAITFORPHASE2)
         {
           entered_phase2 = TRUE;
-          SmsSaveYourselfPhase2 (client->sms_conn);
-          client->state = XFSM_CLIENT_SAVING;
-          client->save_timeout_id = g_timeout_add (SAVE_TIMEOUT,
-                                                   xfsm_manager_save_timeout,
-                                                   client);
+          SmsSaveYourselfPhase2 (xfsm_client_get_sms_connection (client));
+          xfsm_client_set_state (client, XFSM_CLIENT_SAVING);
+          xfsm_manager_start_client_save_timeout (manager, client);
 
           xfsm_verbose ("Client Id = %s enters SAVE YOURSELF PHASE2.\n\n",
-                        client->id);
+                        xfsm_client_get_id (client));
         }
     }
 
@@ -1199,8 +1184,8 @@ xfsm_manager_complete_saveyourself (XfsmManager *manager)
            lp = lp->next)
         {
           XfsmClient *client = lp->data;
-          client->state = XFSM_CLIENT_IDLE;
-          SmsSaveComplete (client->sms_conn);
+          xfsm_client_set_state (client, XFSM_CLIENT_IDLE);
+          SmsSaveComplete (xfsm_client_get_sms_connection (client));
         }
     }
   else
@@ -1211,18 +1196,58 @@ xfsm_manager_complete_saveyourself (XfsmManager *manager)
 }
 
 
-static gboolean
-xfsm_manager_save_timeout (gpointer client_data)
+typedef struct
 {
-  XfsmClient *client = XFSM_CLIENT (client_data);
+  XfsmManager *manager;
+  XfsmClient  *client;
+  guint        timeout_id;
+} XfsmSaveTimeoutData;
+
+static gboolean
+xfsm_manager_save_timeout (gpointer user_data)
+{
+  XfsmSaveTimeoutData *stdata = user_data;
   
   xfsm_verbose ("Client id = %s, received SAVE TIMEOUT\n"
                 "   Client will be disconnected now.\n\n",
-                client->id);
+                xfsm_client_get_id (stdata->client));
 
-  xfsm_manager_close_connection (client->manager, client, TRUE);
+  xfsm_manager_close_connection (stdata->manager, stdata->client, TRUE);
+
+  /* returning FALSE below will free the data */
+  g_object_steal_data (G_OBJECT (stdata->client), "--save-timeout-id");
   
   return FALSE;
+}
+
+
+static void
+xfsm_manager_start_client_save_timeout (XfsmManager *manager,
+                                        XfsmClient  *client)
+{
+  XfsmSaveTimeoutData *sdata = g_new(XfsmSaveTimeoutData, 1);
+
+  sdata->manager = manager;
+  sdata->client = client;
+  /* |sdata| will get freed when the source gets removed */
+  sdata->timeout_id = g_timeout_add_full (G_PRIORITY_DEFAULT, SAVE_TIMEOUT,
+                                          xfsm_manager_save_timeout,
+                                          sdata, (GDestroyNotify) g_free);
+  /* ... or, if the object gets destroyed first, the source will get
+   * removed and will free |sdata| for us.  also, if there's a pending
+   * timer, this call will clear it. */
+  g_object_set_data_full (G_OBJECT (client), "--save-timeout-id",
+                          GUINT_TO_POINTER (sdata->timeout_id),
+                          (GDestroyNotify) g_source_remove);
+}
+
+
+static void
+xfsm_manager_cancel_client_save_timeout (XfsmManager *manager,
+                                         XfsmClient  *client)
+{
+  /* clearing out the data will call g_source_remove(), which will free it */
+  g_object_set_data (G_OBJECT (client), "--save-timeout-id", NULL);
 }
 
 
@@ -1280,12 +1305,12 @@ xfsm_manager_store_session (XfsmManager *manager)
        lp = lp->next)
     {
       XfsmClient *client = lp->data;
-      if (client->properties == NULL
-          || !xfsm_properties_check (client->properties))
+      if (xfsm_client_get_properties (client) == NULL
+          || !xfsm_properties_check (xfsm_client_get_properties (client)))
         continue;
       
       g_snprintf (prefix, 64, "Client%d_", count);
-      xfsm_properties_store (client->properties, rc, prefix);
+      xfsm_properties_store (xfsm_client_get_properties (client), rc, prefix);
       ++count;
     }
 

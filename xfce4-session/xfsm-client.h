@@ -22,7 +22,15 @@
 #ifndef __XFSM_CLIENT_H__
 #define __XFSM_CLIENT_H__
 
+#include <glib-object.h>
+
 #include <xfce4-session/xfsm-properties.h>
+
+G_BEGIN_DECLS
+
+#define XFSM_TYPE_CLIENT     (xfsm_client_get_type ())
+#define XFSM_CLIENT(obj)     (G_TYPE_CHECK_INSTANCE_CAST((obj), XFSM_TYPE_CLIENT, XfsmClient))
+#define XFSM_IS_CLIENT(obj)  (G_TYPE_CHECK_INSTANCE_TYPE((obj), XFSM_TYPE_CLIENT))
 
 typedef struct _XfsmClient XfsmClient;
 
@@ -37,27 +45,25 @@ typedef enum
   XFSM_CLIENT_WAITFORPHASE2,
   XFSM_CLIENT_DISCONNECTED,
 } XfsmClientState;
-  
 
-struct _XfsmClient
-{
-  XfsmClientState state;
-  const gchar    *id;
-  XfsmProperties *properties;
-  SmsConn sms_conn;
-  guint save_timeout_id;
-  gpointer manager;  /* (XfsmManager *) */
-};
-
-
-#define XFSM_CLIENT(c) ((XfsmClient *) (c))
-
+GType xfsm_client_get_type (void) G_GNUC_CONST;
 
 XfsmClient *xfsm_client_new (SmsConn sms_conn);
 
-void xfsm_client_free (XfsmClient *client);
-
 void xfsm_client_set_initial_properties (XfsmClient     *client,
                                          XfsmProperties *properties);
+
+XfsmClientState xfsm_client_get_state (XfsmClient *client);
+void xfsm_client_set_state (XfsmClient     *client,
+                            XfsmClientState state);
+
+G_CONST_RETURN gchar *xfsm_client_get_id (XfsmClient *client);
+
+SmsConn xfsm_client_get_sms_connection (XfsmClient *client);
+
+XfsmProperties *xfsm_client_get_properties (XfsmClient *client);
+XfsmProperties *xfsm_client_steal_properties (XfsmClient *client);
+
+G_END_DECLS
 
 #endif /* !__XFSM_CLIENT_H__ */
