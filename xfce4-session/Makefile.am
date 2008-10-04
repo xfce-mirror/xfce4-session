@@ -35,6 +35,8 @@ xfce4_session_SOURCES =							\
 	xfsm-legacy.h							\
 	xfsm-manager.c							\
 	xfsm-manager.h							\
+	xfsm-marshal.c							\
+	xfsm-marshal.h							\
 	xfsm-properties.c						\
 	xfsm-properties.h						\
 	xfsm-shutdown-helper.c						\
@@ -77,7 +79,28 @@ chooser-icon.h: $(srcdir)/chooser-icon.png
 	gdk-pixbuf-csource --struct --name=chooser_icon_data		\
 		$(srcdir)/chooser-icon.png > chooser-icon.h
 
+if MAINTAINER_MODE
+
+BUILT_SOURCES =								\
+	xfsm-marshal.c							\
+	xfsm-marshal.h
+
+xfsm-marshal.h: stamp-xfsm-marshal.h
+	@true
+stamp-xfsm-marshal.h: xfsm-marshal.list Makefile
+	glib-genmarshal --prefix=xfsm_marshal --internal xfsm-marshal.list --header > xfsm-marshal.h
+	echo timestamp > $(@F)
+xfsm-marshal.c: xfsm-marshal.list Makefile
+	echo '#include "xfsm-marshal.h"' > $@
+	glib-genmarshal --prefix=xfsm_marshal --internal xfsm-marshal.list --body >> xfsm-marshal.c
+
+CLEANFILES =								\
+	$(BUILT_SOURCES)
+
+endif
+
+
 EXTRA_DIST =								\
 	$(man_MANS)							\
-	chooser-icon.png
-
+	chooser-icon.png						\
+	xfsm-marshal.list

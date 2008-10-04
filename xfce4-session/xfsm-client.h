@@ -64,6 +64,13 @@ SmsConn xfsm_client_get_sms_connection (XfsmClient *client);
 XfsmProperties *xfsm_client_get_properties (XfsmClient *client);
 XfsmProperties *xfsm_client_steal_properties (XfsmClient *client);
 
+void xfsm_client_merge_properties (XfsmClient *client,
+                                   SmProp    **props,
+                                   gint        num_props);
+void xfsm_client_delete_properties (XfsmClient *client,
+                                    gchar     **prop_names,
+                                    gint        num_props);
+
 G_END_DECLS
 
 #endif /* !__XFSM_CLIENT_H__ */

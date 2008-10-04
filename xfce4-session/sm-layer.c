@@ -333,15 +333,14 @@ sm_set_properties (SmsConn   sms_conn,
                    int       num_props,
                    SmProp  **props)
 {
-  XfsmClient     *client     = (XfsmClient *) client_data;
-  XfsmProperties *properties = xfsm_client_get_properties (client);
-  int             n;
-  int             i;
+  XfsmClient *client = (XfsmClient *) client_data;
+  int         n;
+  int         i;
   
   if (G_UNLIKELY (verbose))
     {
       xfsm_verbose ("Client Id = %s, received SET PROPERTIES [Num props = %d]\n",
-                    properties->client_id, num_props);
+                    xfsm_client_get_id (client), num_props);
       for (n = 0; n < num_props; ++n)
         {
           xfsm_verbose ("   Name:  %s\n   Type:  %s\n", props[n]->name, props[n]->type);
@@ -367,7 +366,7 @@ sm_set_properties (SmsConn   sms_conn,
       xfsm_verbose ("\n");
     }  
   
-  xfsm_properties_merge (properties, num_props, props);
+  xfsm_client_merge_properties (client, props, num_props);
   
   while (num_props-- > 0)
     SmFreeProperty (props[num_props]);
@@ -381,20 +380,19 @@ sm_delete_properties (SmsConn   sms_conn,
                       int       num_props,
                       char    **prop_names)
 {
-  XfsmClient     *client     = (XfsmClient *) client_data;
-  XfsmProperties *properties = xfsm_client_get_properties (client);
-  int             n;
+  XfsmClient *client = (XfsmClient *) client_data;
+  int         n;
 
   if (G_UNLIKELY (verbose))
     {
       xfsm_verbose ("Client Id = %s, received DELETE PROPERTIES [Num props = %d]\n",
-                    properties->client_id, num_props);
+                    xfsm_client_get_id (client), num_props);
       for (n = 0; n < num_props; ++n)
         xfsm_verbose ("   Name:   %s\n", prop_names[n]);
       xfsm_verbose ("\n");
     }
   
-  xfsm_properties_delete (properties, num_props, prop_names);
+  xfsm_client_delete_properties (client, prop_names, num_props);
   
   while (num_props-- > 0)
     free (prop_names[num_props]);

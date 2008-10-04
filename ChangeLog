@@ -1,5 +1,14 @@
 2008-10-04	Brian Tarricone <bjt23@cornell.edu>
 
+	* xfce4-session/{sm-layer.c,xfsm-client.*,xfsm-properties.*}:
+	  Add signals to XfsmClient, and move some of the property
+	  handling code into XfsmClient to make signal emission
+	  easier.
+	* xfce4-session/{xfsm-marshal.list,Makefile.am}: Add signal
+	  marshallers.
+
+2008-10-04	Brian Tarricone <bjt23@cornell.edu>
+
 	* xfce4-session/{sm-layer.c,xfsm-client.[ch],xfsm-manager.c}:
 	  Turn XfsmClient into a GObject.  Second step for bug 798 and
 	  a D-Bus interface.

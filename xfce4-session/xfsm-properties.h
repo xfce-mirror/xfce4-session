@@ -61,18 +61,12 @@ XfsmProperties *xfsm_properties_new (const gchar *client_id,
                                      const gchar *hostname) G_GNUC_PURE;
 void            xfsm_properties_free    (XfsmProperties *properties);
 
-void            xfsm_properties_delete  (XfsmProperties *properties,
-                                         gint            num_props,
-                                         gchar         **prop_names);
 void            xfsm_properties_extract (XfsmProperties *properties,
                                          gint           *num_props,
                                          SmProp       ***props);
-void            xfsm_properties_merge   (XfsmProperties *properties,
-                                         gint            num_props,
-                                         SmProp        **props);
 void            xfsm_properties_store   (XfsmProperties *properties,
-                                      XfceRc         *rc,
-                                      const gchar    *prefix);
+                                         XfceRc         *rc,
+                                         const gchar    *prefix);
 
 XfsmProperties* xfsm_properties_load (XfceRc *rc, const gchar *prefix);
 
