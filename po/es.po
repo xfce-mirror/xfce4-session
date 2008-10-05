@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-11 08:56+0300\n"
-"PO-Revision-Date: 2008-04-11 09:08+0300\n"
-"Last-Translator: Rudy Godoy <rudy@stone-head.org>\n"
+"PO-Revision-Date: 2008-09-30 01:06+0100\n"
+"Last-Translator: Abel Martín <abel.martin.ruiz@gmail.com>\n"
 "Language-Team: Spanish <xfce-i18n@xfce.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,17 +26,15 @@ msgstr "Escoja el archivo de tema a instalar..."
 
 #: ../engines/balou/config.c:333
 #, c-format
-msgid ""
-"Unable to install splash theme from file %s, please check that the file is a "
-"valid splash theme archive."
+msgid "Unable to install splash theme from file %s, please check that the file is a valid splash theme archive."
 msgstr ""
-"No se puede leer fichero %s, verifique que el fichero es un archivo de\n"
-"tema de «splash» válido."
+"No se pudo leer el fichero %s, verifique que el fichero es un archivo de\n"
+"tema de pantalla de inicio válido."
 
 #: ../engines/balou/config.c:386
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
-msgstr "No se puede eliminar el tema de splah «%s» del directorio %s."
+msgstr "No se puede eliminar el tema de pantalla de inicio \"%s\" del directorio %s."
 
 #: ../engines/balou/config.c:471
 msgid "Choose theme filename..."
@@ -68,7 +66,7 @@ msgstr "Balou"
 
 #: ../engines/balou/config.c:970
 msgid "Balou Splash Engine"
-msgstr "Motor de pantalla de inicio Balou"
+msgstr "Motor de Pantalla de Inicio Balou"
 
 #: ../engines/mice/mice.c:369
 msgid "Mice"
@@ -76,7 +74,7 @@ msgstr "Mice"
 
 #: ../engines/mice/mice.c:370
 msgid "Mice Splash Engine"
-msgstr "Motor de pantalla de inicio Mice"
+msgstr "Motor de Pantalla de Inicio Mice"
 
 #: ../engines/simple/simple.c:319
 msgid "Choose image..."
@@ -108,7 +106,7 @@ msgstr "Imagen"
 
 #: ../engines/simple/simple.c:424
 msgid "Use custom image"
-msgstr "Use imagen personalizada"
+msgstr "Use una imagen personalizada"
 
 #: ../engines/simple/simple.c:509
 msgid "Simple"
@@ -116,7 +114,7 @@ msgstr "Simple"
 
 #: ../engines/simple/simple.c:510
 msgid "Simple Splash Engine"
-msgstr "Motor de Splash Simple"
+msgstr "Motor de Pantalla de Inicio Simple"
 
 #: ../settings/session/session.c:137
 msgid "Session chooser"
@@ -127,29 +125,24 @@ msgid "Display chooser on login"
 msgstr "Desplegar seleccionador de sesión al inicio"
 
 #: ../settings/session/session.c:150
-msgid ""
-"If set, the session manager will ask you to choose a session every time you "
-"log in to Xfce."
+msgid "If set, the session manager will ask you to choose a session every time you log in to Xfce."
 msgstr ""
 "Si se define, el gestor de sesión le solicitará elegir una sesión cada\n"
-"vez que ingrese a Xfce."
+"vez que entre en Xfce."
 
 #: ../settings/session/session.c:154
 msgid "Logout settings"
-msgstr "Configuración de finalización de sesión"
+msgstr "Configuración de fin de sesión"
 
 #: ../settings/session/session.c:160
 msgid "Automatically save session on logout"
 msgstr "Guardar sesión automáticamente al salir"
 
 #: ../settings/session/session.c:166
-msgid ""
-"This option instructs the session manager to save the current session "
-"automatically when you log out. If you don't select this option you'll be "
-"prompted whether you want to save the current session on each logout."
+msgid "This option instructs the session manager to save the current session automatically when you log out. If you don't select this option you'll be prompted whether you want to save the current session on each logout."
 msgstr ""
 "Esta opción indica al gestor de sesión que guarde la sesión activa de\n"
-"manera automática cuando salga. Si no desea esta opción entonces se le\n"
+"manera automática cuando salga. Si no desea esta opción, entonces se le\n"
 "preguntará cada vez que salga si desea guardar la sesión."
 
 #: ../settings/session/session.c:173
@@ -157,10 +150,7 @@ msgid "Prompt on logout"
 msgstr "Preguntar al salir"
 
 #: ../settings/session/session.c:179
-msgid ""
-"This option disables the logout confirmation dialog. Whether the session "
-"will be saved or not depends on whether you enabled the automatic saving of "
-"sessions on logout or not."
+msgid "This option disables the logout confirmation dialog. Whether the session will be saved or not depends on whether you enabled the automatic saving of sessions on logout or not."
 msgstr ""
 "Esta opción deshabilita el diálogo de confirmación da finalización. Si\n"
 "la sesión se guarda o no, dependerá de la configuración definida para\n"
@@ -175,14 +165,10 @@ msgid "Launch Gnome services on startup"
 msgstr "Arrancar servicios de GNOME al inicio"
 
 #: ../settings/session/session.c:230
-msgid ""
-"Enable this if you plan to use Gnome applications. This will instruct the "
-"session manager to start some vital Gnome services for you. You should also "
-"enable this if you want to use the Assistive Technologies that ship with "
-"Gnome."
+msgid "Enable this if you plan to use Gnome applications. This will instruct the session manager to start some vital Gnome services for you. You should also enable this if you want to use the Assistive Technologies that ship with Gnome."
 msgstr ""
 "Seleccione esta opcion si utiliza aplicaciones del escritorio\n"
-"Gnome. Esto indicará al gestor de sesión que inicie algunos servicios\n"
+"GNOME. Esto indicará al gestor de sesión que inicie algunos servicios\n"
 "vitales de GNOME. También debe habilitar esta opción si utiliza las\n"
 "tecnologías de asistencia que provee GNOME."
 
@@ -191,11 +177,7 @@ msgid "Launch KDE services on startup"
 msgstr "Arrancar servicios KDE al inicio"
 
 #: ../settings/session/session.c:243
-msgid ""
-"Enable this option if you plan to run KDE applications as part of your Xfce "
-"Desktop session. This will notably increase the startup time, but on the "
-"other hand, KDE applications will startup faster. Some KDE applications may "
-"not work at all if you don't enable this option."
+msgid "Enable this option if you plan to run KDE applications as part of your Xfce Desktop session. This will notably increase the startup time, but on the other hand, KDE applications will startup faster. Some KDE applications may not work at all if you don't enable this option."
 msgstr ""
 "Seleccione esta opción si utiliza aplicaciones del escritorio KDE en\n"
 "su sesión de Xfce. Esto incrementará notablemente el tiempo de\n"
@@ -212,16 +194,14 @@ msgid "Manage remote applications"
 msgstr "Gestionar aplicaciones remotas"
 
 #: ../settings/session/session.c:273
-msgid ""
-"Allow the session manager to manage applications running on remote hosts. Do "
-"not enable this option unless you know what you are doing."
+msgid "Allow the session manager to manage applications running on remote hosts. Do not enable this option unless you know what you are doing."
 msgstr ""
 "Seleccione esta opción para administrar aplicaciones que se ejecutan\n"
 "en máquinas remotas. No la habilite si no sabe de que se trata."
 
 #: ../settings/session/session.c:333
 msgid "Sessions and Startup"
-msgstr "Sesiones e inicio"
+msgstr "Sesiones e Inicio"
 
 #: ../settings/session/session.c:352
 msgid "General"
@@ -234,10 +214,12 @@ msgstr "Avanzado"
 #. the button label in the xfce-mcs-manager dialog
 #: ../settings/session/session.c:382
 msgid "Button Label|Sessions and Startup"
-msgstr "Sesiones e inicio"
+msgstr "Sesiones e Inicio"
 
-#: ../settings/splash/splash.c:309 ../settings/splash/splash.c:312
-#: ../settings/splash/splash.c:315 ../settings/splash/splash.c:318
+#: ../settings/splash/splash.c:309
+#: ../settings/splash/splash.c:312
+#: ../settings/splash/splash.c:315
+#: ../settings/splash/splash.c:318
 #: ../settings/splash/splash.c:386
 msgid "None"
 msgstr "Ninguno"
@@ -245,7 +227,7 @@ msgstr "Ninguno"
 #: ../settings/splash/splash.c:409
 #: ../settings/splash/xfce-splash-settings.desktop.in.h:1
 msgid "Splash Screen Settings"
-msgstr "Configuración de pantalla de inicio"
+msgstr "Configuración de Pantalla de Inicio"
 
 #: ../settings/splash/splash.c:457
 msgid "Configure"
@@ -261,7 +243,7 @@ msgstr "Probar"
 
 #: ../settings/splash/splash.c:476
 msgid "Demonstrates the selected splash screen."
-msgstr "Muestra la imagen de arranque elegida"
+msgstr "Muestra la pantalla de inicio elegida"
 
 #: ../settings/splash/splash.c:493
 msgid "Information"
@@ -286,7 +268,7 @@ msgstr "<b>Sitio web:</b>"
 #. the button label in the xfce-mcs-manager dialog
 #: ../settings/splash/splash.c:584
 msgid "Button Label|Splash Screen"
-msgstr "Imagen de arranque"
+msgstr "Pantalla de Inicio"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:99
 msgid "Add application"
@@ -302,16 +284,16 @@ msgstr "Descripción:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:145
 msgid "Command:"
-msgstr "Orden:"
+msgstr "Comando:"
 
 #: ../xfce4-autostart-editor/xfae-dialog.c:205
 msgid "Select a command"
-msgstr "Elija una orden"
+msgstr "Elija un comando"
 
 #: ../xfce4-autostart-editor/xfae-model.c:558
 #, c-format
 msgid "Failed to unlink %s: %s"
-msgstr "No se pudo eliminar %s: %s"
+msgstr "No se pudo desenlazar %s: %s"
 
 #: ../xfce4-autostart-editor/xfae-model.c:646
 #, c-format
@@ -371,23 +353,21 @@ msgstr "Apagar"
 
 #: ../xfce4-session/shutdown.c:388
 msgid "_Save session for future logins"
-msgstr "Guardar _sesión para sesiones futuras"
+msgstr "_Guardar sesión para sesiones futuras"
 
 #: ../xfce4-session/shutdown.c:451
 msgid "Please enter your password:"
-msgstr "Por favor proporcione su contraseña:"
+msgstr "Por favor introduzca su contraseña:"
 
 #: ../xfce4-session/shutdown.c:482
 msgid "<b>An error occurred</b>"
 msgstr "<b>Ha ocurrido un error</b>"
 
 #: ../xfce4-session/shutdown.c:496
-msgid ""
-"Either the password you entered is invalid, or the system administrator "
-"disallows shutting down this computer with your user account."
+msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
 msgstr ""
-"Bien la clave ingresada es inválida o el administrador del sistema ha\n"
-"deshabilitado la capacidad de apagar el computador con su cuenta de\n"
+"Bien la clave introducida es inválida o el administrador del sistema ha\n"
+"deshabilitado la capacidad de apagar el equipo con su cuenta de\n"
 "usuario."
 
 #: ../xfce4-session/xfsm-chooser.c:120
@@ -396,9 +376,7 @@ msgid "Last accessed: %s"
 msgstr "Último acceso: %s"
 
 #: ../xfce4-session/xfsm-chooser.c:213
-msgid ""
-"Choose the session you want to restore. You can simply double-click the "
-"session name to restore it."
+msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
 msgstr ""
 "Elija la sesión a restaurar. Puede hacerlo con doble click en el\n"
 "nombre de sesión."
@@ -410,8 +388,7 @@ msgstr "Salir"
 
 #: ../xfce4-session/xfsm-chooser.c:241
 msgid "Cancel the login attempt and return to the login screen."
-msgstr ""
-"Cancela el intento de acceso al inicio y retorna a la pantalla de acceso."
+msgstr "Cancela el intento de acceso al inicio y vuelve a la pantalla de acceso."
 
 #. "New" button
 #: ../xfce4-session/xfsm-chooser.c:249
@@ -428,7 +405,7 @@ msgstr "Iniciando Gnome Keyring Daemon"
 
 #: ../xfce4-session/xfsm-compat-gnome.c:256
 msgid "Starting Gnome Assistive Technologies"
-msgstr "Iniciando Gnome Assistive Technologies"
+msgstr "Iniciando Tecnologías de Accesibilidad de Gnome"
 
 #: ../xfce4-session/xfsm-compat-kde.c:118
 msgid "Starting KDE services"
@@ -473,43 +450,43 @@ msgstr "Escoger un nombre para la sesión"
 
 #: ../xfce4-session/xfsm-startup.c:101
 msgid "Starting the Volume Controller"
-msgstr "Iniciando el controlador de volumen"
+msgstr "Iniciando el Controlador de Volumen"
 
 #: ../xfce4-session/xfsm-startup.c:103
 msgid "Starting the Panel"
-msgstr "Iniciando el panel"
+msgstr "Iniciando el Panel"
 
 #: ../xfce4-session/xfsm-startup.c:105
 msgid "Starting the Desktop Manager"
-msgstr "Iniciando gestor de escritorio"
+msgstr "Iniciando Gestor de Escritorio"
 
 #: ../xfce4-session/xfsm-startup.c:107
 msgid "Starting the Taskbar"
-msgstr "Iniciando la barra de tareas"
+msgstr "Iniciando la Barra de Tareas"
 
 #: ../xfce4-session/xfsm-startup.c:109
 msgid "Starting the Window Manager"
-msgstr "Iniciando el gestor de ventanas"
+msgstr "Iniciando el Gestor de Ventanas"
 
 #: ../xfce4-session/xfsm-startup.c:113
 msgid "Starting the Gnome Terminal Emulator"
-msgstr "Iniciando Gnome Terminal Emulator"
+msgstr "Iniciando Emulador de Terminal de Gnome"
 
 #: ../xfce4-session/xfsm-startup.c:117
 msgid "Starting the KDE Advanced Text Editor"
-msgstr "Iniciando KDE Advanced Text Edito"
+msgstr "Iniciando Editor Avanzado de Texto de KDE"
 
 #: ../xfce4-session/xfsm-startup.c:119
 msgid "Starting the KDE Clipboard Manager"
-msgstr "Iniciando KDE Clipboard Manager"
+msgstr "Iniciando Gestor de Portapapeles de KDE"
 
 #: ../xfce4-session/xfsm-startup.c:121
 msgid "Starting the KDE Mail Reader"
-msgstr "Iniciando KDE Mail Reader"
+msgstr "Iniciando Lector de Correos de KDE"
 
 #: ../xfce4-session/xfsm-startup.c:123
 msgid "Starting the KDE News Reader"
-msgstr "Iniciando KDE News Reader"
+msgstr "Iniciando Lector de Noticias KDE"
 
 #: ../xfce4-session/xfsm-startup.c:125
 msgid "Starting the Konqueror"
@@ -517,7 +494,7 @@ msgstr "Iniciando Konqueror"
 
 #: ../xfce4-session/xfsm-startup.c:127
 msgid "Starting the KDE Terminal Emulator"
-msgstr "Iniciando KDE Terminal Emulator"
+msgstr "Iniciando Emulador de Terminal de KDE"
 
 #: ../xfce4-session/xfsm-startup.c:131
 msgid "Starting the Beep Media Player"
@@ -533,11 +510,11 @@ msgstr "Iniciando VI Improved Editor"
 
 #: ../xfce4-session/xfsm-startup.c:137
 msgid "Starting the Session Management Proxy"
-msgstr "Comenzando el Session Management Proxy"
+msgstr "Comenzando el Proxy de Gestión de Sesiones"
 
 #: ../xfce4-session/xfsm-startup.c:139
 msgid "Starting the X-Chat IRC Client"
-msgstr "Iniciando cliente de IRC X-Chat"
+msgstr "Iniciando Cliente de IRC X-Chat"
 
 #: ../xfce4-session/xfsm-startup.c:141
 msgid "Starting the X Multimedia System"
@@ -545,7 +522,7 @@ msgstr "Iniciando X Multimedia System"
 
 #: ../xfce4-session/xfsm-startup.c:143
 msgid "Starting the X Terminal Emulator"
-msgstr "Iniciando emulador de terminal de X"
+msgstr "Iniciando Emulador de Terminal de X"
 
 #: ../xfce4-session/xfsm-startup.c:145
 #, c-format
@@ -566,26 +543,27 @@ msgid ""
 "location.\n"
 "You should delete this directory now.\n"
 msgstr ""
-"Se ha cambiando la ubicación y el formato del directorio de auto arranque.\n"
+"Se ha cambiando la ubicación y el formato del directorio de autoarranque.\n"
 "La nueva ubicación es\n"
 "\n"
 "  %s\n"
 "\n"
-"en la que puede colocar los fichreos .desktop, que describen las\n"
-"aplicaciones a iniciar cuando inicie su sesión de Xfce. Se ha migrado\n"
-"exitósamente los ficheros del directorio de autoarranque antiguo a la nueva "
-"ubicación.\n"
-"Ahora debe eliminarlo.\n"
+"en la que puede colocar los archivos .desktop que describen las\n"
+"aplicaciones a iniciar cuando comience su sesión de Xfce. Se han migrado\n"
+"con éxito los ficheros del directorio de autoarranque antiguo a la nueva ubicación.\n"
+"Ahora debe eliminar este directorio.\n"
 
 #: ../xfce4-session/xfsm-startup.c:409
 msgid "Performing Autostart..."
-msgstr "Realizando autoarranque..."
+msgstr "Realizando Autoarranque..."
 
-#: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:161
+#: ../xfce4-tips/main.c:47
+#: ../xfce4-tips/main.c:161
 msgid "Tips and Tricks"
-msgstr "Consejos y trucos"
+msgstr "Consejos y Trucos"
 
-#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:205
+#: ../xfce4-tips/main.c:48
+#: ../xfce4-tips/main.c:205
 msgid "Fortunes"
 msgstr "Fortunes"
 
@@ -593,7 +571,8 @@ msgstr "Fortunes"
 msgid "Display tips on _startup"
 msgstr "Mostrar con_sejos al inicio"
 
-#: ../xfce4-tips/main.c:199 ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
+#: ../xfce4-tips/main.c:199
+#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
 msgid "Tips and tricks"
 msgstr "Consejos y trucos"
 
@@ -603,23 +582,23 @@ msgstr "Siguiente"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:1
 msgid "Session and Startup Settings"
-msgstr "Configuración de sesiones e inicio"
+msgstr "Configuración de Sesiones e Inicio"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:2
 msgid "Sessions and Startup Settings"
-msgstr "Configuración de sesiones e inicio"
+msgstr "Configuración de Sesiones e Inicio"
 
 #: ../settings/session/xfce-session-settings.desktop.in.h:3
 msgid "Xfce 4 Sessions and Startup Settings"
-msgstr "Configuración de sesiones e inicio de Xfce 4"
+msgstr "Configuración de Sesiones e Inicio de Xfce 4"
 
 #: ../settings/splash/xfce-splash-settings.desktop.in.h:2
 msgid "Xfce 4 Splash Screen Settings"
-msgstr "Configuración de pantalla de inicio de Xfce 4"
+msgstr "Configuración de Pantalla de Inicio de Xfce 4"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:1
 msgid "Autostarted Applications"
-msgstr "Aplicaciones para autoarranque"
+msgstr "Aplicaciones para Autoarranque"
 
 #: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:2
 msgid "Edit the list of autostarted applications"
@@ -635,3 +614,4 @@ msgstr "consejos de xfce4"
 
 #~ msgid "End Session"
 #~ msgstr "Finalizar sesión"
+
