@@ -383,3 +383,105 @@ xfsm_properties_free (XfsmProperties *properties)
     g_free (properties->user_id);
   g_free (properties);
 }
+
+
+gchar **
+xfsm_strv_from_smprop (const SmProp *prop)
+{
+  gchar **strv = NULL;
+  gint    strc;
+  guint   n;
+  
+  if (strcmp (prop->type, SmARRAY8) == 0)
+    {
+      if (!g_shell_parse_argv ((const gchar *) prop->vals->value,
+                               &strc, &strv, NULL))
+        return NULL;
+    }
+  else if (strcmp (prop->type, SmLISTofARRAY8) == 0)
+    {
+      strv = g_new (gchar *, prop->num_vals + 1);
+      for (n = 0; n < prop->num_vals; ++n)
+        strv[n] = g_strdup ((const gchar *) prop->vals[n].value);
+      strv[n] = NULL;
+    }
+
+  return strv;
+}
+
+
+GValue *
+xfsm_g_value_from_property (XfsmProperties *properties,
+                            const gchar *name)
+{
+  GValue *val = NULL;
+
+  if (strcmp (name, SmCloneCommand) == 0)
+    {
+      val = xfsm_g_value_new (G_TYPE_STRV);
+      g_value_take_boxed (val, g_strdupv (properties->clone_command));
+    }
+  else if (strcmp (name, SmCurrentDirectory) == 0)
+    {
+      val = xfsm_g_value_new (G_TYPE_STRING);
+      g_value_take_string (val, g_strdup (properties->current_directory));
+    }
+  else if (strcmp (name, SmDiscardCommand) == 0)
+    {
+      val = xfsm_g_value_new (G_TYPE_STRV);
+      g_value_take_boxed (val, g_strdupv (properties->discard_command));
+    }
+  else if (strcmp (name, SmEnvironment) == 0)
+    {
+      val = xfsm_g_value_new (G_TYPE_STRV);
+      g_value_take_boxed (val, g_strdupv (properties->environment));
+    }
+#if 0
+  else if (strcmp(name, SmProcessID) == 0)
+    {
+      val = xfsm_g_value_new (G_TYPE_STRING);
+      g_value_take_string (val, g_strdup (properties->process_id));
+    }
+#endif
+  else if (strcmp (name, SmProgram) == 0)
+    {
+      val = xfsm_g_value_new (G_TYPE_STRING);
+      g_value_take_string (val, g_strdup (properties->program));
+    }
+  else if (strcmp (name, SmRestartCommand) == 0)
+    {
+      val = xfsm_g_value_new (G_TYPE_STRV);
+      g_value_take_boxed (val, g_strdupv (properties->restart_command));
+    }
+#if 0
+  else if (strcmp (name, SmResignCommand) == 0)
+    {
+      val = xfsm_g_value_new (G_TYPE_STRV);
+      g_value_take_boxed (val, g_strdupv (properties->resign_command));
+    }
+#endif
+  else if (strcmp (name, SmRestartStyleHint) == 0)
+    {
+      val = xfsm_g_value_new (G_TYPE_UCHAR);
+      g_value_set_uchar (val, properties->restart_style_hint);
+    }
+#if 0
+  else if (strcmp (name, SmShutdownCommand) == 0)
+    {
+      val = xfsm_g_value_new (G_TYPE_STRV);
+      g_value_take_boxed (val, g_strdupv (properties->shutdown_command));
+    }
+#endif
+  else if (strcmp (name, SmUserID) == 0)
+    {
+      val = xfsm_g_value_new (G_TYPE_STRING);
+      g_value_take_string (val, g_strdup (properties->user_id));
+    }
+  else if (strcmp (name, GsmPriority) == 0)
+    {
+      val = xfsm_g_value_new (G_TYPE_UCHAR);
+      g_value_set_uchar (val, properties->priority);
+    }
+
+  return val;
+}
