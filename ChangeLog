@@ -1,5 +1,12 @@
 2008-10-06	Brian Tarricone <bjt23@cornell.edu>
 
+	* xfce4-session/xfsm-client.c,xfsm-properties.*}: Implement
+	  support for storing/retrieving the SmProcessID,
+	  SmResignCommand, and SmShutdownCommand SM properties.  The
+	  latter two will be needed for SmRestartAnyway support.
+
+2008-10-06	Brian Tarricone <bjt23@cornell.edu>
+
 	* xfce4-session/{xfsm-client.c,xfsm-properties.*}: Move some
 	  properties manipulation functions from xfsm-client.c to
 	  xfsm-properties.c

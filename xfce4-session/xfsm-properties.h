@@ -45,9 +45,12 @@ struct _XfsmProperties
   gchar **discard_command;
   gchar **environment;
   gint    priority;
+  gchar  *process_id;
   gchar  *program;
+  gchar **resign_command;
   gchar **restart_command;
   gint    restart_style_hint;
+  gchar **shutdown_command;
   gchar  *user_id;
 
   guint startup_timeout_id;

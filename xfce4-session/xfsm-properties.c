@@ -1,6 +1,7 @@
 /* $Id$ */
 /*-
  * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2008 Brian Tarricone <bjt23@cornell.edu>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -183,14 +184,23 @@ xfsm_properties_extract (XfsmProperties *properties,
 
   *pp++ = int_to_property (GsmPriority, properties->priority);
 
+  if (properties->process_id != NULL)
+    *pp++ = str_to_property (SmProcessID, properties->process_id);
+
   if (properties->program != NULL)
     *pp++ = str_to_property (SmProgram, properties->program);
   
+  if (properties->resign_command != NULL)
+    *pp++ = strv_to_property (SmResignCommand, properties->resign_command);
+
   if (properties->restart_command != NULL)
     *pp++ = strv_to_property (SmRestartCommand, properties->restart_command);
   
   *pp++ = int_to_property (SmRestartStyleHint, properties->restart_style_hint);
   
+  if (properties->shutdown_command != NULL)
+    *pp++ = strv_to_property (SmShutdownCommand, properties->shutdown_command);
+
   if (properties->user_id != NULL)
     *pp++ = str_to_property (SmUserID, properties->user_id);
   
@@ -236,7 +246,11 @@ xfsm_properties_load (XfceRc      *rc,
                                                             NULL);
   properties->environment        = xfce_rc_read_list_entry (rc, ENTRY ("Environment"),
                                                             NULL);
+  properties->resign_command     = xfce_rc_read_list_entry (rc, ENTRY ("ResignCOmmand"),
+                                                            NULL);
   properties->restart_command    = xfce_rc_read_list_entry (rc, ENTRY ("RestartCommand"),
+                                                            NULL);
+  properties->shutdown_command   = xfce_rc_read_list_entry (rc, ENTRY ("ShutdownCommand"),
                                                             NULL);
   properties->priority           = xfce_rc_read_int_entry (rc, ENTRY ("Priority"), 50);
   properties->restart_style_hint = xfce_rc_read_int_entry (rc, ENTRY ("RestartStyleHint"),
@@ -308,12 +322,20 @@ xfsm_properties_store (XfsmProperties *properties,
                                properties->priority);
     }
 
+  /* ProcessID isn't something you'd generally want saved... */
+
   if (properties->program != NULL)
     {
       xfce_rc_write_entry (rc, ENTRY ("Program"),
                            properties->program);
     }
-  
+
+  if (properties->resign_command != NULL)
+    {
+      xfce_rc_write_list_entry (rc, ENTRY ("ResignCommand"),
+                                properties->resign_command, NULL);
+    }
+
   if (properties->restart_command != NULL)
     {
       xfce_rc_write_list_entry (rc, ENTRY ("RestartCommand"),
@@ -324,6 +346,12 @@ xfsm_properties_store (XfsmProperties *properties,
     {
       xfce_rc_write_int_entry (rc, ENTRY ("RestartStyleHint"),
                                properties->restart_style_hint);
+    }
+
+  if (properties->shutdown_command != NULL)
+    {
+      xfce_rc_write_list_entry (rc, ENTRY ("ShutdownCommand"),
+                                properties->shutdown_command, NULL);
     }
   
   if (properties->user_id != NULL)
@@ -371,12 +399,18 @@ xfsm_properties_free (XfsmProperties *properties)
     g_strfreev (properties->clone_command);
   if (properties->current_directory != NULL)
     g_free (properties->current_directory);
+  if (properties->process_id != NULL)
+    g_free (properties->process_id);
   if (properties->program != NULL)
     g_free (properties->program);
   if (properties->discard_command != NULL)
     g_strfreev (properties->discard_command);
+  if (properties->resign_command != NULL)
+    g_strfreev (properties->resign_command);
   if (properties->restart_command != NULL)
     g_strfreev (properties->restart_command);
+  if (properties->shutdown_command != NULL)
+    g_strfreev (properties->shutdown_command);
   if (properties->environment != NULL)
     g_strfreev (properties->environment);
   if (properties->user_id)
@@ -436,13 +470,11 @@ xfsm_g_value_from_property (XfsmProperties *properties,
       val = xfsm_g_value_new (G_TYPE_STRV);
       g_value_take_boxed (val, g_strdupv (properties->environment));
     }
-#if 0
   else if (strcmp(name, SmProcessID) == 0)
     {
       val = xfsm_g_value_new (G_TYPE_STRING);
       g_value_take_string (val, g_strdup (properties->process_id));
     }
-#endif
   else if (strcmp (name, SmProgram) == 0)
     {
       val = xfsm_g_value_new (G_TYPE_STRING);
@@ -453,25 +485,21 @@ xfsm_g_value_from_property (XfsmProperties *properties,
       val = xfsm_g_value_new (G_TYPE_STRV);
       g_value_take_boxed (val, g_strdupv (properties->restart_command));
     }
-#if 0
   else if (strcmp (name, SmResignCommand) == 0)
     {
       val = xfsm_g_value_new (G_TYPE_STRV);
       g_value_take_boxed (val, g_strdupv (properties->resign_command));
     }
-#endif
   else if (strcmp (name, SmRestartStyleHint) == 0)
     {
       val = xfsm_g_value_new (G_TYPE_UCHAR);
       g_value_set_uchar (val, properties->restart_style_hint);
     }
-#if 0
   else if (strcmp (name, SmShutdownCommand) == 0)
     {
       val = xfsm_g_value_new (G_TYPE_STRV);
       g_value_take_boxed (val, g_strdupv (properties->shutdown_command));
     }
-#endif
   else if (strcmp (name, SmUserID) == 0)
     {
       val = xfsm_g_value_new (G_TYPE_STRING);

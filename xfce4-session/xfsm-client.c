@@ -1,6 +1,7 @@
 /* $Id$ */
 /*-
  * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2008 Brian Tarricone <bjt23@cornell.edu>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -222,13 +223,8 @@ xfsm_client_signal_prop_change (XfsmClient *client,
     }
   else if (strcmp (name, SmProcessID) == 0)
     {
-#if 0  /* FIXME */
       g_value_init (&val, G_TYPE_STRING);
       g_value_set_string (&val, properties->process_id);
-#else
-      g_warning ("FIXME: handle SmProcessID prop change");
-      return;
-#endif
     }
   else if (strcmp (name, SmProgram) == 0)
     {
@@ -242,13 +238,8 @@ xfsm_client_signal_prop_change (XfsmClient *client,
     }
   else if (strcmp (name, SmResignCommand) == 0)
     {
-#if 0  /* FIXME */
       g_value_init (&val, G_TYPE_STRV);
       g_value_set_boxed (&val, properties->resign_command);
-#else
-      g_warning ("FIXME: handle SmResignCommand prop change");
-      return;
-#endif
     }
   else if (strcmp (name, SmRestartStyleHint) == 0)
     {
@@ -257,14 +248,8 @@ xfsm_client_signal_prop_change (XfsmClient *client,
     }
   else if (strcmp (name, SmShutdownCommand) == 0)
     {
-#if 0  /* FIXME */
       g_value_init (&val, G_TYPE_STRV);
       g_value_set_boxed (&val, properties->shutdown_command);
-#else
-      g_warning ("FIXME: handle SmShutdownCommand prop change");
-      return;
-#endif
-
     }
   else if (strcmp (name, SmUserID) == 0)
     {
@@ -789,10 +774,8 @@ xfsm_client_dbus_get_all_sm_properties (XfsmClient *client,
   g_hash_table_insert (*OUT_properties, SmEnvironment,
                        xfsm_g_value_from_property (properties, SmEnvironment));
 
-#if 0
   g_hash_table_insert (*OUT_properties, SmProcessID,
                        xfsm_g_value_from_property (properties, SmProcessID));
-#endif
 
   g_hash_table_insert (*OUT_properties, SmProgram,
                        xfsm_g_value_from_property (properties, SmProgram));
@@ -800,18 +783,14 @@ xfsm_client_dbus_get_all_sm_properties (XfsmClient *client,
   g_hash_table_insert (*OUT_properties, SmRestartCommand,
                        xfsm_g_value_from_property (properties, SmRestartCommand));
 
-#if 0
   g_hash_table_insert (*OUT_properties, SmResignCommand,
                        xfsm_g_value_from_property (properties, SmResignCommand));
-#endif
   
   g_hash_table_insert (*OUT_properties, SmRestartStyleHint,
                        xfsm_g_value_from_property (properties, SmRestartStyleHint));
 
-#if 0
   g_hash_table_insert (*OUT_properties, SmShutdownCommand,
                        xfsm_g_value_from_property (properties, SmShutdownCommand));
-#endif
 
   g_hash_table_insert (*OUT_properties, SmUserID,
                        xfsm_g_value_from_property (properties, SmUserID));
@@ -854,6 +833,11 @@ xfsm_client_dbus_get_sm_properties (XfsmClient  *client,
 }
 
 
+/* this is a "lightweight" version of xfsm_properties_extract().  it
+ * uses glib functions to allocate memory, and doesn't allocate where
+ * it doesn't need to (it assumes all strings will last a while.  for
+ * these reasons, you can't use SmFreeProperty() on the results.
+ */
 static void
 xfsm_convert_sm_properties_ht (gpointer key,
                                gpointer value,
