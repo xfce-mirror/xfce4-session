@@ -46,6 +46,9 @@
 #include <unistd.h>
 #endif
 
+#include <dbus/dbus-glib.h>
+#include <dbus/dbus-glib-lowlevel.h>
+
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
@@ -60,7 +63,7 @@
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-manager.h>
 #include <xfce4-session/xfsm-startup.h>
-
+#include "xfsm-error.h"
 
 void
 setup_environment (void)
@@ -220,11 +223,55 @@ initialize (XfsmManager *manager,
 }
 
 
+void
+xfsm_dbus_init (void)
+{
+  DBusGConnection *dbus_conn;
+  int              ret;
+  GError          *error = NULL;
+
+  xfsm_error_dbus_init ();
+
+  dbus_conn = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+  if (G_UNLIKELY (!dbus_conn))
+    {
+      g_critical ("Unable to contact D-Bus session bus: %s", error ? error->message : "Unknown error");
+      if (error)
+        g_error_free (error);
+      return;
+    }
+
+  ret = dbus_bus_request_name (dbus_g_connection_get_connection (dbus_conn),
+                               "org.xfce.SessionManager",
+                               DBUS_NAME_FLAG_DO_NOT_QUEUE,
+                               NULL);
+  if (DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER != ret)
+    {
+      g_error ("Another session manager is already running");
+      exit (1);
+    }
+}
+
+void
+xfsm_dbus_cleanup (void)
+{
+  DBusGConnection *dbus_conn;
+
+  /* this is all not really necessary, but... */
+
+  dbus_conn = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+  if (G_UNLIKELY (!dbus_conn))
+    return;
+
+  dbus_bus_release_name (dbus_g_connection_get_connection (dbus_conn),
+                         "org.xfce.SessionManager", NULL);
+}
+
 int
 main (int argc, char **argv)
 {
-  XfsmManager *manager;
-  gint shutdown_type;
+  XfsmManager     *manager;
+  XfsmShutdownType shutdown_type;
 
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
   
@@ -238,6 +285,8 @@ main (int argc, char **argv)
    */
   gdk_set_sm_client_id (xfsm_generate_client_id (NULL));
 
+  xfsm_dbus_init ();
+
   manager = xfsm_manager_new ();
   initialize (manager, argc, argv);
   xfsm_manager_restart (manager);
@@ -246,7 +295,8 @@ main (int argc, char **argv)
 
   shutdown_type = xfsm_manager_get_shutdown_type (manager);
   g_object_unref (manager);
-  
+ 
+  xfsm_dbus_cleanup ();
   ice_cleanup ();
 
   return xfsm_shutdown (shutdown_type);

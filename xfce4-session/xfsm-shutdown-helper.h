@@ -27,8 +27,8 @@
 
 typedef enum
 {
-  XFSM_SHUTDOWN_POWEROFF   = 0,
-  XFSM_SHUTDOWN_REBOOT     = 1,
+  XFSM_SHUTDOWN_COMMAND_POWEROFF   = 0,
+  XFSM_SHUTDOWN_COMMAND_REBOOT     = 1,
 } XfsmShutdownCommand;
 
 

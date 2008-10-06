@@ -43,6 +43,8 @@
 #include <unistd.h>
 #endif
 
+#include <dbus/dbus-glib.h>
+
 #include <X11/ICE/ICElib.h>
 #include <X11/SM/SMlib.h>
 
@@ -58,12 +60,12 @@
 
 #include "xfsm-manager.h"
 #include "chooser-icon.h"
-#include "shutdown.h"
 #include "xfsm-chooser.h"
 #include "xfsm-global.h"
 #include "xfsm-legacy.h"
 #include "xfsm-startup.h"
 #include "xfsm-marshal.h"
+#include "xfsm-error.h"
 
 
 #define DEFAULT_SESSION_NAME "Default"
@@ -74,11 +76,12 @@ struct _XfsmManager
   GObject parent;
 
   XfsmManagerState state;
-  gint             shutdown_type;
+  XfsmShutdownType shutdown_type;
 
   gboolean         session_chooser;
   gchar           *session_name;
   gchar           *session_file;
+  gchar           *checkpoint_session_name;
 
   gboolean         compat_gnome;
   gboolean         compat_kde;
@@ -104,10 +107,24 @@ typedef struct _XfsmManagerClass
                          XfsmManagerState new_state);
 
   void (*client_registered) (XfsmManager *manager,
-                             XfsmClient  *client);
+                             const gchar *client_object_path);
 
   void (*shutdown_cancelled) (XfsmManager *manager);
 } XfsmManagerClass;
+
+typedef struct
+{
+  XfsmManager *manager;
+  XfsmClient  *client;
+  guint        timeout_id;
+} XfsmSaveTimeoutData;
+
+typedef struct
+{
+  XfsmManager     *manager;
+  XfsmShutdownType type;
+  gboolean         allow_save;
+} ShutdownIdleData;
 
 enum
 {
@@ -131,6 +148,8 @@ static gboolean   xfsm_manager_save_timeout (gpointer user_data);
 static void       xfsm_manager_load_settings (XfsmManager *manager,
                                               XfceRc      *rc);
 static gboolean   xfsm_manager_load_session (XfsmManager *manager);
+static void       xfsm_manager_dbus_class_init (XfsmManagerClass *klass);
+static void       xfsm_manager_dbus_init (XfsmManager *manager);
 
 
 static guint signals[N_SIGS] = { 0, };
@@ -162,9 +181,9 @@ xfsm_manager_class_init (XfsmManagerClass *klass)
                                                  G_STRUCT_OFFSET (XfsmManagerClass,
                                                                   client_registered),
                                                  NULL, NULL,
-                                                 g_cclosure_marshal_VOID__OBJECT,
+                                                 g_cclosure_marshal_VOID__STRING,
                                                  G_TYPE_NONE, 1,
-                                                 XFSM_TYPE_CLIENT);
+                                                 G_TYPE_STRING);
 
   signals[SIG_SHUTDOWN_CANCELLED] = g_signal_new ("shutdown-cancelled",
                                                   XFSM_TYPE_MANAGER,
@@ -174,6 +193,8 @@ xfsm_manager_class_init (XfsmManagerClass *klass)
                                                   NULL, NULL,
                                                   g_cclosure_marshal_VOID__VOID,
                                                   G_TYPE_NONE, 0);
+
+  xfsm_manager_dbus_class_init (klass);
 }
 
 
@@ -183,7 +204,7 @@ xfsm_manager_init (XfsmManager *manager)
   manager->state = XFSM_MANAGER_STARTUP;
   manager->session_chooser = FALSE;
   manager->failsafe_mode = TRUE;
-  manager->shutdown_type = SHUTDOWN_LOGOUT;
+  manager->shutdown_type = XFSM_SHUTDOWN_LOGOUT;
 
   manager->pending_properties = g_queue_new ();
   manager->starting_properties = g_queue_new ();
@@ -218,6 +239,7 @@ xfsm_manager_finalize (GObject *obj)
 
   g_free (manager->session_name);
   g_free (manager->session_file);
+  g_free (manager->checkpoint_session_name);
 
   G_OBJECT_CLASS (xfsm_manager_parent_class)->finalize (obj);
 }
@@ -245,10 +267,15 @@ xfsm_manager_set_state (XfsmManager     *manager,
   g_signal_emit (manager, signals[SIG_STATE_CHANGED], 0, old_state, state);
 }
 
+
 XfsmManager *
 xfsm_manager_new (void)
 {
-  return g_object_new (XFSM_TYPE_MANAGER, NULL);
+  XfsmManager *manager = g_object_new (XFSM_TYPE_MANAGER, NULL);
+
+  xfsm_manager_dbus_init (manager);
+
+  return manager;
 }
 
 
@@ -642,7 +669,7 @@ xfsm_manager_new_client (XfsmManager *manager,
       return NULL;
     }
 
-  client = xfsm_client_new (sms_conn);
+  client = xfsm_client_new (manager, sms_conn);
   return client;
 }
 
@@ -721,7 +748,8 @@ xfsm_manager_register_client (XfsmManager *manager,
 
   SmsRegisterClientReply (sms_conn, (char *) xfsm_client_get_id (client));
 
-  g_signal_emit (manager, signals[SIG_CLIENT_REGISTERED], 0, client);
+  g_signal_emit (manager, signals[SIG_CLIENT_REGISTERED], 0,
+                 xfsm_client_get_object_path (client));
   
   if (previous_id == NULL)
     {
@@ -880,6 +908,77 @@ xfsm_manager_interact_done (XfsmManager *manager,
   xfsm_manager_start_client_save_timeout (manager, client);
 }
 
+static void
+xfsm_manager_save_yourself_global (XfsmManager     *manager,
+                                   gint             save_type,
+                                   gboolean         shutdown,
+                                   gint             interact_style,
+                                   gboolean         fast,
+                                   XfsmShutdownType shutdown_type,
+                                   gboolean         allow_shutdown_save)
+{
+  gboolean shutdown_save = allow_shutdown_save;
+  GList *lp;
+
+  if (shutdown)
+    {
+      if (!fast && shutdown_type == XFSM_SHUTDOWN_ASK)
+        {
+          /* if we're not specifying fast shutdown, and we're ok with
+           * prompting then ask the user what to do */
+          if (!shutdownDialog (manager->session_name, &manager->shutdown_type, &shutdown_save))
+            return;
+
+          /* |allow_shutdown_save| is ignored if we prompt the user.  i think
+           * this is the right thing to do. */
+        }
+
+      /* update shutdown type if we didn't prompt the user */
+      if (shutdown_type != XFSM_SHUTDOWN_ASK)
+        manager->shutdown_type = shutdown_type;
+    }
+
+  if (!shutdown || shutdown_save)
+    {
+      xfsm_manager_set_state (manager,
+                              shutdown
+                              ? XFSM_MANAGER_SHUTDOWN
+                              : XFSM_MANAGER_CHECKPOINT);
+      
+      /* handle legacy applications first! */
+      xfsm_legacy_perform_session_save ();
+
+      for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
+           lp;
+           lp = lp->next)
+        {
+          XfsmClient *client = lp->data;
+          XfsmProperties *properties = xfsm_client_get_properties (client);
+
+          /* xterm's session management is broken, so we won't
+           * send a SAVE YOURSELF to xterms */
+          if (properties->program != NULL
+              && strcasecmp (properties->program, "xterm") == 0)
+            {
+              continue;
+            }
+
+          if (xfsm_client_get_state (client) != XFSM_CLIENT_SAVINGLOCAL)
+            {
+              SmsSaveYourself (xfsm_client_get_sms_connection (client), save_type, shutdown,
+                               interact_style, fast);
+            }
+
+          xfsm_client_set_state (client, XFSM_CLIENT_SAVING);
+          xfsm_manager_start_client_save_timeout (manager, client);
+        } 
+    }
+  else
+    {
+      /* shutdown session without saving */
+      xfsm_manager_perform_shutdown (manager);
+    }
+}
 
 void
 xfsm_manager_save_yourself (XfsmManager *manager,
@@ -890,9 +989,6 @@ xfsm_manager_save_yourself (XfsmManager *manager,
                             gboolean     fast,
                             gboolean     global)
 {
-  gboolean shutdown_save = TRUE;
-  GList *lp;
-
   if (G_UNLIKELY (xfsm_client_get_state (client) != XFSM_CLIENT_IDLE))
     {
       xfsm_verbose ("Client Id = %s, requested SAVE YOURSELF, but client is not in IDLE mode.\n"
@@ -921,56 +1017,7 @@ xfsm_manager_save_yourself (XfsmManager *manager,
       xfsm_manager_start_client_save_timeout (manager, client);
     }
   else
-    {
-      if (!fast && shutdown && !shutdownDialog (manager->session_name, &manager->shutdown_type, &shutdown_save))
-        return;
-  
-      if (!shutdown || shutdown_save)
-        {
-          xfsm_manager_set_state (manager,
-                                  shutdown
-                                  ? XFSM_MANAGER_SHUTDOWN
-                                  : XFSM_MANAGER_CHECKPOINT);
-          
-          /* handle legacy applications first! */
-          xfsm_legacy_perform_session_save ();
-
-        if (xfsm_client_get_state (client) == XFSM_CLIENT_INTERACTING)
-          {
-            xfsm_client_set_state (client, XFSM_CLIENT_WAITFORINTERACT);
-            return;
-          }
-          for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
-               lp;
-               lp = lp->next)
-            {
-              XfsmClient *client = lp->data;
-              XfsmProperties *properties = xfsm_client_get_properties (client);
-
-              /* xterm's session management is broken, so we won't
-               * send a SAVE YOURSELF to xterms */
-              if (properties->program != NULL
-                  && strcasecmp (properties->program, "xterm") == 0)
-                {
-                  continue;
-                }
-
-              if (xfsm_client_get_state (client) != XFSM_CLIENT_SAVINGLOCAL)
-                {
-                  SmsSaveYourself (xfsm_client_get_sms_connection (client), save_type, shutdown,
-                                   interact_style, fast);
-                }
-
-              xfsm_client_set_state (client, XFSM_CLIENT_SAVING);
-              xfsm_manager_start_client_save_timeout (manager, client);
-            } 
-        }
-      else
-        {
-          /* shutdown session without saving */
-          xfsm_manager_perform_shutdown (manager);
-        }
-    }
+    xfsm_manager_save_yourself_global (manager, save_type, shutdown, interact_style, fast, XFSM_SHUTDOWN_ASK, TRUE);
 }
 
 
@@ -1169,6 +1216,28 @@ xfsm_manager_close_connection_by_ice_conn (XfsmManager *manager,
 }
 
 
+gboolean
+xfsm_manager_terminate_client (XfsmManager *manager,
+                               XfsmClient  *client,
+                               GError **error)
+{
+  if (manager->state != XFSM_MANAGER_IDLE
+      || xfsm_client_get_state (client) != XFSM_CLIENT_IDLE)
+    {
+      if (error)
+        {
+          g_set_error (error, XFSM_ERROR, XFSM_ERROR_BAD_STATE,
+                       _("Can only terminate clients when in the idle state"));
+        }
+      return FALSE;
+    }
+
+  SmsDie (xfsm_client_get_sms_connection (client));
+
+  return TRUE;
+}
+
+
 void
 xfsm_manager_perform_shutdown (XfsmManager *manager)
 {
@@ -1274,13 +1343,6 @@ xfsm_manager_complete_saveyourself (XfsmManager *manager)
 }
 
 
-typedef struct
-{
-  XfsmManager *manager;
-  XfsmClient  *client;
-  guint        timeout_id;
-} XfsmSaveTimeoutData;
-
 static gboolean
 xfsm_manager_save_timeout (gpointer user_data)
 {
@@ -1363,7 +1425,10 @@ xfsm_manager_store_session (XfsmManager *manager)
       g_free (backup);
     }
 
-  group = g_strconcat ("Session: ", manager->session_name, NULL);
+  if (manager->state == XFSM_MANAGER_CHECKPOINT && manager->checkpoint_session_name != NULL)
+    group = g_strconcat ("Session: ", manager->checkpoint_session_name, NULL);
+  else
+    group = g_strconcat ("Session: ", manager->session_name, NULL);
   xfce_rc_delete_group (rc, group, TRUE);
   xfce_rc_set_group (rc, group);
   g_free (group);
@@ -1415,10 +1480,13 @@ xfsm_manager_store_session (XfsmManager *manager)
   xfce_rc_write_int_entry (rc, "LastAccess", time (NULL));
 
   xfce_rc_close (rc);
+
+  g_free (manager->checkpoint_session_name);
+  manager->checkpoint_session_name = NULL;
 }
 
 
-gint
+XfsmShutdownType
 xfsm_manager_get_shutdown_type (XfsmManager *manager)
 {
   return manager->shutdown_type;
@@ -1469,4 +1537,198 @@ xfsm_manager_get_compat_startup (XfsmManager          *manager,
         g_warning ("Invalid compat startup type %d", type);
         return FALSE;
     }
+}
+
+
+
+/*
+ * dbus server impl
+ */
+
+static gboolean xfsm_manager_dbus_get_info (XfsmManager *manager,
+                                            gchar      **OUT_name,
+                                            gchar      **OUT_version,
+                                            gchar      **OUT_vendor,
+                                            GError     **error);
+static gboolean xfsm_manager_dbus_list_clients (XfsmManager *manager,
+                                                GPtrArray  **OUT_clients,
+                                                GError     **error);
+static gboolean xfsm_manager_dbus_get_state (XfsmManager *manager,
+                                             guint       *OUT_state,
+                                             GError     **error);
+static gboolean xfsm_manager_dbus_checkpoint (XfsmManager *manager,
+                                              const gchar *session_name,
+                                              GError     **error);
+static gboolean xfsm_manager_dbus_shutdown (XfsmManager *manager,
+                                            guint        type,
+                                            gboolean     allow_save,
+                                            GError     **error);
+
+
+/* eader needs the above fwd decls */
+#include "xfsm-manager-dbus.h"
+
+
+static void
+xfsm_manager_dbus_class_init (XfsmManagerClass *klass)
+{
+  dbus_g_object_type_install_info (G_TYPE_FROM_CLASS (klass),
+                                   &dbus_glib_xfsm_manager_object_info);
+}
+
+
+static void
+xfsm_manager_dbus_init (XfsmManager *manager)
+{
+  GError *error = NULL;
+  DBusGConnection *dbus_conn = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
+
+  if (G_UNLIKELY (!dbus_conn))
+    {
+      g_critical ("Unable to contact D-Bus session bus: %s", error ? error->message : "Unknown error");
+      if (error)
+        g_error_free (error);
+      return;
+    }
+
+  dbus_g_connection_register_g_object (dbus_conn, "/org/xfce/SessionManager",
+                                       G_OBJECT (manager));
+}
+
+
+static gboolean
+xfsm_manager_dbus_get_info (XfsmManager *manager,
+                            gchar      **OUT_name,
+                            gchar      **OUT_version,
+                            gchar      **OUT_vendor,
+                            GError     **error)
+{
+  *OUT_name = g_strdup (PACKAGE);
+  *OUT_version = g_strdup (VERSION);
+  *OUT_vendor = g_strdup ("Xfce");
+
+  return TRUE;
+}
+
+
+static gboolean
+xfsm_manager_dbus_list_clients (XfsmManager *manager,
+                                GPtrArray  **OUT_clients,
+                                GError     **error)
+{
+  GList *lp;
+
+  *OUT_clients = g_ptr_array_sized_new (g_queue_get_length (manager->running_clients));
+
+  for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
+       lp;
+       lp = lp->next)
+    {
+      XfsmClient *client = XFSM_CLIENT (lp->data);
+      gchar *object_path = g_strdup (xfsm_client_get_object_path (client));
+      g_ptr_array_add (*OUT_clients, object_path);
+    }
+
+    return TRUE;
+}
+
+
+static gboolean
+xfsm_manager_dbus_get_state (XfsmManager *manager,
+                             guint       *OUT_state,
+                             GError     **error)
+{
+  *OUT_state = manager->state;
+  return TRUE;
+}
+
+
+static gboolean
+xfsm_manager_dbus_checkpoint_idled (gpointer data)
+{
+  XfsmManager *manager = XFSM_MANAGER (data);
+
+  xfsm_manager_save_yourself_global (manager, SmSaveBoth, FALSE,
+                                     SmInteractStyleNone, FALSE,
+                                     XFSM_SHUTDOWN_ASK, TRUE);
+
+  return FALSE;
+}
+
+
+static gboolean
+xfsm_manager_dbus_checkpoint (XfsmManager *manager,
+                              const gchar *session_name,
+                              GError     **error)
+{
+  if (manager->state != XFSM_MANAGER_IDLE)
+    {
+      g_set_error (error, XFSM_ERROR, XFSM_ERROR_BAD_STATE,
+                   _("Session manager must be in idle state when requesting a checkpoint"));
+      return FALSE;
+    }
+
+  g_free (manager->checkpoint_session_name);
+  if (session_name[0] != '\0')
+    manager->checkpoint_session_name = g_strdup (session_name);
+  else
+    manager->checkpoint_session_name = NULL;
+
+  /* idle so the dbus call returns in the client */
+  g_idle_add (xfsm_manager_dbus_checkpoint_idled, manager);
+
+  return TRUE;
+}
+
+
+static gboolean
+xfsm_manager_dbus_shutdown_idled (gpointer data)
+{
+  ShutdownIdleData *idata = data;
+
+  xfsm_manager_save_yourself_global (idata->manager, SmSaveBoth, TRUE,
+                                     SmInteractStyleAny, FALSE,
+                                     idata->type, idata->allow_save);
+
+  return FALSE;
+}
+
+
+static gboolean
+xfsm_manager_dbus_shutdown (XfsmManager *manager,
+                            guint        type,
+                            gboolean     allow_save,
+                            GError     **error)
+{
+  ShutdownIdleData *idata;
+
+  if (manager->state != XFSM_MANAGER_IDLE)
+    {
+      g_set_error (error, XFSM_ERROR, XFSM_ERROR_BAD_STATE,
+                   _("Session manager must be in idle state when requesting a shutdown"));
+      return FALSE;
+    }
+
+  if (type == XFSM_SHUTDOWN_SUSPEND || type == XFSM_SHUTDOWN_HIBERNATE)
+    {
+      g_set_error (error, XFSM_ERROR, XFSM_ERROR_UNSUPPORTED,
+                   _("Suspend and hibernate are not supported"));
+      return FALSE;
+    }
+
+  if (type > XFSM_SHUTDOWN_HIBERNATE)
+    {
+      g_set_error (error, XFSM_ERROR, XFSM_ERROR_BAD_VALUE,
+                   _("Invalid shutdown type \"%u\""), type);
+      return FALSE;
+    }
+
+  idata = g_new (ShutdownIdleData, 1);
+  idata->manager = manager;
+  idata->type = type;
+  idata->allow_save = allow_save;
+  g_idle_add_full (G_PRIORITY_DEFAULT, xfsm_manager_dbus_shutdown_idled,
+                   idata, (GDestroyNotify) g_free);
+
+  return TRUE;
 }

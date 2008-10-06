@@ -166,7 +166,7 @@ xfsm_shutdown_helper_hal_send (XfsmShutdownHelper *helper,
   message = dbus_message_new_method_call ("org.freedesktop.Hal",
                                           "/org/freedesktop/Hal/devices/computer",
                                           "org.freedesktop.Hal.Device.SystemPowerManagement",
-                                          (command == XFSM_SHUTDOWN_REBOOT) ? "Reboot" : "Shutdown");
+                                          (command == XFSM_SHUTDOWN_COMMAND_REBOOT) ? "Reboot" : "Shutdown");
   result = dbus_connection_send_with_reply_and_block (connection, message, 2000, &error);
   dbus_message_unref (message);
 

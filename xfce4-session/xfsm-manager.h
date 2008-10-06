@@ -30,6 +30,7 @@ G_BEGIN_DECLS
 #include <libxfce4util/libxfce4util.h>
 
 #include <xfce4-session/xfsm-client.h>
+#include "shutdown.h"
 
 #define XFSM_TYPE_MANAGER     (xfsm_manager_get_type())
 #define XFSM_MANAGER(obj)     (G_TYPE_CHECK_INSTANCE_CAST((obj), XFSM_TYPE_MANAGER, XfsmManager))
@@ -126,6 +127,10 @@ gboolean xfsm_manager_check_clients_saving (XfsmManager *manager);
 
 gboolean xfsm_manager_maybe_enter_phase2 (XfsmManager *manager);
 
+gboolean xfsm_manager_terminate_client (XfsmManager *manager,
+                                        XfsmClient  *client,
+                                        GError     **error);
+
 void xfsm_manager_perform_shutdown (XfsmManager *manager);
 
 gboolean xfsm_manager_run_command (XfsmManager          *manager,
@@ -136,7 +141,7 @@ void xfsm_manager_store_session (XfsmManager *manager);
 
 void xfsm_manager_complete_saveyourself (XfsmManager *manager);
 
-gint xfsm_manager_get_shutdown_type (XfsmManager *manager);
+XfsmShutdownType xfsm_manager_get_shutdown_type (XfsmManager *manager);
 
 GQueue *xfsm_manager_get_queue (XfsmManager         *manager,
                                 XfsmManagerQueueType q_type);

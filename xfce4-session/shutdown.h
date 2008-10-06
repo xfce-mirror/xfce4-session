@@ -25,12 +25,20 @@
 #include <glib.h>
 
 /* */
-#define	SHUTDOWN_LOGOUT	0
-#define SHUTDOWN_REBOOT	1
-#define SHUTDOWN_HALT	2
+typedef enum
+{
+  XFSM_SHUTDOWN_ASK = 0,
+  XFSM_SHUTDOWN_LOGOUT,
+  XFSM_SHUTDOWN_HALT,
+  XFSM_SHUTDOWN_REBOOT,
+  XFSM_SHUTDOWN_SUSPEND,
+  XFSM_SHUTDOWN_HIBERNATE,
+} XfsmShutdownType;
 
 /* prototypes */
-extern gboolean	shutdownDialog(const gchar *, gint *, gboolean *);
-extern gint	xfsm_shutdown(gint);
+extern gboolean	shutdownDialog(const gchar *sessionName,
+                               XfsmShutdownType *shutdownType,
+                               gboolean *saveSession);
+extern gint	xfsm_shutdown(XfsmShutdownType type);
 
 #endif	/* !__XFSM_SHUTDOWN_H__ */

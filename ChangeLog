@@ -1,3 +1,23 @@
+2008-10-06	Brian Tarricone <bjt23@cornell.edu>
+
+	* configure.in.in: Make D-Bus a hard dependency.
+	* xfce4-session/Makefile.am: Add xfsm-error.* and D-Bus stuff to the
+	  build.
+	* xfce4-session/{xfsm-manager-dbus.xml,xfsm-client-dbus.xml}: Add
+	  D-Bus interface introspection files.
+	* xfce4-session/shutdown.*: Make the shutdown type a real enum,
+	  and add values for 'ask', 'suspend', and 'hibernate'.
+	* xfce4-session/xfsm-shutdown-helper.*: Make sure the shutdown
+	  types/commands don't clash with shutdown.h.
+	* xfce4-session/xfsm-global.*: Add some GValue convenience
+	  functions.
+	* xfce4-session/xfsm-error.*: Add XfsmError type, and register the
+	  error domain with D-Bus.
+	* xfce4-session/{xfsm-manager.*,xfsm-client.*}: Implement D-Bus
+	  server for org.xfce.Session.Manager and org.xfce.Session.Client.
+	* xfce4-session/main.c: Hook up some D-Bus stuff.
+	* po/POTFILES.in: Add xfsm-manager.c and xfsm-client.c to POTFILES.
+
 2008-10-04	Brian Tarricone <bjt23@cornell.edu>
 
 	* xfce4-session/xfsm-manager.c: Add signals to XfsmManager.

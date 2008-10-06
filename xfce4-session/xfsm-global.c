@@ -160,3 +160,23 @@ xfsm_load_session_preview (const gchar *name)
   return NULL;
 #endif
 }
+
+
+GValue *
+xfsm_g_value_new (GType gtype)
+{
+  GValue *value = g_new0 (GValue, 1);
+  g_value_init (value, gtype);
+  return value;
+}
+
+
+void
+xfsm_g_value_free (GValue *value)
+{
+  if (G_LIKELY (value))
+    {
+      g_value_unset (value);
+      g_free (value);
+    }
+}

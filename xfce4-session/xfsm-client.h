@@ -32,6 +32,9 @@ G_BEGIN_DECLS
 #define XFSM_CLIENT(obj)     (G_TYPE_CHECK_INSTANCE_CAST((obj), XFSM_TYPE_CLIENT, XfsmClient))
 #define XFSM_IS_CLIENT(obj)  (G_TYPE_CHECK_INSTANCE_TYPE((obj), XFSM_TYPE_CLIENT))
 
+/* fwd decl */
+struct _XfsmManager;
+
 typedef struct _XfsmClient XfsmClient;
 
 typedef enum
@@ -48,7 +51,8 @@ typedef enum
 
 GType xfsm_client_get_type (void) G_GNUC_CONST;
 
-XfsmClient *xfsm_client_new (SmsConn sms_conn);
+XfsmClient *xfsm_client_new (struct _XfsmManager *manager,
+                             SmsConn              sms_conn);
 
 void xfsm_client_set_initial_properties (XfsmClient     *client,
                                          XfsmProperties *properties);
@@ -70,6 +74,8 @@ void xfsm_client_merge_properties (XfsmClient *client,
 void xfsm_client_delete_properties (XfsmClient *client,
                                     gchar     **prop_names,
                                     gint        num_props);
+
+G_CONST_RETURN gchar *xfsm_client_get_object_path (XfsmClient *client);
 
 G_END_DECLS
 

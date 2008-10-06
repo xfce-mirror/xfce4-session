@@ -113,7 +113,7 @@ entry_activate_cb (GtkWidget *entry, GtkDialog *dialog)
 static void
 logout_button_clicked (GtkWidget *b, gint *shutdownType)
 {
-    *shutdownType = SHUTDOWN_LOGOUT;
+    *shutdownType = XFSM_SHUTDOWN_LOGOUT;
 
     gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
 }
@@ -121,7 +121,7 @@ logout_button_clicked (GtkWidget *b, gint *shutdownType)
 static void
 reboot_button_clicked (GtkWidget *b, gint *shutdownType)
 {
-    *shutdownType = SHUTDOWN_REBOOT;
+    *shutdownType = XFSM_SHUTDOWN_REBOOT;
 
     gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
 }
@@ -129,7 +129,7 @@ reboot_button_clicked (GtkWidget *b, gint *shutdownType)
 static void
 halt_button_clicked (GtkWidget *b, gint *shutdownType)
 {
-    *shutdownType = SHUTDOWN_HALT;
+    *shutdownType = XFSM_SHUTDOWN_HALT;
 
     gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
 }
@@ -137,7 +137,7 @@ halt_button_clicked (GtkWidget *b, gint *shutdownType)
 /*
  */
 gboolean
-shutdownDialog(const gchar *sessionName, gint *shutdownType, gboolean *saveSession)
+shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolean *saveSession)
 {
   gboolean accessibility;
   XfsmFadeout *fadeout = NULL;
@@ -201,7 +201,7 @@ shutdownDialog(const gchar *sessionName, gint *shutdownType, gboolean *saveSessi
     {
       xfce_rc_close (rc);
 
-      *shutdownType = SHUTDOWN_LOGOUT;
+      *shutdownType = XFSM_SHUTDOWN_LOGOUT;
       *saveSession = autosave;
 
       return TRUE;
@@ -443,7 +443,7 @@ shutdownDialog(const gchar *sessionName, gint *shutdownType, gboolean *saveSessi
   gtk_widget_hide (dialog);
 
   /* ask password */
-  if (result == GTK_RESPONSE_OK && *shutdownType != SHUTDOWN_LOGOUT
+  if (result == GTK_RESPONSE_OK && *shutdownType != XFSM_SHUTDOWN_LOGOUT
       && xfsm_shutdown_helper_need_password (shutdown_helper))
     {
       gtk_widget_show (ok_button);
@@ -577,9 +577,16 @@ shutdownDialog(const gchar *sessionName, gint *shutdownType, gboolean *saveSessi
 /*
  */
 gint
-xfsm_shutdown(gint type)
+xfsm_shutdown(XfsmShutdownType type)
 {
   gboolean result;
+
+  /* kludge */
+  if (type == XFSM_SHUTDOWN_ASK)
+    {
+      g_warning ("xfsm_shutdown () passed XFSM_SHUTDOWN_ASK.  This is a bug.");
+      type = XFSM_SHUTDOWN_LOGOUT;
+    }
 
   /* these two remember if they were started or not */
   xfsm_compat_gnome_shutdown ();
@@ -590,10 +597,17 @@ xfsm_shutdown(gint type)
 
 #ifdef HAVE_SYNC
   /* sync disk block in-core status with that on disk */
-  sync ();
-#endif
+  if (fork () == 0)
+    {
+# ifdef HAVE_SETSID
+      setsid ();
+# endif
+      sync ();
+      _exit (EXIT_SUCCESS);
+    }
+#endif  /* HAVE_SYNC */
 
-  if (type == SHUTDOWN_LOGOUT)
+  if (type == XFSM_SHUTDOWN_LOGOUT)
     return EXIT_SUCCESS;
 
   if (shutdown_helper == NULL)
@@ -602,15 +616,15 @@ xfsm_shutdown(gint type)
       return EXIT_FAILURE;
     }
 
-  if (type == SHUTDOWN_HALT)
+  if (type == XFSM_SHUTDOWN_HALT)
     {
       result = xfsm_shutdown_helper_send_command (shutdown_helper,
-                                                  XFSM_SHUTDOWN_POWEROFF);
+                                                  XFSM_SHUTDOWN_COMMAND_POWEROFF);
     }
   else
     {
       result = xfsm_shutdown_helper_send_command (shutdown_helper,
-                                                  XFSM_SHUTDOWN_REBOOT);
+                                                  XFSM_SHUTDOWN_COMMAND_REBOOT);
     }
 
   xfsm_shutdown_helper_destroy (shutdown_helper);

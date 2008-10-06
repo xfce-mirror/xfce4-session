@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<node name="/org/xfce/SessionClients">
+    <interface name="org.xfce.Session.Client">
+        <annotation name="org.freedesktop.DBus.GLib.CSymbol"
+                    value="xfsm_client_dbus"/>
+        <!--
+             String org.xfce.Session.Client.GetID()
+
+             Retrieves the client's SM client ID.
+        -->
+        <method name="GetID">
+            <arg direction="out" name="id" type="s"/>
+        </method>
+
+        <!--
+             Unsigned Int org.xfce.Session.Client.GetState()
+
+             Queries the session manager for a client's state.
+             Valid states are:
+                 0  Idle: the client is operating normally.
+                 1  Interacting: the client is interacting with the
+                    user as part of the shutdown process.
+                 2  Save Done: the client has finished saving its state.
+                 3  Saving: the client is saving its state.
+                 4  Saving Local: the client is saving its local state
+                    (as opposed to global state).
+                 5  Wait for Interact: the client is waiting for the
+                    session manager to allow it to interact with the
+                    user.
+                 6  Wait for Phase 2: the client is waiting for the
+                    session manager to enter Phase 2 so it can continue
+                    saving its state.
+                 7  Disconnected: the client has disconnected from the
+                    session mananger (depending on its restart style,
+                    it may still remain in the session after
+                    disconnecting).
+        -->
+        <method name="GetState">
+            <arg direction="out" name="state" type="u"/>
+        </method>
+
+        <!--
+             Dict[] org.xfce.Session.Client.GetAllSmProperties()
+
+             Retrieves all session management properties set on
+             the client.
+        -->
+        <method name="GetAllSmProperties">
+            <arg direction="out" name="properties" type="a{sv}"/>
+        </method>
+
+        <!--
+             Dict[] org.xfce.Session.Client.GetSmProperties(String[] names)
+
+             @names: A string array of property names to fetch.
+
+             Retrieves the values of one or more SM propertis as an
+             array of variants.
+        -->
+        <method name="GetSmProperties">
+            <arg direction="in" name="names" type="as"/>
+            <arg direction="out" name="values" type="a{sv}"/>
+        </method>
+
+        <!--
+             void org.xfce.Session.Client.SetSmProperties(HashArray properties)
+
+             @properties: A hash array of properties, with string
+                          keys and variant values.
+
+             Sets properties specified in the hash array.  Other
+             properties are not affected.
+
+             Implementation note: properties may be validated in
+             sequence, so an error return from this method may
+             indicate that some properties have been set, but
+             others have not.
+        -->
+        <method name="SetSmProperties">
+            <arg direction="in" name="properties" type="a{sv}"/>
+        </method>
+
+        <!--
+             void org.xfce.Session.Client.DeleteSmProperties(String[] names)
+
+             @names: An string array of property names.
+
+             Deletes one or more SM properties.
+             
+             Implementation note: Some properties defined in the
+             XSMP spec have defined semantics and default values.
+             This properties may not actually be deleted, but simply
+             reset to their default values.
+        -->
+        <method name="DeleteSmProperties">
+            <arg direction="in" name="names" type="as"/>
+        </method>
+
+        <!--
+             void org.xfce.Session.Client.Terminate()
+
+             Instructs the client to exit.  Whether or not the client
+             remains in the session depends on its "restart hint"
+             SM property.  If the restart hint is "restart immediately",
+             the client will likely indeed be restarted immediately.
+        -->
+        <method name="Terminate"/>
+
+        <!--
+             void org.xfce.Session.Client.StateChanged(Unsigned Int old_state,
+                                                       Unsigned Int new_state)
+
+             @old_state: The client's previous state.
+             @new_state: The client's new (current) state.
+
+             Emitted when a client changes state.  See GetState() above
+             for valid state values.
+        -->
+        <signal name="StateChanged">
+            <arg name="old_state" type="u"/>
+            <arg name="new_state" type="u"/>
+        </signal>
+
+        <!--
+             void org.xfce.Session.Client.SmPropertyChanged(String name,
+                                                            Variant value)
+
+             @name: The name of a property.
+             @value: the value of the named property.
+
+             Emitted when a property changes.  The new value is included
+             in the message for convenience.
+        -->
+        <signal name="SmPropertyChanged">
+            <arg name="name" type="s"/>
+            <arg name="value" type="v"/>
+        </signal>
+
+        <!--
+             void org.xfce.Session.Client.SmPropertyDeleted(String name)
+
+             @name: The name of a property.
+
+             Emitted when a property is deleted.
+             
+             Implementation note: this message should be rare;
+             most SM properties are defined with default values and
+             will merely be reset to their default upon deletion
+             (resulting in a SmPropertyChanged signal instead).
+        -->
+        <signal name="SmPropertyDeleted">
+            <arg name="name" type="s"/>
+        </signal>
+    </interface>
+</node>

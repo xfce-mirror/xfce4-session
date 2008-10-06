@@ -21,12 +21,15 @@ xfce4_session_SOURCES =							\
 	xfsm-chooser.h							\
 	xfsm-client.c							\
 	xfsm-client.h							\
+	xfsm-client-dbus.h						\
 	xfsm-compat-gnome.c						\
 	xfsm-compat-gnome.h						\
 	xfsm-compat-kde.c						\
 	xfsm-compat-kde.h						\
 	xfsm-dns.c							\
 	xfsm-dns.h							\
+	xfsm-error.c							\
+	xfsm-error.h							\
 	xfsm-fadeout.c							\
 	xfsm-fadeout.h							\
 	xfsm-global.c							\
@@ -35,6 +38,7 @@ xfce4_session_SOURCES =							\
 	xfsm-legacy.h							\
 	xfsm-manager.c							\
 	xfsm-manager.h							\
+	xfsm-manager-dbus.h						\
 	xfsm-marshal.c							\
 	xfsm-marshal.h							\
 	xfsm-properties.c						\
@@ -82,6 +86,8 @@ chooser-icon.h: $(srcdir)/chooser-icon.png
 if MAINTAINER_MODE
 
 BUILT_SOURCES =								\
+	xfsm-client-dbus.h						\
+	xfsm-manager-dbus.h						\
 	xfsm-marshal.c							\
 	xfsm-marshal.h
 
@@ -94,7 +100,13 @@ xfsm-marshal.c: xfsm-marshal.list Makefile
 	echo '#include "xfsm-marshal.h"' > $@
 	glib-genmarshal --prefix=xfsm_marshal --internal xfsm-marshal.list --body >> xfsm-marshal.c
 
-CLEANFILES =								\
+xfsm-manager-dbus.h: $(srcdir)/xfsm-manager-dbus.xml
+	dbus-binding-tool --mode=glib-server --prefix=xfsm_manager $< > $@
+
+xfsm-client-dbus.h: $(srcdir)/xfsm-client-dbus.xml
+	dbus-binding-tool --mode=glib-server --prefix=xfsm_client $< > $@
+
+DISTCLEANFILES =								\
 	$(BUILT_SOURCES)
 
 endif

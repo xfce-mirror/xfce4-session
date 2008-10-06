@@ -73,10 +73,7 @@ dnl Check for required packages
 XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.5.90])
 XDT_CHECK_PACKAGE([LIBXFCEGUI4], [libxfcegui4-1.0], [4.5.90])
 XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-1.0], [2.12])
-
-dnl Check for D-Bus support (for HAL shutdown support)
-XDT_CHECK_OPTIONAL_PACKAGE([DBUS], [dbus-1], [0.34], [dbus],
-                           [Hal shutdown support], [yes])
+XDT_CHECK_PACKAGE([DBUS], [dbus-glib-1], [0.73])
 
 dnl Check for gnome support
 XDT_CHECK_OPTIONAL_PACKAGE([GNOME], [gconf-2.0], [2.4.0], [gnome],
