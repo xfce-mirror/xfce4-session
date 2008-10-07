@@ -53,9 +53,7 @@
 #include <unistd.h>
 #endif
 
-#ifdef HAVE_DBUS
 #include <dbus/dbus.h>
-#endif
 
 #include <libxfce4util/libxfce4util.h>
 
@@ -78,7 +76,6 @@ struct _XfsmShutdownHelper
 static gboolean
 xfsm_shutdown_helper_hal_check (XfsmShutdownHelper *helper)
 {
-#ifdef HAVE_DBUS
   DBusConnection *connection;
   DBusMessage    *message;
   DBusMessage    *result;
@@ -133,7 +130,6 @@ xfsm_shutdown_helper_hal_check (XfsmShutdownHelper *helper)
   /* otherwise, we failed for some reason */
   g_warning (G_STRLOC ": Failed to contact HAL: %s", error.message);
   dbus_error_free (&error);
-#endif
 
   return FALSE;
 }
@@ -144,7 +140,6 @@ static gboolean
 xfsm_shutdown_helper_hal_send (XfsmShutdownHelper *helper,
                                XfsmShutdownCommand command)
 {
-#ifdef HAVE_DBUS
   DBusConnection *connection;
   DBusMessage    *message;
   DBusMessage    *result;
@@ -181,9 +176,6 @@ xfsm_shutdown_helper_hal_send (XfsmShutdownHelper *helper,
   /* pretend that we succeed */
   dbus_message_unref (result);
   return TRUE;
-#else
-  return FALSE;
-#endif
 }
 
 
