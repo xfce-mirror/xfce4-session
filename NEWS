@@ -1,3 +1,15 @@
+4.5.91
+======
+- Start up session in parallel to greatly shorten startup time (bug 4312).
+- Add a D-Bus interface for some limited amount of remote control.
+- Implement support for the ShutdownCommand SM property when a
+  client has RestartAnyway set as its restart style hint.
+- Implement support for the RestartNever restart style hint.
+- sync() disks early in the shutdown process if on Linux and
+  ioprio_set() is available (bug 4313).  Otherwise sync() right before
+  quit as before (bug 4313).
+
+
 4.5.90
 ======
 - Modified settings-dialogs to work with the new settings-manager

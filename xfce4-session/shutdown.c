@@ -40,6 +40,10 @@
 #include <unistd.h>
 #endif
 
+#ifdef HAVE_ASM_UNISTD_H
+#include <asm/unistd.h>  /* for __NR_ioprio_set */
+#endif
+
 #include <libxfce4util/libxfce4util.h>
 #include <libxfcegui4/libxfcegui4.h>
 #include <gtk/gtk.h>
@@ -595,8 +599,9 @@ xfsm_shutdown(XfsmShutdownType type)
   /* kill legacy clients */
   xfsm_legacy_shutdown ();
 
-#ifdef HAVE_SYNC
-  /* sync disk block in-core status with that on disk */
+#if !defined(__NR_ioprio_set) && defined(HAVE_SYNC)
+  /* sync disk block in-core status with that on disk.  if
+   * we have ioprio_set (), then we've already synced. */
   if (fork () == 0)
     {
 # ifdef HAVE_SETSID
