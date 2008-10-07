@@ -79,6 +79,9 @@ XDT_CHECK_PACKAGE([DBUS], [dbus-glib-1], [0.73])
 dnl Check for gnome support
 XDT_CHECK_OPTIONAL_PACKAGE([GNOME], [gconf-2.0], [2.4.0], [gnome],
                            [Assistive technologies support], [no])
+XDT_CHECK_OPTIONAL_PACKAGE([GNOME_KEYRING], [gnome-keyring-1], [2.22],
+                           [libgnome-keyring],
+                           [Extra gnome-keyring compatibility support], [no])
 
 dnl Check for debugging support
 BM_DEBUG_SUPPORT()

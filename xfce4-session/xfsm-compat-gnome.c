@@ -44,6 +44,9 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+#ifdef HAVE_FCNTL_H
+#include <fcntl.h>
+#endif
 
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
@@ -55,9 +58,13 @@
 #ifdef HAVE_GNOME
 #include <gconf/gconf-client.h>
 #endif
+#ifdef HAVE_GNOME_KEYRING
+#include <gnome-keyring.h>
+#endif
 
 #include <xfce4-session/xfsm-compat-gnome.h>
 
+#define GNOME_KEYRING_DAEMON "gnome-keyring-daemon"
 
 #ifdef HAVE_GNOME
 #define ACCESSIBILITY_KEY "/desktop/gnome/interface/accessibility"
@@ -66,15 +73,35 @@
 static GConfClient *gnome_conf_client = NULL;
 #endif
 
-
 static gboolean gnome_compat_started = FALSE;
+static int keyring_lifetime_pipe[2];
 static pid_t gnome_keyring_daemon_pid = 0;
 static Window gnome_smproxy_window = None;
+
+static void
+child_setup (gpointer user_data)
+{
+  gint open_max;
+  gint fd;
+  char *fd_str;
+
+  open_max = sysconf (_SC_OPEN_MAX);
+  for (fd = 3; fd < open_max; fd++)
+    {
+      if (fd != keyring_lifetime_pipe[0])
+      fcntl (fd, F_SETFD, FD_CLOEXEC);
+    }
+
+  fd_str = g_strdup_printf ("%d", keyring_lifetime_pipe[0]);
+  g_setenv ("GNOME_KEYRING_LIFETIME_FD", fd_str, TRUE);
+}
 
 
 static void
 gnome_keyring_daemon_startup (void)
 {
+  const char *old_keyring;
+
   GError *error = NULL;
   gchar  *sout;
   gchar **lines;
@@ -82,10 +109,32 @@ gnome_keyring_daemon_startup (void)
   long    pid;
   gchar  *pid_str;
   gchar  *end;
-  
-  // FIXME: use async spawn!
-  g_spawn_command_line_sync ("gnome-keyring-daemon",
-                             &sout, NULL, &status, &error);
+  char *argv[2];
+
+  /* If there is already a working keyring, don't start a new daemon */
+  old_keyring = g_getenv ("GNOME_KEYRING_SOCKET");
+  if (old_keyring != NULL && access (old_keyring, R_OK | W_OK) == 0)
+    {
+#ifdef HAVE_GNOME_KEYRING
+      gnome_keyring_daemon_prepare_environment_sync ();
+#endif
+      return;
+    }
+
+
+  /* Pipe to slave keyring lifetime to */
+  pipe (keyring_lifetime_pipe);
+
+  error = NULL;
+  argv[0] = GNOME_KEYRING_DAEMON;
+  argv[1] = NULL;
+  g_spawn_sync (NULL, argv, NULL, G_SPAWN_LEAVE_DESCRIPTORS_OPEN,
+                child_setup, NULL,
+                &sout, NULL, &status, &error);
+
+  close (keyring_lifetime_pipe[0]);
+  /* We leave keyring_lifetime_pipe[1] open for the lifetime of the session,
+     in order to slave the keyring daemon lifecycle to the session. */
 
   if (error != NULL)
     {
@@ -113,6 +162,10 @@ gnome_keyring_daemon_startup (void)
           }
 
           g_strfreev (lines);
+
+#ifdef HAVE_GNOME_KEYRING
+          gnome_keyring_daemon_prepare_environment_sync ();
+#endif
         }
       else
         {

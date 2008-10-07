@@ -52,6 +52,7 @@ xfce4_session_SOURCES =							\
 
 xfce4_session_CFLAGS =							\
 	$(GNOME_CFLAGS)							\
+	$(GNOME_KEYRING_CFLAGS)						\
 	$(LIBSM_CFLAGS)							\
 	$(LIBX11_CFLAGS)						\
 	$(LIBXFCEGUI4_CFLAGS)						\
@@ -73,7 +74,8 @@ xfce4_session_LDADD =							\
 	$(LIBXFCEGUI4_LIBS)						\
 	$(DBUS_LIBS)							\
 	$(LIBWNCK_LIBS)							\
-	$(GNOME_LIBS)
+	$(GNOME_LIBS)							\
+	$(GNOME_KEYRING_LIBS)
 
 xfce4_session_DEPENDENCIES =						\
 	$(top_builddir)/libxfsm/libxfsm-4.2.la

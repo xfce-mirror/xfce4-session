@@ -8,6 +8,8 @@
 - sync() disks early in the shutdown process if on Linux and
   ioprio_set() is available (bug 4313).  Otherwise sync() right before
   quit as before (bug 4313).
+- Check for a running gnome-keyring instance before launching
+  a new one (bug 3007).
 
 
 4.5.90

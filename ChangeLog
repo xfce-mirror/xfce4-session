@@ -1,5 +1,13 @@
 2008-10-07	Brian Tarricone <bjt23@cornell.edu>
 
+	* configure.in.in,xfce4-session/Makefile.am: Add check for
+	  gnome-keyring support library.
+	* xfce4-session/xfsm-compat-gnome.c: Don't start a new
+	  gnome-keyring instance if it's already running (bug 3007,
+	  patch from Olivier Fourdan <fourdan@xfce.org>).
+
+2008-10-07	Brian Tarricone <bjt23@cornell.edu>
+
 	* xfce4-session/xfsm-shutdown-helper.c: Remove the HAVE_DBUS
 	  conditionals when doing HAL operations, since it's not
 	  defined anymore because we require dbus.  This should make
