@@ -1471,9 +1471,12 @@ xfsm_manager_store_session (XfsmManager *manager)
        lp;
        lp = lp->next)
     {
-      XfsmClient *client = lp->data;
-      if (xfsm_client_get_properties (client) == NULL
-          || !xfsm_properties_check (xfsm_client_get_properties (client)))
+      XfsmClient     *client     = lp->data;
+      XfsmProperties *properties = xfsm_client_get_properties (client);
+
+      if (properties == NULL || !xfsm_properties_check (xfsm_client_get_properties (client)))
+        continue;
+      if (properties->restart_style_hint == SmRestartNever)
         continue;
       
       g_snprintf (prefix, 64, "Client%d_", count);
