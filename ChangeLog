@@ -1,5 +1,13 @@
 2008-10-06	Brian Tarricone <bjt23@cornell.edu>
 
+	* xfce4-session/xfsm-manager.c: Implement support for the
+	  ShutdownCommand SM property in XfsmManager.  The spec says
+	  this command should be run on manager shutdown for clients
+	  that have set RestartAnyway as their restart hint AND have
+	  already quit.
+
+2008-10-06	Brian Tarricone <bjt23@cornell.edu>
+
 	* xfce4-session/xfsm-client.c,xfsm-properties.*}: Implement
 	  support for storing/retrieving the SmProcessID,
 	  SmResignCommand, and SmShutdownCommand SM properties.  The

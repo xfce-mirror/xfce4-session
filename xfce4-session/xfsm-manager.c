@@ -1253,6 +1253,30 @@ xfsm_manager_perform_shutdown (XfsmManager *manager)
       SmsDie (xfsm_client_get_sms_connection (client));
     }
 
+  /* check for SmRestartAnyway clients that have already quit and
+   * set a ShutdownCommand */
+  for (lp = g_queue_peek_nth_link (manager->restart_properties, 0);
+       lp;
+       lp = lp->next)
+    {
+      XfsmProperties *properties = lp->data;
+
+      if (properties->restart_style_hint == SmRestartAnyway
+          && properties->shutdown_command != NULL)
+        {
+          xfsm_verbose ("Client Id = %s, quit already, running shutdown command.\n\n",
+                        properties->client_id);
+
+          g_spawn_sync (properties->current_directory,
+                        properties->shutdown_command,
+                        properties->environment,
+                        G_SPAWN_SEARCH_PATH,
+                        NULL, NULL,
+                        NULL, NULL,
+                        NULL, NULL);
+        }
+    }
+
   /* give all clients the chance to close the connection */
   manager->die_timeout_id = g_timeout_add (DIE_TIMEOUT,
                                            (GSourceFunc) gtk_main_quit,
