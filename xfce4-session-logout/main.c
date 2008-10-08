@@ -92,6 +92,7 @@ usage (int exit_code)
            "  --reboot              Reboot without displaying the logout dialog\n"
            "  --suspend             Suspend without displaying the logout dialog\n"
            "  --hibernate           Hibernate without displaying the logout dialog\n"
+           "  --fast                Log out quickly; don't save the session\n"
            "\n"
            "  --help                Print this help message and exit\n"
            "  --version             Print version information and exit\n"
@@ -133,6 +134,10 @@ main (int argc, char **argv)
       else if (strcmp (*argv, "--hibernate") == 0)
         {
           shutdown_type = XFSM_SHUTDOWN_HIBERNATE;
+        }
+      else if (strcmp (*argv, "--fast") == 0)
+        {
+          allow_save = FALSE;
         }
       else if (strcmp (*argv, "--version") == 0)
         {
