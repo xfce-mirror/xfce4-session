@@ -101,9 +101,13 @@
              void org.xfce.Session.Client.Terminate()
 
              Instructs the client to exit.  Whether or not the client
-             remains in the session depends on its "restart hint"
-             SM property.  If the restart hint is "restart immediately",
+             remains in the session depends on its restart hint
+             SM property.  If the restart hint is RestartImmediately,
              the client will likely indeed be restarted immediately.
+
+             To actually remove a running client from the running
+             session, it's best to set the restart hint SM property
+             to RestartIfRunning before calling Terminate.
         -->
         <method name="Terminate"/>
 
