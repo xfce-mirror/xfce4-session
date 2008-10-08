@@ -57,6 +57,7 @@ xfce4_session_CFLAGS =							\
 	$(LIBX11_CFLAGS)						\
 	$(LIBXFCEGUI4_CFLAGS)						\
 	$(DBUS_CFLAGS)							\
+	$(DBUS_GLIB_CFLAGS)						\
 	$(LIBWNCK_CFLAGS)						\
 	-DDBUS_API_SUBJECT_TO_CHANGE					\
 	-DWNCK_I_KNOW_THIS_IS_UNSTABLE					\
@@ -73,6 +74,7 @@ xfce4_session_LDADD =							\
 	$(LIBX11_LIBS)							\
 	$(LIBXFCEGUI4_LIBS)						\
 	$(DBUS_LIBS)							\
+	$(DBUS_GLIB_LIBS)						\
 	$(LIBWNCK_LIBS)							\
 	$(GNOME_LIBS)							\
 	$(GNOME_KEYRING_LIBS)

@@ -74,7 +74,8 @@ dnl Check for required packages
 XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.5.90])
 XDT_CHECK_PACKAGE([LIBXFCEGUI4], [libxfcegui4-1.0], [4.5.90])
 XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-1.0], [2.12])
-XDT_CHECK_PACKAGE([DBUS], [dbus-glib-1], [0.73])
+XDT_CHECK_PACKAGE([DBUS], [dbus-1], [1.0.0])
+XDT_CHECK_PACKAGE([DBUS_GLIB], [dbus-glib-1], [0.73])
 
 dnl Check for gnome support
 XDT_CHECK_OPTIONAL_PACKAGE([GNOME], [gconf-2.0], [2.4.0], [gnome],

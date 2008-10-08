@@ -1,5 +1,17 @@
 2008-10-07	Brian Tarricone <bjt23@cornell.edu>
 
+	* configure.in.in: Add separate deps on dbus and dbus-glib.
+	* xfce4-session-logout/Makefile.am,xfce4-session/Makefile.am:
+	  Fix/add dbus/dbus-glib deps.
+	* xfce4-session-logout/main.c: Make xfce4-session-logout use
+	  the more flexible dbus interface for shutting down, and add
+	  command-line options to take action while skipping the
+	  logout confirmation dialog.
+	* xfce4-session-logout/xfce4-session-logout.1: Update manual
+	  page to reflect new command-line options.
+
+2008-10-07	Brian Tarricone <bjt23@cornell.edu>
+
 	* configure.in.in,xfce4-session/Makefile.am: Add check for
 	  gnome-keyring support library.
 	* xfce4-session/xfsm-compat-gnome.c: Don't start a new

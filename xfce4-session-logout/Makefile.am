@@ -9,9 +9,11 @@ xfce4_session_logout_SOURCES =						\
 
 xfce4_session_logout_CFLAGS =						\
 	-I$(top_srcdir)							\
+	$(DBUS_CFLAGS)							\
 	$(LIBXFCEGUI4_CFLAGS)
 
 xfce4_session_logout_LDFLAGS =						\
+	$(DBUS_LIBS)							\
 	$(LIBXFCEGUI4_LIBS)
 
 EXTRA_DIST =								\
