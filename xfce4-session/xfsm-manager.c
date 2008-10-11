@@ -165,8 +165,8 @@ static void       xfsm_manager_start_client_save_timeout (XfsmManager *manager,
 static void       xfsm_manager_cancel_client_save_timeout (XfsmManager *manager,
                                                            XfsmClient  *client);
 static gboolean   xfsm_manager_save_timeout (gpointer user_data);
-static void       xfsm_manager_load_settings (XfsmManager *manager,
-                                              XfceRc      *rc);
+static void       xfsm_manager_load_settings (XfsmManager   *manager,
+                                              XfconfChannel *channel);
 static gboolean   xfsm_manager_load_session (XfsmManager *manager);
 static void       xfsm_manager_dbus_class_init (XfsmManagerClass *klass);
 static void       xfsm_manager_dbus_init (XfsmManager *manager);
@@ -495,42 +495,56 @@ xfsm_manager_load_session (XfsmManager *manager)
 
 
 static gboolean
-xfsm_manager_load_failsafe (XfsmManager *manager,
-                            XfceRc      *rc)
+xfsm_manager_load_failsafe (XfsmManager   *manager,
+                            XfconfChannel *channel)
 {
   FailsafeClient *fclient;
-  const gchar    *old_group;
+  gchar          *failsafe_name;
   GdkDisplay     *display;
+  gchar           propbuf[4096];
   gchar         **command;
   gchar           command_entry[256];
   gchar           screen_entry[256];
   gint            count;
   gint            i;
   gint            n_screen;
-  
-  if (!xfce_rc_has_group (rc, "Failsafe Session"))
+
+  failsafe_name = xfconf_channel_get_string (channel, "/general/FailsafeSessionName", NULL);
+  if (G_UNLIKELY (!failsafe_name))
     return FALSE;
 
+  g_snprintf (propbuf, sizeof (propbuf), "/sessions/%s/IsFailsafe",
+              failsafe_name);
+  if (!xfconf_channel_get_bool (channel, propbuf, FALSE))
+    {
+      g_free (failsafe_name);
+      return FALSE;
+    }
+
   display = gdk_display_get_default ();
-  old_group = xfce_rc_get_group (rc);
-  xfce_rc_set_group (rc, "Failsafe Session");
-  
-  count = xfce_rc_read_int_entry (rc, "Count", 0);
+
+  g_snprintf (propbuf, sizeof (propbuf), "/sessions/%s/Count", failsafe_name);
+  count = xfconf_channel_get_int (channel, propbuf, 0);
 
   for (i = 0; i < count; ++i)
     {
-      g_snprintf (command_entry, 256, "Client%d_Command", i);
-      command = xfce_rc_read_list_entry (rc, command_entry, NULL);
+      g_snprintf (command_entry, sizeof (command_entry),
+                  "/sessions/%s/Client%d_Command", failsafe_name, i);
+      command = xfconf_channel_get_string_list (channel, command_entry);
       if (G_UNLIKELY (command == NULL))
         continue;
 
-      g_snprintf (screen_entry, 256, "Client%d_PerScreen", i);
-      if (xfce_rc_read_bool_entry (rc, screen_entry, FALSE))
+      g_snprintf (screen_entry, sizeof (screen_entry),
+                  "/sessions/%s/Client%d_PerScreen", failsafe_name, i);
+      if (xfconf_channel_get_bool (channel, screen_entry, FALSE))
         {
           for (n_screen = 0; n_screen < gdk_display_get_n_screens (display); ++n_screen)
             {
               fclient = g_new0 (FailsafeClient, 1);
-              fclient->command = xfce_rc_read_list_entry (rc, command_entry, NULL);
+              if (n_screen == 0)
+                fclient->command = command;
+              else
+                fclient->command = g_strdupv (command);
               fclient->screen = gdk_display_get_screen (display, n_screen);
               g_queue_push_tail (manager->failsafe_clients, fclient);
             }
@@ -544,27 +558,26 @@ xfsm_manager_load_failsafe (XfsmManager *manager,
         }
     }
 
-  xfce_rc_set_group (rc, old_group);
-
   return g_queue_peek_head (manager->failsafe_clients) != NULL;
 }
 
 
 static void
-xfsm_manager_load_settings (XfsmManager *manager,
-                            XfceRc      *rc)
+xfsm_manager_load_settings (XfsmManager   *manager,
+                            XfconfChannel *channel)
 {
-  gboolean     session_loaded = FALSE;
-  const gchar *name;
+  gboolean session_loaded = FALSE;
   
-  name = xfce_rc_read_entry (rc, "SessionName", NULL);
-  if (name != NULL && *name != '\0')
-    manager->session_name = g_strdup (name);
-  else
-    manager->session_name = g_strdup (DEFAULT_SESSION_NAME);
+  manager->session_name = xfconf_channel_get_string (channel,
+                                                     "/general/SessionName",
+                                                     DEFAULT_SESSION_NAME);
+  if (G_UNLIKELY (manager->session_name[0] == '\0'))
+    {
+      g_free (manager->session_name);
+      manager->session_name = g_strdup (DEFAULT_SESSION_NAME);
+    }
 
-  xfce_rc_set_group (rc, "Chooser");
-  manager->session_chooser = xfce_rc_read_bool_entry (rc, "AlwaysDisplay", FALSE);
+  manager->session_chooser = xfconf_channel_get_bool (channel, "/chooser/AlwaysDisplay", FALSE);
 
   session_loaded = xfsm_manager_load_session (manager);
 
@@ -575,13 +588,12 @@ xfsm_manager_load_settings (XfsmManager *manager,
     }
   else
     {
-      if (!xfsm_manager_load_failsafe (manager, rc))
+      if (!xfsm_manager_load_failsafe (manager, channel))
         {
           fprintf (stderr, "xfce4-session: Unable to load failsafe session, exiting. Please check\n"
                            "               the value of the environment variable XDG_CONFIG_DIRS\n"
                            "               and make sure that it includes the following path:\n\n"
                            "                " SYSCONFDIR "/xdg\n\n");
-          xfce_rc_close (rc);
           exit (EXIT_FAILURE);
         }
       manager->failsafe_mode = TRUE;
@@ -590,8 +602,8 @@ xfsm_manager_load_settings (XfsmManager *manager,
 
 
 void
-xfsm_manager_load (XfsmManager *manager,
-                   XfceRc *rc)
+xfsm_manager_load (XfsmManager   *manager,
+                   XfconfChannel *channel)
 {
   gchar *display_name;
   gchar *resource_name;
@@ -599,11 +611,9 @@ xfsm_manager_load (XfsmManager *manager,
   gchar *s;
 #endif
 
-  xfce_rc_set_group (rc, "Compatibility");
-  manager->compat_gnome = xfce_rc_read_bool_entry (rc, "LaunchGnome", FALSE);
-  manager->compat_kde = xfce_rc_read_bool_entry (rc, "LaunchKDE", FALSE);
+  manager->compat_gnome = xfconf_channel_get_bool (channel, "/compat/LaunchGNOME", FALSE);
+  manager->compat_kde = xfconf_channel_get_bool (channel, "/compat/LaunchKDE", FALSE);
 
-  xfce_rc_set_group (rc, "General");
   display_name  = xfce_gdk_display_get_fullname (gdk_display_get_default ());
 
 #ifdef HAVE_OS_CYGWIN
@@ -619,7 +629,7 @@ xfsm_manager_load (XfsmManager *manager,
   g_free (resource_name);
   g_free (display_name);
 
-  xfsm_manager_load_settings (manager, rc);
+  xfsm_manager_load_settings (manager, channel);
 }
 
 

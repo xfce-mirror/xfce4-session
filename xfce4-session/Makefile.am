@@ -59,6 +59,7 @@ xfce4_session_CFLAGS =							\
 	$(DBUS_CFLAGS)							\
 	$(DBUS_GLIB_CFLAGS)						\
 	$(LIBWNCK_CFLAGS)						\
+	$(XFCONF_CFLAGS)						\
 	-DDBUS_API_SUBJECT_TO_CHANGE					\
 	-DWNCK_I_KNOW_THIS_IS_UNSTABLE					\
 	-DLIBDIR=\"$(libdir)\"						\
@@ -67,7 +68,7 @@ xfce4_session_CFLAGS =							\
 	-DXFSM_SHUTDOWN_HELPER=\"$(libexecdir)/xfsm-shutdown-helper\"
 
 xfce4_session_LDADD =							\
-	$(top_builddir)/libxfsm/libxfsm-4.2.la				\
+	$(top_builddir)/libxfsm/libxfsm-4.6.la				\
 	$(LIBSM_LDFLAGS)						\
 	$(LIBSM_LIBS)							\
 	$(LIBX11_LDFLAGS)						\
@@ -76,11 +77,12 @@ xfce4_session_LDADD =							\
 	$(DBUS_LIBS)							\
 	$(DBUS_GLIB_LIBS)						\
 	$(LIBWNCK_LIBS)							\
+	$(XFCONF_LIBS)							\
 	$(GNOME_LIBS)							\
 	$(GNOME_KEYRING_LIBS)
 
 xfce4_session_DEPENDENCIES =						\
-	$(top_builddir)/libxfsm/libxfsm-4.2.la
+	$(top_builddir)/libxfsm/libxfsm-4.6.la
 
 
 chooser-icon.h: $(srcdir)/chooser-icon.png

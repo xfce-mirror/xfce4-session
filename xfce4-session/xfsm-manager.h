@@ -25,12 +25,13 @@
 
 #include <glib-object.h>
 
-G_BEGIN_DECLS
-
+#include <xfconf/xfconf.h>
 #include <libxfce4util/libxfce4util.h>
 
-#include <xfce4-session/xfsm-client.h>
+#include "xfsm-client.h"
 #include "shutdown.h"
+
+G_BEGIN_DECLS
 
 #define XFSM_TYPE_MANAGER     (xfsm_manager_get_type())
 #define XFSM_MANAGER(obj)     (G_TYPE_CHECK_INSTANCE_CAST((obj), XFSM_TYPE_MANAGER, XfsmManager))
@@ -70,8 +71,8 @@ GType xfsm_manager_get_type (void) G_GNUC_CONST;
 
 XfsmManager *xfsm_manager_new (void);
 
-void xfsm_manager_load (XfsmManager *manager,
-                        XfceRc      *rc);
+void xfsm_manager_load (XfsmManager   *manager,
+                        XfconfChannel *channel);
 
 gboolean xfsm_manager_restart (XfsmManager *manager);
 

@@ -91,7 +91,7 @@ static void xfsm_startup_handle_failed_client        (XfsmProperties *properties
                                                       XfsmManager    *manager);
 
 void
-xfsm_startup_init (XfceRc *rc)
+xfsm_startup_init (XfconfChannel *channel)
 {
   /* nothing to be done here, currently */
 }

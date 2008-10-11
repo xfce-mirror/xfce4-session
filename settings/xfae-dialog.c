@@ -23,7 +23,7 @@
 #include <config.h>
 #endif
 
-#include <xfce4-autostart-editor/xfae-dialog.h>
+#include "xfae-dialog.h"
 
 
 

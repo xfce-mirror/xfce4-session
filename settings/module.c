@@ -37,7 +37,7 @@
 #include <libxfsm/xfsm-splash-engine.h>
 #include <libxfsm/xfsm-splash-rc.h>
 
-#include <settings/splash/module.h>
+#include "module.h"
 
 
 struct _Module

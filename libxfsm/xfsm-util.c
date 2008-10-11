@@ -234,11 +234,9 @@ xfsm_window_grab_input (GtkWindow *window)
 }
 
 
-XfceRc*
-xfsm_open_config (gboolean readonly)
+XfconfChannel*
+xfsm_open_config (void)
 {
-  return xfce_rc_config_open (XFCE_RESOURCE_CONFIG,
-                              "xfce4-session/xfce4-session.rc",
-                              readonly);
+  return xfconf_channel_get ("xfce4-session");
 }
 

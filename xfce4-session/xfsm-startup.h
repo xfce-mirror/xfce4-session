@@ -23,9 +23,10 @@
 #ifndef __XFSM_STARTUP_H__
 #define __XFSM_STARTUP_H__
 
+#include <xfconf/xfconf.h>
 #include <libxfce4util/libxfce4util.h>
 
-void xfsm_startup_init (XfceRc *rc);
+void xfsm_startup_init (XfconfChannel *channel);
 void xfsm_startup_foreign (XfsmManager *manager);
 void xfsm_startup_begin (XfsmManager *manager);
 void xfsm_startup_session_continue (XfsmManager *manager);

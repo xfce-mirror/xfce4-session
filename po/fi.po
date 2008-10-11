@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-06 12:38+0300\n"
+"POT-Creation-Date: 2008-10-11 03:33-0700\n"
 "PO-Revision-Date: 2007-09-06 12:39+0300\n"
 "Last-Translator: Jari Rahkonen <jari.rahkonen@pp1.inet.fi>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -78,311 +78,353 @@ msgstr "Hiiret"
 msgid "Mice Splash Engine"
 msgstr "Hiiret-käynnistyskuvateema"
 
-#: ../engines/simple/simple.c:319
+#: ../engines/simple/simple.c:320
 msgid "Choose image..."
 msgstr "Valitse kuva..."
 
-#: ../engines/simple/simple.c:364
+#: ../engines/simple/simple.c:365
 msgid "Configure Simple..."
 msgstr "Simplen asetukset..."
 
-#: ../engines/simple/simple.c:375
+#: ../engines/simple/simple.c:376
 msgid "Font"
 msgstr "Kirjasin"
 
-#: ../engines/simple/simple.c:384
+#: ../engines/simple/simple.c:385
 msgid "Colors"
 msgstr "Värit"
 
-#: ../engines/simple/simple.c:392
+#: ../engines/simple/simple.c:393
 msgid "Background color:"
 msgstr "Taustaväri:"
 
-#: ../engines/simple/simple.c:404
+#: ../engines/simple/simple.c:405
 msgid "Text color:"
 msgstr "Tekstin väri:"
 
-#: ../engines/simple/simple.c:416
+#: ../engines/simple/simple.c:417
 msgid "Image"
 msgstr "Kuva"
 
-#: ../engines/simple/simple.c:424
+#: ../engines/simple/simple.c:425
 msgid "Use custom image"
 msgstr "Käytä omaa kuvaa"
 
-#: ../engines/simple/simple.c:509
+#: ../engines/simple/simple.c:510
 msgid "Simple"
 msgstr "Yksinkertainen"
 
-#: ../engines/simple/simple.c:510
+#: ../engines/simple/simple.c:511
 msgid "Simple Splash Engine"
 msgstr "Yksinkertainen käynnistyskuvateema"
 
-#: ../settings/session/session.c:137
-msgid "Session chooser"
-msgstr "Istunnon valitsin"
-
-#: ../settings/session/session.c:142
-msgid "Display chooser on login"
-msgstr "Näytä valitsin sisäänkirjauksen yhteydessä"
-
-#: ../settings/session/session.c:150
-msgid ""
-"If set, the session manager will ask you to choose a session every time you "
-"log in to Xfce."
+#: ../settings/main.c:43
+msgid "Settings manager socket"
 msgstr ""
-"Tämän ollessa valittuna istunnonhallinta pyytää valitsemaan istunnon aina "
-"kirjautuessasi Xfce:hen."
 
-#: ../settings/session/session.c:154
-msgid "Logout settings"
-msgstr "Uloskirjautumisen asetukset"
-
-#: ../settings/session/session.c:160
-msgid "Automatically save session on logout"
-msgstr "Tallenna istunto automaattisesti lopetettaessa"
-
-#: ../settings/session/session.c:166
-msgid ""
-"This option instructs the session manager to save the current session "
-"automatically when you log out. If you don't select this option you'll be "
-"prompted whether you want to save the current session on each logout."
+#: ../settings/main.c:43
+msgid "SOCKET ID"
 msgstr ""
-"Tämä ollessa valittuna istuntosi tallennetaan automaattisesti aina "
-"kirjautuessasi ulos. Muussa tapauksessa sinulta kysytään jokaisen "
-"uloskirjautumisen yhteydessä, haluatko tallentaa nykyisen istunnon."
 
-#: ../settings/session/session.c:173
-msgid "Prompt on logout"
-msgstr "Näytä uloskirjausdialogi"
+#: ../settings/main.c:44
+#, fuzzy
+msgid "Version information"
+msgstr "Tietoja"
 
-#: ../settings/session/session.c:179
-msgid ""
-"This option disables the logout confirmation dialog. Whether the session "
-"will be saved or not depends on whether you enabled the automatic saving of "
-"sessions on logout or not."
+#: ../settings/main.c:64
+#, c-format
+msgid "Type '%s --help' for usage."
 msgstr ""
-"Tämä valinta poistaa uloskirjausdialogin käytöstä. Istunto tallennetaan "
-"tässä tapauksessa vain, jos olet ottanut käyttöön istunnon automaattisen "
-"tallentamisen uloskirjautumisen yhteydessä."
 
-#: ../settings/session/session.c:215
-msgid "Compatibility"
-msgstr "Yhteensopivuus"
-
-#: ../settings/session/session.c:224
-msgid "Launch Gnome services on startup"
-msgstr "Alusta Gnome-palvelut käynnistettäessä"
-
-#: ../settings/session/session.c:230
-msgid ""
-"Enable this if you plan to use Gnome applications. This will instruct the "
-"session manager to start some vital Gnome services for you. You should also "
-"enable this if you want to use the Assistive Technologies that ship with "
-"Gnome."
+#: ../settings/main.c:76
+msgid "The Xfce development team. All rights reserved."
 msgstr ""
-"Valitse tämä, jos aiot käyttää Gnome-sovelluksia. Istunnonhallinta "
-"käynnistää tällöin tarvittavia Gnomen perusosia valmiiksi. Valitse tämä "
-"myös, jos aiot käyttää Gnomen mukana toimitettavia Apuvälineteknologioita."
 
-#: ../settings/session/session.c:237
-msgid "Launch KDE services on startup"
-msgstr "Alusta KDE-palvelut käynnistettäessä"
-
-#: ../settings/session/session.c:243
-msgid ""
-"Enable this option if you plan to run KDE applications as part of your Xfce "
-"Desktop session. This will notably increase the startup time, but on the "
-"other hand, KDE applications will startup faster. Some KDE applications may "
-"not work at all if you don't enable this option."
+#: ../settings/main.c:77
+#, c-format
+msgid "Please report bugs to <%s>."
 msgstr ""
-"Valitse tämä, jos aiot käyttää KDE-sovelluksia osana Xfce-"
-"työpöytäistuntoasi. Tämä kasvattaa käynnistysaikaa huomattavasti, mutta "
-"toisaalta KDE:n sovellukset käynnistyvät nopeammin. Saattaa olla, etteivät "
-"jotkin KDE-sovellukset toimi ollenkaan ilman tätä asetusta."
 
-#: ../settings/session/session.c:256
-msgid "Security"
-msgstr "Turvallisuus"
+#: ../settings/main.c:84
+#, fuzzy
+msgid "Session Settings"
+msgstr "Istunto- ja käynnistysasetukset"
 
-#: ../settings/session/session.c:261
-msgid "Manage remote applications"
-msgstr "Hallitse etäsovelluksia"
-
-#: ../settings/session/session.c:273
-msgid ""
-"Allow the session manager to manage applications running on remote hosts. Do "
-"not enable this option unless you know what you are doing."
+#: ../settings/main.c:86 ../xfce4-session/main.c:277
+msgid "Unable to contact settings server"
 msgstr ""
-"Salli istunnonhallinnan hallita myös etäkoneilla suoritettavia sovelluksia. "
-"Älä valitse tätä, jos et varmasti tiedä, mitä olet tekemässä."
 
-#: ../settings/session/session.c:333
-msgid "Sessions and Startup"
-msgstr "Istunnot ja käynnistys"
+#: ../settings/main.c:100
+msgid "Internal Error"
+msgstr ""
 
-#: ../settings/session/session.c:352
-msgid "General"
-msgstr "Yleiset"
+#: ../settings/main.c:101
+msgid "Unable to create user interface from embedded definition data"
+msgstr ""
 
-#: ../settings/session/session.c:358
-msgid "Advanced"
-msgstr "Lisäasetukset"
+#: ../settings/main.c:102
+msgid "This is likely a problem with your Xfce installation"
+msgstr ""
 
-#. the button label in the xfce-mcs-manager dialog
-#: ../settings/session/session.c:382
-msgid "Button Label|Sessions and Startup"
-msgstr "Istunnot ja käynnistys"
+#: ../settings/main.c:115
+msgid "_Application Autostart"
+msgstr ""
 
-#: ../settings/splash/splash.c:309 ../settings/splash/splash.c:312
-#: ../settings/splash/splash.c:315 ../settings/splash/splash.c:318
-#: ../settings/splash/splash.c:386
+#: ../settings/splash-settings.c:288 ../settings/splash-settings.c:291
+#: ../settings/splash-settings.c:294 ../settings/splash-settings.c:297
+#: ../settings/splash-settings.c:354
 msgid "None"
 msgstr "Ei mitään"
 
-#: ../settings/splash/splash.c:409
-#: ../settings/splash/xfce-splash-settings.desktop.in.h:1
-msgid "Splash Screen Settings"
-msgstr "Käynnistyskuva-asetukset"
-
-#: ../settings/splash/splash.c:457
-msgid "Configure"
-msgstr "Säädä"
-
-#: ../settings/splash/splash.c:465
-msgid "Opens the configuration panel for the selected splash screen."
-msgstr "Avaa valitun käynnistykuvan asetuspaneeli."
-
-#: ../settings/splash/splash.c:469
-msgid "Test"
-msgstr "Kokeile"
-
-#: ../settings/splash/splash.c:476
-msgid "Demonstrates the selected splash screen."
-msgstr "Antaa näytteen valitun käynnistyskuvan toiminnasta."
-
-#: ../settings/splash/splash.c:493
-msgid "Information"
-msgstr "Tietoja"
-
-#: ../settings/splash/splash.c:504
-msgid "<b>Description:</b>"
-msgstr "<b>Kuvaus:</b>"
-
-#: ../settings/splash/splash.c:518
-msgid "<b>Version:</b>"
-msgstr "<b>Versio:</b>"
-
-#: ../settings/splash/splash.c:532
-msgid "<b>Author:</b>"
-msgstr "<b>Tekijä:</b>"
-
-#: ../settings/splash/splash.c:546
-msgid "<b>Homepage:</b>"
-msgstr "<b>Kotisivu:</b>"
-
-#. the button label in the xfce-mcs-manager dialog
-#: ../settings/splash/splash.c:584
-msgid "Button Label|Splash Screen"
-msgstr "Käynnistyskuva"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:99
+#: ../settings/xfae-dialog.c:99
 msgid "Add application"
 msgstr "Lisää sovellus"
 
-#: ../xfce4-autostart-editor/xfae-dialog.c:113
+#: ../settings/xfae-dialog.c:113
 msgid "Name:"
 msgstr "Nimi:"
 
-#: ../xfce4-autostart-editor/xfae-dialog.c:130
+#: ../settings/xfae-dialog.c:130
 msgid "Description:"
 msgstr "Kuvaus:"
 
-#: ../xfce4-autostart-editor/xfae-dialog.c:145
+#: ../settings/xfae-dialog.c:145
 msgid "Command:"
 msgstr "Komento:"
 
-#: ../xfce4-autostart-editor/xfae-dialog.c:205
+#: ../settings/xfae-dialog.c:205
 msgid "Select a command"
 msgstr "Valitse komento"
 
-#: ../xfce4-autostart-editor/xfae-model.c:558
+#: ../settings/xfae-model.c:558
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "Kohteen %s irroitus epäonnistui: %s"
 
-#: ../xfce4-autostart-editor/xfae-model.c:646
+#: ../settings/xfae-model.c:646
 #, c-format
 msgid "Failed to create file %s"
 msgstr "Tiedostoa %s ei voitu luoda"
 
-#: ../xfce4-autostart-editor/xfae-model.c:668
+#: ../settings/xfae-model.c:668
 #, c-format
 msgid "Failed to write file %s"
 msgstr "Tiedostoon %s ei voitu kirjoittaa"
 
-#: ../xfce4-autostart-editor/xfae-model.c:767
+#: ../settings/xfae-model.c:767
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "Tiedostoa %s ei voitu avata kirjoitettavaksi"
 
-#: ../xfce4-autostart-editor/xfae-window.c:89
-#: ../xfce4-autostart-editor/xfae-window.c:106
-msgid "Autostarted applications"
-msgstr "Sovellusten automaattikäynnistys"
-
-#: ../xfce4-autostart-editor/xfae-window.c:124
+#: ../settings/xfae-window.c:102
+#, fuzzy
 msgid ""
-"Below is the list of applications that will be started\n"
-"automatically when you login to your Xfce desktop,\n"
-"in addition to the applications that were saved when\n"
-"you logged out last time:"
+"Below is the list of applications that will be started automatically when "
+"you login to your Xfce desktop, in addition to the applications that were "
+"saved when you logged out last time:"
 msgstr ""
 "Alla on lista sovelluksista, jotka käynnistetään\n"
 "automaattisesti kirjautuessasi Xfce-työpöydällesi\n"
 "sekä sovelluksista, jotka tallennettiin edellisen\n"
 "uloskirjautumisen yhteydessä:"
 
-#: ../xfce4-session/main.c:140
+#: ../settings/xfce4-session-settings.glade.h:1
+msgid "<b>Author:</b>"
+msgstr "<b>Tekijä:</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:2
+#, fuzzy
+msgid "<b>Compatibility</b>"
+msgstr "Yhteensopivuus"
+
+#: ../settings/xfce4-session-settings.glade.h:3
+msgid "<b>Description:</b>"
+msgstr "<b>Kuvaus:</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:4
+msgid "<b>Homepage:</b>"
+msgstr "<b>Kotisivu:</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:5
+#, fuzzy
+msgid "<b>Information</b>"
+msgstr "Tietoja"
+
+#: ../settings/xfce4-session-settings.glade.h:6
+#, fuzzy
+msgid "<b>Logout Settings</b>"
+msgstr "Uloskirjautumisen asetukset"
+
+#: ../settings/xfce4-session-settings.glade.h:7
+#, fuzzy
+msgid "<b>Security</b>"
+msgstr "<b>Kuvaus:</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:8
+#, fuzzy
+msgid "<b>Session Chooser</b>"
+msgstr "Istunnon valitsin"
+
+#: ../settings/xfce4-session-settings.glade.h:9
+msgid "<b>Version:</b>"
+msgstr "<b>Versio:</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:10
+#, fuzzy
+msgid "Ad_vanced"
+msgstr "Lisäasetukset"
+
+#: ../settings/xfce4-session-settings.glade.h:11
+#, fuzzy
+msgid "Automatically save session on _logout"
+msgstr "Tallenna istunto automaattisesti lopetettaessa"
+
+#: ../settings/xfce4-session-settings.glade.h:12
+#, fuzzy
+msgid "Con_figure"
+msgstr "Säädä"
+
+#: ../settings/xfce4-session-settings.glade.h:13
+msgid "Customize desktop startup and splash screen"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.glade.h:14
+msgid "Demonstrates the selected splash screen."
+msgstr "Antaa näytteen valitun käynnistyskuvan toiminnasta."
+
+#: ../settings/xfce4-session-settings.glade.h:15
+#, fuzzy
+msgid "Launch GN_OME services on startup"
+msgstr "Alusta KDE-palvelut käynnistettäessä"
+
+#: ../settings/xfce4-session-settings.glade.h:16
+#, fuzzy
+msgid "Launch _KDE services on startup"
+msgstr "Alusta KDE-palvelut käynnistettäessä"
+
+#: ../settings/xfce4-session-settings.glade.h:17
+#, fuzzy
+msgid "Manage _remote applications"
+msgstr "Hallitse etäsovelluksia"
+
+#: ../settings/xfce4-session-settings.glade.h:18
+msgid "Opens the configuration panel for the selected splash screen."
+msgstr "Avaa valitun käynnistykuvan asetuspaneeli."
+
+#: ../settings/xfce4-session-settings.glade.h:19
+msgid "Quit Program"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.glade.h:20
+msgid "Quit the program, and remove it from the session."
+msgstr ""
+
+#: ../settings/xfce4-session-settings.glade.h:21
+#, fuzzy
+msgid "Remove the selected application from the session."
+msgstr "Antaa näytteen valitun käynnistyskuvan toiminnasta."
+
+#: ../settings/xfce4-session-settings.glade.h:22
+msgid "S_plash"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.glade.h:23
+#: ../settings/xfce-session-settings.desktop.in.h:2
+msgid "Sessions and Startup"
+msgstr "Istunnot ja käynnistys"
+
+#: ../settings/xfce4-session-settings.glade.h:24
+msgid ""
+"These applications are a part of the currently-running session, and can be "
+"saved when you log out."
+msgstr ""
+
+#: ../settings/xfce4-session-settings.glade.h:25
+#, fuzzy
+msgid "_Display chooser on login"
+msgstr "Näytä valitsin sisäänkirjauksen yhteydessä"
+
+#: ../settings/xfce4-session-settings.glade.h:26
+#, fuzzy
+msgid "_General"
+msgstr "Yleiset"
+
+#: ../settings/xfce4-session-settings.glade.h:27
+#, fuzzy
+msgid "_Prompt on logout"
+msgstr "Näytä uloskirjausdialogi"
+
+#: ../settings/xfce4-session-settings.glade.h:28
+#, fuzzy
+msgid "_Session"
+msgstr "Lopeta istunto"
+
+#: ../settings/xfce4-session-settings.glade.h:29
+#, fuzzy
+msgid "_Test"
+msgstr "Kokeile"
+
+#: ../settings/xfce4-session-settings.glade.h:30
+msgid "gtk-close"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.glade.h:31
+msgid "gtk-help"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.glade.h:32
+msgid "gtk-remove"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.glade.h:33
+msgid "label"
+msgstr ""
+
+#: ../xfce4-session/main.c:145
 msgid "Loading desktop settings"
 msgstr "Ladataan näytön asetuksia"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:200
+#: ../xfce4-session/main.c:206
 msgid "Verifying DNS settings"
 msgstr "Varmistetaan DNS-asetukset"
 
-#: ../xfce4-session/main.c:203
+#: ../xfce4-session/main.c:209
 msgid "Loading session data"
 msgstr "Ladataan istunnon tietoja"
 
-#: ../xfce4-session/shutdown.c:334
+#: ../xfce4-session/main.c:275
+#, fuzzy
+msgid "Xfce Session Manager"
+msgstr "Valitse istunnon nimi"
+
+#: ../xfce4-session/shutdown.c:338
 msgid "Log Out"
 msgstr "Kirjaudu ulos"
 
-#: ../xfce4-session/shutdown.c:357
+#: ../xfce4-session/shutdown.c:363
 msgid "Restart"
 msgstr ""
 "Käynnistä\n"
 "uudelleen"
 
-#: ../xfce4-session/shutdown.c:380
+#: ../xfce4-session/shutdown.c:388
 msgid "Shut Down"
 msgstr "Sammuta"
 
-#: ../xfce4-session/shutdown.c:388
+#: ../xfce4-session/shutdown.c:396
 msgid "_Save session for future logins"
 msgstr "_Tallenna istunto"
 
-#: ../xfce4-session/shutdown.c:451
+#: ../xfce4-session/shutdown.c:459
 msgid "Please enter your password:"
 msgstr "Anna salasanasi:"
 
-#: ../xfce4-session/shutdown.c:482
+#: ../xfce4-session/shutdown.c:490
 msgid "<b>An error occurred</b>"
 msgstr "<b>Virhe</b>"
 
-#: ../xfce4-session/shutdown.c:496
+#: ../xfce4-session/shutdown.c:504
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
@@ -421,15 +463,21 @@ msgstr "Uusi istunto"
 msgid "Create a new session."
 msgstr "Luo uusi istunto."
 
-#: ../xfce4-session/xfsm-compat-gnome.c:244
+#: ../xfce4-session/xfsm-client.c:757 ../xfce4-session/xfsm-client.c:817
+#: ../xfce4-session/xfsm-client.c:925
+#, c-format
+msgid "The client doesn't have any properties set yet"
+msgstr ""
+
+#: ../xfce4-session/xfsm-compat-gnome.c:301
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "Käynnistetään Gnomen avainrengaspalvelu"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:256
+#: ../xfce4-session/xfsm-compat-gnome.c:313
 msgid "Starting Gnome Assistive Technologies"
 msgstr "Käynnistetään Gnomen apuvälineteknologiat"
 
-#: ../xfce4-session/xfsm-compat-kde.c:118
+#: ../xfce4-session/xfsm-compat-kde.c:124
 msgid "Starting KDE services"
 msgstr "Käynnistetään KDE-palvelut"
 
@@ -458,6 +506,31 @@ msgstr "Jatka kuitenkin"
 msgid "Try again"
 msgstr "Yritä uudelleen"
 
+#: ../xfce4-session/xfsm-manager.c:1281
+#, c-format
+msgid "Can only terminate clients when in the idle state"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1745
+#, c-format
+msgid "Session manager must be in idle state when requesting a checkpoint"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1786
+#, c-format
+msgid "Session manager must be in idle state when requesting a shutdown"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1793
+#, c-format
+msgid "Suspend and hibernate are not supported"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1800
+#, c-format
+msgid "Invalid shutdown type \"%u\""
+msgstr ""
+
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
 msgstr "Valitse istunto"
@@ -470,88 +543,88 @@ msgstr "Valitse istunnon nimi"
 msgid "Choose a name for the new session:"
 msgstr "Valise nimi uudelle istunnolle:"
 
-#: ../xfce4-session/xfsm-startup.c:101
+#: ../xfce4-session/xfsm-startup.c:123
 msgid "Starting the Volume Controller"
 msgstr "Käynnistetään äänenvoimakkuuden säädin"
 
-#: ../xfce4-session/xfsm-startup.c:103
+#: ../xfce4-session/xfsm-startup.c:125
 msgid "Starting the Panel"
 msgstr "Käynnistetään paneeli"
 
-#: ../xfce4-session/xfsm-startup.c:105
+#: ../xfce4-session/xfsm-startup.c:127
 msgid "Starting the Desktop Manager"
 msgstr "Käynnistetään työpöydänhallinta"
 
-#: ../xfce4-session/xfsm-startup.c:107
+#: ../xfce4-session/xfsm-startup.c:129
 msgid "Starting the Taskbar"
 msgstr "Käynnistetään tehtäväpalkki"
 
-#: ../xfce4-session/xfsm-startup.c:109
+#: ../xfce4-session/xfsm-startup.c:131
 msgid "Starting the Window Manager"
 msgstr "Käynnistetään ikkunoidenhallinta"
 
-#: ../xfce4-session/xfsm-startup.c:113
+#: ../xfce4-session/xfsm-startup.c:135
 msgid "Starting the Gnome Terminal Emulator"
 msgstr "Käynnistetään Gnomen pääteohjelma"
 
-#: ../xfce4-session/xfsm-startup.c:117
+#: ../xfce4-session/xfsm-startup.c:139
 msgid "Starting the KDE Advanced Text Editor"
 msgstr "Käynnistetään KDE:n edistynyt tekstieditori (Kate)"
 
-#: ../xfce4-session/xfsm-startup.c:119
+#: ../xfce4-session/xfsm-startup.c:141
 msgid "Starting the KDE Clipboard Manager"
 msgstr "Käynnistetään KDE:n leikepöydänhallinta"
 
-#: ../xfce4-session/xfsm-startup.c:121
+#: ../xfce4-session/xfsm-startup.c:143
 msgid "Starting the KDE Mail Reader"
 msgstr "Käynnistetään KDE:n sähköpostiohjelma"
 
-#: ../xfce4-session/xfsm-startup.c:123
+#: ../xfce4-session/xfsm-startup.c:145
 msgid "Starting the KDE News Reader"
 msgstr "Käynnistetään KDE:n uutisryhmäohjelma"
 
-#: ../xfce4-session/xfsm-startup.c:125
+#: ../xfce4-session/xfsm-startup.c:147
 msgid "Starting the Konqueror"
 msgstr "Käynnistetään Konqueror"
 
-#: ../xfce4-session/xfsm-startup.c:127
+#: ../xfce4-session/xfsm-startup.c:149
 msgid "Starting the KDE Terminal Emulator"
 msgstr "Käynnistetään KDE:n pääteohjelma"
 
-#: ../xfce4-session/xfsm-startup.c:131
+#: ../xfce4-session/xfsm-startup.c:153
 msgid "Starting the Beep Media Player"
 msgstr "Käynnistetään Beep Media Player"
 
-#: ../xfce4-session/xfsm-startup.c:133
+#: ../xfce4-session/xfsm-startup.c:155
 msgid "Starting The Gimp"
 msgstr "Käynnistetään Gimp"
 
-#: ../xfce4-session/xfsm-startup.c:135
+#: ../xfce4-session/xfsm-startup.c:157
 msgid "Starting the VI Improved Editor"
 msgstr "Käynnistetään VI Improved Editor"
 
-#: ../xfce4-session/xfsm-startup.c:137
+#: ../xfce4-session/xfsm-startup.c:159
 msgid "Starting the Session Management Proxy"
 msgstr "Käynnistetään istunnonhallinnan välipalvelin"
 
-#: ../xfce4-session/xfsm-startup.c:139
+#: ../xfce4-session/xfsm-startup.c:161
 msgid "Starting the X-Chat IRC Client"
 msgstr "Käynnistetään X-Chat IRC-asiakasohjelma"
 
-#: ../xfce4-session/xfsm-startup.c:141
+#: ../xfce4-session/xfsm-startup.c:163
 msgid "Starting the X Multimedia System"
 msgstr "Käynnistetään X Multimedia System"
 
-#: ../xfce4-session/xfsm-startup.c:143
+#: ../xfce4-session/xfsm-startup.c:165
 msgid "Starting the X Terminal Emulator"
 msgstr "Käynnistetään X Terminal Emulator"
 
-#: ../xfce4-session/xfsm-startup.c:145
+#: ../xfce4-session/xfsm-startup.c:167
 #, c-format
 msgid "Starting %s"
 msgstr "Käynnistetään %s"
 
-#: ../xfce4-session/xfsm-startup.c:270
+#: ../xfce4-session/xfsm-startup.c:292
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -575,7 +648,7 @@ msgstr ""
 "on onnistuneesti haettu uuteen sijaintiin.\n"
 "Vanha hakemisto pitäisi nyt poistaa.\n"
 
-#: ../xfce4-session/xfsm-startup.c:409
+#: ../xfce4-session/xfsm-startup.c:431
 msgid "Performing Autostart..."
 msgstr "Suoritetaan automaattinen käynnistys..."
 
@@ -599,37 +672,101 @@ msgstr "Vinkkejä ja kikkoja"
 msgid "Next"
 msgstr "Seuraava"
 
-#: ../settings/session/xfce-session-settings.desktop.in.h:1
+#: ../settings/xfce-session-settings.desktop.in.h:1
 msgid "Session and Startup Settings"
 msgstr "Istunto- ja käynnistysasetukset"
 
-#: ../settings/session/xfce-session-settings.desktop.in.h:2
+#: ../settings/xfce-session-settings.desktop.in.h:3
 msgid "Sessions and Startup Settings"
 msgstr "Istuntojen ja käynnistyksen asetukset"
 
-#: ../settings/session/xfce-session-settings.desktop.in.h:3
+#: ../settings/xfce-session-settings.desktop.in.h:4
 msgid "Xfce 4 Sessions and Startup Settings"
 msgstr "Xfce 4 istuntojen ja käynnistyksen asetukset"
-
-#: ../settings/splash/xfce-splash-settings.desktop.in.h:2
-msgid "Xfce 4 Splash Screen Settings"
-msgstr "Xfce 4 käynnistyskuva-asetukset"
-
-#: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:1
-msgid "Autostarted Applications"
-msgstr "Sovellusten automaattikäynnistys"
-
-#: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:2
-msgid "Edit the list of autostarted applications"
-msgstr "Muokkaa automaattikäynnistyslistaa"
-
-#: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:3
-msgid "Xfce 4 Autostarted Applications"
-msgstr "Xfce 4 sovellusten automaattikäynnistys"
 
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
 msgstr "xfce4-vinkit"
 
-#~ msgid "End Session"
-#~ msgstr "Lopeta istunto"
+#~ msgid ""
+#~ "If set, the session manager will ask you to choose a session every time "
+#~ "you log in to Xfce."
+#~ msgstr ""
+#~ "Tämän ollessa valittuna istunnonhallinta pyytää valitsemaan istunnon aina "
+#~ "kirjautuessasi Xfce:hen."
+
+#~ msgid ""
+#~ "This option instructs the session manager to save the current session "
+#~ "automatically when you log out. If you don't select this option you'll be "
+#~ "prompted whether you want to save the current session on each logout."
+#~ msgstr ""
+#~ "Tämä ollessa valittuna istuntosi tallennetaan automaattisesti aina "
+#~ "kirjautuessasi ulos. Muussa tapauksessa sinulta kysytään jokaisen "
+#~ "uloskirjautumisen yhteydessä, haluatko tallentaa nykyisen istunnon."
+
+#~ msgid ""
+#~ "This option disables the logout confirmation dialog. Whether the session "
+#~ "will be saved or not depends on whether you enabled the automatic saving "
+#~ "of sessions on logout or not."
+#~ msgstr ""
+#~ "Tämä valinta poistaa uloskirjausdialogin käytöstä. Istunto tallennetaan "
+#~ "tässä tapauksessa vain, jos olet ottanut käyttöön istunnon automaattisen "
+#~ "tallentamisen uloskirjautumisen yhteydessä."
+
+#~ msgid "Launch Gnome services on startup"
+#~ msgstr "Alusta Gnome-palvelut käynnistettäessä"
+
+#~ msgid ""
+#~ "Enable this if you plan to use Gnome applications. This will instruct the "
+#~ "session manager to start some vital Gnome services for you. You should "
+#~ "also enable this if you want to use the Assistive Technologies that ship "
+#~ "with Gnome."
+#~ msgstr ""
+#~ "Valitse tämä, jos aiot käyttää Gnome-sovelluksia. Istunnonhallinta "
+#~ "käynnistää tällöin tarvittavia Gnomen perusosia valmiiksi. Valitse tämä "
+#~ "myös, jos aiot käyttää Gnomen mukana toimitettavia Apuvälineteknologioita."
+
+#~ msgid ""
+#~ "Enable this option if you plan to run KDE applications as part of your "
+#~ "Xfce Desktop session. This will notably increase the startup time, but on "
+#~ "the other hand, KDE applications will startup faster. Some KDE "
+#~ "applications may not work at all if you don't enable this option."
+#~ msgstr ""
+#~ "Valitse tämä, jos aiot käyttää KDE-sovelluksia osana Xfce-"
+#~ "työpöytäistuntoasi. Tämä kasvattaa käynnistysaikaa huomattavasti, mutta "
+#~ "toisaalta KDE:n sovellukset käynnistyvät nopeammin. Saattaa olla, "
+#~ "etteivät jotkin KDE-sovellukset toimi ollenkaan ilman tätä asetusta."
+
+#~ msgid "Security"
+#~ msgstr "Turvallisuus"
+
+#~ msgid ""
+#~ "Allow the session manager to manage applications running on remote hosts. "
+#~ "Do not enable this option unless you know what you are doing."
+#~ msgstr ""
+#~ "Salli istunnonhallinnan hallita myös etäkoneilla suoritettavia "
+#~ "sovelluksia. Älä valitse tätä, jos et varmasti tiedä, mitä olet tekemässä."
+
+#~ msgid "Button Label|Sessions and Startup"
+#~ msgstr "Istunnot ja käynnistys"
+
+#~ msgid "Splash Screen Settings"
+#~ msgstr "Käynnistyskuva-asetukset"
+
+#~ msgid "Button Label|Splash Screen"
+#~ msgstr "Käynnistyskuva"
+
+#~ msgid "Autostarted applications"
+#~ msgstr "Sovellusten automaattikäynnistys"
+
+#~ msgid "Xfce 4 Splash Screen Settings"
+#~ msgstr "Xfce 4 käynnistyskuva-asetukset"
+
+#~ msgid "Autostarted Applications"
+#~ msgstr "Sovellusten automaattikäynnistys"
+
+#~ msgid "Edit the list of autostarted applications"
+#~ msgstr "Muokkaa automaattikäynnistyslistaa"
+
+#~ msgid "Xfce 4 Autostarted Applications"
+#~ msgstr "Xfce 4 sovellusten automaattikäynnistys"

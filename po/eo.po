@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-20 16:58+0200\n"
+"POT-Creation-Date: 2008-10-11 03:33-0700\n"
 "PO-Revision-Date: 2006-09-08 22:06+0200\n"
 "Last-Translator: Sylvain Vedrenne <gnu_sylvain@xfce.org>\n"
 "Language-Team: Esperanto <debian-l10n-esperanto@lists.debian.org>\n"
@@ -78,311 +78,352 @@ msgstr "Musoj"
 msgid "Mice Splash Engine"
 msgstr "La Ekaperanta Lanĉetoso 'Musoj'"
 
-#: ../engines/simple/simple.c:319
+#: ../engines/simple/simple.c:320
 msgid "Choose image..."
 msgstr "Elektu bildon..."
 
-#: ../engines/simple/simple.c:364
+#: ../engines/simple/simple.c:365
 msgid "Configure Simple..."
 msgstr "Agordu la Simplan etoson..."
 
-#: ../engines/simple/simple.c:375
+#: ../engines/simple/simple.c:376
 msgid "Font"
 msgstr "Tiparo"
 
-#: ../engines/simple/simple.c:384
+#: ../engines/simple/simple.c:385
 msgid "Colors"
 msgstr "Koloroj"
 
-#: ../engines/simple/simple.c:392
+#: ../engines/simple/simple.c:393
 msgid "Background color:"
 msgstr "Fona koloro:"
 
-#: ../engines/simple/simple.c:404
+#: ../engines/simple/simple.c:405
 msgid "Text color:"
 msgstr "Teksta koloro:"
 
-#: ../engines/simple/simple.c:416
+#: ../engines/simple/simple.c:417
 msgid "Image"
 msgstr "Bildo"
 
-#: ../engines/simple/simple.c:424
+#: ../engines/simple/simple.c:425
 msgid "Use custom image"
 msgstr "Uzu laŭmendan bildon"
 
-#: ../engines/simple/simple.c:509
+#: ../engines/simple/simple.c:510
 msgid "Simple"
 msgstr "Simpla"
 
-#: ../engines/simple/simple.c:510
+#: ../engines/simple/simple.c:511
 msgid "Simple Splash Engine"
 msgstr "'Simpla' Ekaperanta Lanĉetoso"
 
-#: ../settings/session/session.c:137
-msgid "Session chooser"
-msgstr "Elektilo de Seanco"
-
-#: ../settings/session/session.c:142
-msgid "Display chooser on login"
-msgstr "Montru la elektilon dum la ensaluto"
-
-#: ../settings/session/session.c:150
-msgid ""
-"If set, the session manager will ask you to choose a session every time you "
-"log in to Xfce."
+#: ../settings/main.c:43
+msgid "Settings manager socket"
 msgstr ""
-"Se aktivigita, la seancadministrilo demandos al vi elektu seancon ĉiufoje "
-"kiam vi ensalutas en Xfce."
 
-#: ../settings/session/session.c:154
-msgid "Logout settings"
-msgstr "Elsalutaj parametroj"
-
-#: ../settings/session/session.c:160
-msgid "Automatically save session on logout"
-msgstr "Aŭtomate konservu la seancon ĉe elsaluto"
-
-#: ../settings/session/session.c:166
-msgid ""
-"This option instructs the session manager to save the current session "
-"automatically when you log out. If you don't select this option you'll be "
-"prompted whether you want to save the current session on each logout."
+#: ../settings/main.c:43
+msgid "SOCKET ID"
 msgstr ""
-"Ĉi tiu opcio signifas ke la seancadministrilo konservas la kurantan seancon "
-"aŭtomate kiam vi elsalutas. Se vi ne elektas tiun opcion, vi estos demandita "
-"ĉu vi volas konservi la kurantan seancon ĉe ĉiu elsaluto."
 
-#: ../settings/session/session.c:173
-msgid "Prompt on logout"
-msgstr "Demandu ĉe la elsaluto"
+#: ../settings/main.c:44
+#, fuzzy
+msgid "Version information"
+msgstr "Informigo"
 
-#: ../settings/session/session.c:179
-msgid ""
-"This option disables the logout confirmation dialog. Whether the session "
-"will be saved or not depends on whether you enabled the automatic saving of "
-"sessions on logout or not."
+#: ../settings/main.c:64
+#, c-format
+msgid "Type '%s --help' for usage."
 msgstr ""
-"Ĉi tiu opcio malaktivigas la elsalutan konfirmdialogon. La seanco estos "
-"konservita kondiĉe ke vi antaŭe aktivigis la aŭtomatan konservigon de seanco "
-"ĉe la elsaluto."
 
-#: ../settings/session/session.c:215
-msgid "Compatibility"
-msgstr "Kongrueco"
-
-#: ../settings/session/session.c:224
-msgid "Launch Gnome services on startup"
-msgstr "Lanĉu Gnomajn servojn dum la komenco"
-
-#: ../settings/session/session.c:230
-msgid ""
-"Enable this if you plan to use Gnome applications. This will instruct the "
-"session manager to start some vital Gnome services for you. You should also "
-"enable this if you want to use the Assistive Technologies that ship with "
-"Gnome."
+#: ../settings/main.c:76
+msgid "The Xfce development team. All rights reserved."
 msgstr ""
-"Elektu ĉi tion se vi intencas uzi Gnomajn programojn. Ĉi-tio faros ke la "
-"administrilo de seanco lanĉos gravegajn Gnomajn servojn por vi. Vi devus "
-"ankaŭ elekti tion se vi volas uzi la Asistantajn Teknologiojn kiuj kunestas "
-"Gnomon."
 
-#: ../settings/session/session.c:237
-msgid "Launch KDE services on startup"
-msgstr "Lanĉi KDE servojn dum la komenco"
-
-#: ../settings/session/session.c:243
-msgid ""
-"Enable this option if you plan to run KDE applications as part of your Xfce "
-"Desktop session. This will notably increase the startup time, but on the "
-"other hand, KDE applications will startup faster. Some KDE applications may "
-"not work at all if you don't enable this option."
+#: ../settings/main.c:77
+#, c-format
+msgid "Please report bugs to <%s>."
 msgstr ""
-"Elektu tiun opcion se vi intencas uzi KDE programojn kiel partoj de via Xfce "
-"seanco. Ĉi tio rimarkinde plilongigos la komencdaŭron de la seanco, sed "
-"aliflanke KDE programoj komenciĝos pli rapide. Kelkaj KDE programoj eble eĉ "
-"ne funkcios se vi ne elektas ĉi tiun opcion."
 
-#: ../settings/session/session.c:256
-msgid "Security"
-msgstr "Sekurigo"
+#: ../settings/main.c:84
+#, fuzzy
+msgid "Session Settings"
+msgstr "Seancaj kaj Startigaj Parametroj"
 
-#: ../settings/session/session.c:261
-msgid "Manage remote applications"
-msgstr "Administru forajn aplikaĵojn"
-
-#: ../settings/session/session.c:273
-msgid ""
-"Allow the session manager to manage applications running on remote hosts. Do "
-"not enable this option unless you know what you are doing."
+#: ../settings/main.c:86 ../xfce4-session/main.c:277
+msgid "Unable to contact settings server"
 msgstr ""
-"Permesas ke la seancadministrilo administras aplikaĵojn ĉe foraj gastigaj "
-"komputiloj. Se vi elektas ĉi tiun opcion, ne faru tion hazarde."
 
-#: ../settings/session/session.c:333
-msgid "Sessions and Startup"
-msgstr "Seancoj kaj Komenco"
+#: ../settings/main.c:100
+msgid "Internal Error"
+msgstr ""
 
-#: ../settings/session/session.c:352
-msgid "General"
-msgstr "Ĝeneralaĵoj"
+#: ../settings/main.c:101
+msgid "Unable to create user interface from embedded definition data"
+msgstr ""
 
-#: ../settings/session/session.c:358
-msgid "Advanced"
-msgstr "Evoluaĵoj"
+#: ../settings/main.c:102
+msgid "This is likely a problem with your Xfce installation"
+msgstr ""
 
-#. the button label in the xfce-mcs-manager dialog
-#: ../settings/session/session.c:382
-msgid "Button Label|Sessions and Startup"
-msgstr "Butona etikedo|Seancoj kaj Komenco"
+#: ../settings/main.c:115
+msgid "_Application Autostart"
+msgstr ""
 
-#: ../settings/splash/splash.c:309 ../settings/splash/splash.c:312
-#: ../settings/splash/splash.c:315 ../settings/splash/splash.c:318
-#: ../settings/splash/splash.c:386
+#: ../settings/splash-settings.c:288 ../settings/splash-settings.c:291
+#: ../settings/splash-settings.c:294 ../settings/splash-settings.c:297
+#: ../settings/splash-settings.c:354
 msgid "None"
 msgstr "Nenia"
 
-#: ../settings/splash/splash.c:409
-#: ../settings/splash/xfce-splash-settings.desktop.in.h:1
-msgid "Splash Screen Settings"
-msgstr "Ekaperantekranaj Parametroj"
-
-#: ../settings/splash/splash.c:457
-msgid "Configure"
-msgstr "Konfiguru"
-
-#: ../settings/splash/splash.c:465
-msgid "Opens the configuration panel for the selected splash screen."
-msgstr "Malfermas la konfigurilan panelon pri la elektita ekaperantekrano."
-
-#: ../settings/splash/splash.c:469
-msgid "Test"
-msgstr "Testu"
-
-#: ../settings/splash/splash.c:476
-msgid "Demonstrates the selected splash screen."
-msgstr "Demonstras la elektitan ekaperantekranon."
-
-#: ../settings/splash/splash.c:493
-msgid "Information"
-msgstr "Informigo"
-
-#: ../settings/splash/splash.c:504
-msgid "<b>Description:</b>"
-msgstr "<b>Priskribo:</b>"
-
-#: ../settings/splash/splash.c:518
-msgid "<b>Version:</b>"
-msgstr "<b>Eldono:</b>"
-
-#: ../settings/splash/splash.c:532
-msgid "<b>Author:</b>"
-msgstr "<b>Aŭtoro:</b>"
-
-#: ../settings/splash/splash.c:546
-msgid "<b>Homepage:</b>"
-msgstr "<b>Hejmpaĝo:</b>"
-
-#. the button label in the xfce-mcs-manager dialog
-#: ../settings/splash/splash.c:584
-msgid "Button Label|Splash Screen"
-msgstr "Butona etikedo|Ekaperantekrano"
-
-#: ../xfce4-autostart-editor/xfae-dialog.c:99
+#: ../settings/xfae-dialog.c:99
 msgid "Add application"
 msgstr "Aldonu aplikaĵon"
 
-#: ../xfce4-autostart-editor/xfae-dialog.c:113
+#: ../settings/xfae-dialog.c:113
 msgid "Name:"
 msgstr "Nomo:"
 
-#: ../xfce4-autostart-editor/xfae-dialog.c:130
+#: ../settings/xfae-dialog.c:130
 msgid "Description:"
 msgstr "Priskribo:"
 
-#: ../xfce4-autostart-editor/xfae-dialog.c:145
+#: ../settings/xfae-dialog.c:145
 msgid "Command:"
 msgstr "Komando:"
 
-#: ../xfce4-autostart-editor/xfae-dialog.c:205
+#: ../settings/xfae-dialog.c:205
 msgid "Select a command"
 msgstr "Elektu komandon"
 
-#: ../xfce4-autostart-editor/xfae-model.c:558
+#: ../settings/xfae-model.c:558
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "Malsukcesis malligi %s: %s"
 
-#: ../xfce4-autostart-editor/xfae-model.c:646
+#: ../settings/xfae-model.c:646
 #, c-format
 msgid "Failed to create file %s"
 msgstr "Malsukcesis krei la dosieron %s"
 
-#: ../xfce4-autostart-editor/xfae-model.c:668
+#: ../settings/xfae-model.c:668
 #, c-format
 msgid "Failed to write file %s"
 msgstr "Malsukcesis surdiskigi la dosieron %s"
 
-#: ../xfce4-autostart-editor/xfae-model.c:767
+#: ../settings/xfae-model.c:767
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "Malsukcesis malfermi %s por skribadi"
 
-#: ../xfce4-autostart-editor/xfae-window.c:89
-#: ../xfce4-autostart-editor/xfae-window.c:106
-msgid "Autostarted applications"
-msgstr "Aŭtolanĉindaj aplikaĵoj"
-
-#: ../xfce4-autostart-editor/xfae-window.c:124
+#: ../settings/xfae-window.c:102
+#, fuzzy
 msgid ""
-"Below is the list of applications that will be started\n"
-"automatically when you login to your Xfce desktop,\n"
-"in addition to the applications that were saved when\n"
-"you logged out last time:"
+"Below is the list of applications that will be started automatically when "
+"you login to your Xfce desktop, in addition to the applications that were "
+"saved when you logged out last time:"
 msgstr ""
 "Malsupre estas la listo de la aplikaĵoj kiuj estos startigitaj\n"
 "aŭtomate kiam vi ensalutos en vian Xfce labortablon,\n"
 "aldonitaj al la aplikaĵoj kiuj jam estis konservitaj kiam\n"
 "vi ensalutis je la antaŭa fojo:"
 
-#: ../xfce4-session/main.c:140
+#: ../settings/xfce4-session-settings.glade.h:1
+msgid "<b>Author:</b>"
+msgstr "<b>Aŭtoro:</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:2
+#, fuzzy
+msgid "<b>Compatibility</b>"
+msgstr "Kongrueco"
+
+#: ../settings/xfce4-session-settings.glade.h:3
+msgid "<b>Description:</b>"
+msgstr "<b>Priskribo:</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:4
+msgid "<b>Homepage:</b>"
+msgstr "<b>Hejmpaĝo:</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:5
+#, fuzzy
+msgid "<b>Information</b>"
+msgstr "Informigo"
+
+#: ../settings/xfce4-session-settings.glade.h:6
+#, fuzzy
+msgid "<b>Logout Settings</b>"
+msgstr "Elsalutaj parametroj"
+
+#: ../settings/xfce4-session-settings.glade.h:7
+#, fuzzy
+msgid "<b>Security</b>"
+msgstr "<b>Priskribo:</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:8
+#, fuzzy
+msgid "<b>Session Chooser</b>"
+msgstr "Elektilo de Seanco"
+
+#: ../settings/xfce4-session-settings.glade.h:9
+msgid "<b>Version:</b>"
+msgstr "<b>Eldono:</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:10
+#, fuzzy
+msgid "Ad_vanced"
+msgstr "Evoluaĵoj"
+
+#: ../settings/xfce4-session-settings.glade.h:11
+#, fuzzy
+msgid "Automatically save session on _logout"
+msgstr "Aŭtomate konservu la seancon ĉe elsaluto"
+
+#: ../settings/xfce4-session-settings.glade.h:12
+#, fuzzy
+msgid "Con_figure"
+msgstr "Konfiguru"
+
+#: ../settings/xfce4-session-settings.glade.h:13
+msgid "Customize desktop startup and splash screen"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.glade.h:14
+msgid "Demonstrates the selected splash screen."
+msgstr "Demonstras la elektitan ekaperantekranon."
+
+#: ../settings/xfce4-session-settings.glade.h:15
+#, fuzzy
+msgid "Launch GN_OME services on startup"
+msgstr "Lanĉi KDE servojn dum la komenco"
+
+#: ../settings/xfce4-session-settings.glade.h:16
+#, fuzzy
+msgid "Launch _KDE services on startup"
+msgstr "Lanĉi KDE servojn dum la komenco"
+
+#: ../settings/xfce4-session-settings.glade.h:17
+#, fuzzy
+msgid "Manage _remote applications"
+msgstr "Administru forajn aplikaĵojn"
+
+#: ../settings/xfce4-session-settings.glade.h:18
+msgid "Opens the configuration panel for the selected splash screen."
+msgstr "Malfermas la konfigurilan panelon pri la elektita ekaperantekrano."
+
+#: ../settings/xfce4-session-settings.glade.h:19
+msgid "Quit Program"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.glade.h:20
+msgid "Quit the program, and remove it from the session."
+msgstr ""
+
+#: ../settings/xfce4-session-settings.glade.h:21
+#, fuzzy
+msgid "Remove the selected application from the session."
+msgstr "Demonstras la elektitan ekaperantekranon."
+
+#: ../settings/xfce4-session-settings.glade.h:22
+msgid "S_plash"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.glade.h:23
+#: ../settings/xfce-session-settings.desktop.in.h:2
+msgid "Sessions and Startup"
+msgstr "Seancoj kaj Komenco"
+
+#: ../settings/xfce4-session-settings.glade.h:24
+msgid ""
+"These applications are a part of the currently-running session, and can be "
+"saved when you log out."
+msgstr ""
+
+#: ../settings/xfce4-session-settings.glade.h:25
+#, fuzzy
+msgid "_Display chooser on login"
+msgstr "Montru la elektilon dum la ensaluto"
+
+#: ../settings/xfce4-session-settings.glade.h:26
+#, fuzzy
+msgid "_General"
+msgstr "Ĝeneralaĵoj"
+
+#: ../settings/xfce4-session-settings.glade.h:27
+#, fuzzy
+msgid "_Prompt on logout"
+msgstr "Demandu ĉe la elsaluto"
+
+#: ../settings/xfce4-session-settings.glade.h:28
+#, fuzzy
+msgid "_Session"
+msgstr "Finu la Seancon"
+
+#: ../settings/xfce4-session-settings.glade.h:29
+#, fuzzy
+msgid "_Test"
+msgstr "Testu"
+
+#: ../settings/xfce4-session-settings.glade.h:30
+msgid "gtk-close"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.glade.h:31
+msgid "gtk-help"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.glade.h:32
+msgid "gtk-remove"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.glade.h:33
+msgid "label"
+msgstr ""
+
+#: ../xfce4-session/main.c:145
 msgid "Loading desktop settings"
 msgstr "Ŝargante labortablajn parametrojn"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:200
+#: ../xfce4-session/main.c:206
 msgid "Verifying DNS settings"
 msgstr "Kontrolante DNS parametrojn"
 
-#: ../xfce4-session/main.c:203
+#: ../xfce4-session/main.c:209
 msgid "Loading session data"
 msgstr "Ŝargante seancajn datumojn"
 
-#: ../xfce4-session/shutdown.c:334
+#: ../xfce4-session/main.c:275
+#, fuzzy
+msgid "Xfce Session Manager"
+msgstr "Elektu seancnomon"
+
+#: ../xfce4-session/shutdown.c:338
 msgid "Log Out"
 msgstr "Adiaŭu"
 
-#: ../xfce4-session/shutdown.c:357
+#: ../xfce4-session/shutdown.c:363
 msgid "Restart"
 msgstr "Restartigu"
 
-#: ../xfce4-session/shutdown.c:380
+#: ../xfce4-session/shutdown.c:388
 msgid "Shut Down"
 msgstr "Malŝaltu"
 
-#: ../xfce4-session/shutdown.c:388
+#: ../xfce4-session/shutdown.c:396
 msgid "_Save session for future logins"
 msgstr "_Konservu tiun seancon por estontaj ensalutoj"
 
-#: ../xfce4-session/shutdown.c:451
+#: ../xfce4-session/shutdown.c:459
 msgid "Please enter your password:"
 msgstr "Bonvolu enskribi vian pasvorton:"
 
-#: ../xfce4-session/shutdown.c:482
+#: ../xfce4-session/shutdown.c:490
 #, fuzzy
 msgid "<b>An error occurred</b>"
 msgstr "<b>Eraro okazis</b>"
 
-#: ../xfce4-session/shutdown.c:496
+#: ../xfce4-session/shutdown.c:504
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
@@ -421,15 +462,21 @@ msgstr "Novan seancon"
 msgid "Create a new session."
 msgstr "Kreu novan seancon."
 
-#: ../xfce4-session/xfsm-compat-gnome.c:244
+#: ../xfce4-session/xfsm-client.c:757 ../xfce4-session/xfsm-client.c:817
+#: ../xfce4-session/xfsm-client.c:925
+#, c-format
+msgid "The client doesn't have any properties set yet"
+msgstr ""
+
+#: ../xfce4-session/xfsm-compat-gnome.c:301
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "Lanĉante la Gnoman Ŝlosilaran Demonon"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:256
+#: ../xfce4-session/xfsm-compat-gnome.c:313
 msgid "Starting Gnome Assistive Technologies"
 msgstr "Lanĉante la Gnomajn Asistantajn Teknologiojn"
 
-#: ../xfce4-session/xfsm-compat-kde.c:118
+#: ../xfce4-session/xfsm-compat-kde.c:124
 msgid "Starting KDE services"
 msgstr "Lanĉante KDE servojn"
 
@@ -458,6 +505,31 @@ msgstr "Daŭrigu malgraŭe"
 msgid "Try again"
 msgstr "Provu denove"
 
+#: ../xfce4-session/xfsm-manager.c:1281
+#, c-format
+msgid "Can only terminate clients when in the idle state"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1745
+#, c-format
+msgid "Session manager must be in idle state when requesting a checkpoint"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1786
+#, c-format
+msgid "Session manager must be in idle state when requesting a shutdown"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1793
+#, c-format
+msgid "Suspend and hibernate are not supported"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1800
+#, c-format
+msgid "Invalid shutdown type \"%u\""
+msgstr ""
+
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
 msgstr "Elektu seancon"
@@ -470,88 +542,88 @@ msgstr "Elektu seancnomon"
 msgid "Choose a name for the new session:"
 msgstr "Elektu nomon por la nova seanco"
 
-#: ../xfce4-session/xfsm-startup.c:101
+#: ../xfce4-session/xfsm-startup.c:123
 msgid "Starting the Volume Controller"
 msgstr "Lanĉante la Kontrolilon de Sono"
 
-#: ../xfce4-session/xfsm-startup.c:103
+#: ../xfce4-session/xfsm-startup.c:125
 msgid "Starting the Panel"
 msgstr "Lanĉante la Panelon"
 
-#: ../xfce4-session/xfsm-startup.c:105
+#: ../xfce4-session/xfsm-startup.c:127
 msgid "Starting the Desktop Manager"
 msgstr "Lanĉante la Administrilon de Labortablo"
 
-#: ../xfce4-session/xfsm-startup.c:107
+#: ../xfce4-session/xfsm-startup.c:129
 msgid "Starting the Taskbar"
 msgstr "Lanĉante la Taskostrion"
 
-#: ../xfce4-session/xfsm-startup.c:109
+#: ../xfce4-session/xfsm-startup.c:131
 msgid "Starting the Window Manager"
 msgstr "Lanĉante la Fenestradministrilon"
 
-#: ../xfce4-session/xfsm-startup.c:113
+#: ../xfce4-session/xfsm-startup.c:135
 msgid "Starting the Gnome Terminal Emulator"
 msgstr "Lanĉante la Gnoman Imitilon de Terminalo"
 
-#: ../xfce4-session/xfsm-startup.c:117
+#: ../xfce4-session/xfsm-startup.c:139
 msgid "Starting the KDE Advanced Text Editor"
 msgstr "Lanĉante la KDE Evoluan Redaktilon de Teksto"
 
-#: ../xfce4-session/xfsm-startup.c:119
+#: ../xfce4-session/xfsm-startup.c:141
 msgid "Starting the KDE Clipboard Manager"
 msgstr "Lanĉante la KDE Administrilon de Poŝo"
 
-#: ../xfce4-session/xfsm-startup.c:121
+#: ../xfce4-session/xfsm-startup.c:143
 msgid "Starting the KDE Mail Reader"
 msgstr "Lanĉante la KDE Retpoŝtolegilon"
 
-#: ../xfce4-session/xfsm-startup.c:123
+#: ../xfce4-session/xfsm-startup.c:145
 msgid "Starting the KDE News Reader"
 msgstr "Lanĉante la KDE Novaĵlegilon"
 
-#: ../xfce4-session/xfsm-startup.c:125
+#: ../xfce4-session/xfsm-startup.c:147
 msgid "Starting the Konqueror"
 msgstr "Lanĉante Konkerilon"
 
-#: ../xfce4-session/xfsm-startup.c:127
+#: ../xfce4-session/xfsm-startup.c:149
 msgid "Starting the KDE Terminal Emulator"
 msgstr "Lanĉante la KDE Imitilon de Terminalo"
 
-#: ../xfce4-session/xfsm-startup.c:131
+#: ../xfce4-session/xfsm-startup.c:153
 msgid "Starting the Beep Media Player"
 msgstr "Lanĉante la Bipan Legilon de Mediumo"
 
-#: ../xfce4-session/xfsm-startup.c:133
+#: ../xfce4-session/xfsm-startup.c:155
 msgid "Starting The Gimp"
 msgstr "Lanĉante la Gimpon"
 
-#: ../xfce4-session/xfsm-startup.c:135
+#: ../xfce4-session/xfsm-startup.c:157
 msgid "Starting the VI Improved Editor"
 msgstr "Lanĉante la VI Plibonigitan Redaktilon"
 
-#: ../xfce4-session/xfsm-startup.c:137
+#: ../xfce4-session/xfsm-startup.c:159
 msgid "Starting the Session Management Proxy"
 msgstr "Lanĉante la Seancadministrilan Prokuron"
 
-#: ../xfce4-session/xfsm-startup.c:139
+#: ../xfce4-session/xfsm-startup.c:161
 msgid "Starting the X-Chat IRC Client"
 msgstr "Lanĉante la X-Chat IRC Klienton"
 
-#: ../xfce4-session/xfsm-startup.c:141
+#: ../xfce4-session/xfsm-startup.c:163
 msgid "Starting the X Multimedia System"
 msgstr "Lanĉante la Ksan Plurmediuman Sistemon"
 
-#: ../xfce4-session/xfsm-startup.c:143
+#: ../xfce4-session/xfsm-startup.c:165
 msgid "Starting the X Terminal Emulator"
 msgstr "Lanĉante la Ksan Imitilon de Terminalo"
 
-#: ../xfce4-session/xfsm-startup.c:145
+#: ../xfce4-session/xfsm-startup.c:167
 #, c-format
 msgid "Starting %s"
 msgstr "Lanĉante %s"
 
-#: ../xfce4-session/xfsm-startup.c:270
+#: ../xfce4-session/xfsm-startup.c:292
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -575,7 +647,7 @@ msgstr ""
 "via malnova aŭtolanĉa dosierujo sukcese estis movigitaj al la nova loko.\n"
 "Vi devus viŝi la malnovan dosierujon nun.\n"
 
-#: ../xfce4-session/xfsm-startup.c:409
+#: ../xfce4-session/xfsm-startup.c:431
 msgid "Performing Autostart..."
 msgstr "Plenumante la Aŭtolanĉon..."
 
@@ -599,37 +671,102 @@ msgstr "Arkanoj"
 msgid "Next"
 msgstr "Sekvanta"
 
-#: ../settings/session/xfce-session-settings.desktop.in.h:1
+#: ../settings/xfce-session-settings.desktop.in.h:1
 msgid "Session and Startup Settings"
 msgstr "Seancaj kaj Startigaj Parametroj"
 
-#: ../settings/session/xfce-session-settings.desktop.in.h:2
+#: ../settings/xfce-session-settings.desktop.in.h:3
 msgid "Sessions and Startup Settings"
 msgstr "Seancoj kaj Startigaj Parametroj"
 
-#: ../settings/session/xfce-session-settings.desktop.in.h:3
+#: ../settings/xfce-session-settings.desktop.in.h:4
 msgid "Xfce 4 Sessions and Startup Settings"
 msgstr "Xfce 4 Seancoj kaj Startigaj Parametroj"
-
-#: ../settings/splash/xfce-splash-settings.desktop.in.h:2
-msgid "Xfce 4 Splash Screen Settings"
-msgstr "Xfce 4 Ekaperantektranaj Parametroj"
-
-#: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:1
-msgid "Autostarted Applications"
-msgstr "Aŭtolanĉindaj aplikaĵoj"
-
-#: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:2
-msgid "Edit the list of autostarted applications"
-msgstr "Modifu la liston de aŭtolanĉindaj aplikaĵoj"
-
-#: ../xfce4-autostart-editor/xfce4-autostart-editor.desktop.in.h:3
-msgid "Xfce 4 Autostarted Applications"
-msgstr "Xfce 4 Aŭtolanĉindaj Aplikaĵoj"
 
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
 msgstr "xfce4-tips (Xfce 4 arkanoj)"
 
-#~ msgid "End Session"
-#~ msgstr "Finu la Seancon"
+#~ msgid ""
+#~ "If set, the session manager will ask you to choose a session every time "
+#~ "you log in to Xfce."
+#~ msgstr ""
+#~ "Se aktivigita, la seancadministrilo demandos al vi elektu seancon ĉiufoje "
+#~ "kiam vi ensalutas en Xfce."
+
+#~ msgid ""
+#~ "This option instructs the session manager to save the current session "
+#~ "automatically when you log out. If you don't select this option you'll be "
+#~ "prompted whether you want to save the current session on each logout."
+#~ msgstr ""
+#~ "Ĉi tiu opcio signifas ke la seancadministrilo konservas la kurantan "
+#~ "seancon aŭtomate kiam vi elsalutas. Se vi ne elektas tiun opcion, vi "
+#~ "estos demandita ĉu vi volas konservi la kurantan seancon ĉe ĉiu elsaluto."
+
+#~ msgid ""
+#~ "This option disables the logout confirmation dialog. Whether the session "
+#~ "will be saved or not depends on whether you enabled the automatic saving "
+#~ "of sessions on logout or not."
+#~ msgstr ""
+#~ "Ĉi tiu opcio malaktivigas la elsalutan konfirmdialogon. La seanco estos "
+#~ "konservita kondiĉe ke vi antaŭe aktivigis la aŭtomatan konservigon de "
+#~ "seanco ĉe la elsaluto."
+
+#~ msgid "Launch Gnome services on startup"
+#~ msgstr "Lanĉu Gnomajn servojn dum la komenco"
+
+#~ msgid ""
+#~ "Enable this if you plan to use Gnome applications. This will instruct the "
+#~ "session manager to start some vital Gnome services for you. You should "
+#~ "also enable this if you want to use the Assistive Technologies that ship "
+#~ "with Gnome."
+#~ msgstr ""
+#~ "Elektu ĉi tion se vi intencas uzi Gnomajn programojn. Ĉi-tio faros ke la "
+#~ "administrilo de seanco lanĉos gravegajn Gnomajn servojn por vi. Vi devus "
+#~ "ankaŭ elekti tion se vi volas uzi la Asistantajn Teknologiojn kiuj "
+#~ "kunestas Gnomon."
+
+#~ msgid ""
+#~ "Enable this option if you plan to run KDE applications as part of your "
+#~ "Xfce Desktop session. This will notably increase the startup time, but on "
+#~ "the other hand, KDE applications will startup faster. Some KDE "
+#~ "applications may not work at all if you don't enable this option."
+#~ msgstr ""
+#~ "Elektu tiun opcion se vi intencas uzi KDE programojn kiel partoj de via "
+#~ "Xfce seanco. Ĉi tio rimarkinde plilongigos la komencdaŭron de la seanco, "
+#~ "sed aliflanke KDE programoj komenciĝos pli rapide. Kelkaj KDE programoj "
+#~ "eble eĉ ne funkcios se vi ne elektas ĉi tiun opcion."
+
+#~ msgid "Security"
+#~ msgstr "Sekurigo"
+
+#~ msgid ""
+#~ "Allow the session manager to manage applications running on remote hosts. "
+#~ "Do not enable this option unless you know what you are doing."
+#~ msgstr ""
+#~ "Permesas ke la seancadministrilo administras aplikaĵojn ĉe foraj gastigaj "
+#~ "komputiloj. Se vi elektas ĉi tiun opcion, ne faru tion hazarde."
+
+#~ msgid "Button Label|Sessions and Startup"
+#~ msgstr "Butona etikedo|Seancoj kaj Komenco"
+
+#~ msgid "Splash Screen Settings"
+#~ msgstr "Ekaperantekranaj Parametroj"
+
+#~ msgid "Button Label|Splash Screen"
+#~ msgstr "Butona etikedo|Ekaperantekrano"
+
+#~ msgid "Autostarted applications"
+#~ msgstr "Aŭtolanĉindaj aplikaĵoj"
+
+#~ msgid "Xfce 4 Splash Screen Settings"
+#~ msgstr "Xfce 4 Ekaperantektranaj Parametroj"
+
+#~ msgid "Autostarted Applications"
+#~ msgstr "Aŭtolanĉindaj aplikaĵoj"
+
+#~ msgid "Edit the list of autostarted applications"
+#~ msgstr "Modifu la liston de aŭtolanĉindaj aplikaĵoj"
+
+#~ msgid "Xfce 4 Autostarted Applications"
+#~ msgstr "Xfce 4 Aŭtolanĉindaj Aplikaĵoj"

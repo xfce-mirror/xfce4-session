@@ -22,6 +22,8 @@
 #ifndef __XFSM_UTIL_H__
 #define __XFSM_UTIL_H__
 
+#include <xfconf/xfconf.h>
+
 #include <gtk/gtk.h>
 
 #include <libxfce4util/libxfce4util.h>
@@ -49,7 +51,7 @@ void xfsm_window_add_border (GtkWindow *window);
 
 void xfsm_window_grab_input (GtkWindow *window);
 
-XfceRc *xfsm_open_config (gboolean readonly);
+XfconfChannel *xfsm_open_config (void);
 
 G_END_DECLS;
 

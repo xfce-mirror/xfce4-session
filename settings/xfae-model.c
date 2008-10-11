@@ -30,7 +30,7 @@
 #include <unistd.h>
 #endif
 
-#include <xfce4-autostart-editor/xfae-model.h>
+#include "xfae-model.h"
 
 
 

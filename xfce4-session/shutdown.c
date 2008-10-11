@@ -170,7 +170,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gint result;
   XfceKiosk *kiosk;
   gboolean kiosk_can_shutdown;
-  XfceRc *rc;
+  XfconfChannel *channel;
 #ifdef SESSION_SCREENSHOTS
   GdkRectangle screenshot_area;
   GdkWindow *root;
@@ -194,17 +194,15 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   xfce_kiosk_free (kiosk);
 
   /* load configuration */
-  rc = xfsm_open_config (FALSE);
-  xfce_rc_set_group (rc, "General");
-  saveonexit = xfce_rc_read_bool_entry (rc, "SaveOnExit", TRUE);
-  autosave = xfce_rc_read_bool_entry (rc, "AutoSave", FALSE);
-  prompt = xfce_rc_read_bool_entry (rc, "PromptOnLogout", TRUE);
+  channel = xfsm_open_config ();
+  channel = xfconf_channel_get ("xfce4-session");
+  saveonexit = xfconf_channel_get_bool (channel, "/general/SaveOnExit", TRUE);
+  autosave = xfconf_channel_get_bool (channel, "/general/AutoSave", FALSE);
+  prompt = xfconf_channel_get_bool (channel, "/general/PromptOnLogout", TRUE);
 
   /* if PromptOnLogout is off, saving depends on AutoSave */
   if (!prompt)
     {
-      xfce_rc_close (rc);
-
       *shutdownType = XFSM_SHUTDOWN_LOGOUT;
       *saveSession = autosave;
 
@@ -552,9 +550,8 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
    */
   if (result == GTK_RESPONSE_OK)
     {
-      xfce_rc_set_group (rc, "General");
-      xfce_rc_write_entry (rc, "SessionName", sessionName);
-      xfce_rc_write_bool_entry (rc, "SaveOnExit", *saveSession);
+      xfconf_channel_set_string (channel, "/general/SessionName", sessionName);
+      xfconf_channel_set_bool (channel, "/general/SaveOnExit", *saveSession);
     }
   else
     {
@@ -571,8 +568,6 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
       g_object_unref (G_OBJECT (screenshot_pm));
     }
 #endif
-
-  xfce_rc_close (rc);
 
   return (result == GTK_RESPONSE_OK);
 }

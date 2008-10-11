@@ -24,9 +24,9 @@
 #include <config.h>
 #endif
 
-#include <xfce4-autostart-editor/xfae-dialog.h>
-#include <xfce4-autostart-editor/xfae-model.h>
-#include <xfce4-autostart-editor/xfae-window.h>
+#include "xfae-dialog.h"
+#include "xfae-model.h"
+#include "xfae-window.h"
 
 
 
@@ -46,22 +46,21 @@ static void     xfae_window_selection_changed   (GtkTreeSelection *selection,
 
 struct _XfaeWindowClass
 {
-  GtkWindowClass __parent__;
+  GtkVBoxClass __parent__;
 };
 
 struct _XfaeWindow
 {
-  GtkWindow         __parent__;
+  GtkVBox           __parent__;
 
   GtkTreeSelection *selection;
 
   GtkWidget        *treeview;
-  GtkWidget        *ibox;
 };
 
 
 
-G_DEFINE_TYPE (XfaeWindow, xfae_window, GTK_TYPE_WINDOW);
+G_DEFINE_TYPE (XfaeWindow, xfae_window, GTK_TYPE_VBOX);
 
 
 
@@ -79,49 +78,24 @@ xfae_window_init (XfaeWindow *window)
   GtkCellRenderer   *renderer;
   GtkTreeModel      *model;
   GtkWidget         *vbox;
-  GtkWidget         *title_box;
-  GtkWidget         *heading;
-  GtkWidget         *separator;
-  GtkWidget         *content_vbox;
+  GtkWidget         *hbox;
+  GtkWidget         *img;
   GtkWidget         *label;
   GtkWidget         *swin;
   GtkWidget         *bbox;
   GtkWidget         *button;
 
-  gtk_window_set_default_size (GTK_WINDOW (window), -1, 350);
-  gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
-  gtk_window_set_title (GTK_WINDOW (window), _("Autostarted applications"));
+  vbox = GTK_WIDGET(window);
+  gtk_box_set_spacing (GTK_BOX (vbox), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 0);
-  gtk_container_add (GTK_CONTAINER (window), vbox);
-  gtk_widget_show (vbox);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
+  gtk_widget_show (hbox);
 
-  title_box = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), title_box, FALSE, TRUE, 0);
-  gtk_widget_show (title_box);
-
-  heading = xfce_heading_new ();
-  xfce_heading_set_icon_name (XFCE_HEADING (heading), "xfce4-autostart-editor");
-  xfce_heading_set_title (XFCE_HEADING (heading), 
-                          gtk_window_get_title (GTK_WINDOW (window)));
-  xfce_heading_set_subtitle (XFCE_HEADING (heading), 
-                             _("Edit the list of autostarted applications"));
-  gtk_box_pack_start (GTK_BOX (title_box), heading, FALSE, TRUE, 0);
-  gtk_widget_show (heading);
-
-  separator = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (title_box), separator, FALSE, TRUE, 0);
-  gtk_widget_show (separator);
-
-  content_vbox = gtk_vbox_new (FALSE, 8);
-  gtk_container_set_border_width (GTK_CONTAINER (content_vbox), 6);
-  gtk_container_add (GTK_CONTAINER (vbox), content_vbox);
-  gtk_widget_show (content_vbox);
-
-  window->ibox = gtk_vbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (content_vbox), window->ibox);
-  gtk_widget_show (window->ibox);
+  img = gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_DIALOG);
+  gtk_box_pack_start (GTK_BOX (hbox), img, FALSE, FALSE, 0);
+  gtk_widget_show (img);
 
   label = g_object_new (GTK_TYPE_LABEL,
                         "justify", GTK_JUSTIFY_FILL,
@@ -132,7 +106,7 @@ xfae_window_init (XfaeWindow *window)
                         "xalign", 0.0f,
                         NULL);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-  gtk_box_pack_start (GTK_BOX (window->ibox), label, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);
 
   swin = g_object_new (GTK_TYPE_SCROLLED_WINDOW,
@@ -142,7 +116,7 @@ xfae_window_init (XfaeWindow *window)
                        "vscrollbar-policy", GTK_POLICY_AUTOMATIC,
                        "hscrollbar-policy", GTK_POLICY_NEVER,
                        NULL);
-  gtk_box_pack_start (GTK_BOX (window->ibox), swin, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), swin, TRUE, TRUE, 0);
   gtk_widget_show (swin);
 
   window->treeview = g_object_new (GTK_TYPE_TREE_VIEW,
@@ -192,8 +166,8 @@ xfae_window_init (XfaeWindow *window)
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
 
-  bbox = gtk_hbutton_box_new ();
-  gtk_box_pack_start (GTK_BOX (content_vbox), bbox, FALSE, TRUE, 0);
+  bbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, TRUE, 0);
   gtk_widget_show (bbox);
 
   button = gtk_button_new_from_stock (GTK_STOCK_ADD);
@@ -208,12 +182,6 @@ xfae_window_init (XfaeWindow *window)
   g_signal_connect (G_OBJECT (window->selection), "changed",
                     G_CALLBACK (xfae_window_selection_changed), button);
   xfae_window_selection_changed (window->selection, button);
-  gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-  g_signal_connect_swapped (G_OBJECT (button), "clicked",
-                            G_CALLBACK (gtk_widget_destroy), window);
   gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 }
@@ -396,6 +364,7 @@ xfae_window_new (void)
 
 
 
+#if 0
 /**
  * xfae_window_create_plug_child:
  *
@@ -445,3 +414,4 @@ xfae_window_create_plug_child (XfaeWindow *window)
 
   return vbox;
 }
+#endif

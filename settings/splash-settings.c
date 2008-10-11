@@ -38,18 +38,24 @@
 #undef XFCE_DISABLE_DEPRECATED
 #endif
 
+#include <xfconf/xfconf.h>
+
 #include <gdk-pixbuf/gdk-pixdata.h>
 #include <gmodule.h>
 #include <gtk/gtk.h>
+
+#include <glade/glade.h>
 
 #include <libxfcegui4/libxfcegui4.h>
 
 #include <libxfsm/xfsm-util.h>
 #include <libxfsm/xfsm-splash-engine.h>
 
-#include <settings/splash/module.h>
-#include <settings/splash/nopreview.h>
+#include "module.h"
+#include "nopreview.h"
+#include "xfce4-session-settings-common.h"
 
+#define SPLASH_ENGINE_PROP  "/splash/Engine"
 
 /*
    Prototypes
@@ -88,18 +94,6 @@ static GtkWidget   *splash_author0;
 static GtkWidget   *splash_author1;
 static GtkWidget   *splash_www0;
 static GtkWidget   *splash_www1;
-static GtkTooltips *tooltips = NULL;
-
-
-/*
-   Command line options
- */
-static gboolean     opt_socket_id;
-static GOptionEntry entries[] =
-{
-  { "socket-id", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_INT, &opt_socket_id, N_("Settings manager socket"), N_("SOCKET ID") },
-  { NULL }
-};
 
 
 /*
@@ -161,30 +155,6 @@ splash_unload_modules (void)
 }
 
 
-/*
-   Dialog
- */
-static gboolean
-splash_response (void)
-{
-  if (G_LIKELY (splash_dialog != NULL))
-    {
-      gtk_widget_destroy (splash_dialog);
-      splash_dialog = NULL;
-    }
-
-  if (G_LIKELY (tooltips != NULL))
-    {
-      gtk_object_destroy (GTK_OBJECT (tooltips));
-      tooltips = NULL;
-    }
-
-  splash_unload_modules ();
-
-  return TRUE;
-}
-
-
 static void
 splash_configure (void)
 {
@@ -226,21 +196,16 @@ splash_test (void)
 static void
 splash_selection_changed (GtkTreeSelection *selection)
 {
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
-  const gchar  *str;
-  GdkPixbuf    *preview;
-  Module       *module;
-  XfceRc       *rc;
+  XfconfChannel *channel;
+  GtkTreeModel  *model;
+  GtkTreeIter    iter;
+  const gchar   *str;
+  GdkPixbuf     *preview;
+  Module        *module;
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
       gtk_tree_model_get (model, &iter, COLUMN_MODULE, &module, -1);
-
-      rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG,
-                                "xfce4-session/xfce4-session.rc",
-                                FALSE);
-      xfce_rc_set_group (rc, "Splash Screen");
 
       if (module != NULL)
         {
@@ -306,8 +271,9 @@ splash_selection_changed (GtkTreeSelection *selection)
           gtk_image_set_from_pixbuf (GTK_IMAGE (splash_image), preview);
           g_object_unref (G_OBJECT (preview));
 
-          xfce_rc_write_entry (rc, "Engine", module_engine (module));
-          xfce_rc_flush (rc);
+          
+          channel = xfconf_channel_get (SETTINGS_CHANNEL);
+          xfconf_channel_set_string (channel, SPLASH_ENGINE_PROP, module_engine (module));
 
           gtk_widget_set_sensitive (splash_button_cfg, kiosk_can_splash
                                  && module_can_configure (module));
@@ -334,10 +300,9 @@ splash_selection_changed (GtkTreeSelection *selection)
           gtk_widget_set_sensitive (splash_button_cfg, FALSE);
           gtk_widget_set_sensitive (splash_button_test, FALSE);
 
-          xfce_rc_write_entry (rc, "Engine", "");
+          channel = xfconf_channel_get (SETTINGS_CHANNEL);
+          xfconf_channel_set_string (channel, SPLASH_ENGINE_PROP, "");
         }
-
-      xfce_rc_close (rc);
     }
 
   /* centering must be delayed! */
@@ -350,33 +315,26 @@ splash_selection_changed (GtkTreeSelection *selection)
 
 
 static void
-settings_dialog_new (GtkWidget **plug_child)
+splash_dialog_destroy (GtkWidget *widget,
+                       gpointer user_data)
 {
+  splash_unload_modules ();
+}
+
+
+void
+splash_settings_init (GladeXML *gxml)
+{
+  XfconfChannel     *channel;
   GtkTreeSelection  *selection;
   GtkTreeViewColumn *column;
   GtkCellRenderer   *renderer;
   GtkListStore      *store;
-  const gchar       *engine;
+  gchar             *engine;
   GtkTreePath       *path;
   GtkTreeIter        iter;
-  GtkWidget         *hbox;
-  GtkWidget         *vbox;
-  GtkWidget         *swin;
-  GtkWidget         *frame;
-  GtkWidget         *table;
   XfceKiosk         *kiosk;
-  XfceRc            *rc;
   GList             *lp;
-
-  if (G_UNLIKELY (splash_dialog != NULL))
-    {
-      gtk_window_present (GTK_WINDOW (splash_dialog));
-      return;
-    }
-
-  xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
-
-  tooltips = gtk_tooltips_new ();
 
   /* load splash modules */
   splash_load_modules ();
@@ -387,11 +345,8 @@ settings_dialog_new (GtkWidget **plug_child)
   xfce_kiosk_free (kiosk);
 
   /* load config */
-  rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG,
-                            "xfce4-session/xfce4-session.rc",
-                            TRUE);
-  xfce_rc_set_group (rc, "Splash Screen");
-  engine = xfce_rc_read_entry (rc, "Engine", "");
+  channel = xfconf_channel_get (SETTINGS_CHANNEL);
+  engine = xfconf_channel_get_string (channel, SPLASH_ENGINE_PROP, "");
 
   store = gtk_list_store_new (N_COLUMNS, G_TYPE_STRING, G_TYPE_POINTER);
   gtk_list_store_append (store, &iter);
@@ -416,49 +371,18 @@ settings_dialog_new (GtkWidget **plug_child)
         }
     }
 
-  xfce_rc_close (rc);
+  g_free (engine);
 
   splash_centered = FALSE;
-  splash_dialog = xfce_titled_dialog_new_with_buttons (_("Splash Screen Settings"),
-                                                       NULL,
-                                                       GTK_DIALOG_NO_SEPARATOR,
-                                                       GTK_STOCK_CLOSE,
-                                                       GTK_RESPONSE_CLOSE,
-                                                       NULL);
-  gtk_window_set_icon_name (GTK_WINDOW (splash_dialog), "xfce4-splash");
 
-  g_signal_connect (G_OBJECT (splash_dialog), "response",
-                    G_CALLBACK (splash_response), NULL);
-  g_signal_connect (G_OBJECT (splash_dialog), "delete-event",
-                    G_CALLBACK (splash_response), NULL);
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (splash_dialog)->vbox), hbox,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
-
-  *plug_child = hbox;
-
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  swin = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swin), 
-                                  GTK_POLICY_NEVER,
-                                  GTK_POLICY_AUTOMATIC);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (swin),
-                                       GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), swin, TRUE, TRUE, 0);
-  gtk_widget_show (swin);
-  
-  splash_treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
-  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (splash_treeview), FALSE);
-  gtk_container_add (GTK_CONTAINER (swin), splash_treeview);
-  gtk_widget_set_sensitive (splash_treeview, kiosk_can_splash);
-  gtk_widget_show (splash_treeview);
+  splash_treeview = glade_xml_get_widget (gxml, "treeview_splash");
+  gtk_tree_view_set_model (GTK_TREE_VIEW (splash_treeview), GTK_TREE_MODEL (store));
   g_object_unref (G_OBJECT (store));
+
+  /* FIXME: this won't work right when we embed */
+  splash_dialog = gtk_widget_get_toplevel (splash_treeview);
+  g_signal_connect (G_OBJECT (splash_dialog), "destroy",
+                    G_CALLBACK (splash_dialog_destroy), NULL);
 
   /* add tree view column */
   column = gtk_tree_view_column_new ();
@@ -469,108 +393,24 @@ settings_dialog_new (GtkWidget **plug_child)
                                        NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (splash_treeview), column);
 
-  splash_button_cfg = xfsm_imgbtn_new (_("Configure"), GTK_STOCK_PREFERENCES,
-                                       NULL);
-  gtk_widget_set_sensitive (splash_button_cfg, FALSE);
+  splash_button_cfg = glade_xml_get_widget (gxml, "btn_splash_configure");
   g_signal_connect (G_OBJECT (splash_button_cfg), "clicked",
                     splash_configure, NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), splash_button_cfg, FALSE, FALSE, 0);
-  gtk_widget_show (splash_button_cfg);
-  gtk_tooltips_set_tip (tooltips, splash_button_cfg,
-                        _("Opens the configuration panel for the selected "
-                          "splash screen."),
-                        NULL);
 
-  splash_button_test = xfsm_imgbtn_new (_("Test"), GTK_STOCK_EXECUTE, NULL);
-  gtk_widget_set_sensitive (splash_button_test, FALSE);
+  splash_button_test = glade_xml_get_widget (gxml, "btn_splash_test");
   g_signal_connect (G_OBJECT (splash_button_test), "clicked",
                     splash_test, NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), splash_button_test, FALSE, FALSE, 0);
-  gtk_widget_show (splash_button_test);
-  gtk_tooltips_set_tip (tooltips, splash_button_test,
-                        _("Demonstrates the selected splash screen."),
-                        NULL);
 
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  splash_image = glade_xml_get_widget (gxml, "img_splash_preview");
 
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  splash_image = gtk_image_new ();
-  gtk_container_add (GTK_CONTAINER (frame), splash_image);
-  gtk_widget_show (splash_image);
-
-  frame = gtk_frame_new (_("Information"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  table = gtk_table_new (4, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
-
-  splash_descr0 = gtk_label_new (_("<b>Description:</b>"));
-  gtk_label_set_use_markup (GTK_LABEL (splash_descr0), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (splash_descr0), 0, 0);
-  gtk_table_attach (GTK_TABLE (table), splash_descr0,
-                    0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (splash_descr0);
-
-  splash_descr1 = gtk_label_new ("");
-  gtk_label_set_selectable (GTK_LABEL (splash_descr1), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (splash_descr1), 0, 0);
-  gtk_table_attach (GTK_TABLE (table), splash_descr1,
-                    1, 2, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (splash_descr1);
-
-  splash_version0 = gtk_label_new (_("<b>Version:</b>"));
-  gtk_label_set_use_markup (GTK_LABEL (splash_version0), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (splash_version0), 0, 0);
-  gtk_table_attach (GTK_TABLE (table), splash_version0,
-                    0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (splash_version0);
-
-  splash_version1 = gtk_label_new ("");
-  gtk_label_set_selectable (GTK_LABEL (splash_version1), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (splash_version1), 0, 0);
-  gtk_table_attach (GTK_TABLE (table), splash_version1,
-                    1, 2, 1, 2, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (splash_version1);
-
-  splash_author0 = gtk_label_new (_("<b>Author:</b>"));
-  gtk_label_set_use_markup (GTK_LABEL (splash_author0), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (splash_author0), 0, 0);
-  gtk_table_attach (GTK_TABLE (table), splash_author0,
-                    0, 1, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (splash_author0);
-
-  splash_author1 = gtk_label_new ("");
-  gtk_label_set_selectable (GTK_LABEL (splash_author1), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (splash_author1), 0, 0);
-  gtk_table_attach (GTK_TABLE (table), splash_author1,
-                    1, 2, 2, 3, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (splash_author1);
-
-  splash_www0 = gtk_label_new (_("<b>Homepage:</b>"));
-  gtk_label_set_use_markup (GTK_LABEL (splash_www0), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (splash_www0), 0, 0);
-  gtk_table_attach (GTK_TABLE (table), splash_www0,
-                    0, 1, 3, 4, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (splash_www0);
-
-  splash_www1 = gtk_label_new ("");
-  gtk_label_set_selectable (GTK_LABEL (splash_www1), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (splash_www1), 0, 0);
-  gtk_table_attach (GTK_TABLE (table), splash_www1,
-                    1, 2, 3, 4, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (splash_www1);
+  splash_descr0 = glade_xml_get_widget (gxml, "lbl_splash_desc0");
+  splash_version0 = glade_xml_get_widget (gxml, "lbl_splash_version0");
+  splash_author0 = glade_xml_get_widget (gxml, "lbl_splash_author0");
+  splash_www0 = glade_xml_get_widget (gxml, "lbl_splash_homepage0");
+  splash_descr1 = glade_xml_get_widget (gxml, "lbl_splash_desc1");
+  splash_version1 = glade_xml_get_widget (gxml, "lbl_splash_version1");
+  splash_author1 = glade_xml_get_widget (gxml, "lbl_splash_author1");
+  splash_www1 = glade_xml_get_widget (gxml, "lbl_splash_homepage1");
 
   /* handle selection */
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (splash_treeview));
@@ -581,56 +421,4 @@ settings_dialog_new (GtkWidget **plug_child)
   gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (splash_treeview), path, NULL,
                                 TRUE, 0.5, 0.0);
   gtk_tree_path_free (path);
-}
-
-int
-main(int argc, char **argv)
-{
-  GtkWidget *plug;
-  GtkWidget *plug_child = NULL;
-  GError    *error = NULL;
-
-  #ifdef ENABLE_NLS
-  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
-  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-  textdomain (GETTEXT_PACKAGE);
-  #endif
-
-  if (G_UNLIKELY (!gtk_init_with_args (&argc, &argv, "", entries, PACKAGE, &error)))
-    {
-      if (G_LIKELY (error != NULL))
-        {
-          g_print ("%s: %s.\n", G_LOG_DOMAIN, error->message);
-          g_print (_("Type '%s --help' for usage."), G_LOG_DOMAIN);
-          g_print ("\n");
-
-          g_error_free (error);
-        }
-      
-      return EXIT_FAILURE;
-    }
-
-  settings_dialog_new (&plug_child);
-
-  if (G_UNLIKELY (opt_socket_id == 0))
-    {
-      gtk_dialog_run (GTK_DIALOG (splash_dialog));
-    }
-  else
-    {
-      /* Create plug widget */
-      plug = gtk_plug_new (opt_socket_id);
-      gtk_widget_show (plug);
-
-      /* Reparent the plug child widget */
-      gtk_widget_reparent (plug_child, plug);
-      gtk_widget_show (plug_child);
-
-      splash_unload_modules ();
-
-      /* Enter main loop */
-      gtk_main ();
-    }
-
-  return 0;
 }

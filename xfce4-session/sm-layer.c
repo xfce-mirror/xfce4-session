@@ -98,14 +98,14 @@ static IceListenObj *listen_objs;
 
 
 void
-sm_init (XfceRc      *rc,
-         gboolean     disable_tcp,
-         XfsmManager *manager)
+sm_init (XfconfChannel *channel,
+         gboolean       disable_tcp,
+         XfsmManager   *manager)
 {
   char *network_idlist;
   char  error[2048];
 
-  if (disable_tcp || xfce_rc_read_bool_entry (rc, "DisableTcp", FALSE))
+  if (disable_tcp || !xfconf_channel_get_bool (channel, "/security/EnableTcp", TRUE))
     {
 #ifdef HAVE__ICETRANSNOLISTEN
       extern void _IceTransNoListen (char *protocol);

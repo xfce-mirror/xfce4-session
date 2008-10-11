@@ -49,10 +49,13 @@
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 
+#include <xfconf/xfconf.h>
+
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
 #include <libxfce4util/libxfce4util.h>
+#include <libxfcegui4/libxfcegui4.h>
 
 #include <libxfsm/xfsm-util.h>
 
@@ -129,23 +132,21 @@ usage (int exit_code)
 
 
 static void
-init_display (XfsmManager *manager,
-              GdkDisplay  *dpy,
-              XfceRc      *rc,
-              gboolean     disable_tcp)
+init_display (XfsmManager   *manager,
+              GdkDisplay    *dpy,
+              XfconfChannel *channel,
+              gboolean       disable_tcp)
 {
   const gchar *engine;
 
-  xfce_rc_set_group (rc, "Splash Screen");
-  engine = xfce_rc_read_entry (rc, "Engine", NULL);
+  engine = xfconf_channel_get_string (channel, "/splash/Engine", "mice");
 
   splash_screen = xfsm_splash_screen_new (dpy, engine);  
   xfsm_splash_screen_next (splash_screen, _("Loading desktop settings"));
 
   gdk_flush ();
 
-  xfce_rc_set_group (rc, "General");
-  sm_init (rc, disable_tcp, manager);
+  sm_init (channel, disable_tcp, manager);
 
   /* start xfsettingsd */
   if ( !g_spawn_command_line_async ("xfsettingsd", NULL))
@@ -166,7 +167,7 @@ initialize (XfsmManager *manager,
 {
   gboolean disable_tcp = FALSE;
   GdkDisplay *dpy;
-  XfceRc *rc;
+  XfconfChannel *channel;
   
   for (++argv; --argc > 0; ++argv)
     {
@@ -196,10 +197,10 @@ initialize (XfsmManager *manager,
 
   setup_environment ();
 
-  rc = xfsm_open_config (TRUE);
+  channel = xfsm_open_config ();
 
   dpy = gdk_display_get_default ();
-  init_display (manager, dpy, rc, disable_tcp);
+  init_display (manager, dpy, channel, disable_tcp);
 
   /* verify that the DNS settings are ok */
   xfsm_splash_screen_next (splash_screen, _("Verifying DNS settings"));
@@ -207,19 +208,8 @@ initialize (XfsmManager *manager,
 
   xfsm_splash_screen_next (splash_screen, _("Loading session data"));
 
-  xfce_rc_set_group (rc, "General");
-  xfsm_startup_init (rc);
-  xfsm_manager_load (manager, rc);
-
-  /* cleanup obsolete entries */
-  xfce_rc_set_group (rc, "General");
-  if (xfce_rc_has_entry (rc, "ConfirmLogout"))
-    xfce_rc_delete_entry (rc, "ConfirmLogout", FALSE);
-  if (xfce_rc_has_entry (rc, "AlwaysDisplayChooser"))
-    xfce_rc_delete_entry (rc, "AlwaysDisplayChooser", FALSE);
-  xfce_rc_delete_group (rc, "Splash Theme", FALSE);
-
-  xfce_rc_close (rc);
+  xfsm_startup_init (channel);
+  xfsm_manager_load (manager, channel);
 }
 
 
@@ -272,6 +262,7 @@ main (int argc, char **argv)
 {
   XfsmManager     *manager;
   XfsmShutdownType shutdown_type;
+  GError          *error = NULL;
 
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
   
@@ -279,6 +270,16 @@ main (int argc, char **argv)
   signal (SIGPIPE, SIG_IGN);
 
   gtk_init (&argc, &argv);
+
+  if (G_UNLIKELY (!xfconf_init (&error))) {
+    xfce_message_dialog (NULL, _("Xfce Session Manager"),
+                         GTK_STOCK_DIALOG_ERROR,
+                         _("Unable to contact settings server"),
+                         error->message,
+                         GTK_STOCK_CLOSE, GTK_RESPONSE_ACCEPT,
+                         NULL);
+    g_error_free (error);
+  }
 
   /* fake a client id for the manager, so the legacy management does not
    * recognize us to be a session client.
