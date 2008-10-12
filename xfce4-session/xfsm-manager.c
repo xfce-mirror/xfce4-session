@@ -496,7 +496,8 @@ xfsm_manager_load_session (XfsmManager *manager)
 
 static gboolean
 xfsm_manager_load_failsafe (XfsmManager   *manager,
-                            XfconfChannel *channel)
+                            XfconfChannel *channel,
+                            gchar        **error)
 {
   FailsafeClient *fclient;
   gchar          *failsafe_name;
@@ -511,12 +512,22 @@ xfsm_manager_load_failsafe (XfsmManager   *manager,
 
   failsafe_name = xfconf_channel_get_string (channel, "/general/FailsafeSessionName", NULL);
   if (G_UNLIKELY (!failsafe_name))
-    return FALSE;
+    {
+      if (error)
+        *error = g_strdup_printf (_("Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."),
+                                  SYSCONFDIR);
+      return FALSE;
+    }
 
   g_snprintf (propbuf, sizeof (propbuf), "/sessions/%s/IsFailsafe",
               failsafe_name);
   if (!xfconf_channel_get_bool (channel, propbuf, FALSE))
     {
+      if (error)
+        {
+          *error = g_strdup_printf (_("The specified failsafe session (\"%s\") is not marked as a failsafe session."),
+                                    failsafe_name);
+        }
       g_free (failsafe_name);
       return FALSE;
     }
@@ -558,7 +569,14 @@ xfsm_manager_load_failsafe (XfsmManager   *manager,
         }
     }
 
-  return g_queue_peek_head (manager->failsafe_clients) != NULL;
+  if (g_queue_peek_head (manager->failsafe_clients) == NULL)
+    {
+      if (error)
+        *error = g_strdup (_("The list of applications in the failsafe session is empty."));
+      return FALSE;
+    }
+
+  return TRUE;
 }
 
 
@@ -588,12 +606,25 @@ xfsm_manager_load_settings (XfsmManager   *manager,
     }
   else
     {
-      if (!xfsm_manager_load_failsafe (manager, channel))
+      gchar *errorstr = NULL;
+
+      if (!xfsm_manager_load_failsafe (manager, channel, &errorstr))
         {
-          fprintf (stderr, "xfce4-session: Unable to load failsafe session, exiting. Please check\n"
-                           "               the value of the environment variable XDG_CONFIG_DIRS\n"
-                           "               and make sure that it includes the following path:\n\n"
-                           "                " SYSCONFDIR "/xdg\n\n");
+          if (G_LIKELY (splash_screen != NULL))
+            {
+              xfsm_splash_screen_free (splash_screen);
+              splash_screen = NULL;
+            }
+
+          /* FIXME: migrate this into the splash screen somehow so the
+           * window doesn't look ugly (right now now WM is running, so it
+           * won't have window decorations). */
+          xfce_message_dialog (NULL, _("Session Manager Error"),
+                               GTK_STOCK_DIALOG_ERROR,
+                               _("Unable to load a failsafe session"),
+                               errorstr,
+                               GTK_STOCK_QUIT, GTK_RESPONSE_ACCEPT, NULL);
+          g_free (errorstr);
           exit (EXIT_FAILURE);
         }
       manager->failsafe_mode = TRUE;
