@@ -67,6 +67,7 @@ endif
 EXTRA_DIST = \
 	$(desktop_in_files) \
 	nopreview.png \
+	xfce4-session.xml \
 	xfce4-session-settings.glade
 
 DISTCLEANFILES = \
