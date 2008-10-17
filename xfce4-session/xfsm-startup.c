@@ -638,16 +638,17 @@ xfsm_startup_child_watch (GPid     pid,
   XfsmProperties            *properties;
   XfsmStartupChildWatchData *cwdata = user_data;
   GQueue                    *starting_properties;
-  gint                      i, n_items;
+  GList                     *lp;
 
   starting_properties = xfsm_manager_get_queue (cwdata->manager, XFSM_MANAGER_QUEUE_STARTING_PROPS);
-  n_items = g_queue_get_length (starting_properties);
 
   /* check if we have a starting process with the given client_id */
-  for (i = 0; i < n_items; ++i)
+  for (lp = g_queue_peek_nth_link (starting_properties, 0);
+       lp != NULL;
+       lp = lp->next)
     {
       /* check if this properties matches */
-      properties = (XfsmProperties *) g_queue_peek_nth (starting_properties, i);
+      properties = (XfsmProperties *) lp->data;
       if (strcmp (properties->client_id, cwdata->client_id) == 0)
         {
           /* continue startup, this client failed most probably */
