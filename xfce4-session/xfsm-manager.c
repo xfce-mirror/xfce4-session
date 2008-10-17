@@ -398,28 +398,45 @@ xfsm_manager_handle_failed_properties (XfsmManager    *manager,
             }
         }
     }
-  else if (manager->state == XFSM_MANAGER_IDLE && properties->discard_command != NULL)
+  else
     {
-      /* Run the SmDiscardCommand after the client exited in IDLE state,
-       * but only if we don't expect the client to be restarted,
-       * whether immediately or in the next session.
-       * Unfortunately the spec isn't clear about the usage of the
-       * discard command. Have to check ksmserver/gnome-session, and
-       * come up with consistent behaviour.
-       * But for now, this work-around fixes the problem of the
-       * ever-growing number of xfwm4 session files when restarting
-       * xfwm4 within a session.
-       */
-      xfsm_verbose ("Client Id = %s exited while in IDLE state, running "
-                    "discard command now.\n\n", properties->client_id);
+      /* We get here if a SmRestartNever or SmRestartIfRunning client
+       * has exited.  SmRestartNever clients shouldn't have discard
+       * commands, but it can't hurt to run it if it has one for some
+       * reason, and might clean up garbage we don't want. */
+      xfsm_verbose ("Client Id %s exited, removing from session.\n",
+                    properties->client_id);
 
-      g_spawn_sync (properties->current_directory,
-                    properties->discard_command,
-                    properties->environment,
-                    G_SPAWN_SEARCH_PATH,
-                    NULL, NULL,
-                    NULL, NULL,
-                    NULL, NULL);
+      if (properties->discard_command != NULL)
+        {
+          /* Run the SmDiscardCommand after the client exited in any state,
+           * but only if we don't expect the client to be restarted,
+           * whether immediately or in the next session.
+           *
+           * NB: This used to also have the condition that the manager is
+           * in the IDLE state, but this was removed because I can't see
+           * why you'd treat a client that fails during startup any
+           * differently, and this fixes a potential properties leak.
+           *
+           * Unfortunately the spec isn't clear about the usage of the
+           * discard command. Have to check ksmserver/gnome-session, and
+           * come up with consistent behaviour.
+           *
+           * But for now, this work-around fixes the problem of the
+           * ever-growing number of xfwm4 session files when restarting
+           * xfwm4 within a session.
+           */
+          xfsm_verbose ("Client Id = %s: running discard command.\n\n",
+                        properties->client_id);
+
+          g_spawn_sync (properties->current_directory,
+                        properties->discard_command,
+                        properties->environment,
+                        G_SPAWN_SEARCH_PATH,
+                        NULL, NULL,
+                        NULL, NULL,
+                        NULL, NULL);
+        }
 
       return FALSE;
     }

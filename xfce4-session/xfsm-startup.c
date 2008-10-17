@@ -491,6 +491,10 @@ xfsm_startup_start_properties (XfsmProperties *properties,
   gchar          **argv;
   gint             argc;
   gint             n;
+  GPid             pid;
+
+  /* release any possible old resources related to a previous startup */
+  xfsm_properties_set_default_child_watch (properties);
 
   /* generate the argument vector for the application (expanding variables) */
   argc = g_strv_length (properties->restart_command);
@@ -501,13 +505,13 @@ xfsm_startup_start_properties (XfsmProperties *properties,
 
   /* fork a new process for the application */
 #ifdef HAVE_VFORK
-  properties->pid = vfork ();
+  pid = vfork ();
 #else
-  properties->pid = fork ();
+  pid = fork ();
 #endif
 
   /* handle the child process */
-  if (properties->pid == 0)
+  if (pid == 0)
     {
       /* execute the application here */
       execvp (argv[0], argv);
@@ -518,12 +522,14 @@ xfsm_startup_start_properties (XfsmProperties *properties,
   g_strfreev (argv);
 
   /* check if we failed to fork */
-  if (G_UNLIKELY (properties->pid < 0))
+  if (G_UNLIKELY (pid < 0))
     {
       /* tell the user that we failed to fork */
       perror ("Failed to fork new process");
       return FALSE;
     }
+
+  properties->pid = pid;
 
   /* set a watch to make sure the child doesn't quit before registering */
   child_watch_data = g_new (XfsmStartupData, 1);
