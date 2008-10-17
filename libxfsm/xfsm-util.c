@@ -126,24 +126,6 @@ xfsm_place_trash_window (GtkWindow *window,
 }
 
 
-gchar**
-xfsm_strv_copy (gchar **v)
-{
-  gchar **rv;
-  gsize len;
-  gsize n;
-
-  for (len = 0; v[len] != NULL; ++len) ;
-
-  rv = g_new (gchar *, len + 1);
-  for (n = 0; n < len; ++n)
-    rv[n] = g_strdup (v[n]);
-  rv[n] = NULL;
-
-  return rv;
-}
-
-
 gboolean
 xfsm_strv_equal (gchar **a, gchar **b)
 {
