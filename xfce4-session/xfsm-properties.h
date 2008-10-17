@@ -36,6 +36,7 @@ typedef struct _XfsmProperties XfsmProperties;
 struct _XfsmProperties
 {
   guint   restart_attempts;
+  guint   restart_attempts_reset_id;
   
   gchar  *client_id;
   gchar  *hostname;
@@ -53,7 +54,10 @@ struct _XfsmProperties
   gchar **shutdown_command;
   gchar  *user_id;
 
-  guint startup_timeout_id;
+  guint   startup_timeout_id;
+
+  GPid    pid;
+  guint   child_watch_id;
 };
 
 
@@ -75,6 +79,8 @@ XfsmProperties* xfsm_properties_load (XfceRc *rc, const gchar *prefix);
 
 gboolean xfsm_properties_check (const XfsmProperties *properties) G_GNUC_CONST;
 
+void xfsm_properties_set_default_child_watch (XfsmProperties *properties);
+
 gchar **xfsm_strv_from_smprop (const SmProp *prop);
 
 GValue *xfsm_g_value_from_property (XfsmProperties *properties,
@@ -82,5 +88,8 @@ GValue *xfsm_g_value_from_property (XfsmProperties *properties,
 
 gint xfsm_properties_compare (const XfsmProperties *a,
                               const XfsmProperties *b) G_GNUC_CONST;
+
+gint xfsm_properties_compare_id (const XfsmProperties *properties,
+                                 const gchar *client_id);
 
 #endif /* !__XFSM_PROPERTIES_H__ */

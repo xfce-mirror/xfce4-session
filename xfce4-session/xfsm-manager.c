@@ -339,16 +339,79 @@ xfsm_manager_restore_active_workspace (XfsmManager *manager,
 }
 
 
-void
-xfsm_manager_handle_failed_client (XfsmManager    *manager,
-                                   XfsmProperties *properties)
+gboolean
+xfsm_manager_handle_failed_properties (XfsmManager    *manager,
+                                       XfsmProperties *properties)
 {
-  /* Handle apps that failed to start here */
+  /* Handle apps that failed to start, or died randomly, here */
 
-  if (properties->discard_command != NULL)
+  xfsm_properties_set_default_child_watch (properties);
+
+  if (properties->restart_attempts_reset_id > 0)
     {
-      xfsm_verbose ("Client Id = %s failed to start, running discard "
-                    "command now.\n\n", properties->client_id);
+      g_source_remove (properties->restart_attempts_reset_id);
+      properties->restart_attempts_reset_id = 0;
+    }
+
+  if (properties->restart_style_hint == SmRestartAnyway)
+    {
+      g_queue_push_tail (manager->restart_properties, properties);
+    }
+  else if (properties->restart_style_hint == SmRestartImmediately)
+    {
+      if (++properties->restart_attempts > MAX_RESTART_ATTEMPTS)
+        {
+          xfsm_verbose ("Client Id = %s, reached maximum attempts [Restart attempts = %d]\n"
+                        "   Will be re-scheduled for run on next startup\n",
+                        properties->client_id, properties->restart_attempts);
+
+          g_queue_push_tail (manager->restart_properties, properties);
+        }
+      else
+        {
+          xfsm_verbose ("Client Id = %s disconnected, restarting\n",
+                        properties->client_id);
+
+          if (G_UNLIKELY (!xfsm_startup_start_properties (properties, manager)))
+            {
+              xfsm_verbose ("Client Id = %s failed to restart; removing from client "
+                            "list and running discard command\n",
+                            properties->client_id);
+
+              /* FIXME: should we just re-add it to the list of restart
+               * properties and hope we're able to start it next session? */
+              if (properties->discard_command != NULL)
+                {
+                  g_spawn_sync (properties->current_directory,
+                                properties->discard_command,
+                                properties->environment,
+                                G_SPAWN_SEARCH_PATH,
+                                NULL, NULL, NULL, NULL, NULL, NULL);
+                }
+
+              return FALSE;
+            }
+          else
+            {
+              /* put it back in the starting list */
+              g_queue_push_tail (manager->starting_properties, properties);
+            }
+        }
+    }
+  else if (manager->state == XFSM_MANAGER_IDLE && properties->discard_command != NULL)
+    {
+      /* Run the SmDiscardCommand after the client exited in IDLE state,
+       * but only if we don't expect the client to be restarted,
+       * whether immediately or in the next session.
+       * Unfortunately the spec isn't clear about the usage of the
+       * discard command. Have to check ksmserver/gnome-session, and
+       * come up with consistent behaviour.
+       * But for now, this work-around fixes the problem of the
+       * ever-growing number of xfwm4 session files when restarting
+       * xfwm4 within a session.
+       */
+      xfsm_verbose ("Client Id = %s exited while in IDLE state, running "
+                    "discard command now.\n\n", properties->client_id);
 
       g_spawn_sync (properties->current_directory,
                     properties->discard_command,
@@ -357,10 +420,11 @@ xfsm_manager_handle_failed_client (XfsmManager    *manager,
                     NULL, NULL,
                     NULL, NULL,
                     NULL, NULL);
+
+      return FALSE;
     }
 
-  if (g_queue_peek_head (manager->starting_properties) == NULL)
-    xfsm_startup_session_continue (manager);
+  return TRUE;
 }
 
 
@@ -735,16 +799,15 @@ xfsm_manager_new_client (XfsmManager *manager,
 }
 
 
-static gint
-xfsm_properties_queue_find (gconstpointer a,
-                            gconstpointer b)
+static gboolean
+xfsm_manager_reset_restart_attempts (gpointer data)
 {
-  XfsmProperties *properties = XFSM_PROPERTIES (a);
-  const gchar *previous_id = (const gchar *) b;
+  XfsmProperties *properties = data;
 
-  if (strcmp (properties->client_id, previous_id) == 0)
-    return 0;
-  return 1;
+  properties->restart_attempts = 0;
+  properties->restart_attempts_reset_id = 0;
+
+  return FALSE;
 }
 
 
@@ -764,7 +827,7 @@ xfsm_manager_register_client (XfsmManager *manager,
     {
       lp = g_queue_find_custom (manager->starting_properties,
                                 previous_id,
-                                xfsm_properties_queue_find);
+                                (GCompareFunc) xfsm_properties_compare_id);
       if (lp != NULL)
         {
           properties = XFSM_PROPERTIES (lp->data);
@@ -774,7 +837,7 @@ xfsm_manager_register_client (XfsmManager *manager,
         {
           lp = g_queue_find_custom (manager->pending_properties,
                                     previous_id,
-                                    xfsm_properties_queue_find);
+                                    (GCompareFunc) xfsm_properties_compare_id);
           if (lp != NULL)
             {
               properties = XFSM_PROPERTIES (lp->data);
@@ -782,20 +845,38 @@ xfsm_manager_register_client (XfsmManager *manager,
             }
         }
 
-      if (properties != NULL && properties->startup_timeout_id != 0)
-        {
-          g_source_remove (properties->startup_timeout_id);
-          properties->startup_timeout_id = 0;
-        }
-
       /* If previous_id is invalid, the SM will send a BadValue error message
        * to the client and reverts to register state waiting for another
        * RegisterClient message.
        */
       if (properties == NULL)
-        return FALSE;
+        {
+          xfsm_verbose ("Client Id = %s registering, failed to find matching "
+                        "properties\n", previous_id);
+          return FALSE;
+        }
+
+      /* cancel startup timer */
+      if (properties->startup_timeout_id > 0)
+        {
+          g_source_remove (properties->startup_timeout_id);
+          properties->startup_timeout_id = 0;
+        }
+
+      /* cancel the old child watch, and replace it with one that
+       * doesn't really do anything but reap the child */
+      xfsm_properties_set_default_child_watch (properties);
 
       xfsm_client_set_initial_properties (client, properties);
+
+      /* if we've been restarted, we'll want to reset the restart
+       * attempts counter if the client stays alive for a while */
+      if (properties->restart_attempts > 0 && properties->restart_attempts_reset_id == 0)
+        {
+          properties->restart_attempts_reset_id = g_timeout_add (RESTART_RESET_TIMEOUT,
+                                                                 xfsm_manager_reset_restart_attempts,
+                                                                 properties);
+        }
     }
   else
     {
@@ -1062,6 +1143,7 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
     }
 }
 
+
 void
 xfsm_manager_save_yourself (XfsmManager *manager,
                             XfsmClient  *client,
@@ -1214,60 +1296,21 @@ xfsm_manager_close_connection (XfsmManager *manager,
     }
   else
     {
-      XfsmProperties *properties = xfsm_client_get_properties (client);
+      XfsmProperties *properties = xfsm_client_steal_properties (client);
       
-      if (properties != NULL && xfsm_properties_check (properties))
+      if (properties != NULL)
         {
-          if (properties->restart_style_hint == SmRestartAnyway)
+          if (xfsm_properties_check (properties))
             {
-              g_queue_push_tail (manager->restart_properties,
-                                 xfsm_client_steal_properties (client));
+              if (xfsm_manager_handle_failed_properties (manager, properties) == FALSE)
+                xfsm_properties_free (properties);
             }
-          else if (properties->restart_style_hint == SmRestartImmediately)
-            {
-              if (++properties->restart_attempts > MAX_RESTART_ATTEMPTS)
-                {
-                  xfsm_verbose ("Client Id = %s, reached maximum attempts [Restart attempts = %d]\n"
-                                "   Will be re-scheduled for run on next startup\n",
-                                properties->client_id, properties->restart_attempts);
-
-                  g_queue_push_tail (manager->restart_properties,
-                                     xfsm_client_steal_properties (client));
-                }
-#if 0
-              else if (xfsm_manager_run_prop_command (properties, SmRestartCommand))
-                {
-                  /* XXX - add a timeout here, in case the application does not come up */
-                  g_queue_push_tail (manager->pending_properties,
-                                     xfsm_client_steal_properties (client));
-                }
-#endif
-            }
-
-          /* Run the SmDiscardCommand after the client exited in IDLE state.
-           * FIXME: Need to handle this better when we support restarting
-           * immediately properly.
-           * Unfortunately the spec isn't clear about the usage of the discard
-           * command. Have to check ksmserver/gnome-session, and come up with
-           * consistent behaviour.
-           * But for now, this work-around fixes the problem of the evergrowing
-           * number of xfwm4 session files when restarting xfwm4 within a session.
-           */
-          if (manager->state == XFSM_MANAGER_IDLE && properties->discard_command != NULL)
-            {
-              xfsm_verbose ("Client Id = %s exited while in IDLE state, running "
-                            "discard command now.\n\n", properties->client_id);
-
-              g_spawn_sync (properties->current_directory,
-                            properties->discard_command,
-                            properties->environment,
-                            G_SPAWN_SEARCH_PATH,
-                            NULL, NULL,
-                            NULL, NULL,
-                            NULL, NULL);
-            }
+          else
+            xfsm_properties_free (properties);
         }
 
+      /* regardless of the restart style hint, the current instance of
+       * the client is gone, so remove it from the client list and free it. */
       g_queue_remove (manager->running_clients, client);
       g_object_unref (client);
     }
@@ -1599,6 +1642,13 @@ XfsmShutdownType
 xfsm_manager_get_shutdown_type (XfsmManager *manager)
 {
   return manager->shutdown_type;
+}
+
+
+XfsmManagerState
+xfsm_manager_get_state (XfsmManager *manager)
+{
+  return manager->state;
 }
 
 

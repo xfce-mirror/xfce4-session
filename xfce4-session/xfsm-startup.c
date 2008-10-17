@@ -63,13 +63,7 @@ typedef struct
 {
   XfsmManager    *manager;
   XfsmProperties *properties;
-} XfsmStartupTimeoutData;
-
-typedef struct
-{
-  XfsmManager *manager;
-  gchar *client_id;
-} XfsmStartupChildWatchData;
+} XfsmStartupData;
 
 
 /*
@@ -79,15 +73,13 @@ static void     xfsm_startup_failsafe                (XfsmManager *manager);
 
 static gboolean xfsm_startup_session_next_prio_group (XfsmManager *manager);
 
+static void     xfsm_startup_data_free               (XfsmStartupData *sdata);
 static void     xfsm_startup_child_watch             (GPid         pid,
                                                       gint         status,
                                                       gpointer     user_data);
-static void     xfsm_startup_child_watch_destroy     (gpointer     user_data);
-
 static gboolean xfsm_startup_timeout                 (gpointer     data);
-static void     xfsm_startup_timeout_destroy         (gpointer     data);
 
-static void xfsm_startup_handle_failed_client        (XfsmProperties *properties,
+static void     xfsm_startup_handle_failed_startup   (XfsmProperties *properties,
                                                       XfsmManager    *manager);
 
 void
@@ -490,13 +482,15 @@ xfsm_startup_failsafe (XfsmManager *manager)
 }
 
 
-static GPid
-xfsm_startup_session_client (XfsmProperties *properties)
+gboolean
+xfsm_startup_start_properties (XfsmProperties *properties,
+                               XfsmManager    *manager)
 {
-  gchar **argv;
-  gint    argc;
-  GPid    pid;
-  gint    n;
+  XfsmStartupData *child_watch_data;
+  XfsmStartupData *startup_timeout_data;
+  gchar          **argv;
+  gint             argc;
+  gint             n;
 
   /* generate the argument vector for the application (expanding variables) */
   argc = g_strv_length (properties->restart_command);
@@ -507,13 +501,13 @@ xfsm_startup_session_client (XfsmProperties *properties)
 
   /* fork a new process for the application */
 #ifdef HAVE_VFORK
-  pid = vfork ();
+  properties->pid = vfork ();
 #else
-  pid = fork ();
+  properties->pid = fork ();
 #endif
 
   /* handle the child process */
-  if (pid == 0)
+  if (properties->pid == 0)
     {
       /* execute the application here */
       execvp (argv[0], argv);
@@ -524,14 +518,33 @@ xfsm_startup_session_client (XfsmProperties *properties)
   g_strfreev (argv);
 
   /* check if we failed to fork */
-  if (G_UNLIKELY (pid < 0))
+  if (G_UNLIKELY (properties->pid < 0))
     {
       /* tell the user that we failed to fork */
       perror ("Failed to fork new process");
-      return -1;
+      return FALSE;
     }
 
-  return pid;
+  /* set a watch to make sure the child doesn't quit before registering */
+  child_watch_data = g_new (XfsmStartupData, 1);
+  child_watch_data->manager = g_object_ref (manager);
+  child_watch_data->properties = properties;
+  g_child_watch_add_full (G_PRIORITY_LOW, properties->pid,
+                          xfsm_startup_child_watch, child_watch_data,
+                          (GDestroyNotify) xfsm_startup_data_free);
+
+  /* set a timeout -- client must register in a a certain amount of time
+   * or it's assumed to be broken/have issues. */
+  startup_timeout_data = g_new (XfsmStartupData, 1);
+  startup_timeout_data->manager = g_object_ref (manager);
+  startup_timeout_data->properties = properties;
+  properties->startup_timeout_id = g_timeout_add_full (G_PRIORITY_DEFAULT,
+                                                       STARTUP_TIMEOUT,
+                                                       xfsm_startup_timeout,
+                                                       startup_timeout_data,
+                                                       (GDestroyNotify) xfsm_startup_data_free);
+
+  return TRUE;
 }
 
 
@@ -568,7 +581,6 @@ xfsm_startup_session_next_prio_group (XfsmManager *manager)
   XfsmProperties *properties;
   gint            cur_prio_group;
   gboolean        client_started = FALSE;
-  GPid            pid;
 
   properties = (XfsmProperties *) g_queue_peek_head (pending_properties);
   if (properties == NULL)
@@ -583,6 +595,7 @@ xfsm_startup_session_next_prio_group (XfsmManager *manager)
       /* quit if we've hit all the clients in the current prio group */
       if (properties->priority != cur_prio_group)
         {
+          /* we're not starting this one yet; put it back */
           g_queue_push_head (pending_properties, properties);
           break;
         }
@@ -594,35 +607,16 @@ xfsm_startup_session_next_prio_group (XfsmManager *manager)
                                    figure_app_name (properties->program));
         }
 
-      if (G_LIKELY ((pid = xfsm_startup_session_client (properties)) != -1))
+      if (G_LIKELY (xfsm_startup_start_properties (properties, manager)))
         {
-          XfsmStartupChildWatchData *cwdata;
-          XfsmStartupTimeoutData    *stdata;
-
-          cwdata = g_new(XfsmStartupChildWatchData, 1);
-          cwdata->manager = g_object_ref (manager);
-          cwdata->client_id = g_strdup (properties->client_id);
-          g_child_watch_add_full (G_PRIORITY_LOW, pid,
-                                  xfsm_startup_child_watch, cwdata,
-                                  xfsm_startup_child_watch_destroy);
-
-          stdata = g_new(XfsmStartupTimeoutData, 1);
-          stdata->manager = manager;
-          stdata->properties = properties;
-          properties->startup_timeout_id = g_timeout_add_full (G_PRIORITY_DEFAULT,
-                                                               STARTUP_TIMEOUT,
-                                                               xfsm_startup_timeout,
-                                                               stdata,
-                                                               xfsm_startup_timeout_destroy);
-
           g_queue_push_tail (starting_properties, properties);
           client_started = TRUE;
         }
       else
         {
-          /* if starting the app failed, just ditch it */
-          xfsm_manager_handle_failed_client (manager, properties);
-          xfsm_properties_free (properties);
+          /* if starting the app failed, let the manager handle it */
+          if (xfsm_manager_handle_failed_properties (manager, properties) == FALSE)
+            xfsm_properties_free (properties);
         }
     }
 
@@ -631,76 +625,77 @@ xfsm_startup_session_next_prio_group (XfsmManager *manager)
 
 
 static void
-xfsm_startup_child_watch (GPid     pid,
-                          gint     status,
-                          gpointer user_data)
+xfsm_startup_data_free (XfsmStartupData *sdata)
 {
-  XfsmProperties            *properties;
-  XfsmStartupChildWatchData *cwdata = user_data;
-  GQueue                    *starting_properties;
-  GList                     *lp;
-
-  starting_properties = xfsm_manager_get_queue (cwdata->manager, XFSM_MANAGER_QUEUE_STARTING_PROPS);
-
-  /* check if we have a starting process with the given client_id */
-  for (lp = g_queue_peek_nth_link (starting_properties, 0);
-       lp != NULL;
-       lp = lp->next)
-    {
-      /* check if this properties matches */
-      properties = (XfsmProperties *) lp->data;
-      if (strcmp (properties->client_id, cwdata->client_id) == 0)
-        {
-          /* continue startup, this client failed most probably */
-          xfsm_startup_handle_failed_client (properties, cwdata->manager);
-          break;
-        }
-    }
+  g_object_unref (sdata->manager);
+  g_free (sdata);
 }
 
 
 static void
-xfsm_startup_child_watch_destroy (gpointer user_data)
+xfsm_startup_child_watch (GPid     pid,
+                          gint     status,
+                          gpointer user_data)
 {
-  XfsmStartupChildWatchData *cwdata = user_data;
+  XfsmStartupData *cwdata = user_data;
+  GQueue          *starting_properties;
 
-  g_object_unref (cwdata->manager);
-  g_free (cwdata->client_id);
-  g_free (cwdata);
+  xfsm_verbose ("Client Id = %s, PID %d exited with status %d\n",
+                cwdata->properties->client_id, (gint)pid, status);
+
+  starting_properties = xfsm_manager_get_queue (cwdata->manager, XFSM_MANAGER_QUEUE_STARTING_PROPS);
+  if (g_queue_find (starting_properties, cwdata->properties) != NULL)
+    {
+      xfsm_verbose ("Client Id = %s died while starting up\n",
+                    cwdata->properties->client_id);
+      xfsm_startup_handle_failed_startup (cwdata->properties, cwdata->manager);
+    }
+
+  cwdata->properties->child_watch_id = 0;
+  cwdata->properties->pid = -1;
+
+  g_spawn_close_pid (pid);
 }
 
 
 static gboolean
 xfsm_startup_timeout (gpointer data)
 {
-  XfsmStartupTimeoutData *stdata = data;
+  XfsmStartupData *stdata = data;
+
+  xfsm_verbose ("Client Id = %s failed to register in time\n",
+                stdata->properties->client_id);
 
   stdata->properties->startup_timeout_id = 0;
-  xfsm_startup_handle_failed_client(stdata->properties, stdata->manager);
+  xfsm_startup_handle_failed_startup (stdata->properties, stdata->manager);
 
   return FALSE;
 }
 
 
 static void
-xfsm_startup_timeout_destroy (gpointer data)
-{
-  g_free (data);
-}
-
-
-static void
-xfsm_startup_handle_failed_client (XfsmProperties *properties,
-                                   XfsmManager    *manager)
+xfsm_startup_handle_failed_startup (XfsmProperties *properties,
+                                    XfsmManager    *manager)
 {
   GQueue *starting_properties = xfsm_manager_get_queue (manager, XFSM_MANAGER_QUEUE_STARTING_PROPS);
 
-  xfsm_manager_handle_failed_client (manager, properties);
+  /* if our timer hasn't run out yet, kill it */
+  if (properties->startup_timeout_id > 0)
+    {
+      g_source_remove (properties->startup_timeout_id);
+      properties->startup_timeout_id = 0;
+    }
 
+  xfsm_properties_set_default_child_watch (properties);
+
+  /* not starting anymore, so remove it from the list.  tell the manager
+   * it failed, and let it do its thing. */
   g_queue_remove (starting_properties, properties);
-  xfsm_properties_free (properties);
+  if (xfsm_manager_handle_failed_properties (manager, properties) == FALSE)
+      xfsm_properties_free (properties);
 
-  if (g_queue_peek_head (starting_properties) == NULL)
+  if (g_queue_peek_head (starting_properties) == NULL
+      && xfsm_manager_get_state (manager) == XFSM_MANAGER_STARTUP)
     {
       /* everything has finished starting or failed; continue startup */
       xfsm_startup_session_continue (manager);

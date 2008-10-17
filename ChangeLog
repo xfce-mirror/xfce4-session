@@ -1,3 +1,21 @@
+2008-10-17	Brian Tarricone <bjt23@cornell.edu>
+
+	* xfce4-session/xfsm-properties.[ch]: Track the PID of properties
+	  that have an associated app running, whether or not it's
+	  registered with the SM.  Add client ID comparison function.
+	  Track the child watch GSource and provide a way to reset the
+	  child watch to a function that simply reaps the child.
+	* xfce4-session/xfsm-startup.[ch]: Move handling of the child
+	  watch and startup timeout, and make the properties starter
+	  global so the manager can make use of it.  Merge a couple
+	  data structures, and record a launched client's PID in its
+	  properties structure.
+	* xfce4-session/xfsm-manager.[ch]: Implement SmRestartImmediately
+	  support.  Remove some code duplication.  Add an accessor
+	  func for the manager's state.  Add a timeout function that
+	  resets the 'restart attempts' counter if the client has been
+	  alive for a while (5 minutes).
+
 2008-10-15	Brian Tarricone <bjt23@cornell.edu>
 
 	* xfce4-session/xfsm-client.c: Grab the GList pointer to iterate

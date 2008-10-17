@@ -37,9 +37,10 @@ G_BEGIN_DECLS
 #define XFSM_MANAGER(obj)     (G_TYPE_CHECK_INSTANCE_CAST((obj), XFSM_TYPE_MANAGER, XfsmManager))
 #define XFSM_IS_MANAGER(obj)  (G_TYPE_CHECK_INSTANCE_TYPE((obj), XFSM_TYPE_MANAGER))
 
-#define DIE_TIMEOUT     ( 7 * 1000)
-#define SAVE_TIMEOUT    (60 * 1000)
-#define STARTUP_TIMEOUT ( 8 * 1000)
+#define DIE_TIMEOUT            (     7 * 1000)
+#define SAVE_TIMEOUT           (    60 * 1000)
+#define STARTUP_TIMEOUT        (     8 * 1000)
+#define RESTART_RESET_TIMEOUT  (5 * 60 * 1000)
 
 typedef enum
 {
@@ -80,8 +81,8 @@ gboolean xfsm_manager_restart (XfsmManager *manager);
 void xfsm_manager_signal_startup_done (XfsmManager *manager);
 
 /* call for each client that fails */
-void xfsm_manager_handle_failed_client (XfsmManager    *manager,
-                                        XfsmProperties *properties);
+gboolean xfsm_manager_handle_failed_properties (XfsmManager    *manager,
+                                                XfsmProperties *properties);
 
 XfsmClient* xfsm_manager_new_client (XfsmManager *manager,
                                      SmsConn      sms_conn,
@@ -143,6 +144,8 @@ void xfsm_manager_store_session (XfsmManager *manager);
 void xfsm_manager_complete_saveyourself (XfsmManager *manager);
 
 XfsmShutdownType xfsm_manager_get_shutdown_type (XfsmManager *manager);
+
+XfsmManagerState xfsm_manager_get_state (XfsmManager *manager);
 
 GQueue *xfsm_manager_get_queue (XfsmManager         *manager,
                                 XfsmManagerQueueType q_type);

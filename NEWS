@@ -1,3 +1,8 @@
+4.5.92
+======
+- Implement support for the RestartImmediately restart style hint.
+
+
 4.5.91
 ======
 - Start up session in parallel to greatly shorten startup time (bug 4312).
@@ -10,6 +15,9 @@
   quit as before (bug 4313).
 - Check for a running gnome-keyring instance before launching
   a new one (bug 3007).
+- Convert most of xfce4-session to use Xfconf.  Splash settings are still
+  stored in the xfce4-splash.rc file.  The xfce4-session.rc file is no longer
+  used, however.
 
 
 4.5.90

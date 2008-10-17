@@ -30,6 +30,8 @@ void xfsm_startup_init (XfconfChannel *channel);
 void xfsm_startup_foreign (XfsmManager *manager);
 void xfsm_startup_begin (XfsmManager *manager);
 void xfsm_startup_session_continue (XfsmManager *manager);
+gboolean xfsm_startup_start_properties (XfsmProperties *properties,
+                                        XfsmManager    *manager);
 
 #endif /* !__XFSM_STARTUP_H__ */
 

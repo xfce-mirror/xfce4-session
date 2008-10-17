@@ -153,6 +153,7 @@ xfsm_properties_new (const gchar *client_id,
   properties->client_id = g_strdup (client_id);
   properties->hostname  = g_strdup (hostname);
   properties->priority  = 50;
+  properties->pid       = -1;
   
   return properties;
 }
@@ -372,6 +373,14 @@ xfsm_properties_compare (const XfsmProperties *a,
 }
 
 
+gint
+xfsm_properties_compare_id (const XfsmProperties *properties,
+                            const gchar *client_id)
+{
+  return strcmp (properties->client_id, client_id);
+}
+
+
 gboolean
 xfsm_properties_check (const XfsmProperties *properties)
 {
@@ -385,11 +394,35 @@ xfsm_properties_check (const XfsmProperties *properties)
 
 
 void
+xfsm_properties_set_default_child_watch (XfsmProperties *properties)
+{
+  if (properties->child_watch_id > 0)
+    {
+      g_source_remove (properties->child_watch_id);
+      properties->child_watch_id = 0;
+    }
+
+  if (properties->pid != -1)
+    {
+      /* if the PID is still open, we need to close it,
+       * or it will become a zombie when it quits */
+      g_child_watch_add (properties->pid,
+                         (GChildWatchFunc) g_spawn_close_pid,
+                         NULL);
+      properties->pid = -1;
+    }
+}
+
+void
 xfsm_properties_free (XfsmProperties *properties)
 {
   g_return_if_fail (properties != NULL);
 
-  if (properties->startup_timeout_id != 0)
+  xfsm_properties_set_default_child_watch (properties);
+
+  if (properties->restart_attempts_reset_id > 0)
+    g_source_remove (properties->restart_attempts_reset_id);
+  if (properties->startup_timeout_id > 0)
     g_source_remove (properties->startup_timeout_id);
   if (properties->client_id != NULL)
     g_free (properties->client_id);
