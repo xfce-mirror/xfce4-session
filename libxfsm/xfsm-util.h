@@ -30,8 +30,6 @@
 
 G_BEGIN_DECLS;
 
-GtkWidget	*xfsm_imgbtn_new(const gchar *, const gchar *, GtkWidget **);
-
 gboolean xfsm_start_application (gchar      **command,
                                  gchar      **environment,
                                  GdkScreen   *screen,

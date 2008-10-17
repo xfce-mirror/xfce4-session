@@ -1,5 +1,11 @@
 2008-10-17	Brian Tarricone <bjt23@cornell.edu>
 
+	* xfce4-session/xfsm-chooser.c: Use xfce_create_mixed_button()
+	  instead of xfsm_imgbtn_new() (bug 1446).
+	* libxfsm/xfsm-utils.[ch]: Remove xfsm_imgbtn_new().
+
+2008-10-17	Brian Tarricone <bjt23@cornell.edu>
+
 	* xfce4-session/xfsm-manager.c: Don't ditch clients that fail
 	  to restart solely because fork() failed in xfce4-session.
 
