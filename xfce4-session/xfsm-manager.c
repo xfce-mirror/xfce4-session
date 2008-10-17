@@ -374,22 +374,9 @@ xfsm_manager_handle_failed_properties (XfsmManager    *manager,
 
           if (G_UNLIKELY (!xfsm_startup_start_properties (properties, manager)))
             {
-              xfsm_verbose ("Client Id = %s failed to restart; removing from client "
-                            "list and running discard command\n",
-                            properties->client_id);
-
-              /* FIXME: should we just re-add it to the list of restart
-               * properties and hope we're able to start it next session? */
-              if (properties->discard_command != NULL)
-                {
-                  g_spawn_sync (properties->current_directory,
-                                properties->discard_command,
-                                properties->environment,
-                                G_SPAWN_SEARCH_PATH,
-                                NULL, NULL, NULL, NULL, NULL, NULL);
-                }
-
-              return FALSE;
+              /* this failure has nothing to do with the app itself, so
+               * just add it to restart props */
+              g_queue_push_tail (manager->restart_properties, properties);
             }
           else
             {
