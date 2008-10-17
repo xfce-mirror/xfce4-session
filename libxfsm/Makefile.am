@@ -17,18 +17,18 @@ libxfsm_4_6_la_CFLAGS =							\
 
 libxfsm_4_6_la_LDFLAGS =						\
 	-export-dynamic							\
-	-version-info 0:0:0
+	-version-info 0:0:0						\
+	$(LIBX11_LDFLAGS)
 
 if HAVE_OS_CYGWIN
 libxfsm_4_6_la_LDFLAGS +=						\
-	-no-undefined							\
-	$(LIBX11_LDFLAGS@
+	-no-undefined
+endif
 
 libxfsm_4_6_la_LIBADD =							\
 	$(LIBX11_LIBS)							\
 	$(LIBXFCEGUI4_LIBS)						\
 	$(XFCONF_LIBS)
-endif
 
 
 libxfsmincludedir =							\

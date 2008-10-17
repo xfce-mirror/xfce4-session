@@ -214,7 +214,7 @@ ice_connection_accept (GIOChannel  *channel,
 static FILE*
 ice_tmpfile (char **name)
 {
-  GError *error;
+  GError *error = NULL;
   mode_t  mode;
   FILE   *fp = NULL;
   int     fd;

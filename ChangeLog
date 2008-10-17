@@ -1,5 +1,14 @@
 2008-10-17	Brian Tarricone <bjt23@cornell.edu>
 
+	* xfce4-session/ice-layer.c: Properly initialise a GError to
+	  NULL.  Patch from Carlos Santos (bug 4202).
+	* libxfsm/Makefile.am: Link all used libraries to libxfsm.so
+	  to avoid link-time errors on Darwin.  Shouldn't be an issue
+	  on other platforms as well.  Partial patch from Anders
+	  Björklund (bug 4429).
+
+2008-10-17	Brian Tarricone <bjt23@cornell.edu>
+
 	* xfce4-session/xfsm-startup.c: Store the result of fork() in a
 	  temporary again to avoid possible memory access issues if
 	  vfork() is used.
