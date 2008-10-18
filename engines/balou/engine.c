@@ -37,11 +37,12 @@ static void
 engine_setup (XfsmSplashEngine *engine,
               XfsmSplashRc     *rc)
 {
-  const gchar *theme_name;
-  BalouTheme  *theme;
+  gchar      *theme_name;
+  BalouTheme *theme;
 
   theme_name = xfsm_splash_rc_read_entry (rc, "Theme", DEFAULT_THEME);
   theme = balou_theme_load (theme_name);
+  g_free (theme_name);
 
   balou_init (BALOU (engine->user_data),
               engine->display,

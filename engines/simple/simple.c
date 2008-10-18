@@ -92,8 +92,9 @@ simple_setup (XfsmSplashEngine *engine,
   PangoContext         *context;
   GdkWindowAttr         attr;
   GdkRectangle          geo;
-  const gchar          *font;
-  const gchar          *path;
+  gchar                *color;
+  gchar                *font;
+  gchar                *path;
   GdkWindow            *root;
   GdkPixbuf            *logo = NULL;
   GdkCursor            *cursor;
@@ -105,10 +106,14 @@ simple_setup (XfsmSplashEngine *engine,
   simple = (Simple *) engine->user_data;
 
   /* load settings */
-  gdk_color_parse (xfsm_splash_rc_read_entry (rc, "BgColor", DEFAULT_BGCOLOR),
-                   &simple->bgcolor);
-  gdk_color_parse (xfsm_splash_rc_read_entry (rc, "FgColor", DEFAULT_FGCOLOR),
-                   &simple->fgcolor);
+  color = xfsm_splash_rc_read_entry (rc, "BgColor", DEFAULT_BGCOLOR);
+  gdk_color_parse (color, &simple->bgcolor);
+  g_free (color);
+
+  color = xfsm_splash_rc_read_entry (rc, "FgColor", DEFAULT_FGCOLOR);
+  gdk_color_parse (color, &simple->fgcolor);
+  g_free (color);
+
   font = xfsm_splash_rc_read_entry (rc, "Font", DEFAULT_FONT);
   path = xfsm_splash_rc_read_entry (rc, "Image", NULL);
 
@@ -190,6 +195,8 @@ simple_setup (XfsmSplashEngine *engine,
   gdk_window_show (simple->window);
 
   /* cleanup */
+  g_free (font);
+  g_free (path);
   pango_font_description_free (description);
   pango_font_metrics_unref (metrics);
   gdk_cursor_unref (cursor);
@@ -345,8 +352,9 @@ static void
 config_configure (XfsmSplashConfig *config,
                   GtkWidget        *parent)
 {
-  const gchar *font;
-  const gchar *path;
+  gchar       *font;
+  gchar       *path;
+  gchar       *colorstr;
   GtkWidget   *dialog;
   GtkWidget   *frame;
   GtkWidget   *btn_font;
@@ -379,6 +387,7 @@ config_configure (XfsmSplashConfig *config,
 
   font = xfsm_splash_rc_read_entry (config->rc, "Font", DEFAULT_FONT);
   btn_font = gtk_font_button_new_with_font (font);
+  g_free (font);
   xfce_framebox_add (XFCE_FRAMEBOX (frame), btn_font);
   gtk_widget_show (btn_font);
 
@@ -395,8 +404,9 @@ config_configure (XfsmSplashConfig *config,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  gdk_color_parse (xfsm_splash_rc_read_entry (config->rc, "BgColor",
-                                              DEFAULT_BGCOLOR), &color);
+  colorstr = xfsm_splash_rc_read_entry (config->rc, "BgColor", DEFAULT_BGCOLOR);
+  gdk_color_parse (colorstr, &color);
+  g_free (colorstr);
   sel_bg = xfce_color_button_new_with_color (&color);
   gtk_table_attach (GTK_TABLE (table), sel_bg, 1, 2, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
@@ -407,8 +417,9 @@ config_configure (XfsmSplashConfig *config,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  gdk_color_parse (xfsm_splash_rc_read_entry (config->rc, "FgColor",
-                                              DEFAULT_FGCOLOR), &color);
+  colorstr = xfsm_splash_rc_read_entry (config->rc, "FgColor", DEFAULT_FGCOLOR);
+  gdk_color_parse (colorstr, &color);
+  g_free (colorstr);
   sel_fg = xfce_color_button_new_with_color (&color);
   gtk_table_attach (GTK_TABLE (table), sel_fg, 1, 2, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
@@ -454,6 +465,7 @@ config_configure (XfsmSplashConfig *config,
       gtk_widget_set_sensitive (button, TRUE);
       gtk_entry_set_text (GTK_ENTRY (entry), path);
     }
+  g_free (path);
   g_signal_connect (G_OBJECT (checkbox), "toggled",
                     G_CALLBACK (config_toggled), entry);
   g_signal_connect (G_OBJECT (checkbox), "toggled",
@@ -465,8 +477,8 @@ config_configure (XfsmSplashConfig *config,
   gtk_dialog_run (GTK_DIALOG (dialog));
 
   /* store settings */
-  font = gtk_font_button_get_font_name (GTK_FONT_BUTTON (btn_font));
-  xfsm_splash_rc_write_entry (config->rc, "Font", font);
+  xfsm_splash_rc_write_entry (config->rc, "Font",
+                              gtk_font_button_get_font_name (GTK_FONT_BUTTON (btn_font)));
 
   xfce_color_button_get_color (XFCE_COLOR_BUTTON (sel_bg), &color);
   g_snprintf (buffer, 32, "#%02x%02x%02x",
@@ -482,7 +494,7 @@ config_configure (XfsmSplashConfig *config,
               (unsigned) color.blue >> 8);
   xfsm_splash_rc_write_entry (config->rc, "FgColor", buffer);
 
-  path = gtk_entry_get_text (GTK_ENTRY (entry));
+  path = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (checkbox))
       && path != NULL && g_file_test (path, G_FILE_TEST_IS_REGULAR))
     {
@@ -492,6 +504,7 @@ config_configure (XfsmSplashConfig *config,
     {
       xfsm_splash_rc_write_entry (config->rc, "Image", "");
     }
+  g_free (path);
   
   gtk_widget_destroy (dialog);
 }

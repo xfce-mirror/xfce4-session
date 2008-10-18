@@ -18,7 +18,8 @@ libbalou_la_SOURCES =							\
 
 libbalou_la_CFLAGS =							\
 	-I$(top_srcdir)							\
-	@LIBXFCEGUI4_CFLAGS@						\
+	$(LIBXFCEGUI4_CFLAGS)						\
+	$(XFCONF_CFLAGS)						\
 	-DBALOU_EXPORT_THEME=\"$(libexecdir)/balou-export-theme\"	\
 	-DBALOU_INSTALL_THEME=\"$(libexecdir)/balou-install-theme\"
 
@@ -28,12 +29,10 @@ libbalou_la_LDFLAGS =							\
 	-module
 
 libbalou_la_LIBADD =							\
-	$(top_builddir)/libxfsm/libxfsm-4.6.la
+	$(top_builddir)/libxfsm/libxfsm-4.6.la				\
+	$(LIBXFCEGUI4_LIBS)						\
+	$(XFCONF_LIBS)
 
-if HAVE_OS_CYGWIN
-libbalou_la_LIBADD +=							\
-	@XFCE_MCS_MANAGER_LIBS@
-endif
 
 libbalou_la_DEPENDENCIES =						\
 	$(top_builddir)/libxfsm/libxfsm-4.6.la

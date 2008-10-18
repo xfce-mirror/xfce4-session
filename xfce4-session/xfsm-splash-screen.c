@@ -32,6 +32,7 @@
 
 #include <gmodule.h>
 
+#include <xfconf/xfconf.h>
 #include <libxfce4util/libxfce4util.h>
 #include <libxfcegui4/libxfcegui4.h>
 
@@ -62,7 +63,7 @@ xfsm_splash_screen_new (GdkDisplay  *display,
   GdkScreen        *screen;
   gchar             name[128];
   int               monitor;
-  XfceRc           *rc;
+  XfconfChannel    *channel;
 
   /* locate monitor with pointer */
   screen = xfce_gdk_display_locate_monitor_with_pointer (display, &monitor);
@@ -84,14 +85,13 @@ xfsm_splash_screen_new (GdkDisplay  *display,
       xfsm_splash_screen_load (splash, engine);
       if (G_LIKELY (splash->engine.setup != NULL))
         {
-          rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG,
-                                    "xfce4-session/xfce4-splash.rc",
-                                    TRUE);
-          g_snprintf (name, 128, "Engine: %s", engine);
-          splash_rc = xfsm_splash_rc_new (rc, name);
+          g_snprintf (name, sizeof(name), "/splash/engines/%s", engine);
+          channel = xfconf_channel_new_with_property_base ("xfce4-session",
+                                                           name);
+          splash_rc = xfsm_splash_rc_new (channel);
+          g_object_unref (channel);
           splash->engine.setup (&splash->engine, splash_rc);
           xfsm_splash_rc_free (splash_rc);
-          xfce_rc_close (rc);
 
           gdk_flush ();
         }

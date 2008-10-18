@@ -34,8 +34,8 @@ G_BEGIN_DECLS;
 typedef struct _Module Module;
 
 
-Module      *module_load          (const gchar  *path,
-                                   XfceRc       *rc);
+Module      *module_load          (const gchar *path,
+                                   const gchar *channel_name);
 
 const gchar *module_engine        (const Module *module);
 

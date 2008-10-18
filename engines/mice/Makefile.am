@@ -9,7 +9,8 @@ libmice_la_SOURCES =							\
 
 libmice_la_CFLAGS =							\
 	-I$(top_srcdir)							\
-	@LIBXFCEGUI4_CFLAGS@
+	$(LIBXFCEGUI4_CFLAGS)						\
+	$(XFCONF_CFLAGS)
 
 libmice_la_LDFLAGS =							\
 	-avoid-version							\
@@ -17,12 +18,9 @@ libmice_la_LDFLAGS =							\
 	-module
 
 libmice_la_LIBADD =							\
-	$(top_builddir)/libxfsm/libxfsm-4.6.la
-
-if HAVE_OS_CYGWIN
-libmice_la_LIBADD +=							\
-	@XFCE_MCS_MANAGER_LIBS@
-endif
+	$(top_builddir)/libxfsm/libxfsm-4.6.la				\
+	$(LIBXFCEGUI4_LIBS)						\
+	$(XFCONF_LIBS)
 
 libmice_la_DEPENDENCIES =						\
 	$(top_builddir)/libxfsm/libxfsm-4.6.la
@@ -34,10 +32,10 @@ generate_SOURCES =							\
 	generate.c
 
 generate_CFLAGS =							\
-	@LIBXFCEGUI4_CFLAGS@
+	$(LIBXFCEGUI4_CFLAGS)
 
 generate_LDADD =							\
-	@LIBXFCEGUI4_LIBS@
+	$(LIBXFCEGUI4_LIBS)
 
 
 EXTRA_DIST =								\

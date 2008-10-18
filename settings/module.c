@@ -51,13 +51,14 @@ struct _Module
 
 Module*
 module_load (const gchar *path,
-             XfceRc      *rc)
+             const gchar *channel_name)
 {
   void (*init) (XfsmSplashConfig *config);
   Module *module;
-  gchar   group[128];
-  gchar  *dp;
-  gchar  *sp;
+  gchar          property_base[512];
+  XfconfChannel *channel;
+  gchar         *dp;
+  gchar         *sp;
 
   /* load module */
   module = g_new0 (Module, 1);
@@ -83,10 +84,15 @@ module_load (const gchar *path,
         *dp = *sp;
     }
   *dp = '\0';
-  g_snprintf (group, 128, "Engine: %s", module->engine);
+
+  g_snprintf (property_base, sizeof (property_base),
+              "/splash/engines/%s", module->engine);
+  channel = xfconf_channel_new_with_property_base (channel_name,
+                                                   property_base);
 
   /* initialize module */
-  module->config.rc = xfsm_splash_rc_new (rc, group);
+  module->config.rc = xfsm_splash_rc_new (channel);
+  g_object_unref (channel);
   init (&module->config);
   if (G_UNLIKELY (module->config.name == NULL))
     {

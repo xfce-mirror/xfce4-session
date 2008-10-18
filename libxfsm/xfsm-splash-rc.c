@@ -25,35 +25,37 @@
 
 #include <libxfsm/xfsm-splash-rc.h>
 
+#define PROP_FROM_KEY(varname, key) \
+  gchar varname[4096]; \
+  g_strlcpy(varname, "/", sizeof(varname)); \
+  g_strlcat(varname, key, sizeof(varname))
+
 
 struct _XfsmSplashRc
 {
-  gchar  *group;
-  XfceRc *rc;
+  XfconfChannel *channel;
 };
 
 
 XfsmSplashRc*
-xfsm_splash_rc_new (XfceRc      *rc,
-                    const gchar *group)
+xfsm_splash_rc_new (XfconfChannel *channel)
 {
   XfsmSplashRc *splash_rc;
 
-  splash_rc         = g_new (XfsmSplashRc, 1);
-  splash_rc->group  = g_strdup (group);
-  splash_rc->rc     = rc;
+  splash_rc          = g_new (XfsmSplashRc, 1);
+  splash_rc->channel = g_object_ref (channel);
 
   return splash_rc;
 }
 
 
-const gchar*
+gchar*
 xfsm_splash_rc_read_entry (XfsmSplashRc *splash_rc,
                            const gchar  *key,
                            const gchar  *fallback)
 {
-  xfce_rc_set_group (splash_rc->rc, splash_rc->group);
-  return xfce_rc_read_entry (splash_rc->rc, key, fallback);
+  PROP_FROM_KEY(prop, key);
+  return xfconf_channel_get_string (splash_rc->channel, prop, fallback);
 }
 
 
@@ -62,8 +64,8 @@ xfsm_splash_rc_read_int_entry (XfsmSplashRc *splash_rc,
                                const gchar  *key,
                                gint          fallback)
 {
-  xfce_rc_set_group (splash_rc->rc, splash_rc->group);
-  return xfce_rc_read_int_entry (splash_rc->rc, key, fallback);
+  PROP_FROM_KEY(prop, key);
+  return xfconf_channel_get_int (splash_rc->channel, prop, fallback);
 }
 
 
@@ -72,8 +74,8 @@ xfsm_splash_rc_read_bool_entry (XfsmSplashRc *splash_rc,
                                 const gchar  *key,
                                 gboolean      fallback)
 {
-  xfce_rc_set_group (splash_rc->rc, splash_rc->group);
-  return xfce_rc_read_bool_entry (splash_rc->rc, key, fallback);
+  PROP_FROM_KEY(prop, key);
+  return xfconf_channel_get_bool (splash_rc->channel, prop, fallback);
 }
 
 
@@ -82,8 +84,8 @@ xfsm_splash_rc_read_list_entry (XfsmSplashRc *splash_rc,
                                 const gchar  *key,
                                 const gchar  *delimiter)
 {
-  xfce_rc_set_group (splash_rc->rc, splash_rc->group);
-  return xfce_rc_read_list_entry (splash_rc->rc, key, delimiter);
+  PROP_FROM_KEY(prop, key);
+  return xfconf_channel_get_string_list (splash_rc->channel, prop);
 }
 
 
@@ -92,8 +94,8 @@ xfsm_splash_rc_write_entry (XfsmSplashRc *splash_rc,
                             const gchar  *key,
                             const gchar  *value)
 {
-  xfce_rc_set_group (splash_rc->rc, splash_rc->group);
-  xfce_rc_write_entry (splash_rc->rc, key, value);
+  PROP_FROM_KEY(prop, key);
+  xfconf_channel_set_string (splash_rc->channel, prop, value);
 }
 
 
@@ -102,8 +104,8 @@ xfsm_splash_rc_write_int_entry (XfsmSplashRc *splash_rc,
                                 const gchar  *key,
                                 gint          value)
 {
-  xfce_rc_set_group (splash_rc->rc, splash_rc->group);
-  xfce_rc_write_int_entry (splash_rc->rc, key, value);
+  PROP_FROM_KEY(prop, key);
+  xfconf_channel_set_int (splash_rc->channel, prop, value);
 }
 
 
@@ -112,8 +114,8 @@ xfsm_splash_rc_write_bool_entry (XfsmSplashRc *splash_rc,
                                  const gchar  *key,
                                  gboolean      value)
 {
-  xfce_rc_set_group (splash_rc->rc, splash_rc->group);
-  xfce_rc_write_bool_entry (splash_rc->rc, key, value);
+  PROP_FROM_KEY(prop, key);
+  xfconf_channel_set_bool (splash_rc->channel, prop, value);
 }
 
 
@@ -123,15 +125,15 @@ xfsm_splash_rc_write_list_entry (XfsmSplashRc *splash_rc,
                                  gchar       **value,
                                  const gchar  *delimiter)
 {
-  xfce_rc_set_group (splash_rc->rc, splash_rc->group);
-  xfce_rc_write_list_entry (splash_rc->rc, key, value, delimiter);
+  PROP_FROM_KEY(prop, key);
+  xfconf_channel_set_string_list (splash_rc->channel, prop, (gchar const **)value);
 }
 
 
 void
 xfsm_splash_rc_free (XfsmSplashRc *splash_rc)
 {
-  g_free (splash_rc->group);
+  g_object_unref (splash_rc->channel);
   g_free (splash_rc);
 }
 

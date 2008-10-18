@@ -9,21 +9,21 @@ libsimple_la_SOURCES =							\
 
 libsimple_la_CFLAGS =							\
 	-I$(top_srcdir)							\
-	@LIBX11_CFLAGS@							\
-	@LIBXFCEGUI4_CFLAGS@
+	$(LIBX11_CFLAGS)						\
+	$(LIBXFCEGUI4_CFLAGS)						\
+	$(XFCONF_CFLAGS)
 
 libsimple_la_LDFLAGS =							\
 	-avoid-version							\
 	-no-undefined							\
-	-module
+	-module								\
+	$(LIBX11_LDFLAGS)
 
 libsimple_la_LIBADD =							\
-	$(top_builddir)/libxfsm/libxfsm-4.6.la
-
-if HAVE_OS_CYGWIN
-libsimple_la_LIBADD +=							\
-	@XFCE_MCS_MANAGER_LIBS@
-endif
+	$(top_builddir)/libxfsm/libxfsm-4.6.la				\
+	$(LIBX11_LIBS)							\
+	$(LIBXFCEGUI4_LIBS)						\
+	$(XFCONF_LIBS)
 
 libsimple_la_DEPENDENCIES =						\
 	$(top_builddir)/libxfsm/libxfsm-4.6.la

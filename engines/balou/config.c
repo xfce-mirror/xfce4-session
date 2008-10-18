@@ -835,7 +835,7 @@ config_create (XfsmSplashRc *rc)
   GtkWidget         *page;
   GtkWidget         *swin;
   GtkWidget         *vbox;
-  const gchar       *theme;
+  gchar             *theme;
 
   theme = xfsm_splash_rc_read_entry (rc, "Theme", "Default");
 
@@ -914,6 +914,8 @@ config_create (XfsmSplashRc *rc)
   g_signal_connect (G_OBJECT (treeview), "destroy",
                     G_CALLBACK (config_store), rc);
 
+  g_free (theme);
+
   return page;
 }
 
@@ -947,7 +949,7 @@ config_configure (XfsmSplashConfig *config,
 static GdkPixbuf*
 config_preview (XfsmSplashConfig *config)
 {
-  const gchar *name;
+  gchar       *name;
   BalouTheme  *theme;
   GdkPixbuf   *pixbuf = NULL;
 
@@ -958,6 +960,8 @@ config_preview (XfsmSplashConfig *config)
   theme = balou_theme_load (name);
   pixbuf = balou_theme_generate_preview (theme, 320, 240);
   balou_theme_destroy (theme);
+
+  g_free (name);
 
   return pixbuf;
 }

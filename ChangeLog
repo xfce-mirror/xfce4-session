@@ -1,3 +1,16 @@
+2008-10-18	Brian Tarricone <bjt23@cornell.edu>
+
+	* configure.in.in: Depend on newer version of libxfconf.
+	* engines/*/Makefile.am: Link with libxfconf.
+	* libxfsm/xfsm-splash-rc.*: Replace XfceRc usage with
+	  XfconfChannel.
+	* libxfsm/xfce4-session-2.0.pc.in: Add libxfconf-0 to required
+	  packages list.
+	* settings/{module.*,splash-settings.c]: Load XfconfChannel
+	  with a property base instead of the old XfceRc file.
+	* xfce4-session/xfsm-splash-screen.c: Fetch settings from
+	  xfconf instead of rc file.
+
 2008-10-17	Brian Tarricone <bjt23@cornell.edu>
 
 	* xfce4-session/xfsm-chooser.c: Use xfce_create_mixed_button()

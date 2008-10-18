@@ -123,7 +123,7 @@ splash_load_modules (void)
             continue;
 
           file = g_strconcat (MODULESDIR, G_DIR_SEPARATOR_S, entry, NULL);
-          module = module_load (file, modules_rc);
+          module = module_load (file, SETTINGS_CHANNEL);
           if (G_LIKELY (module != NULL))
             modules = g_list_append (modules, module);
           g_free (file);

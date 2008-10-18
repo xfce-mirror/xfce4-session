@@ -23,6 +23,7 @@
 #define __XFSM_SPLASH_RC_H__
 
 #include <gmodule.h>
+#include <xfconf/xfconf.h>
 #include <libxfce4util/libxfce4util.h>
 
 
@@ -32,10 +33,10 @@ typedef struct _XfsmSplashRc XfsmSplashRc;
 
 
 G_MODULE_IMPORT
-XfsmSplashRc *xfsm_splash_rc_new              (XfceRc       *rc,
-                                               const gchar  *group);
+XfsmSplashRc *xfsm_splash_rc_new              (XfconfChannel*channel);
+
 G_MODULE_IMPORT
-const gchar  *xfsm_splash_rc_read_entry       (XfsmSplashRc *splash_rc,
+gchar        *xfsm_splash_rc_read_entry       (XfsmSplashRc *splash_rc,
                                                const gchar  *key,
                                                const gchar  *fallback);
 G_MODULE_IMPORT
