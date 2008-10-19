@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Sat Oct 11 03:33:46 2008 -->
+<!--Generated with glade3 3.4.5 on Sun Oct 19 14:11:48 2008 -->
 <glade-interface>
   <requires lib="xfce4"/>
   <widget class="XfceTitledDialog" id="xfce4_session_settings_dialog">
@@ -38,6 +38,7 @@
                           <widget class="GtkCheckButton" id="chk_display_chooser">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
+                            <property name="tooltip" translatable="yes">Display the session chooser every time Xfce starts</property>
                             <property name="label" translatable="yes">_Display chooser on login</property>
                             <property name="use_underline">True</property>
                             <property name="response_id">0</property>
@@ -80,6 +81,7 @@
                               <widget class="GtkCheckButton" id="chk_session_autosave">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
+                                <property name="tooltip" translatable="yes">Always save the session when logging out</property>
                                 <property name="label" translatable="yes">Automatically save session on _logout</property>
                                 <property name="use_underline">True</property>
                                 <property name="response_id">0</property>
@@ -93,6 +95,7 @@
                               <widget class="GtkCheckButton" id="chk_logout_prompt">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
+                                <property name="tooltip" translatable="yes">Prompt for confirmation when logging out</property>
                                 <property name="label" translatable="yes">_Prompt on logout</property>
                                 <property name="use_underline">True</property>
                                 <property name="response_id">0</property>
@@ -167,7 +170,7 @@
                         <property name="sensitive">False</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
-                        <property name="tooltip" translatable="yes">Opens the configuration panel for the selected splash screen.</property>
+                        <property name="tooltip" translatable="yes">Opens the configuration panel for the selected splash screen</property>
                         <property name="response_id">0</property>
                         <child>
                           <widget class="GtkHBox" id="hbox3">
@@ -206,7 +209,7 @@
                         <property name="sensitive">False</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
-                        <property name="tooltip" translatable="yes">Demonstrates the selected splash screen.</property>
+                        <property name="tooltip" translatable="yes">Demonstrates the selected splash screen</property>
                         <property name="response_id">0</property>
                         <child>
                           <widget class="GtkHBox" id="hbox4">
@@ -271,82 +274,13 @@
                                 <property name="column_spacing">12</property>
                                 <property name="row_spacing">2</property>
                                 <child>
-                                  <widget class="GtkLabel" id="lbl_splash_homepage1">
+                                  <widget class="GtkLabel" id="lbl_splash_desc0">
                                     <property name="visible">True</property>
                                     <property name="xalign">0</property>
-                                    <property name="label" translatable="yes">label</property>
-                                    <property name="selectable">True</property>
-                                  </widget>
-                                  <packing>
-                                    <property name="left_attach">1</property>
-                                    <property name="right_attach">2</property>
-                                    <property name="top_attach">3</property>
-                                    <property name="bottom_attach">4</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <widget class="GtkLabel" id="lbl_splash_author1">
-                                    <property name="visible">True</property>
-                                    <property name="xalign">0</property>
-                                    <property name="label" translatable="yes">label</property>
-                                    <property name="selectable">True</property>
-                                  </widget>
-                                  <packing>
-                                    <property name="left_attach">1</property>
-                                    <property name="right_attach">2</property>
-                                    <property name="top_attach">2</property>
-                                    <property name="bottom_attach">3</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <widget class="GtkLabel" id="lbl_splash_version1">
-                                    <property name="visible">True</property>
-                                    <property name="xalign">0</property>
-                                    <property name="label" translatable="yes">label</property>
-                                    <property name="selectable">True</property>
-                                  </widget>
-                                  <packing>
-                                    <property name="left_attach">1</property>
-                                    <property name="right_attach">2</property>
-                                    <property name="top_attach">1</property>
-                                    <property name="bottom_attach">2</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <widget class="GtkLabel" id="lbl_splash_desc1">
-                                    <property name="visible">True</property>
-                                    <property name="xalign">0</property>
-                                    <property name="label" translatable="yes">label</property>
-                                    <property name="selectable">True</property>
-                                  </widget>
-                                  <packing>
-                                    <property name="left_attach">1</property>
-                                    <property name="right_attach">2</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <widget class="GtkLabel" id="lbl_splash_homepage0">
-                                    <property name="visible">True</property>
-                                    <property name="xalign">0</property>
-                                    <property name="label" translatable="yes">&lt;b&gt;Homepage:&lt;/b&gt;</property>
+                                    <property name="label" translatable="yes">&lt;b&gt;Description:&lt;/b&gt;</property>
                                     <property name="use_markup">True</property>
                                   </widget>
                                   <packing>
-                                    <property name="top_attach">3</property>
-                                    <property name="bottom_attach">4</property>
-                                    <property name="x_options">GTK_FILL</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <widget class="GtkLabel" id="lbl_splash_author0">
-                                    <property name="visible">True</property>
-                                    <property name="xalign">0</property>
-                                    <property name="label" translatable="yes">&lt;b&gt;Author:&lt;/b&gt;</property>
-                                    <property name="use_markup">True</property>
-                                  </widget>
-                                  <packing>
-                                    <property name="top_attach">2</property>
-                                    <property name="bottom_attach">3</property>
                                     <property name="x_options">GTK_FILL</property>
                                   </packing>
                                 </child>
@@ -364,14 +298,83 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <widget class="GtkLabel" id="lbl_splash_desc0">
+                                  <widget class="GtkLabel" id="lbl_splash_author0">
                                     <property name="visible">True</property>
                                     <property name="xalign">0</property>
-                                    <property name="label" translatable="yes">&lt;b&gt;Description:&lt;/b&gt;</property>
+                                    <property name="label" translatable="yes">&lt;b&gt;Author:&lt;/b&gt;</property>
                                     <property name="use_markup">True</property>
                                   </widget>
                                   <packing>
+                                    <property name="top_attach">2</property>
+                                    <property name="bottom_attach">3</property>
                                     <property name="x_options">GTK_FILL</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="GtkLabel" id="lbl_splash_homepage0">
+                                    <property name="visible">True</property>
+                                    <property name="xalign">0</property>
+                                    <property name="label" translatable="yes">&lt;b&gt;Homepage:&lt;/b&gt;</property>
+                                    <property name="use_markup">True</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="top_attach">3</property>
+                                    <property name="bottom_attach">4</property>
+                                    <property name="x_options">GTK_FILL</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="GtkLabel" id="lbl_splash_desc1">
+                                    <property name="visible">True</property>
+                                    <property name="xalign">0</property>
+                                    <property name="label" translatable="yes">label</property>
+                                    <property name="selectable">True</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="left_attach">1</property>
+                                    <property name="right_attach">2</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="GtkLabel" id="lbl_splash_version1">
+                                    <property name="visible">True</property>
+                                    <property name="xalign">0</property>
+                                    <property name="label" translatable="yes">label</property>
+                                    <property name="selectable">True</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="left_attach">1</property>
+                                    <property name="right_attach">2</property>
+                                    <property name="top_attach">1</property>
+                                    <property name="bottom_attach">2</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="GtkLabel" id="lbl_splash_author1">
+                                    <property name="visible">True</property>
+                                    <property name="xalign">0</property>
+                                    <property name="label" translatable="yes">label</property>
+                                    <property name="selectable">True</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="left_attach">1</property>
+                                    <property name="right_attach">2</property>
+                                    <property name="top_attach">2</property>
+                                    <property name="bottom_attach">3</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="GtkLabel" id="lbl_splash_homepage1">
+                                    <property name="visible">True</property>
+                                    <property name="xalign">0</property>
+                                    <property name="label" translatable="yes">label</property>
+                                    <property name="selectable">True</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="left_attach">1</property>
+                                    <property name="right_attach">2</property>
+                                    <property name="top_attach">3</property>
+                                    <property name="bottom_attach">4</property>
                                   </packing>
                                 </child>
                               </widget>
@@ -481,7 +484,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
-                        <property name="tooltip" translatable="yes">Remove the selected application from the session.</property>
+                        <property name="tooltip" translatable="yes">Remove the selected application from the session</property>
                         <property name="label" translatable="yes">gtk-remove</property>
                         <property name="use_stock">True</property>
                         <property name="response_id">0</property>
@@ -495,7 +498,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
-                        <property name="tooltip" translatable="yes">Quit the program, and remove it from the session.</property>
+                        <property name="tooltip" translatable="yes">Quit the program, and remove it from the session</property>
                         <property name="response_id">0</property>
                         <child>
                           <widget class="GtkHBox" id="hbox6">
@@ -578,6 +581,7 @@
                                   <widget class="GtkCheckButton" id="chk_compat_gnome">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
+                                    <property name="tooltip" translatable="yes">Start GNOME services, such as gnome-keyring and the GNOME accessibility framework</property>
                                     <property name="label" translatable="yes">Launch GN_OME services on startup</property>
                                     <property name="use_underline">True</property>
                                     <property name="response_id">0</property>
@@ -591,6 +595,7 @@
                                   <widget class="GtkCheckButton" id="chk_compat_kde">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
+                                    <property name="tooltip" translatable="yes">Start KDE services, such as "kdeinit," DCOP, and ARTS</property>
                                     <property name="label" translatable="yes">Launch _KDE services on startup</property>
                                     <property name="use_underline">True</property>
                                     <property name="response_id">0</property>
@@ -649,6 +654,7 @@
                           <widget class="GtkCheckButton" id="chk_enable_tcp">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
+                            <property name="tooltip" translatable="yes">Manage remote applications over the network (this may be a security risk)</property>
                             <property name="label" translatable="yes">Manage _remote applications</property>
                             <property name="use_underline">True</property>
                             <property name="response_id">0</property>
