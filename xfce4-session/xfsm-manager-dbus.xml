@@ -16,6 +16,8 @@
     <interface name="org.xfce.Session.Manager">
         <annotation name="org.freedesktop.DBus.GLib.CSymbol"
                     value="xfsm_manager_dbus"/>
+        <annotation name="org.freedesktop.DBus.GLib.ClientCSymbol"
+                    value="xfsm_manager_dbus_client"/>
 
         <!--
              (String, String, String) org.xfce.Session.Manager.GetInfo()
