@@ -2,16 +2,16 @@
 # Copyright (C) 2003-2007 The Xfce development team.
 # This file is distributed under the same license as the xfce4-session package.
 # Moritz Heiber <moe@xfce.org>, 2003.
-# Fabian Nowak <timystery@arcor.de>, 2006, 2007.
+# Fabian Nowak <timystery@arcor.de>, 2006, 2007, 2008.
 # Nico Schümann <nico@prog.nico22.de>, 2007.
-# Benedikt Meurer <benny@xfce.org>, 2007.
+# Benedikt Meurer <benny@xfce.org>, 2007, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-11 03:33-0700\n"
-"PO-Revision-Date: 2007-07-20 16:49+0100\n"
+"POT-Creation-Date: 2008-10-18 17:34+0200\n"
+"PO-Revision-Date: 2008-10-11 11:29+0100\n"
 "Last-Translator: Benedikt Meurer <benny@xfce.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -60,15 +60,15 @@ msgstr "Thema e_xportieren"
 msgid "Balou theme"
 msgstr "Balou Thema"
 
-#: ../engines/balou/config.c:928
+#: ../engines/balou/config.c:930
 msgid "Configure Balou..."
 msgstr "Konfiguriere Balou..."
 
-#: ../engines/balou/config.c:969
+#: ../engines/balou/config.c:973
 msgid "Balou"
 msgstr "Balou"
 
-#: ../engines/balou/config.c:970
+#: ../engines/balou/config.c:974
 msgid "Balou Splash Engine"
 msgstr "Startbildschirm »Balou«"
 
@@ -80,97 +80,96 @@ msgstr "Mäuse"
 msgid "Mice Splash Engine"
 msgstr "Startbildschirm »Mäuse«"
 
-#: ../engines/simple/simple.c:320
+#: ../engines/simple/simple.c:327
 msgid "Choose image..."
 msgstr "Bild auswählen..."
 
-#: ../engines/simple/simple.c:365
+#: ../engines/simple/simple.c:373
 msgid "Configure Simple..."
 msgstr "Konfiguriere einfaches Thema..."
 
-#: ../engines/simple/simple.c:376
+#: ../engines/simple/simple.c:384
 msgid "Font"
 msgstr "Schriftart"
 
-#: ../engines/simple/simple.c:385
+#: ../engines/simple/simple.c:394
 msgid "Colors"
 msgstr "Farben"
 
-#: ../engines/simple/simple.c:393
+#: ../engines/simple/simple.c:402
 msgid "Background color:"
 msgstr "Hintergrundfarbe:"
 
-#: ../engines/simple/simple.c:405
+#: ../engines/simple/simple.c:415
 msgid "Text color:"
 msgstr "Textfarbe:"
 
-#: ../engines/simple/simple.c:417
+#: ../engines/simple/simple.c:428
 msgid "Image"
 msgstr "Bild"
 
-#: ../engines/simple/simple.c:425
+#: ../engines/simple/simple.c:436
 msgid "Use custom image"
 msgstr "Eigenes Bild verwenden"
 
-#: ../engines/simple/simple.c:510
+#: ../engines/simple/simple.c:523
 msgid "Simple"
 msgstr "Einfach"
 
-#: ../engines/simple/simple.c:511
+#: ../engines/simple/simple.c:524
 msgid "Simple Splash Engine"
 msgstr "Einfacher Startbildschirm"
 
 #: ../settings/main.c:43
 msgid "Settings manager socket"
-msgstr ""
+msgstr "Socket des Sitzungsmanagers"
 
 #: ../settings/main.c:43
 msgid "SOCKET ID"
-msgstr ""
+msgstr "SOCKET-ID"
 
 #: ../settings/main.c:44
-#, fuzzy
 msgid "Version information"
-msgstr "Information"
+msgstr "Versionsinformation"
 
 #: ../settings/main.c:64
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr ""
+msgstr "Geben Sie »%s --help« ein, um mehr über die Verwendung zu erfahren."
 
 #: ../settings/main.c:76
 msgid "The Xfce development team. All rights reserved."
-msgstr ""
+msgstr "Das Entwicklungsteam von Xfce. Alle Rechte vorbehalten."
 
 #: ../settings/main.c:77
 #, c-format
 msgid "Please report bugs to <%s>."
-msgstr ""
+msgstr "Bitte melden Sie Fehler an <%s>"
 
 #: ../settings/main.c:84
-#, fuzzy
 msgid "Session Settings"
-msgstr "Sitzungs- und Starteinstellungen"
+msgstr "Sitzungseinstellungen"
 
 #: ../settings/main.c:86 ../xfce4-session/main.c:277
 msgid "Unable to contact settings server"
-msgstr ""
+msgstr "Kann Einstellungsserver nicht kontaktieren"
 
 #: ../settings/main.c:100
 msgid "Internal Error"
-msgstr ""
+msgstr "Interner Fehler"
 
 #: ../settings/main.c:101
 msgid "Unable to create user interface from embedded definition data"
 msgstr ""
+"Kann kein Nutzerbedienfeld aus den enthaltenen Definitionsdaten erzeugen"
 
 #: ../settings/main.c:102
 msgid "This is likely a problem with your Xfce installation"
-msgstr ""
+msgstr "Dies ist wahrscheinlich ein Problem an Ihrer Installation von Xfce"
 
 #: ../settings/main.c:115
 msgid "_Application Autostart"
-msgstr ""
+msgstr "_Automatisch gestartete Anwendungen"
 
 #: ../settings/splash-settings.c:288 ../settings/splash-settings.c:291
 #: ../settings/splash-settings.c:294 ../settings/splash-settings.c:297
@@ -219,25 +218,22 @@ msgid "Failed to open %s for writing"
 msgstr "Konnte »%s« nicht zum Lesen öffnen"
 
 #: ../settings/xfae-window.c:102
-#, fuzzy
 msgid ""
 "Below is the list of applications that will be started automatically when "
 "you login to your Xfce desktop, in addition to the applications that were "
 "saved when you logged out last time:"
 msgstr ""
-"Unten ist eine Liste der Anwendungen, die automatisch\n"
-"gestartet werden, wenn Sie sich an Ihrer Xfce-Arbeitsumgebung\n"
-"anmelden, zusätzlich zu den beim Abmelden gespeicherten\n"
-"Anwendungen:"
+"Unten ist eine Liste der Anwendungen, die automatisch gestartet werden, wenn "
+"Sie sich an Ihrer Xfce-Arbeitsumgebung anmelden, zusätzlich zu den beim "
+"Abmelden gespeicherten Anwendungen:"
 
 #: ../settings/xfce4-session-settings.glade.h:1
 msgid "<b>Author:</b>"
 msgstr "<b>Autor:</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:2
-#, fuzzy
 msgid "<b>Compatibility</b>"
-msgstr "Kompatibilität"
+msgstr "<b>Kompatibilität</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:3
 msgid "<b>Description:</b>"
@@ -248,66 +244,58 @@ msgid "<b>Homepage:</b>"
 msgstr "<b>Webseite:</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:5
-#, fuzzy
 msgid "<b>Information</b>"
-msgstr "Information"
+msgstr "<b>Information</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:6
-#, fuzzy
 msgid "<b>Logout Settings</b>"
-msgstr "Logout-Einstellungen"
+msgstr "<b>Logout-Einstellungen</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:7
-#, fuzzy
 msgid "<b>Security</b>"
-msgstr "<b>Beschreibung:</b>"
+msgstr "<b>Sicherheit</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:8
-#, fuzzy
 msgid "<b>Session Chooser</b>"
-msgstr "Sitzungsübersicht"
+msgstr "<b>Sitzungsübersicht</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:9
 msgid "<b>Version:</b>"
 msgstr "<b>Version:</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:10
-#, fuzzy
 msgid "Ad_vanced"
-msgstr "Fortgeschritten"
+msgstr "_Fortgeschritten"
 
 #: ../settings/xfce4-session-settings.glade.h:11
-#, fuzzy
 msgid "Automatically save session on _logout"
-msgstr "Sitzung automatisch beim Beenden speichern"
+msgstr "_Sitzung automatisch beim Beenden speichern"
 
 #: ../settings/xfce4-session-settings.glade.h:12
-#, fuzzy
 msgid "Con_figure"
-msgstr "Konfigurieren"
+msgstr "_Konfigurieren"
 
 #: ../settings/xfce4-session-settings.glade.h:13
 msgid "Customize desktop startup and splash screen"
 msgstr ""
+"Passen Sie das Startverhalten der Arbeitsumgebung und den Startbildschirm an "
+"Ihre Bedürfnisse an"
 
 #: ../settings/xfce4-session-settings.glade.h:14
 msgid "Demonstrates the selected splash screen."
 msgstr "Zeigt eine Vorschau des ausgewählten Startbildschirms."
 
 #: ../settings/xfce4-session-settings.glade.h:15
-#, fuzzy
 msgid "Launch GN_OME services on startup"
-msgstr "Laufzeitumgebung für KDE beim Starten laden"
+msgstr "Laufzeitumgebung für _Gnome beim Starten laden"
 
 #: ../settings/xfce4-session-settings.glade.h:16
-#, fuzzy
 msgid "Launch _KDE services on startup"
-msgstr "Laufzeitumgebung für KDE beim Starten laden"
+msgstr "Laufzeitumgebung für _KDE beim Starten laden"
 
 #: ../settings/xfce4-session-settings.glade.h:17
-#, fuzzy
 msgid "Manage _remote applications"
-msgstr "Anwendungen auf entfernten Rechnern verwalten"
+msgstr "_Anwendungen auf entfernten Rechnern verwalten"
 
 #: ../settings/xfce4-session-settings.glade.h:18
 msgid "Opens the configuration panel for the selected splash screen."
@@ -315,20 +303,19 @@ msgstr "Öffnet das Konfigurationsfenster für den ausgewählten Startbildschirm
 
 #: ../settings/xfce4-session-settings.glade.h:19
 msgid "Quit Program"
-msgstr ""
+msgstr "Programm beenden"
 
 #: ../settings/xfce4-session-settings.glade.h:20
 msgid "Quit the program, and remove it from the session."
-msgstr ""
+msgstr "Das Programm beenden und aus der Sitzung entfernen."
 
 #: ../settings/xfce4-session-settings.glade.h:21
-#, fuzzy
 msgid "Remove the selected application from the session."
-msgstr "Zeigt eine Vorschau des ausgewählten Startbildschirms."
+msgstr "Entfernt die ausgewählte Anwendung aus der Sitzung."
 
 #: ../settings/xfce4-session-settings.glade.h:22
 msgid "S_plash"
-msgstr ""
+msgstr "S_tarbild"
 
 #: ../settings/xfce4-session-settings.glade.h:23
 #: ../settings/xfce-session-settings.desktop.in.h:2
@@ -340,47 +327,44 @@ msgid ""
 "These applications are a part of the currently-running session, and can be "
 "saved when you log out."
 msgstr ""
+"Diese Anwendungen sind Teil der bereits laufenden Sitzung, und können beim "
+"Abmelden gespeichert werden."
 
 #: ../settings/xfce4-session-settings.glade.h:25
-#, fuzzy
 msgid "_Display chooser on login"
-msgstr "Sitzungsauswahl beim Starten anzeigen"
+msgstr "_Sitzungsauswahl beim Starten anzeigen"
 
 #: ../settings/xfce4-session-settings.glade.h:26
-#, fuzzy
 msgid "_General"
-msgstr "Allgemeine Einstellungen"
+msgstr "_Allgemeine Einstellungen"
 
 #: ../settings/xfce4-session-settings.glade.h:27
-#, fuzzy
 msgid "_Prompt on logout"
-msgstr "Vor dem Abmelden nachfragen"
+msgstr "_Vor dem Abmelden nachfragen"
 
 #: ../settings/xfce4-session-settings.glade.h:28
-#, fuzzy
 msgid "_Session"
-msgstr "Sitzung beenden"
+msgstr "_Sitzung"
 
 #: ../settings/xfce4-session-settings.glade.h:29
-#, fuzzy
 msgid "_Test"
-msgstr "Testen"
+msgstr "_Testen"
 
 #: ../settings/xfce4-session-settings.glade.h:30
 msgid "gtk-close"
-msgstr ""
+msgstr "gtk-close"
 
 #: ../settings/xfce4-session-settings.glade.h:31
 msgid "gtk-help"
-msgstr ""
+msgstr "gtk-help"
 
 #: ../settings/xfce4-session-settings.glade.h:32
 msgid "gtk-remove"
-msgstr ""
+msgstr "gtk-remove"
 
 #: ../settings/xfce4-session-settings.glade.h:33
 msgid "label"
-msgstr ""
+msgstr "label"
 
 #: ../xfce4-session/main.c:145
 msgid "Loading desktop settings"
@@ -396,21 +380,20 @@ msgid "Loading session data"
 msgstr "Lade Sitzungsdaten"
 
 #: ../xfce4-session/main.c:275
-#, fuzzy
 msgid "Xfce Session Manager"
-msgstr "Sitzungsname wählen"
+msgstr "Sitzungsmanager"
 
 #: ../xfce4-session/shutdown.c:338
-msgid "Log Out"
-msgstr "Abmelden"
+msgid "_Log Out"
+msgstr "A_bmelden"
 
 #: ../xfce4-session/shutdown.c:363
-msgid "Restart"
-msgstr "Neu starten"
+msgid "_Restart"
+msgstr "_Neu starten"
 
 #: ../xfce4-session/shutdown.c:388
-msgid "Shut Down"
-msgstr "Herunterfahren"
+msgid "_Shut Down"
+msgstr "_Herunterfahren"
 
 #: ../xfce4-session/shutdown.c:396
 msgid "_Save session for future logins"
@@ -448,7 +431,7 @@ msgstr ""
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:239
-msgid "Logout"
+msgid "Log out"
 msgstr "Abmelden"
 
 #: ../xfce4-session/xfsm-chooser.c:241
@@ -468,7 +451,7 @@ msgstr "Eine neue Sitzung erstellen."
 #: ../xfce4-session/xfsm-client.c:925
 #, c-format
 msgid "The client doesn't have any properties set yet"
-msgstr ""
+msgstr "Für den Client sind keine Eigenschaften eingestellt"
 
 #: ../xfce4-session/xfsm-compat-gnome.c:301
 msgid "Starting The Gnome Keyring Daemon"
@@ -507,30 +490,70 @@ msgstr "Trotzdem fortfahren"
 msgid "Try again"
 msgstr "Nochmal versuchen"
 
-#: ../xfce4-session/xfsm-manager.c:1281
+#: ../xfce4-session/xfsm-manager.c:585
+#, c-format
+msgid ""
+"Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
+"running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
+"incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
+msgstr ""
+"Kann den Namen der abgesicherten Sitzung nicht bestimmen. Mögliche Usachen "
+"sind: xfconfd läuft gerade nicht (Einstellungsproblem von D-Bus); die "
+"Umgebungsvariable $XDG_CONFIG_DIRS ist nicht korrekt gesetzt (muss »%s« "
+"enthalten), oder xfce4-session wurde falsch installiert."
+
+#: ../xfce4-session/xfsm-manager.c:596
+#, c-format
+msgid ""
+"The specified failsafe session (\"%s\") is not marked as a failsafe session."
+msgstr ""
+"Die angegebene abgesicherte Sitzung (»%s«) ist nicht als solche dekariert."
+
+#: ../xfce4-session/xfsm-manager.c:643
+msgid "The list of applications in the failsafe session is empty."
+msgstr "Die Liste der Anwendungen in der abgesicherten Sitzung ist leer."
+
+#. FIXME: migrate this into the splash screen somehow so the
+#. * window doesn't look ugly (right now now WM is running, so it
+#. * won't have window decorations).
+#: ../xfce4-session/xfsm-manager.c:690
+msgid "Session Manager Error"
+msgstr "Fehler im Sitzungsmanager"
+
+#: ../xfce4-session/xfsm-manager.c:692
+msgid "Unable to load a failsafe session"
+msgstr "Kann abgesicherte Sitzugn nicht laden"
+
+#: ../xfce4-session/xfsm-manager.c:1359
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr ""
+"Kann Clients nur dann beenden, wenn keine anderen Aufgaben durchgeführt "
+"werden"
 
-#: ../xfce4-session/xfsm-manager.c:1745
+#: ../xfce4-session/xfsm-manager.c:1830
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
+"Der Sitzungsmanager muss unbeschäftigt sein, wenn ein Checkpoint gemacht "
+"werden soll"
 
-#: ../xfce4-session/xfsm-manager.c:1786
+#: ../xfce4-session/xfsm-manager.c:1871
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
+"Der Sitzungsmanager muss unbeschäftigt sein, wenn er heruntergefahren werden "
+"soll"
 
-#: ../xfce4-session/xfsm-manager.c:1793
+#: ../xfce4-session/xfsm-manager.c:1878
 #, c-format
 msgid "Suspend and hibernate are not supported"
-msgstr ""
+msgstr "Suspend und Hibernate werden nicht unterstützt"
 
-#: ../xfce4-session/xfsm-manager.c:1800
+#: ../xfce4-session/xfsm-manager.c:1885
 #, c-format
 msgid "Invalid shutdown type \"%u\""
-msgstr ""
+msgstr "Ungültiger Typ »%u« zum Herunterfahren des Systems"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -544,88 +567,88 @@ msgstr "Sitzungsname wählen"
 msgid "Choose a name for the new session:"
 msgstr "Wählen Sie einen Namen für die neue Sitzung:"
 
-#: ../xfce4-session/xfsm-startup.c:123
+#: ../xfce4-session/xfsm-startup.c:115
 msgid "Starting the Volume Controller"
 msgstr "Lautstärkeregler wird gestartet"
 
-#: ../xfce4-session/xfsm-startup.c:125
+#: ../xfce4-session/xfsm-startup.c:117
 msgid "Starting the Panel"
 msgstr "Starte den Sitzungsmanager"
 
-#: ../xfce4-session/xfsm-startup.c:127
+#: ../xfce4-session/xfsm-startup.c:119
 msgid "Starting the Desktop Manager"
 msgstr "Starte die Arbeitsoberfläche"
 
-#: ../xfce4-session/xfsm-startup.c:129
+#: ../xfce4-session/xfsm-startup.c:121
 msgid "Starting the Taskbar"
 msgstr "Starte die Taskbar"
 
-#: ../xfce4-session/xfsm-startup.c:131
+#: ../xfce4-session/xfsm-startup.c:123
 msgid "Starting the Window Manager"
 msgstr "Starte den Fenstermanager"
 
-#: ../xfce4-session/xfsm-startup.c:135
+#: ../xfce4-session/xfsm-startup.c:127
 msgid "Starting the Gnome Terminal Emulator"
 msgstr "Starte den Gnome Terminal-Emulator"
 
-#: ../xfce4-session/xfsm-startup.c:139
+#: ../xfce4-session/xfsm-startup.c:131
 msgid "Starting the KDE Advanced Text Editor"
 msgstr "Starte den KDE Advanced Text Editor"
 
-#: ../xfce4-session/xfsm-startup.c:141
+#: ../xfce4-session/xfsm-startup.c:133
 msgid "Starting the KDE Clipboard Manager"
 msgstr "Starte den KDE Clipboard-Manager"
 
-#: ../xfce4-session/xfsm-startup.c:143
+#: ../xfce4-session/xfsm-startup.c:135
 msgid "Starting the KDE Mail Reader"
 msgstr "Starte das KDE Mail-Programm"
 
-#: ../xfce4-session/xfsm-startup.c:145
+#: ../xfce4-session/xfsm-startup.c:137
 msgid "Starting the KDE News Reader"
 msgstr "Starte den KDE News Reader"
 
-#: ../xfce4-session/xfsm-startup.c:147
+#: ../xfce4-session/xfsm-startup.c:139
 msgid "Starting the Konqueror"
 msgstr "Starte den Konqueror"
 
-#: ../xfce4-session/xfsm-startup.c:149
+#: ../xfce4-session/xfsm-startup.c:141
 msgid "Starting the KDE Terminal Emulator"
 msgstr "Starte den KDE Terminal-Emulator"
 
-#: ../xfce4-session/xfsm-startup.c:153
+#: ../xfce4-session/xfsm-startup.c:145
 msgid "Starting the Beep Media Player"
 msgstr "Starte den Beep Media Player"
 
-#: ../xfce4-session/xfsm-startup.c:155
+#: ../xfce4-session/xfsm-startup.c:147
 msgid "Starting The Gimp"
 msgstr "Starte Gimp"
 
-#: ../xfce4-session/xfsm-startup.c:157
+#: ../xfce4-session/xfsm-startup.c:149
 msgid "Starting the VI Improved Editor"
 msgstr "Starte den VI Improved Editor"
 
-#: ../xfce4-session/xfsm-startup.c:159
+#: ../xfce4-session/xfsm-startup.c:151
 msgid "Starting the Session Management Proxy"
 msgstr "Starte den Session Management Proxy"
 
-#: ../xfce4-session/xfsm-startup.c:161
+#: ../xfce4-session/xfsm-startup.c:153
 msgid "Starting the X-Chat IRC Client"
 msgstr "Start den X-Chat IRC Client"
 
-#: ../xfce4-session/xfsm-startup.c:163
+#: ../xfce4-session/xfsm-startup.c:155
 msgid "Starting the X Multimedia System"
 msgstr "Starte das X Multimedia System"
 
-#: ../xfce4-session/xfsm-startup.c:165
+#: ../xfce4-session/xfsm-startup.c:157
 msgid "Starting the X Terminal Emulator"
 msgstr "Starte den X Terminal-Emulator"
 
-#: ../xfce4-session/xfsm-startup.c:167
+#: ../xfce4-session/xfsm-startup.c:159
 #, c-format
 msgid "Starting %s"
 msgstr "Starte %s"
 
-#: ../xfce4-session/xfsm-startup.c:292
+#: ../xfce4-session/xfsm-startup.c:284
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -649,7 +672,7 @@ msgstr ""
 "Dateien im alten Autostart-Verzeichnis wurden erfolgreich zum neuen Ort\n"
 "übertragen. Sie sollten dieses Verzeichnis jetzt löschen.\n"
 
-#: ../xfce4-session/xfsm-startup.c:431
+#: ../xfce4-session/xfsm-startup.c:423
 msgid "Performing Autostart..."
 msgstr "Führe Autostart aus..."
 
@@ -672,6 +695,30 @@ msgstr "Tipps beim Starten anzeigen"
 #: ../xfce4-tips/main.c:216
 msgid "Next"
 msgstr "Nächster"
+
+#: ../xfce4-session-logout/main.c:65
+msgid "Logout Error"
+msgstr "Fehler beim Abmelden"
+
+#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
+msgid "Unknown error"
+msgstr "Unbekannter Fehler"
+
+#: ../xfce4-session-logout/main.c:163
+msgid "Unable to contact D-Bus session bus."
+msgstr "Kann Sitzungsbus »D-Bus« nicht kontaktieren"
+
+#: ../xfce4-session-logout/main.c:175
+msgid "Failed to create new D-Bus message"
+msgstr "Konnte keine neue Nachricht D-Bus erstellen"
+
+#: ../xfce4-session-logout/main.c:191
+msgid "Failed to receive a reply from the session manager"
+msgstr "Keine Antwort von dem Sitzungsmanager erhalten"
+
+#: ../xfce4-session-logout/main.c:199
+msgid "Received error while trying to log out"
+msgstr "Fehler während des Abmeldevorgangs erhalten"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
 msgid "Session and Startup Settings"
