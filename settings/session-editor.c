@@ -43,6 +43,7 @@ enum
     COL_COMMAND,
     COL_RESTART_STYLE,
     COL_PRIORITY,
+    COL_DBUS_PROXY,
     N_COLS,
 };
 
@@ -96,7 +97,8 @@ session_editor_quit_client(GtkWidget *btn,
     GtkTreeSelection *sel;
     GtkTreeModel *model = NULL;
     GtkTreeIter iter;
-    gchar *name = NULL, *client_op = NULL;
+    DBusGProxy *proxy = NULL;
+    gchar *name = NULL;
     guchar hint = SmRestartIfRunning;
     gchar *primary, *btntext;
 
@@ -105,7 +107,7 @@ session_editor_quit_client(GtkWidget *btn,
         return;
 
     gtk_tree_model_get(model, &iter,
-                       COL_OBJ_PATH, &client_op,
+                       COL_DBUS_PROXY, &proxy,
                        COL_NAME, &name,
                        COL_RESTART_STYLE, &hint,
                        -1);
@@ -121,18 +123,14 @@ session_editor_quit_client(GtkWidget *btn,
                            XFCE_CUSTOM_STOCK_BUTTON, btntext, GTK_STOCK_QUIT, GTK_RESPONSE_ACCEPT,
                            NULL) == GTK_RESPONSE_ACCEPT)
     {
-        DBusGProxy *proxy = dbus_g_proxy_new_for_name(dbus_conn,
-                                                      "org.xfce.SessionManager",
-                                                      client_op,
-                                                      "org.xfce.Session.Client");
         GError *error = NULL;
 
-        if(hint != SmRestartNever) {
+        if(hint != SmRestartIfRunning) {
             GHashTable *properties = g_hash_table_new(g_str_hash, g_str_equal);
             GValue val = { 0, };
 
             g_value_init(&val, G_TYPE_UCHAR);
-            g_value_set_uchar(&val, SmRestartNever);
+            g_value_set_uchar(&val, SmRestartIfRunning);
             g_hash_table_insert(properties, SmRestartStyleHint, &val);
 
             if(!xfsm_client_dbus_client_set_sm_properties(proxy, properties, &error)) {
@@ -152,14 +150,10 @@ session_editor_quit_client(GtkWidget *btn,
                                 NULL);
             g_error_free(error);
         }
-
-        g_object_unref(proxy);
     }
 
     g_free(primary);
     g_free(btntext);
-
-    g_free(client_op);
     g_free(name);
 }
 
@@ -262,9 +256,13 @@ manager_client_registered(DBusGProxy *proxy,
     if((val = g_hash_table_lookup(properties, GsmPriority)))
         priority = g_value_get_uchar(val);
 
+    if(!name || !*name)
+        name = _("(Unknown program)");
+
     DBG("adding '%s', obj path %s", name, object_path);
     gtk_list_store_append(GTK_LIST_STORE(model), &iter);
     gtk_list_store_set(GTK_LIST_STORE(model), &iter,
+                       COL_DBUS_PROXY, proxy,
                        COL_OBJ_PATH, object_path,
                        COL_NAME, name,
                        COL_RESTART_STYLE, hint,
@@ -314,7 +312,8 @@ session_editor_populate_treeview(GtkTreeView *treeview)
         return;
 
     ls = gtk_list_store_new(N_COLS, G_TYPE_STRING, G_TYPE_STRING,
-                            G_TYPE_STRING, G_TYPE_UCHAR, G_TYPE_UCHAR);
+                            G_TYPE_STRING, G_TYPE_UCHAR, G_TYPE_UCHAR,
+                            DBUS_TYPE_G_PROXY);
     gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(ls));
     g_object_unref(ls);
 
@@ -336,7 +335,10 @@ session_editor_populate_treeview(GtkTreeView *treeview)
     for(i = 0; i < clients->len; ++i) {
         gchar *client_op = g_ptr_array_index(clients, i);
         manager_client_registered(manager_dbus_proxy, client_op, treeview);
+        g_free(client_op);
     }
+
+    g_ptr_array_free(clients, TRUE);
 }
 
 void

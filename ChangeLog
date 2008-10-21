@@ -1,3 +1,10 @@
+2008-10-21	Brian Tarricone <bjt23@cornell.edu>
+
+	* settings/session-editor.c: Cache the DBusGProxy in the list
+	  store.  Set clients to kill to SmRestartIfRunning, not
+	  SmRestartNever.  Display placeholder text if the app doesn't
+	  provide a SmProgram property.  Fix a one-time memleak.
+
 2008-10-20	Brian Tarricone <bjt23@cornell.edu>
 
 	* settings/session-editor.c: Implement a rudimentary session
