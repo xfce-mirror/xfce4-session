@@ -477,6 +477,24 @@ xfsm_client_merge_properties (XfsmClient *client,
                          prop->type);
             }
         }
+      else if (strcmp (prop->name, SmProcessID) == 0)
+        {
+          if (strcmp (prop->type, SmARRAY8) == 0)
+            {
+              if (properties->process_id != NULL)
+                g_free (properties->process_id);
+              properties->process_id = g_strdup ((const gchar *) prop->vals->value);
+              xfsm_client_signal_prop_change (client, SmProcessID);
+            }
+          else
+            {
+              g_warning ("Client %s specified property %s of invalid "
+                         "type %s, ignoring.",
+                         properties->client_id,
+                         prop->name,
+                         prop->type);
+            }
+        }
       else if (strcmp (prop->name, SmProgram) == 0)
         {
           if (strcmp (prop->type, SmARRAY8) == 0)
