@@ -42,9 +42,19 @@ enum
     COL_NAME,
     COL_COMMAND,
     COL_RESTART_STYLE,
+    COL_RESTART_STYLE_STR,
     COL_PRIORITY,
+    COL_PID,
     COL_DBUS_PROXY,
     N_COLS,
+};
+
+static const gchar *restart_styles[] = {
+    N_("If running"),
+    N_("Always"),
+    N_("Immediately"),
+    N_("Never"),
+    NULL,
 };
 
 static DBusGConnection *dbus_conn = NULL;
@@ -183,12 +193,18 @@ client_sm_property_changed(DBusGProxy *proxy,
                            COL_NAME, g_value_get_string(value),
                            -1);
     } else if(!strcmp(name, SmRestartStyleHint) && G_VALUE_HOLDS_UCHAR(value)) {
+        guint hint = g_value_get_uchar(value);
         gtk_list_store_set(GTK_LIST_STORE(model), &iter,
-                           COL_RESTART_STYLE, g_value_get_uchar(value),
+                           COL_RESTART_STYLE, hint,
+                           COL_RESTART_STYLE_STR, _(restart_styles[hint]),
                            -1);
     } else if(!strcmp(name, GsmPriority) && G_VALUE_HOLDS_UCHAR(value)) {
         gtk_list_store_set(GTK_LIST_STORE(model), &iter,
                            COL_PRIORITY, g_value_get_uchar(value),
+                           -1);
+    } else if(!strcmp(name, SmProcessID) && G_VALUE_HOLDS_STRING(value)) {
+        gtk_list_store_set(GTK_LIST_STORE(model), &iter,
+                           COL_PID, g_value_get_string(value),
                            -1);
     }
 }
@@ -228,9 +244,10 @@ manager_client_registered(DBusGProxy *proxy,
     GtkTreeIter iter;
     DBusGProxy *client_proxy;
     GHashTable *properties = NULL;
-    const gchar *propnames[] = { SmProgram, SmRestartStyleHint, GsmPriority, NULL };
+    const gchar *propnames[] = { SmProgram, SmRestartStyleHint,
+                                 SmProcessID, GsmPriority, NULL };
     GValue *val;
-    const gchar *name = NULL;
+    const gchar *name = NULL, *pid = NULL;
     guchar hint = SmRestartIfRunning, priority = 50;
     GError *error = NULL;
 
@@ -257,6 +274,8 @@ manager_client_registered(DBusGProxy *proxy,
         hint = g_value_get_uchar(val);
     if((val = g_hash_table_lookup(properties, GsmPriority)))
         priority = g_value_get_uchar(val);
+    if((val = g_hash_table_lookup(properties, SmProcessID)))
+        pid = g_value_get_string(val);
 
     if(!name || !*name)
         name = _("(Unknown program)");
@@ -268,7 +287,9 @@ manager_client_registered(DBusGProxy *proxy,
                        COL_OBJ_PATH, object_path,
                        COL_NAME, name,
                        COL_RESTART_STYLE, hint,
+                       COL_RESTART_STYLE_STR, _(restart_styles[hint]),
                        COL_PRIORITY, priority,
+                       COL_PID, pid,
                        -1);
 
     path = gtk_tree_model_get_path(model, &iter);
@@ -294,29 +315,130 @@ manager_client_registered(DBusGProxy *proxy,
     g_hash_table_destroy(properties);
 }
 
+static GtkTreeModel *
+session_editor_create_restart_style_combo_model()
+{
+    GtkListStore *ls = gtk_list_store_new(1, G_TYPE_STRING);
+    GtkTreeIter iter;
+    gint i;
+
+    for(i = 0; restart_styles[i]; ++i) {
+        gtk_list_store_append(ls, &iter);
+        gtk_list_store_set(ls, &iter, 0, _(restart_styles[i]), -1);
+    }
+
+    return GTK_TREE_MODEL(ls);
+}
+
+static void
+restart_style_hint_changed(GtkCellRenderer *render,
+                           const gchar *path_str,
+                           const gchar *new_text,
+                           gpointer user_data)
+{
+    GtkTreeView *treeview = user_data;
+    GtkTreeModel *model = gtk_tree_view_get_model(treeview);
+    GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
+    GtkTreeIter iter;
+
+    if(gtk_tree_model_get_iter(model, &iter, path)) {
+        gint i;
+        guchar old_hint = SmRestartIfRunning, hint;
+        DBusGProxy *proxy = NULL;
+
+        gtk_tree_model_get(GTK_TREE_MODEL(model), &iter,
+                           COL_DBUS_PROXY, &proxy,
+                           COL_RESTART_STYLE, &old_hint,
+                           -1);
+        hint = old_hint;
+
+        for(i = 0; restart_styles[i]; ++i) {
+            if(!g_utf8_collate(new_text, restart_styles[i])) {
+                hint = i;
+                break;
+            }
+        }
+
+        if(old_hint != hint) {
+            GHashTable *properties = g_hash_table_new(g_str_hash, g_str_equal);
+            GValue val = { 0, };
+            GError *error = NULL;
+
+            g_value_init(&val, G_TYPE_UCHAR);
+            g_value_set_uchar(&val, hint);
+            g_hash_table_insert(properties, SmRestartStyleHint, &val);
+
+            if(!xfsm_client_dbus_client_set_sm_properties(proxy, properties, &error)) {
+                /* FIXME: show error */
+                g_error_free(error);
+            }
+
+            g_value_unset(&val);
+            g_hash_table_destroy(properties);
+        }
+
+        g_object_unref(proxy);
+    }
+
+    gtk_tree_path_free(path);
+}
+
 static void
 session_editor_populate_treeview(GtkTreeView *treeview)
 {
     GtkCellRenderer *render;
     GtkTreeViewColumn *col;
+    GtkTreeModel *combo_model;
     GPtrArray *clients = NULL;
     GtkListStore *ls;
     gint i;
     GError *error = NULL;
 
     render = gtk_cell_renderer_text_new();
+    col = gtk_tree_view_column_new_with_attributes(_("Priority"), render,
+                                                   "text", COL_PRIORITY,
+                                                   NULL);
+    gtk_tree_view_append_column(treeview, col);
+
+    render = gtk_cell_renderer_text_new();
+    col = gtk_tree_view_column_new_with_attributes(_("PID"), render,
+                                                   "text", COL_PID,
+                                                   NULL);
+    gtk_tree_view_append_column(treeview, col);
+
+    render = gtk_cell_renderer_text_new();
     col = gtk_tree_view_column_new_with_attributes(_("Program"), render,
                                                    "text", COL_NAME,
                                                    NULL);
+    g_object_set(col, "expand", TRUE, NULL);
     gtk_tree_view_append_column(treeview, col);
+
+    render = gtk_cell_renderer_combo_new();
+    combo_model = session_editor_create_restart_style_combo_model();
+    g_object_set(render,
+                 "has-entry", FALSE,
+                 "model", combo_model,
+                 "text-column", 0,
+                 "editable", TRUE,
+                 "mode", GTK_CELL_RENDERER_MODE_EDITABLE,
+                 NULL);
+    col = gtk_tree_view_column_new_with_attributes(_("Restart Style"), render,
+                                                   "text", COL_RESTART_STYLE_STR,
+                                                   NULL);
+    gtk_tree_view_append_column(treeview, col);
+    g_object_unref(combo_model);
+    g_signal_connect(render, "edited",
+                     G_CALLBACK(restart_style_hint_changed), treeview);
 
     if(!session_editor_ensure_dbus())
         return;
 
     ls = gtk_list_store_new(N_COLS, G_TYPE_STRING, G_TYPE_STRING,
-                            G_TYPE_STRING, G_TYPE_UCHAR, G_TYPE_UCHAR,
-                            DBUS_TYPE_G_PROXY);
+                            G_TYPE_STRING, G_TYPE_UCHAR, G_TYPE_STRING,
+                            G_TYPE_UCHAR, G_TYPE_STRING, DBUS_TYPE_G_PROXY);
     gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(ls));
+    gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(ls), COL_PRIORITY,
+                                         GTK_SORT_ASCENDING);
     g_object_unref(ls);
 
     dbus_g_proxy_add_signal(manager_dbus_proxy, "ClientRegistered",
