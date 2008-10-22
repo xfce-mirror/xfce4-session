@@ -135,6 +135,7 @@ session_editor_quit_client(GtkWidget *btn,
 
             if(!xfsm_client_dbus_client_set_sm_properties(proxy, properties, &error)) {
                 /* FIXME: show error */
+                g_error_free(error);
             }
 
             g_value_unset(&val);
@@ -155,6 +156,7 @@ session_editor_quit_client(GtkWidget *btn,
     g_free(primary);
     g_free(btntext);
     g_free(name);
+    g_object_unref(proxy);
 }
 
 static void
@@ -262,7 +264,7 @@ manager_client_registered(DBusGProxy *proxy,
     DBG("adding '%s', obj path %s", name, object_path);
     gtk_list_store_append(GTK_LIST_STORE(model), &iter);
     gtk_list_store_set(GTK_LIST_STORE(model), &iter,
-                       COL_DBUS_PROXY, proxy,
+                       COL_DBUS_PROXY, client_proxy,
                        COL_OBJ_PATH, object_path,
                        COL_NAME, name,
                        COL_RESTART_STYLE, hint,
