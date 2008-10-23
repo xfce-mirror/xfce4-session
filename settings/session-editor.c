@@ -19,6 +19,10 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+
 #include <X11/SM/SMlib.h>
 
 #include <gtk/gtk.h>
@@ -193,7 +197,11 @@ client_sm_property_changed(DBusGProxy *proxy,
                            COL_NAME, g_value_get_string(value),
                            -1);
     } else if(!strcmp(name, SmRestartStyleHint) && G_VALUE_HOLDS_UCHAR(value)) {
-        guint hint = g_value_get_uchar(value);
+        guchar hint = g_value_get_uchar(value);
+
+        if(hint > SmRestartNever)
+            hint = SmRestartIfRunning;
+
         gtk_list_store_set(GTK_LIST_STORE(model), &iter,
                            COL_RESTART_STYLE, hint,
                            COL_RESTART_STYLE_STR, _(restart_styles[hint]),
@@ -270,8 +278,11 @@ manager_client_registered(DBusGProxy *proxy,
 
     if((val = g_hash_table_lookup(properties, SmProgram)))
         name = g_value_get_string(val);
-    if((val = g_hash_table_lookup(properties, SmRestartStyleHint)))
+    if((val = g_hash_table_lookup(properties, SmRestartStyleHint))) {
         hint = g_value_get_uchar(val);
+        if(hint > SmRestartNever)
+            hint = SmRestartIfRunning;
+    }
     if((val = g_hash_table_lookup(properties, GsmPriority)))
         priority = g_value_get_uchar(val);
     if((val = g_hash_table_lookup(properties, SmProcessID)))
@@ -331,6 +342,58 @@ session_editor_create_restart_style_combo_model()
 }
 
 static void
+priority_changed(GtkCellRenderer *render,
+                 const gchar *path_str,
+                 const gchar *new_text,
+                 gpointer user_data)
+{
+    GtkTreeView *treeview = user_data;
+    GtkTreeModel *model = gtk_tree_view_get_model(treeview);
+    GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
+    GtkTreeIter iter;
+
+    if(gtk_tree_model_get_iter(model, &iter, path)) {
+        DBusGProxy *proxy = NULL;
+        gint new_prio_i = atoi(new_text);
+        guchar old_prio, new_prio;
+
+        /* FIXME: should probably inform user if value gets clamped */
+        if(new_prio_i > G_MAXUINT8)
+            new_prio = G_MAXUINT8;
+        else if(new_prio_i < 0)
+            new_prio = 0;
+        else
+            new_prio = (guchar)new_prio_i;
+
+        gtk_tree_model_get(model, &iter,
+                           COL_DBUS_PROXY, &proxy,
+                           COL_PRIORITY, &old_prio,
+                           -1);
+        if(old_prio != new_prio) {
+            GHashTable *properties = g_hash_table_new(g_str_hash, g_str_equal);
+            GValue val = { 0, };
+            GError *error = NULL;
+
+            g_value_init(&val, G_TYPE_UCHAR);
+            g_value_set_uchar(&val, new_prio);
+            g_hash_table_insert(properties, GsmPriority, &val);
+
+            if(!xfsm_client_dbus_client_set_sm_properties(proxy, properties, &error)) {
+                /* FIXME: show error */
+                g_error_free(error);
+            }
+
+            g_value_unset(&val);
+            g_hash_table_destroy(properties);
+        }
+
+        g_object_unref(proxy);
+    }
+
+    gtk_tree_path_free(path);
+}
+
+static void
 restart_style_hint_changed(GtkCellRenderer *render,
                            const gchar *path_str,
                            const gchar *new_text,
@@ -383,6 +446,44 @@ restart_style_hint_changed(GtkCellRenderer *render,
     gtk_tree_path_free(path);
 }
 
+static gint
+session_tree_compare_iter(GtkTreeModel *model,
+                          GtkTreeIter *a,
+                          GtkTreeIter *b,
+                          gpointer user_data)
+{
+    guchar aprio = 0, bprio = 0;
+
+    gtk_tree_model_get(model, a, COL_PRIORITY, &aprio, -1);
+    gtk_tree_model_get(model, b, COL_PRIORITY, &bprio, -1);
+
+    if(aprio < bprio)
+        return -1;
+    else if(aprio > bprio)
+        return 1;
+    else {
+        gint ret;
+        gchar *aname = NULL, *bname = NULL;
+
+        gtk_tree_model_get(model, a, COL_NAME, &aname, -1);
+        gtk_tree_model_get(model, b, COL_NAME, &bname, -1);
+
+        if(!aname && !bname)
+            return 0;
+        else if(!aname)
+            ret = -1;
+        else if(!bname)
+            ret = 1;
+        else
+            ret = g_utf8_collate(aname, bname);
+
+        g_free(aname);
+        g_free(bname);
+
+        return ret;
+    }
+}
+
 static void
 session_editor_populate_treeview(GtkTreeView *treeview)
 {
@@ -395,10 +496,16 @@ session_editor_populate_treeview(GtkTreeView *treeview)
     GError *error = NULL;
 
     render = gtk_cell_renderer_text_new();
+    g_object_set(render,
+                 "editable", TRUE,
+                 "editable-set", TRUE,
+                 NULL);
     col = gtk_tree_view_column_new_with_attributes(_("Priority"), render,
                                                    "text", COL_PRIORITY,
                                                    NULL);
     gtk_tree_view_append_column(treeview, col);
+    g_signal_connect(render, "edited",
+                     G_CALLBACK(priority_changed), treeview);
 
     render = gtk_cell_renderer_text_new();
     col = gtk_tree_view_column_new_with_attributes(_("PID"), render,
@@ -437,7 +544,11 @@ session_editor_populate_treeview(GtkTreeView *treeview)
                             G_TYPE_STRING, G_TYPE_UCHAR, G_TYPE_STRING,
                             G_TYPE_UCHAR, G_TYPE_STRING, DBUS_TYPE_G_PROXY);
     gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(ls));
-    gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(ls), COL_PRIORITY,
+    gtk_tree_sortable_set_default_sort_func(GTK_TREE_SORTABLE(ls),
+                                            session_tree_compare_iter,
+                                            NULL, NULL);
+    gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(ls),
+                                         GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID,
                                          GTK_SORT_ASCENDING);
     g_object_unref(ls);
 
