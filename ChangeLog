@@ -1,5 +1,13 @@
 2008-10-22	Brian Tarricone <bjt23@cornell.edu>
 
+	* settings/xfce4-session-settings.glade: Remove 'remove' button
+	  and add a 'save session' button.  Add a session save progress
+	  dialog.
+	* settings/session-editor.c: Add the ability to save the
+	  session from the dialog.
+
+2008-10-22	Brian Tarricone <bjt23@cornell.edu>
+
 	* settings/session-editor.c: Validate the value for the
 	  restart style hint to avoid a possible crash.  Sort the
 	  client list first by priority, then by program name.  Allow

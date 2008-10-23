@@ -83,9 +83,68 @@ session_editor_ensure_dbus()
                                                        "org.xfce.SessionManager",
                                                        "/org/xfce/SessionManager",
                                                        "org.xfce.Session.Manager");
+
+        dbus_g_proxy_add_signal(manager_dbus_proxy, "ClientRegistered",
+                                G_TYPE_STRING, G_TYPE_INVALID);
+        dbus_g_proxy_add_signal(manager_dbus_proxy, "StateChanged",
+                                G_TYPE_UINT, G_TYPE_UINT, G_TYPE_INVALID);
     }
 
     return !!dbus_conn;
+}
+
+static void
+manager_state_changed_saving(DBusGProxy *proxy,
+                             guint old_state,
+                             guint new_state,
+                             gpointer user_data)
+{
+    if(new_state == 1)  /* idle.  FIXME: enum this */
+        gtk_dialog_response(GTK_DIALOG(user_data), GTK_RESPONSE_ACCEPT);
+}
+
+static gboolean
+pulse_session_save_dialog(gpointer data)
+{
+    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(data));
+    return TRUE;
+}
+
+static void
+session_editor_save_session(GtkWidget *btn,
+                            GtkWidget *dialog)
+{
+    GtkWidget *pbar = g_object_get_data(G_OBJECT(dialog), "pbar");
+    guint pulse_id;
+    GError *error = NULL;
+
+    gtk_widget_set_sensitive(btn, FALSE);
+
+    if(!xfsm_manager_dbus_client_checkpoint(manager_dbus_proxy, "", &error)) {
+        xfce_message_dialog(GTK_WINDOW(gtk_widget_get_toplevel(btn)),
+                            _("Session Save Error"), GTK_STOCK_DIALOG_ERROR,
+                            _("Unable to save the session"),
+                            error->message,
+                            GTK_STOCK_CLOSE, GTK_RESPONSE_ACCEPT,
+                            NULL);
+        gtk_widget_set_sensitive(btn, TRUE);
+        g_error_free(error);
+        return;
+    }
+
+    dbus_g_proxy_connect_signal(manager_dbus_proxy, "StateChanged",
+                                G_CALLBACK(manager_state_changed_saving),
+                                dialog, NULL);
+    pulse_id = g_timeout_add(250, pulse_session_save_dialog, pbar);
+
+    gtk_dialog_run(GTK_DIALOG(dialog));
+
+    g_source_remove(pulse_id);
+    dbus_g_proxy_disconnect_signal(manager_dbus_proxy, "StateChanged",
+                                   G_CALLBACK(manager_state_changed_saving),
+                                   dialog);
+    gtk_widget_hide(dialog);
+    gtk_widget_set_sensitive(btn, TRUE);
 }
 
 static void
@@ -95,13 +154,6 @@ session_editor_sel_changed_btn(GtkTreeSelection *sel,
   GtkTreeIter iter;
   gtk_widget_set_sensitive(btn, gtk_tree_selection_get_selected(sel, NULL,
                                                                 &iter));
-}
-
-static void
-session_editor_remove_client(GtkWidget *btn,
-                             GtkWidget *treeview)
-{
-
 }
 
 static void
@@ -552,8 +604,6 @@ session_editor_populate_treeview(GtkTreeView *treeview)
                                          GTK_SORT_ASCENDING);
     g_object_unref(ls);
 
-    dbus_g_proxy_add_signal(manager_dbus_proxy, "ClientRegistered",
-                            G_TYPE_STRING, G_TYPE_INVALID);
     dbus_g_proxy_connect_signal(manager_dbus_proxy, "ClientRegistered",
                                 G_CALLBACK(manager_client_registered),
                                 treeview, NULL);
@@ -579,7 +629,7 @@ session_editor_populate_treeview(GtkTreeView *treeview)
 void
 session_editor_init(GladeXML *gxml)
 {
-    GtkWidget *treeview, *btn_remove, *btn_quit;
+    GtkWidget *treeview, *btn_save, *btn_quit, *dlg_saving;
     GtkTreeSelection *sel;
 
     dbus_g_object_register_marshaller(g_cclosure_marshal_VOID__STRING,
@@ -596,11 +646,13 @@ session_editor_init(GladeXML *gxml)
     sel = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
     session_editor_populate_treeview(GTK_TREE_VIEW(treeview));
 
-    btn_remove = glade_xml_get_widget(gxml, "btn_remove_client");
-    g_signal_connect(btn_remove, "clicked",
-                   G_CALLBACK(session_editor_remove_client), treeview);
-    //g_signal_connect(sel, "changed",
-    //                 G_CALLBACK(session_editor_sel_changed_btn), btn_remove);
+    dlg_saving = glade_xml_get_widget(gxml, "dialog_saving");
+    g_object_set_data(G_OBJECT(dlg_saving), "pbar",
+                      glade_xml_get_widget(gxml, "progress_save_session"));
+
+    btn_save = glade_xml_get_widget(gxml, "btn_save_session");
+    g_signal_connect(btn_save, "clicked",
+                     G_CALLBACK(session_editor_save_session), dlg_saving);
 
     btn_quit = glade_xml_get_widget(gxml, "btn_quit_client");
     g_signal_connect(btn_quit, "clicked",

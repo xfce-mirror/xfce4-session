@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Mon Oct 20 00:11:57 2008 -->
+<!--Generated with glade3 3.4.5 on Wed Oct 22 22:47:27 2008 -->
 <glade-interface>
   <requires lib="xfce4"/>
   <widget class="XfceTitledDialog" id="xfce4_session_settings_dialog">
@@ -442,7 +442,7 @@
                       <widget class="GtkLabel" id="label21">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">These applications are a part of the currently-running session, and can be saved when you log out.</property>
+                        <property name="label" translatable="yes">These applications are a part of the currently-running session, and can be saved when you log out.  Changes below will only take effect when the session is saved.</property>
                         <property name="justify">GTK_JUSTIFY_FILL</property>
                         <property name="wrap">True</property>
                       </widget>
@@ -479,18 +479,39 @@
                     <property name="visible">True</property>
                     <property name="spacing">6</property>
                     <child>
-                      <widget class="GtkButton" id="btn_remove_client">
+                      <widget class="GtkButton" id="btn_save_session">
                         <property name="visible">True</property>
-                        <property name="sensitive">False</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
-                        <property name="tooltip" translatable="yes">Remove the selected application from the session</property>
-                        <property name="label" translatable="yes">gtk-remove</property>
-                        <property name="use_stock">True</property>
                         <property name="response_id">0</property>
+                        <child>
+                          <widget class="GtkHBox" id="hbox5">
+                            <property name="visible">True</property>
+                            <property name="spacing">4</property>
+                            <child>
+                              <widget class="GtkImage" id="image4">
+                                <property name="visible">True</property>
+                                <property name="xalign">1</property>
+                                <property name="stock">gtk-save</property>
+                              </widget>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="label5">
+                                <property name="visible">True</property>
+                                <property name="xalign">0</property>
+                                <property name="label" translatable="yes">Save Sessio_n</property>
+                                <property name="use_underline">True</property>
+                              </widget>
+                              <packing>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </widget>
+                        </child>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="position">1</property>
                       </packing>
                     </child>
                     <child>
@@ -516,7 +537,8 @@
                               <widget class="GtkLabel" id="label23">
                                 <property name="visible">True</property>
                                 <property name="xalign">0</property>
-                                <property name="label" translatable="yes">Quit Program</property>
+                                <property name="label" translatable="yes">_Quit Program</property>
+                                <property name="use_underline">True</property>
                               </widget>
                               <packing>
                                 <property name="position">1</property>
@@ -527,7 +549,7 @@
                       </widget>
                       <packing>
                         <property name="expand">False</property>
-                        <property name="position">1</property>
+                        <property name="pack_type">GTK_PACK_END</property>
                       </packing>
                     </child>
                   </widget>
@@ -727,6 +749,97 @@
               <packing>
                 <property name="position">1</property>
               </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">GTK_PACK_END</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="GtkDialog" id="dialog_saving">
+    <property name="border_width">5</property>
+    <property name="title" translatable="yes">Saving Session</property>
+    <property name="resizable">False</property>
+    <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
+    <property name="destroy_with_parent">True</property>
+    <property name="icon_name">xfce4-session</property>
+    <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+    <property name="skip_taskbar_hint">True</property>
+    <property name="skip_pager_hint">True</property>
+    <property name="transient_for">xfce4_session_settings_dialog</property>
+    <property name="has_separator">False</property>
+    <child internal-child="vbox">
+      <widget class="GtkVBox" id="dialog-vbox2">
+        <property name="visible">True</property>
+        <property name="spacing">2</property>
+        <child>
+          <widget class="GtkVBox" id="vbox5">
+            <property name="visible">True</property>
+            <property name="border_width">6</property>
+            <property name="spacing">6</property>
+            <child>
+              <widget class="GtkHBox" id="hbox8">
+                <property name="visible">True</property>
+                <property name="spacing">12</property>
+                <child>
+                  <widget class="GtkImage" id="image6">
+                    <property name="visible">True</property>
+                    <property name="stock">gtk-dialog-info</property>
+                    <property name="icon_size">6</property>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkLabel" id="label10">
+                    <property name="visible">True</property>
+                    <property name="xalign">0</property>
+                    <property name="label" translatable="yes">Your session is being saved.  If you do not wish to wait, you may close this window.</property>
+                    <property name="justify">GTK_JUSTIFY_FILL</property>
+                    <property name="wrap">True</property>
+                  </widget>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkProgressBar" id="progress_save_session">
+                <property name="visible">True</property>
+                <property name="activity_mode">True</property>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <widget class="GtkHButtonBox" id="dialog-action_area2">
+            <property name="visible">True</property>
+            <property name="layout_style">GTK_BUTTONBOX_END</property>
+            <child>
+              <widget class="GtkButton" id="button3">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-close</property>
+                <property name="use_stock">True</property>
+                <property name="response_id">0</property>
+              </widget>
             </child>
           </widget>
           <packing>
