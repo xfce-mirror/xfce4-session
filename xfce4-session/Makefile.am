@@ -100,11 +100,11 @@ BUILT_SOURCES =								\
 xfsm-marshal.h: stamp-xfsm-marshal.h
 	@true
 stamp-xfsm-marshal.h: xfsm-marshal.list Makefile
-	glib-genmarshal --prefix=xfsm_marshal --internal xfsm-marshal.list --header > xfsm-marshal.h
+	glib-genmarshal --prefix=xfsm_marshal xfsm-marshal.list --header > xfsm-marshal.h
 	echo timestamp > $(@F)
 xfsm-marshal.c: xfsm-marshal.list Makefile
 	echo '#include "xfsm-marshal.h"' > $@
-	glib-genmarshal --prefix=xfsm_marshal --internal xfsm-marshal.list --body >> xfsm-marshal.c
+	glib-genmarshal --prefix=xfsm_marshal xfsm-marshal.list --body >> xfsm-marshal.c
 
 xfsm-manager-dbus.h: $(srcdir)/xfsm-manager-dbus.xml
 	dbus-binding-tool --mode=glib-server --prefix=xfsm_manager $< > $@

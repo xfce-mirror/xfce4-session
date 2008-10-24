@@ -69,11 +69,11 @@ nopreview.h: $(srcdir)/nopreview.png
 xfce4-session-marshal.h: stamp-xfce4-session-marshal.h
 	@true
 stamp-xfce4-session-marshal.h: xfce4-session-marshal.list Makefile
-	glib-genmarshal --prefix=xfce4_session_marshal --internal xfce4-session-marshal.list --header > xfce4-session-marshal.h
+	glib-genmarshal --prefix=xfce4_session_marshal xfce4-session-marshal.list --header > xfce4-session-marshal.h
 	echo timestamp > $(@F)
 xfce4-session-marshal.c: xfce4-session-marshal.list Makefile
 	echo '#include "xfce4-session-marshal.h"' > $@
-	glib-genmarshal --prefix=xfce4_session_marshal --internal xfce4-session-marshal.list --body >> xfce4-session-marshal.c
+	glib-genmarshal --prefix=xfce4_session_marshal xfce4-session-marshal.list --body >> xfce4-session-marshal.c
 
 xfce4-session-settings_glade.h: xfce4-session-settings.glade
 	exo-csource --static --strip-comments --strip-content --name=xfce4_session_settings_glade $< >$@
