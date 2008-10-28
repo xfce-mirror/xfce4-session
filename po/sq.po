@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-22 23:22-0700\n"
-"PO-Revision-Date: 2007-01-21 22:00+0200\n"
+"PO-Revision-Date: 2008-10-25 09:08+0200\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <translation-team-sq@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -25,12 +25,8 @@ msgstr "Zgjidhni kartelë teme për instalim..."
 
 #: ../engines/balou/config.c:333
 #, c-format
-msgid ""
-"Unable to install splash theme from file %s, please check that the file is a "
-"valid splash theme archive."
-msgstr ""
-"I pazoti të instaloj temë sigle prej kartelës %s, ju lutem kontrolloni që "
-"kartela është një arkiv i vlefshëm teme sigle."
+msgid "Unable to install splash theme from file %s, please check that the file is a valid splash theme archive."
+msgstr "I pazoti të instaloj temë sigle prej kartelës %s, ju lutem kontrolloni që kartela është një arkiv i vlefshëm teme sigle."
 
 #: ../engines/balou/config.c:386
 #, c-format
@@ -119,128 +115,158 @@ msgstr "Mekanizëm Sigle e Thjeshtë"
 
 #: ../settings/main.c:43
 msgid "Settings manager socket"
-msgstr ""
+msgstr "\"Socket\" përgjegjësi rregullimesh"
+
+#: ../settings/session/session.c:142
+msgid "Display chooser on login"
+msgstr "Shfaq zgjedhës gjatë hyrjesh"
+
+#: ../settings/session/session.c:150
+msgid "If set, the session manager will ask you to choose a session every time you log in to Xfce."
+msgstr "Nëse caktohet, përgjegjësi i sesioneve do t'ju kërkojë të zgjidhni një sesion sa herë që hyni në Xfce."
 
 #: ../settings/main.c:43
 msgid "SOCKET ID"
-msgstr ""
+msgstr "SOCKET ID"
 
 #: ../settings/main.c:44
-#, fuzzy
 msgid "Version information"
-msgstr "Të dhëna"
+msgstr "Të dhëna versioni"
 
 #: ../settings/main.c:64
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr ""
+msgstr "Shtypni '%s --help' për përdorimin."
+
+#: ../settings/session/session.c:166
+msgid "This option instructs the session manager to save the current session automatically when you log out. If you don't select this option you'll be prompted whether you want to save the current session on each logout."
+msgstr "Kjo mundësi udhëzon përgjegjësin e sesioneve të ruajë sesionin e çastit automatikisht kur dilni. Nëse nuk përzgjidhni këtë mundësi do të pyeteni në çdo dalje nëse doni të ruhet sesioni i çastit."
 
 #: ../settings/main.c:76
 msgid "The Xfce development team. All rights reserved."
-msgstr ""
+msgstr "Ekipi zhvillues i Xfce-së. Tërë të drejtat të rezervuara."
+
+#: ../settings/session/session.c:173
+msgid "Prompt on logout"
+msgstr "Prompt gjatë daljesh"
+
+#: ../settings/session/session.c:179
+msgid "This option disables the logout confirmation dialog. Whether the session will be saved or not depends on whether you enabled the automatic saving of sessions on logout or not."
+msgstr "Kjo mundësi çaktivizon dialogun e ripohimit të daljes. nëse do të ruhet apo jo sesioni varet nga fakti i aktivizimit ose jo të ruajtjes automatike të sesioneve."
 
 #: ../settings/main.c:77
 #, c-format
 msgid "Please report bugs to <%s>."
-msgstr ""
+msgstr "Ju lutem njoftoni të meta te <%s>."
 
 #: ../settings/main.c:84
-#, fuzzy
 msgid "Session Settings"
-msgstr "Rregullime Sesioni dhe Nisjeje"
+msgstr "Rregullime Sesioni"
 
-#: ../settings/main.c:86 ../xfce4-session/main.c:277
+#: ../settings/main.c:86
+#: ../xfce4-session/main.c:277
 msgid "Unable to contact settings server"
-msgstr ""
+msgstr "I pazoti të lidhet me shërbyesin e rregullimeve"
+
+#: ../settings/session/session.c:230
+msgid "Enable this if you plan to use Gnome applications. This will instruct the session manager to start some vital Gnome services for you. You should also enable this if you want to use the Assistive Technologies that ship with Gnome."
+msgstr "Aktivizojeni nëse keni në plan të përdorni zbatime Gnome. Kjo do të udhëzojë përgjegjësin e sesionit të nisë për ju disa shërbime jetikë të Gnome-s. Do të duhej ta aktivizonit gjithashtu nëse doni të zbatohen Teknologji Asistive që ofron Gnome-ja"
 
 #: ../settings/main.c:100
 msgid "Internal Error"
-msgstr ""
+msgstr "Gabim i Brendshëm"
 
 #: ../settings/main.c:101
 msgid "Unable to create user interface from embedded definition data"
-msgstr ""
+msgstr "I pazoti të krijojë ndërfaqe përdoruesi prej të dhënash të trupëzuara përcaktimi"
+
+#: ../settings/session/session.c:243
+msgid "Enable this option if you plan to run KDE applications as part of your Xfce Desktop session. This will notably increase the startup time, but on the other hand, KDE applications will startup faster. Some KDE applications may not work at all if you don't enable this option."
+msgstr "Aktivizojeni këtë mundësi nëse keni në plan të xhironi zbatime KDE si pjesë të sesionit tuaj Xfce Desktop. Kjo do të rrisë dukshëm kohën e nisjes, por nga ana tjetër, zbatimet KDE do të nisen më shpejt. Disa zbatime KDE mund edhe të mos punojnë fare nëse nuk e aktivizoni këtë mundësi."
 
 #: ../settings/main.c:102
 msgid "This is likely a problem with your Xfce installation"
-msgstr ""
+msgstr "Ka gjasa që ky të jetë një problem i instalimit tuaj Xfce"
 
 #: ../settings/main.c:115
 msgid "_Application Autostart"
-msgstr ""
+msgstr "_Vetënisje Zbatimi"
 
 #: ../settings/session-editor.c:57
 msgid "If running"
-msgstr ""
+msgstr "Nëse xhiron"
+
+#: ../settings/session/session.c:273
+msgid "Allow the session manager to manage applications running on remote hosts. Do not enable this option unless you know what you are doing."
+msgstr "Lejoni përgjegjësin e sesionit të administrojë zbatime që xhirojnë në strehë të largëta. Mos e aktivizoni po nuk ditët se çfarë po bëni"
 
 #: ../settings/session-editor.c:58
 msgid "Always"
-msgstr ""
+msgstr "Përherë"
 
 #: ../settings/session-editor.c:59
 msgid "Immediately"
-msgstr ""
+msgstr "Menjëherë"
 
 #: ../settings/session-editor.c:60
 msgid "Never"
-msgstr ""
+msgstr "Kurrë"
 
 #: ../settings/session-editor.c:125
 msgid "Session Save Error"
-msgstr ""
+msgstr "Gabim në Ruajtje Sesioni"
 
 #: ../settings/session-editor.c:126
 msgid "Unable to save the session"
-msgstr ""
+msgstr "I pazoti të ruajë sesionin."
 
 #: ../settings/session-editor.c:181
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
-msgstr ""
+msgstr "Jeni të sigurt se doni të përfundoni \"%s\"?"
 
 #: ../settings/session-editor.c:183
 #, c-format
 msgid "Terminate \"%s\""
-msgstr ""
+msgstr "Përfundo \"%s\""
 
-#: ../settings/session-editor.c:185 ../settings/session-editor.c:213
+#: ../settings/session-editor.c:185
+#: ../settings/session-editor.c:213
 msgid "Terminate Program"
-msgstr ""
+msgstr "Përfundo Programin"
 
 #: ../settings/session-editor.c:187
-msgid ""
-"The application will lose any unsaved state and will not be restarted in "
-"your next session."
-msgstr ""
+msgid "The application will lose any unsaved state and will not be restarted in your next session."
+msgstr "Zbatimi do të humbë çfarëdo gjendje të paruajtur dhe nuk do të riniset gjatë sesionit tuaj pasues."
 
 #: ../settings/session-editor.c:214
 msgid "Unable to terminate program."
-msgstr ""
+msgstr "I pazoti të përfundoj programin."
 
 #: ../settings/session-editor.c:344
-#, fuzzy
 msgid "(Unknown program)"
-msgstr "(I panjohur)"
+msgstr "(Program i panjohur)"
 
 #: ../settings/session-editor.c:555
 msgid "Priority"
-msgstr ""
+msgstr "Përparësi"
 
 #: ../settings/session-editor.c:563
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: ../settings/session-editor.c:569
 msgid "Program"
-msgstr ""
+msgstr "Program"
 
 #: ../settings/session-editor.c:584
-#, fuzzy
 msgid "Restart Style"
-msgstr "Rinis"
+msgstr "Stil Rinisjeje"
 
-#: ../settings/splash-settings.c:288 ../settings/splash-settings.c:291
-#: ../settings/splash-settings.c:294 ../settings/splash-settings.c:297
+#: ../settings/splash-settings.c:288
+#: ../settings/splash-settings.c:291
+#: ../settings/splash-settings.c:294
+#: ../settings/splash-settings.c:297
 #: ../settings/splash-settings.c:354
 msgid "None"
 msgstr "Asnjë"
@@ -286,16 +312,8 @@ msgid "Failed to open %s for writing"
 msgstr "Dështova të hap %s për shkrim"
 
 #: ../settings/xfae-window.c:102
-#, fuzzy
-msgid ""
-"Below is the list of applications that will be started automatically when "
-"you login to your Xfce desktop, in addition to the applications that were "
-"saved when you logged out last time:"
-msgstr ""
-"Më poshtë keni listën e zbatimeve që do të nisen\n"
-"vetvetiu kur hyni te desktopi juaj Xfce, si shtesë\n"
-"e zbatimeve që qenë ruajtur kur dolët që këtej herën\n"
-"e fundit:"
+msgid "Below is the list of applications that will be started automatically when you login to your Xfce desktop, in addition to the applications that were saved when you logged out last time:"
+msgstr "Më poshtë keni listën e zbatimeve që do të nisen vetvetiu kur hyni te desktopi juaj Xfce, si shtesë e zbatimeve që qenëruajtur kur dolët që këtej herën e fundit:"
 
 #: ../xfce4-session/main.c:145
 msgid "Loading desktop settings"
@@ -311,9 +329,8 @@ msgid "Loading session data"
 msgstr "Po ngarkoj të dhëna sesioni"
 
 #: ../xfce4-session/main.c:275
-#, fuzzy
 msgid "Xfce Session Manager"
-msgstr "Zgjidhni emër sesioni"
+msgstr "Përgjegjës Sesionesh Xfce"
 
 #: ../xfce4-session/shutdown.c:338
 msgid "Log Out"
@@ -336,17 +353,12 @@ msgid "Please enter your password:"
 msgstr "Ju lutem jepni fjalëkalimin tuaj:"
 
 #: ../xfce4-session/shutdown.c:490
-#, fuzzy
 msgid "<b>An error occurred</b>"
-msgstr "<b>Pati një gabim</b>"
+msgstr "<b>Ndodhi një gabim</b>"
 
 #: ../xfce4-session/shutdown.c:504
-msgid ""
-"Either the password you entered is invalid, or the system administrator "
-"disallows shutting down this computer with your user account."
-msgstr ""
-"Ose fjalëkalimi që dhatë është i pavlefshëm, ose përgjegjësi i sistemit nuk "
-"lejon fikjen e kompjuterit prej llogarisë suaj të përdoruesit."
+msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
+msgstr "Ose fjalëkalimi që dhatë është i pavlefshëm, ose përgjegjësi i sistemit nuk lejon fikjen e kompjuterit prej llogarisë suaj të përdoruesit."
 
 #: ../xfce4-session/xfsm-chooser.c:120
 #, c-format
@@ -354,18 +366,13 @@ msgid "Last accessed: %s"
 msgstr "Parë së fundi: %s"
 
 #: ../xfce4-session/xfsm-chooser.c:213
-msgid ""
-"Choose the session you want to restore. You can simply double-click the "
-"session name to restore it."
-msgstr ""
-"Zgjidhni sesionin që doni të rimerrni. Thjesht mund të dyklikoni emrin e "
-"sesionit për ta rimarrë."
+msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
+msgstr "Zgjidhni sesionin që doni të rimerrni. Thjesht mund të dyklikoni emrin e sesionit për ta rimarrë."
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:239
-#, fuzzy
 msgid "Log out"
-msgstr "Dalje"
+msgstr "Dil"
 
 #: ../xfce4-session/xfsm-chooser.c:241
 msgid "Cancel the login attempt and return to the login screen."
@@ -380,11 +387,12 @@ msgstr "Sesion i ri"
 msgid "Create a new session."
 msgstr "Krijo sesion të ri."
 
-#: ../xfce4-session/xfsm-client.c:775 ../xfce4-session/xfsm-client.c:835
+#: ../xfce4-session/xfsm-client.c:775
+#: ../xfce4-session/xfsm-client.c:835
 #: ../xfce4-session/xfsm-client.c:943
 #, c-format
 msgid "The client doesn't have any properties set yet"
-msgstr ""
+msgstr "Klienti s'ka akoma veti të rregulluara"
 
 #: ../xfce4-session/xfsm-compat-gnome.c:301
 msgid "Starting The Gnome Keyring Daemon"
@@ -425,58 +433,53 @@ msgstr "Riprovoni"
 
 #: ../xfce4-session/xfsm-manager.c:585
 #, c-format
-msgid ""
-"Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
-"running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
-"incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
-msgstr ""
+msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
+msgstr "I pazoti të përcaktonte emër sesioni \"failsafe\".  Shkaqe të mundshëm: xfconfd nuk po xhiron (problem rregullimi D-Bus-i); ndryshorja e mjedisit $XDG_CONFIG_DIRS është caktuar pasaktësisht (duhet të përfshijë \"%s\"), ose xfce4-session është instaluar jo saktë)."
 
 #: ../xfce4-session/xfsm-manager.c:596
 #, c-format
-msgid ""
-"The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr ""
+msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
+msgstr "Sesioni \"failsafe\" i dhënë (\"%s\") nuk është i shënuar si sesion \"failsafe\"."
 
 #: ../xfce4-session/xfsm-manager.c:643
 msgid "The list of applications in the failsafe session is empty."
-msgstr ""
+msgstr "Lista e zbatimeve për sesione \"failsafe\" është bosh"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
 #: ../xfce4-session/xfsm-manager.c:690
-#, fuzzy
 msgid "Session Manager Error"
-msgstr "Zgjidhni emër sesioni"
+msgstr "Gabim Përgjegjësi Sesionesh"
 
 #: ../xfce4-session/xfsm-manager.c:692
 msgid "Unable to load a failsafe session"
-msgstr ""
+msgstr "I pazoti të ngarkojë sesion \"failsafe\""
 
 #: ../xfce4-session/xfsm-manager.c:1359
 #, c-format
 msgid "Can only terminate clients when in the idle state"
-msgstr ""
+msgstr "Mund të mbyllë klientë vetëm kur është në gjendje plogështie"
 
 #: ../xfce4-session/xfsm-manager.c:1830
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
-msgstr ""
+msgstr "Përgjegjësi i sesionit duhet të jetë në gjendje të plogësht kur i kërkohet \"checkpoint\""
 
 #: ../xfce4-session/xfsm-manager.c:1871
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
-msgstr ""
+msgstr "Përgjegjësi i sesionit duhet të jetë në gjendje të plogësht kur i kërkohet fikje"
 
 #: ../xfce4-session/xfsm-manager.c:1878
 #, c-format
 msgid "Suspend and hibernate are not supported"
-msgstr ""
+msgstr "Pezullimi dhe dimërimi nuk mbulohen"
 
 #: ../xfce4-session/xfsm-manager.c:1885
 #, c-format
 msgid "Invalid shutdown type \"%u\""
-msgstr ""
+msgstr "Lloj i pavlefshëm daljeje \"%u\""
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -600,20 +603,22 @@ msgstr ""
 msgid "Performing Autostart..."
 msgstr "Po kryej Vetënisje..."
 
-#: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:161
+#: ../xfce4-tips/main.c:47
+#: ../xfce4-tips/main.c:161
 msgid "Tips and Tricks"
 msgstr "Ndihmëza dhe Rrengje"
 
-#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:205
-#, fuzzy
+#: ../xfce4-tips/main.c:48
+#: ../xfce4-tips/main.c:205
 msgid "Fortunes"
-msgstr "Fatlum"
+msgstr ""
 
 #: ../xfce4-tips/main.c:190
 msgid "Display tips on _startup"
 msgstr "Shfaq ndihmëza në _nisje"
 
-#: ../xfce4-tips/main.c:199 ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
+#: ../xfce4-tips/main.c:199
+#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
 msgid "Tips and tricks"
 msgstr "Ndihmëza dhe rrengje"
 
@@ -622,31 +627,29 @@ msgid "Next"
 msgstr "Pasues"
 
 #: ../xfce4-session-logout/main.c:65
-#, fuzzy
 msgid "Logout Error"
-msgstr "Dalje"
+msgstr "Gabim Daljeje"
 
-#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
-#, fuzzy
+#: ../xfce4-session-logout/main.c:68
+#: ../xfce4-session-logout/main.c:75
 msgid "Unknown error"
-msgstr "(I panjohur)"
+msgstr "Gabim i panjohur"
 
 #: ../xfce4-session-logout/main.c:163
 msgid "Unable to contact D-Bus session bus."
-msgstr ""
+msgstr "I pazoti të lidhej me bus sesioni D-Bus."
 
 #: ../xfce4-session-logout/main.c:175
-#, fuzzy
 msgid "Failed to create new D-Bus message"
-msgstr "Dështova në krijimin e kartelës %s"
+msgstr "Dështoi në krijimin e mesazhi të ri për D-Bus"
 
 #: ../xfce4-session-logout/main.c:191
 msgid "Failed to receive a reply from the session manager"
-msgstr ""
+msgstr "Dështoi në marrjen e një përgjigjeje prej përgjegjësit të sesionit"
 
 #: ../xfce4-session-logout/main.c:199
 msgid "Received error while trying to log out"
-msgstr ""
+msgstr "U mor gabim ndërkohë që po provohej të dilej"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
 msgid "Session and Startup Settings"
@@ -670,9 +673,8 @@ msgid "<b>Author:</b>"
 msgstr "<b> Autor:</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:2
-#, fuzzy
 msgid "<b>Compatibility</b>"
-msgstr "Përputhshmëri"
+msgstr "<b>Përputhshmëri</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:3
 msgid "<b>Description:</b>"
@@ -683,262 +685,146 @@ msgid "<b>Homepage:</b>"
 msgstr "<b> Faqe Hyrëse:</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:5
-#, fuzzy
 msgid "<b>Information</b>"
-msgstr "Të dhëna"
+msgstr "<b>Të dhëna</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:6
-#, fuzzy
 msgid "<b>Logout Settings</b>"
-msgstr "Rregullime daljeje"
+msgstr "<b>Rregullime Daljeje</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:7
-#, fuzzy
 msgid "<b>Security</b>"
-msgstr "<b> Përshkrim:</b>"
+msgstr "<b>Siguri</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:8
-#, fuzzy
 msgid "<b>Session Chooser</b>"
-msgstr "Zgjedhës sesioni"
+msgstr "<b>Zgjedhës Sesioni</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:9
 msgid "<b>Version:</b>"
 msgstr "<b> Version:</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:10
-#, fuzzy
 msgid "Ad_vanced"
-msgstr "Të mëtejshme"
+msgstr "Të _nëtejshme"
 
 #: ../settings/xfce4-session-settings.glade.h:11
-#, fuzzy
 msgid "Always save the session when logging out"
-msgstr "Ruaj automatikisht sesionin në dalje"
+msgstr "Ruaje përherë sesionin kur dilet"
 
 #: ../settings/xfce4-session-settings.glade.h:12
-#, fuzzy
 msgid "Automatically save session on _logout"
-msgstr "Ruaj automatikisht sesionin në dalje"
+msgstr "Ruaj automatikisht sesionin në _dalje"
 
 #: ../settings/xfce4-session-settings.glade.h:13
-#, fuzzy
 msgid "Con_figure"
-msgstr "Formëso"
+msgstr "_Formësoni"
 
 #: ../settings/xfce4-session-settings.glade.h:14
 msgid "Customize desktop startup and splash screen"
-msgstr ""
+msgstr "Përshtasni desktopin dhe skenën e siglës"
 
 #: ../settings/xfce4-session-settings.glade.h:15
-#, fuzzy
 msgid "Demonstrates the selected splash screen"
-msgstr "Shfaq siglën e përzgjedhur."
+msgstr "Shfaq siglën e përzgjedhur"
 
 #: ../settings/xfce4-session-settings.glade.h:16
 msgid "Display the session chooser every time Xfce starts"
-msgstr ""
+msgstr "Shfaqe zgjedhësin e sesionit çdo herë që niset Xfce-ja"
 
 #: ../settings/xfce4-session-settings.glade.h:17
-#, fuzzy
 msgid "Launch GN_OME services on startup"
-msgstr "Nis shërbimet KDE gjatë fillimit"
+msgstr "Nis shërbimet _GNOME gjatë fillimit"
 
 #: ../settings/xfce4-session-settings.glade.h:18
-#, fuzzy
 msgid "Launch _KDE services on startup"
-msgstr "Nis shërbimet KDE gjatë fillimit"
+msgstr "Nis shërbimet _KDE gjatë fillimit"
 
 #: ../settings/xfce4-session-settings.glade.h:19
-#, fuzzy
 msgid "Manage _remote applications"
-msgstr "Administro zbatime të largët"
+msgstr "Administro zbatime të _largëta"
 
 #: ../settings/xfce4-session-settings.glade.h:20
-msgid ""
-"Manage remote applications over the network (this may be a security risk)"
-msgstr ""
+msgid "Manage remote applications over the network (this may be a security risk)"
+msgstr "Administroni zbatime të largëta nëpër rrjet (kjo mund të jetë rrezik sigurie)"
 
 #: ../settings/xfce4-session-settings.glade.h:21
-#, fuzzy
 msgid "Opens the configuration panel for the selected splash screen"
-msgstr "Hap panel formësimi për siglën e përzgjedhur."
+msgstr "Hap panel formësimi për siglën e përzgjedhur"
 
 #: ../settings/xfce4-session-settings.glade.h:22
 msgid "Prompt for confirmation when logging out"
-msgstr ""
+msgstr "Kërko ripohim kur dilet"
 
 #: ../settings/xfce4-session-settings.glade.h:23
 msgid "Quit the program, and remove it from the session"
-msgstr ""
+msgstr "Mbylle programin, dhe hiqe prej sesionit"
 
 #: ../settings/xfce4-session-settings.glade.h:24
 msgid "S_plash"
-msgstr ""
+msgstr "_Sigla"
 
 #: ../settings/xfce4-session-settings.glade.h:25
-#, fuzzy
 msgid "Save Sessio_n"
-msgstr "Përfundo Sesion"
+msgstr "Ruaj _Sesionin"
 
 #: ../settings/xfce4-session-settings.glade.h:26
-#, fuzzy
 msgid "Saving Session"
-msgstr "Po ngarkoj të dhëna sesioni"
+msgstr "Po ruhet Sesioni"
 
 #: ../settings/xfce4-session-settings.glade.h:28
-msgid ""
-"Start GNOME services, such as gnome-keyring and the GNOME accessibility "
-"framework"
-msgstr ""
+msgid "Start GNOME services, such as gnome-keyring and the GNOME accessibility framework"
+msgstr "Nis shërbimet GNOME, të tillë si \"gnome-keyring\" dhe \"GNOME accessibility framework\""
 
 #: ../settings/xfce4-session-settings.glade.h:29
 msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
-msgstr ""
+msgstr "Nis shërbimet KDE, të tillë si \"kdeinit,\" DCOP, dhe ARTS"
 
 #: ../settings/xfce4-session-settings.glade.h:30
-msgid ""
-"These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr ""
+msgid "These applications are a part of the currently-running session, and can be saved when you log out.  Changes below will only take effect when the session is saved."
+msgstr "Këto zbatime janë pjesë e sesionit të tanishëm në xhirim e sipër, dhe mund të ruhen vetëm kur dilni. Ndryshimet më poshtë do të hyjnë në fuqi kur sesioni të jetë ruajtur. "
 
 #: ../settings/xfce4-session-settings.glade.h:31
-msgid ""
-"Your session is being saved.  If you do not wish to wait, you may close this "
-"window."
-msgstr ""
+msgid "Your session is being saved.  If you do not wish to wait, you may close this window."
+msgstr "Sesioni juaj po ruhet. Po qe se nuk doni të prisni, mund ta mbyllni këtë dritare."
 
 #: ../settings/xfce4-session-settings.glade.h:32
-#, fuzzy
 msgid "_Display chooser on login"
-msgstr "Shfaq zgjedhës gjatë hyrjesh"
+msgstr "_Shfaqe zgjedhësin gjatë hyrjesh"
 
 #: ../settings/xfce4-session-settings.glade.h:33
-#, fuzzy
 msgid "_General"
-msgstr "Të përgjithshme"
+msgstr "_Të përgjithshme"
 
 #: ../settings/xfce4-session-settings.glade.h:34
-#, fuzzy
 msgid "_Prompt on logout"
-msgstr "Prompt gjatë daljesh"
+msgstr ""
 
 #: ../settings/xfce4-session-settings.glade.h:35
 msgid "_Quit Program"
-msgstr ""
+msgstr "_Dil nga Programi"
 
 #: ../settings/xfce4-session-settings.glade.h:36
-#, fuzzy
 msgid "_Session"
-msgstr "Përfundo Sesion"
+msgstr "_Sesion"
 
 #: ../settings/xfce4-session-settings.glade.h:37
-#, fuzzy
 msgid "_Test"
-msgstr "Provo"
+msgstr "_Provo"
 
 #: ../settings/xfce4-session-settings.glade.h:38
 msgid "gtk-close"
-msgstr ""
+msgstr "gtk-close"
 
 #: ../settings/xfce4-session-settings.glade.h:39
 msgid "gtk-help"
-msgstr ""
+msgstr "gtk-help"
 
 #: ../settings/xfce4-session-settings.glade.h:40
 msgid "label"
-msgstr ""
+msgstr "etiketë"
 
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
 msgstr "ndihmëza xfce4"
 
-#, fuzzy
-#~ msgid "Remove the selected application from the session."
-#~ msgstr "Shfaq siglën e përzgjedhur."
-
-#~ msgid ""
-#~ "If set, the session manager will ask you to choose a session every time "
-#~ "you log in to Xfce."
-#~ msgstr ""
-#~ "Nëse caktohet, përgjegjësi i sesioneve do t'ju kërkojë të zgjidhni një "
-#~ "sesion sa herë që hyni në Xfce."
-
-#~ msgid ""
-#~ "This option instructs the session manager to save the current session "
-#~ "automatically when you log out. If you don't select this option you'll be "
-#~ "prompted whether you want to save the current session on each logout."
-#~ msgstr ""
-#~ "Kjo mundësi udhëzon përgjegjësin e sesioneve të ruajë sesionin e çastit "
-#~ "automatikisht kur dilni. Nëse nuk përzgjidhni këtë mundësi do të pyeteni "
-#~ "në çdo dalje nëse doni të ruhet sesioni i çastit."
-
-#~ msgid ""
-#~ "This option disables the logout confirmation dialog. Whether the session "
-#~ "will be saved or not depends on whether you enabled the automatic saving "
-#~ "of sessions on logout or not."
-#~ msgstr ""
-#~ "Kjo mundësi çaktivizon dialogun e ripohimit të daljes. nëse do të ruhet "
-#~ "apo jo sesioni varet nga fakti i aktivizimit ose jo të ruajtjes "
-#~ "automatike të sesioneve."
-
-#~ msgid "Launch Gnome services on startup"
-#~ msgstr "Nis shërbimet Gnome gjatë fillimit"
-
-#~ msgid ""
-#~ "Enable this if you plan to use Gnome applications. This will instruct the "
-#~ "session manager to start some vital Gnome services for you. You should "
-#~ "also enable this if you want to use the Assistive Technologies that ship "
-#~ "with Gnome."
-#~ msgstr ""
-#~ "Aktivizojeni nëse keni në plan të përdorni zbatime Gnome. Kjo do të "
-#~ "udhëzojë përgjegjësin e sesionit të nisë për ju disa shërbime jetikë të "
-#~ "Gnome-s. Do të duhej ta aktivizonit gjithashtu nëse doni të zbatohen "
-#~ "Teknologji Asistive që ofron Gnome-ja"
-
-#~ msgid ""
-#~ "Enable this option if you plan to run KDE applications as part of your "
-#~ "Xfce Desktop session. This will notably increase the startup time, but on "
-#~ "the other hand, KDE applications will startup faster. Some KDE "
-#~ "applications may not work at all if you don't enable this option."
-#~ msgstr ""
-#~ "Aktivizojeni këtë mundësi nëse keni në plan të xhironi zbatime KDE si "
-#~ "pjesë të sesionit tuaj Xfce Desktop. Kjo do të rrisë dukshëm kohën e "
-#~ "nisjes, por nga ana tjetër, zbatimet KDE do të nisen më shpejt. Disa "
-#~ "zbatime KDE mund edhe të mos punojnë fare nëse nuk e aktivizoni këtë "
-#~ "mundësi."
-
-#~ msgid "Security"
-#~ msgstr "Siguri"
-
-#~ msgid ""
-#~ "Allow the session manager to manage applications running on remote hosts. "
-#~ "Do not enable this option unless you know what you are doing."
-#~ msgstr ""
-#~ "Lejoni përgjegjësin e sesionit të administrojë zbatime që xhirojnë në "
-#~ "strehë të largëta. Mos e aktivizoni po nuk ditët se çfarë po bëni"
-
-#~ msgid "Button Label|Sessions and Startup"
-#~ msgstr "Etiketë Butoni|Sesione dhe Nisje"
-
-#~ msgid "Splash Screen Settings"
-#~ msgstr "Rregullime Sigle"
-
-#~ msgid "Button Label|Splash Screen"
-#~ msgstr "Etiketë Butoni|Sigël"
-
-#~ msgid "Autostarted applications"
-#~ msgstr "Zbatime të vetënisur"
-
-#~ msgid "Xfce 4 Splash Screen Settings"
-#~ msgstr "Rregullime Ekrani Sigle të Xfce 4-s"
-
-#~ msgid "Autostarted Applications"
-#~ msgstr "Zbatime që Vetënisen"
-
-#~ msgid "Edit the list of autostarted applications"
-#~ msgstr "Përpunoni listën e zbatimeve që vetënisen"
-
-#~ msgid "Xfce 4 Autostarted Applications"
-#~ msgstr "Zbatime Xfce 4 Vetënisëse"
