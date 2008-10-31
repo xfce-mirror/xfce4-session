@@ -139,6 +139,9 @@ main(int argc,
         
         g_object_unref(gxml);
 
+        /* Stop startup notification */
+        gdk_notify_startup_complete ();
+
         gtk_main();
     }
 
