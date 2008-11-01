@@ -43,6 +43,7 @@
 #endif
 
 #include <libxfce4util/libxfce4util.h>
+#include <libxfcegui4/libxfcegui4.h>
 
 #include <xfce4-session/shutdown.h>
 #include <xfce4-session/xfsm-global.h>
