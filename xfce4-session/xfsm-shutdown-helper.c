@@ -136,6 +136,11 @@ xfsm_shutdown_helper_hal_check (XfsmShutdownHelper *helper,
     {
       /* we received a valid message return?! HAL must be on crack! */
       dbus_message_unref (result);
+      if (error)
+        {
+          g_set_error (error, DBUS_GERROR, DBUS_GERROR_FAILED,
+                       _("Unexpected error from HAL"));
+        }
       return FALSE;
     }
 
@@ -220,7 +225,7 @@ xfsm_shutdown_helper_hal_send (XfsmShutdownHelper *helper,
   if (command == XFSM_SHUTDOWN_SUSPEND)
      dbus_message_append_args (message, DBUS_TYPE_INT32, &wakeup, DBUS_TYPE_INVALID);
 
-  result = dbus_connection_send_with_reply_and_block (connection, message, 2000, &derror);
+  result = dbus_connection_send_with_reply_and_block (connection, message, -1, &derror);
   dbus_message_unref (message);
 
   /* check if we received a result */

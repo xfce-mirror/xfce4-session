@@ -1,5 +1,12 @@
 2008-11-01	Brian Tarricone <bjt23@cornell.edu>
 
+	* xfce4-session/xfsm-shutdown-helper.c: Use dbus-default method
+	  call timeout (which appears to be 25 seconds) rather than hard-
+	  coding 2 seconds.  Fix a possible crash if a possible (however
+	  unlikely) error path is taken.
+
+2008-11-01	Brian Tarricone <bjt23@cornell.edu>
+
 	* *: Implement suspend/hibernate support using HAL.  Partial patch
 	  from Michael Casadevall.
 	* xfce4-session/shutdown.c: Add buttons for suspend/hibernate.
