@@ -73,6 +73,7 @@
 
 #include <libwnck/libwnck.h>
 
+#include "xfsm-shutdown-helper.h"
 #include <libxfcegui4/libxfcegui4.h>
 
 #include <libxfsm/xfsm-splash-engine.h>
@@ -1082,8 +1083,43 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
       /* update shutdown type if we didn't prompt the user */
       if (shutdown_type != XFSM_SHUTDOWN_ASK)
         manager->shutdown_type = shutdown_type;
-    }
 
+      /* we only save the session and quit if we're actually shutting down;
+       * suspend and hibernate will (if successful) return us to
+       * exactly the same state, so there's no need to save session */
+      if (manager->shutdown_type == XFSM_SHUTDOWN_SUSPEND
+          || manager->shutdown_type == XFSM_SHUTDOWN_HIBERNATE)
+        {
+          XfsmShutdownHelper *shutdown_helper;
+          GError *error = NULL;
+
+          shutdown_helper = xfsm_shutdown_helper_spawn (&error);
+          if (shutdown_helper == NULL
+              || !xfsm_shutdown_helper_send_command(shutdown_helper,
+                                                    manager->shutdown_type,
+                                                    &error))
+            {
+              xfce_message_dialog (NULL, _("Shutdown Failed"),
+                                   GTK_STOCK_DIALOG_ERROR,
+                                   manager->shutdown_type == XFSM_SHUTDOWN_SUSPEND
+                                   ? _("Failed to suspend session")
+                                   : _("Failed to hibernate session"),
+                                   error->message,
+                                   GTK_STOCK_CLOSE, GTK_RESPONSE_ACCEPT,
+                                   NULL);
+              g_error_free (error);
+            }
+
+          /* clean up and return */
+          if (G_LIKELY (shutdown_helper))
+            xfsm_shutdown_helper_destroy (shutdown_helper);
+
+          /* at this point, either we failed to suspend/hibernate, or we
+           * successfully suspended/hibernated, and we've been woken back
+           * up, so return control to the user */
+          return;
+        }
+    }
 #if defined(__NR_ioprio_set) && defined(HAVE_SYNC)
   /* if we're on Linux and have ioprio_set(), we start sync()ing the
    * disks now, and set the i/o priority to idle so we don't create
@@ -1869,13 +1905,6 @@ xfsm_manager_dbus_shutdown (XfsmManager *manager,
     {
       g_set_error (error, XFSM_ERROR, XFSM_ERROR_BAD_STATE,
                    _("Session manager must be in idle state when requesting a shutdown"));
-      return FALSE;
-    }
-
-  if (type == XFSM_SHUTDOWN_SUSPEND || type == XFSM_SHUTDOWN_HIBERNATE)
-    {
-      g_set_error (error, XFSM_ERROR, XFSM_ERROR_UNSUPPORTED,
-                   _("Suspend and hibernate are not supported"));
       return FALSE;
     }
 

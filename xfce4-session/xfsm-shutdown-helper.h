@@ -35,7 +35,7 @@ typedef enum
 typedef struct _XfsmShutdownHelper XfsmShutdownHelper;
 
 
-XfsmShutdownHelper *xfsm_shutdown_helper_spawn (void);
+XfsmShutdownHelper *xfsm_shutdown_helper_spawn (GError **error);
 
 gboolean xfsm_shutdown_helper_need_password (const XfsmShutdownHelper *helper);
 
@@ -43,7 +43,8 @@ gboolean xfsm_shutdown_helper_send_password (XfsmShutdownHelper *helper,
                                              const gchar        *password);
 
 gboolean xfsm_shutdown_helper_send_command (XfsmShutdownHelper *helper,
-                                            XfsmShutdownCommand command);
+                                            XfsmShutdownCommand command,
+                                            GError **error);
 
 void xfsm_shutdown_helper_destroy (XfsmShutdownHelper *helper);
 

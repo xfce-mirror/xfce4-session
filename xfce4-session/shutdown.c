@@ -138,6 +138,22 @@ halt_button_clicked (GtkWidget *b, gint *shutdownType)
     gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
 }
 
+static void
+suspend_button_clicked (GtkWidget *b, gint *shutdownType)
+{
+    *shutdownType = XFSM_SHUTDOWN_SUSPEND;
+
+    gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
+}
+
+static void
+hibernate_button_clicked (GtkWidget *b, gint *shutdownType)
+{
+    *shutdownType = XFSM_SHUTDOWN_HIBERNATE;
+
+    gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
+}
+
 /*
  */
 gboolean
@@ -160,12 +176,16 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   GtkWidget *logout_button;
   GtkWidget *reboot_button;
   GtkWidget *halt_button;
+  GtkWidget *suspend_button = NULL;
+  GtkWidget *hibernate_button = NULL;
   GtkWidget *cancel_button;
   GtkWidget *ok_button;
   GdkPixbuf *icon;
   gboolean saveonexit;
   gboolean autosave;
   gboolean prompt;
+  gboolean show_suspend;
+  gboolean show_hibernate;
   gint monitor;
   gint result;
   XfceKiosk *kiosk;
@@ -199,6 +219,8 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   saveonexit = xfconf_channel_get_bool (channel, "/general/SaveOnExit", TRUE);
   autosave = xfconf_channel_get_bool (channel, "/general/AutoSave", FALSE);
   prompt = xfconf_channel_get_bool (channel, "/general/PromptOnLogout", TRUE);
+  show_suspend = xfconf_channel_get_bool (channel, "/shutdown/ShowSuspend", TRUE);
+  show_hibernate = xfconf_channel_get_bool (channel, "/shutdown/ShowHibernate", TRUE);
 
   /* if PromptOnLogout is off, saving depends on AutoSave */
   if (!prompt)
@@ -389,6 +411,69 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
   
+  if (show_suspend || show_hibernate)
+    {
+      hbox = gtk_hbox_new (FALSE, BORDER);
+      gtk_widget_show (hbox);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+    }
+
+  /* suspend */
+  if (show_suspend)
+    {
+      suspend_button = gtk_button_new ();
+      gtk_widget_show (suspend_button);
+      gtk_box_pack_start (GTK_BOX (hbox), suspend_button, TRUE, TRUE, 0);
+
+      g_signal_connect (suspend_button, "clicked",
+                        G_CALLBACK (suspend_button_clicked), shutdownType);
+
+      vbox2 = gtk_vbox_new (FALSE, BORDER);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox2), BORDER);
+      gtk_widget_show (vbox2);
+      gtk_container_add (GTK_CONTAINER (suspend_button), vbox2);
+
+      icon = xfce_themed_icon_load ("system-suspend", 32);
+      if (!icon)
+        icon = xfce_themed_icon_load ("xfsm-suspend", 32);
+      image = gtk_image_new_from_pixbuf (icon);
+      gtk_widget_show (image);
+      gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
+      g_object_unref (icon);
+
+      label = gtk_label_new (_("Suspend"));
+      gtk_widget_show (label);
+      gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
+    }
+
+  /* hibernate */
+  if (show_hibernate)
+    {
+      hibernate_button = gtk_button_new ();
+      gtk_widget_show (hibernate_button);
+      gtk_box_pack_start (GTK_BOX (hbox), hibernate_button, TRUE, TRUE, 0);
+
+      g_signal_connect (hibernate_button, "clicked",
+                        G_CALLBACK (hibernate_button_clicked), shutdownType);
+
+      vbox2 = gtk_vbox_new (FALSE, BORDER);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox2), BORDER);
+      gtk_widget_show (vbox2);
+      gtk_container_add (GTK_CONTAINER (hibernate_button), vbox2);
+
+      icon = xfce_themed_icon_load ("system-hibernate", 32);
+      if (!icon)
+        icon = xfce_themed_icon_load ("xfsm-hibernate", 32);
+      image = gtk_image_new_from_pixbuf (icon);
+      gtk_widget_show (image);
+      gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
+      g_object_unref (icon);
+
+      label = gtk_label_new (_("Hibernate"));
+      gtk_widget_show (label);
+      gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
+  }
+
   /* save session */
   if (!autosave)
     {
@@ -412,10 +497,14 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
 
   /* connect to the shutdown helper */
   if (!kiosk_can_shutdown || 
-      (shutdown_helper = xfsm_shutdown_helper_spawn ()) == NULL)
+      (shutdown_helper = xfsm_shutdown_helper_spawn (NULL)) == NULL)
     {
       gtk_widget_set_sensitive (reboot_button, FALSE);
       gtk_widget_set_sensitive (halt_button, FALSE);
+      if (suspend_button)
+        gtk_widget_set_sensitive (suspend_button, FALSE);
+      if (hibernate_button)
+        gtk_widget_set_sensitive (hibernate_button, FALSE);
     }
 
   /* save portion of the root window covered by the dialog */
@@ -579,6 +668,7 @@ gint
 xfsm_shutdown(XfsmShutdownType type)
 {
   gboolean result;
+  GError *error = NULL;
 
   /* kludge */
   if (type == XFSM_SHUTDOWN_ASK)
@@ -616,24 +706,19 @@ xfsm_shutdown(XfsmShutdownType type)
       return EXIT_FAILURE;
     }
 
-  if (type == XFSM_SHUTDOWN_HALT)
-    {
-      result = xfsm_shutdown_helper_send_command (shutdown_helper,
-                                                  XFSM_SHUTDOWN_COMMAND_POWEROFF);
-    }
-  else
-    {
-      result = xfsm_shutdown_helper_send_command (shutdown_helper,
-                                                  XFSM_SHUTDOWN_COMMAND_REBOOT);
-    }
-
+  result = xfsm_shutdown_helper_send_command (shutdown_helper, type, &error);
   xfsm_shutdown_helper_destroy (shutdown_helper);
   shutdown_helper = NULL;
 
   if (!result)
     {
-      /* XXX - graphical feedback ?! */
-      g_warning ("Failed to perform shutdown action!");
+      xfce_message_dialog (NULL, _("Shutdown Failed"),
+                           GTK_STOCK_DIALOG_ERROR,
+                           _("Unable to perform shutdown"),
+                           error->message,
+                           GTK_STOCK_QUIT, GTK_RESPONSE_ACCEPT,
+                           NULL);
+      g_error_free (error);
       return EXIT_FAILURE;
     }
 

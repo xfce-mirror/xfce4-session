@@ -53,12 +53,28 @@
 #include <unistd.h>
 #endif
 
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+
 #include <dbus/dbus.h>
+#include <dbus/dbus-glib-lowlevel.h>
 
 #include <libxfce4util/libxfce4util.h>
 
-#include <xfce4-session/xfsm-shutdown-helper.h>
+#include "shutdown.h"
+#include "xfsm-shutdown-helper.h"
 
+static struct
+{
+  XfsmShutdownCommand command;
+  gchar * name;
+} command_name_map[] = {
+  { XFSM_SHUTDOWN_HALT,      "Shutdown"  },
+  { XFSM_SHUTDOWN_REBOOT,    "Reboot"    },
+  { XFSM_SHUTDOWN_SUSPEND,   "Suspend"   },
+  { XFSM_SHUTDOWN_HIBERNATE, "Hibernate" },
+};
 
 
 struct _XfsmShutdownHelper
@@ -74,22 +90,27 @@ struct _XfsmShutdownHelper
 
 
 static gboolean
-xfsm_shutdown_helper_hal_check (XfsmShutdownHelper *helper)
+xfsm_shutdown_helper_hal_check (XfsmShutdownHelper *helper,
+                                GError **error)
 {
   DBusConnection *connection;
   DBusMessage    *message;
   DBusMessage    *result;
-  DBusError       error;
+  DBusError       derror;
+
+  g_return_val_if_fail (helper && (!error || !*error), FALSE);
 
   /* initialize the error */
-  dbus_error_init (&error);
+  dbus_error_init (&derror);
 
   /* connect to the system message bus */
-  connection = dbus_bus_get (DBUS_BUS_SYSTEM, &error);
+  connection = dbus_bus_get (DBUS_BUS_SYSTEM, &derror);
   if (G_UNLIKELY (connection == NULL))
     {
-      g_warning (G_STRLOC ": Failed to connect to the system message bus: %s", error.message);
-      dbus_error_free (&error);
+      g_warning (G_STRLOC ": Failed to connect to the system message bus: %s", derror.message);
+      if (error)
+        dbus_set_g_error (error, &derror);
+      dbus_error_free (&derror);
       return FALSE;
     }
 
@@ -101,11 +122,11 @@ xfsm_shutdown_helper_hal_check (XfsmShutdownHelper *helper)
                                           "/org/freedesktop/Hal/devices/computer",
                                           "org.freedesktop.Hal.Device.SystemPowerManagement",
                                           "ThisMethodMustNotExistInHal");
-  result = dbus_connection_send_with_reply_and_block (connection, message, 2000, &error);
+  result = dbus_connection_send_with_reply_and_block (connection, message, 2000, &derror);
   dbus_message_unref (message);
 
   /* translate error results appropriately */
-  if (result != NULL && dbus_set_error_from_message (&error, result))
+  if (result != NULL && dbus_set_error_from_message (&derror, result))
     {
       /* release and reset the result */
       dbus_message_unref (result);
@@ -121,15 +142,17 @@ xfsm_shutdown_helper_hal_check (XfsmShutdownHelper *helper)
   /* if we receive org.freedesktop.DBus.Error.UnknownMethod, then
    * we are allowed to shutdown/reboot the computer via HAL.
    */
-  if (strcmp (error.name, "org.freedesktop.DBus.Error.UnknownMethod") == 0)
+  if (strcmp (derror.name, "org.freedesktop.DBus.Error.UnknownMethod") == 0)
     {
-      dbus_error_free (&error);
+      dbus_error_free (&derror);
       return TRUE;
     }
 
   /* otherwise, we failed for some reason */
-  g_warning (G_STRLOC ": Failed to contact HAL: %s", error.message);
-  dbus_error_free (&error);
+  g_warning (G_STRLOC ": Failed to contact HAL: %s", derror.message);
+  if (error)
+    dbus_set_g_error (error, &derror);
+  dbus_error_free (&derror);
 
   return FALSE;
 }
@@ -138,22 +161,52 @@ xfsm_shutdown_helper_hal_check (XfsmShutdownHelper *helper)
 
 static gboolean
 xfsm_shutdown_helper_hal_send (XfsmShutdownHelper *helper,
-                               XfsmShutdownCommand command)
+                               XfsmShutdownCommand command,
+                               GError **error)
 {
   DBusConnection *connection;
   DBusMessage    *message;
   DBusMessage    *result;
-  DBusError       error;
+  DBusError       derror;
+  const gchar    *methodname = NULL;
+  dbus_int32_t    wakeup     = 0;
+  int             i;
+
+  /* FIXME: would rather not call this here, but it's nice to be able
+   * to get a correct error message */
+  if (!xfsm_shutdown_helper_hal_check (helper, error))
+    return FALSE;
+
+  for (i = 0; i < G_N_ELEMENTS (command_name_map); i++)
+    {
+      if (command_name_map[i].command == command)
+        {
+          methodname = command_name_map[i].name;
+          break;
+        }
+    }
+
+  if (G_UNLIKELY (methodname == NULL))
+    {
+      if (error)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("No HAL method for command %d"), command);
+        }
+      return FALSE;
+    }
 
   /* initialize the error */
-  dbus_error_init (&error);
+  dbus_error_init (&derror);
 
   /* connect to the system message bus */
-  connection = dbus_bus_get (DBUS_BUS_SYSTEM, &error);
+  connection = dbus_bus_get (DBUS_BUS_SYSTEM, &derror);
   if (G_UNLIKELY (connection == NULL))
     {
-      g_warning (G_STRLOC ": Failed to connect to the system message bus: %s", error.message);
-      dbus_error_free (&error);
+      g_warning (G_STRLOC ": Failed to connect to the system message bus: %s", derror.message);
+      if (error)
+        dbus_set_g_error (error, &derror);
+      dbus_error_free (&derror);
       return FALSE;
     }
 
@@ -161,15 +214,22 @@ xfsm_shutdown_helper_hal_send (XfsmShutdownHelper *helper,
   message = dbus_message_new_method_call ("org.freedesktop.Hal",
                                           "/org/freedesktop/Hal/devices/computer",
                                           "org.freedesktop.Hal.Device.SystemPowerManagement",
-                                          (command == XFSM_SHUTDOWN_COMMAND_REBOOT) ? "Reboot" : "Shutdown");
-  result = dbus_connection_send_with_reply_and_block (connection, message, 2000, &error);
+                                          methodname);
+
+  /* suspend requires additional arguements */
+  if (command == XFSM_SHUTDOWN_SUSPEND)
+     dbus_message_append_args (message, DBUS_TYPE_INT32, &wakeup, DBUS_TYPE_INVALID);
+
+  result = dbus_connection_send_with_reply_and_block (connection, message, 2000, &derror);
   dbus_message_unref (message);
 
   /* check if we received a result */
   if (G_UNLIKELY (result == NULL))
     {
-      g_warning (G_STRLOC ": Failed to contact HAL: %s", error.message);
-      dbus_error_free (&error);
+      g_warning (G_STRLOC ": Failed to contact HAL: %s", derror.message);
+      if (error)
+        dbus_set_g_error (error, &derror);
+      dbus_error_free (&derror);
       return FALSE;
     }
 
@@ -181,7 +241,7 @@ xfsm_shutdown_helper_hal_send (XfsmShutdownHelper *helper,
 
 
 XfsmShutdownHelper*
-xfsm_shutdown_helper_spawn (void)
+xfsm_shutdown_helper_spawn (GError **error)
 {
   XfsmShutdownHelper *helper;
   struct              rlimit rlp;
@@ -191,11 +251,13 @@ xfsm_shutdown_helper_spawn (void)
   gint                result;
   gint                n;
 
+  g_return_val_if_fail (!error || !*error, NULL);
+
   /* allocate a new helper */
   helper = g_new0 (XfsmShutdownHelper, 1);
 
   /* check if we can use HAL to shutdown the computer */
-  if (xfsm_shutdown_helper_hal_check (helper))
+  if (xfsm_shutdown_helper_hal_check (helper, NULL))
     {
       /* well that's it then */
       g_message (G_STRLOC ": Using HAL to shutdown/reboot the computer.");
@@ -210,22 +272,45 @@ xfsm_shutdown_helper_spawn (void)
   helper->sudo = g_find_program_in_path ("sudo");
   if (G_UNLIKELY (helper->sudo == NULL))
     {
-      g_warning ("sudo was not found. You will not be able to shutdown your system from within Xfce.");
+      if (error)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Program \"sudo\" was not found.  You will not be able to shutdown your system from within Xfce."));
+        }
       g_free (helper);
       return NULL;
     }
 
   result = pipe (parent_pipe);
   if (result < 0)
-    goto error0;
+    {
+      if (error)
+        {
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Unable to create parent pipe: %s"), strerror (errno));
+        }
+      goto error0;
+    }
 
   result = pipe (child_pipe);
   if (result < 0)
-    goto error1;
+    {
+      if (error)
+        {
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Unable to create child pipe: %s"), strerror (errno));
+        }
+      goto error1;
+    }
 
   helper->pid = fork ();
   if (helper->pid < 0)
     {
+      if (error)
+        {
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Unable to fork sudo helper: %s"), strerror (errno));
+        }
       goto error2;
     }
   else if (helper->pid == 0)
@@ -262,15 +347,37 @@ xfsm_shutdown_helper_spawn (void)
   /* read sudo/helper answer */
   n = read (parent_pipe[0], buf, 15);
   if (n < 15)
-    goto error2;
+    {
+      if (error)
+        {
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Unable to read response from sudo helper: %s"),
+                       n < 0 ? strerror (errno) : _("Unknown error"));
+        }
+      goto error2;
+    }
 
   helper->infile = fdopen (parent_pipe[0], "r");
   if (helper->infile == NULL)
-    goto error2;
+    {
+      if (error)
+        {
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Unable to open parent pipe: %s"), strerror (errno));
+        }
+      goto error2;
+    }
 
   helper->outfile = fdopen (child_pipe[1], "w");
   if (helper->outfile == NULL)
-    goto error3;
+    {
+      if (error)
+        {
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Unable to open child pipe: %s"), strerror (errno));
+        }
+      goto error3;
+    }
 
   if (memcmp (buf, "XFSM_SUDO_PASS ", 15) == 0)
     {
@@ -281,7 +388,14 @@ xfsm_shutdown_helper_spawn (void)
       helper->need_password = FALSE;
     }
   else
-    goto error3;
+    {
+      if (error)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Got unexpected reply from sudo shutdown helper"));
+        }
+      goto error3;
+    }
 
   close (parent_pipe[1]);
   close (child_pipe[0]);
@@ -398,41 +512,68 @@ xfsm_shutdown_helper_send_password (XfsmShutdownHelper *helper,
 
 gboolean
 xfsm_shutdown_helper_send_command (XfsmShutdownHelper *helper,
-                                   XfsmShutdownCommand command)
+                                   XfsmShutdownCommand command,
+                                   GError **error)
 {
   static gchar *command_table[] = { "POWEROFF", "REBOOT" };
   gchar         response[256];
 
   g_return_val_if_fail (helper != NULL, FALSE);
   g_return_val_if_fail (!helper->need_password, FALSE);
+  g_return_val_if_fail (!error || !*error, FALSE);
 
   /* check if we can use HAL to perform the requested action */
   if (G_LIKELY (helper->use_hal))
     {
       /* well, send the command to HAL then */
-      return xfsm_shutdown_helper_hal_send (helper, command);
+      return xfsm_shutdown_helper_hal_send (helper, command, error);
     }
   else
     {
+      /* we don't support hibernate or suspend without HAL */
+      if (command == XFSM_SHUTDOWN_SUSPEND || command == XFSM_SHUTDOWN_HIBERNATE)
+        {
+          if (error)
+            {
+              g_set_error (error, DBUS_GERROR, DBUS_GERROR_SERVICE_UNKNOWN,
+                           _("Suspend and Hibernate are only supported through HAL, which is unavailable"));
+            }
+          return FALSE;
+        }
+
       /* send it to our associated sudo'ed process */
       fprintf (helper->outfile, "%s\n", command_table[command]);
       fflush (helper->outfile);
 
       if (ferror (helper->outfile))
         {
-          fprintf (stderr, "Error sending command to helper\n");
+          if (error)
+            {
+              g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                           _("Error sending command to shutdown helper: %s"),
+                           strerror (errno));
+            }
           return FALSE;
         }
 
       if (fgets (response, 256, helper->infile) == NULL)
         {
-          fprintf (stderr, "No response from helper\n");
+          if (error)
+            {
+              g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                           _("Error receiving response from shutdown helper: %s"),
+                           strerror (errno));
+            }
           return FALSE;
         }
 
       if (strncmp (response, "SUCCEED", 7) != 0)
         {
-          fprintf (stderr, "Command failed\n");
+          if (error)
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Shutdown command failed"));
+            }
           return FALSE;
         }
     }
