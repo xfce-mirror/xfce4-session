@@ -316,44 +316,12 @@ config_toggled (GtkWidget *button, GtkWidget *widget)
 
 
 static void
-config_browse (GtkWidget *button, GtkWidget *entry)
-{
-  const gchar *filename;
-  gchar       *new_filename;
-  GtkWidget   *chooser;
-  GtkWidget   *toplevel;
-
-  toplevel = gtk_widget_get_toplevel (button);
-  chooser = gtk_file_chooser_dialog_new (_("Choose image..."),
-                                         GTK_WINDOW (toplevel),
-                                         GTK_FILE_CHOOSER_ACTION_OPEN,
-                                         GTK_STOCK_OPEN, GTK_RESPONSE_OK,
-                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                         NULL);
-
-  filename = gtk_entry_get_text (GTK_ENTRY (entry));
-  if (filename != NULL)
-    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (chooser), filename);
-
-  gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (chooser), FALSE);
-
-  if (gtk_dialog_run (GTK_DIALOG (chooser)) == GTK_RESPONSE_OK)
-    {
-      new_filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
-      gtk_entry_set_text (GTK_ENTRY (entry), new_filename);
-      g_free (new_filename);
-    }
-
-  gtk_widget_destroy (chooser);
-}
-
-
-static void
 config_configure (XfsmSplashConfig *config,
                   GtkWidget        *parent)
 {
   gchar       *font;
   gchar       *path;
+  gchar       *path_locale = NULL;
   gchar       *colorstr;
   GtkWidget   *dialog;
   GtkWidget   *frame;
@@ -363,9 +331,9 @@ config_configure (XfsmSplashConfig *config,
   GtkWidget   *sel_bg;
   GtkWidget   *sel_fg;
   GtkWidget   *checkbox;
-  GtkWidget   *entry;
-  GtkWidget   *image;
+  GtkWidget   *vbox;
   GtkWidget   *button;
+  GtkFileFilter *filter;
   GdkColor     color;
   GtkBox      *dbox;
   gchar        buffer[32];
@@ -429,49 +397,49 @@ config_configure (XfsmSplashConfig *config,
   gtk_box_pack_start (dbox, frame, FALSE, FALSE, 6);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (2, 2, FALSE);
-  xfce_framebox_add (XFCE_FRAMEBOX (frame), table);
-  gtk_widget_show (table);
+  vbox = gtk_vbox_new (FALSE, 6);
+  xfce_framebox_add (XFCE_FRAMEBOX (frame), vbox);
+  gtk_widget_show (vbox);
 
   checkbox = gtk_check_button_new_with_label (_("Use custom image"));
-  gtk_table_attach (GTK_TABLE (table), checkbox, 0, 2, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), checkbox, FALSE, FALSE, 0);
   gtk_widget_show (checkbox);
 
-  entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 0, 1, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (entry);
-
-  image = gtk_image_new_from_stock (GTK_STOCK_OPEN, GTK_ICON_SIZE_BUTTON);
-  gtk_widget_show (image);
-  button = gtk_button_new ();
-  gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_table_attach (GTK_TABLE (table), button, 1, 2, 1, 2,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  button = gtk_file_chooser_button_new (_("Choose image..."),
+                                        GTK_FILE_CHOOSER_ACTION_OPEN);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("Images"));
+  gtk_file_filter_add_pixbuf_formats (filter);
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (button), filter);
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("All files"));
+  gtk_file_filter_add_pattern (filter, "*");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (button), filter);
+
+  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (button), 0);
+
   path = xfsm_splash_rc_read_entry (config->rc, "Image", NULL);
-  if (path == NULL || !g_file_test (path, G_FILE_TEST_IS_REGULAR))
+  if (path != NULL)
+    path_locale = g_filename_from_utf8 (path, -1, NULL, NULL, NULL);
+  g_free (path);
+  if (path_locale == NULL || !g_file_test (path_locale, G_FILE_TEST_IS_REGULAR))
     {
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbox), FALSE);
-      gtk_widget_set_sensitive (entry, FALSE);
       gtk_widget_set_sensitive (button, FALSE);
     }
   else
     {
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbox), TRUE);
-      gtk_widget_set_sensitive (entry, TRUE);
       gtk_widget_set_sensitive (button, TRUE);
-      gtk_entry_set_text (GTK_ENTRY (entry), path);
+      gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (button), path_locale);
     }
-  g_free (path);
-  g_signal_connect (G_OBJECT (checkbox), "toggled",
-                    G_CALLBACK (config_toggled), entry);
+  g_free (path_locale);
   g_signal_connect (G_OBJECT (checkbox), "toggled",
                     G_CALLBACK (config_toggled), button);
-  g_signal_connect (G_OBJECT (button), "clicked",
-                    G_CALLBACK (config_browse), entry);
 
   /* run the dialog */
   gtk_dialog_run (GTK_DIALOG (dialog));
@@ -494,17 +462,19 @@ config_configure (XfsmSplashConfig *config,
               (unsigned) color.blue >> 8);
   xfsm_splash_rc_write_entry (config->rc, "FgColor", buffer);
 
-  path = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
+  path_locale = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (button));
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (checkbox))
-      && path != NULL && g_file_test (path, G_FILE_TEST_IS_REGULAR))
+      && path_locale != NULL && g_file_test (path_locale, G_FILE_TEST_IS_REGULAR))
     {
+      path = g_filename_to_utf8 (path_locale, -1, NULL, NULL, NULL);
       xfsm_splash_rc_write_entry (config->rc, "Image", path);
+      g_free (path);
     }
   else
     {
       xfsm_splash_rc_write_entry (config->rc, "Image", "");
     }
-  g_free (path);
+  g_free (path_locale);
   
   gtk_widget_destroy (dialog);
 }
