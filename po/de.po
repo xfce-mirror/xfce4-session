@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-27 23:39+0100\n"
+"POT-Creation-Date: 2008-11-01 02:59-0700\n"
 "PO-Revision-Date: 2008-10-27 23:31+0100\n"
 "Last-Translator: Fabian Nowak <timystery@arcor.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -80,43 +80,52 @@ msgstr "Mäuse"
 msgid "Mice Splash Engine"
 msgstr "Startbildschirm »Mäuse«"
 
-#: ../engines/simple/simple.c:327
-msgid "Choose image..."
-msgstr "Bild auswählen..."
-
-#: ../engines/simple/simple.c:373
+#: ../engines/simple/simple.c:341
 msgid "Configure Simple..."
 msgstr "Konfiguriere einfaches Thema..."
 
-#: ../engines/simple/simple.c:384
+#: ../engines/simple/simple.c:352
 msgid "Font"
 msgstr "Schriftart"
 
-#: ../engines/simple/simple.c:394
+#: ../engines/simple/simple.c:362
 msgid "Colors"
 msgstr "Farben"
 
-#: ../engines/simple/simple.c:402
+#: ../engines/simple/simple.c:370
 msgid "Background color:"
 msgstr "Hintergrundfarbe:"
 
-#: ../engines/simple/simple.c:415
+#: ../engines/simple/simple.c:383
 msgid "Text color:"
 msgstr "Textfarbe:"
 
-#: ../engines/simple/simple.c:428
+#: ../engines/simple/simple.c:396
 msgid "Image"
 msgstr "Bild"
 
-#: ../engines/simple/simple.c:436
+#: ../engines/simple/simple.c:404
 msgid "Use custom image"
 msgstr "Eigenes Bild verwenden"
 
-#: ../engines/simple/simple.c:523
+#: ../engines/simple/simple.c:408
+msgid "Choose image..."
+msgstr "Bild auswählen..."
+
+#: ../engines/simple/simple.c:414
+#, fuzzy
+msgid "Images"
+msgstr "Bild"
+
+#: ../engines/simple/simple.c:419
+msgid "All files"
+msgstr ""
+
+#: ../engines/simple/simple.c:493
 msgid "Simple"
 msgstr "Einfach"
 
-#: ../engines/simple/simple.c:524
+#: ../engines/simple/simple.c:494
 msgid "Simple Splash Engine"
 msgstr "Einfacher Startbildschirm"
 
@@ -314,31 +323,42 @@ msgstr "Lade Sitzungsdaten"
 msgid "Xfce Session Manager"
 msgstr "Sitzungsmanager"
 
-#: ../xfce4-session/shutdown.c:338
-msgid "_Log Out"
+#: ../xfce4-session/shutdown.c:360
+#, fuzzy
+msgid "Log Out"
 msgstr "_Abmelden"
 
-#: ../xfce4-session/shutdown.c:363
-msgid "_Restart"
+#: ../xfce4-session/shutdown.c:385
+#, fuzzy
+msgid "Restart"
 msgstr "_Neustarten"
 
-#: ../xfce4-session/shutdown.c:388
-msgid "_Shut Down"
+#: ../xfce4-session/shutdown.c:410
+#, fuzzy
+msgid "Shut Down"
 msgstr "_Herunterfahren"
 
-#: ../xfce4-session/shutdown.c:396
+#: ../xfce4-session/shutdown.c:444
+msgid "Suspend"
+msgstr ""
+
+#: ../xfce4-session/shutdown.c:472
+msgid "Hibernate"
+msgstr ""
+
+#: ../xfce4-session/shutdown.c:481
 msgid "_Save session for future logins"
 msgstr "_Speichere Sitzung für weitere Logins"
 
-#: ../xfce4-session/shutdown.c:459
+#: ../xfce4-session/shutdown.c:548
 msgid "Please enter your password:"
 msgstr "Bitte geben Sie Ihr Passwort ein:"
 
-#: ../xfce4-session/shutdown.c:490
+#: ../xfce4-session/shutdown.c:579
 msgid "<b>An error occurred</b>"
 msgstr "<b>Es ist ein Fehler aufgetreten</b>"
 
-#: ../xfce4-session/shutdown.c:504
+#: ../xfce4-session/shutdown.c:593
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
@@ -346,6 +366,14 @@ msgstr ""
 "Entweder haben Sie Ihr Passwort falsch eingegeben oder der "
 "Systemadministrator hat es Ihnen nicht erlaubt, den Computer von Ihrem "
 "Benutzeraccount aus herunterzufahren."
+
+#: ../xfce4-session/shutdown.c:715 ../xfce4-session/xfsm-manager.c:1102
+msgid "Shutdown Failed"
+msgstr ""
+
+#: ../xfce4-session/shutdown.c:717
+msgid "Unable to perform shutdown"
+msgstr ""
 
 #: ../xfce4-session/xfsm-chooser.c:120
 #, c-format
@@ -421,7 +449,7 @@ msgstr "Trotzdem fortfahren"
 msgid "Try again"
 msgstr "Nochmal versuchen"
 
-#: ../xfce4-session/xfsm-manager.c:585
+#: ../xfce4-session/xfsm-manager.c:586
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -433,55 +461,60 @@ msgstr ""
 "Umgebungsvariable $XDG_CONFIG_DIRS ist nicht korrekt gesetzt (muss »%s« "
 "enthalten) oder xfce4-session wurde falsch installiert."
 
-#: ../xfce4-session/xfsm-manager.c:596
+#: ../xfce4-session/xfsm-manager.c:597
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr ""
 "Die angegebene abgesicherte Sitzung (»%s«) ist nicht als solche dekariert."
 
-#: ../xfce4-session/xfsm-manager.c:643
+#: ../xfce4-session/xfsm-manager.c:644
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Die Liste der Anwendungen in der abgesicherten Sitzung ist leer."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:690
+#: ../xfce4-session/xfsm-manager.c:691
 msgid "Session Manager Error"
 msgstr "Fehler im Sitzungsmanager"
 
-#: ../xfce4-session/xfsm-manager.c:692
+#: ../xfce4-session/xfsm-manager.c:693
 msgid "Unable to load a failsafe session"
 msgstr "Kann abgesicherte Sitzugn nicht laden"
 
-#: ../xfce4-session/xfsm-manager.c:1359
+#: ../xfce4-session/xfsm-manager.c:1105
+#, fuzzy
+msgid "Failed to suspend session"
+msgstr "Kann Sitzung nicht speichern"
+
+#: ../xfce4-session/xfsm-manager.c:1106
+#, fuzzy
+msgid "Failed to hibernate session"
+msgstr "Kann Sitzung nicht speichern"
+
+#: ../xfce4-session/xfsm-manager.c:1395
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr ""
 "Kann Clients nur dann beenden, wenn keine anderen Aufgaben durchgeführt "
 "werden"
 
-#: ../xfce4-session/xfsm-manager.c:1830
+#: ../xfce4-session/xfsm-manager.c:1866
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 "Der Sitzungsmanager muss unbeschäftigt sein, wenn ein Checkpoint gemacht "
 "werden soll"
 
-#: ../xfce4-session/xfsm-manager.c:1871
+#: ../xfce4-session/xfsm-manager.c:1907
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
 "Der Sitzungsmanager muss unbeschäftigt sein, wenn er heruntergefahren werden "
 "soll"
 
-#: ../xfce4-session/xfsm-manager.c:1878
-#, c-format
-msgid "Suspend and hibernate are not supported"
-msgstr "Ruehmodus und Tiefschlaf werden nicht unterstützt"
-
-#: ../xfce4-session/xfsm-manager.c:1885
+#: ../xfce4-session/xfsm-manager.c:1914
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Ungültiger Typ »%u« zum Herunterfahren des Systems"
@@ -652,21 +685,17 @@ msgid "Received error while trying to log out"
 msgstr "Fehler während des Abmeldevorgangs erhalten"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
-msgid "Session and Startup Settings"
-msgstr "Sitzungs- und Starteinstellungen"
+#: ../settings/xfce4-session-settings.glade.h:14
+msgid "Customize desktop startup and splash screen"
+msgstr ""
+"Passen Sie das Startverhalten der Arbeitsumgebung und den Startbildschirm an "
+"Ihre Bedürfnisse an"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
 #: ../settings/xfce4-session-settings.glade.h:27
-msgid "Sessions and Startup"
+#, fuzzy
+msgid "Session and Startup"
 msgstr "Sitzungs- und Starteinstellungen"
-
-#: ../settings/xfce-session-settings.desktop.in.h:3
-msgid "Sessions and Startup Settings"
-msgstr "Sitzungen und Starteinstellungen"
-
-#: ../settings/xfce-session-settings.desktop.in.h:4
-msgid "Xfce 4 Sessions and Startup Settings"
-msgstr "Xfce4-Sitzungs- und Starteinstellungen"
 
 #: ../settings/xfce4-session-settings.glade.h:1
 msgid "<b>Author:</b>"
@@ -719,12 +748,6 @@ msgstr "_Sitzung automatisch beim Abmelden speichern"
 #: ../settings/xfce4-session-settings.glade.h:13
 msgid "Con_figure"
 msgstr "_Konfigurieren"
-
-#: ../settings/xfce4-session-settings.glade.h:14
-msgid "Customize desktop startup and splash screen"
-msgstr ""
-"Passen Sie das Startverhalten der Arbeitsumgebung und den Startbildschirm an "
-"Ihre Bedürfnisse an"
 
 #: ../settings/xfce4-session-settings.glade.h:15
 msgid "Demonstrates the selected splash screen"
@@ -845,6 +868,18 @@ msgstr "label"
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
 msgstr "Xfce4-Tipps"
+
+#~ msgid "Suspend and hibernate are not supported"
+#~ msgstr "Ruehmodus und Tiefschlaf werden nicht unterstützt"
+
+#~ msgid "Session and Startup Settings"
+#~ msgstr "Sitzungs- und Starteinstellungen"
+
+#~ msgid "Sessions and Startup Settings"
+#~ msgstr "Sitzungen und Starteinstellungen"
+
+#~ msgid "Xfce 4 Sessions and Startup Settings"
+#~ msgstr "Xfce4-Sitzungs- und Starteinstellungen"
 
 #~ msgid "Remove the selected application from the session."
 #~ msgstr "Entfernt die ausgewählte Anwendung aus der Sitzung."

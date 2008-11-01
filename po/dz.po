@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-22 23:22-0700\n"
+"POT-Creation-Date: 2008-11-01 02:59-0700\n"
 "PO-Revision-Date: 2006-10-24 20:36+0530\n"
 "Last-Translator: sonam rinchen <somindruk@druknet.bt>\n"
 "Language-Team: Dzongkha <pgeyleg@dit.gov.bt>\n"
@@ -81,43 +81,52 @@ msgstr "མའུསི་ཚུ།"
 msgid "Mice Splash Engine"
 msgstr "མའུསི་སིཔེལེཤ་མ་འཕྲུལ།"
 
-#: ../engines/simple/simple.c:327
-msgid "Choose image..."
-msgstr "གཟུགས་བརྙན་གདམས་་་་་"
-
-#: ../engines/simple/simple.c:373
+#: ../engines/simple/simple.c:341
 msgid "Configure Simple..."
 msgstr "རིམ་སྒྲིག་འཇམ་སམ་་་་"
 
-#: ../engines/simple/simple.c:384
+#: ../engines/simple/simple.c:352
 msgid "Font"
 msgstr "ཡིག་གཟུགས།"
 
-#: ../engines/simple/simple.c:394
+#: ../engines/simple/simple.c:362
 msgid "Colors"
 msgstr "ཚོས་གཞི་ཚུ།"
 
-#: ../engines/simple/simple.c:402
+#: ../engines/simple/simple.c:370
 msgid "Background color:"
 msgstr "རྒྱབ་གཞིའི་ཚོས་གཞི་:"
 
-#: ../engines/simple/simple.c:415
+#: ../engines/simple/simple.c:383
 msgid "Text color:"
 msgstr "ཚིག་ཡིག་ཚོས་གཞི་:"
 
-#: ../engines/simple/simple.c:428
+#: ../engines/simple/simple.c:396
 msgid "Image"
 msgstr "གཟུགས་བརྙན།"
 
-#: ../engines/simple/simple.c:436
+#: ../engines/simple/simple.c:404
 msgid "Use custom image"
 msgstr "སྲོལ་སྒྲིག་གཟུགས་བརྙན་ལག་ལེན་འཐབ།"
 
-#: ../engines/simple/simple.c:523
+#: ../engines/simple/simple.c:408
+msgid "Choose image..."
+msgstr "གཟུགས་བརྙན་གདམས་་་་་"
+
+#: ../engines/simple/simple.c:414
+#, fuzzy
+msgid "Images"
+msgstr "གཟུགས་བརྙན།"
+
+#: ../engines/simple/simple.c:419
+msgid "All files"
+msgstr ""
+
+#: ../engines/simple/simple.c:493
 msgid "Simple"
 msgstr "འཇམ་སམ།"
 
-#: ../engines/simple/simple.c:524
+#: ../engines/simple/simple.c:494
 msgid "Simple Splash Engine"
 msgstr "འཇམ་སམ་སིཔེལེཤ་མ་འཕྲུལ།"
 
@@ -320,38 +329,54 @@ msgstr "ལཱ་ཡུན་གནད་སྡུད་མངོན་གསལ
 msgid "Xfce Session Manager"
 msgstr "ལཱ་ཡུན་མིང་གདམས།"
 
-#: ../xfce4-session/shutdown.c:338
+#: ../xfce4-session/shutdown.c:360
 msgid "Log Out"
 msgstr "ཕྱིར་བསྐྱོད།"
 
-#: ../xfce4-session/shutdown.c:363
+#: ../xfce4-session/shutdown.c:385
 msgid "Restart"
 msgstr "ལོག་འགོ་བཙུགས།"
 
-#: ../xfce4-session/shutdown.c:388
+#: ../xfce4-session/shutdown.c:410
 msgid "Shut Down"
 msgstr "སྒོ་བསྡམ།"
 
-#: ../xfce4-session/shutdown.c:396
+#: ../xfce4-session/shutdown.c:444
+msgid "Suspend"
+msgstr "འཕྲལ་བཀག"
+
+#: ../xfce4-session/shutdown.c:472
+msgid "Hibernate"
+msgstr "ཧའི་བར་ནེཊི།"
+
+#: ../xfce4-session/shutdown.c:481
 msgid "_Save session for future logins"
 msgstr "མ་འོངས་ནང་བསྐྱོད་ཀྱི་དོན་ལུ་ ལཱ་ཡུན་སྲུངས།(_S)"
 
-#: ../xfce4-session/shutdown.c:459
+#: ../xfce4-session/shutdown.c:548
 msgid "Please enter your password:"
 msgstr "ཁྱོད་རའི་ཆོག་ཡིག་བཙུགས་གནང་:"
 
-#: ../xfce4-session/shutdown.c:490
+#: ../xfce4-session/shutdown.c:579
 #, fuzzy
 msgid "<b>An error occurred</b>"
 msgstr "<b>འཛོལ་བ་བྱུང་ཡི་</b>"
 
-#: ../xfce4-session/shutdown.c:504
+#: ../xfce4-session/shutdown.c:593
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
 msgstr ""
 "ཁྱོད་ཀྱིས་བཙུགས་ཡོད་པའི་ཆོག་ཡིག་འདི་ནུས་མེད་ཨིན་པས་ ཡང་ན་ རིམ་ལུགས་བདག་སྐྱོང་པ་གིས་ ཁྱོད་རའི་ལག་ལེན་"
 "པའི་རྩིས་ཐོའི་ཐོག་ལས་གློག་རིག་འདི་སྒོ་བསྡམ་མ་བཅུགཔ་ཨིན་པས། "
+
+#: ../xfce4-session/shutdown.c:715 ../xfce4-session/xfsm-manager.c:1102
+msgid "Shutdown Failed"
+msgstr ""
+
+#: ../xfce4-session/shutdown.c:717
+msgid "Unable to perform shutdown"
+msgstr ""
 
 #: ../xfce4-session/xfsm-chooser.c:120
 #, c-format
@@ -428,7 +453,7 @@ msgstr "ག་དེ་འབད་རུང་འཕྲོ་མཐུད།"
 msgid "Try again"
 msgstr "ལོག་འབད་རྩོལ་བསྐྱེད།"
 
-#: ../xfce4-session/xfsm-manager.c:585
+#: ../xfce4-session/xfsm-manager.c:586
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -436,49 +461,54 @@ msgid ""
 "incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:596
+#: ../xfce4-session/xfsm-manager.c:597
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:643
+#: ../xfce4-session/xfsm-manager.c:644
 msgid "The list of applications in the failsafe session is empty."
 msgstr ""
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:690
+#: ../xfce4-session/xfsm-manager.c:691
 #, fuzzy
 msgid "Session Manager Error"
 msgstr "ལཱ་ཡུན་མིང་གདམས།"
 
-#: ../xfce4-session/xfsm-manager.c:692
+#: ../xfce4-session/xfsm-manager.c:693
 msgid "Unable to load a failsafe session"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1359
+#: ../xfce4-session/xfsm-manager.c:1105
+#, fuzzy
+msgid "Failed to suspend session"
+msgstr "འབྲི་ནིའི་དོན་ལུ་%sཁ་ཕྱེ་ནི་འཐུས་ཤོར་བྱུང་ཡོདཔ།"
+
+#: ../xfce4-session/xfsm-manager.c:1106
+#, fuzzy
+msgid "Failed to hibernate session"
+msgstr "ཡིག་སྣོད་%sགསར་བསྐྲུན་འབད་ནི་འཐུས་ཤོར་བྱུང་ཡོདཔ།"
+
+#: ../xfce4-session/xfsm-manager.c:1395
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1830
+#: ../xfce4-session/xfsm-manager.c:1866
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1871
+#: ../xfce4-session/xfsm-manager.c:1907
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1878
-#, c-format
-msgid "Suspend and hibernate are not supported"
-msgstr ""
-
-#: ../xfce4-session/xfsm-manager.c:1885
+#: ../xfce4-session/xfsm-manager.c:1914
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr ""
@@ -653,21 +683,15 @@ msgid "Received error while trying to log out"
 msgstr ""
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
-msgid "Session and Startup Settings"
-msgstr "ལཱ་ཡུན་དང་འགོ་བཙུགས་སྒྲིག་སྟངས་ཚུ།"
+#: ../settings/xfce4-session-settings.glade.h:14
+msgid "Customize desktop startup and splash screen"
+msgstr ""
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
 #: ../settings/xfce4-session-settings.glade.h:27
-msgid "Sessions and Startup"
+#, fuzzy
+msgid "Session and Startup"
 msgstr "ལཱ་ཡུན་དང་འགོ་བཙུགས།"
-
-#: ../settings/xfce-session-settings.desktop.in.h:3
-msgid "Sessions and Startup Settings"
-msgstr "ལཱ་ཡུན་ཚུ་དང་འགོ་བཙུགས་སྒྲིག་སྟངས་ཚུ།"
-
-#: ../settings/xfce-session-settings.desktop.in.h:4
-msgid "Xfce 4 Sessions and Startup Settings"
-msgstr "ཨེགསི་ཨེཕ་སི་ཨི་ ༤ལཱ་ཡུན་དང་འགོ་བཙུགས་སྒྲིག་སྟངས་ཚུ།"
 
 #: ../settings/xfce4-session-settings.glade.h:1
 msgid "<b>Author:</b>"
@@ -729,10 +753,6 @@ msgstr "ཕྱིར་བསྐྱོད་ཀྱི་སྐབས་ ལཱ�
 #, fuzzy
 msgid "Con_figure"
 msgstr "རིམ་སྒྲིག"
-
-#: ../settings/xfce4-session-settings.glade.h:14
-msgid "Customize desktop startup and splash screen"
-msgstr ""
 
 #: ../settings/xfce4-session-settings.glade.h:15
 #, fuzzy
@@ -858,6 +878,15 @@ msgstr ""
 msgid "xfce4-tips"
 msgstr "ཨེགསི་ཨེཕ་སི་ཨི་༤-སླབ་བྱ།"
 
+#~ msgid "Session and Startup Settings"
+#~ msgstr "ལཱ་ཡུན་དང་འགོ་བཙུགས་སྒྲིག་སྟངས་ཚུ།"
+
+#~ msgid "Sessions and Startup Settings"
+#~ msgstr "ལཱ་ཡུན་ཚུ་དང་འགོ་བཙུགས་སྒྲིག་སྟངས་ཚུ།"
+
+#~ msgid "Xfce 4 Sessions and Startup Settings"
+#~ msgstr "ཨེགསི་ཨེཕ་སི་ཨི་ ༤ལཱ་ཡུན་དང་འགོ་བཙུགས་སྒྲིག་སྟངས་ཚུ།"
+
 #, fuzzy
 #~ msgid "Remove the selected application from the session."
 #~ msgstr "སེལ་འཐུ་འབད་ཡོད་པའི་སི་པེལེཤ་གསལ་གཞི་འགྲེམས་སྟོན་འབདཝ་ཨིན།"
@@ -964,9 +993,3 @@ msgstr "ཨེགསི་ཨེཕ་སི་ཨི་༤-སླབ་བྱ�
 #~ msgstr ""
 #~ "གདམ་ཁ་འདི་གིས་ཕྱིར་བསྐྱོད་ཌའི་ལོག་ལུ་ཧའི་བར་ནེཊི་ཨེབ་རྟ་ ཁ་སྐོང་རྐྱབ་ཨིན། ཁྱོད་ཀྱིས་ ཨར་ཨེ་ཨེམ་ལུ་རིམ་"
 #~ "ལུགས་འཕྲལ་བཀག་ཡོདཔ་ཤེས་ཡོདཔ་དང་ངེས་ལྡན་སྦེ་བསྐྱར་ལོག་འབད་བ་ཅིན་རྐྱངམ་ཅིག་ལྕོགས་ཅན་ཨིན།"
-
-#~ msgid "Suspend"
-#~ msgstr "འཕྲལ་བཀག"
-
-#~ msgid "Hibernate"
-#~ msgstr "ཧའི་བར་ནེཊི།"

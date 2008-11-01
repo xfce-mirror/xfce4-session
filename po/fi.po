@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-31 14:05+0200\n"
+"POT-Creation-Date: 2008-11-01 02:59-0700\n"
 "PO-Revision-Date: 2008-10-31 14:06+0200\n"
 "Last-Translator: Jari Rahkonen <jari.rahkonen@pp1.inet.fi>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -78,43 +78,52 @@ msgstr "Hiiret"
 msgid "Mice Splash Engine"
 msgstr "Hiiret-käynnistyskuvateema"
 
-#: ../engines/simple/simple.c:327
-msgid "Choose image..."
-msgstr "Valitse kuva..."
-
-#: ../engines/simple/simple.c:373
+#: ../engines/simple/simple.c:341
 msgid "Configure Simple..."
 msgstr "Simplen asetukset..."
 
-#: ../engines/simple/simple.c:384
+#: ../engines/simple/simple.c:352
 msgid "Font"
 msgstr "Kirjasin"
 
-#: ../engines/simple/simple.c:394
+#: ../engines/simple/simple.c:362
 msgid "Colors"
 msgstr "Värit"
 
-#: ../engines/simple/simple.c:402
+#: ../engines/simple/simple.c:370
 msgid "Background color:"
 msgstr "Taustaväri:"
 
-#: ../engines/simple/simple.c:415
+#: ../engines/simple/simple.c:383
 msgid "Text color:"
 msgstr "Tekstin väri:"
 
-#: ../engines/simple/simple.c:428
+#: ../engines/simple/simple.c:396
 msgid "Image"
 msgstr "Kuva"
 
-#: ../engines/simple/simple.c:436
+#: ../engines/simple/simple.c:404
 msgid "Use custom image"
 msgstr "Käytä omaa kuvaa"
 
-#: ../engines/simple/simple.c:523
+#: ../engines/simple/simple.c:408
+msgid "Choose image..."
+msgstr "Valitse kuva..."
+
+#: ../engines/simple/simple.c:414
+#, fuzzy
+msgid "Images"
+msgstr "Kuva"
+
+#: ../engines/simple/simple.c:419
+msgid "All files"
+msgstr ""
+
+#: ../engines/simple/simple.c:493
 msgid "Simple"
 msgstr "Yksinkertainen"
 
-#: ../engines/simple/simple.c:524
+#: ../engines/simple/simple.c:494
 msgid "Simple Splash Engine"
 msgstr "Yksinkertainen käynnistyskuvateema"
 
@@ -311,39 +320,55 @@ msgstr "Ladataan istunnon tietoja"
 msgid "Xfce Session Manager"
 msgstr "Valitse istunnon nimi"
 
-#: ../xfce4-session/shutdown.c:338
+#: ../xfce4-session/shutdown.c:360
 msgid "Log Out"
 msgstr "Kirjaudu ulos"
 
-#: ../xfce4-session/shutdown.c:363
+#: ../xfce4-session/shutdown.c:385
 msgid "Restart"
 msgstr ""
 "Käynnistä\n"
 "uudelleen"
 
-#: ../xfce4-session/shutdown.c:388
+#: ../xfce4-session/shutdown.c:410
 msgid "Shut Down"
 msgstr "Sammuta"
 
-#: ../xfce4-session/shutdown.c:396
+#: ../xfce4-session/shutdown.c:444
+msgid "Suspend"
+msgstr ""
+
+#: ../xfce4-session/shutdown.c:472
+msgid "Hibernate"
+msgstr ""
+
+#: ../xfce4-session/shutdown.c:481
 msgid "_Save session for future logins"
 msgstr "_Tallenna istunto"
 
-#: ../xfce4-session/shutdown.c:459
+#: ../xfce4-session/shutdown.c:548
 msgid "Please enter your password:"
 msgstr "Anna salasanasi:"
 
-#: ../xfce4-session/shutdown.c:490
+#: ../xfce4-session/shutdown.c:579
 msgid "<b>An error occurred</b>"
 msgstr "<b>Virhe</b>"
 
-#: ../xfce4-session/shutdown.c:504
+#: ../xfce4-session/shutdown.c:593
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
 msgstr ""
 "Joko antamasi salasana oli virheellinen, tai järjestelmän ylläpitäjä ei "
 "salli tietokoneen sulkemista tällä käyttäjätunnuksella."
+
+#: ../xfce4-session/shutdown.c:715 ../xfce4-session/xfsm-manager.c:1102
+msgid "Shutdown Failed"
+msgstr ""
+
+#: ../xfce4-session/shutdown.c:717
+msgid "Unable to perform shutdown"
+msgstr ""
 
 #: ../xfce4-session/xfsm-chooser.c:120
 #, c-format
@@ -419,7 +444,7 @@ msgstr "Jatka kuitenkin"
 msgid "Try again"
 msgstr "Yritä uudelleen"
 
-#: ../xfce4-session/xfsm-manager.c:585
+#: ../xfce4-session/xfsm-manager.c:586
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -430,49 +455,54 @@ msgstr ""
 "ole käynnissä (D-Bus -ongelma), ympäristömuuttuja $XDG_CONFIG_DIRS on väärin "
 "asetettu (pitäisi sisältää \"%s\") tai xfce4-session on asennettu väärin."
 
-#: ../xfce4-session/xfsm-manager.c:596
+#: ../xfce4-session/xfsm-manager.c:597
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr ""
 "Määritettyä vikasietoista istuntoa (\"%s\") ei ole merkitty vikasietoiseksi."
 
-#: ../xfce4-session/xfsm-manager.c:643
+#: ../xfce4-session/xfsm-manager.c:644
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Vikasietoinen istunto ei sisällä sovelluksia."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:690
+#: ../xfce4-session/xfsm-manager.c:691
 msgid "Session Manager Error"
 msgstr "Istunnonhallinnan virhe"
 
-#: ../xfce4-session/xfsm-manager.c:692
+#: ../xfce4-session/xfsm-manager.c:693
 msgid "Unable to load a failsafe session"
 msgstr "Vikasietoista istuntoa ei voi ladata"
 
-#: ../xfce4-session/xfsm-manager.c:1359
+#: ../xfce4-session/xfsm-manager.c:1105
+#, fuzzy
+msgid "Failed to suspend session"
+msgstr "Istuntoa ei voi tallentaa"
+
+#: ../xfce4-session/xfsm-manager.c:1106
+#, fuzzy
+msgid "Failed to hibernate session"
+msgstr "Istuntoa ei voi tallentaa"
+
+#: ../xfce4-session/xfsm-manager.c:1395
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Asiakasohjelmia voi sulkea vain joutenollessa"
 
-#: ../xfce4-session/xfsm-manager.c:1830
+#: ../xfce4-session/xfsm-manager.c:1866
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Istunnonhallinnan on oltava jouten pyydettäessä varmistuspistettä"
 
-#: ../xfce4-session/xfsm-manager.c:1871
+#: ../xfce4-session/xfsm-manager.c:1907
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Istunnonhallinnan on oltava jouten pyydettäessä sammutusta"
 
-#: ../xfce4-session/xfsm-manager.c:1878
-#, c-format
-msgid "Suspend and hibernate are not supported"
-msgstr "Keskeytys- ja lepotilaa ei tueta"
-
-#: ../xfce4-session/xfsm-manager.c:1885
+#: ../xfce4-session/xfsm-manager.c:1914
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Sammutustyyppi \"%u\" ei kelpaa"
@@ -643,21 +673,15 @@ msgid "Received error while trying to log out"
 msgstr "Virhe uloskirjautuessa"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
-msgid "Session and Startup Settings"
-msgstr "Istunto- ja käynnistysasetukset"
+#: ../settings/xfce4-session-settings.glade.h:14
+msgid "Customize desktop startup and splash screen"
+msgstr "Mukauta työpöydän käynnistystä ja käynnistyskuvaa"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
 #: ../settings/xfce4-session-settings.glade.h:27
-msgid "Sessions and Startup"
+#, fuzzy
+msgid "Session and Startup"
 msgstr "Istunnot ja käynnistys"
-
-#: ../settings/xfce-session-settings.desktop.in.h:3
-msgid "Sessions and Startup Settings"
-msgstr "Istuntojen ja käynnistyksen asetukset"
-
-#: ../settings/xfce-session-settings.desktop.in.h:4
-msgid "Xfce 4 Sessions and Startup Settings"
-msgstr "Xfce 4 istuntojen ja käynnistyksen asetukset"
 
 #: ../settings/xfce4-session-settings.glade.h:1
 msgid "<b>Author:</b>"
@@ -710,10 +734,6 @@ msgstr "Tallenna istunto automaattisesti ulos_kirjautuessa"
 #: ../settings/xfce4-session-settings.glade.h:13
 msgid "Con_figure"
 msgstr "Sää_dä"
-
-#: ../settings/xfce4-session-settings.glade.h:14
-msgid "Customize desktop startup and splash screen"
-msgstr "Mukauta työpöydän käynnistystä ja käynnistyskuvaa"
 
 #: ../settings/xfce4-session-settings.glade.h:15
 msgid "Demonstrates the selected splash screen"
@@ -830,6 +850,18 @@ msgstr "nimike"
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
 msgstr "xfce4-vinkit"
+
+#~ msgid "Suspend and hibernate are not supported"
+#~ msgstr "Keskeytys- ja lepotilaa ei tueta"
+
+#~ msgid "Session and Startup Settings"
+#~ msgstr "Istunto- ja käynnistysasetukset"
+
+#~ msgid "Sessions and Startup Settings"
+#~ msgstr "Istuntojen ja käynnistyksen asetukset"
+
+#~ msgid "Xfce 4 Sessions and Startup Settings"
+#~ msgstr "Xfce 4 istuntojen ja käynnistyksen asetukset"
 
 #~ msgid "Remove the selected application from the session"
 #~ msgstr "Poista valittu sovellus istunnosta"

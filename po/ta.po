@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-22 23:22-0700\n"
+"POT-Creation-Date: 2008-11-01 02:59-0700\n"
 "PO-Revision-Date: 2005-10-08 20:46+0900\n"
 "Last-Translator: Dinesh Nadarajah <dinesh_list@sbcglobal.net>\n"
 "Language-Team: Tamil <tamillinux-user@lists.sourceforge.net>\n"
@@ -77,44 +77,52 @@ msgstr ""
 msgid "Mice Splash Engine"
 msgstr ""
 
-#: ../engines/simple/simple.c:327
-msgid "Choose image..."
-msgstr ""
-
-#: ../engines/simple/simple.c:373
+#: ../engines/simple/simple.c:341
 #, fuzzy
 msgid "Configure Simple..."
 msgstr "கணிப்பொறியிலிருந்து வெளிச்செல்வதை உறுதிசெய்ய வேண்டும்"
 
-#: ../engines/simple/simple.c:384
+#: ../engines/simple/simple.c:352
 msgid "Font"
 msgstr ""
 
-#: ../engines/simple/simple.c:394
+#: ../engines/simple/simple.c:362
 msgid "Colors"
 msgstr ""
 
-#: ../engines/simple/simple.c:402
+#: ../engines/simple/simple.c:370
 msgid "Background color:"
 msgstr ""
 
-#: ../engines/simple/simple.c:415
+#: ../engines/simple/simple.c:383
 msgid "Text color:"
 msgstr ""
 
-#: ../engines/simple/simple.c:428
+#: ../engines/simple/simple.c:396
 msgid "Image"
 msgstr ""
 
-#: ../engines/simple/simple.c:436
+#: ../engines/simple/simple.c:404
 msgid "Use custom image"
 msgstr ""
 
-#: ../engines/simple/simple.c:523
+#: ../engines/simple/simple.c:408
+msgid "Choose image..."
+msgstr ""
+
+#: ../engines/simple/simple.c:414
+msgid "Images"
+msgstr ""
+
+#: ../engines/simple/simple.c:419
+msgid "All files"
+msgstr ""
+
+#: ../engines/simple/simple.c:493
 msgid "Simple"
 msgstr ""
 
-#: ../engines/simple/simple.c:524
+#: ../engines/simple/simple.c:494
 msgid "Simple Splash Engine"
 msgstr ""
 
@@ -312,34 +320,50 @@ msgstr "அமர்வு மேலாளர் தொடங்கப்பட�
 msgid "Xfce Session Manager"
 msgstr "அமர்வு மேலாண்மை"
 
-#: ../xfce4-session/shutdown.c:338
+#: ../xfce4-session/shutdown.c:360
 msgid "Log Out"
 msgstr ""
 
-#: ../xfce4-session/shutdown.c:363
+#: ../xfce4-session/shutdown.c:385
 msgid "Restart"
 msgstr ""
 
-#: ../xfce4-session/shutdown.c:388
+#: ../xfce4-session/shutdown.c:410
 msgid "Shut Down"
 msgstr ""
 
-#: ../xfce4-session/shutdown.c:396
+#: ../xfce4-session/shutdown.c:444
+msgid "Suspend"
+msgstr ""
+
+#: ../xfce4-session/shutdown.c:472
+msgid "Hibernate"
+msgstr ""
+
+#: ../xfce4-session/shutdown.c:481
 msgid "_Save session for future logins"
 msgstr "_எதிர்கால உள்நுழைவுக்கு அமர்வை சேமிக்கவும்"
 
-#: ../xfce4-session/shutdown.c:459
+#: ../xfce4-session/shutdown.c:548
 msgid "Please enter your password:"
 msgstr ""
 
-#: ../xfce4-session/shutdown.c:490
+#: ../xfce4-session/shutdown.c:579
 msgid "<b>An error occurred</b>"
 msgstr ""
 
-#: ../xfce4-session/shutdown.c:504
+#: ../xfce4-session/shutdown.c:593
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
+msgstr ""
+
+#: ../xfce4-session/shutdown.c:715 ../xfce4-session/xfsm-manager.c:1102
+msgid "Shutdown Failed"
+msgstr ""
+
+#: ../xfce4-session/shutdown.c:717
+msgid "Unable to perform shutdown"
 msgstr ""
 
 #: ../xfce4-session/xfsm-chooser.c:120
@@ -414,7 +438,7 @@ msgstr ""
 msgid "Try again"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:585
+#: ../xfce4-session/xfsm-manager.c:586
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -422,49 +446,54 @@ msgid ""
 "incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:596
+#: ../xfce4-session/xfsm-manager.c:597
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:643
+#: ../xfce4-session/xfsm-manager.c:644
 msgid "The list of applications in the failsafe session is empty."
 msgstr ""
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:690
+#: ../xfce4-session/xfsm-manager.c:691
 #, fuzzy
 msgid "Session Manager Error"
 msgstr "அமர்வு மேலாண்மை"
 
-#: ../xfce4-session/xfsm-manager.c:692
+#: ../xfce4-session/xfsm-manager.c:693
 msgid "Unable to load a failsafe session"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1359
+#: ../xfce4-session/xfsm-manager.c:1105
+#, fuzzy
+msgid "Failed to suspend session"
+msgstr "சேவைப்பயனர் நகல்செய்ய முடியவில்லை: %s"
+
+#: ../xfce4-session/xfsm-manager.c:1106
+#, fuzzy
+msgid "Failed to hibernate session"
+msgstr "MCS சேவைப்பயனர் படைக்க முடியவில்லை"
+
+#: ../xfce4-session/xfsm-manager.c:1395
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1830
+#: ../xfce4-session/xfsm-manager.c:1866
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1871
+#: ../xfce4-session/xfsm-manager.c:1907
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1878
-#, c-format
-msgid "Suspend and hibernate are not supported"
-msgstr ""
-
-#: ../xfce4-session/xfsm-manager.c:1885
+#: ../xfce4-session/xfsm-manager.c:1914
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr ""
@@ -641,24 +670,14 @@ msgid "Received error while trying to log out"
 msgstr ""
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
-#, fuzzy
-msgid "Session and Startup Settings"
-msgstr "அமர்வு மேலாண்மை"
+#: ../settings/xfce4-session-settings.glade.h:14
+msgid "Customize desktop startup and splash screen"
+msgstr ""
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
 #: ../settings/xfce4-session-settings.glade.h:27
 #, fuzzy
-msgid "Sessions and Startup"
-msgstr "அமர்வு மேலாண்மை"
-
-#: ../settings/xfce-session-settings.desktop.in.h:3
-#, fuzzy
-msgid "Sessions and Startup Settings"
-msgstr "அமர்வு மேலாண்மை"
-
-#: ../settings/xfce-session-settings.desktop.in.h:4
-#, fuzzy
-msgid "Xfce 4 Sessions and Startup Settings"
+msgid "Session and Startup"
 msgstr "அமர்வு மேலாண்மை"
 
 #: ../settings/xfce4-session-settings.glade.h:1
@@ -720,10 +739,6 @@ msgstr "வெளிச்செல்லும்போது அமர்வ�
 #, fuzzy
 msgid "Con_figure"
 msgstr "கணிப்பொறியிலிருந்து வெளிச்செல்வதை உறுதிசெய்ய வேண்டும்"
-
-#: ../settings/xfce4-session-settings.glade.h:14
-msgid "Customize desktop startup and splash screen"
-msgstr ""
 
 #: ../settings/xfce4-session-settings.glade.h:15
 #, fuzzy
@@ -842,6 +857,18 @@ msgstr ""
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Session and Startup Settings"
+#~ msgstr "அமர்வு மேலாண்மை"
+
+#, fuzzy
+#~ msgid "Sessions and Startup Settings"
+#~ msgstr "அமர்வு மேலாண்மை"
+
+#, fuzzy
+#~ msgid "Xfce 4 Sessions and Startup Settings"
+#~ msgstr "அமர்வு மேலாண்மை"
 
 #, fuzzy
 #~ msgid "Remove the selected application from the session."
