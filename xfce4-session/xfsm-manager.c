@@ -63,7 +63,7 @@
 #  endif  /* __NR_ioprio_set */
 #endif  /* HAVE_ASM_UNISTD_H */
 
-#include <dbus/dbus-glib.h>
+#include <dbus/dbus-glib-lowlevel.h>
 
 #include <X11/ICE/ICElib.h>
 #include <X11/SM/SMlib.h>
@@ -116,6 +116,8 @@ struct _XfsmManager
   GQueue          *failsafe_clients;
 
   guint            die_timeout_id;
+
+  DBusGConnection *dbus_conn;
 };
 
 typedef struct _XfsmManagerClass
@@ -171,6 +173,7 @@ static void       xfsm_manager_load_settings (XfsmManager   *manager,
 static gboolean   xfsm_manager_load_session (XfsmManager *manager);
 static void       xfsm_manager_dbus_class_init (XfsmManagerClass *klass);
 static void       xfsm_manager_dbus_init (XfsmManager *manager);
+static void       xfsm_manager_dbus_cleanup (XfsmManager *manager);
 
 
 static guint signals[N_SIGS] = { 0, };
@@ -239,6 +242,8 @@ static void
 xfsm_manager_finalize (GObject *obj)
 {
   XfsmManager *manager = XFSM_MANAGER(obj);
+
+  xfsm_manager_dbus_cleanup (manager);
 
   if (manager->die_timeout_id != 0)
     g_source_remove (manager->die_timeout_id);
@@ -1744,6 +1749,10 @@ xfsm_manager_get_compat_startup (XfsmManager          *manager,
  * dbus server impl
  */
 
+static DBusHandlerResult xfsm_manager_watch_dbus_disconnect (DBusConnection *connection,
+                                                             DBusMessage *message,
+                                                             void *user_data);
+
 static gboolean xfsm_manager_dbus_get_info (XfsmManager *manager,
                                             gchar      **OUT_name,
                                             gchar      **OUT_version,
@@ -1780,9 +1789,10 @@ static void
 xfsm_manager_dbus_init (XfsmManager *manager)
 {
   GError *error = NULL;
-  DBusGConnection *dbus_conn = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
 
-  if (G_UNLIKELY (!dbus_conn))
+  manager->dbus_conn = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
+
+  if (G_UNLIKELY (!manager->dbus_conn))
     {
       g_critical ("Unable to contact D-Bus session bus: %s", error ? error->message : "Unknown error");
       if (error)
@@ -1790,8 +1800,44 @@ xfsm_manager_dbus_init (XfsmManager *manager)
       return;
     }
 
-  dbus_g_connection_register_g_object (dbus_conn, "/org/xfce/SessionManager",
+  dbus_g_connection_register_g_object (manager->dbus_conn,
+                                       "/org/xfce/SessionManager",
                                        G_OBJECT (manager));
+
+  dbus_connection_add_filter (dbus_g_connection_get_connection (manager->dbus_conn),
+                              xfsm_manager_watch_dbus_disconnect,
+                              manager, NULL);
+}
+
+
+static void
+xfsm_manager_dbus_cleanup (XfsmManager *manager)
+{
+  if (G_LIKELY (manager->dbus_conn))
+    {
+      dbus_connection_remove_filter (dbus_g_connection_get_connection (manager->dbus_conn),
+                                     xfsm_manager_watch_dbus_disconnect,
+                                     manager);
+      dbus_g_connection_unref (manager->dbus_conn);
+      manager->dbus_conn = NULL;
+    }
+}
+
+
+static DBusHandlerResult
+xfsm_manager_watch_dbus_disconnect (DBusConnection *connection,
+                                    DBusMessage *message,
+                                    void *user_data)
+{
+  if (dbus_message_is_signal (message, DBUS_INTERFACE_LOCAL, "Disconnected"))
+    {
+      g_message ("Got disconnected from D-Bus.  Unless this happened during "
+                 "session shutdown, this is probably a bad thing.");
+
+      return DBUS_HANDLER_RESULT_HANDLED;
+    }
+
+  return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
 }
 
 

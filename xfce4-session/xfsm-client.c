@@ -28,6 +28,8 @@
 #include <string.h>
 #endif
 
+#include <dbus/dbus-glib.h>
+
 #include <libxfsm/xfsm-util.h>
 
 #include "xfsm-client.h"
@@ -42,14 +44,16 @@ struct _XfsmClient
 {
   GObject parent;
 
-  XfsmManager    *manager;
+  XfsmManager     *manager;
 
-  gchar          *id;
-  gchar          *object_path;
+  gchar           *id;
+  gchar           *object_path;
 
-  XfsmClientState state;
-  XfsmProperties *properties;
-  SmsConn         sms_conn;
+  XfsmClientState  state;
+  XfsmProperties  *properties;
+  SmsConn          sms_conn;
+
+  DBusGConnection *dbus_conn;
 };
 
 typedef struct _XfsmClientClass
@@ -92,6 +96,7 @@ static void    xfsm_properties_replace_discard_command (XfsmProperties *properti
                                                         gchar         **new_discard);
 static void    xfsm_client_dbus_class_init (XfsmClientClass *klass);
 static void    xfsm_client_dbus_init (XfsmClient *client);
+static void    xfsm_client_dbus_cleanup (XfsmClient *client);
 
 
 static guint signals[N_SIGS] = { 0, };
@@ -151,6 +156,8 @@ static void
 xfsm_client_finalize (GObject *obj)
 {
   XfsmClient *client = XFSM_CLIENT (obj);
+
+  xfsm_client_dbus_cleanup (client);
 
   if (client->properties != NULL)
     xfsm_properties_free (client->properties);
@@ -727,9 +734,10 @@ static void
 xfsm_client_dbus_init (XfsmClient *client)
 {
   GError *error = NULL;
-  DBusGConnection *dbus_conn = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
 
-  if (G_UNLIKELY(!dbus_conn))
+  client->dbus_conn = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
+
+  if (G_UNLIKELY(!client->dbus_conn))
     {
       g_critical ("Unable to contact D-Bus session bus: %s", error ? error->message : "Unknown error");
       if (error)
@@ -737,8 +745,19 @@ xfsm_client_dbus_init (XfsmClient *client)
       return;
     }
 
-  dbus_g_connection_register_g_object (dbus_conn, client->object_path,
+  dbus_g_connection_register_g_object (client->dbus_conn, client->object_path,
                                        G_OBJECT (client));
+}
+
+
+static void
+xfsm_client_dbus_cleanup (XfsmClient *client)
+{
+  if (G_LIKELY (client->dbus_conn))
+    {
+      dbus_g_connection_unref (client->dbus_conn);
+      client->dbus_conn = NULL;
+    }
 }
 
 
