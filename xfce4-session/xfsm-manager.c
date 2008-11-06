@@ -1037,8 +1037,9 @@ xfsm_manager_interact_done (XfsmManager *manager,
           /* reset all clients that are waiting for interact */
           xfsm_client_set_state (client, XFSM_CLIENT_SAVING);
           SmsShutdownCancelled (xfsm_client_get_sms_connection (client));
-          g_signal_emit (manager, signals[SIG_SHUTDOWN_CANCELLED], 0);
         }
+
+        g_signal_emit (manager, signals[SIG_SHUTDOWN_CANCELLED], 0);
     }
   else
     {
