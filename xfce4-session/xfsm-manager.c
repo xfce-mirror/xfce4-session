@@ -1100,9 +1100,11 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
 
           shutdown_helper = xfsm_shutdown_helper_spawn (&error);
           if (shutdown_helper == NULL
-              || !xfsm_shutdown_helper_send_command(shutdown_helper,
+              || (!xfsm_shutdown_helper_send_command(shutdown_helper,
                                                     manager->shutdown_type,
-                                                    &error))
+                                                    &error)
+                  && (error->domain != DBUS_GERROR
+                      || error->code != DBUS_GERROR_TIMED_OUT)))
             {
               xfce_message_dialog (NULL, _("Shutdown Failed"),
                                    GTK_STOCK_DIALOG_ERROR,
