@@ -137,11 +137,12 @@ init_display (XfsmManager   *manager,
               XfconfChannel *channel,
               gboolean       disable_tcp)
 {
-  const gchar *engine;
+  gchar *engine;
 
   engine = xfconf_channel_get_string (channel, "/splash/Engine", "mice");
 
   splash_screen = xfsm_splash_screen_new (dpy, engine);  
+  g_free (engine);
   xfsm_splash_screen_next (splash_screen, _("Loading desktop settings"));
 
   gdk_flush ();
