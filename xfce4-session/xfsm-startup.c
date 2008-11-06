@@ -505,15 +505,20 @@ xfsm_startup_start_properties (XfsmProperties *properties,
 
   /* fork a new process for the application */
 #ifdef HAVE_VFORK
-  pid = vfork ();
-#else
-  pid = fork ();
+  /* vfork() doesn't allow you to do anything but call exec*() or _exit(),
+   * so if we need to set the working directory, we can't use vfork() */
+  if (properties->current_directory == NULL)
+    pid = vfork ();
+  else
 #endif
+    pid = fork ();
 
   /* handle the child process */
   if (pid == 0)
     {
       /* execute the application here */
+      if (properties->current_directory)
+        chdir (properties->current_directory);
       execvp (argv[0], argv);
       _exit (127);
     }
