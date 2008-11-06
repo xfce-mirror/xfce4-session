@@ -190,6 +190,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gint result;
   XfceKiosk *kiosk;
   gboolean kiosk_can_shutdown;
+  gboolean kiosk_can_save_session;
   XfconfChannel *channel;
 #ifdef SESSION_SCREENSHOTS
   GdkRectangle screenshot_area;
@@ -211,6 +212,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   /* load kiosk settings */
   kiosk = xfce_kiosk_new ("xfce4-session");
   kiosk_can_shutdown = xfce_kiosk_query (kiosk, "Shutdown");
+  kiosk_can_save_session = xfce_kiosk_query (kiosk, "SaveSession");
   xfce_kiosk_free (kiosk);
 
   /* load configuration */
@@ -221,6 +223,13 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   prompt = xfconf_channel_get_bool (channel, "/general/PromptOnLogout", TRUE);
   show_suspend = xfconf_channel_get_bool (channel, "/shutdown/ShowSuspend", TRUE);
   show_hibernate = xfconf_channel_get_bool (channel, "/shutdown/ShowHibernate", TRUE);
+
+  /* make the session-save settings obey the kiosk settings */
+  if (!kiosk_can_save_session)
+    {
+      saveonexit = FALSE;
+      autosave = FALSE;
+    }
 
   /* if PromptOnLogout is off, saving depends on AutoSave */
   if (!prompt)
@@ -475,7 +484,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   }
 
   /* save session */
-  if (!autosave)
+  if (!autosave && kiosk_can_save_session)
     {
       checkbox = gtk_check_button_new_with_mnemonic(
           _("_Save session for future logins"));

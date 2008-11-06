@@ -23,6 +23,12 @@ The Xfce session manager supports the KIOSK mode introduced with libxfce4util
 				this capability the reboot and poweroff options
 				in the shutdown dialog will be greyed out.
 
+	SaveSession		whether or not the user is allowed to save
+				the session on logout. If a user lacks this
+				capability the "Save session for future logins"
+				checkbox in the shutdown dialog will be
+				greyed out.
+
 So a sample xfce4-session section in your kioskrc might look like this:
 
 --- snip ---
@@ -33,8 +39,10 @@ CustomizeLogout=ALL
 CustomizeCompatibility=%wheel
 CustomizeSecurity=NONE
 Shutdown=%wheel
+SaveSession=%admin
 --- snip ---
 
 This allows all users to change their splash, chooser and logout settings, but
 allows only users in the group wheel to customize the compatibility settings
-and shutdown the system. No one will be allowed to adjust the security settings.
+and shutdown the system, and only users in the group admin to save the
+session on logout. No one will be allowed to adjust the security settings.

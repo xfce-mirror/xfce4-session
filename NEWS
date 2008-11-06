@@ -10,6 +10,11 @@
 - Fix compilation on some Linux systems with a broken linux/ioprio.h
   header (bug 4515).
 - Fix a possible crash on amd64 (bug 4510).
+- Add support for suspend and hibernate via HAL.  Initial patch from
+  Michael Casadevall (bug 2672).
+- When restoring clients on startup, be sure to set their current
+  working directory if the cwd was set as a part of their saved state.
+- Add SaveSession kiosk capability (bug 2998).
 
 4.5.91
 ======
