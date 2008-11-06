@@ -15,6 +15,10 @@
 - When restoring clients on startup, be sure to set their current
   working directory if the cwd was set as a part of their saved state.
 - Add SaveSession kiosk capability (bug 2998).
+- When a client requests interaction, don't continue to kill all other
+  clients while it's still interacting.  And then don't ignore it when
+  it wants to cancel shutdown.  Also fixes a similar problem when
+  interaction is requested during a phase 2 save-yourself (bug 4284).
 
 4.5.91
 ======

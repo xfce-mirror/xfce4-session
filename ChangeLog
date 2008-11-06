@@ -1,5 +1,16 @@
 2008-11-06	Brian Tarricone <bjt23@cornell.edu>
 
+	* xfce4-session/xfsm-manager.c: Fix a problem: client
+	  requests interaction -> client is granted interaction ->
+	  but now SM kills all other apps.  If the client then requests
+	  that the shutdown is canceled, the SM doesn't listen, and
+	  even if it did, nothing else would be running (including the
+	  WM).  Problem was in xfsm_manager_check_clients_saving(): it
+	  didn't consider a client waiting for interaction or interaction
+	  to be saving (bug 4284).
+
+2008-11-06	Brian Tarricone <bjt23@cornell.edu>
+
 	* xfce4-session/xfsm-manager.c: Only one dbus ShutdownCancelled
 	  signal is enough, really.  And I guess it wouldn't get sent
 	  at all if <= 1 client was interacting.

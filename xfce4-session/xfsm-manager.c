@@ -1467,8 +1467,16 @@ xfsm_manager_check_clients_saving (XfsmManager *manager)
        lp = lp->next)
     {
       XfsmClient *client = lp->data;
-      if (xfsm_client_get_state (client) == XFSM_CLIENT_SAVING)
-        return TRUE;
+      XfsmClientState state = xfsm_client_get_state (client);
+      switch (state)
+        {
+          case XFSM_CLIENT_SAVING:
+          case XFSM_CLIENT_WAITFORINTERACT:
+          case XFSM_CLIENT_INTERACTING:
+            return TRUE;
+          default:
+            break;
+        }
     }
   
   return FALSE;
