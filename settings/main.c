@@ -120,11 +120,10 @@ main(int argc,
         GtkWidget *dialog = glade_xml_get_widget(gxml, "xfce4_session_settings_dialog");
         g_object_unref(gxml);
 
-        while(gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_HELP) {
-            /* FIXME: load help */
-        }
+        while(gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_HELP)
+            xfce_exec("xfhelp4 xfce4-session.html", FALSE, FALSE, NULL);
 
-        gtk_widget_destroy (dialog);
+        gtk_widget_destroy(dialog);
     } else {
         GtkWidget *plug, *plug_child;
 
@@ -140,7 +139,7 @@ main(int argc,
         g_object_unref(gxml);
 
         /* Stop startup notification */
-        gdk_notify_startup_complete ();
+        gdk_notify_startup_complete();
 
         gtk_main();
     }
