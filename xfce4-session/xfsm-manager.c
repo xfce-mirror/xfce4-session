@@ -910,14 +910,13 @@ xfsm_manager_register_client (XfsmManager *manager,
       xfsm_manager_start_client_save_timeout (manager, client);
     }
 
-  if ((manager->failsafe_mode || previous_id != NULL)
-      && manager->state == XFSM_MANAGER_STARTUP)
+  if (previous_id != NULL && manager->state == XFSM_MANAGER_STARTUP)
     {
-      /* Only continue the startup if we are either in Failsafe mode (which
-       * means that we don't have any previous_id at all) or the previous_id
-       * matched one of the starting_properties. If there was no match
-       * above, previous_id will be NULL here.
-       * See http://bugs.xfce.org/view_bug_page.php?f_id=212 for details.
+      /* Only continue the startup if the previous_id matched one of
+       * the starting_properties. If there was no match above,
+       * previous_id will be NULL here.  We don't need to continue when
+       * in failsafe mode because in that case the failsafe session is
+       * started all at once.
        */
       if (g_queue_peek_head (manager->starting_properties) == NULL)
         xfsm_startup_session_continue (manager);
