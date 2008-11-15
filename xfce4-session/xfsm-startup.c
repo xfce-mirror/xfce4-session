@@ -450,6 +450,7 @@ xfsm_startup_begin (XfsmManager *manager)
     {
       xfsm_startup_failsafe (manager);
       xfsm_startup_autostart ();
+      xfsm_manager_signal_startup_done (manager);
     }
   else
     {
