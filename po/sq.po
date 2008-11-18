@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-11-01 02:59-0700\n"
-"PO-Revision-Date: 2008-10-25 09:08+0200\n"
+"PO-Revision-Date: 2008-11-11 00:39+0200\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <translation-team-sq@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -29,13 +29,13 @@ msgid ""
 "Unable to install splash theme from file %s, please check that the file is a "
 "valid splash theme archive."
 msgstr ""
-"I pazoti të instaloj temë sigle prej kartelës %s, ju lutem kontrolloni që "
+"I pazoti të instalojë temë sigle prej kartelës %s, ju lutem kontrolloni që "
 "kartela është një arkiv i vlefshëm teme sigle."
 
 #: ../engines/balou/config.c:386
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
-msgstr "I pazoti të heq temë sigle \"%s\" prej drejtorisë %s."
+msgstr "I pazoti të heqë temë sigle \"%s\" prej drejtorisë %s."
 
 #: ../engines/balou/config.c:471
 msgid "Choose theme filename..."
@@ -110,13 +110,12 @@ msgid "Choose image..."
 msgstr "Zgjidhni pamje..."
 
 #: ../engines/simple/simple.c:414
-#, fuzzy
 msgid "Images"
 msgstr "Pamje"
 
 #: ../engines/simple/simple.c:419
 msgid "All files"
-msgstr ""
+msgstr "Tërë kartelat "
 
 #: ../engines/simple/simple.c:493
 msgid "Simple"
@@ -226,7 +225,7 @@ msgstr ""
 
 #: ../settings/session-editor.c:214
 msgid "Unable to terminate program."
-msgstr "I pazoti të përfundoj programin."
+msgstr "I pazoti të përfundojë programin."
 
 #: ../settings/session-editor.c:344
 msgid "(Unknown program)"
@@ -277,22 +276,22 @@ msgstr "Përzgjidhni një urdhër"
 #: ../settings/xfae-model.c:558
 #, c-format
 msgid "Failed to unlink %s: %s"
-msgstr "Dështova në çlidhjen e %s: %s"
+msgstr "Dështoi në çlidhjen e %s: %s"
 
 #: ../settings/xfae-model.c:646
 #, c-format
 msgid "Failed to create file %s"
-msgstr "Dështova në krijimin e kartelës %s"
+msgstr "Dështoi në krijimin e kartelës %s"
 
 #: ../settings/xfae-model.c:668
 #, c-format
 msgid "Failed to write file %s"
-msgstr "Dështova në shkrimin e kartelës %s"
+msgstr "Dështoi në shkrimin e kartelës %s"
 
 #: ../settings/xfae-model.c:767
 #, c-format
 msgid "Failed to open %s for writing"
-msgstr "Dështova të hap %s për shkrim"
+msgstr "Dështoi në hapjen e %s për shkrim"
 
 #: ../settings/xfae-window.c:102
 msgid ""
@@ -306,16 +305,16 @@ msgstr ""
 
 #: ../xfce4-session/main.c:145
 msgid "Loading desktop settings"
-msgstr "Po ngarkoj rregullime desktopi"
+msgstr "Po ngarkohen rregullime desktopi"
 
 #. verify that the DNS settings are ok
 #: ../xfce4-session/main.c:206
 msgid "Verifying DNS settings"
-msgstr "Po verifikoj rregullime DNS"
+msgstr "Po verifikohen rregullime DNS"
 
 #: ../xfce4-session/main.c:209
 msgid "Loading session data"
-msgstr "Po ngarkoj të dhëna sesioni"
+msgstr "Po ngarkohen të dhëna sesioni"
 
 #: ../xfce4-session/main.c:275
 msgid "Xfce Session Manager"
@@ -335,11 +334,11 @@ msgstr "Fik"
 
 #: ../xfce4-session/shutdown.c:444
 msgid "Suspend"
-msgstr ""
+msgstr "Pezulloje"
 
 #: ../xfce4-session/shutdown.c:472
 msgid "Hibernate"
-msgstr ""
+msgstr "Dimëro"
 
 #: ../xfce4-session/shutdown.c:481
 msgid "_Save session for future logins"
@@ -363,11 +362,11 @@ msgstr ""
 
 #: ../xfce4-session/shutdown.c:715 ../xfce4-session/xfsm-manager.c:1102
 msgid "Shutdown Failed"
-msgstr ""
+msgstr "Fikja Dështoi"
 
 #: ../xfce4-session/shutdown.c:717
 msgid "Unable to perform shutdown"
-msgstr ""
+msgstr "I pazoti të kryejë fikjen"
 
 #: ../xfce4-session/xfsm-chooser.c:120
 #, c-format
@@ -408,15 +407,15 @@ msgstr "Klienti s'ka akoma veti të rregulluara"
 
 #: ../xfce4-session/xfsm-compat-gnome.c:301
 msgid "Starting The Gnome Keyring Daemon"
-msgstr "Po nis Gnome Keyring Daemon"
+msgstr "Po niset Demoni Gnome Keyring"
 
 #: ../xfce4-session/xfsm-compat-gnome.c:313
 msgid "Starting Gnome Assistive Technologies"
-msgstr "Po nis Gnome Assistive Technologies"
+msgstr "Po nisen Teknologjitë Ndihmëse Gnome"
 
 #: ../xfce4-session/xfsm-compat-kde.c:124
 msgid "Starting KDE services"
-msgstr "Po nis shërbime KDE"
+msgstr "Po nisen shërbime KDE"
 
 #: ../xfce4-session/xfsm-dns.c:77
 msgid "(Unknown)"
@@ -430,9 +429,9 @@ msgid ""
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
 msgstr ""
-"Nuk pashë dot për vendndodhje interneti për %s.\n"
+"Nuk pa dot për vendndodhje interneti për %s.\n"
 "Kjo do të pengojë funksionimin si duhet të Xfce-së.\n"
-"Mundet të jetë e mundur ndreqet problemi duke shtuar\n"
+"Mundet të jetë e mundur të ndreqet problemi duke shtuar\n"
 "%s te kartela /etc/hosts në sistemin tuaj."
 
 #: ../xfce4-session/xfsm-dns.c:151
@@ -479,14 +478,12 @@ msgid "Unable to load a failsafe session"
 msgstr "I pazoti të ngarkojë sesion \"failsafe\""
 
 #: ../xfce4-session/xfsm-manager.c:1105
-#, fuzzy
 msgid "Failed to suspend session"
-msgstr "I pazoti të ruajë sesionin."
+msgstr "Dështoi në pezullimin e sesionit"
 
 #: ../xfce4-session/xfsm-manager.c:1106
-#, fuzzy
 msgid "Failed to hibernate session"
-msgstr "I pazoti të ruajë sesionin."
+msgstr "Dështoi në dimërimin e sesionit"
 
 #: ../xfce4-session/xfsm-manager.c:1395
 #, c-format
@@ -526,84 +523,84 @@ msgstr "Zgjidhni një emër për sesionin e ri:"
 
 #: ../xfce4-session/xfsm-startup.c:115
 msgid "Starting the Volume Controller"
-msgstr "Po nis Kontrollor Volumi"
+msgstr "Po niset Kontrollor Volumi"
 
 #: ../xfce4-session/xfsm-startup.c:117
 msgid "Starting the Panel"
-msgstr "Po nis Panelin"
+msgstr "Po niset Paneli"
 
 #: ../xfce4-session/xfsm-startup.c:119
 msgid "Starting the Desktop Manager"
-msgstr "Po nis Përgjegjësin e Desktopit"
+msgstr "Po niset Përgjegjësi i Desktopit"
 
 #: ../xfce4-session/xfsm-startup.c:121
 msgid "Starting the Taskbar"
-msgstr "Po nis Shtyllën e Punëve"
+msgstr "Po niset Shtylla e Punëve"
 
 #: ../xfce4-session/xfsm-startup.c:123
 msgid "Starting the Window Manager"
-msgstr "Po nis Përgjegjësin e Dritareve"
+msgstr "Po niset Përgjegjësi i Dritareve"
 
 #: ../xfce4-session/xfsm-startup.c:127
 msgid "Starting the Gnome Terminal Emulator"
-msgstr "Po nis Emuluesin e Terminalit Gnome"
+msgstr "Po niset Emuluesi i Terminalit Gnome"
 
 #: ../xfce4-session/xfsm-startup.c:131
 msgid "Starting the KDE Advanced Text Editor"
-msgstr "Po nis Përpunuesin e Përparuar të Teksteve KDE"
+msgstr "Po niset Përpunuesi i Përparuar KDE i Teksteve"
 
 #: ../xfce4-session/xfsm-startup.c:133
 msgid "Starting the KDE Clipboard Manager"
-msgstr "Po nis Përgjegjësin KDE për të Papastrën"
+msgstr "Po niset Përgjegjësi KDE për të Papastrën"
 
 #: ../xfce4-session/xfsm-startup.c:135
 msgid "Starting the KDE Mail Reader"
-msgstr "Po nis Lexuesin KDE të Postës"
+msgstr "Po niset Lexuesi KDE i Postës"
 
 #: ../xfce4-session/xfsm-startup.c:137
 msgid "Starting the KDE News Reader"
-msgstr "Po nis Lexuesin KDE të Lajmeve"
+msgstr "Po niset Lexuesi KDE i Lajmeve"
 
 #: ../xfce4-session/xfsm-startup.c:139
 msgid "Starting the Konqueror"
-msgstr "Po nis Konqueror-in"
+msgstr "Po niset Konqueror-i"
 
 #: ../xfce4-session/xfsm-startup.c:141
 msgid "Starting the KDE Terminal Emulator"
-msgstr "Po nis Emuluesin e Terminalit KDE"
+msgstr "Po niset Emuluesi i Terminalit KDE"
 
 #: ../xfce4-session/xfsm-startup.c:145
 msgid "Starting the Beep Media Player"
-msgstr "Po nis Luajtës Mediash Beep"
+msgstr "Po niset Luajtës Mediash Beep"
 
 #: ../xfce4-session/xfsm-startup.c:147
 msgid "Starting The Gimp"
-msgstr "Po nis Gimp-in"
+msgstr "Po niset Gimp-i"
 
 #: ../xfce4-session/xfsm-startup.c:149
 msgid "Starting the VI Improved Editor"
-msgstr "Po nis Përpunuesin VI të Përmirësuar"
+msgstr "Po niset Përpunuesi VI i Përmirësuar"
 
 #: ../xfce4-session/xfsm-startup.c:151
 msgid "Starting the Session Management Proxy"
-msgstr "Po nis Ndërmjetësin e Administrimit të Sesioneve"
+msgstr "Po niset Ndërmjetësi i Administrimit të Sesioneve"
 
 #: ../xfce4-session/xfsm-startup.c:153
 msgid "Starting the X-Chat IRC Client"
-msgstr "Po nis Klientin IRC X-Chat"
+msgstr "Po niset Klienti IRC X-Chat"
 
 #: ../xfce4-session/xfsm-startup.c:155
 msgid "Starting the X Multimedia System"
-msgstr "Po nis Sistemin X për Multimedia"
+msgstr "Po niset Sistemi X për Multimedia"
 
 #: ../xfce4-session/xfsm-startup.c:157
 msgid "Starting the X Terminal Emulator"
-msgstr "Po nis Emuluesin e Terminalit X"
+msgstr "Po niset Emuluesi i Terminalit X"
 
 #: ../xfce4-session/xfsm-startup.c:159
 #, c-format
 msgid "Starting %s"
-msgstr "Po nis %s"
+msgstr "Po niset %s"
 
 #: ../xfce4-session/xfsm-startup.c:284
 #, c-format
@@ -632,7 +629,7 @@ msgstr ""
 
 #: ../xfce4-session/xfsm-startup.c:423
 msgid "Performing Autostart..."
-msgstr "Po kryej Vetënisje..."
+msgstr "Po kryhet Vetënisje..."
 
 #: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:161
 msgid "Tips and Tricks"
@@ -685,9 +682,8 @@ msgstr "Përshtasni desktopin dhe skenën e siglës"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
 #: ../settings/xfce4-session-settings.glade.h:27
-#, fuzzy
 msgid "Session and Startup"
-msgstr "Sesione dhe Nisje"
+msgstr "Sesion dhe Nisje"
 
 #: ../settings/xfce4-session-settings.glade.h:1
 msgid "<b>Author:</b>"
@@ -831,7 +827,7 @@ msgstr "_Të përgjithshme"
 
 #: ../settings/xfce4-session-settings.glade.h:34
 msgid "_Prompt on logout"
-msgstr ""
+msgstr "_Prompt gjatë daljesh"
 
 #: ../settings/xfce4-session-settings.glade.h:35
 msgid "_Quit Program"
@@ -861,75 +857,79 @@ msgstr "etiketë"
 msgid "xfce4-tips"
 msgstr "ndihmëza xfce4"
 
+msgid ""
+"If set, the session manager will ask you to choose a session every time you "
+"log in to Xfce."
+msgstr ""
+"Nëse caktohet, përgjegjësi i sesioneve do t'ju kërkojë të zgjidhni një "
+"sesion sa herë që hyni në Xfce."
+
+msgid ""
+"This option instructs the session manager to save the current session "
+"automatically when you log out. If you don't select this option you'll be "
+"prompted whether you want to save the current session on each logout."
+msgstr ""
+"Kjo mundësi udhëzon përgjegjësin e sesioneve të ruajë sesionin e çastit "
+"automatikisht kur dilni. Nëse nuk përzgjidhni këtë mundësi do të pyeteni në "
+"çdo dalje nëse doni të ruhet sesioni i çastit."
+
+msgid ""
+"This option disables the logout confirmation dialog. Whether the session "
+"will be saved or not depends on whether you enabled the automatic saving of "
+"sessions on logout or not."
+msgstr ""
+"Kjo mundësi çaktivizon dialogun e ripohimit të daljes. nëse do të ruhet apo "
+"jo sesioni varet nga fakti i aktivizimit ose jo të ruajtjes automatike të "
+"sesioneve."
+
+msgid ""
+"Enable this if you plan to use Gnome applications. This will instruct the "
+"session manager to start some vital Gnome services for you. You should also "
+"enable this if you want to use the Assistive Technologies that ship with "
+"Gnome."
+msgstr ""
+"Aktivizojeni nëse keni në plan të përdorni zbatime Gnome. Kjo do të udhëzojë "
+"përgjegjësin e sesionit të nisë për ju disa shërbime jetikë të Gnome-s. Do "
+"të duhej ta aktivizonit gjithashtu nëse doni të zbatohen Teknologji Asistive "
+"që ofron Gnome-ja"
+
+msgid ""
+"Enable this option if you plan to run KDE applications as part of your Xfce "
+"Desktop session. This will notably increase the startup time, but on the "
+"other hand, KDE applications will startup faster. Some KDE applications may "
+"not work at all if you don't enable this option."
+msgstr ""
+"Aktivizojeni këtë mundësi nëse keni në plan të xhironi zbatime KDE si pjesë "
+"të sesionit tuaj Xfce Desktop. Kjo do të rrisë dukshëm kohën e nisjes, por "
+"nga ana tjetër, zbatimet KDE do të nisen më shpejt. Disa zbatime KDE mund "
+"edhe të mos punojnë fare nëse nuk e aktivizoni këtë mundësi."
+
+msgid ""
+"Allow the session manager to manage applications running on remote hosts. Do "
+"not enable this option unless you know what you are doing."
+msgstr ""
+"Lejoni përgjegjësin e sesionit të administrojë zbatime që xhirojnë në strehë "
+"të largëta. Mos e aktivizoni po nuk ditët se çfarë po bëni"
+
+msgid "Suspend and hibernate are not supported"
+msgstr "Pezullimi dhe dimërimi nuk mbulohen"
+
+#, fuzzy
 #~ msgid "Display chooser on login"
-#~ msgstr "Shfaq zgjedhës gjatë hyrjesh"
+#~ msgstr "_Shfaqe zgjedhësin gjatë hyrjesh"
 
-#~ msgid ""
-#~ "If set, the session manager will ask you to choose a session every time "
-#~ "you log in to Xfce."
-#~ msgstr ""
-#~ "Nëse caktohet, përgjegjësi i sesioneve do t'ju kërkojë të zgjidhni një "
-#~ "sesion sa herë që hyni në Xfce."
-
-#~ msgid ""
-#~ "This option instructs the session manager to save the current session "
-#~ "automatically when you log out. If you don't select this option you'll be "
-#~ "prompted whether you want to save the current session on each logout."
-#~ msgstr ""
-#~ "Kjo mundësi udhëzon përgjegjësin e sesioneve të ruajë sesionin e çastit "
-#~ "automatikisht kur dilni. Nëse nuk përzgjidhni këtë mundësi do të pyeteni "
-#~ "në çdo dalje nëse doni të ruhet sesioni i çastit."
-
+#, fuzzy
 #~ msgid "Prompt on logout"
-#~ msgstr "Prompt gjatë daljesh"
+#~ msgstr "_Prompt gjatë daljesh"
 
-#~ msgid ""
-#~ "This option disables the logout confirmation dialog. Whether the session "
-#~ "will be saved or not depends on whether you enabled the automatic saving "
-#~ "of sessions on logout or not."
-#~ msgstr ""
-#~ "Kjo mundësi çaktivizon dialogun e ripohimit të daljes. nëse do të ruhet "
-#~ "apo jo sesioni varet nga fakti i aktivizimit ose jo të ruajtjes "
-#~ "automatike të sesioneve."
-
-#~ msgid ""
-#~ "Enable this if you plan to use Gnome applications. This will instruct the "
-#~ "session manager to start some vital Gnome services for you. You should "
-#~ "also enable this if you want to use the Assistive Technologies that ship "
-#~ "with Gnome."
-#~ msgstr ""
-#~ "Aktivizojeni nëse keni në plan të përdorni zbatime Gnome. Kjo do të "
-#~ "udhëzojë përgjegjësin e sesionit të nisë për ju disa shërbime jetikë të "
-#~ "Gnome-s. Do të duhej ta aktivizonit gjithashtu nëse doni të zbatohen "
-#~ "Teknologji Asistive që ofron Gnome-ja"
-
-#~ msgid ""
-#~ "Enable this option if you plan to run KDE applications as part of your "
-#~ "Xfce Desktop session. This will notably increase the startup time, but on "
-#~ "the other hand, KDE applications will startup faster. Some KDE "
-#~ "applications may not work at all if you don't enable this option."
-#~ msgstr ""
-#~ "Aktivizojeni këtë mundësi nëse keni në plan të xhironi zbatime KDE si "
-#~ "pjesë të sesionit tuaj Xfce Desktop. Kjo do të rrisë dukshëm kohën e "
-#~ "nisjes, por nga ana tjetër, zbatimet KDE do të nisen më shpejt. Disa "
-#~ "zbatime KDE mund edhe të mos punojnë fare nëse nuk e aktivizoni këtë "
-#~ "mundësi."
-
-#~ msgid ""
-#~ "Allow the session manager to manage applications running on remote hosts. "
-#~ "Do not enable this option unless you know what you are doing."
-#~ msgstr ""
-#~ "Lejoni përgjegjësin e sesionit të administrojë zbatime që xhirojnë në "
-#~ "strehë të largëta. Mos e aktivizoni po nuk ditët se çfarë po bëni"
-
-#~ msgid "Suspend and hibernate are not supported"
-#~ msgstr "Pezullimi dhe dimërimi nuk mbulohen"
-
+#, fuzzy
 #~ msgid "Session and Startup Settings"
-#~ msgstr "Rregullime Sesioni dhe Nisjeje"
+#~ msgstr "Sesion dhe Nisje"
 
+#, fuzzy
 #~ msgid "Sessions and Startup Settings"
-#~ msgstr "Rregullime Sesionesh dhe Nisjeje"
+#~ msgstr "Sesion dhe Nisje"
 
+#, fuzzy
 #~ msgid "Xfce 4 Sessions and Startup Settings"
-#~ msgstr "Rregullime Sesionesh dhe Nisjeje të Xfce 4-s"
+#~ msgstr "Sesion dhe Nisje"
