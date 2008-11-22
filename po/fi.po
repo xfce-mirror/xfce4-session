@@ -1,5 +1,5 @@
 # Translation of xfce4-session into Finnish.
-# Copyright (C) 2003-2007 The Xfce Development Team.
+# Copyright (C) 2003-2008 The Xfce Development Team.
 # This file is distributed under the same license as the xfce4-session package.
 # Juha Kautto <juha@xfce.org>, 2004.
 # Jari Rahkonen <jari.rahkonen@pp1.inet.fi>, 2005-2008.
@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-07 14:34+0200\n"
-"PO-Revision-Date: 2008-11-07 14:38+0200\n"
+"POT-Creation-Date: 2008-11-22 12:27+0200\n"
+"PO-Revision-Date: 2008-11-22 12:40+0200\n"
 "Last-Translator: Jari Rahkonen <jari.rahkonen@pp1.inet.fi>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -219,7 +219,7 @@ msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
 msgstr ""
-"Sovelluksen tallentamattomat tiedot kadotetaan eikä sitä käynnistetä "
+"Sovelluksen tallentamattomat tiedot katoavat eikä sitä käynnistetä "
 "seuraavassa istunnossasi."
 
 #: ../settings/session-editor.c:214
@@ -280,17 +280,17 @@ msgstr "Kohteen %s irroitus epäonnistui: %s"
 #: ../settings/xfae-model.c:646
 #, c-format
 msgid "Failed to create file %s"
-msgstr "Tiedostoa %s ei voitu luoda"
+msgstr "Tiedostoa %s ei voi luoda"
 
 #: ../settings/xfae-model.c:668
 #, c-format
 msgid "Failed to write file %s"
-msgstr "Tiedostoon %s ei voitu kirjoittaa"
+msgstr "Tiedostoon %s ei voi kirjoittaa"
 
 #: ../settings/xfae-model.c:767
 #, c-format
 msgid "Failed to open %s for writing"
-msgstr "Tiedostoa %s ei voitu avata kirjoitettavaksi"
+msgstr "Tiedoston %s avaaminen kirjoitettavaksi ei onnistu"
 
 #: ../settings/xfae-window.c:102
 msgid ""
@@ -361,7 +361,7 @@ msgstr ""
 "Joko antamasi salasana oli virheellinen, tai järjestelmän ylläpitäjä ei "
 "salli tietokoneen sulkemista tällä käyttäjätunnuksella."
 
-#: ../xfce4-session/shutdown.c:724 ../xfce4-session/xfsm-manager.c:1110
+#: ../xfce4-session/shutdown.c:724 ../xfce4-session/xfsm-manager.c:1109
 msgid "Shutdown Failed"
 msgstr "Sammutus epäonnistui"
 
@@ -430,7 +430,7 @@ msgid ""
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
 msgstr ""
-"%s:n internetosoitetta ei voitu selvittää.\n"
+"%s:n internetosoitteen selvitys ei onnistunut.\n"
 "Tämä estää Xfce:tä toimimasta oikein.\n"
 "Ongelman voi ehkä korjata lisäämällä %s tiedostoon\n"
 "/etc/hosts järjestelmässäsi."
@@ -476,33 +476,113 @@ msgstr "Istunnonhallinnan virhe"
 msgid "Unable to load a failsafe session"
 msgstr "Vikasietoista istuntoa ei voi ladata"
 
-#: ../xfce4-session/xfsm-manager.c:1113
+#: ../xfce4-session/xfsm-manager.c:1112
 msgid "Failed to suspend session"
 msgstr "Keskeytystilaan asettaminen epäonnistui"
 
-#: ../xfce4-session/xfsm-manager.c:1114
+#: ../xfce4-session/xfsm-manager.c:1113
 msgid "Failed to hibernate session"
 msgstr "Lepotilaan asettaminen epäonnistui"
 
-#: ../xfce4-session/xfsm-manager.c:1403
+#: ../xfce4-session/xfsm-manager.c:1402
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Asiakasohjelmia voi sulkea vain joutenollessa"
 
-#: ../xfce4-session/xfsm-manager.c:1923
+#: ../xfce4-session/xfsm-manager.c:1922
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Istunnonhallinnan on oltava jouten pyydettäessä varmistuspistettä"
 
-#: ../xfce4-session/xfsm-manager.c:1964
+#: ../xfce4-session/xfsm-manager.c:1963
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Istunnonhallinnan on oltava jouten pyydettäessä sammutusta"
 
-#: ../xfce4-session/xfsm-manager.c:1971
+#: ../xfce4-session/xfsm-manager.c:1970
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Sammutustyyppi \"%u\" ei kelpaa"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:142
+#, c-format
+msgid "Unexpected error from HAL"
+msgstr "Odottamaton HAL-virhe"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:199
+#, c-format
+msgid "No HAL method for command %d"
+msgstr "Komennolle %d ei ole HAL-metodia"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:283
+#, c-format
+msgid ""
+"Program \"sudo\" was not found.  You will not be able to shutdown your "
+"system from within Xfce."
+msgstr ""
+"Komentoa \"sudo\" ei löydy. Et voi sammuttaa järjestelmääsi Xfce:stä."
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:295
+#, c-format
+msgid "Unable to create parent pipe: %s"
+msgstr "Emoputken luominen ei onnistu: %s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:306
+#, c-format
+msgid "Unable to create child pipe: %s"
+msgstr "Lapsiputken luominen ei onnistu: %s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:317
+#, c-format
+msgid "Unable to fork sudo helper: %s"
+msgstr "Sudo-avustajan haaroitus ei onnistu: %s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:359
+#, c-format
+msgid "Unable to read response from sudo helper: %s"
+msgstr "Sudo-avustajan vastausta ei voi lukea: %s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:360
+#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
+msgid "Unknown error"
+msgstr "Tuntematon virhe"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:371
+#, c-format
+msgid "Unable to open parent pipe: %s"
+msgstr "Emoputken avaaminen ei onnistu: %s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:382
+#, c-format
+msgid "Unable to open child pipe: %s"
+msgstr "Lapsiputken avaaminen ei onnistu: %s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:400
+#, c-format
+msgid "Got unexpected reply from sudo shutdown helper"
+msgstr "Odottamaton vastaus udo-sammutusavustajalta"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:544
+#, c-format
+msgid ""
+"Suspend and Hibernate are only supported through HAL, which is unavailable"
+msgstr ""
+"Keskeytys- ja lepotilaan tarvitaan HAL, mutta se ei ole käytettävissä"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:558
+#, c-format
+msgid "Error sending command to shutdown helper: %s"
+msgstr "Virhe lähetettäessä komentoa sammutusavustajalle: %s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:569
+#, c-format
+msgid "Error receiving response from shutdown helper: %s"
+msgstr "Virhe luettaessa sammutusavustajan vastausta: %s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:580
+#, c-format
+msgid "Shutdown command failed"
+msgstr "Sammutuskomento epäonnistui"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -648,10 +728,6 @@ msgstr "Seuraava"
 #: ../xfce4-session-logout/main.c:65
 msgid "Logout Error"
 msgstr "Uloskirjausvirhe"
-
-#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
-msgid "Unknown error"
-msgstr "Tuntematon virhe"
 
 #: ../xfce4-session-logout/main.c:163
 msgid "Unable to contact D-Bus session bus."
