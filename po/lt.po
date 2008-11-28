@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-01 02:59-0700\n"
+"POT-Creation-Date: 2008-11-27 18:17-0800\n"
 "PO-Revision-Date: 2005-10-08 20:40+0900\n"
 "Last-Translator: Mantas Zapolskas <mantaz@users.sf.net>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -159,7 +159,7 @@ msgstr ""
 msgid "Session Settings"
 msgstr "Sesijos ir įkeltis"
 
-#: ../settings/main.c:86 ../xfce4-session/main.c:277
+#: ../settings/main.c:86 ../xfce4-session/main.c:278
 msgid "Unable to contact settings server"
 msgstr ""
 
@@ -303,60 +303,65 @@ msgid ""
 "saved when you logged out last time:"
 msgstr ""
 
-#: ../xfce4-session/main.c:145
+#: ../xfce4-session/main.c:146
 msgid "Loading desktop settings"
 msgstr "Paleidžiamos darbastalio nuostatos"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:206
+#: ../xfce4-session/main.c:207
 msgid "Verifying DNS settings"
 msgstr "Tikrinami DNS nustatymai"
 
-#: ../xfce4-session/main.c:209
+#: ../xfce4-session/main.c:210
 msgid "Loading session data"
 msgstr "Pakraunami sesijos duomenys"
 
-#: ../xfce4-session/main.c:275
+#: ../xfce4-session/main.c:276
 #, fuzzy
 msgid "Xfce Session Manager"
 msgstr "Pasirinkite sesijos vardą"
 
 #: ../xfce4-session/shutdown.c:360
+#, c-format
+msgid "<span size='large'><b>Log off %s</b></span>"
+msgstr ""
+
+#: ../xfce4-session/shutdown.c:401
 #, fuzzy
 msgid "Log Out"
 msgstr "Atsijungti"
 
-#: ../xfce4-session/shutdown.c:385
+#: ../xfce4-session/shutdown.c:426
 #, fuzzy
 msgid "Restart"
 msgstr "Atkurti"
 
-#: ../xfce4-session/shutdown.c:410
+#: ../xfce4-session/shutdown.c:451
 msgid "Shut Down"
 msgstr ""
 
-#: ../xfce4-session/shutdown.c:444
+#: ../xfce4-session/shutdown.c:485
 msgid "Suspend"
 msgstr ""
 
-#: ../xfce4-session/shutdown.c:472
+#: ../xfce4-session/shutdown.c:513
 msgid "Hibernate"
 msgstr ""
 
-#: ../xfce4-session/shutdown.c:481
+#: ../xfce4-session/shutdown.c:522
 msgid "_Save session for future logins"
 msgstr "_Saugoti sesiją ateinantiems prisijungimams"
 
-#: ../xfce4-session/shutdown.c:548
+#: ../xfce4-session/shutdown.c:589
 msgid "Please enter your password:"
 msgstr "Įveskite savo slaptažodį:"
 
-#: ../xfce4-session/shutdown.c:579
+#: ../xfce4-session/shutdown.c:620
 #, fuzzy
 msgid "<b>An error occurred</b>"
 msgstr "<b>Įvyko klaida</b>"
 
-#: ../xfce4-session/shutdown.c:593
+#: ../xfce4-session/shutdown.c:634
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
@@ -364,11 +369,11 @@ msgstr ""
 "Jūs įvedėte neteisingą slaptažodį arba sistemos administratorius neleidžia "
 "Jums išjungti kompiuterio"
 
-#: ../xfce4-session/shutdown.c:715 ../xfce4-session/xfsm-manager.c:1102
+#: ../xfce4-session/shutdown.c:756 ../xfce4-session/xfsm-manager.c:1109
 msgid "Shutdown Failed"
 msgstr ""
 
-#: ../xfce4-session/shutdown.c:717
+#: ../xfce4-session/shutdown.c:758
 msgid "Unable to perform shutdown"
 msgstr ""
 
@@ -404,8 +409,8 @@ msgstr "Nauja sesija"
 msgid "Create a new session."
 msgstr "Sukurti naują sesiją."
 
-#: ../xfce4-session/xfsm-client.c:775 ../xfce4-session/xfsm-client.c:835
-#: ../xfce4-session/xfsm-client.c:943
+#: ../xfce4-session/xfsm-client.c:794 ../xfce4-session/xfsm-client.c:854
+#: ../xfce4-session/xfsm-client.c:962
 #, c-format
 msgid "The client doesn't have any properties set yet"
 msgstr ""
@@ -443,7 +448,7 @@ msgstr "Tęsti bet kuriuo atveju"
 msgid "Try again"
 msgstr "Bandykite dar"
 
-#: ../xfce4-session/xfsm-manager.c:586
+#: ../xfce4-session/xfsm-manager.c:591
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -451,54 +456,133 @@ msgid ""
 "incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:597
+#: ../xfce4-session/xfsm-manager.c:602
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:644
+#: ../xfce4-session/xfsm-manager.c:649
 msgid "The list of applications in the failsafe session is empty."
 msgstr ""
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:691
+#: ../xfce4-session/xfsm-manager.c:696
 #, fuzzy
 msgid "Session Manager Error"
 msgstr "Pasirinkite sesijos vardą"
 
-#: ../xfce4-session/xfsm-manager.c:693
+#: ../xfce4-session/xfsm-manager.c:698
 msgid "Unable to load a failsafe session"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1105
+#: ../xfce4-session/xfsm-manager.c:1112
 msgid "Failed to suspend session"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1106
+#: ../xfce4-session/xfsm-manager.c:1113
 msgid "Failed to hibernate session"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1395
+#: ../xfce4-session/xfsm-manager.c:1402
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1866
+#: ../xfce4-session/xfsm-manager.c:1922
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1907
+#: ../xfce4-session/xfsm-manager.c:1963
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1914
+#: ../xfce4-session/xfsm-manager.c:1970
 #, c-format
 msgid "Invalid shutdown type \"%u\""
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:142
+#, c-format
+msgid "Unexpected error from HAL"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:199
+#, c-format
+msgid "No HAL method for command %d"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:283
+#, c-format
+msgid ""
+"Program \"sudo\" was not found.  You will not be able to shutdown your "
+"system from within Xfce."
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:295
+#, c-format
+msgid "Unable to create parent pipe: %s"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:306
+#, c-format
+msgid "Unable to create child pipe: %s"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:317
+#, c-format
+msgid "Unable to fork sudo helper: %s"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:359
+#, c-format
+msgid "Unable to read response from sudo helper: %s"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:360
+#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
+#, fuzzy
+msgid "Unknown error"
+msgstr "(Nežinoma)"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:371
+#, c-format
+msgid "Unable to open parent pipe: %s"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:382
+#, c-format
+msgid "Unable to open child pipe: %s"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:400
+#, c-format
+msgid "Got unexpected reply from sudo shutdown helper"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:544
+#, c-format
+msgid ""
+"Suspend and Hibernate are only supported through HAL, which is unavailable"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:558
+#, c-format
+msgid "Error sending command to shutdown helper: %s"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:569
+#, c-format
+msgid "Error receiving response from shutdown helper: %s"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:580
+#, c-format
+msgid "Shutdown command failed"
 msgstr ""
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
@@ -637,11 +721,6 @@ msgstr ""
 #, fuzzy
 msgid "Logout Error"
 msgstr "Atsijungti"
-
-#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
-#, fuzzy
-msgid "Unknown error"
-msgstr "(Nežinoma)"
 
 #: ../xfce4-session-logout/main.c:163
 msgid "Unable to contact D-Bus session bus."

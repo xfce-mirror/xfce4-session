@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-18 21:50+0100\n"
+"POT-Creation-Date: 2008-11-27 18:17-0800\n"
 "PO-Revision-Date: 2005-08-18 01:33+0900\n"
 "Last-Translator: Terje Uriansrud <terje@uriansrud.net>\n"
 "Language-Team: Norwegian Bokmal <i18n-nb@lister.ping.uio.no>\n"
@@ -300,9 +300,9 @@ msgid ""
 "you login to your Xfce desktop, in addition to the applications that were "
 "saved when you logged out last time:"
 msgstr ""
-"Dette er en liste over programmer som vil bli automatisk startet når "
-"du logger inn i Xfce skrivebordsmiljøet. Programmene som ble lagret i "
-"økten sist du logget ut vil også bli startet:"
+"Dette er en liste over programmer som vil bli automatisk startet når du "
+"logger inn i Xfce skrivebordsmiljøet. Programmene som ble lagret i økten "
+"sist du logget ut vil også bli startet:"
 
 #: ../xfce4-session/main.c:146
 msgid "Loading desktop settings"
@@ -321,39 +321,44 @@ msgstr "Laster inn øktdata"
 msgid "Xfce Session Manager"
 msgstr "Øktbehandler"
 
-#: ../xfce4-session/shutdown.c:369
+#: ../xfce4-session/shutdown.c:360
+#, c-format
+msgid "<span size='large'><b>Log off %s</b></span>"
+msgstr ""
+
+#: ../xfce4-session/shutdown.c:401
 msgid "Log Out"
 msgstr "Logg ut"
 
-#: ../xfce4-session/shutdown.c:394
+#: ../xfce4-session/shutdown.c:426
 msgid "Restart"
 msgstr "Starte på nytt"
 
-#: ../xfce4-session/shutdown.c:419
+#: ../xfce4-session/shutdown.c:451
 msgid "Shut Down"
 msgstr "Avslutt"
 
-#: ../xfce4-session/shutdown.c:453
+#: ../xfce4-session/shutdown.c:485
 msgid "Suspend"
 msgstr "Hvilemodus"
 
-#: ../xfce4-session/shutdown.c:481
+#: ../xfce4-session/shutdown.c:513
 msgid "Hibernate"
 msgstr "Dvalemodus"
 
-#: ../xfce4-session/shutdown.c:490
+#: ../xfce4-session/shutdown.c:522
 msgid "_Save session for future logins"
 msgstr "_Lagre økt for fremtidige innlogginger"
 
-#: ../xfce4-session/shutdown.c:557
+#: ../xfce4-session/shutdown.c:589
 msgid "Please enter your password:"
 msgstr "Skriv inn passordet ditt:"
 
-#: ../xfce4-session/shutdown.c:588
+#: ../xfce4-session/shutdown.c:620
 msgid "<b>An error occurred</b>"
 msgstr "<b>En feil oppsto</b>"
 
-#: ../xfce4-session/shutdown.c:602
+#: ../xfce4-session/shutdown.c:634
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
@@ -361,11 +366,11 @@ msgstr ""
 "Du har enten angitt feil passord, eller systemadministratoren tillater ikke "
 "å skru av maskinen fra din brukerkonto."
 
-#: ../xfce4-session/shutdown.c:724 ../xfce4-session/xfsm-manager.c:1109
+#: ../xfce4-session/shutdown.c:756 ../xfce4-session/xfsm-manager.c:1109
 msgid "Shutdown Failed"
 msgstr "Avslutning feilet"
 
-#: ../xfce4-session/shutdown.c:726
+#: ../xfce4-session/shutdown.c:758
 msgid "Unable to perform shutdown"
 msgstr "Klarte ikke å avslutte"
 
@@ -450,17 +455,16 @@ msgid ""
 "running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
 "incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr ""
-"Klarte ikke å avgjøre feilsikkert øktnavn. Mulige årsaker: «xfconfd» "
-"kjører ikke (D-Bus oppsett problem); miljøvariabel «$XDG_CONFIG_DIRS» er "
-"satt feil (må inkludere «%s») eller «xfce-session» er feil installert."
+"Klarte ikke å avgjøre feilsikkert øktnavn. Mulige årsaker: «xfconfd» kjører "
+"ikke (D-Bus oppsett problem); miljøvariabel «$XDG_CONFIG_DIRS» er satt feil "
+"(må inkludere «%s») eller «xfce-session» er feil installert."
 
 #: ../xfce4-session/xfsm-manager.c:602
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr ""
-"Den spesifiserte feilsikre økten («%s») er ikke markert som en feilsikker "
-"økt."
+"Den spesifiserte feilsikre økten («%s») er ikke markert som en feilsikker økt."
 
 #: ../xfce4-session/xfsm-manager.c:649
 msgid "The list of applications in the failsafe session is empty."
@@ -521,8 +525,8 @@ msgid ""
 "Program \"sudo\" was not found.  You will not be able to shutdown your "
 "system from within Xfce."
 msgstr ""
-"Programmet «sudo» ikke funnet. Du vil ikke kunne skru av maskinen din "
-"under bruk av Xfce."
+"Programmet «sudo» ikke funnet. Du vil ikke kunne skru av maskinen din under "
+"bruk av Xfce."
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:295
 #, c-format
@@ -779,7 +783,6 @@ msgid "<b>Information</b>"
 msgstr "<b>Informasjon</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:6
-
 msgid "<b>Logout Settings</b>"
 msgstr "<b>Utloggingsinnstillinger</b>"
 
@@ -880,8 +883,8 @@ msgid ""
 "saved when you log out.  Changes below will only take effect when the "
 "session is saved."
 msgstr ""
-"Disse programmene er del av den gjeldende økten og kan lagres ved "
-"utlogging. Endringer nedenfor vil kun gjøres gjeldende når økten lagres."
+"Disse programmene er del av den gjeldende økten og kan lagres ved utlogging. "
+"Endringer nedenfor vil kun gjøres gjeldende når økten lagres."
 
 #: ../settings/xfce4-session-settings.glade.h:31
 msgid ""

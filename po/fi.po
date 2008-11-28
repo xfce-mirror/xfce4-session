@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-22 12:27+0200\n"
+"POT-Creation-Date: 2008-11-27 18:17-0800\n"
 "PO-Revision-Date: 2008-11-22 12:40+0200\n"
 "Last-Translator: Jari Rahkonen <jari.rahkonen@pp1.inet.fi>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -319,41 +319,46 @@ msgstr "Ladataan istunnon tietoja"
 msgid "Xfce Session Manager"
 msgstr "Valitse istunnon nimi"
 
-#: ../xfce4-session/shutdown.c:369
+#: ../xfce4-session/shutdown.c:360
+#, c-format
+msgid "<span size='large'><b>Log off %s</b></span>"
+msgstr ""
+
+#: ../xfce4-session/shutdown.c:401
 msgid "Log Out"
 msgstr "Kirjaudu ulos"
 
-#: ../xfce4-session/shutdown.c:394
+#: ../xfce4-session/shutdown.c:426
 msgid "Restart"
 msgstr ""
 "Käynnistä\n"
 "uudelleen"
 
-#: ../xfce4-session/shutdown.c:419
+#: ../xfce4-session/shutdown.c:451
 msgid "Shut Down"
 msgstr "Sammuta"
 
-#: ../xfce4-session/shutdown.c:453
+#: ../xfce4-session/shutdown.c:485
 msgid "Suspend"
 msgstr "Keskeytystila"
 
-#: ../xfce4-session/shutdown.c:481
+#: ../xfce4-session/shutdown.c:513
 msgid "Hibernate"
 msgstr "Lepotila"
 
-#: ../xfce4-session/shutdown.c:490
+#: ../xfce4-session/shutdown.c:522
 msgid "_Save session for future logins"
 msgstr "_Tallenna istunto"
 
-#: ../xfce4-session/shutdown.c:557
+#: ../xfce4-session/shutdown.c:589
 msgid "Please enter your password:"
 msgstr "Anna salasanasi:"
 
-#: ../xfce4-session/shutdown.c:588
+#: ../xfce4-session/shutdown.c:620
 msgid "<b>An error occurred</b>"
 msgstr "<b>Virhe</b>"
 
-#: ../xfce4-session/shutdown.c:602
+#: ../xfce4-session/shutdown.c:634
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
@@ -361,11 +366,11 @@ msgstr ""
 "Joko antamasi salasana oli virheellinen, tai järjestelmän ylläpitäjä ei "
 "salli tietokoneen sulkemista tällä käyttäjätunnuksella."
 
-#: ../xfce4-session/shutdown.c:724 ../xfce4-session/xfsm-manager.c:1109
+#: ../xfce4-session/shutdown.c:756 ../xfce4-session/xfsm-manager.c:1109
 msgid "Shutdown Failed"
 msgstr "Sammutus epäonnistui"
 
-#: ../xfce4-session/shutdown.c:726
+#: ../xfce4-session/shutdown.c:758
 msgid "Unable to perform shutdown"
 msgstr "Järjestelmän sammuttaminen ei onnistu"
 
@@ -519,8 +524,7 @@ msgstr "Komennolle %d ei ole HAL-metodia"
 msgid ""
 "Program \"sudo\" was not found.  You will not be able to shutdown your "
 "system from within Xfce."
-msgstr ""
-"Komentoa \"sudo\" ei löydy. Et voi sammuttaa järjestelmääsi Xfce:stä."
+msgstr "Komentoa \"sudo\" ei löydy. Et voi sammuttaa järjestelmääsi Xfce:stä."
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:295
 #, c-format
@@ -566,8 +570,7 @@ msgstr "Odottamaton vastaus udo-sammutusavustajalta"
 #, c-format
 msgid ""
 "Suspend and Hibernate are only supported through HAL, which is unavailable"
-msgstr ""
-"Keskeytys- ja lepotilaan tarvitaan HAL, mutta se ei ole käytettävissä"
+msgstr "Keskeytys- ja lepotilaan tarvitaan HAL, mutta se ei ole käytettävissä"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:558
 #, c-format
