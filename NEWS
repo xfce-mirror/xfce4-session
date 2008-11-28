@@ -1,11 +1,14 @@
-4.5.90.0
-========
+4.5.93 (Xfce 4.6beta3)
+======================
 
 - Don't let autostart get run twice when using the failsafe session
   (bug 4486).
+- Display username in logout dialog (bug 3083).
+- Ignore DBUS_GERROR_NO_REPLY errors on suspend/hibernate (bug 4629).
 
-4.5.92
-======
+4.5.92 (Xfce 4.6beta2)
+======================
+
 - Hook up Help button in settings dialog.
 - Implement support for the RestartImmediately restart style hint.
 - Fix possible crash with uninitialised GError (bug 4202).
@@ -27,8 +30,9 @@
   it wants to cancel shutdown.  Also fixes a similar problem when
   interaction is requested during a phase 2 save-yourself (bug 4284).
 
-4.5.91
-======
+4.5.91 (Xfce 4.6beta1)
+======================
+
 - Start up session in parallel to greatly shorten startup time (bug 4312).
 - Add a D-Bus interface for some limited amount of remote control.
 - Implement support for the ShutdownCommand SM property when a
@@ -44,8 +48,9 @@
   used, however.
 
 
-4.5.90
-======
+4.5.90 (Xfce 4.6alpha)
+======================
+
 - Modified settings-dialogs to work with the new settings-manager
 - Fix compile-issues with -Wall -Werror in mice theme-engine and settings-dialogs
 - Let xfce4-session start xfsettingsd automatically

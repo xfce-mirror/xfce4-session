@@ -1,8 +1,13 @@
 2008-11-27	Brian Tarricone <bjt23@cornell.edu>
 
+	* xfce4-session/xfsm-manager.c: On suspend/hibernate, ignore errors
+	  of type DBUS_GERROR_NO_REPLY, not type _TIMEOUT (bug 4628).
+
+2008-11-27	Brian Tarricone <bjt23@cornell.edu>
+
 	* configure.in.in: Check for pwd.h and getpwuid ().
 	* xfce4-session/shutdown.c: Display the currently logged-in user
-	  in a label in the shutdown dialog.
+	  in a label in the shutdown dialog (bug 3083).
 
 2008-11-15	Brian Tarricone <bjt23@cornell.edu>
 
