@@ -40,6 +40,15 @@
 #include <unistd.h>
 #endif
 
+#ifdef HAVE_GETPWUID
+#ifdef HAVE_SYS_TYPES_H
+#include <sys/types.h>
+#endif
+#ifdef HAVE_PWD_H
+#include <pwd.h>
+#endif
+#endif
+
 #ifdef HAVE_ASM_UNISTD_H
 #include <asm/unistd.h>  /* for __NR_ioprio_set */
 #endif
@@ -198,6 +207,9 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   GdkPixmap *screenshot_pm = NULL;
   GdkGC *screenshot_gc;
 #endif
+#ifdef HAVE_GETPWUID
+  struct passwd *pw;
+#endif
 
   g_return_val_if_fail(saveSession != NULL, FALSE);
   g_return_val_if_fail(shutdownType != NULL, FALSE);
@@ -340,6 +352,26 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gtk_box_pack_start(GTK_BOX(dbox), vbox, TRUE, TRUE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), BORDER);
   gtk_widget_show(vbox);
+
+#ifdef HAVE_GETPWUID
+  pw = getpwuid (getuid ());
+  if (G_LIKELY(pw && pw->pw_name && *pw->pw_name))
+    {
+      gchar *text = g_strdup_printf (_("<span size='large'><b>Log off %s</b></span>"), pw->pw_name);
+      GtkWidget *label = g_object_new (GTK_TYPE_LABEL,
+                                       "label", text,
+                                       "use-markup", TRUE,
+                                       "justify", GTK_JUSTIFY_CENTER,
+                                       "xalign", 0.5,
+                                       "yalign", 0.5,
+                                       NULL);
+
+      gtk_widget_show (label);
+      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+
+      g_free (text);
+    }
+#endif
 
   hbox = gtk_hbox_new (TRUE, BORDER);
   gtk_widget_show (hbox);
