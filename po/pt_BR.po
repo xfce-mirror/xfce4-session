@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-11-27 18:17-0800\n"
-"PO-Revision-Date: 2008-11-06 22:32-0500\n"
+"PO-Revision-Date: 2008-11-28 20:46-0500\n"
 "Last-Translator: Og Maciel <ogmaciel@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar2.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
@@ -328,7 +328,7 @@ msgstr "Gerenciador de Sessão Xfce"
 #: ../xfce4-session/shutdown.c:360
 #, c-format
 msgid "<span size='large'><b>Log off %s</b></span>"
-msgstr ""
+msgstr "<span size='large'><b>Desligar %s</b></span>"
 
 #: ../xfce4-session/shutdown.c:401
 msgid "Log Out"
@@ -522,12 +522,12 @@ msgstr "Tipo de desligamento inválido \"%u\""
 #: ../xfce4-session/xfsm-shutdown-helper.c:142
 #, c-format
 msgid "Unexpected error from HAL"
-msgstr ""
+msgstr "Erro inesperado do HAL"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:199
 #, c-format
 msgid "No HAL method for command %d"
-msgstr ""
+msgstr "nenhum método HAL para o comando %d"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:283
 #, c-format
@@ -535,26 +535,28 @@ msgid ""
 "Program \"sudo\" was not found.  You will not be able to shutdown your "
 "system from within Xfce."
 msgstr ""
+"O programa \"sudo\" não foi encontrado. Você não conseguirá desligar o seu "
+"sistema pelo Xfce."
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:295
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create parent pipe: %s"
-msgstr "Falha ao criar o arquivo %s"
+msgstr "Não foi possível criar um pipe pai: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:306
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create child pipe: %s"
-msgstr "Falha ao criar o arquivo %s"
+msgstr "Não foi possível criar um pipe filho: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:317
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to fork sudo helper: %s"
-msgstr "Não foi possível desligar"
+msgstr "Não foi possível bifurcar o assistente sudo: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:359
 #, c-format
 msgid "Unable to read response from sudo helper: %s"
-msgstr ""
+msgstr "Não foi possível ler a resposta do assistente sudo: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:360
 #: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
@@ -564,38 +566,39 @@ msgstr "Erro desconhecido"
 #: ../xfce4-session/xfsm-shutdown-helper.c:371
 #, c-format
 msgid "Unable to open parent pipe: %s"
-msgstr ""
+msgstr "Não foi possível abrir um pipe pai: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:382
 #, c-format
 msgid "Unable to open child pipe: %s"
-msgstr ""
+msgstr "Não foi possível abrir um pipe filho: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:400
 #, c-format
 msgid "Got unexpected reply from sudo shutdown helper"
-msgstr ""
+msgstr "Recebeu uma resposta inesperada do assistente sudo de desligar"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:544
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Suspend and Hibernate are only supported through HAL, which is unavailable"
-msgstr "Sem suporte a hibernar e suspender"
+msgstr ""
+"Suspender e hibernar são suportados somente pelo HAL, que não está disponível"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:558
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
-msgstr ""
+msgstr "Erro enviando um comando para o assistente de desligar: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:569
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
-msgstr ""
+msgstr "Erro recebendo uma resposta do assistente de desligar: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:580
-#, fuzzy, c-format
+#, c-format
 msgid "Shutdown command failed"
-msgstr "Falha ao desligar"
+msgstr "O comando de desligar falhou"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
