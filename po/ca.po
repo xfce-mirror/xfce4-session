@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-11-27 18:17-0800\n"
-"PO-Revision-Date: 2008-11-16 10:26+0100\n"
+"PO-Revision-Date: 2008-11-30 11:31+0100\n"
 "Last-Translator: Carles Muñoz Gorriz <carlesmu@internautas.org>\n"
 "Language-Team: catalan <xfce-i18n@xfce.org>\n"
 "MIME-Version: 1.0\n"
@@ -327,7 +327,7 @@ msgstr "Gestor de sessió de Xfce"
 #: ../xfce4-session/shutdown.c:360
 #, c-format
 msgid "<span size='large'><b>Log off %s</b></span>"
-msgstr ""
+msgstr "<span size='large'><b>Surt %s</b></span>"
 
 #: ../xfce4-session/shutdown.c:401
 msgid "Log Out"
@@ -343,7 +343,7 @@ msgstr "Atura"
 
 #: ../xfce4-session/shutdown.c:485
 msgid "Suspend"
-msgstr "Suspén"
+msgstr "Suspèn"
 
 #: ../xfce4-session/shutdown.c:513
 msgid "Hibernate"
@@ -516,17 +516,17 @@ msgstr ""
 #: ../xfce4-session/xfsm-manager.c:1970
 #, c-format
 msgid "Invalid shutdown type \"%u\""
-msgstr "Tipus d'apagada «%u» errònia "
+msgstr "Tipus d'aturada «%u» errònia"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:142
 #, c-format
 msgid "Unexpected error from HAL"
-msgstr ""
+msgstr "Error inesperat de HAL"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:199
 #, c-format
 msgid "No HAL method for command %d"
-msgstr ""
+msgstr "No hi ha cap mètode HAL per l'ordre %d"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:283
 #, c-format
@@ -534,26 +534,28 @@ msgid ""
 "Program \"sudo\" was not found.  You will not be able to shutdown your "
 "system from within Xfce."
 msgstr ""
+"No s'ha trobat el programa «sudo». No podeu aturar el vostre sistema "
+"mitjançant Xfce."
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:295
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create parent pipe: %s"
-msgstr "Impossible crear el fitxer %s"
+msgstr "No es pot crear el conducte pare: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:306
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create child pipe: %s"
-msgstr "Impossible crear el fitxer %s"
+msgstr "No es pot crear el conducte fill: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:317
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to fork sudo helper: %s"
-msgstr "No s'ha pogut aturar"
+msgstr "No es por bifurcar la utilitat «sudo»: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:359
 #, c-format
 msgid "Unable to read response from sudo helper: %s"
-msgstr ""
+msgstr "No es pot llegir la resposta de la utilitat «sudo»: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:360
 #: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
@@ -563,38 +565,40 @@ msgstr "Error desconegut"
 #: ../xfce4-session/xfsm-shutdown-helper.c:371
 #, c-format
 msgid "Unable to open parent pipe: %s"
-msgstr ""
+msgstr "No es pot obrir la canonada pare: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:382
 #, c-format
 msgid "Unable to open child pipe: %s"
-msgstr ""
+msgstr "No es pot obrir la canonada filla: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:400
 #, c-format
 msgid "Got unexpected reply from sudo shutdown helper"
-msgstr ""
+msgstr "Resposta inesperada de la utilitat d'aturada de «sudo»"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:544
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Suspend and Hibernate are only supported through HAL, which is unavailable"
-msgstr "Parada i hibernació no estan implementades"
+msgstr ""
+"La suspensió i la hibernació només estan habilitats mitjançant HAL, i aquest "
+"no està disponible"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:558
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
-msgstr ""
+msgstr "Error al enviar l'ordre a la utilitat d'aturada: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:569
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
-msgstr ""
+msgstr "Error al rebre la resposta de la utilitat d'aturada: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:580
-#, fuzzy, c-format
+#, c-format
 msgid "Shutdown command failed"
-msgstr "L'aturada ha fallat"
+msgstr "L'ordre d'aturada ha fallat"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -927,11 +931,11 @@ msgstr "_Test"
 
 #: ../settings/xfce4-session-settings.glade.h:38
 msgid "gtk-close"
-msgstr ""
+msgstr "tanca"
 
 #: ../settings/xfce4-session-settings.glade.h:39
 msgid "gtk-help"
-msgstr ""
+msgstr "ajuda"
 
 #: ../settings/xfce4-session-settings.glade.h:40
 msgid "label"
