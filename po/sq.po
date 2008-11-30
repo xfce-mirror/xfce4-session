@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-01 02:59-0700\n"
+"POT-Creation-Date: 2008-11-30 21:05+0100\n"
 "PO-Revision-Date: 2008-11-11 00:39+0200\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <translation-team-sq@lists.sourceforge.net>\n"
@@ -155,7 +155,7 @@ msgstr "Ju lutem njoftoni të meta te <%s>."
 msgid "Session Settings"
 msgstr "Rregullime Sesioni"
 
-#: ../settings/main.c:86 ../xfce4-session/main.c:277
+#: ../settings/main.c:86 ../xfce4-session/main.c:278
 msgid "Unable to contact settings server"
 msgstr "I pazoti të lidhet me shërbyesin e rregullimeve"
 
@@ -303,56 +303,61 @@ msgstr ""
 "desktopi juaj Xfce, si shtesë e zbatimeve që qenëruajtur kur dolët që këtej "
 "herën e fundit:"
 
-#: ../xfce4-session/main.c:145
+#: ../xfce4-session/main.c:146
 msgid "Loading desktop settings"
 msgstr "Po ngarkohen rregullime desktopi"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:206
+#: ../xfce4-session/main.c:207
 msgid "Verifying DNS settings"
 msgstr "Po verifikohen rregullime DNS"
 
-#: ../xfce4-session/main.c:209
+#: ../xfce4-session/main.c:210
 msgid "Loading session data"
 msgstr "Po ngarkohen të dhëna sesioni"
 
-#: ../xfce4-session/main.c:275
+#: ../xfce4-session/main.c:276
 msgid "Xfce Session Manager"
 msgstr "Përgjegjës Sesionesh Xfce"
 
 #: ../xfce4-session/shutdown.c:360
+#, c-format
+msgid "<span size='large'><b>Log off %s</b></span>"
+msgstr ""
+
+#: ../xfce4-session/shutdown.c:401
 msgid "Log Out"
 msgstr "Dilni"
 
-#: ../xfce4-session/shutdown.c:385
+#: ../xfce4-session/shutdown.c:426
 msgid "Restart"
 msgstr "Rinis"
 
-#: ../xfce4-session/shutdown.c:410
+#: ../xfce4-session/shutdown.c:451
 msgid "Shut Down"
 msgstr "Fik"
 
-#: ../xfce4-session/shutdown.c:444
+#: ../xfce4-session/shutdown.c:485
 msgid "Suspend"
 msgstr "Pezulloje"
 
-#: ../xfce4-session/shutdown.c:472
+#: ../xfce4-session/shutdown.c:513
 msgid "Hibernate"
 msgstr "Dimëro"
 
-#: ../xfce4-session/shutdown.c:481
+#: ../xfce4-session/shutdown.c:522
 msgid "_Save session for future logins"
 msgstr "Ruaj sesionin për hyrje të ardhshme"
 
-#: ../xfce4-session/shutdown.c:548
+#: ../xfce4-session/shutdown.c:589
 msgid "Please enter your password:"
 msgstr "Ju lutem jepni fjalëkalimin tuaj:"
 
-#: ../xfce4-session/shutdown.c:579
+#: ../xfce4-session/shutdown.c:620
 msgid "<b>An error occurred</b>"
 msgstr "<b>Ndodhi një gabim</b>"
 
-#: ../xfce4-session/shutdown.c:593
+#: ../xfce4-session/shutdown.c:634
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
@@ -360,11 +365,11 @@ msgstr ""
 "Ose fjalëkalimi që dhatë është i pavlefshëm, ose përgjegjësi i sistemit nuk "
 "lejon fikjen e kompjuterit prej llogarisë suaj të përdoruesit."
 
-#: ../xfce4-session/shutdown.c:715 ../xfce4-session/xfsm-manager.c:1102
+#: ../xfce4-session/shutdown.c:756 ../xfce4-session/xfsm-manager.c:1109
 msgid "Shutdown Failed"
 msgstr "Fikja Dështoi"
 
-#: ../xfce4-session/shutdown.c:717
+#: ../xfce4-session/shutdown.c:758
 msgid "Unable to perform shutdown"
 msgstr "I pazoti të kryejë fikjen"
 
@@ -399,8 +404,8 @@ msgstr "Sesion i ri"
 msgid "Create a new session."
 msgstr "Krijo sesion të ri."
 
-#: ../xfce4-session/xfsm-client.c:775 ../xfce4-session/xfsm-client.c:835
-#: ../xfce4-session/xfsm-client.c:943
+#: ../xfce4-session/xfsm-client.c:794 ../xfce4-session/xfsm-client.c:854
+#: ../xfce4-session/xfsm-client.c:962
 #, c-format
 msgid "The client doesn't have any properties set yet"
 msgstr "Klienti s'ka akoma veti të rregulluara"
@@ -442,7 +447,7 @@ msgstr "Vazhdo sidoqoftë"
 msgid "Try again"
 msgstr "Riprovoni"
 
-#: ../xfce4-session/xfsm-manager.c:586
+#: ../xfce4-session/xfsm-manager.c:591
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -454,7 +459,7 @@ msgstr ""
 "$XDG_CONFIG_DIRS është caktuar pasaktësisht (duhet të përfshijë \"%s\"), ose "
 "xfce4-session është instaluar jo saktë)."
 
-#: ../xfce4-session/xfsm-manager.c:597
+#: ../xfce4-session/xfsm-manager.c:602
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
@@ -462,52 +467,130 @@ msgstr ""
 "Sesioni \"failsafe\" i dhënë (\"%s\") nuk është i shënuar si sesion "
 "\"failsafe\"."
 
-#: ../xfce4-session/xfsm-manager.c:644
+#: ../xfce4-session/xfsm-manager.c:649
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Lista e zbatimeve për sesione \"failsafe\" është bosh"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:691
+#: ../xfce4-session/xfsm-manager.c:696
 msgid "Session Manager Error"
 msgstr "Gabim Përgjegjësi Sesionesh"
 
-#: ../xfce4-session/xfsm-manager.c:693
+#: ../xfce4-session/xfsm-manager.c:698
 msgid "Unable to load a failsafe session"
 msgstr "I pazoti të ngarkojë sesion \"failsafe\""
 
-#: ../xfce4-session/xfsm-manager.c:1105
+#: ../xfce4-session/xfsm-manager.c:1112
 msgid "Failed to suspend session"
 msgstr "Dështoi në pezullimin e sesionit"
 
-#: ../xfce4-session/xfsm-manager.c:1106
+#: ../xfce4-session/xfsm-manager.c:1113
 msgid "Failed to hibernate session"
 msgstr "Dështoi në dimërimin e sesionit"
 
-#: ../xfce4-session/xfsm-manager.c:1395
+#: ../xfce4-session/xfsm-manager.c:1402
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Mund të mbyllë klientë vetëm kur është në gjendje plogështie"
 
-#: ../xfce4-session/xfsm-manager.c:1866
+#: ../xfce4-session/xfsm-manager.c:1922
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 "Përgjegjësi i sesionit duhet të jetë në gjendje të plogësht kur i kërkohet "
 "\"checkpoint\""
 
-#: ../xfce4-session/xfsm-manager.c:1907
+#: ../xfce4-session/xfsm-manager.c:1963
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
 "Përgjegjësi i sesionit duhet të jetë në gjendje të plogësht kur i kërkohet "
 "fikje"
 
-#: ../xfce4-session/xfsm-manager.c:1914
+#: ../xfce4-session/xfsm-manager.c:1970
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Lloj i pavlefshëm daljeje \"%u\""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:142
+#, c-format
+msgid "Unexpected error from HAL"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:199
+#, c-format
+msgid "No HAL method for command %d"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:283
+#, c-format
+msgid ""
+"Program \"sudo\" was not found.  You will not be able to shutdown your "
+"system from within Xfce."
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:295
+#, fuzzy, c-format
+msgid "Unable to create parent pipe: %s"
+msgstr "Dështoi në krijimin e kartelës %s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:306
+#, fuzzy, c-format
+msgid "Unable to create child pipe: %s"
+msgstr "Dështoi në krijimin e kartelës %s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:317
+#, fuzzy, c-format
+msgid "Unable to fork sudo helper: %s"
+msgstr "I pazoti të kryejë fikjen"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:359
+#, c-format
+msgid "Unable to read response from sudo helper: %s"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:360
+#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
+msgid "Unknown error"
+msgstr "Gabim i panjohur"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:371
+#, c-format
+msgid "Unable to open parent pipe: %s"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:382
+#, c-format
+msgid "Unable to open child pipe: %s"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:400
+#, c-format
+msgid "Got unexpected reply from sudo shutdown helper"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:544
+#, fuzzy, c-format
+msgid ""
+"Suspend and Hibernate are only supported through HAL, which is unavailable"
+msgstr "Pezullimi dhe dimërimi nuk mbulohen"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:558
+#, c-format
+msgid "Error sending command to shutdown helper: %s"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:569
+#, c-format
+msgid "Error receiving response from shutdown helper: %s"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:580
+#, fuzzy, c-format
+msgid "Shutdown command failed"
+msgstr "Fikja Dështoi"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -654,10 +737,6 @@ msgstr "Pasues"
 #: ../xfce4-session-logout/main.c:65
 msgid "Logout Error"
 msgstr "Gabim Daljeje"
-
-#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
-msgid "Unknown error"
-msgstr "Gabim i panjohur"
 
 #: ../xfce4-session-logout/main.c:163
 msgid "Unable to contact D-Bus session bus."
@@ -857,62 +936,60 @@ msgstr "etiketë"
 msgid "xfce4-tips"
 msgstr "ndihmëza xfce4"
 
-msgid ""
-"If set, the session manager will ask you to choose a session every time you "
-"log in to Xfce."
-msgstr ""
-"Nëse caktohet, përgjegjësi i sesioneve do t'ju kërkojë të zgjidhni një "
-"sesion sa herë që hyni në Xfce."
+#~ msgid ""
+#~ "If set, the session manager will ask you to choose a session every time "
+#~ "you log in to Xfce."
+#~ msgstr ""
+#~ "Nëse caktohet, përgjegjësi i sesioneve do t'ju kërkojë të zgjidhni një "
+#~ "sesion sa herë që hyni në Xfce."
 
-msgid ""
-"This option instructs the session manager to save the current session "
-"automatically when you log out. If you don't select this option you'll be "
-"prompted whether you want to save the current session on each logout."
-msgstr ""
-"Kjo mundësi udhëzon përgjegjësin e sesioneve të ruajë sesionin e çastit "
-"automatikisht kur dilni. Nëse nuk përzgjidhni këtë mundësi do të pyeteni në "
-"çdo dalje nëse doni të ruhet sesioni i çastit."
+#~ msgid ""
+#~ "This option instructs the session manager to save the current session "
+#~ "automatically when you log out. If you don't select this option you'll be "
+#~ "prompted whether you want to save the current session on each logout."
+#~ msgstr ""
+#~ "Kjo mundësi udhëzon përgjegjësin e sesioneve të ruajë sesionin e çastit "
+#~ "automatikisht kur dilni. Nëse nuk përzgjidhni këtë mundësi do të pyeteni "
+#~ "në çdo dalje nëse doni të ruhet sesioni i çastit."
 
-msgid ""
-"This option disables the logout confirmation dialog. Whether the session "
-"will be saved or not depends on whether you enabled the automatic saving of "
-"sessions on logout or not."
-msgstr ""
-"Kjo mundësi çaktivizon dialogun e ripohimit të daljes. nëse do të ruhet apo "
-"jo sesioni varet nga fakti i aktivizimit ose jo të ruajtjes automatike të "
-"sesioneve."
+#~ msgid ""
+#~ "This option disables the logout confirmation dialog. Whether the session "
+#~ "will be saved or not depends on whether you enabled the automatic saving "
+#~ "of sessions on logout or not."
+#~ msgstr ""
+#~ "Kjo mundësi çaktivizon dialogun e ripohimit të daljes. nëse do të ruhet "
+#~ "apo jo sesioni varet nga fakti i aktivizimit ose jo të ruajtjes "
+#~ "automatike të sesioneve."
 
-msgid ""
-"Enable this if you plan to use Gnome applications. This will instruct the "
-"session manager to start some vital Gnome services for you. You should also "
-"enable this if you want to use the Assistive Technologies that ship with "
-"Gnome."
-msgstr ""
-"Aktivizojeni nëse keni në plan të përdorni zbatime Gnome. Kjo do të udhëzojë "
-"përgjegjësin e sesionit të nisë për ju disa shërbime jetikë të Gnome-s. Do "
-"të duhej ta aktivizonit gjithashtu nëse doni të zbatohen Teknologji Asistive "
-"që ofron Gnome-ja"
+#~ msgid ""
+#~ "Enable this if you plan to use Gnome applications. This will instruct the "
+#~ "session manager to start some vital Gnome services for you. You should "
+#~ "also enable this if you want to use the Assistive Technologies that ship "
+#~ "with Gnome."
+#~ msgstr ""
+#~ "Aktivizojeni nëse keni në plan të përdorni zbatime Gnome. Kjo do të "
+#~ "udhëzojë përgjegjësin e sesionit të nisë për ju disa shërbime jetikë të "
+#~ "Gnome-s. Do të duhej ta aktivizonit gjithashtu nëse doni të zbatohen "
+#~ "Teknologji Asistive që ofron Gnome-ja"
 
-msgid ""
-"Enable this option if you plan to run KDE applications as part of your Xfce "
-"Desktop session. This will notably increase the startup time, but on the "
-"other hand, KDE applications will startup faster. Some KDE applications may "
-"not work at all if you don't enable this option."
-msgstr ""
-"Aktivizojeni këtë mundësi nëse keni në plan të xhironi zbatime KDE si pjesë "
-"të sesionit tuaj Xfce Desktop. Kjo do të rrisë dukshëm kohën e nisjes, por "
-"nga ana tjetër, zbatimet KDE do të nisen më shpejt. Disa zbatime KDE mund "
-"edhe të mos punojnë fare nëse nuk e aktivizoni këtë mundësi."
+#~ msgid ""
+#~ "Enable this option if you plan to run KDE applications as part of your "
+#~ "Xfce Desktop session. This will notably increase the startup time, but on "
+#~ "the other hand, KDE applications will startup faster. Some KDE "
+#~ "applications may not work at all if you don't enable this option."
+#~ msgstr ""
+#~ "Aktivizojeni këtë mundësi nëse keni në plan të xhironi zbatime KDE si "
+#~ "pjesë të sesionit tuaj Xfce Desktop. Kjo do të rrisë dukshëm kohën e "
+#~ "nisjes, por nga ana tjetër, zbatimet KDE do të nisen më shpejt. Disa "
+#~ "zbatime KDE mund edhe të mos punojnë fare nëse nuk e aktivizoni këtë "
+#~ "mundësi."
 
-msgid ""
-"Allow the session manager to manage applications running on remote hosts. Do "
-"not enable this option unless you know what you are doing."
-msgstr ""
-"Lejoni përgjegjësin e sesionit të administrojë zbatime që xhirojnë në strehë "
-"të largëta. Mos e aktivizoni po nuk ditët se çfarë po bëni"
-
-msgid "Suspend and hibernate are not supported"
-msgstr "Pezullimi dhe dimërimi nuk mbulohen"
+#~ msgid ""
+#~ "Allow the session manager to manage applications running on remote hosts. "
+#~ "Do not enable this option unless you know what you are doing."
+#~ msgstr ""
+#~ "Lejoni përgjegjësin e sesionit të administrojë zbatime që xhirojnë në "
+#~ "strehë të largëta. Mos e aktivizoni po nuk ditët se çfarë po bëni"
 
 #, fuzzy
 #~ msgid "Display chooser on login"
