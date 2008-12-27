@@ -357,7 +357,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   pw = getpwuid (getuid ());
   if (G_LIKELY(pw && pw->pw_name && *pw->pw_name))
     {
-      gchar *text = g_strdup_printf (_("<span size='large'><b>Log off %s</b></span>"), pw->pw_name);
+      gchar *text = g_strdup_printf (_("<span size='large'><b>Log out %s</b></span>"), pw->pw_name);
       GtkWidget *label = g_object_new (GTK_TYPE_LABEL,
                                        "label", text,
                                        "use-markup", TRUE,
