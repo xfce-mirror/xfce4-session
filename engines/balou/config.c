@@ -330,9 +330,16 @@ config_install_theme (GtkWidget *item,
 
       if (!config_do_install_theme (file, treeview))
         {
-          xfce_err (_("Unable to install splash theme from file %s, "
-                      "please check that the file is a valid splash "
-                      "theme archive."), file);
+          gchar *primary = g_strdup_printf (_("Unable to install splash theme from file \"%s\""),
+                                            file);
+          xfce_message_dialog (GTK_WINDOW (toplevel),
+                               _("Theme File Error"),
+                               GTK_STOCK_DIALOG_ERROR,
+                               primary,
+                               _("Please check that the file is a valid splash "
+                                 "theme archive."),
+                               GTK_STOCK_CLOSE, GTK_RESPONSE_ACCEPT, NULL);
+          g_free (primary);
         }
 
       g_free (file);
