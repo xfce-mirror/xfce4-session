@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-16 20:14+0200\n"
-"PO-Revision-Date: 2008-12-16 20:16+0200\n"
+"POT-Creation-Date: 2008-12-31 11:59+0200\n"
+"PO-Revision-Date: 2008-12-31 12:02+0200\n"
 "Last-Translator: Jari Rahkonen <jari.rahkonen@pp1.inet.fi>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -26,47 +26,52 @@ msgstr "Valitse asennettava teematiedosto..."
 
 #: ../engines/balou/config.c:333
 #, c-format
-msgid ""
-"Unable to install splash theme from file %s, please check that the file is a "
-"valid splash theme archive."
-msgstr ""
-"Käynnistyskuvateeman asennus tiedostosta %s epäonnistui. Tarkista, että "
-"tiedosto on kelvollinen käynnistysteematiedosto."
+msgid "Unable to install splash theme from file \"%s\""
+msgstr "Käynnistyskuvateeman asennus ei onnistu tiedostosta \"%s\""
 
-#: ../engines/balou/config.c:386
+#: ../engines/balou/config.c:336
+msgid "Theme File Error"
+msgstr "Teematiedostovirhe"
+
+#: ../engines/balou/config.c:339
+msgid "Please check that the file is a valid splash theme archive."
+msgstr ""
+"Tarkista, että tiedosto on kelvollinen käynnistysteematiedosto."
+
+#: ../engines/balou/config.c:393
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "Käynnistyskuvateeman \"%s\" poisto epäonnistui kansiosta %s."
 
-#: ../engines/balou/config.c:471
+#: ../engines/balou/config.c:478
 msgid "Choose theme filename..."
 msgstr "Valitse teematiedosto..."
 
-#: ../engines/balou/config.c:604
+#: ../engines/balou/config.c:611
 msgid "_Install new theme"
 msgstr "_Asenna uusi teema"
 
-#: ../engines/balou/config.c:613
+#: ../engines/balou/config.c:620
 msgid "_Remove theme"
 msgstr "_Poista teema"
 
-#: ../engines/balou/config.c:630
+#: ../engines/balou/config.c:637
 msgid "_Export theme"
 msgstr "_Vie teema"
 
-#: ../engines/balou/config.c:845
+#: ../engines/balou/config.c:852
 msgid "Balou theme"
 msgstr "Balou-teema"
 
-#: ../engines/balou/config.c:930
+#: ../engines/balou/config.c:937
 msgid "Configure Balou..."
 msgstr "Baloun asetukset..."
 
-#: ../engines/balou/config.c:973
+#: ../engines/balou/config.c:980
 msgid "Balou"
 msgstr "Balou"
 
-#: ../engines/balou/config.c:974
+#: ../engines/balou/config.c:981
 msgid "Balou Splash Engine"
 msgstr "Balou-käynnistyskuvateema"
 
@@ -321,7 +326,7 @@ msgstr "Valitse istunnon nimi"
 
 #: ../xfce4-session/shutdown.c:360
 #, c-format
-msgid "<span size='large'><b>Log off %s</b></span>"
+msgid "<span size='large'><b>Log out %s</b></span>"
 msgstr "<span size='large'><b>Kirjaa ulos käyttäjä %s</b></span>"
 
 #: ../xfce4-session/shutdown.c:401
