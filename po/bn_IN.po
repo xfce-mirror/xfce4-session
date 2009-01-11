@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-30 21:05+0100\n"
+"POT-Creation-Date: 2008-12-26 20:57-0800\n"
 "PO-Revision-Date: 2005-10-08 20:30+0900\n"
 "Last-Translator: Runa Bhattacharjee <runab@redhat.com>\n"
 "Language-Team: Bangla INDIA <LL@li.org>\n"
@@ -25,49 +25,56 @@ msgid "Choose theme file to install..."
 msgstr "ইনস্টল করার জন্য থীম ফাইল নির্বাচন করুন..."
 
 #: ../engines/balou/config.c:333
-#, c-format
-msgid ""
-"Unable to install splash theme from file %s, please check that the file is a "
-"valid splash theme archive."
+#, fuzzy, c-format
+msgid "Unable to install splash theme from file \"%s\""
+msgstr "স্প্ল্যাশ থীম \"%s\", %s ডিরক্টরি থেকে মুছে ফেলা যায়নি।"
+
+#: ../engines/balou/config.c:336
+msgid "Theme File Error"
+msgstr ""
+
+#: ../engines/balou/config.c:339
+#, fuzzy
+msgid "Please check that the file is a valid splash theme archive."
 msgstr ""
 "%s ফাইল থেকে স্প্ল্যাশ থীম ইনস্টল করা সম্ভব হয়নি, অনুগ্রহ করে পরীক্ষা করুন ঐ ফাইলটি "
 "বৈধ স্প্লেশ থীম আর্কাইভ কি না।"
 
-#: ../engines/balou/config.c:386
+#: ../engines/balou/config.c:393
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "স্প্ল্যাশ থীম \"%s\", %s ডিরক্টরি থেকে মুছে ফেলা যায়নি।"
 
-#: ../engines/balou/config.c:471
+#: ../engines/balou/config.c:478
 msgid "Choose theme filename..."
 msgstr "থীম ফাইলের নাম নির্বাচন করুন..."
 
-#: ../engines/balou/config.c:604
+#: ../engines/balou/config.c:611
 msgid "_Install new theme"
 msgstr "নতুন থীম ইনস্টল করুন (_I)"
 
-#: ../engines/balou/config.c:613
+#: ../engines/balou/config.c:620
 msgid "_Remove theme"
 msgstr "থীম মুছে ফেলুন (_R)"
 
-#: ../engines/balou/config.c:630
+#: ../engines/balou/config.c:637
 msgid "_Export theme"
 msgstr "থীম এক্সপোর্ট করুন (_E)"
 
-#: ../engines/balou/config.c:845
+#: ../engines/balou/config.c:852
 msgid "Balou theme"
 msgstr "Balou থীম"
 
-#: ../engines/balou/config.c:930
+#: ../engines/balou/config.c:937
 msgid "Configure Balou..."
 msgstr "Balou কনফিগার করুন..."
 
-#: ../engines/balou/config.c:973
+#: ../engines/balou/config.c:980
 #, fuzzy
 msgid "Balou"
 msgstr "Balou থীম"
 
-#: ../engines/balou/config.c:974
+#: ../engines/balou/config.c:981
 msgid "Balou Splash Engine"
 msgstr ""
 
@@ -323,7 +330,7 @@ msgstr "সেশানের নাম নির্বাচন করুন"
 
 #: ../xfce4-session/shutdown.c:360
 #, c-format
-msgid "<span size='large'><b>Log off %s</b></span>"
+msgid "<span size='large'><b>Log out %s</b></span>"
 msgstr ""
 
 #: ../xfce4-session/shutdown.c:401

@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-30 21:05+0100\n"
+"POT-Creation-Date: 2008-12-26 20:57-0800\n"
 "PO-Revision-Date: 2008-11-30 08:41+0200\n"
 "Last-Translator: Piarres Beobide <pi@beobide.net>\n"
 "Language-Team: Euskara <debian-l10n-basque@lists.debian.org>\n"
-"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: eu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 1.2.0\n"
 
@@ -28,48 +28,55 @@ msgid "Choose theme file to install..."
 msgstr "Aukeratu instalatu nahi duzun gai fitxategia..."
 
 #: ../engines/balou/config.c:333
-#, c-format
-msgid ""
-"Unable to install splash theme from file %s, please check that the file is a "
-"valid splash theme archive."
+#, fuzzy, c-format
+msgid "Unable to install splash theme from file \"%s\""
+msgstr "Ezin da \"%s\" abiarazpen gaia %s karpetatik ezabatu."
+
+#: ../engines/balou/config.c:336
+msgid "Theme File Error"
+msgstr ""
+
+#: ../engines/balou/config.c:339
+#, fuzzy
+msgid "Please check that the file is a valid splash theme archive."
 msgstr ""
 "Ezin da %s fitxategitik abiarazpen gaia instalatu, ziurtatu fitxategia "
 "abiarazpen gai fitxategi bat dela."
 
-#: ../engines/balou/config.c:386
+#: ../engines/balou/config.c:393
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "Ezin da \"%s\" abiarazpen gaia %s karpetatik ezabatu."
 
-#: ../engines/balou/config.c:471
+#: ../engines/balou/config.c:478
 msgid "Choose theme filename..."
 msgstr "Aukeratu gai fitxategia..."
 
-#: ../engines/balou/config.c:604
+#: ../engines/balou/config.c:611
 msgid "_Install new theme"
 msgstr "_Instalatu gai berria"
 
-#: ../engines/balou/config.c:613
+#: ../engines/balou/config.c:620
 msgid "_Remove theme"
 msgstr "_Gaia ezabatu"
 
-#: ../engines/balou/config.c:630
+#: ../engines/balou/config.c:637
 msgid "_Export theme"
 msgstr "Gaia _esportatu"
 
-#: ../engines/balou/config.c:845
+#: ../engines/balou/config.c:852
 msgid "Balou theme"
 msgstr "Balou gaia"
 
-#: ../engines/balou/config.c:930
+#: ../engines/balou/config.c:937
 msgid "Configure Balou..."
 msgstr "Balou konfiguratu..."
 
-#: ../engines/balou/config.c:973
+#: ../engines/balou/config.c:980
 msgid "Balou"
 msgstr "Balou"
 
-#: ../engines/balou/config.c:974
+#: ../engines/balou/config.c:981
 msgid "Balou Splash Engine"
 msgstr "Balou abiarazte errobota"
 
@@ -169,7 +176,8 @@ msgstr "Barne errorea"
 
 #: ../settings/main.c:101
 msgid "Unable to create user interface from embedded definition data"
-msgstr "Ezin da txertatutako definizio datuetatik erabiltzaile interfazea sortu"
+msgstr ""
+"Ezin da txertatutako definizio datuetatik erabiltzaile interfazea sortu"
 
 #: ../settings/main.c:102
 msgid "This is likely a problem with your Xfce installation"
@@ -322,6 +330,11 @@ msgstr "Saio datuak kargatzen"
 msgid "Xfce Session Manager"
 msgstr "Xfce saio kudeatzailea"
 
+#: ../xfce4-session/shutdown.c:360
+#, fuzzy, c-format
+msgid "<span size='large'><b>Log out %s</b></span>"
+msgstr "<span size='large'><b>SAioa itxi %s</b></span>"
+
 #: ../xfce4-session/shutdown.c:401
 msgid "Log Out"
 msgstr "Irten"
@@ -458,8 +471,10 @@ msgstr ""
 
 #: ../xfce4-session/xfsm-manager.c:602
 #, c-format
-msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr "Zehazturiko saio segurua (\"%s\") ez da saio seguru bat bezala markaturik."
+msgid ""
+"The specified failsafe session (\"%s\") is not marked as a failsafe session."
+msgstr ""
+"Zehazturiko saio segurua (\"%s\") ez da saio seguru bat bezala markaturik."
 
 #: ../xfce4-session/xfsm-manager.c:649
 msgid "The list of applications in the failsafe session is empty."
@@ -505,6 +520,87 @@ msgstr "Saio kudeatzailea inaktibo egoeran egon behar da itzaltzea eskatzean"
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "\"%u\" itzaltze modu baliogabea"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:142
+#, c-format
+msgid "Unexpected error from HAL"
+msgstr "HAL-ek espero ez zen errore bat erantzun du"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:199
+#, c-format
+msgid "No HAL method for command %d"
+msgstr "Ez dago HALmetodorik %d komandoarentzat"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:283
+#, c-format
+msgid ""
+"Program \"sudo\" was not found.  You will not be able to shutdown your "
+"system from within Xfce."
+msgstr ""
+"Ez da \"sudo\" programa aurkitu. Ez zara Xfce barnetik sistema itzaltzeko "
+"gai izango."
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:295
+#, c-format
+msgid "Unable to create parent pipe: %s"
+msgstr "Ezin da guraso kanalizazioa sortu: %s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:306
+#, c-format
+msgid "Unable to create child pipe: %s"
+msgstr "Ezin da ume kanalizazioa sortu: %s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:317
+#, c-format
+msgid "Unable to fork sudo helper: %s"
+msgstr "Ezin da sudo laguntzailea banatu: %s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:359
+#, c-format
+msgid "Unable to read response from sudo helper: %s"
+msgstr "Ezin da sudo laguntzailearen erantzuna irakurri: %s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:360
+#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
+msgid "Unknown error"
+msgstr "Errore ezezaguna"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:371
+#, c-format
+msgid "Unable to open parent pipe: %s"
+msgstr "Ezin da guraso kanalizazioa ireki: %s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:382
+#, c-format
+msgid "Unable to open child pipe: %s"
+msgstr "Ezin da ume kanalizazioa ireki: %s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:400
+#, c-format
+msgid "Got unexpected reply from sudo shutdown helper"
+msgstr "Espero ez zen erantzuna jaso da sudo itzaltze laguntzailetik"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:544
+#, c-format
+msgid ""
+"Suspend and Hibernate are only supported through HAL, which is unavailable"
+msgstr ""
+"Eskeki eta hibetnatu erabilgarri ez dagoen HAL bidez bakarrik onartzen dira"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:558
+#, c-format
+msgid "Error sending command to shutdown helper: %s"
+msgstr "Errorea komandoa itzaltze laguntzailera bidaltzean: %s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:569
+#, c-format
+msgid "Error receiving response from shutdown helper: %s"
+msgstr "Errorea itzaltze laguntzailetik erantzuna jasotzean: %s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:580
+#, c-format
+msgid "Shutdown command failed"
+msgstr "Itzaltze komandoak huts egin du"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -652,11 +748,6 @@ msgstr "Hurrengoa"
 msgid "Logout Error"
 msgstr "Saio itxiera errorea"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:360
-#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
-msgid "Unknown error"
-msgstr "Errore ezezaguna"
-
 #: ../xfce4-session-logout/main.c:163
 msgid "Unable to contact D-Bus session bus."
 msgstr "Ezin da D-Bus saioa bus-a konektatu"
@@ -756,7 +847,8 @@ msgid "Manage _remote applications"
 msgstr "Kudeatu u_rruneko aplikazioak"
 
 #: ../settings/xfce4-session-settings.glade.h:20
-msgid "Manage remote applications over the network (this may be a security risk)"
+msgid ""
+"Manage remote applications over the network (this may be a security risk)"
 msgstr ""
 "Kudeatu urruneko aplikazioak sarearen bitartez (hau egitea segurtasun "
 "arrisku bat da)"
@@ -853,84 +945,3 @@ msgstr "etiketa"
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
 msgstr "xfce4-gomendioak"
-
-#: ../xfce4-session/shutdown.c:360
-#, c-format
-msgid "<span size='large'><b>Log off %s</b></span>"
-msgstr "<span size='large'><b>SAioa itxi %s</b></span>"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:142
-#, c-format
-msgid "Unexpected error from HAL"
-msgstr "HAL-ek espero ez zen errore bat erantzun du"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:199
-#, c-format
-msgid "No HAL method for command %d"
-msgstr "Ez dago HALmetodorik %d komandoarentzat"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:283
-#, c-format
-msgid ""
-"Program \"sudo\" was not found.  You will not be able to shutdown your "
-"system from within Xfce."
-msgstr ""
-"Ez da \"sudo\" programa aurkitu. Ez zara Xfce barnetik sistema itzaltzeko gai "
-"izango."
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:295
-#, c-format
-msgid "Unable to create parent pipe: %s"
-msgstr "Ezin da guraso kanalizazioa sortu: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:306
-#, c-format
-msgid "Unable to create child pipe: %s"
-msgstr "Ezin da ume kanalizazioa sortu: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:317
-#, c-format
-msgid "Unable to fork sudo helper: %s"
-msgstr "Ezin da sudo laguntzailea banatu: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:359
-#, c-format
-msgid "Unable to read response from sudo helper: %s"
-msgstr "Ezin da sudo laguntzailearen erantzuna irakurri: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:371
-#, c-format
-msgid "Unable to open parent pipe: %s"
-msgstr "Ezin da guraso kanalizazioa ireki: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:382
-#, c-format
-msgid "Unable to open child pipe: %s"
-msgstr "Ezin da ume kanalizazioa ireki: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:400
-#, c-format
-msgid "Got unexpected reply from sudo shutdown helper"
-msgstr "Espero ez zen erantzuna jaso da sudo itzaltze laguntzailetik"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:544
-#, c-format
-msgid ""
-"Suspend and Hibernate are only supported through HAL, which is unavailable"
-msgstr ""
-"Eskeki eta hibetnatu erabilgarri ez dagoen HAL bidez bakarrik onartzen dira"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:558
-#, c-format
-msgid "Error sending command to shutdown helper: %s"
-msgstr "Errorea komandoa itzaltze laguntzailera bidaltzean: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:569
-#, c-format
-msgid "Error receiving response from shutdown helper: %s"
-msgstr "Errorea itzaltze laguntzailetik erantzuna jasotzean: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:580
-#, c-format
-msgid "Shutdown command failed"
-msgstr "Itzaltze komandoak huts egin du"

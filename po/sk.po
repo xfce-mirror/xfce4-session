@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-30 21:05+0100\n"
+"POT-Creation-Date: 2008-12-26 20:57-0800\n"
 "PO-Revision-Date: 2008-07-03 23:42+0200\n"
 "Last-Translator: Stefan Miklosovic <miklosovic@gmail.com>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -26,48 +26,55 @@ msgid "Choose theme file to install..."
 msgstr "Vyberte súbor témy na nainštalovanie..."
 
 #: ../engines/balou/config.c:333
-#, c-format
-msgid ""
-"Unable to install splash theme from file %s, please check that the file is a "
-"valid splash theme archive."
+#, fuzzy, c-format
+msgid "Unable to install splash theme from file \"%s\""
+msgstr "Nemožem odstrániť tému úvodnej obrazovky \"%s\" z adresára %s."
+
+#: ../engines/balou/config.c:336
+msgid "Theme File Error"
+msgstr ""
+
+#: ../engines/balou/config.c:339
+#, fuzzy
+msgid "Please check that the file is a valid splash theme archive."
 msgstr ""
 "Nemôžem nainštalovať tému úvodnej obrazovky zo súboru %s, prosím "
 "skontrolujte, či jetento súbor skutočne téma úvodnej obrazovky."
 
-#: ../engines/balou/config.c:386
+#: ../engines/balou/config.c:393
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "Nemožem odstrániť tému úvodnej obrazovky \"%s\" z adresára %s."
 
-#: ../engines/balou/config.c:471
+#: ../engines/balou/config.c:478
 msgid "Choose theme filename..."
 msgstr "Vyberte súbor témy..."
 
-#: ../engines/balou/config.c:604
+#: ../engines/balou/config.c:611
 msgid "_Install new theme"
 msgstr "_Inštalovať novú tému"
 
-#: ../engines/balou/config.c:613
+#: ../engines/balou/config.c:620
 msgid "_Remove theme"
 msgstr "_Odstrániť tému"
 
-#: ../engines/balou/config.c:630
+#: ../engines/balou/config.c:637
 msgid "_Export theme"
 msgstr "_Exportovať tému"
 
-#: ../engines/balou/config.c:845
+#: ../engines/balou/config.c:852
 msgid "Balou theme"
 msgstr "Téma Balou"
 
-#: ../engines/balou/config.c:930
+#: ../engines/balou/config.c:937
 msgid "Configure Balou..."
 msgstr "Konfigurácia Balou..."
 
-#: ../engines/balou/config.c:973
+#: ../engines/balou/config.c:980
 msgid "Balou"
 msgstr "Téma Balou"
 
-#: ../engines/balou/config.c:974
+#: ../engines/balou/config.c:981
 msgid "Balou Splash Engine"
 msgstr "Téma Balou"
 
@@ -328,7 +335,7 @@ msgstr "Vyberte si názov sedenia"
 
 #: ../xfce4-session/shutdown.c:360
 #, c-format
-msgid "<span size='large'><b>Log off %s</b></span>"
+msgid "<span size='large'><b>Log out %s</b></span>"
 msgstr ""
 
 #: ../xfce4-session/shutdown.c:401

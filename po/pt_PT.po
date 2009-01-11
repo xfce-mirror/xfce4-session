@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-30 21:05+0100\n"
+"POT-Creation-Date: 2008-12-26 20:57-0800\n"
 "PO-Revision-Date: 2008-02-26 12:34+0100\n"
 "Last-Translator: Nuno Miguel <nunis@netcabo.pt>\n"
 "Language-Team: \n"
@@ -25,48 +25,55 @@ msgid "Choose theme file to install..."
 msgstr "Escolha o ficheiro do tema para instalar..."
 
 #: ../engines/balou/config.c:333
-#, c-format
-msgid ""
-"Unable to install splash theme from file %s, please check that the file is a "
-"valid splash theme archive."
+#, fuzzy, c-format
+msgid "Unable to install splash theme from file \"%s\""
+msgstr "Incapaz de remover o tema de arranque \"%s\" da pasta %s."
+
+#: ../engines/balou/config.c:336
+msgid "Theme File Error"
+msgstr ""
+
+#: ../engines/balou/config.c:339
+#, fuzzy
+msgid "Please check that the file is a valid splash theme archive."
 msgstr ""
 "Impossível instalar o tema de arranque do ficheiro %s, por favor verifique "
 "se o ficheiro é um de tema arranque válido."
 
-#: ../engines/balou/config.c:386
+#: ../engines/balou/config.c:393
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "Incapaz de remover o tema de arranque \"%s\" da pasta %s."
 
-#: ../engines/balou/config.c:471
+#: ../engines/balou/config.c:478
 msgid "Choose theme filename..."
 msgstr "Escolha o nome do ficheiro do tema..."
 
-#: ../engines/balou/config.c:604
+#: ../engines/balou/config.c:611
 msgid "_Install new theme"
 msgstr "_Instalar novo tema"
 
-#: ../engines/balou/config.c:613
+#: ../engines/balou/config.c:620
 msgid "_Remove theme"
 msgstr "_Remover tema"
 
-#: ../engines/balou/config.c:630
+#: ../engines/balou/config.c:637
 msgid "_Export theme"
 msgstr "_Exportar tema"
 
-#: ../engines/balou/config.c:845
+#: ../engines/balou/config.c:852
 msgid "Balou theme"
 msgstr "Tema Balou"
 
-#: ../engines/balou/config.c:930
+#: ../engines/balou/config.c:937
 msgid "Configure Balou..."
 msgstr "Configurar Balou..."
 
-#: ../engines/balou/config.c:973
+#: ../engines/balou/config.c:980
 msgid "Balou"
 msgstr "Tema Balou"
 
-#: ../engines/balou/config.c:974
+#: ../engines/balou/config.c:981
 msgid "Balou Splash Engine"
 msgstr "Motor de Arranque Balou"
 
@@ -326,7 +333,7 @@ msgstr "Escolha o nome da sessão"
 
 #: ../xfce4-session/shutdown.c:360
 #, c-format
-msgid "<span size='large'><b>Log off %s</b></span>"
+msgid "<span size='large'><b>Log out %s</b></span>"
 msgstr ""
 
 #: ../xfce4-session/shutdown.c:401

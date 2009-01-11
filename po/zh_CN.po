@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-30 21:05+0100\n"
+"POT-Creation-Date: 2008-12-26 20:57-0800\n"
 "PO-Revision-Date: 2007-02-03 04:12+0800\n"
 "Last-Translator: wuli <wuli@gmail.com>\n"
 "Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
@@ -26,47 +26,54 @@ msgid "Choose theme file to install..."
 msgstr "选择要安装的主题文件..."
 
 #: ../engines/balou/config.c:333
-#, c-format
-msgid ""
-"Unable to install splash theme from file %s, please check that the file is a "
-"valid splash theme archive."
+#, fuzzy, c-format
+msgid "Unable to install splash theme from file \"%s\""
+msgstr "无法从目录 %s 中删除启动闪屏主题: “%s”。"
+
+#: ../engines/balou/config.c:336
+msgid "Theme File Error"
+msgstr ""
+
+#: ../engines/balou/config.c:339
+#, fuzzy
+msgid "Please check that the file is a valid splash theme archive."
 msgstr ""
 "无法从文件 %s 中安装飞溅主题，请检查该文件是否为一个有效的飞溅主题文档。"
 
-#: ../engines/balou/config.c:386
+#: ../engines/balou/config.c:393
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "无法从目录 %s 中删除启动闪屏主题: “%s”。"
 
-#: ../engines/balou/config.c:471
+#: ../engines/balou/config.c:478
 msgid "Choose theme filename..."
 msgstr "选择主题文件名..."
 
-#: ../engines/balou/config.c:604
+#: ../engines/balou/config.c:611
 msgid "_Install new theme"
 msgstr "安装新主题(_I)"
 
-#: ../engines/balou/config.c:613
+#: ../engines/balou/config.c:620
 msgid "_Remove theme"
 msgstr "删除主题(_R)"
 
-#: ../engines/balou/config.c:630
+#: ../engines/balou/config.c:637
 msgid "_Export theme"
 msgstr "导出主题(_E)"
 
-#: ../engines/balou/config.c:845
+#: ../engines/balou/config.c:852
 msgid "Balou theme"
 msgstr "Balou 主题"
 
-#: ../engines/balou/config.c:930
+#: ../engines/balou/config.c:937
 msgid "Configure Balou..."
 msgstr "设置 Balou ..."
 
-#: ../engines/balou/config.c:973
+#: ../engines/balou/config.c:980
 msgid "Balou"
 msgstr "Balou 主题"
 
-#: ../engines/balou/config.c:974
+#: ../engines/balou/config.c:981
 msgid "Balou Splash Engine"
 msgstr "Balou主题启动引擎"
 
@@ -327,7 +334,7 @@ msgstr "选择回话名称"
 
 #: ../xfce4-session/shutdown.c:360
 #, c-format
-msgid "<span size='large'><b>Log off %s</b></span>"
+msgid "<span size='large'><b>Log out %s</b></span>"
 msgstr ""
 
 #: ../xfce4-session/shutdown.c:401

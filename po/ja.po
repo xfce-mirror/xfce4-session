@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-30 21:05+0100\n"
+"POT-Creation-Date: 2008-12-26 20:57-0800\n"
 "PO-Revision-Date: 2008-11-30 17:24+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <xfce-users-jp@ml.fdiary.net>\n"
@@ -32,48 +32,55 @@ msgid "Choose theme file to install..."
 msgstr "インストールするテーマを選択してください..."
 
 #: ../engines/balou/config.c:333
-#, c-format
-msgid ""
-"Unable to install splash theme from file %s, please check that the file is a "
-"valid splash theme archive."
+#, fuzzy, c-format
+msgid "Unable to install splash theme from file \"%s\""
+msgstr "起動画面のテーマ \"%s\" をフォルダ %s から削除できません。"
+
+#: ../engines/balou/config.c:336
+msgid "Theme File Error"
+msgstr ""
+
+#: ../engines/balou/config.c:339
+#, fuzzy
+msgid "Please check that the file is a valid splash theme archive."
 msgstr ""
 "ファイル %s から起動画面のテーマをインストールできません、正しいアーカイブか"
 "確認して下さい。"
 
-#: ../engines/balou/config.c:386
+#: ../engines/balou/config.c:393
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "起動画面のテーマ \"%s\" をフォルダ %s から削除できません。"
 
-#: ../engines/balou/config.c:471
+#: ../engines/balou/config.c:478
 msgid "Choose theme filename..."
 msgstr "テーマファイル名を選択して下さい..."
 
-#: ../engines/balou/config.c:604
+#: ../engines/balou/config.c:611
 msgid "_Install new theme"
 msgstr "新しいテーマのインストール(_I)"
 
-#: ../engines/balou/config.c:613
+#: ../engines/balou/config.c:620
 msgid "_Remove theme"
 msgstr "テーマを削除(_R)"
 
-#: ../engines/balou/config.c:630
+#: ../engines/balou/config.c:637
 msgid "_Export theme"
 msgstr "テーマをエクスポート(_E)"
 
-#: ../engines/balou/config.c:845
+#: ../engines/balou/config.c:852
 msgid "Balou theme"
 msgstr "Balou テーマ"
 
-#: ../engines/balou/config.c:930
+#: ../engines/balou/config.c:937
 msgid "Configure Balou..."
 msgstr "Balou の設定..."
 
-#: ../engines/balou/config.c:973
+#: ../engines/balou/config.c:980
 msgid "Balou"
 msgstr "Balou"
 
-#: ../engines/balou/config.c:974
+#: ../engines/balou/config.c:981
 msgid "Balou Splash Engine"
 msgstr "Balou 起動画面エンジン"
 
@@ -327,8 +334,8 @@ msgstr "Xfce セッションマネージャ"
 
 # In ja translation: unification of the term 'Log off' to 'Logout'.
 #: ../xfce4-session/shutdown.c:360
-#, c-format
-msgid "<span size='large'><b>Log off %s</b></span>"
+#, fuzzy, c-format
+msgid "<span size='large'><b>Log out %s</b></span>"
 msgstr "<span size='large'><b>%s のログアウト</b></span>"
 
 #: ../xfce4-session/shutdown.c:401

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-30 21:05+0100\n"
+"POT-Creation-Date: 2008-12-26 20:57-0800\n"
 "PO-Revision-Date: 2008-12-21 21:41+0700\n"
 "Last-Translator: Andhika Padmawan <andhika.padmawan@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -24,44 +24,55 @@ msgid "Choose theme file to install..."
 msgstr "Pilih berkas tema untuk diinstal..."
 
 #: ../engines/balou/config.c:333
-#, c-format
-msgid "Unable to install splash theme from file %s, please check that the file is a valid splash theme archive."
-msgstr "Tak dapat menginstal tema splash dari berkas %s, silakan cek apakah berkas tersebut merupakan arsip tema splash yang sah."
+#, fuzzy, c-format
+msgid "Unable to install splash theme from file \"%s\""
+msgstr "Tak dapat menghapus tema splash \"%s\" dari direktori %s."
 
-#: ../engines/balou/config.c:386
+#: ../engines/balou/config.c:336
+msgid "Theme File Error"
+msgstr ""
+
+#: ../engines/balou/config.c:339
+#, fuzzy
+msgid "Please check that the file is a valid splash theme archive."
+msgstr ""
+"Tak dapat menginstal tema splash dari berkas %s, silakan cek apakah berkas "
+"tersebut merupakan arsip tema splash yang sah."
+
+#: ../engines/balou/config.c:393
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "Tak dapat menghapus tema splash \"%s\" dari direktori %s."
 
-#: ../engines/balou/config.c:471
+#: ../engines/balou/config.c:478
 msgid "Choose theme filename..."
 msgstr "Pilih nama berkas tema..."
 
-#: ../engines/balou/config.c:604
+#: ../engines/balou/config.c:611
 msgid "_Install new theme"
 msgstr "_Instal tema baru"
 
-#: ../engines/balou/config.c:613
+#: ../engines/balou/config.c:620
 msgid "_Remove theme"
 msgstr "_Hapus tema"
 
-#: ../engines/balou/config.c:630
+#: ../engines/balou/config.c:637
 msgid "_Export theme"
 msgstr "_Ekspor tema"
 
-#: ../engines/balou/config.c:845
+#: ../engines/balou/config.c:852
 msgid "Balou theme"
 msgstr "Tema Balou"
 
-#: ../engines/balou/config.c:930
+#: ../engines/balou/config.c:937
 msgid "Configure Balou..."
 msgstr "Konfigurasi Balou..."
 
-#: ../engines/balou/config.c:973
+#: ../engines/balou/config.c:980
 msgid "Balou"
 msgstr "Balou"
 
-#: ../engines/balou/config.c:974
+#: ../engines/balou/config.c:981
 msgid "Balou Splash Engine"
 msgstr "Mesin Splash Balou"
 
@@ -151,8 +162,7 @@ msgstr "Silakan laporkan kutu ke <%s>."
 msgid "Session Settings"
 msgstr "Pengaturan Sesi"
 
-#: ../settings/main.c:86
-#: ../xfce4-session/main.c:278
+#: ../settings/main.c:86 ../xfce4-session/main.c:278
 msgid "Unable to contact settings server"
 msgstr "Tak dapat menghubungi server pengaturan"
 
@@ -206,14 +216,17 @@ msgstr "Anda yakin ingin mematikan \"%s\"?"
 msgid "Terminate \"%s\""
 msgstr "Mematikan \"%s\""
 
-#: ../settings/session-editor.c:185
-#: ../settings/session-editor.c:213
+#: ../settings/session-editor.c:185 ../settings/session-editor.c:213
 msgid "Terminate Program"
 msgstr "Matikan Program"
 
 #: ../settings/session-editor.c:187
-msgid "The application will lose any unsaved state and will not be restarted in your next session."
-msgstr "Aplikasi akan kehilangan kondisi tak tersimpan apapun dan tak akan dijalankan ulang pada sesi anda berikutnya."
+msgid ""
+"The application will lose any unsaved state and will not be restarted in "
+"your next session."
+msgstr ""
+"Aplikasi akan kehilangan kondisi tak tersimpan apapun dan tak akan "
+"dijalankan ulang pada sesi anda berikutnya."
 
 #: ../settings/session-editor.c:214
 msgid "Unable to terminate program."
@@ -239,10 +252,8 @@ msgstr "Program"
 msgid "Restart Style"
 msgstr "Gaya Start Ulang"
 
-#: ../settings/splash-settings.c:288
-#: ../settings/splash-settings.c:291
-#: ../settings/splash-settings.c:294
-#: ../settings/splash-settings.c:297
+#: ../settings/splash-settings.c:288 ../settings/splash-settings.c:291
+#: ../settings/splash-settings.c:294 ../settings/splash-settings.c:297
 #: ../settings/splash-settings.c:354
 msgid "None"
 msgstr "Tak ada"
@@ -288,8 +299,14 @@ msgid "Failed to open %s for writing"
 msgstr "Gagal membuka %s untuk penulisan"
 
 #: ../settings/xfae-window.c:102
-msgid "Below is the list of applications that will be started automatically when you login to your Xfce desktop, in addition to the applications that were saved when you logged out last time:"
-msgstr "Di bawah ini adalah senarai aplikasi yang otomatis berjalan ketika anda log masuk ke destop Xfce anda, sebagai tambahan terhadap aplikasi yang anda simpan ketika terakhir kali anda log keluar:"
+msgid ""
+"Below is the list of applications that will be started automatically when "
+"you login to your Xfce desktop, in addition to the applications that were "
+"saved when you logged out last time:"
+msgstr ""
+"Di bawah ini adalah senarai aplikasi yang otomatis berjalan ketika anda log "
+"masuk ke destop Xfce anda, sebagai tambahan terhadap aplikasi yang anda "
+"simpan ketika terakhir kali anda log keluar:"
 
 #: ../xfce4-session/main.c:146
 msgid "Loading desktop settings"
@@ -309,8 +326,8 @@ msgid "Xfce Session Manager"
 msgstr "Manajer Sesi Xfce"
 
 #: ../xfce4-session/shutdown.c:360
-#, c-format
-msgid "<span size='large'><b>Log off %s</b></span>"
+#, fuzzy, c-format
+msgid "<span size='large'><b>Log out %s</b></span>"
 msgstr "<span size='large'><b>Keluar %s</b></span>"
 
 #: ../xfce4-session/shutdown.c:401
@@ -346,11 +363,14 @@ msgid "<b>An error occurred</b>"
 msgstr "<b>Galat terjadi</b>"
 
 #: ../xfce4-session/shutdown.c:634
-msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
-msgstr "Apakah sandi lewat yang anda masukkan salah, atau administrator sistem tidak mengizinkan untuk mematikan komputer ini dengan akun pengguna anda."
+msgid ""
+"Either the password you entered is invalid, or the system administrator "
+"disallows shutting down this computer with your user account."
+msgstr ""
+"Apakah sandi lewat yang anda masukkan salah, atau administrator sistem tidak "
+"mengizinkan untuk mematikan komputer ini dengan akun pengguna anda."
 
-#: ../xfce4-session/shutdown.c:756
-#: ../xfce4-session/xfsm-manager.c:1109
+#: ../xfce4-session/shutdown.c:756 ../xfce4-session/xfsm-manager.c:1109
 msgid "Shutdown Failed"
 msgstr "Matikan Gagal"
 
@@ -364,8 +384,12 @@ msgid "Last accessed: %s"
 msgstr "Terakhir kali diakses: %s"
 
 #: ../xfce4-session/xfsm-chooser.c:213
-msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
-msgstr "Pilih sesi yang ingin anda kembalikan. Anda dapat klik ganda nama sesi untuk mengembalikannya."
+msgid ""
+"Choose the session you want to restore. You can simply double-click the "
+"session name to restore it."
+msgstr ""
+"Pilih sesi yang ingin anda kembalikan. Anda dapat klik ganda nama sesi untuk "
+"mengembalikannya."
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:239
@@ -385,8 +409,7 @@ msgstr "Sesi baru"
 msgid "Create a new session."
 msgstr "Buat sebuah sesi baru."
 
-#: ../xfce4-session/xfsm-client.c:794
-#: ../xfce4-session/xfsm-client.c:854
+#: ../xfce4-session/xfsm-client.c:794 ../xfce4-session/xfsm-client.c:854
 #: ../xfce4-session/xfsm-client.c:962
 #, c-format
 msgid "The client doesn't have any properties set yet"
@@ -431,13 +454,22 @@ msgstr "Coba lagi"
 
 #: ../xfce4-session/xfsm-manager.c:591
 #, c-format
-msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
-msgstr "Tak dapat menentukan nama sesi darurat.  Kemungkinan penyebab: xfconfd tak berjalan (masalah pengaturan D-BUS); variabel lingkungan $XDG_CONFIG_DIRS tak benar diatur (harus menyertakan \"%s\"), atau xfce4-session tak diinstal secara benar."
+msgid ""
+"Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
+"running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
+"incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
+msgstr ""
+"Tak dapat menentukan nama sesi darurat.  Kemungkinan penyebab: xfconfd tak "
+"berjalan (masalah pengaturan D-BUS); variabel lingkungan $XDG_CONFIG_DIRS "
+"tak benar diatur (harus menyertakan \"%s\"), atau xfce4-session tak diinstal "
+"secara benar."
 
 #: ../xfce4-session/xfsm-manager.c:602
 #, c-format
-msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr "Sesi darurat yang ditentukan (\"%s\") tidak ditandai sebagai sesi darurat."
+msgid ""
+"The specified failsafe session (\"%s\") is not marked as a failsafe session."
+msgstr ""
+"Sesi darurat yang ditentukan (\"%s\") tidak ditandai sebagai sesi darurat."
 
 #: ../xfce4-session/xfsm-manager.c:649
 msgid "The list of applications in the failsafe session is empty."
@@ -470,12 +502,14 @@ msgstr "Hanya dapat mematikan klien ketika dalam kondisi tak aktif"
 #: ../xfce4-session/xfsm-manager.c:1922
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
-msgstr "Manajer sesi harus dalam kondisi tak aktif ketika meminta titik pemeriksaan"
+msgstr ""
+"Manajer sesi harus dalam kondisi tak aktif ketika meminta titik pemeriksaan"
 
 #: ../xfce4-session/xfsm-manager.c:1963
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
-msgstr "Manajer sesi harus dalam kondisi tak aktif ketika meminta matikan komputer"
+msgstr ""
+"Manajer sesi harus dalam kondisi tak aktif ketika meminta matikan komputer"
 
 #: ../xfce4-session/xfsm-manager.c:1970
 #, c-format
@@ -494,8 +528,12 @@ msgstr "Tak ada metode HAL untuk perintah %d"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:283
 #, c-format
-msgid "Program \"sudo\" was not found.  You will not be able to shutdown your system from within Xfce."
-msgstr "Program \"sudo\" tak ditemukan. Anda tak akan dapat mematikan sistem anda dari dalam Xfce."
+msgid ""
+"Program \"sudo\" was not found.  You will not be able to shutdown your "
+"system from within Xfce."
+msgstr ""
+"Program \"sudo\" tak ditemukan. Anda tak akan dapat mematikan sistem anda "
+"dari dalam Xfce."
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:295
 #, c-format
@@ -518,8 +556,7 @@ msgid "Unable to read response from sudo helper: %s"
 msgstr "Tak dapat membaca respon dari pembantu sudo: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:360
-#: ../xfce4-session-logout/main.c:68
-#: ../xfce4-session-logout/main.c:75
+#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
 msgid "Unknown error"
 msgstr "Galat tak diketahui"
 
@@ -540,7 +577,8 @@ msgstr "Mendapatkan balasan yang tak diharapkan dari pembantu matikan sudo"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:544
 #, c-format
-msgid "Suspend and Hibernate are only supported through HAL, which is unavailable"
+msgid ""
+"Suspend and Hibernate are only supported through HAL, which is unavailable"
 msgstr "Suspesi dan Hibernasi hanya didukung melalui HAL, yang tidak tersedia"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:558
@@ -672,20 +710,19 @@ msgstr ""
 "\n"
 "dimana anda dapat menaruh berkas .desktop ke, yang menjelaskan\n"
 "kepada aplikasi untuk mulai ketika anda log masuk ke destop Xfce.\n"
-"Berkas di direktori start otomatis anda telah sukses dimigrasikan kelokasi baru.\n"
+"Berkas di direktori start otomatis anda telah sukses dimigrasikan kelokasi "
+"baru.\n"
 "Anda dapat menghapus direktori ini sekarang.\n"
 
 #: ../xfce4-session/xfsm-startup.c:423
 msgid "Performing Autostart..."
 msgstr "Melakukan Start Otomatis..."
 
-#: ../xfce4-tips/main.c:47
-#: ../xfce4-tips/main.c:161
+#: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:161
 msgid "Tips and Tricks"
 msgstr "Tips dan Trik"
 
-#: ../xfce4-tips/main.c:48
-#: ../xfce4-tips/main.c:205
+#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:205
 msgid "Fortunes"
 msgstr "Keberuntungan"
 
@@ -693,8 +730,7 @@ msgstr "Keberuntungan"
 msgid "Display tips on _startup"
 msgstr "Tampilkan tips pada _hidupkan"
 
-#: ../xfce4-tips/main.c:199
-#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
+#: ../xfce4-tips/main.c:199 ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
 msgid "Tips and tricks"
 msgstr "Tips dan trik"
 
@@ -805,8 +841,10 @@ msgid "Manage _remote applications"
 msgstr "Atur aplikasi _jarak jauh"
 
 #: ../settings/xfce4-session-settings.glade.h:20
-msgid "Manage remote applications over the network (this may be a security risk)"
-msgstr "Atur aplikasi jarak jauh lewat jaringan (ini mungkin berisiko keamanan)"
+msgid ""
+"Manage remote applications over the network (this may be a security risk)"
+msgstr ""
+"Atur aplikasi jarak jauh lewat jaringan (ini mungkin berisiko keamanan)"
 
 #: ../settings/xfce4-session-settings.glade.h:21
 msgid "Opens the configuration panel for the selected splash screen"
@@ -833,20 +871,34 @@ msgid "Saving Session"
 msgstr "Menyimpan Sesi"
 
 #: ../settings/xfce4-session-settings.glade.h:28
-msgid "Start GNOME services, such as gnome-keyring and the GNOME accessibility framework"
-msgstr "Mulai layanan GNOME, seperti gnome-keyring dan kerangka kerja aksesibilitas GNOME"
+msgid ""
+"Start GNOME services, such as gnome-keyring and the GNOME accessibility "
+"framework"
+msgstr ""
+"Mulai layanan GNOME, seperti gnome-keyring dan kerangka kerja aksesibilitas "
+"GNOME"
 
 #: ../settings/xfce4-session-settings.glade.h:29
 msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
 msgstr "Mulai layanan KDE, seperti \"kdeinit,\" DCOP, dan ARTS"
 
 #: ../settings/xfce4-session-settings.glade.h:30
-msgid "These applications are a part of the currently-running session, and can be saved when you log out.  Changes below will only take effect when the session is saved."
-msgstr "Aplikasi ini adalah bagian dari sesi yang berjalan saat ini, dan dapat disimpan ketika anda log keluar.  Perubahan di bawah hanya akan berfungsi ketika sesi disimpan."
+msgid ""
+"These applications are a part of the currently-running session, and can be "
+"saved when you log out.  Changes below will only take effect when the "
+"session is saved."
+msgstr ""
+"Aplikasi ini adalah bagian dari sesi yang berjalan saat ini, dan dapat "
+"disimpan ketika anda log keluar.  Perubahan di bawah hanya akan berfungsi "
+"ketika sesi disimpan."
 
 #: ../settings/xfce4-session-settings.glade.h:31
-msgid "Your session is being saved.  If you do not wish to wait, you may close this window."
-msgstr "Sesi anda sedang disimpan.  Jika anda tak ingin menunggu, anda dapat menutup jendela ini."
+msgid ""
+"Your session is being saved.  If you do not wish to wait, you may close this "
+"window."
+msgstr ""
+"Sesi anda sedang disimpan.  Jika anda tak ingin menunggu, anda dapat menutup "
+"jendela ini."
 
 #: ../settings/xfce4-session-settings.glade.h:32
 msgid "_Display chooser on login"
@@ -890,20 +942,24 @@ msgstr "xfce4-tips"
 
 #~ msgid "Session and Startup Settings"
 #~ msgstr "Pengaturan Sesi dan Hidupkan"
+
 #~ msgid "Sessions and Startup Settings"
 #~ msgstr "Pengaturan Sesi dan Hidupkan"
+
 #~ msgid "Xfce 4 Sessions and Startup Settings"
 #~ msgstr "Pengaturan Sesi dan Hidupkan Xfce 4"
 
 #, fuzzy
 #~ msgid "Remove the selected application from the session."
 #~ msgstr "Demonstrasikan layar splash terpilih."
+
 #~ msgid ""
 #~ "If set, the session manager will ask you to choose a session every time "
 #~ "you log in to Xfce."
 #~ msgstr ""
 #~ "Jika diatur, manajer sesi akan meminta anda untuk memilih sebuah sesi "
 #~ "tiap kali anda log masuk ke Xfce."
+
 #~ msgid ""
 #~ "This option instructs the session manager to save the current session "
 #~ "automatically when you log out. If you don't select this option you'll be "
@@ -912,6 +968,7 @@ msgstr "xfce4-tips"
 #~ "Opsi ini memerintahkan manajer sesi untuk secara otomatis menyimpan sesi "
 #~ "saat ini ketika anda log keluar. Jika anda tidak memilih opsi ini, anda "
 #~ "akan ditanya apakah ingin menyimpan sesi saat ini setiap kali log keluar."
+
 #~ msgid ""
 #~ "This option disables the logout confirmation dialog. Whether the session "
 #~ "will be saved or not depends on whether you enabled the automatic saving "
@@ -920,8 +977,10 @@ msgstr "xfce4-tips"
 #~ "Opsi ini menonaktifkan dialog konfirmasi log keluar. Apakah sesi akan "
 #~ "disimpan atau tidak tergantung pada apakah anda mengaktifkan penyimpanan "
 #~ "sesi otomatis pada log keluar atau tidak."
+
 #~ msgid "Launch Gnome services on startup"
 #~ msgstr "Jalankan layanan Gnome pada hidupkan"
+
 #~ msgid ""
 #~ "Enable this if you plan to use Gnome applications. This will instruct the "
 #~ "session manager to start some vital Gnome services for you. You should "
@@ -932,6 +991,7 @@ msgstr "xfce4-tips"
 #~ "memerintahkan manajer sesi untuk memulai beberapa layanan vital Gnome "
 #~ "untuk anda. Anda juga harus mengaktifkan ini jika anda ingin menggunakan "
 #~ "Teknologi Bantuan yang hadir bersama Gnome."
+
 #~ msgid ""
 #~ "Enable this option if you plan to run KDE applications as part of your "
 #~ "Xfce Desktop session. This will notably increase the startup time, but on "
@@ -943,8 +1003,10 @@ msgstr "xfce4-tips"
 #~ "sisi lain, aplikasi KDE akan dihidupkan lebih cepat. Beberapa aplikasi "
 #~ "KDE mungkin tidak akan bekerja sama sekali jika anda tidak mengaktifkan "
 #~ "opsi ini."
+
 #~ msgid "Security"
 #~ msgstr "Keamanan"
+
 #~ msgid ""
 #~ "Allow the session manager to manage applications running on remote hosts. "
 #~ "Do not enable this option unless you know what you are doing."
@@ -952,20 +1014,27 @@ msgstr "xfce4-tips"
 #~ "Izinkan manajer sesi untuk mengatur aplikasi yang berjalan di host jarak "
 #~ "jauh. Jangan mengaktifkan opsi jika kecuali anda tahu apa yang anda "
 #~ "lakukan."
+
 #~ msgid "Button Label|Sessions and Startup"
 #~ msgstr "Sesi dan Hidupkan"
+
 #~ msgid "Splash Screen Settings"
 #~ msgstr "Pengaturan Layar Splash"
+
 #~ msgid "Button Label|Splash Screen"
 #~ msgstr "Layar Splash"
+
 #~ msgid "Autostarted applications"
 #~ msgstr "Aplikasi otomatis berjalan"
+
 #~ msgid "Xfce 4 Splash Screen Settings"
 #~ msgstr "Pengaturan Layar Splash Xfce 4"
+
 #~ msgid "Autostarted Applications"
 #~ msgstr "Aplikasi Otomatis Berjalan"
+
 #~ msgid "Edit the list of autostarted applications"
 #~ msgstr "Sunting senarai aplikasi otomatis berjalan"
+
 #~ msgid "Xfce 4 Autostarted Applications"
 #~ msgstr "Aplikasi Otomatis Berjalan Xfce 4"
-
