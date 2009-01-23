@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the xfce4-session package.
 # Jean-François Wauthy <pollux@xfce.org>, 2004.
 # Maximilian Schleiss <maximilian@xfce.org>, 2006-2008
+# Mike Massonnet <mmassonnet@xfce.org>, 2009
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-26 20:57-0800\n"
-"PO-Revision-Date: 2008-11-29 23:05+0100\n"
-"Last-Translator: Maximilian Schleiss <maximilian@xfce.org>\n"
+"PO-Revision-Date: 2009-01-17 14:54+0100\n"
+"Last-Translator: Mike Massonnet <mmassonnet@xfce.org>\n"
 "Language-Team: French <xfce-i18n@xfce.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -25,29 +26,24 @@ msgid "Choose theme file to install..."
 msgstr "Choisir le fichier de thème à installer..."
 
 #: ../engines/balou/config.c:333
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to install splash theme from file \"%s\""
-msgstr ""
-"Impossible de supprimer le thème d'écran de démarrage \"%s\" du répertoire %"
-"s."
+msgstr "Impossible d'installer le thème depuis le fichier « %s »"
 
 #: ../engines/balou/config.c:336
 msgid "Theme File Error"
-msgstr ""
+msgstr "Erreur dans le thème"
 
 #: ../engines/balou/config.c:339
-#, fuzzy
 msgid "Please check that the file is a valid splash theme archive."
-msgstr ""
-"Impossible d'installer le thème d'écran de démarrage du fichier %s, veuillez "
-"vérifier que le fichier est une archive de thème d'écran de démarrage valide"
+msgstr "Vérifiez que le fichier est une archive de thème de splash valide."
 
 #: ../engines/balou/config.c:393
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr ""
-"Impossible de supprimer le thème d'écran de démarrage \"%s\" du répertoire %"
-"s."
+"Impossible de supprimer le thème d'écran de démarrage \"%s\" du répertoire "
+"%s."
 
 #: ../engines/balou/config.c:478
 msgid "Choose theme filename..."
@@ -139,11 +135,11 @@ msgstr "Moteur d'écran de démarrage simple"
 
 #: ../settings/main.c:43
 msgid "Settings manager socket"
-msgstr "Socle du gestionnaire de paramètres"
+msgstr "Socket du gestionnaire de paramètres"
 
 #: ../settings/main.c:43
 msgid "SOCKET ID"
-msgstr "ID SOCLE"
+msgstr "ID SOCKET"
 
 #: ../settings/main.c:44
 msgid "Version information"
@@ -333,9 +329,9 @@ msgid "Xfce Session Manager"
 msgstr "Gestionnaire de session Xfce"
 
 #: ../xfce4-session/shutdown.c:360
-#, fuzzy, c-format
+#, c-format
 msgid "<span size='large'><b>Log out %s</b></span>"
-msgstr "<span size='large'><b>Déconnexion %s</b></span>"
+msgstr "<span size='large'><b>Déconnexion de %s</b></span>"
 
 #: ../xfce4-session/shutdown.c:401
 msgid "Log Out"
@@ -547,14 +543,14 @@ msgstr ""
 "système depuis Xfce."
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:295
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create parent pipe: %s"
-msgstr "Échec à la création du tuyau parent : %s"
+msgstr "Échec à la création du tube parent : %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:306
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create child pipe: %s"
-msgstr "Échec à la création du tuyau enfant : %s"
+msgstr "Échec à la création du tube enfant : %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:317
 #, c-format
@@ -572,14 +568,14 @@ msgid "Unknown error"
 msgstr "Erreur inconnue"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:371
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open parent pipe: %s"
-msgstr "Impossible d'ouvrir le tuyau parent : %s"
+msgstr "Impossible d'ouvrir le tube parent : %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:382
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open child pipe: %s"
-msgstr "Impossible d'ouvrir le tuyau enfant : %s"
+msgstr "Impossible d'ouvrir le tube enfant : %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:400
 #, c-format
@@ -955,104 +951,3 @@ msgstr "étiquette"
 msgid "xfce4-tips"
 msgstr "astuces-xfce4"
 
-#~ msgid "Session and Startup Settings"
-#~ msgstr "Paramètres de session et de démarrage"
-
-#~ msgid "Sessions and Startup Settings"
-#~ msgstr "Paramètres de sessions et de démarrage"
-
-#~ msgid "Xfce 4 Sessions and Startup Settings"
-#~ msgstr "Xfce 4 Gestionnaire de session"
-
-#~ msgid "Remove the selected application from the session."
-#~ msgstr "Enlever l'application sélectionnée de la session."
-
-#~ msgid "gtk-remove"
-#~ msgstr "Supprimer"
-
-#~ msgid ""
-#~ "If set, the session manager will ask you to choose a session every time "
-#~ "you log in to Xfce."
-#~ msgstr ""
-#~ "Si coché, le gestionnaire de session proposera de choisir une session à "
-#~ "chaque fois que vous vous connecterez à Xfce."
-
-#~ msgid ""
-#~ "This option instructs the session manager to save the current session "
-#~ "automatically when you log out. If you don't select this option you'll be "
-#~ "prompted whether you want to save the current session on each logout."
-#~ msgstr ""
-#~ "Cette option indique au gestionnaire de session de sauvegarder "
-#~ "automatiquement la session courante lors de la déconnexion. Si cette "
-#~ "option n'est pas activée, la sauvegarde de la session courante sera "
-#~ "demandée à chaque déconnexion."
-
-#~ msgid ""
-#~ "This option disables the logout confirmation dialog. Whether the session "
-#~ "will be saved or not depends on whether you enabled the automatic saving "
-#~ "of sessions on logout or not."
-#~ msgstr ""
-#~ "Cette option désactive la boîte de confirmation de déconnexion. La "
-#~ "sauvegarde de la session est déterminée par l'activation de l'option de "
-#~ "sauvegarde automatique de session."
-
-#~ msgid "Launch Gnome services on startup"
-#~ msgstr "Charger les services Gnome au démarrage"
-
-#~ msgid ""
-#~ "Enable this if you plan to use Gnome applications. This will instruct the "
-#~ "session manager to start some vital Gnome services for you. You should "
-#~ "also enable this if you want to use the Assistive Technologies that ship "
-#~ "with Gnome."
-#~ msgstr ""
-#~ "Activer cette option pour l'utilisation d'application Gnome. Le "
-#~ "gestionnaire de session démarrera automatiquement des services vitaux "
-#~ "pour Gnome. Cette option devra également être activée pour utiliser les "
-#~ "outils d'assistance (Assistive Technologies) qui sont livrés avec Gnome."
-
-#~ msgid ""
-#~ "Enable this option if you plan to run KDE applications as part of your "
-#~ "Xfce Desktop session. This will notably increase the startup time, but on "
-#~ "the other hand, KDE applications will startup faster. Some KDE "
-#~ "applications may not work at all if you don't enable this option."
-#~ msgstr ""
-#~ "Activer cette option pour utiliser des applications KDE dans le bureau "
-#~ "Xfce. Cela va rallonger notablement le temps de connexion, mais d'un "
-#~ "autre coté, les application KDE se chargeront plus rapidement. Certaines "
-#~ "applications KDE ne fontionnent pas du tout si cette option n'est pas "
-#~ "activée."
-
-#~ msgid "Security"
-#~ msgstr "Sécurité"
-
-#~ msgid ""
-#~ "Allow the session manager to manage applications running on remote hosts. "
-#~ "Do not enable this option unless you know what you are doing."
-#~ msgstr ""
-#~ "Autoriser le gestionnaire de session à gérer les applications qui "
-#~ "fonctionnent sur des systèmes distants. N'activez pas cette option à "
-#~ "moins de savoir ce que vous faites."
-
-#~ msgid "Button Label|Sessions and Startup"
-#~ msgstr "Sessions et démarrage"
-
-#~ msgid "Splash Screen Settings"
-#~ msgstr "Paramétrage de l'écran de démarrage"
-
-#~ msgid "Button Label|Splash Screen"
-#~ msgstr "Écran de démarrage"
-
-#~ msgid "Autostarted applications"
-#~ msgstr "Applications démarrées automatiquement"
-
-#~ msgid "Xfce 4 Splash Screen Settings"
-#~ msgstr "Xfce 4 Paramètres de l'écran de démarrage"
-
-#~ msgid "Autostarted Applications"
-#~ msgstr "Applications démarrées automatiquement"
-
-#~ msgid "Edit the list of autostarted applications"
-#~ msgstr "Éditer la liste d'applications démarrées automatiquement"
-
-#~ msgid "Xfce 4 Autostarted Applications"
-#~ msgstr "Xfce 4 Applications démarrées automatiquement"
