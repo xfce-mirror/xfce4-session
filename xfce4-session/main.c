@@ -99,8 +99,11 @@ setup_environment (void)
       xfce_unsetenv ("GDM_LANG");
     }
 
-  /* check access to $HOME/.ICEauthority */
-  authfile = xfce_get_homefile (".ICEauthority", NULL);
+  /* check access to $ICEAUTHORITY or $HOME/.ICEauthority if unset */
+  if (g_getenv ("ICEAUTHORITY"))
+    authfile = g_strdup (g_getenv ("ICEAUTHORITY"));
+  else
+    authfile = xfce_get_homefile (".ICEauthority", NULL);
   fd = open (authfile, O_RDWR | O_CREAT, 0600);
   if (fd < 0)
     {
