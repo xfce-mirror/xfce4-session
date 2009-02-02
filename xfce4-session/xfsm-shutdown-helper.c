@@ -547,12 +547,14 @@ xfsm_shutdown_helper_send_command (XfsmShutdownHelper *helper,
         }
 
       /* send it to our associated sudo'ed process */
-      fprintf (helper->outfile, "%s\n", command_table[command]);
+      /* -2 is not a magic number, it's to get the right offset in command_table array */
+      /* because in enum, XFSM_SHUTDOWN_HALT = 2 and XFSM_SHUTDOWN_REBOOT = 3 */
+      fprintf (helper->outfile, "%s\n", command_table[command - 2]);
       fflush (helper->outfile);
 
       if (ferror (helper->outfile))
         {
-          if (error)
+          if (error && errno != EINTR)
             {
               g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Error sending command to shutdown helper: %s"),
@@ -563,7 +565,7 @@ xfsm_shutdown_helper_send_command (XfsmShutdownHelper *helper,
 
       if (fgets (response, 256, helper->infile) == NULL)
         {
-          if (error)
+          if (error && errno != EINTR)
             {
               g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Error receiving response from shutdown helper: %s"),
