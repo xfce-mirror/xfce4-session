@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-26 20:57-0800\n"
-"PO-Revision-Date: 2008-12-30 08:51+0100\n"
+"PO-Revision-Date: 2009-02-11 02:01+0100\n"
 "Last-Translator: SZERVÁC Attila <sas@321.hu>\n"
 "Language-Team: hu\n"
 "MIME-Version: 1.0\n"
@@ -21,20 +21,17 @@ msgid "Choose theme file to install..."
 msgstr "Válassz telepítendő témafájlt..."
 
 #: ../engines/balou/config.c:333
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to install splash theme from file \"%s\""
-msgstr "Nem tudom törölni e nyitókép-témát: \"%s\" e könyvtárból: %s."
+msgstr "Nem tudok nyitókép témát telepíteni innen: \"%s\""
 
 #: ../engines/balou/config.c:336
 msgid "Theme File Error"
-msgstr ""
+msgstr "Téma fájl hiba"
 
 #: ../engines/balou/config.c:339
-#, fuzzy
 msgid "Please check that the file is a valid splash theme archive."
-msgstr ""
-"Sikertelen nyitókép-téma telepítés innen: %s, ellenőrizd, a fájl valódi "
-"nyitókép-téma archívum voltát."
+msgstr "Ellenőrizd a fájl valódi nyitókép-téma archívum voltát."
 
 #: ../engines/balou/config.c:393
 #, c-format
@@ -119,7 +116,7 @@ msgstr "Képek"
 
 #: ../engines/simple/simple.c:419
 msgid "All files"
-msgstr ""
+msgstr "Minden fájl"
 
 #: ../engines/simple/simple.c:493
 msgid "Simple"
@@ -159,7 +156,8 @@ msgstr "Hibajeletés küldése <%s>"
 msgid "Session Settings"
 msgstr "Folyamat beállításai"
 
-#: ../settings/main.c:86 ../xfce4-session/main.c:278
+#: ../settings/main.c:86
+#: ../xfce4-session/main.c:278
 msgid "Unable to contact settings server"
 msgstr "Nem lehet kapcsolatot teremteni a beállítás szerverrel"
 
@@ -213,17 +211,14 @@ msgstr "Biztos le akarod állítani a  \"%s\" -t?"
 msgid "Terminate \"%s\""
 msgstr "\"%s\" bezárása"
 
-#: ../settings/session-editor.c:185 ../settings/session-editor.c:213
+#: ../settings/session-editor.c:185
+#: ../settings/session-editor.c:213
 msgid "Terminate Program"
 msgstr "Program bezárása"
 
 #: ../settings/session-editor.c:187
-msgid ""
-"The application will lose any unsaved state and will not be restarted in "
-"your next session."
-msgstr ""
-"Az alkalmazás minden nem mentett állapotát elveszti és nem lesz a következő "
-"munkamenetben elindítva."
+msgid "The application will lose any unsaved state and will not be restarted in your next session."
+msgstr "Az alkalmazás minden nem mentett állapotát elveszti és nem lesz a következő munkamenetben elindítva."
 
 #: ../settings/session-editor.c:214
 msgid "Unable to terminate program."
@@ -249,8 +244,10 @@ msgstr "Program"
 msgid "Restart Style"
 msgstr "Stílus újraindítása"
 
-#: ../settings/splash-settings.c:288 ../settings/splash-settings.c:291
-#: ../settings/splash-settings.c:294 ../settings/splash-settings.c:297
+#: ../settings/splash-settings.c:288
+#: ../settings/splash-settings.c:291
+#: ../settings/splash-settings.c:294
+#: ../settings/splash-settings.c:297
 #: ../settings/splash-settings.c:354
 msgid "None"
 msgstr "Nincs"
@@ -296,14 +293,8 @@ msgid "Failed to open %s for writing"
 msgstr "%s megnyitása írásra sikertelen"
 
 #: ../settings/xfae-window.c:102
-msgid ""
-"Below is the list of applications that will be started automatically when "
-"you login to your Xfce desktop, in addition to the applications that were "
-"saved when you logged out last time:"
-msgstr ""
-"Alább azon alkalmazások listája, melyek automatikusan indulnak az Xfce "
-"munkakörnyezetbe való bejelentkezéskor és azon alkalmazások, melyek "
-"elmentésre kerültek az utolsó kijelentkezéskor:"
+msgid "Below is the list of applications that will be started automatically when you login to your Xfce desktop, in addition to the applications that were saved when you logged out last time:"
+msgstr "Alább azon alkalmazások listája, melyek automatikusan indulnak az Xfce munkakörnyezetbe való bejelentkezéskor és azon alkalmazások, melyek elmentésre kerültek az utolsó kijelentkezéskor:"
 
 #: ../xfce4-session/main.c:146
 msgid "Loading desktop settings"
@@ -325,7 +316,7 @@ msgstr "Xfce folyamat kezelő"
 #: ../xfce4-session/shutdown.c:360
 #, c-format
 msgid "<span size='large'><b>Log out %s</b></span>"
-msgstr ""
+msgstr "<span size='large'><b>%s lezárása</b></span>"
 
 #: ../xfce4-session/shutdown.c:401
 msgid "Log Out"
@@ -341,11 +332,11 @@ msgstr "Leállítás"
 
 #: ../xfce4-session/shutdown.c:485
 msgid "Suspend"
-msgstr ""
+msgstr "Felfüggeszt"
 
 #: ../xfce4-session/shutdown.c:513
 msgid "Hibernate"
-msgstr ""
+msgstr "Hibernál"
 
 #: ../xfce4-session/shutdown.c:522
 msgid "_Save session for future logins"
@@ -360,14 +351,11 @@ msgid "<b>An error occurred</b>"
 msgstr "<b>Hiba történt</b>"
 
 #: ../xfce4-session/shutdown.c:634
-msgid ""
-"Either the password you entered is invalid, or the system administrator "
-"disallows shutting down this computer with your user account."
-msgstr ""
-"Hibás jelszó, vagy a rendszergazda nem engedélyezte a gép kikapcsolását az "
-"általad használt hozzáféréssel."
+msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
+msgstr "Hibás jelszó, vagy a rendszergazda nem engedélyezte a gép kikapcsolását az általad használt hozzáféréssel."
 
-#: ../xfce4-session/shutdown.c:756 ../xfce4-session/xfsm-manager.c:1109
+#: ../xfce4-session/shutdown.c:756
+#: ../xfce4-session/xfsm-manager.c:1109
 msgid "Shutdown Failed"
 msgstr "A leállítás meghiúsult"
 
@@ -381,11 +369,8 @@ msgid "Last accessed: %s"
 msgstr "Utolsó megnyitás: %s"
 
 #: ../xfce4-session/xfsm-chooser.c:213
-msgid ""
-"Choose the session you want to restore. You can simply double-click the "
-"session name to restore it."
-msgstr ""
-"Válaszd ki a visszaállítandó folyamatot. Egyszerűen kattints duplán a nevére."
+msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
+msgstr "Válaszd ki a visszaállítandó folyamatot. Egyszerűen kattints duplán a nevére."
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:239
@@ -405,7 +390,8 @@ msgstr "Új folyamat"
 msgid "Create a new session."
 msgstr "Új folyamat létrehozása"
 
-#: ../xfce4-session/xfsm-client.c:794 ../xfce4-session/xfsm-client.c:854
+#: ../xfce4-session/xfsm-client.c:794
+#: ../xfce4-session/xfsm-client.c:854
 #: ../xfce4-session/xfsm-client.c:962
 #, c-format
 msgid "The client doesn't have any properties set yet"
@@ -450,22 +436,13 @@ msgstr "Próbáld újra"
 
 #: ../xfce4-session/xfsm-manager.c:591
 #, c-format
-msgid ""
-"Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
-"running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
-"incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
-msgstr ""
-"Nem lehet a hibamentes munkamenet nevét meghatározni. Valószínű okok: "
-"xfconfd nem fut (D-Bus beállítási hiba); $XDG_CONFIG_DIRS környezeti változó "
-"rosszul van megadva (a  \"%s\" benne kell lennie), vagy az xfce4-session "
-"nincs jól telepítve."
+msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
+msgstr "Nem lehet a hibamentes munkamenet nevét meghatározni. Valószínű okok: xfconfd nem fut (D-Bus beállítási hiba); $XDG_CONFIG_DIRS környezeti változó rosszul van megadva (a  \"%s\" benne kell lennie), vagy az xfce4-session nincs jól telepítve."
 
 #: ../xfce4-session/xfsm-manager.c:602
 #, c-format
-msgid ""
-"The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr ""
-"A kijelölt hibamentes munkamenet (\"%s\") nincs hibamentesként jelölve."
+msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
+msgstr "A kijelölt hibamentes munkamenet (\"%s\") nincs hibamentesként jelölve."
 
 #: ../xfce4-session/xfsm-manager.c:649
 msgid "The list of applications in the failsafe session is empty."
@@ -522,9 +499,7 @@ msgstr "Nincs HAL-mód e parancshoz: %d"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:283
 #, c-format
-msgid ""
-"Program \"sudo\" was not found.  You will not be able to shutdown your "
-"system from within Xfce."
+msgid "Program \"sudo\" was not found.  You will not be able to shutdown your system from within Xfce."
 msgstr "Nincs \"sudo\".  Maga az Xfce nem tudja leállítani a számítógépet."
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:295
@@ -548,7 +523,8 @@ msgid "Unable to read response from sudo helper: %s"
 msgstr ""
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:360
-#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
+#: ../xfce4-session-logout/main.c:68
+#: ../xfce4-session-logout/main.c:75
 msgid "Unknown error"
 msgstr "Ismeretlen hiba"
 
@@ -569,10 +545,8 @@ msgstr ""
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:544
 #, c-format
-msgid ""
-"Suspend and Hibernate are only supported through HAL, which is unavailable"
-msgstr ""
-"A felfüggesztést és hibernálást csak a HAL támogatja, mely nem elérhető"
+msgid "Suspend and Hibernate are only supported through HAL, which is unavailable"
+msgstr "A felfüggesztést és hibernálást csak a HAL támogatja, mely nem elérhető"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:558
 #, c-format
@@ -701,8 +675,7 @@ msgstr ""
 "\n"
 "  %s\n"
 "\n"
-"ahova a .desktop fájlok rakhatók, melyek leírják az indítandó "
-"alkalmazásokat\n"
+"ahova a .desktop fájlok rakhatók, melyek leírják az indítandó alkalmazásokat\n"
 "az Xfce munkakörnyezetbe való bejelentkezéskor. A régi autostart\n"
 "könyvtár fájljai sikeresen az új helyre költöztek.\n"
 "Töröld e régi könyvtárat most.\n"
@@ -711,11 +684,13 @@ msgstr ""
 msgid "Performing Autostart..."
 msgstr "Azonnali alkalmazások indítása..."
 
-#: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:161
+#: ../xfce4-tips/main.c:47
+#: ../xfce4-tips/main.c:161
 msgid "Tips and Tricks"
 msgstr "Tippek és trükkök"
 
-#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:205
+#: ../xfce4-tips/main.c:48
+#: ../xfce4-tips/main.c:205
 msgid "Fortunes"
 msgstr "Szerencsesütik"
 
@@ -723,7 +698,8 @@ msgstr "Szerencsesütik"
 msgid "Display tips on _startup"
 msgstr "Tippek mutatá_sa induláskor"
 
-#: ../xfce4-tips/main.c:199 ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
+#: ../xfce4-tips/main.c:199
+#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
 msgid "Tips and tricks"
 msgstr "Tippek és trükkök"
 
@@ -834,11 +810,8 @@ msgid "Manage _remote applications"
 msgstr "Távoli alkalmazások kezelése"
 
 #: ../settings/xfce4-session-settings.glade.h:20
-msgid ""
-"Manage remote applications over the network (this may be a security risk)"
-msgstr ""
-"Távoli alkalmazások kezelése a hálózaton keresztül ( lehetséges biztonsági "
-"kockázat)"
+msgid "Manage remote applications over the network (this may be a security risk)"
+msgstr "Távoli alkalmazások kezelése a hálózaton keresztül ( lehetséges biztonsági kockázat)"
 
 #: ../settings/xfce4-session-settings.glade.h:21
 msgid "Opens the configuration panel for the selected splash screen"
@@ -865,33 +838,20 @@ msgid "Saving Session"
 msgstr "Folyamat mentése"
 
 #: ../settings/xfce4-session-settings.glade.h:28
-msgid ""
-"Start GNOME services, such as gnome-keyring and the GNOME accessibility "
-"framework"
-msgstr ""
-"GNOME szolgáltatások indítása úgy mint,gnome-keyring és a GNOME elérhetőségi "
-"keretrendszer"
+msgid "Start GNOME services, such as gnome-keyring and the GNOME accessibility framework"
+msgstr "GNOME szolgáltatások indítása úgy mint,gnome-keyring és a GNOME elérhetőségi keretrendszer"
 
 #: ../settings/xfce4-session-settings.glade.h:29
 msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
 msgstr "KDE szolgáltatások indítása úgy mint, \"kdeinit,\" DCOP és ARTS"
 
 #: ../settings/xfce4-session-settings.glade.h:30
-msgid ""
-"These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr ""
-"Ezen alkalmazások részei a jelenlegi munkamenetednek és elmenhetők amikor "
-"kilépsz. A változtatások csak a munkamenet elmentése után jutnak érvényre."
+msgid "These applications are a part of the currently-running session, and can be saved when you log out.  Changes below will only take effect when the session is saved."
+msgstr "Ezen alkalmazások részei a jelenlegi munkamenetednek és elmenhetők amikor kilépsz. A változtatások csak a munkamenet elmentése után jutnak érvényre."
 
 #: ../settings/xfce4-session-settings.glade.h:31
-msgid ""
-"Your session is being saved.  If you do not wish to wait, you may close this "
-"window."
-msgstr ""
-"A munkameneted mentése folyamatban van. Ha nem kívánod megvárni, bezárhatod "
-"ezt az ablakot."
+msgid "Your session is being saved.  If you do not wish to wait, you may close this window."
+msgstr "A munkameneted mentése folyamatban van. Ha nem kívánod megvárni, bezárhatod ezt az ablakot."
 
 #: ../settings/xfce4-session-settings.glade.h:32
 msgid "_Display chooser on login"
@@ -935,23 +895,18 @@ msgstr "xfce-tippek"
 
 #~ msgid "Session and Startup Settings"
 #~ msgstr "Folyamat is indulás beállítások"
-
 #~ msgid "Sessions and Startup Settings"
 #~ msgstr "Folyamatok és indulás beállításai"
-
 #~ msgid "Xfce 4 Sessions and Startup Settings"
 #~ msgstr "Xfce 4 folyamat és indulás beállítások"
-
 #~ msgid "Remove the selected application from the session."
 #~ msgstr "A kijelölt alkalmazás eltávolítása a folyamatból."
-
 #~ msgid ""
 #~ "If set, the session manager will ask you to choose a session every time "
 #~ "you log in to Xfce."
 #~ msgstr ""
 #~ "Ha beállítod, a folyamatkezelő minden Xfce bejelentkezésnél lehetőséget "
 #~ "ad egy folyamat választására."
-
 #~ msgid ""
 #~ "This option instructs the session manager to save the current session "
 #~ "automatically when you log out. If you don't select this option you'll be "
@@ -961,7 +916,6 @@ msgstr "xfce-tippek"
 #~ "folyamatot kijelentkezésnél. Ha nem használod, de a kijelentkezés "
 #~ "megerősítését igen, akkor minden kijelentkezésnél van lehetőséged a "
 #~ "döntésre."
-
 #~ msgid ""
 #~ "This option disables the logout confirmation dialog. Whether the session "
 #~ "will be saved or not depends on whether you enabled the automatic saving "
@@ -970,10 +924,8 @@ msgstr "xfce-tippek"
 #~ "Ezzel állíthatod be, hogy legyen-e kijelentkezés-megerősítés. Ha "
 #~ "kikapcsolod, a folyamat mentése azon fog múlni, előtte milyen állapotban "
 #~ "hagytad a mentési beállítást."
-
 #~ msgid "Launch Gnome services on startup"
 #~ msgstr "GNOME szolgáltatások futtatása indításkor"
-
 #~ msgid ""
 #~ "Enable this if you plan to use Gnome applications. This will instruct the "
 #~ "session manager to start some vital Gnome services for you. You should "
@@ -983,7 +935,6 @@ msgstr "xfce-tippek"
 #~ "Akkor állítsd be, ha GNOME alkalmazások futtatását tervezed. Ennek "
 #~ "hatására a folyamatkezelő néhány alapvető GNOME szolgáltatást indít el. "
 #~ "Akkor is állítsd be, ha a GNOME kisegítő lehetőségek használatát tervezed."
-
 #~ msgid ""
 #~ "Enable this option if you plan to run KDE applications as part of your "
 #~ "Xfce Desktop session. This will notably increase the startup time, but on "
@@ -994,37 +945,28 @@ msgstr "xfce-tippek"
 #~ "KDE alkalmazások futtatását tervezed. Ez jelentősen meg fogja növelni az "
 #~ "indulást, viszont a KDE alkalmazások gyorsabban indulnak. Egyes KDE "
 #~ "alkalmazások teljesen képtelenek működni e nélkül."
-
 #~ msgid "Security"
 #~ msgstr "Biztonság"
-
 #~ msgid ""
 #~ "Allow the session manager to manage applications running on remote hosts. "
 #~ "Do not enable this option unless you know what you are doing."
 #~ msgstr ""
 #~ "Távoli gépeken való alkalmazás-futtatás engedélyezése a "
 #~ "folyamatkezelőnek. Ne használd ezt, míg nem vagy képben."
-
 #~ msgid "Button Label|Sessions and Startup"
 #~ msgstr "Munkafolyamatok is indulás"
-
 #~ msgid "Splash Screen Settings"
 #~ msgstr "Nyitókép beállítások"
-
 #~ msgid "Button Label|Splash Screen"
 #~ msgstr "Nyitókép"
-
 #~ msgid "Autostarted applications"
 #~ msgstr "Azonnali alkalmazások"
-
 #~ msgid "Xfce 4 Splash Screen Settings"
 #~ msgstr "Xfce 4 nyitókép beállítások"
-
 #~ msgid "Autostarted Applications"
 #~ msgstr "Azonnali alkalmazások"
-
 #~ msgid "Edit the list of autostarted applications"
 #~ msgstr "Azonnali alkalmazások listájának vége"
-
 #~ msgid "Xfce 4 Autostarted Applications"
 #~ msgstr "Xfce 4 Azonnali Alkalmazások"
+
