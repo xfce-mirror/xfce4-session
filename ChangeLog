@@ -1,3 +1,10 @@
+2009-02-13	Jannis Pohlmann <jannis@xfce.org>
+
+	* settings/xfae-window.c: Fix a crash in xfce4-session-settings when
+	  trying to add a new autostarted application. XfaeWindow is no longer
+	  a GtkWindow and can thus not be used as a parent in
+	  gtk_window_set_transient_for() anymore (bug 4934).
+
 2009-02-01	Brian Tarricone <bjt23@cornell.edu>
 
 	* xfce4-session/xfsm-shutdown-helper.c: Fix sudo shutdown helper;

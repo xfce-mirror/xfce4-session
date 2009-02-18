@@ -257,6 +257,7 @@ static void
 xfae_window_add (XfaeWindow *window)
 {
   GtkTreeModel *model;
+  GtkWidget    *parent;
   GtkWidget    *dialog;
   GError       *error = NULL;
   gchar        *name;
@@ -264,7 +265,8 @@ xfae_window_add (XfaeWindow *window)
   gchar        *command;
 
   dialog = xfae_dialog_new ();
-  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
+  parent = gtk_widget_get_toplevel (GTK_WIDGET (window));
+  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent));
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
       gtk_widget_hide (dialog);
