@@ -505,6 +505,9 @@ xfae_item_new (const gchar *relpath)
 static void
 xfae_item_free (XfaeItem *item)
 {
+  if (G_UNLIKELY (item == NULL))
+    return;
+
   if (item->icon != NULL)
     g_object_unref (G_OBJECT (item->icon));
 
