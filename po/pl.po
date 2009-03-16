@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-26 20:57-0800\n"
-"PO-Revision-Date: 2009-03-08 13:16+0100\n"
+"PO-Revision-Date: 2009-03-13 15:25+0100\n"
 "Last-Translator: Piotr Sokół <piotr.sokol@10g.pl>\n"
 "Language-Team: Polish\n"
 "MIME-Version: 1.0\n"
@@ -445,11 +445,14 @@ msgstr "Spróbuj ponownie"
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr ""
+"Nie można określić nazwy sesji awaryjnej. Prawdopodobne przyczyny:\n"
+"program xfconfd nie jest uruchomiony (problem z konfiguracją D-Bus),\n"
+"zmienna środowiskowa $XDG_CONFIG_DIRS jest nieprawidłowa (musi zawierać „%s”) lub program xfce4-session nie został poprawnie zainstalowany."
 
 #: ../xfce4-session/xfsm-manager.c:602
-#, c-format
+#, fuzzy, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr ""
+msgstr "Określona sesja awaryjna „%s” nie jest oznaczona jako sesja awaryjna."
 
 #: ../xfce4-session/xfsm-manager.c:649
 msgid "The list of applications in the failsafe session is empty."
@@ -520,9 +523,9 @@ msgid "Unable to create child pipe: %s"
 msgstr "Nie można utworzyć potoku podrzędnego: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:317
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to fork sudo helper: %s"
-msgstr ""
+msgstr "Nie można wykonać fork dla sudo helper: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:359
 #, c-format
@@ -651,7 +654,6 @@ msgid "Starting the X-Chat IRC Client"
 msgstr "Uruchamianie klienta IRC X-Chat"
 
 #: ../xfce4-session/xfsm-startup.c:155
-#, fuzzy
 msgid "Starting the X Multimedia System"
 msgstr "Uruchamianie X Multimedia System"
 
