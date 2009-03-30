@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-26 20:57-0800\n"
-"PO-Revision-Date: 2009-03-13 15:25+0100\n"
+"PO-Revision-Date: 2009-03-28 11:34+0100\n"
 "Last-Translator: Piotr Sokół <piotr.sokol@10g.pl>\n"
 "Language-Team: Polish\n"
 "MIME-Version: 1.0\n"
@@ -67,7 +67,7 @@ msgstr "Balou"
 
 #: ../engines/balou/config.c:937
 msgid "Configure Balou..."
-msgstr "Preferencje ekranu powitalnego"
+msgstr "Preferencje"
 
 #: ../engines/balou/config.c:980
 msgid "Balou"
@@ -87,7 +87,7 @@ msgstr "Ekran powitalny Mice"
 
 #: ../engines/simple/simple.c:341
 msgid "Configure Simple..."
-msgstr "Preferencje ekranu powitalnego"
+msgstr "Preferencje"
 
 #: ../engines/simple/simple.c:352
 msgid "Font"
@@ -450,9 +450,9 @@ msgstr ""
 "zmienna środowiskowa $XDG_CONFIG_DIRS jest nieprawidłowa (musi zawierać „%s”) lub program xfce4-session nie został poprawnie zainstalowany."
 
 #: ../xfce4-session/xfsm-manager.c:602
-#, fuzzy, c-format
+#, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr "Określona sesja awaryjna „%s” nie jest oznaczona jako sesja awaryjna."
+msgstr "Określona sesja „%s” nie jest oznaczona jako awaryjna."
 
 #: ../xfce4-session/xfsm-manager.c:649
 msgid "The list of applications in the failsafe session is empty."
@@ -483,9 +483,9 @@ msgid "Can only terminate clients when in the idle state"
 msgstr ""
 
 #: ../xfce4-session/xfsm-manager.c:1922
-#, fuzzy, c-format
+#, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
-msgstr "Menedżer sesji musi być w stanie bezczynności podczas żądania punktu kontrolnego"
+msgstr "Menedżer sesji musi być w stanie bezczynności podczas żądania utworzenia punktu kontrolnego"
 
 #: ../xfce4-session/xfsm-manager.c:1963
 #, c-format
@@ -493,9 +493,9 @@ msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Menedżer sesji musi być w stanie bezczynności podczas żądania wyłączenia"
 
 #: ../xfce4-session/xfsm-manager.c:1970
-#, c-format
+#, fuzzy, c-format
 msgid "Invalid shutdown type \"%u\""
-msgstr ""
+msgstr "Niepoprawny typ shutdown „%u”"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:142
 #, c-format
@@ -510,7 +510,7 @@ msgstr "Brak metody HAL dla polecenia %d"
 #: ../xfce4-session/xfsm-shutdown-helper.c:283
 #, c-format
 msgid "Program \"sudo\" was not found.  You will not be able to shutdown your system from within Xfce."
-msgstr "Nie znaleziono programu „sudo”. Brak możliwości wyłączenia komputera za pośrednictwem środowiska Xfce."
+msgstr "Nie znaleziono programu „sudo”. Nie ma możliwości wyłączenia komputera za pośrednictwem środowiska Xfce."
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:295
 #, c-format
@@ -523,9 +523,9 @@ msgid "Unable to create child pipe: %s"
 msgstr "Nie można utworzyć potoku podrzędnego: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:317
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to fork sudo helper: %s"
-msgstr "Nie można wykonać fork dla sudo helper: %s"
+msgstr "Nie można utworzyć procesu sudo helper: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:359
 #, c-format
@@ -720,12 +720,11 @@ msgstr "Następny"
 
 #: ../xfce4-session-logout/main.c:65
 msgid "Logout Error"
-msgstr "Błąd wylogowania"
+msgstr "Błąd wylogowywania"
 
 #: ../xfce4-session-logout/main.c:163
-#, fuzzy
 msgid "Unable to contact D-Bus session bus."
-msgstr "Nie można połączyć"
+msgstr "Nie można połączyć z usługą sesji D-Bus."
 
 #: ../xfce4-session-logout/main.c:175
 msgid "Failed to create new D-Bus message"
