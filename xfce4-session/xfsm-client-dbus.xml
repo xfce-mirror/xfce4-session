@@ -115,6 +115,28 @@
         <method name="Terminate"/>
 
         <!--
+             (Bool, UInt) org.xfce.Session.Client.AddToSavedSession()
+
+             Forces the session manager to reopen the currently-active
+             session file, add this client to it, and then save it back
+             to disk.  This allows "important" clients to get themselves
+             added to the session without dirty hacks.
+
+             Note: the user may be prompted to confirm.
+
+             Returns: %TRUE if the client was added successfully, %FALSE
+                      otherwise.  If %FALSE, the second return arg will
+                      be an integer describing the reason for failure:
+                        0: Success/Unknown
+                        1: Write error
+                        2: User canceled
+        -->
+        <method name="AddToSavedSession">
+            <arg direction="out" name="success" type="b"/>
+            <arg direction="out" name="reason" type="u"/>
+        </method>
+
+        <!--
              void org.xfce.Session.Client.StateChanged(Unsigned Int old_state,
                                                        Unsigned Int new_state)
 

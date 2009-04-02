@@ -66,6 +66,13 @@ typedef enum
     XFSM_MANAGER_COMPAT_KDE,
 } XfsmManagerCompatType;
 
+typedef enum
+{
+  XFSM_MANAGER_REASON_SUCCESS = 0,
+  XFSM_MANAGER_REASON_WRITE_ERROR,
+  XFSM_MANAGER_REASON_USER_CANCELED,
+} XfsmManagerReason;
+
 typedef struct _XfsmManager  XfsmManager;
 
 GType xfsm_manager_get_type (void) G_GNUC_CONST;
@@ -154,5 +161,8 @@ gboolean xfsm_manager_get_use_failsafe_mode (XfsmManager *manager);
 
 gboolean xfsm_manager_get_compat_startup (XfsmManager          *manager,
                                           XfsmManagerCompatType type);
+
+XfsmManagerReason xfsm_manager_add_client_to_saved_session (XfsmManager *manager,
+                                                            XfsmClient  *client);
 
 #endif /* !__XFSM_MANAGER_H__ */

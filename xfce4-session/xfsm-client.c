@@ -714,6 +714,10 @@ static gboolean xfsm_client_dbus_delete_sm_properties (XfsmClient *client,
                                                        GError    **error);
 static gboolean xfsm_client_dbus_terminate (XfsmClient *client,
                                             GError    **error);
+static gboolean xfsm_client_dbus_add_to_saved_session (XfsmClient *client,
+                                                       gboolean *OUT_success,
+                                                       guint *OUT_reason,
+                                                       GError **error);
 
 
 /* header needs the above fwd decls */
@@ -1000,4 +1004,19 @@ xfsm_client_dbus_terminate (XfsmClient *client,
                             GError    **error)
 {
   return xfsm_manager_terminate_client (client->manager, client, error);
+}
+
+static gboolean
+xfsm_client_dbus_add_to_saved_session (XfsmClient *client,
+                                       gboolean   *OUT_success,
+                                       guint      *OUT_reason,
+                                       GError    **error)
+{
+  XfsmManagerFailureReason ret;
+
+  ret = xfsm_manager_add_client_to_saved_session (client->manager, client);
+  *OUT_success = (ret == XFSM_MANAGER_REASON_SUCCESS);
+  *OUT_reason = ret;
+
+  return TRUE;
 }
