@@ -105,7 +105,7 @@ sm_init (XfconfChannel *channel,
   char *network_idlist;
   char  error[2048];
 
-  if (disable_tcp || !xfconf_channel_get_bool (channel, "/security/EnableTcp", TRUE))
+  if (disable_tcp || !xfconf_channel_get_bool (channel, "/security/EnableTcp", FALSE))
     {
 #ifdef HAVE__ICETRANSNOLISTEN
       extern void _IceTransNoListen (char *protocol);
