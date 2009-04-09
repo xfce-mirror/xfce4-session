@@ -2,7 +2,7 @@
 # Copyright (C) 2003-2007 The Xfce development team.
 # This file is distributed under the same license as the xfce4-session package.
 # Moritz Heiber <moe@xfce.org>, 2003.
-# Fabian Nowak <timystery@arcor.de>, 2006, 2007, 2008.
+# Fabian Nowak <timystery@arcor.de>, 2006-2009.
 # Nico Schümann <nico@prog.nico22.de>, 2007.
 # Benedikt Meurer <benny@xfce.org>, 2007, 2008.
 # Simon Schneider <simon@schneiderimtal.de>, 2009
@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-26 20:57-0800\n"
-"PO-Revision-Date: 2009-02-24 22:36+0000\n"
-"Last-Translator: Simon Schneider <simon@schneiderimtal.de>\n"
+"PO-Revision-Date: 2009-04-09 12:12+0200\n"
+"Last-Translator: Fabian Nowak <timystery@arcor.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,20 +28,19 @@ msgid "Choose theme file to install..."
 msgstr "Wählen Sie die Themadatei, die Sie installieren möchten..."
 
 #: ../engines/balou/config.c:333
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to install splash theme from file \"%s\""
-msgstr "Konnte das Startbildschirmthema aus »%s« nicht installieren"
+msgstr "Kann das Startbildschirmthema aus »%s« nicht installieren"
 
 #: ../engines/balou/config.c:336
 msgid "Theme File Error"
-msgstr ""
+msgstr "Fehler in der Themadatei"
 
 #: ../engines/balou/config.c:339
-#, fuzzy
 msgid "Please check that the file is a valid splash theme archive."
 msgstr ""
-"Konnte Thema aus Datei »%s« nicht installieren. Stellen Sie sicher, dass die "
-"Datei ein Archiv für ein Startbildschirmthema ist."
+"Stellen Sie bitte sicher, dass die Datei ein Archiv für ein "
+"Startbildschirmthema ist."
 
 #: ../engines/balou/config.c:393
 #, c-format
@@ -70,7 +69,7 @@ msgstr "Balou"
 
 #: ../engines/balou/config.c:937
 msgid "Configure Balou..."
-msgstr "Konfiguriere Balou..."
+msgstr "Balou einstellen..."
 
 #: ../engines/balou/config.c:980
 msgid "Balou"
@@ -90,7 +89,7 @@ msgstr "Startbildschirm »Mäuse«"
 
 #: ../engines/simple/simple.c:341
 msgid "Configure Simple..."
-msgstr "Konfiguriere einfaches Thema..."
+msgstr "Einfaches Thema einstellen..."
 
 #: ../engines/simple/simple.c:352
 msgid "Font"
@@ -160,7 +159,7 @@ msgstr "Das Entwicklungsteam von Xfce. Alle Rechte vorbehalten."
 #: ../settings/main.c:77
 #, c-format
 msgid "Please report bugs to <%s>."
-msgstr "Bitte melden Sie Fehler an <%s>"
+msgstr "Bitte melden Sie Fehler an <%s>."
 
 #: ../settings/main.c:84
 msgid "Session Settings"
@@ -336,19 +335,16 @@ msgid "<span size='large'><b>Log out %s</b></span>"
 msgstr "<span·size='large'><b>%s abmelden</b></span>"
 
 #: ../xfce4-session/shutdown.c:401
-#, fuzzy
 msgid "Log Out"
-msgstr "A_bmelden"
+msgstr "Abmelden"
 
 #: ../xfce4-session/shutdown.c:426
-#, fuzzy
 msgid "Restart"
-msgstr "_Neustarten"
+msgstr "Neustarten"
 
 #: ../xfce4-session/shutdown.c:451
-#, fuzzy
 msgid "Shut Down"
-msgstr "_Herunterfahren"
+msgstr "Herunterfahren"
 
 #: ../xfce4-session/shutdown.c:485
 msgid "Suspend"
@@ -376,8 +372,8 @@ msgid ""
 "disallows shutting down this computer with your user account."
 msgstr ""
 "Entweder haben Sie Ihr Passwort falsch eingegeben oder der "
-"Systemadministrator hat es Ihnen nicht erlaubt, den Computer von Ihrem "
-"Benutzeraccount aus herunterzufahren."
+"Systemadministrator hat es Ihnen nicht erlaubt, den Computer mit Ihrem "
+"Benutzerkonto aus herunterzufahren."
 
 #: ../xfce4-session/shutdown.c:756 ../xfce4-session/xfsm-manager.c:1109
 msgid "Shutdown Failed"
@@ -398,7 +394,7 @@ msgid ""
 "session name to restore it."
 msgstr ""
 "Wählen Sie die Sitzung aus, die Sie weiterführen wollen. Sie können einfach "
-"auf die Sitzung doppelt klicken, welche Sie weiterführen wollen."
+"auf die Sitzung doppelklicken, welche Sie weiterführen wollen."
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:239
@@ -407,7 +403,7 @@ msgstr "Abmelden"
 
 #: ../xfce4-session/xfsm-chooser.c:241
 msgid "Cancel the login attempt and return to the login screen."
-msgstr "Den Loginvorgang abbrechen und zum Anmeldebildschirm zurückkehren."
+msgstr "Den Anmeldevorgang abbrechen und zum Anmeldebildschirm zurückkehren."
 
 #. "New" button
 #: ../xfce4-session/xfsm-chooser.c:249
@@ -478,7 +474,7 @@ msgstr ""
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr ""
-"Die angegebene abgesicherte Sitzung (»%s«) ist nicht als solche dekariert."
+"Die angegebene abgesicherte Sitzung (»%s«) ist nicht als solche deklariert."
 
 #: ../xfce4-session/xfsm-manager.c:649
 msgid "The list of applications in the failsafe session is empty."
@@ -535,9 +531,9 @@ msgid "Unexpected error from HAL"
 msgstr "Unerwarteter HAL-Fehler"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:199
-#, fuzzy, c-format
+#, c-format
 msgid "No HAL method for command %d"
-msgstr "Kann Befehl »%d« nicht ausführen: keine HAL-Funktion verfügbar."
+msgstr "Keine HAL-Methode für Befehl »%d« verfügbar"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:283
 #, c-format
@@ -547,24 +543,24 @@ msgid ""
 msgstr "Befehl »sudo« wurde nicht gefunden. Sie werden Ihr System nicht aus Xfce heraus ausschalten können."
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:295
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create parent pipe: %s"
-msgstr "Konnte Datei »%s« nicht erstellen"
+msgstr "Konnte keine Datenweiterleitung zu Elternprozess erstellen: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:306
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create child pipe: %s"
-msgstr "Konnte Datei »%s« nicht erstellen"
+msgstr "Konnte keine Datenweiterleitung zu Kindprozess erstellen: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:317
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to fork sudo helper: %s"
-msgstr "Kann System nicht herunterfahren: %s"
+msgstr "Konnte keinen Prozess für Sudo-Helfer abspalten: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:359
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read response from sudo helper: %s"
-msgstr "Konnte die Antwort von sudo-Unterprogramm »%s« nicht lesen."
+msgstr "Konnte die Antwort vom Sudo-Helfer nicht lesen: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:360
 #: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
@@ -572,40 +568,42 @@ msgid "Unknown error"
 msgstr "Unbekannter Fehler"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:371
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open parent pipe: %s"
-msgstr "Konnte Elterndatenstrom »%s« nicht lesen."
+msgstr "Konnte Datenweiterleitung von Elternprozess nicht öffnen: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:382
 #, c-format
 msgid "Unable to open child pipe: %s"
-msgstr "Konnte Unterdatenstrom »%s« nicht lesen."
+msgstr "Konnte Datenweiterleitung von Kindprozess nicht öffnen: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:400
 #, c-format
 msgid "Got unexpected reply from sudo shutdown helper"
-msgstr "Unerwartete Antwort von sudo-Unterprogramm empfangen"
+msgstr "Unerwartete Antwort von Sudo-Helfer empfangen"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:544
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Suspend and Hibernate are only supported through HAL, which is unavailable"
-msgstr "Ruehmodus und Tiefschlaf werden nicht unterstützt"
+msgstr ""
+"Ruhemodus und Standby werden nur mittels HAL unterstützt, was nicht "
+"verfügbar ist"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:558
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
-msgstr "Fehler bei der Steuerung des Abschaltprogramms »%s«"
+msgstr "Fehler bei der Steuerung des Abschaltprogramms: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:569
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
-msgstr "Fehler beim Empfang der Antwort des Abschaltprogramms »%s«"
+msgstr "Fehler beim Empfang der Antwort des Abschaltprogramms: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:580
-#, fuzzy, c-format
+#, c-format
 msgid "Shutdown command failed"
-msgstr "Herunterfahren fehlgeschlagen"
+msgstr "Befehl zum Herunterfahren fehlgeschlagen"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -613,7 +611,7 @@ msgstr "Sitzung wählen"
 
 #: ../xfce4-session/xfsm-splash-screen.c:208
 msgid "Choose session name"
-msgstr "Sitzungsname wählen"
+msgstr "Sitzungsnamen wählen"
 
 #: ../xfce4-session/xfsm-splash-screen.c:222
 msgid "Choose a name for the new session:"
@@ -621,7 +619,7 @@ msgstr "Wählen Sie einen Namen für die neue Sitzung:"
 
 #: ../xfce4-session/xfsm-startup.c:115
 msgid "Starting the Volume Controller"
-msgstr "Lautstärkeregler wird gestartet"
+msgstr "Starte den Lautstärkeregler"
 
 #: ../xfce4-session/xfsm-startup.c:117
 msgid "Starting the Panel"
@@ -633,7 +631,7 @@ msgstr "Starte die Arbeitsoberfläche"
 
 #: ../xfce4-session/xfsm-startup.c:121
 msgid "Starting the Taskbar"
-msgstr "Starte die Taskbar"
+msgstr "Starte die Taskleiste"
 
 #: ../xfce4-session/xfsm-startup.c:123
 msgid "Starting the Window Manager"
@@ -653,7 +651,7 @@ msgstr "Starte den KDE Clipboard-Manager"
 
 #: ../xfce4-session/xfsm-startup.c:135
 msgid "Starting the KDE Mail Reader"
-msgstr "Starte das KDE Mail-Programm"
+msgstr "Starte das KDE E-Mail-Programm"
 
 #: ../xfce4-session/xfsm-startup.c:137
 msgid "Starting the KDE News Reader"
@@ -830,7 +828,7 @@ msgstr "_Sitzung automatisch beim Abmelden speichern"
 
 #: ../settings/xfce4-session-settings.glade.h:13
 msgid "Con_figure"
-msgstr "_Konfigurieren"
+msgstr "_Einstellen"
 
 #: ../settings/xfce4-session-settings.glade.h:15
 msgid "Demonstrates the selected splash screen"
@@ -873,7 +871,7 @@ msgstr "Das Programm beenden und aus der Sitzung entfernen"
 
 #: ../settings/xfce4-session-settings.glade.h:24
 msgid "S_plash"
-msgstr "S_tarbild"
+msgstr "S_tartbild"
 
 #: ../settings/xfce4-session-settings.glade.h:25
 msgid "Save Sessio_n"
