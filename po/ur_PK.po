@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: Muhammad Ali Makki <makki.ma@gmail.com>\n"
 "Language-Team: Urdu <makki.ma@gmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Urdu\n"
 "X-Poedit-Country: PAKISTAN\n"
@@ -163,7 +163,8 @@ msgstr "براہ مہربانی اخلاط کی <%s> پر اطلاع دیں."
 msgid "Session Settings"
 msgstr "نشست کی ترتیبات"
 
-#: ../settings/main.c:86 ../xfce4-session/main.c:278
+#: ../settings/main.c:86
+#: ../xfce4-session/main.c:278
 msgid "Unable to contact settings server"
 msgstr "ترتیبات کے سرور سے رابطہ نہیں ہو پا رہا"
 
@@ -217,17 +218,14 @@ msgstr "کیا آپ واقعی \"%s\" کو بند کرنا چاہتے ہیں؟"
 msgid "Terminate \"%s\""
 msgstr "\"%s\" کو بند کریں"
 
-#: ../settings/session-editor.c:185 ../settings/session-editor.c:213
+#: ../settings/session-editor.c:185
+#: ../settings/session-editor.c:213
 msgid "Terminate Program"
 msgstr "پروگرام بند کریں"
 
 #: ../settings/session-editor.c:187
-msgid ""
-"The application will lose any unsaved state and will not be restarted in "
-"your next session."
-msgstr ""
-"اطلاقیہ کوئی بھی غیر محفوظ حالت کھو دے گا اور آپ کی اگلی نشست میں نہیں چلے "
-"گا."
+msgid "The application will lose any unsaved state and will not be restarted in your next session."
+msgstr "اطلاقیہ کوئی بھی غیر محفوظ حالت کھو دے گا اور آپ کی اگلی نشست میں نہیں چلے گا."
 
 #: ../settings/session-editor.c:214
 msgid "Unable to terminate program."
@@ -253,8 +251,10 @@ msgstr "پروگرام"
 msgid "Restart Style"
 msgstr "دوبارہ چلانے کا انداز"
 
-#: ../settings/splash-settings.c:288 ../settings/splash-settings.c:291
-#: ../settings/splash-settings.c:294 ../settings/splash-settings.c:297
+#: ../settings/splash-settings.c:288
+#: ../settings/splash-settings.c:291
+#: ../settings/splash-settings.c:294
+#: ../settings/splash-settings.c:297
 #: ../settings/splash-settings.c:354
 msgid "None"
 msgstr "کچھ نہیں"
@@ -300,14 +300,8 @@ msgid "Failed to open %s for writing"
 msgstr "لکھنے کے لیے %s کو کھولنے میں ناکامی"
 
 #: ../settings/xfae-window.c:102
-msgid ""
-"Below is the list of applications that will be started automatically when "
-"you login to your Xfce desktop, in addition to the applications that were "
-"saved when you logged out last time:"
-msgstr ""
-"ذیل میں ان اطلاقیوں کی فہرست ہے جو آپ کے ایکسفس ڈیسک ٹاپ میں لاگ ان ہوتے ہی "
-"خودکار طور پر چل جائیں گے اس میں وہ اطلاقیے بھی شامل ہیں جو آخری بار لاگ آؤٹ "
-"کے وقت آپ نے محفوظ کیے تھے:"
+msgid "Below is the list of applications that will be started automatically when you login to your Xfce desktop, in addition to the applications that were saved when you logged out last time:"
+msgstr "ذیل میں ان اطلاقیوں کی فہرست ہے جو آپ کے ایکسفس ڈیسک ٹاپ میں لاگ ان ہوتے ہی خودکار طور پر چل جائیں گے اس میں وہ اطلاقیے بھی شامل ہیں جو آخری بار لاگ آؤٹ کے وقت آپ نے محفوظ کیے تھے:"
 
 #: ../xfce4-session/main.c:146
 msgid "Loading desktop settings"
@@ -364,14 +358,11 @@ msgid "<b>An error occurred</b>"
 msgstr "<b>کوئی غلطی ہوئی ہے</b>"
 
 #: ../xfce4-session/shutdown.c:634
-msgid ""
-"Either the password you entered is invalid, or the system administrator "
-"disallows shutting down this computer with your user account."
-msgstr ""
-"ممکن ہے کہ آپ نے جو پاس ورڈ فراہم کیا ہے وہ غلط ہو، یا نظام کے مدیر نے آپ کے "
-"اکاؤنٹ سے نظام کو بند کرنے پر پابندی عائد کر رکھی ہو."
+msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
+msgstr "ممکن ہے کہ آپ نے جو پاس ورڈ فراہم کیا ہے وہ غلط ہو، یا نظام کے مدیر نے آپ کے اکاؤنٹ سے نظام کو بند کرنے پر پابندی عائد کر رکھی ہو."
 
-#: ../xfce4-session/shutdown.c:756 ../xfce4-session/xfsm-manager.c:1109
+#: ../xfce4-session/shutdown.c:756
+#: ../xfce4-session/xfsm-manager.c:1109
 msgid "Shutdown Failed"
 msgstr "شٹ ڈاؤن میں ناکامی"
 
@@ -385,11 +376,8 @@ msgid "Last accessed: %s"
 msgstr "آخری رسائی: %s"
 
 #: ../xfce4-session/xfsm-chooser.c:213
-msgid ""
-"Choose the session you want to restore. You can simply double-click the "
-"session name to restore it."
-msgstr ""
-"ری سٹور کرنے کے لیے نشست منتخب کریں، اس کے لیے نشست کے نام پر دہرا کلک کریں."
+msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
+msgstr "ری سٹور کرنے کے لیے نشست منتخب کریں، اس کے لیے نشست کے نام پر دہرا کلک کریں."
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:239
@@ -409,7 +397,8 @@ msgstr "نئی نشست"
 msgid "Create a new session."
 msgstr "نئی نشست بنائیں."
 
-#: ../xfce4-session/xfsm-client.c:794 ../xfce4-session/xfsm-client.c:854
+#: ../xfce4-session/xfsm-client.c:794
+#: ../xfce4-session/xfsm-client.c:854
 #: ../xfce4-session/xfsm-client.c:962
 #, c-format
 msgid "The client doesn't have any properties set yet"
@@ -454,19 +443,12 @@ msgstr "دوبارہ کوشش"
 
 #: ../xfce4-session/xfsm-manager.c:591
 #, c-format
-msgid ""
-"Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
-"running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
-"incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
-msgstr ""
-"فیل سیو نشست کا نام متعین نہیں کیا جاسکتا. ممکنہ وجوہات: xfconfd نہیں چل رہا "
-"(D-Bus کے سیٹ اپ کا مسئلہ)، ماحول متغیر $XDG_CONFIG_DIRS کی ترتیبات غلط ہیں "
-"(اس میں \"%s\" شامل ہونا چاہیے)، یا xfce4-session کی تنصیب غلط ہے."
+msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
+msgstr "فیل سیو نشست کا نام متعین نہیں کیا جاسکتا. ممکنہ وجوہات: xfconfd نہیں چل رہا (D-Bus کے سیٹ اپ کا مسئلہ)، ماحول متغیر $XDG_CONFIG_DIRS کی ترتیبات غلط ہیں (اس میں \"%s\" شامل ہونا چاہیے)، یا xfce4-session کی تنصیب غلط ہے."
 
 #: ../xfce4-session/xfsm-manager.c:602
 #, c-format
-msgid ""
-"The specified failsafe session (\"%s\") is not marked as a failsafe session."
+msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "معینہ فیل سیو نشست (\"%s\") بطور فیل سیو نشست نشان زدہ نہیں ہے."
 
 #: ../xfce4-session/xfsm-manager.c:649
@@ -524,12 +506,8 @@ msgstr "کمانڈ %d کے لیے HAL میتھڈ نہیں ہے"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:283
 #, c-format
-msgid ""
-"Program \"sudo\" was not found.  You will not be able to shutdown your "
-"system from within Xfce."
-msgstr ""
-"پروگرام \"sudo\" نہیں پایا گیا. آپ ایکسفس میں سے اپنے نظام کو شٹ ڈاؤن کرنے "
-"کے قابل نہیں ہوں گے."
+msgid "Program \"sudo\" was not found.  You will not be able to shutdown your system from within Xfce."
+msgstr "پروگرام \"sudo\" نہیں پایا گیا. آپ ایکسفس میں سے اپنے نظام کو شٹ ڈاؤن کرنے کے قابل نہیں ہوں گے."
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:295
 #, c-format
@@ -552,7 +530,8 @@ msgid "Unable to read response from sudo helper: %s"
 msgstr "سوڈو معاون کار سے جواب پڑھنے میں غلطی: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:360
-#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
+#: ../xfce4-session-logout/main.c:68
+#: ../xfce4-session-logout/main.c:75
 msgid "Unknown error"
 msgstr "نا معلوم غلطی"
 
@@ -573,8 +552,7 @@ msgstr "سوڈو شٹ ڈاؤن معاون کار سے غیر متوقعہ جوا
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:544
 #, c-format
-msgid ""
-"Suspend and Hibernate are only supported through HAL, which is unavailable"
+msgid "Suspend and Hibernate are only supported through HAL, which is unavailable"
 msgstr "معطلی اور ہائبرنیٹ صرف HAL کے ذریعے معاونت رکھتے ہیں جو دستیاب نہیں"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:558
@@ -714,11 +692,13 @@ msgstr ""
 msgid "Performing Autostart..."
 msgstr "خودکار چلایا جارہا ہے..."
 
-#: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:161
+#: ../xfce4-tips/main.c:47
+#: ../xfce4-tips/main.c:161
 msgid "Tips and Tricks"
 msgstr "ٹِپ اور ٹِرکس"
 
-#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:205
+#: ../xfce4-tips/main.c:48
+#: ../xfce4-tips/main.c:205
 msgid "Fortunes"
 msgstr "Fortunes"
 
@@ -726,7 +706,8 @@ msgstr "Fortunes"
 msgid "Display tips on _startup"
 msgstr "چلانے پر ٹِپ د_کھائیں"
 
-#: ../xfce4-tips/main.c:199 ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
+#: ../xfce4-tips/main.c:199
+#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
 msgid "Tips and tricks"
 msgstr "ٹِپ اور ٹِرکس"
 
@@ -837,8 +818,7 @@ msgid "Manage _remote applications"
 msgstr "_بعید اطلاقیوں کی ادارت کریں"
 
 #: ../settings/xfce4-session-settings.glade.h:20
-msgid ""
-"Manage remote applications over the network (this may be a security risk)"
+msgid "Manage remote applications over the network (this may be a security risk)"
 msgstr "نیٹ ورک میں بعید اطلاقیوں کی ادارت کریں (یہ ایک سیکورٹی رسک ہوسکتا ہے)"
 
 #: ../settings/xfce4-session-settings.glade.h:21
@@ -866,9 +846,7 @@ msgid "Saving Session"
 msgstr "نشست محفوظ کی جارہی ہے"
 
 #: ../settings/xfce4-session-settings.glade.h:28
-msgid ""
-"Start GNOME services, such as gnome-keyring and the GNOME accessibility "
-"framework"
+msgid "Start GNOME services, such as gnome-keyring and the GNOME accessibility framework"
 msgstr "گنوم کی خدمات چلائیں، جیسے گنوم کیرنگ اور گنوم قابلیت رسائی فریم ورک"
 
 #: ../settings/xfce4-session-settings.glade.h:29
@@ -876,21 +854,12 @@ msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
 msgstr "کیڈی کی خدمات چلائیں، جیسے \"kdeinit,\" DCOP، اور آرٹ"
 
 #: ../settings/xfce4-session-settings.glade.h:30
-msgid ""
-"These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr ""
-"یہ اطلاقیے اس وقت چلتی ہوئی نشست کا حصہ ہیں، اور لاگ آؤٹ کرتے وقت محفوظ کیے "
-"جاسکتے ہیں. ذیل کی تبدیلیاں تب لاگو ہوں گی جب نشست محفوظ کی جائے گی."
+msgid "These applications are a part of the currently-running session, and can be saved when you log out.  Changes below will only take effect when the session is saved."
+msgstr "یہ اطلاقیے اس وقت چلتی ہوئی نشست کا حصہ ہیں، اور لاگ آؤٹ کرتے وقت محفوظ کیے جاسکتے ہیں. ذیل کی تبدیلیاں تب لاگو ہوں گی جب نشست محفوظ کی جائے گی."
 
 #: ../settings/xfce4-session-settings.glade.h:31
-msgid ""
-"Your session is being saved.  If you do not wish to wait, you may close this "
-"window."
-msgstr ""
-"آپ کی نشست محفوظ کی جارہی ہے. اگر آپ انتظار نہیں کرنا چاہتے تو اس ونڈو کو "
-"بند کر سکتے ہیں."
+msgid "Your session is being saved.  If you do not wish to wait, you may close this window."
+msgstr "آپ کی نشست محفوظ کی جارہی ہے. اگر آپ انتظار نہیں کرنا چاہتے تو اس ونڈو کو بند کر سکتے ہیں."
 
 #: ../settings/xfce4-session-settings.glade.h:32
 msgid "_Display chooser on login"
@@ -932,27 +901,12 @@ msgstr "لیبل"
 msgid "xfce4-tips"
 msgstr "ایکسفس4-ٹِپس"
 
-#, fuzzy
-msgid "Remove the selected application from the session."
-msgstr "منتخب کردہ سپلیش سکرین کا مظاہرہ دیکھیں."
-
-#, fuzzy
-#~ msgid "Session and Startup Settings"
-#~ msgstr "نشست اور سٹارٹ اپ ترتیبات"
-
-#~ msgid "Sessions and Startup Settings"
-#~ msgstr "نشست اور سٹارٹ اپ ترتیبات"
-
-#~ msgid "Xfce 4 Sessions and Startup Settings"
-#~ msgstr "ایکسفس 4 نشست اور سٹارٹ اپ ترتیبات"
-
 #~ msgid ""
 #~ "If set, the session manager will ask you to choose a session every time "
 #~ "you log in to Xfce."
 #~ msgstr ""
 #~ "اگر منتخب کیا گیا تو نشست منیجر ہر بار ایکسفس میں لاگ ان ہونے پر نشست کا "
 #~ "پوچھے گا."
-
 #~ msgid ""
 #~ "This option instructs the session manager to save the current session "
 #~ "automatically when you log out. If you don't select this option you'll be "
@@ -961,7 +915,6 @@ msgstr "منتخب کردہ سپلیش سکرین کا مظاہرہ دیکھیں
 #~ "یہ آپشن نشست منیجر کو ہدایت دیتا ہے کہ وہ آپ کے لاگ آؤٹ ہونے پر نشست کو "
 #~ "خودکار طور پر محفوظ کرلے. اگر آپ اسے منتخب نہیں کرتے تو ہر بار لاگ آؤٹ "
 #~ "ہونے پر آپ سے نشست کی محفوظگی کے بارے میں پوچھا جائے گا."
-
 #~ msgid ""
 #~ "This option disables the logout confirmation dialog. Whether the session "
 #~ "will be saved or not depends on whether you enabled the automatic saving "
@@ -969,10 +922,8 @@ msgstr "منتخب کردہ سپلیش سکرین کا مظاہرہ دیکھیں
 #~ msgstr ""
 #~ "یہ آپشن لاگ آؤٹ تصدیقی ڈائیلاگ کو معطل کردے گا. نشست کی محفوظگی کا انحصار "
 #~ "آپ کی ترتیبات پر ہے."
-
 #~ msgid "Launch Gnome services on startup"
 #~ msgstr "سٹارٹ اپ میں گنوم کی خدمات چلائیں"
-
 #~ msgid ""
 #~ "Enable this if you plan to use Gnome applications. This will instruct the "
 #~ "session manager to start some vital Gnome services for you. You should "
@@ -982,7 +933,6 @@ msgstr "منتخب کردہ سپلیش سکرین کا مظاہرہ دیکھیں
 #~ "اگر آپ گنوم کے اطلاقیے استعمال کرنے چاہتے ہیں تو اسے فعال کردیں. یہ نشست "
 #~ "منیجر کو آگاہ کردے گا کہ وہ آپ کے لیے گنوم کی بنیادی خدمات چلادے. گنوم کی "
 #~ "معاون ٹیکنالوچیز کے استعمال کے لیے بھی اسے فعال رکھیں."
-
 #~ msgid ""
 #~ "Enable this option if you plan to run KDE applications as part of your "
 #~ "Xfce Desktop session. This will notably increase the startup time, but on "
@@ -993,10 +943,8 @@ msgstr "منتخب کردہ سپلیش سکرین کا مظاہرہ دیکھیں
 #~ "فعال کردیں، یہ نہ صرف سٹارٹ اپ کو تیز کرے گا بلکہ کیڈی کے اطلاقیے بھی "
 #~ "تیزی سے چلنے لگیں گے، اگر آپ اسے فعال نہیں کریں گے تو ہوسکتا ہے کہ کیڈی "
 #~ "کے بعض اطلاقیے چلنے سے ہی انکار کردیں اور موج ہوجائے."
-
 #~ msgid "Security"
 #~ msgstr "سیکورٹی"
-
 #~ msgid ""
 #~ "Allow the session manager to manage applications running on remote hosts. "
 #~ "Do not enable this option unless you know what you are doing."
@@ -1004,27 +952,24 @@ msgstr "منتخب کردہ سپلیش سکرین کا مظاہرہ دیکھیں
 #~ "نشست منیجر کو یہ صلاحیت دیتا ہے کہ وہ بعید ہوسٹ میں چلنے والے اطلاقیوں کی "
 #~ "ادرات کرسکے. اگر آپ کو نہیں معلوم کہ آپ کیا کرنے جارہے ہیں تو اسے فعال مت "
 #~ "کریں."
-
 #~ msgid "Button Label|Sessions and Startup"
 #~ msgstr "نشست اور ابتدائیہ"
-
 #~ msgid "Splash Screen Settings"
 #~ msgstr "سپلیش سکرین کی ترتیبات"
-
 #~ msgid "Button Label|Splash Screen"
 #~ msgstr "سپلیش سکرین"
-
 #~ msgid "Autostarted applications"
 #~ msgstr "خودکار چلنے والے اطلاقیے"
-
+#~ msgid "Sessions and Startup Settings"
+#~ msgstr "نشست اور سٹارٹ اپ ترتیبات"
+#~ msgid "Xfce 4 Sessions and Startup Settings"
+#~ msgstr "ایکسفس 4 نشست اور سٹارٹ اپ ترتیبات"
 #~ msgid "Xfce 4 Splash Screen Settings"
 #~ msgstr "ایکسفس 4 سپلیش سکرین ترتیبات"
-
 #~ msgid "Autostarted Applications"
 #~ msgstr "خودکار چلنے والے اطلاقیے"
-
 #~ msgid "Edit the list of autostarted applications"
 #~ msgstr "خودکار چلنے والے اطلاقیوں کی فہرست مدون کریں"
-
 #~ msgid "Xfce 4 Autostarted Applications"
 #~ msgstr "ایکسفس 4 خودکار چلنے والے اطلاقیے"
+
