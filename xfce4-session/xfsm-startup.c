@@ -388,6 +388,7 @@ xfsm_startup_autostart_xdg (void)
           terminal = xfce_rc_read_bool_entry (rc, "Terminal", FALSE);
 
           /* try to launch the command */
+          xfsm_verbose ("Autostart: running command \"%s\"\n", exec);
           if (!xfce_exec (exec, terminal, startup_notify, &error))
             {
               g_warning ("Unable to launch \"%s\" (specified by %s): %s", exec, files[n], error->message);
@@ -519,7 +520,10 @@ xfsm_startup_start_properties (XfsmProperties *properties,
     {
       /* execute the application here */
       if (properties->current_directory)
-        chdir (properties->current_directory);
+        {
+          if (chdir (properties->current_directory))
+            g_warning ("Unable to chdir to \"%s\": %s", properties->current_directory, strerror (errno));
+        }
       execvp (argv[0], argv);
       _exit (127);
     }
