@@ -79,6 +79,7 @@ xfsm_verbose_real (const gchar *format, ...)
   static FILE *fp = NULL;
   gchar       *logfile;
   va_list      valist;
+  GTimeVal     tv;
   
   if (G_UNLIKELY (fp == NULL))
     {
@@ -86,6 +87,9 @@ xfsm_verbose_real (const gchar *format, ...)
       fp = fopen (logfile, "w");
       g_free (logfile);
     }
+
+  g_get_current_time(&tv);
+  fprintf(fp, "[%10lu] ", tv.tv_sec);
   
   va_start (valist, format);
   vfprintf (fp, format, valist);

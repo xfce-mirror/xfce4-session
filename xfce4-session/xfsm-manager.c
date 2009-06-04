@@ -1625,7 +1625,8 @@ xfsm_manager_store_session (XfsmManager *manager)
     {
       backup = g_strconcat (manager->session_file, ".bak", NULL);
       unlink (backup);
-      link (manager->session_file, backup);
+      if (link (manager->session_file, backup))
+          g_warning ("Failed to create session file backup");
       g_free (backup);
     }
 
