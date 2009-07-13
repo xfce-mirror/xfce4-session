@@ -149,7 +149,7 @@ main (int argc, char **argv)
   GtkWidget *menu;
   GtkWidget *opt;
   GtkWidget *next;
-  GtkWidget *close;
+  GtkWidget *close_btn;
 
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
   
@@ -217,13 +217,13 @@ main (int argc, char **argv)
   gtk_dialog_add_action_widget (GTK_DIALOG (dlg), next, GTK_RESPONSE_NONE);
   gtk_widget_show (next);
 
-  close = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-  gtk_dialog_add_action_widget (GTK_DIALOG (dlg), close, GTK_RESPONSE_DELETE_EVENT);
-  gtk_widget_show (close);
+  close_btn = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+  gtk_dialog_add_action_widget (GTK_DIALOG (dlg), close_btn, GTK_RESPONSE_DELETE_EVENT);
+  gtk_widget_show (close_btn);
 
   g_signal_connect (dlg, "delete-event", G_CALLBACK (gtk_main_quit), NULL);
   g_signal_connect (dlg, "destroy-event", G_CALLBACK (gtk_main_quit), NULL);
-  g_signal_connect (close, "clicked", G_CALLBACK (gtk_main_quit), NULL);
+  g_signal_connect (close_btn, "clicked", G_CALLBACK (gtk_main_quit), NULL);
   g_signal_connect (next, "clicked", G_CALLBACK (next_cb), gtk_text_view_get_buffer (GTK_TEXT_VIEW (view)));
 
   next_cb (next, gtk_text_view_get_buffer (GTK_TEXT_VIEW (view)));

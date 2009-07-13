@@ -48,6 +48,10 @@
 #include <fcntl.h>
 #endif
 
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
 
@@ -123,7 +127,11 @@ gnome_keyring_daemon_startup (void)
 
 
   /* Pipe to slave keyring lifetime to */
-  pipe (keyring_lifetime_pipe);
+  if (pipe (keyring_lifetime_pipe))
+    {
+      g_warning ("Failed to set up pipe for gnome-keyring: %s", strerror (errno));
+      return;
+    }
 
   error = NULL;
   argv[0] = GNOME_KEYRING_DAEMON;

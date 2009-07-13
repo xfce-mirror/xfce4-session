@@ -158,8 +158,6 @@ enum
 };
 
 
-static void       xfsm_manager_class_init (XfsmManagerClass *klass);
-static void       xfsm_manager_init (XfsmManager *manager);
 static void       xfsm_manager_finalize (GObject *obj);
 
 static gboolean   xfsm_manager_startup (XfsmManager *manager);
@@ -967,10 +965,10 @@ xfsm_manager_interact (XfsmManager *manager,
            lp;
            lp = lp->next)
         {
-          XfsmClient *client = lp->data;
-          if (xfsm_client_get_state (client) == XFSM_CLIENT_INTERACTING)
+          XfsmClient *cl = lp->data;
+          if (xfsm_client_get_state (cl) == XFSM_CLIENT_INTERACTING)
             {
-              xfsm_client_set_state (client, XFSM_CLIENT_WAITFORINTERACT);
+              xfsm_client_set_state (cl, XFSM_CLIENT_WAITFORINTERACT);
               return;
             }
         }
@@ -1029,13 +1027,13 @@ xfsm_manager_interact_done (XfsmManager *manager,
            lp;
            lp = lp->next)
         {
-          XfsmClient *client = lp->data;
-          if (xfsm_client_get_state (client) != XFSM_CLIENT_WAITFORINTERACT)
+          XfsmClient *cl = lp->data;
+          if (xfsm_client_get_state (cl) != XFSM_CLIENT_WAITFORINTERACT)
             continue;
 
           /* reset all clients that are waiting for interact */
           xfsm_client_set_state (client, XFSM_CLIENT_SAVING);
-          SmsShutdownCancelled (xfsm_client_get_sms_connection (client));
+          SmsShutdownCancelled (xfsm_client_get_sms_connection (cl));
         }
 
         g_signal_emit (manager, signals[SIG_SHUTDOWN_CANCELLED], 0);
@@ -1047,10 +1045,10 @@ xfsm_manager_interact_done (XfsmManager *manager,
            lp;
            lp = lp->next)
         {
-          XfsmClient *client = lp->data;
-          if (xfsm_client_get_state (client) == XFSM_CLIENT_WAITFORINTERACT)
+          XfsmClient *cl = lp->data;
+          if (xfsm_client_get_state (cl) == XFSM_CLIENT_WAITFORINTERACT)
             {
-              xfsm_manager_start_interact (manager, client);
+              xfsm_manager_start_interact (manager, cl);
               break;
             }
         }
@@ -1317,8 +1315,8 @@ xfsm_manager_close_connection (XfsmManager *manager,
            lp;
            lp = lp->next)
         {
-          XfsmClient *client = lp->data;
-          if (xfsm_client_get_state (client) != XFSM_CLIENT_DISCONNECTED)
+          XfsmClient *cl = lp->data;
+          if (xfsm_client_get_state (cl) != XFSM_CLIENT_DISCONNECTED)
             return;
         }
       

@@ -68,7 +68,7 @@
 #include <xfce4-session/xfsm-startup.h>
 #include "xfsm-error.h"
 
-void
+static void
 setup_environment (void)
 {
   const gchar *lang;
@@ -217,7 +217,7 @@ initialize (XfsmManager *manager,
 }
 
 
-void
+static void
 xfsm_dbus_init (void)
 {
   DBusGConnection *dbus_conn;
@@ -246,7 +246,7 @@ xfsm_dbus_init (void)
     }
 }
 
-void
+static void
 xfsm_dbus_cleanup (void)
 {
   DBusGConnection *dbus_conn;

@@ -71,6 +71,10 @@ struct _Mice
 };
 
 
+G_MODULE_EXPORT void config_init (XfsmSplashConfig *config);
+G_MODULE_EXPORT void engine_init (XfsmSplashEngine *engine);
+
+
 static GdkFilterReturn
 mice_filter (GdkXEvent *xevent, GdkEvent *event, gpointer user_data)
 {

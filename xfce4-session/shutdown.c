@@ -358,16 +358,16 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   if (G_LIKELY(pw && pw->pw_name && *pw->pw_name))
     {
       gchar *text = g_strdup_printf (_("<span size='large'><b>Log out %s</b></span>"), pw->pw_name);
-      GtkWidget *label = g_object_new (GTK_TYPE_LABEL,
-                                       "label", text,
-                                       "use-markup", TRUE,
-                                       "justify", GTK_JUSTIFY_CENTER,
-                                       "xalign", 0.5,
-                                       "yalign", 0.5,
-                                       NULL);
+      GtkWidget *logout_label = g_object_new (GTK_TYPE_LABEL,
+                                             "label", text,
+                                             "use-markup", TRUE,
+                                             "justify", GTK_JUSTIFY_CENTER,
+                                             "xalign", 0.5,
+                                             "yalign", 0.5,
+                                             NULL);
 
-      gtk_widget_show (label);
-      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (logout_label);
+      gtk_box_pack_start (GTK_BOX (vbox), logout_label, FALSE, FALSE, 0);
 
       g_free (text);
     }
@@ -612,9 +612,9 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
 
       if (result == GTK_RESPONSE_OK)
         {
-          const gchar *pw = gtk_entry_get_text (GTK_ENTRY (entry));
+          const gchar *password = gtk_entry_get_text (GTK_ENTRY (entry));
 
-          if (!xfsm_shutdown_helper_send_password (shutdown_helper, pw))
+          if (!xfsm_shutdown_helper_send_password (shutdown_helper, password))
             {
               gtk_label_set_text (GTK_LABEL (label),
                                   _("<b>An error occurred</b>"));

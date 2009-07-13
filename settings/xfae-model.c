@@ -38,14 +38,12 @@ typedef struct _XfaeItem XfaeItem;
 
 
 
-static void               xfae_model_class_init       (XfaeModelClass     *klass);
-static void               xfae_model_init             (XfaeModel          *model);
 static void               xfae_model_tree_model_init  (GtkTreeModelIface  *iface);
 static void               xfae_model_finalize         (GObject            *object);
 static GtkTreeModelFlags  xfae_model_get_flags        (GtkTreeModel       *tree_model);
 static gint               xfae_model_get_n_columns    (GtkTreeModel       *tree_model);
 static GType              xfae_model_get_column_type  (GtkTreeModel       *tree_model,
-                                                       gint                index);
+                                                       gint                index_);
 static gboolean           xfae_model_get_iter         (GtkTreeModel       *tree_model,
                                                        GtkTreeIter        *iter,
                                                        GtkTreePath        *path);
@@ -87,7 +85,7 @@ struct _XfaeModel
 {
   GObject __parent__;
 
-  guint  stamp;
+  gint   stamp;
   GList *items;
 };
 
@@ -193,9 +191,9 @@ xfae_model_get_n_columns (GtkTreeModel *tree_model)
 
 static GType
 xfae_model_get_column_type (GtkTreeModel *tree_model,
-                            gint          index)
+                            gint          index_)
 {
-  switch (index)
+  switch (index_)
     {
     case XFAE_MODEL_COLUMN_NAME:
       return G_TYPE_STRING;
@@ -222,17 +220,17 @@ xfae_model_get_iter (GtkTreeModel *tree_model,
                      GtkTreePath  *path)
 {
   XfaeModel *model = XFAE_MODEL (tree_model);
-  gint       index;
+  guint      index_;
 
   g_return_val_if_fail (XFAE_IS_MODEL (model), FALSE);
   g_return_val_if_fail (gtk_tree_path_get_depth (path) > 0, FALSE);
 
-  index = gtk_tree_path_get_indices (path)[0];
-  if (G_UNLIKELY (index >= g_list_length (model->items)))
+  index_ = gtk_tree_path_get_indices (path)[0];
+  if (G_UNLIKELY (index_ >= g_list_length (model->items)))
     return FALSE;
 
   iter->stamp = model->stamp;
-  iter->user_data = g_list_nth (model->items, index);
+  iter->user_data = g_list_nth (model->items, index_);
 
   return TRUE;
 }
@@ -244,16 +242,16 @@ xfae_model_get_path (GtkTreeModel *tree_model,
                      GtkTreeIter  *iter)
 {
   XfaeModel *model = XFAE_MODEL (tree_model);
-  gint       index;
+  gint       index_;
 
   g_return_val_if_fail (XFAE_IS_MODEL (model), NULL);
   g_return_val_if_fail (model->stamp == iter->stamp, NULL);
 
-  index = g_list_position (model->items, iter->user_data);
-  if (G_UNLIKELY (index < 0))
+  index_ = g_list_position (model->items, iter->user_data);
+  if (G_UNLIKELY (index_ < 0))
     return NULL;
 
-  return gtk_tree_path_new_from_indices (index, -1);
+  return gtk_tree_path_new_from_indices (index_, -1);
 }
 
 
@@ -373,7 +371,7 @@ xfae_model_iter_nth_child (GtkTreeModel *tree_model,
 
   g_return_val_if_fail (XFAE_IS_MODEL (model), FALSE);
 
-  if (G_UNLIKELY (parent == NULL && n < g_list_length (model->items)))
+  if (G_UNLIKELY (parent == NULL && n < (gint)g_list_length (model->items)))
     {
       iter->stamp = model->stamp;
       iter->user_data = g_list_nth (model->items, n);
@@ -707,7 +705,7 @@ xfae_model_remove (XfaeModel   *model,
   GtkTreePath *path;
   XfaeItem    *item;
   GList       *lp;
-  gint         index;
+  gint         index_;
 
   g_return_val_if_fail (XFAE_IS_MODEL (model), FALSE);
   g_return_val_if_fail (iter->stamp == model->stamp, FALSE);
@@ -721,12 +719,12 @@ xfae_model_remove (XfaeModel   *model,
     return FALSE;
 
   /* unlink the item from the list */
-  index = g_list_position (model->items, lp);
+  index_ = g_list_position (model->items, lp);
   model->items = g_list_delete_link (model->items, lp);
   xfae_item_free (item);
 
   /* tell the view that we have just removed one item */
-  path = gtk_tree_path_new_from_indices (index, -1);
+  path = gtk_tree_path_new_from_indices (index_, -1);
   gtk_tree_model_row_deleted (GTK_TREE_MODEL (model), path);
   gtk_tree_path_free (path);
 

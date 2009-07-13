@@ -361,7 +361,8 @@ ice_cleanup (void)
 
   /* remove newly added ICE authority entries */
   command = g_strdup_printf ("%s source %s", ICEAUTH_CMD, auth_cleanup_file);
-  system (command);
+  if (system (command))
+    g_warning ("Failed to execute \"%s\"", command);
   g_free (command);
 
   /* remove the cleanup file, no longer needed */

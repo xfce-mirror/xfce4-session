@@ -175,7 +175,7 @@ xfsm_shutdown_helper_hal_send (XfsmShutdownHelper *helper,
   DBusError       derror;
   const gchar    *methodname = NULL;
   dbus_int32_t    wakeup     = 0;
-  int             i;
+  guint           i;
 
   /* FIXME: would rather not call this here, but it's nice to be able
    * to get a correct error message */

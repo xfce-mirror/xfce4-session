@@ -55,6 +55,7 @@
 
 #include <libxfsm/xfsm-util.h>
 
+#include "xfsm-dns.h"
 #include <xfce4-session/xfsm-global.h>
 
 

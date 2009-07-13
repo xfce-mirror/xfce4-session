@@ -88,8 +88,6 @@ enum
 };
 
 
-static void xfsm_client_class_init (XfsmClientClass *klass);
-static void xfsm_client_init (XfsmClient *client);
 static void xfsm_client_finalize (GObject *obj);
 
 static void    xfsm_properties_replace_discard_command (XfsmProperties *properties,
@@ -392,7 +390,7 @@ xfsm_client_merge_properties (XfsmClient *client,
   XfsmProperties *properties;
   gchar         **strv;
   SmProp         *prop;
-  guint           n;
+  gint            n;
 
   g_return_if_fail (XFSM_IS_CLIENT (client));
   g_return_if_fail (client->properties != NULL);

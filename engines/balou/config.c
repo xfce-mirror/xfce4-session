@@ -68,6 +68,9 @@ enum
 };
 
 
+G_MODULE_EXPORT void config_init (XfsmSplashConfig *config);
+
+
 static GtkTargetEntry dst_targets[] =
 {
   { "text/uri-list", 0, TARGET_URI },
@@ -283,7 +286,7 @@ config_do_install_theme (const gchar *path,
 static void
 config_dropped (GtkWidget *treeview, GdkDragContext *context,
                 gint x, gint y, GtkSelectionData *data,
-                guint info, guint time, gpointer user_data)
+                guint info, guint time_, gpointer user_data)
 {
   gboolean succeed = FALSE;
   GList   *fnames;
@@ -303,7 +306,7 @@ config_dropped (GtkWidget *treeview, GdkDragContext *context,
       gnome_uri_list_free_strings (fnames);
     }
 
-  gtk_drag_finish (context, succeed, FALSE, time);
+  gtk_drag_finish (context, succeed, FALSE, time_);
 }
 
 
@@ -511,7 +514,7 @@ config_popup_menu (GtkWidget      *treeview,
   gchar     *resource;
   gchar     *name;
   guint      button;
-  guint      time;
+  guint      time_;
 
   menu = (GtkWidget *) g_object_get_data (G_OBJECT (treeview), "popup-menu");
   if (GTK_IS_WIDGET (menu))
@@ -519,12 +522,12 @@ config_popup_menu (GtkWidget      *treeview,
       if (event != NULL)
         {
           button = event->button;
-          time = event->time;
+          time_ = event->time;
         }
       else
         {
           button = 0;
-          time = gtk_get_current_event_time ();
+          time_ = gtk_get_current_event_time ();
         }
 
 #ifdef RM_CMD
@@ -555,7 +558,7 @@ config_popup_menu (GtkWidget      *treeview,
                               (GDestroyNotify) g_free);
       g_object_set_data (G_OBJECT (menu), "tree-view", treeview);
 
-      gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL, button, time);
+      gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL, button, time_);
     }
 }
 
@@ -667,7 +670,7 @@ extract_local_path (gchar *uri)
 			return path;	/* ///path */
 
     our_host_name = xfce_gethostname ();
-		if (strlen(our_host_name) == path - uri - 2 &&
+		if ((int)strlen(our_host_name) == path - uri - 2 &&
 			strncmp(uri + 2, our_host_name, path - uri - 2) == 0)
       {
         g_free (our_host_name);
@@ -724,7 +727,7 @@ config_drag_data_get (GtkWidget        *treeview,
                       GdkDragContext   *context,
                       GtkSelectionData *selection_data,
                       guint             info,
-                      guint32           time)
+                      guint32           time_)
 {
   GtkTreeSelection *selection;
   GtkTreeModel     *model;
@@ -829,7 +832,7 @@ config_selection_changed (GtkTreeSelection *selection,
 }
 
 
-GtkWidget*
+static GtkWidget*
 config_create (XfsmSplashRc *rc)
 {
   GtkTreeSelection  *selection;

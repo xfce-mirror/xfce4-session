@@ -33,6 +33,7 @@
 #include <libxfce4util/libxfce4util.h>
 #include <libxfcegui4/libxfcegui4.h>
 
+#include "xfce4-session-settings-common.h"
 #include "xfce4-session-marshal.h"
 #include "xfsm-client-dbus-client.h"
 #include "xfsm-manager-dbus-client.h"
@@ -66,7 +67,7 @@ static DBusGProxy *manager_dbus_proxy = NULL;
 
 
 static gboolean
-session_editor_ensure_dbus()
+session_editor_ensure_dbus(void)
 {
     if(G_UNLIKELY(!dbus_conn)) {
         GError *error = NULL;
@@ -379,7 +380,7 @@ manager_client_registered(DBusGProxy *proxy,
 }
 
 static GtkTreeModel *
-session_editor_create_restart_style_combo_model()
+session_editor_create_restart_style_combo_model(void)
 {
     GtkListStore *ls = gtk_list_store_new(1, G_TYPE_STRING);
     GtkTreeIter iter;
@@ -544,7 +545,7 @@ session_editor_populate_treeview(GtkTreeView *treeview)
     GtkTreeModel *combo_model;
     GPtrArray *clients = NULL;
     GtkListStore *ls;
-    gint i;
+    guint i;
     GError *error = NULL;
 
     render = gtk_cell_renderer_text_new();

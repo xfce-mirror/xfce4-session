@@ -33,6 +33,9 @@
 #define DEFAULT_THEME   "Default"
 
 
+G_MODULE_EXPORT void engine_init (XfsmSplashEngine *engine);
+
+
 static void
 engine_setup (XfsmSplashEngine *engine,
               XfsmSplashRc     *rc)

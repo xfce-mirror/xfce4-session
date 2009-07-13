@@ -457,7 +457,7 @@ xfsm_strv_from_smprop (const SmProp *prop)
 {
   gchar **strv = NULL;
   gint    strc;
-  guint   n;
+  gint    n;
   
   if (strcmp (prop->type, SmARRAY8) == 0)
     {

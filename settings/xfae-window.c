@@ -30,8 +30,6 @@
 
 
 
-static void     xfae_window_class_init          (XfaeWindowClass  *klass);
-static void     xfae_window_init                (XfaeWindow       *window);
 static void     xfae_window_add                 (XfaeWindow       *window);
 static void     xfae_window_remove              (XfaeWindow       *window);
 static gboolean xfae_window_button_press_event  (GtkWidget        *treeview,
