@@ -548,6 +548,11 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
         gtk_widget_set_sensitive (hibernate_button, FALSE);
     }
 
+  if (suspend_button && !xfsm_shutdown_helper_supports (shutdown_helper, XFSM_SHUTDOWN_SUSPEND))
+    gtk_widget_hide (suspend_button);
+  if (hibernate_button && !xfsm_shutdown_helper_supports (shutdown_helper, XFSM_SHUTDOWN_HIBERNATE))
+    gtk_widget_hide (hibernate_button);
+
   /* save portion of the root window covered by the dialog */
   if (!accessibility && shutdown_helper != NULL)
     {

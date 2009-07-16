@@ -24,12 +24,7 @@
 
 #include <glib.h>
 
-
-typedef enum
-{
-  XFSM_SHUTDOWN_COMMAND_POWEROFF   = 0,
-  XFSM_SHUTDOWN_COMMAND_REBOOT     = 1,
-} XfsmShutdownCommand;
+#include "xfsm-global.h"
 
 
 typedef struct _XfsmShutdownHelper XfsmShutdownHelper;
@@ -43,8 +38,11 @@ gboolean xfsm_shutdown_helper_send_password (XfsmShutdownHelper *helper,
                                              const gchar        *password);
 
 gboolean xfsm_shutdown_helper_send_command (XfsmShutdownHelper *helper,
-                                            XfsmShutdownCommand command,
+                                            XfsmShutdownType command,
                                             GError **error);
+
+gboolean xfsm_shutdown_helper_supports (XfsmShutdownHelper *helper,
+                                        XfsmShutdownType shutdown_type);
 
 void xfsm_shutdown_helper_destroy (XfsmShutdownHelper *helper);
 

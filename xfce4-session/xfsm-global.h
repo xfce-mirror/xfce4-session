@@ -28,6 +28,15 @@
 
 #include <xfce4-session/xfsm-splash-screen.h>
 
+typedef enum
+{
+  XFSM_SHUTDOWN_ASK = 0,
+  XFSM_SHUTDOWN_LOGOUT,
+  XFSM_SHUTDOWN_HALT,
+  XFSM_SHUTDOWN_REBOOT,
+  XFSM_SHUTDOWN_SUSPEND,
+  XFSM_SHUTDOWN_HIBERNATE,
+} XfsmShutdownType;
 
 typedef struct _FailsafeClient FailsafeClient;
 struct _FailsafeClient

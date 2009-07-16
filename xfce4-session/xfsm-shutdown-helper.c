@@ -67,7 +67,7 @@
 
 static struct
 {
-  XfsmShutdownCommand command;
+  XfsmShutdownType command;
   gchar * name;
 } command_name_map[] = {
   { XFSM_SHUTDOWN_HALT,      "Shutdown"  },
@@ -88,17 +88,11 @@ struct _XfsmShutdownHelper
 };
 
 
-
-static gboolean
-xfsm_shutdown_helper_hal_check (XfsmShutdownHelper *helper,
-                                GError **error)
+static DBusConnection *
+xfsm_shutdown_helper_dbus_connect (GError **error)
 {
   DBusConnection *connection;
-  DBusMessage    *message;
-  DBusMessage    *result;
   DBusError       derror;
-
-  g_return_val_if_fail (helper && (!error || !*error), FALSE);
 
   /* initialize the error */
   dbus_error_init (&derror);
@@ -111,8 +105,30 @@ xfsm_shutdown_helper_hal_check (XfsmShutdownHelper *helper,
       if (error)
         dbus_set_g_error (error, &derror);
       dbus_error_free (&derror);
-      return FALSE;
+      return NULL;
     }
+
+  return connection;
+}
+
+
+static gboolean
+xfsm_shutdown_helper_hal_check (XfsmShutdownHelper *helper,
+                                GError **error)
+{
+  DBusConnection *connection;
+  DBusMessage    *message;
+  DBusMessage    *result;
+  DBusError       derror;
+
+  g_return_val_if_fail (helper && (!error || !*error), FALSE);
+
+  connection = xfsm_shutdown_helper_dbus_connect (error);
+  if (!connection)
+    return FALSE;
+
+  /* initialize the error */
+  dbus_error_init (&derror);
 
   /* this is a simple trick to check whether we are allowed to
    * use the org.freedesktop.Hal.Device.SystemPowerManagement
@@ -166,7 +182,7 @@ xfsm_shutdown_helper_hal_check (XfsmShutdownHelper *helper,
 
 static gboolean
 xfsm_shutdown_helper_hal_send (XfsmShutdownHelper *helper,
-                               XfsmShutdownCommand command,
+                               XfsmShutdownType command,
                                GError **error)
 {
   DBusConnection *connection;
@@ -201,19 +217,12 @@ xfsm_shutdown_helper_hal_send (XfsmShutdownHelper *helper,
       return FALSE;
     }
 
+  connection = xfsm_shutdown_helper_dbus_connect (error);
+  if(!connection)
+    return FALSE;
+
   /* initialize the error */
   dbus_error_init (&derror);
-
-  /* connect to the system message bus */
-  connection = dbus_bus_get (DBUS_BUS_SYSTEM, &derror);
-  if (G_UNLIKELY (connection == NULL))
-    {
-      g_warning (G_STRLOC ": Failed to connect to the system message bus: %s", derror.message);
-      if (error)
-        dbus_set_g_error (error, &derror);
-      dbus_error_free (&derror);
-      return FALSE;
-    }
 
   /* send the appropriate message to HAL, telling it to shutdown or reboot the system */
   message = dbus_message_new_method_call ("org.freedesktop.Hal",
@@ -241,6 +250,65 @@ xfsm_shutdown_helper_hal_send (XfsmShutdownHelper *helper,
   /* pretend that we succeed */
   dbus_message_unref (result);
   return TRUE;
+}
+
+
+
+static gboolean
+xfsm_shutdown_helper_check_hal_property (const gchar *object_path,
+                                         const gchar *property_name)
+{
+  DBusConnection *connection;
+  DBusMessage    *message;
+  DBusMessage    *result;
+  DBusError       derror;
+  dbus_bool_t     response = FALSE;
+
+  connection = xfsm_shutdown_helper_dbus_connect (NULL);
+  if (!connection)
+    return FALSE;
+
+  message = dbus_message_new_method_call ("org.freedesktop.Hal",
+                                          object_path,
+                                          "org.freedesktop.Hal.Device",
+                                          "GetPropertyBoolean");
+  dbus_message_append_args (message,
+                            DBUS_TYPE_STRING, &property_name,
+                            DBUS_TYPE_INVALID);
+
+  dbus_error_init(&derror);
+  result = dbus_connection_send_with_reply_and_block (connection, message, -1, &derror);
+  dbus_message_unref (message);
+
+  if (G_UNLIKELY (result == NULL))
+    {
+      g_warning (G_STRLOC ": Failed to contact HAL: %s", derror.message);
+      dbus_error_free (&derror);
+      return FALSE;
+    }
+
+  if (!result)
+    return FALSE;
+
+  if (dbus_set_error_from_message (&derror, result))
+    {
+      dbus_error_free (&derror);
+      response = FALSE;
+    }
+  else
+    {
+      if (!dbus_message_get_args (result, &derror,
+                                  DBUS_TYPE_BOOLEAN, &response,
+                                  DBUS_TYPE_INVALID))
+        {
+          dbus_error_free (&derror);
+          response = FALSE;
+        }
+    }
+
+  dbus_message_unref (result);
+
+  return response;
 }
 
 
@@ -517,15 +585,16 @@ xfsm_shutdown_helper_send_password (XfsmShutdownHelper *helper,
 
 gboolean
 xfsm_shutdown_helper_send_command (XfsmShutdownHelper *helper,
-                                   XfsmShutdownCommand command,
+                                   XfsmShutdownType command,
                                    GError **error)
 {
-  static gchar *command_table[] = { "POWEROFF", "REBOOT" };
+  const gchar *command_str = NULL;
   gchar         response[256];
 
   g_return_val_if_fail (helper != NULL, FALSE);
   g_return_val_if_fail (!helper->need_password, FALSE);
   g_return_val_if_fail (!error || !*error, FALSE);
+  g_return_val_if_fail (command != XFSM_SHUTDOWN_ASK, FALSE);
 
   /* check if we can use HAL to perform the requested action */
   if (G_LIKELY (helper->use_hal))
@@ -536,20 +605,30 @@ xfsm_shutdown_helper_send_command (XfsmShutdownHelper *helper,
   else
     {
       /* we don't support hibernate or suspend without HAL */
-      if (command == XFSM_SHUTDOWN_SUSPEND || command == XFSM_SHUTDOWN_HIBERNATE)
+      switch (command)
         {
-          if (error)
-            {
-              g_set_error (error, DBUS_GERROR, DBUS_GERROR_SERVICE_UNKNOWN,
-                           _("Suspend and Hibernate are only supported through HAL, which is unavailable"));
-            }
-          return FALSE;
+          case XFSM_SHUTDOWN_HALT:
+            command_str = "POWEROFF";
+            break;
+
+          case XFSM_SHUTDOWN_REBOOT:
+            command_str = "REBOOT";
+            break;
+
+          case XFSM_SHUTDOWN_SUSPEND:
+          case XFSM_SHUTDOWN_HIBERNATE:
+            if (error)
+              {
+                g_set_error (error, DBUS_GERROR, DBUS_GERROR_SERVICE_UNKNOWN,
+                             _("Suspend and Hibernate are only supported through HAL, which is unavailable"));
+              }
+            /* fall through */
+          default:
+            return FALSE;
         }
 
       /* send it to our associated sudo'ed process */
-      /* -2 is not a magic number, it's to get the right offset in command_table array */
-      /* because in enum, XFSM_SHUTDOWN_HALT = 2 and XFSM_SHUTDOWN_REBOOT = 3 */
-      fprintf (helper->outfile, "%s\n", command_table[command - 2]);
+      fprintf (helper->outfile, "%s\n", command_str);
       fflush (helper->outfile);
 
       if (ferror (helper->outfile))
@@ -586,6 +665,52 @@ xfsm_shutdown_helper_send_command (XfsmShutdownHelper *helper,
     }
 
   return TRUE;
+}
+
+
+
+gboolean
+xfsm_shutdown_helper_supports (XfsmShutdownHelper *helper,
+                               XfsmShutdownType shutdown_type)
+{
+  if (helper->use_hal)
+    {
+      switch (shutdown_type)
+        {
+          case XFSM_SHUTDOWN_SUSPEND:
+            if (xfsm_shutdown_helper_check_hal_property ("/org/freedesktop/Hal/devices/computer",
+                                                         "power_management.can_suspend"))
+              {
+                return TRUE;
+              }
+            return FALSE;
+
+          case XFSM_SHUTDOWN_HIBERNATE:
+            if (xfsm_shutdown_helper_check_hal_property ("/org/freedesktop/Hal/devices/computer",
+                                                         "power_management.can_hibernate"))
+              {
+                return TRUE;
+              }
+            return FALSE;
+
+          default:
+            return TRUE;
+        }
+    }
+  else
+    {
+      switch (shutdown_type)
+        {
+          case XFSM_SHUTDOWN_SUSPEND:
+          case XFSM_SHUTDOWN_HIBERNATE:
+            return FALSE;
+
+          default:
+            return TRUE;
+        }
+    }
+
+  g_assert_not_reached();
 }
 
 
