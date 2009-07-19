@@ -65,6 +65,14 @@
 #include "shutdown.h"
 #include "xfsm-shutdown-helper.h"
 
+typedef enum
+{
+    XFSM_SHUTDOWN_SUDO = 0,
+    XFSM_SHUTDOWN_HAL,
+    XFSM_SHUTDOWN_POWER_MANAGER,
+} XfsmShutdownBackend;
+
+
 static struct
 {
   XfsmShutdownType command;
@@ -79,17 +87,19 @@ static struct
 
 struct _XfsmShutdownHelper
 {
-  gchar   *sudo;
-  pid_t    pid;
-  FILE    *infile;
-  FILE    *outfile;
-  gboolean use_hal;
-  gboolean need_password;
+  XfsmShutdownBackend backend;
+
+  gchar              *sudo;
+  pid_t               pid;
+  FILE               *infile;
+  FILE               *outfile;
+  gboolean            need_password;
 };
 
 
 static DBusConnection *
-xfsm_shutdown_helper_dbus_connect (GError **error)
+xfsm_shutdown_helper_dbus_connect (DBusBusType bus_type,
+                                   GError **error)
 {
   DBusConnection *connection;
   DBusError       derror;
@@ -98,7 +108,7 @@ xfsm_shutdown_helper_dbus_connect (GError **error)
   dbus_error_init (&derror);
 
   /* connect to the system message bus */
-  connection = dbus_bus_get (DBUS_BUS_SYSTEM, &derror);
+  connection = dbus_bus_get (bus_type, &derror);
   if (G_UNLIKELY (connection == NULL))
     {
       g_warning (G_STRLOC ": Failed to connect to the system message bus: %s", derror.message);
@@ -112,18 +122,189 @@ xfsm_shutdown_helper_dbus_connect (GError **error)
 }
 
 
+
 static gboolean
-xfsm_shutdown_helper_hal_check (XfsmShutdownHelper *helper,
-                                GError **error)
+xfsm_shutdown_helper_pm_check (XfsmShutdownHelper *helper)
 {
   DBusConnection *connection;
   DBusMessage    *message;
   DBusMessage    *result;
   DBusError       derror;
 
-  g_return_val_if_fail (helper && (!error || !*error), FALSE);
+  connection = xfsm_shutdown_helper_dbus_connect (DBUS_BUS_SESSION, NULL);
+  if (!connection)
+    return FALSE;
 
-  connection = xfsm_shutdown_helper_dbus_connect (error);
+  /* older versions of xfce4-power-manager didn't have the 'CanReboot'
+   * method, so we'll key off that one to check for support. */
+  message = dbus_message_new_method_call ("org.freedesktop.PowerManagement",
+                                          "/org/freedesktop/PowerManagement",
+                                          "org.freedesktop.PowerManagement",
+                                          "CanReboot");
+
+  dbus_error_init(&derror);
+  result = dbus_connection_send_with_reply_and_block (connection, message, -1, &derror);
+  dbus_message_unref (message);
+
+  if (result == NULL)
+    {
+      g_debug (G_STRLOC ": Failed to contact PM: %s", derror.message);
+      dbus_error_free (&derror);
+      return FALSE;
+    }
+  else if (dbus_set_error_from_message (&derror, result))
+    {
+      g_debug (G_STRLOC ": Error talking to PM: %s", derror.message);
+      dbus_message_unref (result);
+      dbus_error_free (&derror);
+      /* PM running, but is broken */
+      return FALSE;
+    }
+  else
+    {
+      /* it doesn't matter what the response is, but it's valid, so
+       * we can use the PM */
+      dbus_message_unref (result);
+      return TRUE;
+    }
+}
+
+
+
+static gboolean
+xfsm_shutdown_helper_pm_send (XfsmShutdownHelper *helper,
+                              XfsmShutdownType    command,
+                              GError            **error)
+{
+  DBusConnection *connection;
+  const char     *methodname;
+  DBusMessage    *message;
+  DBusMessage    *result;
+  DBusError       derror;
+  guint           i;
+
+  for (i = 0; i < G_N_ELEMENTS (command_name_map); i++)
+    {
+      if (command_name_map[i].command == command)
+        {
+          methodname = command_name_map[i].name;
+          break;
+        }
+    }
+
+  if (!methodname)
+    {
+      if (error)
+        {
+          g_set_error (error, DBUS_GERROR, DBUS_GERROR_INVALID_ARGS,
+                       "%s", _("Invalid shutdown type"));
+        }
+      return FALSE;
+    }
+
+  connection = xfsm_shutdown_helper_dbus_connect (DBUS_BUS_SESSION, error);
+  if (G_UNLIKELY (!connection))
+    return FALSE;
+
+  message = dbus_message_new_method_call ("org.freedesktop.PowerManagement",
+                                          "/org/freedesktop/PowerManagement",
+                                          "org.freedesktop.PowerManagement",
+                                          methodname);
+
+  dbus_error_init (&derror);
+  result = dbus_connection_send_with_reply_and_block (connection, message, -1, &derror);
+  dbus_message_unref (message);
+
+  if (!result)
+    {
+      if (error)
+        dbus_set_g_error (error, &derror);
+      dbus_error_free (&derror);
+      return FALSE;
+    }
+  else if (dbus_set_error_from_message (&derror, result))
+    {
+      dbus_message_unref (result);
+      if (error)
+        {
+          dbus_set_g_error (error, &derror);
+        }
+      dbus_error_free (&derror);
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+
+
+static gboolean
+xfsm_shutdown_helper_check_pm_cap (const char *capability)
+{
+  DBusConnection *connection;
+  char            method[64];
+  DBusMessage    *message;
+  DBusMessage    *result;
+  DBusError       derror;
+  dbus_bool_t     response = FALSE;
+
+  connection = xfsm_shutdown_helper_dbus_connect (DBUS_BUS_SESSION, NULL);
+  if (!connection)
+    return FALSE;
+
+  g_strlcpy (method, "Can", sizeof (method));
+  g_strlcat (method, capability, sizeof (method));
+
+  message = dbus_message_new_method_call ("org.freedesktop.PowerManagement",
+                                          "/org/freedesktop/PowerManagement",
+                                          "org.freedesktop.PowerManagement",
+                                          method);
+
+  dbus_error_init(&derror);
+  result = dbus_connection_send_with_reply_and_block (connection, message, -1, &derror);
+  dbus_message_unref (message);
+
+  if (G_UNLIKELY (result == NULL))
+    {
+      g_warning (G_STRLOC ": Failed to contact PM: %s", derror.message);
+      dbus_error_free (&derror);
+      return FALSE;
+    }
+
+  if (!result)
+    return FALSE;
+
+  if (dbus_set_error_from_message (&derror, result))
+    {
+      dbus_error_free (&derror);
+      response = FALSE;
+    }
+  else if (!dbus_message_get_args (result, &derror,
+                                   DBUS_TYPE_BOOLEAN, &response,
+                                   DBUS_TYPE_INVALID))
+    {
+      dbus_error_free (&derror);
+      response = FALSE;
+    }
+
+  dbus_message_unref (result);
+
+  return response;
+}
+
+
+
+static gboolean
+xfsm_shutdown_helper_hal_check (XfsmShutdownHelper *helper)
+{
+  DBusConnection *connection;
+  DBusMessage    *message;
+  DBusMessage    *result;
+  DBusError       derror;
+
+  g_return_val_if_fail (helper, FALSE);
+
+  connection = xfsm_shutdown_helper_dbus_connect (DBUS_BUS_SYSTEM, NULL);
   if (!connection)
     return FALSE;
 
@@ -152,11 +333,6 @@ xfsm_shutdown_helper_hal_check (XfsmShutdownHelper *helper,
     {
       /* we received a valid message return?! HAL must be on crack! */
       dbus_message_unref (result);
-      if (error)
-        {
-          g_set_error (error, DBUS_GERROR, DBUS_GERROR_FAILED,
-                       _("Unexpected error from HAL"));
-        }
       return FALSE;
     }
 
@@ -171,8 +347,6 @@ xfsm_shutdown_helper_hal_check (XfsmShutdownHelper *helper,
 
   /* otherwise, we failed for some reason */
   g_warning (G_STRLOC ": Failed to contact HAL: %s", derror.message);
-  if (error)
-    dbus_set_g_error (error, &derror);
   dbus_error_free (&derror);
 
   return FALSE;
@@ -193,11 +367,6 @@ xfsm_shutdown_helper_hal_send (XfsmShutdownHelper *helper,
   dbus_int32_t    wakeup     = 0;
   guint           i;
 
-  /* FIXME: would rather not call this here, but it's nice to be able
-   * to get a correct error message */
-  if (!xfsm_shutdown_helper_hal_check (helper, error))
-    return FALSE;
-
   for (i = 0; i < G_N_ELEMENTS (command_name_map); i++)
     {
       if (command_name_map[i].command == command)
@@ -217,7 +386,7 @@ xfsm_shutdown_helper_hal_send (XfsmShutdownHelper *helper,
       return FALSE;
     }
 
-  connection = xfsm_shutdown_helper_dbus_connect (error);
+  connection = xfsm_shutdown_helper_dbus_connect (DBUS_BUS_SYSTEM, error);
   if(!connection)
     return FALSE;
 
@@ -264,7 +433,7 @@ xfsm_shutdown_helper_check_hal_property (const gchar *object_path,
   DBusError       derror;
   dbus_bool_t     response = FALSE;
 
-  connection = xfsm_shutdown_helper_dbus_connect (NULL);
+  connection = xfsm_shutdown_helper_dbus_connect (DBUS_BUS_SYSTEM, NULL);
   if (!connection)
     return FALSE;
 
@@ -329,12 +498,20 @@ xfsm_shutdown_helper_spawn (GError **error)
   /* allocate a new helper */
   helper = g_new0 (XfsmShutdownHelper, 1);
 
+  /* first choice is the power manager */
+  if (xfsm_shutdown_helper_pm_check (helper))
+    {
+      g_message (G_STRLOC ": Using PM to shutdown/reboot the computer.");
+      helper->backend = XFSM_SHUTDOWN_POWER_MANAGER;
+      return helper;
+    }
+
   /* check if we can use HAL to shutdown the computer */
-  if (xfsm_shutdown_helper_hal_check (helper, NULL))
+  if (xfsm_shutdown_helper_hal_check (helper))
     {
       /* well that's it then */
       g_message (G_STRLOC ": Using HAL to shutdown/reboot the computer.");
-      helper->use_hal = TRUE;
+      helper->backend = XFSM_SHUTDOWN_HAL;
       return helper;
     }
 
@@ -517,7 +694,7 @@ xfsm_shutdown_helper_send_password (XfsmShutdownHelper *helper,
 
   g_return_val_if_fail (helper != NULL, FALSE);
   g_return_val_if_fail (password != NULL, FALSE);
-  g_return_val_if_fail (!helper->use_hal, FALSE);
+  g_return_val_if_fail (helper->backend == XFSM_SHUTDOWN_SUDO, FALSE);
   g_return_val_if_fail (helper->need_password, FALSE);
 
   g_snprintf (buffer, 1024, "%s\n", password);
@@ -596,8 +773,11 @@ xfsm_shutdown_helper_send_command (XfsmShutdownHelper *helper,
   g_return_val_if_fail (!error || !*error, FALSE);
   g_return_val_if_fail (command != XFSM_SHUTDOWN_ASK, FALSE);
 
-  /* check if we can use HAL to perform the requested action */
-  if (G_LIKELY (helper->use_hal))
+  if (helper->backend == XFSM_SHUTDOWN_POWER_MANAGER)
+    {
+        return xfsm_shutdown_helper_pm_send (helper, command, error);
+    }
+  else if (helper->backend == XFSM_SHUTDOWN_HAL)
     {
       /* well, send the command to HAL then */
       return xfsm_shutdown_helper_hal_send (helper, command, error);
@@ -673,41 +853,56 @@ gboolean
 xfsm_shutdown_helper_supports (XfsmShutdownHelper *helper,
                                XfsmShutdownType shutdown_type)
 {
-  if (helper->use_hal)
+  const char *method_name = NULL;
+  guint i;
+
+  if (!helper)
+    return FALSE;
+
+  switch (helper->backend)
     {
-      switch (shutdown_type)
-        {
-          case XFSM_SHUTDOWN_SUSPEND:
-            if (xfsm_shutdown_helper_check_hal_property ("/org/freedesktop/Hal/devices/computer",
-                                                         "power_management.can_suspend"))
+      case XFSM_SHUTDOWN_POWER_MANAGER:
+        for (i = 0; i < G_N_ELEMENTS (command_name_map); i++)
+          {
+            if (command_name_map[i].command == shutdown_type)
               {
-                return TRUE;
+                method_name = command_name_map[i].name;
+                break;
               }
-            return FALSE;
+          }
 
-          case XFSM_SHUTDOWN_HIBERNATE:
-            if (xfsm_shutdown_helper_check_hal_property ("/org/freedesktop/Hal/devices/computer",
-                                                         "power_management.can_hibernate"))
-              {
-                return TRUE;
-              }
-            return FALSE;
+        if (G_UNLIKELY (!method_name))
+          return FALSE;
 
-          default:
-            return TRUE;
-        }
-    }
-  else
-    {
-      switch (shutdown_type)
-        {
-          case XFSM_SHUTDOWN_SUSPEND:
-          case XFSM_SHUTDOWN_HIBERNATE:
-            return FALSE;
+        return xfsm_shutdown_helper_check_pm_cap (method_name);
 
-          default:
-            return TRUE;
-        }
+      case XFSM_SHUTDOWN_HAL:
+        switch (shutdown_type)
+          {
+            case XFSM_SHUTDOWN_SUSPEND:
+              return xfsm_shutdown_helper_check_hal_property ("/org/freedesktop/Hal/devices/computer",
+                                                              "power_management.can_suspend");
+
+            case XFSM_SHUTDOWN_HIBERNATE:
+              return xfsm_shutdown_helper_check_hal_property ("/org/freedesktop/Hal/devices/computer",
+                                                              "power_management.can_hibernate");
+
+            default:
+              return TRUE;
+          }
+        break;
+
+      case XFSM_SHUTDOWN_SUDO:
+        switch (shutdown_type)
+          {
+            case XFSM_SHUTDOWN_SUSPEND:
+            case XFSM_SHUTDOWN_HIBERNATE:
+              return FALSE;
+
+            default:
+              return TRUE;
+          }
+        break;
     }
 
   g_assert_not_reached();

@@ -252,6 +252,10 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
       return TRUE;
     }
 
+  /* spawn the helper early so we know what it supports when
+   * constructing the dialog */
+  shutdown_helper = xfsm_shutdown_helper_spawn (NULL);
+
   /* It's really bad here if someone else has the pointer
    * grabbed, so we first grab the pointer and keyboard
    * to an offscreen window, and then once we have the
@@ -426,6 +430,9 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   label = gtk_label_new (_("Restart"));
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
+
+  if (!kiosk_can_shutdown || !xfsm_shutdown_helper_supports (shutdown_helper, XFSM_SHUTDOWN_REBOOT))
+    gtk_widget_set_sensitive (reboot_button, FALSE);
   
   /* halt */
   halt_button = gtk_button_new ();
@@ -451,8 +458,16 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   label = gtk_label_new (_("Shut Down"));
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
+
+  if (!kiosk_can_shutdown || !xfsm_shutdown_helper_supports (shutdown_helper, XFSM_SHUTDOWN_HALT))
+    gtk_widget_set_sensitive (halt_button, FALSE);
+
+  if (show_suspend)
+    show_suspend = xfsm_shutdown_helper_supports (shutdown_helper, XFSM_SHUTDOWN_SUSPEND);
+  if (show_hibernate)
+    show_hibernate = xfsm_shutdown_helper_supports (shutdown_helper, XFSM_SHUTDOWN_HIBERNATE);
   
-  if (show_suspend || show_hibernate)
+  if (kiosk_can_shutdown && (show_suspend || show_hibernate))
     {
       hbox = gtk_hbox_new (FALSE, BORDER);
       gtk_widget_show (hbox);
@@ -460,7 +475,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
     }
 
   /* suspend */
-  if (show_suspend)
+  if (kiosk_can_shutdown && show_suspend)
     {
       suspend_button = gtk_button_new ();
       gtk_widget_show (suspend_button);
@@ -488,7 +503,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
     }
 
   /* hibernate */
-  if (show_hibernate)
+  if (kiosk_can_shutdown && show_hibernate)
     {
       hibernate_button = gtk_button_new ();
       gtk_widget_show (hibernate_button);
@@ -535,23 +550,6 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   
   /* center dialog on target monitor */
   xfce_gtk_window_center_on_monitor (GTK_WINDOW (dialog), screen, monitor);
-
-  /* connect to the shutdown helper */
-  if (!kiosk_can_shutdown || 
-      (shutdown_helper = xfsm_shutdown_helper_spawn (NULL)) == NULL)
-    {
-      gtk_widget_set_sensitive (reboot_button, FALSE);
-      gtk_widget_set_sensitive (halt_button, FALSE);
-      if (suspend_button)
-        gtk_widget_set_sensitive (suspend_button, FALSE);
-      if (hibernate_button)
-        gtk_widget_set_sensitive (hibernate_button, FALSE);
-    }
-
-  if (suspend_button && !xfsm_shutdown_helper_supports (shutdown_helper, XFSM_SHUTDOWN_SUSPEND))
-    gtk_widget_hide (suspend_button);
-  if (hibernate_button && !xfsm_shutdown_helper_supports (shutdown_helper, XFSM_SHUTDOWN_HIBERNATE))
-    gtk_widget_hide (hibernate_button);
 
   /* save portion of the root window covered by the dialog */
   if (!accessibility && shutdown_helper != NULL)
