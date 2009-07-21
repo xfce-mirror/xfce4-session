@@ -77,6 +77,12 @@ void xfsm_client_delete_properties (XfsmClient *client,
 
 G_CONST_RETURN gchar *xfsm_client_get_object_path (XfsmClient *client);
 
+G_CONST_RETURN gchar *xfsm_client_get_desktop_id (XfsmClient *client);
+
+gboolean xfsm_client_save (XfsmClient  *client,
+                           const gchar *session_name,
+                           GError     **error);
+
 G_END_DECLS
 
 #endif /* !__XFSM_CLIENT_H__ */

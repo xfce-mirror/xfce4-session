@@ -24,8 +24,16 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 #ifdef HAVE_STRING_H
 #include <string.h>
+#endif
+
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
 #endif
 
 #include <dbus/dbus-glib.h>
@@ -48,6 +56,7 @@ struct _XfsmClient
 
   gchar           *id;
   gchar           *object_path;
+  gchar           *desktop_id;
 
   XfsmClientState  state;
   XfsmProperties  *properties;
@@ -162,6 +171,7 @@ xfsm_client_finalize (GObject *obj)
 
   g_free (client->id);
   g_free (client->object_path);
+  g_free (client->desktop_id);
 
   G_OBJECT_CLASS (xfsm_client_parent_class)->finalize (obj);
 }
@@ -387,7 +397,132 @@ xfsm_client_get_object_path (XfsmClient *client)
   return client->object_path;
 }
 
+G_CONST_RETURN gchar *
+xfsm_client_get_desktop_id (XfsmClient *client)
+{
+  g_return_val_if_fail (XFSM_IS_CLIENT (client), NULL);
 
+  if (!client->desktop_id)
+    {
+      client->desktop_id = g_strdup_printf("%s_%s",
+                                           xfsm_properties_get_string (client->properties,
+                                                                       SmProgram),
+                                           client->id);
+    }
+
+  return client->desktop_id;
+}
+
+static gboolean
+xfsm_client_quick_copy (const gchar *src_path,
+                        const gchar *dst_path)
+{
+  gboolean ret = FALSE;
+  gchar *file_contents = NULL;
+  gsize  len;
+
+  if (g_file_get_contents (src_path, &file_contents, &len, NULL))
+    if (g_file_set_contents (dst_path, file_contents, len, NULL))
+      ret = TRUE;
+
+  g_free (file_contents);
+
+  return ret;
+}
+
+gboolean
+xfsm_client_save (XfsmClient  *client,
+                  const gchar *session_name,
+                  GError     **error)
+{
+  gboolean ret = FALSE;
+  gchar *session_resource;
+  XfceRc *rcfile = NULL;
+  gchar session_group[1024];
+  const gchar *desktop_file;
+
+  g_return_val_if_fail (XFSM_IS_CLIENT (client) && (!error || !*error), FALSE);
+
+  session_resource = g_strdup_printf ("autostart/%s.desktop",
+                                      xfsm_client_get_desktop_id (client));
+  rcfile = xfce_rc_config_open (XFCE_RESOURCE_CONFIG, session_resource, FALSE);
+
+  if (G_UNLIKELY (!rcfile))
+    {
+      if (error)
+        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                     _("Couldn't write to session data file for client \"%s\""),
+                     xfsm_client_get_desktop_id ());
+      goto out;
+    }
+
+  xfce_rc_set_group (rcfile, "Desktop Entry");
+
+  xfce_rc_write_entry (rcfile, "Version", "1.0");
+  xfce_rc_write_entry (rcfile, "Type", "Application");
+  xfce_rc_write_entry (rcfile, "OnlyShowIn", "XFCE;");
+  xfce_rc_write_bool_entry (rcfile, "NoDisplay", TRUE);
+  xfce_rc_write_bool_entry (rcfile, "Hidden", TRUE);
+
+  desktop_file = xfsm_properties_get_string (client->properties, GsmDesktopFile);
+  if (desktop_file)
+    {
+      XfceRc *rcfile_desktop = xfce_rc_simple_open (desktop_file, TRUE);
+      if (rcfile_desktop)
+        {
+          const gchar *val_str;
+
+          if ((val_str = xfce_rc_read_entry (rcfile_desktop, "Name", NULL)))
+            xfce_rc_write_entry (rcfile, "Name", val_str);
+          if ((val_str = xfce_rc_read_entry (rcfile_desktop, "Comment", NULL)))
+            xfce_rc_write_entry (rcfile, "Comment", val_str);
+          if ((val_str = xfce_rc_read_entry (rcfile_desktop, "Icon", NULL)))
+            xfce_rc_write_entry (rcfile, "Icon", val_str);
+          if ((val_str = xfce_rc_read_entry (rcfile_desktop, "Exec", NULL)))
+            xfce_rc_write_entry (rcfile, "Exec", val_str);
+          if (xfce_rc_has_entry (rcfile_desktop, "StartupNotify"))
+            {
+              xfce_rc_write_bool_entry (rcfile, "StartupNotify",
+                                        xfce_rc_read_bool_entry (rcfile_desktop,
+                                                                 "StartupNotify",
+                                                                 FALSE));
+            }
+
+          xfce_rc_close (rcfile_desktop);
+        }
+    }
+
+  xfce_rc_set_group (rcfile, "X-XfceSession");
+  xfce_rc_write_bool_entry (rcfile, "IsSessionManaged", TRUE);
+
+  if (!session_name)
+    session_name = "Default";
+  g_snprintf (session_group, sizeof (session_group), "X-XfceSession: %s",
+              session_name);
+
+  xfce_rc_delete_group (rcfile, session_group, TRUE);
+  xfce_rc_set_group (rcfile, session_group);
+  xfsm_properties_store (client->properties, rcfile);
+
+  if (rename (session_file_new, session_file))
+    {
+      if (error)
+        g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                     _("Unable to rename \"%s\" to \"%s\": %s"),
+                     session_file_new, session_file, strerror (errno));
+    }
+  else
+    ret = TRUE;
+
+out:
+
+  if (G_LIKELY (rcfile))
+    xfce_rc_close (rcfile);
+  g_free (session_file);
+  g_free (session_file_new);
+
+  return ret;
+}
 
 /*
  * dbus server impl

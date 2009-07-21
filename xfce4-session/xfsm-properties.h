@@ -62,8 +62,7 @@ void            xfsm_properties_extract (XfsmProperties *properties,
                                          gint           *num_props,
                                          SmProp       ***props);
 void            xfsm_properties_store   (XfsmProperties *properties,
-                                         XfceRc         *rc,
-                                         const gchar    *prefix);
+                                         XfceRc         *rc);
 
 XfsmProperties* xfsm_properties_load (XfceRc *rc, const gchar *prefix);
 

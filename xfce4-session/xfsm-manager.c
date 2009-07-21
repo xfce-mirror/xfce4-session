@@ -1610,6 +1610,11 @@ xfsm_manager_cancel_client_save_timeout (XfsmManager *manager,
 void
 xfsm_manager_store_session (XfsmManager *manager)
 {
+  const gchar   *session_name;
+  gchar         *autostart_dir;
+  DIR           *dir;
+  struct dirent *de;
+  gchar          path[PATH_MAX];
   WnckWorkspace *workspace;
   GdkDisplay    *display;
   WnckScreen    *screen;
@@ -1621,31 +1626,57 @@ xfsm_manager_store_session (XfsmManager *manager)
   gint           count = 0;
   gint           n, m;
 
-  rc = xfce_rc_simple_open (manager->session_file, FALSE);
-  if (G_UNLIKELY (rc == NULL))
+  autostart_dir = xfce_resource_save_location (XFCE_RESOURCE_CONFIG,
+                                               "autostart/",
+                                               TRUE);
+  if (G_UNLIKELY (!autostart_dir))
     {
-      fprintf (stderr,
-               "xfce4-session: Unable to open session file %s for "
-               "writing. Session data will not be stored. Please check "
-               "your installation.\n",
-               manager->session_file);
+      g_critical ("Unable to find/create autostart directory; session will " \
+                  "not be saved!");
       return;
     }
 
-  /* backup the old session file first */
-  if (g_file_test (manager->session_file, G_FILE_TEST_IS_REGULAR))
+  if (manager->state == XFSM_MANAGER_CHECKPOINT && manager->checkpoint_session_name != NULL)
+    session_name = manager->checkpoint_session_name;
+  else
+    session_name = manager->session_name;
+
+  dir = opendir (autostart_dir);
+  if (G_UNLIKELY (!dir))
     {
-      backup = g_strconcat (manager->session_file, ".bak", NULL);
-      unlink (backup);
-      if (link (manager->session_file, backup))
-          g_warning ("Failed to create session file backup");
-      g_free (backup);
+      g_critical ("Unable to open \"%s\": %s; session will not be saved!",
+                  autostart_dir, strerror (errno));
+      g_free (autostart_dir);
+      return;
     }
 
-  if (manager->state == XFSM_MANAGER_CHECKPOINT && manager->checkpoint_session_name != NULL)
-    group = g_strconcat ("Session: ", manager->checkpoint_session_name, NULL);
-  else
-    group = g_strconcat ("Session: ", manager->session_name, NULL);
+  while ((de = readdir (dir)))
+    {
+      if (G_UNLIKELY (!g_str_has_suffix (de->d_name, ".desktop")))
+        continue;
+
+      g_snprintf (path, sizeof (path), "%s%c%s", autostart_dir,
+                  G_DIR_SEPARATOR, de->d_name);
+      rc = xfce_rc_simple_open (path, FALSE);
+      if (G_UNLIKELY (rc))
+        {
+          g_warning ("Couldn't open \"%s\": %s", path, strerror (errno));
+          continue;
+        }
+
+      if (!xfce_rc_has_group (rc, "X-XfceSession"))
+        {
+          xfce_rc_close (rc);
+          continue;
+        }
+
+      xfce_rc_set_group (rc, "X-XfceSession");
+      if (!xfce_rc_read_bool_entry (rc, "IsSessionManaged", FALSE))
+        {
+          xfce_rc_close (rc);
+          continue;
+        }
+
   xfce_rc_delete_group (rc, group, TRUE);
   xfce_rc_set_group (rc, group);
   g_free (group);
@@ -1655,8 +1686,7 @@ xfsm_manager_store_session (XfsmManager *manager)
        lp = lp->next)
     {
       XfsmProperties *properties = lp->data;
-      g_snprintf (prefix, 64, "Client%d_", count);
-      xfsm_properties_store (properties, rc, prefix);
+      xfsm_properties_store (properties, rc);
       ++count;
     }
 
@@ -1676,8 +1706,7 @@ xfsm_manager_store_session (XfsmManager *manager)
       if (restart_style_hint == SmRestartNever)
         continue;
       
-      g_snprintf (prefix, 64, "Client%d_", count);
-      xfsm_properties_store (xfsm_client_get_properties (client), rc, prefix);
+      xfsm_properties_store (xfsm_client_get_properties (client), rc);
       ++count;
     }
 

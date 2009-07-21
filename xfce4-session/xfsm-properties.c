@@ -103,18 +103,6 @@ strdup (const char *s)
 #endif
 
 
-static gchar*
-compose (gchar       *buffer,
-         gsize        length,
-         const gchar *prefix,
-         const gchar *suffix)
-{
-  g_strlcpy (buffer, prefix, length);
-  g_strlcat (buffer, suffix, length);
-  return buffer;
-}
-
-
 static SmProp*
 strv_to_property (const gchar *name,
                   gchar      **argv)
@@ -249,8 +237,6 @@ XfsmProperties *
 xfsm_properties_load (XfceRc      *rc,
                       const gchar *prefix)
 {
-#define ENTRY(name) (compose(buffer, 256, prefix, (name)))
-
   XfsmProperties *properties;
   const gchar    *client_id;
   const gchar    *hostname;
@@ -258,7 +244,6 @@ xfsm_properties_load (XfceRc      *rc,
   const gchar    *value_str;
   gchar         **value_strv;
   gint            value_int;
-  gchar           buffer[256];
   gint            i;
 
   client_id = xfce_rc_read_entry (rc, ENTRY ("ClientId"), NULL);
@@ -283,7 +268,7 @@ xfsm_properties_load (XfceRc      *rc,
 
   for (i = 0; strv_properties[i].name; ++i)
     {
-      value_strv = xfce_rc_read_list_entry (rc, ENTRY (strv_properties[i].name), NULL);
+      value_strv = xfce_rc_read_list_entry (rc, strv_properties[i].name, NULL);
       if (value_strv)
         {
           xfsm_verbose ("-> Set strv (%s)\n", strv_properties[i].xsmp_name);
@@ -298,14 +283,14 @@ xfsm_properties_load (XfceRc      *rc,
 
   for (i = 0; str_properties[i].name; ++i)
     {
-      value_str = xfce_rc_read_entry (rc, ENTRY (str_properties[i].name), NULL);
+      value_str = xfce_rc_read_entry (rc, str_properties[i].name, NULL);
       if (value_str)
         xfsm_properties_set_string (properties, str_properties[i].xsmp_name, value_str);
     }
 
   for (i = 0; uchar_properties[i].name; ++i)
     {
-      value_int = xfce_rc_read_int_entry (rc, ENTRY (uchar_properties[i].name),
+      value_int = xfce_rc_read_int_entry (rc, uchar_properties[i].name,
                                           uchar_properties[i].default_value);
       xfsm_properties_set_uchar (properties, uchar_properties[i].xsmp_name, value_int);
     }
@@ -317,31 +302,25 @@ xfsm_properties_load (XfceRc      *rc,
     }
 
   return properties;
-  
-#undef ENTRY
 }
 
 
 void
 xfsm_properties_store (XfsmProperties *properties,
-                       XfceRc         *rc,
-                       const gchar    *prefix)
+                       XfceRc         *rc)
 {
-#define ENTRY(name) (compose(buffer, 256, prefix, (name)))
-
   GValue *value;
   gint    i;
-  gchar   buffer[256];
   
-  xfce_rc_write_entry (rc, ENTRY ("ClientId"), properties->client_id);
-  xfce_rc_write_entry (rc, ENTRY ("Hostname"), properties->hostname);
+  xfce_rc_write_entry (rc, "ClientId", properties->client_id);
+  xfce_rc_write_entry (rc, "Hostname", properties->hostname);
 
   for (i = 0; strv_properties[i].name; ++i)
     {
       value = g_tree_lookup (properties->sm_properties, strv_properties[i].xsmp_name);
       if (value)
         {
-          xfce_rc_write_list_entry (rc, ENTRY (strv_properties[i].name),
+          xfce_rc_write_list_entry (rc, strv_properties[i].name,
                                     g_value_get_boxed (value), NULL);
         }
     }
@@ -351,7 +330,7 @@ xfsm_properties_store (XfsmProperties *properties,
       value = g_tree_lookup (properties->sm_properties, str_properties[i].xsmp_name);
       if (value)
         {
-          xfce_rc_write_entry (rc, ENTRY (str_properties[i].name),
+          xfce_rc_write_entry (rc, str_properties[i].name,
                                g_value_get_string (value));
         }
     }
@@ -361,12 +340,10 @@ xfsm_properties_store (XfsmProperties *properties,
       value = g_tree_lookup (properties->sm_properties, uchar_properties[i].xsmp_name);
       if (value)
         {
-          xfce_rc_write_int_entry (rc, ENTRY (uchar_properties[i].name),
+          xfce_rc_write_int_entry (rc, uchar_properties[i].name,
                                    g_value_get_uchar (value));
         }
     }
-
-#undef ENTRY
 }
 
 
