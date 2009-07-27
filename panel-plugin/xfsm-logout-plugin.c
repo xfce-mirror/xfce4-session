@@ -1,11 +1,41 @@
+/*
+ * Copyright (c) 2009 Brian Tarricone <brian@tarricone.org>
+ * All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *                                                                              
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *                                                                              
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+ *
+ * The session id generator was taken from the KDE session manager.
+ * Copyright (c) 2000 Matthias Ettrich <ettrich@kde.org>
+ */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+
+#ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
+#endif
+
+#ifdef HAVE_PWD_H
 #include <pwd.h>
+#endif
 
 #include <dbus/dbus-glib.h>
 
@@ -345,8 +375,11 @@ xfsm_logout_plugin_construct(XfcePanelPlugin *plugin)
 {
     XfsmLogoutPlugin *logout_plugin;
     GtkUIManager *uimgr;
-    GtkWidget *menubar, *mi, *label, *submenu;
+    GtkWidget *menubar, *mi, *submenu;
+#ifdef HAVE_GETPWUID
+    GtkWidget *label;
     struct passwd *pwent;
+#endif
 
     xfce_textdomain(GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
 
@@ -374,11 +407,13 @@ xfsm_logout_plugin_construct(XfcePanelPlugin *plugin)
 
     mi = gtk_ui_manager_get_widget(uimgr, "/main-menubar/session-menu");
 
+#ifdef HAVE_GETPWUID
     pwent = getpwuid(geteuid());
     if(pwent) {
         label = gtk_bin_get_child(GTK_BIN(mi));
         gtk_label_set_text(GTK_LABEL(label), pwent->pw_name);
     }
+#endif
 
     menubar = gtk_ui_manager_get_widget(uimgr, "/main-menubar");
     gtk_container_set_border_width(GTK_CONTAINER(menubar), 0);
