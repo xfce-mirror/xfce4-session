@@ -340,19 +340,6 @@ xfsm_logout_plugin_do_something(GtkAction *action,
 }
 
 static void
-xfsm_logout_plugin_size_changed(XfcePanelPlugin *plugin,
-                                gint size,
-                                gpointer user_data)
-{
-    GtkWidget *menubar = user_data;
-
-    if(xfce_panel_plugin_get_orientation(plugin) == GTK_ORIENTATION_HORIZONTAL)
-        gtk_widget_set_size_request(menubar, -1, size);
-    else
-        gtk_widget_set_size_request(menubar, size, -1);
-}
-
-static void
 xfsm_logout_plugin_free_data(XfcePanelPlugin *plugin,
                              gpointer user_data)
 {
@@ -423,10 +410,9 @@ xfsm_logout_plugin_construct(XfcePanelPlugin *plugin)
     submenu = gtk_menu_item_get_submenu(GTK_MENU_ITEM(mi));
     xfce_panel_plugin_register_menu(plugin, GTK_MENU(submenu));
 
-    /* annoyingly, handling size-changed is required even if we don't
-     * do anything special.  otherwise we get truncated. */
-    g_signal_connect(plugin, "size-changed",
-                     G_CALLBACK(xfsm_logout_plugin_size_changed), menubar);
+    /* returning TRUE from size-changed disables the panel's size
+     * handling code for the plugin */
+    g_signal_connect(plugin, "size-changed", G_CALLBACK(gtk_true), NULL);
     g_signal_connect(plugin, "free-data",
                      G_CALLBACK(xfsm_logout_plugin_free_data), logout_plugin);
 
