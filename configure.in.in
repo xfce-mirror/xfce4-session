@@ -21,7 +21,7 @@ AC_COPYRIGHT([Copyright (c) 2003-2009
         
 Written for Xfce by Benedikt Meurer <benny@xfce.org>.])
 AC_INIT([xfce4-session], [xfsm_version], [http://bugs.xfce.org/])
-AC_PREREQ([2.50])
+AC_PREREQ([2.59c])
 AC_REVISION([$Id$])
 AC_PROG_MAKE_SET()
 
@@ -31,9 +31,7 @@ AM_CONFIG_HEADER([config.h])
 AM_MAINTAINER_MODE()
 
 dnl check for UNIX variants
-AC_AIX()
-AC_ISC_POSIX()
-AC_MINIX()
+AC_USE_SYSTEM_EXTENSIONS
 AM_CONDITIONAL([HAVE_OS_CYGWIN], [test x"`uname | grep \"CYGWIN\"`" != x""])
 if test x"`uname | grep \"CYGWIN\"`" != x""; then
 	AC_DEFINE([HAVE_OS_CYGWIN], [1], [Compiling under cygwin])
