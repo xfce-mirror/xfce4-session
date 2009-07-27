@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-13 02:03-0700\n"
+"POT-Creation-Date: 2009-07-26 19:15-0700\n"
 "PO-Revision-Date: 2008-11-09 20:38+0200\n"
 "Last-Translator: Alexander Nyakhaychyk <nyakhaychyk@gmail.com>\n"
 "Language-Team: Belarusian <xfce-i18n@xfce.org>\n"
@@ -132,6 +132,112 @@ msgstr "Просты"
 #: ../engines/simple/simple.c:498
 msgid "Simple Splash Engine"
 msgstr "Просты рухавік"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:56
+#, fuzzy
+msgid "Session"
+msgstr "_Сэанс"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:57
+msgid "Loc_k screen"
+msgstr ""
+
+#: ../panel-plugin/xfsm-logout-plugin.c:58
+#: ../panel-plugin/xfsm-logout-plugin.c:98
+#, fuzzy
+msgid "_Suspend"
+msgstr "Прыпыніць"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:59
+#: ../panel-plugin/xfsm-logout-plugin.c:105
+#, fuzzy
+msgid "_Hibernate"
+msgstr "Усыпіць"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:60
+#: ../panel-plugin/xfsm-logout-plugin.c:91
+msgid "_Reboot"
+msgstr ""
+
+#: ../panel-plugin/xfsm-logout-plugin.c:61
+#: ../panel-plugin/xfsm-logout-plugin.c:84
+#, fuzzy
+msgid "Shut _down"
+msgstr "Выключыць"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:62
+#: ../panel-plugin/xfsm-logout-plugin.c:77
+#, fuzzy
+msgid "_Log out"
+msgstr "Выхад"
+
+#. XFSM_SHUTDOWN_ASK
+#. XFSM_SHUTDOWN_LOGOUT
+#: ../panel-plugin/xfsm-logout-plugin.c:75
+#, fuzzy
+msgid "Are you sure you want to log out?"
+msgstr "Вы насамрэч жадаеце завяршыць \"%s\"?"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:76
+#, c-format
+msgid "You will be logged out in %u seconds."
+msgstr ""
+
+#: ../panel-plugin/xfsm-logout-plugin.c:79
+msgid "Failed to log out."
+msgstr ""
+
+#. XFSM_SHUTDOWN_HALT
+#: ../panel-plugin/xfsm-logout-plugin.c:82
+#, fuzzy
+msgid "Are you sure you want to shut down?"
+msgstr "Вы насамрэч жадаеце завяршыць \"%s\"?"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:83
+#, c-format
+msgid "Your system will shut down in %u seconds."
+msgstr ""
+
+#: ../panel-plugin/xfsm-logout-plugin.c:86
+#, fuzzy
+msgid "Failed to shut down."
+msgstr "Немагчыма прыпыніць сэанс"
+
+#. XFSM_SHUTDOWN_REBOOT
+#: ../panel-plugin/xfsm-logout-plugin.c:89
+#, fuzzy
+msgid "Are you sure you want to reboot?"
+msgstr "Вы насамрэч жадаеце завяршыць \"%s\"?"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:90
+#, c-format
+msgid "Your system will reboot in %u seconds."
+msgstr ""
+
+#: ../panel-plugin/xfsm-logout-plugin.c:93
+#, fuzzy
+msgid "Failed to reboot."
+msgstr "Немагчыма стварыць файл %s"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:100
+#, fuzzy
+msgid "Failed to suspend"
+msgstr "Немагчыма прыпыніць сэанс"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:107
+#, fuzzy
+msgid "Failed to hibernate"
+msgstr "Немагчыма ўсыпіць сэанс"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:186
+#, fuzzy
+msgid "Close Session"
+msgstr "Абярыце сэанс"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:274
+#, fuzzy
+msgid "Session Error"
+msgstr "Памылка захаваньня сэанса"
 
 #: ../settings/main.c:43
 msgid "Settings manager socket"
@@ -326,44 +432,44 @@ msgstr "Загружаюцца даньні сэанса"
 msgid "Xfce Session Manager"
 msgstr "Кіраўнік сэансу Xfce"
 
-#: ../xfce4-session/shutdown.c:360
+#: ../xfce4-session/shutdown.c:364
 #, c-format
 msgid "<span size='large'><b>Log out %s</b></span>"
 msgstr ""
 
-#: ../xfce4-session/shutdown.c:401
+#: ../xfce4-session/shutdown.c:405
 msgid "Log Out"
 msgstr "Выйсьці"
 
-#: ../xfce4-session/shutdown.c:426
+#: ../xfce4-session/shutdown.c:430
 msgid "Restart"
 msgstr "Перазапуск"
 
-#: ../xfce4-session/shutdown.c:451
+#: ../xfce4-session/shutdown.c:458
 msgid "Shut Down"
 msgstr "Выключыць"
 
-#: ../xfce4-session/shutdown.c:485
+#: ../xfce4-session/shutdown.c:500
 msgid "Suspend"
 msgstr "Прыпыніць"
 
-#: ../xfce4-session/shutdown.c:513
+#: ../xfce4-session/shutdown.c:528
 msgid "Hibernate"
 msgstr "Усыпіць"
 
-#: ../xfce4-session/shutdown.c:522
+#: ../xfce4-session/shutdown.c:537
 msgid "_Save session for future logins"
 msgstr "За_хаваць сэанс для будучых уваходаў"
 
-#: ../xfce4-session/shutdown.c:589
+#: ../xfce4-session/shutdown.c:592
 msgid "Please enter your password:"
 msgstr "Калі ласка, увядзіце пароль:"
 
-#: ../xfce4-session/shutdown.c:620
+#: ../xfce4-session/shutdown.c:623
 msgid "<b>An error occurred</b>"
 msgstr "<b>Узьнікла памылка</b>"
 
-#: ../xfce4-session/shutdown.c:634
+#: ../xfce4-session/shutdown.c:637
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
@@ -371,11 +477,11 @@ msgstr ""
 "Альбо няправільны пароль, альбо сыстэмны адміністратар забараніўвыключаць "
 "кампутар ад імя вашага рахунка."
 
-#: ../xfce4-session/shutdown.c:756 ../xfce4-session/xfsm-manager.c:1107
+#: ../xfce4-session/shutdown.c:759 ../xfce4-session/xfsm-manager.c:1107
 msgid "Shutdown Failed"
 msgstr "Збой выключэньня"
 
-#: ../xfce4-session/shutdown.c:758
+#: ../xfce4-session/shutdown.c:761
 msgid "Unable to perform shutdown"
 msgstr "Немагчыма выканаць выключэньне"
 
@@ -515,80 +621,80 @@ msgstr "Кіраўнік сэансаў мусіць прастойваць, к�
 msgid "Invalid shutdown type \"%u\""
 msgstr "Нерэчаісны тып выключэньня \"%u\""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:142
-#, c-format
-msgid "Unexpected error from HAL"
-msgstr ""
+#: ../xfce4-session/xfsm-shutdown-helper.c:200
+#, fuzzy
+msgid "Invalid shutdown type"
+msgstr "Нерэчаісны тып выключэньня \"%u\""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:199
+#: ../xfce4-session/xfsm-shutdown-helper.c:384
 #, c-format
 msgid "No HAL method for command %d"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:283
+#: ../xfce4-session/xfsm-shutdown-helper.c:528
 #, c-format
 msgid ""
 "Program \"sudo\" was not found.  You will not be able to shutdown your "
 "system from within Xfce."
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:295
+#: ../xfce4-session/xfsm-shutdown-helper.c:540
 #, fuzzy, c-format
 msgid "Unable to create parent pipe: %s"
 msgstr "Немагчыма стварыць файл %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:306
+#: ../xfce4-session/xfsm-shutdown-helper.c:551
 #, fuzzy, c-format
 msgid "Unable to create child pipe: %s"
 msgstr "Немагчыма стварыць файл %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:317
+#: ../xfce4-session/xfsm-shutdown-helper.c:562
 #, fuzzy, c-format
 msgid "Unable to fork sudo helper: %s"
 msgstr "Немагчыма выканаць выключэньне"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:359
+#: ../xfce4-session/xfsm-shutdown-helper.c:604
 #, c-format
 msgid "Unable to read response from sudo helper: %s"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:360
+#: ../xfce4-session/xfsm-shutdown-helper.c:605
 #: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
 msgid "Unknown error"
 msgstr "Невядомая памылка"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:371
+#: ../xfce4-session/xfsm-shutdown-helper.c:616
 #, c-format
 msgid "Unable to open parent pipe: %s"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:382
+#: ../xfce4-session/xfsm-shutdown-helper.c:627
 #, c-format
 msgid "Unable to open child pipe: %s"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:400
+#: ../xfce4-session/xfsm-shutdown-helper.c:645
 #, c-format
 msgid "Got unexpected reply from sudo shutdown helper"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:544
+#: ../xfce4-session/xfsm-shutdown-helper.c:803
 #, c-format
 msgid ""
 "Suspend and Hibernate are only supported through HAL, which is unavailable"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:560
+#: ../xfce4-session/xfsm-shutdown-helper.c:819
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:571
+#: ../xfce4-session/xfsm-shutdown-helper.c:830
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:582
+#: ../xfce4-session/xfsm-shutdown-helper.c:841
 #, fuzzy, c-format
 msgid "Shutdown command failed"
 msgstr "Збой выключэньня"
@@ -714,23 +820,39 @@ msgstr ""
 msgid "Performing Autostart..."
 msgstr "Выконваецца аўтазапуск..."
 
-#: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:161
+#: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:269
 msgid "Tips and Tricks"
 msgstr "Каштоўныя парады"
 
-#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:205
+#: ../xfce4-tips/main.c:48
 msgid "Fortunes"
 msgstr "Разумныя думкі"
 
-#: ../xfce4-tips/main.c:190
+#: ../xfce4-tips/main.c:74
+#, c-format
+msgid "Could not load tips database (%s)."
+msgstr ""
+
+#. converting it from the user's locale failed too, we give up
+#: ../xfce4-tips/main.c:183
+#, c-format
+msgid "Invalid output of fortune."
+msgstr ""
+
+#: ../xfce4-tips/main.c:188 ../xfce4-tips/main.c:196
+#, c-format
+msgid "Executing fortune failed (%s)"
+msgstr ""
+
+#: ../xfce4-tips/main.c:221
+msgid "Error while loading tips."
+msgstr ""
+
+#: ../xfce4-tips/main.c:298
 msgid "Display tips on _startup"
 msgstr "Адлюстроўваць парады ў час _запуску"
 
-#: ../xfce4-tips/main.c:199 ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
-msgid "Tips and tricks"
-msgstr "Каштоўныя парады"
-
-#: ../xfce4-tips/main.c:216
+#: ../xfce4-tips/main.c:327
 msgid "Next"
 msgstr "Далей"
 
@@ -753,6 +875,16 @@ msgstr "Немагчыма атрымаць адказ ад кіраўніка �
 #: ../xfce4-session-logout/main.c:199
 msgid "Received error while trying to log out"
 msgstr "Атрымана памылка ў час завяршэньня сэансу"
+
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
+#, fuzzy
+msgid "Session Menu"
+msgstr "Настаўленьні сэанса"
+
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
+msgid ""
+"Shows a menu with options to lock the screen, suspend, shutdown, or log out"
+msgstr ""
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
 #: ../settings/xfce4-session-settings.glade.h:14
@@ -920,6 +1052,10 @@ msgstr "Пра_верыць"
 #: ../settings/xfce4-session-settings.glade.h:38
 msgid "label"
 msgstr "label"
+
+#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
+msgid "Tips and tricks"
+msgstr "Каштоўныя парады"
 
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-27 01:38+0900\n"
+"POT-Creation-Date: 2009-07-26 19:15-0700\n"
 "PO-Revision-Date: 2009-07-27 01:38+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <xfce-users-jp@ml.fdiary.net>\n"
@@ -136,6 +136,113 @@ msgstr "シンプル"
 #: ../engines/simple/simple.c:498
 msgid "Simple Splash Engine"
 msgstr "シンプルな起動画面エンジン"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:56
+#, fuzzy
+msgid "Session"
+msgstr "セッション(_S)"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:57
+msgid "Loc_k screen"
+msgstr ""
+
+#: ../panel-plugin/xfsm-logout-plugin.c:58
+#: ../panel-plugin/xfsm-logout-plugin.c:98
+#, fuzzy
+msgid "_Suspend"
+msgstr "サスペンド"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:59
+#: ../panel-plugin/xfsm-logout-plugin.c:105
+#, fuzzy
+msgid "_Hibernate"
+msgstr "ハイバネート"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:60
+#: ../panel-plugin/xfsm-logout-plugin.c:91
+msgid "_Reboot"
+msgstr ""
+
+# NOTE: changed for the actual behavior
+#: ../panel-plugin/xfsm-logout-plugin.c:61
+#: ../panel-plugin/xfsm-logout-plugin.c:84
+#, fuzzy
+msgid "Shut _down"
+msgstr "電源を切る"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:62
+#: ../panel-plugin/xfsm-logout-plugin.c:77
+#, fuzzy
+msgid "_Log out"
+msgstr "ログアウト"
+
+#. XFSM_SHUTDOWN_ASK
+#. XFSM_SHUTDOWN_LOGOUT
+#: ../panel-plugin/xfsm-logout-plugin.c:75
+#, fuzzy
+msgid "Are you sure you want to log out?"
+msgstr "\"%s\" を終了させてもよろしいですか?"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:76
+#, c-format
+msgid "You will be logged out in %u seconds."
+msgstr ""
+
+#: ../panel-plugin/xfsm-logout-plugin.c:79
+msgid "Failed to log out."
+msgstr ""
+
+#. XFSM_SHUTDOWN_HALT
+#: ../panel-plugin/xfsm-logout-plugin.c:82
+#, fuzzy
+msgid "Are you sure you want to shut down?"
+msgstr "\"%s\" を終了させてもよろしいですか?"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:83
+#, c-format
+msgid "Your system will shut down in %u seconds."
+msgstr ""
+
+#: ../panel-plugin/xfsm-logout-plugin.c:86
+#, fuzzy
+msgid "Failed to shut down."
+msgstr "セッションのサスペンドに失敗しました"
+
+#. XFSM_SHUTDOWN_REBOOT
+#: ../panel-plugin/xfsm-logout-plugin.c:89
+#, fuzzy
+msgid "Are you sure you want to reboot?"
+msgstr "\"%s\" を終了させてもよろしいですか?"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:90
+#, c-format
+msgid "Your system will reboot in %u seconds."
+msgstr ""
+
+#: ../panel-plugin/xfsm-logout-plugin.c:93
+#, fuzzy
+msgid "Failed to reboot."
+msgstr "ファイル %s の作成に失敗しました"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:100
+#, fuzzy
+msgid "Failed to suspend"
+msgstr "セッションのサスペンドに失敗しました"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:107
+#, fuzzy
+msgid "Failed to hibernate"
+msgstr "セッションのハイバネートに失敗しました"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:186
+#, fuzzy
+msgid "Close Session"
+msgstr "セッションを選択してください"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:274
+#, fuzzy
+msgid "Session Error"
+msgstr "セッション保存エラー"
 
 #: ../settings/main.c:43
 msgid "Settings manager socket"
@@ -784,6 +891,16 @@ msgstr "セッションマネージャからの応答を受信できませんで
 #: ../xfce4-session-logout/main.c:199
 msgid "Received error while trying to log out"
 msgstr "ログアウト中にエラーを受信しました"
+
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
+#, fuzzy
+msgid "Session Menu"
+msgstr "セッション設定"
+
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
+msgid ""
+"Shows a menu with options to lock the screen, suspend, shutdown, or log out"
+msgstr ""
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
 #: ../settings/xfce4-session-settings.glade.h:14

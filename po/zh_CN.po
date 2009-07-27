@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-13 02:03-0700\n"
+"POT-Creation-Date: 2009-07-26 19:15-0700\n"
 "PO-Revision-Date: 2009-06-14 11:46+0800\n"
 "Last-Translator: Hunt Xu <huntxu@live.cn>\n"
 "Language-Team: Chinese/Simplified <xfce-i18n@xfce.org>\n"
@@ -133,6 +133,112 @@ msgstr "Simple"
 #: ../engines/simple/simple.c:498
 msgid "Simple Splash Engine"
 msgstr "Simple 闪屏主题引擎"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:56
+#, fuzzy
+msgid "Session"
+msgstr "会话(_S)"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:57
+msgid "Loc_k screen"
+msgstr ""
+
+#: ../panel-plugin/xfsm-logout-plugin.c:58
+#: ../panel-plugin/xfsm-logout-plugin.c:98
+#, fuzzy
+msgid "_Suspend"
+msgstr "挂起"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:59
+#: ../panel-plugin/xfsm-logout-plugin.c:105
+#, fuzzy
+msgid "_Hibernate"
+msgstr "休眠"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:60
+#: ../panel-plugin/xfsm-logout-plugin.c:91
+msgid "_Reboot"
+msgstr ""
+
+#: ../panel-plugin/xfsm-logout-plugin.c:61
+#: ../panel-plugin/xfsm-logout-plugin.c:84
+#, fuzzy
+msgid "Shut _down"
+msgstr "关机"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:62
+#: ../panel-plugin/xfsm-logout-plugin.c:77
+#, fuzzy
+msgid "_Log out"
+msgstr "注销"
+
+#. XFSM_SHUTDOWN_ASK
+#. XFSM_SHUTDOWN_LOGOUT
+#: ../panel-plugin/xfsm-logout-plugin.c:75
+#, fuzzy
+msgid "Are you sure you want to log out?"
+msgstr "您确定要终止“%s”吗？"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:76
+#, c-format
+msgid "You will be logged out in %u seconds."
+msgstr ""
+
+#: ../panel-plugin/xfsm-logout-plugin.c:79
+msgid "Failed to log out."
+msgstr ""
+
+#. XFSM_SHUTDOWN_HALT
+#: ../panel-plugin/xfsm-logout-plugin.c:82
+#, fuzzy
+msgid "Are you sure you want to shut down?"
+msgstr "您确定要终止“%s”吗？"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:83
+#, c-format
+msgid "Your system will shut down in %u seconds."
+msgstr ""
+
+#: ../panel-plugin/xfsm-logout-plugin.c:86
+#, fuzzy
+msgid "Failed to shut down."
+msgstr "挂起会话失败"
+
+#. XFSM_SHUTDOWN_REBOOT
+#: ../panel-plugin/xfsm-logout-plugin.c:89
+#, fuzzy
+msgid "Are you sure you want to reboot?"
+msgstr "您确定要终止“%s”吗？"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:90
+#, c-format
+msgid "Your system will reboot in %u seconds."
+msgstr ""
+
+#: ../panel-plugin/xfsm-logout-plugin.c:93
+#, fuzzy
+msgid "Failed to reboot."
+msgstr "创建文件 %s 失败"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:100
+#, fuzzy
+msgid "Failed to suspend"
+msgstr "挂起会话失败"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:107
+#, fuzzy
+msgid "Failed to hibernate"
+msgstr "休眠会话失败"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:186
+#, fuzzy
+msgid "Close Session"
+msgstr "选择会话"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:274
+#, fuzzy
+msgid "Session Error"
+msgstr "保存 Session 出错"
 
 #: ../settings/main.c:43
 msgid "Settings manager socket"
@@ -324,54 +430,54 @@ msgstr "正在读取会话数据"
 msgid "Xfce Session Manager"
 msgstr "Xfce 会话管理器管理器"
 
-#: ../xfce4-session/shutdown.c:360
+#: ../xfce4-session/shutdown.c:364
 #, c-format
 msgid "<span size='large'><b>Log out %s</b></span>"
 msgstr "<span size='large'><b>注销 %s</b></span>"
 
-#: ../xfce4-session/shutdown.c:401
+#: ../xfce4-session/shutdown.c:405
 msgid "Log Out"
 msgstr "注销"
 
-#: ../xfce4-session/shutdown.c:426
+#: ../xfce4-session/shutdown.c:430
 msgid "Restart"
 msgstr "重启"
 
-#: ../xfce4-session/shutdown.c:451
+#: ../xfce4-session/shutdown.c:458
 msgid "Shut Down"
 msgstr "关机"
 
-#: ../xfce4-session/shutdown.c:485
+#: ../xfce4-session/shutdown.c:500
 msgid "Suspend"
 msgstr "挂起"
 
-#: ../xfce4-session/shutdown.c:513
+#: ../xfce4-session/shutdown.c:528
 msgid "Hibernate"
 msgstr "休眠"
 
-#: ../xfce4-session/shutdown.c:522
+#: ../xfce4-session/shutdown.c:537
 msgid "_Save session for future logins"
 msgstr "保存会话以便下次登录时使用(_S)"
 
-#: ../xfce4-session/shutdown.c:589
+#: ../xfce4-session/shutdown.c:592
 msgid "Please enter your password:"
 msgstr "请输入您的密码:"
 
-#: ../xfce4-session/shutdown.c:620
+#: ../xfce4-session/shutdown.c:623
 msgid "<b>An error occurred</b>"
 msgstr "<b>出现一个错误</b>"
 
-#: ../xfce4-session/shutdown.c:634
+#: ../xfce4-session/shutdown.c:637
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
 msgstr "您所输入的密码不正确，或者系统管理员不允许您的帐户关闭该计算机。"
 
-#: ../xfce4-session/shutdown.c:756 ../xfce4-session/xfsm-manager.c:1107
+#: ../xfce4-session/shutdown.c:759 ../xfce4-session/xfsm-manager.c:1107
 msgid "Shutdown Failed"
 msgstr "关机失败"
 
-#: ../xfce4-session/shutdown.c:758
+#: ../xfce4-session/shutdown.c:761
 msgid "Unable to perform shutdown"
 msgstr "无法关机"
 
@@ -505,80 +611,80 @@ msgstr "会话管理器空闲时才可请求关机"
 msgid "Invalid shutdown type \"%u\""
 msgstr "无效的关机类型“%u”"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:142
-#, c-format
-msgid "Unexpected error from HAL"
-msgstr "HAL 异常错误"
+#: ../xfce4-session/xfsm-shutdown-helper.c:200
+#, fuzzy
+msgid "Invalid shutdown type"
+msgstr "无效的关机类型“%u”"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:199
+#: ../xfce4-session/xfsm-shutdown-helper.c:384
 #, c-format
 msgid "No HAL method for command %d"
 msgstr "没有与命令 %d 对应的 HAL 方法"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:283
+#: ../xfce4-session/xfsm-shutdown-helper.c:528
 #, c-format
 msgid ""
 "Program \"sudo\" was not found.  You will not be able to shutdown your "
 "system from within Xfce."
 msgstr "找不到“sudo”程序。无法从 Xfce 桌面关机。"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:295
+#: ../xfce4-session/xfsm-shutdown-helper.c:540
 #, c-format
 msgid "Unable to create parent pipe: %s"
 msgstr "无法创建父管道： %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:306
+#: ../xfce4-session/xfsm-shutdown-helper.c:551
 #, c-format
 msgid "Unable to create child pipe: %s"
 msgstr "无法创建子管道： %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:317
+#: ../xfce4-session/xfsm-shutdown-helper.c:562
 #, c-format
 msgid "Unable to fork sudo helper: %s"
 msgstr "无法建立 sudo 命令 %s 的分支"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:359
+#: ../xfce4-session/xfsm-shutdown-helper.c:604
 #, c-format
 msgid "Unable to read response from sudo helper: %s"
 msgstr "无法读入 sudo 命令 %s 的回应"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:360
+#: ../xfce4-session/xfsm-shutdown-helper.c:605
 #: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
 msgid "Unknown error"
 msgstr "未知错误"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:371
+#: ../xfce4-session/xfsm-shutdown-helper.c:616
 #, c-format
 msgid "Unable to open parent pipe: %s"
 msgstr "无法打开父管道：%s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:382
+#: ../xfce4-session/xfsm-shutdown-helper.c:627
 #, c-format
 msgid "Unable to open child pipe: %s"
 msgstr "无法打开子管道：%s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:400
+#: ../xfce4-session/xfsm-shutdown-helper.c:645
 #, c-format
 msgid "Got unexpected reply from sudo shutdown helper"
 msgstr "sudo 关机助手返回异常"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:544
+#: ../xfce4-session/xfsm-shutdown-helper.c:803
 #, c-format
 msgid ""
 "Suspend and Hibernate are only supported through HAL, which is unavailable"
 msgstr "HAL 不存在，所以无法挂起或休眠"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:560
+#: ../xfce4-session/xfsm-shutdown-helper.c:819
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
 msgstr "向关机程序 %s 发送命令时出错"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:571
+#: ../xfce4-session/xfsm-shutdown-helper.c:830
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
 msgstr "从关机程序 %s 接收响应时出错"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:582
+#: ../xfce4-session/xfsm-shutdown-helper.c:841
 #, c-format
 msgid "Shutdown command failed"
 msgstr "关机命令失败"
@@ -705,23 +811,39 @@ msgstr ""
 msgid "Performing Autostart..."
 msgstr "正在执行自动启动..."
 
-#: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:161
+#: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:269
 msgid "Tips and Tricks"
 msgstr "提示与技巧"
 
-#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:205
+#: ../xfce4-tips/main.c:48
 msgid "Fortunes"
 msgstr "幸运签"
 
-#: ../xfce4-tips/main.c:190
+#: ../xfce4-tips/main.c:74
+#, c-format
+msgid "Could not load tips database (%s)."
+msgstr ""
+
+#. converting it from the user's locale failed too, we give up
+#: ../xfce4-tips/main.c:183
+#, c-format
+msgid "Invalid output of fortune."
+msgstr ""
+
+#: ../xfce4-tips/main.c:188 ../xfce4-tips/main.c:196
+#, c-format
+msgid "Executing fortune failed (%s)"
+msgstr ""
+
+#: ../xfce4-tips/main.c:221
+msgid "Error while loading tips."
+msgstr ""
+
+#: ../xfce4-tips/main.c:298
 msgid "Display tips on _startup"
 msgstr "在启动时显示提示(_S)"
 
-#: ../xfce4-tips/main.c:199 ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
-msgid "Tips and tricks"
-msgstr "小提示与技巧"
-
-#: ../xfce4-tips/main.c:216
+#: ../xfce4-tips/main.c:327
 msgid "Next"
 msgstr "下一条"
 
@@ -744,6 +866,16 @@ msgstr "从会话管理器接收回应失败"
 #: ../xfce4-session-logout/main.c:199
 msgid "Received error while trying to log out"
 msgstr "注销时出错"
+
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
+#, fuzzy
+msgid "Session Menu"
+msgstr "会话设置"
+
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
+msgid ""
+"Shows a menu with options to lock the screen, suspend, shutdown, or log out"
+msgstr ""
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
 #: ../settings/xfce4-session-settings.glade.h:14
@@ -909,9 +1041,16 @@ msgstr "测试(_T)"
 msgid "label"
 msgstr "标签"
 
+#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
+msgid "Tips and tricks"
+msgstr "小提示与技巧"
+
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
 msgstr "Xfce4-提示"
+
+#~ msgid "Unexpected error from HAL"
+#~ msgstr "HAL 异常错误"
 
 #~ msgid "gtk-close"
 #~ msgstr "gtk-close"
