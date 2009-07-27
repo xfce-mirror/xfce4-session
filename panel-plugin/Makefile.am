@@ -1,5 +1,3 @@
-plugindir = $(libdir)/xfce4/panel-plugins
-
 plugin_sources = \
 	xfsm-logout-plugin.c \
 	xfsm-logout-plugin-ui.h
@@ -23,6 +21,7 @@ plugin_libs = \
 
 if BUILD_OLD_PANEL_PLUGIN
 
+plugindir = $(libexecdir)/xfce4/panel-plugins
 plugin_PROGRAMS = xfsm-logout-plugin
 
 xfsm_logout_plugin_SOURCES = $(plugin_sources)
@@ -31,6 +30,7 @@ xfsm_logout_plugin_LDADD = $(plugin_libs)
 
 else
 
+plugindir = $(libdir)/xfce4/panel-plugins
 plugin_LTLIBRARIES = libxfsm-logout-plugin.la
 
 libxfsm_logout_plugin_la_SOURCES = $(plugin_sources)
