@@ -35,6 +35,20 @@
         </method>
 
         <!--
+            String[] org.xfce.Session.Manager.GetCapabilities()
+
+            Retrieves a list of stuff the session manager is
+            capable of doing.  Current possibilities:
+                suspend
+                hibernate
+                reboot
+                shutdown
+        -->
+        <method name="GetCapabilities">
+            <arg direction="out" type="as"/>
+        </method>
+
+        <!--
              ObjectPath[] org.xfce.Session.Manager.ListClients()
 
              Retrieves a list of session clients from the session
@@ -81,6 +95,36 @@
         </method>
 
         <!--
+            void org.xfce.Session.Manager.SessionControl(String action,
+                                                         Dict[] options)
+
+            @action: Action to request.  Currently-recognized
+                     values are:
+                         show-logout-dialog
+                         logout
+                         suspend
+                         hibernate
+                         reboot
+                         shutdown
+            @options: An array of (String, Variant) pairs.  Currently-
+                      recognized options are:
+                          fast (bool): Whether or not to allow
+                                       applications connected to the
+                                       SM a chance to close cleanly.
+                          allow-interact (bool): Whether or not to allow
+                                                 applications connected
+                                                 to the SM to interact
+                                                 with the user during
+                                                 shutdown.
+                      These two options are ignored for all @action values
+                      except 'reboot' and 'shutdown'.
+        -->
+        <method name="SessionControl">
+            <arg direction="in" name="action" type="s"/>
+            <arg direction="in" name="options" type="a{sv}"/>
+        </method>
+
+        <!--
              void org.xfce.Session.Manager.Shutdown(Unsigned Int type,
                                                     Boolean save)
 
@@ -95,6 +139,10 @@
                           chance to save themselves, or to shut down
                           immediately.  Note that this parameter is
                           ignored for type==0.
+
+             NOTE: This method is deprecated and should not be used in
+             newly-written code.  See the SessionControl() method for
+             a replacement.
 
              Instructs the session manager to shut down.  Type 0 will
              prompt the user for a shutdown type.  All other types will
@@ -143,5 +191,19 @@
              cancelled.
         -->
         <signal name="ShutdownCancelled"/>
+
+        <!--
+            void org.xfce.Session.Manager.CapabilitiesChanged(String[] caps_added,
+                                                              String[] caps_removed)
+
+            @caps_added: A list of new capabilities available.
+            @caps_removed: A list of capabilities lost.
+
+            Emitted when the list of capabilities is changed.
+        -->
+        <signal name="CapabilitiesChanged">
+            <arg name="caps_added" type="as"/>
+            <arg name="caps_removed" type="as"/>
+        </signal>
     </interface>
 </node>

@@ -1,7 +1,7 @@
 /* $Id$ */
 /*-
  * Copyright (c) 2003-2006 Benedikt Meurer <benny@xfce.org>
- * Copyright (c) 2008 Brian Tarricone <bjt23@cornell.edu>
+ * Copyright (c) 2008-2009 Brian Tarricone <bjt23@cornell.edu>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -146,8 +146,9 @@ typedef struct
 {
   XfsmManager     *manager;
   XfsmShutdownType type;
-  gboolean         allow_save;
-} ShutdownIdleData;
+  gboolean         fast;
+  gboolean         allow_interact;
+} XfsmSessionControlIdleData;
 
 enum
 {
@@ -1776,6 +1777,10 @@ static gboolean xfsm_manager_dbus_get_state (XfsmManager *manager,
 static gboolean xfsm_manager_dbus_checkpoint (XfsmManager *manager,
                                               const gchar *session_name,
                                               GError     **error);
+static gboolean xfsm_manager_dbus_session_control (XfsmManager *manager,
+                                                   const gchar *action,
+                                                   GHashTable  *options,
+                                                   GError     **error);
 static gboolean xfsm_manager_dbus_shutdown (XfsmManager *manager,
                                             guint        type,
                                             gboolean     allow_save,
@@ -1935,18 +1940,79 @@ xfsm_manager_dbus_checkpoint (XfsmManager *manager,
 }
 
 
-static gboolean
-xfsm_manager_dbus_shutdown_idled (gpointer data)
-{
-  ShutdownIdleData *idata = data;
 
-  xfsm_manager_save_yourself_global (idata->manager, SmSaveBoth, TRUE,
-                                     SmInteractStyleAny, FALSE,
-                                     idata->type, idata->allow_save);
+static gboolean
+xfsm_manager_dbus_session_control_idled (gpointer data)
+{
+  XfsmSessionControlIdleData *scdata = data;
+
+  xfsm_manager_save_yourself_global (scdata->manager, SmSaveBoth, TRUE,
+                                     scdata->allow_interact
+                                       ? SmInteractStyleAny
+                                       : SmInteractStyleNone,
+                                     scdata->fast, scdata->type,
+                                     !scdata->fast);
 
   return FALSE;
 }
 
+
+
+static gboolean
+xfsm_manager_dbus_session_control (XfsmManager *manager,
+                                   const gchar *action,
+                                   GHashTable  *options,
+                                   GError     **error)
+{
+  XfsmShutdownType type = -1;
+  XfsmSessionControlIdleData *scdata;
+  GValue *value;
+
+  if (manager->state != XFSM_MANAGER_IDLE)
+    {
+      g_set_error (error, XFSM_ERROR, XFSM_ERROR_BAD_STATE,
+                   _("Session manager must be in idle state when requesting session control"));
+      return FALSE;
+    }
+
+  if (!strcmp (action, "show-logout-dialog"))
+    type = XFSM_SHUTDOWN_ASK;
+  else if (!strcmp (action, "suspend"))
+    type = XFSM_SHUTDOWN_SUSPEND;
+  else if (!strcmp (action, "hibernate"))
+    type = XFSM_SHUTDOWN_HIBERNATE;
+  else if (!strcmp (action, "reboot"))
+    type = XFSM_SHUTDOWN_REBOOT;
+  else if (!strcmp (action, "shutdown"))
+    type = XFSM_SHUTDOWN_HALT;
+  else
+    {
+      g_set_error (error, XFSM_ERROR, XFSM_ERROR_BAD_VALUE,
+                   _("Invalid action \"%s\""), action);
+      return FALSE;
+    }
+
+  scdata = g_new0 (XfsmSessionControlIdleData, 1);
+  scdata->manager = manager;
+  scdata->type = type;
+
+  value = g_hash_table_lookup (options, "fast");
+  if (value)
+    scdata->fast = g_value_get_boolean (value);
+  else
+    scdata->fast = FALSE;
+
+  value = g_hash_table_lookup (options, "allow-interact");
+  if (value)
+    scdata->allow_interact = g_value_get_boolean (value);
+  else
+    scdata->allow_interact = TRUE;
+
+  g_idle_add_full (G_PRIORITY_DEFAULT, xfsm_manager_dbus_session_control_idled,
+                   scdata, (GDestroyNotify) g_free);
+
+  return TRUE;
+}
 
 static gboolean
 xfsm_manager_dbus_shutdown (XfsmManager *manager,
@@ -1954,14 +2020,18 @@ xfsm_manager_dbus_shutdown (XfsmManager *manager,
                             gboolean     allow_save,
                             GError     **error)
 {
-  ShutdownIdleData *idata;
-
-  if (manager->state != XFSM_MANAGER_IDLE)
-    {
-      g_set_error (error, XFSM_ERROR, XFSM_ERROR_BAD_STATE,
-                   _("Session manager must be in idle state when requesting a shutdown"));
-      return FALSE;
-    }
+  static const gchar *action_map[] =
+  {
+    [XFSM_SHUTDOWN_ASK] = "show-logout-dialog",
+    [XFSM_SHUTDOWN_SUSPEND] = "suspend",
+    [XFSM_SHUTDOWN_HIBERNATE] = "hibernate",
+    [XFSM_SHUTDOWN_REBOOT] = "reboot",
+    [XFSM_SHUTDOWN_HALT] = "shutdown",
+  };
+  GHashTable         *options;
+  gboolean            ret;
+  GValue              value1 = { 0, };
+  GValue              value2 = { 0, };
 
   if (type > XFSM_SHUTDOWN_HIBERNATE)
     {
@@ -1970,12 +2040,22 @@ xfsm_manager_dbus_shutdown (XfsmManager *manager,
       return FALSE;
     }
 
-  idata = g_new (ShutdownIdleData, 1);
-  idata->manager = manager;
-  idata->type = type;
-  idata->allow_save = allow_save;
-  g_idle_add_full (G_PRIORITY_DEFAULT, xfsm_manager_dbus_shutdown_idled,
-                   idata, (GDestroyNotify) g_free);
+  options = g_hash_table_new (g_str_hash, g_str_equal);
 
-  return TRUE;
+  g_value_init (&value1, G_TYPE_BOOLEAN);
+  g_value_set_boolean (&value1, !allow_save);
+  g_hash_table_insert (options, "fast", &value1);
+
+  g_value_init (&value2, G_TYPE_BOOLEAN);
+  g_value_set_boolean (&value2, allow_save);
+  g_hash_table_insert (options, "allow-interact", &value2);
+
+  ret = xfsm_manager_dbus_session_control (manager, action_map[type],
+                                           options, error);
+
+  g_hash_table_destroy (options);
+  g_value_unset (&value1);
+  g_value_unset (&value2);
+
+  return ret;
 }
