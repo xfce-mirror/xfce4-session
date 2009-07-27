@@ -71,11 +71,23 @@ XDT_I18N([@LINGUAS@])
 dnl Check for required packages
 XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.6.0])
 XDT_CHECK_PACKAGE([LIBXFCEGUI4], [libxfcegui4-1.0], [4.6.0])
+XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [2.10.0])
 XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-1.0], [2.12])
 XDT_CHECK_PACKAGE([DBUS], [dbus-1], [1.0.0])
 XDT_CHECK_PACKAGE([DBUS_GLIB], [dbus-glib-1], [0.73])
 XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.6.0])
 XDT_CHECK_PACKAGE([LIBGLADE], [libglade-2.0], [2.0.0])
+
+dnl we provide a panel plugin now
+XDT_CHECK_OPTIONAL_PACKAGE([LIBXFCE4PANEL], [libxfce4panel-1.0], [4.6.0],
+                           [panel-plugin], [Panel logout menu button], [yes])
+if test "x$LIBXFCE4PANEL_FOUND" = "xyes"; then
+    PANEL_MINOR=`echo $LIBXFCE4PANEL_VERSION | cut -d. -f2`
+    if test $PANEL_MINOR -lt 7; then
+        old_panel_plugin=yes
+    fi
+fi
+AM_CONDITIONAL([BUILD_OLD_PANEL_PLUGIN], [test "x$old_panel_plugin" = "xyes"])
 
 dnl Check for gnome support
 XDT_CHECK_OPTIONAL_PACKAGE([GNOME], [gconf-2.0], [2.4.0], [gnome],
@@ -164,6 +176,7 @@ icons/128x128/Makefile
 icons/scalable/Makefile
 libxfsm/Makefile
 libxfsm/xfce4-session-2.0.pc
+panel-plugin/Makefile
 po/Makefile.in
 settings/Makefile
 xfce4-session/Makefile

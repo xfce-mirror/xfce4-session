@@ -10,7 +10,12 @@ SUBDIRS =								\
 	xfce4-session							\
 	xfce4-session-logout						\
 	xfce4-tips							\
-	xfsm-shutdown-helper
+	xfsm-shutdown-helper						\
+	$(panel_plugin_dir)
+
+if HAVE_LIBXFCE4PANEL
+panel_plugin_dir = panel-plugin
+endif
 
 EXTRA_DIST =								\
 	BUGS								\
