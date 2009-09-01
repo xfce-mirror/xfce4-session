@@ -6,10 +6,10 @@
 # Evaggelos Balaskas <ebalaskas@ebalaskas.gr>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-session 4.4.0\n"
+"Project-Id-Version: xfce4-session git version\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-07-26 19:15-0700\n"
-"PO-Revision-Date: 2009-02-22 00:52+0200\n"
+"PO-Revision-Date: 2009-09-01 20:41-0800\n"
 "Last-Translator: Evaggelos Balaskas <ebalaskas@ebalaskas.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Lokalize 0.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: ../engines/balou/balou-theme.c:110
 msgid "No description given"
@@ -42,9 +45,7 @@ msgstr "Παρακαλώ ελέγξτε ότι το αρχείο είναι έν
 #: ../engines/balou/config.c:396
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
-msgstr ""
-"Αδύνατη η απομάκρυνση του θέματος οθόνης εκκίνησης \"%s\" από τον κατάλογο %"
-"s."
+msgstr "Αδύνατη η απομάκρυνση του θέματος οθόνης εκκίνησης \"%s\" από τον κατάλογο %s."
 
 #: ../engines/balou/config.c:481
 msgid "Choose theme filename..."
@@ -135,110 +136,96 @@ msgid "Simple Splash Engine"
 msgstr "Απλή οθόνη εκκίνησης"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:56
-#, fuzzy
 msgid "Session"
-msgstr "Σ_υνεδρία"
+msgstr "Συνεδρία"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:57
 msgid "Loc_k screen"
-msgstr ""
+msgstr "Κλεί_δωμα οθόνης"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:58
 #: ../panel-plugin/xfsm-logout-plugin.c:98
-#, fuzzy
 msgid "_Suspend"
-msgstr "Αναστολή"
+msgstr "_Αναστολή"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:59
 #: ../panel-plugin/xfsm-logout-plugin.c:105
-#, fuzzy
 msgid "_Hibernate"
-msgstr "Αδρανοποίηση"
+msgstr "_Αδρανοποίηση"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:60
 #: ../panel-plugin/xfsm-logout-plugin.c:91
 msgid "_Reboot"
-msgstr ""
+msgstr "_Επανεκκίνηση"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:61
 #: ../panel-plugin/xfsm-logout-plugin.c:84
-#, fuzzy
 msgid "Shut _down"
-msgstr "Τερματισμός"
+msgstr "Τερμ_ατισμός"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:62
 #: ../panel-plugin/xfsm-logout-plugin.c:77
-#, fuzzy
 msgid "_Log out"
-msgstr "Αποσύνδεση"
+msgstr "_Αποσύνδεση"
 
 #. XFSM_SHUTDOWN_ASK
 #. XFSM_SHUTDOWN_LOGOUT
 #: ../panel-plugin/xfsm-logout-plugin.c:75
-#, fuzzy
 msgid "Are you sure you want to log out?"
-msgstr "Είστε σίγουροι ότι θέλετε να τερματίσετε \"%s\";"
+msgstr "Είστε σίγουροι ότι επιθυμείτε την αποσύνδεσή σας;"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:76
 #, c-format
 msgid "You will be logged out in %u seconds."
-msgstr ""
+msgstr "Θα αποσυνδεθείτε σε %u δευτερόλεπτα."
 
 #: ../panel-plugin/xfsm-logout-plugin.c:79
 msgid "Failed to log out."
-msgstr ""
+msgstr "Απέτυχε η αποσύνδεσή."
 
 #. XFSM_SHUTDOWN_HALT
 #: ../panel-plugin/xfsm-logout-plugin.c:82
-#, fuzzy
 msgid "Are you sure you want to shut down?"
-msgstr "Είστε σίγουροι ότι θέλετε να τερματίσετε \"%s\";"
+msgstr "Είστε σίγουροι ότι επιθυμείτε τον τερματισμό;"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:83
 #, c-format
 msgid "Your system will shut down in %u seconds."
-msgstr ""
+msgstr "Το σύστημα θα τερματιστεί σε %u δευτερόλεπτα."
 
 #: ../panel-plugin/xfsm-logout-plugin.c:86
-#, fuzzy
 msgid "Failed to shut down."
-msgstr "Αποτυχία αναστολής συνεδρίας"
+msgstr "Απέτυχε ο τερματισμός."
 
 #. XFSM_SHUTDOWN_REBOOT
 #: ../panel-plugin/xfsm-logout-plugin.c:89
-#, fuzzy
 msgid "Are you sure you want to reboot?"
-msgstr "Είστε σίγουροι ότι θέλετε να τερματίσετε \"%s\";"
+msgstr "Είστε σίγουροι ότι θέλετε να επανεκκινήσετε;"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:90
 #, c-format
 msgid "Your system will reboot in %u seconds."
-msgstr ""
+msgstr "Το σύστημά σας θα επανεκκινηθεί σε %u δευτερόλεπτα."
 
 #: ../panel-plugin/xfsm-logout-plugin.c:93
-#, fuzzy
 msgid "Failed to reboot."
-msgstr "Αδύνατη η δημιουργία του αρχείου %s"
+msgstr "Απέτυχε η επανεκκίνηση."
 
 #: ../panel-plugin/xfsm-logout-plugin.c:100
-#, fuzzy
 msgid "Failed to suspend"
-msgstr "Αποτυχία αναστολής συνεδρίας"
+msgstr "Απέτυχε η αναστολή"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:107
-#, fuzzy
 msgid "Failed to hibernate"
-msgstr "Αδυναμία αδρανοποίησης συνεδρίας"
+msgstr "Απέτυχε η αδρανοποίηση"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:186
-#, fuzzy
 msgid "Close Session"
-msgstr "Επιλέξτε συνεδρία"
+msgstr "Κλείσιμο συνεδρίας"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:274
-#, fuzzy
 msgid "Session Error"
-msgstr "Σφάλμα αποθήκευσης συνεδρίας"
+msgstr "Σφάλμα συνεδρίας"
 
 #: ../settings/main.c:43
 msgid "Settings manager socket"
@@ -268,9 +255,10 @@ msgstr "Παρακαλώ να αναφέρετε σφάλματα στο <%s>"
 
 #: ../settings/main.c:84
 msgid "Session Settings"
-msgstr "Ρυθμίσεις συνεδριών"
+msgstr "Ρυθμίσεις συνεδρίας"
 
-#: ../settings/main.c:86 ../xfce4-session/main.c:281
+#: ../settings/main.c:86
+#: ../xfce4-session/main.c:281
 msgid "Unable to contact settings server"
 msgstr "Αδυναμία επικοινωνίας με τον διακομιστή ρυθμίσεων"
 
@@ -280,9 +268,7 @@ msgstr "Εσωτερικό σφάλμα"
 
 #: ../settings/main.c:101
 msgid "Unable to create user interface from embedded definition data"
-msgstr ""
-"Αδυναμία δημιουργίας διεπαφής χρήστη από τα ενσωματεμένα προσδιορισμένα "
-"δεδομένα"
+msgstr "Αδυναμία δημιουργίας διεπαφής χρήστη από τα ενσωματεμένα προσδιορισμένα δεδομένα"
 
 #: ../settings/main.c:102
 msgid "This is likely a problem with your Xfce installation"
@@ -326,17 +312,14 @@ msgstr "Είστε σίγουροι ότι θέλετε να τερματίσε�
 msgid "Terminate \"%s\""
 msgstr "Τερματισμός \"%s\""
 
-#: ../settings/session-editor.c:186 ../settings/session-editor.c:214
+#: ../settings/session-editor.c:186
+#: ../settings/session-editor.c:214
 msgid "Terminate Program"
 msgstr "Τερματισμός προγράμματος"
 
 #: ../settings/session-editor.c:188
-msgid ""
-"The application will lose any unsaved state and will not be restarted in "
-"your next session."
-msgstr ""
-"Η εφαρμογή θα χάσει την μη αποθηκευμένη κατάσταση και δεν θα ξεκινήσει στην "
-"επόμενη συνεδρία σας."
+msgid "The application will lose any unsaved state and will not be restarted in your next session."
+msgstr "Η εφαρμογή θα χάσει την μη αποθηκευμένη κατάσταση και δεν θα ξεκινήσει στην επόμενη συνεδρία σας."
 
 #: ../settings/session-editor.c:215
 msgid "Unable to terminate program."
@@ -362,8 +345,10 @@ msgstr "Πρόγραμμα"
 msgid "Restart Style"
 msgstr "Επανεκκίνηση του στυλ"
 
-#: ../settings/splash-settings.c:288 ../settings/splash-settings.c:291
-#: ../settings/splash-settings.c:294 ../settings/splash-settings.c:297
+#: ../settings/splash-settings.c:288
+#: ../settings/splash-settings.c:291
+#: ../settings/splash-settings.c:294
+#: ../settings/splash-settings.c:297
 #: ../settings/splash-settings.c:354
 msgid "None"
 msgstr "Κανένα"
@@ -409,14 +394,8 @@ msgid "Failed to open %s for writing"
 msgstr "Αδυναμία ανοίγματος του '%s' για εγγραφή"
 
 #: ../settings/xfae-window.c:100
-msgid ""
-"Below is the list of applications that will be started automatically when "
-"you login to your Xfce desktop, in addition to the applications that were "
-"saved when you logged out last time:"
-msgstr ""
-"Παρακάτω είναι η λίστα των εφαρμογών που θα ξεκινήσουν αυτόματα όταν θα "
-"συνδεθείτε στην επιφάνεια εργασίας, επιπρόσθετα θα αποθηκεύονται την "
-"τελευταία φορά που αποσυνδεθήκατε:"
+msgid "Below is the list of applications that will be started automatically when you login to your Xfce desktop, in addition to the applications that were saved when you logged out last time:"
+msgstr "Παρακάτω είναι η λίστα των εφαρμογών που θα ξεκινήσουν αυτόματα όταν θα συνδεθείτε στην επιφάνεια εργασίας, επιπρόσθετα θα αποθηκεύονται την τελευταία φορά που αποσυνδεθήκατε:"
 
 #: ../xfce4-session/main.c:149
 msgid "Loading desktop settings"
@@ -473,14 +452,11 @@ msgid "<b>An error occurred</b>"
 msgstr "<b>Παρουσιάστηκε ένα σφάλμα</b>"
 
 #: ../xfce4-session/shutdown.c:637
-msgid ""
-"Either the password you entered is invalid, or the system administrator "
-"disallows shutting down this computer with your user account."
-msgstr ""
-"Είτε ο κωδικός που εισάγατε δεν ισχύει, είτε ο διαχειριστής σας δεν "
-"επιτρέπει την απενεργοποίηση του υπολογιστή από αυτό τον λογαριασμό."
+msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
+msgstr "Είτε ο κωδικός που εισάγατε δεν ισχύει, είτε ο διαχειριστής σας δεν επιτρέπει την απενεργοποίηση του υπολογιστή από αυτό τον λογαριασμό."
 
-#: ../xfce4-session/shutdown.c:759 ../xfce4-session/xfsm-manager.c:1107
+#: ../xfce4-session/shutdown.c:759
+#: ../xfce4-session/xfsm-manager.c:1107
 msgid "Shutdown Failed"
 msgstr "Ο τερματισμός απέτυχε"
 
@@ -494,12 +470,8 @@ msgid "Last accessed: %s"
 msgstr "Τελευταία προσπέλαση: %s"
 
 #: ../xfce4-session/xfsm-chooser.c:213
-msgid ""
-"Choose the session you want to restore. You can simply double-click the "
-"session name to restore it."
-msgstr ""
-"Επιλέξτε τη συνεδρία που θέλετε να επαναφέρετε. Μπορείτε απλώς να κάνετε "
-"διπλό κλικ στο όνομα της συνεδρίας για να την επαναφέρετε."
+msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
+msgstr "Επιλέξτε τη συνεδρία που θέλετε να επαναφέρετε. Μπορείτε απλώς να κάνετε διπλό κλικ στο όνομα της συνεδρίας για να την επαναφέρετε."
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:239
@@ -519,7 +491,8 @@ msgstr "Nέα συνεδρία"
 msgid "Create a new session."
 msgstr "Δημιουργία νέας συνεδρίας"
 
-#: ../xfce4-session/xfsm-client.c:792 ../xfce4-session/xfsm-client.c:852
+#: ../xfce4-session/xfsm-client.c:792
+#: ../xfce4-session/xfsm-client.c:852
 #: ../xfce4-session/xfsm-client.c:960
 #, c-format
 msgid "The client doesn't have any properties set yet"
@@ -564,23 +537,13 @@ msgstr "Προσπάθεια ξανά"
 
 #: ../xfce4-session/xfsm-manager.c:589
 #, c-format
-msgid ""
-"Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
-"running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
-"incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
-msgstr ""
-"Αδυναμία προσδιορισμού ονόματος ασφαλής συνεδρίας. Πιθανή αιτία: το xfconfd "
-"δεν τρέχει (D-BUS πρόβλημα ρύθμισης)' οι μεταβλητές περιβάλλοντος "
-"$XDG_CONFIG_DIRS δεν είναι ορισμένα σωστά (πρέπει να συμπεριληφθεί \"%s\"), "
-"ή το xfce4-session δεν έχει εγκατασταθεί σωστά."
+msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
+msgstr "Αδυναμία προσδιορισμού ονόματος ασφαλής συνεδρίας. Πιθανή αιτία: το xfconfd δεν τρέχει (D-BUS πρόβλημα ρύθμισης)' οι μεταβλητές περιβάλλοντος $XDG_CONFIG_DIRS δεν είναι ορισμένα σωστά (πρέπει να συμπεριληφθεί \"%s\"), ή το xfce4-session δεν έχει εγκατασταθεί σωστά."
 
 #: ../xfce4-session/xfsm-manager.c:600
 #, c-format
-msgid ""
-"The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr ""
-"Η συγκεκριμένη ασφαλή συνεδρία (\"%s\") δεν είναι σημειωμένη ως ασφαλή "
-"συνεδρία."
+msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
+msgstr "Η συγκεκριμένη ασφαλή συνεδρία (\"%s\") δεν είναι σημειωμένη ως ασφαλή συνεδρία."
 
 #: ../xfce4-session/xfsm-manager.c:647
 msgid "The list of applications in the failsafe session is empty."
@@ -613,16 +576,12 @@ msgstr "Μπορείτε μόνο να τερματίσετε πελάτες ό�
 #: ../xfce4-session/xfsm-manager.c:1921
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
-msgstr ""
-"Ο διαχειριστής συνεδριών μπορεί να είναι σε αδρανή κατάσταση όταν φτάσει σε "
-"ένα σημείο ελέγχου"
+msgstr "Ο διαχειριστής συνεδριών μπορεί να είναι σε αδρανή κατάσταση όταν φτάσει σε ένα σημείο ελέγχου"
 
 #: ../xfce4-session/xfsm-manager.c:1962
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
-msgstr ""
-"Ο διαχειριστής συνεδρίας πρέπει να είναι σε κατάσταση αδράνειας όταν αιτηθεί "
-"να τερματιστεί"
+msgstr "Ο διαχειριστής συνεδρίας πρέπει να είναι σε κατάσταση αδράνειας όταν αιτηθεί να τερματιστεί"
 
 #: ../xfce4-session/xfsm-manager.c:1969
 #, c-format
@@ -630,9 +589,8 @@ msgid "Invalid shutdown type \"%u\""
 msgstr "Μη έγκυρος τύπος τερματισμού \"%u\""
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:200
-#, fuzzy
 msgid "Invalid shutdown type"
-msgstr "Μη έγκυρος τύπος τερματισμού \"%u\""
+msgstr "Μη έγκυρος τύπος τερματισμού"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:384
 #, c-format
@@ -641,12 +599,8 @@ msgstr "Καμία μέθοδο HAL για την εντολή %d"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:528
 #, c-format
-msgid ""
-"Program \"sudo\" was not found.  You will not be able to shutdown your "
-"system from within Xfce."
-msgstr ""
-"Το πρόγραμμα \"sudο\" δεν βρέθηκε. Δεν θα είναι δυνατός ο τερματισμός του "
-"συστήματός σας μέσα από το xfce."
+msgid "Program \"sudo\" was not found.  You will not be able to shutdown your system from within Xfce."
+msgstr "Το πρόγραμμα \"sudο\" δεν βρέθηκε. Δεν θα είναι δυνατός ο τερματισμός του συστήματός σας μέσα από το xfce."
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:540
 #, c-format
@@ -669,7 +623,8 @@ msgid "Unable to read response from sudo helper: %s"
 msgstr "Αδυναμία ανάγνωσης της απάντησης από την βοήθεια του sudo: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:605
-#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
+#: ../xfce4-session-logout/main.c:68
+#: ../xfce4-session-logout/main.c:75
 msgid "Unknown error"
 msgstr "(Άγνωστο σφάλμα)"
 
@@ -690,11 +645,8 @@ msgstr "Ήρθε αναπάντεχη απάντηση από τον τερμα�
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:803
 #, c-format
-msgid ""
-"Suspend and Hibernate are only supported through HAL, which is unavailable"
-msgstr ""
-"Αναστολή και αδρανοποίηση υποστηρίζονται μόνο μέσα από το HAL, το οποίο δεν "
-"είναι διαθέσιμο"
+msgid "Suspend and Hibernate are only supported through HAL, which is unavailable"
+msgstr "Αναστολή και αδρανοποίηση υποστηρίζονται μόνο μέσα από το HAL, το οποίο δεν είναι διαθέσιμο"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:819
 #, c-format
@@ -833,7 +785,8 @@ msgstr ""
 msgid "Performing Autostart..."
 msgstr "Αυτόματη εκκίνηση..."
 
-#: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:269
+#: ../xfce4-tips/main.c:47
+#: ../xfce4-tips/main.c:269
 msgid "Tips and Tricks"
 msgstr "Συμβουλές και κολπάκια"
 
@@ -844,22 +797,23 @@ msgstr "Κουλουράκια τύχης"
 #: ../xfce4-tips/main.c:74
 #, c-format
 msgid "Could not load tips database (%s)."
-msgstr ""
+msgstr "Αδυναμία φόρτωσης της βάσης σημειώσεων (%s)."
 
 #. converting it from the user's locale failed too, we give up
 #: ../xfce4-tips/main.c:183
 #, c-format
 msgid "Invalid output of fortune."
-msgstr ""
+msgstr "Μη έγκυρη έξοδο γνωμικού."
 
-#: ../xfce4-tips/main.c:188 ../xfce4-tips/main.c:196
+#: ../xfce4-tips/main.c:188
+#: ../xfce4-tips/main.c:196
 #, c-format
 msgid "Executing fortune failed (%s)"
-msgstr ""
+msgstr "Η εκτέλεση του fortune απέτυχε (%s)"
 
 #: ../xfce4-tips/main.c:221
 msgid "Error while loading tips."
-msgstr ""
+msgstr "Σφάλμα κατά την φόρτωση σημειώσεων."
 
 #: ../xfce4-tips/main.c:298
 msgid "Display tips on _startup"
@@ -890,14 +844,12 @@ msgid "Received error while trying to log out"
 msgstr "Λήφθηκε σφάλμα κατά την προσπάθεια αποσύνδεσης"
 
 #: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
-#, fuzzy
 msgid "Session Menu"
-msgstr "Ρυθμίσεις συνεδριών"
+msgstr "Μενού συνεδρίας"
 
 #: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
-msgid ""
-"Shows a menu with options to lock the screen, suspend, shutdown, or log out"
-msgstr ""
+msgid "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
+msgstr "Εμφανίζει ένα μενού με επιλογή το κλειδώμα οθόνης, αναστολή, τερματισμό, ή αποσύνδεση"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
 #: ../settings/xfce4-session-settings.glade.h:14
@@ -982,11 +934,8 @@ msgid "Manage _remote applications"
 msgstr "Διαχείριση απ_ομακρυσμένων εφαρμογών"
 
 #: ../settings/xfce4-session-settings.glade.h:20
-msgid ""
-"Manage remote applications over the network (this may be a security risk)"
-msgstr ""
-"Διαχείριση απομακρυσμένων διαδικτυακών εφαρμογών (μπορεί να έχει ρίσκο "
-"ασφάλειας)"
+msgid "Manage remote applications over the network (this may be a security risk)"
+msgstr "Διαχείριση απομακρυσμένων διαδικτυακών εφαρμογών (μπορεί να έχει ρίσκο ασφάλειας)"
 
 #: ../settings/xfce4-session-settings.glade.h:21
 msgid "Opens the configuration panel for the selected splash screen"
@@ -1013,31 +962,20 @@ msgid "Saving Session"
 msgstr "Αποθήκευση συνεδρίας"
 
 #: ../settings/xfce4-session-settings.glade.h:28
-msgid ""
-"Start GNOME services, such as gnome-keyring and the GNOME accessibility "
-"framework"
-msgstr ""
-"Εκκίνηση υπηρεσιών GNOME, όπως το gnome-keyring και το πλαίσιο "
-"προσβασιμότητας GNOME"
+msgid "Start GNOME services, such as gnome-keyring and the GNOME accessibility framework"
+msgstr "Εκκίνηση υπηρεσιών GNOME, όπως το gnome-keyring και το πλαίσιο προσβασιμότητας GNOME"
 
 #: ../settings/xfce4-session-settings.glade.h:29
 msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
 msgstr "Εκκίνηση υπηρεσιών KDE, όπως το \"kdeinit,\" DCOP, και το ARTS"
 
 #: ../settings/xfce4-session-settings.glade.h:30
-msgid ""
-"These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr ""
+msgid "These applications are a part of the currently-running session, and can be saved when you log out.  Changes below will only take effect when the session is saved."
+msgstr "Αυτές οι εφαρμογές είναι μέρος της τρέχουσας συνεδρίας, και μπορεί να αποθηκευτούν κατά την αποσύνδεση. Οι παρακάτω αλλαγές θα έχουν ισχύει μόνο όταν η συνεδρία αποθηκευτεί."
 
 #: ../settings/xfce4-session-settings.glade.h:31
-msgid ""
-"Your session is being saved.  If you do not wish to wait, you may close this "
-"window."
-msgstr ""
-"Η συνεδρία σας αποθηκεύεται. Εάν δεν θέλετε να περιμένετε, θα πρέπει να "
-"κλείσετε το παράθυρο."
+msgid "Your session is being saved.  If you do not wish to wait, you may close this window."
+msgstr "Η συνεδρία σας αποθηκεύεται. Εάν δεν θέλετε να περιμένετε, θα πρέπει να κλείσετε το παράθυρο."
 
 #: ../settings/xfce4-session-settings.glade.h:32
 msgid "_Display chooser on login"
@@ -1075,112 +1013,3 @@ msgstr "Συμβουλές και κολπάκια"
 msgid "xfce4-tips"
 msgstr "συμβουλές xfce4"
 
-#~ msgid "Unexpected error from HAL"
-#~ msgstr "Αναπάντεχο σφάλμα από το HAL"
-
-#~ msgid "gtk-close"
-#~ msgstr "κλείσιμο"
-
-#~ msgid "gtk-help"
-#~ msgstr "βοήθεια"
-
-#~ msgid "Session and Startup Settings"
-#~ msgstr "Συνεδρίες και Εκκίνηση"
-
-#~ msgid "Sessions and Startup Settings"
-#~ msgstr "Συνεδρίες και Εκκίνηση"
-
-#~ msgid "Xfce 4 Sessions and Startup Settings"
-#~ msgstr "Ρυθμίσεις Συνεδρίας και Εκκίνησης Xfce 4"
-
-#, fuzzy
-#~ msgid "Remove the selected application from the session."
-#~ msgstr "Επιδεικνύει την επιλεγμένη οθόνη εισόδου."
-
-#~ msgid ""
-#~ "If set, the session manager will ask you to choose a session every time "
-#~ "you log in to Xfce."
-#~ msgstr ""
-#~ "Εάν επιλεχθεί, ο διαχειριστής συνεδρίας θα σας δίνει να επιλέξετε μια "
-#~ "συνεδρία κάθε φορά που θα συνδέεστε στο Xfce."
-
-#~ msgid ""
-#~ "This option instructs the session manager to save the current session "
-#~ "automatically when you log out. If you don't select this option you'll be "
-#~ "prompted whether you want to save the current session on each logout."
-#~ msgstr ""
-#~ "Η επιλογή αυτή ορίζει στον διαχειριστή συνεδρίας να αποθηκεύει την "
-#~ "τρέχουσα συνεδρία αυτόματα κατά την έξοδο. Εάν δεν την ενεργοποιήσετε θα "
-#~ "σας γίνεται ερώτηση εάν θέλετε να αποθηκεύσετε την τρέχουσα συνεδρία σε "
-#~ "κάθε σας έξοδο."
-
-#~ msgid ""
-#~ "This option disables the logout confirmation dialog. Whether the session "
-#~ "will be saved or not depends on whether you enabled the automatic saving "
-#~ "of sessions on logout or not."
-#~ msgstr ""
-#~ "Αυτή η επιλογή απενεργοποιεί τον διάλογο επιβεβαίωσης της αποσύνδεσης. Η "
-#~ "αποθήκευση ή μη της τρέχουσας συνεδρίας θα εξαρτάται από το κατά πόσον "
-#~ "έχετε ενεργοποιήσει την αυτόματη αποθήκευση της συνεδρίας ή όχι."
-
-#~ msgid "Launch Gnome services on startup"
-#~ msgstr "Έναρξη των υπηρεσιών του Gnome κατά την εκκίνηση"
-
-#~ msgid ""
-#~ "Enable this if you plan to use Gnome applications. This will instruct the "
-#~ "session manager to start some vital Gnome services for you. You should "
-#~ "also enable this if you want to use the Assistive Technologies that ship "
-#~ "with Gnome."
-#~ msgstr ""
-#~ "Επιλέξτε το εάν σκοπεύετε να χρησιμοποιήσετε εφαρμογές του Gnome. Έτσι ο "
-#~ "διαχειριστής συνεδριών θα ξεκινάει ορισμένες ζωτικές υπηρεσίες του Gnome "
-#~ "για εσάς. Θα πρέπει επίσης να το ενεργοποιήσετε εάν θέλετε να "
-#~ "χρησιμοποιήσετε τις Βοηθητικές Τεχνολογίες που έρχονται μαζί με το Gnome."
-
-#~ msgid ""
-#~ "Enable this option if you plan to run KDE applications as part of your "
-#~ "Xfce Desktop session. This will notably increase the startup time, but on "
-#~ "the other hand, KDE applications will startup faster. Some KDE "
-#~ "applications may not work at all if you don't enable this option."
-#~ msgstr ""
-#~ "Επιλέξτε το εάν σκοπεύετε να χρησιμοποιήσετε εφαρμογές του KDE με το "
-#~ "Περιβάλλον Xfce. Η επιλογή αυτή θα αυξήσει τον χρόνο εκκίνησης, αλλά από "
-#~ "την άλλη, οι εφαρμογές του KDE θα ξεκινούν γρηγορότερα. Μερικές εφαρμογές "
-#~ "του KDE δεν θα λειτουργήσουν εάν δεν ενεργοποιήσετε αυτή την επιλογή."
-
-#~ msgid "Security"
-#~ msgstr "Ασφάλεια"
-
-#~ msgid ""
-#~ "Allow the session manager to manage applications running on remote hosts. "
-#~ "Do not enable this option unless you know what you are doing."
-#~ msgstr ""
-#~ "Επιτρέπει στον διαχειριστή συνεδρίας να διαχειρίζεται εφαρμογές που "
-#~ "εκτελούνται σε απομακρυσμένους υπολογιστές. Μην ενεργοποιήσετε αυτή την "
-#~ "επιλογή εκτός εάν ξέρετε τι κάνετε."
-
-#~ msgid "Button Label|Sessions and Startup"
-#~ msgstr ""
-#~ "Συνεδρίες και\n"
-#~ "εκκίνηση"
-
-#~ msgid "Splash Screen Settings"
-#~ msgstr "Οθόνη εκκίνησης"
-
-#~ msgid "Button Label|Splash Screen"
-#~ msgstr "Οθόνη εκκίνησης"
-
-#~ msgid "Autostarted applications"
-#~ msgstr "Εφαρμογές αυτόματης εκκίνησης"
-
-#~ msgid "Xfce 4 Splash Screen Settings"
-#~ msgstr "Ρυθμίσεις οθόνης εκκίνησης Xfce 4"
-
-#~ msgid "Autostarted Applications"
-#~ msgstr "Αυτόματη εκκίνηση εφαρμογών "
-
-#~ msgid "Edit the list of autostarted applications"
-#~ msgstr "Επεξεργασία λίστας των εφαρμογών που ξεκινούν αυτόματα"
-
-#~ msgid "Xfce 4 Autostarted Applications"
-#~ msgstr "Xfce 4: Αυτόματη εκκίνηση εφαρμογών"
