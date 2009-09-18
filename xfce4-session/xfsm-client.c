@@ -343,8 +343,6 @@ xfsm_client_merge_properties (XfsmClient *client,
             old_discard = g_strdupv (old_discard);
         }
 
-      xfsm_verbose ("Attempting to set prop (%s)\n", props[n]->name);
-
       if (xfsm_properties_set_from_smprop (properties, props[n]))
         {
           if (old_discard)
@@ -490,8 +488,6 @@ xfsm_client_properties_tree_foreach (gpointer key,
   GValue      *prop_value = value;
   GHashTable  *hash_table = data;
 
-  xfsm_verbose ("  -> (%s)\n", prop_name);
-
   g_hash_table_insert (hash_table, prop_name, prop_value);
 
   return FALSE;
@@ -511,15 +507,11 @@ xfsm_client_dbus_get_all_sm_properties (XfsmClient *client,
       return FALSE;
     }
 
-  xfsm_verbose ("DBus: getting all properties\n");
-
   *OUT_properties = g_hash_table_new_full (g_str_hash, g_str_equal,
                                            NULL, NULL);
   g_tree_foreach (properties->sm_properties,
                   xfsm_client_properties_tree_foreach,
                   *OUT_properties);
-
-  xfsm_verbose ("DBus: done\n");
 
   return TRUE;
 }
@@ -580,12 +572,8 @@ xfsm_client_dbus_set_sm_properties (XfsmClient *client,
       return FALSE;
     }
 
-  xfsm_verbose ("DBus: setting properties\n");
-
   g_hash_table_foreach (properties, xfsm_client_dbus_merge_properties_ht,
                         client->properties);
-
-  xfsm_verbose ("DBus: done\n");
 
   return TRUE;
 }
