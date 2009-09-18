@@ -346,7 +346,8 @@ sm_set_properties (SmsConn   sms_conn,
                     xfsm_client_get_id (client), num_props);
       for (n = 0; n < num_props; ++n)
         {
-          xfsm_verbose ("   Name:  %s\n   Type:  %s\n", props[n]->name, props[n]->type);
+          xfsm_verbose ("   Name:  %s\n", props[n]->name);
+          xfsm_verbose ("   Type:  %s\n", props[n]->type);
           if (strcmp (props[n]->type, "ARRAY8") == 0)
             {
               xfsm_verbose ("   Value: %s\n", (const gchar *) props[n]->vals->value);
@@ -358,13 +359,14 @@ sm_set_properties (SmsConn   sms_conn,
             }
           else if (strcmp (props[n]->type, "LISTofARRAY8") == 0)
             {
-              xfsm_verbose ("   Value: ");
+              xfsm_verbose ("   Value:\n");
               for (i = 0; i < props[n]->num_vals; ++i)
                 {
-                  xfsm_verbose ("%s%s", (const gchar *) props[n]->vals[i].value,
+                  xfsm_verbose ("          %s%s\n", (const gchar *) props[n]->vals[i].value,
                                 (i == props[n]->num_vals - 1) ? ""  : ",");
                 }
             }
+          xfsm_verbose ("\n");
         }
       xfsm_verbose ("\n");
     }  

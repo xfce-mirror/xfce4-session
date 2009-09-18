@@ -90,8 +90,8 @@ enum
 
 static void xfsm_client_finalize (GObject *obj);
 
-static void    xfsm_properties_replace_discard_command (XfsmProperties *properties,
-                                                        gchar         **new_discard);
+static void    xfsm_properties_discard_command_changed (XfsmProperties *properties,
+                                                        gchar         **old_discard);
 static void    xfsm_client_dbus_class_init (XfsmClientClass *klass);
 static void    xfsm_client_dbus_init (XfsmClient *client);
 static void    xfsm_client_dbus_cleanup (XfsmClient *client);
@@ -169,33 +169,30 @@ xfsm_client_finalize (GObject *obj)
 
 
 
-
 static void
-xfsm_properties_replace_discard_command (XfsmProperties *properties,
-                                         gchar         **new_discard)
+xfsm_properties_discard_command_changed (XfsmProperties *properties,
+                                         gchar         **old_discard)
 {
-  gchar **old_discard = properties->discard_command;
+  gchar **new_discard;
 
-  if (old_discard != NULL)
+  g_return_if_fail (properties != NULL);
+  g_return_if_fail (old_discard != NULL);
+
+  new_discard = xfsm_properties_get_strv (properties, SmDiscardCommand);
+
+  if (!xfsm_strv_equal (old_discard, new_discard))
     {
-      if (!xfsm_strv_equal (old_discard, new_discard))
-        {
-          xfsm_verbose ("Client Id = %s, running old discard command.\n\n",
-                        properties->client_id);
+      xfsm_verbose ("Client Id = %s, running old discard command.\n\n",
+                    properties->client_id);
 
-          g_spawn_sync (properties->current_directory,
-                        old_discard,
-                        properties->environment,
-                        G_SPAWN_SEARCH_PATH,
-                        NULL, NULL,
-                        NULL, NULL,
-                        NULL, NULL);
-        }
-
-      g_strfreev (old_discard);
+      g_spawn_sync (xfsm_properties_get_string(properties, SmCurrentDirectory),
+                    old_discard,
+                    xfsm_properties_get_strv(properties, SmEnvironment),
+                    G_SPAWN_SEARCH_PATH,
+                    NULL, NULL,
+                    NULL, NULL,
+                    NULL, NULL);
     }
-
-  properties->discard_command = new_discard;
 }
 
 
@@ -203,78 +200,15 @@ static void
 xfsm_client_signal_prop_change (XfsmClient *client,
                                 const gchar *name)
 {
-  GValue          val = { 0, };
+  const GValue   *value;
   XfsmProperties *properties = client->properties;
 
-  if (strcmp (name, SmCloneCommand) == 0)
+  value = xfsm_properties_get (properties, name);
+  if (value)
     {
-      g_value_init (&val, G_TYPE_STRV);
-      g_value_set_boxed (&val, properties->clone_command);
+      g_signal_emit (client, signals[SIG_SM_PROPERTY_CHANGED], 0,
+                     name, value);
     }
-  else if (strcmp (name, SmCurrentDirectory) == 0)
-    {
-      g_value_init (&val, G_TYPE_STRING);
-      g_value_set_string (&val, properties->current_directory);
-    }
-  else if (strcmp (name, SmDiscardCommand) == 0)
-    {
-      g_value_init (&val, G_TYPE_STRV);
-      g_value_set_boxed (&val, properties->discard_command);
-    }
-  else if (strcmp (name, SmEnvironment) == 0)
-    {
-      g_value_init (&val, G_TYPE_STRV);
-      g_value_set_boxed (&val, properties->environment);
-    }
-  else if (strcmp (name, SmProcessID) == 0)
-    {
-      g_value_init (&val, G_TYPE_STRING);
-      g_value_set_string (&val, properties->process_id);
-    }
-  else if (strcmp (name, SmProgram) == 0)
-    {
-      g_value_init (&val, G_TYPE_STRING);
-      g_value_set_string (&val, properties->program);
-    }
-  else if (strcmp (name, SmRestartCommand) == 0)
-    {
-      g_value_init (&val, G_TYPE_STRV);
-      g_value_set_boxed (&val, properties->restart_command);
-    }
-  else if (strcmp (name, SmResignCommand) == 0)
-    {
-      g_value_init (&val, G_TYPE_STRV);
-      g_value_set_boxed (&val, properties->resign_command);
-    }
-  else if (strcmp (name, SmRestartStyleHint) == 0)
-    {
-      g_value_init (&val, G_TYPE_UCHAR);
-      g_value_set_uchar (&val, properties->restart_style_hint);
-    }
-  else if (strcmp (name, SmShutdownCommand) == 0)
-    {
-      g_value_init (&val, G_TYPE_STRV);
-      g_value_set_boxed (&val, properties->shutdown_command);
-    }
-  else if (strcmp (name, SmUserID) == 0)
-    {
-      g_value_init (&val, G_TYPE_STRING);
-      g_value_set_string (&val, properties->user_id);
-    }
-  else if (strcmp (name, GsmPriority) == 0)
-    {
-      g_value_init (&val, G_TYPE_UCHAR);
-      g_value_set_uchar (&val, properties->priority);
-    }
-  else
-    {
-      xfsm_verbose ("Client Id = %s, unhandled property change %s\n",
-                    client->id, name);
-      return;
-    }
-
-    g_signal_emit (client, signals[SIG_SM_PROPERTY_CHANGED], 0, name, &val);
-    g_value_unset (&val);
 }
 
 
@@ -388,7 +322,6 @@ xfsm_client_merge_properties (XfsmClient *client,
                               gint        num_props)
 {
   XfsmProperties *properties;
-  gchar         **strv;
   SmProp         *prop;
   gint            n;
 
@@ -399,199 +332,28 @@ xfsm_client_merge_properties (XfsmClient *client,
   
   for (n = 0; n < num_props; ++n)
     {
+      gchar **old_discard = NULL;
+
       prop = props[n];
 
-      if (strcmp (prop->name, SmCloneCommand) == 0)
+      if (!strcmp (props[n]->name, SmDiscardCommand))
         {
-          strv = xfsm_strv_from_smprop (prop);
-          
-          if (strv != NULL)
-            {
-              if (properties->clone_command != NULL)
-                g_strfreev (properties->clone_command);
-              properties->clone_command = strv;
-              xfsm_client_signal_prop_change (client, SmCloneCommand);
-            }
-          else
-            {
-              g_warning ("Client %s specified property %s of invalid "
-                         "type %s, ignoring.",
-                         properties->client_id,
-                         prop->name,
-                         prop->type);
-            }
+          old_discard = xfsm_properties_get_strv (properties, SmDiscardCommand);
+          if (old_discard)
+            old_discard = g_strdupv (old_discard);
         }
-      else if (strcmp (prop->name, SmCurrentDirectory) == 0)
-        {
-          if (properties->current_directory != NULL)
-            g_free (properties->current_directory);
-          properties->current_directory = g_strdup ((const gchar *) prop->vals->value);
-          xfsm_client_signal_prop_change (client, SmCurrentDirectory);
-        }
-      else if (strcmp (prop->name, SmDiscardCommand) == 0)
-        {
-          strv = xfsm_strv_from_smprop (prop);
-          
-          if (strv != NULL)
-            {
-              xfsm_properties_replace_discard_command (properties, strv);
-              xfsm_client_signal_prop_change (client, SmDiscardCommand);
-            }
-          else
-            {
-              g_warning ("Client %s specified property %s of invalid "
-                         "type %s, ignoring.",
-                         properties->client_id,
-                         prop->name,
-                         prop->type);
-            }
-        }
-      else if (strcmp (prop->name, SmEnvironment) == 0)
-        {
-          strv = xfsm_strv_from_smprop (prop);
 
-          if (strv != NULL)
-            {
-              if (properties->environment != NULL)
-                g_strfreev (properties->environment);
-              properties->environment = strv;
-              xfsm_client_signal_prop_change (client, SmEnvironment);
-            }
-          else
-            {
-              g_warning ("Client %s specified property %s of invalid "
-                         "type %s, ignoring.",
-                         properties->client_id,
-                         prop->name,
-                         prop->type);
-            }
-        }
-      else if (strcmp (prop->name, GsmPriority) == 0)
-        {
-          if (strcmp (prop->type, SmCARD8) == 0)
-            {
-              properties->priority = *((gint8 *) prop->vals->value);
-              xfsm_client_signal_prop_change (client, GsmPriority);
-            }
-          else
-            {
-              g_warning ("Client %s specified property %s of invalid "
-                         "type %s, ignoring.",
-                         properties->client_id,
-                         prop->name,
-                         prop->type);
-            }
-        }
-      else if (strcmp (prop->name, SmProcessID) == 0)
-        {
-          if (strcmp (prop->type, SmARRAY8) == 0)
-            {
-              if (properties->process_id != NULL)
-                g_free (properties->process_id);
-              properties->process_id = g_strdup ((const gchar *) prop->vals->value);
-              xfsm_client_signal_prop_change (client, SmProcessID);
-            }
-          else
-            {
-              g_warning ("Client %s specified property %s of invalid "
-                         "type %s, ignoring.",
-                         properties->client_id,
-                         prop->name,
-                         prop->type);
-            }
-        }
-      else if (strcmp (prop->name, SmProgram) == 0)
-        {
-          if (strcmp (prop->type, SmARRAY8) == 0)
-            {
-              if (properties->program != NULL)
-                g_free (properties->program);
+      xfsm_verbose ("Attempting to set prop (%s)\n", props[n]->name);
 
-              /* work-around damn f*cking xmms */
-              if (properties->restart_command != NULL
-                  && g_str_has_suffix (properties->restart_command[0], "xmms"))
-                {
-                  properties->program = g_strdup ("xmms");
-                }
-              else
-                {
-                  properties->program = g_strdup ((const gchar *) prop->vals->value);
-                }
+      if (xfsm_properties_set_from_smprop (properties, props[n]))
+        {
+          if (old_discard)
+            xfsm_properties_discard_command_changed (properties, old_discard);
 
-              xfsm_client_signal_prop_change (client, SmProgram);
-            }
-          else
-            {
-              g_warning ("Client %s specified property %s of invalid "
-                         "type %s, ignoring.",
-                         properties->client_id,
-                         prop->name,
-                         prop->type);
-            }
+          xfsm_client_signal_prop_change (client, props[n]->name);
         }
-      else if (strcmp (prop->name, SmRestartCommand) == 0)
-        {
-          strv = xfsm_strv_from_smprop (prop);
-          
-          if (strv != NULL)
-            {
-              if (properties->restart_command != NULL)
-                g_strfreev (properties->restart_command);
-              properties->restart_command = strv;
-              xfsm_client_signal_prop_change (client, SmRestartCommand);
 
-              /* work-around damn f*cking xmms */
-              if (g_str_has_suffix (strv[0], "xmms"))
-                {
-                  if (properties->program != NULL)
-                    g_free (properties->program);
-                  properties->program = g_strdup ("xmms");
-                  xfsm_client_signal_prop_change (client, SmProgram);
-                }
-            }
-          else
-            {
-              g_warning ("Client %s specified property %s of invalid "
-                         "type %s, ignoring.",
-                         properties->client_id,
-                         prop->name,
-                         prop->type);
-            }
-        }
-      else if (strcmp (prop->name, SmRestartStyleHint) == 0)
-        {
-          if (strcmp (prop->type, SmCARD8) == 0)
-            {
-              properties->restart_style_hint = *((gint8 *) prop->vals->value);
-              xfsm_client_signal_prop_change (client, SmRestartStyleHint);
-            }
-          else
-            {
-              g_warning ("Client %s specified property %s of invalid "
-                         "type %s, ignoring.",
-                         properties->client_id,
-                         prop->name,
-                         prop->type);
-            }
-        }
-      else if (strcmp (prop->name, SmUserID) == 0)
-        {
-          if (strcmp (prop->type, SmARRAY8) == 0)
-            {
-              if (properties->user_id != NULL)
-                g_free (properties->user_id);
-              properties->user_id = g_strdup ((const gchar *) prop->vals->value);
-              xfsm_client_signal_prop_change (client, SmUserID);
-            }
-          else
-            {
-              g_warning ("Client %s specified property %s of invalid "
-                         "type %s, ignoring.",
-                         properties->client_id,
-                         prop->name,
-                         prop->type);
-            }
-        }
+      g_strfreev (old_discard);
     }
 }
 
@@ -603,80 +365,20 @@ xfsm_client_delete_properties (XfsmClient *client,
 {
   XfsmProperties *properties;
   gint            n;
-  const gchar    *name_signal = NULL;
 
   g_return_if_fail (XFSM_IS_CLIENT (client));
   g_return_if_fail (client->properties != NULL);
 
   properties = client->properties;
-  
+
   for (n = 0; n < num_props; ++n)
     {
-      if (strcmp (prop_names[n], SmCloneCommand) == 0)
+      if (xfsm_properties_remove (properties, prop_names[n]))
         {
-          if (properties->clone_command != NULL)
-            {
-              g_strfreev (properties->clone_command);
-              properties->clone_command = NULL;
-              name_signal = prop_names[n];
-            }
-        }
-      else if (strcmp (prop_names[n], SmCurrentDirectory) == 0)
-        {
-          if (properties->current_directory != NULL)
-            {
-              g_free (properties->current_directory);
-              properties->current_directory = NULL;
-              name_signal = prop_names[n];
-            }
-        }
-      else if (strcmp (prop_names[n], SmDiscardCommand) == 0)
-        {
-          if (properties->discard_command != NULL)
-            {
-              g_strfreev (properties->discard_command);
-              properties->discard_command = NULL;
-              name_signal = prop_names[n];
-            }
-        }
-      else if (strcmp (prop_names[n], SmEnvironment) == 0)
-        {
-          if (properties->environment != NULL)
-            {
-              g_strfreev (properties->environment);
-              properties->environment = NULL;
-              name_signal = prop_names[n];
-            }
-        }
-      else if (strcmp (prop_names[n], GsmPriority) == 0)
-        {
-          if (properties->priority != 50)
-            {
-              properties->priority = 50;
-              xfsm_client_signal_prop_change (client, GsmPriority);
-            }
-        }
-      else if (strcmp (prop_names[n], SmRestartStyleHint) == 0)
-        {
-          if (properties->restart_style_hint != SmRestartIfRunning)
-            {
-              properties->restart_style_hint = SmRestartIfRunning;
-              xfsm_client_signal_prop_change (client, SmRestartStyleHint);
-            }
-        }
-      else if (strcmp (prop_names[n], SmUserID) == 0)
-        {
-          if (properties->user_id != NULL)
-            {
-              g_free (properties->user_id);
-              properties->user_id = NULL;
-              name_signal = prop_names[n];
-            }
+          g_signal_emit (client, signals[SIG_SM_PROPERTY_DELETED], 0,
+                         prop_names[n]);
         }
     }
-
-    if (name_signal != NULL)
-      g_signal_emit (client, signals[SIG_SM_PROPERTY_DELETED], 0, name_signal);
 }
 
 
@@ -780,6 +482,22 @@ xfsm_client_dbus_get_state (XfsmClient *client,
 
 
 static gboolean
+xfsm_client_properties_tree_foreach (gpointer key,
+                                     gpointer value,
+                                     gpointer data)
+{
+  gchar       *prop_name = key;
+  GValue      *prop_value = value;
+  GHashTable  *hash_table = data;
+
+  xfsm_verbose ("  -> (%s)\n", prop_name);
+
+  g_hash_table_insert (hash_table, prop_name, prop_value);
+
+  return FALSE;
+}
+
+static gboolean
 xfsm_client_dbus_get_all_sm_properties (XfsmClient *client,
                                         GHashTable **OUT_properties,
                                         GError    **error)
@@ -793,45 +511,15 @@ xfsm_client_dbus_get_all_sm_properties (XfsmClient *client,
       return FALSE;
     }
 
+  xfsm_verbose ("DBus: getting all properties\n");
+
   *OUT_properties = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                           NULL,
-                                           (GDestroyNotify) xfsm_g_value_free);
+                                           NULL, NULL);
+  g_tree_foreach (properties->sm_properties,
+                  xfsm_client_properties_tree_foreach,
+                  *OUT_properties);
 
-  g_hash_table_insert (*OUT_properties, SmCloneCommand,
-                       xfsm_g_value_from_property (properties, SmCloneCommand));
-
-  g_hash_table_insert (*OUT_properties, SmCurrentDirectory,
-                       xfsm_g_value_from_property (properties, SmCurrentDirectory));
-
-  g_hash_table_insert (*OUT_properties, SmDiscardCommand,
-                       xfsm_g_value_from_property (properties, SmDiscardCommand));
-
-  g_hash_table_insert (*OUT_properties, SmEnvironment,
-                       xfsm_g_value_from_property (properties, SmEnvironment));
-
-  g_hash_table_insert (*OUT_properties, SmProcessID,
-                       xfsm_g_value_from_property (properties, SmProcessID));
-
-  g_hash_table_insert (*OUT_properties, SmProgram,
-                       xfsm_g_value_from_property (properties, SmProgram));
-
-  g_hash_table_insert (*OUT_properties, SmRestartCommand,
-                       xfsm_g_value_from_property (properties, SmRestartCommand));
-
-  g_hash_table_insert (*OUT_properties, SmResignCommand,
-                       xfsm_g_value_from_property (properties, SmResignCommand));
-  
-  g_hash_table_insert (*OUT_properties, SmRestartStyleHint,
-                       xfsm_g_value_from_property (properties, SmRestartStyleHint));
-
-  g_hash_table_insert (*OUT_properties, SmShutdownCommand,
-                       xfsm_g_value_from_property (properties, SmShutdownCommand));
-
-  g_hash_table_insert (*OUT_properties, SmUserID,
-                       xfsm_g_value_from_property (properties, SmUserID));
-
-  g_hash_table_insert (*OUT_properties, GsmPriority,
-                       xfsm_g_value_from_property (properties, GsmPriority));
+  xfsm_verbose ("DBus: done\n");
 
   return TRUE;
 }
@@ -854,12 +542,11 @@ xfsm_client_dbus_get_sm_properties (XfsmClient  *client,
     }
 
   *OUT_properties = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                           NULL,
-                                           (GDestroyNotify) xfsm_g_value_free);
+                                           NULL, NULL);
 
   for (i = 0; names[i]; ++i)
     {
-      GValue *value = xfsm_g_value_from_property (properties, names[i]);
+      GValue *value = g_tree_lookup (properties->sm_properties, names[i]);
       if (G_LIKELY (value))
         g_hash_table_insert (*OUT_properties, names[i], value);
     }
@@ -868,81 +555,16 @@ xfsm_client_dbus_get_sm_properties (XfsmClient  *client,
 }
 
 
-/* this is a "lightweight" version of xfsm_properties_extract().  it
- * uses glib functions to allocate memory, and doesn't allocate where
- * it doesn't need to (it assumes all strings will last a while.  for
- * these reasons, you can't use SmFreeProperty() on the results.
- */
 static void
-xfsm_convert_sm_properties_ht (gpointer key,
-                               gpointer value,
-                               gpointer user_data)
+xfsm_client_dbus_merge_properties_ht (gpointer key,
+                                      gpointer value,
+                                      gpointer user_data)
 {
-  HtToPropsData *pdata = user_data;
-  gchar         *name  = key;
-  GValue        *val   = value;
-  gint           n     = pdata->count;
+  gchar          *prop_name = key;
+  GValue         *prop_value = value;
+  XfsmProperties *properties = user_data;
 
-  if (strcmp (name, SmCloneCommand) == 0
-      || strcmp (name, SmDiscardCommand) == 0
-      || strcmp (name, SmEnvironment) == 0
-      || strcmp (name, SmRestartCommand) == 0
-      || strcmp (name, SmResignCommand) == 0
-      || strcmp (name, SmShutdownCommand) == 0)
-    {
-      gchar **val_strv = g_value_get_boxed (val);
-      gint i;
-
-      if (G_UNLIKELY (val_strv == NULL))
-        return;
-
-      pdata->props[n].name = name;
-      pdata->props[n].type = SmLISTofARRAY8;
-      pdata->props[n].num_vals = g_strv_length (val_strv);
-      pdata->props[n].vals = g_new0 (SmPropValue, pdata->props[n].num_vals);
-      for (i = 0; i < pdata->props[n].num_vals; ++i)
-        {
-          pdata->props[n].vals[i].length = strlen (val_strv[i]);
-          pdata->props[n].vals[i].value = val_strv[i];
-        }
-    }
-  else if (strcmp (name, SmCurrentDirectory) == 0
-           || strcmp (name, SmProcessID) == 0
-           || strcmp (name, SmProgram) == 0
-           || strcmp (name, SmUserID) == 0)
-    {
-      gchar *val_str = (gchar *) g_value_get_string (val);
-
-      if (G_UNLIKELY (val_str == NULL))
-        return;
-
-      pdata->props[n].name = name;
-      pdata->props[n].type = SmARRAY8;
-      pdata->props[n].num_vals = 1;
-      pdata->props[n].vals = g_new0 (SmPropValue, 1);
-      pdata->props[n].vals[0].length = strlen (val_str);
-      pdata->props[n].vals[0].value = val_str;
-    }
-  else if (strcmp (name, SmRestartStyleHint) == 0
-           || strcmp (name, GsmPriority) == 0)
-    {
-      guint val_uchar = g_value_get_uchar (val);
-
-      pdata->props[n].name = name;
-      pdata->props[n].type = SmCARD8;
-      pdata->props[n].num_vals = 1;
-      pdata->props[n].vals = g_new0 (SmPropValue, 1);
-      pdata->props[n].vals[0].length = 1;
-      pdata->props[n].vals[0].value = g_new0 (guchar, 1);
-      *(guchar *)(pdata->props[n].vals[0].value) = val_uchar;
-    }
-  else
-    {
-      g_warning ("Unhandled property \"%s\"", name);
-      return;
-    }
-
-  ++pdata->count;
+  xfsm_properties_set (properties, prop_name, prop_value);
 }
 
 
@@ -951,9 +573,6 @@ xfsm_client_dbus_set_sm_properties (XfsmClient *client,
                                     GHashTable *properties,
                                     GError    **error)
 {
-  HtToPropsData   pdata;
-  gint            n_props, i;
-
   if (G_UNLIKELY (client->properties == NULL))
     {
       g_set_error (error, XFSM_ERROR, XFSM_ERROR_BAD_VALUE,
@@ -961,20 +580,12 @@ xfsm_client_dbus_set_sm_properties (XfsmClient *client,
       return FALSE;
     }
 
-  n_props = g_hash_table_size (properties);
-  pdata.props = g_new0 (SmProp, n_props);
-  pdata.count = 0;
+  xfsm_verbose ("DBus: setting properties\n");
 
-  g_hash_table_foreach (properties, xfsm_convert_sm_properties_ht, &pdata);
-  xfsm_client_merge_properties (client, &pdata.props, pdata.count);
+  g_hash_table_foreach (properties, xfsm_client_dbus_merge_properties_ht,
+                        client->properties);
 
-  for (i = 0; i < pdata.count; ++i)
-    {
-      if (strcmp (pdata.props[i].type, SmCARD8) == 0)
-        g_free (pdata.props[i].vals[0].value);
-      g_free (pdata.props[i].vals);
-    }
-  g_free (pdata.props);
+  xfsm_verbose ("DBus: done\n");
 
   return TRUE;
 }

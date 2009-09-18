@@ -48,6 +48,45 @@ static SmProp* str_to_property  (const gchar  *name,
 static SmProp* int_to_property  (const gchar  *name,
                                  gint          value) G_GNUC_PURE;
 
+/* these three structs hold lists of properties that we save in
+ * and load from the session file */
+static const struct
+{
+  const gchar *name;
+  const gchar *xsmp_name;
+} strv_properties[] = {
+  { "CloneCommand", SmCloneCommand },
+  { "DiscardCommand", SmDiscardCommand },
+  { "Environment", SmEnvironment },
+  { "ResignCommand", SmResignCommand },
+  { "RestartCommand", SmRestartCommand },
+  { "ShutdownCommand", SmShutdownCommand },
+  { NULL, NULL }
+};
+
+static const struct
+{
+  const gchar *name;
+  const gchar *xsmp_name;
+} str_properties[] = {
+  { "CurrentDirectory", SmCurrentDirectory },
+  { "DesktopFile", GsmDesktopFile },
+  { "Program", SmProgram },
+  { "UserId", SmUserID },
+  { NULL, NULL }
+};
+
+static const struct
+{
+  const gchar *name;
+  const gchar *xsmp_name;
+  const guchar default_value;
+} uchar_properties[] = {
+  { "Priority", GsmPriority, 50 },
+  { "RestartStyleHint", SmRestartStyleHint, SmRestartIfRunning },
+  { NULL, NULL, 0 }
+};
+
 
 #ifndef HAVE_STRDUP
 static char*
@@ -149,15 +188,42 @@ xfsm_properties_new (const gchar *client_id,
 {
   XfsmProperties *properties;
   
-  properties = g_new0 (XfsmProperties, 1);
+  properties = g_slice_new0 (XfsmProperties);
   properties->client_id = g_strdup (client_id);
   properties->hostname  = g_strdup (hostname);
-  properties->priority  = 50;
   properties->pid       = -1;
+
+  properties->sm_properties = g_tree_new_full ((GCompareDataFunc) strcmp,
+                                               NULL,
+                                               (GDestroyNotify) g_free,
+                                               (GDestroyNotify) xfsm_g_value_free);
   
   return properties;
 }
 
+
+static gboolean
+xfsm_properties_extract_foreach (gpointer key,
+                                 gpointer value,
+                                 gpointer data)
+{
+  const gchar  *prop_name = key;
+  const GValue *prop_value = value;
+  SmProp     ***pp = data;
+
+  if (G_VALUE_HOLDS (prop_value, G_TYPE_STRV))
+    **pp++ = strv_to_property (prop_name, g_value_get_boxed (prop_value));
+  else if (G_VALUE_HOLDS_STRING (prop_value))
+    **pp++ = str_to_property (prop_name, g_value_get_string (prop_value));
+  else if (G_VALUE_HOLDS_UCHAR (prop_value))
+    **pp++ = int_to_property (prop_name, g_value_get_uchar (prop_value));
+  else {
+    g_warning ("Unhandled property \"%s\" with type \"%s\"", prop_name,
+               g_type_name (G_VALUE_TYPE (prop_value)));
+  }
+
+  return FALSE;
+}
 
 void
 xfsm_properties_extract (XfsmProperties *properties,
@@ -169,47 +235,17 @@ xfsm_properties_extract (XfsmProperties *properties,
   g_return_if_fail (num_props != NULL);
   g_return_if_fail (props != NULL);
   
-  *props = pp = (SmProp **) malloc (sizeof (SmProp *) * 20);
-  
-  if (properties->clone_command != NULL)
-    *pp++ = strv_to_property (SmCloneCommand, properties->clone_command);
-      
-  if (properties->current_directory != NULL)
-    *pp++ = str_to_property (SmCurrentDirectory, properties->current_directory);
-  
-  if (properties->discard_command != NULL)
-    *pp++ = strv_to_property (SmDiscardCommand, properties->discard_command);
+  *props = pp = (SmProp **) malloc (sizeof (SmProp *) * g_tree_nnodes (properties->sm_properties));
 
-  if (properties->environment != NULL)
-    *pp++ = strv_to_property (SmEnvironment, properties->environment);
-
-  *pp++ = int_to_property (GsmPriority, properties->priority);
-
-  if (properties->process_id != NULL)
-    *pp++ = str_to_property (SmProcessID, properties->process_id);
-
-  if (properties->program != NULL)
-    *pp++ = str_to_property (SmProgram, properties->program);
-  
-  if (properties->resign_command != NULL)
-    *pp++ = strv_to_property (SmResignCommand, properties->resign_command);
-
-  if (properties->restart_command != NULL)
-    *pp++ = strv_to_property (SmRestartCommand, properties->restart_command);
-  
-  *pp++ = int_to_property (SmRestartStyleHint, properties->restart_style_hint);
-  
-  if (properties->shutdown_command != NULL)
-    *pp++ = strv_to_property (SmShutdownCommand, properties->shutdown_command);
-
-  if (properties->user_id != NULL)
-    *pp++ = str_to_property (SmUserID, properties->user_id);
+  g_tree_foreach (properties->sm_properties,
+                  xfsm_properties_extract_foreach,
+                  &pp);
   
   *num_props = pp - *props;
 }
 
 
-XfsmProperties*
+XfsmProperties *
 xfsm_properties_load (XfceRc      *rc,
                       const gchar *prefix)
 {
@@ -218,9 +254,13 @@ xfsm_properties_load (XfceRc      *rc,
   XfsmProperties *properties;
   const gchar    *client_id;
   const gchar    *hostname;
-  const gchar    *value;
+  GValue         *value;
+  const gchar    *value_str;
+  gchar         **value_strv;
+  gint            value_int;
   gchar           buffer[256];
-  
+  gint            i;
+
   client_id = xfce_rc_read_entry (rc, ENTRY ("ClientId"), NULL);
   if (client_id == NULL)
     {
@@ -236,39 +276,40 @@ xfsm_properties_load (XfceRc      *rc,
                  "Skipping client.");
       return NULL;
     }
+
+  xfsm_verbose ("Loading properties for client %s\n", client_id);
   
-  properties                     = g_new0 (XfsmProperties, 1);
-  properties->restart_attempts   = 0;
-  properties->client_id          = g_strdup (client_id);
-  properties->hostname           = g_strdup (hostname);
-  properties->clone_command      = xfce_rc_read_list_entry (rc, ENTRY ("CloneCommand"),
-                                                            NULL);
-  properties->discard_command    = xfce_rc_read_list_entry (rc, ENTRY ("DiscardCommand"),
-                                                            NULL);
-  properties->environment        = xfce_rc_read_list_entry (rc, ENTRY ("Environment"),
-                                                            NULL);
-  properties->resign_command     = xfce_rc_read_list_entry (rc, ENTRY ("ResignCOmmand"),
-                                                            NULL);
-  properties->restart_command    = xfce_rc_read_list_entry (rc, ENTRY ("RestartCommand"),
-                                                            NULL);
-  properties->shutdown_command   = xfce_rc_read_list_entry (rc, ENTRY ("ShutdownCommand"),
-                                                            NULL);
-  properties->priority           = xfce_rc_read_int_entry (rc, ENTRY ("Priority"), 50);
-  properties->restart_style_hint = xfce_rc_read_int_entry (rc, ENTRY ("RestartStyleHint"),
-                                                           SmRestartIfRunning);
-  
-  value = xfce_rc_read_entry (rc, ENTRY ("CurrentDirectory"), NULL);
-  if (value != NULL)
-    properties->current_directory = g_strdup (value);
-  
-  value = xfce_rc_read_entry (rc, ENTRY ("Program"), NULL);
-  if (value != NULL)
-    properties->program = g_strdup (value);
-  
-  value = xfce_rc_read_entry (rc, ENTRY ("UserId"), NULL);
-  if (value != NULL)
-    properties->user_id = g_strdup (value);
-  
+  properties = xfsm_properties_new (client_id, hostname);
+
+  for (i = 0; strv_properties[i].name; ++i)
+    {
+      value_strv = xfce_rc_read_list_entry (rc, ENTRY (strv_properties[i].name), NULL);
+      if (value_strv)
+        {
+          xfsm_verbose ("-> Set strv (%s)\n", strv_properties[i].xsmp_name);
+          /* don't use _set_strv() to avoid a realloc of the whole strv */
+          value = xfsm_g_value_new (G_TYPE_STRV);
+          g_value_take_boxed (value, value_strv);
+          g_tree_replace (properties->sm_properties,
+                          g_strdup (strv_properties[i].xsmp_name),
+                          value);
+        }
+    }
+
+  for (i = 0; str_properties[i].name; ++i)
+    {
+      value_str = xfce_rc_read_entry (rc, ENTRY (str_properties[i].name), NULL);
+      if (value_str)
+        xfsm_properties_set_string (properties, str_properties[i].xsmp_name, value_str);
+    }
+
+  for (i = 0; uchar_properties[i].name; ++i)
+    {
+      value_int = xfce_rc_read_int_entry (rc, ENTRY (uchar_properties[i].name),
+                                          uchar_properties[i].default_value);
+      xfsm_properties_set_uchar (properties, uchar_properties[i].xsmp_name, value_int);
+    }
+
   if (!xfsm_properties_check (properties))
     {
       xfsm_properties_free (properties);
@@ -288,77 +329,41 @@ xfsm_properties_store (XfsmProperties *properties,
 {
 #define ENTRY(name) (compose(buffer, 256, prefix, (name)))
 
-  gchar buffer[256];
+  GValue *value;
+  gint    i;
+  gchar   buffer[256];
   
   xfce_rc_write_entry (rc, ENTRY ("ClientId"), properties->client_id);
   xfce_rc_write_entry (rc, ENTRY ("Hostname"), properties->hostname);
-  
-  if (properties->clone_command != NULL)
+
+  for (i = 0; strv_properties[i].name; ++i)
     {
-      xfce_rc_write_list_entry (rc, ENTRY ("CloneCommand"),
-                                properties->clone_command, NULL);
-    }
-  
-  if (properties->current_directory != NULL)
-    {
-      xfce_rc_write_entry (rc, ENTRY ("CurrentDirectory"),
-                           properties->current_directory);
-    }
-  
-  if (properties->discard_command != NULL)
-    {
-      xfce_rc_write_list_entry (rc, ENTRY ("DiscardCommand"),
-                                properties->discard_command, NULL);
+      value = g_tree_lookup (properties->sm_properties, strv_properties[i].xsmp_name);
+      if (value)
+        {
+          xfce_rc_write_list_entry (rc, ENTRY (strv_properties[i].name),
+                                    g_value_get_boxed (value), NULL);
+        }
     }
 
-  if (properties->environment != NULL)
+  for (i = 0; str_properties[i].name; ++i)
     {
-      xfce_rc_write_list_entry (rc, ENTRY ("Environment"),
-                                properties->environment, NULL);
-    }
-  
-  if (properties->priority != 50)
-    {
-      xfce_rc_write_int_entry (rc, ENTRY ("Priority"),
-                               properties->priority);
+      value = g_tree_lookup (properties->sm_properties, str_properties[i].xsmp_name);
+      if (value)
+        {
+          xfce_rc_write_entry (rc, ENTRY (str_properties[i].name),
+                               g_value_get_string (value));
+        }
     }
 
-  /* ProcessID isn't something you'd generally want saved... */
-
-  if (properties->program != NULL)
+  for (i = 0; uchar_properties[i].name; ++i)
     {
-      xfce_rc_write_entry (rc, ENTRY ("Program"),
-                           properties->program);
-    }
-
-  if (properties->resign_command != NULL)
-    {
-      xfce_rc_write_list_entry (rc, ENTRY ("ResignCommand"),
-                                properties->resign_command, NULL);
-    }
-
-  if (properties->restart_command != NULL)
-    {
-      xfce_rc_write_list_entry (rc, ENTRY ("RestartCommand"),
-                                properties->restart_command, NULL);
-    }
-
-  if (properties->restart_style_hint != SmRestartIfRunning)
-    {
-      xfce_rc_write_int_entry (rc, ENTRY ("RestartStyleHint"),
-                               properties->restart_style_hint);
-    }
-
-  if (properties->shutdown_command != NULL)
-    {
-      xfce_rc_write_list_entry (rc, ENTRY ("ShutdownCommand"),
-                                properties->shutdown_command, NULL);
-    }
-  
-  if (properties->user_id != NULL)
-    {
-      xfce_rc_write_entry (rc, ENTRY ("UserId"),
-                           properties->user_id);
+      value = g_tree_lookup (properties->sm_properties, uchar_properties[i].xsmp_name);
+      if (value)
+        {
+          xfce_rc_write_int_entry (rc, ENTRY (uchar_properties[i].name),
+                                   g_value_get_uchar (value));
+        }
     }
 
 #undef ENTRY
@@ -369,7 +374,18 @@ gint
 xfsm_properties_compare (const XfsmProperties *a,
                          const XfsmProperties *b)
 {
-  return a->priority - b->priority;
+  GValue *va, *vb;
+  gint ia = 50, ib = 50;
+
+  va = g_tree_lookup (a->sm_properties, GsmPriority);
+  if (va)
+    ia = g_value_get_uchar (va);
+
+  vb = g_tree_lookup (b->sm_properties, GsmPriority);
+  if (vb)
+    ib = g_value_get_uchar (vb);
+
+  return ia - ib;
 }
 
 
@@ -388,8 +404,282 @@ xfsm_properties_check (const XfsmProperties *properties)
   
   return properties->client_id != NULL
     && properties->hostname != NULL
-    && properties->program != NULL
-    && properties->restart_command != NULL;
+    && g_tree_lookup (properties->sm_properties, SmProgram) != NULL
+    && g_tree_lookup (properties->sm_properties, SmRestartCommand) != NULL;
+}
+
+
+G_CONST_RETURN gchar *
+xfsm_properties_get_string (XfsmProperties *properties,
+                            const gchar *property_name)
+{
+  GValue *value;
+
+  g_return_val_if_fail (properties != NULL, NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
+  value = g_tree_lookup (properties->sm_properties, property_name);
+
+  if (G_LIKELY (value && G_VALUE_HOLDS_STRING (value)))
+    return g_value_get_string (value);
+
+  return NULL;
+}
+
+
+gchar **
+xfsm_properties_get_strv (XfsmProperties *properties,
+                          const gchar *property_name)
+{
+  GValue *value;
+
+  g_return_val_if_fail (properties != NULL, NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
+  value = g_tree_lookup (properties->sm_properties, property_name);
+
+  if (G_LIKELY (value && G_VALUE_HOLDS (value, G_TYPE_STRV)))
+    return g_value_get_boxed (value);
+
+  return NULL;
+}
+
+
+guchar
+xfsm_properties_get_uchar (XfsmProperties *properties,
+                           const gchar *property_name,
+                           guchar default_value)
+{
+  GValue *value;
+
+  g_return_val_if_fail (properties != NULL, default_value);
+  g_return_val_if_fail (property_name != NULL, default_value);
+
+  value = g_tree_lookup (properties->sm_properties, property_name);
+
+  if (G_LIKELY (value && G_VALUE_HOLDS_UCHAR (value)))
+    return g_value_get_uchar (value);
+
+  return default_value;
+}
+
+
+const GValue *
+xfsm_properties_get (XfsmProperties *properties,
+                     const gchar *property_name)
+{
+  g_return_val_if_fail (properties != NULL, NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
+  return g_tree_lookup (properties->sm_properties, property_name);
+}
+
+
+void
+xfsm_properties_set_string (XfsmProperties *properties,
+                            const gchar *property_name,
+                            const gchar *property_value)
+{
+  GValue *value;
+
+  g_return_if_fail (properties != NULL);
+  g_return_if_fail (property_name != NULL);
+  g_return_if_fail (property_value != NULL);
+
+  xfsm_verbose ("-> Set string (%s, %s)\n", property_name, property_value);
+
+  value = g_tree_lookup (properties->sm_properties, property_name);
+  if (value)
+    {
+      if (!G_VALUE_HOLDS_STRING (value))
+        {
+          g_value_unset (value);
+          g_value_init (value, G_TYPE_STRING);
+        }
+      g_value_set_string (value, property_value);
+    }
+  else
+    {
+      value = xfsm_g_value_new (G_TYPE_STRING);
+      g_value_set_string (value, property_value);
+      g_tree_replace (properties->sm_properties,
+                      g_strdup (property_name),
+                      value);
+    }
+}
+
+
+void
+xfsm_properties_set_strv (XfsmProperties *properties,
+                          const gchar *property_name,
+                          gchar **property_value)
+{
+  GValue *value;
+
+  g_return_if_fail (properties != NULL);
+  g_return_if_fail (property_name != NULL);
+  g_return_if_fail (property_value != NULL);
+
+  xfsm_verbose ("-> Set strv (%s)\n", property_name);
+
+  value = g_tree_lookup (properties->sm_properties, property_name);
+  if (value)
+    {
+      if (!G_VALUE_HOLDS (value, G_TYPE_STRV))
+        {
+          g_value_unset (value);
+          g_value_init (value, G_TYPE_STRV);
+        }
+      g_value_set_boxed (value, property_value);
+    }
+  else
+    {
+      value = xfsm_g_value_new (G_TYPE_STRV);
+      g_value_set_boxed (value, property_value);
+      g_tree_replace (properties->sm_properties,
+                      g_strdup (property_name),
+                      value);
+    }
+}
+
+void
+xfsm_properties_set_uchar (XfsmProperties *properties,
+                           const gchar *property_name,
+                           guchar property_value)
+{
+  GValue *value;
+
+  g_return_if_fail (properties != NULL);
+  g_return_if_fail (property_name != NULL);
+
+  xfsm_verbose ("-> Set uchar (%s, %d)\n", property_name, property_value);
+
+  value = g_tree_lookup (properties->sm_properties, property_name);
+  if (value)
+    {
+      if (!G_VALUE_HOLDS_UCHAR (value))
+        {
+          g_value_unset (value);
+          g_value_init (value, G_TYPE_UCHAR);
+        }
+      g_value_set_uchar (value, property_value);
+    }
+  else
+    {
+      value = xfsm_g_value_new (G_TYPE_UCHAR);
+      g_value_set_uchar (value, property_value);
+      g_tree_replace (properties->sm_properties,
+                      g_strdup (property_name),
+                      value);
+    }
+}
+
+
+gboolean
+xfsm_properties_set (XfsmProperties *properties,
+                     const gchar *property_name,
+                     const GValue *property_value)
+{
+  GValue *new_value;
+
+  g_return_val_if_fail (properties != NULL, FALSE);
+  g_return_val_if_fail (property_name != NULL, FALSE);
+  g_return_val_if_fail (property_value != NULL, FALSE);
+
+  if (!G_VALUE_HOLDS (property_value, G_TYPE_STRV)
+      && !G_VALUE_HOLDS_STRING (property_value)
+      && !G_VALUE_HOLDS_UCHAR (property_value))
+    {
+      g_warning ("Unhandled property \"%s\" of type \"%s\"", property_name,
+                 g_type_name (G_VALUE_TYPE (property_value)));
+      return FALSE;
+    }
+
+  xfsm_verbose ("-> Set (%s)\n", property_name);
+
+  new_value = xfsm_g_value_new (G_VALUE_TYPE (property_value));
+  g_value_copy (property_value, new_value);
+
+  g_tree_replace (properties->sm_properties, g_strdup (property_name), new_value);
+
+  return TRUE;
+}
+
+gboolean
+xfsm_properties_set_from_smprop (XfsmProperties *properties,
+                                 const SmProp *sm_prop)
+{
+  GValue *value;
+  gchar **value_strv;
+  guchar  value_uchar;
+  gint    n;
+
+  g_return_val_if_fail (properties != NULL, FALSE);
+  g_return_val_if_fail (sm_prop != NULL, FALSE);
+
+  if (!strcmp (sm_prop->type, SmLISTofARRAY8))
+    {
+      if (G_UNLIKELY (!sm_prop->num_vals || !sm_prop->vals))
+        return FALSE;
+
+      value_strv = g_new0 (gchar *, sm_prop->num_vals + 1);
+      for (n = 0; n < sm_prop->num_vals; ++n)
+        value_strv[n] = g_strdup ((const gchar *) sm_prop->vals[n].value);
+
+      xfsm_verbose ("-> Set strv (%s)\n", sm_prop->name);
+
+      /* don't use _set_strv() to avoid a realloc of the whole strv */
+      value = g_tree_lookup (properties->sm_properties, sm_prop->name);
+      if (value)
+        {
+          if (!G_VALUE_HOLDS (value, G_TYPE_STRV))
+            {
+              g_value_unset (value);
+              g_value_init (value, G_TYPE_STRV);
+            }
+          g_value_take_boxed (value, value_strv);
+        }
+      else
+        {
+          value = xfsm_g_value_new (G_TYPE_STRV);
+          g_value_take_boxed (value, value_strv);
+          g_tree_replace (properties->sm_properties,
+                          g_strdup (sm_prop->name),
+                          value);
+        }
+    }
+  else if (!strcmp (sm_prop->type, SmARRAY8))
+    {
+      if (G_UNLIKELY (!sm_prop->vals[0].value))
+        return FALSE;
+
+      xfsm_properties_set_string (properties, sm_prop->name, sm_prop->vals[0].value);
+    }
+  else if (!strcmp (sm_prop->type, SmCARD8))
+    {
+      value_uchar = *(guchar *)(sm_prop->vals[0].value);
+      xfsm_properties_set_uchar (properties, sm_prop->name, value_uchar);
+    }
+  else
+    {
+      g_warning ("Unhandled SMProp type: \"%s\"", sm_prop->type);
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+
+gboolean
+xfsm_properties_remove (XfsmProperties *properties,
+                        const gchar *property_name)
+{
+  g_return_val_if_fail (properties != NULL, FALSE);
+  g_return_val_if_fail (property_name != NULL, FALSE);
+
+  xfsm_verbose ("-> Removing (%s)\n", property_name);
+
+  return g_tree_remove (properties->sm_properties, property_name);
 }
 
 
@@ -424,125 +714,13 @@ xfsm_properties_free (XfsmProperties *properties)
     g_source_remove (properties->restart_attempts_reset_id);
   if (properties->startup_timeout_id > 0)
     g_source_remove (properties->startup_timeout_id);
+
   if (properties->client_id != NULL)
     g_free (properties->client_id);
   if (properties->hostname != NULL)
     g_free (properties->hostname);
-  if (properties->clone_command != NULL)
-    g_strfreev (properties->clone_command);
-  if (properties->current_directory != NULL)
-    g_free (properties->current_directory);
-  if (properties->process_id != NULL)
-    g_free (properties->process_id);
-  if (properties->program != NULL)
-    g_free (properties->program);
-  if (properties->discard_command != NULL)
-    g_strfreev (properties->discard_command);
-  if (properties->resign_command != NULL)
-    g_strfreev (properties->resign_command);
-  if (properties->restart_command != NULL)
-    g_strfreev (properties->restart_command);
-  if (properties->shutdown_command != NULL)
-    g_strfreev (properties->shutdown_command);
-  if (properties->environment != NULL)
-    g_strfreev (properties->environment);
-  if (properties->user_id)
-    g_free (properties->user_id);
-  g_free (properties);
-}
 
+  g_tree_destroy (properties->sm_properties);
 
-gchar **
-xfsm_strv_from_smprop (const SmProp *prop)
-{
-  gchar **strv = NULL;
-  gint    strc;
-  gint    n;
-  
-  if (strcmp (prop->type, SmARRAY8) == 0)
-    {
-      if (!g_shell_parse_argv ((const gchar *) prop->vals->value,
-                               &strc, &strv, NULL))
-        return NULL;
-    }
-  else if (strcmp (prop->type, SmLISTofARRAY8) == 0)
-    {
-      strv = g_new (gchar *, prop->num_vals + 1);
-      for (n = 0; n < prop->num_vals; ++n)
-        strv[n] = g_strdup ((const gchar *) prop->vals[n].value);
-      strv[n] = NULL;
-    }
-
-  return strv;
-}
-
-
-GValue *
-xfsm_g_value_from_property (XfsmProperties *properties,
-                            const gchar *name)
-{
-  GValue *val = NULL;
-
-  if (strcmp (name, SmCloneCommand) == 0)
-    {
-      val = xfsm_g_value_new (G_TYPE_STRV);
-      g_value_take_boxed (val, g_strdupv (properties->clone_command));
-    }
-  else if (strcmp (name, SmCurrentDirectory) == 0)
-    {
-      val = xfsm_g_value_new (G_TYPE_STRING);
-      g_value_take_string (val, g_strdup (properties->current_directory));
-    }
-  else if (strcmp (name, SmDiscardCommand) == 0)
-    {
-      val = xfsm_g_value_new (G_TYPE_STRV);
-      g_value_take_boxed (val, g_strdupv (properties->discard_command));
-    }
-  else if (strcmp (name, SmEnvironment) == 0)
-    {
-      val = xfsm_g_value_new (G_TYPE_STRV);
-      g_value_take_boxed (val, g_strdupv (properties->environment));
-    }
-  else if (strcmp(name, SmProcessID) == 0)
-    {
-      val = xfsm_g_value_new (G_TYPE_STRING);
-      g_value_take_string (val, g_strdup (properties->process_id));
-    }
-  else if (strcmp (name, SmProgram) == 0)
-    {
-      val = xfsm_g_value_new (G_TYPE_STRING);
-      g_value_take_string (val, g_strdup (properties->program));
-    }
-  else if (strcmp (name, SmRestartCommand) == 0)
-    {
-      val = xfsm_g_value_new (G_TYPE_STRV);
-      g_value_take_boxed (val, g_strdupv (properties->restart_command));
-    }
-  else if (strcmp (name, SmResignCommand) == 0)
-    {
-      val = xfsm_g_value_new (G_TYPE_STRV);
-      g_value_take_boxed (val, g_strdupv (properties->resign_command));
-    }
-  else if (strcmp (name, SmRestartStyleHint) == 0)
-    {
-      val = xfsm_g_value_new (G_TYPE_UCHAR);
-      g_value_set_uchar (val, properties->restart_style_hint);
-    }
-  else if (strcmp (name, SmShutdownCommand) == 0)
-    {
-      val = xfsm_g_value_new (G_TYPE_STRV);
-      g_value_take_boxed (val, g_strdupv (properties->shutdown_command));
-    }
-  else if (strcmp (name, SmUserID) == 0)
-    {
-      val = xfsm_g_value_new (G_TYPE_STRING);
-      g_value_take_string (val, g_strdup (properties->user_id));
-    }
-  else if (strcmp (name, GsmPriority) == 0)
-    {
-      val = xfsm_g_value_new (G_TYPE_UCHAR);
-      g_value_set_uchar (val, properties->priority);
-    }
-
-  return val;
+  g_slice_free (XfsmProperties, properties);
 }

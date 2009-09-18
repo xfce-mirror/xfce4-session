@@ -490,26 +490,31 @@ xfsm_startup_start_properties (XfsmProperties *properties,
 {
   XfsmStartupData *child_watch_data;
   XfsmStartupData *startup_timeout_data;
+  gchar          **restart_command;
   gchar          **argv;
   gint             argc;
   gint             n;
+  const gchar     *current_directory;
   GPid             pid;
 
   /* release any possible old resources related to a previous startup */
   xfsm_properties_set_default_child_watch (properties);
 
   /* generate the argument vector for the application (expanding variables) */
-  argc = g_strv_length (properties->restart_command);
+  restart_command = xfsm_properties_get_strv (properties, SmRestartCommand);
+  argc = g_strv_length (restart_command);
   argv = g_new (gchar *, argc + 1);
   for (n = 0; n < argc; ++n)
-    argv[n] = xfce_expand_variables (properties->restart_command[n], NULL);
+    argv[n] = xfce_expand_variables (restart_command[n], NULL);
   argv[n] = NULL;
+
+  current_directory = xfsm_properties_get_string (properties, SmCurrentDirectory);
 
   /* fork a new process for the application */
 #ifdef HAVE_VFORK
   /* vfork() doesn't allow you to do anything but call exec*() or _exit(),
    * so if we need to set the working directory, we can't use vfork() */
-  if (properties->current_directory == NULL)
+  if (current_directory == NULL)
     pid = vfork ();
   else
 #endif
@@ -519,10 +524,10 @@ xfsm_startup_start_properties (XfsmProperties *properties,
   if (pid == 0)
     {
       /* execute the application here */
-      if (properties->current_directory)
+      if (current_directory)
         {
-          if (chdir (properties->current_directory))
-            g_warning ("Unable to chdir to \"%s\": %s", properties->current_directory, strerror (errno));
+          if (chdir (current_directory))
+            g_warning ("Unable to chdir to \"%s\": %s", current_directory, strerror (errno));
         }
       execvp (argv[0], argv);
       _exit (127);
@@ -602,14 +607,14 @@ xfsm_startup_session_next_prio_group (XfsmManager *manager)
   if (properties == NULL)
     return FALSE;
 
-  cur_prio_group = properties->priority;
+  cur_prio_group = xfsm_properties_get_uchar (properties, GsmPriority, 50);
 
   xfsm_verbose ("Starting apps in prio group %d\n", cur_prio_group);
 
   while ((properties = g_queue_pop_head (pending_properties)))
     {
       /* quit if we've hit all the clients in the current prio group */
-      if (properties->priority != cur_prio_group)
+      if (xfsm_properties_get_uchar (properties, GsmPriority, 50) != cur_prio_group)
         {
           /* we're not starting this one yet; put it back */
           g_queue_push_head (pending_properties, properties);
@@ -619,8 +624,34 @@ xfsm_startup_session_next_prio_group (XfsmManager *manager)
       /* FIXME: splash */
       if (G_LIKELY (splash_screen != NULL))
         {
-          xfsm_splash_screen_next (splash_screen,
-                                   figure_app_name (properties->program));
+          const gchar *app_name = NULL;
+          const gchar *desktop_file;
+          XfceRc      *rcfile = NULL;
+
+          desktop_file = xfsm_properties_get_string (properties, GsmDesktopFile);
+
+          if (desktop_file)
+            {
+              rcfile = xfce_rc_simple_open (desktop_file, TRUE);
+              if (rcfile)
+                {
+                  xfce_rc_set_group (rcfile, "Desktop Entry");
+                  app_name = xfce_rc_read_entry (rcfile, "Name", NULL);
+                }
+            }
+
+          if (!app_name)
+            app_name = figure_app_name (xfsm_properties_get_string (properties,
+                                                                    SmProgram));
+
+          xfsm_splash_screen_next (splash_screen, app_name);
+
+          if (rcfile)
+            {
+              /* delay closing because app_name belongs to the rcfile
+               * if we found it in the file */
+              xfce_rc_close (rcfile);
+            }
         }
 
       if (G_LIKELY (xfsm_startup_start_properties (properties, manager)))

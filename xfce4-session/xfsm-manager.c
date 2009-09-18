@@ -347,6 +347,8 @@ gboolean
 xfsm_manager_handle_failed_properties (XfsmManager    *manager,
                                        XfsmProperties *properties)
 {
+  gint restart_style_hint;
+
   /* Handle apps that failed to start, or died randomly, here */
 
   xfsm_properties_set_default_child_watch (properties);
@@ -357,11 +359,15 @@ xfsm_manager_handle_failed_properties (XfsmManager    *manager,
       properties->restart_attempts_reset_id = 0;
     }
 
-  if (properties->restart_style_hint == SmRestartAnyway)
+  restart_style_hint = xfsm_properties_get_uchar (properties,
+                                                  SmRestartStyleHint,
+                                                  SmRestartIfRunning);
+
+  if (restart_style_hint == SmRestartAnyway)
     {
       g_queue_push_tail (manager->restart_properties, properties);
     }
-  else if (properties->restart_style_hint == SmRestartImmediately)
+  else if (restart_style_hint == SmRestartImmediately)
     {
       if (++properties->restart_attempts > MAX_RESTART_ATTEMPTS)
         {
@@ -391,6 +397,8 @@ xfsm_manager_handle_failed_properties (XfsmManager    *manager,
     }
   else
     {
+      gchar **discard_command;
+
       /* We get here if a SmRestartNever or SmRestartIfRunning client
        * has exited.  SmRestartNever clients shouldn't have discard
        * commands, but it can't hurt to run it if it has one for some
@@ -398,7 +406,8 @@ xfsm_manager_handle_failed_properties (XfsmManager    *manager,
       xfsm_verbose ("Client Id %s exited, removing from session.\n",
                     properties->client_id);
 
-      if (properties->discard_command != NULL)
+      discard_command = xfsm_properties_get_strv (properties, SmDiscardCommand);
+      if (discard_command != NULL)
         {
           /* Run the SmDiscardCommand after the client exited in any state,
            * but only if we don't expect the client to be restarted,
@@ -420,9 +429,9 @@ xfsm_manager_handle_failed_properties (XfsmManager    *manager,
           xfsm_verbose ("Client Id = %s: running discard command.\n\n",
                         properties->client_id);
 
-          g_spawn_sync (properties->current_directory,
-                        properties->discard_command,
-                        properties->environment,
+          g_spawn_sync (xfsm_properties_get_string (properties, SmCurrentDirectory),
+                        discard_command,
+                        xfsm_properties_get_strv (properties, SmEnvironment),
                         G_SPAWN_SEARCH_PATH,
                         NULL, NULL,
                         NULL, NULL,
@@ -1162,14 +1171,13 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
         {
           XfsmClient *client = lp->data;
           XfsmProperties *properties = xfsm_client_get_properties (client);
+          const gchar *program;
 
           /* xterm's session management is broken, so we won't
            * send a SAVE YOURSELF to xterms */
-          if (properties->program != NULL
-              && strcasecmp (properties->program, "xterm") == 0)
-            {
-              continue;
-            }
+          program = xfsm_properties_get_string (properties, SmProgram);
+          if (program != NULL && strcasecmp (program, "xterm") == 0)
+            continue;
 
           if (xfsm_client_get_state (client) != XFSM_CLIENT_SAVINGLOCAL)
             {
@@ -1430,16 +1438,22 @@ xfsm_manager_perform_shutdown (XfsmManager *manager)
        lp = lp->next)
     {
       XfsmProperties *properties = lp->data;
+      gint            restart_style_hint;
+      gchar         **shutdown_command;
 
-      if (properties->restart_style_hint == SmRestartAnyway
-          && properties->shutdown_command != NULL)
+      restart_style_hint = xfsm_properties_get_uchar (properties,
+                                                      SmRestartStyleHint,
+                                                      SmRestartIfRunning);
+      shutdown_command = xfsm_properties_get_strv (properties, SmShutdownCommand);
+
+      if (restart_style_hint == SmRestartAnyway && shutdown_command != NULL)
         {
           xfsm_verbose ("Client Id = %s, quit already, running shutdown command.\n\n",
                         properties->client_id);
 
-          g_spawn_sync (properties->current_directory,
-                        properties->shutdown_command,
-                        properties->environment,
+          g_spawn_sync (xfsm_properties_get_string (properties, SmCurrentDirectory),
+                        shutdown_command,
+                        xfsm_properties_get_strv (properties, SmEnvironment),
                         G_SPAWN_SEARCH_PATH,
                         NULL, NULL,
                         NULL, NULL,
@@ -1652,10 +1666,14 @@ xfsm_manager_store_session (XfsmManager *manager)
     {
       XfsmClient     *client     = lp->data;
       XfsmProperties *properties = xfsm_client_get_properties (client);
+      gint            restart_style_hint;
 
       if (properties == NULL || !xfsm_properties_check (xfsm_client_get_properties (client)))
         continue;
-      if (properties->restart_style_hint == SmRestartNever)
+      restart_style_hint = xfsm_properties_get_uchar (properties,
+                                                      SmRestartStyleHint,
+                                                      SmRestartIfRunning);
+      if (restart_style_hint == SmRestartNever)
         continue;
       
       g_snprintf (prefix, 64, "Client%d_", count);

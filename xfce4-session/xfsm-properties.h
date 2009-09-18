@@ -27,7 +27,8 @@
 #include <libxfce4util/libxfce4util.h>
 
 /* GNOME compatibility */
-#define GsmPriority "_GSM_Priority"
+#define GsmPriority     "_GSM_Priority"
+#define GsmDesktopFile  "_GSM_DesktopFile"
 
 #define MAX_RESTART_ATTEMPTS 5
 
@@ -38,26 +39,15 @@ struct _XfsmProperties
   guint   restart_attempts;
   guint   restart_attempts_reset_id;
   
-  gchar  *client_id;
-  gchar  *hostname;
-
-  gchar **clone_command;
-  gchar  *current_directory;
-  gchar **discard_command;
-  gchar **environment;
-  gint    priority;
-  gchar  *process_id;
-  gchar  *program;
-  gchar **resign_command;
-  gchar **restart_command;
-  gint    restart_style_hint;
-  gchar **shutdown_command;
-  gchar  *user_id;
-
   guint   startup_timeout_id;
 
   GPid    pid;
   guint   child_watch_id;
+
+  gchar  *client_id;
+  gchar  *hostname;
+
+  GTree  *sm_properties;
 };
 
 
@@ -79,12 +69,37 @@ XfsmProperties* xfsm_properties_load (XfceRc *rc, const gchar *prefix);
 
 gboolean xfsm_properties_check (const XfsmProperties *properties) G_GNUC_CONST;
 
+G_CONST_RETURN gchar *xfsm_properties_get_string (XfsmProperties *properties,
+                                                  const gchar *property_name);
+gchar **xfsm_properties_get_strv (XfsmProperties *properties,
+                                  const gchar *property_name);
+guchar xfsm_properties_get_uchar (XfsmProperties *properties,
+                                  const gchar *property_name,
+                                  guchar default_value);
+
+const GValue *xfsm_properties_get (XfsmProperties *properties,
+                                   const gchar *property_name);
+
+void xfsm_properties_set_string (XfsmProperties *properties,
+                                 const gchar *property_name,
+                                 const gchar *property_value);
+void xfsm_properties_set_strv (XfsmProperties *properties,
+                               const gchar *property_name,
+                               gchar **property_value);
+void xfsm_properties_set_uchar (XfsmProperties *properties,
+                                const gchar *property_name,
+                                guchar property_value);
+
+gboolean xfsm_properties_set (XfsmProperties *properties,
+                              const gchar *property_name,
+                              const GValue *property_value);
+gboolean xfsm_properties_set_from_smprop (XfsmProperties *properties,
+                                          const SmProp *sm_prop);
+
+gboolean xfsm_properties_remove (XfsmProperties *properties,
+                                 const gchar *property_name);
+
 void xfsm_properties_set_default_child_watch (XfsmProperties *properties);
-
-gchar **xfsm_strv_from_smprop (const SmProp *prop);
-
-GValue *xfsm_g_value_from_property (XfsmProperties *properties,
-                                    const gchar *name);
 
 gint xfsm_properties_compare (const XfsmProperties *a,
                               const XfsmProperties *b) G_GNUC_CONST;
