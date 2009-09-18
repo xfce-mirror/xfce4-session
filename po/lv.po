@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: xfce4-settings\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-07-26 19:15-0700\n"
-"PO-Revision-Date: 2009-09-18 19:52+0100\n"
+"PO-Revision-Date: 2009-09-18 20:22+0100\n"
 "Last-Translator: Rihards Prieditis <rprieditis@gmail.com>\n"
 "Language-Team: Latvian <translation-team-lv@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -517,28 +517,32 @@ msgid ""
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
 msgstr ""
+"Nevarēja atrast interneta adresi %s.\n"
+"Tas neļauj Xfce darboties korekti.\n"
+"Iespējams problēmu var labot pievienojot\n"
+"%s rindiņu /etc/hosts failam, jūsu sistēmā."
 
 #: ../xfce4-session/xfsm-dns.c:152
 msgid "Continue anyway"
-msgstr ""
+msgstr "Turpināt vienalga"
 
 #: ../xfce4-session/xfsm-dns.c:153
 msgid "Try again"
-msgstr ""
+msgstr "Mēģināt atkal"
 
 #: ../xfce4-session/xfsm-manager.c:589
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
-msgstr ""
+msgstr "Nevar noteikt drošo sesijas nosaukumu. Iespējamie iemesli: xfconfd nav palaists (D-Bus uzstādījumu problēma); vides mainīgais $XDG_CONFIG_DIRS ir nepareizi uzstādīts (jābūt \"%s\"), vai xfce4-session nav pareizi instalēts."
 
 #: ../xfce4-session/xfsm-manager.c:600
 #, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr ""
+msgstr "Norādītā drošā sesija (\"%s\") nav atzīmēta, kā drošā sesija."
 
 #: ../xfce4-session/xfsm-manager.c:647
 msgid "The list of applications in the failsafe session is empty."
-msgstr ""
+msgstr "Lietotņu saraksts drošajā sesija ir tukšs."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
@@ -549,7 +553,7 @@ msgstr "Sesijas pārvaldnieka kļūda"
 
 #: ../xfce4-session/xfsm-manager.c:696
 msgid "Unable to load a failsafe session"
-msgstr ""
+msgstr "Nevar ielādēt drošo sesiju"
 
 #: ../xfce4-session/xfsm-manager.c:1110
 msgid "Failed to suspend session"
@@ -562,36 +566,36 @@ msgstr "Neizdevās hibernēt sesiju"
 #: ../xfce4-session/xfsm-manager.c:1400
 #, c-format
 msgid "Can only terminate clients when in the idle state"
-msgstr ""
+msgstr "Var tikai terminēt klientus, kad atrodas dīkstāvē"
 
 #: ../xfce4-session/xfsm-manager.c:1921
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
-msgstr ""
+msgstr "Sesiju pārvaldniekam jāatrodas dīkstāvē, kad notiek pārbaudes punkta pieprasīšana"
 
 #: ../xfce4-session/xfsm-manager.c:1962
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
-msgstr ""
+msgstr "Sesiju pārvaldniekam jāatrodas dīkstāvē, kad notiek izslēgšanas pieprasīšana"
 
 #: ../xfce4-session/xfsm-manager.c:1969
 #, c-format
 msgid "Invalid shutdown type \"%u\""
-msgstr ""
+msgstr "Nederīgs izslēgšanas tips \"%u\""
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:200
 msgid "Invalid shutdown type"
-msgstr ""
+msgstr "Nederīgs izslēgšanas tips"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:384
 #, c-format
 msgid "No HAL method for command %d"
-msgstr ""
+msgstr "Nav HAL metodes komandai %d"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:528
 #, c-format
 msgid "Program \"sudo\" was not found.  You will not be able to shutdown your system from within Xfce."
-msgstr ""
+msgstr "Programma \"sudo\" netika atrasta. Jūs nevarēsiet izslēgt savu sistēmu no Xfce vides."
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:540, c-format
 msgid "Unable to create parent pipe: %s"
@@ -600,7 +604,7 @@ msgstr "Neizdevās izveidot vecāka programmkanālu: %s"
 #: ../xfce4-session/xfsm-shutdown-helper.c:551
 #, c-format
 msgid "Unable to create child pipe: %s"
-msgstr ""
+msgstr "Nevar izveidot bērna programkanālu: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:562, c-format
 msgid "Unable to fork sudo helper: %s"
@@ -609,13 +613,13 @@ msgstr "Neizdevās sadalīt sudo palīgu: %s"
 #: ../xfce4-session/xfsm-shutdown-helper.c:604
 #, c-format
 msgid "Unable to read response from sudo helper: %s"
-msgstr ""
+msgstr "Nevar nolasīt atbilde no sudo palīga: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:605
 #: ../xfce4-session-logout/main.c:68
 #: ../xfce4-session-logout/main.c:75
 msgid "Unknown error"
-msgstr ""
+msgstr "Nezināma kļūda"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:616, c-format
 msgid "Unable to open parent pipe: %s"
@@ -624,52 +628,52 @@ msgstr "Neizdevās atvērt vecāka programmkanālu: %s"
 #: ../xfce4-session/xfsm-shutdown-helper.c:627
 #, c-format
 msgid "Unable to open child pipe: %s"
-msgstr ""
+msgstr "Nevar atvērt bērna programmkanālu: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:645
 #, c-format
 msgid "Got unexpected reply from sudo shutdown helper"
-msgstr ""
+msgstr "Tika saņemta negaidīta atbilde no sudo izslēgšanas palīga"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:803
 #, c-format
 msgid "Suspend and Hibernate are only supported through HAL, which is unavailable"
-msgstr ""
+msgstr "Iemidzināt un hibernēt tiek atbalstīti tikai caur HAL, kurš nav pieejams"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:819
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
-msgstr ""
+msgstr "Kļūda sūtot komandu izslēgšanas palīgam: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:830
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
-msgstr ""
+msgstr "Kļūda saņemot atbildi no izslēgšanas palīga: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:841
 #, c-format
 msgid "Shutdown command failed"
-msgstr ""
+msgstr "Izslēgšanas komanda neizdevās"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
-msgstr ""
+msgstr "Izvēlaties sesiju"
 
 #: ../xfce4-session/xfsm-splash-screen.c:208
 msgid "Choose session name"
-msgstr ""
+msgstr "Izvēlaties sesijas nosaukumu"
 
 #: ../xfce4-session/xfsm-splash-screen.c:222
 msgid "Choose a name for the new session:"
-msgstr ""
+msgstr "Izvēlaties nosaukumu jaunajai sesijai:"
 
 #: ../xfce4-session/xfsm-startup.c:115
 msgid "Starting the Volume Controller"
-msgstr ""
+msgstr "Sējuma kontroliera palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:117
 msgid "Starting the Panel"
-msgstr ""
+msgstr "Paneļa palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:119
 msgid "Starting the Desktop Manager"
@@ -677,7 +681,7 @@ msgstr "Darbvirsmas pārvaldnieka palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:121
 msgid "Starting the Taskbar"
-msgstr ""
+msgstr "Uzdevumu joslas palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:123
 msgid "Starting the Window Manager"
@@ -685,59 +689,59 @@ msgstr "Logu pārvaldnieka palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:127
 msgid "Starting the Gnome Terminal Emulator"
-msgstr ""
+msgstr "Gnome termināļa emulātora palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:131
 msgid "Starting the KDE Advanced Text Editor"
-msgstr ""
+msgstr "KDE paplašināta teksta redaktora palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:133
 msgid "Starting the KDE Clipboard Manager"
-msgstr ""
+msgstr "KDE starpliktuves pārvaldnieka palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:135
 msgid "Starting the KDE Mail Reader"
-msgstr ""
+msgstr "KDE pasta lasītāja palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:137
 msgid "Starting the KDE News Reader"
-msgstr ""
+msgstr "KDE jaunu lasītāja palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:139
 msgid "Starting the Konqueror"
-msgstr ""
+msgstr "Konqueror palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:141
 msgid "Starting the KDE Terminal Emulator"
-msgstr ""
+msgstr "KDE termināla emulātora palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:145
 msgid "Starting the Beep Media Player"
-msgstr ""
+msgstr "Beep mūzikas atskaņotāja palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:147
 msgid "Starting The Gimp"
-msgstr ""
+msgstr "Gimp palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:149
 msgid "Starting the VI Improved Editor"
-msgstr ""
+msgstr "VI uzlabotā redaktora palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:151
 msgid "Starting the Session Management Proxy"
-msgstr ""
+msgstr "Sesiju pārvaldības starpniek servera palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:153
 msgid "Starting the X-Chat IRC Client"
-msgstr ""
+msgstr "X-Chat IRC klienta palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:155
 msgid "Starting the X Multimedia System"
-msgstr ""
+msgstr "X multimedija sistēmas palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:157
 msgid "Starting the X Terminal Emulator"
-msgstr ""
+msgstr "X termināla emulatora palaišana"
 
 #: ../xfce4-session/xfsm-startup.c:159, c-format
 msgid "Starting %s"
@@ -757,40 +761,50 @@ msgid ""
 "location.\n"
 "You should delete this directory now.\n"
 msgstr ""
+"Atrašanās vieta un formāts automātiskās palaišanas direktorijai ir mainījies.\n"
+"Jaunā atrašanās vieta ir\n"
+"\n"
+"  %s\n"
+"\n"
+"Tur jūs varat likt .desktop failus, kuri apraksta lietotnes,\n"
+"lai sāktu viņas pie pieteikšanās Xfce darbvirsmas vidē. Faili jūsu vecajā\n"
+"automātiskās palaišanās mapē ir veiksmīgi migrēti uz jauno\n"
+"atrašanās vietu.\n"
+"Jums šī mape tagad būtu jāizdzēš.\n"
 
 #: ../xfce4-session/xfsm-startup.c:424
 msgid "Performing Autostart..."
-msgstr ""
+msgstr "Notiek automātiskā palaišanās..."
 
 #: ../xfce4-tips/main.c:47
 #: ../xfce4-tips/main.c:269
 msgid "Tips and Tricks"
-msgstr ""
+msgstr "Padomi un triki"
 
 #: ../xfce4-tips/main.c:48
 msgid "Fortunes"
-msgstr ""
+msgstr "Veiksmes"
 
 #: ../xfce4-tips/main.c:74
 #, c-format
 msgid "Could not load tips database (%s)."
-msgstr ""
+msgstr "Nevarēja ielādēt padomu datubāzi (%s)."
 
 #. converting it from the user's locale failed too, we give up
 #: ../xfce4-tips/main.c:183
 #, c-format
 msgid "Invalid output of fortune."
-msgstr ""
+msgstr "Nederīgs izvads no fortune."
 
 #: ../xfce4-tips/main.c:188
 #: ../xfce4-tips/main.c:196
 #, c-format
 msgid "Executing fortune failed (%s)"
-msgstr ""
+msgstr "Neizdevās izpildīt fortune (%s)"
 
 #: ../xfce4-tips/main.c:221
 msgid "Error while loading tips."
-msgstr ""
+msgstr "Kļūda ielādējot padomus."
 
 #: ../xfce4-tips/main.c:298
 msgid "Display tips on _startup"
@@ -802,41 +816,41 @@ msgstr "Nākamais"
 
 #: ../xfce4-session-logout/main.c:65
 msgid "Logout Error"
-msgstr ""
+msgstr "Atteikšanās kļūda"
 
 #: ../xfce4-session-logout/main.c:163
 msgid "Unable to contact D-Bus session bus."
-msgstr ""
+msgstr "Nevar savienoties ar D-Buss sesijas kopni"
 
 #: ../xfce4-session-logout/main.c:175
 msgid "Failed to create new D-Bus message"
-msgstr ""
+msgstr "Neizdevās izveidot jaunu D-Buss ziņu"
 
 #: ../xfce4-session-logout/main.c:191
 msgid "Failed to receive a reply from the session manager"
-msgstr ""
+msgstr "Neizdevās saņemt atbildi no sesiju pārvaldnieka"
 
 #: ../xfce4-session-logout/main.c:199
 msgid "Received error while trying to log out"
-msgstr ""
+msgstr "Tika saņemta kļūda mēģinot atteikties"
 
 #: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
 msgid "Session Menu"
-msgstr ""
+msgstr "Sesiju izvēlne"
 
 #: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
 msgid "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
-msgstr ""
+msgstr "Rāda izvēlni ar izvēli aizslēgt ekrānu, iemidzināt, izslēgt, vai atteikties"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
 #: ../settings/xfce4-session-settings.glade.h:14
 msgid "Customize desktop startup and splash screen"
-msgstr ""
+msgstr "Pielāgot darbvirsmas palaišanos un uzplaiksnījuma ekrānu"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
 #: ../settings/xfce4-session-settings.glade.h:27
 msgid "Session and Startup"
-msgstr ""
+msgstr "Sesijas uz palaišanās"
 
 #: ../settings/xfce4-session-settings.glade.h:1
 msgid "<b>Author:</b>"
@@ -844,19 +858,19 @@ msgstr "<b>Autors:</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:2
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>Saderība</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:3
 msgid "<b>Description:</b>"
-msgstr ""
+msgstr "<b>Apraksts:</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:4
 msgid "<b>Homepage:</b>"
-msgstr ""
+msgstr "<b>Mājas vietne:</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:5
 msgid "<b>Information</b>"
-msgstr ""
+msgstr "<b>Informācija</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:6
 msgid "<b>Logout Settings</b>"
@@ -876,99 +890,99 @@ msgstr "<b>Versija:</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:10
 msgid "Ad_vanced"
-msgstr ""
+msgstr "_Paplašināti"
 
 #: ../settings/xfce4-session-settings.glade.h:11
 msgid "Always save the session when logging out"
-msgstr ""
+msgstr "Vienmēr saglabāt sesiju, kad atsakās"
 
 #: ../settings/xfce4-session-settings.glade.h:12
 msgid "Automatically save session on _logout"
-msgstr ""
+msgstr "Automātiski saglabāt sesiju uz _atteikšanos"
 
 #: ../settings/xfce4-session-settings.glade.h:13
 msgid "Con_figure"
-msgstr ""
+msgstr "Kon_figurēt"
 
 #: ../settings/xfce4-session-settings.glade.h:15
 msgid "Demonstrates the selected splash screen"
-msgstr ""
+msgstr "Demonstrē atlasīto uzplaiksnījuma ekrānu"
 
 #: ../settings/xfce4-session-settings.glade.h:16
 msgid "Display the session chooser every time Xfce starts"
-msgstr ""
+msgstr "Attēlo sesijas izvēlētāju katru reizi, kad palaižas Xfce"
 
 #: ../settings/xfce4-session-settings.glade.h:17
 msgid "Launch GN_OME services on startup"
-msgstr ""
+msgstr "Izsaukt GN_OME pakalpojumus uz palaišanos"
 
 #: ../settings/xfce4-session-settings.glade.h:18
 msgid "Launch _KDE services on startup"
-msgstr ""
+msgstr "Izsaukt _KDE pakalpojumus uz palaišanos"
 
 #: ../settings/xfce4-session-settings.glade.h:19
 msgid "Manage _remote applications"
-msgstr ""
+msgstr "Pā_rvaldīt attālās lietotnes"
 
 #: ../settings/xfce4-session-settings.glade.h:20
 msgid "Manage remote applications over the network (this may be a security risk)"
-msgstr ""
+msgstr "Pārvaldīt attālās lietotnes caur tīklu (tas var būt drošības risks)"
 
 #: ../settings/xfce4-session-settings.glade.h:21
 msgid "Opens the configuration panel for the selected splash screen"
-msgstr ""
+msgstr "Atver konfigurācijas paneli atlasītajam uzplaiksnījuma ekrānam"
 
 #: ../settings/xfce4-session-settings.glade.h:22
 msgid "Prompt for confirmation when logging out"
-msgstr ""
+msgstr "Jautā apstiprinājumu uz atteikšanos"
 
 #: ../settings/xfce4-session-settings.glade.h:23
 msgid "Quit the program, and remove it from the session"
-msgstr ""
+msgstr "Iziet no programmas un izņemt no sesijas"
 
 #: ../settings/xfce4-session-settings.glade.h:24
 msgid "S_plash"
-msgstr ""
+msgstr "Uzplaik_snījums"
 
 #: ../settings/xfce4-session-settings.glade.h:25
 msgid "Save Sessio_n"
-msgstr ""
+msgstr "Sa_glabāt sesiju"
 
 #: ../settings/xfce4-session-settings.glade.h:26
 msgid "Saving Session"
-msgstr ""
+msgstr "Sesijas saglabāšana"
 
 #: ../settings/xfce4-session-settings.glade.h:28
 msgid "Start GNOME services, such as gnome-keyring and the GNOME accessibility framework"
-msgstr ""
+msgstr "Izsaukt GNOME pakalpojums, tādus kā gnome-keyring un GNOME pieejamības karkasu"
 
 #: ../settings/xfce4-session-settings.glade.h:29
 msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
-msgstr ""
+msgstr "Izsaukt KDE pakalpojumus, tādus kā \"kdeinit\". DCOP un ARTS"
 
 #: ../settings/xfce4-session-settings.glade.h:30
 msgid "These applications are a part of the currently-running session, and can be saved when you log out.  Changes below will only take effect when the session is saved."
-msgstr ""
+msgstr "Šīs lietotnes pagaidām ir daļa no pašreiz skrejošās sesijas un tiks saglabātas pie atteikšanās. Izmaiņas zemāk stāsies spēkā, pēc sesijas saglabāšanas."
 
 #: ../settings/xfce4-session-settings.glade.h:31
 msgid "Your session is being saved.  If you do not wish to wait, you may close this window."
-msgstr ""
+msgstr "Jūsu sesija tiek saglabāta. Ja nevēlaties gaidīt, jūs varat aizvērt šo logu."
 
 #: ../settings/xfce4-session-settings.glade.h:32
 msgid "_Display chooser on login"
-msgstr ""
+msgstr "_Attēlot izvēlētāju pie pieteikšanās"
 
 #: ../settings/xfce4-session-settings.glade.h:33
 msgid "_General"
-msgstr ""
+msgstr "_Vsipārēji"
 
 #: ../settings/xfce4-session-settings.glade.h:34
 msgid "_Prompt on logout"
-msgstr ""
+msgstr "_Jautāt pie atteikšanās"
 
 #: ../settings/xfce4-session-settings.glade.h:35
 msgid "_Quit Program"
-msgstr ""
+msgstr "_Iziet no programmas"
 
 #: ../settings/xfce4-session-settings.glade.h:36
 msgid "_Session"
@@ -980,15 +994,15 @@ msgstr "Pārbaudī_t"
 
 #: ../settings/xfce4-session-settings.glade.h:38
 msgid "label"
-msgstr ""
+msgstr "etiķete"
 
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
 msgid "Tips and tricks"
-msgstr ""
+msgstr "Padomi un triki"
 
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
-msgstr ""
+msgstr "xfce4-tips"
 
 #~ msgid "Accessibility"
 #~ msgstr "Pieejamība"
