@@ -39,18 +39,21 @@
 #include "xfsm-manager-dbus-client.h"
 
 #define GsmPriority       "_GSM_Priority"
+#define GsmDesktopFile    "_GSM_DesktopFile"
 #define TREE_ROW_REF_KEY  "--tree-row-ref"
 
 enum
 {
     COL_OBJ_PATH = 0,
     COL_NAME,
+    COL_ICON_NAME,
     COL_COMMAND,
     COL_RESTART_STYLE,
     COL_RESTART_STYLE_STR,
     COL_PRIORITY,
     COL_PID,
     COL_DBUS_PROXY,
+    COL_HAS_DESKTOP_FILE,
     N_COLS,
 };
 
@@ -227,6 +230,43 @@ session_editor_quit_client(GtkWidget *btn,
 }
 
 static void
+session_editor_set_from_desktop_file(GtkTreeModel *model,
+                                     GtkTreeIter *iter,
+                                     const gchar *desktop_file)
+{
+    XfceRc *rcfile;
+    const gchar *name, *icon;
+
+    rcfile = xfce_rc_simple_open(desktop_file, TRUE);
+    if(!rcfile)
+        return;
+
+    if(!xfce_rc_has_group(rcfile, "Desktop Entry")) {
+        xfce_rc_close(rcfile);
+        return;
+    }
+
+    xfce_rc_set_group(rcfile, "Desktop Entry");
+
+    name = xfce_rc_read_entry(rcfile, "Name", NULL);
+    if(!name) {
+        /* we require at least Name to make things simpler */
+        xfce_rc_close(rcfile);
+        return;
+    }
+
+    icon = xfce_rc_read_entry(rcfile, "Icon", NULL);
+
+    gtk_list_store_set(GTK_LIST_STORE(model), iter,
+                       COL_NAME, name,
+                       COL_ICON_NAME, icon,
+                       COL_HAS_DESKTOP_FILE, TRUE,
+                       -1);
+
+    xfce_rc_close(rcfile);
+}
+
+static void
 client_sm_property_changed(DBusGProxy *proxy,
                            const gchar *name,
                            const GValue *value,
@@ -238,6 +278,7 @@ client_sm_property_changed(DBusGProxy *proxy,
                                                   TREE_ROW_REF_KEY);
     GtkTreePath *path = gtk_tree_row_reference_get_path(rref);
     GtkTreeIter iter;
+    gboolean has_desktop_file = FALSE;
 
     if(!gtk_tree_model_get_iter(model, &iter, path)) {
         gtk_tree_path_free(path);
@@ -245,10 +286,16 @@ client_sm_property_changed(DBusGProxy *proxy,
     }
     gtk_tree_path_free(path);
 
+    gtk_tree_model_get(model, &iter,
+                       COL_HAS_DESKTOP_FILE, &has_desktop_file,
+                       -1);
+
     if(!strcmp(name, SmProgram) && G_VALUE_HOLDS_STRING(value)) {
-        gtk_list_store_set(GTK_LIST_STORE(model), &iter,
-                           COL_NAME, g_value_get_string(value),
-                           -1);
+        if(!has_desktop_file) {
+            gtk_list_store_set(GTK_LIST_STORE(model), &iter,
+                               COL_NAME, g_value_get_string(value),
+                               -1);
+        }
     } else if(!strcmp(name, SmRestartStyleHint) && G_VALUE_HOLDS_UCHAR(value)) {
         guchar hint = g_value_get_uchar(value);
 
@@ -267,6 +314,9 @@ client_sm_property_changed(DBusGProxy *proxy,
         gtk_list_store_set(GTK_LIST_STORE(model), &iter,
                            COL_PID, g_value_get_string(value),
                            -1);
+    } else if(!strcmp(name, GsmDesktopFile) && G_VALUE_HOLDS_STRING(value)) {
+        session_editor_set_from_desktop_file(model, &iter,
+                                             g_value_get_string(value));
     }
 }
 
@@ -305,8 +355,10 @@ manager_client_registered(DBusGProxy *proxy,
     GtkTreeIter iter;
     DBusGProxy *client_proxy;
     GHashTable *properties = NULL;
-    const gchar *propnames[] = { SmProgram, SmRestartStyleHint,
-                                 SmProcessID, GsmPriority, NULL };
+    const gchar *propnames[] = {
+        SmProgram, SmRestartStyleHint,SmProcessID, GsmPriority,
+        GsmDesktopFile, NULL
+    };
     GValue *val;
     const gchar *name = NULL, *pid = NULL;
     guchar hint = SmRestartIfRunning, priority = 50;
@@ -355,6 +407,13 @@ manager_client_registered(DBusGProxy *proxy,
                        COL_PRIORITY, priority,
                        COL_PID, pid,
                        -1);
+
+    if((val = g_hash_table_lookup(properties, GsmDesktopFile))
+       && G_VALUE_HOLDS_STRING(val))
+    {
+        session_editor_set_from_desktop_file(model, &iter,
+                                             g_value_get_string(val));
+    }
 
     path = gtk_tree_model_get_path(model, &iter);
     g_object_set_data_full(G_OBJECT(client_proxy), TREE_ROW_REF_KEY,
@@ -566,12 +625,22 @@ session_editor_populate_treeview(GtkTreeView *treeview)
                                                    NULL);
     gtk_tree_view_append_column(treeview, col);
 
-    render = gtk_cell_renderer_text_new();
-    col = gtk_tree_view_column_new_with_attributes(_("Program"), render,
-                                                   "text", COL_NAME,
-                                                   NULL);
+    col = gtk_tree_view_column_new();
+    gtk_tree_view_column_set_title(col, _("Program"));
     g_object_set(col, "expand", TRUE, NULL);
     gtk_tree_view_append_column(treeview, col);
+
+    render = gtk_cell_renderer_pixbuf_new();
+    gtk_tree_view_column_pack_start(col, render, FALSE);
+    gtk_tree_view_column_set_attributes(col, render,
+                                        "icon-name", COL_ICON_NAME,
+                                        NULL);
+
+    render = gtk_cell_renderer_text_new();
+    gtk_tree_view_column_pack_start(col, render, TRUE);
+    gtk_tree_view_column_set_attributes(col, render,
+                                        "text", COL_NAME,
+                                        NULL);
 
     render = gtk_cell_renderer_combo_new();
     combo_model = session_editor_create_restart_style_combo_model();
@@ -594,8 +663,9 @@ session_editor_populate_treeview(GtkTreeView *treeview)
         return;
 
     ls = gtk_list_store_new(N_COLS, G_TYPE_STRING, G_TYPE_STRING,
+                            G_TYPE_STRING, G_TYPE_STRING, G_TYPE_UCHAR,
                             G_TYPE_STRING, G_TYPE_UCHAR, G_TYPE_STRING,
-                            G_TYPE_UCHAR, G_TYPE_STRING, DBUS_TYPE_G_PROXY);
+                            DBUS_TYPE_G_PROXY, G_TYPE_BOOLEAN);
     gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(ls));
     gtk_tree_sortable_set_default_sort_func(GTK_TREE_SORTABLE(ls),
                                             session_tree_compare_iter,
