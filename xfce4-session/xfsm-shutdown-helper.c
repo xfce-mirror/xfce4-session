@@ -813,7 +813,13 @@ xfsm_shutdown_helper_send_command (XfsmShutdownHelper *helper,
 
       if (ferror (helper->outfile))
         {
-          if (error && errno != EINTR)
+          if (errno == EINTR)
+            {
+              /* probably succeeded but the helper got killed */
+              return TRUE;
+            }
+
+          if (error)
             {
               g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Error sending command to shutdown helper: %s"),
@@ -824,7 +830,13 @@ xfsm_shutdown_helper_send_command (XfsmShutdownHelper *helper,
 
       if (fgets (response, 256, helper->infile) == NULL)
         {
-          if (error && errno != EINTR)
+          if (errno == EINTR)
+            {
+              /* probably succeeded but the helper got killed */
+              return TRUE;
+            }
+
+          if (error)
             {
               g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Error receiving response from shutdown helper: %s"),
