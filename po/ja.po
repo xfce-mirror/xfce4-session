@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-10 00:23+0900\n"
+"POT-Creation-Date: 2009-09-28 10:33+0200\n"
 "PO-Revision-Date: 2009-08-09 22:50+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <xfce-users-jp@ml.fdiary.net>\n"
@@ -281,45 +281,45 @@ msgstr "これは Xfce のインストールの問題と思われます"
 msgid "_Application Autostart"
 msgstr "自動開始アプリケーション(_A)"
 
-#: ../settings/session-editor.c:58
+#: ../settings/session-editor.c:61
 msgid "If running"
 msgstr "実行中の場合"
 
-#: ../settings/session-editor.c:59
+#: ../settings/session-editor.c:62
 msgid "Always"
 msgstr "常に"
 
-#: ../settings/session-editor.c:60
+#: ../settings/session-editor.c:63
 msgid "Immediately"
 msgstr "すぐに"
 
-#: ../settings/session-editor.c:61
+#: ../settings/session-editor.c:64
 msgid "Never"
 msgstr "しない"
 
-#: ../settings/session-editor.c:126
+#: ../settings/session-editor.c:129
 msgid "Session Save Error"
 msgstr "セッション保存エラー"
 
-#: ../settings/session-editor.c:127
+#: ../settings/session-editor.c:130
 msgid "Unable to save the session"
 msgstr "セッションの保存に失敗しました"
 
-#: ../settings/session-editor.c:182
+#: ../settings/session-editor.c:185
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "\"%s\" を終了させてもよろしいですか?"
 
-#: ../settings/session-editor.c:184
+#: ../settings/session-editor.c:187
 #, c-format
 msgid "Terminate \"%s\""
 msgstr "\"%s\" を終了する"
 
-#: ../settings/session-editor.c:186 ../settings/session-editor.c:214
+#: ../settings/session-editor.c:189 ../settings/session-editor.c:217
 msgid "Terminate Program"
 msgstr "プログラムを終了する"
 
-#: ../settings/session-editor.c:188
+#: ../settings/session-editor.c:191
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
@@ -327,27 +327,27 @@ msgstr ""
 "アプリケーションは、保存されていない状態をすべて失います。また、次回のセッ"
 "ションで再起動されません。"
 
-#: ../settings/session-editor.c:215
+#: ../settings/session-editor.c:218
 msgid "Unable to terminate program."
 msgstr "プログラムの終了に失敗しました"
 
-#: ../settings/session-editor.c:345
+#: ../settings/session-editor.c:397
 msgid "(Unknown program)"
 msgstr "(不明なプログラム)"
 
-#: ../settings/session-editor.c:556
+#: ../settings/session-editor.c:615
 msgid "Priority"
 msgstr "優先順位"
 
-#: ../settings/session-editor.c:564
+#: ../settings/session-editor.c:623
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:570
+#: ../settings/session-editor.c:629
 msgid "Program"
 msgstr "プログラム"
 
-#: ../settings/session-editor.c:585
+#: ../settings/session-editor.c:654
 msgid "Restart Style"
 msgstr "再起動スタイル"
 
@@ -470,7 +470,7 @@ msgstr ""
 "あなたの入力したパスワードが無効であるか、システム管理者があなたのユーザアカ"
 "ウントでのコンピュータのシャットダウンを許可していません。"
 
-#: ../xfce4-session/shutdown.c:759 ../xfce4-session/xfsm-manager.c:1107
+#: ../xfce4-session/shutdown.c:759 ../xfce4-session/xfsm-manager.c:1116
 msgid "Shutdown Failed"
 msgstr "シャットダウン失敗"
 
@@ -509,8 +509,8 @@ msgstr "新規セッション"
 msgid "Create a new session."
 msgstr "新しいセッションを作成します。"
 
-#: ../xfce4-session/xfsm-client.c:792 ../xfce4-session/xfsm-client.c:852
-#: ../xfce4-session/xfsm-client.c:960
+#: ../xfce4-session/xfsm-client.c:506 ../xfce4-session/xfsm-client.c:532
+#: ../xfce4-session/xfsm-client.c:571
 #, c-format
 msgid "The client doesn't have any properties set yet"
 msgstr "クライアントはまだどのプロパティも設定していません"
@@ -552,7 +552,7 @@ msgstr "とにかく続行する"
 msgid "Try again"
 msgstr "再試行"
 
-#: ../xfce4-session/xfsm-manager.c:589
+#: ../xfce4-session/xfsm-manager.c:598
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -564,7 +564,7 @@ msgstr ""
 "い (\"%s\" を含まなければなりません)、あるいは xfce4-session が正しくインス"
 "トールされていない。"
 
-#: ../xfce4-session/xfsm-manager.c:600
+#: ../xfce4-session/xfsm-manager.c:609
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
@@ -572,49 +572,49 @@ msgstr ""
 "指定されたフェイルセーフセッション (\"%s\") はフェイルセーフセッションとして"
 "設定されていません。"
 
-#: ../xfce4-session/xfsm-manager.c:647
+#: ../xfce4-session/xfsm-manager.c:656
 msgid "The list of applications in the failsafe session is empty."
 msgstr "フェイルセーフセッション内のアプリケーションリストが空です。"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:694
+#: ../xfce4-session/xfsm-manager.c:703
 msgid "Session Manager Error"
 msgstr "セッションマネージャエラー"
 
-#: ../xfce4-session/xfsm-manager.c:696
+#: ../xfce4-session/xfsm-manager.c:705
 msgid "Unable to load a failsafe session"
 msgstr "フェイルセーフセッションを読み込めませんでした"
 
-#: ../xfce4-session/xfsm-manager.c:1110
+#: ../xfce4-session/xfsm-manager.c:1119
 msgid "Failed to suspend session"
 msgstr "セッションのサスペンドに失敗しました"
 
-#: ../xfce4-session/xfsm-manager.c:1111
+#: ../xfce4-session/xfsm-manager.c:1120
 msgid "Failed to hibernate session"
 msgstr "セッションのハイバネートに失敗しました"
 
-#: ../xfce4-session/xfsm-manager.c:1400
+#: ../xfce4-session/xfsm-manager.c:1408
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "待機状態の時のみクライアントを終了できます"
 
-#: ../xfce4-session/xfsm-manager.c:1921
+#: ../xfce4-session/xfsm-manager.c:1939
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 "チェックポイントを要求するとき、セッションマネージャは待機状態でなければなり"
 "ません"
 
-#: ../xfce4-session/xfsm-manager.c:1962
+#: ../xfce4-session/xfsm-manager.c:1980
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
 "シャットダウンを要求するとき、セッションマネージャは待機状態でなければなりま"
 "せん"
 
-#: ../xfce4-session/xfsm-manager.c:1969
+#: ../xfce4-session/xfsm-manager.c:1987
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "\"%u\" は不正なシャットダウンタイプです"
@@ -685,17 +685,17 @@ msgstr ""
 "サスペンドおよびハイバネートは HAL を通したもののみサポートされていますが、そ"
 "れが有効になっていません"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:819
+#: ../xfce4-session/xfsm-shutdown-helper.c:825
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
 msgstr "シャットダウンヘルパーへのコマンド送信エラーです: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:830
+#: ../xfce4-session/xfsm-shutdown-helper.c:842
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
 msgstr "シャットダウンヘルパーからの応答受信エラーです: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:841
+#: ../xfce4-session/xfsm-shutdown-helper.c:853
 #, c-format
 msgid "Shutdown command failed"
 msgstr "シャットダウンコマンド失敗"
@@ -879,11 +879,13 @@ msgstr "セッションマネージャからの応答を受信できませんで
 msgid "Received error while trying to log out"
 msgstr "ログアウト中にエラーを受信しました"
 
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
+#: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:1
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:1
 msgid "Session Menu"
 msgstr "セッションメニュー"
 
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
+#: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:2
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:2
 msgid ""
 "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
 msgstr ""
