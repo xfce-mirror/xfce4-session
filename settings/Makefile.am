@@ -56,7 +56,6 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 if MAINTAINER_MODE
 
 BUILT_SOURCES = \
-	nopreview.h \
 	xfce4-session-marshal.c \
 	xfce4-session-marshal.h \
 	xfce4-session-settings_glade.h \

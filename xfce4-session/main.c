@@ -116,7 +116,7 @@ setup_environment (void)
 }
 
 
-static void
+G_GNUC_NORETURN static void
 usage (int exit_code)
 {
   fprintf (stderr,

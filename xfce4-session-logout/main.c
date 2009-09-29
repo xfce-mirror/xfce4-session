@@ -77,7 +77,7 @@ xfce_session_logout_notify_error (const gchar *primary_message,
 }
 
 
-static void
+G_GNUC_NORETURN static void
 usage (int exit_code)
 {
   fprintf (stderr,
