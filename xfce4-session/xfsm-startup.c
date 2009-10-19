@@ -690,6 +690,9 @@ xfsm_startup_child_watch (GPid     pid,
   xfsm_verbose ("Client Id = %s, PID %d exited with status %d\n",
                 cwdata->properties->client_id, (gint)pid, status);
 
+  cwdata->properties->child_watch_id = 0;
+  cwdata->properties->pid = -1;
+
   starting_properties = xfsm_manager_get_queue (cwdata->manager, XFSM_MANAGER_QUEUE_STARTING_PROPS);
   if (g_queue_find (starting_properties, cwdata->properties) != NULL)
     {
@@ -698,8 +701,9 @@ xfsm_startup_child_watch (GPid     pid,
       xfsm_startup_handle_failed_startup (cwdata->properties, cwdata->manager);
     }
 
-  cwdata->properties->child_watch_id = 0;
-  cwdata->properties->pid = -1;
+  /* NOTE: cwdata->properties could have been freed by
+   * xfsm_startup_handle_failed_startup() above, so don't try to access
+   * any of its members here. */
 
   g_spawn_close_pid (pid);
 }
