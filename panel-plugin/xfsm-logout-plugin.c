@@ -420,8 +420,8 @@ xfsm_logout_plugin_construct(XfcePanelPlugin *plugin)
     g_object_unref(G_OBJECT(uimgr));
 }
 
-#ifdef XFCE_PANEL_PLUGIN_REGISTER_EXTERNAL  /* panel <= 4.6 */
-XFCE_PANEL_PLUGIN_REGISTER_EXTERNAL(xfsm_logout_plugin_construct)
-#else  /* panel >= 4.7  */
+#ifdef XFCE_PANEL_PLUGIN_REGISTER /* panel >= 4.7  */
 XFCE_PANEL_PLUGIN_REGISTER(xfsm_logout_plugin_construct)
+#else /* panel <= 4.6 */
+XFCE_PANEL_PLUGIN_REGISTER_EXTERNAL(xfsm_logout_plugin_construct)
 #endif
