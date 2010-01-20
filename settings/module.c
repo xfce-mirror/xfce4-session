@@ -7,12 +7,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- *                                                                              
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *                                                                              
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -32,7 +32,7 @@
 
 #include <gmodule.h>
 
-#include <libxfcegui4/libxfcegui4.h>
+#include <libxfce4ui/libxfce4ui.h>
 
 #include <libxfsm/xfsm-splash-engine.h>
 #include <libxfsm/xfsm-splash-rc.h>
@@ -183,7 +183,7 @@ void
 module_test (Module     *module,
              GdkDisplay *display)
 {
-  static char *steps[] = 
+  static char *steps[] =
   {
     "Starting the Window Manager",
     "Starting the Desktop Manager",
@@ -203,7 +203,7 @@ module_test (Module     *module,
   bzero (&engine, sizeof (engine));
 
   /* locate monitor with pointer */
-  screen = xfce_gdk_display_locate_monitor_with_pointer (display, &monitor);
+  screen = gdk_display_get_screen (display, monitor);
   if (G_UNLIKELY (screen == NULL))
     {
       screen  = gdk_display_get_screen (display, 0);

@@ -8,12 +8,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- *                                                                              
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *                                                                              
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -46,7 +46,7 @@
 
 #include <glade/glade.h>
 
-#include <libxfcegui4/libxfcegui4.h>
+#include <libxfce4ui/libxfce4ui.h>
 
 #include <libxfsm/xfsm-util.h>
 #include <libxfsm/xfsm-splash-engine.h>
@@ -138,7 +138,7 @@ static void
 splash_unload_modules (void)
 {
   GList *lp;
-  
+
   if (G_LIKELY (modules != NULL))
     {
       for (lp = modules; lp != NULL; lp = lp->next)
@@ -271,7 +271,7 @@ splash_selection_changed (GtkTreeSelection *selection)
           gtk_image_set_from_pixbuf (GTK_IMAGE (splash_image), preview);
           g_object_unref (G_OBJECT (preview));
 
-          
+
           channel = xfconf_channel_get (SETTINGS_CHANNEL);
           xfconf_channel_set_string (channel, SPLASH_ENGINE_PROP, module_engine (module));
 
@@ -308,7 +308,7 @@ splash_selection_changed (GtkTreeSelection *selection)
   /* centering must be delayed! */
   if (!splash_centered)
     {
-      xfce_gtk_window_center_on_monitor_with_pointer(GTK_WINDOW(splash_dialog));
+      gtk_window_set_position(GTK_WINDOW(splash_dialog), GTK_WIN_POS_CENTER);
       splash_centered = TRUE;
     }
 }

@@ -31,7 +31,7 @@
 #include <dbus/dbus-glib.h>
 
 #include <libxfce4util/libxfce4util.h>
-#include <libxfcegui4/libxfcegui4.h>
+#include <libxfce4ui/libxfce4ui.h>
 
 #include "xfce4-session-settings-common.h"
 #include "xfce4-session-marshal.h"
@@ -190,7 +190,7 @@ session_editor_quit_client(GtkWidget *btn,
                            primary,
                            _("The application will lose any unsaved state and will not be restarted in your next session."),
                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                           XFCE_CUSTOM_STOCK_BUTTON, btntext, GTK_STOCK_QUIT, GTK_RESPONSE_ACCEPT,
+                           XFCE_BUTTON_TYPE_MIXED, btntext, GTK_STOCK_QUIT, GTK_RESPONSE_ACCEPT,
                            NULL) == GTK_RESPONSE_ACCEPT)
     {
         GError *error = NULL;

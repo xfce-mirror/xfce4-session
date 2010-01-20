@@ -54,7 +54,6 @@
 #endif
 
 #include <libxfce4util/libxfce4util.h>
-#include <libxfcegui4/libxfcegui4.h>
 #include <gtk/gtk.h>
 
 #include <libxfsm/xfsm-util.h>
@@ -170,6 +169,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
 {
   gboolean accessibility;
   XfsmFadeout *fadeout = NULL;
+  GdkDisplay *display;
   GdkScreen *screen;
   GtkWidget *dialog;
   GtkWidget *label;
@@ -263,8 +263,10 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
    */
   gtk_rc_reparse_all ();
 
+  display = gdk_display_get_default();
+
   /* get screen with pointer */
-  screen = xfce_gdk_display_locate_monitor_with_pointer (NULL, &monitor);
+  screen = gdk_display_get_screen(display, monitor);
   if (screen == NULL)
     {
       screen = gdk_screen_get_default ();
@@ -549,7 +551,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
     xfsm_window_add_border (GTK_WINDOW (dialog));
   
   /* center dialog on target monitor */
-  xfce_gtk_window_center_on_monitor (GTK_WINDOW (dialog), screen, monitor);
+  gtk_window_center_on_monitor (GTK_WINDOW (dialog), screen, monitor);
 
   /* save portion of the root window covered by the dialog */
   if (!accessibility && shutdown_helper != NULL)

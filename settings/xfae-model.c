@@ -7,12 +7,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- *                                                                              
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *                                                                              
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -32,7 +32,7 @@
 
 #include "xfae-model.h"
 
-
+#include <libxfce4ui/libxfce4ui.h>
 
 typedef struct _XfaeItem XfaeItem;
 
@@ -406,6 +406,7 @@ xfae_item_new (const gchar *relpath)
   gchar      **args;
   gchar       *icon_name;
   gint         m;
+  GtkIconTheme *icon_theme;
 
   rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG, relpath, TRUE);
   if (G_LIKELY (rc != NULL))
@@ -416,6 +417,8 @@ xfae_item_new (const gchar *relpath)
       value = xfce_rc_read_entry (rc, "Type", NULL);
       if (G_LIKELY (value != NULL && g_ascii_strcasecmp (value, "Application") == 0))
         {
+          icon_theme = gtk_icon_theme_get_default ();
+
           item = g_new0 (XfaeItem, 1);
           item->relpath = g_strdup (relpath);
 
@@ -425,7 +428,7 @@ xfae_item_new (const gchar *relpath)
 
           value = xfce_rc_read_entry (rc, "Icon", NULL);
           if (G_UNLIKELY (value != NULL))
-            item->icon = xfce_themed_icon_load (value, 16);
+            item->icon = gtk_icon_theme_load_icon (icon_theme, value, 16, GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
           else
             {
               /* we try to be smart here in that we try to guess
@@ -439,7 +442,7 @@ xfae_item_new (const gchar *relpath)
                   if (G_LIKELY (*args != NULL))
                     {
                       icon_name = g_path_get_basename (*args);
-                      item->icon = xfce_themed_icon_load (icon_name, 16);
+                      item->icon = gtk_icon_theme_load_icon (icon_theme, icon_name, 16, GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
                       g_free (icon_name);
                     }
                   g_strfreev (args);

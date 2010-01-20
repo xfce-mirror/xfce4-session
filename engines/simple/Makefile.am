@@ -10,7 +10,7 @@ libsimple_la_SOURCES =							\
 libsimple_la_CFLAGS =							\
 	-I$(top_srcdir)							\
 	$(LIBX11_CFLAGS)						\
-	$(LIBXFCEGUI4_CFLAGS)						\
+	$(LIBXFCE4UI_CFLAGS)						\
 	$(XFCONF_CFLAGS)
 
 libsimple_la_LDFLAGS =							\
@@ -22,12 +22,12 @@ libsimple_la_LDFLAGS =							\
 libsimple_la_LIBADD =							\
 	$(top_builddir)/libxfsm/libxfsm-4.6.la				\
 	$(LIBX11_LIBS)							\
-	$(LIBXFCEGUI4_LIBS)						\
+	$(LIBXFCE4UI_LIBS)						\
 	$(XFCONF_LIBS)
 
 libsimple_la_DEPENDENCIES =						\
 	$(top_builddir)/libxfsm/libxfsm-4.6.la
-	
+
 EXTRA_DIST =								\
 	fallback.h							\
 	fallback.png							\

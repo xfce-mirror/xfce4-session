@@ -55,7 +55,7 @@ xfce4_session_CFLAGS =							\
 	$(GNOME_KEYRING_CFLAGS)						\
 	$(LIBSM_CFLAGS)							\
 	$(LIBX11_CFLAGS)						\
-	$(LIBXFCEGUI4_CFLAGS)						\
+	$(LIBXFCE4UI_CFLAGS)						\
 	$(DBUS_CFLAGS)							\
 	$(DBUS_GLIB_CFLAGS)						\
 	$(LIBWNCK_CFLAGS)						\
@@ -73,7 +73,7 @@ xfce4_session_LDADD =							\
 	$(LIBSM_LIBS)							\
 	$(LIBX11_LDFLAGS)						\
 	$(LIBX11_LIBS)							\
-	$(LIBXFCEGUI4_LIBS)						\
+	$(LIBXFCE4UI_LIBS)						\
 	$(DBUS_LIBS)							\
 	$(DBUS_GLIB_LIBS)						\
 	$(LIBWNCK_LIBS)							\

@@ -8,12 +8,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- *                                                                              
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *                                                                              
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -38,7 +38,7 @@
 
 #include <gdk/gdkx.h>
 
-#include <libxfcegui4/libxfcegui4.h>
+#include <libxfce4ui/libxfce4ui.h>
 
 #include <libxfsm/xfsm-util.h>
 
@@ -67,11 +67,11 @@ xfsm_start_application (gchar      **command,
     {
       /* setting current directory on a remote machine is not supported */
       current_directory = NULL;
-      
+
       argv[argc++] = g_strdup ("xon");
       argv[argc++] = g_strdup (client_machine);
     }
-  
+
   if (screen != NULL)
     {
       if (client_machine != NULL)
@@ -90,12 +90,12 @@ xfsm_start_application (gchar      **command,
           size *= 2;
           argv = g_realloc (argv, (size + 1) * sizeof (*argv));
         }
-      
+
       argv[argc++] = xfce_expand_variables (*command, environment);
     }
 
   argv[argc] = NULL;
-  
+
   result = g_spawn_async (current_directory,
                           argv,
                           environment,
@@ -104,9 +104,9 @@ xfsm_start_application (gchar      **command,
                           NULL,
                           NULL,
                           NULL);
-  
+
   g_strfreev (argv);
-  
+
   return result;
 }
 
@@ -151,11 +151,11 @@ void
 xfsm_window_add_border (GtkWindow *window)
 {
   GtkWidget *box1, *box2;
-  
+
   gtk_widget_realize(GTK_WIDGET(window));
 
   box1 = gtk_event_box_new ();
-  gtk_widget_modify_bg (box1, GTK_STATE_NORMAL, 
+  gtk_widget_modify_bg (box1, GTK_STATE_NORMAL,
                         &(GTK_WIDGET(window)->style->bg [GTK_STATE_SELECTED]));
   gtk_widget_show (box1);
 

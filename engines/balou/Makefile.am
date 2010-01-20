@@ -18,7 +18,7 @@ libbalou_la_SOURCES =							\
 
 libbalou_la_CFLAGS =							\
 	-I$(top_srcdir)							\
-	$(LIBXFCEGUI4_CFLAGS)						\
+	$(LIBXFCE4UI_CFLAGS)						\
 	$(XFCONF_CFLAGS)						\
 	-DBALOU_EXPORT_THEME=\"$(libexecdir)/balou-export-theme\"	\
 	-DBALOU_INSTALL_THEME=\"$(libexecdir)/balou-install-theme\"

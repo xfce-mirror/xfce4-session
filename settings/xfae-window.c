@@ -8,12 +8,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- *                                                                              
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *                                                                              
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -24,11 +24,13 @@
 #include <config.h>
 #endif
 
+#include "xfae-window.h"
 #include "xfae-dialog.h"
 #include "xfae-model.h"
-#include "xfae-window.h"
 
-
+#include <glib.h>
+#include <glib/gi18n.h>
+#include <gtk/gtk.h>
 
 static void     xfae_window_add                 (XfaeWindow       *window);
 static void     xfae_window_remove              (XfaeWindow       *window);
@@ -274,7 +276,7 @@ xfae_window_add (XfaeWindow *window)
       model = gtk_tree_view_get_model (GTK_TREE_VIEW (window->treeview));
       if (!xfae_model_add (XFAE_MODEL (model), name, descr, command, &error))
         {
-          xfce_err (error->message);
+          xfce_dialog_show_error (0, error, _("Error"));
           g_error_free (error);
         }
 
@@ -300,7 +302,7 @@ xfae_window_remove (XfaeWindow *window)
     {
       if (!xfae_model_remove (XFAE_MODEL (model), &iter, &error))
         {
-          xfce_err (error->message);
+          xfce_dialog_show_error (0, error, _("Error"));
           g_error_free (error);
         }
     }
@@ -323,7 +325,7 @@ xfae_window_item_toggled (XfaeWindow *window,
     {
       if (!xfae_model_toggle (XFAE_MODEL (model), &iter, &error))
         {
-          xfce_err (error->message);
+          xfce_dialog_show_error (0, error, _("Error"));
           g_error_free (error);
         }
     }
@@ -368,11 +370,11 @@ xfae_window_new (void)
 /**
  * xfae_window_create_plug_child:
  *
- * Creates a widget that can be used to embed the window contents 
+ * Creates a widget that can be used to embed the window contents
  * into a GtkPlug widget. After this function call, the XfaeWindow can
  * no longer be used and has to be re-created.
  *
- * Return value: A widget holding the most important contents of the 
+ * Return value: A widget holding the most important contents of the
  *               window.
  **/
 GtkWidget*

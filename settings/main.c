@@ -29,7 +29,6 @@
 #include <glade/glade.h>
 
 #include <libxfce4util/libxfce4util.h>
-#include <libxfcegui4/libxfcegui4.h>
 
 #include "xfae-window.h"
 #include "xfce4-session-settings-common.h"
@@ -121,7 +120,7 @@ main(int argc,
         g_object_unref(gxml);
 
         while(gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_HELP)
-            xfce_exec("xfhelp4 xfce4-session.html", FALSE, FALSE, NULL);
+            xfce_spawn_command_line_on_screen("xfhelp4 xfce4-session.html", FALSE, FALSE, NULL);
 
         gtk_widget_destroy(dialog);
     } else {
@@ -135,7 +134,7 @@ main(int argc,
         plug_child = glade_xml_get_widget(gxml, "plug-child");
         gtk_widget_reparent(plug_child, plug);
         gtk_widget_show(plug_child);
-        
+
         g_object_unref(gxml);
 
         /* Stop startup notification */

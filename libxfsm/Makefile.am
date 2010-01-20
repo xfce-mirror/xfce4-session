@@ -12,7 +12,7 @@ libxfsm_4_6_la_SOURCES =						\
 
 libxfsm_4_6_la_CFLAGS =							\
 	$(LIBX11_CFLAGS)						\
-	$(LIBXFCEGUI4_CFLAGS)						\
+	$(LIBXFCE4UI_CFLAGS)						\
 	$(XFCONF_CFLAGS)
 
 libxfsm_4_6_la_LDFLAGS =						\
@@ -27,7 +27,7 @@ endif
 
 libxfsm_4_6_la_LIBADD =							\
 	$(LIBX11_LIBS)							\
-	$(LIBXFCEGUI4_LIBS)						\
+	$(LIBXFCE4UI_LIBS)						\
 	$(XFCONF_LIBS)
 
 

@@ -27,7 +27,7 @@ xfce4_session_settings_CFLAGS = \
 	-DG_LOG_DOMAIN=\"xfce4-session-settings\" \
 	-I$(top_srcdir) \
 	$(LIBXFCE4UTIL_CFLAGS) \
-	$(LIBXFCEGUI4_CFLAGS) \
+	$(LIBXFCE4UI_CFLAGS) \
 	$(LIBGLADE_CFLAGS) \
 	$(XFCONF_CFLAGS) \
 	$(DBUS_GLIB_CFLAGS)
@@ -35,7 +35,7 @@ xfce4_session_settings_CFLAGS = \
 xfce4_session_settings_LDADD = \
 	$(top_builddir)/libxfsm/libxfsm-4.6.la \
 	$(LIBXFCE4UTIL_CFLAGS) \
-	$(LIBXFCEGUI4_LIBS) \
+	$(LIBXFCE4UI_LIBS) \
 	$(LIBGLADE_LIBS) \
 	$(XFCONF_LIBS) \
 	$(DBUS_GLIB_LIBS)

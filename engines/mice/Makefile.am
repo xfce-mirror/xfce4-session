@@ -9,7 +9,7 @@ libmice_la_SOURCES =							\
 
 libmice_la_CFLAGS =							\
 	-I$(top_srcdir)							\
-	$(LIBXFCEGUI4_CFLAGS)						\
+	$(LIBXFCE4UI_CFLAGS)						\
 	$(XFCONF_CFLAGS)
 
 libmice_la_LDFLAGS =							\
@@ -19,7 +19,7 @@ libmice_la_LDFLAGS =							\
 
 libmice_la_LIBADD =							\
 	$(top_builddir)/libxfsm/libxfsm-4.6.la				\
-	$(LIBXFCEGUI4_LIBS)						\
+	$(LIBXFCE4UI_LIBS)						\
 	$(XFCONF_LIBS)
 
 libmice_la_DEPENDENCIES =						\
@@ -32,10 +32,10 @@ generate_SOURCES =							\
 	generate.c
 
 generate_CFLAGS =							\
-	$(LIBXFCEGUI4_CFLAGS)
+	$(LIBXFCE4UI_CFLAGS)
 
 generate_LDADD =							\
-	$(LIBXFCEGUI4_LIBS)
+	$(LIBXFCE4UI_LIBS)
 
 
 EXTRA_DIST =								\

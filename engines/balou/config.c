@@ -7,12 +7,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- *                                                                              
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *                                                                              
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -39,7 +39,7 @@
 
 #include <gmodule.h>
 
-#include <libxfcegui4/libxfcegui4.h>
+#include <libxfce4ui/libxfce4ui.h>
 
 #include <libxfsm/xfsm-splash-engine.h>
 
@@ -393,7 +393,7 @@ config_remove_theme (GtkWidget *item,
 
   if (!result || status != 0)
     {
-      xfce_err (_("Unable to remove splash theme \"%s\" from directory "
+      xfce_dialog_show_error (NULL, NULL, _("Unable to remove splash theme \"%s\" from directory "
                   "%s."), name, directory);
     }
   else
@@ -417,7 +417,7 @@ config_do_export_theme (const gchar *name,
   gchar   *themerc;
   gchar   *argv[4];
   gint     status;
-  
+
   resource = g_strconcat (name, "/balou/themerc", NULL);
   themerc = xfce_resource_lookup (XFCE_RESOURCE_THEMES, resource);
   g_free (resource);
@@ -478,18 +478,19 @@ config_export_theme (GtkWidget *item,
     return;
 
   toplevel = gtk_widget_get_toplevel (GTK_WIDGET (treeview));
-  dialog = xfce_file_chooser_new (_("Choose theme filename..."),
-                                  GTK_WINDOW (toplevel),
-                                  XFCE_FILE_CHOOSER_ACTION_SAVE,
-                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                  GTK_STOCK_SAVE, GTK_RESPONSE_OK,
-                                  NULL);
+
+  dialog = gtk_file_chooser_dialog_new (_("Choose theme filename..."),
+                                        GTK_WINDOW (toplevel),
+                                        GTK_FILE_CHOOSER_ACTION_SAVE,
+                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        GTK_STOCK_SAVE, GTK_RESPONSE_OK,
+                                        NULL);
   file = g_strconcat (name, ".tar.gz", NULL);
-  xfce_file_chooser_set_current_name (XFCE_FILE_CHOOSER (dialog), file);
+  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), file);
   g_free (file);
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
-      file = xfce_file_chooser_get_filename (XFCE_FILE_CHOOSER (dialog));
+      file = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
       config_do_export_theme (name, file);
 
@@ -852,13 +853,13 @@ config_create (XfsmSplashRc *rc)
   page = gtk_vbox_new (FALSE, BORDER);
   gtk_container_set_border_width (GTK_CONTAINER (page), BORDER);
 
-  frame = xfce_framebox_new (_("Balou theme"), TRUE);
+  frame = xfce_gtk_frame_box_new (_("Balou theme"), NULL);
   gtk_box_pack_start (GTK_BOX (page), frame, TRUE, TRUE, 0);
   vbox = gtk_vbox_new (FALSE, 0);
-  xfce_framebox_add (XFCE_FRAMEBOX (frame), vbox);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   swin = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swin), 
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swin),
                                   GTK_POLICY_NEVER,
                                   GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (swin),
