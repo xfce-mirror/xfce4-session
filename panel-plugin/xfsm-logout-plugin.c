@@ -42,7 +42,7 @@
 #include <gtk/gtk.h>
 
 #include <libxfce4util/libxfce4util.h>
-#include <libxfcegui4/libxfcegui4.h>
+#include <libxfce4ui/libxfce4ui.h>
 #include <libxfce4panel/libxfce4panel.h>
 
 #include "xfsm-logout-plugin-ui.h"
@@ -142,7 +142,13 @@ static void
 xfsm_logout_plugin_lock_screen(GtkAction *action,
                           gpointer user_data)
 {
-    xfce_exec("xflock4", FALSE, FALSE, NULL);
+    GError *error = NULL;
+
+    if (!g_spawn_command_line_async("xflock4", error)) {
+        xfce_dialog_show_error (NULL,
+                                error,
+                                _("Xfclock4 could not be launched"));
+    }
 }
 
 static gboolean
@@ -301,12 +307,9 @@ xfsm_logout_plugin_show_confirmation_dialog(XfsmLogoutPlugin *logout_plugin,
         GError *error = NULL;
 
         if(!xfsm_logout_plugin_do_dbus_call(logout_plugin, type, &error)) {
-            xfce_message_dialog(NULL, _("Session Error"),
-                                GTK_STOCK_DIALOG_ERROR,
-                                _(dialog_strings[type].error_text),
-                                error->message,
-                                GTK_STOCK_CLOSE, GTK_RESPONSE_ACCEPT,
-                                NULL);
+            xfce_dialog_show_warning (NULL,
+                                      error->message,
+                                      _(dialog_strings[type].error_text));
             g_error_free(error);
         }
     }
