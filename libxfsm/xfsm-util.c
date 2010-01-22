@@ -75,7 +75,44 @@ xfsm_start_application (gchar      **command,
   if (screen != NULL)
     {
       if (client_machine != NULL)
-        screen_name = xfce_gdk_screen_get_fullname (screen);
+        {
+          const gchar *name;
+          const gchar *np;
+          GdkDisplay  *display;
+          gchar       *hostname;
+          gchar        buffer[256];
+          gchar       *bp;
+
+          display = gdk_screen_get_display (screen);
+
+          name = gdk_display_get_name (display);
+          if (*name == ':')
+            {
+              hostname = xfce_gethostname ();
+              g_strlcpy (buffer, hostname, 256);
+              g_free (hostname);
+
+              bp = buffer + strlen (buffer);
+
+              for (np = name; *np != '\0' && *np != '.' && bp < buffer + 255; )
+                *bp++ = *np++;
+              *bp = '\0';
+            }
+          else
+            {
+              g_strlcpy (buffer, name, 256);
+
+              for (bp = buffer + strlen (buffer) - 1; *bp != ':'; --bp)
+                if (*bp == '.')
+                  {
+                    *bp = '\0';
+                    break;
+                  }
+            }
+
+          screen_name = g_strdup_printf ("%s.%d", buffer,
+                                         gdk_screen_get_number (screen));
+        }
       else
         screen_name = gdk_screen_make_display_name (screen);
       argv[argc++] = g_strdup ("env");
