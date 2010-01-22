@@ -38,7 +38,7 @@
 #include <dbus/dbus.h>
 
 #include <gtk/gtk.h>
-#include <libxfcegui4/libxfcegui4.h>
+#include <libxfce4ui/libxfce4ui.h>
 
 
 /* copied from xfce4-session/shutdown.h -- ORDER MATTERS.  The numbers

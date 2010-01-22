@@ -51,7 +51,7 @@
 
 #include <gtk/gtk.h>
 
-#include <libxfcegui4/libxfcegui4.h>
+#include <libxfce4ui/libxfce4ui.h>
 
 #include <libxfsm/xfsm-util.h>
 
