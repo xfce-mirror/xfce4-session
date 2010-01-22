@@ -601,9 +601,10 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   /* create small border */
   if (!accessibility)
     xfsm_window_add_border (GTK_WINDOW (dialog));
-  
+
   /* center dialog on target monitor */
-  gtk_window_center_on_monitor (GTK_WINDOW (dialog), screen, monitor);
+  gtk_window_set_screen (GTK_WINDOW (dialog), screen);
+  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
 
   /* save portion of the root window covered by the dialog */
   if (!accessibility && shutdown_helper != NULL)
@@ -656,7 +657,8 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
       gtk_widget_show (entry);
 
       /* center dialog on target monitor */
-      xfce_gtk_window_center_on_monitor (GTK_WINDOW (dialog), screen, monitor);
+      gtk_window_set_screen (GTK_WINDOW (dialog), screen);
+      gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
 
       gtk_widget_show_now (dialog);
       gtk_widget_grab_focus (entry);
@@ -697,8 +699,8 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
               gtk_widget_show (label);
 
               /* center dialog on target monitor */
-              xfce_gtk_window_center_on_monitor (GTK_WINDOW (dialog),
-                                                 screen, monitor);
+              gtk_window_set_screen (GTK_WINDOW (dialog), screen);
+              gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
 
               gtk_widget_show_now (dialog);
 

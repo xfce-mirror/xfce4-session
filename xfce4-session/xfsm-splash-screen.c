@@ -66,7 +66,8 @@ xfsm_splash_screen_new (GdkDisplay  *display,
   XfconfChannel    *channel;
 
   /* locate monitor with pointer */
-  screen = xfce_gdk_display_locate_monitor_with_pointer (display, &monitor);
+  screen = xfce_gdk_screen_get_active (&monitor);
+
   if (G_UNLIKELY (screen == NULL))
     {
       screen  = gdk_display_get_screen (display, 0);
@@ -139,9 +140,8 @@ xfsm_splash_screen_run (XfsmSplashScreen *splash,
     }
   else
     {
-      xfce_gtk_window_center_on_monitor (GTK_WINDOW (dialog),
-                                         splash->engine.primary_screen,
-                                         splash->engine.primary_monitor);
+      gtk_window_set_screen (GTK_WINDOW (dialog), splash->engine.primary_screen);
+      gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
 
       result = gtk_dialog_run (GTK_DIALOG (dialog));
     }

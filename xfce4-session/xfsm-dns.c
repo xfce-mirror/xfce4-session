@@ -137,6 +137,8 @@ xfsm_dns_check (void)
     {
       if (msgbox == NULL)
         {
+          GdkScreen *screen = xfce_gdk_screen_get_active (NULL);
+
           queryhostname (hostname, 256, TRUE);
 
           msgbox = gtk_message_dialog_new (NULL, 0,
@@ -153,8 +155,9 @@ xfsm_dns_check (void)
                                   _("Try again"), RESPONSE_TRY_AGAIN,
                                   NULL);
 
+          gtk_window_set_screen (GTK_WINDOW (msgbox), screen);
           xfsm_window_add_border (GTK_WINDOW (msgbox));
-          xfce_gtk_window_center_on_monitor_with_pointer (GTK_WINDOW (msgbox));
+          gtk_window_set_position (GTK_WINDOW (msgbox), GTK_WIN_POS_CENTER);
         }
 
       gtk_dialog_set_default_response (GTK_DIALOG (msgbox), RESPONSE_TRY_AGAIN);
