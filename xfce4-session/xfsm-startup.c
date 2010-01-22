@@ -389,7 +389,11 @@ xfsm_startup_autostart_xdg (void)
 
           /* try to launch the command */
           xfsm_verbose ("Autostart: running command \"%s\"\n", exec);
-          if (!xfce_exec (exec, terminal, startup_notify, &error))
+          if (!xfce_spawn_command_line_on_screen (gdk_screen_get_default (),
+                                                  exec,
+                                                  terminal,
+                                                  startup_notify,
+                                                  &error))
             {
               g_warning ("Unable to launch \"%s\" (specified by %s): %s", exec, files[n], error->message);
               g_error_free (error);
