@@ -144,7 +144,7 @@ xfsm_logout_plugin_lock_screen(GtkAction *action,
 {
     GError *error = NULL;
 
-    if (!g_spawn_command_line_async("xflock4", error)) {
+    if (!g_spawn_command_line_async("xflock4", &error)) {
         xfce_dialog_show_error (NULL,
                                 error,
                                 _("Xfclock4 could not be launched"));
@@ -309,7 +309,8 @@ xfsm_logout_plugin_show_confirmation_dialog(XfsmLogoutPlugin *logout_plugin,
         if(!xfsm_logout_plugin_do_dbus_call(logout_plugin, type, &error)) {
             xfce_dialog_show_warning (NULL,
                                       error->message,
-                                      _(dialog_strings[type].error_text));
+                                      "%s",
+                                      dialog_strings[type].error_text);
             g_error_free(error);
         }
     }
