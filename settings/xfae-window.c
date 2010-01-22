@@ -28,9 +28,7 @@
 #include "xfae-dialog.h"
 #include "xfae-model.h"
 
-#include <glib.h>
-#include <glib/gi18n.h>
-#include <gtk/gtk.h>
+#include <libxfce4ui/libxfce4ui.h>
 
 static void     xfae_window_add                 (XfaeWindow       *window);
 static void     xfae_window_remove              (XfaeWindow       *window);
@@ -276,7 +274,7 @@ xfae_window_add (XfaeWindow *window)
       model = gtk_tree_view_get_model (GTK_TREE_VIEW (window->treeview));
       if (!xfae_model_add (XFAE_MODEL (model), name, descr, command, &error))
         {
-          xfce_dialog_show_error (0, error, _("Error"));
+          xfce_dialog_show_error (NULL, error, _("Error"));
           g_error_free (error);
         }
 
@@ -302,7 +300,7 @@ xfae_window_remove (XfaeWindow *window)
     {
       if (!xfae_model_remove (XFAE_MODEL (model), &iter, &error))
         {
-          xfce_dialog_show_error (0, error, _("Error"));
+          xfce_dialog_show_error (NULL, error, _("Error"));
           g_error_free (error);
         }
     }
@@ -325,7 +323,7 @@ xfae_window_item_toggled (XfaeWindow *window,
     {
       if (!xfae_model_toggle (XFAE_MODEL (model), &iter, &error))
         {
-          xfce_dialog_show_error (0, error, _("Error"));
+          xfce_dialog_show_error (NULL, error, _("Error"));
           g_error_free (error);
         }
     }

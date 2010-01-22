@@ -29,6 +29,7 @@
 #include <glade/glade.h>
 
 #include <libxfce4util/libxfce4util.h>
+#include <libxfce4ui/libxfce4ui.h>
 
 #include "xfae-window.h"
 #include "xfce4-session-settings-common.h"
@@ -80,12 +81,9 @@ main(int argc,
     }
 
     if(G_UNLIKELY(!xfconf_init(&error))) {
-        xfce_message_dialog(NULL, _("Session Settings"),
-                            GTK_STOCK_DIALOG_ERROR,
-                            _("Unable to contact settings server"),
-                            error->message,
-                            GTK_STOCK_QUIT, GTK_RESPONSE_ACCEPT,
-                            NULL);
+        xfce_dialog_show_error (NULL,
+                                error,
+                                _("Unable to contact settings server"));
         g_error_free(error);
         return EXIT_FAILURE;
     }
@@ -120,7 +118,7 @@ main(int argc,
         g_object_unref(gxml);
 
         while(gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_HELP)
-            xfce_spawn_command_line_on_screen("xfhelp4 xfce4-session.html", FALSE, FALSE, NULL);
+            g_spawn_command_line_async("xfhelp4 xfce4-session.html", NULL);
 
         gtk_widget_destroy(dialog);
     } else {
