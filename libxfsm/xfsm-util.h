@@ -50,6 +50,9 @@ void xfsm_window_grab_input (GtkWindow *window);
 
 XfconfChannel *xfsm_open_config (void);
 
+gchar *xfsm_gdk_display_get_fullname (GdkDisplay *display);
+
+
 G_END_DECLS;
 
 #endif /* !__XFSM_UTIL_H__ */

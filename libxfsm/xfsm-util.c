@@ -76,41 +76,10 @@ xfsm_start_application (gchar      **command,
     {
       if (client_machine != NULL)
         {
-          const gchar *name;
-          const gchar *np;
-          GdkDisplay  *display;
-          gchar       *hostname;
-          gchar        buffer[256];
-          gchar       *bp;
+          gchar *display_name =
+            xfsm_gdk_display_get_fullname (gdk_screen_get_display (screen));
 
-          display = gdk_screen_get_display (screen);
-
-          name = gdk_display_get_name (display);
-          if (*name == ':')
-            {
-              hostname = xfce_gethostname ();
-              g_strlcpy (buffer, hostname, 256);
-              g_free (hostname);
-
-              bp = buffer + strlen (buffer);
-
-              for (np = name; *np != '\0' && *np != '.' && bp < buffer + 255; )
-                *bp++ = *np++;
-              *bp = '\0';
-            }
-          else
-            {
-              g_strlcpy (buffer, name, 256);
-
-              for (bp = buffer + strlen (buffer) - 1; *bp != ':'; --bp)
-                if (*bp == '.')
-                  {
-                    *bp = '\0';
-                    break;
-                  }
-            }
-
-          screen_name = g_strdup_printf ("%s.%d", buffer,
+          screen_name = g_strdup_printf ("%s.%d", display_name,
                                          gdk_screen_get_number (screen));
         }
       else
@@ -223,5 +192,44 @@ XfconfChannel*
 xfsm_open_config (void)
 {
   return xfconf_channel_get ("xfce4-session");
+}
+
+gchar*
+xfsm_gdk_display_get_fullname (GdkDisplay *display)
+{
+  const gchar *name;
+  const gchar *np;
+  gchar       *hostname;
+  gchar        buffer[256];
+  gchar       *bp;
+
+  g_return_val_if_fail (GDK_IS_DISPLAY (display), NULL);
+
+  name = gdk_display_get_name (display);
+  if (*name == ':')
+    {
+      hostname = xfce_gethostname ();
+      g_strlcpy (buffer, hostname, 256);
+      g_free (hostname);
+
+      bp = buffer + strlen (buffer);
+
+      for (np = name; *np != '\0' && *np != '.' && bp < buffer + 255; )
+        *bp++ = *np++;
+      *bp = '\0';
+    }
+  else
+    {
+      g_strlcpy (buffer, name, 256);
+
+      for (bp = buffer + strlen (buffer) - 1; *bp != ':'; --bp)
+        if (*bp == '.')
+          {
+            *bp = '\0';
+            break;
+          }
+    }
+
+  return g_strdup (buffer);
 }
 

@@ -96,7 +96,7 @@ screenshot_save (const gchar *session_name, GdkPixmap *pm, GdkRectangle *area)
         {
           /* determine thumb file */
           dpy = gdk_drawable_get_display (GDK_DRAWABLE (pm));
-          display_name = xfce_gdk_display_get_fullname (dpy);
+          display_name = xfsm_gdk_display_get_fullname (dpy);
           resource = g_strconcat ("sessions/thumbs-", display_name,
                                   "/", session_name, ".png", NULL);
           filename = xfce_resource_save_location (XFCE_RESOURCE_CACHE,

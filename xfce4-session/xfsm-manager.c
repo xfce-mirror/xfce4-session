@@ -726,7 +726,7 @@ xfsm_manager_load (XfsmManager   *manager,
   manager->compat_gnome = xfconf_channel_get_bool (channel, "/compat/LaunchGNOME", FALSE);
   manager->compat_kde = xfconf_channel_get_bool (channel, "/compat/LaunchKDE", FALSE);
 
-  display_name  = xfce_gdk_display_get_fullname (gdk_display_get_default ());
+  display_name  = xfsm_gdk_display_get_fullname (gdk_display_get_default ());
 
 #ifdef HAVE_OS_CYGWIN
   /* rename a colon (:) to a hash (#) under cygwin. windows doesn't like
