@@ -168,6 +168,7 @@ gboolean
 shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolean *saveSession)
 {
   gboolean accessibility;
+  GtkIconTheme *icon_theme;
   XfsmFadeout *fadeout = NULL;
   GdkDisplay *display;
   GdkScreen *screen;
@@ -213,6 +214,8 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
 
   g_return_val_if_fail(saveSession != NULL, FALSE);
   g_return_val_if_fail(shutdownType != NULL, FALSE);
+
+  icon_theme = gtk_icon_theme_get_default ();
 
   /* destroy any previously running shutdown helper first */
   if (shutdown_helper != NULL)
@@ -396,9 +399,18 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gtk_widget_show (vbox2);
   gtk_container_add (GTK_CONTAINER (logout_button), vbox2);
 
-  icon = xfce_themed_icon_load ("system-log-out", 32);
+  icon = gtk_icon_theme_load_icon (icon_theme,
+                                   "system-log-out",
+                                   32,
+                                   GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                   NULL);
   if (!icon)
-    icon = xfce_themed_icon_load ("xfsm-logout", 32);
+    icon = gtk_icon_theme_load_icon (icon_theme,
+                                     "xfsm-logout",
+                                     32,
+                                     GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                     NULL);
+
   image = gtk_image_new_from_pixbuf (icon);
   gtk_widget_show (image);
   gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
@@ -421,9 +433,19 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gtk_widget_show (vbox2);
   gtk_container_add (GTK_CONTAINER (reboot_button), vbox2);
 
-  icon = xfce_themed_icon_load ("system-reboot", 32);
+  icon = gtk_icon_theme_load_icon (icon_theme,
+                                   "system-reboot",
+                                   32,
+                                   GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                   NULL);
+ 
   if (!icon)
-    icon = xfce_themed_icon_load ("xfsm-reboot", 32);
+    icon = gtk_icon_theme_load_icon (icon_theme,
+                                     "xfsm-reboot",
+                                     32,
+                                     GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                     NULL);
+ 
   image = gtk_image_new_from_pixbuf (icon);
   gtk_widget_show (image);
   gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
@@ -449,14 +471,24 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gtk_widget_show (vbox2);
   gtk_container_add (GTK_CONTAINER (halt_button), vbox2);
 
-  icon = xfce_themed_icon_load ("system-shutdown", 32);
+  icon = gtk_icon_theme_load_icon (icon_theme,
+                                   "system-shutdown",
+                                   32,
+                                   GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                   NULL);
+
   if (!icon)
-    icon = xfce_themed_icon_load ("xfsm-shutdown", 32);
+    icon = gtk_icon_theme_load_icon (icon_theme,
+                                     "xfsm-shutdown",
+                                     32,
+                                     GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                     NULL);
+
   image = gtk_image_new_from_pixbuf (icon);
   gtk_widget_show (image);
   gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
   g_object_unref (icon);
-  
+
   label = gtk_label_new (_("Shut Down"));
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
@@ -468,7 +500,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
     show_suspend = xfsm_shutdown_helper_supports (shutdown_helper, XFSM_SHUTDOWN_SUSPEND);
   if (show_hibernate)
     show_hibernate = xfsm_shutdown_helper_supports (shutdown_helper, XFSM_SHUTDOWN_HIBERNATE);
-  
+
   if (kiosk_can_shutdown && (show_suspend || show_hibernate))
     {
       hbox = gtk_hbox_new (FALSE, BORDER);
@@ -491,9 +523,19 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
       gtk_widget_show (vbox2);
       gtk_container_add (GTK_CONTAINER (suspend_button), vbox2);
 
-      icon = xfce_themed_icon_load ("system-suspend", 32);
+      icon = gtk_icon_theme_load_icon (icon_theme,
+                                       "system-suspend",
+                                       32,
+                                       GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                       NULL);
+
       if (!icon)
-        icon = xfce_themed_icon_load ("xfsm-suspend", 32);
+        icon = gtk_icon_theme_load_icon (icon_theme,
+                                         "xfsm-suspend",
+                                         32,
+                                         GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                         NULL);
+
       image = gtk_image_new_from_pixbuf (icon);
       gtk_widget_show (image);
       gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
@@ -519,9 +561,19 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
       gtk_widget_show (vbox2);
       gtk_container_add (GTK_CONTAINER (hibernate_button), vbox2);
 
-      icon = xfce_themed_icon_load ("system-hibernate", 32);
+      icon = gtk_icon_theme_load_icon (icon_theme,
+                                       "system-hibernate",
+                                       32,
+                                       GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                       NULL);
+
       if (!icon)
-        icon = xfce_themed_icon_load ("xfsm-hibernate", 32);
+        icon = gtk_icon_theme_load_icon (icon_theme,
+                                         "xfsm-hibernate",
+                                         32,
+                                         GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                         NULL);
+
       image = gtk_image_new_from_pixbuf (icon);
       gtk_widget_show (image);
       gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
