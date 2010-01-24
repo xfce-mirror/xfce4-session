@@ -30,7 +30,7 @@ libbalou_la_LDFLAGS =							\
 
 libbalou_la_LIBADD =							\
 	$(top_builddir)/libxfsm/libxfsm-4.6.la				\
-	$(LIBXFCEGUI4_LIBS)						\
+	$(LIBXFCE4UI_LIBS)						\
 	$(XFCONF_LIBS)
 
 
