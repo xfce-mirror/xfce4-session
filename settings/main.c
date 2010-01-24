@@ -44,6 +44,17 @@ static GOptionEntry option_entries[] =
     { NULL }
 };
 
+static void xfce4_session_settings_dialog_response (GtkDialog *dialog, gint response, gpointer userdata)
+{
+    if (response == GTK_RESPONSE_HELP) {
+       g_signal_stop_emission_by_name(dialog, "response");
+       g_spawn_command_line_async("xfhelp4 xfce4-session.html", NULL);
+    }
+    else {
+      gtk_widget_destroy(GTK_WIDGET(dialog));
+      gtk_main_quit ();
+    }
+}
 
 int
 main(int argc,
@@ -122,10 +133,11 @@ main(int argc,
     if(G_UNLIKELY(opt_socket_id == 0)) {
         GtkWidget *dialog = GTK_WIDGET(gtk_builder_get_object(builder, "xfce4_session_settings_dialog"));
 
-        while(gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_HELP)
-            g_spawn_command_line_async("xfhelp4 xfce4-session.html", NULL);
+        g_signal_connect(dialog, "response", G_CALLBACK(xfce4_session_settings_dialog_response), NULL);
+        g_signal_connect(dialog, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
 
-        gtk_widget_destroy(dialog);
+        gtk_widget_show(dialog);
+        gtk_main ();
     } else {
         GtkWidget *plug, *plug_child;
 
