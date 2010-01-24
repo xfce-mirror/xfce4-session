@@ -21,7 +21,6 @@
 
 #include <xfconf/xfconf.h>
 #include <gtk/gtk.h>
-#include <glade/glade.h>
 
 #include "xfce4-session-settings-common.h"
 
@@ -36,29 +35,29 @@
 #define ENABLE_TCP_PROP     "/security/EnableTcp"
 
 void
-startup_settings_init(GladeXML *gxml)
+startup_settings_init(GtkBuilder *builder)
 {
     XfconfChannel *channel = xfconf_channel_get(SETTINGS_CHANNEL);
 
     xfconf_g_property_bind(channel, DISP_CHOOSER_PROP, G_TYPE_BOOLEAN,
-                           glade_xml_get_widget(gxml, "chk_display_chooser"),
+                           gtk_builder_get_object(builder, "chk_display_chooser"),
                            "active");
 
     xfconf_g_property_bind(channel, AUTO_SAVE_PROP, G_TYPE_BOOLEAN,
-                           glade_xml_get_widget(gxml, "chk_session_autosave"),
+                           gtk_builder_get_object(builder, "chk_session_autosave"),
                            "active");
     xfconf_g_property_bind(channel, LOGOUT_PROMPT_PROP, G_TYPE_BOOLEAN,
-                           glade_xml_get_widget(gxml, "chk_logout_prompt"),
+                           gtk_builder_get_object(builder, "chk_logout_prompt"),
                            "active");
 
     xfconf_g_property_bind(channel, GNOME_SUPPORT_PROP, G_TYPE_BOOLEAN,
-                           glade_xml_get_widget(gxml, "chk_compat_gnome"),
+                           gtk_builder_get_object(builder, "chk_compat_gnome"),
                            "active");
     xfconf_g_property_bind(channel, KDE_SUPPORT_PROP, G_TYPE_BOOLEAN,
-                           glade_xml_get_widget(gxml, "chk_compat_kde"),
+                           gtk_builder_get_object(builder, "chk_compat_kde"),
                            "active");
 
     xfconf_g_property_bind(channel, ENABLE_TCP_PROP, G_TYPE_BOOLEAN,
-                           glade_xml_get_widget(gxml, "chk_enable_tcp"),
+                           gtk_builder_get_object(builder, "chk_enable_tcp"),
                            "active");
 }

@@ -17,7 +17,7 @@ xfce4_session_settings_SOURCES = \
 	xfce4-session-marshal.c \
 	xfce4-session-marshal.h \
 	xfce4-session-settings-common.h \
-	xfce4-session-settings_glade.h \
+	xfce4-session-settings_ui.h \
 	xfsm-client-dbus-client.h \
 	xfsm-manager-dbus-client.h
 
@@ -28,7 +28,6 @@ xfce4_session_settings_CFLAGS = \
 	-I$(top_srcdir) \
 	$(LIBXFCE4UTIL_CFLAGS) \
 	$(LIBXFCE4UI_CFLAGS) \
-	$(LIBGLADE_CFLAGS) \
 	$(XFCONF_CFLAGS) \
 	$(DBUS_GLIB_CFLAGS)
 
@@ -36,7 +35,6 @@ xfce4_session_settings_LDADD = \
 	$(top_builddir)/libxfsm/libxfsm-4.6.la \
 	$(LIBXFCE4UTIL_CFLAGS) \
 	$(LIBXFCE4UI_LIBS) \
-	$(LIBGLADE_LIBS) \
 	$(XFCONF_LIBS) \
 	$(DBUS_GLIB_LIBS)
 
@@ -58,7 +56,7 @@ if MAINTAINER_MODE
 BUILT_SOURCES = \
 	xfce4-session-marshal.c \
 	xfce4-session-marshal.h \
-	xfce4-session-settings_glade.h \
+	xfce4-session-settings_ui.h \
 	xfsm-client-dbus-client.h \
 	xfsm-manager-dbus-client.h
 
@@ -74,8 +72,8 @@ xfce4-session-marshal.c: xfce4-session-marshal.list Makefile
 	echo '#include "xfce4-session-marshal.h"' > $@
 	glib-genmarshal --prefix=xfce4_session_marshal xfce4-session-marshal.list --body >> xfce4-session-marshal.c
 
-xfce4-session-settings_glade.h: xfce4-session-settings.glade
-	exo-csource --static --strip-comments --strip-content --name=xfce4_session_settings_glade $< >$@
+xfce4-session-settings_ui.h: xfce4-session-settings.glade
+	exo-csource --static --strip-comments --strip-content --name=xfce4_session_settings_ui $< >$@
 
 xfsm-client-dbus-client.h: $(top_srcdir)/xfce4-session/xfsm-client-dbus.xml Makefile
 	dbus-binding-tool --mode=glib-client $(top_srcdir)/xfce4-session/xfsm-client-dbus.xml > $@

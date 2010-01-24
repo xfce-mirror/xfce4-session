@@ -26,14 +26,13 @@
 #include <xfconf/xfconf.h>
 
 #include <gtk/gtk.h>
-#include <glade/glade.h>
 
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
 
 #include "xfae-window.h"
 #include "xfce4-session-settings-common.h"
-#include "xfce4-session-settings_glade.h"
+#include "xfce4-session-settings_ui.h"
 
 
 static GdkNativeWindow opt_socket_id = 0;
@@ -50,7 +49,7 @@ int
 main(int argc,
      char **argv)
 {
-    GladeXML *gxml;
+    GtkBuilder *builder;
     GtkWidget *notebook, *xfae_page, *lbl;
     GError *error = NULL;
 
@@ -90,10 +89,17 @@ main(int argc,
 
     gtk_window_set_default_icon_name("xfce4-session");
 
-    gxml = glade_xml_new_from_buffer(xfce4_session_settings_glade,
-                                     xfce4_session_settings_glade_length,
-                                     NULL, NULL);
-    if(!gxml) {
+    /* hook to make sure the libxfce4ui library is linked */
+    if (xfce_titled_dialog_get_type() == 0)
+        return EXIT_FAILURE;
+
+    builder = gtk_builder_new();
+    gtk_builder_add_from_string(builder,
+                                xfce4_session_settings_ui,
+                                xfce4_session_settings_ui_length,
+                                NULL);
+
+    if(!builder) {
         xfce_message_dialog(NULL, _("Internal Error"), GTK_STOCK_DIALOG_ERROR,
                             _("Unable to create user interface from embedded definition data"),
                             _("This is likely a problem with your Xfce installation"),
@@ -101,21 +107,20 @@ main(int argc,
         return EXIT_FAILURE;
     }
 
-    startup_settings_init(gxml);
-    splash_settings_init(gxml);
-    session_editor_init(gxml);
+    startup_settings_init(builder);
+    splash_settings_init(builder);
+    session_editor_init(builder);
 
     /* FIXME: someday, glade-ify this, maybe. */
     xfae_page = xfae_window_new();
     gtk_widget_show(xfae_page);
-    notebook = glade_xml_get_widget(gxml, "plug-child");
+    notebook = GTK_WIDGET(gtk_builder_get_object(builder, "plug-child"));
     lbl = gtk_label_new_with_mnemonic(_("_Application Autostart"));
     gtk_widget_show(lbl);
     gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), xfae_page, lbl, 2);
 
     if(G_UNLIKELY(opt_socket_id == 0)) {
-        GtkWidget *dialog = glade_xml_get_widget(gxml, "xfce4_session_settings_dialog");
-        g_object_unref(gxml);
+        GtkWidget *dialog = GTK_WIDGET(gtk_builder_get_object(builder, "xfce4_session_settings_dialog"));
 
         while(gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_HELP)
             g_spawn_command_line_async("xfhelp4 xfce4-session.html", NULL);
@@ -129,11 +134,11 @@ main(int argc,
         g_signal_connect(plug, "delete-event",
                          G_CALLBACK(gtk_main_quit), NULL);
 
-        plug_child = glade_xml_get_widget(gxml, "plug-child");
+        plug_child = GTK_WIDGET(gtk_builder_get_object(builder, "plug-child"));
         gtk_widget_reparent(plug_child, plug);
         gtk_widget_show(plug_child);
 
-        g_object_unref(gxml);
+        g_object_unref(builder);
 
         /* Stop startup notification */
         gdk_notify_startup_complete();

@@ -44,8 +44,6 @@
 #include <gmodule.h>
 #include <gtk/gtk.h>
 
-#include <glade/glade.h>
-
 #include <libxfce4ui/libxfce4ui.h>
 
 #include <libxfsm/xfsm-util.h>
@@ -323,7 +321,7 @@ splash_dialog_destroy (GtkWidget *widget,
 
 
 void
-splash_settings_init (GladeXML *gxml)
+splash_settings_init (GtkBuilder *builder)
 {
   XfconfChannel     *channel;
   GtkTreeSelection  *selection;
@@ -375,7 +373,7 @@ splash_settings_init (GladeXML *gxml)
 
   splash_centered = FALSE;
 
-  splash_treeview = glade_xml_get_widget (gxml, "treeview_splash");
+  splash_treeview = GTK_WIDGET(gtk_builder_get_object (builder, "treeview_splash"));
   gtk_tree_view_set_model (GTK_TREE_VIEW (splash_treeview), GTK_TREE_MODEL (store));
   g_object_unref (G_OBJECT (store));
 
@@ -393,24 +391,24 @@ splash_settings_init (GladeXML *gxml)
                                        NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (splash_treeview), column);
 
-  splash_button_cfg = glade_xml_get_widget (gxml, "btn_splash_configure");
+  splash_button_cfg = GTK_WIDGET(gtk_builder_get_object (builder, "btn_splash_configure"));
   g_signal_connect (G_OBJECT (splash_button_cfg), "clicked",
                     splash_configure, NULL);
 
-  splash_button_test = glade_xml_get_widget (gxml, "btn_splash_test");
+  splash_button_test = GTK_WIDGET(gtk_builder_get_object (builder, "btn_splash_test"));
   g_signal_connect (G_OBJECT (splash_button_test), "clicked",
                     splash_test, NULL);
 
-  splash_image = glade_xml_get_widget (gxml, "img_splash_preview");
+  splash_image = GTK_WIDGET(gtk_builder_get_object (builder, "img_splash_preview"));
 
-  splash_descr0 = glade_xml_get_widget (gxml, "lbl_splash_desc0");
-  splash_version0 = glade_xml_get_widget (gxml, "lbl_splash_version0");
-  splash_author0 = glade_xml_get_widget (gxml, "lbl_splash_author0");
-  splash_www0 = glade_xml_get_widget (gxml, "lbl_splash_homepage0");
-  splash_descr1 = glade_xml_get_widget (gxml, "lbl_splash_desc1");
-  splash_version1 = glade_xml_get_widget (gxml, "lbl_splash_version1");
-  splash_author1 = glade_xml_get_widget (gxml, "lbl_splash_author1");
-  splash_www1 = glade_xml_get_widget (gxml, "lbl_splash_homepage1");
+  splash_descr0 = GTK_WIDGET(gtk_builder_get_object (builder, "lbl_splash_desc0"));
+  splash_version0 =GTK_WIDGET(gtk_builder_get_object (builder, "lbl_splash_version0"));
+  splash_author0 = GTK_WIDGET(gtk_builder_get_object (builder, "lbl_splash_author0"));
+  splash_www0 = GTK_WIDGET(gtk_builder_get_object (builder, "lbl_splash_homepage0"));
+  splash_descr1 = GTK_WIDGET(gtk_builder_get_object (builder, "lbl_splash_desc1"));
+  splash_version1 = GTK_WIDGET(gtk_builder_get_object (builder, "lbl_splash_version1"));
+  splash_author1 = GTK_WIDGET(gtk_builder_get_object (builder, "lbl_splash_author1"));
+  splash_www1 = GTK_WIDGET(gtk_builder_get_object (builder, "lbl_splash_homepage1"));
 
   /* handle selection */
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (splash_treeview));

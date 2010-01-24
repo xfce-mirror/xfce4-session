@@ -18,12 +18,10 @@
 #ifndef __XFCE4_SESSION_SETTINGS_COMMON_H__
 #define __XFCE4_SESSION_SETTINGS_COMMON_H__
 
-#include <glade/glade.h>
-
 #define  SETTINGS_CHANNEL  "xfce4-session"
 
-void startup_settings_init(GladeXML *gxml);
-void splash_settings_init(GladeXML *gxml);
-void session_editor_init(GladeXML *gxml);
+void startup_settings_init(GtkBuilder *builder);
+void splash_settings_init(GtkBuilder *builder);
+void session_editor_init(GtkBuilder *builder);
 
 #endif
