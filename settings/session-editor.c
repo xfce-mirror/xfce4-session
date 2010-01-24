@@ -699,7 +699,8 @@ session_editor_populate_treeview(GtkTreeView *treeview)
 void
 session_editor_init(GtkBuilder *builder)
 {
-    GObject *treeview, *btn_save, *btn_quit, *dlg_saving;
+    GObject *btn_save, *btn_quit, *dlg_saving;
+    GtkTreeView *treeview;
     GtkTreeSelection *sel;
 
     dbus_g_object_register_marshaller(g_cclosure_marshal_VOID__STRING,
@@ -712,12 +713,12 @@ session_editor_init(GtkBuilder *builder)
                                       G_TYPE_NONE, G_TYPE_UINT, G_TYPE_UINT,
                                       G_TYPE_INVALID);
 
-    treeview = gtk_builder_get_object(builder, "treeview_clients");
-    sel = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
-    session_editor_populate_treeview(GTK_TREE_VIEW(treeview));
+    treeview = GTK_TREE_VIEW(gtk_builder_get_object(builder, "treeview_clients"));
+    sel = gtk_tree_view_get_selection(treeview);
+    session_editor_populate_treeview(treeview);
 
     dlg_saving = gtk_builder_get_object(builder, "dialog_saving");
-    g_object_set_data(G_OBJECT(dlg_saving), "pbar",
+    g_object_set_data(dlg_saving, "pbar",
                       GTK_WIDGET(gtk_builder_get_object(builder, "progress_save_session")));
 
     btn_save = gtk_builder_get_object(builder, "btn_save_session");
@@ -726,7 +727,7 @@ session_editor_init(GtkBuilder *builder)
 
     btn_quit = gtk_builder_get_object(builder, "btn_quit_client");
     g_signal_connect(btn_quit, "clicked",
-                   G_CALLBACK(session_editor_quit_client), treeview);
+                     G_CALLBACK(session_editor_quit_client), treeview);
     g_signal_connect(sel, "changed",
-                   G_CALLBACK(session_editor_sel_changed_btn), GTK_WIDGET(btn_quit));
+                     G_CALLBACK(session_editor_sel_changed_btn), GTK_WIDGET(btn_quit));
 }
