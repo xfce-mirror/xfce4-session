@@ -150,13 +150,13 @@ main(int argc,
         gtk_widget_reparent(plug_child, plug);
         gtk_widget_show(plug_child);
 
-        g_object_unref(builder);
-
         /* Stop startup notification */
         gdk_notify_startup_complete();
 
         gtk_main();
     }
+
+    g_object_unref(builder);
 
     return EXIT_SUCCESS;
 }
