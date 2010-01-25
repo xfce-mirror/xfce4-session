@@ -68,7 +68,7 @@ xfsm_splash_screen_new (GdkDisplay  *display,
   /* locate monitor with pointer */
   screen = xfce_gdk_screen_get_active (&monitor);
 
-  if (G_UNLIKELY (screen == NULL))
+  if (G_UNLIKELY (screen == NULL) || (gdk_screen_get_display (screen) != display))
     {
       screen  = gdk_display_get_screen (display, 0);
       monitor = 0;

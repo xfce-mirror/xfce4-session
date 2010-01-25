@@ -170,7 +170,6 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gboolean accessibility;
   GtkIconTheme *icon_theme;
   XfsmFadeout *fadeout = NULL;
-  GdkDisplay *display;
   GdkScreen *screen;
   GtkWidget *dialog;
   GtkWidget *label;
@@ -266,10 +265,8 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
    */
   gtk_rc_reparse_all ();
 
-  display = gdk_display_get_default();
-
   /* get screen with pointer */
-  screen = gdk_display_get_screen(display, monitor);
+  screen = xfce_gdk_screen_get_active (&monitor);
   if (screen == NULL)
     {
       screen = gdk_screen_get_default ();

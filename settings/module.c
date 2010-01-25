@@ -203,8 +203,8 @@ module_test (Module     *module,
   bzero (&engine, sizeof (engine));
 
   /* locate monitor with pointer */
-  screen = gdk_display_get_screen (display, monitor);
-  if (G_UNLIKELY (screen == NULL))
+  screen = xfce_gdk_screen_get_active (&monitor);
+  if (G_UNLIKELY (screen == NULL) || (gdk_screen_get_display(screen) != display))
     {
       screen  = gdk_display_get_screen (display, 0);
       monitor = 0;
