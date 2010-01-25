@@ -137,7 +137,7 @@ main(int argc,
         g_signal_connect(dialog, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
 
         gtk_widget_show(dialog);
-        gtk_main ();
+        gtk_main();
     } else {
         GtkWidget *plug, *plug_child;
 
