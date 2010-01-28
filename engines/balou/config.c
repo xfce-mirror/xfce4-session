@@ -366,6 +366,8 @@ config_remove_theme (GtkWidget *item,
   gchar        *name;
   gchar*        argv[4];
   gint          status;
+  GError       *error = NULL;
+  gchar        *error_msg = NULL;
 
   iter = (GtkTreeIter *) g_object_get_data (G_OBJECT (menu), "iter");
   if (G_UNLIKELY (iter == NULL))
@@ -389,12 +391,18 @@ config_remove_theme (GtkWidget *item,
   argv[3] = NULL;
 
   result = g_spawn_sync (NULL, argv, NULL, 0, NULL, NULL,
-                         NULL, NULL, &status, NULL);
+                         NULL, &error_msg, &status, NULL);
 
   if (!result || status != 0)
     {
-      xfce_dialog_show_error (NULL, NULL, _("Unable to remove splash theme \"%s\" from directory "
-                  "%s."), name, directory);
+      if (!error && error_msg)
+        g_set_error_literal (&error, G_SPAWN_ERROR, G_SPAWN_ERROR_FAILED, error_msg);
+
+      xfce_dialog_show_error (NULL, error,
+                              _("Unable to remove splash theme \"%s\" from directory %s."),
+                              name, directory);
+      if (error)
+        g_error_free (error);
     }
   else
     {
@@ -403,6 +411,7 @@ config_remove_theme (GtkWidget *item,
 
   g_free (directory);
   g_free (name);
+  g_free (error_msg);
 }
 #endif
 
