@@ -847,16 +847,17 @@ config_create (XfsmSplashRc *rc)
   GtkWidget         *swin;
   GtkWidget         *vbox;
   gchar             *theme;
+  GtkWidget         *bin;
 
   theme = xfsm_splash_rc_read_entry (rc, "Theme", "Default");
 
   page = gtk_vbox_new (FALSE, BORDER);
   gtk_container_set_border_width (GTK_CONTAINER (page), BORDER);
 
-  frame = xfce_gtk_frame_box_new (_("Balou theme"), NULL);
+  frame = xfce_gtk_frame_box_new (_("Balou theme"), &bin);
   gtk_box_pack_start (GTK_BOX (page), frame, TRUE, TRUE, 0);
   vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_container_add (GTK_CONTAINER (bin), vbox);
 
   swin = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swin),

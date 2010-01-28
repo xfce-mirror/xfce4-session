@@ -341,6 +341,7 @@ config_configure (XfsmSplashConfig *config,
   GdkColor     color;
   GtkBox      *dbox;
   gchar        buffer[32];
+  GtkWidget   *bin;
 
   dialog = gtk_dialog_new_with_buttons (_("Configure Simple..."),
                                         GTK_WINDOW (parent),
@@ -353,22 +354,22 @@ config_configure (XfsmSplashConfig *config,
 
   dbox = GTK_BOX (GTK_DIALOG (dialog)->vbox);
 
-  frame = xfce_gtk_frame_box_new (_("Font"), NULL);
+  frame = xfce_gtk_frame_box_new (_("Font"), &bin);
   gtk_box_pack_start (dbox, frame, FALSE, FALSE, 6);
   gtk_widget_show (frame);
 
   font = xfsm_splash_rc_read_entry (config->rc, "Font", DEFAULT_FONT);
   btn_font = gtk_font_button_new_with_font (font);
   g_free (font);
-  gtk_container_add (GTK_CONTAINER (frame), btn_font);
+  gtk_container_add (GTK_CONTAINER (bin), btn_font);
   gtk_widget_show (btn_font);
 
-  frame = xfce_gtk_frame_box_new (_("Colors"), NULL);
+  frame = xfce_gtk_frame_box_new (_("Colors"), &bin);
   gtk_box_pack_start (dbox, frame, FALSE, FALSE, 6);
   gtk_widget_show (frame);
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_container_add (GTK_CONTAINER (bin), table);
   gtk_widget_show (table);
 
   label = gtk_label_new (_("Background color:"));
@@ -397,12 +398,12 @@ config_configure (XfsmSplashConfig *config,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (sel_fg);
 
-  frame = xfce_gtk_frame_box_new (_("Image"), NULL);
+  frame = xfce_gtk_frame_box_new (_("Image"), &bin);
   gtk_box_pack_start (dbox, frame, FALSE, FALSE, 6);
   gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_container_add (GTK_CONTAINER (bin), vbox);
   gtk_widget_show (vbox);
 
   checkbox = gtk_check_button_new_with_label (_("Use custom image"));
