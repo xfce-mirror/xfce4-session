@@ -274,7 +274,7 @@ xfae_window_add (XfaeWindow *window)
       model = gtk_tree_view_get_model (GTK_TREE_VIEW (window->treeview));
       if (!xfae_model_add (XFAE_MODEL (model), name, descr, command, &error))
         {
-          xfce_dialog_show_error (NULL, error, _("Error when adding %s"), name);
+          xfce_dialog_show_error (NULL, error, _("Failed adding \"%s\""), name);
           g_error_free (error);
         }
 
@@ -300,7 +300,7 @@ xfae_window_remove (XfaeWindow *window)
     {
       if (!xfae_model_remove (XFAE_MODEL (model), &iter, &error))
         {
-          xfce_dialog_show_error (NULL, error, _("Error when removing the current item"));
+          xfce_dialog_show_error (NULL, error, _("Failed to remove item"));
           g_error_free (error);
         }
     }
@@ -323,7 +323,7 @@ xfae_window_item_toggled (XfaeWindow *window,
     {
       if (!xfae_model_toggle (XFAE_MODEL (model), &iter, &error))
         {
-          xfce_dialog_show_error (NULL, error, _("Error when toggling the current item"));
+          xfce_dialog_show_error (NULL, error, _("Failed to toggle item"));
           g_error_free (error);
         }
     }
