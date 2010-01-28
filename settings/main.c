@@ -108,13 +108,12 @@ main(int argc,
     gtk_builder_add_from_string(builder,
                                 xfce4_session_settings_ui,
                                 xfce4_session_settings_ui_length,
-                                NULL);
+                                &error);
 
     if(!builder) {
-        xfce_message_dialog(NULL, _("Internal Error"), GTK_STOCK_DIALOG_ERROR,
-                            _("Unable to create user interface from embedded definition data"),
-                            _("This is likely a problem with your Xfce installation"),
-                            GTK_STOCK_CLOSE, GTK_RESPONSE_ACCEPT, NULL);
+        xfce_dialog_show_error(NULL, error,
+                               _("Unable to create user interface from embedded definition data"));
+        g_error_free (error);
         return EXIT_FAILURE;
     }
 
