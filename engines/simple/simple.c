@@ -129,7 +129,7 @@ simple_setup (XfsmSplashEngine *engine,
   if (path != NULL && g_file_test (path, G_FILE_TEST_IS_REGULAR))
     logo = gdk_pixbuf_new_from_file (path, NULL);
   if (logo == NULL)
-    logo = gdk_pixbuf_from_pixdata (&fallback, FALSE, NULL);
+    logo = gdk_pixbuf_new_from_inline (-1, fallback, FALSE, NULL);
   logo_width = gdk_pixbuf_get_width (logo);
   logo_height = gdk_pixbuf_get_height (logo);
 
@@ -487,7 +487,7 @@ config_configure (XfsmSplashConfig *config,
 static GdkPixbuf*
 config_preview (XfsmSplashConfig *config)
 {
-  return gdk_pixbuf_from_pixdata (&preview, FALSE, NULL);
+  return gdk_pixbuf_new_from_inline (-1, preview, FALSE, NULL);
 }
 
 

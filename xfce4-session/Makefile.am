@@ -85,17 +85,17 @@ xfce4_session_DEPENDENCIES =						\
 	$(top_builddir)/libxfsm/libxfsm-4.6.la
 
 
-chooser-icon.h: $(srcdir)/chooser-icon.png
-	gdk-pixbuf-csource --struct --name=chooser_icon_data		\
-		$(srcdir)/chooser-icon.png > chooser-icon.h
-
 if MAINTAINER_MODE
 
 BUILT_SOURCES =								\
 	xfsm-client-dbus.h						\
 	xfsm-manager-dbus.h						\
 	xfsm-marshal.c							\
-	xfsm-marshal.h
+	xfsm-marshal.h							\
+	chooser-icon.h
+
+chooser-icon.h: $(srcdir)/chooser-icon.png
+	gdk-pixbuf-csource --static --raw --stream --name=chooser_icon_data $< > $@
 
 xfsm-marshal.h: stamp-xfsm-marshal.h
 	@true

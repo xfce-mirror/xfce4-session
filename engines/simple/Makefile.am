@@ -28,18 +28,23 @@ libsimple_la_LIBADD =							\
 libsimple_la_DEPENDENCIES =						\
 	$(top_builddir)/libxfsm/libxfsm-4.6.la
 
-EXTRA_DIST =								\
-	fallback.h							\
-	fallback.png							\
-	preview.h							\
-	preview.png
+if MAINTAINER_MODE
 
+BUILT_SOURCES =								\
+	fallback.h							\
+	preview.h
 
 fallback.h: $(srcdir)/fallback.png
-	gdk-pixbuf-csource --struct --name=fallback			\
-		$(srcdir)/fallback.png > fallback.h
+	gdk-pixbuf-csource --static --raw --stream --name=fallback $< > $@
 
 preview.h: $(srcdir)/preview.png
-	gdk-pixbuf-csource --struct --name=preview			\
-		$(srcdir)/preview.png > preview.h
+	gdk-pixbuf-csource --static --raw --stream --name=preview $< > $@
 
+DISTCLEANFILES =							\
+	$(BUILT_SOURCES)
+
+endif
+
+EXTRA_DIST =								\
+	fallback.png							\
+	preview.png

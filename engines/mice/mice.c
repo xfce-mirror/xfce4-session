@@ -219,7 +219,7 @@ mice_setup (XfsmSplashEngine *engine,
   cursor = gdk_cursor_new (GDK_WATCH);
 
   /* load slide pixbuf */
-  pixbuf = gdk_pixbuf_from_pixdata (&slide, FALSE, NULL);
+  pixbuf = gdk_pixbuf_new_from_inline (-1, slide, FALSE, NULL);
   pw = gdk_pixbuf_get_width (pixbuf);
   ph = gdk_pixbuf_get_height (pixbuf);
 
@@ -363,7 +363,7 @@ engine_init (XfsmSplashEngine *engine)
 static GdkPixbuf*
 config_preview (XfsmSplashConfig *config)
 {
-  return gdk_pixbuf_from_pixdata (&preview, FALSE, NULL);
+  return gdk_pixbuf_new_from_inline (-1, preview, FALSE, NULL);
 }
 
 

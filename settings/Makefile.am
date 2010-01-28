@@ -58,10 +58,11 @@ BUILT_SOURCES = \
 	xfce4-session-marshal.h \
 	xfce4-session-settings_ui.h \
 	xfsm-client-dbus-client.h \
-	xfsm-manager-dbus-client.h
+	xfsm-manager-dbus-client.h \
+	nopreview.h
 
 nopreview.h: $(srcdir)/nopreview.png
-	gdk-pixbuf-csource --struct --name=nopreview $< > $@
+	gdk-pixbuf-csource --static --raw --stream --name=nopreview $< > $@
 
 xfce4-session-marshal.h: stamp-xfce4-session-marshal.h
 	@true

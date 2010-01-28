@@ -37,18 +37,23 @@ generate_CFLAGS =							\
 generate_LDADD =							\
 	$(LIBXFCE4UI_LIBS)
 
+if MAINTAINER_MODE
 
-EXTRA_DIST =								\
-	preview.h							\
-	preview.png							\
+BUILT_SOURCES =								\
 	slide.h								\
-	slide.png
+	preview.h
 
 preview.h: $(srcdir)/preview.png
-	gdk-pixbuf-csource --struct --name=preview			\
-		$(srcdir)/preview.png > preview.h
+	gdk-pixbuf-csource --static --raw --stream --name=preview $< > $@
 
 slide.h: $(srcdir)/slide.png
-	gdk-pixbuf-csource --struct --name=slide			\
-		$(srcdir)/slide.png > slide.h
+	gdk-pixbuf-csource --static --raw --stream --name=slide $< > $@
 
+DISTCLEANFILES =							\
+	$(BUILT_SOURCES)
+
+endif
+
+EXTRA_DIST =								\
+	preview.png							\
+	slide.png

@@ -474,8 +474,8 @@ xfsm_manager_choose_session (XfsmManager *manager,
             {
               if (G_UNLIKELY (preview_default == NULL))
                 {
-                  preview_default = gdk_pixbuf_from_pixdata (&chooser_icon_data,
-                                                             FALSE, NULL);
+                  preview_default = gdk_pixbuf_new_from_inline (-1, chooser_icon_data,
+                                                                FALSE, NULL);
                 }
 
               session->preview = GDK_PIXBUF (g_object_ref (preview_default));
@@ -759,7 +759,7 @@ xfsm_manager_restart (XfsmManager *manager)
   /* tell splash screen that the session is starting now */
   preview = xfsm_load_session_preview (manager->session_name);
   if (preview == NULL)
-    preview = gdk_pixbuf_from_pixdata (&chooser_icon_data, FALSE, NULL);
+    preview = gdk_pixbuf_new_from_inline (-1, chooser_icon_data, FALSE, NULL);
   steps = g_queue_get_length (manager->failsafe_mode ? manager->failsafe_clients : manager->pending_properties);
   xfsm_splash_screen_start (splash_screen, manager->session_name, preview, steps);
   g_object_unref (preview);

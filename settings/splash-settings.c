@@ -265,7 +265,7 @@ splash_selection_changed (GtkTreeSelection *selection)
 
           preview = module_preview (module);
           if (G_UNLIKELY (preview == NULL))
-            preview = gdk_pixbuf_from_pixdata (&nopreview, FALSE, NULL);
+            preview = gdk_pixbuf_new_from_inline (-1, nopreview, FALSE, NULL);
           gtk_image_set_from_pixbuf (GTK_IMAGE (splash_image), preview);
           g_object_unref (G_OBJECT (preview));
 
@@ -279,7 +279,7 @@ splash_selection_changed (GtkTreeSelection *selection)
         }
       else
         {
-          preview = gdk_pixbuf_from_pixdata (&nopreview, FALSE, NULL);
+          preview = gdk_pixbuf_new_from_inline (-1, nopreview, FALSE, NULL);
           gtk_image_set_from_pixbuf (GTK_IMAGE (splash_image), preview);
           g_object_unref (G_OBJECT (preview));
 
