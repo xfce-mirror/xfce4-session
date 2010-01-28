@@ -419,13 +419,12 @@ config_configure (XfsmSplashConfig *config,
   gtk_file_filter_set_name (filter, _("Images"));
   gtk_file_filter_add_pixbuf_formats (filter);
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (button), filter);
+  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (button), filter);
 
   filter = gtk_file_filter_new ();
   gtk_file_filter_set_name (filter, _("All files"));
   gtk_file_filter_add_pattern (filter, "*");
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (button), filter);
-
-  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (button), 0);
 
   path = xfsm_splash_rc_read_entry (config->rc, "Image", NULL);
   if (path != NULL)
