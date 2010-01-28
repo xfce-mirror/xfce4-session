@@ -35,10 +35,10 @@ BUILT_SOURCES =								\
 	preview.h
 
 fallback.h: $(srcdir)/fallback.png
-	gdk-pixbuf-csource --static --raw --stream --name=fallback $< > $@
+	$(AM_V_GEN) gdk-pixbuf-csource --static --raw --stream --name=fallback $< > $@
 
 preview.h: $(srcdir)/preview.png
-	gdk-pixbuf-csource --static --raw --stream --name=preview $< > $@
+	$(AM_V_GEN) gdk-pixbuf-csource --static --raw --stream --name=preview $< > $@
 
 DISTCLEANFILES =							\
 	$(BUILT_SOURCES)

@@ -44,10 +44,10 @@ BUILT_SOURCES =								\
 	preview.h
 
 preview.h: $(srcdir)/preview.png
-	gdk-pixbuf-csource --static --raw --stream --name=preview $< > $@
+	$(AM_V_GEN) gdk-pixbuf-csource --static --raw --stream --name=preview $< > $@
 
 slide.h: $(srcdir)/slide.png
-	gdk-pixbuf-csource --static --raw --stream --name=slide $< > $@
+	$(AM_V_GEN) gdk-pixbuf-csource --static --raw --stream --name=slide $< > $@
 
 DISTCLEANFILES =							\
 	$(BUILT_SOURCES)

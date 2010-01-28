@@ -71,7 +71,7 @@ xfsm-logout-plugin.desktop.in: $(srcdir)/$(dfile)
 if MAINTAINER_MODE
 
 xfsm-logout-plugin-ui.h: $(srcdir)/xfsm-logout-plugin-ui.xml Makefile
-	exo-csource --static --name=logout_plugin_ui $< > $@
+	$(AM_V_GEN) exo-csource --static --name=logout_plugin_ui $< > $@
 
 BUILT_SOURCES = xfsm-logout-plugin-ui.h
 

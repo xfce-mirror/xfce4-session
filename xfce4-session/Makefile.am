@@ -95,22 +95,22 @@ BUILT_SOURCES =								\
 	chooser-icon.h
 
 chooser-icon.h: $(srcdir)/chooser-icon.png
-	gdk-pixbuf-csource --static --raw --stream --name=chooser_icon_data $< > $@
+	$(AM_V_GEN) gdk-pixbuf-csource --static --raw --stream --name=chooser_icon_data $< > $@
 
 xfsm-marshal.h: stamp-xfsm-marshal.h
 	@true
 stamp-xfsm-marshal.h: xfsm-marshal.list Makefile
-	glib-genmarshal --prefix=xfsm_marshal xfsm-marshal.list --header > xfsm-marshal.h
+	$(AM_V_GEN) glib-genmarshal --prefix=xfsm_marshal xfsm-marshal.list --header > xfsm-marshal.h
 	echo timestamp > $(@F)
 xfsm-marshal.c: xfsm-marshal.list Makefile
-	echo '#include "xfsm-marshal.h"' > $@
+	$(AM_V_GEN) echo '#include "xfsm-marshal.h"' > $@
 	glib-genmarshal --prefix=xfsm_marshal xfsm-marshal.list --body >> xfsm-marshal.c
 
 xfsm-manager-dbus.h: $(srcdir)/xfsm-manager-dbus.xml
-	dbus-binding-tool --mode=glib-server --prefix=xfsm_manager $< > $@
+	$(AM_V_GEN) dbus-binding-tool --mode=glib-server --prefix=xfsm_manager $< > $@
 
 xfsm-client-dbus.h: $(srcdir)/xfsm-client-dbus.xml
-	dbus-binding-tool --mode=glib-server --prefix=xfsm_client $< > $@
+	$(AM_V_GEN) dbus-binding-tool --mode=glib-server --prefix=xfsm_client $< > $@
 
 DISTCLEANFILES =								\
 	$(BUILT_SOURCES)
