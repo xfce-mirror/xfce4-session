@@ -47,7 +47,6 @@ static GOptionEntry option_entries[] =
 static void xfce4_session_settings_dialog_response (GtkDialog *dialog, gint response, gpointer userdata)
 {
     if (response == GTK_RESPONSE_HELP) {
-       g_signal_stop_emission_by_name(dialog, "response");
        g_spawn_command_line_async("xfhelp4 xfce4-session.html", NULL);
     }
     else {
