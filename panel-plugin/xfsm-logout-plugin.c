@@ -307,10 +307,10 @@ xfsm_logout_plugin_show_confirmation_dialog(XfsmLogoutPlugin *logout_plugin,
         GError *error = NULL;
 
         if(!xfsm_logout_plugin_do_dbus_call(logout_plugin, type, &error)) {
-            xfce_dialog_show_warning (NULL,
-                                      error->message,
-                                      "%s",
-                                      dialog_strings[type].error_text);
+            xfce_dialog_show_error (NULL,
+                                    error,
+                                    "%s",
+                                    dialog_strings[type].error_text);
             g_error_free(error);
         }
     }
