@@ -306,7 +306,7 @@ splash_selection_changed (GtkTreeSelection *selection)
   /* centering must be delayed! */
   if (!splash_centered)
     {
-      gtk_window_set_position(GTK_WINDOW(splash_dialog), GTK_WIN_POS_CENTER);
+      xfce_gtk_window_center_on_active_screen(GTK_WINDOW(splash_dialog));
       splash_centered = TRUE;
     }
 }
