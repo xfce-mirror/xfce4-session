@@ -117,7 +117,11 @@ struct _XfsmManager
 
   guint            die_timeout_id;
 
-  DBusGConnection *dbus_conn;
+  DBusGConnection *session_bus;
+  DBusGConnection *system_bus;
+
+  DBusGProxy      *consolekit_proxy;
+  gchar           *consolekit_cookie;
 };
 
 typedef struct _XfsmManagerClass
@@ -173,6 +177,8 @@ static void       xfsm_manager_dbus_class_init (XfsmManagerClass *klass);
 static void       xfsm_manager_dbus_init (XfsmManager *manager);
 static void       xfsm_manager_dbus_cleanup (XfsmManager *manager);
 
+static void       xfsm_manager_consolekit_init (XfsmManager *manager);
+static void       xfsm_manager_consolekit_cleanup (XfsmManager *manager);
 
 static guint signals[N_SIGS] = { 0, };
 
@@ -223,18 +229,34 @@ xfsm_manager_class_init (XfsmManagerClass *klass)
 static void
 xfsm_manager_init (XfsmManager *manager)
 {
+  GError *error = NULL;
+
   manager->state = XFSM_MANAGER_STARTUP;
   manager->session_chooser = FALSE;
   manager->failsafe_mode = TRUE;
   manager->shutdown_type = XFSM_SHUTDOWN_LOGOUT;
+
+  manager->consolekit_proxy  = NULL;
+  manager->consolekit_cookie = NULL;
 
   manager->pending_properties = g_queue_new ();
   manager->starting_properties = g_queue_new ();
   manager->restart_properties = g_queue_new ();
   manager->running_clients = g_queue_new ();
   manager->failsafe_clients = g_queue_new ();
-}
 
+  manager->system_bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
+  
+  if ( manager->system_bus == NULL )
+    {
+      g_warning ("Failed to connect to the system bus : %s", error->message);
+      g_error_free (error);
+    }
+  else
+    {
+      xfsm_manager_consolekit_init (manager);
+    }
+}
 
 static void
 xfsm_manager_finalize (GObject *obj)
@@ -242,6 +264,11 @@ xfsm_manager_finalize (GObject *obj)
   XfsmManager *manager = XFSM_MANAGER(obj);
 
   xfsm_manager_dbus_cleanup (manager);
+
+  xfsm_manager_consolekit_cleanup (manager);
+  
+  if ( manager->system_bus )
+    dbus_g_connection_unref (manager->system_bus);
 
   if (manager->die_timeout_id != 0)
     g_source_remove (manager->die_timeout_id);
@@ -302,6 +329,68 @@ xfsm_manager_new (void)
   return manager;
 }
 
+static void xfsm_manager_consolekit_init (XfsmManager *manager)
+{
+  GError *error = NULL;
+  gboolean ret;
+  
+  /* Make sure that consolekit is running*/
+  if ( !xfsm_dbus_name_has_owner (dbus_g_connection_get_connection (manager->system_bus),
+				  "org.freedesktop.ConsoleKit") )
+    {
+      
+      g_message (G_STRLOC "ConsoleKit is not running or not installed");
+      return;
+    }
+  
+
+  manager->consolekit_proxy = dbus_g_proxy_new_for_name (manager->system_bus,
+							 "org.freedesktop.ConsoleKit",
+							 "/org/freedesktop/ConsoleKit/Manager",
+							 "org.freedesktop.ConsoleKit.Manager");
+
+  
+  if ( G_UNLIKELY (!manager->consolekit_proxy) )
+    {
+      g_warning ("Failed to create proxy for 'org.freedesktop.ConsoleKit'");
+    }
+
+  ret = dbus_g_proxy_call (manager->consolekit_proxy, "OpenSession", &error,
+			   G_TYPE_INVALID,
+			   G_TYPE_STRING, &manager->consolekit_cookie,
+			   G_TYPE_INVALID);
+
+  if ( !ret )
+    {
+      g_warning ("OpenSession on 'org.freedesktop.ConsoleKit' failed with %s", error->message);
+      g_error_free (error);
+    }
+}
+
+static void xfsm_manager_consolekit_cleanup (XfsmManager *manager)
+{
+  if ( manager->consolekit_proxy )
+    {
+      if (manager->consolekit_cookie) 
+	{
+	  GError *error = NULL;
+	  gboolean ret, result;
+	  
+	  ret = dbus_g_proxy_call (manager->consolekit_proxy, "CloseSession", &error,
+				   G_TYPE_STRING, manager->consolekit_cookie,
+				   G_TYPE_INVALID,
+				   G_TYPE_BOOLEAN, &result,
+				   G_TYPE_INVALID);
+	  if ( !ret )
+	    {
+	      g_warning ("CloseSession on 'org.freedesktop.ConsoleKit' failed with %s", error->message);
+	      g_error_free (error);
+	    }
+	  g_free (manager->consolekit_cookie);
+	}
+      g_object_unref (manager->consolekit_proxy);
+    }
+}
 
 static gboolean
 xfsm_manager_startup (XfsmManager *manager)
@@ -1824,9 +1913,9 @@ xfsm_manager_dbus_init (XfsmManager *manager)
 {
   GError *error = NULL;
 
-  manager->dbus_conn = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
+  manager->session_bus = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
 
-  if (G_UNLIKELY (!manager->dbus_conn))
+  if (G_UNLIKELY (!manager->session_bus))
     {
       g_critical ("Unable to contact D-Bus session bus: %s", error ? error->message : "Unknown error");
       if (error)
@@ -1834,11 +1923,11 @@ xfsm_manager_dbus_init (XfsmManager *manager)
       return;
     }
 
-  dbus_g_connection_register_g_object (manager->dbus_conn,
+  dbus_g_connection_register_g_object (manager->session_bus,
                                        "/org/xfce/SessionManager",
                                        G_OBJECT (manager));
 
-  dbus_connection_add_filter (dbus_g_connection_get_connection (manager->dbus_conn),
+  dbus_connection_add_filter (dbus_g_connection_get_connection (manager->session_bus),
                               xfsm_manager_watch_dbus_disconnect,
                               manager, NULL);
 }
@@ -1847,13 +1936,13 @@ xfsm_manager_dbus_init (XfsmManager *manager)
 static void
 xfsm_manager_dbus_cleanup (XfsmManager *manager)
 {
-  if (G_LIKELY (manager->dbus_conn))
+  if (G_LIKELY (manager->session_bus))
     {
-      dbus_connection_remove_filter (dbus_g_connection_get_connection (manager->dbus_conn),
+      dbus_connection_remove_filter (dbus_g_connection_get_connection (manager->session_bus),
                                      xfsm_manager_watch_dbus_disconnect,
                                      manager);
-      dbus_g_connection_unref (manager->dbus_conn);
-      manager->dbus_conn = NULL;
+      dbus_g_connection_unref (manager->session_bus);
+      manager->session_bus = NULL;
     }
 }
 

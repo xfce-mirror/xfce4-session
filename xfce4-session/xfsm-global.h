@@ -27,6 +27,7 @@
 #include <X11/SM/SMlib.h>
 
 #include <xfce4-session/xfsm-splash-screen.h>
+#include <dbus/dbus.h>
 
 typedef enum
 {
@@ -82,5 +83,8 @@ GdkPixbuf *xfsm_load_session_preview (const gchar *name);
 
 GValue *xfsm_g_value_new (GType gtype);
 void    xfsm_g_value_free (GValue *value);
+
+gboolean xfsm_dbus_name_has_owner (DBusConnection *bus,
+				   const gchar *name);
 
 #endif /* !__XFSM_GLOBAL_H__ */
