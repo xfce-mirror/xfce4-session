@@ -195,6 +195,12 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gboolean prompt;
   gboolean show_suspend;
   gboolean show_hibernate;
+  
+  gboolean show_restart;
+  gboolean show_shutdown;
+
+  gboolean require_password;
+
   gint monitor;
   gint result;
   XfceKiosk *kiosk;
@@ -219,7 +225,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   /* destroy any previously running shutdown helper first */
   if (shutdown_helper != NULL)
     {
-      xfsm_shutdown_helper_destroy (shutdown_helper);
+      g_object_unref (shutdown_helper);
       shutdown_helper = NULL;
     }
 
@@ -256,7 +262,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
 
   /* spawn the helper early so we know what it supports when
    * constructing the dialog */
-  shutdown_helper = xfsm_shutdown_helper_spawn (NULL);
+  shutdown_helper = xfsm_shutdown_helper_new ();
 
   /* It's really bad here if someone else has the pointer
    * grabbed, so we first grab the pointer and keyboard
@@ -452,7 +458,11 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
 
-  if (!kiosk_can_shutdown || !xfsm_shutdown_helper_supports (shutdown_helper, XFSM_SHUTDOWN_REBOOT))
+  g_object_get (shutdown_helper,
+		"user-can-restart", &show_restart,
+		NULL);
+
+  if (!kiosk_can_shutdown || !show_restart )
     gtk_widget_set_sensitive (reboot_button, FALSE);
   
   /* halt */
@@ -490,13 +500,23 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
 
-  if (!kiosk_can_shutdown || !xfsm_shutdown_helper_supports (shutdown_helper, XFSM_SHUTDOWN_HALT))
+  g_object_get (shutdown_helper, 
+		"user-can-shutdown", &show_shutdown,
+		NULL);
+
+  if (!kiosk_can_shutdown || !show_shutdown)
     gtk_widget_set_sensitive (halt_button, FALSE);
 
   if (show_suspend)
-    show_suspend = xfsm_shutdown_helper_supports (shutdown_helper, XFSM_SHUTDOWN_SUSPEND);
+    g_object_get (shutdown_helper,
+		  "user-can-suspend", &show_suspend,
+		  NULL);
+
   if (show_hibernate)
-    show_hibernate = xfsm_shutdown_helper_supports (shutdown_helper, XFSM_SHUTDOWN_HIBERNATE);
+    g_object_get (shutdown_helper,
+		  "user-can-hibernate", &show_hibernate,
+		  NULL);
+
 
   if (kiosk_can_shutdown && (show_suspend || show_hibernate))
     {
@@ -629,9 +649,13 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
 
   gtk_widget_hide (dialog);
 
+  g_object_get (shutdown_helper,
+		"require-password", &require_password,
+		NULL);
+
   /* ask password */
   if (result == GTK_RESPONSE_OK && *shutdownType != XFSM_SHUTDOWN_LOGOUT
-      && xfsm_shutdown_helper_need_password (shutdown_helper))
+      && require_password )
     {
       gtk_widget_show (ok_button);
 
@@ -741,7 +765,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
     }
   else
     {
-      xfsm_shutdown_helper_destroy (shutdown_helper);
+      g_object_unref (shutdown_helper);
       shutdown_helper = NULL;
     }
 
@@ -804,7 +828,7 @@ xfsm_shutdown(XfsmShutdownType type)
     }
 
   result = xfsm_shutdown_helper_send_command (shutdown_helper, type, &error);
-  xfsm_shutdown_helper_destroy (shutdown_helper);
+  g_object_unref (shutdown_helper);
   shutdown_helper = NULL;
 
   if (!result)

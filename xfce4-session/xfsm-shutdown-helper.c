@@ -1,6 +1,7 @@
 /* $Id$ */
 /*-
  * Copyright (c) 2003-2006 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2010      Ali Abdallah    <aliov@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -62,506 +63,443 @@
 
 #include <libxfce4util/libxfce4util.h>
 
-#include "shutdown.h"
 #include "xfsm-shutdown-helper.h"
+#include "xfsm-global.h"
 
+static void xfsm_shutdown_helper_finalize     (GObject *object);
+
+static void xfsm_shutdown_helper_set_property (GObject *object,
+					       guint prop_id,
+					       const GValue *value,
+					       GParamSpec *pspec);
+
+static void xfsm_shutdown_helper_get_property (GObject *object,
+					       guint prop_id,
+					       GValue *value,
+					       GParamSpec *pspec);
+
+/**
+ * Suspend/Hibernate backend to use.
+ *
+ * upower, HAL, pmutils via sudo.
+ *
+ **/
 typedef enum
 {
-    XFSM_SHUTDOWN_SUDO = 0,
-    XFSM_SHUTDOWN_HAL,
-    XFSM_SHUTDOWN_POWER_MANAGER,
+  XFSM_SLEEP_BACKEND_NOT_SUPPORTED,
+  XFSM_SLEEP_BACKEND_UPOWER,
+  XFSM_SLEEP_BACKEND_HAL,
+  XFSM_SLEEP_BACKEND_SUDO /*sudo pm-suspend ?*/
+ 
+} XfsmSleepBackend;
+
+/**
+ * Shutdown/Reboot backend to use
+ *
+ * ConsoleKit, HAL, sudo
+ **/
+typedef enum
+{
+  XFSM_SHUTDOWN_BACKEND_NOT_SUPPORTED,
+  XFSM_SHUTDOWN_BACKEND_CONSOLE_KIT,
+  XFSM_SHUTDOWN_BACKEND_HAL,
+  XFSM_SHUTDOWN_BACKEND_SUDO
+
 } XfsmShutdownBackend;
 
-
-static struct
-{
-  XfsmShutdownType command;
-  gchar * name;
-} command_name_map[] = {
-  { XFSM_SHUTDOWN_HALT,      "Shutdown"  },
-  { XFSM_SHUTDOWN_REBOOT,    "Reboot"    },
-  { XFSM_SHUTDOWN_SUSPEND,   "Suspend"   },
-  { XFSM_SHUTDOWN_HIBERNATE, "Hibernate" },
-};
-
+#ifdef ENABLE_POLKIT
+/*DBus GTypes for polkit calls*/
+GType      polkit_subject_gtype   = G_TYPE_INVALID;
+GType      polkit_details_gtype   = G_TYPE_INVALID;
+GType      polkit_result_gtype    = G_TYPE_INVALID;
+#endif /*ENABLE_POLKIT*/
 
 struct _XfsmShutdownHelper
 {
-  XfsmShutdownBackend backend;
+  GObject              parent;
 
-  gchar              *sudo;
-  pid_t               pid;
-  FILE               *infile;
-  FILE               *outfile;
-  gboolean            need_password;
+  DBusGConnection     *system_bus;
+
+#ifdef ENABLE_POLKIT
+  DBusGProxy          *polkit_proxy;
+  GValueArray         *polkit_subject;
+  GHashTable          *polkit_details;
+  GHashTable          *polkit_subject_hash;
+#endif
+
+  XfsmShutdownBackend  shutdown_backend;
+  XfsmSleepBackend     sleep_backend;
+  
+  gboolean             auth_shutdown;
+  gboolean             auth_restart;
+  gboolean             auth_suspend;
+  gboolean             auth_hibernate;
+  gboolean             can_shutdown;
+  gboolean             can_restart;
+  gboolean             can_suspend;
+  gboolean             can_hibernate;
+
+  gboolean             devkit_is_upower;
+
+  /* Sudo data */
+  gchar               *sudo;
+  FILE                *infile;
+  FILE                *outfile;
+  pid_t                pid;
+  gboolean             require_password;
+
 };
 
-
-static DBusConnection *
-xfsm_shutdown_helper_dbus_connect (DBusBusType bus_type,
-                                   GError **error)
+struct _XfsmShutdownHelperClass
 {
-  DBusConnection *connection;
-  DBusError       derror;
+  GObjectClass parent_class;
+};
 
-  /* initialize the error */
-  dbus_error_init (&derror);
+enum
+{
+  PROP_0,
+  PROP_AUTHORIZED_TO_SHUTDOWN,
+  PROP_AUTHORIZED_TO_RESTART,
+  PROP_AUTHORIZED_TO_SUSPEND,
+  PROP_AUTHORIZED_TO_HIBERNATE,
+  PROP_CAN_SHUTDOWN,
+  PROP_CAN_RESTART,
+  PROP_CAN_SUSPEND,
+  PROP_CAN_HIBERNATE,
+  PROP_USER_CAN_SHUTDOWN,
+  PROP_USER_CAN_RESTART,
+  PROP_USER_CAN_SUSPEND,
+  PROP_USER_CAN_HIBERNATE,
+  PROP_REQUIRE_PASSWORD
+};
 
-  /* connect to the system message bus */
-  connection = dbus_bus_get (bus_type, &derror);
-  if (G_UNLIKELY (connection == NULL))
-    {
-      g_warning (G_STRLOC ": Failed to connect to the system message bus: %s", derror.message);
-      if (error)
-        dbus_set_g_error (error, &derror);
-      dbus_error_free (&derror);
-      return NULL;
-    }
+G_DEFINE_TYPE (XfsmShutdownHelper, xfsm_shutdown_helper, G_TYPE_OBJECT)
 
-  return connection;
-}
+#ifdef ENABLE_POLKIT
 
-
-
+#ifdef HAVE_FREEBSD
+/**
+ * Taken from polkitunixprocess.c code to get process start
+ * time from pid.
+ *
+ * Copyright (C) 2008 Red Hat, Inc.
+ *
+ **/
 static gboolean
-xfsm_shutdown_helper_pm_check (XfsmShutdownHelper *helper)
+get_kinfo_proc (pid_t pid, struct kinfo_proc *p)
 {
-  DBusConnection *connection;
-  DBusMessage    *message;
-  DBusMessage    *result;
-  DBusError       derror;
+  int mib[4];
+  size_t len;
 
-  connection = xfsm_shutdown_helper_dbus_connect (DBUS_BUS_SESSION, NULL);
-  if (!connection)
+  len = 4;
+  sysctlnametomib ("kern.proc.pid", mib, &len);
+
+  len = sizeof (struct kinfo_proc);
+  mib[3] = pid;
+
+  if (sysctl (mib, 4, p, &len, NULL, 0) == -1)
     return FALSE;
-
-  /* older versions of xfce4-power-manager didn't have the 'CanReboot'
-   * method, so we'll key off that one to check for support. */
-  message = dbus_message_new_method_call ("org.freedesktop.PowerManagement",
-                                          "/org/freedesktop/PowerManagement",
-                                          "org.freedesktop.PowerManagement",
-                                          "CanReboot");
-
-  dbus_error_init(&derror);
-  result = dbus_connection_send_with_reply_and_block (connection, message, -1, &derror);
-  dbus_message_unref (message);
-
-  if (result == NULL)
-    {
-      g_debug (G_STRLOC ": Failed to contact PM: %s", derror.message);
-      dbus_error_free (&derror);
-      return FALSE;
-    }
-  else if (dbus_set_error_from_message (&derror, result))
-    {
-      g_debug (G_STRLOC ": Error talking to PM: %s", derror.message);
-      dbus_message_unref (result);
-      dbus_error_free (&derror);
-      /* PM running, but is broken */
-      return FALSE;
-    }
-  else
-    {
-      /* it doesn't matter what the response is, but it's valid, so
-       * we can use the PM */
-      dbus_message_unref (result);
-      return TRUE;
-    }
-}
-
-
-
-static gboolean
-xfsm_shutdown_helper_pm_send (XfsmShutdownHelper *helper,
-                              XfsmShutdownType    command,
-                              GError            **error)
-{
-  DBusConnection *connection;
-  const char     *methodname;
-  DBusMessage    *message;
-  DBusMessage    *result;
-  DBusError       derror;
-  guint           i;
-
-  for (i = 0; i < G_N_ELEMENTS (command_name_map); i++)
-    {
-      if (command_name_map[i].command == command)
-        {
-          methodname = command_name_map[i].name;
-          break;
-        }
-    }
-
-  if (!methodname)
-    {
-      if (error)
-        {
-          g_set_error (error, DBUS_GERROR, DBUS_GERROR_INVALID_ARGS,
-                       "%s", _("Invalid shutdown type"));
-        }
-      return FALSE;
-    }
-
-  connection = xfsm_shutdown_helper_dbus_connect (DBUS_BUS_SESSION, error);
-  if (G_UNLIKELY (!connection))
-    return FALSE;
-
-  message = dbus_message_new_method_call ("org.freedesktop.PowerManagement",
-                                          "/org/freedesktop/PowerManagement",
-                                          "org.freedesktop.PowerManagement",
-                                          methodname);
-
-  dbus_error_init (&derror);
-  result = dbus_connection_send_with_reply_and_block (connection, message, -1, &derror);
-  dbus_message_unref (message);
-
-  if (!result)
-    {
-      if (error)
-        dbus_set_g_error (error, &derror);
-      dbus_error_free (&derror);
-      return FALSE;
-    }
-  else if (dbus_set_error_from_message (&derror, result))
-    {
-      dbus_message_unref (result);
-      if (error)
-        {
-          dbus_set_g_error (error, &derror);
-        }
-      dbus_error_free (&derror);
-      return FALSE;
-    }
 
   return TRUE;
 }
+#endif
 
-
-
-static gboolean
-xfsm_shutdown_helper_check_pm_cap (const char *capability)
+static guint64
+get_start_time_for_pid (pid_t pid)
 {
-  DBusConnection *connection;
-  char            method[64];
-  DBusMessage    *message;
-  DBusMessage    *result;
-  DBusError       derror;
-  dbus_bool_t     response = FALSE;
+  guint64 start_time;
+#ifndef HAVE_FREEBSD
+  gchar *filename;
+  gchar *contents;
+  size_t length;
+  gchar **tokens;
+  guint num_tokens;
+  gchar *p;
+  gchar *endp;
 
-  connection = xfsm_shutdown_helper_dbus_connect (DBUS_BUS_SESSION, NULL);
-  if (!connection)
-    return FALSE;
+  start_time = 0;
+  contents = NULL;
 
-  g_strlcpy (method, "Can", sizeof (method));
-  g_strlcat (method, capability, sizeof (method));
+  filename = g_strdup_printf ("/proc/%d/stat", pid);
 
-  message = dbus_message_new_method_call ("org.freedesktop.PowerManagement",
-                                          "/org/freedesktop/PowerManagement",
-                                          "org.freedesktop.PowerManagement",
-                                          method);
+  if (!g_file_get_contents (filename, &contents, &length, NULL))
+    goto out;
 
-  dbus_error_init(&derror);
-  result = dbus_connection_send_with_reply_and_block (connection, message, -1, &derror);
-  dbus_message_unref (message);
-
-  if (G_UNLIKELY (result == NULL))
+  /* start time is the token at index 19 after the '(process name)' entry - since only this
+   * field can contain the ')' character, search backwards for this to avoid malicious
+   * processes trying to fool us
+   */
+  p = strrchr (contents, ')');
+  if (p == NULL)
     {
-      g_warning (G_STRLOC ": Failed to contact PM: %s", derror.message);
-      dbus_error_free (&derror);
-      return FALSE;
+      goto out;
+    }
+  p += 2; /* skip ') ' */
+
+  if (p - contents >= (int) length)
+    {
+      g_warning ("Error parsing file %s", filename);
+      goto out;
     }
 
-  if (!result)
-    return FALSE;
+  tokens = g_strsplit (p, " ", 0);
 
-  if (dbus_set_error_from_message (&derror, result))
+  num_tokens = g_strv_length (tokens);
+
+  if (num_tokens < 20)
     {
-      dbus_error_free (&derror);
-      response = FALSE;
-    }
-  else if (!dbus_message_get_args (result, &derror,
-                                   DBUS_TYPE_BOOLEAN, &response,
-                                   DBUS_TYPE_INVALID))
-    {
-      dbus_error_free (&derror);
-      response = FALSE;
+      g_warning ("Error parsing file %s", filename);
+      goto out;
     }
 
-  dbus_message_unref (result);
+  start_time = strtoull (tokens[19], &endp, 10);
+  if (endp == tokens[19])
+    {
+      g_warning ("Error parsing file %s", filename);
+      goto out;
+    }
 
-  return response;
+  g_strfreev (tokens);
+
+ out:
+  g_free (filename);
+  g_free (contents);
+#else
+  struct kinfo_proc p;
+
+  start_time = 0;
+
+  if (! get_kinfo_proc (pid, &p))
+    {
+      g_warning ("Error obtaining start time for %d (%s)",
+		 (gint) pid,
+		 g_strerror (errno));
+      goto out;
+    }
+
+  start_time = (guint64) p.ki_start.tv_sec;
+
+out:
+#endif
+
+  return start_time;
 }
 
-
-
-static gboolean
-xfsm_shutdown_helper_hal_check (XfsmShutdownHelper *helper)
+static void
+init_dbus_gtypes (void)
 {
-  DBusConnection *connection;
-  DBusMessage    *message;
-  DBusMessage    *result;
-  DBusError       derror;
-
-  g_return_val_if_fail (helper, FALSE);
-
-  connection = xfsm_shutdown_helper_dbus_connect (DBUS_BUS_SYSTEM, NULL);
-  if (!connection)
-    return FALSE;
-
-  /* initialize the error */
-  dbus_error_init (&derror);
-
-  /* this is a simple trick to check whether we are allowed to
-   * use the org.freedesktop.Hal.Device.SystemPowerManagement
-   * interface without shutting down/rebooting now.
-   */
-  message = dbus_message_new_method_call ("org.freedesktop.Hal",
-                                          "/org/freedesktop/Hal/devices/computer",
-                                          "org.freedesktop.Hal.Device.SystemPowerManagement",
-                                          "ThisMethodMustNotExistInHal");
-  result = dbus_connection_send_with_reply_and_block (connection, message, 2000, &derror);
-  dbus_message_unref (message);
-
-  /* translate error results appropriately */
-  if (result != NULL && dbus_set_error_from_message (&derror, result))
+  if (G_UNLIKELY (polkit_subject_gtype == G_TYPE_INVALID ) )
     {
-      /* release and reset the result */
-      dbus_message_unref (result);
-      result = NULL;
+      polkit_subject_gtype = 
+	dbus_g_type_get_struct ("GValueArray", 
+				G_TYPE_STRING, 
+				dbus_g_type_get_map ("GHashTable", 
+						     G_TYPE_STRING, 
+						     G_TYPE_VALUE),
+				G_TYPE_INVALID);
     }
-  else if (G_UNLIKELY (result != NULL))
+  
+  if (G_UNLIKELY (polkit_details_gtype == G_TYPE_INVALID ) )
     {
-      /* we received a valid message return?! HAL must be on crack! */
-      dbus_message_unref (result);
-      return FALSE;
+      polkit_details_gtype = dbus_g_type_get_map ("GHashTable", 
+						  G_TYPE_STRING, 
+						  G_TYPE_STRING);
     }
 
-  /* if we receive org.freedesktop.DBus.Error.UnknownMethod, then
-   * we are allowed to shutdown/reboot the computer via HAL.
-   */
-  if (strcmp (derror.name, "org.freedesktop.DBus.Error.UnknownMethod") == 0)
+  if ( G_UNLIKELY (polkit_result_gtype == G_TYPE_INVALID ) )
     {
-      dbus_error_free (&derror);
-      return TRUE;
+      polkit_result_gtype =
+	dbus_g_type_get_struct ("GValueArray", 
+				G_TYPE_BOOLEAN, 
+				G_TYPE_BOOLEAN, 
+				dbus_g_type_get_map ("GHashTable", 
+						     G_TYPE_STRING, 
+						     G_TYPE_STRING),
+				G_TYPE_INVALID);
     }
-
-  /* otherwise, we failed for some reason */
-  g_warning (G_STRLOC ": Failed to contact HAL: %s", derror.message);
-  dbus_error_free (&derror);
-
-  return FALSE;
 }
 
-
-
+/**
+ * xfsm_shutdown_helper_init_polkit_data:
+ *
+ * Check for Pokit and
+ * Init the neccarry Polkit data an GTypes.
+ *
+ **/
 static gboolean
-xfsm_shutdown_helper_hal_send (XfsmShutdownHelper *helper,
-                               XfsmShutdownType command,
-                               GError **error)
+xfsm_shutdown_helper_init_polkit_data (XfsmShutdownHelper *helper)
 {
-  DBusConnection *connection;
-  DBusMessage    *message;
-  DBusMessage    *result;
-  DBusError       derror;
-  const gchar    *methodname = NULL;
-  dbus_int32_t    wakeup     = 0;
-  guint           i;
-
-  for (i = 0; i < G_N_ELEMENTS (command_name_map); i++)
+  const gchar *consolekit_cookie;
+  GValue hash_elem = { 0 };
+  gboolean subject_created = FALSE;
+  
+  if ( !xfsm_dbus_name_has_owner (dbus_g_connection_get_connection (helper->system_bus), 
+				  "org.freedesktop.PolicyKit1") )
     {
-      if (command_name_map[i].command == command)
-        {
-          methodname = command_name_map[i].name;
-          break;
-        }
-    }
-
-  if (G_UNLIKELY (methodname == NULL))
-    {
-      if (error)
-        {
-          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("No HAL method for command %d"), command);
-        }
       return FALSE;
     }
 
-  connection = xfsm_shutdown_helper_dbus_connect (DBUS_BUS_SYSTEM, error);
-  if(!connection)
+  helper->polkit_proxy = 
+    dbus_g_proxy_new_for_name (helper->system_bus,
+			       "org.freedesktop.PolicyKit1",
+			       "/org/freedesktop/PolicyKit1/Authority",
+			       "org.freedesktop.PolicyKit1.Authority");
+
+  if ( !helper->polkit_proxy )
     return FALSE;
 
-  /* initialize the error */
-  dbus_error_init (&derror);
+  helper->polkit_subject = g_value_array_new (2);
+  helper->polkit_subject_hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 
-  /* send the appropriate message to HAL, telling it to shutdown or reboot the system */
-  message = dbus_message_new_method_call ("org.freedesktop.Hal",
-                                          "/org/freedesktop/Hal/devices/computer",
-                                          "org.freedesktop.Hal.Device.SystemPowerManagement",
-                                          methodname);
-
-  /* suspend requires additional arguements */
-  if (command == XFSM_SHUTDOWN_SUSPEND)
-     dbus_message_append_args (message, DBUS_TYPE_INT32, &wakeup, DBUS_TYPE_INVALID);
-
-  result = dbus_connection_send_with_reply_and_block (connection, message, -1, &derror);
-  dbus_message_unref (message);
-
-  /* check if we received a result */
-  if (G_UNLIKELY (result == NULL))
+  /**
+   * This variable should be set by the session manager or by 
+   * the login manager (gdm?). under clean Xfce environment
+   * it is set by the session manager (4.8 and above)  
+   * since we don't have a login manager, yet!
+   **/
+  consolekit_cookie = g_getenv ("XDG_SESSION_COOKIE");
+  
+  if ( consolekit_cookie )
     {
-      g_warning (G_STRLOC ": Failed to contact HAL: %s", derror.message);
-      if (error)
-        dbus_set_g_error (error, &derror);
-      dbus_error_free (&derror);
-      return FALSE;
+      DBusGProxy *proxy;
+      GError *error = NULL;
+      gboolean ret;
+      gchar *consolekit_session;
+      
+      proxy  = dbus_g_proxy_new_for_name (helper->system_bus,
+					  "org.freedesktop.ConsoleKit",
+					  "/org/freedesktop/ConsoleKit/Manager",
+					  "org.freedesktop.ConsoleKit.Manager");
+      if ( proxy )
+	{
+	  ret = dbus_g_proxy_call (proxy, "GetSessionForCookie", &error,
+				   G_TYPE_STRING, consolekit_cookie,
+				   G_TYPE_INVALID,
+				   DBUS_TYPE_G_OBJECT_PATH, &consolekit_session,
+				   G_TYPE_INVALID);
+	  
+	  if ( G_LIKELY (ret) )
+	    {
+	      GValue val  = { 0 };
+	      
+	      g_value_init (&val, G_TYPE_STRING);
+	      g_value_set_string (&val, "unix-session");
+	      g_value_array_append (helper->polkit_subject, &val);
+	      
+	      g_value_unset (&val);
+	      g_value_init (&val, G_TYPE_STRING);
+	      g_value_set_string (&val, consolekit_session);
+	      
+	      g_hash_table_insert (helper->polkit_subject_hash, g_strdup ("session-id"), &val);
+	      
+	      g_free (consolekit_session);
+	      subject_created = TRUE;
+	    }
+	}
+      else if (error)
+	{
+	  g_warning ("'GetSessionForCookie' failed : %s", error->message);
+	  g_error_free (error);
+	}
+      g_object_unref (proxy);
+    }
+  
+  /**
+   * We failed to get valid session data, then we try
+   * to check authentication using the pid.
+   **/
+  if ( subject_created == FALSE )
+    {
+      gint pid;
+      guint64 start_time;
+
+      pid = getpid ();
+      
+      start_time = get_start_time_for_pid (pid);
+
+      if ( G_LIKELY (start_time != 0 ) )
+	{
+	  GValue val = { 0 }, pid_val = { 0 }, start_time_val = { 0 };
+	  g_value_init (&val, G_TYPE_STRING);
+	  g_value_set_string (&val, "unix-process");
+	  g_value_array_append (helper->polkit_subject, &val);
+
+	  g_value_unset (&val);
+	  
+	  g_value_init (&pid_val, G_TYPE_UINT);
+	  g_value_set_uint (&pid_val, pid);
+	  g_hash_table_insert (helper->polkit_subject_hash, g_strdup ("pid"), &pid_val);
+
+	  g_value_init (&start_time_val, G_TYPE_UINT64);
+	  g_value_set_uint64 (&start_time_val, start_time);
+	  g_hash_table_insert (helper->polkit_subject_hash, g_strdup ("start-time"), &start_time_val);
+	}
     }
 
-  /* pretend that we succeed */
-  dbus_message_unref (result);
+  g_value_init (&hash_elem, 
+		dbus_g_type_get_map ("GHashTable", 
+				     G_TYPE_STRING, 
+				     G_TYPE_VALUE));
+  
+  g_value_set_static_boxed (&hash_elem, helper->polkit_subject_hash);
+  g_value_array_append (helper->polkit_subject, &hash_elem);
+  
+  /**
+   * Polkit details, will leave it empty.
+   **/
+  helper->polkit_details = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
+
   return TRUE;
 }
+#endif /*ENABLE_POLKIT*/
 
-
-
+/**
+ * xfsm_shutdown_helper_check_sudo:
+ * 
+ * Check if we can use sudo backend.
+ * Method is called if HAL, upower, consolekit are missing
+ * or the session was compiled without those services.
+ * 
+ **/
 static gboolean
-xfsm_shutdown_helper_check_hal_property (const gchar *object_path,
-                                         const gchar *property_name)
+xfsm_shutdown_helper_check_sudo (XfsmShutdownHelper *helper)
 {
-  DBusConnection *connection;
-  DBusMessage    *message;
-  DBusMessage    *result;
-  DBusError       derror;
-  dbus_bool_t     response = FALSE;
-
-  connection = xfsm_shutdown_helper_dbus_connect (DBUS_BUS_SYSTEM, NULL);
-  if (!connection)
-    return FALSE;
-
-  message = dbus_message_new_method_call ("org.freedesktop.Hal",
-                                          object_path,
-                                          "org.freedesktop.Hal.Device",
-                                          "GetPropertyBoolean");
-  dbus_message_append_args (message,
-                            DBUS_TYPE_STRING, &property_name,
-                            DBUS_TYPE_INVALID);
-
-  dbus_error_init(&derror);
-  result = dbus_connection_send_with_reply_and_block (connection, message, -1, &derror);
-  dbus_message_unref (message);
-
-  if (G_UNLIKELY (result == NULL))
-    {
-      g_warning (G_STRLOC ": Failed to contact HAL: %s", derror.message);
-      dbus_error_free (&derror);
-      return FALSE;
-    }
-
-  if (!result)
-    return FALSE;
-
-  if (dbus_set_error_from_message (&derror, result))
-    {
-      dbus_error_free (&derror);
-      response = FALSE;
-    }
-  else
-    {
-      if (!dbus_message_get_args (result, &derror,
-                                  DBUS_TYPE_BOOLEAN, &response,
-                                  DBUS_TYPE_INVALID))
-        {
-          dbus_error_free (&derror);
-          response = FALSE;
-        }
-    }
-
-  dbus_message_unref (result);
-
-  return response;
-}
-
-
-
-XfsmShutdownHelper*
-xfsm_shutdown_helper_spawn (GError **error)
-{
-  XfsmShutdownHelper *helper;
-  struct              rlimit rlp;
-  gchar               buf[15];
-  gint                parent_pipe[2];
-  gint                child_pipe[2];
-  gint                result;
-  gint                n;
-
-  g_return_val_if_fail (!error || !*error, NULL);
-
-  /* allocate a new helper */
-  helper = g_new0 (XfsmShutdownHelper, 1);
-
-  /* first choice is the power manager */
-  if (xfsm_shutdown_helper_pm_check (helper))
-    {
-      g_message (G_STRLOC ": Using PM to shutdown/reboot the computer.");
-      helper->backend = XFSM_SHUTDOWN_POWER_MANAGER;
-      return helper;
-    }
-
-  /* check if we can use HAL to shutdown the computer */
-  if (xfsm_shutdown_helper_hal_check (helper))
-    {
-      /* well that's it then */
-      g_message (G_STRLOC ": Using HAL to shutdown/reboot the computer.");
-      helper->backend = XFSM_SHUTDOWN_HAL;
-      return helper;
-    }
-
-  /* no HAL, but maybe sudo will do */
-  g_message (G_STRLOC ": HAL not available or does not permit to shutdown/reboot the computer, trying sudo fallback instead.");
-
-  /* make sure sudo is installed, and in $PATH */
+  struct  rlimit rlp;
+  gchar   buf[15];
+  gint    parent_pipe[2];
+  gint    child_pipe[2];
+  gint    result;
+  gint    n;
+  
   helper->sudo = g_find_program_in_path ("sudo");
-  if (G_UNLIKELY (helper->sudo == NULL))
+  
+  if ( G_UNLIKELY (helper->sudo == NULL ) )
     {
-      if (error)
-        {
-          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Program \"sudo\" was not found.  You will not be able to shutdown your system from within Xfce."));
-        }
-      g_free (helper);
-      return NULL;
+      g_warning ("Program 'sudo' was not found.");
+      return FALSE;
     }
-
+  
   result = pipe (parent_pipe);
+  
   if (result < 0)
     {
-      if (error)
-        {
-          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Unable to create parent pipe: %s"), strerror (errno));
-        }
-      goto error0;
+      g_warning ("Unable to create parent pipe: %s", strerror (errno));
+      return FALSE;
     }
 
   result = pipe (child_pipe);
   if (result < 0)
     {
-      if (error)
-        {
-          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Unable to create child pipe: %s"), strerror (errno));
-        }
-      goto error1;
+      g_warning ("Unable to create child pipe: %s", strerror (errno));
+      goto error0;
     }
 
   helper->pid = fork ();
+  
   if (helper->pid < 0)
     {
-      if (error)
-        {
-          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Unable to fork sudo helper: %s"), strerror (errno));
-        }
-      goto error2;
+      g_warning ("Unable to fork sudo helper: %s", strerror (errno));
+      goto error1;
     }
   else if (helper->pid == 0)
     {
@@ -588,102 +526,1156 @@ xfsm_shutdown_helper_spawn (GError **error)
 
       /* execute sudo with the helper */
       execl (helper->sudo, "sudo", "-H", "-S", "-p",
-             "XFSM_SUDO_PASS ", "--", XFSM_SHUTDOWN_HELPER, NULL);
+             "XFSM_SUDO_PASS ", "--", XFSM_SHUTDOWN_HELPER_CMD, NULL);
       _exit (127);
     }
-
+  
   close (parent_pipe[1]);
-
+  
   /* read sudo/helper answer */
   n = read (parent_pipe[0], buf, 15);
   if (n < 15)
     {
-      if (error)
-        {
-          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Unable to read response from sudo helper: %s"),
-                       n < 0 ? strerror (errno) : _("Unknown error"));
-        }
-      goto error2;
+      g_warning ("Unable to read response from sudo helper: %s",
+		 n < 0 ? strerror (errno) : "Unknown error");
+      goto error1;
     }
 
   helper->infile = fdopen (parent_pipe[0], "r");
+  
   if (helper->infile == NULL)
     {
-      if (error)
-        {
-          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Unable to open parent pipe: %s"), strerror (errno));
-        }
-      goto error2;
+      g_warning ("Unable to open parent pipe: %s", strerror (errno));
+      goto error1;
     }
 
   helper->outfile = fdopen (child_pipe[1], "w");
+
   if (helper->outfile == NULL)
     {
-      if (error)
-        {
-          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Unable to open child pipe: %s"), strerror (errno));
-        }
-      goto error3;
+      g_warning ("Unable to open child pipe: %s", strerror (errno));
+      goto error2;
     }
 
   if (memcmp (buf, "XFSM_SUDO_PASS ", 15) == 0)
     {
-      helper->need_password = TRUE;
+      helper->require_password = TRUE;
     }
   else if (memcmp (buf, "XFSM_SUDO_DONE ", 15) == 0)
     {
-      helper->need_password = FALSE;
+      helper->require_password = FALSE;
     }
   else
     {
-      if (error)
-        {
-          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Got unexpected reply from sudo shutdown helper"));
-        }
-      goto error3;
+      g_warning ("Got unexpected reply from sudo shutdown helper");
+      goto error2;
     }
 
   close (parent_pipe[1]);
   close (child_pipe[0]);
 
-  return helper;
-
-error3:
-  if (helper->infile != NULL)
-    fclose (helper->infile);
-  if (helper->outfile != NULL)
-    fclose (helper->outfile);
+  return TRUE;
 
 error2:
+  if (helper->infile != NULL)
+    {
+      fclose (helper->infile);
+      helper->infile = NULL;
+    }
+  
+  if (helper->outfile != NULL)
+    {
+      fclose (helper->outfile);
+      helper->outfile = NULL;
+    }
+
+error1:
   close (child_pipe[0]);
   close (child_pipe[1]);
 
-error1:
+error0:
   close (parent_pipe[0]);
   close (parent_pipe[1]);
 
-error0:
-  g_free (helper);
-  return NULL;
+  return FALSE;
 }
 
-
-
-gboolean
-xfsm_shutdown_helper_need_password (const XfsmShutdownHelper *helper)
+/**
+ * xfsm_shutdown_helper_check_upower:
+ * 
+ * Check upower (formely devicekit-power)
+ * for hibernate and suspend availability.
+ * 
+ * Returns: FALSE if failed to contact upower, TRUE otherwise.
+ **/
+#ifdef ENABLE_UPOWER
+static gboolean
+xfsm_shutdown_helper_check_upower (XfsmShutdownHelper *helper)
 {
-  return helper->need_password;
+  /**
+   * Get the properties on 'org.freedesktop.UPower'
+   *                    or 'org.freedesktop.DeviceKit.Power'
+   *
+   * DaemonVersion      's'
+   * CanSuspend'        'b'
+   * CanHibernate'      'b'
+   * OnBattery'         'b'
+   * OnLowBattery'      'b'
+   * LidIsClosed'       'b'
+   * LidIsPresent'      'b'
+   **/
+
+  DBusGProxy *proxy_prop;
+  GHashTable *props;
+  GError *error = NULL;
+  GType g_type_hash_map;
+  GValue *value;
+  const gchar *name, *path, *iface;
+  
+  /* Check for upower first */
+  name = "org.freedesktop.UPower";
+  path = "/org/freedesktop/UPower";
+  iface = "org.freedesktop.Power";
+
+  helper->devkit_is_upower = TRUE;
+
+  if ( !xfsm_dbus_name_has_owner (dbus_g_connection_get_connection (helper->system_bus), 
+				  name) )
+    {
+      name = "org.freedesktop.DeviceKit.Power";
+      path = "/org/freedesktop/DeviceKit/Power";
+      iface = "org.freedesktop.DeviceKit.Power";
+      
+      helper->devkit_is_upower = FALSE;
+
+      if ( !xfsm_dbus_name_has_owner (dbus_g_connection_get_connection (helper->system_bus), 
+				      name) )
+	return FALSE;
+    }
+  
+  proxy_prop = dbus_g_proxy_new_for_name (helper->system_bus,
+					  name,
+					  path,
+					  DBUS_INTERFACE_PROPERTIES);
+  
+  if ( !proxy_prop )
+    {
+      g_warning ("Failed to create proxy for %s", name);
+      return FALSE;
+    }
+
+  /* The Hash table is a pair of (strings, GValues) */
+  g_type_hash_map = dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE);
+
+  dbus_g_proxy_call (proxy_prop, "GetAll", &error,
+		     G_TYPE_STRING, iface,
+		     G_TYPE_INVALID,
+		     g_type_hash_map, &props,
+		     G_TYPE_INVALID);
+
+  g_object_unref (proxy_prop);
+		    
+  if ( error )
+    {
+      g_warning ("Method 'GetAll' on %s failed with %s", iface, error->message);
+      g_error_free (error);
+      return FALSE;
+    }
+
+  /*Get The CanSuspend bit*/
+  value = g_hash_table_lookup (props, "CanSuspend");
+    
+  if ( G_LIKELY (value) )
+    {
+      helper->can_suspend = g_value_get_boolean (value);
+    }
+  else
+    {
+      g_warning ("No 'CanSuspend' property");
+    }
+  
+  /*Get the CanHibernate bit*/
+  value = g_hash_table_lookup (props, "CanHibernate");
+  
+  if ( G_LIKELY (value) ) 
+    {
+      helper->can_hibernate = g_value_get_boolean (value);
+    }
+  else
+    {
+      g_warning ("No 'CanHibernate' property");
+    }
+  
+  g_hash_table_destroy (props);
+
+  return TRUE;
+}
+#endif /*ENABLE_UPOWER*/
+
+
+/**
+ * xfsm_shutdown_helper_check_console_kit:
+ *
+ * Check Consolekit for methods:
+ * Stop (Shutdown), Restart.
+ **/
+#ifdef ENABLE_CONSOLE_KIT
+static gboolean
+xfsm_shutdown_helper_check_console_kit (XfsmShutdownHelper *helper)
+{
+  DBusGProxy *proxy;
+  GError *error = NULL;
+
+  /* Check if D-Bus has "org.freedesktop.ConsoleKit" */
+  if ( !xfsm_dbus_name_has_owner (dbus_g_connection_get_connection (helper->system_bus), 
+				  "org.freedesktop.ConsoleKit") )
+    {
+      return FALSE;
+    }
+
+  proxy = dbus_g_proxy_new_for_name (helper->system_bus,
+				     "org.freedesktop.ConsoleKit",
+				     "/org/freedesktop/ConsoleKit/Manager",
+				     "org.freedesktop.ConsoleKit.Manager");
+
+  if (!proxy)
+    {
+      g_warning ("Failed to create proxy for 'org.freedesktop.ConsoleKit'");
+      return FALSE;
+    }
+
+  dbus_g_proxy_call (proxy, "CanStop", &error,
+		     G_TYPE_INVALID,
+		     G_TYPE_BOOLEAN, &helper->can_shutdown,
+		     G_TYPE_INVALID);
+                       
+  if ( error )
+    {
+      g_warning ("'CanStop' method failed : %s", error->message);
+      g_error_free (error);
+      error = NULL;
+    }
+  
+  dbus_g_proxy_call (proxy, "CanRestart", &error,
+		     G_TYPE_INVALID,
+		     G_TYPE_BOOLEAN, &helper->can_restart,
+		     G_TYPE_INVALID);
+  
+  if ( error )
+    {
+      g_warning ("'CanRestart' method failed : %s", error->message);
+      g_error_free (error);
+    }
+    
+  g_object_unref (proxy);
+
+  return TRUE;
+}
+#endif /*ENABLE_CONSOLE_KIT*/
+
+
+/**
+ * xfsm_shutdown_helper_check_hal:
+ *
+ * Check if HAL is running and for its PowerManagement bits
+ * 
+ **/
+#ifdef ENABLE_HAL
+static gboolean
+xfsm_shutdown_helper_check_hal (XfsmShutdownHelper *helper)
+{
+  DBusGProxy *proxy_power;
+  DBusGProxy *proxy_device;
+  GError *error = NULL;
+
+  if ( !xfsm_dbus_name_has_owner (dbus_g_connection_get_connection (helper->system_bus), 
+				  "org.freedesktop.Hal") )
+    {
+      return FALSE;
+    }
+
+  proxy_power = 
+    dbus_g_proxy_new_for_name (helper->system_bus,
+			       "org.freedesktop.Hal",
+			       "/org/freedesktop/Hal/devices/computer",
+			       "org.freedesktop.Hal.Device.SystemPowerManagement");
+  
+  if (!proxy_power)
+    {
+      g_warning ("Failed to create proxy for 'org.freedesktop.Hal' ");
+      return FALSE;
+    }
+		
+  dbus_g_proxy_call (proxy_power, "JustToCheckUserPermission", &error,
+		     G_TYPE_INVALID,
+		     G_TYPE_INVALID);
+  
+  g_object_unref (proxy_power);
+
+  if ( G_LIKELY (error) )
+    {
+      /* The message passed dbus permission check? */
+      if ( !g_error_matches (error, DBUS_GERROR, DBUS_GERROR_UNKNOWN_METHOD) )
+	{
+	  g_error_free (error);
+	  return FALSE;
+	}
+      g_error_free (error);
+      error = NULL;
+    }
+  else
+    {
+      /*Something went wrong with HAL*/
+      return FALSE;
+    }
+
+  /*
+   * Message raised DBUS_GERROR_UNKNOWN_METHOD, so it reached HAL,
+   * we can consider thatn  HAL allows us to use its power management interface
+   */
+  helper->auth_shutdown  = TRUE;
+  helper->auth_restart   = TRUE;
+  helper->auth_suspend   = TRUE;
+  helper->auth_hibernate = TRUE;
+  /* HAL doesn't have can_shutdown and can_reboot bits since it can always
+   shutdown and reboot the system */
+  helper->can_shutdown   = TRUE;
+  helper->can_restart    = TRUE;
+
+  /*Check to see is the system can_hibernate and can_suspend*/
+  proxy_device = dbus_g_proxy_new_for_name (helper->system_bus,
+					    "org.freedesktop.Hal",
+					    "/org/freedesktop/Hal/devices/computer",
+					    "org.freedesktop.Hal.Device");
+
+  dbus_g_proxy_call (proxy_device, "GetPropertyBoolean", &error,
+		     G_TYPE_STRING, "power_management.can_hibernate",
+		     G_TYPE_INVALID,
+		     G_TYPE_BOOLEAN, &helper->can_hibernate,
+		     G_TYPE_INVALID);
+
+  if ( error )
+    {
+      g_warning ("Method 'GetPropertyBoolean' failed : %s", error->message);
+      g_error_free (error);
+      error = NULL;
+    }
+
+  dbus_g_proxy_call (proxy_device, "GetPropertyBoolean", &error,
+		     G_TYPE_STRING, "power_management.can_suspend",
+		     G_TYPE_INVALID,
+		     G_TYPE_BOOLEAN, &helper->can_suspend,
+		     G_TYPE_INVALID);
+  
+  if ( error )
+    {
+      g_warning ("Method 'GetPropertyBoolean' failed : %s", error->message);
+      g_error_free (error);
+    }
+
+  g_object_unref (proxy_device);
+  
+  return TRUE;
+}
+#endif /*ENABLE_HAL*/
+
+/**
+ * xfsm_shutdown_helper_check_polkit_authorization:
+ *
+ * 
+ **/
+#ifdef ENABLE_POLKIT
+static gboolean
+xfsm_shutdown_helper_check_authorization (XfsmShutdownHelper *helper,
+					  const gchar *action_id)
+{
+  GValueArray *result;
+  GValue result_val = { 0 };
+  GError *error = NULL;
+  gboolean is_authorized = FALSE;
+  gboolean ret;
+  
+  /**
+   * <method name="CheckAuthorization">      
+   *   <arg type="(sa{sv})" name="subject" direction="in"/>      
+   *   <arg type="s" name="action_id" direction="in"/>           
+   *   <arg type="a{ss}" name="details" direction="in"/>         
+   *   <arg type="u" name="flags" direction="in"/>               
+   *   <arg type="s" name="cancellation_id" direction="in"/>     
+   *   <arg type="(bba{ss})" name="result" direction="out"/>     
+   * </method>
+   *
+   **/
+
+  g_return_val_if_fail (helper->polkit_proxy != NULL, FALSE);
+  g_return_val_if_fail (helper->polkit_subject, FALSE);
+  g_return_val_if_fail (helper->polkit_details, FALSE);
+
+  /* Initialized DBus GTypes */
+  init_dbus_gtypes ();
+
+  result = g_value_array_new (0);
+  
+  ret = dbus_g_proxy_call (helper->polkit_proxy, "CheckAuthorization", &error,
+			   polkit_subject_gtype, helper->polkit_subject,
+			   G_TYPE_STRING, action_id,
+			   polkit_details_gtype, helper->polkit_details,
+			   G_TYPE_UINT, 0, 
+			   G_TYPE_STRING, NULL,
+			   G_TYPE_INVALID,
+			   polkit_result_gtype, &result,
+			   G_TYPE_INVALID);
+
+  if ( G_LIKELY (ret) )
+    {
+      g_value_init (&result_val, polkit_result_gtype);
+      g_value_set_static_boxed (&result_val, result);
+
+      dbus_g_type_struct_get (&result_val,
+			      0, &is_authorized,
+			      G_MAXUINT);
+    }
+  else if ( error )
+    {
+      g_warning ("'CheckAuthorization' failed with %s", error->message);
+      g_error_free (error);
+  
+    }
+
+  g_value_array_free (result);
+  return is_authorized;
+}
+#endif /*ENABLE_POLKIT*/
+
+/**
+ *xfsm_shutdown_helper_check_backends:
+ * 
+ * Try to check what is the best available backend to use
+ * Supported: ConsoleKit, HAL, upower and sudo.
+ *
+ **/
+static void
+xfsm_shutdown_helper_check_backends (XfsmShutdownHelper *helper)
+{
+#ifdef ENABLE_POLKIT
+  /*if polkit data was successfully initialized*/
+  gboolean polkit_ok = FALSE;
+#endif
+
+#ifdef ENABLE_UPOWER
+  /*Check upower (formely devicekit-power)*/
+  if ( xfsm_shutdown_helper_check_upower (helper) )
+    helper->sleep_backend = XFSM_SLEEP_BACKEND_UPOWER;
+#endif /* ENABLE_UPOWER */
+
+#ifdef ENABLE_CONSOLE_KIT
+  if ( xfsm_shutdown_helper_check_console_kit (helper) )
+    {
+      helper->shutdown_backend = XFSM_SHUTDOWN_BACKEND_CONSOLE_KIT;
+      /*ConsoleKit doesn't use Polkit*/
+      helper->auth_shutdown = helper->can_shutdown;
+      helper->auth_restart  = helper->can_restart;
+    }
+#endif
+
+  if ( helper->sleep_backend  == XFSM_SLEEP_BACKEND_UPOWER )
+    {
+#ifdef ENABLE_POLKIT
+      
+      polkit_ok = xfsm_shutdown_helper_init_polkit_data (helper);
+      
+      if ( polkit_ok )
+	{
+	  const gchar *action_hibernate, *action_suspend;
+	  
+	  if ( helper->devkit_is_upower )
+	    {
+	      action_hibernate = "org.freedesktop.upower.suspend";
+	      action_suspend   = "org.freedesktop.upower.hibernate";
+	    }
+	  else
+	    {
+	      action_hibernate = "org.freedesktop.devicekit.power.hibernate";
+	      action_suspend   = "org.freedesktop.devicekit.power.suspend";
+	    }
+      
+	  helper->auth_hibernate =
+	    xfsm_shutdown_helper_check_authorization (helper,
+						      action_hibernate);
+	  helper->auth_suspend =
+	    xfsm_shutdown_helper_check_authorization (helper,
+						      action_suspend);
+	}
+      else
+	{
+	  helper->auth_hibernate = TRUE;
+	  helper->auth_suspend   = TRUE;
+	}
+#else
+      helper->auth_hibernate = TRUE;
+      helper->auth_suspend   = TRUE;
+#endif /* ENABLE_POLKIT */
+    }
+
+  /* 
+   * Use HAL just as a fallback.
+   */
+#ifdef ENABLE_HAL
+  if ( helper->sleep_backend == XFSM_SLEEP_BACKEND_NOT_SUPPORTED ||
+       helper->shutdown_backend == XFSM_SHUTDOWN_BACKEND_NOT_SUPPORTED )
+    {
+      if ( xfsm_shutdown_helper_check_hal (helper) )
+	{
+	  if ( helper->shutdown_backend == XFSM_SHUTDOWN_BACKEND_NOT_SUPPORTED )
+	    helper->shutdown_backend = XFSM_SHUTDOWN_BACKEND_HAL;
+	  
+	  if ( helper->sleep_backend == XFSM_SLEEP_BACKEND_NOT_SUPPORTED )
+	    helper->sleep_backend    = XFSM_SLEEP_BACKEND_HAL;
+	}
+    }
+#endif
+
+  /* Fallback for sudo */
+  if ( helper->shutdown_backend == XFSM_SHUTDOWN_BACKEND_NOT_SUPPORTED )
+    {
+      if (xfsm_shutdown_helper_check_sudo (helper) )
+	{
+	  helper->shutdown_backend = XFSM_SHUTDOWN_BACKEND_SUDO;
+	  helper->can_shutdown  = TRUE;
+	  helper->can_restart   =  TRUE;
+	  helper->auth_shutdown = TRUE;
+	  helper->auth_restart  = TRUE;
+	}
+    }
+
+#ifdef DEBUG
+  {
+    const gchar *shutdown_str[] =  {"Shutdown not supported",
+				    "Using ConsoleKit for shutdown",
+				    "Using HAL for shutdown",
+				    "Using Sudo for shutdown",
+				    NULL};
+    
+    const gchar *sleep_str[] = {"Sleep not supported",
+				"Using UPower for sleep",
+				"Using HAL for sleep",
+				"Using Sudo for sleep",
+				NULL};
+
+    g_debug ("%s", shutdown_str[helper->shutdown_backend]);
+    g_debug ("%s", sleep_str[helper->sleep_backend]);
+
+    g_debug ("can_shutdown=%d can_restart=%d can_hibernate=%d can_suspend=%d",
+	     helper->can_shutdown, helper->can_restart, 
+	     helper->can_hibernate, helper->can_suspend);
+    
+    g_debug ("auth_shutdown=%d auth_restart=%d auth_hibernate=%d auth_suspend=%d",
+	     helper->auth_shutdown, helper->auth_restart,
+	     helper->auth_hibernate, helper->auth_suspend);
+  }
+#endif
+
+#ifdef ENABLE_POLKIT
+
+  if ( polkit_ok )
+    {
+      g_hash_table_destroy (helper->polkit_details);
+      g_hash_table_destroy (helper->polkit_subject_hash);
+      g_value_array_free (helper->polkit_subject);
+    }
+
+#endif
+
 }
 
+static void
+xfsm_shutdown_helper_class_init (XfsmShutdownHelperClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  
+  object_class->finalize = xfsm_shutdown_helper_finalize;
+    
+  object_class->get_property = xfsm_shutdown_helper_get_property;
+  object_class->set_property = xfsm_shutdown_helper_set_property;
 
+  /**
+   * XfsmShutdownHelper::authorized-to-shutdown
+   * 
+   * Whether the user is allowed to preform shutdown.
+   **/
+  g_object_class_install_property (object_class,
+				   PROP_AUTHORIZED_TO_SHUTDOWN,
+				   g_param_spec_boolean ("authorized-to-shutdown",
+							 NULL, NULL,
+							 FALSE,
+							 G_PARAM_READABLE));
 
-gboolean
-xfsm_shutdown_helper_send_password (XfsmShutdownHelper *helper,
-                                    const gchar        *password)
+  /**
+   * XfsmShutdownHelper::authorized-to-reboot
+   * 
+   * Whether the user is allowed to preform reboot.
+   **/
+  g_object_class_install_property (object_class,
+				   PROP_AUTHORIZED_TO_RESTART,
+				   g_param_spec_boolean ("authorized-to-restart",
+							 NULL, NULL,
+							 FALSE,
+							 G_PARAM_READABLE));
+
+  /**
+   * XfsmShutdownHelper::authorized-to-suspend
+   * 
+   * Whether the user is allowed to preform suspend.
+   **/
+  g_object_class_install_property (object_class,
+				   PROP_AUTHORIZED_TO_SUSPEND,
+				   g_param_spec_boolean ("authorized-to-suspend",
+							 NULL, NULL,
+							 FALSE,
+							 G_PARAM_READABLE));
+
+  /**
+   * XfsmShutdownHelper::authorized-to-hibernate
+   * 
+   * Whether the user is allowed to preform hibernate.
+   **/
+  g_object_class_install_property (object_class,
+				   PROP_AUTHORIZED_TO_HIBERNATE,
+				   g_param_spec_boolean ("authorized-to-hibernate",
+							 NULL, NULL,
+							 FALSE,
+							 G_PARAM_READABLE));
+  
+  /**
+   * XfsmShutdownHelper::can-shutdown
+   * 
+   * Whether the system can do shutdown.
+   **/
+  g_object_class_install_property (object_class,
+				   PROP_CAN_SHUTDOWN,
+				   g_param_spec_boolean ("can-shutdown",
+							 NULL, NULL,
+							 FALSE,
+							 G_PARAM_READABLE));
+
+  /**
+   * XfsmShutdownHelper::can-restart
+   * 
+   * Whether the system can do restart.
+   **/
+  g_object_class_install_property (object_class,
+				   PROP_CAN_RESTART,
+				   g_param_spec_boolean ("can-restart",
+							 NULL, NULL,
+							 FALSE,
+							 G_PARAM_READABLE));
+
+  /**
+   * XfsmShutdownHelper::can-suspend
+   * 
+   * Whether the system can do suspend.
+   **/
+  g_object_class_install_property (object_class,
+				   PROP_CAN_SUSPEND,
+				   g_param_spec_boolean ("can-suspend",
+							 NULL, NULL,
+							 FALSE,
+							 G_PARAM_READABLE));
+  /**
+   * XfsmShutdownHelper::can-hibernate
+   * 
+   * Whether the system can do hibernate.
+   **/
+  g_object_class_install_property (object_class,
+				   PROP_CAN_HIBERNATE,
+				   g_param_spec_boolean ("can-hibernate",
+							 NULL, NULL,
+							 FALSE,
+							 G_PARAM_READABLE));
+
+  /**
+   * XfsmShutdownHelper::user-can-shutdown
+   * 
+   * Whether the user is allowed and the system can shutdown.
+   **/
+  g_object_class_install_property (object_class,
+				   PROP_USER_CAN_SHUTDOWN,
+				   g_param_spec_boolean ("user-can-shutdown",
+							 NULL, NULL,
+							 FALSE,
+							 G_PARAM_READABLE));
+
+  /**
+   * XfsmShutdownHelper::user-can-restart
+   * 
+   * Whether the user is allowed and the system can restart.
+   **/
+  g_object_class_install_property (object_class,
+				   PROP_USER_CAN_RESTART,
+				   g_param_spec_boolean ("user-can-restart",
+							 NULL, NULL,
+							 FALSE,
+							 G_PARAM_READABLE));
+
+  /**
+   * XfsmShutdownHelper::user-can-suspend
+   * 
+   * Whether the user is allowed and the system can suspend.
+   **/
+  g_object_class_install_property (object_class,
+				   PROP_USER_CAN_SUSPEND,
+				   g_param_spec_boolean ("user-can-suspend",
+							 NULL, NULL,
+							 FALSE,
+							 G_PARAM_READABLE));
+  /**
+   * XfsmShutdownHelper::user-can-hibernate
+   * 
+   * Whether the user is allowed and the system can hibernate.
+   **/
+  g_object_class_install_property (object_class,
+				   PROP_USER_CAN_HIBERNATE,
+				   g_param_spec_boolean ("user-can-hibernate",
+							 NULL, NULL,
+							 FALSE,
+							 G_PARAM_READABLE));
+
+  /**
+   * XfsmShutdownHelper::require-password
+   * 
+   * Whether the shutdown operation requires a password to
+   * pass to sudo.
+   **/
+  g_object_class_install_property (object_class,
+				   PROP_REQUIRE_PASSWORD,
+				   g_param_spec_boolean ("require-password",
+							 NULL, NULL,
+							 FALSE,
+							 G_PARAM_READABLE));
+
+}
+
+static void
+xfsm_shutdown_helper_init (XfsmShutdownHelper *helper)
+{
+  GError *error = NULL;
+
+#ifdef ENABLE_POLKIT
+  helper->polkit_proxy     = NULL;
+  helper->polkit_subject   = NULL;
+  helper->polkit_details   = NULL;
+  helper->polkit_subject_hash = NULL;
+#endif
+
+  helper->sudo             = NULL;
+  helper->infile           = NULL;
+  helper->outfile          = NULL;
+  helper->pid              = 0;
+  helper->require_password = FALSE;
+
+  helper->sleep_backend    = XFSM_SLEEP_BACKEND_NOT_SUPPORTED;
+  helper->shutdown_backend = XFSM_SHUTDOWN_BACKEND_NOT_SUPPORTED;
+
+  helper->auth_shutdown    = FALSE;
+  helper->auth_restart     = FALSE;
+  helper->auth_suspend     = FALSE;
+  helper->auth_hibernate   = FALSE;
+  helper->can_shutdown     = FALSE;
+  helper->can_restart      = FALSE;
+  helper->can_suspend      = FALSE;
+  helper->can_hibernate    = FALSE;
+
+  helper->system_bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
+
+  if ( G_LIKELY (helper->system_bus) )
+    {
+      xfsm_shutdown_helper_check_backends (helper);
+    }
+  else
+    /* Unable to connect to the system bus, just try sudo*/
+    {
+      g_critical ("Failed to connect to the system bus : %s", error->message);
+      g_error_free (error);
+      if ( xfsm_shutdown_helper_check_sudo (helper) )
+	helper->shutdown_backend = XFSM_SHUTDOWN_BACKEND_SUDO;
+    }
+}
+
+static void xfsm_shutdown_helper_set_property (GObject *object,
+					       guint prop_id,
+					       const GValue *value,
+					       GParamSpec *pspec)
+{
+  G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+}
+
+static void xfsm_shutdown_helper_get_property (GObject *object,
+                             guint prop_id,
+                             GValue *value,
+                             GParamSpec *pspec)
+{
+  XfsmShutdownHelper *helper;
+
+  helper = XFSM_SHUTDOWN_HELPER (object);
+  
+  switch (prop_id)
+    {
+    case PROP_AUTHORIZED_TO_SHUTDOWN:
+      g_value_set_boolean (value, helper->auth_shutdown);
+      break;
+    case PROP_AUTHORIZED_TO_RESTART:
+      g_value_set_boolean (value, helper->auth_restart);
+      break;
+    case PROP_AUTHORIZED_TO_SUSPEND:
+      g_value_set_boolean (value, helper->auth_suspend);
+      break;
+    case PROP_AUTHORIZED_TO_HIBERNATE:
+      g_value_set_boolean (value, helper->auth_hibernate);
+      break;
+    case PROP_CAN_SUSPEND:
+      g_value_set_boolean (value, helper->can_suspend);
+      break;
+    case PROP_CAN_HIBERNATE:
+      g_value_set_boolean (value, helper->can_hibernate);
+      break;
+    case PROP_CAN_RESTART:
+      g_value_set_boolean (value, helper->can_restart);
+      break;
+    case PROP_CAN_SHUTDOWN:
+      g_value_set_boolean (value, helper->can_shutdown);
+      break;
+    case PROP_USER_CAN_SUSPEND:
+      g_value_set_boolean (value, helper->can_suspend && helper->auth_suspend);
+      break;
+    case PROP_USER_CAN_HIBERNATE:
+      g_value_set_boolean (value, helper->can_hibernate && helper->auth_hibernate);
+      break;
+    case PROP_USER_CAN_RESTART:
+      g_value_set_boolean (value, helper->can_restart && helper->auth_restart);
+      break;
+    case PROP_USER_CAN_SHUTDOWN:
+      g_value_set_boolean (value, helper->can_shutdown && helper->auth_shutdown);
+      break;
+    case PROP_REQUIRE_PASSWORD:
+      g_value_set_boolean (value, helper->require_password);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      break;
+    }
+}
+
+static void
+xfsm_shutdown_helper_finalize (GObject *object)
+{
+  XfsmShutdownHelper *helper;
+  gint status;
+
+  helper = XFSM_SHUTDOWN_HELPER (object);
+
+#ifdef ENABLE_POLKIT
+  if ( helper->polkit_proxy )
+    g_object_unref (helper->polkit_proxy);
+#endif
+
+  if ( helper->system_bus )
+    dbus_g_connection_unref (helper->system_bus);
+  
+  if (helper->infile != NULL)
+    fclose (helper->infile);
+  
+  if (helper->outfile != NULL)
+    fclose (helper->outfile);
+  
+  if (helper->pid > 0)
+    waitpid (helper->pid, &status, 0);
+      
+  g_free (helper->sudo);
+
+  G_OBJECT_CLASS (xfsm_shutdown_helper_parent_class)->finalize (object);
+}
+
+/**
+ * xfsm_shutdown_helper_upower_sleep:
+ * @helper: a #XfsmShutdownHelper,
+ * @action: 'Hibernate' or 'Suspend'
+ * @error: a #GError
+ *
+ * 
+ **/
+#ifdef ENABLE_UPOWER
+static gboolean
+xfsm_shutdown_helper_upower_sleep (XfsmShutdownHelper *helper,
+				   const gchar *action,
+				   GError **error)
+{
+  DBusGProxy *proxy;
+  GError *error_local = NULL;
+  const gchar *name, *path, *iface;
+  gboolean ret;
+
+  if ( helper->devkit_is_upower )
+    {
+      name = "org.freedesktop.UPower";
+      path = "/org/freedesktop/UPower";
+      iface = "org.freedesktop.Power";
+    }
+  else
+    {
+      name = "org.freedesktop.DeviceKit.Power";
+      path = "/org/freedesktop/DeviceKit/Power";
+      iface = "org.freedesktop.DeviceKit.Power";
+    }
+  
+  g_message (G_STRLOC ": Using %s to %s", name, action);
+
+  proxy = dbus_g_proxy_new_for_name (helper->system_bus,
+				     name,
+				     path,
+				     iface);
+				     
+  if ( !proxy )
+    {
+      g_warning ("Failed to create proxy for %s", name);
+      *error = g_error_new (1, 0, "%s %s %s", 
+			    _("Failed to connect to the helper program."),
+			    name,
+			    _("does not exist"));
+      return FALSE;
+    }
+  
+  ret = dbus_g_proxy_call (proxy, action, &error_local,
+			   G_TYPE_INVALID,
+			   G_TYPE_INVALID);
+
+  g_object_unref (proxy);
+
+  if ( !ret )
+    {
+      /* DBus timeout?*/
+      if ( g_error_matches (error_local, DBUS_GERROR, DBUS_GERROR_NO_REPLY) )
+        {
+	  g_error_free (error_local);
+	  return TRUE;
+        }
+      else
+	{
+	  *error = g_error_new (1, 0, "%s", error_local->message);
+	  g_error_free (error_local);
+	  return FALSE;
+	}
+    }
+  
+  return TRUE;
+}
+#endif /*ENABLE_UPOWER*/
+
+/**
+ * xfsm_shutdown_helper_console_kit_shutdown:
+ * @helper: a #XfsmShutdownHelper,
+ * @action: 'Stop' for shutdown and 'Restart' for reboot.
+ * @error: a #GError
+ *
+ * 
+ **/
+#ifdef ENABLE_CONSOLE_KIT
+static gboolean
+xfsm_shutdown_helper_console_kit_shutdown (XfsmShutdownHelper *helper, 
+					   const gchar *action,
+					   GError **error)
+{
+  DBusGProxy *proxy;
+  GError *error_local = NULL;
+  gboolean ret;
+
+  g_message (G_STRLOC ": Using ConsoleKit to %s", action);
+  
+  proxy = dbus_g_proxy_new_for_name (helper->system_bus,
+				     "org.freedesktop.ConsoleKit",
+				     "/org/freedesktop/ConsoleKit/Manager",
+				     "org.freedesktop.ConsoleKit.Manager");
+  
+  if (!proxy)
+    {
+      g_warning ("Failed to create proxy for 'org.freedesktop.ConsoleKit'");
+      *error = g_error_new (1, 0, "%s %s %s", 
+			    _("Failed to connect to the helper program."),
+			    "org.freedesktop.ConsoleKit",
+			    _("does not exist"));
+      return FALSE;
+    }
+  
+  ret = dbus_g_proxy_call (proxy, action, &error_local,
+			   G_TYPE_INVALID,
+			   G_TYPE_INVALID);
+
+  g_object_unref (proxy);
+  
+  if ( !ret )
+    {
+      *error = g_error_new (1, 0, "%s", error_local->message);
+      g_error_free (error_local);
+       
+      return FALSE;
+    }
+  
+  return TRUE;
+}
+#endif /*ENABLE_CONSOLE_KIT*/
+
+/**
+ * xfsm_shutdown_helper_hal_send:
+ * @helper: a #XfsmShutdownHelper,
+ * @action: 'Reboot' 'Shutdown' 'Hibernate' 'Suspend'
+ * @error: a #GError
+ *
+ **/
+#ifdef ENABLE_HAL
+static gboolean
+xfsm_shutdown_helper_hal_send (XfsmShutdownHelper *helper,
+			       const gchar *action,
+			       GError **error)
+{
+  DBusGProxy *proxy;
+  GError *error_local = NULL;
+  gboolean ret;
+  gint return_code;
+  
+  g_message (G_STRLOC ": Using ConsoleKit to %s", action);
+
+  proxy = dbus_g_proxy_new_for_name (helper->system_bus,
+				     "org.freedesktop.Hal",
+				     "/org/freedesktop/Hal/devices/computer",
+				     "org.freedesktop.Hal.Device.SystemPowerManagement");
+
+  if ( !proxy )
+    {
+      g_warning ("Failed to create proxy for 'org.freedesktop.Hal'");
+      *error = g_error_new (1, 0, "%s %s %s", 
+			    _("Failed to connect to the helper program."),
+			    "org.freedesktop.Hal",
+			    _("does not exist"));
+      return FALSE;
+    }
+
+  if (!g_strcmp0 (action, "Suspend"))
+    {
+      gint seconds = 0;
+      ret = dbus_g_proxy_call (proxy, action, &error_local,
+			       G_TYPE_INT, seconds,
+			       G_TYPE_INVALID,
+			       G_TYPE_INT, &return_code,
+			       G_TYPE_INVALID);
+    }
+  else
+    {
+      ret = dbus_g_proxy_call (proxy, action, &error_local,
+			       G_TYPE_INVALID,
+			       G_TYPE_INT, &return_code,
+			       G_TYPE_INVALID);
+    }
+
+  g_object_unref (proxy);
+
+  if ( !ret )
+    {
+      /* A D-Bus timeout? */
+      if ( g_error_matches (error_local, DBUS_GERROR, DBUS_GERROR_NO_REPLY) )
+	{
+	  g_error_free (error_local);
+	  return TRUE;
+	}
+      else
+	{
+	  *error = g_error_new (1, 0, "%s", error_local->message);
+	  g_error_free (error_local);
+	  return FALSE;
+	}
+    }
+  
+  return TRUE;
+}
+#endif /*ENABLE_HAL*/
+
+/**
+ * xfsm_shutdown_helper_sudo_send:
+ *
+ *
+ **/
+static gboolean
+xfsm_shutdown_helper_sudo_send (XfsmShutdownHelper *helper,
+				const gchar *action,
+				GError **error)
+{
+  gchar  response[256];
+  
+  fprintf (helper->outfile, "%s\n", action);
+  fflush (helper->outfile);
+
+  g_message (G_STRLOC ": Using ConsoleKit to %s",action);
+  
+  if (ferror (helper->outfile))
+    {
+      if (errno == EINTR)
+	{
+	  /* probably succeeded but the helper got killed */
+	  return TRUE;
+	}
+      
+      *error = g_error_new (G_FILE_ERROR, g_file_error_from_errno (errno),
+			    _("Error sending command to shutdown helper: %s"),
+			    strerror (errno));
+      return FALSE;
+    }
+
+  if (fgets (response, 256, helper->infile) == NULL)
+    {
+      if (errno == EINTR)
+	{
+	  /* probably succeeded but the helper got killed */
+	  return TRUE;
+	}
+      
+      *error = g_error_new (G_FILE_ERROR, g_file_error_from_errno (errno),
+                           _("Error receiving response from shutdown helper: %s"),
+			    strerror (errno));
+      
+      return FALSE;
+    }
+
+  if (strncmp (response, "SUCCEED", 7) != 0)
+    {
+      *error = g_error_new (G_FILE_ERROR, G_FILE_ERROR_FAILED,
+			    _("Shutdown command failed"));
+      
+      return FALSE;
+    
+    }
+  return TRUE;
+}
+
+/**
+ * xfsm_shutdown_helper_new:
+ *
+ * 
+ **/
+XfsmShutdownHelper *
+xfsm_shutdown_helper_new (void)
+{
+  XfsmShutdownHelper *xfsm_shutdown_helper = NULL;
+
+  xfsm_shutdown_helper = g_object_new (XFSM_TYPE_SHUTDOWN_HELPER, NULL);
+  
+  return xfsm_shutdown_helper;
+}
+
+/**
+ * xfsm_shutdown_helper_send_password:
+ *
+ * Send password to sudo
+ *
+ **/
+gboolean xfsm_shutdown_helper_send_password (XfsmShutdownHelper *helper, const gchar *password)
 {
   gssize result;
   gchar  buffer[1024];
@@ -692,10 +1684,9 @@ xfsm_shutdown_helper_send_password (XfsmShutdownHelper *helper,
   gsize  bytes;
   gint   fd;
 
-  g_return_val_if_fail (helper != NULL, FALSE);
   g_return_val_if_fail (password != NULL, FALSE);
-  g_return_val_if_fail (helper->backend == XFSM_SHUTDOWN_SUDO, FALSE);
-  g_return_val_if_fail (helper->need_password, FALSE);
+  g_return_val_if_fail (helper->shutdown_backend == XFSM_SHUTDOWN_BACKEND_SUDO, FALSE);
+  g_return_val_if_fail (helper->require_password, FALSE);
 
   g_snprintf (buffer, 1024, "%s\n", password);
   length = strlen (buffer);
@@ -749,7 +1740,7 @@ xfsm_shutdown_helper_send_password (XfsmShutdownHelper *helper,
             }
           else if (strncmp (buffer + (length - 15), "XFSM_SUDO_DONE ", 15) == 0)
             {
-              helper->need_password = FALSE;
+              helper->require_password = FALSE;
               break;
             }
         } 
@@ -758,187 +1749,141 @@ xfsm_shutdown_helper_send_password (XfsmShutdownHelper *helper,
   return TRUE;
 }
 
-
-
-gboolean
-xfsm_shutdown_helper_send_command (XfsmShutdownHelper *helper,
-                                   XfsmShutdownType command,
-                                   GError **error)
+/**
+ * xfsm_shutdown_helper_shutdown:
+ *
+ *
+ **/
+gboolean xfsm_shutdown_helper_shutdown (XfsmShutdownHelper *helper, GError **error)
 {
-  const gchar *command_str = NULL;
-  gchar         response[256];
-
-  g_return_val_if_fail (helper != NULL, FALSE);
-  g_return_val_if_fail (!helper->need_password, FALSE);
   g_return_val_if_fail (!error || !*error, FALSE);
-  g_return_val_if_fail (command != XFSM_SHUTDOWN_ASK, FALSE);
-
-  if (helper->backend == XFSM_SHUTDOWN_POWER_MANAGER)
+  
+#ifdef ENABLE_CONSOLE_KIT
+  if ( helper->shutdown_backend == XFSM_SHUTDOWN_BACKEND_CONSOLE_KIT )
     {
-        return xfsm_shutdown_helper_pm_send (helper, command, error);
+      return xfsm_shutdown_helper_console_kit_shutdown (helper, "Stop", error);
     }
-  else if (helper->backend == XFSM_SHUTDOWN_HAL)
+#endif
+
+#ifdef ENABLE_HAL
+  if ( helper->shutdown_backend == XFSM_SHUTDOWN_BACKEND_HAL )
     {
-      /* well, send the command to HAL then */
-      return xfsm_shutdown_helper_hal_send (helper, command, error);
+      return xfsm_shutdown_helper_hal_send (helper, "Shutdown", error);
     }
-  else
-    {
-      /* we don't support hibernate or suspend without HAL */
-      switch (command)
-        {
-          case XFSM_SHUTDOWN_HALT:
-            command_str = "POWEROFF";
-            break;
+#endif
+  
+  /*Use Sudo mode*/
+  return xfsm_shutdown_helper_sudo_send (helper, "POWEROFF", error);
 
-          case XFSM_SHUTDOWN_REBOOT:
-            command_str = "REBOOT";
-            break;
-
-          case XFSM_SHUTDOWN_SUSPEND:
-          case XFSM_SHUTDOWN_HIBERNATE:
-            if (error)
-              {
-                g_set_error (error, DBUS_GERROR, DBUS_GERROR_SERVICE_UNKNOWN,
-                             _("Suspend and Hibernate are only supported through HAL, which is unavailable"));
-              }
-            /* fall through */
-          default:
-            return FALSE;
-        }
-
-      /* send it to our associated sudo'ed process */
-      fprintf (helper->outfile, "%s\n", command_str);
-      fflush (helper->outfile);
-
-      if (ferror (helper->outfile))
-        {
-          if (errno == EINTR)
-            {
-              /* probably succeeded but the helper got killed */
-              return TRUE;
-            }
-
-          if (error)
-            {
-              g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                           _("Error sending command to shutdown helper: %s"),
-                           strerror (errno));
-            }
-          return FALSE;
-        }
-
-      if (fgets (response, 256, helper->infile) == NULL)
-        {
-          if (errno == EINTR)
-            {
-              /* probably succeeded but the helper got killed */
-              return TRUE;
-            }
-
-          if (error)
-            {
-              g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                           _("Error receiving response from shutdown helper: %s"),
-                           strerror (errno));
-            }
-          return FALSE;
-        }
-
-      if (strncmp (response, "SUCCEED", 7) != 0)
-        {
-          if (error)
-            {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Shutdown command failed"));
-            }
-          return FALSE;
-        }
-    }
-
-  return TRUE;
 }
 
-
-
-gboolean
-xfsm_shutdown_helper_supports (XfsmShutdownHelper *helper,
-                               XfsmShutdownType shutdown_type)
+/**
+ * xfsm_shutdown_helper_restart:
+ *
+ *
+ **/
+gboolean xfsm_shutdown_helper_restart (XfsmShutdownHelper *helper, GError **error)
 {
-  const char *method_name = NULL;
-  guint i;
+  g_return_val_if_fail (!error || !*error, FALSE);
 
-  if (!helper)
-    return FALSE;
-
-  switch (helper->backend)
+#ifdef ENABLE_CONSOLE_KIT
+  if ( helper->shutdown_backend == XFSM_SHUTDOWN_BACKEND_CONSOLE_KIT )
     {
-      case XFSM_SHUTDOWN_POWER_MANAGER:
-        for (i = 0; i < G_N_ELEMENTS (command_name_map); i++)
-          {
-            if (command_name_map[i].command == shutdown_type)
-              {
-                method_name = command_name_map[i].name;
-                break;
-              }
-          }
+      return xfsm_shutdown_helper_console_kit_shutdown (helper, "Restart", error);
+    }
+#endif
 
-        if (G_UNLIKELY (!method_name))
-          return FALSE;
+#ifdef ENABLE_HAL
+  if ( helper->shutdown_backend == XFSM_SHUTDOWN_BACKEND_HAL )
+    {
+      return xfsm_shutdown_helper_hal_send (helper, "Reboot", error);
+    }
+#endif
 
-        return xfsm_shutdown_helper_check_pm_cap (method_name);
+  return xfsm_shutdown_helper_sudo_send (helper, "REBOOT", error);
 
-      case XFSM_SHUTDOWN_HAL:
-        switch (shutdown_type)
-          {
-            case XFSM_SHUTDOWN_SUSPEND:
-              return xfsm_shutdown_helper_check_hal_property ("/org/freedesktop/Hal/devices/computer",
-                                                              "power_management.can_suspend");
+}
 
-            case XFSM_SHUTDOWN_HIBERNATE:
-              return xfsm_shutdown_helper_check_hal_property ("/org/freedesktop/Hal/devices/computer",
-                                                              "power_management.can_hibernate");
+/**
+ * xfsm_shutdown_helper_suspend:
+ *
+ **/
+gboolean xfsm_shutdown_helper_suspend (XfsmShutdownHelper *helper, GError **error)
+{
+  g_return_val_if_fail (!error || !*error, FALSE);
 
-            default:
-              return TRUE;
-          }
-        break;
+#ifdef ENABLE_UPOWER
+  if ( helper->sleep_backend == XFSM_SLEEP_BACKEND_UPOWER )
+    {
+      return xfsm_shutdown_helper_upower_sleep (helper, "Suspend", error);
+    }
+#endif
 
-      case XFSM_SHUTDOWN_SUDO:
-        switch (shutdown_type)
-          {
-            case XFSM_SHUTDOWN_SUSPEND:
-            case XFSM_SHUTDOWN_HIBERNATE:
-              return FALSE;
+#ifdef ENABLE_HAL
+  if ( helper->shutdown_backend == XFSM_SHUTDOWN_BACKEND_HAL )
+    {
+      return xfsm_shutdown_helper_hal_send (helper, "Suspend", error);
+    }
+#endif
 
-            default:
-              return TRUE;
-          }
-        break;
+  *error = g_error_new (1, 0, "%s", _("Suspend failed, no backend supported"));
+
+  return FALSE;
+}
+
+/**
+ * xfsm_shutdown_helper_hibernate:
+ *
+ **/
+gboolean xfsm_shutdown_helper_hibernate (XfsmShutdownHelper *helper, GError **error)
+{
+  g_return_val_if_fail (!error || !*error, FALSE);
+
+#ifdef ENABLE_UPOWER
+  if ( helper->sleep_backend == XFSM_SLEEP_BACKEND_UPOWER )
+    {
+      return xfsm_shutdown_helper_upower_sleep (helper, "Hibernate", error);
+    }
+#endif
+
+#ifdef ENABLE_HAL
+  if ( helper->shutdown_backend == XFSM_SHUTDOWN_BACKEND_HAL )
+    {
+      return xfsm_shutdown_helper_hal_send (helper, "Hibernate", error);
+    }
+#endif
+
+  *error = g_error_new (1, 0, "%s", _("Hibernate failed, no backend supported"));
+
+  return FALSE;
+}
+
+/**
+ * xfsm_shutdown_helper_send_command:
+ *
+ **/
+gboolean xfsm_shutdown_helper_send_command (XfsmShutdownHelper *helper,
+					    XfsmShutdownType shutdown_type,
+					    GError **error)
+{
+  g_return_val_if_fail (!error || !*error, FALSE);
+  
+  switch (shutdown_type)
+    {
+    case XFSM_SHUTDOWN_HALT:
+      return xfsm_shutdown_helper_shutdown (helper, error);
+    case XFSM_SHUTDOWN_REBOOT:
+      return xfsm_shutdown_helper_restart (helper, error);
+    case XFSM_SHUTDOWN_HIBERNATE:
+      return xfsm_shutdown_helper_hibernate (helper, error);
+    case XFSM_SHUTDOWN_SUSPEND:
+      return xfsm_shutdown_helper_suspend (helper, error);
+    default:
+      g_warn_if_reached ();
+      break;
     }
 
-  g_assert_not_reached();
+  *error = g_error_new (1, 0, "%s", _("Shutdown Command not found"));
+
+  return FALSE;
 }
-
-
-
-void
-xfsm_shutdown_helper_destroy (XfsmShutdownHelper *helper)
-{
-  gint status;
-
-  g_return_if_fail (helper != NULL);
-
-  if (helper->infile != NULL)
-    fclose (helper->infile);
-  if (helper->outfile != NULL)
-    fclose (helper->outfile);
-
-  if (helper->pid > 0)
-    waitpid (helper->pid, &status, 0);
-
-  g_free (helper->sudo);
-  g_free (helper);
-}
-
-

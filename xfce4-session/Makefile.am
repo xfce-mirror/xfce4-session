@@ -65,7 +65,7 @@ xfce4_session_CFLAGS =							\
 	-DLIBDIR=\"$(libdir)\"						\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
 	-DSYSCONFDIR=\"$(sysconfdir)\"					\
-	-DXFSM_SHUTDOWN_HELPER=\"$(libexecdir)/xfsm-shutdown-helper\"
+	-DXFSM_SHUTDOWN_HELPER_CMD=\"$(libexecdir)/xfsm-shutdown-helper\"
 
 xfce4_session_LDADD =							\
 	$(top_builddir)/libxfsm/libxfsm-4.6.la				\

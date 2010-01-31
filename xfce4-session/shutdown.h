@@ -27,9 +27,10 @@
 #include "xfsm-global.h"
 
 /* prototypes */
-extern gboolean	shutdownDialog(const gchar *sessionName,
+gboolean     shutdownDialog   (const gchar *sessionName,
                                XfsmShutdownType *shutdownType,
                                gboolean *saveSession);
-extern gint	xfsm_shutdown(XfsmShutdownType type);
+
+gint	     xfsm_shutdown    (XfsmShutdownType type);
 
 #endif	/* !__XFSM_SHUTDOWN_H__ */

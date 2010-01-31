@@ -118,10 +118,13 @@ struct _XfsmManager
   guint            die_timeout_id;
 
   DBusGConnection *session_bus;
-  DBusGConnection *system_bus;
 
+
+#ifdef ENABLE_CONSOLE_KIT
+  DBusGConnection *system_bus;
   DBusGProxy      *consolekit_proxy;
   gchar           *consolekit_cookie;
+#endif
 };
 
 typedef struct _XfsmManagerClass
@@ -177,8 +180,10 @@ static void       xfsm_manager_dbus_class_init (XfsmManagerClass *klass);
 static void       xfsm_manager_dbus_init (XfsmManager *manager);
 static void       xfsm_manager_dbus_cleanup (XfsmManager *manager);
 
+#ifdef ENABLE_CONSOLE_KIT
 static void       xfsm_manager_consolekit_init (XfsmManager *manager);
 static void       xfsm_manager_consolekit_cleanup (XfsmManager *manager);
+#endif /*ENABLE_CONSOLE_KIT*/
 
 static guint signals[N_SIGS] = { 0, };
 
@@ -229,15 +234,19 @@ xfsm_manager_class_init (XfsmManagerClass *klass)
 static void
 xfsm_manager_init (XfsmManager *manager)
 {
+#ifdef ENABLE_CONSOLE_KIT
   GError *error = NULL;
+#endif
 
   manager->state = XFSM_MANAGER_STARTUP;
   manager->session_chooser = FALSE;
   manager->failsafe_mode = TRUE;
   manager->shutdown_type = XFSM_SHUTDOWN_LOGOUT;
 
+#ifdef ENABLE_CONSOLE_KIT
   manager->consolekit_proxy  = NULL;
   manager->consolekit_cookie = NULL;
+#endif /*ENABLE_CONSOLE_KIT*/
 
   manager->pending_properties = g_queue_new ();
   manager->starting_properties = g_queue_new ();
@@ -245,17 +254,19 @@ xfsm_manager_init (XfsmManager *manager)
   manager->running_clients = g_queue_new ();
   manager->failsafe_clients = g_queue_new ();
 
+#ifdef ENABLE_CONSOLE_KIT
   manager->system_bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
   
-  if ( manager->system_bus == NULL )
+  if ( G_LIKELY (manager->system_bus == NULL) )
+    {
+      xfsm_manager_consolekit_init (manager);
+    }
+  else if ( error )
     {
       g_warning ("Failed to connect to the system bus : %s", error->message);
       g_error_free (error);
     }
-  else
-    {
-      xfsm_manager_consolekit_init (manager);
-    }
+#endif
 }
 
 static void
@@ -265,10 +276,12 @@ xfsm_manager_finalize (GObject *obj)
 
   xfsm_manager_dbus_cleanup (manager);
 
+#ifdef ENABLE_CONSOLE_KIT
   xfsm_manager_consolekit_cleanup (manager);
   
   if ( manager->system_bus )
     dbus_g_connection_unref (manager->system_bus);
+#endif /*ENABLE_CONSOLE_KIT*/
 
   if (manager->die_timeout_id != 0)
     g_source_remove (manager->die_timeout_id);
@@ -329,6 +342,7 @@ xfsm_manager_new (void)
   return manager;
 }
 
+#ifdef ENABLE_CONSOLE_KIT
 static void xfsm_manager_consolekit_init (XfsmManager *manager)
 {
   GError *error = NULL;
@@ -343,7 +357,6 @@ static void xfsm_manager_consolekit_init (XfsmManager *manager)
       return;
     }
   
-
   manager->consolekit_proxy = dbus_g_proxy_new_for_name (manager->system_bus,
 							 "org.freedesktop.ConsoleKit",
 							 "/org/freedesktop/ConsoleKit/Manager",
@@ -353,6 +366,7 @@ static void xfsm_manager_consolekit_init (XfsmManager *manager)
   if ( G_UNLIKELY (!manager->consolekit_proxy) )
     {
       g_warning ("Failed to create proxy for 'org.freedesktop.ConsoleKit'");
+      return;
     }
 
   ret = dbus_g_proxy_call (manager->consolekit_proxy, "OpenSession", &error,
@@ -360,7 +374,17 @@ static void xfsm_manager_consolekit_init (XfsmManager *manager)
 			   G_TYPE_STRING, &manager->consolekit_cookie,
 			   G_TYPE_INVALID);
 
-  if ( !ret )
+  if ( G_LIKELY (ret) )
+    {
+      /*
+       * ConsoleKit doc says that the leader session should set the cookie
+       * on XDG_SESSION_COOKIE env variable.
+       */
+      g_warn_if_fail (g_setenv ("XDG_SESSION_COOKIE",
+				manager->consolekit_cookie,
+				TRUE));
+    }
+  else if ( error )
     {
       g_warning ("OpenSession on 'org.freedesktop.ConsoleKit' failed with %s", error->message);
       g_error_free (error);
@@ -391,6 +415,8 @@ static void xfsm_manager_consolekit_cleanup (XfsmManager *manager)
       g_object_unref (manager->consolekit_proxy);
     }
 }
+#endif /*ENABLE_CONSOLE_KIT*/
+
 
 static gboolean
 xfsm_manager_startup (XfsmManager *manager)
@@ -1201,13 +1227,11 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
           XfsmShutdownHelper *shutdown_helper;
           GError *error = NULL;
 
-          shutdown_helper = xfsm_shutdown_helper_spawn (&error);
-          if (shutdown_helper == NULL
-              || (!xfsm_shutdown_helper_send_command(shutdown_helper,
-                                                    manager->shutdown_type,
-                                                    &error)
-                  && (error->domain != DBUS_GERROR
-                      || error->code != DBUS_GERROR_NO_REPLY)))
+          shutdown_helper = xfsm_shutdown_helper_new ();
+
+          if (!xfsm_shutdown_helper_send_command (shutdown_helper,
+						  manager->shutdown_type,
+						  &error))
             {
               xfce_message_dialog (NULL, _("Shutdown Failed"),
                                    GTK_STOCK_DIALOG_ERROR,
@@ -1221,8 +1245,8 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
             }
 
           /* clean up and return */
-          if (G_LIKELY (shutdown_helper))
-            xfsm_shutdown_helper_destroy (shutdown_helper);
+	  g_object_unref (shutdown_helper);
+
 
           /* at this point, either we failed to suspend/hibernate, or we
            * successfully suspended/hibernated, and we've been woken back

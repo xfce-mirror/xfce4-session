@@ -143,6 +143,71 @@ else
   AC_MSG_RESULT([yes])
 fi
 
+dnl 
+dnl        D-Bus RUNTIME Dependencies
+dnl 
+
+dnl HAL?
+
+AC_ARG_ENABLE([hal],
+        [AC_HELP_STRING([--disable-hal],
+                [Do not enable HAL (default=enabled)])],
+        [],
+        [ac_cv_enable_hal=yes])
+	
+AC_MSG_CHECKING([whether to build with HAL support])
+if test "x$ac_cv_enable_hal" != "xyes"; then
+    AC_MSG_RESULT([no])
+else
+    AC_DEFINE(ENABLE_HAL, 1 , [HAL support])
+    AC_MSG_RESULT([yes])
+fi
+
+dnl upower?
+
+AC_ARG_ENABLE([upower],
+        [AC_HELP_STRING([--disable-upower],
+                [Do not enable Upower support (formely devicekit-power) (default=enabled)])],
+        [],
+        [ac_cv_enable_upower=yes])
+AC_MSG_CHECKING([whether to build with UPower (formely devicekit-power) support])
+if test "x$ac_cv_enable_upower" != "xyes"; then
+    AC_MSG_RESULT([no])
+else
+    AC_MSG_RESULT([yes])
+    AC_DEFINE(ENABLE_UPOWER, 1 , [UPower support])
+fi
+
+
+dnl consolekit?
+
+AC_ARG_ENABLE([consolekit],
+        [AC_HELP_STRING([--disable-consolekit],
+                [Do not enable ConsoleKit (default=enabled)])],
+        [],
+        [ac_cv_enable_consolekit=yes])
+AC_MSG_CHECKING([whether to build with ConsoleKit support])
+if test "x$ac_cv_enable_consolekit" != "xyes"; then
+    AC_MSG_RESULT([no])
+else
+    AC_DEFINE(ENABLE_CONSOLE_KIT, 1 , [ConsoleKit support])
+    AC_MSG_RESULT([yes])
+fi
+
+dnl Polkit ?
+AC_ARG_ENABLE([polkit],
+        [AC_HELP_STRING([--disable-polkit],
+                [Do not enable PolicyKit support (default=enabled)])],
+        [],
+        [ac_cv_enable_polkit=polkit])
+    AC_MSG_CHECKING([whether to build with polkit support])
+if test "x$ac_cv_enable_polkit" = !"xyes"; then
+    AC_MSG_RESULT([no])
+else
+    AC_MSG_RESULT([yes])
+    AC_DEFINE(ENABLE_POLKIT, 1 , [PolicyKit support])
+fi
+
 dnl check for linux/ioprio.h, and also check that the header actually
 dnl works, as some kernels have bad headers.  using AC_CHECK_HEADERS()
 dnl prints a scary warning with a request to report a bug if it fails,
