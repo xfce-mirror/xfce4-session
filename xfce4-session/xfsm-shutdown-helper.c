@@ -177,7 +177,7 @@ G_DEFINE_TYPE (XfsmShutdownHelper, xfsm_shutdown_helper, G_TYPE_OBJECT)
 
 #ifdef ENABLE_POLKIT
 
-#ifdef HAVE_FREEBSD
+#if defined(__FreeBSD__)
 /**
  * Taken from polkitunixprocess.c code to get process start
  * time from pid.
@@ -202,13 +202,13 @@ get_kinfo_proc (pid_t pid, struct kinfo_proc *p)
 
   return TRUE;
 }
-#endif
+#endif /*if defined(__FreeBSD__)*/
 
 static guint64
 get_start_time_for_pid (pid_t pid)
 {
   guint64 start_time;
-#ifndef HAVE_FREEBSD
+#if !defined(__FreeBSD__)
   gchar *filename;
   gchar *contents;
   size_t length;
@@ -264,7 +264,9 @@ get_start_time_for_pid (pid_t pid)
  out:
   g_free (filename);
   g_free (contents);
-#else
+
+#else /*if !defined(__FreeBSD__)*/
+
   struct kinfo_proc p;
 
   start_time = 0;
