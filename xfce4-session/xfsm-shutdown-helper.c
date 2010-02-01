@@ -335,17 +335,12 @@ xfsm_shutdown_helper_init_polkit_data (XfsmShutdownHelper *helper)
   GValue hash_elem = { 0 };
   gboolean subject_created = FALSE;
   
-  if ( !xfsm_dbus_name_has_owner (dbus_g_connection_get_connection (helper->system_bus), 
-				  "org.freedesktop.PolicyKit1") )
-    {
-      return FALSE;
-    }
-
   helper->polkit_proxy = 
-    dbus_g_proxy_new_for_name (helper->system_bus,
-			       "org.freedesktop.PolicyKit1",
-			       "/org/freedesktop/PolicyKit1/Authority",
-			       "org.freedesktop.PolicyKit1.Authority");
+    dbus_g_proxy_new_for_name_owner (helper->system_bus,
+				     "org.freedesktop.PolicyKit1",
+				     "/org/freedesktop/PolicyKit1/Authority",
+				     "org.freedesktop.PolicyKit1.Authority",
+				     NULL);
 
   if ( !helper->polkit_proxy )
     return FALSE;
@@ -368,10 +363,11 @@ xfsm_shutdown_helper_init_polkit_data (XfsmShutdownHelper *helper)
       gboolean ret;
       gchar *consolekit_session;
       
-      proxy  = dbus_g_proxy_new_for_name (helper->system_bus,
-					  "org.freedesktop.ConsoleKit",
-					  "/org/freedesktop/ConsoleKit/Manager",
-					  "org.freedesktop.ConsoleKit.Manager");
+      proxy  = dbus_g_proxy_new_for_name_owner (helper->system_bus,
+						"org.freedesktop.ConsoleKit",
+						"/org/freedesktop/ConsoleKit/Manager",
+						"org.freedesktop.ConsoleKit.Manager",
+						NULL);
       if ( proxy )
 	{
 	  ret = dbus_g_proxy_call (proxy, "GetSessionForCookie", &error,
@@ -640,32 +636,35 @@ xfsm_shutdown_helper_check_upower (XfsmShutdownHelper *helper)
   iface = "org.freedesktop.Power";
 
   helper->devkit_is_upower = TRUE;
-
-  if ( !xfsm_dbus_name_has_owner (dbus_g_connection_get_connection (helper->system_bus), 
-				  name) )
-    {
-      name = "org.freedesktop.DeviceKit.Power";
-      path = "/org/freedesktop/DeviceKit/Power";
-      iface = "org.freedesktop.DeviceKit.Power";
-      
-      helper->devkit_is_upower = FALSE;
-
-      if ( !xfsm_dbus_name_has_owner (dbus_g_connection_get_connection (helper->system_bus), 
-				      name) )
-	return FALSE;
-    }
   
-  proxy_prop = dbus_g_proxy_new_for_name (helper->system_bus,
-					  name,
-					  path,
-					  DBUS_INTERFACE_PROPERTIES);
-  
+  proxy_prop = dbus_g_proxy_new_for_name_owner (helper->system_bus,
+						name,
+						path,
+						DBUS_INTERFACE_PROPERTIES,
+						NULL);
+
   if ( !proxy_prop )
-    {
-      g_warning ("Failed to create proxy for %s", name);
-      return FALSE;
-    }
-
+  {
+    g_message ("UPower not found, trying DevKitPower");
+    
+    name = "org.freedesktop.DeviceKit.Power";
+    path = "/org/freedesktop/DeviceKit/Power";
+    iface = "org.freedesktop.DeviceKit.Power";
+      
+    helper->devkit_is_upower = FALSE;
+    proxy_prop = dbus_g_proxy_new_for_name_owner (helper->system_bus,
+						  name,
+						  path,
+						  DBUS_INTERFACE_PROPERTIES,
+						  NULL);
+  
+    if ( !proxy_prop )
+      {
+	g_message ("Devkit Power is not running or not installed");
+	return FALSE;
+      }
+  }
+  
   /* The Hash table is a pair of (strings, GValues) */
   g_type_hash_map = dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE);
 
@@ -728,17 +727,11 @@ xfsm_shutdown_helper_check_console_kit (XfsmShutdownHelper *helper)
   DBusGProxy *proxy;
   GError *error = NULL;
 
-  /* Check if D-Bus has "org.freedesktop.ConsoleKit" */
-  if ( !xfsm_dbus_name_has_owner (dbus_g_connection_get_connection (helper->system_bus), 
-				  "org.freedesktop.ConsoleKit") )
-    {
-      return FALSE;
-    }
-
-  proxy = dbus_g_proxy_new_for_name (helper->system_bus,
-				     "org.freedesktop.ConsoleKit",
-				     "/org/freedesktop/ConsoleKit/Manager",
-				     "org.freedesktop.ConsoleKit.Manager");
+  proxy = dbus_g_proxy_new_for_name_owner (helper->system_bus,
+					   "org.freedesktop.ConsoleKit",
+					   "/org/freedesktop/ConsoleKit/Manager",
+					   "org.freedesktop.ConsoleKit.Manager",
+					   NULL);
 
   if (!proxy)
     {
@@ -790,17 +783,12 @@ xfsm_shutdown_helper_check_hal (XfsmShutdownHelper *helper)
   DBusGProxy *proxy_device;
   GError *error = NULL;
 
-  if ( !xfsm_dbus_name_has_owner (dbus_g_connection_get_connection (helper->system_bus), 
-				  "org.freedesktop.Hal") )
-    {
-      return FALSE;
-    }
-
   proxy_power = 
-    dbus_g_proxy_new_for_name (helper->system_bus,
-			       "org.freedesktop.Hal",
-			       "/org/freedesktop/Hal/devices/computer",
-			       "org.freedesktop.Hal.Device.SystemPowerManagement");
+      dbus_g_proxy_new_for_name_owner (helper->system_bus,
+				       "org.freedesktop.Hal",
+				       "/org/freedesktop/Hal/devices/computer",
+				       "org.freedesktop.Hal.Device.SystemPowerManagement",
+				       NULL);
   
   if (!proxy_power)
     {
@@ -849,6 +837,10 @@ xfsm_shutdown_helper_check_hal (XfsmShutdownHelper *helper)
 					    "org.freedesktop.Hal",
 					    "/org/freedesktop/Hal/devices/computer",
 					    "org.freedesktop.Hal.Device");
+
+
+  if ( !proxy_device )
+      return FALSE;
 
   dbus_g_proxy_call (proxy_device, "GetPropertyBoolean", &error,
 		     G_TYPE_STRING, "power_management.can_hibernate",
@@ -1431,18 +1423,17 @@ xfsm_shutdown_helper_upower_sleep (XfsmShutdownHelper *helper,
   
   g_message (G_STRLOC ": Using %s to %s", name, action);
 
-  proxy = dbus_g_proxy_new_for_name (helper->system_bus,
-				     name,
-				     path,
-				     iface);
+  proxy = dbus_g_proxy_new_for_name_owner (helper->system_bus,
+					   name,
+					   path,
+					   iface,
+					   &error_local);
 				     
   if ( !proxy )
     {
-      g_warning ("Failed to create proxy for %s", name);
-      *error = g_error_new (1, 0, "%s %s %s", 
-			    _("Failed to connect to the helper program."),
-			    name,
-			    _("does not exist"));
+      g_warning ("Failed to create proxy for %s : %s", name, error_local->message);
+      g_set_error (error, 1, 0, "%s", error_local->message);
+      g_error_free (error_local);
       return FALSE;
     }
   
@@ -1492,32 +1483,30 @@ xfsm_shutdown_helper_console_kit_shutdown (XfsmShutdownHelper *helper,
 
   g_message (G_STRLOC ": Using ConsoleKit to %s", action);
   
-  proxy = dbus_g_proxy_new_for_name (helper->system_bus,
-				     "org.freedesktop.ConsoleKit",
-				     "/org/freedesktop/ConsoleKit/Manager",
-				     "org.freedesktop.ConsoleKit.Manager");
+  proxy = dbus_g_proxy_new_for_name_owner (helper->system_bus,
+					   "org.freedesktop.ConsoleKit",
+					   "/org/freedesktop/ConsoleKit/Manager",
+					   "org.freedesktop.ConsoleKit.Manager",
+					   &error_local);
   
   if (!proxy)
     {
-      g_warning ("Failed to create proxy for 'org.freedesktop.ConsoleKit'");
-      *error = g_error_new (1, 0, "%s %s %s", 
-			    _("Failed to connect to the helper program."),
-			    "org.freedesktop.ConsoleKit",
-			    _("does not exist"));
+      g_warning ("Failed to create proxy for 'org.freedesktop.ConsoleKit' : %s", error_local->message);
+      g_set_error (error, 1, 0, "%s", error_local->message);
+      g_error_free (error_local);
       return FALSE;
     }
   
   ret = dbus_g_proxy_call (proxy, action, &error_local,
 			   G_TYPE_INVALID,
 			   G_TYPE_INVALID);
-
+  
   g_object_unref (proxy);
   
   if ( !ret )
     {
       *error = g_error_new (1, 0, "%s", error_local->message);
       g_error_free (error_local);
-       
       return FALSE;
     }
   
@@ -1545,18 +1534,16 @@ xfsm_shutdown_helper_hal_send (XfsmShutdownHelper *helper,
   
   g_message (G_STRLOC ": Using ConsoleKit to %s", action);
 
-  proxy = dbus_g_proxy_new_for_name (helper->system_bus,
-				     "org.freedesktop.Hal",
-				     "/org/freedesktop/Hal/devices/computer",
-				     "org.freedesktop.Hal.Device.SystemPowerManagement");
-
+  proxy = dbus_g_proxy_new_for_name_owner (helper->system_bus,
+					   "org.freedesktop.Hal",
+					   "/org/freedesktop/Hal/devices/computer",
+					   "org.freedesktop.Hal.Device.SystemPowerManagement",
+					   &error_local);
   if ( !proxy )
     {
-      g_warning ("Failed to create proxy for 'org.freedesktop.Hal'");
-      *error = g_error_new (1, 0, "%s %s %s", 
-			    _("Failed to connect to the helper program."),
-			    "org.freedesktop.Hal",
-			    _("does not exist"));
+      g_warning ("Failed to create proxy for 'org.freedesktop.Hal' : %s", error_local->message);
+      g_set_error (error, 1, 0, "%s", error_local->message);
+      g_error_free (error_local);
       return FALSE;
     }
 

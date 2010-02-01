@@ -348,19 +348,11 @@ static void xfsm_manager_consolekit_init (XfsmManager *manager)
   GError *error = NULL;
   gboolean ret;
   
-  /* Make sure that consolekit is running*/
-  if ( !xfsm_dbus_name_has_owner (dbus_g_connection_get_connection (manager->system_bus),
-				  "org.freedesktop.ConsoleKit") )
-    {
-      
-      g_message (G_STRLOC "ConsoleKit is not running or not installed");
-      return;
-    }
-  
-  manager->consolekit_proxy = dbus_g_proxy_new_for_name (manager->system_bus,
-							 "org.freedesktop.ConsoleKit",
-							 "/org/freedesktop/ConsoleKit/Manager",
-							 "org.freedesktop.ConsoleKit.Manager");
+  manager->consolekit_proxy = dbus_g_proxy_new_for_name_owner (manager->system_bus,
+							       "org.freedesktop.ConsoleKit",
+							       "/org/freedesktop/ConsoleKit/Manager",
+							       "org.freedesktop.ConsoleKit.Manager",
+							       NULL);
 
   
   if ( G_UNLIKELY (!manager->consolekit_proxy) )
