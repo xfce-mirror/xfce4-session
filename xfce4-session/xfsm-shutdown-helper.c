@@ -1453,7 +1453,7 @@ xfsm_shutdown_helper_upower_sleep (XfsmShutdownHelper *helper,
         }
       else
 	{
-	  *error = g_error_new (1, 0, "%s", error_local->message);
+	  g_set_error (error, 1, 0, "%s", error_local->message);
 	  g_error_free (error_local);
 	  return FALSE;
 	}
@@ -1505,7 +1505,7 @@ xfsm_shutdown_helper_console_kit_shutdown (XfsmShutdownHelper *helper,
   
   if ( !ret )
     {
-      *error = g_error_new (1, 0, "%s", error_local->message);
+      g_set_error (error, 1, 0, "%s", error_local->message);
       g_error_free (error_local);
       return FALSE;
     }
@@ -1576,7 +1576,7 @@ xfsm_shutdown_helper_hal_send (XfsmShutdownHelper *helper,
 	}
       else
 	{
-	  *error = g_error_new (1, 0, "%s", error_local->message);
+	  g_set_error (error, 1, 0, "%s", error_local->message);
 	  g_error_free (error_local);
 	  return FALSE;
 	}
@@ -1611,9 +1611,9 @@ xfsm_shutdown_helper_sudo_send (XfsmShutdownHelper *helper,
 	  return TRUE;
 	}
       
-      *error = g_error_new (G_FILE_ERROR, g_file_error_from_errno (errno),
-			    _("Error sending command to shutdown helper: %s"),
-			    strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+		   _("Error sending command to shutdown helper: %s"),
+		   strerror (errno));
       return FALSE;
     }
 
@@ -1625,17 +1625,17 @@ xfsm_shutdown_helper_sudo_send (XfsmShutdownHelper *helper,
 	  return TRUE;
 	}
       
-      *error = g_error_new (G_FILE_ERROR, g_file_error_from_errno (errno),
-                           _("Error receiving response from shutdown helper: %s"),
-			    strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+		   _("Error receiving response from shutdown helper: %s"),
+		   strerror (errno));
       
       return FALSE;
     }
 
   if (strncmp (response, "SUCCEED", 7) != 0)
     {
-      *error = g_error_new (G_FILE_ERROR, G_FILE_ERROR_FAILED,
-			    _("Shutdown command failed"));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+		   _("Shutdown command failed"));
       
       return FALSE;
     
@@ -1815,7 +1815,7 @@ gboolean xfsm_shutdown_helper_suspend (XfsmShutdownHelper *helper, GError **erro
     }
 #endif
 
-  *error = g_error_new (1, 0, "%s", _("Suspend failed, no backend supported"));
+  g_set_error (error, 1, 0, "%s", _("Suspend failed, no backend supported"));
 
   return FALSE;
 }
@@ -1842,7 +1842,7 @@ gboolean xfsm_shutdown_helper_hibernate (XfsmShutdownHelper *helper, GError **er
     }
 #endif
 
-  *error = g_error_new (1, 0, "%s", _("Hibernate failed, no backend supported"));
+  g_set_error (error, 1, 0, "%s", _("Hibernate failed, no backend supported"));
 
   return FALSE;
 }
@@ -1872,7 +1872,7 @@ gboolean xfsm_shutdown_helper_send_command (XfsmShutdownHelper *helper,
       break;
     }
 
-  *error = g_error_new (1, 0, "%s", _("Shutdown Command not found"));
+  g_set_error (error, 1, 0, "%s", _("Shutdown Command not found"));
 
   return FALSE;
 }
