@@ -187,31 +187,3 @@ xfsm_g_value_free (GValue *value)
     }
 }
 
-/**
- * xfsm_dbus_name_has_owner:
- * @bus: a #DBusConnection of type DBUS_BUS_SYSTEM to ask the system bus 
- *       or DBUS_BUS_SESSION to ask the session bus of a name. 
- * @name: a valid bus name
- *
- *
- * Returns: FALSE if no owner was found, TRUE otherwise
- **/
-gboolean
-xfsm_dbus_name_has_owner (DBusConnection *bus, const gchar *name)
-{
-  DBusError error;
-  gboolean ret;
-  
-  dbus_error_init (&error);
-  
-  ret = dbus_bus_name_has_owner (bus, name, &error);
-    
-  if ( dbus_error_is_set (&error) )
-    {
-      g_warning ("dbus_bus_name_has_owner failed : %s", error.message);
-      dbus_error_free (&error);
-      return FALSE;
-    }
-  
-  return ret;
-}
