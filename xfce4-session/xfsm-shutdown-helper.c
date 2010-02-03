@@ -345,9 +345,6 @@ xfsm_shutdown_helper_init_polkit_data (XfsmShutdownHelper *helper)
   if ( !helper->polkit_proxy )
     return FALSE;
 
-  helper->polkit_subject = g_value_array_new (2);
-  helper->polkit_subject_hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
-
   /**
    * This variable should be set by the session manager or by 
    * the login manager (gdm?). under clean Xfce environment
@@ -379,6 +376,11 @@ xfsm_shutdown_helper_init_polkit_data (XfsmShutdownHelper *helper)
 	  if ( G_LIKELY (ret) )
 	    {
 	      GValue val  = { 0 };
+	      helper->polkit_subject = g_value_array_new (2);
+	      helper->polkit_subject_hash = g_hash_table_new_full (g_str_hash, 
+								   g_str_equal, 
+								   g_free, 
+								   NULL);
 	      
 	      g_value_init (&val, G_TYPE_STRING);
 	      g_value_set_string (&val, "unix-session");
@@ -418,6 +420,13 @@ xfsm_shutdown_helper_init_polkit_data (XfsmShutdownHelper *helper)
       if ( G_LIKELY (start_time != 0 ) )
 	{
 	  GValue val = { 0 }, pid_val = { 0 }, start_time_val = { 0 };
+	  
+	  helper->polkit_subject = g_value_array_new (2);
+	  helper->polkit_subject_hash = g_hash_table_new_full (g_str_hash, 
+							       g_str_equal, 
+							       g_free, 
+							       NULL);
+
 	  g_value_init (&val, G_TYPE_STRING);
 	  g_value_set_string (&val, "unix-process");
 	  g_value_array_append (helper->polkit_subject, &val);
@@ -431,6 +440,11 @@ xfsm_shutdown_helper_init_polkit_data (XfsmShutdownHelper *helper)
 	  g_value_init (&start_time_val, G_TYPE_UINT64);
 	  g_value_set_uint64 (&start_time_val, start_time);
 	  g_hash_table_insert (helper->polkit_subject_hash, g_strdup ("start-time"), &start_time_val);
+	}
+      else
+	{
+	  g_warning ("Unable to create Polkit subject");
+	  return FALSE;
 	}
     }
 
