@@ -109,9 +109,9 @@ typedef enum
 
 #ifdef ENABLE_POLKIT
 /*DBus GTypes for polkit calls*/
-GType      polkit_subject_gtype   = G_TYPE_INVALID;
-GType      polkit_details_gtype   = G_TYPE_INVALID;
-GType      polkit_result_gtype    = G_TYPE_INVALID;
+static GType      polkit_subject_gtype   = G_TYPE_INVALID;
+static GType      polkit_details_gtype   = G_TYPE_INVALID;
+static GType      polkit_result_gtype    = G_TYPE_INVALID;
 #endif /*ENABLE_POLKIT*/
 
 struct _XfsmShutdownHelper
