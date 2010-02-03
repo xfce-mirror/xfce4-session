@@ -393,13 +393,13 @@ xfsm_shutdown_helper_init_polkit_data (XfsmShutdownHelper *helper)
 	      g_free (consolekit_session);
 	      subject_created = TRUE;
 	    }
+	  g_object_unref (proxy);
 	}
       else if (error)
 	{
 	  g_warning ("'GetSessionForCookie' failed : %s", error->message);
 	  g_error_free (error);
 	}
-      g_object_unref (proxy);
     }
   
   /**
