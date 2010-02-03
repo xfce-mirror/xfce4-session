@@ -257,7 +257,7 @@ xfsm_manager_init (XfsmManager *manager)
 #ifdef ENABLE_CONSOLE_KIT
   manager->system_bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
   
-  if ( G_LIKELY (manager->system_bus == NULL) )
+  if ( G_LIKELY (manager->system_bus != NULL) )
     {
       xfsm_manager_consolekit_init (manager);
     }
