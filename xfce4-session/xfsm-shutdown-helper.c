@@ -928,6 +928,7 @@ xfsm_shutdown_helper_check_authorization (XfsmShutdownHelper *helper,
       dbus_g_type_struct_get (&result_val,
 			      0, &is_authorized,
 			      G_MAXUINT);
+      g_value_unset (&result_val);
     }
   else if ( error )
     {
