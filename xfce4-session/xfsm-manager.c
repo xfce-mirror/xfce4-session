@@ -348,6 +348,7 @@ xfsm_manager_handle_failed_properties (XfsmManager    *manager,
                                        XfsmProperties *properties)
 {
   gint restart_style_hint;
+  GError *error = NULL;
 
   /* Handle apps that failed to start, or died randomly, here */
 
@@ -407,7 +408,7 @@ xfsm_manager_handle_failed_properties (XfsmManager    *manager,
                     properties->client_id);
 
       discard_command = xfsm_properties_get_strv (properties, SmDiscardCommand);
-      if (discard_command != NULL)
+      if (discard_command != NULL && g_strv_length (discard_command) > 0)
         {
           /* Run the SmDiscardCommand after the client exited in any state,
            * but only if we don't expect the client to be restarted,
@@ -426,16 +427,22 @@ xfsm_manager_handle_failed_properties (XfsmManager    *manager,
            * ever-growing number of xfwm4 session files when restarting
            * xfwm4 within a session.
            */
-          xfsm_verbose ("Client Id = %s: running discard command.\n\n",
-                        properties->client_id);
+          xfsm_verbose ("Client Id = %s: running discard command %s:%d.\n\n",
+                        properties->client_id, *discard_command,
+                        g_strv_length (discard_command));
 
-          g_spawn_sync (xfsm_properties_get_string (properties, SmCurrentDirectory),
-                        discard_command,
-                        xfsm_properties_get_strv (properties, SmEnvironment),
-                        G_SPAWN_SEARCH_PATH,
-                        NULL, NULL,
-                        NULL, NULL,
-                        NULL, NULL);
+          if (!g_spawn_sync (xfsm_properties_get_string (properties, SmCurrentDirectory),
+                             discard_command,
+                             xfsm_properties_get_strv (properties, SmEnvironment),
+                             G_SPAWN_SEARCH_PATH,
+                             NULL, NULL,
+                             NULL, NULL,
+                             NULL, &error))
+            {
+              g_warning ("Failed to running discard command \"%s\": %s",
+                         *discard_command, error->message);
+              g_error_free (error);
+            }
         }
 
       return FALSE;
