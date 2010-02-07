@@ -525,9 +525,8 @@ restart_style_hint_changed(GtkCellRenderer *render,
                            COL_RESTART_STYLE, &old_hint,
                            -1);
         hint = old_hint;
-
         for(i = 0; restart_styles[i]; ++i) {
-            if(!g_utf8_collate(new_text, restart_styles[i])) {
+            if(!g_utf8_collate(new_text, _(restart_styles[i]))) {
                 hint = i;
                 break;
             }
@@ -549,6 +548,9 @@ restart_style_hint_changed(GtkCellRenderer *render,
 
             g_value_unset(&val);
             g_hash_table_destroy(properties);
+
+            gtk_list_store_set (GTK_LIST_STORE (model), &iter,
+                                COL_RESTART_STYLE_STR, new_text, -1);
         }
 
         g_object_unref(proxy);
