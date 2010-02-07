@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-session 4.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-29 18:04+0100\n"
-"PO-Revision-Date: 2010-01-29 21:07+0100\n"
+"POT-Creation-Date: 2010-02-07 18:04+0100\n"
+"PO-Revision-Date: 2010-02-07 21:05+0100\n"
 "Last-Translator: Per Kongstad <p_kongstad@op.pl>\n"
 "Language-Team: Danish <dank@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -246,16 +246,18 @@ msgid "Type '%s --help' for usage."
 msgstr "Tast '%s --help' for anvendelse."
 
 #: ../settings/main.c:85
+#: ../xfce4-session/main.c:226
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce-udviklingsholdet. Alle rettigheder forbeholdes."
 
 #: ../settings/main.c:86
+#: ../xfce4-session/main.c:232
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Rapportér venligst fejl til <%s>."
 
 #: ../settings/main.c:95
-#: ../xfce4-session/main.c:281
+#: ../xfce4-session/main.c:238
 msgid "Unable to contact settings server"
 msgstr "Kunne ikke forbinde til indstillingsserver"
 
@@ -318,19 +320,19 @@ msgstr "Kunne ikke afbryde program."
 msgid "(Unknown program)"
 msgstr "(Ukendt program)"
 
-#: ../settings/session-editor.c:614
+#: ../settings/session-editor.c:616
 msgid "Priority"
 msgstr "Prioritet"
 
-#: ../settings/session-editor.c:622
+#: ../settings/session-editor.c:624
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:628
+#: ../settings/session-editor.c:630
 msgid "Program"
 msgstr "Program"
 
-#: ../settings/session-editor.c:653
+#: ../settings/session-editor.c:655
 msgid "Restart Style"
 msgstr "Genstart stil"
 
@@ -342,79 +344,121 @@ msgstr "Genstart stil"
 msgid "None"
 msgstr "Ingen"
 
-#: ../settings/xfae-dialog.c:99
+#: ../settings/xfae-dialog.c:78
 msgid "Add application"
 msgstr "Tilføj program"
 
-#: ../settings/xfae-dialog.c:113
+#: ../settings/xfae-dialog.c:92
 msgid "Name:"
 msgstr "Navn:"
 
-#: ../settings/xfae-dialog.c:130
+#: ../settings/xfae-dialog.c:109
 msgid "Description:"
 msgstr "Beskrivelse:"
 
-#: ../settings/xfae-dialog.c:145
+#: ../settings/xfae-dialog.c:124
 msgid "Command:"
 msgstr "Kommando:"
 
-#: ../settings/xfae-dialog.c:205
+#: ../settings/xfae-dialog.c:184
 msgid "Select a command"
 msgstr "Vælg en kommando"
+
+#: ../settings/xfae-dialog.c:233
+msgid "Edit application"
+msgstr "Redigér program"
 
 #: ../settings/xfae-model.c:562
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "Kunne ikke fjerne henvisning %s: %s"
 
-#: ../settings/xfae-model.c:650
+#: ../settings/xfae-model.c:651
 #, c-format
 msgid "Failed to create file %s"
 msgstr "Kunne ikke oprette fil %s"
 
-#: ../settings/xfae-model.c:672
+#: ../settings/xfae-model.c:673
 #, c-format
 msgid "Failed to write file %s"
 msgstr "Kunne ikke skrive til fil %s"
 
-#: ../settings/xfae-model.c:771
+#: ../settings/xfae-model.c:732
+#, c-format
+msgid "Failed to open %s for reading"
+msgstr "Kunne ikke åbne %s for læsning"
+
+#: ../settings/xfae-model.c:841
+#: ../settings/xfae-model.c:898
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "Kunne ikke åbne %s for skrivning"
 
-#: ../settings/xfae-window.c:100
+#: ../settings/xfae-window.c:101
 msgid "Below is the list of applications that will be started automatically when you login to your Xfce desktop, in addition to the applications that were saved when you logged out last time:"
 msgstr "Herunder er listen af programmer, der vil blive startet automatisk, når du logger ind på dit Xfce-skrivebord, dette gælder udover de programmer, der blev gemt, da du loggede ud sidst:"
 
-#: ../settings/xfae-window.c:277
+#: ../settings/xfae-window.c:289
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Kunne ikke tilføje \"%s\""
 
-#: ../settings/xfae-window.c:303
+#: ../settings/xfae-window.c:320
+#: ../settings/xfae-window.c:334
 msgid "Failed to remove item"
 msgstr "Kunne ikke fjerne element"
 
 #: ../settings/xfae-window.c:326
+msgid "This will permanently remove the application from the list of automatically started applications"
+msgstr "Dette vil fjerne programmet fra listen over automatisk opstartede programmer"
+
+#: ../settings/xfae-window.c:328
+#, c-format
+msgid "Are you sure you want to remove \"%s\""
+msgstr "Er du sikker på, at du vil fjerne \"%s\""
+
+#: ../settings/xfae-window.c:362
+msgid "Failed to edit item"
+msgstr "Kunne ikke redigere element"
+
+#: ../settings/xfae-window.c:382
+#, c-format
+msgid "Failed to edit item \"%s\""
+msgstr "Kunne ikke redigere element \"%s\""
+
+#: ../settings/xfae-window.c:410
 msgid "Failed to toggle item"
 msgstr "Kunne ikke skifte element"
 
-#: ../xfce4-session/main.c:149
+#: ../xfce4-session/main.c:76
+msgid "Disable binding to TCP ports"
+msgstr "Slå binding til TCP-porte fra"
+
+#: ../xfce4-session/main.c:77
+msgid "Print version information and exit"
+msgstr "Udskriv versionsinformation og afslut"
+
+#: ../xfce4-session/main.c:140
 msgid "Loading desktop settings"
 msgstr "Indlæser skrivebordsindstillinger"
 
+#: ../xfce4-session/main.c:227
+msgid "Written by Benedikt Meurer <benny@xfce.org>."
+msgstr "Skrevet af Benedikt Meurer <benny@xfce.org>."
+
+#: ../xfce4-session/main.c:228
+#, c-format
+msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
+msgstr "Bygget med Gtk+-%d.%d.%d, kørende med Gtk+-%d.%d.%d"
+
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:210
+#: ../xfce4-session/main.c:258
 msgid "Verifying DNS settings"
 msgstr "Afprøver DNS-indstillinger"
 
-#: ../xfce4-session/main.c:213
+#: ../xfce4-session/main.c:261
 msgid "Loading session data"
 msgstr "Indlæser sessionsdata"
-
-#: ../xfce4-session/main.c:279
-msgid "Xfce Session Manager"
-msgstr "Sessionshåndtering til Xfce"
 
 #: ../xfce4-session/shutdown.c:366
 #, c-format
@@ -458,7 +502,7 @@ msgid "Either the password you entered is invalid, or the system administrator d
 msgstr "Enten er din adgangskode forkert, eller systemadministratoren har ikke givet tilladelse til at lukke komputeren ned med din brugerkonto."
 
 #: ../xfce4-session/shutdown.c:812
-#: ../xfce4-session/xfsm-manager.c:1116
+#: ../xfce4-session/xfsm-manager.c:1123
 msgid "Shutdown Failed"
 msgstr "Luk ned fejlede"
 
@@ -466,30 +510,30 @@ msgstr "Luk ned fejlede"
 msgid "Unable to perform shutdown"
 msgstr "Kunne ikke udføre luk ned"
 
-#: ../xfce4-session/xfsm-chooser.c:120
+#: ../xfce4-session/xfsm-chooser.c:91
 #, c-format
 msgid "Last accessed: %s"
 msgstr "Sidst tilgået: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:213
+#: ../xfce4-session/xfsm-chooser.c:182
 msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
 msgstr "Vælg den session du vil genskabe. Du kan dobbeltklikke på sessionsnavnet for at genskabe sessionen."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:239
+#: ../xfce4-session/xfsm-chooser.c:208
 msgid "Log out"
 msgstr "Logud"
 
-#: ../xfce4-session/xfsm-chooser.c:241
+#: ../xfce4-session/xfsm-chooser.c:210
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Afbryd logindforsøget og returnér til logindskærmen."
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:249
+#: ../xfce4-session/xfsm-chooser.c:218
 msgid "New session"
 msgstr "Ny session"
 
-#: ../xfce4-session/xfsm-chooser.c:251
+#: ../xfce4-session/xfsm-chooser.c:220
 msgid "Create a new session."
 msgstr "Opret en ny session."
 
@@ -537,55 +581,55 @@ msgstr "Forsæt alligevel"
 msgid "Try again"
 msgstr "Prøv igen"
 
-#: ../xfce4-session/xfsm-manager.c:598
+#: ../xfce4-session/xfsm-manager.c:605
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr "Kunne ikke finde fejlsikret sessionsnavn. Mulige årsager; xfconfd kører ikke (D-Bus indstillingsproblem); miljøvariablen $XDG_CONFIG_DIRS er forkert indstillet (skal indeholde \"%s\"), eller xfce4-session er forkert installeret."
 
-#: ../xfce4-session/xfsm-manager.c:609
+#: ../xfce4-session/xfsm-manager.c:616
 #, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Den angivne fejlsikrede session (\"%s\") er ikke markeret som en fejlsikker session."
 
-#: ../xfce4-session/xfsm-manager.c:656
+#: ../xfce4-session/xfsm-manager.c:663
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Listen over programmer i den fejlsikrede session er tom."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:703
+#: ../xfce4-session/xfsm-manager.c:710
 msgid "Session Manager Error"
 msgstr "Fejl i sessionshåndtering"
 
-#: ../xfce4-session/xfsm-manager.c:705
+#: ../xfce4-session/xfsm-manager.c:712
 msgid "Unable to load a failsafe session"
 msgstr "Kunne ikke indlæse en fejlsikret session"
 
-#: ../xfce4-session/xfsm-manager.c:1119
+#: ../xfce4-session/xfsm-manager.c:1126
 msgid "Failed to suspend session"
 msgstr "Kunne ikke bringe session i hviletilstand"
 
-#: ../xfce4-session/xfsm-manager.c:1120
+#: ../xfce4-session/xfsm-manager.c:1127
 msgid "Failed to hibernate session"
 msgstr "Kunne ikke bringe session i dvalestilstand"
 
-#: ../xfce4-session/xfsm-manager.c:1408
+#: ../xfce4-session/xfsm-manager.c:1415
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Kan kun afbryde klienter når de befinder sig i tomgang"
 
-#: ../xfce4-session/xfsm-manager.c:1939
+#: ../xfce4-session/xfsm-manager.c:1946
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Sessionhåndtering skal befinde sig i tomgang, når der anmodes om et tjekpunkt"
 
-#: ../xfce4-session/xfsm-manager.c:1980
+#: ../xfce4-session/xfsm-manager.c:1987
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Sessionhåndtering skal befinde sig i tomgang, når der anmodes om at lukke ned"
 
-#: ../xfce4-session/xfsm-manager.c:1987
+#: ../xfce4-session/xfsm-manager.c:1994
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Ugyldig type af luk ned \"%u\""
@@ -783,7 +827,7 @@ msgstr ""
 "placering.\n"
 "Du burde slette den gamle mappe nu.\n"
 
-#: ../xfce4-session/xfsm-startup.c:428
+#: ../xfce4-session/xfsm-startup.c:442
 msgid "Performing Autostart..."
 msgstr "Kører autostart..."
 
@@ -1019,6 +1063,8 @@ msgstr "Tips og tricks"
 msgid "xfce4-tips"
 msgstr "xfce4-tips"
 
+#~ msgid "Xfce Session Manager"
+#~ msgstr "Sessionshåndtering til Xfce"
 #~ msgid "Session Error"
 #~ msgstr "Sessionsfejl"
 #~ msgid "Session Settings"
