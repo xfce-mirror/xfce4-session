@@ -61,8 +61,22 @@ gboolean      xfae_model_add      (XfaeModel   *model,
                                    const gchar *command,
                                    GError     **error);
 
+gboolean      xfae_model_get      (XfaeModel   *model,
+                                   GtkTreeIter *iter,
+                                   gchar      **name,
+                                   gchar      **description,
+                                   gchar      **command,
+                                   GError     **error);
+
 gboolean      xfae_model_remove   (XfaeModel   *model,
                                    GtkTreeIter *iter,
+                                   GError     **error);
+
+gboolean      xfae_model_edit     (XfaeModel   *model,
+                                   GtkTreeIter *iter,
+                                   const gchar *name,
+                                   const gchar *description,
+                                   const gchar *command,
                                    GError     **error);
 
 gboolean      xfae_model_toggle   (XfaeModel   *model,

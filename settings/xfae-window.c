@@ -32,6 +32,7 @@
 
 static void     xfae_window_add                 (XfaeWindow       *window);
 static void     xfae_window_remove              (XfaeWindow       *window);
+static void     xfae_window_edit                (XfaeWindow       *window);
 static gboolean xfae_window_button_press_event  (GtkWidget        *treeview,
                                                  GdkEventButton   *event,
                                                  XfaeWindow       *window);
@@ -177,11 +178,22 @@ xfae_window_init (XfaeWindow *window)
   button = gtk_button_new_from_stock (GTK_STOCK_REMOVE);
   g_signal_connect_swapped (G_OBJECT (button), "clicked",
                             G_CALLBACK (xfae_window_remove), window);
+  gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   g_signal_connect (G_OBJECT (window->selection), "changed",
                     G_CALLBACK (xfae_window_selection_changed), button);
   xfae_window_selection_changed (window->selection, button);
+
+  button = gtk_button_new_from_stock (GTK_STOCK_EDIT);
+  g_signal_connect_swapped (G_OBJECT (button), "clicked",
+                            G_CALLBACK (xfae_window_edit), window);
   gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (window->selection), "changed",
+                    G_CALLBACK (xfae_window_selection_changed), button);
+  xfae_window_selection_changed (window->selection, button);
 }
 
 
@@ -262,7 +274,7 @@ xfae_window_add (XfaeWindow *window)
   gchar        *descr;
   gchar        *command;
 
-  dialog = xfae_dialog_new ();
+  dialog = xfae_dialog_new (NULL, NULL, NULL);
   parent = gtk_widget_get_toplevel (GTK_WIDGET (window));
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent));
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
@@ -274,7 +286,7 @@ xfae_window_add (XfaeWindow *window)
       model = gtk_tree_view_get_model (GTK_TREE_VIEW (window->treeview));
       if (!xfae_model_add (XFAE_MODEL (model), name, descr, command, &error))
         {
-          xfce_dialog_show_error (NULL, error, _("Failed adding \"%s\""), name);
+          xfce_dialog_show_error (GTK_WINDOW (parent), error, _("Failed adding \"%s\""), name);
           g_error_free (error);
         }
 
@@ -294,18 +306,90 @@ xfae_window_remove (XfaeWindow *window)
   GtkTreeModel     *model;
   GtkTreeIter       iter;
   GError           *error = NULL;
+  GtkWidget        *parent;
+  gchar            *name;
+  gboolean          remove_item;
+
+  parent = gtk_widget_get_toplevel (GTK_WIDGET (window));
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->treeview));
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
-      if (!xfae_model_remove (XFAE_MODEL (model), &iter, &error))
+      if (!xfae_model_get (XFAE_MODEL (model), &iter, &name, NULL, NULL, &error))
         {
-          xfce_dialog_show_error (NULL, error, _("Failed to remove item"));
+          xfce_dialog_show_error (GTK_WINDOW (parent), error, _("Failed to remove item"));
+          g_error_free (error);
+          return;
+        }
+
+      remove_item = xfce_dialog_confirm (GTK_WINDOW (parent), GTK_STOCK_REMOVE, NULL,
+                                         _("This will permanently remove the application "
+                                           "from the list of automatically started applications"),
+                                         _("Are you sure you want to remove \"%s\""), name);
+
+      g_free (name);
+
+      if (remove_item && !xfae_model_remove (XFAE_MODEL (model), &iter, &error))
+        {
+          xfce_dialog_show_error (GTK_WINDOW (parent), error, _("Failed to remove item"));
           g_error_free (error);
         }
     }
 }
 
+
+
+static void
+xfae_window_edit (XfaeWindow *window)
+{
+  GtkTreeSelection *selection;
+  GtkTreeModel     *model;
+  GtkTreeIter       iter;
+  GError           *error = NULL;
+  gchar            *name;
+  gchar            *descr;
+  gchar            *command;
+  GtkWidget        *parent;
+  GtkWidget        *dialog;
+
+  parent = gtk_widget_get_toplevel (GTK_WIDGET (window));
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->treeview));
+  if (gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      if (!xfae_model_get (XFAE_MODEL (model), &iter, &name, &descr, &command, &error))
+        {
+          xfce_dialog_show_error (GTK_WINDOW (parent), error, _("Failed to edit item"));
+          g_error_free (error);
+          return;
+        }
+
+      dialog = xfae_dialog_new (name, descr, command);
+      gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent));
+
+      g_free (command);
+      g_free (descr);
+      g_free (name);
+
+      if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
+        {
+	  gtk_widget_hide (dialog);
+
+	  xfae_dialog_get (XFAE_DIALOG (dialog), &name, &descr, &command);
+
+          if (!xfae_model_edit (XFAE_MODEL (model), &iter, name, descr, command, &error))
+            {
+              xfce_dialog_show_error (GTK_WINDOW (parent), error, _("Failed to edit item \"%s\""), name);
+              g_error_free (error);
+            }
+
+          g_free (command);
+          g_free (descr);
+          g_free (name);
+        }
+      gtk_widget_destroy (dialog);
+    }
+}
 
 
 static void
@@ -406,12 +490,18 @@ xfae_window_create_plug_child (XfaeWindow *window)
   button = gtk_button_new_from_stock (GTK_STOCK_REMOVE);
   g_signal_connect_swapped (G_OBJECT (button), "clicked",
                             G_CALLBACK (xfae_window_remove), window);
-  g_signal_connect (G_OBJECT (window->selection), "changed",
-                    G_CALLBACK (xfae_window_selection_changed), button);
-  xfae_window_selection_changed (window->selection, button);
   gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
+  button = gtk_button_new_from_stock (GTK_STOCK_EDIT);
+  g_signal_connect_swapped (G_OBJECT (button), "clicked",
+                            G_CALLBACK (xfae_window_edit), window);
+  gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (window->selection), "changed",
+                    G_CALLBACK (xfae_window_selection_changed), button);
+  xfae_window_selection_changed (window->selection, button);
   return vbox;
 }
 #endif

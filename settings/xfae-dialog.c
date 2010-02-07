@@ -229,15 +229,29 @@ xfae_dialog_browse (XfaeDialog *dialog)
 
 /**
  * xfae_dialog_new:
+ * @name    : initial name or %NULL.
+ * @descr   : initial description or %NULL..
+ * @command : initial command or %NULL..
  *
  * Allocates a new #XfaeDialog instance.
  *
  * Return value: the newly allocated #XfaeDialog.
  **/
 GtkWidget*
-xfae_dialog_new (void)
+xfae_dialog_new (const gchar *name,
+                 const gchar *descr,
+                 const gchar *command)
 {
-  return g_object_new (XFAE_TYPE_DIALOG, NULL);
+  XfaeDialog *dialog = g_object_new (XFAE_TYPE_DIALOG, NULL);
+
+  if (name)
+    gtk_entry_set_text (GTK_ENTRY (dialog->name_entry), name);
+  if (descr)
+    gtk_entry_set_text (GTK_ENTRY (dialog->descr_entry), descr );
+  if (command)
+    gtk_entry_set_text (GTK_ENTRY (dialog->command_entry), command);
+
+  return GTK_WIDGET (dialog);
 }
 
 
@@ -271,5 +285,3 @@ xfae_dialog_get (XfaeDialog *dialog,
   g_strstrip (*descr);
   g_strstrip (*command);
 }
-
-

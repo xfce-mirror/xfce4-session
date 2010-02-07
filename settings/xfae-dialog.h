@@ -38,7 +38,9 @@ typedef struct _XfaeDialog      XfaeDialog;
 
 GType      xfae_dialog_get_type (void) G_GNUC_CONST;
 
-GtkWidget *xfae_dialog_new      (void);
+GtkWidget *xfae_dialog_new      (const gchar *name,
+                                 const gchar *descr,
+                                 const gchar *command);
 
 void       xfae_dialog_get      (XfaeDialog *dialog,
                                  gchar     **name,

@@ -691,6 +691,68 @@ xfae_model_add (XfaeModel   *model,
 
 
 /**
+ * xfae_model_get:
+ * @model       : a #XfaeModel.
+ * @name        : the user visible name of the new item.
+ * @description : the description for the new item.
+ * @command     : the command for the new item.
+ * @error       : return locations for errors or %NULL.
+ *
+ * Attempts to add a new item with the given parameters
+ * to @model.
+ *
+ * Return value: %TRUE if successfull, else %FALSE.
+ **/
+gboolean
+xfae_model_get (XfaeModel    *model,
+                GtkTreeIter  *iter,
+                gchar       **name,
+                gchar       **description,
+                gchar       **command,
+                GError      **error)
+{
+  XfaeItem    *item;
+  GList       *lp;
+  XfceRc      *rc;
+  const gchar *value;
+
+  g_return_val_if_fail (XFAE_IS_MODEL (model), FALSE);
+  g_return_val_if_fail (iter->stamp == model->stamp, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  lp = iter->user_data;
+  item = lp->data;
+
+  /* try to open the resource config */
+  rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG, item->relpath, FALSE);
+  if (G_UNLIKELY (rc == NULL))
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (EIO),
+                   _("Failed to open %s for reading"), item->relpath);
+      return FALSE;
+    }
+
+  /* read the resource config */
+  value = xfce_rc_read_entry (rc, "Name", NULL);
+  if (name != NULL)
+   *name = g_strdup (value);
+
+  value = xfce_rc_read_entry (rc, "Comment", NULL);
+  if (description != NULL)
+    *description = g_strdup (value);
+
+  value = xfce_rc_read_entry (rc, "Exec", NULL);
+  if (command != NULL)
+    *command = g_strdup (value);
+
+  xfce_rc_close (rc);
+
+  return TRUE;
+}
+
+
+
+/**
  * xfae_model_remove:
  * @model : a #XfaeModel.
  * @iter  : the #GtkTreeIter referring to the item that should be removed.
@@ -733,6 +795,70 @@ xfae_model_remove (XfaeModel   *model,
 
   return TRUE;
 }
+
+
+
+/**
+ * xfae_model_edit:
+ * @model       : a #XfaeModel.
+ * @iter        : the #GtkTreeIter referring to the item that should be removed.
+ * @name        : the user visible name of the new item.
+ * @description : the description for the new item.
+ * @command     : the command for the new item.
+ * @error       : return locations for errors or %NULL.
+ *
+ * Attempts to edit an item with the given parameters
+ * to @model.
+ *
+ * Return value: %TRUE if successfull, else %FALSE.
+ **/
+gboolean
+xfae_model_edit (XfaeModel   *model,
+                 GtkTreeIter *iter,
+                 const gchar *name,
+                 const gchar *description,
+                 const gchar *command,
+                 GError     **error)
+{
+  GtkTreePath *path;
+  XfaeItem    *item;
+  XfceRc      *rc;
+  GList       *lp;
+
+  g_return_val_if_fail (XFAE_IS_MODEL (model), FALSE);
+  g_return_val_if_fail (iter->stamp == model->stamp, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  lp = iter->user_data;
+  item = lp->data;
+
+  /* try to open the resource config */
+  rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG, item->relpath, FALSE);
+  if (G_UNLIKELY (rc == NULL))
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (EIO),
+                   _("Failed to open %s for writing"), item->relpath);
+      return FALSE;
+    }
+
+  item->name = g_strdup (name);
+  item->comment = g_strdup (description);
+
+  /* write the result */
+  xfce_rc_set_group (rc, "Desktop Entry");
+  xfce_rc_write_entry (rc, "Name", name);
+  xfce_rc_write_entry (rc, "Comment", description);
+  xfce_rc_write_entry (rc, "Exec", command);
+  xfce_rc_close (rc);
+
+  /* tell the view that we have most probably a new state */
+  path = gtk_tree_path_new_from_indices (g_list_position (model->items, lp), -1);
+  gtk_tree_model_row_changed (GTK_TREE_MODEL (model), path, iter);
+  gtk_tree_path_free (path);
+
+  return TRUE;
+}
+
 
 
 
