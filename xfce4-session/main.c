@@ -8,12 +8,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- *                                                                              
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *                                                                              
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -68,6 +68,16 @@
 #include <xfce4-session/xfsm-startup.h>
 #include "xfsm-error.h"
 
+static gboolean opt_disable_tcp = FALSE;
+static gboolean opt_version = FALSE;
+
+static GOptionEntry option_entries[] =
+{
+  { "disable-tcp", '\0', 0, G_OPTION_ARG_NONE, &opt_disable_tcp, N_("Disable binding to TCP ports"), NULL },
+  { "version", 'V', 0, G_OPTION_ARG_NONE, &opt_version, N_("Print version information and exit"), NULL },
+  { NULL }
+};
+
 static void
 setup_environment (void)
 {
@@ -76,7 +86,7 @@ setup_environment (void)
   gchar       *authfile;
   int          fd;
 
-  /* check that no other session manager is running */  
+  /* check that no other session manager is running */
   sm = g_getenv ("SESSION_MANAGER");
   if (sm != NULL && strlen (sm) > 0)
     {
@@ -115,25 +125,6 @@ setup_environment (void)
   close (fd);
 }
 
-
-G_GNUC_NORETURN static void
-usage (int exit_code)
-{
-  fprintf (stderr,
-           "Usage: xfce4-session [OPTION...]\n"
-           "\n"
-           "GTK+\n"
-           "  --display=DISPLAY        X display to use\n"
-           "\n"
-           "Application options\n"
-           "  --disable-tcp            Disable binding to TCP ports\n"
-           "  --help                   Print this help message and exit\n"
-           "  --version                Print version information and exit\n"
-           "\n");
-  exit (exit_code);
-}
-
-
 static void
 init_display (XfsmManager   *manager,
               GdkDisplay    *dpy,
@@ -144,7 +135,7 @@ init_display (XfsmManager   *manager,
 
   engine = xfconf_channel_get_string (channel, "/splash/Engine", "mice");
 
-  splash_screen = xfsm_splash_screen_new (dpy, engine);  
+  splash_screen = xfsm_splash_screen_new (dpy, engine);
   g_free (engine);
   xfsm_splash_screen_next (splash_screen, _("Loading desktop settings"));
 
@@ -157,63 +148,10 @@ init_display (XfsmManager   *manager,
   {
     g_warning ("Could not start xfsettingsd");
   }
-  
-  
+
+
   /* gtk resource files may have changed */
   gtk_rc_reparse_all ();
-}
-
-
-static void
-initialize (XfsmManager *manager,
-            int          argc,
-            char       **argv)
-{
-  gboolean disable_tcp = FALSE;
-  GdkDisplay *dpy;
-  XfconfChannel *channel;
-  
-  for (++argv; --argc > 0; ++argv)
-    {
-      if (strcmp (*argv, "--version") == 0)
-        {
-          printf ("%s (Xfce %s)\n\n"
-                  "Copyright (c) 2003-2006\n"
-                  "        The Xfce development team. All rights reserved.\n\n"
-                  "Written for Xfce by Benedikt Meurer <benny@xfce.org>.\n\n"
-                  "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d.\n\n"
-                  "Please report bugs to <%s>.\n",
-                  PACKAGE_STRING, xfce_version_string (),
-                  GTK_MAJOR_VERSION, GTK_MINOR_VERSION, GTK_MICRO_VERSION,
-                  gtk_major_version, gtk_minor_version, gtk_micro_version,
-                  PACKAGE_BUGREPORT);
-          exit (EXIT_SUCCESS);
-        }
-      else if (strcmp (*argv, "--disable-tcp") == 0)
-        {
-          disable_tcp = TRUE;
-        }
-      else
-        {
-          usage (strcmp (*argv, "--help") == 0 ? EXIT_SUCCESS : EXIT_FAILURE);
-        }
-    }
-
-  setup_environment ();
-
-  channel = xfsm_open_config ();
-
-  dpy = gdk_display_get_default ();
-  init_display (manager, dpy, channel, disable_tcp);
-
-  /* verify that the DNS settings are ok */
-  xfsm_splash_screen_next (splash_screen, _("Verifying DNS settings"));
-  xfsm_dns_check ();
-
-  xfsm_splash_screen_next (splash_screen, _("Loading session data"));
-
-  xfsm_startup_init (channel);
-  xfsm_manager_load (manager, channel);
 }
 
 
@@ -267,21 +205,37 @@ main (int argc, char **argv)
   XfsmManager     *manager;
   XfsmShutdownType shutdown_type;
   GError          *error = NULL;
+  GdkDisplay      *dpy;
+  XfconfChannel   *channel;
 
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
-  
+
   /* install required signal handlers */
   signal (SIGPIPE, SIG_IGN);
 
-  gtk_init (&argc, &argv);
+  if (!gtk_init_with_args (&argc, &argv, "", option_entries, GETTEXT_PACKAGE, &error)) {
+    g_error ("%s", error->message);
+    g_error_free (error);
+    return EXIT_FAILURE;
+  }
+
+  if (opt_version)
+    {
+      g_print ("%s %s (Xfce %s)\n\n", PACKAGE_NAME, PACKAGE_VERSION, xfce_version_string ());
+      g_print ("%s\n", "Copyright (c) 2003-2010");
+      g_print ("\t%s\n\n", _("The Xfce development team. All rights reserved."));
+      g_print ("%s\n\n", _("Written by Benedikt Meurer <benny@xfce.org>."));
+      g_print (_("Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"),
+               GTK_MAJOR_VERSION, GTK_MINOR_VERSION, GTK_MICRO_VERSION,
+               gtk_major_version, gtk_minor_version, gtk_micro_version);
+      g_print ("\n");
+      g_print (_("Please report bugs to <%s>."), PACKAGE_BUGREPORT);
+      g_print ("\n");
+      return EXIT_SUCCESS;
+    }
 
   if (G_UNLIKELY (!xfconf_init (&error))) {
-    xfce_message_dialog (NULL, _("Xfce Session Manager"),
-                         GTK_STOCK_DIALOG_ERROR,
-                         _("Unable to contact settings server"),
-                         error->message,
-                         GTK_STOCK_CLOSE, GTK_RESPONSE_ACCEPT,
-                         NULL);
+    xfce_dialog_show_error (NULL, error, _("Unable to contact settings server"));
     g_error_free (error);
   }
 
@@ -293,14 +247,29 @@ main (int argc, char **argv)
   xfsm_dbus_init ();
 
   manager = xfsm_manager_new ();
-  initialize (manager, argc, argv);
+  setup_environment ();
+
+  channel = xfsm_open_config ();
+
+  dpy = gdk_display_get_default ();
+  init_display (manager, dpy, channel, opt_disable_tcp);
+
+  /* verify that the DNS settings are ok */
+  xfsm_splash_screen_next (splash_screen, _("Verifying DNS settings"));
+  xfsm_dns_check ();
+
+  xfsm_splash_screen_next (splash_screen, _("Loading session data"));
+
+  xfsm_startup_init (channel);
+  xfsm_manager_load (manager, channel);
   xfsm_manager_restart (manager);
-  
+
   gtk_main ();
 
   shutdown_type = xfsm_manager_get_shutdown_type (manager);
   g_object_unref (manager);
- 
+  g_object_unref (channel);
+
   xfsm_dbus_cleanup ();
   ice_cleanup ();
 
