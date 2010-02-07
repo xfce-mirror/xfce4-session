@@ -304,13 +304,15 @@ xfsm_startup_autostart_migrate (void)
 
 
 static gint
-xfsm_startup_autostart_xdg (void)
+xfsm_startup_autostart_xdg (XfsmManager *manager)
 {
   const gchar *try_exec;
   const gchar *type;
   const gchar *exec;
   gboolean     startup_notify;
   gboolean     terminal;
+  gboolean     gnome;
+  gboolean     kde;
   gboolean     skip;
   GError      *error = NULL;
   XfceRc      *rc;
@@ -322,6 +324,10 @@ xfsm_startup_autostart_xdg (void)
 
   /* migrate the old autostart location (if still present) */
   xfsm_startup_autostart_migrate ();
+
+  /* Get if we should start KDE and GNOME applications */
+  kde = xfsm_manager_get_compat_startup (manager, XFSM_MANAGER_COMPAT_KDE);
+  gnome = xfsm_manager_get_compat_startup (manager, XFSM_MANAGER_COMPAT_GNOME);
 
   files = xfce_resource_match (XFCE_RESOURCE_CONFIG, "autostart/*.desktop", TRUE);
   for (n = 0; files[n] != NULL; ++n)
@@ -340,13 +346,21 @@ xfsm_startup_autostart_xdg (void)
           only_show_in = xfce_rc_read_list_entry (rc, "OnlyShowIn", ";");
           if (G_UNLIKELY (only_show_in != NULL))
             {
-              /* check if "Xfce" is specified */
+              /* check if "XFCE" is specified */
+              /* If we start the GNOME components, also start the applications when
+               * then "GNOME" is specified. */
+              /* If we start the KDE components, also start the applications when
+               * then "KDE" is specified. */
               for (m = 0, skip = TRUE; only_show_in[m] != NULL; ++m)
-                if (g_ascii_strcasecmp (only_show_in[m], "Xfce") == 0)
-                  {
-                    skip = FALSE;
-                    break;
-                  }
+                {
+                  if ((g_ascii_strcasecmp (only_show_in[m], "XFCE") == 0) ||
+                      (gnome && g_ascii_strcasecmp (only_show_in[m], "GNOME") == 0) ||
+                      (kde && g_ascii_strcasecmp (only_show_in[m], "KDE") == 0))
+                    {
+                      skip = FALSE;
+                      break;
+                    }
+                }
 
               g_strfreev (only_show_in);
             }
@@ -416,11 +430,11 @@ xfsm_startup_autostart_xdg (void)
 
 
 static void
-xfsm_startup_autostart (void)
+xfsm_startup_autostart (XfsmManager *manager)
 {
   gint n;
 
-  n = xfsm_startup_autostart_xdg ();
+  n = xfsm_startup_autostart_xdg (manager);
 
   if (n > 0)
     {
@@ -454,7 +468,7 @@ xfsm_startup_begin (XfsmManager *manager)
   if (xfsm_manager_get_use_failsafe_mode (manager))
     {
       xfsm_startup_failsafe (manager);
-      xfsm_startup_autostart ();
+      xfsm_startup_autostart (manager);
       xfsm_manager_signal_startup_done (manager);
     }
   else
@@ -591,7 +605,7 @@ xfsm_startup_session_continue (XfsmManager *manager)
       /* we failed to start anything, and we don't have anything else,
        * to start, so just move on to the autostart items and signal
        * the manager that we're finished */
-      xfsm_startup_autostart ();
+      xfsm_startup_autostart (manager);
       xfsm_manager_signal_startup_done (manager);
     }
 }
