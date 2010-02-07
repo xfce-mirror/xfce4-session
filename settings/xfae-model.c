@@ -629,6 +629,7 @@ xfae_model_add (XfaeModel   *model,
       file = (n == 0)
         ?  g_strdup_printf ("%s.desktop", name)
         : g_strdup_printf ("%s-%u.desktop", name, n);
+      file = g_strdelimit (file, G_DIR_SEPARATOR_S, '-'); /* not a copy */
 
       g_snprintf (relpath, 4096, "%s%s", dir, file);
       if (!g_file_test (relpath, G_FILE_TEST_IS_REGULAR))
