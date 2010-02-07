@@ -229,6 +229,8 @@ xfae_dialog_new (const gchar *name,
     gtk_entry_set_text (GTK_ENTRY (dialog->descr_entry), descr );
   if (command)
     gtk_entry_set_text (GTK_ENTRY (dialog->command_entry), command);
+  if (name != NULL || descr != NULL || command != NULL)
+    gtk_window_set_title (GTK_WINDOW (dialog), _("Edit application"));
 
   return GTK_WIDGET (dialog);
 }
