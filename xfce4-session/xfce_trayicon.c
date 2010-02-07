@@ -39,8 +39,6 @@ enum
 };
 
 /* static prototypes */
-static void	xfce_tray_icon_class_init(XfceTrayIconClass *);
-static void	xfce_tray_icon_init(XfceTrayIcon *);
 static void	xfce_tray_icon_finalize(GObject *);
 static void	xfce_tray_icon_reconnect(XfceTrayIcon *);
 static void	xfce_tray_icon_destroy(GtkWidget *, XfceTrayIcon *);
@@ -48,40 +46,11 @@ static void	xfce_tray_icon_press(GtkWidget *, GdkEventButton *,
 			XfceTrayIcon *);
 static void	xfce_tray_icon_popup(GtkWidget *, XfceTrayIcon *);
 
-/* parent class */
-static GObjectClass	*parent_class;
-
 /* tray icon signals */
 static guint 		tray_signals[LAST_SIGNAL];
 
-/*
- */
-GType
-xfce_tray_icon_get_type(void)
-{
-	static GType tray_icon_type = 0;
 
-	if (!tray_icon_type) {
-		static const GTypeInfo tray_icon_info = {
-			sizeof(XfceTrayIconClass),
-			NULL,
-			NULL,
-			(GClassInitFunc)xfce_tray_icon_class_init,
-			NULL,
-			NULL,
-			sizeof(XfceTrayIcon),
-			0,
-			(GInstanceInitFunc)xfce_tray_icon_init
-		};
-
-		tray_icon_type = g_type_register_static(
-				GTK_TYPE_OBJECT,
-				"XfceTrayIcon",
-				&tray_icon_info,
-				0);
-	}
-
-	return(tray_icon_type);
+G_DEFINE_TYPE (XfceTrayIcon, xfce_tray_icon, GTK_TYPE_OBJECT)
 }
 
 /*
@@ -90,8 +59,6 @@ static void
 xfce_tray_icon_class_init(XfceTrayIconClass *klass)
 {
 	GObjectClass *gobject_class;
-
-	parent_class = gtk_type_class(GTK_TYPE_OBJECT);
 
 	gobject_class = G_OBJECT_CLASS(klass);
 	gobject_class->finalize = xfce_tray_icon_finalize;
@@ -167,7 +134,7 @@ xfce_tray_icon_finalize(GObject *object)
 	if (icon->tip_private != NULL)
 		g_free(icon->tip_private);
 
-	G_OBJECT_CLASS(parent_class)->finalize(object);
+	G_OBJECT_CLASS(xfce_tray_icon_parent_class)->finalize(object);
 }
 
 /*

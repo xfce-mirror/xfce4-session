@@ -45,8 +45,6 @@
 #define BORDER 6
 
 
-static void xfsm_chooser_class_init (XfsmChooserClass *klass);
-static void xfsm_chooser_init (XfsmChooser *chooser);
 static void xfsm_chooser_finalize (GObject *object);
 static void xfsm_chooser_row_activated (GtkTreeView       *treeview,
                                         GtkTreePath       *path,
@@ -66,36 +64,9 @@ enum
 };
 
 
-static GObjectClass *parent_class;
 
+G_DEFINE_TYPE (XfsmChooser, xfsm_chooser, GTK_TYPE_DIALOG)
 
-GType
-xfsm_chooser_get_type (void)
-{
-  static GType chooser_type = 0;
-
-  if (chooser_type == 0)
-    {
-      static const GTypeInfo chooser_info = {
-        sizeof (XfsmChooserClass),
-        NULL,
-        NULL,
-        (GClassInitFunc) xfsm_chooser_class_init,
-        NULL,
-        NULL,
-        sizeof (XfsmChooser),
-        0,
-        (GInstanceInitFunc) xfsm_chooser_init,
-      };
-
-      chooser_type = g_type_register_static (GTK_TYPE_DIALOG,
-                                             "XfsmChooser",
-                                             &chooser_info,
-                                             0);
-    }
-
-  return chooser_type;
-}
 
 
 void
@@ -164,8 +135,6 @@ xfsm_chooser_class_init (XfsmChooserClass *klass)
 
   gobject_class = G_OBJECT_CLASS (klass);
   gobject_class->finalize = xfsm_chooser_finalize;
-
-  parent_class = gtk_type_class (gtk_dialog_get_type ());
 }
 
 
@@ -264,7 +233,7 @@ xfsm_chooser_finalize (GObject *object)
   chooser = XFSM_CHOOSER (object);
   g_object_unref (chooser->tooltips);
 
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  G_OBJECT_CLASS (xfsm_chooser_parent_class)->finalize (object);
 }
 
 

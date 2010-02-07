@@ -27,7 +27,6 @@
 
 #include <libxfce4ui/libxfce4ui.h>
 
-static void xfae_dialog_init   (XfaeDialog *dialog);
 static void xfae_dialog_update (XfaeDialog *dialog);
 static void xfae_dialog_browse (XfaeDialog *dialog);
 
@@ -49,33 +48,13 @@ struct _XfaeDialog
 
 
 
-GType
-xfae_dialog_get_type (void)
+G_DEFINE_TYPE (XfaeDialog, xfae_dialog, GTK_TYPE_DIALOG)
+
+
+
+static void
+xfae_dialog_class_init (XfaeDialogClass *klass)
 {
-  static GType type = G_TYPE_INVALID;
-
-  if (G_UNLIKELY (type == G_TYPE_INVALID))
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (XfaeDialogClass),
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        sizeof (XfaeDialog),
-        0,
-        (GInstanceInitFunc) xfae_dialog_init,
-        NULL,
-      };
-
-      type = g_type_register_static (GTK_TYPE_DIALOG,
-                                     "XfaeDialog",
-                                     &info, 0);
-    }
-
-  return type;
 }
 
 
