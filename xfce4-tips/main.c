@@ -149,10 +149,13 @@ autostart_toggled (GtkToggleButton *button)
 
 
 static void
-item_cb (GtkWidget *btn,
-         gpointer   data)
+item_cb (GtkComboBox *combobox, gpointer data)
 {
-  option = GPOINTER_TO_UINT (data);
+  gint active_item = gtk_combo_box_get_active (combobox);
+
+  if (active_item >=0)
+    option = active_item;
+
   gtk_window_set_title (GTK_WINDOW (dlg), _(titles[option]));
 }
 
@@ -203,7 +206,7 @@ run_fortune (void)
 
 
 static void
-next_cb(GtkWidget *btn, GtkTextBuffer *textbuf)
+next_cb(GtkWidget *widget, GtkTextBuffer *textbuf)
 {
   gchar *buffer = NULL;
   GtkTextIter start;
@@ -248,14 +251,13 @@ main (int argc, char **argv)
   GtkWidget *view;
   GtkWidget *vbox2;
   GtkWidget *check;
-  GtkWidget *item;
-  GtkWidget *menu;
-  GtkWidget *opt;
+  GtkWidget *combobox;
   GtkWidget *next;
   GtkWidget *close_btn;
+  GtkWidget *action_area;
 
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
-  
+
   gtk_init (&argc, &argv);
 
   /* test for fortune */
@@ -274,7 +276,8 @@ main (int argc, char **argv)
   gtk_window_set_position (GTK_WINDOW (dlg), GTK_WIN_POS_CENTER);
   gtk_window_stick (GTK_WINDOW (dlg));
 
-  gtk_button_box_set_layout (GTK_BUTTON_BOX (GTK_DIALOG (dlg)->action_area), GTK_BUTTONBOX_EDGE);
+  action_area = gtk_dialog_get_action_area (GTK_DIALOG (dlg));
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (action_area), GTK_BUTTONBOX_EDGE);
 
   vbox2 = gtk_vbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), 6);
@@ -303,25 +306,16 @@ main (int argc, char **argv)
 
   if (fortune_cmd != NULL)
     {
-      menu = gtk_menu_new ();
-      gtk_widget_show (menu);
+      combobox = gtk_combo_box_new_text ();
+      gtk_widget_show (combobox);
 
-      item = gtk_menu_item_new_with_label (_(titles[OPTION_TIPS]));
-      g_signal_connect (item, "activate", G_CALLBACK (item_cb), GUINT_TO_POINTER (OPTION_TIPS));
-      g_signal_connect (item, "activate", G_CALLBACK (next_cb), gtk_text_view_get_buffer (GTK_TEXT_VIEW (view)));
-      gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-      gtk_widget_show (item);
+      gtk_combo_box_append_text (GTK_COMBO_BOX (combobox), titles[OPTION_TIPS]);
+      gtk_combo_box_append_text (GTK_COMBO_BOX (combobox), titles[OPTION_FORTUNES]);
 
-      item = gtk_menu_item_new_with_label (_(titles[OPTION_FORTUNES]));
-      g_signal_connect (item, "activate", G_CALLBACK (item_cb), GUINT_TO_POINTER (OPTION_FORTUNES));
-      g_signal_connect (item, "activate", G_CALLBACK (next_cb), gtk_text_view_get_buffer (GTK_TEXT_VIEW (view)));
-      gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-      gtk_widget_show (item);
+      g_signal_connect (combobox, "changed", G_CALLBACK (item_cb), NULL);
+      g_signal_connect (combobox, "changed", G_CALLBACK (next_cb), gtk_text_view_get_buffer (GTK_TEXT_VIEW (view)));
 
-      opt = gtk_option_menu_new();
-      gtk_option_menu_set_menu(GTK_OPTION_MENU(opt), menu);
-      gtk_dialog_add_action_widget (GTK_DIALOG (dlg), opt, GTK_RESPONSE_NONE);
-      gtk_widget_show(opt);
+      gtk_box_pack_start (GTK_BOX (action_area), combobox, FALSE, FALSE, 0);
     }
 
   next = gtk_button_new_with_label (_("Next"));
@@ -342,7 +336,6 @@ main (int argc, char **argv)
   gtk_widget_show (dlg);
 
   gtk_main ();
-
 
   /* cleanup */
   g_free (fortune_cmd);
