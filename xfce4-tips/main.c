@@ -35,6 +35,7 @@
 #endif
 
 #include <libxfce4ui/libxfce4ui.h>
+#include <xfconf/xfconf.h>
 
 
 
@@ -149,12 +150,15 @@ autostart_toggled (GtkToggleButton *button)
 
 
 static void
-item_cb (GtkComboBox *combobox, gpointer data)
+item_cb (GtkComboBox *combobox, XfconfChannel *channel)
 {
   gint active_item = gtk_combo_box_get_active (combobox);
 
   if (active_item >=0)
-    option = active_item;
+    {
+      option = active_item;
+      xfconf_channel_set_bool (channel, "/fortunes", option == 1);
+    }
 
   gtk_window_set_title (GTK_WINDOW (dlg), _(titles[option]));
 }
@@ -247,6 +251,7 @@ next_cb(GtkWidget *widget, GtkTextBuffer *textbuf)
 int
 main (int argc, char **argv)
 {
+  GError    *error = NULL;
   GtkWidget *sw;
   GtkWidget *view;
   GtkWidget *vbox2;
@@ -255,10 +260,18 @@ main (int argc, char **argv)
   GtkWidget *next;
   GtkWidget *close_btn;
   GtkWidget *action_area;
+  XfconfChannel *channel;
 
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
   gtk_init (&argc, &argv);
+
+  if (G_UNLIKELY (!xfconf_init (&error))) {
+    xfce_dialog_show_error (NULL, error, _("Unable to contact settings server"));
+    g_error_free (error);
+  }
+
+  channel = xfconf_channel_get ("xfce4-tips");
 
   /* test for fortune */
   fortune_cmd = g_find_program_in_path ("fortune");
@@ -306,14 +319,18 @@ main (int argc, char **argv)
 
   if (fortune_cmd != NULL)
     {
+      gboolean fortunes = xfconf_channel_get_bool (channel, "/fortunes", FALSE);
+
       combobox = gtk_combo_box_new_text ();
       gtk_widget_show (combobox);
 
       gtk_combo_box_append_text (GTK_COMBO_BOX (combobox), titles[OPTION_TIPS]);
       gtk_combo_box_append_text (GTK_COMBO_BOX (combobox), titles[OPTION_FORTUNES]);
 
-      g_signal_connect (combobox, "changed", G_CALLBACK (item_cb), NULL);
+      g_signal_connect (combobox, "changed", G_CALLBACK (item_cb), channel);
       g_signal_connect (combobox, "changed", G_CALLBACK (next_cb), gtk_text_view_get_buffer (GTK_TEXT_VIEW (view)));
+
+      gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), fortunes ? 1 : 0);
 
       gtk_box_pack_start (GTK_BOX (action_area), combobox, FALSE, FALSE, 0);
     }
@@ -344,6 +361,8 @@ main (int argc, char **argv)
       g_ptr_array_foreach (tips, free_tip, NULL);
       g_ptr_array_free (tips, TRUE);
     }
+
+  xfconf_shutdown ();
 
   return EXIT_SUCCESS;
 }

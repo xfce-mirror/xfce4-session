@@ -16,10 +16,12 @@ xfce4_tips_SOURCES =							\
 	main.c
 
 xfce4_tips_CFLAGS =							\
-	@LIBXFCE4UI_CFLAGS@
+	@LIBXFCE4UI_CFLAGS@                                             \
+	@XFCONF_CFLAGS@
 
 xfce4_tips_LDADD =							\
-	@LIBXFCE4UI_LIBS@
+	@LIBXFCE4UI_LIBS@                                               \
+	@XFCONF_LIBS@
 
 desktopdir = $(sysconfdir)/xdg/autostart
 desktop_in_files = xfce4-tips-autostart.desktop.in
