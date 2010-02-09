@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-29 06:04+0100\n"
+"POT-Creation-Date: 2010-02-09 06:04+0100\n"
 "PO-Revision-Date: 2009-08-21 11:07+0200\n"
 "Last-Translator: Piarres Beobide <pi@beobide.net>\n"
 "Language-Team: Euskara\n"
@@ -241,16 +241,16 @@ msgstr "Bertsio argibideak"
 msgid "Type '%s --help' for usage."
 msgstr "Idatzi '%s --help' erabilerarentzat."
 
-#: ../settings/main.c:85
+#: ../settings/main.c:85 ../xfce4-session/main.c:226
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce garapen taldea. Eskubide guztiak erreserbaturik."
 
-#: ../settings/main.c:86
+#: ../settings/main.c:86 ../xfce4-session/main.c:232
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Programa erroreen berri eman hemen : <%s>"
 
-#: ../settings/main.c:95 ../xfce4-session/main.c:281
+#: ../settings/main.c:95 ../xfce4-session/main.c:238 ../xfce4-tips/main.c:270
 msgid "Unable to contact settings server"
 msgstr "Ezin da ezarpen zerbitzaria konektatu"
 
@@ -312,19 +312,19 @@ msgstr "Ezin da programa amaitu"
 msgid "(Unknown program)"
 msgstr "(Programa ezezaguna)"
 
-#: ../settings/session-editor.c:614
+#: ../settings/session-editor.c:616
 msgid "Priority"
 msgstr "Lehentasuna"
 
-#: ../settings/session-editor.c:622
+#: ../settings/session-editor.c:624
 msgid "PID"
 msgstr "PIDa"
 
-#: ../settings/session-editor.c:628
+#: ../settings/session-editor.c:630
 msgid "Program"
 msgstr "Programa"
 
-#: ../settings/session-editor.c:653
+#: ../settings/session-editor.c:655
 msgid "Restart Style"
 msgstr "Berrabiarazte estiloa"
 
@@ -334,79 +334,119 @@ msgstr "Berrabiarazte estiloa"
 msgid "None"
 msgstr "Bat ere ez"
 
-#: ../settings/xfae-dialog.c:99
+#: ../settings/xfae-dialog.c:78
 msgid "Add application"
 msgstr "Gehitu aplikazioa"
 
-#: ../settings/xfae-dialog.c:113
+#: ../settings/xfae-dialog.c:92
 msgid "Name:"
 msgstr "Izena:"
 
-#: ../settings/xfae-dialog.c:130
+#: ../settings/xfae-dialog.c:109
 msgid "Description:"
 msgstr "Azalpena:"
 
-#: ../settings/xfae-dialog.c:145
+#: ../settings/xfae-dialog.c:124
 msgid "Command:"
 msgstr "Komandoa:"
 
-#: ../settings/xfae-dialog.c:205
+#: ../settings/xfae-dialog.c:184
 msgid "Select a command"
 msgstr "Hautatu komando bat"
+
+#: ../settings/xfae-dialog.c:233
+msgid "Edit application"
+msgstr "Editatu aplikazioa"
 
 #: ../settings/xfae-model.c:562
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "Ezinda %s lotura ezabatu: %s"
 
-#: ../settings/xfae-model.c:650
+#: ../settings/xfae-model.c:651
 #, c-format
 msgid "Failed to create file %s"
 msgstr "Ezin da %s fitxategia sortu"
 
-#: ../settings/xfae-model.c:672
+#: ../settings/xfae-model.c:673
 #, c-format
 msgid "Failed to write file %s"
 msgstr "Ezin da %s fitxategia idatzi"
 
-#: ../settings/xfae-model.c:771
+#: ../settings/xfae-model.c:732
+#, c-format
+msgid "Failed to open %s for reading"
+msgstr "Ezin da %s fitxategia irakurtzeko ireki"
+
+#: ../settings/xfae-model.c:841 ../settings/xfae-model.c:898
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "Ezin da %s fitxategia idazketarako ireki"
 
-#: ../settings/xfae-window.c:100
+#: ../settings/xfae-window.c:101
 msgid "Below is the list of applications that will be started automatically when you login to your Xfce desktop, in addition to the applications that were saved when you logged out last time:"
 msgstr "Behealdean Xfce mahaigainean saio hasterakoan automatikoki abiaraziko diren aplikazioen zerrenda, saioa azken aldiz ixterakoan gorde ziren zenituen aplikazioez gain."
 
-#: ../settings/xfae-window.c:277
+#: ../settings/xfae-window.c:289
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Huts /\"%s/\" gehitzerakoan"
 
-#: ../settings/xfae-window.c:303
+#: ../settings/xfae-window.c:320 ../settings/xfae-window.c:334
 msgid "Failed to remove item"
 msgstr "Huts elementua ezabatzean"
 
 #: ../settings/xfae-window.c:326
+msgid "This will permanently remove the application from the list of automatically started applications"
+msgstr "Honek betirako ezabatuko du aplikazioa automatikoki abiarazten diren aplikazio zerrendatik"
+
+#: ../settings/xfae-window.c:328
+#, c-format
+msgid "Are you sure you want to remove \"%s\""
+msgstr "Ziur zaude \"%s\" ezabatu nahi duzula?"
+
+#: ../settings/xfae-window.c:362
+msgid "Failed to edit item"
+msgstr "Huts elementua editatzean"
+
+#: ../settings/xfae-window.c:382
+#, c-format
+msgid "Failed to edit item \"%s\""
+msgstr "Ezin da \"%s\" elementua editatu"
+
+#: ../settings/xfae-window.c:410
 msgid "Failed to toggle item"
 msgstr "Huts elementua txandakatzean"
 
-#: ../xfce4-session/main.c:149
+#: ../xfce4-session/main.c:76
+msgid "Disable binding to TCP ports"
+msgstr "Ezgaituko lotutako TXP atakak"
+
+#: ../xfce4-session/main.c:77
+msgid "Print version information and exit"
+msgstr "Bertsio argibideak inprimatu eta irten"
+
+#: ../xfce4-session/main.c:140
 msgid "Loading desktop settings"
 msgstr "Idazmahai ezarpenak kargatzen"
 
+#: ../xfce4-session/main.c:227
+msgid "Written by Benedikt Meurer <benny@xfce.org>."
+msgstr "Benedikt Meurer <benny@xfce.org>-ek idatzia."
+
+#: ../xfce4-session/main.c:228
+#, c-format
+msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
+msgstr "Gtk+-%d.%d.%d-rekin eraikia, Gtk+-%d.%d.%d-rekin martxan"
+
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:210
+#: ../xfce4-session/main.c:258
 msgid "Verifying DNS settings"
 msgstr "DNS ezarpenak egiaztatzen"
 
-#: ../xfce4-session/main.c:213
+#: ../xfce4-session/main.c:261
 msgid "Loading session data"
 msgstr "Saio datuak kargatzen"
-
-#: ../xfce4-session/main.c:279
-msgid "Xfce Session Manager"
-msgstr "Xfce saio kudeatzailea"
 
 #: ../xfce4-session/shutdown.c:366
 #, c-format
@@ -449,7 +489,7 @@ msgstr "<b>Errore bat gertatu da</b>"
 msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
 msgstr "Edo zuk emandako pasahitza ez da zuzena, edo sistema kudeatzaileak zure erabiltzaile kontuaz ordenagailua itzaltzeko aukera ezgaitu du."
 
-#: ../xfce4-session/shutdown.c:812 ../xfce4-session/xfsm-manager.c:1116
+#: ../xfce4-session/shutdown.c:812 ../xfce4-session/xfsm-manager.c:1123
 msgid "Shutdown Failed"
 msgstr "Huts itzaltzerakoan"
 
@@ -457,30 +497,30 @@ msgstr "Huts itzaltzerakoan"
 msgid "Unable to perform shutdown"
 msgstr "Ezin da itzalia aurrera eraman"
 
-#: ../xfce4-session/xfsm-chooser.c:120
+#: ../xfce4-session/xfsm-chooser.c:91
 #, c-format
 msgid "Last accessed: %s"
 msgstr "Azkenez erabilia: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:213
+#: ../xfce4-session/xfsm-chooser.c:182
 msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
 msgstr "Aukeratu berreskuratu nahi duzun saioa. Saio izenean klik bikoitza eginez saio kudeatzaileak berreskuratuko du."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:239
+#: ../xfce4-session/xfsm-chooser.c:208
 msgid "Log out"
 msgstr "Saioa utzi"
 
-#: ../xfce4-session/xfsm-chooser.c:241
+#: ../xfce4-session/xfsm-chooser.c:210
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Saio abiaraztea utzi eta hasiera pantailara itzuli."
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:249
+#: ../xfce4-session/xfsm-chooser.c:218
 msgid "New session"
 msgstr "Saio berria"
 
-#: ../xfce4-session/xfsm-chooser.c:251
+#: ../xfce4-session/xfsm-chooser.c:220
 msgid "Create a new session."
 msgstr "Saio berria sortu."
 
@@ -527,55 +567,55 @@ msgstr "Jarraitu halaere"
 msgid "Try again"
 msgstr "Saiatu berriz"
 
-#: ../xfce4-session/xfsm-manager.c:598
+#: ../xfce4-session/xfsm-manager.c:605
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr "Ezin da saio seguruaren izena atzeman. Arrazoia posibleak xfconfd ez abiarazita egotea (D-BUS konfigurazio arazoa, $XDG_CONFIG_DIRS aldagaia oker ezarrita egotea (\"%s\" eduki beharko luke) edo xfce4-session oker instalaturik egotea dira."
 
-#: ../xfce4-session/xfsm-manager.c:609
+#: ../xfce4-session/xfsm-manager.c:616
 #, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Zehazturiko saio segurua (\"%s\") ez da saio seguru bat bezala markaturik."
 
-#: ../xfce4-session/xfsm-manager.c:656
+#: ../xfce4-session/xfsm-manager.c:663
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Saio seguruko aplikazio zerrenda hutsik dago."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:703
+#: ../xfce4-session/xfsm-manager.c:710
 msgid "Session Manager Error"
 msgstr "Saio kudeatzaile errorea"
 
-#: ../xfce4-session/xfsm-manager.c:705
+#: ../xfce4-session/xfsm-manager.c:712
 msgid "Unable to load a failsafe session"
 msgstr "Ezin da saioa segurua kargatu"
 
-#: ../xfce4-session/xfsm-manager.c:1119
+#: ../xfce4-session/xfsm-manager.c:1126
 msgid "Failed to suspend session"
 msgstr "Huts saioa esekitzerakoan"
 
-#: ../xfce4-session/xfsm-manager.c:1120
+#: ../xfce4-session/xfsm-manager.c:1127
 msgid "Failed to hibernate session"
 msgstr "Huts saioa hibernatzean"
 
-#: ../xfce4-session/xfsm-manager.c:1408
+#: ../xfce4-session/xfsm-manager.c:1415
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Bezeroak inaktibo egoeran daudenean bakarrik amaitu daitezke"
 
-#: ../xfce4-session/xfsm-manager.c:1939
+#: ../xfce4-session/xfsm-manager.c:1946
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Saio kudeatzailea inaktibo egoeran egon behar da egiaztapen-puntu bat eskatzean"
 
-#: ../xfce4-session/xfsm-manager.c:1980
+#: ../xfce4-session/xfsm-manager.c:1987
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Saio kudeatzailea inaktibo egoeran egon behar da itzaltzea eskatzean"
 
-#: ../xfce4-session/xfsm-manager.c:1987
+#: ../xfce4-session/xfsm-manager.c:1994
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "\"%u\" itzaltze modu baliogabea"
@@ -637,7 +677,7 @@ msgstr "Espero ez zen erantzuna jaso da sudo itzaltze laguntzailetik"
 #: ../xfce4-session/xfsm-shutdown-helper.c:803
 #, c-format
 msgid "Suspend and Hibernate are only supported through HAL, which is unavailable"
-msgstr "Eskeki eta hibetnatu erabilgarri ez dagoen HAL bidez bakarrik onartzen dira"
+msgstr "Eskeki eta hibernatu erabilgarri ez dagoen HAL bidez bakarrik onartzen dira"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:825
 #, c-format
@@ -766,49 +806,49 @@ msgstr ""
 "\n"
 " %s\n"
 "\n"
-"Hemen kokatu behar dituzu .desktop fitxategiak, honek Xfce idazmahaiean\n"
+"Hemen kokatu behar dituzu .desktop fitxategiak, honek Xfce mahaigainean\n"
 "saio abiaraztean ireki behar diren aplikazioak ezartzen ditu. Autoabio\n"
 "direktorio zaharreko fitxategiak behar bezala aldaturik izan dira kokapen\n"
 "berrira.\n"
 "Direktorio hau ezabatu egin beharko zenuke.\n"
 
-#: ../xfce4-session/xfsm-startup.c:428
+#: ../xfce4-session/xfsm-startup.c:442
 msgid "Performing Autostart..."
 msgstr "Autoabiarazten..."
 
-#: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:269
+#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:284
 msgid "Tips and Tricks"
 msgstr "Gomendio eta laguntzak"
 
-#: ../xfce4-tips/main.c:48
+#: ../xfce4-tips/main.c:49
 msgid "Fortunes"
 msgstr "Esaerak"
 
-#: ../xfce4-tips/main.c:74
+#: ../xfce4-tips/main.c:75
 #, c-format
 msgid "Could not load tips database (%s)."
-msgstr "Ezin da gomendio datubasea kargatu (%s)."
+msgstr "Ezin da gomendio datu-basea kargatu (%s)."
 
 #. converting it from the user's locale failed too, we give up
-#: ../xfce4-tips/main.c:183
+#: ../xfce4-tips/main.c:190
 #, c-format
 msgid "Invalid output of fortune."
 msgstr "Fortune-ren irteera okerra."
 
-#: ../xfce4-tips/main.c:188 ../xfce4-tips/main.c:196
+#: ../xfce4-tips/main.c:195 ../xfce4-tips/main.c:203
 #, c-format
 msgid "Executing fortune failed (%s)"
 msgstr "Huts fortune exekutatzean (%s)"
 
-#: ../xfce4-tips/main.c:221
+#: ../xfce4-tips/main.c:228
 msgid "Error while loading tips."
-msgstr "Errorea gomedioak kargatzean."
+msgstr "Errorea gomendioak kargatzean."
 
-#: ../xfce4-tips/main.c:298
+#: ../xfce4-tips/main.c:314
 msgid "Display tips on _startup"
 msgstr "Gomendioak bistarazi _abiaraztean"
 
-#: ../xfce4-tips/main.c:327
+#: ../xfce4-tips/main.c:338
 msgid "Next"
 msgstr "Hurrengoa"
 
@@ -1003,6 +1043,9 @@ msgstr "Gomendio eta Laguntza"
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
 msgstr "xfce4-gomendioak"
+
+#~ msgid "Xfce Session Manager"
+#~ msgstr "Xfce saio kudeatzailea"
 
 #~ msgid "Session Error"
 #~ msgstr "Saio errorea"
