@@ -135,6 +135,10 @@ main(int argc,
         g_signal_connect(dialog, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
 
         gtk_widget_show(dialog);
+
+        /* To prevent the settings dialog to be saved in the session */
+        gdk_set_sm_client_id ("FAKE ID");
+
         gtk_main();
     } else {
         GtkWidget *plug, *plug_child;
