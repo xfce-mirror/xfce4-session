@@ -336,12 +336,11 @@ xfsm_shutdown_helper_init_polkit_data (XfsmShutdownHelper *helper)
   gboolean subject_created = FALSE;
   
   helper->polkit_proxy = 
-    dbus_g_proxy_new_for_name_owner (helper->system_bus,
-				     "org.freedesktop.PolicyKit1",
-				     "/org/freedesktop/PolicyKit1/Authority",
-				     "org.freedesktop.PolicyKit1.Authority",
-				     NULL);
-
+    dbus_g_proxy_new_for_name (helper->system_bus,
+			       "org.freedesktop.PolicyKit1",
+			       "/org/freedesktop/PolicyKit1/Authority",
+			       "org.freedesktop.PolicyKit1.Authority");
+		
   if ( !helper->polkit_proxy )
     return FALSE;
 
@@ -360,11 +359,11 @@ xfsm_shutdown_helper_init_polkit_data (XfsmShutdownHelper *helper)
       gboolean ret;
       gchar *consolekit_session;
       
-      proxy  = dbus_g_proxy_new_for_name_owner (helper->system_bus,
-						"org.freedesktop.ConsoleKit",
-						"/org/freedesktop/ConsoleKit/Manager",
-						"org.freedesktop.ConsoleKit.Manager",
-						NULL);
+      proxy  = dbus_g_proxy_new_for_name (helper->system_bus,
+					  "org.freedesktop.ConsoleKit",
+					  "/org/freedesktop/ConsoleKit/Manager",
+					  "org.freedesktop.ConsoleKit.Manager");
+					  
       if ( proxy )
 	{
 	  ret = dbus_g_proxy_call (proxy, "GetSessionForCookie", &error,
@@ -395,12 +394,12 @@ xfsm_shutdown_helper_init_polkit_data (XfsmShutdownHelper *helper)
 	      g_free (consolekit_session);
 	      subject_created = TRUE;
 	    }
+	  else if (error)
+	    {
+	      g_warning ("'GetSessionForCookie' failed : %s", error->message);
+	      g_error_free (error);
+	    }
 	  g_object_unref (proxy);
-	}
-      else if (error)
-	{
-	  g_warning ("'GetSessionForCookie' failed : %s", error->message);
-	  g_error_free (error);
 	}
     }
   
@@ -612,17 +611,65 @@ error0:
   return FALSE;
 }
 
+#ifdef ENABLE_UPOWER
 /**
- * xfsm_shutdown_helper_check_upower:
+ * xfsm_shutdown_helper_get_power_props:
+ *
+ **/
+static GHashTable *
+xfsm_shutdown_helper_get_power_props (XfsmShutdownHelper *helper, 
+				      const gchar *name, 
+				      const gchar *path,
+				      const gchar *iface)
+{
+  DBusGProxy *proxy_prop;
+  GHashTable *props;
+  GType g_type_hash_map;
+  GError *error = NULL;
+
+  proxy_prop = dbus_g_proxy_new_for_name (helper->system_bus,
+					  name,
+					  path,
+					  DBUS_INTERFACE_PROPERTIES);
+
+  if ( !proxy_prop )
+    {
+      g_warning ("Unable to create proxy for %s", name);
+      return NULL;
+    }
+
+  /* The Hash table is a pair of (strings, GValues) */
+  g_type_hash_map = dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE);
+
+  dbus_g_proxy_call (proxy_prop, "GetAll", &error,
+		     G_TYPE_STRING, iface,
+		     G_TYPE_INVALID,
+		     g_type_hash_map, &props,
+		     G_TYPE_INVALID);
+
+  g_object_unref (proxy_prop);
+
+  if ( error )
+    {
+      g_warning ("Method 'GetAll' failed : %s", error->message);
+      g_error_free (error);
+      return NULL;
+    }
+
+  return props;
+}
+
+
+/**
+ * xfsm_shutdown_helper_check_devkit_upower:
  * 
  * Check upower (formely devicekit-power)
  * for hibernate and suspend availability.
  * 
  * Returns: FALSE if failed to contact upower, TRUE otherwise.
  **/
-#ifdef ENABLE_UPOWER
 static gboolean
-xfsm_shutdown_helper_check_upower (XfsmShutdownHelper *helper)
+xfsm_shutdown_helper_check_devkit_upower (XfsmShutdownHelper *helper)
 {
   /**
    * Get the properties on 'org.freedesktop.UPower'
@@ -637,10 +684,7 @@ xfsm_shutdown_helper_check_upower (XfsmShutdownHelper *helper)
    * LidIsPresent'      'b'
    **/
 
-  DBusGProxy *proxy_prop;
   GHashTable *props;
-  GError *error = NULL;
-  GType g_type_hash_map;
   GValue *value;
   const gchar *name, *path, *iface;
   
@@ -650,56 +694,35 @@ xfsm_shutdown_helper_check_upower (XfsmShutdownHelper *helper)
   iface = "org.freedesktop.Power";
 
   helper->devkit_is_upower = TRUE;
-  
-  proxy_prop = dbus_g_proxy_new_for_name_owner (helper->system_bus,
+
+  props = xfsm_shutdown_helper_get_power_props (helper,
 						name,
 						path,
-						DBUS_INTERFACE_PROPERTIES,
-						NULL);
-
-  if ( !proxy_prop )
-  {
-    g_message ("UPower not found, trying DevKitPower");
-    
-    name = "org.freedesktop.DeviceKit.Power";
-    path = "/org/freedesktop/DeviceKit/Power";
-    iface = "org.freedesktop.DeviceKit.Power";
-      
-    helper->devkit_is_upower = FALSE;
-    proxy_prop = dbus_g_proxy_new_for_name_owner (helper->system_bus,
-						  name,
-						  path,
-						  DBUS_INTERFACE_PROPERTIES,
-						  NULL);
-  
-    if ( !proxy_prop )
-      {
-	g_message ("Devkit Power is not running or not installed");
-	return FALSE;
-      }
-  }
-  
-  /* The Hash table is a pair of (strings, GValues) */
-  g_type_hash_map = dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE);
-
-  dbus_g_proxy_call (proxy_prop, "GetAll", &error,
-		     G_TYPE_STRING, iface,
-		     G_TYPE_INVALID,
-		     g_type_hash_map, &props,
-		     G_TYPE_INVALID);
-
-  g_object_unref (proxy_prop);
-		    
-  if ( error )
+						iface);
+  if ( !props )
     {
-      g_warning ("Method 'GetAll' on %s failed with %s", iface, error->message);
-      g_error_free (error);
-      return FALSE;
-    }
+      g_message ("UPower not found, trying DevKitPower");
 
+      name = "org.freedesktop.DeviceKit.Power";
+      path = "/org/freedesktop/DeviceKit/Power";
+      iface = "org.freedesktop.DeviceKit.Power";
+
+      helper->devkit_is_upower = FALSE;
+
+      props = xfsm_shutdown_helper_get_power_props (helper,
+						    name,
+						    path,
+						    iface);
+      if (!props)
+	{
+	  g_message ("Devkit Power is not running or not installed");
+	  return FALSE;
+	}
+    }
+  
   /*Get The CanSuspend bit*/
   value = g_hash_table_lookup (props, "CanSuspend");
-    
+  
   if ( G_LIKELY (value) )
     {
       helper->can_suspend = g_value_get_boolean (value);
@@ -740,12 +763,13 @@ xfsm_shutdown_helper_check_console_kit (XfsmShutdownHelper *helper)
 {
   DBusGProxy *proxy;
   GError *error = NULL;
+  gboolean ret;
 
-  proxy = dbus_g_proxy_new_for_name_owner (helper->system_bus,
-					   "org.freedesktop.ConsoleKit",
-					   "/org/freedesktop/ConsoleKit/Manager",
-					   "org.freedesktop.ConsoleKit.Manager",
-					   NULL);
+  proxy = dbus_g_proxy_new_for_name (helper->system_bus,
+				     "org.freedesktop.ConsoleKit",
+				     "/org/freedesktop/ConsoleKit/Manager",
+				     "org.freedesktop.ConsoleKit.Manager");
+				     
 
   if (!proxy)
     {
@@ -753,16 +777,16 @@ xfsm_shutdown_helper_check_console_kit (XfsmShutdownHelper *helper)
       return FALSE;
     }
 
-  dbus_g_proxy_call (proxy, "CanStop", &error,
-		     G_TYPE_INVALID,
-		     G_TYPE_BOOLEAN, &helper->can_shutdown,
-		     G_TYPE_INVALID);
-                       
+  ret = dbus_g_proxy_call (proxy, "CanStop", &error,
+			   G_TYPE_INVALID,
+			   G_TYPE_BOOLEAN, &helper->can_shutdown,
+			   G_TYPE_INVALID);
+  
   if ( error )
     {
       g_warning ("'CanStop' method failed : %s", error->message);
       g_error_free (error);
-      error = NULL;
+      goto out;
     }
   
   dbus_g_proxy_call (proxy, "CanRestart", &error,
@@ -774,11 +798,16 @@ xfsm_shutdown_helper_check_console_kit (XfsmShutdownHelper *helper)
     {
       g_warning ("'CanRestart' method failed : %s", error->message);
       g_error_free (error);
+      goto out;
     }
     
+  ret = TRUE;
+
+ out:
+
   g_object_unref (proxy);
 
-  return TRUE;
+  return ret;
 }
 #endif /*ENABLE_CONSOLE_KIT*/
 
@@ -796,13 +825,13 @@ xfsm_shutdown_helper_check_hal (XfsmShutdownHelper *helper)
   DBusGProxy *proxy_power;
   DBusGProxy *proxy_device;
   GError *error = NULL;
+  gboolean ret = FALSE;
 
   proxy_power = 
-      dbus_g_proxy_new_for_name_owner (helper->system_bus,
-				       "org.freedesktop.Hal",
-				       "/org/freedesktop/Hal/devices/computer",
-				       "org.freedesktop.Hal.Device.SystemPowerManagement",
-				       NULL);
+      dbus_g_proxy_new_for_name (helper->system_bus,
+				 "org.freedesktop.Hal",
+				 "/org/freedesktop/Hal/devices/computer",
+				 "org.freedesktop.Hal.Device.SystemPowerManagement");
   
   if (!proxy_power)
     {
@@ -866,7 +895,7 @@ xfsm_shutdown_helper_check_hal (XfsmShutdownHelper *helper)
     {
       g_warning ("Method 'GetPropertyBoolean' failed : %s", error->message);
       g_error_free (error);
-      error = NULL;
+      goto out;
     }
 
   dbus_g_proxy_call (proxy_device, "GetPropertyBoolean", &error,
@@ -879,11 +908,16 @@ xfsm_shutdown_helper_check_hal (XfsmShutdownHelper *helper)
     {
       g_warning ("Method 'GetPropertyBoolean' failed : %s", error->message);
       g_error_free (error);
+      goto out;
     }
 
+  ret = TRUE;
+
+ out:
+  
   g_object_unref (proxy_device);
   
-  return TRUE;
+  return ret;
 }
 #endif /*ENABLE_HAL*/
 
@@ -946,7 +980,7 @@ xfsm_shutdown_helper_check_authorization (XfsmShutdownHelper *helper,
     }
   else if ( error )
     {
-      g_warning ("'CheckAuthorization' failed with %s", error->message);
+      g_warning ("'CheckAuthorization' failed : %s", error->message);
       g_error_free (error);
   
     }
@@ -973,7 +1007,7 @@ xfsm_shutdown_helper_check_backends (XfsmShutdownHelper *helper)
 
 #ifdef ENABLE_UPOWER
   /*Check upower (formely devicekit-power)*/
-  if ( xfsm_shutdown_helper_check_upower (helper) )
+  if ( xfsm_shutdown_helper_check_devkit_upower (helper) )
     helper->sleep_backend = XFSM_SLEEP_BACKEND_UPOWER;
 #endif /* ENABLE_UPOWER */
 
