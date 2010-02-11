@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-30 21:53+0900\n"
-"PO-Revision-Date: 2010-01-30 22:09+0900\n"
+"POT-Creation-Date: 2010-02-11 15:29+0900\n"
+"PO-Revision-Date: 2010-02-11 15:29+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <xfce-users-jp@ml.fdiary.net>\n"
 "MIME-Version: 1.0\n"
@@ -248,16 +248,16 @@ msgstr "バージョン情報を表示する"
 msgid "Type '%s --help' for usage."
 msgstr "'%s --help' と入力すると使用方法が表示されます。"
 
-#: ../settings/main.c:85
+#: ../settings/main.c:85 ../xfce4-session/main.c:226
 msgid "The Xfce development team. All rights reserved."
 msgstr "The Xfce development team. All rights reserved."
 
-#: ../settings/main.c:86
+#: ../settings/main.c:86 ../xfce4-session/main.c:232
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "バグは <%s> まで報告してください。"
 
-#: ../settings/main.c:95 ../xfce4-session/main.c:281
+#: ../settings/main.c:95 ../xfce4-session/main.c:238 ../xfce4-tips/main.c:270
 msgid "Unable to contact settings server"
 msgstr "設定サーバに接続できませんでした"
 
@@ -323,19 +323,19 @@ msgstr "プログラムの終了に失敗しました"
 msgid "(Unknown program)"
 msgstr "(不明なプログラム)"
 
-#: ../settings/session-editor.c:614
+#: ../settings/session-editor.c:616
 msgid "Priority"
 msgstr "優先順位"
 
-#: ../settings/session-editor.c:622
+#: ../settings/session-editor.c:624
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:628
+#: ../settings/session-editor.c:630
 msgid "Program"
 msgstr "プログラム"
 
-#: ../settings/session-editor.c:653
+#: ../settings/session-editor.c:655
 msgid "Restart Style"
 msgstr "再起動スタイル"
 
@@ -345,47 +345,56 @@ msgstr "再起動スタイル"
 msgid "None"
 msgstr "なし"
 
-#: ../settings/xfae-dialog.c:99
+#: ../settings/xfae-dialog.c:78
 msgid "Add application"
 msgstr "アプリケーションの追加"
 
-#: ../settings/xfae-dialog.c:113
+#: ../settings/xfae-dialog.c:92
 msgid "Name:"
 msgstr "名前:"
 
-#: ../settings/xfae-dialog.c:130
+#: ../settings/xfae-dialog.c:109
 msgid "Description:"
 msgstr "説明:"
 
-#: ../settings/xfae-dialog.c:145
+#: ../settings/xfae-dialog.c:124
 msgid "Command:"
 msgstr "コマンド:"
 
-#: ../settings/xfae-dialog.c:205
+#: ../settings/xfae-dialog.c:184
 msgid "Select a command"
 msgstr "コマンドを選択してください"
+
+#: ../settings/xfae-dialog.c:233
+msgid "Edit application"
+msgstr "アプリケーションの編集"
 
 #: ../settings/xfae-model.c:562
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "%s のリンク解除に失敗しました: %s"
 
-#: ../settings/xfae-model.c:650
+#: ../settings/xfae-model.c:651
 #, c-format
 msgid "Failed to create file %s"
 msgstr "ファイル %s の作成に失敗しました"
 
-#: ../settings/xfae-model.c:672
+#: ../settings/xfae-model.c:673
 #, c-format
 msgid "Failed to write file %s"
 msgstr "ファイル %s の書き込みに失敗しました"
 
-#: ../settings/xfae-model.c:771
+#: ../settings/xfae-model.c:732
+#, c-format
+msgid "Failed to open %s for reading"
+msgstr "読み込むために %s を開くことに失敗しました"
+
+#: ../settings/xfae-model.c:841 ../settings/xfae-model.c:898
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "書き込むために %s を開くことに失敗しました"
 
-#: ../settings/xfae-window.c:100
+#: ../settings/xfae-window.c:101
 msgid ""
 "Below is the list of applications that will be started automatically when "
 "you login to your Xfce desktop, in addition to the applications that were "
@@ -394,35 +403,70 @@ msgstr ""
 "以下は Xfce デスクトップにログインする時に自動的に開始されるアプリケーション"
 "のリストです。最後にログアウトした時に保存されたアプリケーションも加わります:"
 
-#: ../settings/xfae-window.c:277
+#: ../settings/xfae-window.c:289
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "\"%s\" の追加に失敗しました"
 
-#: ../settings/xfae-window.c:303
+#: ../settings/xfae-window.c:320 ../settings/xfae-window.c:334
 msgid "Failed to remove item"
 msgstr "アイテムの削除に失敗しました。"
 
 #: ../settings/xfae-window.c:326
+msgid ""
+"This will permanently remove the application from the list of automatically "
+"started applications"
+msgstr ""
+"このアプリケーションは自動開始アプリケーションのリストから完全に削除されま"
+"す。"
+
+#: ../settings/xfae-window.c:328
+#, c-format
+msgid "Are you sure you want to remove \"%s\""
+msgstr "\"%s\" を削除してもよろしいですか?"
+
+#: ../settings/xfae-window.c:362
+msgid "Failed to edit item"
+msgstr "アイテムの編集に失敗しました。"
+
+#: ../settings/xfae-window.c:382
+#, c-format
+msgid "Failed to edit item \"%s\""
+msgstr "アイテム %s の編集に失敗しました"
+
+#: ../settings/xfae-window.c:410
 msgid "Failed to toggle item"
 msgstr "アイテムの切り替えに失敗しました。"
 
-#: ../xfce4-session/main.c:149
+#: ../xfce4-session/main.c:76
+msgid "Disable binding to TCP ports"
+msgstr "TCP ポートへのバインディングを無効にする"
+
+#: ../xfce4-session/main.c:77
+msgid "Print version information and exit"
+msgstr "バージョン情報を表示して終了する"
+
+#: ../xfce4-session/main.c:140
 msgid "Loading desktop settings"
 msgstr "デスクトップの設定を読み込んでいます"
 
+#: ../xfce4-session/main.c:227
+msgid "Written by Benedikt Meurer <benny@xfce.org>."
+msgstr "Benedikt Meurer <benny@xfce.org> が製作しました。"
+
+#: ../xfce4-session/main.c:228
+#, c-format
+msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
+msgstr "Gtk+-%d.%d.%d でビルドされ、Gtk+-%d.%d.%d で実行しています。"
+
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:210
+#: ../xfce4-session/main.c:258
 msgid "Verifying DNS settings"
 msgstr "DNS の設定を検証しています"
 
-#: ../xfce4-session/main.c:213
+#: ../xfce4-session/main.c:261
 msgid "Loading session data"
 msgstr "セッションデータを読み込んでいます"
-
-#: ../xfce4-session/main.c:279
-msgid "Xfce Session Manager"
-msgstr "Xfce セッションマネージャ"
 
 # In ja translation: unification of the term 'Log off' to 'Logout'.
 #: ../xfce4-session/shutdown.c:366
@@ -471,7 +515,7 @@ msgstr ""
 "あなたの入力したパスワードが無効であるか、システム管理者があなたのユーザアカ"
 "ウントでのコンピュータのシャットダウンを許可していません。"
 
-#: ../xfce4-session/shutdown.c:812 ../xfce4-session/xfsm-manager.c:1116
+#: ../xfce4-session/shutdown.c:812 ../xfce4-session/xfsm-manager.c:1123
 msgid "Shutdown Failed"
 msgstr "シャットダウン失敗"
 
@@ -479,12 +523,12 @@ msgstr "シャットダウン失敗"
 msgid "Unable to perform shutdown"
 msgstr "シャットダウンの実行ができません"
 
-#: ../xfce4-session/xfsm-chooser.c:120
+#: ../xfce4-session/xfsm-chooser.c:91
 #, c-format
 msgid "Last accessed: %s"
 msgstr "最終アクセス日時: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:213
+#: ../xfce4-session/xfsm-chooser.c:182
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
@@ -493,20 +537,20 @@ msgstr ""
 "す。"
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:239
+#: ../xfce4-session/xfsm-chooser.c:208
 msgid "Log out"
 msgstr "ログアウト"
 
-#: ../xfce4-session/xfsm-chooser.c:241
+#: ../xfce4-session/xfsm-chooser.c:210
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "ログインを取消してログイン画面に戻ります。"
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:249
+#: ../xfce4-session/xfsm-chooser.c:218
 msgid "New session"
 msgstr "新規セッション"
 
-#: ../xfce4-session/xfsm-chooser.c:251
+#: ../xfce4-session/xfsm-chooser.c:220
 msgid "Create a new session."
 msgstr "新しいセッションを作成します。"
 
@@ -553,7 +597,7 @@ msgstr "とにかく続行する"
 msgid "Try again"
 msgstr "再試行"
 
-#: ../xfce4-session/xfsm-manager.c:598
+#: ../xfce4-session/xfsm-manager.c:605
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -565,7 +609,7 @@ msgstr ""
 "い (\"%s\" を含まなければなりません)、あるいは xfce4-session が正しくインス"
 "トールされていない。"
 
-#: ../xfce4-session/xfsm-manager.c:609
+#: ../xfce4-session/xfsm-manager.c:616
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
@@ -573,49 +617,49 @@ msgstr ""
 "指定されたフェイルセーフセッション (\"%s\") はフェイルセーフセッションとして"
 "設定されていません。"
 
-#: ../xfce4-session/xfsm-manager.c:656
+#: ../xfce4-session/xfsm-manager.c:663
 msgid "The list of applications in the failsafe session is empty."
 msgstr "フェイルセーフセッション内のアプリケーションリストが空です。"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:703
+#: ../xfce4-session/xfsm-manager.c:710
 msgid "Session Manager Error"
 msgstr "セッションマネージャエラー"
 
-#: ../xfce4-session/xfsm-manager.c:705
+#: ../xfce4-session/xfsm-manager.c:712
 msgid "Unable to load a failsafe session"
 msgstr "フェイルセーフセッションを読み込めませんでした"
 
-#: ../xfce4-session/xfsm-manager.c:1119
+#: ../xfce4-session/xfsm-manager.c:1126
 msgid "Failed to suspend session"
 msgstr "セッションのサスペンドに失敗しました"
 
-#: ../xfce4-session/xfsm-manager.c:1120
+#: ../xfce4-session/xfsm-manager.c:1127
 msgid "Failed to hibernate session"
 msgstr "セッションのハイバネートに失敗しました"
 
-#: ../xfce4-session/xfsm-manager.c:1408
+#: ../xfce4-session/xfsm-manager.c:1415
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "待機状態の時のみクライアントを終了できます"
 
-#: ../xfce4-session/xfsm-manager.c:1939
+#: ../xfce4-session/xfsm-manager.c:1946
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 "チェックポイントを要求するとき、セッションマネージャは待機状態でなければなり"
 "ません"
 
-#: ../xfce4-session/xfsm-manager.c:1980
+#: ../xfce4-session/xfsm-manager.c:1987
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
 "シャットダウンを要求するとき、セッションマネージャは待機状態でなければなりま"
 "せん"
 
-#: ../xfce4-session/xfsm-manager.c:1987
+#: ../xfce4-session/xfsm-manager.c:1994
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "\"%u\" は不正なシャットダウンタイプです"
@@ -819,44 +863,44 @@ msgstr ""
 "移行されています。\n"
 "このフォルダは削除する方がよいでしょう。\n"
 
-#: ../xfce4-session/xfsm-startup.c:428
+#: ../xfce4-session/xfsm-startup.c:442
 msgid "Performing Autostart..."
 msgstr "自動開始アプリケーションを実行しています..."
 
 # FIXME: should be revised
-#: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:269
+#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:284
 msgid "Tips and Tricks"
 msgstr "チップとトリック"
 
-#: ../xfce4-tips/main.c:48
+#: ../xfce4-tips/main.c:49
 msgid "Fortunes"
 msgstr "運勢"
 
-#: ../xfce4-tips/main.c:74
+#: ../xfce4-tips/main.c:75
 #, c-format
 msgid "Could not load tips database (%s)."
 msgstr "チップデータベース (%s) をロードできませんでした。"
 
 #. converting it from the user's locale failed too, we give up
-#: ../xfce4-tips/main.c:183
+#: ../xfce4-tips/main.c:190
 #, c-format
 msgid "Invalid output of fortune."
 msgstr "運勢の出力は無効です。"
 
-#: ../xfce4-tips/main.c:188 ../xfce4-tips/main.c:196
+#: ../xfce4-tips/main.c:195 ../xfce4-tips/main.c:203
 #, c-format
 msgid "Executing fortune failed (%s)"
 msgstr "運勢の実行に失敗しました (%s)"
 
-#: ../xfce4-tips/main.c:221
+#: ../xfce4-tips/main.c:228
 msgid "Error while loading tips."
 msgstr "チップの読み込み中にエラーが発生しました。"
 
-#: ../xfce4-tips/main.c:298
+#: ../xfce4-tips/main.c:314
 msgid "Display tips on _startup"
 msgstr "起動時にチップを表示(_S)"
 
-#: ../xfce4-tips/main.c:327
+#: ../xfce4-tips/main.c:338
 msgid "Next"
 msgstr "次へ"
 
@@ -1070,6 +1114,9 @@ msgstr "チップとトリック"
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
 msgstr "Xfce4 チップス"
+
+#~ msgid "Xfce Session Manager"
+#~ msgstr "Xfce セッションマネージャ"
 
 #~ msgid "Session Error"
 #~ msgstr "セッションエラー"
