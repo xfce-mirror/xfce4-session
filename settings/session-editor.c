@@ -169,7 +169,7 @@ session_editor_quit_client(GtkWidget *btn,
     DBusGProxy *proxy = NULL;
     gchar *name = NULL;
     guchar hint = SmRestartIfRunning;
-    gchar *primary, *btntext;
+    gchar *primary;
 
     sel = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
     if(!gtk_tree_selection_get_selected(sel, &model, &iter))
@@ -183,13 +183,12 @@ session_editor_quit_client(GtkWidget *btn,
 
     primary = g_strdup_printf(_("Are you sure you want to terminate \"%s\"?"),
                               name);
-    btntext = g_strdup_printf(_("Terminate \"%s\""), name);
     if(xfce_message_dialog(GTK_WINDOW(gtk_widget_get_toplevel(treeview)),
                            _("Terminate Program"), GTK_STOCK_DIALOG_QUESTION,
                            primary,
                            _("The application will lose any unsaved state and will not be restarted in your next session."),
                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                           XFCE_BUTTON_TYPE_MIXED, btntext, GTK_STOCK_QUIT, GTK_RESPONSE_ACCEPT,
+                           XFCE_BUTTON_TYPE_MIXED, GTK_STOCK_QUIT, _("_Quit Program"), GTK_RESPONSE_ACCEPT,
                            NULL) == GTK_RESPONSE_ACCEPT)
     {
         GError *error = NULL;
@@ -223,7 +222,6 @@ session_editor_quit_client(GtkWidget *btn,
     }
 
     g_free(primary);
-    g_free(btntext);
     g_free(name);
     g_object_unref(proxy);
 }
