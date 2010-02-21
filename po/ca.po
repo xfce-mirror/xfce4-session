@@ -3,13 +3,13 @@
 # Copyright (C) 2003-2006 The Xfce development team.
 # This file is distributed under the same license as the xfce4-session package.
 # Carles Muñoz Gorriz <carlesmu@internautas.org>, 2003-2004, 2006, 2008-2010.
-# Pau Rul·lan Ferragut <paurullan@bulma.net> 2005, 2006
+# Pau Rul·lan Ferragut <paurullan@bulma.net> 2005, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-30 12:04+0100\n"
-"PO-Revision-Date: 2010-01-30 16:51+0100\n"
+"POT-Creation-Date: 2010-02-21 12:04+0100\n"
+"PO-Revision-Date: 2010-02-21 13:16+0100\n"
 "Last-Translator: Carles Muñoz Gorriz <carlesmu@internautas.org>\n"
 "Language-Team: catalan <xfce-i18n@xfce.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Language: Catalan\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Country: SPAIN\n"
 
 #: ../engines/balou/balou-theme.c:110
 msgid "No description given"
@@ -242,16 +243,16 @@ msgstr "Informació de la versió"
 msgid "Type '%s --help' for usage."
 msgstr "Feu «%s --help» per veure l'ús."
 
-#: ../settings/main.c:85
+#: ../settings/main.c:85 ../xfce4-session/main.c:226
 msgid "The Xfce development team. All rights reserved."
 msgstr "L'equip de desenvolupament de Xfce. Tots els drets reservats."
 
-#: ../settings/main.c:86
+#: ../settings/main.c:86 ../xfce4-session/main.c:232
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Envieu els errors a <%s>."
 
-#: ../settings/main.c:95 ../xfce4-session/main.c:281
+#: ../settings/main.c:95 ../xfce4-session/main.c:238 ../xfce4-tips/main.c:270
 msgid "Unable to contact settings server"
 msgstr "No s'ha pogut contactar amb el gestor d'ajustaments"
 
@@ -294,16 +295,11 @@ msgstr "No s'ha pogut desar la sessió"
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Esteu segur que voleu finalitzar «%s»?"
 
-#: ../settings/session-editor.c:186
-#, c-format
-msgid "Terminate \"%s\""
-msgstr "Finalitza «%s»"
-
-#: ../settings/session-editor.c:188 ../settings/session-editor.c:216
+#: ../settings/session-editor.c:187 ../settings/session-editor.c:215
 msgid "Terminate Program"
 msgstr "Finalitza el programa"
 
-#: ../settings/session-editor.c:190
+#: ../settings/session-editor.c:189
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
@@ -311,11 +307,16 @@ msgstr ""
 "L'aplicació perdrà qualssevol estat no desat i no es reiniciarà a la vostre "
 "següent sessió."
 
-#: ../settings/session-editor.c:217
+#: ../settings/session-editor.c:191
+#: ../settings/xfce4-session-settings.glade.h:35
+msgid "_Quit Program"
+msgstr "_Surt del programa"
+
+#: ../settings/session-editor.c:216
 msgid "Unable to terminate program."
 msgstr "No s'ha pogut finalitzar el programa."
 
-#: ../settings/session-editor.c:396
+#: ../settings/session-editor.c:394
 msgid "(Unknown program)"
 msgstr "(Programa desconegut)"
 
@@ -341,47 +342,56 @@ msgstr "Reinicia l'estil"
 msgid "None"
 msgstr "Cap"
 
-#: ../settings/xfae-dialog.c:99
+#: ../settings/xfae-dialog.c:78
 msgid "Add application"
 msgstr "Afegeix una aplicació"
 
-#: ../settings/xfae-dialog.c:113
+#: ../settings/xfae-dialog.c:92
 msgid "Name:"
 msgstr "Nom:"
 
-#: ../settings/xfae-dialog.c:130
+#: ../settings/xfae-dialog.c:109
 msgid "Description:"
 msgstr "Descripció:"
 
-#: ../settings/xfae-dialog.c:145
+#: ../settings/xfae-dialog.c:124
 msgid "Command:"
 msgstr "Ordre:"
 
-#: ../settings/xfae-dialog.c:205
+#: ../settings/xfae-dialog.c:184
 msgid "Select a command"
 msgstr "Seleccioneu una ordre"
+
+#: ../settings/xfae-dialog.c:233
+msgid "Edit application"
+msgstr "Edita l'aplicació"
 
 #: ../settings/xfae-model.c:562
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "Impossible desenllaçar %s: %s"
 
-#: ../settings/xfae-model.c:650
+#: ../settings/xfae-model.c:651
 #, c-format
 msgid "Failed to create file %s"
 msgstr "Impossible crear el fitxer %s"
 
-#: ../settings/xfae-model.c:672
+#: ../settings/xfae-model.c:673
 #, c-format
 msgid "Failed to write file %s"
 msgstr "Impossible escriure al fitxer %s"
 
-#: ../settings/xfae-model.c:771
+#: ../settings/xfae-model.c:732
+#, c-format
+msgid "Failed to open %s for reading"
+msgstr "No s'ha pogut obrir «%s» per lectura"
+
+#: ../settings/xfae-model.c:841 ../settings/xfae-model.c:898
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "Impossible obrir %s per escriure"
 
-#: ../settings/xfae-window.c:100
+#: ../settings/xfae-window.c:101
 msgid ""
 "Below is the list of applications that will be started automatically when "
 "you login to your Xfce desktop, in addition to the applications that were "
@@ -391,35 +401,70 @@ msgstr ""
 "entreu al vostre escriptori Xfce, a més de les que es desaren el darrer cop "
 "que veu sortir:"
 
-#: ../settings/xfae-window.c:277
+#: ../settings/xfae-window.c:289
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "No s'ha pogut afegir «%s»"
 
-#: ../settings/xfae-window.c:303
+#: ../settings/xfae-window.c:320 ../settings/xfae-window.c:334
 msgid "Failed to remove item"
 msgstr "No s'ha pogut suprimir l'element"
 
 #: ../settings/xfae-window.c:326
+msgid ""
+"This will permanently remove the application from the list of automatically "
+"started applications"
+msgstr ""
+"Això traurà permanentment l'aplicació de la llista d'aplicacions iniciades "
+"automàticament."
+
+#: ../settings/xfae-window.c:328
+#, c-format
+msgid "Are you sure you want to remove \"%s\""
+msgstr "Esteu segur que voleu eliminar «%s»?"
+
+#: ../settings/xfae-window.c:362
+msgid "Failed to edit item"
+msgstr "No s'ha pogut editar l'element"
+
+#: ../settings/xfae-window.c:382
+#, c-format
+msgid "Failed to edit item \"%s\""
+msgstr "No s'ha pogut editar l'element «%s»"
+
+#: ../settings/xfae-window.c:410
 msgid "Failed to toggle item"
 msgstr "No s'ha pogut canviar l'element"
 
-#: ../xfce4-session/main.c:149
+#: ../xfce4-session/main.c:76
+msgid "Disable binding to TCP ports"
+msgstr "Inhabilita la vinculació de ports TCP"
+
+#: ../xfce4-session/main.c:77
+msgid "Print version information and exit"
+msgstr "Mostra informació sobre la versió i surt"
+
+#: ../xfce4-session/main.c:140
 msgid "Loading desktop settings"
 msgstr "S'estan carregant els paràmetres dels escriptoris"
 
+#: ../xfce4-session/main.c:227
+msgid "Written by Benedikt Meurer <benny@xfce.org>."
+msgstr "Escrit per Benedikt Meurer <benny@xfce.org>."
+
+#: ../xfce4-session/main.c:228
+#, c-format
+msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
+msgstr "Construït amb GTK+-%d.%d.%d, executant-se amb GTK+-%d.%d.%d"
+
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:210
+#: ../xfce4-session/main.c:258
 msgid "Verifying DNS settings"
 msgstr "S'està verificant els paràmetres de DNS"
 
-#: ../xfce4-session/main.c:213
+#: ../xfce4-session/main.c:261
 msgid "Loading session data"
 msgstr "S'està carregant les dades de la sessió"
-
-#: ../xfce4-session/main.c:279
-msgid "Xfce Session Manager"
-msgstr "Gestor de sessió de Xfce"
 
 #: ../xfce4-session/shutdown.c:366
 #, c-format
@@ -466,7 +511,7 @@ msgstr ""
 "Potser la contrasenya és invàlida o l'administrador del sistema no li té "
 "permés aturar la computadora amb el seu compte d'usuari."
 
-#: ../xfce4-session/shutdown.c:812 ../xfce4-session/xfsm-manager.c:1116
+#: ../xfce4-session/shutdown.c:812 ../xfce4-session/xfsm-manager.c:1123
 msgid "Shutdown Failed"
 msgstr "L'aturada ha fallat"
 
@@ -474,12 +519,12 @@ msgstr "L'aturada ha fallat"
 msgid "Unable to perform shutdown"
 msgstr "No s'ha pogut aturar"
 
-#: ../xfce4-session/xfsm-chooser.c:120
+#: ../xfce4-session/xfsm-chooser.c:91
 #, c-format
 msgid "Last accessed: %s"
 msgstr "Darrera entrada: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:213
+#: ../xfce4-session/xfsm-chooser.c:182
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
@@ -488,20 +533,20 @@ msgstr ""
 "sessió a recuperar."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:239
+#: ../xfce4-session/xfsm-chooser.c:208
 msgid "Log out"
 msgstr "Surt"
 
-#: ../xfce4-session/xfsm-chooser.c:241
+#: ../xfce4-session/xfsm-chooser.c:210
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Cancel·la l'intent d'entrada i torna a la finestra d'inici."
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:249
+#: ../xfce4-session/xfsm-chooser.c:218
 msgid "New session"
 msgstr "Sessió nova"
 
-#: ../xfce4-session/xfsm-chooser.c:251
+#: ../xfce4-session/xfsm-chooser.c:220
 msgid "Create a new session."
 msgstr "Crea una sessió nova."
 
@@ -548,7 +593,7 @@ msgstr "Continua igualment"
 msgid "Try again"
 msgstr "Torneu-ho a provar"
 
-#: ../xfce4-session/xfsm-manager.c:598
+#: ../xfce4-session/xfsm-manager.c:605
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -560,7 +605,7 @@ msgstr ""
 "la variable d'entorn $XDG_CONFIG_DIRS és incorrecte (ha d'incloure «%s») o "
 "xfce4-session no està instaŀlat correctament."
 
-#: ../xfce4-session/xfsm-manager.c:609
+#: ../xfce4-session/xfsm-manager.c:616
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
@@ -568,49 +613,49 @@ msgstr ""
 "La sessió a prova d'errades especificada («%s») no te l'indicador de sessió a "
 "prova d'errades."
 
-#: ../xfce4-session/xfsm-manager.c:656
+#: ../xfce4-session/xfsm-manager.c:663
 msgid "The list of applications in the failsafe session is empty."
 msgstr "La llista d'aplicacions està buida a la sessió a prova d'errades"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:703
+#: ../xfce4-session/xfsm-manager.c:710
 msgid "Session Manager Error"
 msgstr "Error del gestor de sessió"
 
-#: ../xfce4-session/xfsm-manager.c:705
+#: ../xfce4-session/xfsm-manager.c:712
 msgid "Unable to load a failsafe session"
 msgstr "No s'ha pogut carregar la sessió a prova d'errades"
 
-#: ../xfce4-session/xfsm-manager.c:1119
+#: ../xfce4-session/xfsm-manager.c:1126
 msgid "Failed to suspend session"
 msgstr "No s'ha pogut suspendre la sessió"
 
-#: ../xfce4-session/xfsm-manager.c:1120
+#: ../xfce4-session/xfsm-manager.c:1127
 msgid "Failed to hibernate session"
 msgstr "No s'ha pogut hibernar la sessió"
 
-#: ../xfce4-session/xfsm-manager.c:1408
+#: ../xfce4-session/xfsm-manager.c:1415
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Només es poden finalitzar els clients quan l'estat és inactiu"
 
-#: ../xfce4-session/xfsm-manager.c:1939
+#: ../xfce4-session/xfsm-manager.c:1946
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 "Cal que el gestor de sessió tingui l'estat inactiu quan es soŀlicita un punt "
 "de control"
 
-#: ../xfce4-session/xfsm-manager.c:1980
+#: ../xfce4-session/xfsm-manager.c:1987
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
 "Cal que el gestor de sessió tingui l'estat inactiu quan es soŀlicita una "
 "aturada"
 
-#: ../xfce4-session/xfsm-manager.c:1987
+#: ../xfce4-session/xfsm-manager.c:1994
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Tipus d'aturada «%u» errònia"
@@ -815,43 +860,43 @@ msgstr ""
 "\n"
 "És aconsellable esborrar l'antic directori ara mateix.\n"
 
-#: ../xfce4-session/xfsm-startup.c:428
+#: ../xfce4-session/xfsm-startup.c:442
 msgid "Performing Autostart..."
 msgstr "S'està realitzant l'engegada automàtica…"
 
-#: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:269
+#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:284
 msgid "Tips and Tricks"
 msgstr "Consells i suggeriments"
 
-#: ../xfce4-tips/main.c:48
+#: ../xfce4-tips/main.c:49
 msgid "Fortunes"
 msgstr "Dites"
 
-#: ../xfce4-tips/main.c:74
+#: ../xfce4-tips/main.c:75
 #, c-format
 msgid "Could not load tips database (%s)."
 msgstr "No s'ha pogur carregar la base de dades de consells «%s»."
 
 #. converting it from the user's locale failed too, we give up
-#: ../xfce4-tips/main.c:183
+#: ../xfce4-tips/main.c:190
 #, c-format
 msgid "Invalid output of fortune."
 msgstr "La sortida de «fortune» no és vàlida."
 
-#: ../xfce4-tips/main.c:188 ../xfce4-tips/main.c:196
+#: ../xfce4-tips/main.c:195 ../xfce4-tips/main.c:203
 #, c-format
 msgid "Executing fortune failed (%s)"
 msgstr "Error al executar «fortune»: «%s»"
 
-#: ../xfce4-tips/main.c:221
+#: ../xfce4-tips/main.c:228
 msgid "Error while loading tips."
 msgstr "Error al carregar els consells."
 
-#: ../xfce4-tips/main.c:298
+#: ../xfce4-tips/main.c:314
 msgid "Display tips on _startup"
 msgstr "Visualitza els consell_s a l'engegada"
 
-#: ../xfce4-tips/main.c:327
+#: ../xfce4-tips/main.c:338
 msgid "Next"
 msgstr "Següent"
 
@@ -1042,10 +1087,6 @@ msgstr "_General"
 msgid "_Prompt on logout"
 msgstr "_Pregunta al sortir"
 
-#: ../settings/xfce4-session-settings.glade.h:35
-msgid "_Quit Program"
-msgstr "_Surt del programa"
-
 #: ../settings/xfce4-session-settings.glade.h:36
 msgid "_Session"
 msgstr "_Sessió"
@@ -1065,6 +1106,12 @@ msgstr "Consells i suggeriments"
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
 msgstr "Consells de Xfce"
+
+#~ msgid "Terminate \"%s\""
+#~ msgstr "Finalitza «%s»"
+
+#~ msgid "Xfce Session Manager"
+#~ msgstr "Gestor de sessió de Xfce"
 
 #~ msgid "Session Error"
 #~ msgstr "Error de sessió"
