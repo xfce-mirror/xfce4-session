@@ -136,7 +136,6 @@ msgid "Simple Splash Engine"
 msgstr "Заставка Simple"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:86
-#, fuzzy
 msgid "Session"
 msgstr "Сеанс"
 
@@ -146,13 +145,11 @@ msgstr "_Блокировка экрана"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:88
 #: ../panel-plugin/xfsm-logout-plugin.c:128
-#, fuzzy
 msgid "_Suspend"
 msgstr "_Ждущий режим"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:89
 #: ../panel-plugin/xfsm-logout-plugin.c:135
-#, fuzzy
 msgid "_Hibernate"
 msgstr "С_пящий режим"
 
@@ -163,22 +160,19 @@ msgstr "Пере_загрузка"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:91
 #: ../panel-plugin/xfsm-logout-plugin.c:114
-#, fuzzy
 msgid "Shut _down"
 msgstr "Вы_ключить"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:92
 #: ../panel-plugin/xfsm-logout-plugin.c:107
-#, fuzzy
 msgid "_Log out"
 msgstr "Завер_шить сеанс"
 
 #. XFSM_SHUTDOWN_ASK
 #. XFSM_SHUTDOWN_LOGOUT
 #: ../panel-plugin/xfsm-logout-plugin.c:105
-#, fuzzy
 msgid "Are you sure you want to log out?"
-msgstr "Вы уверены, что хотите завершить  \"%s\"?"
+msgstr "Вы уверены, что хотите завершить сеанс?"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:106
 #, c-format
@@ -191,9 +185,8 @@ msgstr "Не удалось завершить сеанс"
 
 #. XFSM_SHUTDOWN_HALT
 #: ../panel-plugin/xfsm-logout-plugin.c:112
-#, fuzzy
 msgid "Are you sure you want to shut down?"
-msgstr "Вы уверены, что хотите завершить  \"%s\"?"
+msgstr "Вы уверены, что хотите выключить компьютер?"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:113
 #, c-format
@@ -201,15 +194,13 @@ msgid "Your system will shut down in %u seconds."
 msgstr "Система будет выключена через %u сек."
 
 #: ../panel-plugin/xfsm-logout-plugin.c:116
-#, fuzzy
 msgid "Failed to shut down."
-msgstr "Не удалось войти в ждущий режим"
+msgstr "Не удалось завершить работу системы."
 
 #. XFSM_SHUTDOWN_REBOOT
 #: ../panel-plugin/xfsm-logout-plugin.c:119
-#, fuzzy
 msgid "Are you sure you want to reboot?"
-msgstr "Вы уверены, что хотите завершить  \"%s\"?"
+msgstr "Вы уверены, что хотите перезагрузить компьютер?"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:120
 #, c-format
@@ -217,17 +208,14 @@ msgid "Your system will reboot in %u seconds."
 msgstr "Система будет перезагружена через %u сек."
 
 #: ../panel-plugin/xfsm-logout-plugin.c:123
-#, fuzzy
 msgid "Failed to reboot."
-msgstr "Не удалось создать файл %s"
+msgstr "Не удалось перезагрузить систему."
 
 #: ../panel-plugin/xfsm-logout-plugin.c:130
-#, fuzzy
 msgid "Failed to suspend"
 msgstr "Не удалось войти в ждущий режим"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:137
-#, fuzzy
 msgid "Failed to hibernate"
 msgstr "Не удалось войти в спящий режим"
 
@@ -236,9 +224,8 @@ msgid "Xfclock4 could not be launched"
 msgstr "Не удалось запустить Xfclock4"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:222
-#, fuzzy
 msgid "Close Session"
-msgstr "Выберите сеанс"
+msgstr "Завершение сеанса"
 
 #: ../settings/main.c:42
 msgid "Settings manager socket"
@@ -371,9 +358,8 @@ msgid "Select a command"
 msgstr "Выбор команды"
 
 #: ../settings/xfae-dialog.c:233
-#, fuzzy
 msgid "Edit application"
-msgstr "Добавление приложения"
+msgstr "Изменение приложения"
 
 #: ../settings/xfae-model.c:562
 #, c-format
@@ -391,9 +377,9 @@ msgid "Failed to write file %s"
 msgstr "Не удалось записать в файл %s"
 
 #: ../settings/xfae-model.c:732
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open %s for reading"
-msgstr "Не удалось открыть файл %s для записи"
+msgstr "Не удалось открыть файл %s для чтения"
 
 #: ../settings/xfae-model.c:841 ../settings/xfae-model.c:898
 #, c-format
@@ -411,45 +397,41 @@ msgstr ""
 #: ../settings/xfae-window.c:289
 #, c-format
 msgid "Failed adding \"%s\""
-msgstr ""
+msgstr "Не удалось добавить «%s»"
 
 #: ../settings/xfae-window.c:320 ../settings/xfae-window.c:334
-#, fuzzy
 msgid "Failed to remove item"
-msgstr "Не удалось создать файл %s"
+msgstr "Не удалось удалить элемент"
 
 #: ../settings/xfae-window.c:326
 msgid "This will permanently remove the application from the list of automatically started applications"
-msgstr ""
+msgstr "Приложение будет навсегда удалено из списка автозагрузки"
 
 #: ../settings/xfae-window.c:328
-#, fuzzy, c-format
+#, c-format
 msgid "Are you sure you want to remove \"%s\""
-msgstr "Вы уверены, что хотите завершить  \"%s\"?"
+msgstr "Вы действительно хотите удалить «%s»?"
 
 #: ../settings/xfae-window.c:362
-#, fuzzy
 msgid "Failed to edit item"
-msgstr "Не удалось записать в файл %s"
+msgstr "Не удалось изменить элемент"
 
 #: ../settings/xfae-window.c:382
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to edit item \"%s\""
-msgstr "Не удалось записать в файл %s"
+msgstr "Не удалось изменить элемент «%s»"
 
 #: ../settings/xfae-window.c:410
-#, fuzzy
 msgid "Failed to toggle item"
-msgstr "Не удалось записать в файл %s"
+msgstr "Не удалось переключить элемент"
 
 #: ../xfce4-session/main.c:76
 msgid "Disable binding to TCP ports"
 msgstr "Отключить привязку к портам TCP"
 
 #: ../xfce4-session/main.c:77
-#, fuzzy
 msgid "Print version information and exit"
-msgstr "Сведения"
+msgstr "Вывести сведения о версии и выйти"
 
 #: ../xfce4-session/main.c:140
 msgid "Loading desktop settings"
@@ -648,12 +630,12 @@ msgstr "Неверный тип завершения работы \"%u\""
 #: ../xfce4-session/xfsm-shutdown-helper.c:1664
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
-msgstr ""
+msgstr "Не удалось отправить команду утилите выключения: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:1678
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
-msgstr ""
+msgstr "Не удалось получить ответ от утилиты выключения: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:1687
 #, c-format
@@ -817,7 +799,7 @@ msgstr "Недопустимый результат fortune."
 #: ../xfce4-tips/main.c:195 ../xfce4-tips/main.c:203
 #, c-format
 msgid "Executing fortune failed (%s)"
-msgstr ""
+msgstr "Ошибка при запуске fortune (%s)"
 
 #: ../xfce4-tips/main.c:228
 msgid "Error while loading tips."
@@ -864,7 +846,7 @@ msgstr "Параметры сеанса"
 #: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:2
 #: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:2
 msgid "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
-msgstr ""
+msgstr "Выводит меню, позволяющее заблокировать экран, перейти в ждущий или спящий режимы, завершить сеанс или выключить компьютер"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
 #: ../settings/xfce4-session-settings.glade.h:14
