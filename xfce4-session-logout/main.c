@@ -39,6 +39,7 @@
 
 #include <gtk/gtk.h>
 #include <libxfce4ui/libxfce4ui.h>
+#include <libxfce4util/libxfce4util.h>
 
 
 /* copied from xfce4-session/shutdown.h -- ORDER MATTERS.  The numbers
@@ -53,6 +54,51 @@ typedef enum
   XFSM_SHUTDOWN_SUSPEND,
   XFSM_SHUTDOWN_HIBERNATE,
 } XfsmShutdownType;
+
+gboolean logout = FALSE;
+gboolean halt = FALSE;
+gboolean reboot = FALSE;
+gboolean suspend = FALSE;
+gboolean hibernate = FALSE;
+gboolean fast = FALSE;
+gboolean version = FALSE;
+
+static GOptionEntry option_entries[] =
+{
+  { "logout", 'l', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &logout,
+    N_("Log out without displaying the logout dialog"),
+    NULL
+  },
+  { "halt", 'h', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &halt,
+    N_("Halt without displaying the logout dialog"),
+    NULL
+  },
+  { "reboot", 'r', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &reboot,
+    N_("Reboot without displaying the logout dialog"),
+    NULL
+  },
+  { "suspend", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &suspend,
+    N_("Suspend without displaying the logout dialog"),
+    NULL
+  },
+  { "hibernate", 'h', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &hibernate,
+    N_("Hibernate without displaying the logout dialog"),
+    NULL
+  },
+  { "fast", 'f', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &fast,
+    N_("Log out quickly; don't save the session"),
+    NULL
+  },
+  { "version", 'V', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &version,
+    N_("Print version information and exit"),
+    NULL
+  },
+  {
+    NULL, ' ', 0, 0, NULL,
+    NULL,
+    NULL
+  }
+};
 
 
 static void
@@ -77,31 +123,6 @@ xfce_session_logout_notify_error (const gchar *primary_message,
 }
 
 
-G_GNUC_NORETURN static void
-usage (int exit_code)
-{
-  fprintf (stderr,
-           "Usage: %s [OPTION...]\n"
-           "\n"
-           "GTK+\n"
-           "  --display=DISPLAY     X display to use\n"
-           "\n"
-           "Application options\n"
-           "  --logout              Log out without displaying the logout dialog\n"
-           "  --halt                Halt without displaing the logout dialog\n"
-           "  --reboot              Reboot without displaying the logout dialog\n"
-           "  --suspend             Suspend without displaying the logout dialog\n"
-           "  --hibernate           Hibernate without displaying the logout dialog\n"
-           "  --fast                Log out quickly; don't save the session\n"
-           "\n"
-           "  --help                Print this help message and exit\n"
-           "  --version             Print version information and exit\n"
-           "\n",
-           PACKAGE_STRING);
-  exit (exit_code);
-}
-
-
 
 int
 main (int argc, char **argv)
@@ -111,49 +132,46 @@ main (int argc, char **argv)
   DBusConnection *dbus_conn;
   DBusMessage *message, *reply;
   DBusError derror;
-  gboolean have_display = gtk_init_check (&argc, &argv);
+  gboolean have_display;
 
-  for (++argv; --argc > 0; ++argv)
+  xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
+
+  have_display = gtk_init_with_args (&argc, &argv, "", option_entries, PACKAGE, NULL);
+
+  if (logout)
     {
-      if (strcmp (*argv, "--logout") == 0)
-        {
-          shutdown_type = XFSM_SHUTDOWN_LOGOUT;
-        }
-      else if (strcmp (*argv, "--halt") == 0)
-        {
-          shutdown_type = XFSM_SHUTDOWN_HALT;
-        }
-      else if (strcmp (*argv, "--reboot") == 0)
-        {
-          shutdown_type = XFSM_SHUTDOWN_REBOOT;
-        }
-      else if (strcmp (*argv, "--suspend") == 0)
-        {
-          shutdown_type = XFSM_SHUTDOWN_SUSPEND;
-        }
-      else if (strcmp (*argv, "--hibernate") == 0)
-        {
-          shutdown_type = XFSM_SHUTDOWN_HIBERNATE;
-        }
-      else if (strcmp (*argv, "--fast") == 0)
-        {
-          allow_save = FALSE;
-        }
-      else if (strcmp (*argv, "--version") == 0)
-        {
-          printf ("%s (Xfce %s)\n\n"
-                  "Copyright (c) 2004\n"
-                  "        The Xfce development team. All rights reserved.\n\n"
-                  "Written for Xfce by Brian Tarricone <kelnos@xfce.org> and\n"
-                  "Benedikt Meurer <benny@xfce.org>.\n\n"
-                  "Please report bugs to <%s>.\n",
-                  PACKAGE_STRING, xfce_version_string(), PACKAGE_BUGREPORT);
-          return EXIT_SUCCESS;
-        }
-      else
-        {
-          usage (strcmp (*argv, "--help") == 0 ? EXIT_SUCCESS : EXIT_FAILURE);
-        }
+      shutdown_type = XFSM_SHUTDOWN_LOGOUT;
+    }
+  else if (halt)
+    {
+      shutdown_type = XFSM_SHUTDOWN_HALT;
+    }
+  else if (reboot)
+    {
+      shutdown_type = XFSM_SHUTDOWN_REBOOT;
+    }
+  else if (suspend)
+    {
+      shutdown_type = XFSM_SHUTDOWN_SUSPEND;
+    }
+  else if (hibernate)
+    {
+      shutdown_type = XFSM_SHUTDOWN_HIBERNATE;
+    }
+  else if (fast)
+    {
+      allow_save = FALSE;
+    }
+  else if (version)
+    {
+      printf ("%s (Xfce %s)\n\n"
+              "Copyright (c) 2010\n"
+              "        The Xfce development team. All rights reserved.\n\n"
+              "Written for Xfce by Brian Tarricone <kelnos@xfce.org> and\n"
+              "Benedikt Meurer <benny@xfce.org>.\n\n"
+              "Please report bugs to <%s>.\n",
+              PACKAGE_STRING, xfce_version_string(), PACKAGE_BUGREPORT);
+      return EXIT_SUCCESS;
     }
 
   dbus_error_init (&derror);
