@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-05 12:05+0100\n"
+"POT-Creation-Date: 2010-03-09 06:05+0100\n"
 "PO-Revision-Date: 2009-01-26 16:03+0200\n"
 "Last-Translator: Dmitry Nikitin <luckas_fb@mail.ru>\n"
 "Language-Team: Ukrainian <xfce4-dev@xfce.org>\n"
@@ -421,7 +421,7 @@ msgstr "Не вдається перемкнути елемент"
 msgid "Disable binding to TCP ports"
 msgstr "Заборонити з'єднання на порти TCP"
 
-#: ../xfce4-session/main.c:77
+#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:93
 msgid "Print version information and exit"
 msgstr "Надрукувати інформацію про версію і вийти"
 
@@ -804,27 +804,51 @@ msgstr "Показувати на _старті"
 msgid "Next"
 msgstr "Далі"
 
-#: ../xfce4-session-logout/main.c:65
+#: ../xfce4-session-logout/main.c:69
+msgid "Log out without displaying the logout dialog"
+msgstr "Завершити сеанс без діалогу підтвердження виходу"
+
+#: ../xfce4-session-logout/main.c:73
+msgid "Halt without displaying the logout dialog"
+msgstr "Вимкнути комп'ютер без діалогу підтвердження виходу"
+
+#: ../xfce4-session-logout/main.c:77
+msgid "Reboot without displaying the logout dialog"
+msgstr "Перезавантажити без діалогу підтвердження виходу"
+
+#: ../xfce4-session-logout/main.c:81
+msgid "Suspend without displaying the logout dialog"
+msgstr "Призупинити комп'ютер без діалогу підтвердження виходу"
+
+#: ../xfce4-session-logout/main.c:85
+msgid "Hibernate without displaying the logout dialog"
+msgstr "Приспати без діалогу підтвердження виходу"
+
+#: ../xfce4-session-logout/main.c:89
+msgid "Log out quickly; don't save the session"
+msgstr "Вийти якнайшвидше; дані сеансу не зберігати"
+
+#: ../xfce4-session-logout/main.c:111
 msgid "Logout Error"
 msgstr "Помилка виходу з сеансу"
 
-#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
+#: ../xfce4-session-logout/main.c:114 ../xfce4-session-logout/main.c:121
 msgid "Unknown error"
 msgstr "Невідома помилка"
 
-#: ../xfce4-session-logout/main.c:163
+#: ../xfce4-session-logout/main.c:181
 msgid "Unable to contact D-Bus session bus."
 msgstr "Неможливо з'єднатись з сеансом шини D-Bus."
 
-#: ../xfce4-session-logout/main.c:175
+#: ../xfce4-session-logout/main.c:193
 msgid "Failed to create new D-Bus message"
 msgstr "Не вдалось створити нове повідомлення для D-Bus"
 
-#: ../xfce4-session-logout/main.c:191
+#: ../xfce4-session-logout/main.c:209
 msgid "Failed to receive a reply from the session manager"
 msgstr "Не вдалось отримати відповідь від менеджера сеансів"
 
-#: ../xfce4-session-logout/main.c:199
+#: ../xfce4-session-logout/main.c:217
 msgid "Received error while trying to log out"
 msgstr "Отримано помилку під час спроби вийти з сеансу"
 
