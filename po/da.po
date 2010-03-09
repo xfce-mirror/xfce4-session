@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-session 4.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-27 06:04+0100\n"
+"POT-Creation-Date: 2010-03-09 06:05+0100\n"
 "PO-Revision-Date: 2010-02-07 21:05+0100\n"
 "Last-Translator: Per Kongstad <p_kongstad@op.pl>\n"
 "Language-Team: Danish <dank@dansk-gruppen.dk>\n"
@@ -426,7 +426,7 @@ msgstr "Kunne ikke skifte element"
 msgid "Disable binding to TCP ports"
 msgstr "Slå binding til TCP-porte fra"
 
-#: ../xfce4-session/main.c:77
+#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:93
 msgid "Print version information and exit"
 msgstr "Udskriv versionsinformation og afslut"
 
@@ -811,27 +811,51 @@ msgstr "Vis tips ved _opstart"
 msgid "Next"
 msgstr "Næste"
 
-#: ../xfce4-session-logout/main.c:65
+#: ../xfce4-session-logout/main.c:69
+msgid "Log out without displaying the logout dialog"
+msgstr "Logud uden at vise dialogen logud"
+
+#: ../xfce4-session-logout/main.c:73
+msgid "Halt without displaying the logout dialog"
+msgstr "Luk ned uden at vise dialogen logud"
+
+#: ../xfce4-session-logout/main.c:77
+msgid "Reboot without displaying the logout dialog"
+msgstr "Genstart uden at vise dialogen logud"
+
+#: ../xfce4-session-logout/main.c:81
+msgid "Suspend without displaying the logout dialog"
+msgstr "Til hviletilstand uden at vise dialogen logud"
+
+#: ../xfce4-session-logout/main.c:85
+msgid "Hibernate without displaying the logout dialog"
+msgstr "Til dvaletilstand uden at vise dialogen logud"
+
+#: ../xfce4-session-logout/main.c:89
+msgid "Log out quickly; don't save the session"
+msgstr "Logud hurtigt; undlad at gemme sessionen"
+
+#: ../xfce4-session-logout/main.c:111
 msgid "Logout Error"
 msgstr "Logudfejl"
 
-#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
+#: ../xfce4-session-logout/main.c:114 ../xfce4-session-logout/main.c:121
 msgid "Unknown error"
 msgstr "Ukendt fejl"
 
-#: ../xfce4-session-logout/main.c:163
+#: ../xfce4-session-logout/main.c:181
 msgid "Unable to contact D-Bus session bus."
 msgstr "Kunne ikke forbinde til D-Bus-sessionsbus."
 
-#: ../xfce4-session-logout/main.c:175
+#: ../xfce4-session-logout/main.c:193
 msgid "Failed to create new D-Bus message"
 msgstr "Kunne ikke oprette ny D-Bus-besked"
 
-#: ../xfce4-session-logout/main.c:191
+#: ../xfce4-session-logout/main.c:209
 msgid "Failed to receive a reply from the session manager"
 msgstr "Modtog ikke svar tilbage fra sessionshåndteringen"
 
-#: ../xfce4-session-logout/main.c:199
+#: ../xfce4-session-logout/main.c:217
 msgid "Received error while trying to log out"
 msgstr "Modtog fejl under forsøg på logud"
 
