@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-09 06:04+0100\n"
+"POT-Creation-Date: 2010-03-26 12:05+0100\n"
 "PO-Revision-Date: 2009-08-21 11:07+0200\n"
 "Last-Translator: Piarres Beobide <pi@beobide.net>\n"
 "Language-Team: Euskara\n"
@@ -291,40 +291,40 @@ msgstr "Ezin da saioa gorde"
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Ziur zaude \"%s\" amaitu nahi duzula?"
 
-#: ../settings/session-editor.c:186
-#, c-format
-msgid "Terminate \"%s\""
-msgstr "Amaitu \"%s\""
-
-#: ../settings/session-editor.c:188 ../settings/session-editor.c:216
+#: ../settings/session-editor.c:187 ../settings/session-editor.c:215
 msgid "Terminate Program"
 msgstr "Amaitu programa"
 
-#: ../settings/session-editor.c:190
+#: ../settings/session-editor.c:189
 msgid "The application will lose any unsaved state and will not be restarted in your next session."
 msgstr "Aplikazioak gorde gabeko edozein egoera galduko eta ez da hurrengo saioan abiaraziko."
 
-#: ../settings/session-editor.c:217
+#: ../settings/session-editor.c:191
+#: ../settings/xfce4-session-settings.glade.h:35
+msgid "_Quit Program"
+msgstr "I_rten programatik"
+
+#: ../settings/session-editor.c:216
 msgid "Unable to terminate program."
 msgstr "Ezin da programa amaitu"
 
-#: ../settings/session-editor.c:396
+#: ../settings/session-editor.c:394
 msgid "(Unknown program)"
 msgstr "(Programa ezezaguna)"
 
-#: ../settings/session-editor.c:616
+#: ../settings/session-editor.c:614
 msgid "Priority"
 msgstr "Lehentasuna"
 
-#: ../settings/session-editor.c:624
+#: ../settings/session-editor.c:622
 msgid "PID"
 msgstr "PIDa"
 
-#: ../settings/session-editor.c:630
+#: ../settings/session-editor.c:628
 msgid "Program"
 msgstr "Programa"
 
-#: ../settings/session-editor.c:655
+#: ../settings/session-editor.c:653
 msgid "Restart Style"
 msgstr "Berrabiarazte estiloa"
 
@@ -422,7 +422,7 @@ msgstr "Huts elementua txandakatzean"
 msgid "Disable binding to TCP ports"
 msgstr "Ezgaituko lotutako TXP atakak"
 
-#: ../xfce4-session/main.c:77
+#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:93
 msgid "Print version information and exit"
 msgstr "Bertsio argibideak inprimatu eta irten"
 
@@ -448,52 +448,52 @@ msgstr "DNS ezarpenak egiaztatzen"
 msgid "Loading session data"
 msgstr "Saio datuak kargatzen"
 
-#: ../xfce4-session/shutdown.c:366
+#: ../xfce4-session/shutdown.c:372
 #, c-format
 msgid "<span size='large'><b>Log out %s</b></span>"
 msgstr "<span size='large'><b>Saioa itxi %s</b></span>"
 
-#: ../xfce4-session/shutdown.c:416
+#: ../xfce4-session/shutdown.c:422
 msgid "Log Out"
 msgstr "Irten"
 
-#: ../xfce4-session/shutdown.c:451
+#: ../xfce4-session/shutdown.c:457
 msgid "Restart"
 msgstr "Berrabiarazi"
 
-#: ../xfce4-session/shutdown.c:489
+#: ../xfce4-session/shutdown.c:499
 msgid "Shut Down"
 msgstr "Itzali"
 
-#: ../xfce4-session/shutdown.c:541
+#: ../xfce4-session/shutdown.c:561
 msgid "Suspend"
 msgstr "Eseki"
 
-#: ../xfce4-session/shutdown.c:579
+#: ../xfce4-session/shutdown.c:599
 msgid "Hibernate"
 msgstr "Hibernatu"
 
-#: ../xfce4-session/shutdown.c:588
+#: ../xfce4-session/shutdown.c:608
 msgid "_Save session for future logins"
 msgstr "_Gorde saioa hurrengo abiarazterako"
 
-#: ../xfce4-session/shutdown.c:644
+#: ../xfce4-session/shutdown.c:668
 msgid "Please enter your password:"
 msgstr "Mesedez idatzi zure pasahitza:"
 
-#: ../xfce4-session/shutdown.c:676
+#: ../xfce4-session/shutdown.c:700
 msgid "<b>An error occurred</b>"
 msgstr "<b>Errore bat gertatu da</b>"
 
-#: ../xfce4-session/shutdown.c:690
+#: ../xfce4-session/shutdown.c:714
 msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
 msgstr "Edo zuk emandako pasahitza ez da zuzena, edo sistema kudeatzaileak zure erabiltzaile kontuaz ordenagailua itzaltzeko aukera ezgaitu du."
 
-#: ../xfce4-session/shutdown.c:812 ../xfce4-session/xfsm-manager.c:1123
+#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1228
 msgid "Shutdown Failed"
 msgstr "Huts itzaltzerakoan"
 
-#: ../xfce4-session/shutdown.c:814
+#: ../xfce4-session/shutdown.c:838
 msgid "Unable to perform shutdown"
 msgstr "Ezin da itzalia aurrera eraman"
 
@@ -567,131 +567,84 @@ msgstr "Jarraitu halaere"
 msgid "Try again"
 msgstr "Saiatu berriz"
 
-#: ../xfce4-session/xfsm-manager.c:605
+#: ../xfce4-session/xfsm-manager.c:712
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr "Ezin da saio seguruaren izena atzeman. Arrazoia posibleak xfconfd ez abiarazita egotea (D-BUS konfigurazio arazoa, $XDG_CONFIG_DIRS aldagaia oker ezarrita egotea (\"%s\" eduki beharko luke) edo xfce4-session oker instalaturik egotea dira."
 
-#: ../xfce4-session/xfsm-manager.c:616
+#: ../xfce4-session/xfsm-manager.c:723
 #, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Zehazturiko saio segurua (\"%s\") ez da saio seguru bat bezala markaturik."
 
-#: ../xfce4-session/xfsm-manager.c:663
+#: ../xfce4-session/xfsm-manager.c:770
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Saio seguruko aplikazio zerrenda hutsik dago."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:710
+#: ../xfce4-session/xfsm-manager.c:817
 msgid "Session Manager Error"
 msgstr "Saio kudeatzaile errorea"
 
-#: ../xfce4-session/xfsm-manager.c:712
+#: ../xfce4-session/xfsm-manager.c:819
 msgid "Unable to load a failsafe session"
 msgstr "Ezin da saioa segurua kargatu"
 
-#: ../xfce4-session/xfsm-manager.c:1126
+#: ../xfce4-session/xfsm-manager.c:1231
 msgid "Failed to suspend session"
 msgstr "Huts saioa esekitzerakoan"
 
-#: ../xfce4-session/xfsm-manager.c:1127
+#: ../xfce4-session/xfsm-manager.c:1232
 msgid "Failed to hibernate session"
 msgstr "Huts saioa hibernatzean"
 
-#: ../xfce4-session/xfsm-manager.c:1415
+#: ../xfce4-session/xfsm-manager.c:1520
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Bezeroak inaktibo egoeran daudenean bakarrik amaitu daitezke"
 
-#: ../xfce4-session/xfsm-manager.c:1946
+#: ../xfce4-session/xfsm-manager.c:2051
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Saio kudeatzailea inaktibo egoeran egon behar da egiaztapen-puntu bat eskatzean"
 
-#: ../xfce4-session/xfsm-manager.c:1987
+#: ../xfce4-session/xfsm-manager.c:2092
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Saio kudeatzailea inaktibo egoeran egon behar da itzaltzea eskatzean"
 
-#: ../xfce4-session/xfsm-manager.c:1994
+#: ../xfce4-session/xfsm-manager.c:2099
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "\"%u\" itzaltze modu baliogabea"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:200
-msgid "Invalid shutdown type"
-msgstr "Itzaltze modu baliogabea"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:384
-#, c-format
-msgid "No HAL method for command %d"
-msgstr "Ez dago HALmetodorik %d komandoarentzat"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:528
-#, c-format
-msgid "Program \"sudo\" was not found.  You will not be able to shutdown your system from within Xfce."
-msgstr "Ez da \"sudo\" programa aurkitu. Ez zara Xfce barnetik sistema itzaltzeko gai izango."
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:540
-#, c-format
-msgid "Unable to create parent pipe: %s"
-msgstr "Ezin da guraso kanalizazioa sortu: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:551
-#, c-format
-msgid "Unable to create child pipe: %s"
-msgstr "Ezin da ume kanalizazioa sortu: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:562
-#, c-format
-msgid "Unable to fork sudo helper: %s"
-msgstr "Ezin da sudo laguntzailea banatu: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:604
-#, c-format
-msgid "Unable to read response from sudo helper: %s"
-msgstr "Ezin da sudo laguntzailearen erantzuna irakurri: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:605
-#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
-msgid "Unknown error"
-msgstr "Errore ezezaguna"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:616
-#, c-format
-msgid "Unable to open parent pipe: %s"
-msgstr "Ezin da guraso kanalizazioa ireki: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:627
-#, c-format
-msgid "Unable to open child pipe: %s"
-msgstr "Ezin da ume kanalizazioa ireki: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:645
-#, c-format
-msgid "Got unexpected reply from sudo shutdown helper"
-msgstr "Espero ez zen erantzuna jaso da sudo itzaltze laguntzailetik"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:803
-#, c-format
-msgid "Suspend and Hibernate are only supported through HAL, which is unavailable"
-msgstr "Eskeki eta hibernatu erabilgarri ez dagoen HAL bidez bakarrik onartzen dira"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:825
+#: ../xfce4-session/xfsm-shutdown-helper.c:1664
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
 msgstr "Errorea komandoa itzaltze laguntzailera bidaltzean: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:842
+#: ../xfce4-session/xfsm-shutdown-helper.c:1678
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
 msgstr "Errorea itzaltze laguntzailetik erantzuna jasotzean: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:853
+#: ../xfce4-session/xfsm-shutdown-helper.c:1687
 #, c-format
 msgid "Shutdown command failed"
+msgstr "Itzaltze komandoak huts egin du"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:1867
+msgid "Suspend failed, no backend supported"
+msgstr "Huts esekitzean, ez da motorra onartzen"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:1894
+msgid "Hibernate failed, no backend supported"
+msgstr "Huts hibernatzean ez da motorra onartzen"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:1924
+msgid "Shutdown Command not found"
 msgstr "Itzaltze komandoak huts egin du"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
@@ -852,23 +805,51 @@ msgstr "Gomendioak bistarazi _abiaraztean"
 msgid "Next"
 msgstr "Hurrengoa"
 
-#: ../xfce4-session-logout/main.c:65
+#: ../xfce4-session-logout/main.c:69
+msgid "Log out without displaying the logout dialog"
+msgstr "Saioa itxi saio-ixte leihoa bistarazi gabe"
+
+#: ../xfce4-session-logout/main.c:73
+msgid "Halt without displaying the logout dialog"
+msgstr "Gelditu saio-ixte leihoa bistarazi gabe"
+
+#: ../xfce4-session-logout/main.c:77
+msgid "Reboot without displaying the logout dialog"
+msgstr "Berrabiarazi saio-ixte leihoa bistarazi gabe"
+
+#: ../xfce4-session-logout/main.c:81
+msgid "Suspend without displaying the logout dialog"
+msgstr "Eseki saio-ixte leihoa bistarazi gabe"
+
+#: ../xfce4-session-logout/main.c:85
+msgid "Hibernate without displaying the logout dialog"
+msgstr "Hibernatu saio-ixte leihoa bistarazi gabe"
+
+#: ../xfce4-session-logout/main.c:89
+msgid "Log out quickly; don't save the session"
+msgstr "Azkar irten: Ez saioa gorde"
+
+#: ../xfce4-session-logout/main.c:111
 msgid "Logout Error"
 msgstr "Saio itxiera errorea"
 
-#: ../xfce4-session-logout/main.c:163
+#: ../xfce4-session-logout/main.c:114 ../xfce4-session-logout/main.c:121
+msgid "Unknown error"
+msgstr "Errore ezezaguna"
+
+#: ../xfce4-session-logout/main.c:181
 msgid "Unable to contact D-Bus session bus."
 msgstr "Ezin da D-Bus saioa bus-a konektatu"
 
-#: ../xfce4-session-logout/main.c:175
+#: ../xfce4-session-logout/main.c:193
 msgid "Failed to create new D-Bus message"
 msgstr "Huts D-Bus mezu sortzean"
 
-#: ../xfce4-session-logout/main.c:191
+#: ../xfce4-session-logout/main.c:209
 msgid "Failed to receive a reply from the session manager"
 msgstr "Huts saio kudeatzailetik erantzuna jasotzerako"
 
-#: ../xfce4-session-logout/main.c:199
+#: ../xfce4-session-logout/main.c:217
 msgid "Received error while trying to log out"
 msgstr "Errore bat jaso da saioa ixten saiatzerakoan"
 
@@ -1020,10 +1001,6 @@ msgstr "_Orokorra"
 msgid "_Prompt on logout"
 msgstr "_Galdetu saioa amaitzean"
 
-#: ../settings/xfce4-session-settings.glade.h:35
-msgid "_Quit Program"
-msgstr "I_rten programatik"
-
 #: ../settings/xfce4-session-settings.glade.h:36
 msgid "_Session"
 msgstr "_Saioa"
@@ -1043,6 +1020,42 @@ msgstr "Gomendio eta Laguntza"
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
 msgstr "xfce4-gomendioak"
+
+#~ msgid "Terminate \"%s\""
+#~ msgstr "Amaitu \"%s\""
+
+#~ msgid "Invalid shutdown type"
+#~ msgstr "Itzaltze modu baliogabea"
+
+#~ msgid "No HAL method for command %d"
+#~ msgstr "Ez dago HALmetodorik %d komandoarentzat"
+
+#~ msgid "Program \"sudo\" was not found.  You will not be able to shutdown your system from within Xfce."
+#~ msgstr "Ez da \"sudo\" programa aurkitu. Ez zara Xfce barnetik sistema itzaltzeko gai izango."
+
+#~ msgid "Unable to create parent pipe: %s"
+#~ msgstr "Ezin da guraso kanalizazioa sortu: %s"
+
+#~ msgid "Unable to create child pipe: %s"
+#~ msgstr "Ezin da ume kanalizazioa sortu: %s"
+
+#~ msgid "Unable to fork sudo helper: %s"
+#~ msgstr "Ezin da sudo laguntzailea banatu: %s"
+
+#~ msgid "Unable to read response from sudo helper: %s"
+#~ msgstr "Ezin da sudo laguntzailearen erantzuna irakurri: %s"
+
+#~ msgid "Unable to open parent pipe: %s"
+#~ msgstr "Ezin da guraso kanalizazioa ireki: %s"
+
+#~ msgid "Unable to open child pipe: %s"
+#~ msgstr "Ezin da ume kanalizazioa ireki: %s"
+
+#~ msgid "Got unexpected reply from sudo shutdown helper"
+#~ msgstr "Espero ez zen erantzuna jaso da sudo itzaltze laguntzailetik"
+
+#~ msgid "Suspend and Hibernate are only supported through HAL, which is unavailable"
+#~ msgstr "Eskeki eta hibernatu erabilgarri ez dagoen HAL bidez bakarrik onartzen dira"
 
 #~ msgid "Xfce Session Manager"
 #~ msgstr "Xfce saio kudeatzailea"
