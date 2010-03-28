@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-05 00:05+0100\n"
+"POT-Creation-Date: 2010-03-28 12:05+0200\n"
 "PO-Revision-Date: 2010-02-05 23:00-0200\n"
 "Last-Translator: Vladimir Melo <vmelo@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar2.conectiva.com.br>\n"
@@ -427,7 +427,7 @@ msgstr "Falha ao alternar item"
 msgid "Disable binding to TCP ports"
 msgstr "Disabiliar associa;'ao a portas TCP"
 
-#: ../xfce4-session/main.c:77
+#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:93
 msgid "Print version information and exit"
 msgstr "Imprime informação da versão e sai"
 
@@ -810,27 +810,51 @@ msgstr "Exibir dica_s na inicialização"
 msgid "Next"
 msgstr "Próximo"
 
-#: ../xfce4-session-logout/main.c:65
+#: ../xfce4-session-logout/main.c:69
+msgid "Log out without displaying the logout dialog"
+msgstr "Encerrar a sessão sem mostrar o diálogo de encerrar sessão"
+
+#: ../xfce4-session-logout/main.c:73
+msgid "Halt without displaying the logout dialog"
+msgstr "Parar sem mostrar o diálogo de encerrar sessão"
+
+#: ../xfce4-session-logout/main.c:77
+msgid "Reboot without displaying the logout dialog"
+msgstr "Reiniciar sem mostrar o diálogo de encerrar sessão"
+
+#: ../xfce4-session-logout/main.c:81
+msgid "Suspend without displaying the logout dialog"
+msgstr "Suspender sem mostrar o diálogo de encerrar sessão"
+
+#: ../xfce4-session-logout/main.c:85
+msgid "Hibernate without displaying the logout dialog"
+msgstr "Hibernar sem mostrar o diálogo de encerrar sessão"
+
+#: ../xfce4-session-logout/main.c:89
+msgid "Log out quickly; don't save the session"
+msgstr "Encerrar rapidamente a sessão; não salvar a sessão"
+
+#: ../xfce4-session-logout/main.c:111
 msgid "Logout Error"
 msgstr "Erro ao encerrar sessão"
 
-#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
+#: ../xfce4-session-logout/main.c:114 ../xfce4-session-logout/main.c:121
 msgid "Unknown error"
 msgstr "Erro desconhecido"
 
-#: ../xfce4-session-logout/main.c:163
+#: ../xfce4-session-logout/main.c:181
 msgid "Unable to contact D-Bus session bus."
 msgstr "Não foi possível se comunicar com o barramento de sessão D-Bus."
 
-#: ../xfce4-session-logout/main.c:175
+#: ../xfce4-session-logout/main.c:193
 msgid "Failed to create new D-Bus message"
 msgstr "Falha ao criar a nova mensagem D-Bus"
 
-#: ../xfce4-session-logout/main.c:191
+#: ../xfce4-session-logout/main.c:209
 msgid "Failed to receive a reply from the session manager"
 msgstr "Falha ao receber uma resposta do Gerenciador de sessões"
 
-#: ../xfce4-session-logout/main.c:199
+#: ../xfce4-session-logout/main.c:217
 msgid "Received error while trying to log out"
 msgstr "Erro recebido ao tentar encerrar a sessão"
 
