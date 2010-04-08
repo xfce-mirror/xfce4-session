@@ -691,7 +691,7 @@ xfsm_shutdown_helper_check_devkit_upower (XfsmShutdownHelper *helper)
   /* Check for upower first */
   name = "org.freedesktop.UPower";
   path = "/org/freedesktop/UPower";
-  iface = "org.freedesktop.Power";
+  iface = "org.freedesktop.UPower";
 
   helper->devkit_is_upower = TRUE;
 
@@ -1461,7 +1461,7 @@ xfsm_shutdown_helper_upower_sleep (XfsmShutdownHelper *helper,
     {
       name = "org.freedesktop.UPower";
       path = "/org/freedesktop/UPower";
-      iface = "org.freedesktop.Power";
+      iface = "org.freedesktop.UPower";
     }
   else
     {
