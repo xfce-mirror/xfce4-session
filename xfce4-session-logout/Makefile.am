@@ -17,6 +17,14 @@ xfce4_session_logout_LDFLAGS =						\
 	$(DBUS_LIBS)							\
 	$(LIBXFCE4UI_LIBS)
 
-EXTRA_DIST =								\
-	$(man_MANS)
+desktopdir = $(datadir)/applications
+desktop_in_files = xfce4-session-logout.desktop.in
+desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
+@INTLTOOL_DESKTOP_RULE@
 
+EXTRA_DIST =								\
+	$(man_MANS)							\
+	$(desktop_in_files)
+
+DISTCLEANFILES = 							\
+	$(desktop_DATA)
