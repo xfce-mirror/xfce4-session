@@ -1858,7 +1858,7 @@ gboolean xfsm_shutdown_helper_suspend (XfsmShutdownHelper *helper, GError **erro
 #endif
 
 #ifdef ENABLE_HAL
-  if ( helper->sleep_backend == XFSM_SHUTDOWN_BACKEND_HAL )
+  if ( helper->sleep_backend == XFSM_SLEEP_BACKEND_HAL )
     {
       return xfsm_shutdown_helper_hal_send (helper, "Suspend", error);
     }
@@ -1885,7 +1885,7 @@ gboolean xfsm_shutdown_helper_hibernate (XfsmShutdownHelper *helper, GError **er
 #endif
 
 #ifdef ENABLE_HAL
-  if ( helper->sleep_backend == XFSM_SHUTDOWN_BACKEND_HAL )
+  if ( helper->sleep_backend == XFSM_SLEEP_BACKEND_HAL )
     {
       return xfsm_shutdown_helper_hal_send (helper, "Hibernate", error);
     }
