@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-19 12:04+0100\n"
-"PO-Revision-Date: 2010-02-19 18:44+0100\n"
+"POT-Creation-Date: 2010-05-08 16:05+0000\n"
+"PO-Revision-Date: 2010-05-08 22:56+0200\n"
 "Last-Translator: Fabian Nowak <timystery@arcor.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -424,7 +424,9 @@ msgstr "Konnte Datei nicht löschen"
 msgid ""
 "This will permanently remove the application from the list of automatically "
 "started applications"
-msgstr "Dies wird die Anwendung dauerhaft aus der Liste automatisch gestarteter Anwendungen entfernen"
+msgstr ""
+"Dies wird die Anwendung dauerhaft aus der Liste automatisch gestarteter "
+"Anwendungen entfernen"
 
 #: ../settings/xfae-window.c:328
 #, c-format
@@ -450,7 +452,7 @@ msgstr "Konnte Datei »%s« nicht schreiben"
 msgid "Disable binding to TCP ports"
 msgstr ""
 
-#: ../xfce4-session/main.c:77
+#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:93
 msgid "Print version information and exit"
 msgstr "Versionsinformation anzeigen und beenden"
 
@@ -477,44 +479,45 @@ msgstr "DNS-Einstellungen werden geprüft"
 msgid "Loading session data"
 msgstr "Lade Sitzungsdaten"
 
-#: ../xfce4-session/shutdown.c:366
+#: ../xfce4-session/shutdown.c:372
 #, c-format
 msgid "<span size='large'><b>Log out %s</b></span>"
-msgstr "<span size='large'><b>%s abmelden</b></span>"
+msgstr "<span size='large'><b>»%s« abmelden</b></span>"
 
-#: ../xfce4-session/shutdown.c:416
+#: ../xfce4-session/shutdown.c:422
+#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
 msgid "Log Out"
 msgstr "Abmelden"
 
-#: ../xfce4-session/shutdown.c:451
+#: ../xfce4-session/shutdown.c:457
 msgid "Restart"
 msgstr "Neustarten"
 
-#: ../xfce4-session/shutdown.c:489
+#: ../xfce4-session/shutdown.c:499
 msgid "Shut Down"
 msgstr "Herunterfahren"
 
-#: ../xfce4-session/shutdown.c:541
+#: ../xfce4-session/shutdown.c:561
 msgid "Suspend"
 msgstr "Standby"
 
-#: ../xfce4-session/shutdown.c:579
+#: ../xfce4-session/shutdown.c:599
 msgid "Hibernate"
 msgstr "Ruhezustand"
 
-#: ../xfce4-session/shutdown.c:588
+#: ../xfce4-session/shutdown.c:608
 msgid "_Save session for future logins"
 msgstr "_Speichere Sitzung für weitere Logins"
 
-#: ../xfce4-session/shutdown.c:644
+#: ../xfce4-session/shutdown.c:668
 msgid "Please enter your password:"
 msgstr "Bitte geben Sie Ihr Passwort ein:"
 
-#: ../xfce4-session/shutdown.c:676
+#: ../xfce4-session/shutdown.c:700
 msgid "<b>An error occurred</b>"
 msgstr "<b>Es ist ein Fehler aufgetreten</b>"
 
-#: ../xfce4-session/shutdown.c:690
+#: ../xfce4-session/shutdown.c:714
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
@@ -523,11 +526,11 @@ msgstr ""
 "Systemadministrator hat es Ihnen nicht erlaubt, den Computer mit Ihrem "
 "Benutzerkonto aus herunterzufahren."
 
-#: ../xfce4-session/shutdown.c:812 ../xfce4-session/xfsm-manager.c:1123
+#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1228
 msgid "Shutdown Failed"
 msgstr "Herunterfahren fehlgeschlagen"
 
-#: ../xfce4-session/shutdown.c:814
+#: ../xfce4-session/shutdown.c:838
 msgid "Unable to perform shutdown"
 msgstr "Kann System nicht herunterfahren"
 
@@ -605,7 +608,7 @@ msgstr "Trotzdem fortfahren"
 msgid "Try again"
 msgstr "Nochmal versuchen"
 
-#: ../xfce4-session/xfsm-manager.c:605
+#: ../xfce4-session/xfsm-manager.c:712
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -617,142 +620,88 @@ msgstr ""
 "Umgebungsvariable $XDG_CONFIG_DIRS ist nicht korrekt gesetzt (muss »%s« "
 "enthalten) oder xfce4-session wurde falsch installiert."
 
-#: ../xfce4-session/xfsm-manager.c:616
+#: ../xfce4-session/xfsm-manager.c:723
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr ""
 "Die angegebene abgesicherte Sitzung (»%s«) ist nicht als solche deklariert."
 
-#: ../xfce4-session/xfsm-manager.c:663
+#: ../xfce4-session/xfsm-manager.c:770
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Die Liste der Anwendungen in der abgesicherten Sitzung ist leer."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:710
+#: ../xfce4-session/xfsm-manager.c:817
 msgid "Session Manager Error"
 msgstr "Fehler in der Sitzungsverwaltung"
 
-#: ../xfce4-session/xfsm-manager.c:712
+#: ../xfce4-session/xfsm-manager.c:819
 msgid "Unable to load a failsafe session"
 msgstr "Kann abgesicherte Sitzugn nicht laden"
 
-#: ../xfce4-session/xfsm-manager.c:1126
+#: ../xfce4-session/xfsm-manager.c:1231
 msgid "Failed to suspend session"
 msgstr "Kann Sitzung nicht in Standby versetzen"
 
-#: ../xfce4-session/xfsm-manager.c:1127
+#: ../xfce4-session/xfsm-manager.c:1232
 msgid "Failed to hibernate session"
 msgstr "Kann Sitzung nicht in Ruhemodus versetzen"
 
-#: ../xfce4-session/xfsm-manager.c:1415
+#: ../xfce4-session/xfsm-manager.c:1520
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr ""
 "Kann Clients nur dann beenden, wenn keine anderen Aufgaben durchgeführt "
 "werden"
 
-#: ../xfce4-session/xfsm-manager.c:1946
+#: ../xfce4-session/xfsm-manager.c:2051
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 "Die Sitzungsverwaltung muss unbeschäftigt sein, wenn ein Checkpoint gemacht "
 "werden soll"
 
-#: ../xfce4-session/xfsm-manager.c:1987
+#: ../xfce4-session/xfsm-manager.c:2092
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
 "Die Sitzungsverwaltung muss unbeschäftigt sein, wenn heruntergefahren werden "
 "soll"
 
-#: ../xfce4-session/xfsm-manager.c:1994
+#: ../xfce4-session/xfsm-manager.c:2099
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Ungültiger Typ »%u« zum Herunterfahren des Systems"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:200
-#, fuzzy
-msgid "Invalid shutdown type"
-msgstr "Ungültiger Typ zum Herunterfahren des Systems"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:384
-#, c-format
-msgid "No HAL method for command %d"
-msgstr "Keine HAL-Methode für Befehl »%d« verfügbar"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:528
-#, c-format
-msgid ""
-"Program \"sudo\" was not found.  You will not be able to shutdown your "
-"system from within Xfce."
-msgstr ""
-"Befehl »sudo« wurde nicht gefunden. Sie werden Ihr System nicht aus Xfce "
-"heraus ausschalten können."
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:540
-#, c-format
-msgid "Unable to create parent pipe: %s"
-msgstr "Konnte keine Datenweiterleitung zu Elternprozess erstellen: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:551
-#, c-format
-msgid "Unable to create child pipe: %s"
-msgstr "Konnte keine Datenweiterleitung zu Kindprozess erstellen: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:562
-#, c-format
-msgid "Unable to fork sudo helper: %s"
-msgstr "Konnte keinen Prozess für Sudo-Helfer abspalten: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:604
-#, c-format
-msgid "Unable to read response from sudo helper: %s"
-msgstr "Konnte die Antwort vom Sudo-Helfer nicht lesen: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:605
-#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
-msgid "Unknown error"
-msgstr "Unbekannter Fehler"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:616
-#, c-format
-msgid "Unable to open parent pipe: %s"
-msgstr "Konnte Datenweiterleitung von Elternprozess nicht öffnen: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:627
-#, c-format
-msgid "Unable to open child pipe: %s"
-msgstr "Konnte Datenweiterleitung von Kindprozess nicht öffnen: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:645
-#, c-format
-msgid "Got unexpected reply from sudo shutdown helper"
-msgstr "Unerwartete Antwort von Sudo-Helfer empfangen"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:803
-#, c-format
-msgid ""
-"Suspend and Hibernate are only supported through HAL, which is unavailable"
-msgstr ""
-"Ruhemodus und Standby werden nur mittels HAL unterstützt, was nicht "
-"verfügbar ist"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:825
+#: ../xfce4-session/xfsm-shutdown-helper.c:1664
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
 msgstr "Fehler bei der Steuerung des Abschaltprogramms: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:842
+#: ../xfce4-session/xfsm-shutdown-helper.c:1678
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
 msgstr "Fehler beim Empfang der Antwort des Abschaltprogramms: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:853
+#: ../xfce4-session/xfsm-shutdown-helper.c:1687
 #, c-format
 msgid "Shutdown command failed"
+msgstr "Befehl zum Herunterfahren fehlgeschlagen"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:1867
+msgid "Suspend failed, no backend supported"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:1894
+msgid "Hibernate failed, no backend supported"
+msgstr ""
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:1924
+#, fuzzy
+msgid "Shutdown Command not found"
 msgstr "Befehl zum Herunterfahren fehlgeschlagen"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
@@ -912,25 +861,58 @@ msgstr "Xfce-Tipps und -Tricks beim _Start anzeigen"
 msgid "Next"
 msgstr "Nächster"
 
-#: ../xfce4-session-logout/main.c:65
+#: ../xfce4-session-logout/main.c:69
+msgid "Log out without displaying the logout dialog"
+msgstr ""
+
+#: ../xfce4-session-logout/main.c:73
+msgid "Halt without displaying the logout dialog"
+msgstr ""
+
+#: ../xfce4-session-logout/main.c:77
+msgid "Reboot without displaying the logout dialog"
+msgstr ""
+
+#: ../xfce4-session-logout/main.c:81
+msgid "Suspend without displaying the logout dialog"
+msgstr ""
+
+#: ../xfce4-session-logout/main.c:85
+msgid "Hibernate without displaying the logout dialog"
+msgstr ""
+
+#: ../xfce4-session-logout/main.c:89
+#, fuzzy
+msgid "Log out quickly; don't save the session"
+msgstr "Kann Sitzung nicht speichern"
+
+#: ../xfce4-session-logout/main.c:111
 msgid "Logout Error"
 msgstr "Fehler beim Abmelden"
 
-#: ../xfce4-session-logout/main.c:163
+#: ../xfce4-session-logout/main.c:114 ../xfce4-session-logout/main.c:121
+msgid "Unknown error"
+msgstr "Unbekannter Fehler"
+
+#: ../xfce4-session-logout/main.c:181
 msgid "Unable to contact D-Bus session bus."
 msgstr "Kann Sitzungsbus »D-Bus« nicht kontaktieren"
 
-#: ../xfce4-session-logout/main.c:175
+#: ../xfce4-session-logout/main.c:193
 msgid "Failed to create new D-Bus message"
 msgstr "Konnte keine neue D-Bus-Nachricht erstellen"
 
-#: ../xfce4-session-logout/main.c:191
+#: ../xfce4-session-logout/main.c:209
 msgid "Failed to receive a reply from the session manager"
 msgstr "Keine Antwort von der Sitzungsverwaltung erhalten"
 
-#: ../xfce4-session-logout/main.c:199
+#: ../xfce4-session-logout/main.c:217
 msgid "Received error while trying to log out"
 msgstr "Fehler während des Abmeldevorgangs erhalten"
+
+#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:2
+msgid "Log out of the Xfce Desktop"
+msgstr ""
 
 #: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:1
 #: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:1
@@ -943,7 +925,9 @@ msgstr "Sitzungseinstellungen"
 #, fuzzy
 msgid ""
 "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
-msgstr "Zeigt Menü mit Optionen zum Bildschirm sperren, Standby, herunterfahren und abmelden"
+msgstr ""
+"Zeigt Menü mit Optionen zum Bildschirm sperren, Standby, herunterfahren und "
+"abmelden"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
 #: ../settings/xfce4-session-settings.glade.h:14
@@ -1120,6 +1104,47 @@ msgstr "Tipps beim Starten anzeigen"
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
 msgstr "Xfce4-Tipps"
+
+#, fuzzy
+#~ msgid "Invalid shutdown type"
+#~ msgstr "Ungültiger Typ zum Herunterfahren des Systems"
+
+#~ msgid "No HAL method for command %d"
+#~ msgstr "Keine HAL-Methode für Befehl »%d« verfügbar"
+
+#~ msgid ""
+#~ "Program \"sudo\" was not found.  You will not be able to shutdown your "
+#~ "system from within Xfce."
+#~ msgstr ""
+#~ "Befehl »sudo« wurde nicht gefunden. Sie werden Ihr System nicht aus Xfce "
+#~ "heraus ausschalten können."
+
+#~ msgid "Unable to create parent pipe: %s"
+#~ msgstr "Konnte keine Datenweiterleitung zu Elternprozess erstellen: %s"
+
+#~ msgid "Unable to create child pipe: %s"
+#~ msgstr "Konnte keine Datenweiterleitung zu Kindprozess erstellen: %s"
+
+#~ msgid "Unable to fork sudo helper: %s"
+#~ msgstr "Konnte keinen Prozess für Sudo-Helfer abspalten: %s"
+
+#~ msgid "Unable to read response from sudo helper: %s"
+#~ msgstr "Konnte die Antwort vom Sudo-Helfer nicht lesen: %s"
+
+#~ msgid "Unable to open parent pipe: %s"
+#~ msgstr "Konnte Datenweiterleitung von Elternprozess nicht öffnen: %s"
+
+#~ msgid "Unable to open child pipe: %s"
+#~ msgstr "Konnte Datenweiterleitung von Kindprozess nicht öffnen: %s"
+
+#~ msgid "Got unexpected reply from sudo shutdown helper"
+#~ msgstr "Unerwartete Antwort von Sudo-Helfer empfangen"
+
+#~ msgid ""
+#~ "Suspend and Hibernate are only supported through HAL, which is unavailable"
+#~ msgstr ""
+#~ "Ruhemodus und Standby werden nur mittels HAL unterstützt, was nicht "
+#~ "verfügbar ist"
 
 #, fuzzy
 #~ msgid "Session Error"
