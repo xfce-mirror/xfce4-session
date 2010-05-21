@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-05 12:05+0100\n"
+"POT-Creation-Date: 2010-05-20 22:05+0000\n"
 "PO-Revision-Date: 2009-07-28 00:38+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
 "Language-Team: Hungarian <gnome at gnome dot hu>\n"
@@ -240,16 +240,16 @@ msgstr "Verzióinformációk"
 msgid "Type '%s --help' for usage."
 msgstr "Segítségért adja ki az „%s --help” parancsot."
 
-#: ../settings/main.c:85
+#: ../settings/main.c:85 ../xfce4-session/main.c:226
 msgid "The Xfce development team. All rights reserved."
 msgstr "Az Xfce fejlesztőcsapata. Minden jog fenntartva."
 
-#: ../settings/main.c:86
+#: ../settings/main.c:86 ../xfce4-session/main.c:232
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "A hibákat ide jelentse: <%s>."
 
-#: ../settings/main.c:95 ../xfce4-session/main.c:281
+#: ../settings/main.c:95 ../xfce4-session/main.c:238 ../xfce4-tips/main.c:270
 msgid "Unable to contact settings server"
 msgstr "Nem érhető el a beállításkiszolgáló"
 
@@ -290,24 +290,24 @@ msgstr "A munkamenet nem menthető"
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Biztos, hogy meg akarja szakítani a következőt: „%s”?"
 
-#: ../settings/session-editor.c:186
-#, c-format
-msgid "Terminate \"%s\""
-msgstr "„%s” megszakítása"
-
-#: ../settings/session-editor.c:188 ../settings/session-editor.c:216
+#: ../settings/session-editor.c:187 ../settings/session-editor.c:215
 msgid "Terminate Program"
 msgstr "Program megszakítása"
 
-#: ../settings/session-editor.c:190
+#: ../settings/session-editor.c:189
 msgid "The application will lose any unsaved state and will not be restarted in your next session."
 msgstr "Az alkalmazás elveszti a mentetlen beállításait és nem indul el a következő munkamenetben."
 
-#: ../settings/session-editor.c:217
+#: ../settings/session-editor.c:191
+#: ../settings/xfce4-session-settings.glade.h:35
+msgid "_Quit Program"
+msgstr "_Kilépés a programból"
+
+#: ../settings/session-editor.c:216
 msgid "Unable to terminate program."
 msgstr "A program nem szakítható meg."
 
-#: ../settings/session-editor.c:396
+#: ../settings/session-editor.c:394
 msgid "(Unknown program)"
 msgstr "(Ismeretlen program)"
 
@@ -333,153 +333,194 @@ msgstr "Újraindítás stílusa"
 msgid "None"
 msgstr "Nincs"
 
-#: ../settings/xfae-dialog.c:99
+#: ../settings/xfae-dialog.c:78
 msgid "Add application"
 msgstr "Alkalmazás hozzáadása"
 
-#: ../settings/xfae-dialog.c:113
+#: ../settings/xfae-dialog.c:92
 msgid "Name:"
 msgstr "Név:"
 
-#: ../settings/xfae-dialog.c:130
+#: ../settings/xfae-dialog.c:109
 msgid "Description:"
 msgstr "Leírás:"
 
-#: ../settings/xfae-dialog.c:145
+#: ../settings/xfae-dialog.c:124
 msgid "Command:"
 msgstr "Parancs:"
 
-#: ../settings/xfae-dialog.c:205
+#: ../settings/xfae-dialog.c:184
 msgid "Select a command"
 msgstr "Válasszon parancsot"
+
+#: ../settings/xfae-dialog.c:233
+msgid "Edit application"
+msgstr "Alkalmazás szerkesztése"
 
 #: ../settings/xfae-model.c:562
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "%s törlése meghiúsult: %s"
 
-#: ../settings/xfae-model.c:650
+#: ../settings/xfae-model.c:651
 #, c-format
 msgid "Failed to create file %s"
 msgstr "A fájl (%s) létrehozása meghiúsult"
 
-#: ../settings/xfae-model.c:672
+#: ../settings/xfae-model.c:673
 #, c-format
 msgid "Failed to write file %s"
 msgstr "A fájl (%s) írása meghiúsult"
 
-#: ../settings/xfae-model.c:771
+#: ../settings/xfae-model.c:732
+#, c-format
+msgid "Failed to open %s for reading"
+msgstr "%s megnyitása olvasásra meghiúsult"
+
+#: ../settings/xfae-model.c:841 ../settings/xfae-model.c:898
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "%s megnyitása írásra meghiúsult"
 
-#: ../settings/xfae-window.c:100
+#: ../settings/xfae-window.c:101
 msgid "Below is the list of applications that will be started automatically when you login to your Xfce desktop, in addition to the applications that were saved when you logged out last time:"
 msgstr "Alább látható az Xfce asztali környezetbe bejelentkezéskor az utolsó kijelentkezéskor mentett alkalmazások mellett automatikusan elinduló alkalmazások listája."
 
-#: ../settings/xfae-window.c:277
+#: ../settings/xfae-window.c:289
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "„%s” hozzáadása meghiúsult"
 
-#: ../settings/xfae-window.c:303
+#: ../settings/xfae-window.c:320 ../settings/xfae-window.c:334
 msgid "Failed to remove item"
 msgstr "Az elem eltávolítása meghiúsult."
 
 #: ../settings/xfae-window.c:326
+msgid "This will permanently remove the application from the list of automatically started applications"
+msgstr "Ez véglegesen eltávolítja az alkalmazást az automatikusan elindított alkalmazások listájáról"
+
+#: ../settings/xfae-window.c:328
+#, c-format
+msgid "Are you sure you want to remove \"%s\""
+msgstr "Biztos, hogy el akarja távolítani a következőt: „%s”?"
+
+#: ../settings/xfae-window.c:362
+msgid "Failed to edit item"
+msgstr "Az elem szerkesztése meghiúsult"
+
+#: ../settings/xfae-window.c:382
+#, c-format
+msgid "Failed to edit item \"%s\""
+msgstr "Az elem („%s”) írása meghiúsult"
+
+#: ../settings/xfae-window.c:410
 msgid "Failed to toggle item"
 msgstr "Az elem átváltása meghiúsult."
 
-#: ../xfce4-session/main.c:149
+#: ../xfce4-session/main.c:76
+msgid "Disable binding to TCP ports"
+msgstr "A TCP-portokhoz kapcsolódás letiltása"
+
+#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:93
+msgid "Print version information and exit"
+msgstr "Verzióinformációk kiírása és kilépés"
+
+#: ../xfce4-session/main.c:140
 msgid "Loading desktop settings"
 msgstr "Asztali környezet beállításainak betöltése"
 
+#: ../xfce4-session/main.c:227
+msgid "Written by Benedikt Meurer <benny@xfce.org>."
+msgstr "Írta: Benedikt Meurer <benny@xfce.org>."
+
+#: ../xfce4-session/main.c:228
+#, c-format
+msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
+msgstr "Készült a Gtk+-%d.%d.%d, fut a Gtk+-%d.%d.%d használatával"
+
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:210
+#: ../xfce4-session/main.c:258
 msgid "Verifying DNS settings"
 msgstr "DNS beállítások ellenőrzése"
 
-#: ../xfce4-session/main.c:213
+#: ../xfce4-session/main.c:261
 msgid "Loading session data"
 msgstr "Munkamenet-adatok betöltése"
 
-#: ../xfce4-session/main.c:279
-msgid "Xfce Session Manager"
-msgstr "Xfce munkamenet-kezelő"
-
-#: ../xfce4-session/shutdown.c:366
+#: ../xfce4-session/shutdown.c:372
 #, c-format
 msgid "<span size='large'><b>Log out %s</b></span>"
 msgstr "<span size='large'><b>%s kijelentkezése</b></span>"
 
-#: ../xfce4-session/shutdown.c:416
+#: ../xfce4-session/shutdown.c:422
+#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
 msgid "Log Out"
 msgstr "Kijelentkezés"
 
-#: ../xfce4-session/shutdown.c:451
+#: ../xfce4-session/shutdown.c:457
 msgid "Restart"
 msgstr "Újraindítás"
 
-#: ../xfce4-session/shutdown.c:489
+#: ../xfce4-session/shutdown.c:499
 msgid "Shut Down"
 msgstr "Leállítás"
 
-#: ../xfce4-session/shutdown.c:541
+#: ../xfce4-session/shutdown.c:561
 msgid "Suspend"
 msgstr "Felfüggesztés"
 
-#: ../xfce4-session/shutdown.c:579
+#: ../xfce4-session/shutdown.c:599
 msgid "Hibernate"
 msgstr "Hibernálás"
 
-#: ../xfce4-session/shutdown.c:588
+#: ../xfce4-session/shutdown.c:608
 msgid "_Save session for future logins"
 msgstr "_Munkamenet mentése jövőbeli bejelentkezésekhez"
 
-#: ../xfce4-session/shutdown.c:644
+#: ../xfce4-session/shutdown.c:668
 msgid "Please enter your password:"
 msgstr "Adja meg a jelszavát:"
 
-#: ../xfce4-session/shutdown.c:676
+#: ../xfce4-session/shutdown.c:700
 msgid "<b>An error occurred</b>"
 msgstr "<b>Hiba történt</b>"
 
-#: ../xfce4-session/shutdown.c:690
+#: ../xfce4-session/shutdown.c:714
 msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
 msgstr "A megadott jelszó érvénytelen vagy a rendszergazda megtiltotta a számítógép leállítását az Ön felhasználói fiókjával."
 
-#: ../xfce4-session/shutdown.c:812 ../xfce4-session/xfsm-manager.c:1116
+#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1228
 msgid "Shutdown Failed"
 msgstr "A leállítás meghiúsult"
 
-#: ../xfce4-session/shutdown.c:814
+#: ../xfce4-session/shutdown.c:838
 msgid "Unable to perform shutdown"
 msgstr "A leállítás nem végezhető el"
 
-#: ../xfce4-session/xfsm-chooser.c:120
+#: ../xfce4-session/xfsm-chooser.c:91
 #, c-format
 msgid "Last accessed: %s"
 msgstr "Utolsó hozzáférés: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:213
+#: ../xfce4-session/xfsm-chooser.c:182
 msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
 msgstr "Válassza ki a visszaállítandó munkamenetet. Kattintson duplán a munkamenet nevére a visszaállításához."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:239
+#: ../xfce4-session/xfsm-chooser.c:208
 msgid "Log out"
 msgstr "Kijelentkezés"
 
-#: ../xfce4-session/xfsm-chooser.c:241
+#: ../xfce4-session/xfsm-chooser.c:210
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "A bejelentkezési kísérlet megszakítása és visszatérés a bejelentkezési képernyőre."
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:249
+#: ../xfce4-session/xfsm-chooser.c:218
 msgid "New session"
 msgstr "Új munkamenet"
 
-#: ../xfce4-session/xfsm-chooser.c:251
+#: ../xfce4-session/xfsm-chooser.c:220
 msgid "Create a new session."
 msgstr "Új munkamenet létrehozása."
 
@@ -526,132 +567,85 @@ msgstr "Folytatás mindenképp"
 msgid "Try again"
 msgstr "Próbálja újra"
 
-#: ../xfce4-session/xfsm-manager.c:598
+#: ../xfce4-session/xfsm-manager.c:712
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr "A csökkentett munkamenet neve nem állapítható meg. A lehetséges okok: az xfconfd nem fut (D-Bus beállítási probléma), az $XDG_CONFIG_DIRS környezeti változó hibásan van beállítva (tartalmaznia kell ezt: „%s”), vagy az xfce4-session hibásan van telepítve."
 
-#: ../xfce4-session/xfsm-manager.c:609
+#: ../xfce4-session/xfsm-manager.c:723
 #, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "A megadott csökkentett munkamenet („%s”) nincs megjelölve csökkentett munkamenetként."
 
-#: ../xfce4-session/xfsm-manager.c:656
+#: ../xfce4-session/xfsm-manager.c:770
 msgid "The list of applications in the failsafe session is empty."
 msgstr "A csökkentett munkamenet alkalmazásainak listája üres."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:703
+#: ../xfce4-session/xfsm-manager.c:817
 msgid "Session Manager Error"
 msgstr "Munkamenet-kezelési hiba"
 
-#: ../xfce4-session/xfsm-manager.c:705
+#: ../xfce4-session/xfsm-manager.c:819
 msgid "Unable to load a failsafe session"
 msgstr "Nem tölthető be a csökkentett munkamenet"
 
-#: ../xfce4-session/xfsm-manager.c:1119
+#: ../xfce4-session/xfsm-manager.c:1231
 msgid "Failed to suspend session"
 msgstr "A munkamenet nem függeszthető fel"
 
-#: ../xfce4-session/xfsm-manager.c:1120
+#: ../xfce4-session/xfsm-manager.c:1232
 msgid "Failed to hibernate session"
 msgstr "A munkamenet nem hibernálható"
 
-#: ../xfce4-session/xfsm-manager.c:1408
+#: ../xfce4-session/xfsm-manager.c:1520
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Csak üresjáratban lévő kliensek futása szakítható meg"
 
-#: ../xfce4-session/xfsm-manager.c:1939
+#: ../xfce4-session/xfsm-manager.c:2051
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "A munkamenet-kezelőnek üresjáratban kell lennie ellenőrzőpont kérésekor"
 
-#: ../xfce4-session/xfsm-manager.c:1980
+#: ../xfce4-session/xfsm-manager.c:2092
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "A munkamenet-kezelőnek üresjáratban kell lennie leállítás kérésekor"
 
-#: ../xfce4-session/xfsm-manager.c:1987
+#: ../xfce4-session/xfsm-manager.c:2099
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Érvénytelen leállítási típus: „%u”"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:200
-msgid "Invalid shutdown type"
-msgstr "Érvénytelen leállítási típus"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:384
-#, c-format
-msgid "No HAL method for command %d"
-msgstr "Nincs HAL metódus a(z) %d. parancshoz"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:528
-#, c-format
-msgid "Program \"sudo\" was not found.  You will not be able to shutdown your system from within Xfce."
-msgstr "A „sudo” program nem található. Nem lesz képes leállítani a rendszert az Xfce-ből."
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:540
-#, c-format
-msgid "Unable to create parent pipe: %s"
-msgstr "Nem hozható létre szülő adatcsatorna: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:551
-#, c-format
-msgid "Unable to create child pipe: %s"
-msgstr "Nem hozható létre gyermek adatcsatorna: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:562
-#, c-format
-msgid "Unable to fork sudo helper: %s"
-msgstr "Nem indítható a sudo segédprogramja: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:604
-#, c-format
-msgid "Unable to read response from sudo helper: %s"
-msgstr "Nem olvasható a sudo segédprogramjának válasza: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:605
-#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
-msgid "Unknown error"
-msgstr "Ismeretlen hiba"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:616
-#, c-format
-msgid "Unable to open parent pipe: %s"
-msgstr "Nem nyitható meg a szülő adatcsatorna: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:627
-#, c-format
-msgid "Unable to open child pipe: %s"
-msgstr "Nem nyitható meg a gyermek adatcsatorna: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:645
-#, c-format
-msgid "Got unexpected reply from sudo shutdown helper"
-msgstr "Váratlan válasz érkezett a sudo leállítási segédprogramjától"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:803
-#, c-format
-msgid "Suspend and Hibernate are only supported through HAL, which is unavailable"
-msgstr "A felfüggesztés és hibernálás csak a HAL-on keresztül támogatottak, amely nem érhető el"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:825
+#: ../xfce4-session/xfsm-shutdown-helper.c:1664
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
 msgstr "Hiba a parancs küldésekor a sudo leállítási segédprogramjától: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:842
+#: ../xfce4-session/xfsm-shutdown-helper.c:1678
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
 msgstr "Hiba a válasz fogadásakor a sudo leállítási segédprogramjától: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:853
+#: ../xfce4-session/xfsm-shutdown-helper.c:1687
 #, c-format
 msgid "Shutdown command failed"
 msgstr "A leállítási parancs meghiúsult"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:1867
+msgid "Suspend failed, no backend supported"
+msgstr "A felfüggesztés meghiúsult, nincs támogatott háttérprogram"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:1894
+msgid "Hibernate failed, no backend supported"
+msgstr "A hibernálás meghiúsult, nincs támogatott háttérprogram"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:1924
+msgid "Shutdown Command not found"
+msgstr "A leállítási parancs nem található"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -771,65 +765,97 @@ msgstr ""
 "az új helyre.\n"
 "A régi könyvtárat most már törölheti.\n"
 
-#: ../xfce4-session/xfsm-startup.c:428
+#: ../xfce4-session/xfsm-startup.c:442
 msgid "Performing Autostart..."
 msgstr "Automatikus indítás…"
 
-#: ../xfce4-tips/main.c:47 ../xfce4-tips/main.c:269
+#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:284
 msgid "Tips and Tricks"
 msgstr "Tippek és trükkök"
 
-#: ../xfce4-tips/main.c:48
+#: ../xfce4-tips/main.c:49
 msgid "Fortunes"
 msgstr "Szerencsesütik"
 
-#: ../xfce4-tips/main.c:74
+#: ../xfce4-tips/main.c:75
 #, c-format
 msgid "Could not load tips database (%s)."
 msgstr "Nem tölthető be a tippek adatbázisa (%s)."
 
 #. converting it from the user's locale failed too, we give up
-#: ../xfce4-tips/main.c:183
+#: ../xfce4-tips/main.c:190
 #, c-format
 msgid "Invalid output of fortune."
 msgstr "A fortune kimenete érvénytelen."
 
-#: ../xfce4-tips/main.c:188 ../xfce4-tips/main.c:196
+#: ../xfce4-tips/main.c:195 ../xfce4-tips/main.c:203
 #, c-format
 msgid "Executing fortune failed (%s)"
 msgstr "A fortune végrehajtása meghiúsult (%s)"
 
-#: ../xfce4-tips/main.c:221
+#: ../xfce4-tips/main.c:228
 msgid "Error while loading tips."
 msgstr "Hiba a tippek betöltésekor."
 
-#: ../xfce4-tips/main.c:298
+#: ../xfce4-tips/main.c:314
 msgid "Display tips on _startup"
 msgstr "_Tipp megjelenítése indításkor"
 
-#: ../xfce4-tips/main.c:327
+#: ../xfce4-tips/main.c:338
 msgid "Next"
 msgstr "Következő"
 
-#: ../xfce4-session-logout/main.c:65
+#: ../xfce4-session-logout/main.c:69
+msgid "Log out without displaying the logout dialog"
+msgstr "Kijelentkezés a kijelentkezési ablak megjelenítése nélkül"
+
+#: ../xfce4-session-logout/main.c:73
+msgid "Halt without displaying the logout dialog"
+msgstr "Leállítás a kijelentkezési ablak megjelenítése nélkül"
+
+#: ../xfce4-session-logout/main.c:77
+msgid "Reboot without displaying the logout dialog"
+msgstr "Újraindítás a kijelentkezési ablak megjelenítése nélkül"
+
+#: ../xfce4-session-logout/main.c:81
+msgid "Suspend without displaying the logout dialog"
+msgstr "Felfüggesztés a kijelentkezési ablak megjelenítése nélkül"
+
+#: ../xfce4-session-logout/main.c:85
+msgid "Hibernate without displaying the logout dialog"
+msgstr "Hibernálás a kijelentkezési ablak megjelenítése nélkül"
+
+#: ../xfce4-session-logout/main.c:89
+msgid "Log out quickly; don't save the session"
+msgstr "Kijelentkezés gyorsan, ne mentse a munkamenetet"
+
+#: ../xfce4-session-logout/main.c:111
 msgid "Logout Error"
 msgstr "Kijelentkezési hiba"
 
-#: ../xfce4-session-logout/main.c:163
+#: ../xfce4-session-logout/main.c:114 ../xfce4-session-logout/main.c:121
+msgid "Unknown error"
+msgstr "Ismeretlen hiba"
+
+#: ../xfce4-session-logout/main.c:181
 msgid "Unable to contact D-Bus session bus."
 msgstr "Nem lehet kapcsolódni a D-Bus munkamenetbuszhoz."
 
-#: ../xfce4-session-logout/main.c:175
+#: ../xfce4-session-logout/main.c:193
 msgid "Failed to create new D-Bus message"
 msgstr "Nem hozható létre új D-Bus üzenet"
 
-#: ../xfce4-session-logout/main.c:191
+#: ../xfce4-session-logout/main.c:209
 msgid "Failed to receive a reply from the session manager"
 msgstr "Nem érkezett válasz a munkamenet-kezelőtől"
 
-#: ../xfce4-session-logout/main.c:199
+#: ../xfce4-session-logout/main.c:217
 msgid "Received error while trying to log out"
 msgstr "Hiba történt a kijelentkezésre tett kísérlet során"
+
+#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:2
+msgid "Log out of the Xfce Desktop"
+msgstr "Kijelentkezés az Xfce asztali környezetből"
 
 #: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:1
 #: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:1
@@ -979,10 +1005,6 @@ msgstr "Á_ltalános"
 msgid "_Prompt on logout"
 msgstr "Kér_dés kijelentkezéskor"
 
-#: ../settings/xfce4-session-settings.glade.h:35
-msgid "_Quit Program"
-msgstr "_Kilépés a programból"
-
 #: ../settings/xfce4-session-settings.glade.h:36
 msgid "_Session"
 msgstr "M_unkamenet"
@@ -1002,6 +1024,45 @@ msgstr "Tippek és trükkök"
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
 msgstr "Xfce-tippek"
+
+#~ msgid "Terminate \"%s\""
+#~ msgstr "„%s” megszakítása"
+
+#~ msgid "Xfce Session Manager"
+#~ msgstr "Xfce munkamenet-kezelő"
+
+#~ msgid "Invalid shutdown type"
+#~ msgstr "Érvénytelen leállítási típus"
+
+#~ msgid "No HAL method for command %d"
+#~ msgstr "Nincs HAL metódus a(z) %d. parancshoz"
+
+#~ msgid "Program \"sudo\" was not found.  You will not be able to shutdown your system from within Xfce."
+#~ msgstr "A „sudo” program nem található. Nem lesz képes leállítani a rendszert az Xfce-ből."
+
+#~ msgid "Unable to create parent pipe: %s"
+#~ msgstr "Nem hozható létre szülő adatcsatorna: %s"
+
+#~ msgid "Unable to create child pipe: %s"
+#~ msgstr "Nem hozható létre gyermek adatcsatorna: %s"
+
+#~ msgid "Unable to fork sudo helper: %s"
+#~ msgstr "Nem indítható a sudo segédprogramja: %s"
+
+#~ msgid "Unable to read response from sudo helper: %s"
+#~ msgstr "Nem olvasható a sudo segédprogramjának válasza: %s"
+
+#~ msgid "Unable to open parent pipe: %s"
+#~ msgstr "Nem nyitható meg a szülő adatcsatorna: %s"
+
+#~ msgid "Unable to open child pipe: %s"
+#~ msgstr "Nem nyitható meg a gyermek adatcsatorna: %s"
+
+#~ msgid "Got unexpected reply from sudo shutdown helper"
+#~ msgstr "Váratlan válasz érkezett a sudo leállítási segédprogramjától"
+
+#~ msgid "Suspend and Hibernate are only supported through HAL, which is unavailable"
+#~ msgstr "A felfüggesztés és hibernálás csak a HAL-on keresztül támogatottak, amely nem érhető el"
 
 #~ msgid "Session Error"
 #~ msgstr "Munkamenethiba"
