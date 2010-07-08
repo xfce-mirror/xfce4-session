@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 12:04+0100\n"
+"POT-Creation-Date: 2010-07-08 16:06+0000\n"
 "PO-Revision-Date: 2010-01-28 15:03+0100\n"
 "Last-Translator: Cristian Marchi <cri.penta@gmail.com>\n"
 "Language-Team: Italian <xfce-it-translators@googlegroups.com>\n"
@@ -432,7 +432,7 @@ msgstr "Scambio dell'elemento non riuscito"
 msgid "Disable binding to TCP ports"
 msgstr "Disabilita il collegamento alle porte TCP"
 
-#: ../xfce4-session/main.c:77
+#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:93
 msgid "Print version information and exit"
 msgstr "Stampa le informazioni di versione ed esce"
 
@@ -467,6 +467,7 @@ msgid "<span size='large'><b>Log out %s</b></span>"
 msgstr "<span size='large'><b>Uscita di %s</b></span>"
 
 #: ../xfce4-session/shutdown.c:422
+#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
 msgid "Log Out"
 msgstr "Esci"
 
@@ -817,29 +818,58 @@ msgstr "Visualizza i suggerimenti all'_avvio"
 msgid "Next"
 msgstr "Successivo"
 
-#: ../xfce4-session-logout/main.c:65
+#: ../xfce4-session-logout/main.c:69
+msgid "Log out without displaying the logout dialog"
+msgstr ""
+
+#: ../xfce4-session-logout/main.c:73
+msgid "Halt without displaying the logout dialog"
+msgstr ""
+
+#: ../xfce4-session-logout/main.c:77
+msgid "Reboot without displaying the logout dialog"
+msgstr ""
+
+#: ../xfce4-session-logout/main.c:81
+msgid "Suspend without displaying the logout dialog"
+msgstr ""
+
+#: ../xfce4-session-logout/main.c:85
+msgid "Hibernate without displaying the logout dialog"
+msgstr ""
+
+#: ../xfce4-session-logout/main.c:89
+#, fuzzy
+msgid "Log out quickly; don't save the session"
+msgstr "Impossibile salvare la sessione"
+
+#: ../xfce4-session-logout/main.c:111
 msgid "Logout Error"
 msgstr "Errore in uscita"
 
-#: ../xfce4-session-logout/main.c:68 ../xfce4-session-logout/main.c:75
+#: ../xfce4-session-logout/main.c:114 ../xfce4-session-logout/main.c:121
 msgid "Unknown error"
 msgstr "Errore sconosciuto"
 
-#: ../xfce4-session-logout/main.c:163
+#: ../xfce4-session-logout/main.c:181
 msgid "Unable to contact D-Bus session bus."
 msgstr "Impossibile contattare il bus di sessione D-Bus."
 
-#: ../xfce4-session-logout/main.c:175
+#: ../xfce4-session-logout/main.c:193
 msgid "Failed to create new D-Bus message"
 msgstr "Creazione del nuovo messaggio D-Bus non riuscita"
 
-#: ../xfce4-session-logout/main.c:191
+#: ../xfce4-session-logout/main.c:209
 msgid "Failed to receive a reply from the session manager"
 msgstr "Nessuna risposta ricevuta dal gestore di sessione"
 
-#: ../xfce4-session-logout/main.c:199
+#: ../xfce4-session-logout/main.c:217
 msgid "Received error while trying to log out"
 msgstr "Si è verificato un errore durante il tentativo di uscita"
+
+#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:2
+msgid "Log out of the Xfce Desktop"
+msgstr ""
 
 #: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:1
 #: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:1
@@ -943,7 +973,7 @@ msgstr "Apre il pannello di configurazione per la schermata d'avvio selezionata"
 
 #: ../settings/xfce4-session-settings.glade.h:22
 msgid "Prompt for confirmation when logging out"
-msgstr "Richiedi conferma all'uscita"
+msgstr "Chiede conferma all'uscita dalla sessione"
 
 #: ../settings/xfce4-session-settings.glade.h:23
 msgid "Quit the program, and remove it from the session"
