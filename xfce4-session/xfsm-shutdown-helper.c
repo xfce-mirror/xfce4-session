@@ -1033,8 +1033,8 @@ xfsm_shutdown_helper_check_backends (XfsmShutdownHelper *helper)
 	  
 	  if ( helper->devkit_is_upower )
 	    {
-	      action_hibernate = "org.freedesktop.upower.suspend";
-	      action_suspend   = "org.freedesktop.upower.hibernate";
+	      action_hibernate = "org.freedesktop.upower.hibernate";
+	      action_suspend   = "org.freedesktop.upower.suspend";
 	    }
 	  else
 	    {
