@@ -263,7 +263,6 @@ xfsm_startup_autostart_migrate (void)
                                "Terminal=False\n"
                                "StartupNotify=False\n"
                                "Version=0.9.4\n"
-                               "Encoding=UTF-8\n"
                                "Name=%s\n",
                                entry, target_path, entry);
                       fclose (fp);
