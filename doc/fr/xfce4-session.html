@@ -31,14 +31,14 @@
     sélectionné.</p><p><strong class="application"><code>xfce4-session</code></strong> fournit par défaut trois moteurs de thème d'écran de démarrage. Leurs options de configuration 
     respectives - si disponibles - sont disponibles en cliquant sur le bouton <span><strong class="guibutton">Configurer</strong></span>.</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfsm-shutdown"></a>Les options d'arrêt/redémarrage</h3></div></div></div><p><strong class="application"><code>xfce4-session</code></strong> supporte l'arrêt de votre ordinateur lors de la déconnexion de la session. Pour cela, vous devez 
     être listé dans le fichier <code class="filename">sudoers</code> du système, et vous devez en particulier être autorisé 
-    à exécuter la commande <code class="filename">${libexecdir}/xfsm-shutdown-helper</code>
+    à exécuter la commande <code class="filename">${libdir}/xfce4/session/xfsm-shutdown-helper</code>
     (<code class="filename">/usr/sbin/xfsm-shutdown-helper</code> sous Debian GNU/Linux)
-    en tant qu'utilisateur root (où <code class="filename">${libexecdir}</code> est le sous répertoire <code class="filename">libexec</code> selon le préfixe utilisé pour installer <strong class="application"><code>xfce4-session</code></strong>, par exemple 
-    <code class="filename">/usr/local/libexec</code>).</p><p>pas exemple, si vous avez installé <strong class="application"><code>xfce4-session</code></strong> dans <code class="filename">/usr/local</code>, que votre nom d'hôte est <span class="emphasis"><em>myhost</em></span>
+    en tant qu'utilisateur root (où <code class="filename">${libdir}</code> est le sous répertoire <code class="filename">lib</code> selon le préfixe utilisé pour installer <strong class="application"><code>xfce4-session</code></strong>, par exemple 
+    <code class="filename">/usr/local/lib/xfce4/session</code>).</p><p>pas exemple, si vous avez installé <strong class="application"><code>xfce4-session</code></strong> dans <code class="filename">/usr/local</code>, que votre nom d'hôte est <span class="emphasis"><em>myhost</em></span>
     et que votre compte utilisateur est nommé<span class="emphasis"><em>myuser</em></span>, alors vous devez ajouter la ligne 
     suivante au fichier <code class="filename">sudoers</code> (souvenez-vous d'utiliser <strong class="application"><code>visudo</code></strong> 
     pour éditer ce fichier):</p><pre class="programlisting">
-myuser myhost=/usr/local/libexec/xfsm-shutdown-helper
+myuser myhost=/usr/local/lib/xfce4/session/xfsm-shutdown-helper
 </pre></div></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfsm-advanced"></a>Avancé</h2></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="files-and-env-vars"></a>Fichiers et variables d'environnement</h3></div></div></div><p>Xfce utilise maintenant la spécification Basedir telle que définie sur <a href="http://freedesktop.org/" target="_top">Freedesktop.org</a> pour chercher ses données et ses fichiers de 
     configuration. Cela signifie que les emplacements de ces fichiers seront indiqués selon un chemin relatif aux 
     répertoires décrits dans cette spécification.</p><div class="variablelist"><dl><dt><span class="term">${XDG_CONFIG_HOME}</span></dt><dd><p>Le premier répertoire où il faut rechercher les fichiers de configuration. Par défaut, c'est 

@@ -230,11 +230,11 @@ maintainers, etc. Commented out by default.
 	
     <para>&app; supporte l'arrêt de votre ordinateur lors de la déconnexion de la session. Pour cela, vous devez 
     être listé dans le fichier <filename>sudoers</filename> du système, et vous devez en particulier être autorisé 
-    à exécuter la commande <filename>${libexecdir}/xfsm-shutdown-helper</filename>
+    à exécuter la commande <filename>${libdir}/xfce4/session/xfsm-shutdown-helper</filename>
     (<filename>/usr/sbin/xfsm-shutdown-helper</filename> sous Debian GNU/Linux)
-    en tant qu'utilisateur root (où <filename>${libexecdir}</filename> est le sous répertoire <filename
-    role="directory">libexec</filename> selon le préfixe utilisé pour installer &app;, par exemple 
-    <filename role="directory">/usr/local/libexec</filename>).</para>
+    en tant qu'utilisateur root (où <filename>${libdir}</filename> est le sous répertoire <filename
+    role="directory">lib</filename> selon le préfixe utilisé pour installer &app;, par exemple 
+    <filename role="directory">/usr/local/lib/xfce4/session</filename>).</para>
 
     <para>pas exemple, si vous avez installé &app; dans <filename
     role="directory">/usr/local</filename>, que votre nom d'hôte est <emphasis>myhost</emphasis>
@@ -243,7 +243,7 @@ maintainers, etc. Commented out by default.
     pour éditer ce fichier):</para>
 
 <programlisting>
-myuser myhost=/usr/local/libexec/xfsm-shutdown-helper
+myuser myhost=/usr/local/lib/xfce4/session/xfsm-shutdown-helper
 </programlisting>
 	</sect2>
 	

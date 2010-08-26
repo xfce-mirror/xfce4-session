@@ -243,12 +243,12 @@ maintainers, etc. Commented out by default.
     of your desktop session. To be able to shutdown the computer, you
     have to be listed in the systems <filename>sudoers</filename> file,
     in particular, you must be allowed to execute the command
-    <filename>${libexecdir}/xfsm-shutdown-helper</filename>
+    <filename>${libdir}/xfce4/session/xfsm-shutdown-helper</filename>
     (<filename>/usr/sbin/xfsm-shutdown-helper</filename> on Debian GNU/Linux)
-    as user root (where <filename>${libexecdir}</filename> is the <filename
-    role="directory">libexec</filename> sub directory in the prefix you
+    as user root (where <filename>${libdir}</filename> is the <filename
+    role="directory">lib</filename> sub directory in the prefix you
     installed &app;, for example
-    <filename role="directory">/usr/local/libexec</filename>).</para>
+    <filename role="directory">/usr/local/lib/xfce4/session</filename>).</para>
 
     <para>For example, lets say, you installed &app; into <filename
     role="directory">/usr/local</filename>, your hostname is <emphasis>myhost</emphasis>
@@ -258,7 +258,7 @@ maintainers, etc. Commented out by default.
     that file):</para>
 
 <programlisting>
-myuser myhost=/usr/local/libexec/xfsm-shutdown-helper
+myuser myhost=/usr/local/lib/xfce4/session/xfsm-shutdown-helper
 </programlisting>
 	</sect2>
 	

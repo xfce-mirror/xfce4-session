@@ -20,8 +20,8 @@ libbalou_la_CFLAGS =							\
 	-I$(top_srcdir)							\
 	$(LIBXFCE4UI_CFLAGS)						\
 	$(XFCONF_CFLAGS)						\
-	-DBALOU_EXPORT_THEME=\"$(libexecdir)/balou-export-theme\"	\
-	-DBALOU_INSTALL_THEME=\"$(libexecdir)/balou-install-theme\"
+	-DBALOU_EXPORT_THEME=\"$(libdir)/xfce4/session/balou-export-theme\" \
+	-DBALOU_INSTALL_THEME=\"$(libdir)/xfce4/session/balou-install-theme\"
 
 libbalou_la_LDFLAGS =							\
 	-avoid-version							\

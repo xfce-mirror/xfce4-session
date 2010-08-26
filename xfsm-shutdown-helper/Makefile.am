@@ -1,4 +1,5 @@
-libexec_PROGRAMS = 							\
+xfsm_shutdown_helperdir = $(libdir)/xfce4/session
+xfsm_shutdown_helper_PROGRAMS = 					\
 	xfsm-shutdown-helper
 
 xfsm_shutdown_helper_SOURCES =						\

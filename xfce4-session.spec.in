@@ -8,11 +8,7 @@ Source0: 	%{name}-%{version}.tar.gz
 Group: 		User Interface/Desktops
 BuildRoot: 	%{_tmppath}/%{name}-root
 Requires:	libxfcegui4 >= @LIBXFCEGUI4_REQUIRED_VERSION@
-Requires:	libxfce4mcs >= @LIBXFCE4MCS_CLIENT_REQUIRED_VERSION@
-Requires:	xfce-mcs-manager >= @XFCE_MCS_MANAGER_REQUIRED_VERSION@
 BuildRequires: 	libxfcegui4-devel >= @LIBXFCEGUI4_REQUIRED_VERSION@
-BuildRequires:	libxfce4mcs-devel >= @LIBXFCE4MCS_CLIENT_REQUIRED_VERSION@
-BuildRequires:	xfce-mcs-manager-devel >= @XFCE_MCS_MANAGER_REQUIRED_VERSION@
 
 %description
 xfce4-session is the session manager for the Xfce desktop environment.
@@ -68,9 +64,8 @@ fi
 %{_datadir}/xfce4/*
 %{_datadir}/locale/*
 %{_libdir}/lib*.so.*
-%{_libdir}/xfce4/mcs-plugins/*
 %{_libdir}/xfce4/splash/engines/libmice.*
-%{_libexecdir}/xfsm-shutdown-helper
+%{_libdir}/xfce4/session/xfsm-shutdown-helper
 %{_mandir}/man1/*
 %{_sysconfdir}/xdg/*
 
@@ -86,4 +81,4 @@ fi
 %{_datadir}/themes/Default/balou/*
 %{_libdir}/xfce4/splash/engines/libbalou.*
 %{_libdir}/xfce4/splash/engines/libsimple.*
-%{_libexecdir}/balou-*
+%{_libdir}/xfce4/session/balou-*

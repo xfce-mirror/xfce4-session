@@ -6,16 +6,16 @@ Since 4.1.5, the session manager supports only sudo(8)-based shutdown, other
 method can be added by packagers if desired, just replace XfsmShutdownHelper
 with your code. To be able to shutdown the computer, you must be listed
 in the systems sudoers file, in particular, you must be allowed to execute
-$libexecdir/xfsm-shutdown-helper as user root (where $libexecdir is the
-libexec subdir in the prefix you installed xfce4-session, for example
-/usr/local/libexec). 
+$libdir/xfce4/session/xfsm-shutdown-helper as user root (where $libdir is the
+lib subdir in the prefix you installed xfce4-session, for example
+/usr/local/lib). 
 
 For example, you installed xfce4-session into /usr/local, your hostname
 is myhost and your user account is named myuser, then you'd have to add
 the following line to your sudoers file (remember to use visudo to edit
 that file):
 
-  myuser	myhost=/usr/local/libexec/xfsm-shutdown-helper
+  myuser	myhost=/usr/local/lib/xfce4/session/xfsm-shutdown-helper
 
 Starting with xfce4-session 4.3.99.2 xfce4-session will first try to use
 HAL (if built with D-Bus support) and fallback to the sudo method described
