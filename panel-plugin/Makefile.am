@@ -4,7 +4,7 @@ INCLUDES = \
 	-DLOCALEDIR=\"$(localedir)\" \
 	-DG_LOG_DOMAIN=\"libxfsm-logout-plugin\"
 
-plugindir = $(libdir)/xfce4/panel-plugins
+plugindir = $(libdir)/xfce4/panel/plugins
 
 plugin_LTLIBRARIES = libxfsm-logout-plugin.la
 
