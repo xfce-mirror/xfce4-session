@@ -23,7 +23,7 @@ xfce4_session_settings_SOURCES = \
 
 xfce4_session_settings_CFLAGS = \
 	-DLOCALEDIR=\"$(localedir)\" \
-	-DMODULESDIR=\"$(libdir)/xfce4/splash/engines\" \
+	-DMODULESDIR=\"$(libdir)/xfce4/session/splash-engines\" \
 	-DG_LOG_DOMAIN=\"xfce4-session-settings\" \
 	-I$(top_srcdir) \
 	$(LIBXFCE4UTIL_CFLAGS) \

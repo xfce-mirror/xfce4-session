@@ -2,7 +2,7 @@ SUBDIRS =								\
 	scripts								\
 	themes
 
-baloudir = $(libdir)/xfce4/splash/engines
+baloudir = $(libdir)/xfce4/session/splash-engines
 
 balou_LTLIBRARIES = libbalou.la
 

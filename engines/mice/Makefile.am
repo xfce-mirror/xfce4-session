@@ -1,4 +1,4 @@
-micedir = $(libdir)/xfce4/splash/engines
+micedir = $(libdir)/xfce4/session/splash-engines
 
 mice_LTLIBRARIES = libmice.la
 

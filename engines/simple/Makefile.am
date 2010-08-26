@@ -1,4 +1,4 @@
-simpledir = $(libdir)/xfce4/splash/engines
+simpledir = $(libdir)/xfce4/session/splash-engines
 
 simple_LTLIBRARIES = libsimple.la
 
