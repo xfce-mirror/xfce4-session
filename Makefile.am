@@ -53,4 +53,7 @@ ChangeLog: Makefile
 
 dist-hook: ChangeLog
 
+DISTCHECK_CONFIGURE_FLAGS =						\
+	--enable-gen-doc
+
 # vi:set ts=8 sw=8 noet ai nocindent:

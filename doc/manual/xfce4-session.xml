@@ -1,18 +1,18 @@
-<?xml version='1.0'?> 
-<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+<?xml version='1.0'?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
           "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-  <!ENTITY date "July 2005"> 
-  <!ENTITY appversion "4.3">
-  <!ENTITY app "<application>xfce4-session</application>"> 
+  <!ENTITY date "July 2005">
+  <!ENTITY version "@PACKAGE_VERSION@">
+  <!ENTITY app "@PACKAGE_NAME@">
 ]>
 
 <article id="xfce4-session" lang="en">
 
-<!-- Header --> 
+<!-- Header -->
 <articleinfo>
 
   <title>Xfce 4 Session Manager</title>
-  
+
   <copyright>
     <year>2003</year>
     <year>2004</year>
@@ -39,35 +39,22 @@
       type="http" url="http://www.gnu.org/">Free Software Foundation</ulink>.
     </para>
   </legalnotice>
-  
+
   <authorgroup>
     <author>
       <firstname>Benedikt</firstname>
       <surname>Meurer</surname>
       <affiliation>
-	      <address><email>benny@xfce.org</email></address>
+        <jobtitle>Software developer</jobtitle>
         <orgname>os-cillation</orgname>
         <orgdiv>System development</orgdiv>
-        <jobtitle>Software developer</jobtitle>
+        <address><email>benny@xfce.org</email></address>
       </affiliation>
     </author>
-
-<!-- This is appropriate place for other contributors: translators,
-maintainers, etc. Commented out by default.
-
-    <othercredit role="translator">
-      <firstname>Latin</firstname> <surname>Translator 1</surname>
-      <affiliation>
-	<orgname>Latin Translation Team</orgname>
-	<address><email>translator@gnome.org</email> </address>
-      </affiliation> <contrib>Latin translation</contrib>
-    </othercredit>
--->
-
   </authorgroup>
 
   <releaseinfo>
-    This manual describes the &app; package, version &appversion;.
+    This manual describes the &app; package, version &version;.
   </releaseinfo>
 
   <pubdate>&date;</pubdate>
@@ -77,17 +64,17 @@ maintainers, etc. Commented out by default.
 <sect1 id="xfsm-intro">
   <title>Introduction</title>
 
-  <para>&app; is a session manager for Xfce 4. Its task is to save the state of 
-  your desktop (opened applications and their location) and restore it during a next 
-  startup. You can create several different sessions and choose one of them on 
+  <para><application>&app;</application> is a session manager for Xfce 4. Its task is to save the state of
+  your desktop (opened applications and their location) and restore it during a next
+  startup. You can create several different sessions and choose one of them on
   startup.
   </para>
-  
-  <para>&app; provides session management for both X11R6 and 
-  legacy X11R5 protocols. If you don't need legacy session management 
-  support, you can disable it at compile time, giving 
-  --disable-legacy-sm to ./configure. Do <emphasis>NOT EVER</emphasis> run <application>smproxy</application> in 
-  session that is managed by &app;, or weird things will happen. 
+
+  <para><application>&app;</application> provides session management for both X11R6 and
+  legacy X11R5 protocols. If you don't need legacy session management
+  support, you can disable it at compile time, giving
+  --disable-legacy-sm to ./configure. Do <emphasis>NOT EVER</emphasis> run <application>smproxy</application> in
+  session that is managed by <application>&app;</application>, or weird things will happen.
   The included legacy session management does everything that <application>smproxy</application>
   would do, and besides that, it also supports multiscreen display.</para>
 
@@ -95,12 +82,12 @@ maintainers, etc. Commented out by default.
 
 <sect1 id="xfce4-session-settings">
   <title>Session Manager settings</title>
-    
+
   <sect2 id="xfsm-general-settings">
   	<title>General preferences</title>
-  	
+
     <figure id="xfsm-general-fig">
-      <title>&app; general preferences</title>
+      <title><application>&app;</application> general preferences</title>
       <screenshot>
         <mediaobject>
           <imageobject>
@@ -108,47 +95,47 @@ maintainers, etc. Commented out by default.
           </imageobject>
 
           <textobject>
-            <phrase>Shows the General tab of the &app; settings dialog.</phrase>
+            <phrase>Shows the General tab of the <application>&app;</application> settings dialog.</phrase>
           </textobject>
         </mediaobject>
       </screenshot>
     </figure>
-  	
+
   	<variablelist>
       <varlistentry>
-        <term>Display chooser on login</term> 
+        <term>Display chooser on login</term>
         <listitem>
-            <para>If set, the session manager will ask you to choose a session every 
+            <para>If set, the session manager will ask you to choose a session every
             time you log in to Xfce.</para>
         </listitem>
       </varlistentry>
 
       <varlistentry>
-        <term>Automatically save session on logout</term> 
+        <term>Automatically save session on logout</term>
         <listitem>
-          <para>This option instructs the session manager to save the current 
-          session automatically when you log out. If you don't select this option 
-          you'll be prompted whether you want to save the current session on 
+          <para>This option instructs the session manager to save the current
+          session automatically when you log out. If you don't select this option
+          you'll be prompted whether you want to save the current session on
           each logout.</para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
-        <term>Prompt on logout</term> 
+        <term>Prompt on logout</term>
         <listitem>
-          <para>This option disables the logout confirmation dialog. Whether 
-          the session will be saved or not depends on whether you enabled the 
+          <para>This option disables the logout confirmation dialog. Whether
+          the session will be saved or not depends on whether you enabled the
           automatic saving of sessions on logout or not.</para>
         </listitem>
       </varlistentry>
     </variablelist>
 	</sect2>
-		
-	<sect2 id="xfsm-advanced settings">
+
+	<sect2 id="xfsm-advanced-settings">
 	  <title>Advanced preferences</title>
-	
+
     <figure id="xfsm-advanced-fig">
-      <title>&app; advanced preferences</title>
+      <title><application>&app;</application> advanced preferences</title>
       <screenshot>
         <mediaobject>
           <imageobject>
@@ -156,38 +143,38 @@ maintainers, etc. Commented out by default.
           </imageobject>
 
           <textobject>
-            <phrase>Shows Advanced tab of the &app; settings dialog.</phrase>
+            <phrase>Shows Advanced tab of the <application>&app;</application> settings dialog.</phrase>
           </textobject>
         </mediaobject>
       </screenshot>
     </figure>
-	
+
     <variablelist>
       <varlistentry>
-        <term>Launch Gnome services on startup</term> 
+        <term>Launch Gnome services on startup</term>
         <listitem>
           <para>Enable this option if you need the GNOME keyring daemon to be run
-          on startup. This option also instructs &app; to bring up the GNOME assistive
+          on startup. This option also instructs <application>&app;</application> to bring up the GNOME assistive
           technologies at startup (if enabled in the GNOME control center). See the
            GNOME documentation for more information on this topic.</para>
         </listitem>
 		  </varlistentry>
 
       <varlistentry>
-        <term>Launch KDE services on startup</term> 
+        <term>Launch KDE services on startup</term>
         <listitem>
-          <para>Enable this option if you plan to run KDE applications as part of 
-          your Xfce Desktop session. This will notably increase the startup time, 
-          but on the other hand, KDE applications will startup faster. Some KDE 
+          <para>Enable this option if you plan to run KDE applications as part of
+          your Xfce Desktop session. This will notably increase the startup time,
+          but on the other hand, KDE applications will startup faster. Some KDE
           applications may not work at all if you don't enable this option.</para>
         </listitem>
   		</varlistentry>
 
       <varlistentry>
-        <term>Manage remote applications</term> 
+        <term>Manage remote applications</term>
         <listitem>
-          <para>Allow the session manager to manage applications running on 
-          remote hosts. Since this option may constitute a security risk, by listening to  
+          <para>Allow the session manager to manage applications running on
+          remote hosts. Since this option may constitute a security risk, by listening to
           a TCP port on your system, do not enable it unless you know what you are
           doing.</para>
           <para>System administrators may want to disable this option globally using the
@@ -196,20 +183,20 @@ maintainers, etc. Commented out by default.
         </listitem>
       </varlistentry>
     </variablelist>
-	
+
 	</sect2>
 </sect1>
-    
+
 <sect1 id="xfsm-customize">
 	<title>Customizing the Session Manager</title>
-	
-	<para>You can customize the splash-screen that &app; will use when you log in to
+
+	<para>You can customize the splash-screen that <application>&app;</application> will use when you log in to
 	Xfce 4. There is a dedicated dialog available from the <emphasis>Xfce 4
   Settings Manager</emphasis>.</para>
-	
+
 	<sect2 id="xfsm-engines">
 		<title>Splash screen settings</title>
-		
+
     <figure id="splash-screen-settings-fig">
       <title>Splash screen settings dialog</title>
       <screenshot>
@@ -219,27 +206,27 @@ maintainers, etc. Commented out by default.
           </imageobject>
 
           <textobject>
-            <phrase>Shows the &app; splash screen settings dialog.</phrase>
+            <phrase>Shows the <application>&app;</application> splash screen settings dialog.</phrase>
           </textobject>
         </mediaobject>
       </screenshot>
     </figure>
-		
+
     <para>On the left, the dialog shows a list of all installed engines.
     Select an engine, and you will see, if available, a preview and
     information about it. You can click on the <guibutton>Test</guibutton>
     button to see a demonstration of the selected splash screen
     engine.</para>
-				
-    <para>&app; provides three Splash themes engines by default. Their
+
+    <para><application>&app;</application> provides three Splash themes engines by default. Their
     respective configuration options - if any - are available from the
     <guibutton>Configure</guibutton> button.</para>
 	</sect2>
-	
+
 	<sect2 id="xfsm-shutdown">
 		<title>Shutdown/reboot options</title>
-	
-    <para>&app; supports shutting down your computer when you log out
+
+    <para><application>&app;</application> supports shutting down your computer when you log out
     of your desktop session. To be able to shutdown the computer, you
     have to be listed in the systems <filename>sudoers</filename> file,
     in particular, you must be allowed to execute the command
@@ -247,10 +234,10 @@ maintainers, etc. Commented out by default.
     (<filename>/usr/sbin/xfsm-shutdown-helper</filename> on Debian GNU/Linux)
     as user root (where <filename>${libdir}</filename> is the <filename
     role="directory">lib</filename> sub directory in the prefix you
-    installed &app;, for example
+    installed <application>&app;</application>, for example
     <filename role="directory">/usr/local/lib/xfce4/session</filename>).</para>
 
-    <para>For example, lets say, you installed &app; into <filename
+    <para>For example, lets say, you installed <application>&app;</application> into <filename
     role="directory">/usr/local</filename>, your hostname is <emphasis>myhost</emphasis>
     and your user account is named <emphasis>myuser</emphasis>, then you
     would have to add the following line to your <filename>sudoers</filename>
@@ -261,9 +248,9 @@ maintainers, etc. Commented out by default.
 myuser myhost=/usr/local/lib/xfce4/session/xfsm-shutdown-helper
 </programlisting>
 	</sect2>
-	
+
 </sect1>
- 
+
 <sect1 id="xfsm-advanced">
   <title>Advanced</title>
 
@@ -280,7 +267,7 @@ myuser myhost=/usr/local/lib/xfce4/session/xfsm-shutdown-helper
       <varlistentry>
         <term>${XDG_CONFIG_HOME}</term>
         <listitem>
-          <para>The first base directory to look for configuration 
+          <para>The first base directory to look for configuration
           files. By default this is set to <filename
           role="directory">~/.config/</filename>.</para>
         </listitem>
@@ -290,8 +277,8 @@ myuser myhost=/usr/local/lib/xfce4/session/xfsm-shutdown-helper
         <term>${XDG_CONFIG_DIRS}</term>
         <listitem>
           <para>A list of system directories that contain configuration
-          data. By default the panel will look in <filename 
-          role="directory">${sysconfdir}/xdg/</filename> and 
+          data. By default the panel will look in <filename
+          role="directory">${sysconfdir}/xdg/</filename> and
           <filename role="directory">/etc/xdg/</filename>. The value of
           ${sysconfdir} depends on how the program was build and will often be
           <filename role="directory">/etc/</filename> for binary
@@ -320,7 +307,7 @@ myuser myhost=/usr/local/lib/xfce4/session/xfsm-shutdown-helper
           <para>Prior to Xfce 4.3, the list of autostarted applications
           was stored in <filename role="directory">~/Desktop/Autostart</filename>,
           which contained scripts and symbolic links to applications. If
-          you run &app; &appversion; or above for the first time, it will
+          you run <application>&app;</application> &version; or above for the first time, it will
           automatically migrate the autostart items from the old location
           to the standard location and place a <filename>LOCATION-CHANGED.txt</filename>
           file in the old directory, that describes the location change.</para>
@@ -331,11 +318,11 @@ myuser myhost=/usr/local/lib/xfce4/session/xfsm-shutdown-helper
         <term>${XDG_CONFIG_DIRS}/xfce4-session/xfce4-session.rc</term>
         <listitem>
           <para>This is the location of the configuration file that
-          includes the various settings for &app;, which can be changed
+          includes the various settings for <application>&app;</application>, which can be changed
           from the settings dialog.</para>
         </listitem>
       </varlistentry>
-    
+
       <varlistentry>
         <term>${XDG_CONFIG_DIRS}/xfce4-session/xfce4-splash.rc</term>
         <listitem>
@@ -344,11 +331,11 @@ myuser myhost=/usr/local/lib/xfce4/session/xfsm-shutdown-helper
           can be changed from the settings dialog.</para>
         </listitem>
       </varlistentry>
-    
+
       <varlistentry>
         <term>${XDG_CACHE_HOME}/sessions/</term>
         <listitem>
-          <para>The directory where &app; and <application>xfwm4</application>
+          <para>The directory where <application>&app;</application> and <application>xfwm4</application>
           store the session data to.</para>
         </listitem>
       </varlistentry>
@@ -370,7 +357,7 @@ myuser myhost=/usr/local/lib/xfce4/session/xfsm-shutdown-helper
     <para>System administrators might want to customize the file
     <filename>${sysconfdir}/xdg/xfce4-session/xfce4-session.rc</filename> to change
     the default applications that are run on Xfce startup. For example, if you want to
-    start the <application>xfce4-iconbox</application> instead of the 
+    start the <application>xfce4-iconbox</application> instead of the
     <application>xftaskbar4</application>, you would change the <emphasis>[Failsafe
     Session]</emphasis> section like to something like this:</para>
 
@@ -411,7 +398,7 @@ CustomizeSecurity=NONE
 </programlisting>
 
     <para>This allows all users to change their splash, chooser and logout settings,
-    but allows only users in the group <emphasis>wheel</emphasis> to customize the 
+    but allows only users in the group <emphasis>wheel</emphasis> to customize the
     compatibility settings and shutdown the system. No one will be allowed to adjust
     the security settings.</para>
 
@@ -469,37 +456,37 @@ CustomizeSecurity=NONE
 </sect1>
 
 <sect1 id="xfsm-copyright">
-  <title>About &app;</title>
+  <title>About <application>&app;</application></title>
 
-  <para>&app; was written by Benedikt Meurer 
+  <para><application>&app;</application> was written by Benedikt Meurer
   (<email>benny@xfce.org</email>).
-    To find more information, please visit the 
-    <ulink url="http://www.xfce.org" type="http">Xfce web site</ulink>. 
+    To find more information, please visit the
+    <ulink url="http://www.xfce.org" type="http">Xfce web site</ulink>.
   </para>
 
   <para>To report a bug or make a suggestion regarding this application or
-    this manual, use the bug tracking system at <ulink 
-      url="http://bugzilla.xfce.org/" 
-      type="http">http://bugzilla.xfce.org/</ulink>. 
+    this manual, use the bug tracking system at <ulink
+      url="http://bugzilla.xfce.org/"
+      type="http">http://bugzilla.xfce.org/</ulink>.
   </para>
 
   <para>If you have questions about the use or installation of this package,
-    please ask on the <ulink 
+    please ask on the <ulink
       url="http://lunar-linux.org/mailman/listinfo/xfce"
       type="http">xfce</ulink> mailing list. Development discussion takes
-    place on the <ulink 
+    place on the <ulink
       url="http://lunar-linux.org/mailman/listinfo/xfce4-dev"
       type="http">xfce4-dev</ulink> mailing list.
   </para>
-    
+
   <para> This program is distributed under the terms of the
-    GNU General Public License as published by the Free Software Foundation; 
+    GNU General Public License as published by the Free Software Foundation;
     either version 2 of the License, or (at your option) any later version.
   </para>
 
-  <para>You should have received a copy of the GNU General Public License 
-    along with this program; if not, write to the Free Software 
-    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
+  <para>You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
     USA.
   </para>
 

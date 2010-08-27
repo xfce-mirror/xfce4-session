@@ -1,8 +1,7 @@
 @SET_MAKE@
 
 SUBDIRS =								\
-	C								\
-	fr
+	manual
 
 noinst_DATA =								\
 	FAQ								\
