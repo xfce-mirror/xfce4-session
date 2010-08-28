@@ -117,7 +117,13 @@ dist-hook: dist-check-doc doc-build.stamp
 		fi \
 	done
 
+# css file
+cssdir = $(docdir)/html
+css_DATA = \
+	xfce4-session.css
+
 EXTRA_DIST = \
+	$(css_DATA) \
 	$(STYLESHEET) \
 	$(DOCUMENT)
 
