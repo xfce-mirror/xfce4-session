@@ -1,12 +1,41 @@
-4.7.x
+4.7.0
 =====
 
 - Query HAL to be sure suspend and hibernate are supported.  If not,
-  don't even show the buttons (bug 4952).
-- Allow xfce4-tips to work when 'fortune' is not installed (bug 2871).
+  don't even show the buttons (bug #4952).
+- Allow xfce4-tips to work when 'fortune' is not installed (bug #2871).
 - Allow clients to set arbitrary custom SM properties.
 - Support _GSM_DesktopFile and use it in the settings dialog to display
   an icon and localized app name if available.
+- Add timing information to verbose.
+- Allow xfce4-tips to work properly without 'fortune' installed (bug #2871).
+- Add org.freedesktop.PowerManagement support for logout actions.
+- Add panel plugin that lists shutdown/logout actions.
+- Huge refactoring of how SM properties are handled.
+- Display richer information if the SM knows the client's .desktop file.
+- If it looks like the helper got killed, just return success (bug #4849).
+- Fix crash when properties are freed in failure handler (bug #5797).
+- Port code to libxfce4ui and drop deprecated Gtk code.
+- Fix error when running --help or --version (bug #6169).
+- Fix changing the restart style (bug #5768).
+- Add some additional checks for bug #5233.
+- Allow slashes in the application name (bug #3995).
+- Handle OnlyShowIn GNOME or KDE when compat is set.
+- Don't save settings dialogs when saving session (Bug #5113).
+- A lot of compiler warnings got fixed and build improvements.
+- Use ConsoleKit for shutdown and restart.
+- Use Upower for suspend and hibernate.
+- Use gtk_init_with_args in xfce4-session-logout.
+- Add a desktop file for xfce4-session-logout.
+- Don't write the deprecated encoding key to desktop files.
+- Remove deprecated encoding key from desktop files.
+- Move $libexecdir files to $libdir.
+- Move splash engines to $lidir/xfce4/session/splash-engines.
+- Generate documentation during dist check.
+- Translation updates (gl, ro, lv, it, ur_PK, zh_CN, hu, ast, da, po,
+  ja, kk, eu, ca, cs, el, ru, sk, es, tr, lv, sq, fi, pt_BR, de, uk,
+  bn, zh_TW).
+
 
 4.6.1
 =====
@@ -38,13 +67,13 @@
   (bug 4486).
 - Display username in logout dialog (bug 3083).
 - Ignore DBUS_GERROR_NO_REPLY errors on suspend/hibernate (bug 4629).
-- Use xfce_message_dialog() instead of xfce_err() for the Balou config 
+- Use xfce_message_dialog() instead of xfce_err() for the Balou config
   dialog.
 - Check for the existence of pwd.h and getpwuid().
 - Display the currently logged-in user in the shutdown dialog.
 - Properly signal that startup is complete when using the failsafe
   session.
-- Translation updates: ca, cs, de, es, eu, fi, fr, hu, id, ja, nb_BO, 
+- Translation updates: ca, cs, de, es, eu, fi, fr, hu, id, ja, nb_BO,
   pt_BR, sq, sv, uk, tr.
 
 4.5.92 (Xfce 4.6beta2)
@@ -96,10 +125,10 @@
 - Fix compile-issues with -Wall -Werror in mice theme-engine and settings-dialogs
 - Let xfce4-session start xfsettingsd automatically
 - Remove dependency on deprecated NETK
-- Translations: am, ar, az, be, bn_IN, ca, cs, da, de, dz, el, 
-  en_GB, eo, es_MX, es, et, eu, fa, fi, fr, gl, gu, he, hi, hu, 
-  id, it, ja, ka, ko, lt, lv, mk, mr, ms, nb_NO, nl, pa, pl, 
-  pt_BR, pt_PT, ro, ru, si, sk, sq, sv, ta, tr, uk, ur, vi, zh_CN, zh_TW 
+- Translations: am, ar, az, be, bn_IN, ca, cs, da, de, dz, el,
+  en_GB, eo, es_MX, es, et, eu, fa, fi, fr, gl, gu, he, hi, hu,
+  id, it, ja, ka, ko, lt, lv, mk, mr, ms, nb_NO, nl, pa, pl,
+  pt_BR, pt_PT, ro, ru, si, sk, sq, sv, ta, tr, uk, ur, vi, zh_CN, zh_TW
 
 
 4.4.0
