@@ -1,26 +1,24 @@
-/* $Id$ */
+/* vi:set et ai sw=2 sts=2 ts=2: */
 /*-
  * Copyright (c) 2003-2006 Benedikt Meurer <benny@xfce.org>
  * Copyright (c) 2008 Brian Tarricone <bjt23@cornell.edu>
+ * Copyright (c) 2010 Jannis Pohlmann <jannis@xfce.org>
  * All rights reserved.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2, or (at your option)
- * any later version.
- *                                                                              
+ * This program is free software; you can redistribute it and/or 
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of 
+ * the License, or (at your option) any later version.
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
  * GNU General Public License for more details.
- *                                                                              
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
- * 02111-1307, USA.
  *
- * The session id generator was taken from the KDE session manager.
- * Copyright (c) 2000 Matthias Ettrich <ettrich@kde.org>
+ * You should have received a copy of the GNU General Public 
+ * License along with this program; if not, write to the Free 
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -257,11 +255,11 @@ xfsm_manager_init (XfsmManager *manager)
 #ifdef ENABLE_CONSOLE_KIT
   manager->system_bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
   
-  if ( G_LIKELY (manager->system_bus != NULL) )
+  if (G_LIKELY (manager->system_bus != NULL))
     {
       xfsm_manager_consolekit_init (manager);
     }
-  else if ( error )
+  else if (error)
     {
       g_warning ("Failed to connect to the system bus : %s", error->message);
       g_error_free (error);
@@ -279,7 +277,7 @@ xfsm_manager_finalize (GObject *obj)
 #ifdef ENABLE_CONSOLE_KIT
   xfsm_manager_consolekit_cleanup (manager);
   
-  if ( manager->system_bus )
+  if (manager->system_bus)
     dbus_g_connection_unref (manager->system_bus);
 #endif /*ENABLE_CONSOLE_KIT*/
 
@@ -342,6 +340,7 @@ xfsm_manager_new (void)
   return manager;
 }
 
+
 #ifdef ENABLE_CONSOLE_KIT
 static void xfsm_manager_consolekit_init (XfsmManager *manager)
 {
@@ -349,61 +348,83 @@ static void xfsm_manager_consolekit_init (XfsmManager *manager)
   gboolean ret;
   
   manager->consolekit_proxy = dbus_g_proxy_new_for_name_owner (manager->system_bus,
-							       "org.freedesktop.ConsoleKit",
-							       "/org/freedesktop/ConsoleKit/Manager",
-							       "org.freedesktop.ConsoleKit.Manager",
-							       NULL);
+                                                               "org.freedesktop.ConsoleKit",
+                                                               "/org/freedesktop/ConsoleKit/Manager",
+                                                               "org.freedesktop.ConsoleKit.Manager",
+                                                               NULL);
 
   
-  if ( G_UNLIKELY (!manager->consolekit_proxy) )
+  if (G_UNLIKELY (!manager->consolekit_proxy))
     {
       g_warning ("Failed to create proxy for 'org.freedesktop.ConsoleKit'");
       return;
     }
 
-  ret = dbus_g_proxy_call (manager->consolekit_proxy, "OpenSession", &error,
-			   G_TYPE_INVALID,
-			   G_TYPE_STRING, &manager->consolekit_cookie,
-			   G_TYPE_INVALID);
-
-  if ( G_LIKELY (ret) )
+  /* check if there is a session to reuse */
+  if (g_getenv ("XDG_SESSION_COOKIE") != NULL)
     {
-      /*
-       * ConsoleKit doc says that the leader session should set the cookie
-       * on XDG_SESSION_COOKIE env variable.
-       */
-      g_warn_if_fail (g_setenv ("XDG_SESSION_COOKIE",
-				manager->consolekit_cookie,
-				TRUE));
+#ifdef DEBUG
+      g_debug ("Reusing existing ConsoleKit session: XDG_SESSION_ID=%s", 
+               g_getenv ("XDG_SESSION_COOKIE"));
+#endif
     }
-  else if ( error )
+  else
     {
-      g_warning ("OpenSession on 'org.freedesktop.ConsoleKit' failed with %s", error->message);
-      g_error_free (error);
+      /* try to open a new session. as its leader we are then responsible for
+       * setting XDG_SESSION_COOKIE as well as closing the session before we exit */
+      ret = dbus_g_proxy_call (manager->consolekit_proxy, "OpenSession", &error,
+                               G_TYPE_INVALID,
+                               G_TYPE_STRING, &manager->consolekit_cookie,
+                               G_TYPE_INVALID);
+
+      if (G_LIKELY (ret))
+        {
+          /*
+           * ConsoleKit doc says that the leader session should set the cookie
+           * on XDG_SESSION_COOKIE env variable.
+           */
+          if (g_setenv ("XDG_SESSION_COOKIE", manager->consolekit_cookie, TRUE))
+            {
+#ifdef DEBUG
+              g_debug ("Opening a new ConsoleKit session: XDG_SESSION_COOKIE=%s", 
+                       manager->consolekit_cookie);
+#endif
+            }
+          else
+            {
+              g_warning ("Failed to set XDG_SESSION_COOKIE");
+            }
+        }
+      else if (error)
+        {
+          g_warning ("OpenSession on 'org.freedesktop.ConsoleKit' failed with %s", error->message);
+          g_error_free (error);
+        }
     }
 }
 
+
 static void xfsm_manager_consolekit_cleanup (XfsmManager *manager)
 {
-  if ( manager->consolekit_proxy )
+  GError *error = NULL;
+  gboolean ret, result;
+                
+  if (manager->consolekit_proxy)
     {
       if (manager->consolekit_cookie) 
-	{
-	  GError *error = NULL;
-	  gboolean ret, result;
-	  
-	  ret = dbus_g_proxy_call (manager->consolekit_proxy, "CloseSession", &error,
-				   G_TYPE_STRING, manager->consolekit_cookie,
-				   G_TYPE_INVALID,
-				   G_TYPE_BOOLEAN, &result,
-				   G_TYPE_INVALID);
-	  if ( !ret )
-	    {
-	      g_warning ("CloseSession on 'org.freedesktop.ConsoleKit' failed with %s", error->message);
-	      g_error_free (error);
-	    }
-	  g_free (manager->consolekit_cookie);
-	}
+        {
+          ret = dbus_g_proxy_call (manager->consolekit_proxy, "CloseSession", &error,
+                                   G_TYPE_STRING, manager->consolekit_cookie,
+                                   G_TYPE_INVALID,
+                                   G_TYPE_BOOLEAN, &result,
+                                   G_TYPE_INVALID);
+          if (!ret)
+            {
+              g_warning ("CloseSession on 'org.freedesktop.ConsoleKit' failed with %s", error->message);
+              g_error_free (error);
+            }
+          g_free (manager->consolekit_cookie);
+        }
       g_object_unref (manager->consolekit_proxy);
     }
 }
@@ -1181,6 +1202,7 @@ xfsm_manager_interact_done (XfsmManager *manager,
   xfsm_manager_start_client_save_timeout (manager, client);
 }
 
+
 static void
 xfsm_manager_save_yourself_global (XfsmManager     *manager,
                                    gint             save_type,
@@ -1222,8 +1244,8 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
           shutdown_helper = xfsm_shutdown_helper_new ();
 
           if (!xfsm_shutdown_helper_send_command (shutdown_helper,
-						  manager->shutdown_type,
-						  &error))
+                                                  manager->shutdown_type,
+                                                  &error))
             {
               xfce_message_dialog (NULL, _("Shutdown Failed"),
                                    GTK_STOCK_DIALOG_ERROR,
@@ -1237,7 +1259,7 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
             }
 
           /* clean up and return */
-	  g_object_unref (shutdown_helper);
+          g_object_unref (shutdown_helper);
 
 
           /* at this point, either we failed to suspend/hibernate, or we
