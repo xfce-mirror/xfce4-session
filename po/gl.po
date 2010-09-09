@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-04 10:05+0000\n"
+"POT-Creation-Date: 2010-09-09 10:06+0000\n"
 "PO-Revision-Date: 2010-01-06 12:35+0100\n"
 "Last-Translator: Leandro Regueiro <leandro.regueiro@gmail.com>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
@@ -419,7 +419,7 @@ msgstr "Produciuse un erro ao editar o elemento \"%s\""
 
 #: ../settings/xfae-window.c:410
 msgid "Failed to toggle item"
-msgstr ""
+msgstr "Produciuse un erro ao activar o elemento"
 
 #: ../xfce4-session/main.c:76
 msgid "Disable binding to TCP ports"
@@ -493,7 +493,7 @@ msgstr "<b>Produciuse un erro</b>"
 msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
 msgstr "Ou o contrasinal introducido non é válido, ou o administrador do sistema non permite a capacidade de apaga-lo computador coa súa conta de usuario."
 
-#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1228
+#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1250
 msgid "Shutdown Failed"
 msgstr "Erro ao apagar"
 
@@ -571,55 +571,55 @@ msgstr "Continuar de tódolos xeitos"
 msgid "Try again"
 msgstr "Tentalo de novo"
 
-#: ../xfce4-session/xfsm-manager.c:712
+#: ../xfce4-session/xfsm-manager.c:733
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr "Non foi posible determinar o nome da sesión a proba de erros. Causas posibles: xfconfd non se está executando (problema de configuración de D-Bus), a variable de contorno $XDG_CONFIG_DIRS está mal definida (debe incluír \"%s\"), ou xfce4-session está mal instalado."
 
-#: ../xfce4-session/xfsm-manager.c:723
+#: ../xfce4-session/xfsm-manager.c:744
 #, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "A sesión a proba de erros especificada (\"%s\") non está marcada como sesión a proba de erros."
 
-#: ../xfce4-session/xfsm-manager.c:770
+#: ../xfce4-session/xfsm-manager.c:791
 msgid "The list of applications in the failsafe session is empty."
 msgstr "A lista de aplicacións da sesión a proba de erros está baleira."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:817
+#: ../xfce4-session/xfsm-manager.c:838
 msgid "Session Manager Error"
 msgstr "Erro do xestor de sesións"
 
-#: ../xfce4-session/xfsm-manager.c:819
+#: ../xfce4-session/xfsm-manager.c:840
 msgid "Unable to load a failsafe session"
 msgstr "Non foi posible cargar unha sesión a proba de erros"
 
-#: ../xfce4-session/xfsm-manager.c:1231
+#: ../xfce4-session/xfsm-manager.c:1253
 msgid "Failed to suspend session"
 msgstr "Produciuse un erro ao suspender a sesión"
 
-#: ../xfce4-session/xfsm-manager.c:1232
+#: ../xfce4-session/xfsm-manager.c:1254
 msgid "Failed to hibernate session"
 msgstr "Produciuse un erro ao hibernar a sesión"
 
-#: ../xfce4-session/xfsm-manager.c:1520
+#: ../xfce4-session/xfsm-manager.c:1542
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Só pode terminar os clientes cando está en estado inactivo"
 
-#: ../xfce4-session/xfsm-manager.c:2051
+#: ../xfce4-session/xfsm-manager.c:2073
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
-msgstr ""
+msgstr "O xestor de sesión debe estar en estado inactivo ao solicitar un punto de control"
 
-#: ../xfce4-session/xfsm-manager.c:2092
+#: ../xfce4-session/xfsm-manager.c:2114
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "O xestor de sesións debe estar en estado inactivo ao solicitar un apagado"
 
-#: ../xfce4-session/xfsm-manager.c:2099
+#: ../xfce4-session/xfsm-manager.c:2121
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Tipo de apagado  \"%u\" incorrecto"
@@ -641,11 +641,11 @@ msgstr "O comando de apagado fallou"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:1867
 msgid "Suspend failed, no backend supported"
-msgstr ""
+msgstr "Produciuse un erro ao suspender, non hai compatibilidade con ningún motor"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:1894
 msgid "Hibernate failed, no backend supported"
-msgstr ""
+msgstr "Produciuse un erro ao hibernar, non hai compatibilidade con ningún motor"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:1924
 msgid "Shutdown Command not found"
@@ -744,7 +744,7 @@ msgstr "Iniciando o emulador de terminal do X"
 msgid "Starting %s"
 msgstr "Iniciando %s"
 
-#: ../xfce4-session/xfsm-startup.c:284
+#: ../xfce4-session/xfsm-startup.c:283
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -769,7 +769,7 @@ msgstr ""
 "autoarrinque antigo á nova localización.\n"
 "Agora débeo eliminar.\n"
 
-#: ../xfce4-session/xfsm-startup.c:442
+#: ../xfce4-session/xfsm-startup.c:441
 msgid "Performing Autostart..."
 msgstr "Realizando autoarrinque..."
 
@@ -861,13 +861,11 @@ msgstr "Recibiuse un erro mentres se intentaba rematar a sesión"
 msgid "Log out of the Xfce Desktop"
 msgstr "Saír da sesión do escritorio Xfce"
 
-#: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:1
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:1
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
 msgid "Session Menu"
 msgstr "Menú de sesión"
 
-#: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:2
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:2
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
 msgid "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
 msgstr "Mostra un menú cas opcións de bloquear a pantalla, suspender, apagar ou saír da sesión"
 
