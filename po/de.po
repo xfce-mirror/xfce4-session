@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-23 16:06+0000\n"
+"POT-Creation-Date: 2010-09-14 16:08+0000\n"
 "PO-Revision-Date: 2010-05-08 22:56+0200\n"
 "Last-Translator: Fabian Nowak <timystery@arcor.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -154,17 +154,17 @@ msgstr "_Ruhezustand"
 #: ../panel-plugin/xfsm-logout-plugin.c:90
 #: ../panel-plugin/xfsm-logout-plugin.c:121
 msgid "_Reboot"
-msgstr "Neustarten"
+msgstr "_Neustarten"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:91
 #: ../panel-plugin/xfsm-logout-plugin.c:114
 msgid "Shut _down"
-msgstr "Herunterfahren"
+msgstr "_Herunterfahren"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:92
 #: ../panel-plugin/xfsm-logout-plugin.c:107
 msgid "_Log out"
-msgstr "Abmelden"
+msgstr "_Abmelden"
 
 #. XFSM_SHUTDOWN_ASK
 #. XFSM_SHUTDOWN_LOGOUT
@@ -491,7 +491,7 @@ msgstr "<b>Es ist ein Fehler aufgetreten</b>"
 msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
 msgstr "Entweder haben Sie Ihr Passwort falsch eingegeben oder der Systemadministrator hat es Ihnen nicht erlaubt, den Computer mit Ihrem Benutzerkonto aus herunterzufahren."
 
-#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1228
+#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1250
 msgid "Shutdown Failed"
 msgstr "Herunterfahren fehlgeschlagen"
 
@@ -569,55 +569,55 @@ msgstr "Trotzdem fortfahren"
 msgid "Try again"
 msgstr "Nochmal versuchen"
 
-#: ../xfce4-session/xfsm-manager.c:712
+#: ../xfce4-session/xfsm-manager.c:733
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr "Kann den Namen der abgesicherten Sitzung nicht bestimmen. Mögliche Usachen sind: xfconfd läuft gerade nicht (Einstellungsproblem von D-Bus); die Umgebungsvariable $XDG_CONFIG_DIRS ist nicht korrekt gesetzt (muss »%s« enthalten) oder xfce4-session wurde falsch installiert."
 
-#: ../xfce4-session/xfsm-manager.c:723
+#: ../xfce4-session/xfsm-manager.c:744
 #, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Die angegebene abgesicherte Sitzung (»%s«) ist nicht als solche deklariert."
 
-#: ../xfce4-session/xfsm-manager.c:770
+#: ../xfce4-session/xfsm-manager.c:791
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Die Liste der Anwendungen in der abgesicherten Sitzung ist leer."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:817
+#: ../xfce4-session/xfsm-manager.c:838
 msgid "Session Manager Error"
 msgstr "Fehler in der Sitzungsverwaltung"
 
-#: ../xfce4-session/xfsm-manager.c:819
+#: ../xfce4-session/xfsm-manager.c:840
 msgid "Unable to load a failsafe session"
 msgstr "Kann abgesicherte Sitzugn nicht laden"
 
-#: ../xfce4-session/xfsm-manager.c:1231
+#: ../xfce4-session/xfsm-manager.c:1253
 msgid "Failed to suspend session"
 msgstr "Kann Sitzung nicht in Standby versetzen"
 
-#: ../xfce4-session/xfsm-manager.c:1232
+#: ../xfce4-session/xfsm-manager.c:1254
 msgid "Failed to hibernate session"
 msgstr "Kann Sitzung nicht in Ruhemodus versetzen"
 
-#: ../xfce4-session/xfsm-manager.c:1520
+#: ../xfce4-session/xfsm-manager.c:1542
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Kann Clients nur dann beenden, wenn keine anderen Aufgaben durchgeführt werden"
 
-#: ../xfce4-session/xfsm-manager.c:2051
+#: ../xfce4-session/xfsm-manager.c:2073
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Die Sitzungsverwaltung muss unbeschäftigt sein, wenn ein Checkpoint gemacht werden soll"
 
-#: ../xfce4-session/xfsm-manager.c:2092
+#: ../xfce4-session/xfsm-manager.c:2114
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Die Sitzungsverwaltung muss unbeschäftigt sein, wenn heruntergefahren werden soll"
 
-#: ../xfce4-session/xfsm-manager.c:2099
+#: ../xfce4-session/xfsm-manager.c:2121
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Ungültiger Typ »%u« zum Herunterfahren des Systems"
