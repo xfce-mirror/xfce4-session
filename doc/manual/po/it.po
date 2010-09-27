@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session-docs\n"
 "POT-Creation-Date: 2010-08-27 18:11+0200\n"
-"PO-Revision-Date: 2010-09-08 09:40+0100\n"
+"PO-Revision-Date: 2010-09-27 15:58+0100\n"
 "Last-Translator: Cristian Marchi <cri.penta@gmail.com>\n"
 "Language-Team: Italian <xfce-it-translators@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -54,7 +54,7 @@ msgstr "Benedikt Meurer"
 
 #: ./xfce4-session.xml:33(para)
 msgid "Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with no Invariant Sections, with no Front-Cover Texts, and with no Back-Cover Texts. The complete license text is available from the <ulink type=\"http\" url=\"http://www.gnu.org/\">Free Software Foundation</ulink>."
-msgstr "È garantito il diritto di copiare, distribuire e/o modificare questo documento nel rispetto dei termini della licenza GNU Free Documentation License, versione 1.1 o qualsiasi versione successiva pubblicata dalal Free Software Foundation; senza Invariant Section senza testi di Front-Cover e senza testi di Back-Cover. Il testo della licenza completa è reso disponibile dalla <ulink type=\"http\" url=\"http://www.gnu.org/\">Free Software Foundation</ulink>. "
+msgstr "È garantito il diritto di copiare, distribuire e/o modificare questo documento nel rispetto dei termini della licenza GNU Free Documentation License, versione 1.1 o qualsiasi versione successiva pubblicata dalla Free Software Foundation; senza Invariant Section senza testi di Front-Cover e senza testi di Back-Cover. Il testo della licenza completa è reso disponibile dalla <ulink type=\"http\" url=\"http://www.gnu.org/\">Free Software Foundation</ulink>. "
 
 #: ./xfce4-session.xml:45(firstname)
 msgid "Benedikt"
@@ -90,11 +90,11 @@ msgstr "Introduzione"
 
 #: ./xfce4-session.xml:80(para)
 msgid "<application>@PACKAGE_NAME@</application> is a session manager for Xfce 4. Its task is to save the state of your desktop (opened applications and their location) and restore it during a next startup. You can create several different sessions and choose one of them on startup."
-msgstr "<application>@PACKAGE_NAME@</application> è un gestore di sessioneper Xfce 4. Il suo compito è quello di salvare lo stato della propria scrivania (applicazioni aperte e loro posizioni) e di ricrearlo al prossimo riavvio. Si possono creare diverse sessioni e sceglierne poi una all'avvio."
+msgstr "<application>@PACKAGE_NAME@</application> è un gestore di sessione per Xfce 4. Il suo compito è quello di salvare lo stato della propria scrivania (applicazioni aperte e loro posizioni) e di ricrearlo al successivo riavvio. Si possono creare diverse sessioni e sceglierne poi una all'avvio."
 
 #: ./xfce4-session.xml:86(para)
 msgid "<application>@PACKAGE_NAME@</application> provides session management for both X11R6 and legacy X11R5 protocols. If you don't need legacy session management support, you can disable it at compile time, giving --disable-legacy-sm to ./configure. Do <emphasis>NOT EVER</emphasis> run <application>smproxy</application> in session that is managed by <application>@PACKAGE_NAME@</application>, or weird things will happen. The included legacy session management does everything that <application>smproxy</application> would do, and besides that, it also supports multiscreen display."
-msgstr ""
+msgstr "<application>@PACKAGE_NAME@</application> fornisce la gestione della sessione per i protocolli X11R6 e X11R5 compatibile. Se non si ha bisogno del supporto all gestione della sessione compatibile, è possibile disabilitarla al momento della compilazione, fornendo l'opzione --disable-legacy-sm allo script ./configure. <emphasis>NON</emphasis> avviare mai <application>smproxy</application> in una sessione gestita da <application>@PACKAGE_NAME@</application>: potrebbero accadere cose strane. Il gestore della sessione compatibile incluso è in grado di compiere le stesse operazioni di <application>smproxy</application> e, per di più, supporta la visualizzazione a più schermi."
 
 #: ./xfce4-session.xml:97(title)
 msgid "Session Manager settings"
@@ -154,7 +154,7 @@ msgstr "Lancia i servizi di GNOME all'avvio"
 
 #: ./xfce4-session.xml:169(para)
 msgid "Enable this option if you need the GNOME keyring daemon to be run on startup. This option also instructs <application>@PACKAGE_NAME@</application> to bring up the GNOME assistive technologies at startup (if enabled in the GNOME control center). See the GNOME documentation for more information on this topic."
-msgstr "ABilitare questa opzione se si ha bisogno che il demone del portachiavi di GNOME venga avviato all'avvio. Questa opzione inoltre istruisce <application>@PACKAGE_NAME@</application> ad avviare le tecnologie assistive di GNOME all'avvio (se abilitate nel centro controllo di GNOME). COnsultare la documentazione di GNOME per maggiori informazioni sull'argomento."
+msgstr "Abilitare questa opzione se si ha bisogno che il demone del portachiavi di GNOME venga avviato all'avvio. Questa opzione inoltre istruisce <application>@PACKAGE_NAME@</application> ad avviare le tecnologie assistive di GNOME all'avvio (se abilitate nel centro controllo di GNOME). Consultare la documentazione di GNOME per maggiori informazioni sull'argomento."
 
 #: ./xfce4-session.xml:177(term)
 msgid "Launch KDE services on startup"
@@ -170,7 +170,7 @@ msgstr "Gestisci le applicazioni remote"
 
 #: ./xfce4-session.xml:189(para)
 msgid "Allow the session manager to manage applications running on remote hosts. Since this option may constitute a security risk, by listening to a TCP port on your system, do not enable it unless you know what you are doing."
-msgstr "Permette al gestore di sessione di gestire le applicazioni eseguite su host remoti. Dato che questa opzione può costituire un rischio per la sicurezza ascoltando una porta TCP del proprio sistema, si consiglia di non abilitarla ameno che non si sia coscienti di ciò che si sta facendo."
+msgstr "Permette al gestore di sessione di gestire le applicazioni eseguite su host remoti. Dato che questa opzione può costituire un rischio per la sicurezza ascoltando una porta TCP del proprio sistema, si consiglia di non abilitarla a meno che non si sia coscienti di ciò che si sta facendo."
 
 #: ./xfce4-session.xml:193(para)
 msgid "System administrators may want to disable this option globally using the session managers <ulink url=\"#xfsm-kiosk-mode\" type=\"html\">KIOSK capabilities</ulink>."
@@ -210,11 +210,11 @@ msgstr "Opzioni di spegnimento e riavvio"
 
 #: ./xfce4-session.xml:242(para)
 msgid "<application>@PACKAGE_NAME@</application> supports shutting down your computer when you log out of your desktop session. To be able to shutdown the computer, you have to be listed in the systems <filename>sudoers</filename> file, in particular, you must be allowed to execute the command <filename>${libdir}/xfce4/session/xfsm-shutdown-helper</filename> (<filename>/usr/sbin/xfsm-shutdown-helper</filename> on Debian GNU/Linux) as user root (where <filename>${libdir}</filename> is the <filename role=\"directory\">lib</filename> sub directory in the prefix you installed <application>@PACKAGE_NAME@</application>, for example <filename role=\"directory\">/usr/local/lib/xfce4/session</filename>)."
-msgstr "<application>@PACKAGE_NAME@</application> supporta lo spegnimento del computer quando si esce dalla propria sessione. Per poter spegnere il cmputer, occorre essere in lista nel file di sistema <filename>sudoers</filename>, e in particolare, si deve essere abilitati a eseguire il comando <filename>${libdir}/xfce4/session/xfsm-shutdown-helper</filename> (<filename>/usr/sbin/xfsm-shutdown-helper</filename> su Debian GNU/Linux) come utente root (dove <filename>${libdir}</filename> è la sotto cartella <filename role=\"directory\">lib</filename> nel prefisso dove è installato <application>@PACKAGE_NAME@</application>, per esempio <filename role=\"directory\">/usr/local/lib/xfce4/session</filename>)."
+msgstr "<application>@PACKAGE_NAME@</application> supporta lo spegnimento del computer quando si esce dalla propria sessione. Per poter spegnere il computer, occorre essere in lista nel file di sistema <filename>sudoers</filename>, e in particolare, si deve essere abilitati a eseguire il comando <filename>${libdir}/xfce4/session/xfsm-shutdown-helper</filename> (<filename>/usr/sbin/xfsm-shutdown-helper</filename> su Debian GNU/Linux) come utente root (dove <filename>${libdir}</filename> è la sotto cartella <filename role=\"directory\">lib</filename> nel prefisso dove è installato <application>@PACKAGE_NAME@</application>, per esempio <filename role=\"directory\">/usr/local/lib/xfce4/session</filename>)."
 
 #: ./xfce4-session.xml:253(para)
 msgid "For example, lets say, you installed <application>@PACKAGE_NAME@</application> into <filename role=\"directory\">/usr/local</filename>, your hostname is <emphasis>myhost</emphasis> and your user account is named <emphasis>myuser</emphasis>, then you would have to add the following line to your <filename>sudoers</filename> file (remember to use <application>visudo</application> to edit that file):"
-msgstr "Per esempio, si ipotizzi di aver installato <application>@PACKAGE_NAME@</application> in <filename role=\"directory\">/usr/local</filename>, che il proprio nome host sia <emphasis>myhost</emphasis> e che l'utente root si chiami <emphasis>myuser</emphasis>; in questo caso si dovrà aggiungere la linea seguente al proprio file <filename>sudoers</filename> (si ricordi di utilizzarel'applicazione <application>visudo</application> per modificare questo file):"
+msgstr "Per esempio, si ipotizzi di aver installato <application>@PACKAGE_NAME@</application> in <filename role=\"directory\">/usr/local</filename>, che il proprio nome host sia <emphasis>myhost</emphasis> e che l'utente root si chiami <emphasis>myuser</emphasis>; in questo caso si dovrà aggiungere la linea seguente al proprio file <filename>sudoers</filename> (si ricordi di utilizzare l'applicazione <application>visudo</application> per modificare questo file):"
 
 #: ./xfce4-session.xml:260(programlisting)
 #, no-wrap
@@ -235,7 +235,7 @@ msgstr "File e variabili di sistema"
 
 #: ./xfce4-session.xml:273(para)
 msgid "Xfce now uses the Basedir Specification as defined on <ulink url=\"http://freedesktop.org/\" type=\"http\">Freedesktop.org</ulink> to locate its data and configuration files. This means that file locations will be specified as a path relative to the directories described in the specification."
-msgstr "Xfce ora utilizza le specifiche Basedir come definite in  <ulink url=\"http://freedesktop.org/\" type=\"http\">Freedesktop.org</ulink> per individuare i sui dati e i file di configurazione. Questo significa che la posizione dei file sarà specificata come percorso relativo alle cartelle descritte nella specifica."
+msgstr "Xfce ora utilizza le specifiche Basedir come definite in <ulink url=\"http://freedesktop.org/\" type=\"http\">Freedesktop.org</ulink> per individuare i sui dati e i file di configurazione. Questo significa che la posizione dei file sarà specificata come percorso relativo alle cartelle descritte nella specifica."
 
 #: ./xfce4-session.xml:281(term)
 msgid "${XDG_CONFIG_HOME}"
@@ -259,7 +259,7 @@ msgstr "${XDG_CACHE_HOME}"
 
 #: ./xfce4-session.xml:305(para)
 msgid "Specifies the root for all user-specific cache data. If this environment variable is unset, it defaults to <filename role=\"directory\">~/.cache</filename>."
-msgstr ""
+msgstr "Indica la radice per la cache di dati di ogni utente. Se questa variabile di ambiente non è configurata, viene impostata a <filename role=\"directory\">~/.cache</filename>."
 
 #: ./xfce4-session.xml:312(term)
 msgid "${XDG_CONFIG_DIRS}/autostart/"
@@ -267,7 +267,7 @@ msgstr "${XDG_CONFIG_DIRS}/autostart/"
 
 #: ./xfce4-session.xml:314(para)
 msgid "This is the location where the list of applications that should be automatically run on login is stored. Each autostarted application is represented by a <filename>.desktop</filename> file (see the <ulink type=\"http\" url=\"http://standards.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html\">Desktop Entry Specification</ulink> for details)."
-msgstr "Questa è la posizione dove è salvata la lista delle applicazioni da eseguire automaticamente all'avvio. Ogni applicazione è rappresentata da un file <filename>.desktop</filename> (consultare le <ulink type=\"http\" url=\"http://standards.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html\">Desktop Entry Specification</ulink> per maggiori dettagli)."
+msgstr "Questa è la posizione dove è salvata la lista delle applicazioni da eseguire automaticamente all'avvio. Ogni applicazione è rappresentata da un file <filename>.desktop</filename> (consultare le <ulink type=\"http\" url=\"http://standards.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html\">specifiche per gli elementi desktop</ulink> per maggiori dettagli)."
 
 #: ./xfce4-session.xml:320(para)
 msgid "Prior to Xfce 4.3, the list of autostarted applications was stored in <filename role=\"directory\">~/Desktop/Autostart</filename>, which contained scripts and symbolic links to applications. If you run <application>@PACKAGE_NAME@</application> @PACKAGE_VERSION@ or above for the first time, it will automatically migrate the autostart items from the old location to the standard location and place a <filename>LOCATION-CHANGED.txt</filename> file in the old directory, that describes the location change."
@@ -307,7 +307,7 @@ msgstr "File di configurazione della modalità protetta. Consultare la <ulink ur
 
 #: ./xfce4-session.xml:365(para)
 msgid "None of the configuration files, except the <filename>kioskrc</filename>, are designed to be edited by hand during a Xfce session; in fact, the changes will be overwritten if you edit them while the session manager or the settings managers are running."
-msgstr "Nessuno dei file di configurazione, a eccezione di <filename>kioskrc</filename>, sono progettati per essere modificati manualmente durante una sessione di Xfce; infatti i cambiamenti vengono sovrascritti se si modificano i file manualmente mentre il gestore di sessione o il gestore delle impostazioni sono in esecuzione."
+msgstr "Nessuno dei file di configurazione, a eccezione di <filename>kioskrc</filename>, è progettato per essere modificato manualmente durante una sessione di Xfce; infatti i cambiamenti vengono sovrascritti se si modificano i file manualmente mentre il gestore di sessione o il gestore delle impostazioni è in esecuzione."
 
 #: ./xfce4-session.xml:370(para)
 msgid "System administrators might want to customize the file <filename>${sysconfdir}/xdg/xfce4-session/xfce4-session.rc</filename> to change the default applications that are run on Xfce startup. For example, if you want to start the <application>xfce4-iconbox</application> instead of the <application>xftaskbar4</application>, you would change the <emphasis>[Failsafe Session]</emphasis> section like to something like this:"
@@ -435,7 +435,7 @@ msgstr "Informazioni su <application>@PACKAGE_NAME@</application>"
 
 #: ./xfce4-session.xml:474(para)
 msgid "<application>@PACKAGE_NAME@</application> was written by Benedikt Meurer (<email>benny@xfce.org</email>). To find more information, please visit the <ulink url=\"http://www.xfce.org\" type=\"http\">Xfce web site</ulink>."
-msgstr "<application>@PACKAGE_NAME@</application> è stata scritta da Benedikt Meurer (<email>benny@xfce.org</email>). Per ricevere ulteriori informazioni, visitare il <ulink url=\"http://www.xfce.org\" type=\"http\">sito web di Xfce</ulink>."
+msgstr "<application>@PACKAGE_NAME@</application> è stato scritto da Benedikt Meurer (<email>benny@xfce.org</email>). Per ricevere ulteriori informazioni, visitare il <ulink url=\"http://www.xfce.org\" type=\"http\">sito web di Xfce</ulink>."
 
 #: ./xfce4-session.xml:480(para)
 msgid "To report a bug or make a suggestion regarding this application or this manual, use the bug tracking system at <ulink url=\"http://bugzilla.xfce.org/\" type=\"http\">http://bugzilla.xfce.org/</ulink>."
