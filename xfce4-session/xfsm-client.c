@@ -8,12 +8,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- *                                                                              
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *                                                                              
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -237,7 +237,7 @@ xfsm_client_set_initial_properties (XfsmClient     *client,
 {
   g_return_if_fail (XFSM_IS_CLIENT (client));
   g_return_if_fail (properties != NULL);
-  
+
   if (client->properties != NULL)
     xfsm_properties_free (client->properties);
   client->properties = properties;
@@ -329,7 +329,7 @@ xfsm_client_merge_properties (XfsmClient *client,
   g_return_if_fail (client->properties != NULL);
 
   properties = client->properties;
-  
+
   for (n = 0; n < num_props; ++n)
     {
       gchar **old_discard = NULL;
@@ -584,7 +584,6 @@ xfsm_client_dbus_delete_sm_properties (XfsmClient *client,
                                        gchar     **names,
                                        GError    **error)
 {
-  
   if (G_UNLIKELY (client->properties == NULL))
     return TRUE;
 

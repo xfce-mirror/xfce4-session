@@ -7,12 +7,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- *                                                                              
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *                                                                              
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -181,7 +181,7 @@ gnome_keyring_daemon_startup (void)
           g_printerr ("gnome-keyring-daemon failed to start correctly, "
                       "exit code: %d\n", WEXITSTATUS (status));
         }
-      
+
       g_free (sout);
     }
 }
@@ -208,7 +208,7 @@ gnome_ast_startup (void)
 
   list = gconf_client_get_list (gnome_conf_client, AT_STARTUP_KEY,
                                 GCONF_VALUE_STRING, &error);
-  
+
   if (error != NULL)
     {
       g_warning ("Failed to query value of " AT_STARTUP_KEY ": %s",
@@ -260,13 +260,13 @@ xfsm_compat_gnome_smproxy_startup (void)
    */
   dpy = gdk_display;
   root = RootWindow (dpy, 0);
-  
+
   if (gnome_smproxy_window != None)
     XDestroyWindow (dpy, gnome_smproxy_window);
-  
+
   gnome_sm_proxy = XInternAtom (dpy, "GNOME_SM_PROXY", False);
   gnome_smproxy_window = XCreateSimpleWindow (dpy, root, 1, 1, 1, 1, 0, 0, 0);
-  
+
   XChangeProperty (dpy, gnome_smproxy_window, gnome_sm_proxy,
                    XA_CARDINAL, 32, PropModeReplace,
                    (unsigned char *) (void *) &gnome_smproxy_window, 1);

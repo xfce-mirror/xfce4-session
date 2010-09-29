@@ -7,12 +7,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- *                                                                              
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *                                                                              
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -195,7 +195,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gboolean prompt;
   gboolean show_suspend;
   gboolean show_hibernate;
-  
+
   gboolean show_restart;
   gboolean show_shutdown;
 
@@ -285,7 +285,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
 
   accessibility = GTK_IS_ACCESSIBLE (gtk_widget_get_accessible (hidden));
 
-  if (!accessibility) 
+  if (!accessibility)
     {
       for (;;)
         {
@@ -297,7 +297,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
                 {
                   break;
                 }
-          
+
               gdk_pointer_ungrab (GDK_CURRENT_TIME);
             }
 
@@ -388,13 +388,13 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   hbox = gtk_hbox_new (TRUE, BORDER);
   gtk_widget_show (hbox);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  
+
   /* logout */
   logout_button = gtk_button_new ();
   gtk_widget_show (logout_button);
   gtk_box_pack_start (GTK_BOX (hbox), logout_button, TRUE, TRUE, 0);
 
-  g_signal_connect (logout_button, "clicked", 
+  g_signal_connect (logout_button, "clicked",
                     G_CALLBACK (logout_button_clicked), shutdownType);
 
   vbox2 = gtk_vbox_new (FALSE, BORDER);
@@ -422,13 +422,13 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   label = gtk_label_new (_("Log Out"));
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
-  
+
   /* reboot */
   reboot_button = gtk_button_new ();
   gtk_widget_show (reboot_button);
   gtk_box_pack_start (GTK_BOX (hbox), reboot_button, TRUE, TRUE, 0);
 
-  g_signal_connect (reboot_button, "clicked", 
+  g_signal_connect (reboot_button, "clicked",
                     G_CALLBACK (reboot_button_clicked), shutdownType);
 
   vbox2 = gtk_vbox_new (FALSE, BORDER);
@@ -441,14 +441,14 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
                                    32,
                                    GTK_ICON_LOOKUP_GENERIC_FALLBACK,
                                    NULL);
- 
+
   if (!icon)
     icon = gtk_icon_theme_load_icon (icon_theme,
                                      "xfsm-reboot",
                                      32,
                                      GTK_ICON_LOOKUP_GENERIC_FALLBACK,
                                      NULL);
- 
+
   image = gtk_image_new_from_pixbuf (icon);
   gtk_widget_show (image);
   gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
@@ -459,18 +459,18 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
 
   g_object_get (shutdown_helper,
-		"user-can-restart", &show_restart,
-		NULL);
+                "user-can-restart", &show_restart,
+                NULL);
 
   if (!kiosk_can_shutdown || !show_restart )
     gtk_widget_set_sensitive (reboot_button, FALSE);
-  
+
   /* halt */
   halt_button = gtk_button_new ();
   gtk_widget_show (halt_button);
   gtk_box_pack_start (GTK_BOX (hbox), halt_button, TRUE, TRUE, 0);
 
-  g_signal_connect (halt_button, "clicked", 
+  g_signal_connect (halt_button, "clicked",
                     G_CALLBACK (halt_button_clicked), shutdownType);
 
   vbox2 = gtk_vbox_new (FALSE, BORDER);
@@ -500,22 +500,22 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
 
-  g_object_get (shutdown_helper, 
-		"user-can-shutdown", &show_shutdown,
-		NULL);
+  g_object_get (shutdown_helper,
+                "user-can-shutdown", &show_shutdown,
+                NULL);
 
   if (!kiosk_can_shutdown || !show_shutdown)
     gtk_widget_set_sensitive (halt_button, FALSE);
 
   if (show_suspend)
     g_object_get (shutdown_helper,
-		  "user-can-suspend", &show_suspend,
-		  NULL);
+                  "user-can-suspend", &show_suspend,
+                  NULL);
 
   if (show_hibernate)
     g_object_get (shutdown_helper,
-		  "user-can-hibernate", &show_hibernate,
-		  NULL);
+                  "user-can-hibernate", &show_hibernate,
+                  NULL);
 
 
   if (kiosk_can_shutdown && (show_suspend || show_hibernate))
@@ -643,15 +643,15 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   result = gtk_dialog_run (GTK_DIALOG(dialog));
 
   if (result == GTK_RESPONSE_OK) {
-    *saveSession = autosave ? autosave : 
+    *saveSession = autosave ? autosave :
             gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkbox));
   }
 
   gtk_widget_hide (dialog);
 
   g_object_get (shutdown_helper,
-		"require-password", &require_password,
-		NULL);
+                "require-password", &require_password,
+                NULL);
 
   /* ask password */
   if (result == GTK_RESPONSE_OK && *shutdownType != XFSM_SHUTDOWN_LOGOUT
@@ -685,7 +685,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
       gtk_widget_grab_focus (entry);
 
       /* Grab Keyboard and Mouse pointer */
-      if (!accessibility) 
+      if (!accessibility)
         xfsm_window_grab_input (GTK_WINDOW (dialog));
 
       result = gtk_dialog_run (GTK_DIALOG (dialog));
@@ -726,7 +726,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
               gtk_widget_show_now (dialog);
 
               /* Grab Keyboard and Mouse pointer */
-              if (!accessibility) 
+              if (!accessibility)
                 xfsm_window_grab_input (GTK_WINDOW (dialog));
 
               gtk_dialog_run (GTK_DIALOG (dialog));

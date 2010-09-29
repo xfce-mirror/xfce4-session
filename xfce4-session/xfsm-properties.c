@@ -8,12 +8,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- *                                                                              
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *                                                                              
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -121,17 +121,17 @@ strv_to_property (const gchar *name,
 {
   SmProp *prop;
   gint    argc;
-  
+
   prop       = (SmProp *) malloc (sizeof (*prop));
   prop->name = strdup (name);
   prop->type = strdup (SmLISTofARRAY8);
-  
+
   for (argc = 0; argv[argc] != NULL; ++argc)
     ;
-  
+
   prop->num_vals = argc;
   prop->vals     = (SmPropValue *) malloc (argc * sizeof (SmPropValue));
-  
+
   while (argc-- > 0)
     {
       prop->vals[argc].length = strlen (argv[argc]) + 1;
@@ -147,7 +147,7 @@ str_to_property (const gchar *name,
                  const gchar *value)
 {
   SmProp *prop;
-  
+
   prop                 = (SmProp *) malloc (sizeof (*prop));
   prop->name           = strdup (name);
   prop->type           = strdup (SmARRAY8);
@@ -155,7 +155,7 @@ str_to_property (const gchar *name,
   prop->vals           = (SmPropValue *) malloc (sizeof (SmPropValue));
   prop->vals[0].length = strlen (value) + 1;
   prop->vals[0].value  = strdup (value);
-  
+
   return prop;
 }
 
@@ -166,10 +166,10 @@ int_to_property (const gchar *name,
 {
   SmProp *prop;
   gint8  *p;
-  
+
   p    = (gint8 *) malloc (1);
   p[0] = (gint8) value;
-  
+
   prop                 = (SmProp *) malloc (sizeof (*prop));
   prop->name           = strdup (name);
   prop->type           = strdup (SmCARD8);
@@ -177,7 +177,7 @@ int_to_property (const gchar *name,
   prop->vals           = (SmPropValue *) malloc (sizeof (SmPropValue));
   prop->vals[0].length = 1;
   prop->vals[0].value  = p;
-  
+
   return prop;
 }
 
@@ -187,7 +187,7 @@ xfsm_properties_new (const gchar *client_id,
                      const gchar *hostname)
 {
   XfsmProperties *properties;
-  
+
   properties = g_slice_new0 (XfsmProperties);
   properties->client_id = g_strdup (client_id);
   properties->hostname  = g_strdup (hostname);
@@ -197,7 +197,7 @@ xfsm_properties_new (const gchar *client_id,
                                                NULL,
                                                (GDestroyNotify) g_free,
                                                (GDestroyNotify) xfsm_g_value_free);
-  
+
   return properties;
 }
 
@@ -231,16 +231,16 @@ xfsm_properties_extract (XfsmProperties *properties,
                          SmProp       ***props)
 {
   SmProp **pp;
-  
+
   g_return_if_fail (num_props != NULL);
   g_return_if_fail (props != NULL);
-  
+
   *props = pp = (SmProp **) malloc (sizeof (SmProp *) * g_tree_nnodes (properties->sm_properties));
 
   g_tree_foreach (properties->sm_properties,
                   xfsm_properties_extract_foreach,
                   &pp);
-  
+
   *num_props = pp - *props;
 }
 
@@ -278,7 +278,7 @@ xfsm_properties_load (XfceRc      *rc,
     }
 
   xfsm_verbose ("Loading properties for client %s\n", client_id);
-  
+
   properties = xfsm_properties_new (client_id, hostname);
 
   for (i = 0; strv_properties[i].name; ++i)
@@ -317,7 +317,7 @@ xfsm_properties_load (XfceRc      *rc,
     }
 
   return properties;
-  
+
 #undef ENTRY
 }
 
@@ -332,7 +332,7 @@ xfsm_properties_store (XfsmProperties *properties,
   GValue *value;
   gint    i;
   gchar   buffer[256];
-  
+
   xfce_rc_write_entry (rc, ENTRY ("ClientId"), properties->client_id);
   xfce_rc_write_entry (rc, ENTRY ("Hostname"), properties->hostname);
 
@@ -401,7 +401,7 @@ gboolean
 xfsm_properties_check (const XfsmProperties *properties)
 {
   g_return_val_if_fail (properties != NULL, FALSE);
-  
+
   return properties->client_id != NULL
     && properties->hostname != NULL
     && g_tree_lookup (properties->sm_properties, SmProgram) != NULL

@@ -8,12 +8,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- *                                                                              
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *                                                                              
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -60,18 +60,18 @@ typedef struct
 
 
 /* prototypes */
-static void	 ice_error_handler     (IceConn);
-static gboolean	 ice_process_messages  (GIOChannel  *channel,
-                                        GIOCondition condition,
-                                        gpointer     user_data);
-static gboolean	 ice_connection_accept (GIOChannel  *channel,
-                                        GIOCondition condition,
-                                        gpointer     watch_data);
-static FILE 	*ice_tmpfile           (char **name);
-static void	 ice_auth_add          (FILE *,
-                                        FILE *,
-                                        char *,
-                                        IceListenObj);
+static void ice_error_handler         (IceConn);
+static gboolean ice_process_messages  (GIOChannel  *channel,
+                                       GIOCondition condition,
+                                       gpointer     user_data);
+static gboolean ice_connection_accept (GIOChannel  *channel,
+                                       GIOCondition condition,
+                                       gpointer     watch_data);
+static FILE *ice_tmpfile              (char **name);
+static void ice_auth_add              (FILE *,
+                                       FILE *,
+                                       char *,
+                                       IceListenObj);
 
 static char *auth_cleanup_file;
 
@@ -206,7 +206,7 @@ ice_connection_accept (GIOChannel  *channel,
           IceCloseConnection (ice_conn);
         }
     }
-  
+
   return TRUE;
 }
 

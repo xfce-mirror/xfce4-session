@@ -7,12 +7,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- *                                                                              
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *                                                                              
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -45,7 +45,7 @@
 #define BORDER 6
 
 
-static void xfsm_chooser_finalize (GObject *object);
+static void xfsm_chooser_finalize      (GObject           *object);
 static void xfsm_chooser_row_activated (GtkTreeView       *treeview,
                                         GtkTreePath       *path,
                                         GtkTreeViewColumn *column,
@@ -150,7 +150,7 @@ xfsm_chooser_init (XfsmChooser *chooser)
   GtkWidget *dbox;
 
   dbox = GTK_DIALOG (chooser)->vbox;
-  
+
   gtk_dialog_set_has_separator (GTK_DIALOG (chooser), FALSE);
   g_signal_connect_after (G_OBJECT (chooser), "realize",
                           G_CALLBACK (xfsm_chooser_realized), chooser);
@@ -162,7 +162,7 @@ xfsm_chooser_init (XfsmChooser *chooser)
 
   /* scrolled window */
   swin = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swin), 
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swin),
                                   GTK_POLICY_NEVER,
                                   GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (swin),
