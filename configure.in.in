@@ -281,11 +281,33 @@ dnl ***************************
 echo
 echo "Build Configuration:"
 echo
+echo " * Debugging support:         $enable_debug"
 if test x"$enable_gen_doc" = x"yes"; then
-echo "* Documentation: yes (generate)"
+echo " * Documentation:             yes (generate)"
 elif test -d "${srcdir}/doc/manual/html"; then
-echo "* Documentation: yes (in tarball)"
+echo " * Documentation:             yes (in tarball)"
 else
-echo "* Documentation: no"
+echo " * Documentation:             no"
 fi
+if test x"$enable_upower" = x"yes"; then
+echo " * UPower support:            yes"
+else
+echo " * UPower support:            no"
+fi
+if test x"$enable_consolekit" = x"yes"; then
+echo " * Consolekit support:        yes"
+else
+echo " * Consolekit support:        no"
+fi
+if test x"$enable_polkit" = x"yes"; then
+echo " * Policykit support:         yes"
+else
+echo " * Policykit support:         no"
+fi
+if test x"$enable_legacy_sm" = x="yes"; then
+echo " * Legacy session management: yes"
+else
+echo " * Legacy session management: no"
+fi
+
 echo
