@@ -56,15 +56,6 @@ struct _XfsmFadeout
 
 
 
-#if !GTK_CHECK_VERSION(2,8,0)
-static char stipple_data[] = {
-  ' ', '.',
-  '.', ' ',
-};
-#endif
-
-
-
 XfsmFadeout*
 xfsm_fadeout_new (GdkDisplay *display)
 {
@@ -156,7 +147,6 @@ static void
 xfsm_fadeout_drawable_mono (XfsmFadeout *fadeout,
                             GdkDrawable *drawable)
 {
-#if GTK_CHECK_VERSION(2,8,0)
   cairo_t *cr;
 
   /* using Xrender gives better results */
@@ -164,32 +154,5 @@ xfsm_fadeout_drawable_mono (XfsmFadeout *fadeout,
   gdk_cairo_set_source_color (cr, &fadeout->color);
   cairo_paint_with_alpha (cr, 0.5);
   cairo_destroy (cr);
-#else
-  GdkGCValues  values;
-  GdkBitmap   *bm;
-  GdkGC       *gc;
-  gint         width;
-  gint         height;
-
-  bm = gdk_bitmap_create_from_data (drawable, stipple_data, 2, 2);
-
-  values.function = GDK_COPY;
-  values.fill = GDK_STIPPLED;
-  values.stipple = GDK_PIXMAP (bm);
-  values.subwindow_mode = TRUE;
-
-  gc = gdk_gc_new_with_values (drawable, &values,
-                               GDK_GC_FUNCTION | GDK_GC_FILL |
-                               GDK_GC_STIPPLE | GDK_GC_SUBWINDOW);
-
-  gdk_gc_set_rgb_fg_color (gc, &fadeout->color);
-
-  gdk_drawable_get_size (drawable, &width, &height);
-  gdk_draw_rectangle (drawable, gc, TRUE,
-                      0, 0, width, height);
-
-  g_object_unref (G_OBJECT (gc));
-  g_object_unref (G_OBJECT (bm));
-#endif
 }
 

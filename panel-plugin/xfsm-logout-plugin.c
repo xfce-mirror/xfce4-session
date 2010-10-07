@@ -249,11 +249,7 @@ xfsm_logout_plugin_show_confirmation_dialog(XfsmLogoutPlugin *logout_plugin,
 
         gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
 
-#if GTK_CHECK_VERSION(2, 14, 0)
         topvbox = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
-#else
-        topvbox = GTK_DIALOG(dialog)->vbox;
-#endif
 
         hbox = gtk_hbox_new(FALSE, BORDER);
         gtk_container_set_border_width(GTK_CONTAINER(hbox), BORDER/2);
