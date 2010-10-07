@@ -155,11 +155,6 @@ xfsm_chooser_init (XfsmChooser *chooser)
   g_signal_connect_after (G_OBJECT (chooser), "realize",
                           G_CALLBACK (xfsm_chooser_realized), chooser);
 
-  /* allocate tooltips */
-  chooser->tooltips = gtk_tooltips_new ();
-  g_object_ref (G_OBJECT (chooser->tooltips));
-  gtk_object_sink (GTK_OBJECT (chooser->tooltips));
-
   /* scrolled window */
   swin = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swin),
@@ -178,11 +173,11 @@ xfsm_chooser_init (XfsmChooser *chooser)
                               G_TYPE_INT);
   chooser->tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL(model));
   g_object_unref (G_OBJECT (model));
-  gtk_tooltips_set_tip (chooser->tooltips, chooser->tree,
-                        _("Choose the session you want to restore. "
-                          "You can simply double-click the session "
-                          "name to restore it."),
-                        NULL);
+  gtk_widget_set_tooltip_text (chooser->tree,
+                               _("Choose the session you want to restore. "
+                                 "You can simply double-click the session "
+                                 "name to restore it."));
+
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (chooser->tree), FALSE);
   column = gtk_tree_view_column_new ();
   renderer = gtk_cell_renderer_pixbuf_new ();
@@ -206,19 +201,16 @@ xfsm_chooser_init (XfsmChooser *chooser)
 
   /* "Logout" button */
   button = xfce_gtk_button_new_mixed (GTK_STOCK_QUIT, _("Log out"));
-  gtk_tooltips_set_tip (chooser->tooltips, button,
-                        _("Cancel the login attempt and return to "
-                          "the login screen."),
-                        NULL);
+  gtk_widget_set_tooltip_text (button,
+                               _("Cancel the login attempt and return to "
+                                 "the login screen."));
   gtk_dialog_add_action_widget (GTK_DIALOG (chooser), button,
                                 GTK_RESPONSE_CANCEL);
   gtk_widget_show (button);
 
   /* "New" button */
   button = xfce_gtk_button_new_mixed (GTK_STOCK_NEW, _("New session"));
-  gtk_tooltips_set_tip (chooser->tooltips, button,
-                        _("Create a new session."),
-                        NULL);
+  gtk_widget_set_tooltip_text (button, _("Create a new session."));
   gtk_dialog_add_action_widget (GTK_DIALOG (chooser), button,
                                 XFSM_RESPONSE_NEW);
   gtk_widget_show (button);
@@ -231,7 +223,6 @@ xfsm_chooser_finalize (GObject *object)
   XfsmChooser *chooser;
 
   chooser = XFSM_CHOOSER (object);
-  g_object_unref (chooser->tooltips);
 
   G_OBJECT_CLASS (xfsm_chooser_parent_class)->finalize (object);
 }

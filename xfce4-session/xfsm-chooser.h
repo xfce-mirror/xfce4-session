@@ -48,8 +48,6 @@ struct _XfsmChooser
   GtkDialog dialog;
 
   GtkWidget *tree;
-
-  GtkTooltips *tooltips;
 };
 
 GType xfsm_chooser_get_type (void) G_GNUC_CONST;
