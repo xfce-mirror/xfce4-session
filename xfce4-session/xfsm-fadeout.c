@@ -37,11 +37,6 @@ typedef struct _FoScreen FoScreen;
 
 
 
-static void xfsm_fadeout_drawable_mono (XfsmFadeout *fadeout,
-                                        GdkDrawable *drawable);
-
-
-
 struct _FoScreen
 {
   GdkWindow *window;
@@ -60,12 +55,11 @@ XfsmFadeout*
 xfsm_fadeout_new (GdkDisplay *display)
 {
   GdkWindowAttr  attr;
-  GdkGCValues    values;
   XfsmFadeout   *fadeout;
   GdkWindow     *root;
   GdkCursor     *cursor;
   FoScreen      *screen;
-  GdkGC         *gc;
+  cairo_t       *cr;
   GList         *lp;
   gint           width;
   gint           height;
@@ -86,21 +80,23 @@ xfsm_fadeout_new (GdkDisplay *display)
 
   for (n = 0; n < gdk_display_get_n_screens (display); ++n)
     {
+      GdkPixbuf *root_pixbuf;
+
       screen = g_new (FoScreen, 1);
 
       root = gdk_screen_get_root_window (gdk_display_get_screen (display, n));
       gdk_drawable_get_size (GDK_DRAWABLE (root), &width, &height);
 
-      values.function = GDK_COPY;
-      values.graphics_exposures = FALSE;
-      values.subwindow_mode = TRUE;
-      gc = gdk_gc_new_with_values (root, &values, GDK_GC_FUNCTION | GDK_GC_EXPOSURES | GDK_GC_SUBWINDOW);
-
       screen->backbuf = gdk_pixmap_new (GDK_DRAWABLE (root), width, height, -1);
-      gdk_draw_drawable (GDK_DRAWABLE (screen->backbuf),
-                         gc, GDK_DRAWABLE (root),
-                         0, 0, 0, 0, width, height);
-      xfsm_fadeout_drawable_mono (fadeout, GDK_DRAWABLE (screen->backbuf));
+
+      /* Copy the root window */
+      root_pixbuf = gdk_pixbuf_get_from_drawable (NULL, GDK_DRAWABLE (root), NULL,
+                                                  0, 0, 0, 0, width, height);
+      cr = gdk_cairo_create (GDK_DRAWABLE (screen->backbuf));
+      gdk_cairo_set_source_pixbuf (cr, root_pixbuf, 0, 0);
+      cairo_paint (cr);
+      gdk_cairo_set_source_color (cr, &fadeout->color);
+      cairo_paint_with_alpha (cr, 0.5);
 
       attr.width = width;
       attr.height = height;
@@ -109,7 +105,8 @@ xfsm_fadeout_new (GdkDisplay *display)
                                        | GDK_WA_NOREDIR | GDK_WA_CURSOR);
       gdk_window_set_back_pixmap (screen->window, screen->backbuf, FALSE);
 
-      g_object_unref (G_OBJECT (gc));
+      g_object_unref (root_pixbuf);
+      cairo_destroy (cr);
 
       fadeout->screens = g_list_append (fadeout->screens, screen);
     }
@@ -141,18 +138,3 @@ xfsm_fadeout_destroy (XfsmFadeout *fadeout)
   g_list_free (fadeout->screens);
   g_free (fadeout);
 }
-
-
-static void
-xfsm_fadeout_drawable_mono (XfsmFadeout *fadeout,
-                            GdkDrawable *drawable)
-{
-  cairo_t *cr;
-
-  /* using Xrender gives better results */
-  cr = gdk_cairo_create (drawable);
-  gdk_cairo_set_source_color (cr, &fadeout->color);
-  cairo_paint_with_alpha (cr, 0.5);
-  cairo_destroy (cr);
-}
-
