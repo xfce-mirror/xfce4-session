@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-28 10:33+0200\n"
-"PO-Revision-Date: 2009-12-16 17:11+0100\n"
+"POT-Creation-Date: 2010-10-16 10:08+0000\n"
+"PO-Revision-Date: 2010-10-17 17:15+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -39,40 +39,40 @@ msgstr "Fel i temafil"
 msgid "Please check that the file is a valid splash theme archive."
 msgstr "Kontrollera att filen är ett giltigt arkiv för startbildsteman."
 
-#: ../engines/balou/config.c:396
+#: ../engines/balou/config.c:402
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "Kunde inte ta bort startbildstemat \"%s\" från katalogen %s."
 
-#: ../engines/balou/config.c:481
+#: ../engines/balou/config.c:491
 msgid "Choose theme filename..."
 msgstr "Välj temafilnamn..."
 
-#: ../engines/balou/config.c:614
+#: ../engines/balou/config.c:624
 msgid "_Install new theme"
 msgstr "_Installera nytt tema"
 
-#: ../engines/balou/config.c:623
+#: ../engines/balou/config.c:633
 msgid "_Remove theme"
 msgstr "_Ta bort tema"
 
-#: ../engines/balou/config.c:640
+#: ../engines/balou/config.c:650
 msgid "_Export theme"
 msgstr "_Exportera tema"
 
-#: ../engines/balou/config.c:855
+#: ../engines/balou/config.c:866
 msgid "Balou theme"
 msgstr "Temat Balou"
 
-#: ../engines/balou/config.c:940
+#: ../engines/balou/config.c:951
 msgid "Configure Balou..."
 msgstr "Konfigurera Balou..."
 
-#: ../engines/balou/config.c:983
+#: ../engines/balou/config.c:994
 msgid "Balou"
 msgstr "Balou"
 
-#: ../engines/balou/config.c:984
+#: ../engines/balou/config.c:995
 msgid "Balou Splash Engine"
 msgstr "Startbildsmotorn Balou"
 
@@ -84,43 +84,43 @@ msgstr "Mice"
 msgid "Mice Splash Engine"
 msgstr "Startbildsmotorn Mice"
 
-#: ../engines/simple/simple.c:345
+#: ../engines/simple/simple.c:346
 msgid "Configure Simple..."
 msgstr "Konfigurera Simple..."
 
-#: ../engines/simple/simple.c:356
+#: ../engines/simple/simple.c:357
 msgid "Font"
 msgstr "Typsnitt"
 
-#: ../engines/simple/simple.c:366
+#: ../engines/simple/simple.c:367
 msgid "Colors"
 msgstr "Färger"
 
-#: ../engines/simple/simple.c:374
+#: ../engines/simple/simple.c:375
 msgid "Background color:"
 msgstr "Bakgrundsfärg:"
 
-#: ../engines/simple/simple.c:387
+#: ../engines/simple/simple.c:388
 msgid "Text color:"
 msgstr "Textfärg:"
 
-#: ../engines/simple/simple.c:400
+#: ../engines/simple/simple.c:401
 msgid "Image"
 msgstr "Bild"
 
-#: ../engines/simple/simple.c:408
+#: ../engines/simple/simple.c:409
 msgid "Use custom image"
 msgstr "Använd anpassad bild"
 
-#: ../engines/simple/simple.c:412
+#: ../engines/simple/simple.c:413
 msgid "Choose image..."
 msgstr "Välj bild..."
 
-#: ../engines/simple/simple.c:418
+#: ../engines/simple/simple.c:419
 msgid "Images"
 msgstr "Bilder"
 
-#: ../engines/simple/simple.c:423
+#: ../engines/simple/simple.c:425
 msgid "All files"
 msgstr "Alla filer"
 
@@ -216,36 +216,38 @@ msgstr "Misslyckades med att försätta i vänteläge"
 msgid "Failed to hibernate"
 msgstr "Misslyckades med att försätta i viloläge"
 
-#: ../panel-plugin/xfsm-logout-plugin.c:216
+#: ../panel-plugin/xfsm-logout-plugin.c:150
+msgid "Xfclock4 could not be launched"
+msgstr "Xfclock4 kunde inte startas"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:222
 msgid "Close Session"
 msgstr "Stäng session"
 
-#: ../panel-plugin/xfsm-logout-plugin.c:304
-msgid "Session Error"
-msgstr "Sessionsfel"
-
-#: ../settings/main.c:43
+#: ../settings/main.c:42
 msgid "Settings manager socket"
 msgstr "Uttag för inställningshanterare"
 
-#: ../settings/main.c:43
+#: ../settings/main.c:42
 msgid "SOCKET ID"
 msgstr "UTTAGS-ID"
 
-#: ../settings/main.c:44
+#: ../settings/main.c:43
 msgid "Version information"
 msgstr "Versionsinformation"
 
-#: ../settings/main.c:64
+#: ../settings/main.c:73
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Ange \"%s --help\" för användningsinformation."
 
-#: ../settings/main.c:76
+#: ../settings/main.c:85
+#: ../xfce4-session/main.c:226
 msgid "The Xfce development team. All rights reserved."
 msgstr "The Xfce development team. Alla rättigheter är reserverade."
 
-#: ../settings/main.c:77
+#: ../settings/main.c:86
+#: ../xfce4-session/main.c:232
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr ""
@@ -253,241 +255,287 @@ msgstr ""
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>."
 
-#: ../settings/main.c:84
-msgid "Session Settings"
-msgstr "Sessionsinställningar"
-
-#: ../settings/main.c:86
-#: ../xfce4-session/main.c:281
+#: ../settings/main.c:95
+#: ../xfce4-session/main.c:238
+#: ../xfce4-tips/main.c:270
 msgid "Unable to contact settings server"
 msgstr "Kunde inte kontakta inställningsservern"
 
-#: ../settings/main.c:100
-msgid "Internal Error"
-msgstr "Internt fel"
-
-#: ../settings/main.c:101
+#: ../settings/main.c:114
 msgid "Unable to create user interface from embedded definition data"
 msgstr "Kunde inte skapa användargränssnitt från inbäddad definitionsdata"
 
-#: ../settings/main.c:102
-msgid "This is likely a problem with your Xfce installation"
-msgstr "Detta innebär sannolikt att det är ett problem med din Xfce-installation"
-
-#: ../settings/main.c:115
+#: ../settings/main.c:127
 msgid "_Application Autostart"
 msgstr "Autostart av pr_ogram"
 
-#: ../settings/session-editor.c:61
+#: ../settings/session-editor.c:60
 msgid "If running"
 msgstr "Om körande"
 
-#: ../settings/session-editor.c:62
+#: ../settings/session-editor.c:61
 msgid "Always"
 msgstr "Alltid"
 
-#: ../settings/session-editor.c:63
+#: ../settings/session-editor.c:62
 msgid "Immediately"
 msgstr "Omedelbart"
 
-#: ../settings/session-editor.c:64
+#: ../settings/session-editor.c:63
 msgid "Never"
 msgstr "Aldrig"
 
-#: ../settings/session-editor.c:129
+#: ../settings/session-editor.c:128
 msgid "Session Save Error"
 msgstr "Fel vid sparande av session"
 
-#: ../settings/session-editor.c:130
+#: ../settings/session-editor.c:129
 msgid "Unable to save the session"
 msgstr "Kunde inte spara sessionen"
 
-#: ../settings/session-editor.c:185
+#: ../settings/session-editor.c:184
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Är du säker på att du vill terminera \"%s\"?"
 
 #: ../settings/session-editor.c:187
-#, c-format
-msgid "Terminate \"%s\""
-msgstr "Terminera \"%s\""
-
-#: ../settings/session-editor.c:189
-#: ../settings/session-editor.c:217
+#: ../settings/session-editor.c:215
 msgid "Terminate Program"
 msgstr "Terminera program"
 
-#: ../settings/session-editor.c:191
+#: ../settings/session-editor.c:189
 msgid "The application will lose any unsaved state and will not be restarted in your next session."
 msgstr "Programmet kommer att förlora allt osparat data och kommer inte kunna startas om i din nästa session."
 
-#: ../settings/session-editor.c:218
+#: ../settings/session-editor.c:191
+#: ../settings/xfce4-session-settings.glade.h:35
+msgid "_Quit Program"
+msgstr "A_vsluta program"
+
+#: ../settings/session-editor.c:216
 msgid "Unable to terminate program."
 msgstr "Kunde inte terminera program."
 
-#: ../settings/session-editor.c:397
+#: ../settings/session-editor.c:394
 msgid "(Unknown program)"
 msgstr "(Okänt program)"
 
-#: ../settings/session-editor.c:615
+#: ../settings/session-editor.c:614
 msgid "Priority"
 msgstr "Prioritet"
 
-#: ../settings/session-editor.c:623
+#: ../settings/session-editor.c:622
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:629
+#: ../settings/session-editor.c:628
 msgid "Program"
 msgstr "Program"
 
-#: ../settings/session-editor.c:654
+#: ../settings/session-editor.c:653
 msgid "Restart Style"
 msgstr "Omstartstyp"
 
-#: ../settings/splash-settings.c:288
-#: ../settings/splash-settings.c:291
-#: ../settings/splash-settings.c:294
-#: ../settings/splash-settings.c:297
-#: ../settings/splash-settings.c:354
+#: ../settings/splash-settings.c:286
+#: ../settings/splash-settings.c:289
+#: ../settings/splash-settings.c:292
+#: ../settings/splash-settings.c:295
+#: ../settings/splash-settings.c:352
 msgid "None"
 msgstr "Ingen"
 
-#: ../settings/xfae-dialog.c:99
+#: ../settings/xfae-dialog.c:78
 msgid "Add application"
 msgstr "Lägg till program"
 
-#: ../settings/xfae-dialog.c:113
+#: ../settings/xfae-dialog.c:92
 msgid "Name:"
 msgstr "Namn:"
 
-#: ../settings/xfae-dialog.c:130
+#: ../settings/xfae-dialog.c:109
 msgid "Description:"
 msgstr "Beskrivning:"
 
-#: ../settings/xfae-dialog.c:145
+#: ../settings/xfae-dialog.c:124
 msgid "Command:"
 msgstr "Kommando:"
 
-#: ../settings/xfae-dialog.c:205
+#: ../settings/xfae-dialog.c:184
 msgid "Select a command"
 msgstr "Välj ett kommando"
 
-#: ../settings/xfae-model.c:559
+#: ../settings/xfae-dialog.c:233
+msgid "Edit application"
+msgstr "Redigera program"
+
+#: ../settings/xfae-model.c:562
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "Kunde inte avlänka %s: %s"
 
-#: ../settings/xfae-model.c:647
+#: ../settings/xfae-model.c:651
 #, c-format
 msgid "Failed to create file %s"
 msgstr "Kunde inte skapa filen %s"
 
-#: ../settings/xfae-model.c:669
+#: ../settings/xfae-model.c:673
 #, c-format
 msgid "Failed to write file %s"
 msgstr "Kunde inte skriva till filen %s"
 
-#: ../settings/xfae-model.c:768
+#: ../settings/xfae-model.c:732
+#, c-format
+msgid "Failed to open %s for reading"
+msgstr "Misslyckades med att öppna %s för läsning"
+
+#: ../settings/xfae-model.c:841
+#: ../settings/xfae-model.c:898
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "Kunde inte öppna %s för skrivning"
 
-#: ../settings/xfae-window.c:100
+#: ../settings/xfae-window.c:101
 msgid "Below is the list of applications that will be started automatically when you login to your Xfce desktop, in addition to the applications that were saved when you logged out last time:"
 msgstr "Nedan finns en lista över program som kommer att startas automatiskt när du loggar in i Xfce-skrivbordet, i tillägg till de program som sparades förra gången som du loggade ut:"
 
-#: ../xfce4-session/main.c:149
+#: ../settings/xfae-window.c:289
+#, c-format
+msgid "Failed adding \"%s\""
+msgstr "Misslyckades med att lägga till \"%s\""
+
+#: ../settings/xfae-window.c:320
+#: ../settings/xfae-window.c:334
+msgid "Failed to remove item"
+msgstr "Misslyckades med att ta bort objektet"
+
+#: ../settings/xfae-window.c:326
+msgid "This will permanently remove the application from the list of automatically started applications"
+msgstr "Detta kommer permanent att ta bort programmet från listan över automatiskt startade program"
+
+#: ../settings/xfae-window.c:328
+#, c-format
+msgid "Are you sure you want to remove \"%s\""
+msgstr "Är du säker på att du vill ta bort \"%s\""
+
+#: ../settings/xfae-window.c:362
+msgid "Failed to edit item"
+msgstr "Kunde inte redigera objektet"
+
+#: ../settings/xfae-window.c:382
+#, c-format
+msgid "Failed to edit item \"%s\""
+msgstr "Misslyckades med att redigera objektet \"%s\""
+
+#: ../settings/xfae-window.c:410
+msgid "Failed to toggle item"
+msgstr "Misslyckades med att växla objektet"
+
+#: ../xfce4-session/main.c:76
+msgid "Disable binding to TCP ports"
+msgstr "Inaktivera bindning till TCP-portar"
+
+#: ../xfce4-session/main.c:77
+#: ../xfce4-session-logout/main.c:93
+msgid "Print version information and exit"
+msgstr "Skriv ut versionsinformation och avsluta"
+
+#: ../xfce4-session/main.c:140
 msgid "Loading desktop settings"
 msgstr "Läser in skrivbordsinställningar"
 
+#: ../xfce4-session/main.c:227
+msgid "Written by Benedikt Meurer <benny@xfce.org>."
+msgstr "Skriven av Benedikt Meurer <benny@xfce.org>."
+
+#: ../xfce4-session/main.c:228
+#, c-format
+msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
+msgstr "Byggd med Gtk+-%d.%d.%d, kör med Gtk+-%d.%d.%d"
+
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:210
+#: ../xfce4-session/main.c:258
 msgid "Verifying DNS settings"
 msgstr "Verifierar DNS-inställningar"
 
-#: ../xfce4-session/main.c:213
+#: ../xfce4-session/main.c:261
 msgid "Loading session data"
 msgstr "Läser in sessionsdata"
 
-#: ../xfce4-session/main.c:279
-msgid "Xfce Session Manager"
-msgstr "Xfce Sessionshanterare"
-
-#: ../xfce4-session/shutdown.c:364
+#: ../xfce4-session/shutdown.c:372
 #, c-format
 msgid "<span size='large'><b>Log out %s</b></span>"
 msgstr "<span size='large'><b>Logga ut %s</b></span>"
 
-#: ../xfce4-session/shutdown.c:405
+#: ../xfce4-session/shutdown.c:422
+#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
 msgid "Log Out"
 msgstr "Logga ut"
 
-#: ../xfce4-session/shutdown.c:430
+#: ../xfce4-session/shutdown.c:457
 msgid "Restart"
 msgstr "Starta om"
 
-#: ../xfce4-session/shutdown.c:458
+#: ../xfce4-session/shutdown.c:499
 msgid "Shut Down"
 msgstr "Stäng av"
 
-#: ../xfce4-session/shutdown.c:500
+#: ../xfce4-session/shutdown.c:561
 msgid "Suspend"
 msgstr "Vänteläge"
 
-#: ../xfce4-session/shutdown.c:528
+#: ../xfce4-session/shutdown.c:599
 msgid "Hibernate"
 msgstr "Viloläge"
 
-#: ../xfce4-session/shutdown.c:537
+#: ../xfce4-session/shutdown.c:608
 msgid "_Save session for future logins"
 msgstr "_Spara session för framtida inloggningar"
 
-#: ../xfce4-session/shutdown.c:592
+#: ../xfce4-session/shutdown.c:668
 msgid "Please enter your password:"
 msgstr "Ange ditt lösenord:"
 
-#: ../xfce4-session/shutdown.c:623
+#: ../xfce4-session/shutdown.c:700
 msgid "<b>An error occurred</b>"
 msgstr "<b>Ett fel inträffade</b>"
 
-#: ../xfce4-session/shutdown.c:637
+#: ../xfce4-session/shutdown.c:714
 msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
 msgstr "Antingen är lösenordet som du angav felaktigt eller så tillåter inte systemadministratören att din användare får stänga av datorn."
 
-#: ../xfce4-session/shutdown.c:759
-#: ../xfce4-session/xfsm-manager.c:1116
+#: ../xfce4-session/shutdown.c:836
+#: ../xfce4-session/xfsm-manager.c:1250
 msgid "Shutdown Failed"
 msgstr "Avstängning misslyckades"
 
-#: ../xfce4-session/shutdown.c:761
+#: ../xfce4-session/shutdown.c:838
 msgid "Unable to perform shutdown"
 msgstr "Kunde inte genomföra avstängning"
 
-#: ../xfce4-session/xfsm-chooser.c:120
+#: ../xfce4-session/xfsm-chooser.c:91
 #, c-format
 msgid "Last accessed: %s"
 msgstr "Senaste åtkomst: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:213
+#: ../xfce4-session/xfsm-chooser.c:177
 msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
 msgstr "Välj den session som du vill återställa. Du kan helt enkelt dubbelklicka på sessionsnamnet för att återställa den."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:239
+#: ../xfce4-session/xfsm-chooser.c:203
 msgid "Log out"
 msgstr "Logga ut"
 
-#: ../xfce4-session/xfsm-chooser.c:241
+#: ../xfce4-session/xfsm-chooser.c:205
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Avbryt inloggningsförsöket och återgå till inloggningsskärmen."
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:249
+#: ../xfce4-session/xfsm-chooser.c:212
 msgid "New session"
 msgstr "Ny session"
 
-#: ../xfce4-session/xfsm-chooser.c:251
+#: ../xfce4-session/xfsm-chooser.c:213
 msgid "Create a new session."
 msgstr "Skapa en ny session."
 
@@ -514,7 +562,7 @@ msgstr "Startar KDE-tjänsterna"
 msgid "(Unknown)"
 msgstr "(Okänd)"
 
-#: ../xfce4-session/xfsm-dns.c:145
+#: ../xfce4-session/xfsm-dns.c:147
 #, c-format
 msgid ""
 "Could not look up internet address for %s.\n"
@@ -528,141 +576,93 @@ msgstr ""
 "rätta problemet genom att lägga till %s i filen /etc/hosts\n"
 "på ditt system."
 
-#: ../xfce4-session/xfsm-dns.c:152
+#: ../xfce4-session/xfsm-dns.c:154
 msgid "Continue anyway"
 msgstr "Fortsätt ändå"
 
-#: ../xfce4-session/xfsm-dns.c:153
+#: ../xfce4-session/xfsm-dns.c:155
 msgid "Try again"
 msgstr "Försök igen"
 
-#: ../xfce4-session/xfsm-manager.c:598
+#: ../xfce4-session/xfsm-manager.c:733
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr "Kunde inte fastställa namn för felsäker session.  Möjliga orsaker: xfconfd körs inte (D-Bus-konfigurationsproblem); miljövariabeln $XDG_CONFIG_DIRS är felaktigt inställd (måste inkludera \"%s\") eller att xfce4-session är felaktigt installerad."
 
-#: ../xfce4-session/xfsm-manager.c:609
+#: ../xfce4-session/xfsm-manager.c:744
 #, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Den angivna felsäkra sessionen (\"%s\") är inte markerad som en felsäker session."
 
-#: ../xfce4-session/xfsm-manager.c:656
+#: ../xfce4-session/xfsm-manager.c:791
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Listan över program i den felsäkra sessionen är tom."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:703
+#: ../xfce4-session/xfsm-manager.c:838
 msgid "Session Manager Error"
 msgstr "Fel i sessionshanterare"
 
-#: ../xfce4-session/xfsm-manager.c:705
+#: ../xfce4-session/xfsm-manager.c:840
 msgid "Unable to load a failsafe session"
 msgstr "Kunde inte läsa in en felsäker session"
 
-#: ../xfce4-session/xfsm-manager.c:1119
+#: ../xfce4-session/xfsm-manager.c:1253
 msgid "Failed to suspend session"
 msgstr "Misslyckades med att försätta session i vänteläge"
 
-#: ../xfce4-session/xfsm-manager.c:1120
+#: ../xfce4-session/xfsm-manager.c:1254
 msgid "Failed to hibernate session"
 msgstr "Misslyckades med att försätta session i viloläge"
 
-#: ../xfce4-session/xfsm-manager.c:1408
+#: ../xfce4-session/xfsm-manager.c:1542
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Kan endast terminera klienter som befinner sig i ett overksamt tillstånd"
 
-#: ../xfce4-session/xfsm-manager.c:1939
+#: ../xfce4-session/xfsm-manager.c:2073
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Sessionshanteraren måste befinna sig i ett overksamt tillstånd när begäran sker"
 
-#: ../xfce4-session/xfsm-manager.c:1980
+#: ../xfce4-session/xfsm-manager.c:2114
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Sessionshanteraren måste vara i overksamt tillstånd när en avstängning begärs"
 
-#: ../xfce4-session/xfsm-manager.c:1987
+#: ../xfce4-session/xfsm-manager.c:2121
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Ogiltig avstängningstyp \"%u\""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:200
-msgid "Invalid shutdown type"
-msgstr "Ogiltig avstängningstyp"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:384
-#, c-format
-msgid "No HAL method for command %d"
-msgstr "Ingen HAL-metod för kommando %d"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:528
-#, c-format
-msgid "Program \"sudo\" was not found.  You will not be able to shutdown your system from within Xfce."
-msgstr "Programmet \"sudo\" hittades inte.  Du kommer inte att kunna stänga av ditt system inifrån Xfce."
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:540
-#, c-format
-msgid "Unable to create parent pipe: %s"
-msgstr "Kunde inte skapa huvudrör: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:551
-#, c-format
-msgid "Unable to create child pipe: %s"
-msgstr "Kunde inte skapa underrör: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:562
-#, c-format
-msgid "Unable to fork sudo helper: %s"
-msgstr "Kunde inte grena sudo-hjälpare: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:604
-#, c-format
-msgid "Unable to read response from sudo helper: %s"
-msgstr "Kunde inte läsa svar från sudo-hjälpare: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:605
-#: ../xfce4-session-logout/main.c:68
-#: ../xfce4-session-logout/main.c:75
-msgid "Unknown error"
-msgstr "Okänt fel"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:616
-#, c-format
-msgid "Unable to open parent pipe: %s"
-msgstr "Kunde inte öppna huvudrör: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:627
-#, c-format
-msgid "Unable to open child pipe: %s"
-msgstr "Kunde inte öppna underrrör: %s"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:645
-#, c-format
-msgid "Got unexpected reply from sudo shutdown helper"
-msgstr "Fick oväntat svar från avstängningshjälparen"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:803
-#, c-format
-msgid "Suspend and Hibernate are only supported through HAL, which is unavailable"
-msgstr "Vänteläge och viloläge stöds endast genom HAL, vilken är otillgänglig"
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:825
+#: ../xfce4-session/xfsm-shutdown-helper.c:1655
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
 msgstr "Fel vid sändning av kommando till avstängningshjälpare: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:842
+#: ../xfce4-session/xfsm-shutdown-helper.c:1669
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
 msgstr "Fel vid mottagning av svar från avstängningshjälpare: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:853
+#: ../xfce4-session/xfsm-shutdown-helper.c:1678
 #, c-format
 msgid "Shutdown command failed"
 msgstr "Avstängningskommandot misslyckades"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:1856
+msgid "Suspend failed, no backend supported"
+msgstr "Vänteläge misslyckades, inget stöd i bakänden"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:1883
+msgid "Hibernate failed, no backend supported"
+msgstr "Viloläge misslyckades, inget stöd i bakänden"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:1913
+msgid "Shutdown Command not found"
+msgstr "Avstängningskommandot hittades inte"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -757,7 +757,7 @@ msgstr "Startar X-terminalemulator"
 msgid "Starting %s"
 msgstr "Startar %s"
 
-#: ../xfce4-session/xfsm-startup.c:284
+#: ../xfce4-session/xfsm-startup.c:283
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -781,75 +781,106 @@ msgstr ""
 "autostartkatalog har migrerats till den nya platsen.\n"
 "Du kan ta bort den gamla autostartkatalog nu.\n"
 
-#: ../xfce4-session/xfsm-startup.c:424
+#: ../xfce4-session/xfsm-startup.c:441
 msgid "Performing Autostart..."
 msgstr "Genomför autostart..."
 
-#: ../xfce4-tips/main.c:47
-#: ../xfce4-tips/main.c:269
+#: ../xfce4-tips/main.c:48
+#: ../xfce4-tips/main.c:284
 msgid "Tips and Tricks"
 msgstr "Tips och trick"
 
-#: ../xfce4-tips/main.c:48
+#: ../xfce4-tips/main.c:49
 msgid "Fortunes"
 msgstr "Förutsägelser"
 
-#: ../xfce4-tips/main.c:74
+#: ../xfce4-tips/main.c:75
 #, c-format
 msgid "Could not load tips database (%s)."
 msgstr "Kunde inte läsa in tipsdatabas (%s)."
 
 #. converting it from the user's locale failed too, we give up
-#: ../xfce4-tips/main.c:183
+#: ../xfce4-tips/main.c:190
 #, c-format
 msgid "Invalid output of fortune."
 msgstr "Ogiltigt utdata från fortune."
 
-#: ../xfce4-tips/main.c:188
-#: ../xfce4-tips/main.c:196
+#: ../xfce4-tips/main.c:195
+#: ../xfce4-tips/main.c:203
 #, c-format
 msgid "Executing fortune failed (%s)"
 msgstr "Körning av fortune misslyckades (%s)"
 
-#: ../xfce4-tips/main.c:221
+#: ../xfce4-tips/main.c:228
 msgid "Error while loading tips."
 msgstr "Fel vid inläsning av tips."
 
-#: ../xfce4-tips/main.c:298
+#: ../xfce4-tips/main.c:314
 msgid "Display tips on _startup"
 msgstr "Visa tips vid upp_start"
 
-#: ../xfce4-tips/main.c:327
+#: ../xfce4-tips/main.c:338
 msgid "Next"
 msgstr "Nästa"
 
-#: ../xfce4-session-logout/main.c:65
+#: ../xfce4-session-logout/main.c:69
+msgid "Log out without displaying the logout dialog"
+msgstr "Logga ut utan att visa utloggningsdialogen"
+
+#: ../xfce4-session-logout/main.c:73
+msgid "Halt without displaying the logout dialog"
+msgstr "Stoppa utan att visa utloggningsdialogen"
+
+#: ../xfce4-session-logout/main.c:77
+msgid "Reboot without displaying the logout dialog"
+msgstr "Starta om utan att visa utloggningsdialogen"
+
+#: ../xfce4-session-logout/main.c:81
+msgid "Suspend without displaying the logout dialog"
+msgstr "Försätt i vänteläge utan att visa utloggningsdialogen"
+
+#: ../xfce4-session-logout/main.c:85
+msgid "Hibernate without displaying the logout dialog"
+msgstr "Försätt i viloläge utan att visa utloggningsdialogen"
+
+#: ../xfce4-session-logout/main.c:89
+msgid "Log out quickly; don't save the session"
+msgstr "Logga ut snabbt utan att spara sessionen"
+
+#: ../xfce4-session-logout/main.c:111
 msgid "Logout Error"
 msgstr "Utloggningsfel"
 
-#: ../xfce4-session-logout/main.c:163
+#: ../xfce4-session-logout/main.c:114
+#: ../xfce4-session-logout/main.c:121
+msgid "Unknown error"
+msgstr "Okänt fel"
+
+#: ../xfce4-session-logout/main.c:181
 msgid "Unable to contact D-Bus session bus."
 msgstr "Kunde inte kontakta D-Bus-sessionsbussen."
 
-#: ../xfce4-session-logout/main.c:175
+#: ../xfce4-session-logout/main.c:193
 msgid "Failed to create new D-Bus message"
 msgstr "Misslyckades med att skapa nytt D-Bus-meddelande"
 
-#: ../xfce4-session-logout/main.c:191
+#: ../xfce4-session-logout/main.c:209
 msgid "Failed to receive a reply from the session manager"
 msgstr "Misslyckades med att ta emot ett svar från sessionshanteraren"
 
-#: ../xfce4-session-logout/main.c:199
+#: ../xfce4-session-logout/main.c:217
 msgid "Received error while trying to log out"
 msgstr "Tog emot ett fel vid försök att logga ut"
 
-#: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:1
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:1
+#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:2
+msgid "Log out of the Xfce Desktop"
+msgstr "Logga ut från Xfce-skrivbordet"
+
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
 msgid "Session Menu"
 msgstr "Sessionsmeny"
 
-#: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:2
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:2
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
 msgid "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
 msgstr "Visar en meny med alternativ för att låsa skärmen, försätta datorn i viloläge/vänteläge eller logga ut"
 
@@ -991,10 +1022,6 @@ msgstr "A_llmänt"
 msgid "_Prompt on logout"
 msgstr "_Fråga vid utloggning"
 
-#: ../settings/xfce4-session-settings.glade.h:35
-msgid "_Quit Program"
-msgstr "A_vsluta program"
-
 #: ../settings/xfce4-session-settings.glade.h:36
 msgid "_Session"
 msgstr "_Session"
@@ -1015,6 +1042,47 @@ msgstr "Tips och trick"
 msgid "xfce4-tips"
 msgstr "xfce4-tips"
 
+#~ msgid "Session Error"
+#~ msgstr "Sessionsfel"
+#~ msgid "Session Settings"
+#~ msgstr "Sessionsinställningar"
+#~ msgid "Internal Error"
+#~ msgstr "Internt fel"
+#~ msgid "This is likely a problem with your Xfce installation"
+#~ msgstr ""
+#~ "Detta innebär sannolikt att det är ett problem med din Xfce-installation"
+#~ msgid "Terminate \"%s\""
+#~ msgstr "Terminera \"%s\""
+#~ msgid "Xfce Session Manager"
+#~ msgstr "Xfce Sessionshanterare"
+#~ msgid "Invalid shutdown type"
+#~ msgstr "Ogiltig avstängningstyp"
+#~ msgid "No HAL method for command %d"
+#~ msgstr "Ingen HAL-metod för kommando %d"
+#~ msgid ""
+#~ "Program \"sudo\" was not found.  You will not be able to shutdown your "
+#~ "system from within Xfce."
+#~ msgstr ""
+#~ "Programmet \"sudo\" hittades inte.  Du kommer inte att kunna stänga av "
+#~ "ditt system inifrån Xfce."
+#~ msgid "Unable to create parent pipe: %s"
+#~ msgstr "Kunde inte skapa huvudrör: %s"
+#~ msgid "Unable to create child pipe: %s"
+#~ msgstr "Kunde inte skapa underrör: %s"
+#~ msgid "Unable to fork sudo helper: %s"
+#~ msgstr "Kunde inte grena sudo-hjälpare: %s"
+#~ msgid "Unable to read response from sudo helper: %s"
+#~ msgstr "Kunde inte läsa svar från sudo-hjälpare: %s"
+#~ msgid "Unable to open parent pipe: %s"
+#~ msgstr "Kunde inte öppna huvudrör: %s"
+#~ msgid "Unable to open child pipe: %s"
+#~ msgstr "Kunde inte öppna underrrör: %s"
+#~ msgid "Got unexpected reply from sudo shutdown helper"
+#~ msgstr "Fick oväntat svar från avstängningshjälparen"
+#~ msgid ""
+#~ "Suspend and Hibernate are only supported through HAL, which is unavailable"
+#~ msgstr ""
+#~ "Vänteläge och viloläge stöds endast genom HAL, vilken är otillgänglig"
 #~ msgid "Unexpected error from HAL"
 #~ msgstr "Oväntat fel från HAL"
 #~ msgid "gtk-close"
