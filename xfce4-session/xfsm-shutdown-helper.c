@@ -331,7 +331,9 @@ init_dbus_gtypes (void)
 static gboolean
 xfsm_shutdown_helper_init_polkit_data (XfsmShutdownHelper *helper)
 {
+#ifdef ENABLE_CONSOLE_KIT
   const gchar *consolekit_cookie;
+#endif
   GValue hash_elem = { 0 };
   gboolean subject_created = FALSE;
 
@@ -344,6 +346,7 @@ xfsm_shutdown_helper_init_polkit_data (XfsmShutdownHelper *helper)
   if (!helper->polkit_proxy)
     return FALSE;
 
+#ifdef ENABLE_CONSOLE_KIT
   /**
    * This variable should be set by the session manager or by
    * the login manager (gdm?). under clean Xfce environment
@@ -401,6 +404,7 @@ xfsm_shutdown_helper_init_polkit_data (XfsmShutdownHelper *helper)
           g_object_unref (proxy);
         }
     }
+#endif
 
   /**
    * We failed to get valid session data, then we try
