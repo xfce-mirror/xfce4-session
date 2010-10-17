@@ -147,7 +147,7 @@ xfsm_logout_plugin_lock_screen(GtkAction *action,
     if (!g_spawn_command_line_async("xflock4", &error)) {
         xfce_dialog_show_error (NULL,
                                 error,
-                                _("Xfclock4 could not be launched"));
+                                _("Xflock4 could not be launched"));
     }
 }
 
