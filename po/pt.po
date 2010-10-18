@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.6.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-29 10:05+0000\n"
+"POT-Creation-Date: 2010-10-18 10:08+0000\n"
 "PO-Revision-Date: 2010-03-09 11:01-0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: \n"
@@ -217,7 +217,7 @@ msgid "Failed to hibernate"
 msgstr "Falha ao hibernar"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:150
-msgid "Xfclock4 could not be launched"
+msgid "Xflock4 could not be launched"
 msgstr "Xfclock4 não pôde ser iniciado"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:222
@@ -490,7 +490,7 @@ msgstr "<b>Ocorreu um erro</b>"
 msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
 msgstr "Pode ter indicado uma palavra-passe inválida ou o administrador do sistema não permite desligar este computador através da sua conta de utilizador."
 
-#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1228
+#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1119
 msgid "Shutdown Failed"
 msgstr "Falha ao Desligar"
 
@@ -503,25 +503,25 @@ msgstr "Incapaz de desligar"
 msgid "Last accessed: %s"
 msgstr "Último acesso: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:182
+#: ../xfce4-session/xfsm-chooser.c:177
 msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
 msgstr "Escolha a sessão que quer restaurar. Pode simplesmente fazer duplo-clique no nome da sessão."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:208
+#: ../xfce4-session/xfsm-chooser.c:203
 msgid "Log out"
 msgstr "Sair"
 
-#: ../xfce4-session/xfsm-chooser.c:210
+#: ../xfce4-session/xfsm-chooser.c:205
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Cancelar a tentativa de início de sessão e regressar ao ecrã inicial."
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:218
+#: ../xfce4-session/xfsm-chooser.c:212
 msgid "New session"
 msgstr "Nova sessão"
 
-#: ../xfce4-session/xfsm-chooser.c:220
+#: ../xfce4-session/xfsm-chooser.c:213
 msgid "Create a new session."
 msgstr "Criar nova sessão."
 
@@ -568,83 +568,83 @@ msgstr "Continuar na mesma"
 msgid "Try again"
 msgstr "Tentar novamente"
 
-#: ../xfce4-session/xfsm-manager.c:712
+#: ../xfce4-session/xfsm-manager.c:602
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr "Incapaz de determinar o nome de sessão 'failsafe'. Causas possíveis: xfconfd não está em execução (problema de configuração D-Bus); variável de ambiente $XDG_CONFIG_DIRS incorrecta (deve incluir \"%s\") ou xfce4-session mal instalado."
 
-#: ../xfce4-session/xfsm-manager.c:723
+#: ../xfce4-session/xfsm-manager.c:613
 #, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "A sessão 'failsafe' especificada (\"%s\") não está marcada como uma sessão 'failsafe'."
 
-#: ../xfce4-session/xfsm-manager.c:770
+#: ../xfce4-session/xfsm-manager.c:660
 msgid "The list of applications in the failsafe session is empty."
 msgstr "A lista de aplicações da sessão 'failsafe' está vazia."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:817
+#: ../xfce4-session/xfsm-manager.c:707
 msgid "Session Manager Error"
 msgstr "Erro do Gestor de Sessões"
 
-#: ../xfce4-session/xfsm-manager.c:819
+#: ../xfce4-session/xfsm-manager.c:709
 msgid "Unable to load a failsafe session"
 msgstr "Incapaz de carregar a sessão 'failsafe'"
 
-#: ../xfce4-session/xfsm-manager.c:1231
+#: ../xfce4-session/xfsm-manager.c:1122
 msgid "Failed to suspend session"
 msgstr "Falha ao suspender a sessão"
 
-#: ../xfce4-session/xfsm-manager.c:1232
+#: ../xfce4-session/xfsm-manager.c:1123
 msgid "Failed to hibernate session"
 msgstr "Falha ao hibernar a sessão"
 
-#: ../xfce4-session/xfsm-manager.c:1520
+#: ../xfce4-session/xfsm-manager.c:1411
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Apenas pode terminar os clientes inactivos"
 
-#: ../xfce4-session/xfsm-manager.c:2051
+#: ../xfce4-session/xfsm-manager.c:1942
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "O gestor de sessões tem de estar inactivo ao solicitar um ponto de verificação"
 
-#: ../xfce4-session/xfsm-manager.c:2092
+#: ../xfce4-session/xfsm-manager.c:1983
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "O gestor de sessões deve estar inactivo ao solicitar um desligamento"
 
-#: ../xfce4-session/xfsm-manager.c:2099
+#: ../xfce4-session/xfsm-manager.c:1990
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Tipo de encerramento inválido \"%u\""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1664
+#: ../xfce4-session/xfsm-shutdown-helper.c:1659
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
 msgstr "Erro ao enviar comando para o assistente de encerramento: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1678
+#: ../xfce4-session/xfsm-shutdown-helper.c:1673
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
 msgstr "Erro ao receber resposta do assistente de encerramento: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1687
+#: ../xfce4-session/xfsm-shutdown-helper.c:1682
 #, c-format
 msgid "Shutdown command failed"
 msgstr "O comando desligar falhou"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1867
+#: ../xfce4-session/xfsm-shutdown-helper.c:1860
 msgid "Suspend failed, no backend supported"
 msgstr "Falha ao suspender. Sem estrutura de suporte"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1894
+#: ../xfce4-session/xfsm-shutdown-helper.c:1887
 msgid "Hibernate failed, no backend supported"
 msgstr "Falha ao hibernar. Sem estrutura de suporte"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1924
+#: ../xfce4-session/xfsm-shutdown-helper.c:1917
 msgid "Shutdown Command not found"
 msgstr "O Comando Desligar não foi encontrado"
 
@@ -741,7 +741,7 @@ msgstr "Iniciando Emulador de Terminal do X"
 msgid "Starting %s"
 msgstr "Iniciando %s"
 
-#: ../xfce4-session/xfsm-startup.c:284
+#: ../xfce4-session/xfsm-startup.c:283
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -766,7 +766,7 @@ msgstr ""
 "localização.\n"
 "Deve apagar agora este directório.\n"
 
-#: ../xfce4-session/xfsm-startup.c:442
+#: ../xfce4-session/xfsm-startup.c:441
 msgid "Performing Autostart..."
 msgstr "Executando Arranque Automático..."
 
@@ -858,13 +858,11 @@ msgstr "Recebido erro ao tentar sair da sessão"
 msgid "Log out of the Xfce Desktop"
 msgstr "Sair da sessão Xfce"
 
-#: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:1
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:1
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
 msgid "Session Menu"
 msgstr "Menu de Sessão"
 
-#: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:2
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:2
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
 msgid "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
 msgstr "Mostra um menu com opções para bloquear o ecrã, suspender, desligar ou sair da sessão"
 
