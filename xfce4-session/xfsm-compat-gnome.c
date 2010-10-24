@@ -104,27 +104,15 @@ child_setup (gpointer user_data)
 static void
 gnome_keyring_daemon_startup (void)
 {
-  const char *old_keyring;
-
   GError *error = NULL;
   gchar  *sout;
   gchar **lines;
+  gsize   lineno;
   gint    status;
   long    pid;
   gchar  *pid_str;
   gchar  *end;
-  char *argv[2];
-
-  /* If there is already a working keyring, don't start a new daemon */
-  old_keyring = g_getenv ("GNOME_KEYRING_SOCKET");
-  if (old_keyring != NULL && access (old_keyring, R_OK | W_OK) == 0)
-    {
-#ifdef HAVE_GNOME_KEYRING
-      gnome_keyring_daemon_prepare_environment_sync ();
-#endif
-      return;
-    }
-
+  char *argv[3];
 
   /* Pipe to slave keyring lifetime to */
   if (pipe (keyring_lifetime_pipe))
@@ -135,8 +123,10 @@ gnome_keyring_daemon_startup (void)
 
   error = NULL;
   argv[0] = GNOME_KEYRING_DAEMON;
-  argv[1] = NULL;
-  g_spawn_sync (NULL, argv, NULL, G_SPAWN_LEAVE_DESCRIPTORS_OPEN,
+  argv[1] = "--start";
+  argv[2] = NULL;
+  g_spawn_sync (NULL, argv, NULL,
+                G_SPAWN_SEARCH_PATH | G_SPAWN_LEAVE_DESCRIPTORS_OPEN,
                 child_setup, NULL,
                 &sout, NULL, &status, &error);
 
@@ -154,20 +144,22 @@ gnome_keyring_daemon_startup (void)
     {
       if (WIFEXITED (status) && WEXITSTATUS (status) == 0 && sout != NULL)
         {
-          lines = g_strsplit (sout, "\n", 3);
+          lines = g_strsplit (sout, "\n", 0);
 
-          if (lines[0] != NULL && lines[1] != NULL
-              && g_str_has_prefix (lines[1], "GNOME_KEYRING_PID="))
-          {
-            pid_str = lines[1] + strlen ("GNOME_KEYRING_PID=");
-            pid = strtol (pid_str, &end, 10);
+          for (lineno = 0; lines[lineno] != NULL; lineno++)
+            {
+              xfce_putenv (lines[lineno]);
 
-            if (end != pid_str)
-              {
-                gnome_keyring_daemon_pid = pid;
-                xfce_putenv (lines[0]);
-              }
-          }
+              if (g_str_has_prefix (lines[lineno], "GNOME_KEYRING_PID="))
+                {
+                  pid_str = lines[lineno] + strlen ("GNOME_KEYRING_PID=");
+                  pid = strtol (pid_str, &end, 10);
+                  if (end != pid_str)
+                    {
+                      gnome_keyring_daemon_pid = pid;
+                    }
+                }
+            }
 
           g_strfreev (lines);
 
