@@ -5,12 +5,12 @@
 # Ambrose Li <acli@ada.dhs.org>, 2004.
 # Hydonsingore Cia <hydonsingore@educities.edu.tw>, 2005.
 # Cheng-Chia Tseng <pswo10680@gmail.com>, 2010.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-10 04:06+0000\n"
+"POT-Creation-Date: 2010-10-28 04:08+0000\n"
 "PO-Revision-Date: 2010-09-10 13:04+0800\n"
 "Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -218,8 +218,8 @@ msgid "Failed to hibernate"
 msgstr "無法休眠"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:150
-msgid "Xfclock4 could not be launched"
-msgstr "Xfclock4 無法啟動"
+msgid "Xflock4 could not be launched"
+msgstr "Xflock4 無法啟動"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:222
 msgid "Close Session"
@@ -242,20 +242,16 @@ msgstr "版本資訊"
 msgid "Type '%s --help' for usage."
 msgstr "請輸入 '%s --help' 以瞭解用法。"
 
-#: ../settings/main.c:85
-#: ../xfce4-session/main.c:226
+#: ../settings/main.c:85 ../xfce4-session/main.c:226
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce 開發團隊。保留所有權利。"
 
-#: ../settings/main.c:86
-#: ../xfce4-session/main.c:232
+#: ../settings/main.c:86 ../xfce4-session/main.c:232
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "請回報錯誤至 <%s>。"
 
-#: ../settings/main.c:95
-#: ../xfce4-session/main.c:238
-#: ../xfce4-tips/main.c:270
+#: ../settings/main.c:95 ../xfce4-session/main.c:238 ../xfce4-tips/main.c:270
 msgid "Unable to contact settings server"
 msgstr "無法聯絡設定值伺服器"
 
@@ -296,8 +292,7 @@ msgstr "無法儲存工作階段"
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "您確定要終止「%s」？"
 
-#: ../settings/session-editor.c:187
-#: ../settings/session-editor.c:215
+#: ../settings/session-editor.c:187 ../settings/session-editor.c:215
 msgid "Terminate Program"
 msgstr "終止程式"
 
@@ -334,10 +329,8 @@ msgstr "程式"
 msgid "Restart Style"
 msgstr "重新啟動樣式"
 
-#: ../settings/splash-settings.c:286
-#: ../settings/splash-settings.c:289
-#: ../settings/splash-settings.c:292
-#: ../settings/splash-settings.c:295
+#: ../settings/splash-settings.c:286 ../settings/splash-settings.c:289
+#: ../settings/splash-settings.c:292 ../settings/splash-settings.c:295
 #: ../settings/splash-settings.c:352
 msgid "None"
 msgstr "無"
@@ -386,8 +379,7 @@ msgstr "無法寫入檔案 %s"
 msgid "Failed to open %s for reading"
 msgstr "無法開啟 %s 以讀取"
 
-#: ../settings/xfae-model.c:841
-#: ../settings/xfae-model.c:898
+#: ../settings/xfae-model.c:841 ../settings/xfae-model.c:898
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "無法開啟 %s 以寫入"
@@ -401,8 +393,7 @@ msgstr "以下是當您登入 Xfce 桌面時會自動啟動的應用程式清單
 msgid "Failed adding \"%s\""
 msgstr "加入「%s」失敗"
 
-#: ../settings/xfae-window.c:320
-#: ../settings/xfae-window.c:334
+#: ../settings/xfae-window.c:320 ../settings/xfae-window.c:334
 msgid "Failed to remove item"
 msgstr "無法移除項目"
 
@@ -432,8 +423,7 @@ msgstr "無法切換項目"
 msgid "Disable binding to TCP ports"
 msgstr "停用 TCP 連接埠的綁定"
 
-#: ../xfce4-session/main.c:77
-#: ../xfce4-session-logout/main.c:93
+#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:93
 msgid "Print version information and exit"
 msgstr "印出版本資訊並離開"
 
@@ -501,8 +491,7 @@ msgstr "<b>An error occurred</b>"
 msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
 msgstr "您的密碼可能輸入錯誤，或者系統管理員不允許使用您的帳戶關機。"
 
-#: ../xfce4-session/shutdown.c:836
-#: ../xfce4-session/xfsm-manager.c:1250
+#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1119
 msgid "Shutdown Failed"
 msgstr "關機失敗"
 
@@ -516,40 +505,39 @@ msgid "Last accessed: %s"
 msgstr "最後存取：%s"
 
 # XXX 暫譯
-#: ../xfce4-session/xfsm-chooser.c:182
+#: ../xfce4-session/xfsm-chooser.c:177
 msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
 msgstr "請選擇您要載入的工作階段。要載入一個工作階段，雙擊工作階段的名稱即可。"
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:208
+#: ../xfce4-session/xfsm-chooser.c:203
 msgid "Log out"
 msgstr "登出"
 
-#: ../xfce4-session/xfsm-chooser.c:210
+#: ../xfce4-session/xfsm-chooser.c:205
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "取消登入，並返回登入畫面。"
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:218
+#: ../xfce4-session/xfsm-chooser.c:212
 msgid "New session"
 msgstr "新增工作階段"
 
-#: ../xfce4-session/xfsm-chooser.c:220
+#: ../xfce4-session/xfsm-chooser.c:213
 msgid "Create a new session."
 msgstr "建立一個新的工作階段。"
 
-#: ../xfce4-session/xfsm-client.c:506
-#: ../xfce4-session/xfsm-client.c:532
+#: ../xfce4-session/xfsm-client.c:506 ../xfce4-session/xfsm-client.c:532
 #: ../xfce4-session/xfsm-client.c:571
 #, c-format
 msgid "The client doesn't have any properties set yet"
 msgstr "客戶端尚未設定任何屬性"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:309
+#: ../xfce4-session/xfsm-compat-gnome.c:301
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "啟動 Gnome 鑰匙圈幕後程式中"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:321
+#: ../xfce4-session/xfsm-compat-gnome.c:313
 msgid "Starting Gnome Assistive Technologies"
 msgstr "啟動 Gnome 輔助科技中"
 
@@ -582,83 +570,83 @@ msgstr "無論如何都要繼續"
 msgid "Try again"
 msgstr "重試"
 
-#: ../xfce4-session/xfsm-manager.c:733
+#: ../xfce4-session/xfsm-manager.c:602
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr "無法得知防失敗工作階段的名稱。可能原因：xfcond 並非執行中 (D-Bus 設置問題)；環境變數 $XDG_CONFIG_DIRS 的設定不正確 (一定要包含「%s」)，或是 xfce4-session 安裝不正確。"
 
-#: ../xfce4-session/xfsm-manager.c:744
+#: ../xfce4-session/xfsm-manager.c:613
 #, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "指定的防失敗工作階段 (「%s」) 並未標記為防失敗工作階段。"
 
-#: ../xfce4-session/xfsm-manager.c:791
+#: ../xfce4-session/xfsm-manager.c:660
 msgid "The list of applications in the failsafe session is empty."
 msgstr "防失敗工作階段內的應用程式清單是空的。"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:838
+#: ../xfce4-session/xfsm-manager.c:707
 msgid "Session Manager Error"
 msgstr "工作階段管理程式錯誤"
 
-#: ../xfce4-session/xfsm-manager.c:840
+#: ../xfce4-session/xfsm-manager.c:709
 msgid "Unable to load a failsafe session"
 msgstr "無法載入防失敗工作階段"
 
-#: ../xfce4-session/xfsm-manager.c:1253
+#: ../xfce4-session/xfsm-manager.c:1122
 msgid "Failed to suspend session"
 msgstr "無法暫停工作階段"
 
-#: ../xfce4-session/xfsm-manager.c:1254
+#: ../xfce4-session/xfsm-manager.c:1123
 msgid "Failed to hibernate session"
 msgstr "無法休眠工作階段"
 
-#: ../xfce4-session/xfsm-manager.c:1542
+#: ../xfce4-session/xfsm-manager.c:1411
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "只能在客戶端為閒置狀態時終止它們"
 
-#: ../xfce4-session/xfsm-manager.c:2073
+#: ../xfce4-session/xfsm-manager.c:1942
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "當請求檢查點時，工作階段管理程式一定要處於閒置狀態"
 
-#: ../xfce4-session/xfsm-manager.c:2114
+#: ../xfce4-session/xfsm-manager.c:1983
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "當請求關機時，工作階段管理程式一定要處於閒置狀態"
 
-#: ../xfce4-session/xfsm-manager.c:2121
+#: ../xfce4-session/xfsm-manager.c:1990
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "無效的關機類型「%u」"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1664
+#: ../xfce4-session/xfsm-shutdown-helper.c:1659
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
 msgstr "傳送指令至關機輔助程式時發生錯誤：%s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1678
+#: ../xfce4-session/xfsm-shutdown-helper.c:1673
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
 msgstr "從關機輔助程式接收回應時發生錯誤：%s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1687
+#: ../xfce4-session/xfsm-shutdown-helper.c:1682
 #, c-format
 msgid "Shutdown command failed"
 msgstr "關機指令失敗"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1867
+#: ../xfce4-session/xfsm-shutdown-helper.c:1860
 msgid "Suspend failed, no backend supported"
 msgstr "暫停失敗，後端程式未支援"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1894
+#: ../xfce4-session/xfsm-shutdown-helper.c:1887
 msgid "Hibernate failed, no backend supported"
 msgstr "休眠失敗，後端程式未支援"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1924
+#: ../xfce4-session/xfsm-shutdown-helper.c:1917
 msgid "Shutdown Command not found"
 msgstr "找不到關機指令"
 
@@ -781,8 +769,7 @@ msgstr ""
 msgid "Performing Autostart..."
 msgstr "執行自動啟動中..."
 
-#: ../xfce4-tips/main.c:48
-#: ../xfce4-tips/main.c:284
+#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:284
 msgid "Tips and Tricks"
 msgstr "秘訣與撇步"
 
@@ -801,8 +788,7 @@ msgstr "無法載入秘訣資料庫 (%s)。"
 msgid "Invalid output of fortune."
 msgstr "fortune 的輸出無效。"
 
-#: ../xfce4-tips/main.c:195
-#: ../xfce4-tips/main.c:203
+#: ../xfce4-tips/main.c:195 ../xfce4-tips/main.c:203
 #, c-format
 msgid "Executing fortune failed (%s)"
 msgstr "執行 fortune 失敗(%s)"
@@ -847,8 +833,7 @@ msgstr "快速登出；不要儲存工作階段"
 msgid "Logout Error"
 msgstr "登出錯誤"
 
-#: ../xfce4-session-logout/main.c:114
-#: ../xfce4-session-logout/main.c:121
+#: ../xfce4-session-logout/main.c:114 ../xfce4-session-logout/main.c:121
 msgid "Unknown error"
 msgstr "不明錯誤"
 
@@ -1041,113 +1026,111 @@ msgstr "xfce4-tips"
 
 #~ msgid "Session Error"
 #~ msgstr "工作階段錯誤"
+
 #~ msgid "Session Settings"
 #~ msgstr "工作階段設定值"
+
 #~ msgid "Internal Error"
 #~ msgstr "內部錯誤"
+
 #~ msgid "This is likely a problem with your Xfce installation"
 #~ msgstr "這很可能是您的 Xfce 安裝過程有問題"
+
 #~ msgid "Terminate \"%s\""
 #~ msgstr "終止「%s」"
+
 #~ msgid "Xfce Session Manager"
 #~ msgstr "Xfce 工作階段管理員"
+
 #~ msgid "Invalid shutdown type"
 #~ msgstr "無效的關機類型"
+
 #~ msgid "No HAL method for command %d"
 #~ msgstr "指令 %d 沒有 HAL 方法"
-#~ msgid ""
-#~ "Program \"sudo\" was not found.  You will not be able to shutdown your "
-#~ "system from within Xfce."
+
+#~ msgid "Program \"sudo\" was not found.  You will not be able to shutdown your system from within Xfce."
 #~ msgstr "找不到「sudo」程式。您將無法從 Xfce 底下關閉系統。"
+
 #~ msgid "Unable to create parent pipe: %s"
 #~ msgstr "無法建立親代管線：%s"
+
 #~ msgid "Unable to create child pipe: %s"
 #~ msgstr "無法建立子代管線：%s"
+
 #~ msgid "Unable to fork sudo helper: %s"
 #~ msgstr "無法將 sudo 輔助程式叉開：%s"
+
 #~ msgid "Unable to read response from sudo helper: %s"
 #~ msgstr "無法從 sudo 輔助程式讀取回應：%s"
+
 #~ msgid "Unable to open parent pipe: %s"
 #~ msgstr "無法開啟親代管線：%s"
+
 #~ msgid "Unable to open child pipe: %s"
 #~ msgstr "無法開啟子代管線：%s"
+
 #~ msgid "Got unexpected reply from sudo shutdown helper"
 #~ msgstr "從 sudo 關機輔助程式接到非預期的回應"
-#~ msgid ""
-#~ "Suspend and Hibernate are only supported through HAL, which is unavailable"
+
+#~ msgid "Suspend and Hibernate are only supported through HAL, which is unavailable"
 #~ msgstr "「暫停」與「休眠」只能透過 HAL 提供支援，而它卻無法使用"
+
 #~ msgid "Session and Startup Settings"
 #~ msgstr "設定與工作階段及啟動相關的各種選項"
+
 #~ msgid "Sessions and Startup Settings"
 #~ msgstr "工作階段及啟動設定"
+
 #~ msgid "Xfce 4 Sessions and Startup Settings"
 #~ msgstr "Xfce 4 工作階段及啟動設定"
 
-#, fuzzy
 #~ msgid "Remove the selected application from the session."
 #~ msgstr "示範一下選取的起動畫面。"
-#~ msgid ""
-#~ "If set, the session manager will ask you to choose a session every time "
-#~ "you log in to Xfce."
-#~ msgstr ""
-#~ "設定這個選項後，每當您登入 Xfce 時，工作階段選擇器都會要求您選擇一個工作階"
-#~ "段。"
-#~ msgid ""
-#~ "This option instructs the session manager to save the current session "
-#~ "automatically when you log out. If you don't select this option you'll be "
-#~ "prompted whether you want to save the current session on each logout."
-#~ msgstr ""
-#~ "這個選項令工作階段管理程式在您登出時自動儲存工作階段。如果您不選擇這樣做，"
-#~ "每當您登出時，您都會被問及要不要儲存工作階段。"
-#~ msgid ""
-#~ "This option disables the logout confirmation dialog. Whether the session "
-#~ "will be saved or not depends on whether you enabled the automatic saving "
-#~ "of sessions on logout or not."
-#~ msgstr ""
-#~ "這個選項決定是否在登出時先問清楚是否登出。至於工作階段是否會被儲存，則視乎"
-#~ "您有否選擇「登出時自動儲存工作階段」。"
+
+#~ msgid "If set, the session manager will ask you to choose a session every time you log in to Xfce."
+#~ msgstr "設定這個選項後，每當您登入 Xfce 時，工作階段選擇器都會要求您選擇一個工作階段。"
+
+#~ msgid "This option instructs the session manager to save the current session automatically when you log out. If you don't select this option you'll be prompted whether you want to save the current session on each logout."
+#~ msgstr "這個選項令工作階段管理程式在您登出時自動儲存工作階段。如果您不選擇這樣做，每當您登出時，您都會被問及要不要儲存工作階段。"
+
+#~ msgid "This option disables the logout confirmation dialog. Whether the session will be saved or not depends on whether you enabled the automatic saving of sessions on logout or not."
+#~ msgstr "這個選項決定是否在登出時先問清楚是否登出。至於工作階段是否會被儲存，則視乎您有否選擇「登出時自動儲存工作階段」。"
+
 #~ msgid "Launch Gnome services on startup"
 #~ msgstr "啟動時同時啟動 Gnome 服務"
-#~ msgid ""
-#~ "Enable this if you plan to use Gnome applications. This will instruct the "
-#~ "session manager to start some vital Gnome services for you. You should "
-#~ "also enable this if you want to use the Assistive Technologies that ship "
-#~ "with Gnome."
-#~ msgstr ""
-#~ "如果您打算使用 Gnome 的應用程式，就應使用這個選項。這令工作階段管理程式為"
-#~ "您啟動一些重要的 Gnome 服務；此外，假如您希望使用 Gnome 的 Assistive "
-#~ "Technologies 的話，也應使用這個選項。"
-#~ msgid ""
-#~ "Enable this option if you plan to run KDE applications as part of your "
-#~ "Xfce Desktop session. This will notably increase the startup time, but on "
-#~ "the other hand, KDE applications will startup faster. Some KDE "
-#~ "applications may not work at all if you don't enable this option."
-#~ msgstr ""
-#~ "如果您打算在 Xfce 的桌面工作階段內使用 KDE 的應用程式，就應使用這個選項。"
-#~ "這會明顯的拖長 Xfce 的啟動時間，卻可加快 KDE 應用程式的啟動。除非你使用這"
-#~ "個選項，某些 KDE 的應用程式可能會完全不能運作。"
+
+#~ msgid "Enable this if you plan to use Gnome applications. This will instruct the session manager to start some vital Gnome services for you. You should also enable this if you want to use the Assistive Technologies that ship with Gnome."
+#~ msgstr "如果您打算使用 Gnome 的應用程式，就應使用這個選項。這令工作階段管理程式為您啟動一些重要的 Gnome 服務；此外，假如您希望使用 Gnome 的 Assistive Technologies 的話，也應使用這個選項。"
+
+#~ msgid "Enable this option if you plan to run KDE applications as part of your Xfce Desktop session. This will notably increase the startup time, but on the other hand, KDE applications will startup faster. Some KDE applications may not work at all if you don't enable this option."
+#~ msgstr "如果您打算在 Xfce 的桌面工作階段內使用 KDE 的應用程式，就應使用這個選項。這會明顯的拖長 Xfce 的啟動時間，卻可加快 KDE 應用程式的啟動。除非你使用這個選項，某些 KDE 的應用程式可能會完全不能運作。"
+
 #~ msgid "Security"
 #~ msgstr "保安"
-#~ msgid ""
-#~ "Allow the session manager to manage applications running on remote hosts. "
-#~ "Do not enable this option unless you know what you are doing."
-#~ msgstr ""
-#~ "容許工作階段管理程式管理在遠端主機執行的應用程式。除非您明瞭這是做什麼的，"
-#~ "切勿使用這個選項。"
+
+#~ msgid "Allow the session manager to manage applications running on remote hosts. Do not enable this option unless you know what you are doing."
+#~ msgstr "容許工作階段管理程式管理在遠端主機執行的應用程式。除非您明瞭這是做什麼的，切勿使用這個選項。"
+
 #~ msgid "Button Label|Sessions and Startup"
 #~ msgstr "工作階段及啟動"
+
 #~ msgid "Splash Screen Settings"
 #~ msgstr "起動畫面設定"
+
 #~ msgid "Button Label|Splash Screen"
 #~ msgstr "啟動畫面"
+
 #~ msgid "Autostarted applications"
 #~ msgstr "自動開啟的應用程式"
+
 #~ msgid "Xfce 4 Splash Screen Settings"
 #~ msgstr "Xfce 4 啟動畫面設定"
+
 #~ msgid "Autostarted Applications"
 #~ msgstr "自動啟動的應用程式"
+
 #~ msgid "Edit the list of autostarted applications"
 #~ msgstr "編輯自動啟動的應用程式清單"
+
 #~ msgid "Xfce 4 Autostarted Applications"
 #~ msgstr "Xfce 4 自動啟動應用程式"
-
