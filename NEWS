@@ -1,6 +1,20 @@
+4.7.1
+=====
+- Add support for new gnome-keyring (bugs #5912, #5137 and #6073).
+- Fix typo in xflock4 error message.
+- Don't use consolekit when it's not enabled.
+- Remove consolekit session creation in xfce4-session.
+- Use cairo to draw the fadeout.
+- Remove obsolote gtk_tooltip_* calls and other < gtk 2.14 code.
+- Fix the check for legacy sm.
+- Fix configure build options.
+- Print build config after running configure.
+- Various code cleanups.
+- Translation updates (it, ug, gl, zh_TW, de, ru, ja, sv, fi, kk,
+  pt, da, ca, eu, hu).
+
 4.7.0
 =====
-
 - Query HAL to be sure suspend and hibernate are supported.  If not,
   don't even show the buttons (bug #4952).
 - Allow xfce4-tips to work when 'fortune' is not installed (bug #2871).
