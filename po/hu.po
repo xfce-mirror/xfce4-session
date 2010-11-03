@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-20 22:05+0000\n"
+"POT-Creation-Date: 2010-11-03 11:08+0000\n"
 "PO-Revision-Date: 2009-07-28 00:38+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
 "Language-Team: Hungarian <gnome at gnome dot hu>\n"
@@ -216,8 +216,8 @@ msgid "Failed to hibernate"
 msgstr "A hibernálás meghiúsult."
 
 #: ../panel-plugin/xfsm-logout-plugin.c:150
-msgid "Xfclock4 could not be launched"
-msgstr "Az Xfclock4 nem indítható"
+msgid "Xflock4 could not be launched"
+msgstr "Az Xflock4 nem indítható"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:222
 msgid "Close Session"
@@ -489,7 +489,7 @@ msgstr "<b>Hiba történt</b>"
 msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
 msgstr "A megadott jelszó érvénytelen vagy a rendszergazda megtiltotta a számítógép leállítását az Ön felhasználói fiókjával."
 
-#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1228
+#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1119
 msgid "Shutdown Failed"
 msgstr "A leállítás meghiúsult"
 
@@ -502,25 +502,25 @@ msgstr "A leállítás nem végezhető el"
 msgid "Last accessed: %s"
 msgstr "Utolsó hozzáférés: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:182
+#: ../xfce4-session/xfsm-chooser.c:177
 msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
 msgstr "Válassza ki a visszaállítandó munkamenetet. Kattintson duplán a munkamenet nevére a visszaállításához."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:208
+#: ../xfce4-session/xfsm-chooser.c:203
 msgid "Log out"
 msgstr "Kijelentkezés"
 
-#: ../xfce4-session/xfsm-chooser.c:210
+#: ../xfce4-session/xfsm-chooser.c:205
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "A bejelentkezési kísérlet megszakítása és visszatérés a bejelentkezési képernyőre."
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:218
+#: ../xfce4-session/xfsm-chooser.c:212
 msgid "New session"
 msgstr "Új munkamenet"
 
-#: ../xfce4-session/xfsm-chooser.c:220
+#: ../xfce4-session/xfsm-chooser.c:213
 msgid "Create a new session."
 msgstr "Új munkamenet létrehozása."
 
@@ -530,11 +530,11 @@ msgstr "Új munkamenet létrehozása."
 msgid "The client doesn't have any properties set yet"
 msgstr "A kliensnek még nincsenek beállított tulajdonságai"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:309
+#: ../xfce4-session/xfsm-compat-gnome.c:301
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "A Gnome kulcstartódémon indítása"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:321
+#: ../xfce4-session/xfsm-compat-gnome.c:313
 msgid "Starting Gnome Assistive Technologies"
 msgstr "A Gnome akadálymentesítési szolgáltatásainak indítása"
 
@@ -567,83 +567,83 @@ msgstr "Folytatás mindenképp"
 msgid "Try again"
 msgstr "Próbálja újra"
 
-#: ../xfce4-session/xfsm-manager.c:712
+#: ../xfce4-session/xfsm-manager.c:602
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr "A csökkentett munkamenet neve nem állapítható meg. A lehetséges okok: az xfconfd nem fut (D-Bus beállítási probléma), az $XDG_CONFIG_DIRS környezeti változó hibásan van beállítva (tartalmaznia kell ezt: „%s”), vagy az xfce4-session hibásan van telepítve."
 
-#: ../xfce4-session/xfsm-manager.c:723
+#: ../xfce4-session/xfsm-manager.c:613
 #, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "A megadott csökkentett munkamenet („%s”) nincs megjelölve csökkentett munkamenetként."
 
-#: ../xfce4-session/xfsm-manager.c:770
+#: ../xfce4-session/xfsm-manager.c:660
 msgid "The list of applications in the failsafe session is empty."
 msgstr "A csökkentett munkamenet alkalmazásainak listája üres."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:817
+#: ../xfce4-session/xfsm-manager.c:707
 msgid "Session Manager Error"
 msgstr "Munkamenet-kezelési hiba"
 
-#: ../xfce4-session/xfsm-manager.c:819
+#: ../xfce4-session/xfsm-manager.c:709
 msgid "Unable to load a failsafe session"
 msgstr "Nem tölthető be a csökkentett munkamenet"
 
-#: ../xfce4-session/xfsm-manager.c:1231
+#: ../xfce4-session/xfsm-manager.c:1122
 msgid "Failed to suspend session"
 msgstr "A munkamenet nem függeszthető fel"
 
-#: ../xfce4-session/xfsm-manager.c:1232
+#: ../xfce4-session/xfsm-manager.c:1123
 msgid "Failed to hibernate session"
 msgstr "A munkamenet nem hibernálható"
 
-#: ../xfce4-session/xfsm-manager.c:1520
+#: ../xfce4-session/xfsm-manager.c:1411
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Csak üresjáratban lévő kliensek futása szakítható meg"
 
-#: ../xfce4-session/xfsm-manager.c:2051
+#: ../xfce4-session/xfsm-manager.c:1942
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "A munkamenet-kezelőnek üresjáratban kell lennie ellenőrzőpont kérésekor"
 
-#: ../xfce4-session/xfsm-manager.c:2092
+#: ../xfce4-session/xfsm-manager.c:1983
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "A munkamenet-kezelőnek üresjáratban kell lennie leállítás kérésekor"
 
-#: ../xfce4-session/xfsm-manager.c:2099
+#: ../xfce4-session/xfsm-manager.c:1990
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Érvénytelen leállítási típus: „%u”"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1664
+#: ../xfce4-session/xfsm-shutdown-helper.c:1659
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
 msgstr "Hiba a parancs küldésekor a sudo leállítási segédprogramjától: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1678
+#: ../xfce4-session/xfsm-shutdown-helper.c:1673
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
 msgstr "Hiba a válasz fogadásakor a sudo leállítási segédprogramjától: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1687
+#: ../xfce4-session/xfsm-shutdown-helper.c:1682
 #, c-format
 msgid "Shutdown command failed"
 msgstr "A leállítási parancs meghiúsult"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1867
+#: ../xfce4-session/xfsm-shutdown-helper.c:1860
 msgid "Suspend failed, no backend supported"
 msgstr "A felfüggesztés meghiúsult, nincs támogatott háttérprogram"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1894
+#: ../xfce4-session/xfsm-shutdown-helper.c:1887
 msgid "Hibernate failed, no backend supported"
 msgstr "A hibernálás meghiúsult, nincs támogatott háttérprogram"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1924
+#: ../xfce4-session/xfsm-shutdown-helper.c:1917
 msgid "Shutdown Command not found"
 msgstr "A leállítási parancs nem található"
 
@@ -740,7 +740,7 @@ msgstr "Az X terminálemulátor indítása"
 msgid "Starting %s"
 msgstr "%s indítása"
 
-#: ../xfce4-session/xfsm-startup.c:284
+#: ../xfce4-session/xfsm-startup.c:283
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -765,7 +765,7 @@ msgstr ""
 "az új helyre.\n"
 "A régi könyvtárat most már törölheti.\n"
 
-#: ../xfce4-session/xfsm-startup.c:442
+#: ../xfce4-session/xfsm-startup.c:441
 msgid "Performing Autostart..."
 msgstr "Automatikus indítás…"
 
@@ -857,13 +857,11 @@ msgstr "Hiba történt a kijelentkezésre tett kísérlet során"
 msgid "Log out of the Xfce Desktop"
 msgstr "Kijelentkezés az Xfce asztali környezetből"
 
-#: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:1
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:1
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
 msgid "Session Menu"
 msgstr "Munkamenetmenü"
 
-#: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:2
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:2
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
 msgid "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
 msgstr "A képernyő zárolása, felfüggesztés, leállítás vagy kijelentkezés"
 
