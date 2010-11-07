@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-02 10:06+0000\n"
+"POT-Creation-Date: 2010-11-07 05:08+0000\n"
 "PO-Revision-Date: 2010-07-01 11:43+0700\n"
 "Last-Translator: Andhika Padmawan <andhika.padmawan@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -214,8 +214,8 @@ msgid "Failed to hibernate"
 msgstr "Gagal menghibernasi"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:150
-msgid "Xfclock4 could not be launched"
-msgstr "Xfclock4 tak dapat dijalankan"
+msgid "Xflock4 could not be launched"
+msgstr "Xflock4 tak dapat dijalankan"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:222
 msgid "Close Session"
@@ -487,7 +487,7 @@ msgstr "<b>Galat terjadi</b>"
 msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
 msgstr "Apakah sandi lewat yang anda masukkan salah, atau administrator sistem tidak mengizinkan untuk mematikan komputer ini dengan akun pengguna anda."
 
-#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1228
+#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1119
 msgid "Shutdown Failed"
 msgstr "Matikan Gagal"
 
@@ -500,25 +500,25 @@ msgstr "Tak dapat mematikan"
 msgid "Last accessed: %s"
 msgstr "Terakhir kali diakses: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:182
+#: ../xfce4-session/xfsm-chooser.c:177
 msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
 msgstr "Pilih sesi yang ingin anda kembalikan. Anda dapat klik ganda nama sesi untuk mengembalikannya."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:208
+#: ../xfce4-session/xfsm-chooser.c:203
 msgid "Log out"
 msgstr "Keluar"
 
-#: ../xfce4-session/xfsm-chooser.c:210
+#: ../xfce4-session/xfsm-chooser.c:205
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Batalkan usaha log masuk dan kembali ke layar log masuk."
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:218
+#: ../xfce4-session/xfsm-chooser.c:212
 msgid "New session"
 msgstr "Sesi baru"
 
-#: ../xfce4-session/xfsm-chooser.c:220
+#: ../xfce4-session/xfsm-chooser.c:213
 msgid "Create a new session."
 msgstr "Buat sebuah sesi baru."
 
@@ -528,11 +528,11 @@ msgstr "Buat sebuah sesi baru."
 msgid "The client doesn't have any properties set yet"
 msgstr "Klien belum memiliki pengaturan properti apapun"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:309
+#: ../xfce4-session/xfsm-compat-gnome.c:301
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "Memulai Jurik Keyring Gnome"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:321
+#: ../xfce4-session/xfsm-compat-gnome.c:313
 msgid "Starting Gnome Assistive Technologies"
 msgstr "Memulai Teknologi Bantuan Gnome"
 
@@ -565,83 +565,83 @@ msgstr "Tetap lanjutkan"
 msgid "Try again"
 msgstr "Coba lagi"
 
-#: ../xfce4-session/xfsm-manager.c:712
+#: ../xfce4-session/xfsm-manager.c:602
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr "Tak dapat menentukan nama sesi darurat.  Kemungkinan penyebab: xfconfd tak berjalan (masalah pengaturan D-BUS); variabel lingkungan $XDG_CONFIG_DIRS tak benar diatur (harus menyertakan \"%s\"), atau xfce4-session tak diinstal secara benar."
 
-#: ../xfce4-session/xfsm-manager.c:723
+#: ../xfce4-session/xfsm-manager.c:613
 #, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Sesi darurat yang ditentukan (\"%s\") tidak ditandai sebagai sesi darurat."
 
-#: ../xfce4-session/xfsm-manager.c:770
+#: ../xfce4-session/xfsm-manager.c:660
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Senarai aplikasi di sesi darurat kosong."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:817
+#: ../xfce4-session/xfsm-manager.c:707
 msgid "Session Manager Error"
 msgstr "Galat Manajer Sesi"
 
-#: ../xfce4-session/xfsm-manager.c:819
+#: ../xfce4-session/xfsm-manager.c:709
 msgid "Unable to load a failsafe session"
 msgstr "Tak dapat memuat sesi darurat"
 
-#: ../xfce4-session/xfsm-manager.c:1231
+#: ../xfce4-session/xfsm-manager.c:1122
 msgid "Failed to suspend session"
 msgstr "Gagal menyuspensi sesi"
 
-#: ../xfce4-session/xfsm-manager.c:1232
+#: ../xfce4-session/xfsm-manager.c:1123
 msgid "Failed to hibernate session"
 msgstr "Gagal menghibernasi sesi"
 
-#: ../xfce4-session/xfsm-manager.c:1520
+#: ../xfce4-session/xfsm-manager.c:1411
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Hanya dapat mematikan klien ketika dalam kondisi tak aktif"
 
-#: ../xfce4-session/xfsm-manager.c:2051
+#: ../xfce4-session/xfsm-manager.c:1942
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Manajer sesi harus dalam kondisi tak aktif ketika meminta titik pemeriksaan"
 
-#: ../xfce4-session/xfsm-manager.c:2092
+#: ../xfce4-session/xfsm-manager.c:1983
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Manajer sesi harus dalam kondisi tak aktif ketika meminta matikan komputer"
 
-#: ../xfce4-session/xfsm-manager.c:2099
+#: ../xfce4-session/xfsm-manager.c:1990
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Mematikan tidak sah ketikkan \"%u\""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1664
+#: ../xfce4-session/xfsm-shutdown-helper.c:1659
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
 msgstr "Galat mengirim perintah ke pembantu matikan: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1678
+#: ../xfce4-session/xfsm-shutdown-helper.c:1673
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
 msgstr "Galat menerima respon dari pembantu matikan: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1687
+#: ../xfce4-session/xfsm-shutdown-helper.c:1682
 #, c-format
 msgid "Shutdown command failed"
 msgstr "Perintah matikan gagal"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1867
+#: ../xfce4-session/xfsm-shutdown-helper.c:1860
 msgid "Suspend failed, no backend supported"
 msgstr "Suspensi gagal, tak ada ujung belakang yang didukung"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1894
+#: ../xfce4-session/xfsm-shutdown-helper.c:1887
 msgid "Hibernate failed, no backend supported"
 msgstr "Hibernasi gagal, tak ada ujung belakang yang didukung"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1924
+#: ../xfce4-session/xfsm-shutdown-helper.c:1917
 msgid "Shutdown Command not found"
 msgstr "Perintah matikan tak ditemukan"
 
@@ -738,7 +738,7 @@ msgstr "Memulai Emulator Terminal X"
 msgid "Starting %s"
 msgstr "Memulai %s"
 
-#: ../xfce4-session/xfsm-startup.c:284
+#: ../xfce4-session/xfsm-startup.c:283
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -762,7 +762,7 @@ msgstr ""
 "Berkas di direktori start otomatis anda telah sukses dimigrasikan kelokasi baru.\n"
 "Anda dapat menghapus direktori ini sekarang.\n"
 
-#: ../xfce4-session/xfsm-startup.c:442
+#: ../xfce4-session/xfsm-startup.c:441
 msgid "Performing Autostart..."
 msgstr "Melakukan Start Otomatis..."
 
@@ -854,13 +854,11 @@ msgstr "Menerima galat ketika mencoba log keluar"
 msgid "Log out of the Xfce Desktop"
 msgstr "Keluar Desktop Xfce"
 
-#: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:1
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:1
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
 msgid "Session Menu"
 msgstr "Menu Sesi"
 
-#: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:2
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:2
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
 msgid "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
 msgstr "Menampilkan menu dengan opsi untuk mengunci layar, suspensi, matikan, atau keluar"
 
