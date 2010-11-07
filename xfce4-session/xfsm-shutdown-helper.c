@@ -1331,13 +1331,20 @@ xfsm_shutdown_helper_init (XfsmShutdownHelper *helper)
       xfsm_shutdown_helper_check_backends (helper);
     }
   else
-    /* Unable to connect to the system bus, just try sudo*/
     {
-      g_critical ("Failed to connect to the system bus : %s", error->message);
+      g_warning ("Failed to connect to the system bus : %s", error->message);
       g_error_free (error);
 
+      /* Unable to connect to the system bus, just try sudo */
       if (xfsm_shutdown_helper_check_sudo (helper))
-        helper->shutdown_backend = XFSM_SHUTDOWN_BACKEND_SUDO;
+        {
+          helper->shutdown_backend = XFSM_SHUTDOWN_BACKEND_SUDO;
+
+          helper->can_shutdown = TRUE;
+          helper->can_restart = TRUE;
+          helper->auth_shutdown = TRUE;
+          helper->auth_restart  = TRUE;
+        }
     }
 }
 
@@ -1645,7 +1652,7 @@ xfsm_shutdown_helper_sudo_send (XfsmShutdownHelper *helper,
   fprintf (helper->outfile, "%s\n", action);
   fflush (helper->outfile);
 
-  g_message (G_STRLOC ": Using ConsoleKit to %s",action);
+  g_message (G_STRLOC ": Using sudo to %s", action);
 
   if (ferror (helper->outfile))
     {
