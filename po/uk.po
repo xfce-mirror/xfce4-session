@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-28 10:06+0000\n"
+"POT-Creation-Date: 2010-11-09 11:08+0000\n"
 "PO-Revision-Date: 2009-01-26 16:03+0200\n"
 "Last-Translator: Dmitry Nikitin <luckas_fb@mail.ru>\n"
 "Language-Team: Ukrainian <xfce4-dev@xfce.org>\n"
@@ -216,7 +216,7 @@ msgid "Failed to hibernate"
 msgstr "Не вдалось перейти в сплячий режим"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:150
-msgid "Xfclock4 could not be launched"
+msgid "Xflock4 could not be launched"
 msgstr "Не вдалось запустити Xfclock4"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:222
@@ -489,7 +489,7 @@ msgstr "<b>Сталася помилка  </b>"
 msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
 msgstr "Введений пароль - неправильний, або системний адміністратор заборонив вам вимикати комп'ютер."
 
-#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1228
+#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1119
 msgid "Shutdown Failed"
 msgstr "Неможливо вимкнути"
 
@@ -502,25 +502,25 @@ msgstr "Не вдалось виконати зупинку"
 msgid "Last accessed: %s"
 msgstr "Запущено останній раз: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:182
+#: ../xfce4-session/xfsm-chooser.c:177
 msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
 msgstr "Виберіть сеанс, який бажаєте відновити. Щоб завантажити сеанс, можете просто двічі клацнути на його назві."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:208
+#: ../xfce4-session/xfsm-chooser.c:203
 msgid "Log out"
 msgstr "Вийти з сеансу"
 
-#: ../xfce4-session/xfsm-chooser.c:210
+#: ../xfce4-session/xfsm-chooser.c:205
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Скасувати спробу входу та повернутись до екрану входу у систему."
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:218
+#: ../xfce4-session/xfsm-chooser.c:212
 msgid "New session"
 msgstr "Новий сеанс"
 
-#: ../xfce4-session/xfsm-chooser.c:220
+#: ../xfce4-session/xfsm-chooser.c:213
 msgid "Create a new session."
 msgstr "Створити новий сеанс."
 
@@ -530,11 +530,11 @@ msgstr "Створити новий сеанс."
 msgid "The client doesn't have any properties set yet"
 msgstr "Клієнт не має встановлених будь яких властивостей"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:309
+#: ../xfce4-session/xfsm-compat-gnome.c:301
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "Запуск служби Gnome Keyring"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:321
+#: ../xfce4-session/xfsm-compat-gnome.c:313
 msgid "Starting Gnome Assistive Technologies"
 msgstr "Запуск допоміжних технологій Gnome"
 
@@ -567,70 +567,70 @@ msgstr "Продовжити"
 msgid "Try again"
 msgstr "Повторити спробу"
 
-#: ../xfce4-session/xfsm-manager.c:712
+#: ../xfce4-session/xfsm-manager.c:602
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr "Неможливо визначити назву безпечного сеансу. Можливі причини: xconfd не запущено (проблема налаштування D-Bus); неправильно встановлено змінну середовища $XDG_CONFIG_DIRS (має включати \"%s\"), або неправильно встановлено xfce4-session."
 
-#: ../xfce4-session/xfsm-manager.c:723
+#: ../xfce4-session/xfsm-manager.c:613
 #, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Вибраний безпечний сеанс (\"%s\") не позначено як безпечний сеанс."
 
-#: ../xfce4-session/xfsm-manager.c:770
+#: ../xfce4-session/xfsm-manager.c:660
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Список програм в безпечному сеансі пустий."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:817
+#: ../xfce4-session/xfsm-manager.c:707
 msgid "Session Manager Error"
 msgstr "Помилка менеджеру сеансів"
 
-#: ../xfce4-session/xfsm-manager.c:819
+#: ../xfce4-session/xfsm-manager.c:709
 msgid "Unable to load a failsafe session"
 msgstr "Неможливо завантажити безпечний сеанс"
 
-#: ../xfce4-session/xfsm-manager.c:1231
+#: ../xfce4-session/xfsm-manager.c:1122
 msgid "Failed to suspend session"
 msgstr "Невдача призупинення сеансу"
 
-#: ../xfce4-session/xfsm-manager.c:1232
+#: ../xfce4-session/xfsm-manager.c:1123
 msgid "Failed to hibernate session"
 msgstr "Невдача для сплячого сеансу"
 
-#: ../xfce4-session/xfsm-manager.c:1520
+#: ../xfce4-session/xfsm-manager.c:1411
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Можна тільки завершити клієнтів коли перебуваєш в стані очікування"
 
-#: ../xfce4-session/xfsm-manager.c:2051
+#: ../xfce4-session/xfsm-manager.c:1942
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Менеджер сеансу мусить бути в стані очікування коли запитується місце перевірки"
 
-#: ../xfce4-session/xfsm-manager.c:2092
+#: ../xfce4-session/xfsm-manager.c:1983
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Менеджер сеансу мусить бути в стані очікування коли запитується вимкнення"
 
-#: ../xfce4-session/xfsm-manager.c:2099
+#: ../xfce4-session/xfsm-manager.c:1990
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Неправильний тип вимкнення \"%u\""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1664
+#: ../xfce4-session/xfsm-shutdown-helper.c:1666
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
 msgstr "Помилка відсилання команди помічнику вимкнення системи: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1678
+#: ../xfce4-session/xfsm-shutdown-helper.c:1680
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
 msgstr "Помилка отримання відповіді від помічника вимкнення системи: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1687
+#: ../xfce4-session/xfsm-shutdown-helper.c:1689
 #, c-format
 msgid "Shutdown command failed"
 msgstr "Команда вимкнення системи зазнала невдачі"
@@ -740,7 +740,7 @@ msgstr "Запуск емулятора термінала xterm"
 msgid "Starting %s"
 msgstr "Запуск %s"
 
-#: ../xfce4-session/xfsm-startup.c:284
+#: ../xfce4-session/xfsm-startup.c:283
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -765,7 +765,7 @@ msgstr ""
 "\n"
 "Тепер ви маєте видалити старий каталог.\n"
 
-#: ../xfce4-session/xfsm-startup.c:442
+#: ../xfce4-session/xfsm-startup.c:441
 msgid "Performing Autostart..."
 msgstr "Автозавантаження програм..."
 
@@ -857,13 +857,11 @@ msgstr "Отримано помилку під час спроби вийти з
 msgid "Log out of the Xfce Desktop"
 msgstr "Вийти з середовища Xfce"
 
-#: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:1
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:1
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
 msgid "Session Menu"
 msgstr "Меню сеансу"
 
-#: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:2
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:2
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
 msgid "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
 msgstr "Відображає меню з опціями для блокування екрану, переходу в режим сну, вимикання, або завершення сеансу"
 
