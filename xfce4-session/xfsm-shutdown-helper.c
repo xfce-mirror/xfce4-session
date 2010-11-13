@@ -331,11 +331,9 @@ init_dbus_gtypes (void)
 static gboolean
 xfsm_shutdown_helper_init_polkit_data (XfsmShutdownHelper *helper)
 {
-#ifdef ENABLE_CONSOLE_KIT
-  const gchar *consolekit_cookie;
-#endif
   GValue hash_elem = { 0 };
-  gboolean subject_created = FALSE;
+  guint64 start_time;
+  gint pid;
 
   helper->polkit_proxy =
     dbus_g_proxy_new_for_name (helper->system_bus,
@@ -346,112 +344,41 @@ xfsm_shutdown_helper_init_polkit_data (XfsmShutdownHelper *helper)
   if (!helper->polkit_proxy)
     return FALSE;
 
-#ifdef ENABLE_CONSOLE_KIT
-  /**
-   * This variable should be set by the session manager or by
-   * the login manager (gdm?). under clean Xfce environment
-   * it is set by the session manager (4.8 and above)
-   * since we don't have a login manager, yet!
-   **/
-  consolekit_cookie = g_getenv ("XDG_SESSION_COOKIE");
+  pid = getpid ();
 
-  if (consolekit_cookie)
+  start_time = get_start_time_for_pid (pid);
+
+  if (G_LIKELY (start_time != 0))
     {
-      DBusGProxy *proxy;
-      GError *error = NULL;
-      gboolean ret;
-      gchar *consolekit_session;
+      GValue val = { 0 }, pid_val = { 0 }, start_time_val = { 0 };
 
-      proxy  = dbus_g_proxy_new_for_name (helper->system_bus,
-                                          "org.freedesktop.ConsoleKit",
-                                          "/org/freedesktop/ConsoleKit/Manager",
-                                          "org.freedesktop.ConsoleKit.Manager");
+      helper->polkit_subject = g_value_array_new (2);
+      helper->polkit_subject_hash = g_hash_table_new_full (g_str_hash,
+                                                           g_str_equal,
+                                                           g_free, NULL);
+      g_value_init (&val, G_TYPE_STRING);
+      g_value_set_string (&val, "unix-process");
+      g_value_array_append (helper->polkit_subject, &val);
 
-      if (proxy)
-        {
-          ret = dbus_g_proxy_call (proxy, "GetSessionForCookie", &error,
-                                   G_TYPE_STRING, consolekit_cookie,
-                                   G_TYPE_INVALID,
-                                   DBUS_TYPE_G_OBJECT_PATH, &consolekit_session,
-                                   G_TYPE_INVALID);
+      g_value_unset (&val);
 
-          if (G_LIKELY (ret))
-            {
-              GValue val  = { 0 };
+      g_value_init (&pid_val, G_TYPE_UINT);
+      g_value_set_uint (&pid_val, pid);
+      g_hash_table_insert (helper->polkit_subject_hash, g_strdup ("pid"), &pid_val);
 
-              helper->polkit_subject = g_value_array_new (2);
-              helper->polkit_subject_hash = g_hash_table_new_full (g_str_hash,
-                                                                   g_str_equal,
-                                                                   g_free, NULL);
-              g_value_init (&val, G_TYPE_STRING);
-              g_value_set_string (&val, "unix-session");
-              g_value_array_append (helper->polkit_subject, &val);
-
-              g_value_unset (&val);
-              g_value_init (&val, G_TYPE_STRING);
-              g_value_set_string (&val, consolekit_session);
-
-              g_hash_table_insert (helper->polkit_subject_hash, g_strdup ("session-id"), &val);
-
-              g_free (consolekit_session);
-              subject_created = TRUE;
-            }
-          else if (error)
-            {
-              g_warning ("'GetSessionForCookie' failed : %s", error->message);
-              g_error_free (error);
-            }
-          g_object_unref (proxy);
-        }
+      g_value_init (&start_time_val, G_TYPE_UINT64);
+      g_value_set_uint64 (&start_time_val, start_time);
+      g_hash_table_insert (helper->polkit_subject_hash, g_strdup ("start-time"), &start_time_val);
     }
-#endif
-
-  /**
-   * We failed to get valid session data, then we try
-   * to check authentication using the pid.
-   **/
-  if (subject_created == FALSE)
+  else
     {
-      gint pid;
-      guint64 start_time;
-
-      pid = getpid ();
-
-      start_time = get_start_time_for_pid (pid);
-
-      if (G_LIKELY (start_time != 0))
-        {
-          GValue val = { 0 }, pid_val = { 0 }, start_time_val = { 0 };
-
-          helper->polkit_subject = g_value_array_new (2);
-          helper->polkit_subject_hash = g_hash_table_new_full (g_str_hash,
-                                                               g_str_equal,
-                                                               g_free, NULL);
-          g_value_init (&val, G_TYPE_STRING);
-          g_value_set_string (&val, "unix-process");
-          g_value_array_append (helper->polkit_subject, &val);
-
-          g_value_unset (&val);
-
-          g_value_init (&pid_val, G_TYPE_UINT);
-          g_value_set_uint (&pid_val, pid);
-          g_hash_table_insert (helper->polkit_subject_hash, g_strdup ("pid"), &pid_val);
-
-          g_value_init (&start_time_val, G_TYPE_UINT64);
-          g_value_set_uint64 (&start_time_val, start_time);
-          g_hash_table_insert (helper->polkit_subject_hash, g_strdup ("start-time"), &start_time_val);
-        }
-      else
-        {
-          g_warning ("Unable to create Polkit subject");
-          return FALSE;
-        }
+      g_warning ("Unable to create Polkit subject");
+      return FALSE;
     }
+  
 
-  g_value_init (&hash_elem,
-  dbus_g_type_get_map ("GHashTable",
-                       G_TYPE_STRING,
-                       G_TYPE_VALUE));
+  g_value_init (&hash_elem, 
+                dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE));
 
   g_value_set_static_boxed (&hash_elem, helper->polkit_subject_hash);
   g_value_array_append (helper->polkit_subject, &hash_elem);

@@ -1,3 +1,9 @@
+4.7.2
+=====
+- Do not try "unix-session" authorization with PolicyKit as this 
+  seems to be either broken or not implemented in PolicyKit (bug #6817).
+  This fixes suspend/hibernate in xfce4-session-logout.
+
 4.7.1
 =====
 - Add support for new gnome-keyring (bugs #5912, #5137 and #6073).
