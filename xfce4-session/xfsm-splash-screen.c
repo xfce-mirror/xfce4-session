@@ -280,7 +280,7 @@ xfsm_splash_screen_load (XfsmSplashScreen *splash,
   void (*init) (XfsmSplashEngine *engine);
   gchar *filename;
 
-  filename = g_module_build_path (LIBDIR "/xfce4/splash/engines", engine);
+  filename = g_module_build_path (LIBDIR "/xfce4/session/splash-engines", engine);
   splash->module = g_module_open (filename, G_MODULE_BIND_LOCAL);
   g_free (filename);
 
