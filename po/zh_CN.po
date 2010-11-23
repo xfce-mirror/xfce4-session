@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-29 10:05+0000\n"
+"POT-Creation-Date: 2010-11-23 11:08+0000\n"
 "PO-Revision-Date: 2010-04-06 13:28+0800\n"
 "Last-Translator: Hunt Xu <huntxu@live.cn>\n"
 "Language-Team: Chinese/Simplified <xfce-i18n@xfce.org>\n"
@@ -218,7 +218,7 @@ msgid "Failed to hibernate"
 msgstr "休眠失败"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:150
-msgid "Xfclock4 could not be launched"
+msgid "Xflock4 could not be launched"
 msgstr "无法启动 Xfclock4"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:222
@@ -493,7 +493,7 @@ msgstr "<b>出现一个错误</b>"
 msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
 msgstr "您所输入的密码不正确，或者系统管理员不允许您的帐户关闭该计算机。"
 
-#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1228
+#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1119
 msgid "Shutdown Failed"
 msgstr "关机失败"
 
@@ -506,25 +506,25 @@ msgstr "无法关机"
 msgid "Last accessed: %s"
 msgstr "最后访问: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:182
+#: ../xfce4-session/xfsm-chooser.c:177
 msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
 msgstr "选择您希望恢复的会话。您可以简单地双击会话名称来选择。"
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:208
+#: ../xfce4-session/xfsm-chooser.c:203
 msgid "Log out"
 msgstr "注销"
 
-#: ../xfce4-session/xfsm-chooser.c:210
+#: ../xfce4-session/xfsm-chooser.c:205
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "取消本次登录并且返回到登录屏幕。"
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:218
+#: ../xfce4-session/xfsm-chooser.c:212
 msgid "New session"
 msgstr "新建会话"
 
-#: ../xfce4-session/xfsm-chooser.c:220
+#: ../xfce4-session/xfsm-chooser.c:213
 msgid "Create a new session."
 msgstr "创建新会话。"
 
@@ -534,11 +534,11 @@ msgstr "创建新会话。"
 msgid "The client doesn't have any properties set yet"
 msgstr "客户程序还没有设置任何属性"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:309
+#: ../xfce4-session/xfsm-compat-gnome.c:301
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "正在启动 Gnome Keyring 守护进程"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:321
+#: ../xfce4-session/xfsm-compat-gnome.c:313
 msgid "Starting Gnome Assistive Technologies"
 msgstr "正在启动 Gnome 辅助技术"
 
@@ -569,7 +569,7 @@ msgstr "仍然继续"
 msgid "Try again"
 msgstr "重试"
 
-#: ../xfce4-session/xfsm-manager.c:712
+#: ../xfce4-session/xfsm-manager.c:602
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr ""
@@ -577,78 +577,78 @@ msgstr ""
 "环境变量 $XDG_CONFIG_DIRS 设置不对(必须包含 \"%s\" )；或者 xfce4-session 安装\n"
 "不正确。"
 
-#: ../xfce4-session/xfsm-manager.c:723
+#: ../xfce4-session/xfsm-manager.c:613
 #, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "指定的应急会话(\"%s\")未被标记为应急会话。"
 
-#: ../xfce4-session/xfsm-manager.c:770
+#: ../xfce4-session/xfsm-manager.c:660
 msgid "The list of applications in the failsafe session is empty."
 msgstr "应急会话中的程序列表是空的。"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:817
+#: ../xfce4-session/xfsm-manager.c:707
 msgid "Session Manager Error"
 msgstr "会话管理器错误"
 
-#: ../xfce4-session/xfsm-manager.c:819
+#: ../xfce4-session/xfsm-manager.c:709
 msgid "Unable to load a failsafe session"
 msgstr "无法加载应急会话"
 
-#: ../xfce4-session/xfsm-manager.c:1231
+#: ../xfce4-session/xfsm-manager.c:1122
 msgid "Failed to suspend session"
 msgstr "挂起会话失败"
 
-#: ../xfce4-session/xfsm-manager.c:1232
+#: ../xfce4-session/xfsm-manager.c:1123
 msgid "Failed to hibernate session"
 msgstr "休眠会话失败"
 
-#: ../xfce4-session/xfsm-manager.c:1520
+#: ../xfce4-session/xfsm-manager.c:1411
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "客户程序空闲时方可被终止"
 
-#: ../xfce4-session/xfsm-manager.c:2051
+#: ../xfce4-session/xfsm-manager.c:1942
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "会话管理器空闲时才会接受断点测试请求"
 
-#: ../xfce4-session/xfsm-manager.c:2092
+#: ../xfce4-session/xfsm-manager.c:1983
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "会话管理器空闲时才可请求关机"
 
-#: ../xfce4-session/xfsm-manager.c:2099
+#: ../xfce4-session/xfsm-manager.c:1990
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "无效的关机类型 \"%u\""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1664
+#: ../xfce4-session/xfsm-shutdown-helper.c:1593
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
 msgstr "向关机程序 %s 发送命令时出错"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1678
+#: ../xfce4-session/xfsm-shutdown-helper.c:1607
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
 msgstr "从关机程序 %s 接收响应时出错"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1687
+#: ../xfce4-session/xfsm-shutdown-helper.c:1616
 #, c-format
 msgid "Shutdown command failed"
 msgstr "关机命令失败"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1867
+#: ../xfce4-session/xfsm-shutdown-helper.c:1794
 msgid "Suspend failed, no backend supported"
 msgstr "挂起操作失败，没有后端被支持"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1894
+#: ../xfce4-session/xfsm-shutdown-helper.c:1821
 msgid "Hibernate failed, no backend supported"
 msgstr "休眠操作失败，没有后端被支持"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1924
+#: ../xfce4-session/xfsm-shutdown-helper.c:1851
 msgid "Shutdown Command not found"
 msgstr "找不到关机命令"
 
@@ -745,7 +745,7 @@ msgstr "正在启动 X 终端"
 msgid "Starting %s"
 msgstr "正在启动 %s"
 
-#: ../xfce4-session/xfsm-startup.c:284
+#: ../xfce4-session/xfsm-startup.c:283
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -770,7 +770,7 @@ msgstr ""
 "地方。\n"
 "你可以删除这个文件夹了。\n"
 
-#: ../xfce4-session/xfsm-startup.c:442
+#: ../xfce4-session/xfsm-startup.c:441
 msgid "Performing Autostart..."
 msgstr "正在执行自动启动..."
 
@@ -862,13 +862,11 @@ msgstr "注销时出错"
 msgid "Log out of the Xfce Desktop"
 msgstr "从 Xfce 桌面注销"
 
-#: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:1
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:1
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
 msgid "Session Menu"
 msgstr "会话菜单"
 
-#: ../panel-plugin/xfsm-logout-plugin-4.6.desktop.in.in.h:2
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.in.h:2
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
 msgid "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
 msgstr "显示一个菜单用以锁屏、挂起、关机或注销"
 
