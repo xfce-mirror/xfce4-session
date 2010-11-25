@@ -36,6 +36,15 @@
 #ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
 #endif
+#ifdef HAVE_SYS_PARAM_H
+#include <sys/param.h>
+#endif
+#ifdef HAVE_SYS_USER_H
+#include <sys/user.h>
+#endif
+#ifdef HAVE_SYS_SYSCTL_H
+#include <sys/sysctl.h>
+#endif
 
 #ifdef HAVE_MEMORY_H
 #include <memory.h>
@@ -53,7 +62,6 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-
 #ifdef HAVE_ERRNO_H
 #include <errno.h>
 #endif
