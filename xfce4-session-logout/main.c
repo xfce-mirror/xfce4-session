@@ -55,49 +55,45 @@ typedef enum
   XFSM_SHUTDOWN_HIBERNATE,
 } XfsmShutdownType;
 
-gboolean logout = FALSE;
-gboolean halt = FALSE;
-gboolean reboot = FALSE;
-gboolean suspend = FALSE;
-gboolean hibernate = FALSE;
-gboolean fast = FALSE;
-gboolean version = FALSE;
+gboolean opt_logout = FALSE;
+gboolean opt_halt = FALSE;
+gboolean opt_reboot = FALSE;
+gboolean opt_suspend = FALSE;
+gboolean opt_hibernate = FALSE;
+gboolean opt_fast = FALSE;
+gboolean opt_version = FALSE;
 
 static GOptionEntry option_entries[] =
 {
-  { "logout", 'l', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &logout,
+  { "logout", 'l', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_logout,
     N_("Log out without displaying the logout dialog"),
     NULL
   },
-  { "halt", 'h', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &halt,
+  { "halt", 'h', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_halt,
     N_("Halt without displaying the logout dialog"),
     NULL
   },
-  { "reboot", 'r', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &reboot,
+  { "reboot", 'r', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_reboot,
     N_("Reboot without displaying the logout dialog"),
     NULL
   },
-  { "suspend", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &suspend,
+  { "suspend", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_suspend,
     N_("Suspend without displaying the logout dialog"),
     NULL
   },
-  { "hibernate", 'h', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &hibernate,
+  { "hibernate", 'h', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_hibernate,
     N_("Hibernate without displaying the logout dialog"),
     NULL
   },
-  { "fast", 'f', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &fast,
+  { "fast", 'f', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_fast,
     N_("Log out quickly; don't save the session"),
     NULL
   },
-  { "version", 'V', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &version,
+  { "version", 'V', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_version,
     N_("Print version information and exit"),
     NULL
   },
-  {
-    NULL, ' ', 0, 0, NULL,
-    NULL,
-    NULL
-  }
+  { NULL }
 };
 
 
@@ -138,31 +134,31 @@ main (int argc, char **argv)
 
   have_display = gtk_init_with_args (&argc, &argv, "", option_entries, PACKAGE, NULL);
 
-  if (logout)
+  if (opt_logout)
     {
       shutdown_type = XFSM_SHUTDOWN_LOGOUT;
     }
-  else if (halt)
+  else if (opt_halt)
     {
       shutdown_type = XFSM_SHUTDOWN_HALT;
     }
-  else if (reboot)
+  else if (opt_reboot)
     {
       shutdown_type = XFSM_SHUTDOWN_REBOOT;
     }
-  else if (suspend)
+  else if (opt_suspend)
     {
       shutdown_type = XFSM_SHUTDOWN_SUSPEND;
     }
-  else if (hibernate)
+  else if (opt_hibernate)
     {
       shutdown_type = XFSM_SHUTDOWN_HIBERNATE;
     }
-  else if (fast)
+  else if (opt_fast)
     {
       allow_save = FALSE;
     }
-  else if (version)
+  else if (opt_version)
     {
       printf ("%s (Xfce %s)\n\n"
               "Copyright (c) 2010\n"
