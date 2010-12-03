@@ -1,4 +1,3 @@
-dnl $Id$
 dnl
 dnl Copyright (c) 2003-2009
 dnl         The Xfce development team. All rights reserved.
@@ -9,16 +8,16 @@ dnl
 dnl Version information
 m4_define([xfsm_version_major], [4])
 m4_define([xfsm_version_minor], [7])
-m4_define([xfsm_version_micro], [1])
+m4_define([xfsm_version_micro], [2])
 m4_define([xfsm_version_nano], []) dnl leave this empty to have no nano version
 m4_define([xfsm_version_build], [@REVISION@])
-m4_define([xfsm_version_tag], [git])
+m4_define([xfsm_version_tag], [])
 m4_define([xfsm_version], [xfsm_version_major().xfsm_version_minor().xfsm_version_micro()ifelse(xfsm_version_nano(), [], [], [.xfsm_version_nano()])ifelse(xfsm_version_tag(), [git], [xfsm_version_tag()-xfsm_version_build()], [xfsm_version_tag()])])
 
 m4_define([xfsm_debug_default], [ifelse(xfsm_version_tag(), [git], [full], [minimum])])
 
 dnl Initialize autoconf
-AC_COPYRIGHT([Copyright (c) 2003-2009
+AC_COPYRIGHT([Copyright (c) 2003-2010
         The Xfce development team. All rights reserved.
 
 Written for Xfce by Benedikt Meurer <benny@xfce.org>.])
