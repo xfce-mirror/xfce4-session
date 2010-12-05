@@ -48,6 +48,8 @@
 #include <xfce4-session/shutdown.h>
 #include <xfce4-session/xfsm-global.h>
 
+#include <libxfsm/xfsm-util.h>
+
 
 /* global variables */
 gboolean          verbose = FALSE;
