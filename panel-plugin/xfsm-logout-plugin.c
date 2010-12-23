@@ -362,7 +362,7 @@ xfsm_logout_plugin_construct(XfcePanelPlugin *plugin)
 {
     XfsmLogoutPlugin *logout_plugin;
     GtkUIManager *uimgr;
-    GtkWidget *menubar, *mi, *submenu;
+    GtkWidget *menubar, *mi;
 #ifdef HAVE_GETPWUID
     GtkWidget *label;
     struct passwd *pwent;
@@ -406,9 +406,6 @@ xfsm_logout_plugin_construct(XfcePanelPlugin *plugin)
     gtk_container_set_border_width(GTK_CONTAINER(menubar), 0);
     gtk_container_add(GTK_CONTAINER(plugin), menubar);
     xfce_panel_plugin_add_action_widget(plugin, menubar);
-
-    submenu = gtk_menu_item_get_submenu(GTK_MENU_ITEM(mi));
-    xfce_panel_plugin_register_menu(plugin, GTK_MENU(submenu));
 
     /* returning TRUE from size-changed disables the panel's size
      * handling code for the plugin */
