@@ -822,10 +822,7 @@ xfsm_shutdown(XfsmShutdownType type)
     return EXIT_SUCCESS;
 
   if (shutdown_helper == NULL)
-    {
-      g_warning ("No shutdown helper attached!");
-      return EXIT_FAILURE;
-    }
+    shutdown_helper = xfsm_shutdown_helper_new ();
 
   result = xfsm_shutdown_helper_send_command (shutdown_helper, type, &error);
   g_object_unref (shutdown_helper);
