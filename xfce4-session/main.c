@@ -222,7 +222,7 @@ main (int argc, char **argv)
   if (opt_version)
     {
       g_print ("%s %s (Xfce %s)\n\n", PACKAGE_NAME, PACKAGE_VERSION, xfce_version_string ());
-      g_print ("%s\n", "Copyright (c) 2003-2010");
+      g_print ("%s\n", "Copyright (c) 2003-2011");
       g_print ("\t%s\n\n", _("The Xfce development team. All rights reserved."));
       g_print ("%s\n\n", _("Written by Benedikt Meurer <benny@xfce.org>."));
       g_print (_("Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"),

@@ -7,17 +7,17 @@ dnl
 
 dnl Version information
 m4_define([xfsm_version_major], [4])
-m4_define([xfsm_version_minor], [7])
-m4_define([xfsm_version_micro], [3])
+m4_define([xfsm_version_minor], [8])
+m4_define([xfsm_version_micro], [0])
 m4_define([xfsm_version_nano], []) dnl leave this empty to have no nano version
 m4_define([xfsm_version_build], [@REVISION@])
-m4_define([xfsm_version_tag], [git])
+m4_define([xfsm_version_tag], [])
 m4_define([xfsm_version], [xfsm_version_major().xfsm_version_minor().xfsm_version_micro()ifelse(xfsm_version_nano(), [], [], [.xfsm_version_nano()])ifelse(xfsm_version_tag(), [git], [xfsm_version_tag()-xfsm_version_build()], [xfsm_version_tag()])])
 
 m4_define([xfsm_debug_default], [ifelse(xfsm_version_tag(), [git], [full], [minimum])])
 
 dnl Initialize autoconf
-AC_COPYRIGHT([Copyright (c) 2003-2010
+AC_COPYRIGHT([Copyright (c) 2003-2011
         The Xfce development team. All rights reserved.
 
 Written for Xfce by Benedikt Meurer <benny@xfce.org>.])
@@ -71,16 +71,16 @@ dnl Check for i18n support
 XDT_I18N([@LINGUAS@])
 
 dnl Check for required packages
-XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.7.0])
-XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-1], [4.7.0])
+XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.8.0])
+XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-1], [4.8.0])
 XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [2.14.0])
 XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-1.0], [2.22])
 XDT_CHECK_PACKAGE([DBUS], [dbus-1], [1.0.0])
 XDT_CHECK_PACKAGE([DBUS_GLIB], [dbus-glib-1], [0.73])
-XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.7.0])
+XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.8.0])
 
 dnl we provide a panel plugin now
-XDT_CHECK_OPTIONAL_PACKAGE([LIBXFCE4PANEL], [libxfce4panel-1.0], [4.7.2],
+XDT_CHECK_OPTIONAL_PACKAGE([LIBXFCE4PANEL], [libxfce4panel-1.0], [4.8.0],
                            [panel-plugin], [Panel logout menu button], [yes])
 
 dnl Check for gnome support

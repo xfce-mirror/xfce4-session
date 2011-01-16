@@ -161,7 +161,7 @@ main (int argc, char **argv)
   else if (opt_version)
     {
       printf ("%s (Xfce %s)\n\n"
-              "Copyright (c) 2010\n"
+              "Copyright (c) 2010-2011\n"
               "        The Xfce development team. All rights reserved.\n\n"
               "Written for Xfce by Brian Tarricone <kelnos@xfce.org> and\n"
               "Benedikt Meurer <benny@xfce.org>.\n\n"

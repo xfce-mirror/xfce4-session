@@ -1,21 +1,22 @@
 # Galician translation of xfce4-session
 # Copyright (C) 2008, 2009, 2010 Leandro Regueiro
 # This file is distributed under the same license as the xfce package.
-# 
+#
 # Iván Seoane Pardo <talivan.ivan@gmail.com>, 2006.
 # Leandro Regueiro <leandro.regueiro@gmail.com>, 2008, 2009, 2010.
-# 
+#
 # Proxecto Trasno - Adaptación do software libre á lingua galega:  Se desexas
 # colaborar connosco, podes atopar máis información en <http://trasno.net>
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-25 10:08+0000\n"
+"POT-Creation-Date: 2011-01-16 17:35+0100\n"
 "PO-Revision-Date: 2010-10-19 18:31+0100\n"
 "Last-Translator: Leandro Regueiro <leandro.regueiro@gmail.com>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
+"Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -259,7 +260,9 @@ msgstr "Non foi posible contactar co servidor de configuración"
 
 #: ../settings/main.c:114
 msgid "Unable to create user interface from embedded definition data"
-msgstr "Non foi posible crear a interface de usuario a partir dos datos da definición encastada"
+msgstr ""
+"Non foi posible crear a interface de usuario a partir dos datos da "
+"definición encastada"
 
 #: ../settings/main.c:127
 msgid "_Application Autostart"
@@ -299,8 +302,12 @@ msgid "Terminate Program"
 msgstr "Terminar o programa"
 
 #: ../settings/session-editor.c:189
-msgid "The application will lose any unsaved state and will not be restarted in your next session."
-msgstr "A aplicación ha perder calquera estado que non fora gardado e non se ha reiniciar na seguinte sesión."
+msgid ""
+"The application will lose any unsaved state and will not be restarted in "
+"your next session."
+msgstr ""
+"A aplicación ha perder calquera estado que non fora gardado e non se ha "
+"reiniciar na seguinte sesión."
 
 #: ../settings/session-editor.c:191
 #: ../settings/xfce4-session-settings.glade.h:35
@@ -387,8 +394,14 @@ msgid "Failed to open %s for writing"
 msgstr "Non se puido abrir «%s» para escritura"
 
 #: ../settings/xfae-window.c:101
-msgid "Below is the list of applications that will be started automatically when you login to your Xfce desktop, in addition to the applications that were saved when you logged out last time:"
-msgstr "Embaixo está a lista de aplicacións que se iniciarán automaticamente cando inicie sesión no escritorio Xfce, ademais das aplicacións que foron gardadas cando rematou a súa última sesión:"
+msgid ""
+"Below is the list of applications that will be started automatically when "
+"you login to your Xfce desktop, in addition to the applications that were "
+"saved when you logged out last time:"
+msgstr ""
+"Embaixo está a lista de aplicacións que se iniciarán automaticamente cando "
+"inicie sesión no escritorio Xfce, ademais das aplicacións que foron gardadas "
+"cando rematou a súa última sesión:"
 
 #: ../settings/xfae-window.c:289
 #, c-format
@@ -400,8 +413,12 @@ msgid "Failed to remove item"
 msgstr "Produciuse un erro ao eliminar o elemento"
 
 #: ../settings/xfae-window.c:326
-msgid "This will permanently remove the application from the list of automatically started applications"
-msgstr "Isto eliminará permanentemente a aplicación da lista de aplicacións que se inician automaticamente"
+msgid ""
+"This will permanently remove the application from the list of automatically "
+"started applications"
+msgstr ""
+"Isto eliminará permanentemente a aplicación da lista de aplicacións que se "
+"inician automaticamente"
 
 #: ../settings/xfae-window.c:328
 #, c-format
@@ -490,14 +507,18 @@ msgid "<b>An error occurred</b>"
 msgstr "<b>Produciuse un erro</b>"
 
 #: ../xfce4-session/shutdown.c:714
-msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
-msgstr "Ou o contrasinal introducido non é válido, ou o administrador do sistema non permite a capacidade de apaga-lo computador coa súa conta de usuario."
+msgid ""
+"Either the password you entered is invalid, or the system administrator "
+"disallows shutting down this computer with your user account."
+msgstr ""
+"Ou o contrasinal introducido non é válido, ou o administrador do sistema non "
+"permite a capacidade de apaga-lo computador coa súa conta de usuario."
 
-#: ../xfce4-session/shutdown.c:836 ../xfce4-session/xfsm-manager.c:1119
+#: ../xfce4-session/shutdown.c:833 ../xfce4-session/xfsm-manager.c:1119
 msgid "Shutdown Failed"
 msgstr "Erro ao apagar"
 
-#: ../xfce4-session/shutdown.c:838
+#: ../xfce4-session/shutdown.c:835
 msgid "Unable to perform shutdown"
 msgstr "Non foi posible apagar"
 
@@ -507,8 +528,12 @@ msgid "Last accessed: %s"
 msgstr "Último acceso: %s"
 
 #: ../xfce4-session/xfsm-chooser.c:177
-msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
-msgstr "Escolla a sesión que quer restaurar. Pódeo facer premendo dúas veces no nome da sesión."
+msgid ""
+"Choose the session you want to restore. You can simply double-click the "
+"session name to restore it."
+msgstr ""
+"Escolla a sesión que quer restaurar. Pódeo facer premendo dúas veces no nome "
+"da sesión."
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:203
@@ -573,13 +598,23 @@ msgstr "Tentalo de novo"
 
 #: ../xfce4-session/xfsm-manager.c:602
 #, c-format
-msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
-msgstr "Non foi posible determinar o nome da sesión a proba de erros. Causas posibles: xfconfd non se está executando (problema de configuración de D-Bus), a variable de contorno $XDG_CONFIG_DIRS está mal definida (debe incluír \"%s\"), ou xfce4-session está mal instalado."
+msgid ""
+"Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
+"running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
+"incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
+msgstr ""
+"Non foi posible determinar o nome da sesión a proba de erros. Causas "
+"posibles: xfconfd non se está executando (problema de configuración de D-"
+"Bus), a variable de contorno $XDG_CONFIG_DIRS está mal definida (debe "
+"incluír \"%s\"), ou xfce4-session está mal instalado."
 
 #: ../xfce4-session/xfsm-manager.c:613
 #, c-format
-msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr "A sesión a proba de erros especificada (\"%s\") non está marcada como sesión a proba de erros."
+msgid ""
+"The specified failsafe session (\"%s\") is not marked as a failsafe session."
+msgstr ""
+"A sesión a proba de erros especificada (\"%s\") non está marcada como sesión "
+"a proba de erros."
 
 #: ../xfce4-session/xfsm-manager.c:660
 msgid "The list of applications in the failsafe session is empty."
@@ -612,42 +647,47 @@ msgstr "Só pode terminar os clientes cando está en estado inactivo"
 #: ../xfce4-session/xfsm-manager.c:1942
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
-msgstr "O xestor de sesión debe estar en estado inactivo ao solicitar un punto de control"
+msgstr ""
+"O xestor de sesión debe estar en estado inactivo ao solicitar un punto de "
+"control"
 
 #: ../xfce4-session/xfsm-manager.c:1983
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
-msgstr "O xestor de sesións debe estar en estado inactivo ao solicitar un apagado"
+msgstr ""
+"O xestor de sesións debe estar en estado inactivo ao solicitar un apagado"
 
 #: ../xfce4-session/xfsm-manager.c:1990
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Tipo de apagado  \"%u\" incorrecto"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1659
+#: ../xfce4-session/xfsm-shutdown-helper.c:1601
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
 msgstr "Produciuse un erro ao enviar a orde ao asistente de apagado: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1673
+#: ../xfce4-session/xfsm-shutdown-helper.c:1615
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
 msgstr "Produciuse un erro ao recibir a resposta do asistente de apagado: %s"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1682
+#: ../xfce4-session/xfsm-shutdown-helper.c:1624
 #, c-format
 msgid "Shutdown command failed"
 msgstr "A orde de apagado fallou"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1860
+#: ../xfce4-session/xfsm-shutdown-helper.c:1802
 msgid "Suspend failed, no backend supported"
-msgstr "Produciuse un erro ao suspender, non hai compatibilidade con ningún motor"
+msgstr ""
+"Produciuse un erro ao suspender, non hai compatibilidade con ningún motor"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1887
+#: ../xfce4-session/xfsm-shutdown-helper.c:1829
 msgid "Hibernate failed, no backend supported"
-msgstr "Produciuse un erro ao hibernar, non hai compatibilidade con ningún motor"
+msgstr ""
+"Produciuse un erro ao hibernar, non hai compatibilidade con ningún motor"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1917
+#: ../xfce4-session/xfsm-shutdown-helper.c:1859
 msgid "Shutdown Command not found"
 msgstr "Non se atopou a orde de apagado"
 
@@ -833,27 +873,27 @@ msgstr "Hibernar sen mostrar o diálogo para saír da sesión"
 msgid "Log out quickly; don't save the session"
 msgstr "Saír da sesión rápido; non gardar a sesión"
 
-#: ../xfce4-session-logout/main.c:111
+#: ../xfce4-session-logout/main.c:107
 msgid "Logout Error"
 msgstr "Erro ao rematar a sesión"
 
-#: ../xfce4-session-logout/main.c:114 ../xfce4-session-logout/main.c:121
+#: ../xfce4-session-logout/main.c:110 ../xfce4-session-logout/main.c:117
 msgid "Unknown error"
 msgstr "Erro descoñecido"
 
-#: ../xfce4-session-logout/main.c:181
+#: ../xfce4-session-logout/main.c:177
 msgid "Unable to contact D-Bus session bus."
 msgstr "Non foi posible contactar co bus de sesións D-Bus."
 
-#: ../xfce4-session-logout/main.c:193
+#: ../xfce4-session-logout/main.c:189
 msgid "Failed to create new D-Bus message"
 msgstr "Produciuse un erro ao crear unha nova mensaxe D-Bus"
 
-#: ../xfce4-session-logout/main.c:209
+#: ../xfce4-session-logout/main.c:205
 msgid "Failed to receive a reply from the session manager"
 msgstr "Produciuse un erro ao recibir unha resposta do xestor de sesións"
 
-#: ../xfce4-session-logout/main.c:217
+#: ../xfce4-session-logout/main.c:213
 msgid "Received error while trying to log out"
 msgstr "Recibiuse un erro mentres se intentaba rematar a sesión"
 
@@ -866,8 +906,11 @@ msgid "Session Menu"
 msgstr "Menú de sesión"
 
 #: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
-msgid "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
-msgstr "Mostra un menú cas opcións de bloquear a pantalla, suspender, apagar ou saír da sesión"
+msgid ""
+"Shows a menu with options to lock the screen, suspend, shutdown, or log out"
+msgstr ""
+"Mostra un menú cas opcións de bloquear a pantalla, suspender, apagar ou saír "
+"da sesión"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
 #: ../settings/xfce4-session-settings.glade.h:14
@@ -952,8 +995,11 @@ msgid "Manage _remote applications"
 msgstr "Xestionar as aplicacións _remotas"
 
 #: ../settings/xfce4-session-settings.glade.h:20
-msgid "Manage remote applications over the network (this may be a security risk)"
-msgstr "Xestionar as aplicacións remotas pola rede (isto podería ser un risco de seguridade)"
+msgid ""
+"Manage remote applications over the network (this may be a security risk)"
+msgstr ""
+"Xestionar as aplicacións remotas pola rede (isto podería ser un risco de "
+"seguridade)"
 
 #: ../settings/xfce4-session-settings.glade.h:21
 msgid "Opens the configuration panel for the selected splash screen"
@@ -980,20 +1026,32 @@ msgid "Saving Session"
 msgstr "Gardando a sesión"
 
 #: ../settings/xfce4-session-settings.glade.h:28
-msgid "Start GNOME services, such as gnome-keyring and the GNOME accessibility framework"
-msgstr "Inicia os servizos de GNOME, como gnome-keyring e a plataforma de accesibilidade de GNOME"
+msgid ""
+"Start GNOME services, such as gnome-keyring and the GNOME accessibility "
+"framework"
+msgstr ""
+"Inicia os servizos de GNOME, como gnome-keyring e a plataforma de "
+"accesibilidade de GNOME"
 
 #: ../settings/xfce4-session-settings.glade.h:29
 msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
 msgstr "Inicia os servizos de KDE, como \"kdeinit,\" DCOP, e ARTS"
 
 #: ../settings/xfce4-session-settings.glade.h:30
-msgid "These applications are a part of the currently-running session, and can be saved when you log out.  Changes below will only take effect when the session is saved."
-msgstr "Estas aplicacións son parte da sesión actual, e pódense gardar cando saia. Os cambios de embaixo só terán efecto cando se garde a sesión."
+msgid ""
+"These applications are a part of the currently-running session, and can be "
+"saved when you log out.  Changes below will only take effect when the "
+"session is saved."
+msgstr ""
+"Estas aplicacións son parte da sesión actual, e pódense gardar cando saia. "
+"Os cambios de embaixo só terán efecto cando se garde a sesión."
 
 #: ../settings/xfce4-session-settings.glade.h:31
-msgid "Your session is being saved.  If you do not wish to wait, you may close this window."
-msgstr "Estase gardando a súa sesión. Se non desexa agardar pode pechar esta xanela."
+msgid ""
+"Your session is being saved.  If you do not wish to wait, you may close this "
+"window."
+msgstr ""
+"Estase gardando a súa sesión. Se non desexa agardar pode pechar esta xanela."
 
 #: ../settings/xfce4-session-settings.glade.h:32
 msgid "_Display chooser on login"
@@ -1051,17 +1109,25 @@ msgstr "Consellos do xfce4"
 #~ msgid "No HAL method for command %d"
 #~ msgstr "Non hai método HAL para o comando %d"
 
-#~ msgid "Program \"sudo\" was not found.  You will not be able to shutdown your system from within Xfce."
-#~ msgstr "Non se atopou o programa \"sudo\". Non poderá apagar o sistema dende Xfce."
+#~ msgid ""
+#~ "Program \"sudo\" was not found.  You will not be able to shutdown your "
+#~ "system from within Xfce."
+#~ msgstr ""
+#~ "Non se atopou o programa \"sudo\". Non poderá apagar o sistema dende Xfce."
 
 #~ msgid "Unable to read response from sudo helper: %s"
 #~ msgstr "Non foi posible ler a resposta do asistente de sudo: %s"
 
 #~ msgid "Got unexpected reply from sudo shutdown helper"
-#~ msgstr "Obtívose unha resposta inesperada do asistente de apagado executado con sudo"
+#~ msgstr ""
+#~ "Obtívose unha resposta inesperada do asistente de apagado executado con "
+#~ "sudo"
 
-#~ msgid "Suspend and Hibernate are only supported through HAL, which is unavailable"
-#~ msgstr "A Suspensión e maila Hibernación só están soportadas por HAL, que non está dispoñible"
+#~ msgid ""
+#~ "Suspend and Hibernate are only supported through HAL, which is unavailable"
+#~ msgstr ""
+#~ "A Suspensión e maila Hibernación só están soportadas por HAL, que non "
+#~ "está dispoñible"
 
 #~ msgid "Unexpected error from HAL"
 #~ msgstr "Erro inesperado de HAL"
@@ -1084,29 +1150,66 @@ msgstr "Consellos do xfce4"
 #~ msgid "Remove the selected application from the session."
 #~ msgstr "Fai unha demostración da pantalla de inicio seleccionada."
 
-#~ msgid "If set, the session manager will ask you to choose a session every time you log in to Xfce."
-#~ msgstr "Se se seleciona, o xestor de sesión pediralle que escolla unha sesión sempre que entre no Xfce."
+#~ msgid ""
+#~ "If set, the session manager will ask you to choose a session every time "
+#~ "you log in to Xfce."
+#~ msgstr ""
+#~ "Se se seleciona, o xestor de sesión pediralle que escolla unha sesión "
+#~ "sempre que entre no Xfce."
 
-#~ msgid "This option instructs the session manager to save the current session automatically when you log out. If you don't select this option you'll be prompted whether you want to save the current session on each logout."
-#~ msgstr "Esta opción indica ó xestor de sesión que garde a sesión actual de xeito automático cando saia. Se non selecciona esta opción daquela preguntaráselle sempre que saia se desexa garda-la sesión."
+#~ msgid ""
+#~ "This option instructs the session manager to save the current session "
+#~ "automatically when you log out. If you don't select this option you'll be "
+#~ "prompted whether you want to save the current session on each logout."
+#~ msgstr ""
+#~ "Esta opción indica ó xestor de sesión que garde a sesión actual de xeito "
+#~ "automático cando saia. Se non selecciona esta opción daquela "
+#~ "preguntaráselle sempre que saia se desexa garda-la sesión."
 
-#~ msgid "This option disables the logout confirmation dialog. Whether the session will be saved or not depends on whether you enabled the automatic saving of sessions on logout or not."
-#~ msgstr "Esta opción inhabilita o diálogo de confirmación da saída. A sesión será ou non gardada dependendo de se habilitou ou non o gardado automático de sesión na saída."
+#~ msgid ""
+#~ "This option disables the logout confirmation dialog. Whether the session "
+#~ "will be saved or not depends on whether you enabled the automatic saving "
+#~ "of sessions on logout or not."
+#~ msgstr ""
+#~ "Esta opción inhabilita o diálogo de confirmación da saída. A sesión será "
+#~ "ou non gardada dependendo de se habilitou ou non o gardado automático de "
+#~ "sesión na saída."
 
 #~ msgid "Launch Gnome services on startup"
 #~ msgstr "Executa-los servizos do Gnome no arrinque"
 
-#~ msgid "Enable this if you plan to use Gnome applications. This will instruct the session manager to start some vital Gnome services for you. You should also enable this if you want to use the Assistive Technologies that ship with Gnome."
-#~ msgstr "Habilite isto se está a pensar usar aplicacións do escritorio Gnome. Isto indicará ó xestor de sesión que inicie algúns servizos vitais do Gnome. Tamén debe habilitar esta opción se pretende usa-las tecnoloxías de asistencia que veñen co Gnome."
+#~ msgid ""
+#~ "Enable this if you plan to use Gnome applications. This will instruct the "
+#~ "session manager to start some vital Gnome services for you. You should "
+#~ "also enable this if you want to use the Assistive Technologies that ship "
+#~ "with Gnome."
+#~ msgstr ""
+#~ "Habilite isto se está a pensar usar aplicacións do escritorio Gnome. Isto "
+#~ "indicará ó xestor de sesión que inicie algúns servizos vitais do Gnome. "
+#~ "Tamén debe habilitar esta opción se pretende usa-las tecnoloxías de "
+#~ "asistencia que veñen co Gnome."
 
-#~ msgid "Enable this option if you plan to run KDE applications as part of your Xfce Desktop session. This will notably increase the startup time, but on the other hand, KDE applications will startup faster. Some KDE applications may not work at all if you don't enable this option."
-#~ msgstr "Habilite isto se está a pensar usar aplicacións do escritorio KDE na súa sesión de Xfce. Isto incrementará notabelmente o tempo de arrinque, mais pola outra banda, as aplicacións do KDE iniciaranse máis axiña. Pode que algunhas aplicacións do KDE non funcionen se non habilita esta opción."
+#~ msgid ""
+#~ "Enable this option if you plan to run KDE applications as part of your "
+#~ "Xfce Desktop session. This will notably increase the startup time, but on "
+#~ "the other hand, KDE applications will startup faster. Some KDE "
+#~ "applications may not work at all if you don't enable this option."
+#~ msgstr ""
+#~ "Habilite isto se está a pensar usar aplicacións do escritorio KDE na súa "
+#~ "sesión de Xfce. Isto incrementará notabelmente o tempo de arrinque, mais "
+#~ "pola outra banda, as aplicacións do KDE iniciaranse máis axiña. Pode que "
+#~ "algunhas aplicacións do KDE non funcionen se non habilita esta opción."
 
 #~ msgid "Security"
 #~ msgstr "Seguranza"
 
-#~ msgid "Allow the session manager to manage applications running on remote hosts. Do not enable this option unless you know what you are doing."
-#~ msgstr "Permite, ó xestor de sesión, xestionar aplicacións que se executan en máquinas remotas. Non habilite esta opción se non está certo do que está a facer."
+#~ msgid ""
+#~ "Allow the session manager to manage applications running on remote hosts. "
+#~ "Do not enable this option unless you know what you are doing."
+#~ msgstr ""
+#~ "Permite, ó xestor de sesión, xestionar aplicacións que se executan en "
+#~ "máquinas remotas. Non habilite esta opción se non está certo do que está "
+#~ "a facer."
 
 #~ msgid "Button Label|Sessions and Startup"
 #~ msgstr "Texto do botón|Sesións e arrinque"
@@ -1135,11 +1238,21 @@ msgstr "Consellos do xfce4"
 #~ msgid "Show hibernate button"
 #~ msgstr "Amosar botón de hibernar"
 
-#~ msgid "This option adds a hibernate button to the logout dialog. Only enable if you known your system suspends todisk and resumes correctly."
-#~ msgstr "Esta opción engade un botón de hibernar ó diálogo de finalización. Habilíteo só se sabe que o seu sistema pode suspender a disco e reanudarse correctamente."
+#~ msgid ""
+#~ "This option adds a hibernate button to the logout dialog. Only enable if "
+#~ "you known your system suspends todisk and resumes correctly."
+#~ msgstr ""
+#~ "Esta opción engade un botón de hibernar ó diálogo de finalización. "
+#~ "Habilíteo só se sabe que o seu sistema pode suspender a disco e "
+#~ "reanudarse correctamente."
 
 #~ msgid "Show suspend button"
 #~ msgstr "Amosar botón de suspensión"
 
-#~ msgid "This option adds a suspend button to the logout dialog. Only enable if you known your system suspends toRAM and resumes correctly."
-#~ msgstr "Esta opción engade un botón de suspender na xanela de finalización da sesión. Habilíteo só se sabe que o seu sistema se suspende á RAM e se reanuda correctamente."
+#~ msgid ""
+#~ "This option adds a suspend button to the logout dialog. Only enable if "
+#~ "you known your system suspends toRAM and resumes correctly."
+#~ msgstr ""
+#~ "Esta opción engade un botón de suspender na xanela de finalización da "
+#~ "sesión. Habilíteo só se sabe que o seu sistema se suspende á RAM e se "
+#~ "reanuda correctamente."
