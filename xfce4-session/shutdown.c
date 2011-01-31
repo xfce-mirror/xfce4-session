@@ -405,7 +405,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   icon = gtk_icon_theme_load_icon (icon_theme,
                                    "system-log-out",
                                    32,
-                                   GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                   0,
                                    NULL);
   if (!icon)
     icon = gtk_icon_theme_load_icon (icon_theme,
@@ -439,7 +439,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   icon = gtk_icon_theme_load_icon (icon_theme,
                                    "system-reboot",
                                    32,
-                                   GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                   0,
                                    NULL);
 
   if (!icon)
@@ -481,7 +481,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   icon = gtk_icon_theme_load_icon (icon_theme,
                                    "system-shutdown",
                                    32,
-                                   GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                   0,
                                    NULL);
 
   if (!icon)
@@ -543,7 +543,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
       icon = gtk_icon_theme_load_icon (icon_theme,
                                        "system-suspend",
                                        32,
-                                       GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                       0,
                                        NULL);
 
       if (!icon)
@@ -581,7 +581,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
       icon = gtk_icon_theme_load_icon (icon_theme,
                                        "system-hibernate",
                                        32,
-                                       GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                       0,
                                        NULL);
 
       if (!icon)
