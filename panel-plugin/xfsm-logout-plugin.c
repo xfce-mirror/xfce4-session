@@ -174,7 +174,7 @@ xfsm_logout_plugin_do_dbus_call(XfsmLogoutPlugin *logout_plugin,
     ret = dbus_g_proxy_call(proxy, "Shutdown", error,
                             G_TYPE_UINT, type,
                             G_TYPE_BOOLEAN, logout_plugin->allow_save,
-                            G_TYPE_INVALID);
+                            G_TYPE_INVALID, G_TYPE_INVALID);
     g_object_unref(G_OBJECT(proxy));
 
     return ret;
