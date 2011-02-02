@@ -154,10 +154,6 @@ main (int argc, char **argv)
     {
       shutdown_type = XFSM_SHUTDOWN_HIBERNATE;
     }
-  else if (opt_fast)
-    {
-      allow_save = FALSE;
-    }
   else if (opt_version)
     {
       printf ("%s (Xfce %s)\n\n"
@@ -168,6 +164,11 @@ main (int argc, char **argv)
               "Please report bugs to <%s>.\n",
               PACKAGE_STRING, xfce_version_string(), PACKAGE_BUGREPORT);
       return EXIT_SUCCESS;
+    }
+
+  if (opt_fast)
+    {
+      allow_save = FALSE;
     }
 
   dbus_error_init (&derror);
