@@ -1,4 +1,4 @@
-baloursciptsdir = $(libdir)/xfce4/session
+baloursciptsdir = $(HELPER_PATH_PREFIX)/xfce4/session
 balourscipts_SCRIPTS =							\
 	balou-export-theme						\
 	balou-install-theme

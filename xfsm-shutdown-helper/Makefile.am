@@ -1,4 +1,4 @@
-xfsm_shutdown_helperdir = $(libdir)/xfce4/session
+xfsm_shutdown_helperdir = $(HELPER_PATH_PREFIX)/xfce4/session
 xfsm_shutdown_helper_PROGRAMS = 					\
 	xfsm-shutdown-helper
 
