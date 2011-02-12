@@ -230,15 +230,14 @@
     of your desktop session. To be able to shutdown the computer, you
     have to be listed in the systems <filename>sudoers</filename> file,
     in particular, you must be allowed to execute the command
-    <filename>${libdir}/xfce4/session/xfsm-shutdown-helper</filename>
+    <filename>${HELPERDIR}/xfce4/session/xfsm-shutdown-helper</filename>
     (<filename>/usr/sbin/xfsm-shutdown-helper</filename> on Debian GNU/Linux)
-    as user root (where <filename>${libdir}</filename> is the <filename
-    role="directory">lib</filename> sub directory in the prefix you
-    installed <application>&app;</application>, for example
-    <filename role="directory">/usr/local/lib/xfce4/session</filename>).</para>
+    as user root (where <filename>${HELPERDIR}</filename> is the directory passed
+    to configure with the --with-helper-path-prefix option or
+    <filename role="directory">/usr/local/lib/xfce4/session</filename> by default.</para>
 
-    <para>For example, lets say, you installed <application>&app;</application> into <filename
-    role="directory">/usr/local</filename>, your hostname is <emphasis>myhost</emphasis>
+    <para>For example, lets say, you built <application>&app;</application> with
+    the default options, your hostname is <emphasis>myhost</emphasis>
     and your user account is named <emphasis>myuser</emphasis>, then you
     would have to add the following line to your <filename>sudoers</filename>
     file (remember to use <application>visudo</application> to edit
