@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- *                                                                              
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *                                                                              
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
- * 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301 USA.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -245,7 +245,7 @@ simple_next (XfsmSplashEngine *engine, const gchar *text)
 
   gdk_gc_set_rgb_fg_color (simple->gc, &simple->fgcolor);
   gdk_draw_layout (simple->pixmap,
-                   simple->gc, 
+                   simple->gc,
                    tx, ty,
                    simple->layout);
 
@@ -479,7 +479,7 @@ config_configure (XfsmSplashConfig *config,
       xfsm_splash_rc_write_entry (config->rc, "Image", "");
     }
   g_free (path_locale);
-  
+
   gtk_widget_destroy (dialog);
 }
 
@@ -499,7 +499,7 @@ config_init (XfsmSplashConfig *config)
   config->version     = g_strdup (VERSION);
   config->author      = g_strdup ("Benedikt Meurer");
   config->homepage    = g_strdup ("http://www.xfce.org/");
-  
+
   config->configure   = config_configure;
   config->preview     = config_preview;
 }
