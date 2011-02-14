@@ -16,8 +16,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
- * 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301 USA.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -383,9 +383,9 @@ xfsm_shutdown_helper_init_polkit_data (XfsmShutdownHelper *helper)
       g_warning ("Unable to create Polkit subject");
       return FALSE;
     }
-  
 
-  g_value_init (&hash_elem, 
+
+  g_value_init (&hash_elem,
                 dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE));
 
   g_value_set_static_boxed (&hash_elem, helper->polkit_subject_hash);
