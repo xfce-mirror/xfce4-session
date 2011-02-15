@@ -419,7 +419,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
   g_object_unref (icon);
 
-  label = gtk_label_new (_("Log Out"));
+  label = gtk_label_new_with_mnemonic (_("_Log Out"));
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
 
@@ -454,7 +454,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
   g_object_unref (icon);
 
-  label = gtk_label_new (_("Restart"));
+  label = gtk_label_new_with_mnemonic (_("_Restart"));
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
 
@@ -496,7 +496,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
   g_object_unref (icon);
 
-  label = gtk_label_new (_("Shut Down"));
+  label = gtk_label_new_with_mnemonic (_("_Shut Down"));
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
 
@@ -558,7 +558,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
       gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
       g_object_unref (icon);
 
-      label = gtk_label_new (_("Suspend"));
+      label = gtk_label_new_with_mnemonic (_("Sus_pend"));
       gtk_widget_show (label);
       gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
     }
@@ -596,7 +596,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
       gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
       g_object_unref (icon);
 
-      label = gtk_label_new (_("Hibernate"));
+      label = gtk_label_new_with_mnemonic (_("_Hibernate"));
       gtk_widget_show (label);
       gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
   }
