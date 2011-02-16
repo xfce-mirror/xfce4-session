@@ -496,7 +496,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
   g_object_unref (icon);
 
-  label = gtk_label_new_with_mnemonic (_("_Shut Down"));
+  label = gtk_label_new_with_mnemonic (_("Shut _Down"));
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
 
