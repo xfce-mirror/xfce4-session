@@ -102,6 +102,8 @@ struct _XfsmManager
   gchar           *session_file;
   gchar           *checkpoint_session_name;
 
+  gboolean         start_at;
+
   gboolean         compat_gnome;
   gboolean         compat_kde;
 
@@ -729,6 +731,7 @@ xfsm_manager_load (XfsmManager   *manager,
 
   manager->compat_gnome = xfconf_channel_get_bool (channel, "/compat/LaunchGNOME", FALSE);
   manager->compat_kde = xfconf_channel_get_bool (channel, "/compat/LaunchKDE", FALSE);
+  manager->start_at = xfconf_channel_get_bool (channel, "/general/StartAt", FALSE);
 
   display_name  = xfsm_gdk_display_get_fullname (gdk_display_get_default ());
 
@@ -1773,6 +1776,12 @@ xfsm_manager_get_compat_startup (XfsmManager          *manager,
     }
 }
 
+
+gboolean
+xfsm_manager_get_start_at (XfsmManager *manager)
+{
+  return manager->start_at;
+}
 
 
 /*

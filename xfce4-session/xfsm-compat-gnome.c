@@ -189,52 +189,6 @@ gnome_keyring_daemon_shutdown (void)
 }
 
 
-#ifdef HAVE_GNOME
-static void
-gnome_ast_startup (void)
-{
-  GError *error = NULL;
-  GSList *list;
-  GSList *lp;
-  gchar  *path;
-
-  list = gconf_client_get_list (gnome_conf_client, AT_STARTUP_KEY,
-                                GCONF_VALUE_STRING, &error);
-
-  if (error != NULL)
-    {
-      g_warning ("Failed to query value of " AT_STARTUP_KEY ": %s",
-                 error->message);
-      g_error_free (error);
-    }
-  else
-    {
-      for (lp = list; lp != NULL; lp = lp->next)
-        {
-          path = g_find_program_in_path ((const gchar *) lp->data);
-          if (path != NULL)
-            {
-              g_spawn_command_line_async (path, &error);
-              if (error != NULL)
-                {
-                  g_warning ("Failed to execute assistive helper %s: %s",
-                             path, error->message);
-                  g_error_free (error);
-                }
-              else
-                {
-                  /* give it some time to fire up */
-                  g_usleep (50 * 1000);
-                }
-              g_free (path);
-            }
-          g_free (lp->data);
-        }
-      g_slist_free (list);
-    }
-}
-#endif
-
 
 static void
 xfsm_compat_gnome_smproxy_startup (void)
@@ -300,23 +254,6 @@ xfsm_compat_gnome_startup (XfsmSplashScreen *splash)
   if (G_LIKELY (splash != NULL))
     xfsm_splash_screen_next (splash, _("Starting The Gnome Keyring Daemon"));
   gnome_keyring_daemon_startup ();
-
-#ifdef HAVE_GNOME
-  /* connect to the GConf daemon */
-  gnome_conf_client = gconf_client_get_default ();
-  if (gnome_conf_client != NULL)
-    {
-      if (gconf_client_get_bool (gnome_conf_client, ACCESSIBILITY_KEY, NULL))
-        {
-          if (G_LIKELY (splash != NULL))
-            {
-              xfsm_splash_screen_next (splash, _("Starting Gnome Assistive Technologies"));
-            }
-
-          gnome_ast_startup ();
-        }
-    }
-#endif
 
   gnome_compat_started = TRUE;
 }

@@ -45,7 +45,7 @@
 #endif
 
 #include <glib/gstdio.h>
-
+#include <gdk/gdkx.h>
 #include <libxfce4ui/libxfce4ui.h>
 
 #include <libxfsm/xfsm-util.h>
@@ -303,7 +303,8 @@ xfsm_startup_autostart_migrate (void)
 
 
 static gint
-xfsm_startup_autostart_xdg (XfsmManager *manager)
+xfsm_startup_autostart_xdg (XfsmManager *manager,
+                            gboolean     start_at_spi)
 {
   const gchar *try_exec;
   const gchar *type;
@@ -320,6 +321,8 @@ xfsm_startup_autostart_xdg (XfsmManager *manager)
   gchar      **not_show_in;
   gint         started = 0;
   gint         n, m;
+  gchar       *filename;
+  const gchar *pattern;
 
   /* migrate the old autostart location (if still present) */
   xfsm_startup_autostart_migrate ();
@@ -328,7 +331,13 @@ xfsm_startup_autostart_xdg (XfsmManager *manager)
   kde = xfsm_manager_get_compat_startup (manager, XFSM_MANAGER_COMPAT_KDE);
   gnome = xfsm_manager_get_compat_startup (manager, XFSM_MANAGER_COMPAT_GNOME);
 
-  files = xfce_resource_match (XFCE_RESOURCE_CONFIG, "autostart/*.desktop", TRUE);
+  /* pattern for only at-spi desktop files or everything */
+  if (start_at_spi)
+    pattern = "autostart/at-spi-*.desktop";
+  else
+    pattern = "autostart/*.desktop";
+
+  files = xfce_resource_match (XFCE_RESOURCE_CONFIG, pattern, TRUE);
   for (n = 0; files[n] != NULL; ++n)
     {
       rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG, files[n], TRUE);
@@ -380,6 +389,14 @@ xfsm_startup_autostart_xdg (XfsmManager *manager)
                   g_strfreev (not_show_in);
                 }
             }
+
+          /* skip at-spi launchers if not in at-spi mode or don't skip
+           * them no matter what the OnlyShowIn key says if only
+           * launching at-spi */
+          filename = g_path_get_basename (files[n]);
+          if (g_str_has_prefix (filename, "at-spi-"))
+            skip = !start_at_spi;
+          g_free (filename);
         }
 
       /* check the "Type" key */
@@ -433,7 +450,7 @@ xfsm_startup_autostart (XfsmManager *manager)
 {
   gint n;
 
-  n = xfsm_startup_autostart_xdg (manager);
+  n = xfsm_startup_autostart_xdg (manager, FALSE);
 
   if (n > 0)
     {
@@ -461,11 +478,119 @@ xfsm_startup_foreign (XfsmManager *manager)
 }
 
 
+static void
+xfsm_startup_at_set_gtk_modules (void)
+{
+  const gchar  *old;
+  gchar       **modules;
+  guint         i;
+  gboolean      found_gail = FALSE;
+  gboolean      found_atk_bridge = FALSE;
+  GString      *new;
+
+  old = g_getenv ("GTK_MODULES");
+  if (old != NULL && *old != '\0')
+    {
+      /* check which modules are already loaded */
+      modules = g_strsplit (old, ":", -1);
+      for (i = 0; modules[i] != NULL; i++)
+        {
+          if (strcmp (modules[i], "gail") == 0)
+            found_gail = TRUE;
+          else if (strcmp (modules[i], "atk-bridge") == 0)
+            found_atk_bridge = TRUE;
+        }
+      g_strfreev (modules);
+
+      if (!found_gail || !found_atk_bridge)
+        {
+          /* append modules to old value */
+          new = g_string_new (old);
+          if (!found_gail)
+            new = g_string_append (new, ":gail");
+          if (!found_atk_bridge)
+            new = g_string_append (new, ":atk-bridge");
+
+          g_setenv ("GTK_MODULES", new->str, TRUE);
+          g_string_free (new, TRUE);
+        }
+    }
+  else
+    {
+      g_setenv ("GTK_MODULES", "gail:atk-bridge", TRUE);
+    }
+}
+
+
+static gboolean
+xfsm_startup_at_spi_ior_set (void)
+{
+  Atom        AT_SPI_IOR;
+  GdkDisplay *display;
+  Atom        actual_type;
+  gint        actual_format;
+  guchar    *data = NULL;
+  gulong     nitems;
+  gulong     leftover;
+
+  display = gdk_display_get_default ();
+  AT_SPI_IOR = XInternAtom (GDK_DISPLAY_XDISPLAY (display), "AT_SPI_IOR", False);
+  XGetWindowProperty (GDK_DISPLAY_XDISPLAY (display),
+                      XDefaultRootWindow (GDK_DISPLAY_XDISPLAY (display)),
+                      AT_SPI_IOR, 0L,
+                      (long) BUFSIZ, False,
+                      (Atom) 31, &actual_type, &actual_format,
+                      &nitems, &leftover, &data);
+
+  if (data == NULL)
+    return FALSE;
+  XFree (data);
+
+  return TRUE;
+}
+
+
+static void
+xfsm_startup_at (XfsmManager *manager)
+{
+  gint n, i;
+
+  /* start at-spi-dbus-bus and/or at-spi-registryd */
+  n = xfsm_startup_autostart_xdg (manager, TRUE);
+
+  if (n > 0)
+    {
+      if (G_LIKELY (splash_screen != NULL))
+        xfsm_splash_screen_next (splash_screen, _("Starting Assistive Technologies"));
+
+      xfsm_startup_at_set_gtk_modules ();
+
+      /* wait for 2 seconds until the at-spi registered, not very nice
+       * but required to properly start an accessible desktop */
+      for (i = 0; i < 10; i++)
+        {
+          if (xfsm_startup_at_spi_ior_set ())
+            break;
+          xfsm_verbose ("Waiting for at-spi to register...\n");
+          g_usleep (G_USEC_PER_SEC / 5);
+        }
+    }
+  else
+    {
+      g_warning ("No assistive technology service provider was started!");
+    }
+}
+
+
 void
 xfsm_startup_begin (XfsmManager *manager)
 {
   if (xfsm_manager_get_use_failsafe_mode (manager))
     {
+      /* start assistive technology before anything else */
+      if (xfsm_manager_get_start_at (manager))
+        xfsm_startup_at (manager);
+
       xfsm_startup_failsafe (manager);
       xfsm_startup_autostart (manager);
       xfsm_manager_signal_startup_done (manager);

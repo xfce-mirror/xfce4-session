@@ -155,4 +155,6 @@ gboolean xfsm_manager_get_use_failsafe_mode (XfsmManager *manager);
 gboolean xfsm_manager_get_compat_startup (XfsmManager          *manager,
                                           XfsmManagerCompatType type);
 
+gboolean xfsm_manager_get_start_at (XfsmManager *manager);
+
 #endif /* !__XFSM_MANAGER_H__ */
