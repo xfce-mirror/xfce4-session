@@ -585,12 +585,12 @@ xfsm_startup_at (XfsmManager *manager)
 void
 xfsm_startup_begin (XfsmManager *manager)
 {
+  /* start assistive technology before anything else */
+  if (xfsm_manager_get_start_at (manager))
+    xfsm_startup_at (manager);
+
   if (xfsm_manager_get_use_failsafe_mode (manager))
     {
-      /* start assistive technology before anything else */
-      if (xfsm_manager_get_start_at (manager))
-        xfsm_startup_at (manager);
-
       xfsm_startup_failsafe (manager);
       xfsm_startup_autostart (manager);
       xfsm_manager_signal_startup_done (manager);
