@@ -59,9 +59,6 @@
 
 #include <libxfce4util/libxfce4util.h>
 
-#ifdef HAVE_GNOME
-#include <gconf/gconf-client.h>
-#endif
 #ifdef HAVE_GNOME_KEYRING
 #include <gnome-keyring.h>
 #endif
@@ -70,12 +67,6 @@
 
 #define GNOME_KEYRING_DAEMON "gnome-keyring-daemon"
 
-#ifdef HAVE_GNOME
-#define ACCESSIBILITY_KEY "/desktop/gnome/interface/accessibility"
-#define AT_STARTUP_KEY    "/desktop/gnome/accessibility/startup/exec_ats"
-
-static GConfClient *gnome_conf_client = NULL;
-#endif
 
 static gboolean gnome_compat_started = FALSE;
 static int keyring_lifetime_pipe[2];
@@ -270,14 +261,6 @@ xfsm_compat_gnome_shutdown (void)
 
   /* shutdown the keyring daemon */
   gnome_keyring_daemon_shutdown ();
-
-#ifdef HAVE_GNOME
-  if (gnome_conf_client != NULL)
-    {
-      g_object_unref (G_OBJECT (gnome_conf_client));
-      gnome_conf_client = NULL;
-    }
-#endif
 
   /* shutdown the GConf daemon */
   if (!g_spawn_command_line_sync ("gconftool-2 --shutdown", NULL,
