@@ -731,7 +731,7 @@ xfsm_manager_load (XfsmManager   *manager,
 
   manager->compat_gnome = xfconf_channel_get_bool (channel, "/compat/LaunchGNOME", FALSE);
   manager->compat_kde = xfconf_channel_get_bool (channel, "/compat/LaunchKDE", FALSE);
-  manager->start_at = xfconf_channel_get_bool (channel, "/general/StartAt", FALSE);
+  manager->start_at = xfconf_channel_get_bool (channel, "/general/StartAssistiveTechnologies", FALSE);
 
   display_name  = xfsm_gdk_display_get_fullname (gdk_display_get_default ());
 
