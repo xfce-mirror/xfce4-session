@@ -275,8 +275,6 @@ po/Makefile.in
 settings/Makefile
 xfce4-session/Makefile
 xfce4-session-logout/Makefile
-xfce4-tips/Makefile
-xfce4-tips/data/Makefile
 xfsm-shutdown-helper/Makefile
 ])
 
@@ -320,12 +318,6 @@ else
 echo " * Panel plugin:                   no"
 fi
 echo
-echo "Gnome compatibility:"
-if test x"$GNOME_FOUND" = x"yes"; then
-echo " * Assistive technologies support: yes"
-else
-echo " * Assistive technologies support: no"
-fi
 if test x"$GNOME_KEYRING_FOUND" = x"yes"; then
 echo " * Gnome Keyring support:          yes"
 else
