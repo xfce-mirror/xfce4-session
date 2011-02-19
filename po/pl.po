@@ -11,14 +11,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-16 17:35+0100\n"
-"PO-Revision-Date: 2011-01-05 13:29+0100\n"
+"POT-Creation-Date: 2011-02-19 11:11+0000\n"
+"PO-Revision-Date: 2011-02-19 14:27+0100\n"
 "Last-Translator: Piotr Sokół <psokol@jabster.pl>\n"
 "Language-Team: Polish <>\n"
-"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : ((n%10>=2 && n%10<=4 && (n"
 "%100<10 || n%100>=20)) ? 1 : 2));\n"
 
@@ -147,22 +147,22 @@ msgstr "Za_blokuj ekran"
 #: ../panel-plugin/xfsm-logout-plugin.c:88
 #: ../panel-plugin/xfsm-logout-plugin.c:128
 msgid "_Suspend"
-msgstr "_Wstrzymaj sesję"
+msgstr "_Wstrzymaj"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:89
-#: ../panel-plugin/xfsm-logout-plugin.c:135
+#: ../panel-plugin/xfsm-logout-plugin.c:135 ../xfce4-session/shutdown.c:599
 msgid "_Hibernate"
-msgstr "Za_hiberuj sesję"
+msgstr "Za_hiberuj"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:90
 #: ../panel-plugin/xfsm-logout-plugin.c:121
 msgid "_Reboot"
-msgstr "_Uruchom komputer ponownie"
+msgstr "_Uruchom ponownie"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:91
 #: ../panel-plugin/xfsm-logout-plugin.c:114
 msgid "Shut _down"
-msgstr "_Wyłącz komputer"
+msgstr "_Wyłącz"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:92
 #: ../panel-plugin/xfsm-logout-plugin.c:107
@@ -228,41 +228,41 @@ msgstr "Nie można uruchomić programu xflock4"
 msgid "Close Session"
 msgstr "Kończenie sesji"
 
-#: ../settings/main.c:42
+#: ../settings/main.c:43
 msgid "Settings manager socket"
 msgstr "Określa gniazdo menedżera ustawień"
 
-#: ../settings/main.c:42
+#: ../settings/main.c:43
 msgid "SOCKET ID"
 msgstr "ID_GNIAZDA"
 
-#: ../settings/main.c:43
+#: ../settings/main.c:44
 msgid "Version information"
 msgstr "Wypisuje informacje o wersji i kończy"
 
-#: ../settings/main.c:73
+#: ../settings/main.c:74
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Proszę wprowadzić „%s --help”, aby wypisać komunikat pomocy."
 
-#: ../settings/main.c:85 ../xfce4-session/main.c:226
+#: ../settings/main.c:86 ../xfce4-session/main.c:226
 msgid "The Xfce development team. All rights reserved."
 msgstr "Zespół twórców środowiska Xfce. Wszystkie prawa zastrzeżone."
 
-#: ../settings/main.c:86 ../xfce4-session/main.c:232
+#: ../settings/main.c:87 ../xfce4-session/main.c:232
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Proszę zgłaszać błędy na adres <%s>."
 
-#: ../settings/main.c:95 ../xfce4-session/main.c:238 ../xfce4-tips/main.c:270
+#: ../settings/main.c:96 ../xfce4-session/main.c:238
 msgid "Unable to contact settings server"
 msgstr "Nie można połączyć z serwerem ustawień"
 
-#: ../settings/main.c:114
+#: ../settings/main.c:115
 msgid "Unable to create user interface from embedded definition data"
 msgstr ""
 
-#: ../settings/main.c:127
+#: ../settings/main.c:128
 msgid "_Application Autostart"
 msgstr "Automatyczne _uruchamianie"
 
@@ -382,7 +382,7 @@ msgid "Failed to write file %s"
 msgstr "Nie udało się zapisać pliku „%s”"
 
 #: ../settings/xfae-model.c:732
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open %s for reading"
 msgstr "Nie udało się otworzyć pliku „%s” do odczytu"
 
@@ -432,7 +432,7 @@ msgstr "Nie udało się edytować elementu „%s”"
 #: ../settings/xfae-window.c:410
 #, fuzzy
 msgid "Failed to toggle item"
-msgstr "Nie udało się przełączyć stanu uruchamiania"
+msgstr "Nie udało się przełączyć elementu"
 
 #: ../xfce4-session/main.c:76
 msgid "Disable binding to TCP ports"
@@ -471,25 +471,20 @@ msgid "<span size='large'><b>Log out %s</b></span>"
 msgstr "<span size='large'><b>Wylogowywanie użytkownika „%s”</b></span>"
 
 #: ../xfce4-session/shutdown.c:422
-#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
-msgid "Log Out"
-msgstr "Wyloguj"
+msgid "_Log Out"
+msgstr "Wy_loguj"
 
 #: ../xfce4-session/shutdown.c:457
-msgid "Restart"
-msgstr "Uruchom ponownie"
+msgid "_Restart"
+msgstr "_Uruchom ponownie"
 
 #: ../xfce4-session/shutdown.c:499
-msgid "Shut Down"
-msgstr "Wyłącz komputer"
+msgid "Shut _Down"
+msgstr "_Wyłącz"
 
 #: ../xfce4-session/shutdown.c:561
-msgid "Suspend"
-msgstr "Wstrzymaj sesję"
-
-#: ../xfce4-session/shutdown.c:599
-msgid "Hibernate"
-msgstr "Zahibernuj sesję"
+msgid "Sus_pend"
+msgstr "W_strzymaj "
 
 #: ../xfce4-session/shutdown.c:608
 msgid "_Save session for future logins"
@@ -511,7 +506,7 @@ msgstr ""
 "Podane hasło jest nieprawidłowe, bądź administrator systemu zablokował "
 "możliwość wyłączania komputera przez użytkowników."
 
-#: ../xfce4-session/shutdown.c:833 ../xfce4-session/xfsm-manager.c:1119
+#: ../xfce4-session/shutdown.c:833 ../xfce4-session/xfsm-manager.c:1122
 msgid "Shutdown Failed"
 msgstr "Nie udało się wyłączyć"
 
@@ -556,13 +551,9 @@ msgstr "Tworzy nową sesję"
 msgid "The client doesn't have any properties set yet"
 msgstr "Klient nie posiada jeszcze żadnych ustawionych właściwości"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:301
+#: ../xfce4-session/xfsm-compat-gnome.c:246
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "Uruchamiam Gnome Keyring Daemon"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:313
-msgid "Starting Gnome Assistive Technologies"
-msgstr "Uruchamiam Gnome Assistive Technologies"
 
 #: ../xfce4-session/xfsm-compat-kde.c:124
 msgid "Starting KDE services"
@@ -593,7 +584,7 @@ msgstr "Kontynuuj"
 msgid "Try again"
 msgstr "Spróbuj ponownie"
 
-#: ../xfce4-session/xfsm-manager.c:602
+#: ../xfce4-session/xfsm-manager.c:604
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -605,54 +596,54 @@ msgstr ""
 "zmienna środowiskowa $XDG_CONFIG_DIRS jest nieprawidłowa (musi zawierać "
 "„%s”) lub program xfce4-session nie został poprawnie zainstalowany."
 
-#: ../xfce4-session/xfsm-manager.c:613
+#: ../xfce4-session/xfsm-manager.c:615
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Określona sesja „%s” nie jest oznaczona jako awaryjna."
 
-#: ../xfce4-session/xfsm-manager.c:660
+#: ../xfce4-session/xfsm-manager.c:662
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Lista programów sesji awaryjnej jest pusta."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:707
+#: ../xfce4-session/xfsm-manager.c:709
 msgid "Session Manager Error"
 msgstr "Błąd menedżera sesji"
 
-#: ../xfce4-session/xfsm-manager.c:709
+#: ../xfce4-session/xfsm-manager.c:711
 msgid "Unable to load a failsafe session"
 msgstr "Nie można wczytać sesji awaryjnej"
 
-#: ../xfce4-session/xfsm-manager.c:1122
+#: ../xfce4-session/xfsm-manager.c:1125
 msgid "Failed to suspend session"
 msgstr "Nie udało się wstrzymać sesji"
 
-#: ../xfce4-session/xfsm-manager.c:1123
+#: ../xfce4-session/xfsm-manager.c:1126
 msgid "Failed to hibernate session"
 msgstr "Nie udało się zahibernować sesji"
 
-#: ../xfce4-session/xfsm-manager.c:1411
+#: ../xfce4-session/xfsm-manager.c:1414
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1942
+#: ../xfce4-session/xfsm-manager.c:1951
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 "Menedżer sesji musi być w stanie bezczynności podczas żądania utworzenia "
 "punktu kontrolnego"
 
-#: ../xfce4-session/xfsm-manager.c:1983
+#: ../xfce4-session/xfsm-manager.c:1992
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
 "Menedżer sesji musi być w stanie bezczynności podczas żądania wyłączenia"
 
-#: ../xfce4-session/xfsm-manager.c:1990
+#: ../xfce4-session/xfsm-manager.c:1999
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Niepoprawny typ shutdown „%u”"
@@ -674,11 +665,11 @@ msgstr "Nie udało się wykonać polecenia shutdown"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:1802
 msgid "Suspend failed, no backend supported"
-msgstr ""
+msgstr "Nie udało się wstrzymać sesji. Brak modułu obsługi."
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:1829
 msgid "Hibernate failed, no backend supported"
-msgstr ""
+msgstr "Nie udało się zahibernować sesji. Brak modułu obsługi."
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:1859
 msgid "Shutdown Command not found"
@@ -802,45 +793,14 @@ msgstr ""
 "położenia.\n"
 "Stary katalog może zostać usunięty.\n"
 
-#: ../xfce4-session/xfsm-startup.c:441
+#: ../xfce4-session/xfsm-startup.c:458
 msgid "Performing Autostart..."
 msgstr "Automatyczne uruchamianie..."
 
-#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:284
-msgid "Tips and Tricks"
-msgstr "Sztuczki i kruczki"
-
-#: ../xfce4-tips/main.c:49
-msgid "Fortunes"
-msgstr "Wróżby"
-
-#: ../xfce4-tips/main.c:75
-#, c-format
-msgid "Could not load tips database (%s)."
-msgstr "Nie można wczytać bazy danych porad (%s)"
-
-#. converting it from the user's locale failed too, we give up
-#: ../xfce4-tips/main.c:190
-#, c-format
-msgid "Invalid output of fortune."
-msgstr ""
-
-#: ../xfce4-tips/main.c:195 ../xfce4-tips/main.c:203
-#, c-format
-msgid "Executing fortune failed (%s)"
-msgstr ""
-
-#: ../xfce4-tips/main.c:228
-msgid "Error while loading tips."
-msgstr "Wystąpił błąd podczas wczytywania porad."
-
-#: ../xfce4-tips/main.c:314
-msgid "Display tips on _startup"
-msgstr "_Uruchamianie po zalogowaniu"
-
-#: ../xfce4-tips/main.c:338
-msgid "Next"
-msgstr "Następny"
+#: ../xfce4-session/xfsm-startup.c:564
+#, fuzzy
+msgid "Starting Assistive Technologies"
+msgstr "Uruchamiam Gnome Assistive Technologies"
 
 #: ../xfce4-session-logout/main.c:69
 msgid "Log out without displaying the logout dialog"
@@ -874,25 +834,29 @@ msgstr "Błąd wylogowywania"
 msgid "Unknown error"
 msgstr "Nieznany błąd"
 
-#: ../xfce4-session-logout/main.c:177
+#: ../xfce4-session-logout/main.c:178
 msgid "Unable to contact D-Bus session bus."
-msgstr "Nie można połączyć z usługą sesji D-Bus."
+msgstr "Nie można połączyć z sesją systemu D-Bus"
 
-#: ../xfce4-session-logout/main.c:189
+#: ../xfce4-session-logout/main.c:190
 msgid "Failed to create new D-Bus message"
 msgstr "Nie udało się utworzyć wiadomości D-Bus"
 
-#: ../xfce4-session-logout/main.c:205
+#: ../xfce4-session-logout/main.c:206
 msgid "Failed to receive a reply from the session manager"
 msgstr "Nie udało się otrzymać odpowiedzi od menedżera sesji"
 
-#: ../xfce4-session-logout/main.c:213
+#: ../xfce4-session-logout/main.c:214
 msgid "Received error while trying to log out"
 msgstr "Wystąpił błąd podczas próby wylogowania"
 
+#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
+msgid "Log Out"
+msgstr "Wyloguj"
+
 #: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:2
 msgid "Log out of the Xfce Desktop"
-msgstr ""
+msgstr "Kończy sesję środowiska Xfce"
 
 #: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
 msgid "Session Menu"
@@ -1069,13 +1033,32 @@ msgstr "Prze_testuj"
 msgid "label"
 msgstr "etykieta"
 
-#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
-msgid "Tips and tricks"
-msgstr "Sztuczki i kruczki"
+#~ msgid "Hibernate"
+#~ msgstr "Zahibernuj sesję"
 
-#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
-msgid "xfce4-tips"
-msgstr "xfce4-tips"
+#~ msgid "Tips and Tricks"
+#~ msgstr "Sztuczki i kruczki"
+
+#~ msgid "Fortunes"
+#~ msgstr "Wróżby"
+
+#~ msgid "Could not load tips database (%s)."
+#~ msgstr "Nie można wczytać bazy danych porad (%s)"
+
+#~ msgid "Error while loading tips."
+#~ msgstr "Wystąpił błąd podczas wczytywania porad."
+
+#~ msgid "Display tips on _startup"
+#~ msgstr "_Uruchamianie po zalogowaniu"
+
+#~ msgid "Next"
+#~ msgstr "Następny"
+
+#~ msgid "Tips and tricks"
+#~ msgstr "Sztuczki i kruczki"
+
+#~ msgid "xfce4-tips"
+#~ msgstr "xfce4-tips"
 
 #, fuzzy
 #~ msgid "Session Error"
