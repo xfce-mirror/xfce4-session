@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.6.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-17 11:11+0000\n"
+"POT-Creation-Date: 2011-02-19 11:11+0000\n"
 "PO-Revision-Date: 2010-12-23 16:19+0100\n"
 "Last-Translator: Nuno Miguel <nunis@netcabo.pt>\n"
 "Language-Team: \n"
@@ -251,7 +251,7 @@ msgstr "A equipa de desenvolvimento do Xfce. Todos os direitos reservados."
 msgid "Please report bugs to <%s>."
 msgstr "Por favor, reporte os erros para <%s>."
 
-#: ../settings/main.c:96 ../xfce4-session/main.c:238 ../xfce4-tips/main.c:270
+#: ../settings/main.c:96 ../xfce4-session/main.c:238
 msgid "Unable to contact settings server"
 msgstr "Incapaz de contactar servidor de definições"
 
@@ -486,7 +486,7 @@ msgstr "<b>Ocorreu um erro</b>"
 msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
 msgstr "Pode ter indicado uma palavra-passe inválida ou o administrador do sistema não permite desligar este computador através da sua conta de utilizador."
 
-#: ../xfce4-session/shutdown.c:833 ../xfce4-session/xfsm-manager.c:1119
+#: ../xfce4-session/shutdown.c:833 ../xfce4-session/xfsm-manager.c:1122
 msgid "Shutdown Failed"
 msgstr "Falha ao desligar"
 
@@ -527,13 +527,9 @@ msgstr "Criar nova sessão."
 msgid "The client doesn't have any properties set yet"
 msgstr "O cliente ainda não definiu as propriedades"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:301
+#: ../xfce4-session/xfsm-compat-gnome.c:246
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "Iniciando o serviço Gnome Keyring"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:313
-msgid "Starting Gnome Assistive Technologies"
-msgstr "Iniciando tecnologias de acessibilidade Gnome"
 
 #: ../xfce4-session/xfsm-compat-kde.c:124
 msgid "Starting KDE services"
@@ -564,55 +560,55 @@ msgstr "Continuar na mesma"
 msgid "Try again"
 msgstr "Tentar novamente"
 
-#: ../xfce4-session/xfsm-manager.c:602
+#: ../xfce4-session/xfsm-manager.c:604
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr "Incapaz de determinar o nome de sessão \"failsafe\". Causas possíveis: xfconfd não está em execução (problema de configuração D-Bus); variável de ambiente $XDG_CONFIG_DIRS incorrecta (deve incluir \"%s\") ou xfce4-session mal instalado."
 
-#: ../xfce4-session/xfsm-manager.c:613
+#: ../xfce4-session/xfsm-manager.c:615
 #, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "A sessão \"failsafe\" especificada (\"%s\") não é reconhecida como uma sessão \"failsafe\"."
 
-#: ../xfce4-session/xfsm-manager.c:660
+#: ../xfce4-session/xfsm-manager.c:662
 msgid "The list of applications in the failsafe session is empty."
 msgstr "A lista de aplicações da sessão \"failsafe\" está vazia."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:707
+#: ../xfce4-session/xfsm-manager.c:709
 msgid "Session Manager Error"
 msgstr "Erro do gestor de sessões"
 
-#: ../xfce4-session/xfsm-manager.c:709
+#: ../xfce4-session/xfsm-manager.c:711
 msgid "Unable to load a failsafe session"
 msgstr "Incapaz de carregar a sessão \"failsafe\""
 
-#: ../xfce4-session/xfsm-manager.c:1122
+#: ../xfce4-session/xfsm-manager.c:1125
 msgid "Failed to suspend session"
 msgstr "Falha ao suspender a sessão"
 
-#: ../xfce4-session/xfsm-manager.c:1123
+#: ../xfce4-session/xfsm-manager.c:1126
 msgid "Failed to hibernate session"
 msgstr "Falha ao hibernar a sessão"
 
-#: ../xfce4-session/xfsm-manager.c:1411
+#: ../xfce4-session/xfsm-manager.c:1414
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Apenas pode terminar os clientes inactivos"
 
-#: ../xfce4-session/xfsm-manager.c:1942
+#: ../xfce4-session/xfsm-manager.c:1951
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "O gestor de sessões tem de estar inactivo ao solicitar um ponto de verificação"
 
-#: ../xfce4-session/xfsm-manager.c:1983
+#: ../xfce4-session/xfsm-manager.c:1992
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "O gestor de sessões deve estar inactivo ao solicitar o encerramento"
 
-#: ../xfce4-session/xfsm-manager.c:1990
+#: ../xfce4-session/xfsm-manager.c:1999
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Tipo de encerramento inválido \"%u\""
@@ -762,45 +758,13 @@ msgstr ""
 "localização.\n"
 "Agora, deve apagar este directório.\n"
 
-#: ../xfce4-session/xfsm-startup.c:441
+#: ../xfce4-session/xfsm-startup.c:458
 msgid "Performing Autostart..."
 msgstr "Executando arranque automático..."
 
-#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:284
-msgid "Tips and Tricks"
-msgstr "Dicas e truques"
-
-#: ../xfce4-tips/main.c:49
-msgid "Fortunes"
-msgstr "Fortunas"
-
-#: ../xfce4-tips/main.c:75
-#, c-format
-msgid "Could not load tips database (%s)."
-msgstr "Não foi possivel carregar as dicas (%s)."
-
-#. converting it from the user's locale failed too, we give up
-#: ../xfce4-tips/main.c:190
-#, c-format
-msgid "Invalid output of fortune."
-msgstr "Saída de fortuna inválida."
-
-#: ../xfce4-tips/main.c:195 ../xfce4-tips/main.c:203
-#, c-format
-msgid "Executing fortune failed (%s)"
-msgstr "Falha ao executar fortuna (%s)"
-
-#: ../xfce4-tips/main.c:228
-msgid "Error while loading tips."
-msgstr "Erro ao carregar dicas."
-
-#: ../xfce4-tips/main.c:314
-msgid "Display tips on _startup"
-msgstr "Apresentar dica_s ao iniciar"
-
-#: ../xfce4-tips/main.c:338
-msgid "Next"
-msgstr "Seguinte"
+#: ../xfce4-session/xfsm-startup.c:564
+msgid "Starting Assistive Technologies"
+msgstr "Iniciando tecnologias de acessibilidade"
 
 #: ../xfce4-session-logout/main.c:69
 msgid "Log out without displaying the logout dialog"
@@ -1016,13 +980,35 @@ msgstr "_Testar"
 msgid "label"
 msgstr "legenda"
 
-#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
-msgid "Tips and tricks"
-msgstr "Dicas e truques"
+#~ msgid "Tips and Tricks"
+#~ msgstr "Dicas e truques"
 
-#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
-msgid "xfce4-tips"
-msgstr "xfce4-tips"
+#~ msgid "Fortunes"
+#~ msgstr "Fortunas"
+
+#~ msgid "Could not load tips database (%s)."
+#~ msgstr "Não foi possivel carregar as dicas (%s)."
+
+#~ msgid "Invalid output of fortune."
+#~ msgstr "Saída de fortuna inválida."
+
+#~ msgid "Executing fortune failed (%s)"
+#~ msgstr "Falha ao executar fortuna (%s)"
+
+#~ msgid "Error while loading tips."
+#~ msgstr "Erro ao carregar dicas."
+
+#~ msgid "Display tips on _startup"
+#~ msgstr "Apresentar dica_s ao iniciar"
+
+#~ msgid "Next"
+#~ msgstr "Seguinte"
+
+#~ msgid "Tips and tricks"
+#~ msgstr "Dicas e truques"
+
+#~ msgid "xfce4-tips"
+#~ msgstr "xfce4-tips"
 
 #~ msgid "_Shut Down"
 #~ msgstr "_Desligar"
