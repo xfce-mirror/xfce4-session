@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-session 4.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-15 17:11+0000\n"
+"POT-Creation-Date: 2011-02-20 05:11+0000\n"
 "PO-Revision-Date: 2010-02-07 21:05+0100\n"
 "Last-Translator: Per Kongstad <p_kongstad@op.pl>\n"
 "Language-Team: Danish <dank@dansk-gruppen.dk>\n"
@@ -255,7 +255,7 @@ msgstr "Xfce-udviklingsholdet. Alle rettigheder forbeholdes."
 msgid "Please report bugs to <%s>."
 msgstr "Rapportér venligst fejl til <%s>."
 
-#: ../settings/main.c:96 ../xfce4-session/main.c:238 ../xfce4-tips/main.c:270
+#: ../settings/main.c:96 ../xfce4-session/main.c:238
 msgid "Unable to contact settings server"
 msgstr "Kunne ikke forbinde til indstillingsserver"
 
@@ -467,8 +467,9 @@ msgid "_Restart"
 msgstr "_Genstart"
 
 #: ../xfce4-session/shutdown.c:499
-msgid "_Shut Down"
-msgstr "_Luk ned"
+#, fuzzy
+msgid "Shut _Down"
+msgstr "Luk _ned"
 
 #: ../xfce4-session/shutdown.c:561
 msgid "Sus_pend"
@@ -490,7 +491,7 @@ msgstr "<b>Der er sket en fejl</b>"
 msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
 msgstr "Enten er din adgangskode forkert, eller systemadministratoren har ikke givet tilladelse til at lukke komputeren ned med din brugerkonto."
 
-#: ../xfce4-session/shutdown.c:833 ../xfce4-session/xfsm-manager.c:1119
+#: ../xfce4-session/shutdown.c:833 ../xfce4-session/xfsm-manager.c:1122
 msgid "Shutdown Failed"
 msgstr "Luk ned fejlede"
 
@@ -531,13 +532,9 @@ msgstr "Opret en ny session."
 msgid "The client doesn't have any properties set yet"
 msgstr "Klienten har ingen indstillinger endnu"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:301
+#: ../xfce4-session/xfsm-compat-gnome.c:246
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "Starter Gnome-nøgleringsdæmonen"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:313
-msgid "Starting Gnome Assistive Technologies"
-msgstr "Starter Gnome-hjælpeteknologier"
 
 #: ../xfce4-session/xfsm-compat-kde.c:124
 msgid "Starting KDE services"
@@ -568,55 +565,55 @@ msgstr "Forsæt alligevel"
 msgid "Try again"
 msgstr "Prøv igen"
 
-#: ../xfce4-session/xfsm-manager.c:602
+#: ../xfce4-session/xfsm-manager.c:604
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr "Kunne ikke finde fejlsikret sessionsnavn. Mulige årsager; xfconfd kører ikke (D-Bus indstillingsproblem); miljøvariablen $XDG_CONFIG_DIRS er forkert indstillet (skal indeholde \"%s\"), eller xfce4-session er forkert installeret."
 
-#: ../xfce4-session/xfsm-manager.c:613
+#: ../xfce4-session/xfsm-manager.c:615
 #, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Den angivne fejlsikrede session (\"%s\") er ikke markeret som en fejlsikker session."
 
-#: ../xfce4-session/xfsm-manager.c:660
+#: ../xfce4-session/xfsm-manager.c:662
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Listen over programmer i den fejlsikrede session er tom."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:707
+#: ../xfce4-session/xfsm-manager.c:709
 msgid "Session Manager Error"
 msgstr "Fejl i sessionshåndtering"
 
-#: ../xfce4-session/xfsm-manager.c:709
+#: ../xfce4-session/xfsm-manager.c:711
 msgid "Unable to load a failsafe session"
 msgstr "Kunne ikke indlæse en fejlsikret session"
 
-#: ../xfce4-session/xfsm-manager.c:1122
+#: ../xfce4-session/xfsm-manager.c:1125
 msgid "Failed to suspend session"
 msgstr "Kunne ikke bringe session i hviletilstand"
 
-#: ../xfce4-session/xfsm-manager.c:1123
+#: ../xfce4-session/xfsm-manager.c:1126
 msgid "Failed to hibernate session"
 msgstr "Kunne ikke bringe session i dvalestilstand"
 
-#: ../xfce4-session/xfsm-manager.c:1411
+#: ../xfce4-session/xfsm-manager.c:1414
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Kan kun afbryde klienter når de befinder sig i tomgang"
 
-#: ../xfce4-session/xfsm-manager.c:1942
+#: ../xfce4-session/xfsm-manager.c:1951
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Sessionhåndtering skal befinde sig i tomgang, når der anmodes om et tjekpunkt"
 
-#: ../xfce4-session/xfsm-manager.c:1983
+#: ../xfce4-session/xfsm-manager.c:1992
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Sessionhåndtering skal befinde sig i tomgang, når der anmodes om at lukke ned"
 
-#: ../xfce4-session/xfsm-manager.c:1990
+#: ../xfce4-session/xfsm-manager.c:1999
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Ugyldig type af luk ned \"%u\""
@@ -766,47 +763,13 @@ msgstr ""
 "placering.\n"
 "Du burde slette den gamle mappe nu.\n"
 
-#: ../xfce4-session/xfsm-startup.c:441
+#: ../xfce4-session/xfsm-startup.c:458
 msgid "Performing Autostart..."
 msgstr "Kører autostart..."
 
-#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:284
-msgid "Tips and Tricks"
-msgstr "Tips og tricks"
-
-# http://en.wikipedia.org/wiki/Fortune_(Unix)
-# Forslag 'bevingede ord'
-#: ../xfce4-tips/main.c:49
-msgid "Fortunes"
-msgstr "Fortunes"
-
-#: ../xfce4-tips/main.c:75
-#, c-format
-msgid "Could not load tips database (%s)."
-msgstr "Kunne ikke indlæse tipsdatabase (%s)."
-
-#. converting it from the user's locale failed too, we give up
-#: ../xfce4-tips/main.c:190
-#, c-format
-msgid "Invalid output of fortune."
-msgstr "Ugyldig uddata fra fortune."
-
-#: ../xfce4-tips/main.c:195 ../xfce4-tips/main.c:203
-#, c-format
-msgid "Executing fortune failed (%s)"
-msgstr "Kørsel af fortune fejlede (%s)"
-
-#: ../xfce4-tips/main.c:228
-msgid "Error while loading tips."
-msgstr "Kunne ikke indlæse tips."
-
-#: ../xfce4-tips/main.c:314
-msgid "Display tips on _startup"
-msgstr "Vis tips ved _opstart"
-
-#: ../xfce4-tips/main.c:338
-msgid "Next"
-msgstr "Næste"
+#: ../xfce4-session/xfsm-startup.c:564
+msgid "Starting Assistive Technologies"
+msgstr "Starter hjælpeteknologier"
 
 #: ../xfce4-session-logout/main.c:69
 msgid "Log out without displaying the logout dialog"
@@ -1022,13 +985,38 @@ msgstr "_Prøv"
 msgid "label"
 msgstr "mærkat"
 
-#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
-msgid "Tips and tricks"
-msgstr "Tips og tricks"
+#~ msgid "_Shut Down"
+#~ msgstr "_Luk ned"
 
-#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
-msgid "xfce4-tips"
-msgstr "xfce4-tips"
+#~ msgid "Tips and Tricks"
+#~ msgstr "Tips og tricks"
+
+#~ msgid "Fortunes"
+#~ msgstr "Fortunes"
+
+#~ msgid "Could not load tips database (%s)."
+#~ msgstr "Kunne ikke indlæse tipsdatabase (%s)."
+
+#~ msgid "Invalid output of fortune."
+#~ msgstr "Ugyldig uddata fra fortune."
+
+#~ msgid "Executing fortune failed (%s)"
+#~ msgstr "Kørsel af fortune fejlede (%s)"
+
+#~ msgid "Error while loading tips."
+#~ msgstr "Kunne ikke indlæse tips."
+
+#~ msgid "Display tips on _startup"
+#~ msgstr "Vis tips ved _opstart"
+
+#~ msgid "Next"
+#~ msgstr "Næste"
+
+#~ msgid "Tips and tricks"
+#~ msgstr "Tips og tricks"
+
+#~ msgid "xfce4-tips"
+#~ msgstr "xfce4-tips"
 
 #~ msgid "Hibernate"
 #~ msgstr "Dvale"
