@@ -143,13 +143,6 @@ init_display (XfsmManager   *manager,
 
   sm_init (channel, disable_tcp, manager);
 
-  /* start xfsettingsd */
-  if ( !g_spawn_command_line_async ("xfsettingsd", NULL))
-  {
-    g_warning ("Could not start xfsettingsd");
-  }
-
-
   /* gtk resource files may have changed */
   gtk_rc_reparse_all ();
 }
