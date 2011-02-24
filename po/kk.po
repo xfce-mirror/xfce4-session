@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-16 05:11+0000\n"
+"POT-Creation-Date: 2011-02-24 05:10+0000\n"
 "PO-Revision-Date: 2010-11-04 09:42+0600\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
@@ -249,7 +249,7 @@ msgstr "Xfce өндіру тобы. Барлық құқықтары қорғал
 msgid "Please report bugs to <%s>."
 msgstr "Ақаулықтар жөнінде хабарласыңыз: <%s>."
 
-#: ../settings/main.c:96 ../xfce4-session/main.c:238 ../xfce4-tips/main.c:270
+#: ../settings/main.c:96 ../xfce4-session/main.c:238
 msgid "Unable to contact settings server"
 msgstr "Баптаулар қызметімен байланыс орнату мүмкін емес"
 
@@ -461,8 +461,9 @@ msgid "_Restart"
 msgstr "Қа_йта қосу"
 
 #: ../xfce4-session/shutdown.c:499
-msgid "_Shut Down"
-msgstr "Сө_ндіру"
+#, fuzzy
+msgid "Shut _Down"
+msgstr "Сөн_діру"
 
 #: ../xfce4-session/shutdown.c:561
 msgid "Sus_pend"
@@ -484,7 +485,7 @@ msgstr "<b>Қате орын алды</b>"
 msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
 msgstr "Сіз енгізген пароль қате, немесе жүйелік администратор осы тіркелгіге жүйені сөндіруге тыйым салған."
 
-#: ../xfce4-session/shutdown.c:833 ../xfce4-session/xfsm-manager.c:1119
+#: ../xfce4-session/shutdown.c:833 ../xfce4-session/xfsm-manager.c:1122
 msgid "Shutdown Failed"
 msgstr "Сөндіру сәтсіз аяқталды"
 
@@ -525,13 +526,9 @@ msgstr "Жаңа сессияны жасау."
 msgid "The client doesn't have any properties set yet"
 msgstr "Клиентте бірде-бір қасиет әлі орнатылмаған"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:301
+#: ../xfce4-session/xfsm-compat-gnome.c:246
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "Gnome Keyring Daemon іске қосу"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:313
-msgid "Starting Gnome Assistive Technologies"
-msgstr "Gnome Assistive Technologies іске қосу"
 
 #: ../xfce4-session/xfsm-compat-kde.c:124
 msgid "Starting KDE services"
@@ -562,55 +559,55 @@ msgstr "Бәрібір жалғастыру"
 msgid "Try again"
 msgstr "Қайталап көру"
 
-#: ../xfce4-session/xfsm-manager.c:602
+#: ../xfce4-session/xfsm-manager.c:604
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr "Қауіпсіз сессияның атын анықтау сәтсіз ақяталды. Мүмкін себептер: xfconfd орындалып тұрған жоқ (D-Bus орнату қатесі); қоршамның $XDG_CONFIG_DIRS айнымалысы қате (құрамында \"%s\" болуы керек), немесе xfce4-session қате орнатылған."
 
-#: ../xfce4-session/xfsm-manager.c:613
+#: ../xfce4-session/xfsm-manager.c:615
 #, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Көрсетілген қауіпсіз сессия (\"%s\") қауіпсіз деп белгіленбеген."
 
-#: ../xfce4-session/xfsm-manager.c:660
+#: ../xfce4-session/xfsm-manager.c:662
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Қауіпсіз сессияның қолданбалар тізімі бос."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:707
+#: ../xfce4-session/xfsm-manager.c:709
 msgid "Session Manager Error"
 msgstr "Сессиялар басқарушысының қатесі"
 
-#: ../xfce4-session/xfsm-manager.c:709
+#: ../xfce4-session/xfsm-manager.c:711
 msgid "Unable to load a failsafe session"
 msgstr "Қауіпсіз сессияны жүктеу мүмкін емес"
 
-#: ../xfce4-session/xfsm-manager.c:1122
+#: ../xfce4-session/xfsm-manager.c:1125
 msgid "Failed to suspend session"
 msgstr "Сессияны ұйықтату сәтсіз аяқталды"
 
-#: ../xfce4-session/xfsm-manager.c:1123
+#: ../xfce4-session/xfsm-manager.c:1126
 msgid "Failed to hibernate session"
 msgstr "Сессияны гибернациялау сәтсіз аяқталды"
 
-#: ../xfce4-session/xfsm-manager.c:1411
+#: ../xfce4-session/xfsm-manager.c:1414
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Тек белсенді емес клиенттерді тоқтатуға болады"
 
-#: ../xfce4-session/xfsm-manager.c:1942
+#: ../xfce4-session/xfsm-manager.c:1951
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Бақылау нүктесін сұрау кезінде сессиялар басқарушысы белсенді емес болуы керек"
 
-#: ../xfce4-session/xfsm-manager.c:1983
+#: ../xfce4-session/xfsm-manager.c:1992
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Сөндіруді сұрау кезінде сессиялар басқарушысы белсенді емес болуы керек"
 
-#: ../xfce4-session/xfsm-manager.c:1990
+#: ../xfce4-session/xfsm-manager.c:1999
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Сөндірудің қате түрі \"%u\""
@@ -759,45 +756,13 @@ msgstr ""
 "бумаңыздың файлдары жаңа жерге сәтті ауыстырылды.\n"
 "Бұл буманы енді өшіруіңіз керек.\n"
 
-#: ../xfce4-session/xfsm-startup.c:441
+#: ../xfce4-session/xfsm-startup.c:458
 msgid "Performing Autostart..."
 msgstr "Автоқосылуды дайындау..."
 
-#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:284
-msgid "Tips and Tricks"
-msgstr "Кеңестер мен қулықтар"
-
-#: ../xfce4-tips/main.c:49
-msgid "Fortunes"
-msgstr "Fortunes"
-
-#: ../xfce4-tips/main.c:75
-#, c-format
-msgid "Could not load tips database (%s)."
-msgstr "Кеңестер дерекқорын жүктеу мүмкін емес (%s)."
-
-#. converting it from the user's locale failed too, we give up
-#: ../xfce4-tips/main.c:190
-#, c-format
-msgid "Invalid output of fortune."
-msgstr "Fortune қолданбасының шығысы қате."
-
-#: ../xfce4-tips/main.c:195 ../xfce4-tips/main.c:203
-#, c-format
-msgid "Executing fortune failed (%s)"
-msgstr "Fortune қолданбасын жөнелту сәтсіз аяқталды (%s)"
-
-#: ../xfce4-tips/main.c:228
-msgid "Error while loading tips."
-msgstr "Кеңестерді жүктеу сәтсіз аяқталды."
-
-#: ../xfce4-tips/main.c:314
-msgid "Display tips on _startup"
-msgstr "Қ_осылғанда, кеңестерді көрсету"
-
-#: ../xfce4-tips/main.c:338
-msgid "Next"
-msgstr "Келесі"
+#: ../xfce4-session/xfsm-startup.c:564
+msgid "Starting Assistive Technologies"
+msgstr "Көмекші технологияларды іске қосу"
 
 #: ../xfce4-session-logout/main.c:69
 msgid "Log out without displaying the logout dialog"
@@ -1013,13 +978,38 @@ msgstr "С_ынау"
 msgid "label"
 msgstr "белгі"
 
-#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
-msgid "Tips and tricks"
-msgstr "Кеңестер мен қулықтар"
+#~ msgid "_Shut Down"
+#~ msgstr "Сө_ндіру"
 
-#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
-msgid "xfce4-tips"
-msgstr "xfce4-tips"
+#~ msgid "Tips and Tricks"
+#~ msgstr "Кеңестер мен қулықтар"
+
+#~ msgid "Fortunes"
+#~ msgstr "Fortunes"
+
+#~ msgid "Could not load tips database (%s)."
+#~ msgstr "Кеңестер дерекқорын жүктеу мүмкін емес (%s)."
+
+#~ msgid "Invalid output of fortune."
+#~ msgstr "Fortune қолданбасының шығысы қате."
+
+#~ msgid "Executing fortune failed (%s)"
+#~ msgstr "Fortune қолданбасын жөнелту сәтсіз аяқталды (%s)"
+
+#~ msgid "Error while loading tips."
+#~ msgstr "Кеңестерді жүктеу сәтсіз аяқталды."
+
+#~ msgid "Display tips on _startup"
+#~ msgstr "Қ_осылғанда, кеңестерді көрсету"
+
+#~ msgid "Next"
+#~ msgstr "Келесі"
+
+#~ msgid "Tips and tricks"
+#~ msgstr "Кеңестер мен қулықтар"
+
+#~ msgid "xfce4-tips"
+#~ msgstr "xfce4-tips"
 
 #~ msgid "Hibernate"
 #~ msgstr "Гибернация"
