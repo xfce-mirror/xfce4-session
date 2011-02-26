@@ -1,7 +1,5 @@
-SUBDIRS = \
-	el
 
-imagesdir = $(docdir)/html/C/images
+imagesdir = $(docdir)/html/el/images
 images_DATA = \
 	xfsm-splash.png \
 	xfsm-general.png \
