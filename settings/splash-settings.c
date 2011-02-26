@@ -50,7 +50,6 @@
 #include <libxfsm/xfsm-splash-engine.h>
 
 #include "module.h"
-#include "nopreview.h"
 #include "xfce4-session-settings-common.h"
 
 #define SPLASH_ENGINE_PROP  "/splash/Engine"
@@ -264,11 +263,17 @@ splash_selection_changed (GtkTreeSelection *selection)
           gtk_widget_set_sensitive (splash_www1, TRUE);
 
           preview = module_preview (module);
-          if (G_UNLIKELY (preview == NULL))
-            preview = gdk_pixbuf_new_from_inline (-1, nopreview, FALSE, NULL);
-          gtk_image_set_from_pixbuf (GTK_IMAGE (splash_image), preview);
-          g_object_unref (G_OBJECT (preview));
-
+          if (G_LIKELY (preview != NULL))
+            {
+              gtk_image_set_from_pixbuf (GTK_IMAGE (splash_image), preview);
+              g_object_unref (G_OBJECT (preview));
+            }
+          else
+            {
+              gtk_image_set_from_stock (GTK_IMAGE (splash_image),
+                                        GTK_STOCK_MISSING_IMAGE,
+                                        GTK_ICON_SIZE_DIALOG);
+            }
 
           channel = xfconf_channel_get (SETTINGS_CHANNEL);
           xfconf_channel_set_string (channel, SPLASH_ENGINE_PROP, module_engine (module));
@@ -279,9 +284,9 @@ splash_selection_changed (GtkTreeSelection *selection)
         }
       else
         {
-          preview = gdk_pixbuf_new_from_inline (-1, nopreview, FALSE, NULL);
-          gtk_image_set_from_pixbuf (GTK_IMAGE (splash_image), preview);
-          g_object_unref (G_OBJECT (preview));
+          gtk_image_set_from_stock (GTK_IMAGE (splash_image),
+                                    GTK_STOCK_MISSING_IMAGE,
+                                    GTK_ICON_SIZE_DIALOG);
 
           gtk_label_set_text (GTK_LABEL (splash_descr1), _("None"));
           gtk_widget_set_sensitive (splash_descr1, FALSE);
@@ -400,6 +405,7 @@ splash_settings_init (GtkBuilder *builder)
                     splash_test, NULL);
 
   splash_image = GTK_WIDGET(gtk_builder_get_object (builder, "img_splash_preview"));
+  gtk_widget_set_size_request (splash_image, 300, 240);
 
   splash_descr0 = GTK_WIDGET(gtk_builder_get_object (builder, "lbl_splash_desc0"));
   splash_version0 =GTK_WIDGET(gtk_builder_get_object (builder, "lbl_splash_version0"));
