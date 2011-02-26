@@ -4,7 +4,6 @@ xfce4_session_settings_SOURCES = \
 	main.c \
 	module.c \
 	module.h \
-	nopreview.h \
 	session-editor.c \
 	splash-settings.c  \
 	startup-settings.c \
@@ -58,11 +57,7 @@ BUILT_SOURCES = \
 	xfce4-session-marshal.h \
 	xfce4-session-settings_ui.h \
 	xfsm-client-dbus-client.h \
-	xfsm-manager-dbus-client.h \
-	nopreview.h
-
-nopreview.h: $(srcdir)/nopreview.png
-	$(AM_V_GEN) gdk-pixbuf-csource --static --raw --stream --name=nopreview $< > $@
+	xfsm-manager-dbus-client.h
 
 xfce4-session-marshal.h: stamp-xfce4-session-marshal.h
 	@true
@@ -87,7 +82,6 @@ endif
 
 EXTRA_DIST = \
 	$(desktop_in_files) \
-	nopreview.png \
 	xfce4-session.xml \
 	xfce4-session-settings.glade
 
