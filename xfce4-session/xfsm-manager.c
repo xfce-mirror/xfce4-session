@@ -1571,10 +1571,10 @@ xfsm_manager_save_timeout (gpointer user_data)
                 "   Client will be disconnected now.\n\n",
                 xfsm_client_get_id (stdata->client));
 
-  xfsm_manager_close_connection (stdata->manager, stdata->client, TRUE);
-
   /* returning FALSE below will free the data */
   g_object_steal_data (G_OBJECT (stdata->client), "--save-timeout-id");
+
+  xfsm_manager_close_connection (stdata->manager, stdata->client, TRUE);
 
   return FALSE;
 }
