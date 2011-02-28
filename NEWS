@@ -1,3 +1,16 @@
+4.8.2
+=====
+- Fix crash if save timeout for a client is triggered (bug #7320).
+
+4.8.1
+=====
+- Add missing license information (bug #7240).
+- Fix --fast CLI option when used with another option (bug #7197).
+- Fix error pop up when clicking session menu item (bug #7123).
+- Don't fallback to "system" icon in the logout dialog (bug #7196).
+- Update FSF address in copyright headers.
+- Updated translations: French, Swedish, Russian, Turkish.
+
 4.8.0
 =====
 - Add main category to desktop file.
@@ -12,7 +25,7 @@
 
 4.7.2
 =====
-- Do not try "unix-session" authorization with PolicyKit as this 
+- Do not try "unix-session" authorization with PolicyKit as this
   seems to be either broken or not implemented in PolicyKit (bug #6817).
   This fixes suspend/hibernate in xfce4-session-logout.
 - Fix possibly shadowed variables.
