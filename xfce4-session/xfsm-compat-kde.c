@@ -123,10 +123,10 @@ xfsm_compat_kde_startup (XfsmSplashScreen *splash)
   if (G_LIKELY (splash != NULL))
     xfsm_splash_screen_next (splash, _("Starting KDE services"));
 
-  run ("kdeinit");
+  run ("kdeinit4");
 
   /* tell klauncher about the session manager */
-  g_snprintf (command, 256, "dcop klauncher klauncher setLaunchEnv "
+  g_snprintf (command, 256, "qdbus org.kde.klauncher /KLauncher setLaunchEnv "
                             "SESSION_MANAGER \"%s\"",
                             g_getenv ("SESSION_MANAGER"));
   run (command);
@@ -134,7 +134,7 @@ xfsm_compat_kde_startup (XfsmSplashScreen *splash)
   /* tell kde if we are running multi-head */
   if (gdk_display_get_n_screens (gdk_display_get_default ()) > 1)
     {
-      g_snprintf (command, 256, "dcop klauncher klauncher setLaunchEnv "
+      g_snprintf (command, 256, "qdbus org.kde.klauncher /KLauncher setLaunchEnv "
                                 "KDE_MULTIHEAD \"true\"");
       run (command);
     }
@@ -150,9 +150,7 @@ xfsm_compat_kde_shutdown (void)
     return;
 
   /* shutdown KDE services */
-  run ("kdeinit_shutdown");
-  run ("dcopserver_shutdown");
-  run ("artsshell -q terminate");
+  run ("kdeinit4_shutdown");
 
   kde_compat_started = FALSE;
 }
