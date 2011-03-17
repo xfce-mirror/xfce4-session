@@ -85,7 +85,7 @@ msgstr ""
 
 #: ./xfce4-session.xml78(title)
 msgid "Introduction"
-msgstr ""
+msgstr "Giriş"
 
 #: ./xfce4-session.xml80(para)
 msgid "<application>@PACKAGE_NAME@</application> is a session manager for Xfce 4. Its task is to save the state of your desktop (opened applications and their location) and restore it during a next startup. You can create several different sessions and choose one of them on startup."
@@ -184,8 +184,9 @@ msgid "You can customize the splash-screen that <application>@PACKAGE_NAME@</app
 msgstr ""
 
 #: ./xfce4-session.xml211(title)
+#, fuzzy
 msgid "Splash screen settings"
-msgstr ""
+msgstr "Ekranı ayarları"
 
 #: ./xfce4-session.xml214(title)
 msgid "Splash screen settings dialog"
@@ -205,7 +206,7 @@ msgstr ""
 
 #: ./xfce4-session.xml240(title)
 msgid "Shutdown/reboot options"
-msgstr ""
+msgstr "Kapatma/yeniden başlatma seçenekleri"
 
 #: ./xfce4-session.xml242(para)
 msgid "<application>@PACKAGE_NAME@</application> supports shutting down your computer when you log out of your desktop session. To be able to shutdown the computer, you have to be listed in the systems <filename>sudoers</filename> file, in particular, you must be allowed to execute the command <filename>${libdir}/xfce4/session/xfsm-shutdown-helper</filename> (<filename>/usr/sbin/xfsm-shutdown-helper</filename> on Debian GNU/Linux) as user root (where <filename>${libdir}</filename> is the <filename role=\"directory\">lib</filename> sub directory in the prefix you installed <application>@PACKAGE_NAME@</application>, for example <filename role=\"directory\">/usr/local/lib/xfce4/session</filename>)."
@@ -228,7 +229,7 @@ msgstr "Gelişmiş"
 
 #: ./xfce4-session.xml271(title)
 msgid "Files and Environment Variables"
-msgstr ""
+msgstr "Dosyalar ve Çevre Değişkenleri"
 
 #: ./xfce4-session.xml273(para)
 msgid "Xfce now uses the Basedir Specification as defined on <ulink url=\"http://freedesktop.org/\" type=\"http\">Freedesktop.org</ulink> to locate its data and configuration files. This means that file locations will be specified as a path relative to the directories described in the specification."
@@ -236,7 +237,7 @@ msgstr ""
 
 #: ./xfce4-session.xml281(term)
 msgid "${XDG_CONFIG_HOME}"
-msgstr ""
+msgstr "${XDG_CONFIG_HOME}"
 
 #: ./xfce4-session.xml283(para)
 msgid "The first base directory to look for configuration files. By default this is set to <filename role=\"directory\">~/.config/</filename>."
@@ -244,7 +245,7 @@ msgstr ""
 
 #: ./xfce4-session.xml290(term)
 msgid "${XDG_CONFIG_DIRS}"
-msgstr ""
+msgstr "$(XDG_CONFIG_DIRS}"
 
 #: ./xfce4-session.xml292(para)
 msgid "A list of system directories that contain configuration data. By default the panel will look in <filename role=\"directory\">${sysconfdir}/xdg/</filename> and <filename role=\"directory\">/etc/xdg/</filename>. The value of ${sysconfdir} depends on how the program was build and will often be <filename role=\"directory\">/etc/</filename> for binary packages."
@@ -252,7 +253,7 @@ msgstr ""
 
 #: ./xfce4-session.xml303(term)
 msgid "${XDG_CACHE_HOME}"
-msgstr ""
+msgstr "${XDG_CACHE_HOME}"
 
 #: ./xfce4-session.xml305(para)
 msgid "Specifies the root for all user-specific cache data. If this environment variable is unset, it defaults to <filename role=\"directory\">~/.cache</filename>."
@@ -260,7 +261,7 @@ msgstr ""
 
 #: ./xfce4-session.xml312(term)
 msgid "${XDG_CONFIG_DIRS}/autostart/"
-msgstr ""
+msgstr "${XDG_CONFIG_DIRS}/autostart/"
 
 #: ./xfce4-session.xml314(para)
 msgid "This is the location where the list of applications that should be automatically run on login is stored. Each autostarted application is represented by a <filename>.desktop</filename> file (see the <ulink type=\"http\" url=\"http://standards.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html\">Desktop Entry Specification</ulink> for details)."
@@ -272,7 +273,7 @@ msgstr ""
 
 #: ./xfce4-session.xml331(term)
 msgid "${XDG_CONFIG_DIRS}/xfce4-session/xfce4-session.rc"
-msgstr ""
+msgstr "${XDG_CONFIG_DIRS}/xfce4-session/xfce4-session.rc"
 
 #: ./xfce4-session.xml333(para)
 msgid "This is the location of the configuration file that includes the various settings for <application>@PACKAGE_NAME@</application>, which can be changed from the settings dialog."
@@ -280,7 +281,7 @@ msgstr ""
 
 #: ./xfce4-session.xml340(term)
 msgid "${XDG_CONFIG_DIRS}/xfce4-session/xfce4-splash.rc"
-msgstr ""
+msgstr "${XDG_CONFIG_DIRS}/xfce4-session/xfce4-splash.rc"
 
 #: ./xfce4-session.xml342(para)
 msgid "This is the location of the configuration file that includes the configuration for the splash screen, which can be changed from the settings dialog."
@@ -288,7 +289,7 @@ msgstr ""
 
 #: ./xfce4-session.xml349(term)
 msgid "${XDG_CACHE_HOME}/sessions/"
-msgstr ""
+msgstr "${XDG_CACHE_HOME}/sessions/"
 
 #: ./xfce4-session.xml351(para)
 msgid "The directory where <application>@PACKAGE_NAME@</application> and <application>xfwm4</application> store the session data to."
@@ -296,7 +297,7 @@ msgstr ""
 
 #: ./xfce4-session.xml357(term)
 msgid "${sysconfdir}/xdg/xfce4/kiosk/kioskrc"
-msgstr ""
+msgstr "${sysconfdir}/xdg/xfce4/kiosk/kioskrc"
 
 #: ./xfce4-session.xml359(para)
 msgid "Kiosk mode configuration file. See <ulink url=\"#xfsm-kiosk-mode\">next section</ulink> for an explanation."
