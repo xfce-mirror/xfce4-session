@@ -103,7 +103,7 @@ setup_environment (void)
 
   /* this is for compatibility with the GNOME Display Manager */
   lang = g_getenv ("GDM_LANG");
-  if (lang != NULL)
+  if (lang != NULL && strlen (lang) > 0)
     {
       xfce_setenv ("LANG", lang, TRUE);
       xfce_unsetenv ("GDM_LANG");
