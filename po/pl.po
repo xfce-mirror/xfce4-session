@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-19 11:11+0000\n"
-"PO-Revision-Date: 2011-02-23 09:23+0100\n"
+"POT-Creation-Date: 2011-03-24 17:11+0000\n"
+"PO-Revision-Date: 2011-03-24 22:34+0100\n"
 "Last-Translator: Piotr Sokół <psokol@jabster.pl>\n"
 "Language-Team: Polish <>\n"
 "MIME-Version: 1.0\n"
@@ -28,12 +28,12 @@ msgstr "Nie wprowadzono opisu"
 
 #: ../engines/balou/config.c:324
 msgid "Choose theme file to install..."
-msgstr "Proszę wybrać plik tematu do zainstalowania..."
+msgstr "Proszę wybrać plik motywy do zainstalowania..."
 
 #: ../engines/balou/config.c:336
 #, c-format
 msgid "Unable to install splash theme from file \"%s\""
-msgstr "Nie można zainstalować tematu ekranu powitalnego z pliku „%s”"
+msgstr "Nie można zainstalować motywu ekranu powitalnego z pliku „%s”"
 
 #: ../engines/balou/config.c:339
 msgid "Theme File Error"
@@ -46,7 +46,7 @@ msgstr "Proszę sprawdzić czy plik jest poprawnym archiwum motywu."
 #: ../engines/balou/config.c:402
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
-msgstr "Nie można usunąc tematu ekranu powitalnego „%s” z katalogu %s."
+msgstr "Nie można usunąć motywu ekranu powitalnego „%s” z katalogu %s."
 
 #: ../engines/balou/config.c:491
 msgid "Choose theme filename..."
@@ -245,16 +245,16 @@ msgstr "Wypisuje informacje o wersji i kończy"
 msgid "Type '%s --help' for usage."
 msgstr "Proszę wprowadzić „%s --help”, aby wypisać komunikat pomocy."
 
-#: ../settings/main.c:86 ../xfce4-session/main.c:226
+#: ../settings/main.c:86 ../xfce4-session/main.c:219
 msgid "The Xfce development team. All rights reserved."
 msgstr "Zespół twórców środowiska Xfce. Wszystkie prawa zastrzeżone."
 
-#: ../settings/main.c:87 ../xfce4-session/main.c:232
+#: ../settings/main.c:87 ../xfce4-session/main.c:225
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Proszę zgłaszać błędy na adres <%s>."
 
-#: ../settings/main.c:96 ../xfce4-session/main.c:238
+#: ../settings/main.c:96 ../xfce4-session/main.c:231
 msgid "Unable to contact settings server"
 msgstr "Nie można połączyć z serwerem ustawień"
 
@@ -336,9 +336,9 @@ msgstr "Program"
 msgid "Restart Style"
 msgstr "Sposób ponownego uruchamiania"
 
-#: ../settings/splash-settings.c:286 ../settings/splash-settings.c:289
-#: ../settings/splash-settings.c:292 ../settings/splash-settings.c:295
-#: ../settings/splash-settings.c:352
+#: ../settings/splash-settings.c:291 ../settings/splash-settings.c:294
+#: ../settings/splash-settings.c:297 ../settings/splash-settings.c:300
+#: ../settings/splash-settings.c:357
 msgid "None"
 msgstr "Brak"
 
@@ -430,7 +430,6 @@ msgid "Failed to edit item \"%s\""
 msgstr "Nie udało się edytować elementu „%s”"
 
 #: ../settings/xfae-window.c:410
-#, fuzzy
 msgid "Failed to toggle item"
 msgstr "Nie udało się przełączyć elementu"
 
@@ -446,29 +445,29 @@ msgstr "Wypisuje informacje o wersji i kończy"
 msgid "Loading desktop settings"
 msgstr "Wczytywanie ustawień środowiska graficznego"
 
-#: ../xfce4-session/main.c:227
+#: ../xfce4-session/main.c:220
 msgid "Written by Benedikt Meurer <benny@xfce.org>."
 msgstr "Autor: Benedikt Meurer <benny@xfce.org>."
 
-#: ../xfce4-session/main.c:228
+#: ../xfce4-session/main.c:221
 #, c-format
 msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
 msgstr ""
 "Skompilowano przy użyciu Gtk+-%d.%d.%d, uruchomiono przy użyciu Gtk+-%d.%d.%d"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:258
+#: ../xfce4-session/main.c:251
 msgid "Verifying DNS settings"
 msgstr "Sprawdzanie ustawień DNS"
 
-#: ../xfce4-session/main.c:261
+#: ../xfce4-session/main.c:254
 msgid "Loading session data"
 msgstr "Wczytywanie danych sesji"
 
 #: ../xfce4-session/shutdown.c:372
 #, c-format
 msgid "<span size='large'><b>Log out %s</b></span>"
-msgstr "<span size='large'><b>Wylogowywanie użytkownika „%s”</b></span>"
+msgstr "<span size='large'><b>Kończenie sesji użytkownika „%s”</b></span>"
 
 #: ../xfce4-session/shutdown.c:422
 msgid "_Log Out"
@@ -530,7 +529,7 @@ msgstr ""
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:203
 msgid "Log out"
-msgstr "Wyloguj"
+msgstr "Zakończ sesję"
 
 #: ../xfce4-session/xfsm-chooser.c:205
 msgid "Cancel the login attempt and return to the login screen."
