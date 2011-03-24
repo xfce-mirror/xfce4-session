@@ -108,14 +108,6 @@ setup_environment (void)
   /* pass correct DISPLAY to children, in case of --display in argv */
   g_setenv ("DISPLAY", gdk_display_get_name (gdk_display_get_default ()), TRUE);
 
-  /* this is for compatibility with the GNOME Display Manager */
-  lang = g_getenv ("GDM_LANG");
-  if (lang != NULL && strlen (lang) > 0)
-    {
-      g_setenv ("LANG", lang, TRUE);
-      g_unsetenv ("GDM_LANG");
-    }
-
   /* check access to $ICEAUTHORITY or $HOME/.ICEauthority if unset */
   if (g_getenv ("ICEAUTHORITY"))
     authfile = g_strdup (g_getenv ("ICEAUTHORITY"));
