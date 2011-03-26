@@ -133,7 +133,7 @@ msgstr "Çıkışta sor"
 
 #: ./xfce4-session.xml139(para)
 msgid "This option disables the logout confirmation dialog. Whether the session will be saved or not depends on whether you enabled the automatic saving of sessions on logout or not."
-msgstr ""
+msgstr "Bu seçenek çıkıştaki onaylama penceresini pasif hale getirir. Çıkışta oturumu kaydedip kaydetmeyeceği otomatik kayıt seçeneğinin durumuna bağlıdır."
 
 #: ./xfce4-session.xml148(title)
 msgid "Advanced preferences"
@@ -169,7 +169,7 @@ msgstr "Uzaktaki uygulamaları yönet"
 
 #: ./xfce4-session.xml189(para)
 msgid "Allow the session manager to manage applications running on remote hosts. Since this option may constitute a security risk, by listening to a TCP port on your system, do not enable it unless you know what you are doing."
-msgstr ""
+msgstr "Oturum yöneticisinin uzak bilgisayarlardaki uygulamaları yönetmesine izin ver. Bu seçenek bilgisayarınızdaki bir TCP portunu dinleyeceğinden bazı güzenlik riskleri taşıyabilir. Ne yaptığınızı bilmiyorsanız aktif etmeyin."
 
 #: ./xfce4-session.xml193(para)
 msgid "System administrators may want to disable this option globally using the session managers <ulink url=\"#xfsm-kiosk-mode\" type=\"html\">KIOSK capabilities</ulink>."
@@ -197,7 +197,7 @@ msgstr "<application>@PACKAGE_NAME@</application>  uygulamasının karşılama e
 
 #: ./xfce4-session.xml228(para)
 msgid "On the left, the dialog shows a list of all installed engines. Select an engine, and you will see, if available, a preview and information about it. You can click on the <guibutton>Test</guibutton> button to see a demonstration of the selected splash screen engine."
-msgstr ""
+msgstr "Sol tarafta yüklenmiş bütün motorları göreceksiniz. Bir motoru seçtiğinizde, eğer mevcutsa, bir ön izleme ve hakkında kısa bilgi gösterilecektir. <guibutton>Test</guibutton> düğmesine tıkladığınızda bir ön izleme yapılacaktır."
 
 #: ./xfce4-session.xml234(para)
 msgid "<application>@PACKAGE_NAME@</application> provides three Splash themes engines by default. Their respective configuration options - if any - are available from the <guibutton>Configure</guibutton> button."
@@ -213,7 +213,7 @@ msgstr ""
 
 #: ./xfce4-session.xml253(para)
 msgid "For example, lets say, you installed <application>@PACKAGE_NAME@</application> into <filename role=\"directory\">/usr/local</filename>, your hostname is <emphasis>myhost</emphasis> and your user account is named <emphasis>myuser</emphasis>, then you would have to add the following line to your <filename>sudoers</filename> file (remember to use <application>visudo</application> to edit that file):"
-msgstr ""
+msgstr "Örneğin, <application>@PACKAGE_NAME@</application> uygulamasını <filename role=\"directory\">/usr/local</filename> dizinine yüklemişseniz ve kullanıcı adınız <emphasis>myuser</emphasis> ise <filename>sudoers</filename> dosyasında (bu dosyayı düzenlemek için <application>visudo</application> kullanabilirsiniz) aşağıdaki gibi bir satır olacaktır:"
 
 #: ./xfce4-session.xml260(programlisting)
 #, no-wrap
@@ -221,6 +221,8 @@ msgid ""
 "\n"
 "myuser myhost=/usr/local/lib/xfce4/session/xfsm-shutdown-helper\n"
 msgstr ""
+"\n"
+"myuser myhost=/usr/local/lib/xfce4/session/xfsm-shutdown-helper\n"
 
 #: ./xfce4-session.xml268(title)
 msgid "Advanced"
@@ -299,7 +301,6 @@ msgid "${sysconfdir}/xdg/xfce4/kiosk/kioskrc"
 msgstr "${sysconfdir}/xdg/xfce4/kiosk/kioskrc"
 
 #: ./xfce4-session.xml359(para)
-#, fuzzy
 msgid "Kiosk mode configuration file. See <ulink url=\"#xfsm-kiosk-mode\">next section</ulink> for an explanation."
 msgstr "Kiosk kipi yapılandırma dosyası. Açıklama için <ulink url=\"#xfsm-kiosk-mode\">sonraki bölüm</ulink>e bakınız."
 
@@ -328,7 +329,6 @@ msgid ""
 msgstr ""
 
 #: ./xfce4-session.xml392(title)
-#, fuzzy
 msgid "Kiosk Mode"
 msgstr "Kiosk Kipi"
 
