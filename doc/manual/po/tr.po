@@ -352,6 +352,14 @@ msgid ""
 "Shutdown=%wheel\n"
 "CustomizeSecurity=NONE\n"
 msgstr ""
+"\n"
+"[xfce4-session]\n"
+"CustomizeSplash=ALL\n"
+"CustomizeChooser=ALL\n"
+"CustomizeLogout=ALL\n"
+"CustomizeCompatibility=%wheel\n"
+"Shutdown=%wheel\n"
+"CustomizeSecurity=NONE\n"
 
 #: ./xfce4-session.xml413(para)
 msgid "This allows all users to change their splash, chooser and logout settings, but allows only users in the group <emphasis>wheel</emphasis> to customize the compatibility settings and shutdown the system. No one will be allowed to adjust the security settings."
@@ -363,11 +371,11 @@ msgstr "Oturum yöneticisi aşağıdaki KIOSK özelliklerini destekliyor:"
 
 #: ./xfce4-session.xml422(term)
 msgid "CustomizeSplash"
-msgstr ""
+msgstr "AçılışResminiÖzelleştir"
 
 #: ./xfce4-session.xml424(para)
 msgid "Whether or not the user is allowed to customize the splash screen."
-msgstr ""
+msgstr "Kullanıcının açılış resmini özelleştirmeye yetkisinin olup olmadığı"
 
 #: ./xfce4-session.xml429(term)
 msgid "CustomizeChooser"
@@ -399,7 +407,7 @@ msgstr "GüvenliğiDüzenle"
 
 #: ./xfce4-session.xml453(para)
 msgid "Whether or not the user is allowed to customize the security settings. This is one of the most <emphasis>IMPORTANT</emphasis> settings, since it prevents users (actually <filename>libICE</filename>) from binding to a TCP port."
-msgstr ""
+msgstr "Kullanıcının güvenlik ayarlarını değiştirmeye yetkili olup olmadığı. Bu en <emphasis>ÖNEMLİ</emphasis> ayardır çünkü kullanıcları (gerçekte <filename>libICE</filename>ı) bir TCP portuna bağlanmaktan alıkoyabilir"
 
 #: ./xfce4-session.xml460(term)
 msgid "Shutdown"
