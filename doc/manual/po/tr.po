@@ -53,7 +53,7 @@ msgstr "Benedikt Meurer"
 
 #: ./xfce4-session.xml33(para)
 msgid "Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with no Invariant Sections, with no Front-Cover Texts, and with no Back-Cover Texts. The complete license text is available from the <ulink type=\"http\" url=\"http://www.gnu.org/\">Free Software Foundation</ulink>."
-msgstr ""
+msgstr "Bu dokümanın dağıtımı, kopyalanması ve/veya düzenlenmesi GNU Özgür Belgeleme Lisansı 1.1 sürümü ve daha sonraki sürümleri de dahil olmak üzere, ancak değişmesi imkansız biçimde olmamak kaydı ile serbesttir.  Lisansın tamamına <ulink type=\"http\" url=\"http://www.gnu.org/\">Özgür Yazılım Vakfı</ulink> sitesinden ulaşabilirsiniz."
 
 #: ./xfce4-session.xml45(firstname)
 msgid "Benedikt"
@@ -125,7 +125,7 @@ msgstr "Çıkışta otomatik olarak oturumu kaydet"
 
 #: ./xfce4-session.xml129(para)
 msgid "This option instructs the session manager to save the current session automatically when you log out. If you don't select this option you'll be prompted whether you want to save the current session on each logout."
-msgstr ""
+msgstr "Bu seçenek oturum yöneticisinin çıkışta mevcut oturumu otomatik olarak kaydetmesini sağlar. Eğer bu seçeneği seçmezseniz her çıkışta oturum kaydedilip edilmeyeceği size sorulur."
 
 #: ./xfce4-session.xml137(term)
 msgid "Prompt on logout"
@@ -154,6 +154,9 @@ msgstr "Başlangıçta Gnome servislerini çalıştır"
 #: ./xfce4-session.xml169(para)
 msgid "Enable this option if you need the GNOME keyring daemon to be run on startup. This option also instructs <application>@PACKAGE_NAME@</application> to bring up the GNOME assistive technologies at startup (if enabled in the GNOME control center). See the GNOME documentation for more information on this topic."
 msgstr ""
+"GNOME keyring hizmetini başlangıçta çalıştırmaya ihtiyaç duyarsanız bu seçeneği etkinleştirin. \r\n"
+"Bu seçenek aynı zamanda <application>@PACKAGE_NAME@</application>  uygulamasını başlangıçta GNOME yardımcı teknolojilerine getirmeyi sağlar (eğer GNOME kontrol merkezinde etkinleştirildiyse).\r\n"
+"Bu konu hakkında daha fazla bilgi için GNOME belgelendirmesine bakın."
 
 #: ./xfce4-session.xml177(term)
 msgid "Launch KDE services on startup"
@@ -201,7 +204,7 @@ msgstr "Sol tarafta yüklenmiş bütün motorları göreceksiniz. Bir motoru se�
 
 #: ./xfce4-session.xml234(para)
 msgid "<application>@PACKAGE_NAME@</application> provides three Splash themes engines by default. Their respective configuration options - if any - are available from the <guibutton>Configure</guibutton> button."
-msgstr ""
+msgstr "<application>@PACKAGE_NAME@</application> varsayılan olarak üç adet Açılış teması motoru sağlar. Kendi yapılandırma seçeneklerine - varsa - <guibutton>Configure</guibutton> düğmesinden ulaşılabilir."
 
 #: ./xfce4-session.xml240(title)
 msgid "Shutdown/reboot options"
@@ -209,7 +212,7 @@ msgstr "Kapatma/yeniden başlatma seçenekleri"
 
 #: ./xfce4-session.xml242(para)
 msgid "<application>@PACKAGE_NAME@</application> supports shutting down your computer when you log out of your desktop session. To be able to shutdown the computer, you have to be listed in the systems <filename>sudoers</filename> file, in particular, you must be allowed to execute the command <filename>${libdir}/xfce4/session/xfsm-shutdown-helper</filename> (<filename>/usr/sbin/xfsm-shutdown-helper</filename> on Debian GNU/Linux) as user root (where <filename>${libdir}</filename> is the <filename role=\"directory\">lib</filename> sub directory in the prefix you installed <application>@PACKAGE_NAME@</application>, for example <filename role=\"directory\">/usr/local/lib/xfce4/session</filename>)."
-msgstr ""
+msgstr "<application>@PACKAGE_NAME@</application> masaüstü oturumunuzdan çıkış yaptığınızda bilgisayarınızı kapatmayı sağlar. Bilgisayarı kapatabilmek için, sistemin <filename>sudoers</filename> dosyasındaki listesinde olmanız gerekmektedir, özellikle <filename>${libdir}/xfce4/session/xfsm-shutdown-helper</filename>(Debian GNU/Linux'da <filename>/usr/sbin/xfsm-shutdown-helper</filename>) komutunu çalıştırmak için root kullanıcısı olarak izinli olmasınız (<filename>${libdir}</filename> dizinin  <filename role=\"directory\">lib</filename> olduğu yüklediğiniz önekteki alt dizin <application>@PACKAGE_NAME@</application>, örnek olarak <filename role=\"directory\">/usr/local/lib/xfce4/session</filename>)."
 
 #: ./xfce4-session.xml253(para)
 msgid "For example, lets say, you installed <application>@PACKAGE_NAME@</application> into <filename role=\"directory\">/usr/local</filename>, your hostname is <emphasis>myhost</emphasis> and your user account is named <emphasis>myuser</emphasis>, then you would have to add the following line to your <filename>sudoers</filename> file (remember to use <application>visudo</application> to edit that file):"
@@ -250,15 +253,16 @@ msgstr "$(XDG_CONFIG_DIRS}"
 
 #: ./xfce4-session.xml292(para)
 msgid "A list of system directories that contain configuration data. By default the panel will look in <filename role=\"directory\">${sysconfdir}/xdg/</filename> and <filename role=\"directory\">/etc/xdg/</filename>. The value of ${sysconfdir} depends on how the program was build and will often be <filename role=\"directory\">/etc/</filename> for binary packages."
-msgstr ""
+msgstr "Yapılandırma verisi içeren sistem dizinlerinin listesi. Panel varsayılan olarak <filename role=\"directory\">${sysconfdir}/xdg/</filename> ve <filename role=\"directory\">/etc/xdg/</filename> dizinlerinin içerisine bakacak. ${sysconfdir} değeri programın nasıl derlendiğine ve genellikle ikili paketler için <filename role=\"directory\">/etc/</filename> olacaktır."
 
 #: ./xfce4-session.xml303(term)
 msgid "${XDG_CACHE_HOME}"
 msgstr "${XDG_CACHE_HOME}"
 
 #: ./xfce4-session.xml305(para)
+#, fuzzy
 msgid "Specifies the root for all user-specific cache data. If this environment variable is unset, it defaults to <filename role=\"directory\">~/.cache</filename>."
-msgstr ""
+msgstr "Bütün belirli kullanıcı önbellek verileri için root'u belirtir. Bu ortam değişkeni ayarlanmamış ise, varsayılan olarak <filename role=\"directory\">~/.cache</filename> seçilir."
 
 #: ./xfce4-session.xml312(term)
 msgid "${XDG_CONFIG_DIRS}/autostart/"
@@ -278,7 +282,7 @@ msgstr "${XDG_CONFIG_DIRS}/xfce4-session/xfce4-session.rc"
 
 #: ./xfce4-session.xml333(para)
 msgid "This is the location of the configuration file that includes the various settings for <application>@PACKAGE_NAME@</application>, which can be changed from the settings dialog."
-msgstr ""
+msgstr "<application>@PACKAGE_NAME@</application> için çeşitli ayarların da bulunduğu yapılandırma dosyasının konumu. Ayarlar penceresinden değiştirilebilir."
 
 #: ./xfce4-session.xml340(term)
 msgid "${XDG_CONFIG_DIRS}/xfce4-session/xfce4-splash.rc"
@@ -286,7 +290,7 @@ msgstr "${XDG_CONFIG_DIRS}/xfce4-session/xfce4-splash.rc"
 
 #: ./xfce4-session.xml342(para)
 msgid "This is the location of the configuration file that includes the configuration for the splash screen, which can be changed from the settings dialog."
-msgstr ""
+msgstr "Açılış penceresininde yapılandırmasını içeren, yapılandırma dosyasının konumu. Ayarlar penceresinden değiştirilebilir."
 
 #: ./xfce4-session.xml349(term)
 msgid "${XDG_CACHE_HOME}/sessions/"
@@ -327,6 +331,17 @@ msgid ""
 "Client3_Command=xfdesktop\n"
 "Client3_PerScreen=False\n"
 msgstr ""
+"\n"
+"[Failsafe Session]\n"
+"Count=4\n"
+"Client0_Command=xfwm4\n"
+"Client0_PerScreen=False\n"
+"Client1_Command=xfce4-panel\n"
+"Client1_PerScreen=True\n"
+"Client2_Command=xfce4-iconbox\n"
+"Client2_PerScreen=True\n"
+"Client3_Command=xfdesktop\n"
+"Client3_PerScreen=False\n"
 
 #: ./xfce4-session.xml392(title)
 msgid "Kiosk Mode"
