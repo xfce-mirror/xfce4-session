@@ -160,6 +160,57 @@ session_editor_sel_changed_btn(GtkTreeSelection *sel,
 }
 
 static void
+session_editor_clear_sessions(GtkWidget *btn,
+                              GtkWidget *treeview)
+{
+    gtk_widget_set_sensitive(btn, FALSE);
+
+    if(xfce_message_dialog(GTK_WINDOW(gtk_widget_get_toplevel(treeview)),
+                           _("Clear sessions"), GTK_STOCK_DIALOG_QUESTION,
+                           _("Are you sure you want to empty the session cache?"),
+                           _("The saved states of your applications will not be restored during your next login."),
+                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                           XFCE_BUTTON_TYPE_MIXED, GTK_STOCK_DELETE, _("_Proceed"), GTK_RESPONSE_ACCEPT,
+                           NULL) == GTK_RESPONSE_ACCEPT)
+    {
+        const gchar *item_name;
+        gchar       *cache_dir_path, *item_path;
+        GDir        *cache_dir;
+        GError      *error = NULL;
+
+        cache_dir_path = g_build_path(G_DIR_SEPARATOR_S, g_get_user_cache_dir(), "sessions", NULL);
+        cache_dir = g_dir_open(cache_dir_path, 0, &error);
+        if(!cache_dir) {
+            g_critical("Failed to open the session cache's directory: %s", error->message);
+            g_error_free(error);
+            g_free(cache_dir_path);
+            gtk_widget_set_sensitive(btn, TRUE);
+            return;
+        }
+
+        while((item_name = g_dir_read_name(cache_dir))) {
+            /* only clean Xfce related items */
+            if(!g_str_has_prefix(item_name, "xfce4-session-") &&
+               !g_str_has_prefix(item_name, "Thunar-") &&
+               !g_str_has_prefix(item_name, "xfwm4-")) {
+                continue;
+            }
+
+            item_path = g_build_filename(cache_dir_path, item_name, NULL);
+            if(G_UNLIKELY(g_unlink(item_path) == -1)) {
+                g_warning("Failed to delete \"%s\" from the session cache.", item_path);
+            }
+            g_free(item_path);
+        }
+        g_dir_close(cache_dir);
+        g_free(cache_dir_path);
+    }
+    else {
+        gtk_widget_set_sensitive(btn, TRUE);
+    }
+}
+
+static void
 session_editor_quit_client(GtkWidget *btn,
                            GtkWidget *treeview)
 {
@@ -699,7 +750,7 @@ session_editor_populate_treeview(GtkTreeView *treeview)
 void
 session_editor_init(GtkBuilder *builder)
 {
-    GObject *btn_save, *btn_quit, *dlg_saving;
+    GObject *btn_save, *btn_clear, *btn_quit, *dlg_saving;
     GtkTreeView *treeview;
     GtkTreeSelection *sel;
 
@@ -724,6 +775,10 @@ session_editor_init(GtkBuilder *builder)
     btn_save = gtk_builder_get_object(builder, "btn_save_session");
     g_signal_connect(btn_save, "clicked",
                      G_CALLBACK(session_editor_save_session), GTK_WIDGET(dlg_saving));
+
+    btn_clear = gtk_builder_get_object(builder, "btn_clear_sessions");
+    g_signal_connect(btn_clear, "clicked",
+                     G_CALLBACK(session_editor_clear_sessions), treeview);
 
     btn_quit = gtk_builder_get_object(builder, "btn_quit_client");
     g_signal_connect(btn_quit, "clicked",
