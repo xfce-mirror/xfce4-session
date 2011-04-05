@@ -177,6 +177,7 @@ session_editor_clear_sessions(GtkWidget *btn,
         gchar       *cache_dir_path, *item_path;
         GDir        *cache_dir;
         GError      *error = NULL;
+        gboolean     failed = FALSE;
 
         cache_dir_path = g_build_path(G_DIR_SEPARATOR_S, g_get_user_cache_dir(), "sessions", NULL);
         cache_dir = g_dir_open(cache_dir_path, 0, &error);
@@ -198,10 +199,23 @@ session_editor_clear_sessions(GtkWidget *btn,
 
             item_path = g_build_filename(cache_dir_path, item_name, NULL);
             if(G_UNLIKELY(g_unlink(item_path) == -1)) {
-                g_warning("Failed to delete \"%s\" from the session cache.", item_path);
+                DBG("Failed to delete \"%s\" from the session cache.", item_path);
+                failed = TRUE;
             }
             g_free(item_path);
         }
+
+        if(failed){
+            gchar *secondary_text;
+
+            secondary_text = g_strconcat(_("You might need to delete some files manually in "),
+                                         cache_dir_path, NULL);
+            xfce_dialog_show_warning(GTK_WINDOW(gtk_widget_get_toplevel(treeview)),
+                                     secondary_text,
+                                     _("All Xfce cache files could not be cleared"));
+            g_free(secondary_text);
+        }
+
         g_dir_close(cache_dir);
         g_free(cache_dir_path);
     }
