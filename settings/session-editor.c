@@ -170,7 +170,7 @@ session_editor_clear_sessions(GtkWidget *btn,
                            _("Are you sure you want to empty the session cache?"),
                            _("The saved states of your applications will not be restored during your next login."),
                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                           XFCE_BUTTON_TYPE_MIXED, GTK_STOCK_DELETE, _("_Proceed"), GTK_RESPONSE_ACCEPT,
+                           XFCE_BUTTON_TYPE_MIXED, GTK_STOCK_OK, _("_Proceed"), GTK_RESPONSE_ACCEPT,
                            NULL) == GTK_RESPONSE_ACCEPT)
     {
         const gchar *item_name;
