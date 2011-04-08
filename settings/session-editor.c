@@ -26,6 +26,7 @@
 #include <X11/SM/SMlib.h>
 
 #include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <dbus/dbus-glib.h>
 
