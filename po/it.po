@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-18 17:11+0000\n"
+"POT-Creation-Date: 2011-04-09 04:11+0000\n"
 "PO-Revision-Date: 2010-01-28 15:03+0100\n"
 "Last-Translator: Cristian Marchi <cri.penta@gmail.com>\n"
 "Language-Team: Italian <xfce-it-translators@googlegroups.com>\n"
@@ -252,16 +252,16 @@ msgstr "Informazioni di versione"
 msgid "Type '%s --help' for usage."
 msgstr "Digitare \"%s --help\" per le modalità d'uso"
 
-#: ../settings/main.c:86 ../xfce4-session/main.c:226
+#: ../settings/main.c:86 ../xfce4-session/main.c:219
 msgid "The Xfce development team. All rights reserved."
 msgstr "Il gruppo di sviluppo di Xfce. Tutti i diritti riservati."
 
-#: ../settings/main.c:87 ../xfce4-session/main.c:232
+#: ../settings/main.c:87 ../xfce4-session/main.c:225
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Segnalare i problemi a <%s>."
 
-#: ../settings/main.c:96 ../xfce4-session/main.c:238 ../xfce4-tips/main.c:270
+#: ../settings/main.c:96 ../xfce4-session/main.c:231
 msgid "Unable to contact settings server"
 msgstr "Impossibile contattare il server delle impostazioni"
 
@@ -273,75 +273,99 @@ msgstr "Impossibile creare l'interfaccia utente dai dati di definizione inclusi"
 msgid "_Application Autostart"
 msgstr "_Avvio automatico"
 
-#: ../settings/session-editor.c:60
+#: ../settings/session-editor.c:61
 msgid "If running"
 msgstr "Se in esecuzione"
 
-#: ../settings/session-editor.c:61
+#: ../settings/session-editor.c:62
 msgid "Always"
 msgstr "Sempre"
 
-#: ../settings/session-editor.c:62
+#: ../settings/session-editor.c:63
 msgid "Immediately"
 msgstr "Immediatamente"
 
-#: ../settings/session-editor.c:63
+#: ../settings/session-editor.c:64
 msgid "Never"
 msgstr "Mai"
 
-#: ../settings/session-editor.c:128
+#: ../settings/session-editor.c:129
 msgid "Session Save Error"
 msgstr "Errore di salvataggio della sessione"
 
-#: ../settings/session-editor.c:129
+#: ../settings/session-editor.c:130
 msgid "Unable to save the session"
 msgstr "Impossibile salvare la sessione"
 
-#: ../settings/session-editor.c:184
+#: ../settings/session-editor.c:170
+msgid "Clear sessions"
+msgstr "Eliminazione sessioni"
+
+#: ../settings/session-editor.c:171
+msgid "Are you sure you want to empty the session cache?"
+msgstr "Svuotare davvero la cache delle sessioni?"
+
+#: ../settings/session-editor.c:172
+msgid "The saved states of your applications will not be restored during your next login."
+msgstr "Lo stato salvato delle proprie applicazioni non verrà rispristinato al prossimo accesso."
+
+#: ../settings/session-editor.c:174
+msgid "_Proceed"
+msgstr "_Procedi"
+
+#: ../settings/session-editor.c:212
+msgid "You might need to delete some files manually in "
+msgstr "Potrebbe essere necessario cancellare manualmente alcuni file"
+
+#: ../settings/session-editor.c:216
+msgid "All Xfce cache files could not be cleared"
+msgstr "Tutti i file della cache di Xfce non sono stati rimossi"
+
+#: ../settings/session-editor.c:250
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Terminare davvero \"%s\"?"
 
-#: ../settings/session-editor.c:187 ../settings/session-editor.c:215
+#: ../settings/session-editor.c:253 ../settings/session-editor.c:281
 msgid "Terminate Program"
 msgstr "Termina programma"
 
-#: ../settings/session-editor.c:189
+#: ../settings/session-editor.c:255
 msgid "The application will lose any unsaved state and will not be restarted in your next session."
 msgstr "L'applicazione perderà qualsiasi stato non salvato e non verrà riavviata nella prossima sessione."
 
-#: ../settings/session-editor.c:191
-#: ../settings/xfce4-session-settings.glade.h:35
+#: ../settings/session-editor.c:257
+#: ../settings/xfce4-session-settings.glade.h:37
 msgid "_Quit Program"
 msgstr "_Esci dal programma"
 
-#: ../settings/session-editor.c:216
+#: ../settings/session-editor.c:282
 msgid "Unable to terminate program."
 msgstr "Impossibile terminare il programma."
 
-#: ../settings/session-editor.c:394
+#: ../settings/session-editor.c:460
 msgid "(Unknown program)"
 msgstr "(Programma sconosciuto)"
 
-#: ../settings/session-editor.c:614
+#: ../settings/session-editor.c:680
 msgid "Priority"
 msgstr "Priorità"
 
-#: ../settings/session-editor.c:622
+#: ../settings/session-editor.c:688
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:628
+#: ../settings/session-editor.c:694
 msgid "Program"
 msgstr "Programma"
 
-#: ../settings/session-editor.c:653
+#: ../settings/session-editor.c:719
 msgid "Restart Style"
 msgstr "Stile di riavvio"
 
-#: ../settings/splash-settings.c:286 ../settings/splash-settings.c:289
-#: ../settings/splash-settings.c:292 ../settings/splash-settings.c:295
-#: ../settings/splash-settings.c:352
+#: ../settings/splash-settings.c:291 ../settings/splash-settings.c:294
+#: ../settings/splash-settings.c:297 ../settings/splash-settings.c:300
+#: ../settings/splash-settings.c:357
 msgid "None"
 msgstr "Nessuno"
 
@@ -441,11 +465,11 @@ msgstr "Stampa le informazioni di versione ed esce"
 msgid "Loading desktop settings"
 msgstr "Caricamento delle impostazioni dell'ambiente in corso..."
 
-#: ../xfce4-session/main.c:227
+#: ../xfce4-session/main.c:220
 msgid "Written by Benedikt Meurer <benny@xfce.org>."
 msgstr "Scritto da Benedikt Meurer <benny@xfce.org>."
 
-#: ../xfce4-session/main.c:228
+#: ../xfce4-session/main.c:221
 #, c-format
 msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
 msgstr ""
@@ -454,11 +478,11 @@ msgstr ""
 "Compilato con Gtk+-%d.%d.%d, eseguendo Gtk+-%d.%d.%d"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:258
+#: ../xfce4-session/main.c:251
 msgid "Verifying DNS settings"
 msgstr "Verifica delle impostazioni DNS in corso..."
 
-#: ../xfce4-session/main.c:261
+#: ../xfce4-session/main.c:254
 msgid "Loading session data"
 msgstr "Caricamento dei dati di sessione in corso..."
 
@@ -778,42 +802,6 @@ msgstr "Esecuzione automatica..."
 msgid "Starting Assistive Technologies"
 msgstr "Avvio delle tecnologie di assistenza in corso..."
 
-#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:284
-msgid "Tips and Tricks"
-msgstr "Suggerimenti e trucchi"
-
-#: ../xfce4-tips/main.c:49
-msgid "Fortunes"
-msgstr "Frasi portafortuna"
-
-#: ../xfce4-tips/main.c:75
-#, c-format
-msgid "Could not load tips database (%s)."
-msgstr "Impossibile caricare il database dei suggerimenti (%s)."
-
-#. converting it from the user's locale failed too, we give up
-#: ../xfce4-tips/main.c:190
-#, c-format
-msgid "Invalid output of fortune."
-msgstr "Output non valido di fortune."
-
-#: ../xfce4-tips/main.c:195 ../xfce4-tips/main.c:203
-#, c-format
-msgid "Executing fortune failed (%s)"
-msgstr "Esecuzione di fortune non riuscita (%s)"
-
-#: ../xfce4-tips/main.c:228
-msgid "Error while loading tips."
-msgstr "Errore nel caricamento dei suggerimenti."
-
-#: ../xfce4-tips/main.c:314
-msgid "Display tips on _startup"
-msgstr "Visualizza i suggerimenti all'_avvio"
-
-#: ../xfce4-tips/main.c:338
-msgid "Next"
-msgstr "Successivo"
-
 #: ../xfce4-session-logout/main.c:69
 msgid "Log out without displaying the logout dialog"
 msgstr "Esce senza visualizzare la schermata di uscita"
@@ -884,7 +872,7 @@ msgid "Customize desktop startup and splash screen"
 msgstr "Personalizzazione dell'avvio e della relativa schermata"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
-#: ../settings/xfce4-session-settings.glade.h:27
+#: ../settings/xfce4-session-settings.glade.h:28
 msgid "Session and Startup"
 msgstr "Sessione e avvio"
 
@@ -949,92 +937,122 @@ msgid "Display the session chooser every time Xfce starts"
 msgstr "Mostra il selettore di sessione ogni volta che Xfce viene avviato"
 
 #: ../settings/xfce4-session-settings.glade.h:17
+msgid "Empty the session cache"
+msgstr "Svuota la cache della sessione"
+
+#: ../settings/xfce4-session-settings.glade.h:18
 msgid "Launch GN_OME services on startup"
 msgstr "Lancia i servizi di GN_OME all'avvio"
 
-#: ../settings/xfce4-session-settings.glade.h:18
+#: ../settings/xfce4-session-settings.glade.h:19
 msgid "Launch _KDE services on startup"
 msgstr "Lancia i servizi di _KDE all'avvio"
 
-#: ../settings/xfce4-session-settings.glade.h:19
+#: ../settings/xfce4-session-settings.glade.h:20
 msgid "Manage _remote applications"
 msgstr "Gestisci le applicazioni _remote"
 
-#: ../settings/xfce4-session-settings.glade.h:20
+#: ../settings/xfce4-session-settings.glade.h:21
 msgid "Manage remote applications over the network (this may be a security risk)"
 msgstr "Gestisce le applicazioni remote in rete (potrebbe costituire un rischio per la sicurezza)"
 
-#: ../settings/xfce4-session-settings.glade.h:21
+#: ../settings/xfce4-session-settings.glade.h:22
 msgid "Opens the configuration panel for the selected splash screen"
 msgstr "Apre il pannello di configurazione per la schermata d'avvio selezionata"
 
-#: ../settings/xfce4-session-settings.glade.h:22
+#: ../settings/xfce4-session-settings.glade.h:23
 msgid "Prompt for confirmation when logging out"
 msgstr "Chiede conferma all'uscita dalla sessione"
 
-#: ../settings/xfce4-session-settings.glade.h:23
+#: ../settings/xfce4-session-settings.glade.h:24
 msgid "Quit the program, and remove it from the session"
 msgstr "Esce dal programma e lo rimuove dalla sessione"
 
-#: ../settings/xfce4-session-settings.glade.h:24
+#: ../settings/xfce4-session-settings.glade.h:25
 msgid "S_plash"
 msgstr "S_plash"
 
-#: ../settings/xfce4-session-settings.glade.h:25
+#: ../settings/xfce4-session-settings.glade.h:26
 msgid "Save Sessio_n"
 msgstr "Salva la sessio_ne"
 
-#: ../settings/xfce4-session-settings.glade.h:26
+#: ../settings/xfce4-session-settings.glade.h:27
 msgid "Saving Session"
 msgstr "Salvataggio della sessione in corso..."
 
-#: ../settings/xfce4-session-settings.glade.h:28
+#: ../settings/xfce4-session-settings.glade.h:29
 msgid "Start GNOME services, such as gnome-keyring and the GNOME accessibility framework"
 msgstr "Avvia i servizi di GNOME quali gnome-keyring e la struttura per l'accessibilità di GNOME"
 
-#: ../settings/xfce4-session-settings.glade.h:29
+#: ../settings/xfce4-session-settings.glade.h:30
 msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
 msgstr "Avvia i servizi di KDE quali \"kdeinit\", DCOP e ARTS"
 
-#: ../settings/xfce4-session-settings.glade.h:30
+#: ../settings/xfce4-session-settings.glade.h:31
 msgid "These applications are a part of the currently-running session, and can be saved when you log out.  Changes below will only take effect when the session is saved."
 msgstr "Queste applicazioni rappresentano una parte della sessione attualmente in esecuzione, e possono essere salvate all'uscita. I cambiamenti applicati qui sotto hanno effetto solamente quando la sessione viene salvata."
 
-#: ../settings/xfce4-session-settings.glade.h:31
+#: ../settings/xfce4-session-settings.glade.h:32
 msgid "Your session is being saved.  If you do not wish to wait, you may close this window."
 msgstr "La sessione sta per essere salvata. Se non si vuole attendere, chiudere questa finestra."
 
-#: ../settings/xfce4-session-settings.glade.h:32
+#: ../settings/xfce4-session-settings.glade.h:33
+msgid "_Clear saved sessions"
+msgstr "_Elimina le sessioni salvate"
+
+#: ../settings/xfce4-session-settings.glade.h:34
 msgid "_Display chooser on login"
 msgstr "_Mostra il selettore all'accesso"
 
-#: ../settings/xfce4-session-settings.glade.h:33
+#: ../settings/xfce4-session-settings.glade.h:35
 msgid "_General"
 msgstr "_Generali"
 
-#: ../settings/xfce4-session-settings.glade.h:34
+#: ../settings/xfce4-session-settings.glade.h:36
 msgid "_Prompt on logout"
 msgstr "C_onferma l'uscita"
 
-#: ../settings/xfce4-session-settings.glade.h:36
+#: ../settings/xfce4-session-settings.glade.h:38
 msgid "_Session"
 msgstr "_Sessione"
 
-#: ../settings/xfce4-session-settings.glade.h:37
+#: ../settings/xfce4-session-settings.glade.h:39
 msgid "_Test"
 msgstr "P_rova"
 
-#: ../settings/xfce4-session-settings.glade.h:38
+#: ../settings/xfce4-session-settings.glade.h:40
 msgid "label"
 msgstr "etichetta"
 
-#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
-msgid "Tips and tricks"
-msgstr "Suggerimenti e trucchi"
+#~ msgid "Tips and Tricks"
+#~ msgstr "Suggerimenti e trucchi"
 
-#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
-msgid "xfce4-tips"
-msgstr "xfce4-tips"
+#~ msgid "Fortunes"
+#~ msgstr "Frasi portafortuna"
+
+#~ msgid "Could not load tips database (%s)."
+#~ msgstr "Impossibile caricare il database dei suggerimenti (%s)."
+
+#~ msgid "Invalid output of fortune."
+#~ msgstr "Output non valido di fortune."
+
+#~ msgid "Executing fortune failed (%s)"
+#~ msgstr "Esecuzione di fortune non riuscita (%s)"
+
+#~ msgid "Error while loading tips."
+#~ msgstr "Errore nel caricamento dei suggerimenti."
+
+#~ msgid "Display tips on _startup"
+#~ msgstr "Visualizza i suggerimenti all'_avvio"
+
+#~ msgid "Next"
+#~ msgstr "Successivo"
+
+#~ msgid "Tips and tricks"
+#~ msgstr "Suggerimenti e trucchi"
+
+#~ msgid "xfce4-tips"
+#~ msgstr "xfce4-tips"
 
 #~ msgid "_Shut Down"
 #~ msgstr "_Spegni"
