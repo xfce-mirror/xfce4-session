@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-session 4.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-20 05:11+0000\n"
+"POT-Creation-Date: 2011-04-09 04:11+0000\n"
 "PO-Revision-Date: 2010-02-07 21:05+0100\n"
 "Last-Translator: Per Kongstad <p_kongstad@op.pl>\n"
 "Language-Team: Danish <dank@dansk-gruppen.dk>\n"
@@ -246,16 +246,16 @@ msgstr "Versionsinformation"
 msgid "Type '%s --help' for usage."
 msgstr "Tast '%s --help' for anvendelse."
 
-#: ../settings/main.c:86 ../xfce4-session/main.c:226
+#: ../settings/main.c:86 ../xfce4-session/main.c:219
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce-udviklingsholdet. Alle rettigheder forbeholdes."
 
-#: ../settings/main.c:87 ../xfce4-session/main.c:232
+#: ../settings/main.c:87 ../xfce4-session/main.c:225
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Rapportér venligst fejl til <%s>."
 
-#: ../settings/main.c:96 ../xfce4-session/main.c:238
+#: ../settings/main.c:96 ../xfce4-session/main.c:231
 msgid "Unable to contact settings server"
 msgstr "Kunne ikke forbinde til indstillingsserver"
 
@@ -267,75 +267,99 @@ msgstr "Kunne ikke oprette brugergrænseflade fra indbyggede definitionsdata"
 msgid "_Application Autostart"
 msgstr "_Autostarterprogram"
 
-#: ../settings/session-editor.c:60
+#: ../settings/session-editor.c:61
 msgid "If running"
 msgstr "Hvis kørende"
 
-#: ../settings/session-editor.c:61
+#: ../settings/session-editor.c:62
 msgid "Always"
 msgstr "Altid"
 
-#: ../settings/session-editor.c:62
+#: ../settings/session-editor.c:63
 msgid "Immediately"
 msgstr "Med det samme"
 
-#: ../settings/session-editor.c:63
+#: ../settings/session-editor.c:64
 msgid "Never"
 msgstr "Aldrig"
 
-#: ../settings/session-editor.c:128
+#: ../settings/session-editor.c:129
 msgid "Session Save Error"
 msgstr "Sessionsgemmefejl"
 
-#: ../settings/session-editor.c:129
+#: ../settings/session-editor.c:130
 msgid "Unable to save the session"
 msgstr "Kunne ikke gemme sessionen"
 
-#: ../settings/session-editor.c:184
+#: ../settings/session-editor.c:170
+msgid "Clear sessions"
+msgstr "Ryd sessioner"
+
+#: ../settings/session-editor.c:171
+msgid "Are you sure you want to empty the session cache?"
+msgstr "Er du sikker på, at du vil rydde sessionscachen?"
+
+#: ../settings/session-editor.c:172
+msgid "The saved states of your applications will not be restored during your next login."
+msgstr "De gemte tilstande af dine programmer vil ikke blive gendannet næste gang du logger ind."
+
+#: ../settings/session-editor.c:174
+msgid "_Proceed"
+msgstr "_Fortsæt"
+
+#: ../settings/session-editor.c:212
+msgid "You might need to delete some files manually in "
+msgstr "Du kan være nødt til at slette nogle filer manuelt i"
+
+#: ../settings/session-editor.c:216
+msgid "All Xfce cache files could not be cleared"
+msgstr "Alle Xfce's cachefiler kunne ikke ryddes"
+
+#: ../settings/session-editor.c:250
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Er du sikker på, at du vil afbryde \"%s\"?"
 
-#: ../settings/session-editor.c:187 ../settings/session-editor.c:215
+#: ../settings/session-editor.c:253 ../settings/session-editor.c:281
 msgid "Terminate Program"
 msgstr "Afslut program"
 
-#: ../settings/session-editor.c:189
+#: ../settings/session-editor.c:255
 msgid "The application will lose any unsaved state and will not be restarted in your next session."
 msgstr "Programmet vil miste enhver ikke gemt tilstand og vil ikke blive genstartet i din næste session."
 
-#: ../settings/session-editor.c:191
-#: ../settings/xfce4-session-settings.glade.h:35
+#: ../settings/session-editor.c:257
+#: ../settings/xfce4-session-settings.glade.h:37
 msgid "_Quit Program"
 msgstr "_Afslut program"
 
-#: ../settings/session-editor.c:216
+#: ../settings/session-editor.c:282
 msgid "Unable to terminate program."
 msgstr "Kunne ikke afbryde program."
 
-#: ../settings/session-editor.c:394
+#: ../settings/session-editor.c:460
 msgid "(Unknown program)"
 msgstr "(Ukendt program)"
 
-#: ../settings/session-editor.c:614
+#: ../settings/session-editor.c:680
 msgid "Priority"
 msgstr "Prioritet"
 
-#: ../settings/session-editor.c:622
+#: ../settings/session-editor.c:688
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:628
+#: ../settings/session-editor.c:694
 msgid "Program"
 msgstr "Program"
 
-#: ../settings/session-editor.c:653
+#: ../settings/session-editor.c:719
 msgid "Restart Style"
 msgstr "Genstart stil"
 
-#: ../settings/splash-settings.c:286 ../settings/splash-settings.c:289
-#: ../settings/splash-settings.c:292 ../settings/splash-settings.c:295
-#: ../settings/splash-settings.c:352
+#: ../settings/splash-settings.c:291 ../settings/splash-settings.c:294
+#: ../settings/splash-settings.c:297 ../settings/splash-settings.c:300
+#: ../settings/splash-settings.c:357
 msgid "None"
 msgstr "Ingen"
 
@@ -435,21 +459,21 @@ msgstr "Udskriv versionsinformation og afslut"
 msgid "Loading desktop settings"
 msgstr "Indlæser skrivebordsindstillinger"
 
-#: ../xfce4-session/main.c:227
+#: ../xfce4-session/main.c:220
 msgid "Written by Benedikt Meurer <benny@xfce.org>."
 msgstr "Skrevet af Benedikt Meurer <benny@xfce.org>."
 
-#: ../xfce4-session/main.c:228
+#: ../xfce4-session/main.c:221
 #, c-format
 msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
 msgstr "Bygget med Gtk+-%d.%d.%d, kørende med Gtk+-%d.%d.%d"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:258
+#: ../xfce4-session/main.c:251
 msgid "Verifying DNS settings"
 msgstr "Afprøver DNS-indstillinger"
 
-#: ../xfce4-session/main.c:261
+#: ../xfce4-session/main.c:254
 msgid "Loading session data"
 msgstr "Indlæser sessionsdata"
 
@@ -840,7 +864,7 @@ msgid "Customize desktop startup and splash screen"
 msgstr "Tilpas skrivebordsopstart- og opstartsbilled-skærm"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
-#: ../settings/xfce4-session-settings.glade.h:27
+#: ../settings/xfce4-session-settings.glade.h:28
 msgid "Session and Startup"
 msgstr "Session og opstart"
 
@@ -905,82 +929,90 @@ msgid "Display the session chooser every time Xfce starts"
 msgstr "Vis sessionsvælgeren hver gang Xfce starter"
 
 #: ../settings/xfce4-session-settings.glade.h:17
+msgid "Empty the session cache"
+msgstr "Ryd sessionscachen"
+
+#: ../settings/xfce4-session-settings.glade.h:18
 msgid "Launch GN_OME services on startup"
 msgstr "Start GN_OME-tjenester ved opstart"
 
-#: ../settings/xfce4-session-settings.glade.h:18
+#: ../settings/xfce4-session-settings.glade.h:19
 msgid "Launch _KDE services on startup"
 msgstr "Start _KDE-tjenester ved opstart"
 
-#: ../settings/xfce4-session-settings.glade.h:19
+#: ../settings/xfce4-session-settings.glade.h:20
 msgid "Manage _remote applications"
 msgstr "Håndtér _fjernprogrammer"
 
-#: ../settings/xfce4-session-settings.glade.h:20
+#: ../settings/xfce4-session-settings.glade.h:21
 msgid "Manage remote applications over the network (this may be a security risk)"
 msgstr "Håndtér fjernprogrammer over netværket (dette kan udgøre en sikkerhedsrisiko)"
 
-#: ../settings/xfce4-session-settings.glade.h:21
+#: ../settings/xfce4-session-settings.glade.h:22
 msgid "Opens the configuration panel for the selected splash screen"
 msgstr "Åbner indstillingspanelet for det valgte opstartbillede"
 
-#: ../settings/xfce4-session-settings.glade.h:22
+#: ../settings/xfce4-session-settings.glade.h:23
 msgid "Prompt for confirmation when logging out"
 msgstr "Spørg for bekræftelse ved logud"
 
-#: ../settings/xfce4-session-settings.glade.h:23
+#: ../settings/xfce4-session-settings.glade.h:24
 msgid "Quit the program, and remove it from the session"
 msgstr "Afslut programmet og fjern det fra sessionen"
 
-#: ../settings/xfce4-session-settings.glade.h:24
+#: ../settings/xfce4-session-settings.glade.h:25
 msgid "S_plash"
 msgstr "O_pstartsskærm"
 
-#: ../settings/xfce4-session-settings.glade.h:25
+#: ../settings/xfce4-session-settings.glade.h:26
 msgid "Save Sessio_n"
 msgstr "Gem _session"
 
-#: ../settings/xfce4-session-settings.glade.h:26
+#: ../settings/xfce4-session-settings.glade.h:27
 msgid "Saving Session"
 msgstr "Gemmer session"
 
-#: ../settings/xfce4-session-settings.glade.h:28
+#: ../settings/xfce4-session-settings.glade.h:29
 msgid "Start GNOME services, such as gnome-keyring and the GNOME accessibility framework"
 msgstr "Start GNOME-tjenester, såsom gnome-nøglering og GNOME's tilgængelighedsomgivelser"
 
-#: ../settings/xfce4-session-settings.glade.h:29
+#: ../settings/xfce4-session-settings.glade.h:30
 msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
 msgstr "Start KDE-tjenester, såsom \"kdeinit,\" DCOP, og ARTS"
 
-#: ../settings/xfce4-session-settings.glade.h:30
+#: ../settings/xfce4-session-settings.glade.h:31
 msgid "These applications are a part of the currently-running session, and can be saved when you log out.  Changes below will only take effect when the session is saved."
 msgstr "Disse programmer er en del af den nuværende kørende session, og kan blive gemt når du logger ud. Ændringerne forneden vil kun blive brugt, når sessionen bliver gemt."
 
-#: ../settings/xfce4-session-settings.glade.h:31
+#: ../settings/xfce4-session-settings.glade.h:32
 msgid "Your session is being saved.  If you do not wish to wait, you may close this window."
 msgstr "Din session bliver gemt. Hvis du ikke ønsker at vente, kan du lukke dette vindue."
 
-#: ../settings/xfce4-session-settings.glade.h:32
+#: ../settings/xfce4-session-settings.glade.h:33
+msgid "_Clear saved sessions"
+msgstr "_Ryd gemte sessioner"
+
+#: ../settings/xfce4-session-settings.glade.h:34
 msgid "_Display chooser on login"
 msgstr "Vis _vælger ved logind"
 
-#: ../settings/xfce4-session-settings.glade.h:33
+#: ../settings/xfce4-session-settings.glade.h:35
 msgid "_General"
 msgstr "_Generelt"
 
-#: ../settings/xfce4-session-settings.glade.h:34
+#: ../settings/xfce4-session-settings.glade.h:36
 msgid "_Prompt on logout"
 msgstr "_Spørg ved logud"
 
-#: ../settings/xfce4-session-settings.glade.h:36
+#: ../settings/xfce4-session-settings.glade.h:38
 msgid "_Session"
 msgstr "_Session"
 
-#: ../settings/xfce4-session-settings.glade.h:37
+#: ../settings/xfce4-session-settings.glade.h:39
 msgid "_Test"
 msgstr "_Prøv"
 
-#: ../settings/xfce4-session-settings.glade.h:38
+#: ../settings/xfce4-session-settings.glade.h:40
 msgid "label"
 msgstr "mærkat"
 
