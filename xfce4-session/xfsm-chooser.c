@@ -45,7 +45,6 @@
 #define BORDER 6
 
 
-static void xfsm_chooser_finalize      (GObject           *object);
 static void xfsm_chooser_row_activated (GtkTreeView       *treeview,
                                         GtkTreePath       *path,
                                         GtkTreeViewColumn *column,
@@ -131,10 +130,6 @@ xfsm_chooser_get_session (const XfsmChooser *chooser)
 static void
 xfsm_chooser_class_init (XfsmChooserClass *klass)
 {
-  GObjectClass *gobject_class;
-
-  gobject_class = G_OBJECT_CLASS (klass);
-  gobject_class->finalize = xfsm_chooser_finalize;
 }
 
 
@@ -214,17 +209,6 @@ xfsm_chooser_init (XfsmChooser *chooser)
   gtk_dialog_add_action_widget (GTK_DIALOG (chooser), button,
                                 XFSM_RESPONSE_NEW);
   gtk_widget_show (button);
-}
-
-
-static void
-xfsm_chooser_finalize (GObject *object)
-{
-  XfsmChooser *chooser;
-
-  chooser = XFSM_CHOOSER (object);
-
-  G_OBJECT_CLASS (xfsm_chooser_parent_class)->finalize (object);
 }
 
 
