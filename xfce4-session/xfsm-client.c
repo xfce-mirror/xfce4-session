@@ -336,19 +336,19 @@ xfsm_client_merge_properties (XfsmClient *client,
 
       prop = props[n];
 
-      if (!strcmp (props[n]->name, SmDiscardCommand))
+      if (!strcmp (prop->name, SmDiscardCommand))
         {
           old_discard = xfsm_properties_get_strv (properties, SmDiscardCommand);
           if (old_discard)
             old_discard = g_strdupv (old_discard);
         }
 
-      if (xfsm_properties_set_from_smprop (properties, props[n]))
+      if (xfsm_properties_set_from_smprop (properties, prop))
         {
           if (old_discard)
             xfsm_properties_discard_command_changed (properties, old_discard);
 
-          xfsm_client_signal_prop_change (client, props[n]->name);
+          xfsm_client_signal_prop_change (client, prop->name);
         }
 
       g_strfreev (old_discard);
