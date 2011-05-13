@@ -2,17 +2,17 @@
 # Copyright (C) 2003-2006 The Xfce development team.
 # This file is distributed under the same license as the xfce4-session package.
 # Jasper Huijsmans <jasper@xfce.org>, 2004.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-09 16:35+0000\n"
+"POT-Creation-Date: 2011-05-13 10:35+0000\n"
 "PO-Revision-Date: 2006-11-03 11:50+0100\n"
 "Last-Translator: Pjotr\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: nl\n"
 
@@ -35,16 +35,17 @@ msgstr "Fout van het themabestand"
 
 #: ../engines/balou/config.c:342
 msgid "Please check that the file is a valid splash theme archive."
-msgstr "Controleer a.u.b. of het bestand een geldig beginschermthema-archief is."
+msgstr ""
+"Controleer a.u.b. of het bestand een geldig beginschermthema-archief is."
 
 #: ../engines/balou/config.c:402
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
-msgstr "Kan beginschermthema \"%s\" niet verwijderen uit map %s."
+msgstr "Kan thema van beginscherm \"%s\" niet verwijderen uit map %s."
 
 #: ../engines/balou/config.c:491
 msgid "Choose theme filename..."
-msgstr "Thema-bestand kiezen..."
+msgstr "Themabestand kiezen..."
 
 #: ../engines/balou/config.c:624
 msgid "_Install new theme"
@@ -338,7 +339,7 @@ msgstr "Geen"
 
 #: ../settings/xfae-dialog.c:78
 msgid "Add application"
-msgstr "Programma toevoegen"
+msgstr "Toepassing toevoegen"
 
 #: ../settings/xfae-dialog.c:92
 msgid "Name:"
@@ -363,12 +364,12 @@ msgstr "Programma bewerken"
 #: ../settings/xfae-model.c:562
 #, c-format
 msgid "Failed to unlink %s: %s"
-msgstr "Kan koppeling naar %s niet verwijderen: %s"
+msgstr "Kon koppeling %s niet verwijderen: %s"
 
 #: ../settings/xfae-model.c:651
 #, c-format
 msgid "Failed to create file %s"
-msgstr "Maken van bestand %s is mislukt"
+msgstr "Kon bestand %s niet maken"
 
 #: ../settings/xfae-model.c:673
 #, c-format
@@ -391,7 +392,7 @@ msgid ""
 "you login to your Xfce desktop, in addition to the applications that were "
 "saved when you logged out last time:"
 msgstr ""
-"Hieronder staat de lijst met programma's die automatisch worden gestart "
+"Hieronder staat de lijst met programma's die automatisch worden opgestart "
 "wanneer u zich aanmeldt in uw Xfce-werkomgeving, naast de programma's die "
 "werden opgeslagen toen u zich de laatste keer afmeldde:"
 
@@ -402,7 +403,7 @@ msgstr "Kon \"%s\" niet toevoegen"
 
 #: ../settings/xfae-window.c:320 ../settings/xfae-window.c:334
 msgid "Failed to remove item"
-msgstr "Verwijderen van element %s is mislukt"
+msgstr "Kon element %s niet verwijderen"
 
 #: ../settings/xfae-window.c:326
 msgid ""
@@ -449,9 +450,7 @@ msgstr "Geschreven door Benedikt Meurer <benny@xfce.org>."
 #: ../xfce4-session/main.c:228
 #, c-format
 msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
-msgstr ""
-"Gebouwd met Gtk+-%d.%d.%d, draaiend met Gtk+-%d.%d.%d\r\n"
-"\t"
+msgstr "Gebouwd met Gtk+-%d.%d.%d, draaiend met Gtk+-%d.%d.%d"
 
 #. verify that the DNS settings are ok
 #: ../xfce4-session/main.c:258
@@ -460,7 +459,7 @@ msgstr "Bezig met verifiëren instellingen DNS"
 
 #: ../xfce4-session/main.c:261
 msgid "Loading session data"
-msgstr "Bezig met laden sesiegegevens"
+msgstr "Bezig met laden sessiegegevens"
 
 #: ../xfce4-session/shutdown.c:372
 #, c-format
@@ -474,11 +473,11 @@ msgstr "Afmelden"
 
 #: ../xfce4-session/shutdown.c:457
 msgid "Restart"
-msgstr "Herstarten"
+msgstr "_Herstarten"
 
 #: ../xfce4-session/shutdown.c:499
 msgid "Shut Down"
-msgstr "Afsluiten"
+msgstr "Af_sluiten"
 
 #: ../xfce4-session/shutdown.c:561
 msgid "Suspend"
@@ -505,8 +504,8 @@ msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
 msgstr ""
-"Het wachtwoord is onjuist of de systeembeheerder heeft u niet "
-"het recht gegeven om deze computer af te sluiten."
+"Het wachtwoord is onjuist of de systeembeheerder heeft u niet het recht "
+"gegeven om deze computer af te sluiten."
 
 #: ../xfce4-session/shutdown.c:833 ../xfce4-session/xfsm-manager.c:1119
 msgid "Shutdown Failed"
@@ -555,15 +554,16 @@ msgstr "De cliënt heeft nog geen eigenschappen toegewezen gekregen"
 
 #: ../xfce4-session/xfsm-compat-gnome.c:301
 msgid "Starting The Gnome Keyring Daemon"
-msgstr "Bezig met starten GNOME Keyring Daemon"
+msgstr "Bezig met starten GNOME-dienst voor sleutelbos"
 
 #: ../xfce4-session/xfsm-compat-gnome.c:313
+#, fuzzy
 msgid "Starting Gnome Assistive Technologies"
-msgstr "Bezig met starten GNOME Toegankelijkheidsopties"
+msgstr "Bezig met het opstarten van Ondersteunende Technieken"
 
 #: ../xfce4-session/xfsm-compat-kde.c:124
 msgid "Starting KDE services"
-msgstr "Bezig met starten KDE services"
+msgstr "Bezig met starten KDE-diensten"
 
 #: ../xfce4-session/xfsm-dns.c:78
 msgid "(Unknown)"
@@ -722,19 +722,19 @@ msgstr "Bezig met starten GNOME Terminal Emulator"
 
 #: ../xfce4-session/xfsm-startup.c:131
 msgid "Starting the KDE Advanced Text Editor"
-msgstr "Bezig met starten KDE Advanced Text Editor"
+msgstr "Bezig met starten KDE-Geavanceerde Tekstverwerker"
 
 #: ../xfce4-session/xfsm-startup.c:133
 msgid "Starting the KDE Clipboard Manager"
-msgstr "Bezig met starten KDE Klembordbeheerder"
+msgstr "Bezig met starten KDE-Klembordbeheerder"
 
 #: ../xfce4-session/xfsm-startup.c:135
 msgid "Starting the KDE Mail Reader"
-msgstr "Bezig met starten KDE Mail Reader"
+msgstr "Bezig met starten KDE-Mail Lezer"
 
 #: ../xfce4-session/xfsm-startup.c:137
 msgid "Starting the KDE News Reader"
-msgstr "Bezig met starten KDE News Reader"
+msgstr "Bezig met starten KDE-Nieuwslezer"
 
 #: ../xfce4-session/xfsm-startup.c:139
 msgid "Starting the Konqueror"
@@ -742,19 +742,19 @@ msgstr "Bezig met starten Konqueror"
 
 #: ../xfce4-session/xfsm-startup.c:141
 msgid "Starting the KDE Terminal Emulator"
-msgstr "Bezig met starten KDE Terminal Emulator"
+msgstr "Bezig met starten KDE-Terminal Emulator"
 
 #: ../xfce4-session/xfsm-startup.c:145
 msgid "Starting the Beep Media Player"
-msgstr "Bezig met starten Beep Media Player"
+msgstr "Bezig met starten Beep Media Speler"
 
 #: ../xfce4-session/xfsm-startup.c:147
 msgid "Starting The Gimp"
-msgstr "Bezig met starten The Gimp"
+msgstr "Bezig met starten van De Gimp"
 
 #: ../xfce4-session/xfsm-startup.c:149
 msgid "Starting the VI Improved Editor"
-msgstr "Bezig met starten VI Improved Editor"
+msgstr "Bezig met starten VI Verbeterde Tekstverwerker"
 
 #: ../xfce4-session/xfsm-startup.c:151
 msgid "Starting the Session Management Proxy"
@@ -766,7 +766,7 @@ msgstr "Bezig met starten X-Chat IRC Client"
 
 #: ../xfce4-session/xfsm-startup.c:155
 msgid "Starting the X Multimedia System"
-msgstr "Bezig met starten X Multimedia System"
+msgstr "Bezig met starten X Multimedia Systeem"
 
 #: ../xfce4-session/xfsm-startup.c:157
 msgid "Starting the X Terminal Emulator"
@@ -797,9 +797,10 @@ msgstr ""
 "  %s\n"
 "\n"
 "hier kunt u .desktop-bestanden plaatsen van de toepassingen die\n"
-"automatisch worden opgestart wanneer u zich aanmeldt in Xfce. De bestanden in\n"
-"uw oude map zijn succesvol overgezet naar de nieuwe locatie.\n"
-"U zou de oude map nu moeten verwijderen.\n"
+"automatisch moeten worden opgestart wanneer u zich aanmeldt in Xfce. De "
+"bestanden in\n"
+"uw oude autostart-map zijn succesvol overgezet naar de nieuwe locatie.\n"
+"U zou deze oude autostart-map nu moeten verwijderen.\n"
 
 #: ../xfce4-session/xfsm-startup.c:441
 msgid "Performing Autostart..."
@@ -1043,8 +1044,8 @@ msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this "
 "window."
 msgstr ""
-"Uw sessie wordt nu opgeslagen. Als u niet wil wachten, dan kunt u dit venster "
-"sluiten."
+"Uw sessie wordt nu opgeslagen. Als u niet wil wachten, dan kunt u dit "
+"venster sluiten."
 
 #: ../settings/xfce4-session-settings.glade.h:32
 msgid "_Display chooser on login"
@@ -1088,19 +1089,19 @@ msgstr "xfce4-tips"
 #~ msgstr "Geef sessienaam"
 
 #~ msgid "Unable to create parent pipe: %s"
-#~ msgstr "Maken van bestand %s is mislukt"
+#~ msgstr "Maken van parent pipe %s is mislukt"
 
 #~ msgid "Unable to create child pipe: %s"
-#~ msgstr "Maken van bestand %s is mislukt"
+#~ msgstr "Maken van child pipe %s is mislukt"
 
 #~ msgid "Session and Startup Settings"
 #~ msgstr "Instellingen voor sessiebeheer en opstarten"
 
 #~ msgid "Sessions and Startup Settings"
-#~ msgstr "Instellingen Sessiebeheer en Opstarten"
+#~ msgstr "Instellingen Sessies en Opstarten"
 
 #~ msgid "Xfce 4 Sessions and Startup Settings"
-#~ msgstr "Instellingen Xfce 4 Sessies en Opstarten"
+#~ msgstr "Instellingen Xfce 4-sessies en Opstarten"
 
 #~ msgid "Remove the selected application from the session."
 #~ msgstr "Verwijder de geselecteerde toepassing uit de sessie"
@@ -1109,26 +1110,27 @@ msgstr "xfce4-tips"
 #~ "If set, the session manager will ask you to choose a session every time "
 #~ "you log in to Xfce."
 #~ msgstr ""
-#~ "Indien aldus ingesteld, zal de sessiebeheerder u vragen om een sessie te kiezen, telkens wanneer "
-#~ "u zich aanmeldt."
+#~ "Indien aldus ingesteld, zal de sessiebeheerder u vragen om een sessie te "
+#~ "kiezen, telkens wanneer u zich aanmeldt."
 
 #~ msgid ""
 #~ "This option instructs the session manager to save the current session "
 #~ "automatically when you log out. If you don't select this option you'll be "
 #~ "prompted whether you want to save the current session on each logout."
 #~ msgstr ""
-#~ "Deze optie zorgt ervoor dat de sessiebeheerder automatisch "
-#~ "de huidige sessie opslaat wanneer u zich afmeldt. Als u deze "
-#~ "optie niet kiest, dan zult u telkens bij het afmelden worden gevraagd "
-#~ "of u de huidige sessie wil opslaan."
+#~ "Deze optie zorgt ervoor dat de sessiebeheerder automatisch de huidige "
+#~ "sessie opslaat wanneer u zich afmeldt. Als u deze optie niet kiest, dan "
+#~ "zult u telkens bij het afmelden worden gevraagd of u de huidige sessie "
+#~ "wil opslaan."
 
 #~ msgid ""
 #~ "This option disables the logout confirmation dialog. Whether the session "
 #~ "will be saved or not depends on whether you enabled the automatic saving "
 #~ "of sessions on logout or not."
 #~ msgstr ""
-#~ "Deze optie schakelt de bevestigingsdialoog uit bij het afmelden. Opslag van de "
-#~ "sessie hangt er dan vanaf, of u al dan niet automatische sessie-opslag hebt ingesteld."
+#~ "Deze optie schakelt de bevestigingsdialoog uit bij het afmelden. Opslag "
+#~ "van de sessie hangt er dan vanaf, of u al dan niet automatische sessie-"
+#~ "opslag hebt ingesteld."
 
 #~ msgid "Launch Gnome services on startup"
 #~ msgstr "GNOME-diensten starten bij opstarten"
@@ -1139,9 +1141,10 @@ msgstr "xfce4-tips"
 #~ "also enable this if you want to use the Assistive Technologies that ship "
 #~ "with Gnome."
 #~ msgstr ""
-#~ "Schakel dit in wanneer u van plan bent om Gnome-toepassingen te gaan gebruiken. "
-#~ "Dit zal de sessiebeheerder instrueren om enkele essentiële Gnome-diensten "
-#~ "op te starten. Dit geldt ook voor Gnome-toegankelijkheidstechnieken."
+#~ "Schakel dit in wanneer u van plan bent om Gnome-toepassingen te gaan "
+#~ "gebruiken. Dit zal de sessiebeheerder instrueren om enkele essentiële "
+#~ "Gnome-diensten op te starten. Dit geldt ook voor Gnome-"
+#~ "toegankelijkheidstechnieken."
 
 #~ msgid ""
 #~ "Enable this option if you plan to run KDE applications as part of your "
@@ -1149,10 +1152,10 @@ msgstr "xfce4-tips"
 #~ "the other hand, KDE applications will startup faster. Some KDE "
 #~ "applications may not work at all if you don't enable this option."
 #~ msgstr ""
-#~ "Schakel dit in wanneer u van plan bent om KDE-toepassingen te gaan gebruiken. "
-#~ "Dit zal de sessiebeheerder instrueren om enkele essentiële KDE-diensten "
-#~ "op te starten. Nadeel: opstarttijd wordt verlengd. Voordeel: KDE-toepassingen worden sneller."
-
+#~ "Schakel dit in wanneer u van plan bent om KDE-toepassingen te gaan "
+#~ "gebruiken. Dit zal de sessiebeheerder instrueren om enkele essentiële KDE-"
+#~ "diensten op te starten. Nadeel: opstarttijd wordt verlengd. Voordeel: KDE-"
+#~ "toepassingen worden sneller."
 
 #~ msgid "Security"
 #~ msgstr "Beveiliging"
@@ -1165,19 +1168,19 @@ msgstr "xfce4-tips"
 #~ "Schakel dit alleen in wanneer u precies weet wat u doet."
 
 #~ msgid "Button Label|Sessions and Startup"
-#~ msgstr "Button Label|Sessies en Opstarten"
+#~ msgstr "Knopetiket|Sessies en Opstarten"
 
 #~ msgid "Splash Screen Settings"
 #~ msgstr "Instellingen Beginscherm"
 
 #~ msgid "Button Label|Splash Screen"
-#~ msgstr "Button Label|Beginscherm"
+#~ msgstr "Knopetiket|Beginscherm"
 
 #~ msgid "Autostarted applications"
 #~ msgstr "Automatisch opgestarte toepassingen"
 
 #~ msgid "Xfce 4 Splash Screen Settings"
-#~ msgstr "Instellingen Xfce 4 Beginscherm"
+#~ msgstr "Instellingen Xfce 4-beginscherm"
 
 #~ msgid "Autostarted Applications"
 #~ msgstr "Automatisch opgestarte toepassingen"
@@ -1186,4 +1189,38 @@ msgstr "xfce4-tips"
 #~ msgstr "Bewerk de lijst van automatisch opstartende toepassingen"
 
 #~ msgid "Xfce 4 Autostarted Applications"
-#~ msgstr "Xfce 4 Automatisch opstartende toepassingen"
+#~ msgstr "Xfce 4-automatisch opstartende toepassingen"
+
+#~ msgid "Clear sessions"
+#~ msgstr "Verwijder sessies"
+
+#~ msgid "Are you sure you want to empty the session cache?"
+#~ msgstr "Weet u zeker dat u de sessie-opslag wil ledigen?"
+
+#~ msgid ""
+#~ "The saved states of your applications will not be restored during your "
+#~ "next login."
+#~ msgstr ""
+#~ "De opgeslagen status van uw toepassingen zal niet worden hersteld bij uw "
+#~ "volgende aanmelding."
+
+#~ msgid "_Proceed"
+#~ msgstr "_Ga door"
+
+#~ msgid "You might need to delete some files manually in "
+#~ msgstr "U zou wellicht enkele bestanden handmatig moeten verwijderen in"
+
+#~ msgid "All Xfce cache files could not be cleared"
+#~ msgstr "Niet alle opslagbestanden van Xfce konden worden geleegd"
+
+#~ msgid "_Log Out"
+#~ msgstr "_Afmelden"
+
+#~ msgid "Sus_pend"
+#~ msgstr "_Pauzestand"
+
+#~ msgid "Empty the session cache"
+#~ msgstr "Maak de sessie-opslag leeg"
+
+#~ msgid "_Clear saved sessions"
+#~ msgstr "_Verwijder opgeslagen sessies"
