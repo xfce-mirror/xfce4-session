@@ -1839,6 +1839,8 @@ xfsm_manager_dbus_init (XfsmManager *manager)
       return;
     }
 
+  dbus_connection_set_exit_on_disconnect (manager->dbus_conn, FALSE);
+
   dbus_g_connection_register_g_object (manager->session_bus,
                                        "/org/xfce/SessionManager",
                                        G_OBJECT (manager));
