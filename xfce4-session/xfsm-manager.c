@@ -1828,6 +1828,7 @@ static void
 xfsm_manager_dbus_init (XfsmManager *manager)
 {
   GError *error = NULL;
+  DBusConnection *connection;
 
   manager->session_bus = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
 
@@ -1839,7 +1840,8 @@ xfsm_manager_dbus_init (XfsmManager *manager)
       return;
     }
 
-  dbus_connection_set_exit_on_disconnect (manager->session_bus, FALSE);
+  connection = dbus_g_connection_get_connection (manager->session_bus);
+  dbus_connection_set_exit_on_disconnect (connection, FALSE);
 
   dbus_g_connection_register_g_object (manager->session_bus,
                                        "/org/xfce/SessionManager",
