@@ -55,9 +55,10 @@ msgstr "Benedikt Meurer"
 
 #: xfce4-session.xml33(para)
 msgid "Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with no Invariant Sections, with no Front-Cover Texts, and with no Back-Cover Texts. The complete license text is available from the <ulink type=\"http\" url=\"http://www.gnu.org/\">Free Software Foundation</ulink>."
-msgstr "在自由软件基金会发布的 GNU 自由文档许可协议 1.1 版本或以后版本的条款"
-"约束下发布，允许复制、分发和/或修改本文档；不要求保留特定内容、封面文本或者封底"
-"文本。许可协议全文可以通过以下链接找到："
+msgstr ""
+"在自由软件基金会发布的 GNU 自由文档许可协议 1.1 版本或以后版本"
+"的条款约束下发布，允许复制、分发和/或修改本文档；不要求保留特定"
+"内容、封面文本或者封底文本。许可协议全文可以通过以下链接找到："
 "<ulink type=\"http\" url=\"http://www.gnu.org/\">自由软件组织</ulink>。"
 
 #: xfce4-session.xml45(firstname)
@@ -95,10 +96,22 @@ msgstr "导言"
 #: xfce4-session.xml80(para)
 msgid "<application>@PACKAGE_NAME@</application> is a session manager for Xfce 4. Its task is to save the state of your desktop (opened applications and their location) and restore it during a next startup. You can create several different sessions and choose one of them on startup."
 msgstr ""
+"<application>@PACKAGE_NAME@</application> 是 Xfce 4 的"
+"会话管理器。它的任务是保存您的桌面状态(打开的程序及其位置)并在您"
+"下次启动桌面时恢复使用。您可以创建几个不同的会话并选择其中的某一个"
+"来启动。"
 
 #: xfce4-session.xml86(para)
 msgid "<application>@PACKAGE_NAME@</application> provides session management for both X11R6 and legacy X11R5 protocols. If you don't need legacy session management support, you can disable it at compile time, giving --disable-legacy-sm to ./configure. Do <emphasis>NOT EVER</emphasis> run <application>smproxy</application> in session that is managed by <application>@PACKAGE_NAME@</application>, or weird things will happen. The included legacy session management does everything that <application>smproxy</application> would do, and besides that, it also supports multiscreen display."
 msgstr ""
+"<application>@PACKAGE_NAME@</application> 管理 X11R6 和"
+"旧 X11R5 协议会话。如果您不需要旧的会话管理支持，编译时您可以在 "
+"./configure 中添加 --disable-legacy-sm 禁用它。千万 "
+"<emphasis>不要</emphasis> 在 "
+"<application>@PACKAGE_NAME@</application> 管理的会话中"
+"运行 <application>smproxy</application>，否则会出现奇怪情况。"
+"内含的旧会话管理会做一切 <application>smproxy</application> "
+"该做的事情，另外，它还支持多屏显示支持。"
 
 #: xfce4-session.xml97(title)
 msgid "Session Manager settings"
@@ -110,19 +123,22 @@ msgstr "一般首选项"
 
 #: xfce4-session.xml103(title)
 msgid "<application>@PACKAGE_NAME@</application> general preferences"
-msgstr ""
+msgstr "<application>@PACKAGE_NAME@</application> 一般首选项"
 
 #: xfce4-session.xml111(phrase)
 msgid "Shows the General tab of the <application>@PACKAGE_NAME@</application> settings dialog."
 msgstr ""
+"显示 <application>@PACKAGE_NAME@</application> 设置"
+"对话框的一般标签。"
 
 #: xfce4-session.xml119(term)
 msgid "Display chooser on login"
-msgstr ""
+msgstr "在登录时显示选择窗口"
 
 #: xfce4-session.xml121(para)
 msgid "If set, the session manager will ask you to choose a session every time you log in to Xfce."
 msgstr ""
+"设置后，每次登录 Xfce 时会话管理器都会让您选择哪种会话。"
 
 #: xfce4-session.xml127(term)
 msgid "Automatically save session on logout"
@@ -131,6 +147,8 @@ msgstr "在注销时自动保存会话"
 #: xfce4-session.xml129(para)
 msgid "This option instructs the session manager to save the current session automatically when you log out. If you don't select this option you'll be prompted whether you want to save the current session on each logout."
 msgstr ""
+"此选项让会话管理器在您每次注销时都自动保存当前的会话。如果您没有"
+"选中此选项，每次注销时都有提示询问您是否保存当前的会话。"
 
 #: xfce4-session.xml137(term)
 msgid "Prompt on logout"
@@ -139,6 +157,8 @@ msgstr "注销时提示"
 #: xfce4-session.xml139(para)
 msgid "This option disables the logout confirmation dialog. Whether the session will be saved or not depends on whether you enabled the automatic saving of sessions on logout or not."
 msgstr ""
+"此选项禁用注销确认对话框。是否保存会话取决于您是否启用在注销时自动"
+"保存会话功能。"
 
 #: xfce4-session.xml148(title)
 msgid "Advanced preferences"
@@ -150,23 +170,29 @@ msgstr "<application>@PACKAGE_NAME@</application> 高级首选项"
 
 #: xfce4-session.xml159(phrase)
 msgid "Shows Advanced tab of the <application>@PACKAGE_NAME@</application> settings dialog."
-msgstr ""
+msgstr "显示 <application>@PACKAGE_NAME@</application> 设置对话框"
+"的高级标签。"
 
 #: xfce4-session.xml167(term)
 msgid "Launch Gnome services on startup"
-msgstr "在开始时启动 Gnome 服务"
+msgstr "在桌面启动时启动 Gnome 服务"
 
 #: xfce4-session.xml169(para)
 msgid "Enable this option if you need the GNOME keyring daemon to be run on startup. This option also instructs <application>@PACKAGE_NAME@</application> to bring up the GNOME assistive technologies at startup (if enabled in the GNOME control center). See the GNOME documentation for more information on this topic."
-msgstr ""
+msgstr "如果您需要在桌面启动时运行 GNOME keyring daemon ，启用此"
+"选项。此选项还会让 <application>@PACKAGE_NAME@</application> "
+"在桌面启动时启用 Gnome 辅助技术(如果在 Gnome 控制中心中已启用)。"
+"详情请参看 Gnome 文档中的相关主题"
 
 #: xfce4-session.xml177(term)
 msgid "Launch KDE services on startup"
-msgstr "在开始时启动 KDE 服务"
+msgstr "在桌面启动时启动 KDE 服务"
 
 #: xfce4-session.xml179(para)
 msgid "Enable this option if you plan to run KDE applications as part of your Xfce Desktop session. This will notably increase the startup time, but on the other hand, KDE applications will startup faster. Some KDE applications may not work at all if you don't enable this option."
-msgstr ""
+msgstr "如果您打算将 KDE 应用程序作为 Xfce 桌面会话的一部分来运行，启用此"
+"选项。这样会显著增加桌面启动时间，但从另一方面来说， KDE 应用程序会"
+"启动得快些。如果您没有启用此选项，一些 KDE 应用程序可能一点都不工作。"
 
 #: xfce4-session.xml187(term)
 msgid "Manage remote applications"
@@ -174,11 +200,13 @@ msgstr "管理远程应用程序"
 
 #: xfce4-session.xml189(para)
 msgid "Allow the session manager to manage applications running on remote hosts. Since this option may constitute a security risk, by listening to a TCP port on your system, do not enable it unless you know what you are doing."
-msgstr ""
+msgstr "允许会话管理器管理远程主机上运行的应用程序。由于此选项会监听您系统中的 TCP "
+"端口，这会导致安全风险，所以除非您确实知道自己在做什么，不要启用此选项。"
 
 #: xfce4-session.xml193(para)
 msgid "System administrators may want to disable this option globally using the session managers <ulink url=\"#xfsm-kiosk-mode\" type=\"html\">KIOSK capabilities</ulink>."
-msgstr ""
+msgstr "如果系统管理员想要全局禁用此选项，请用会话管理器"
+"<ulink url=\"#xfsm-kiosk-mode\" type=\"html\">KIOSK 功能</ulink>."
 
 #: xfce4-session.xml204(title)
 msgid "Customizing the Session Manager"
@@ -186,27 +214,33 @@ msgstr "自定义会话管理器"
 
 #: xfce4-session.xml206(para)
 msgid "You can customize the splash-screen that <application>@PACKAGE_NAME@</application> will use when you log in to Xfce 4. There is a dedicated dialog available from the <emphasis>Xfce 4 Settings Manager</emphasis>."
-msgstr ""
+msgstr "您可以自定义登录 Xfce 4 时 <application>@PACKAGE_NAME@</application> "
+"要使用的启动画面。 <emphasis>Xfce 4 设置管理器</emphasis> "
+"里有个专门的对话框。"
 
 #: xfce4-session.xml211(title)
 msgid "Splash screen settings"
-msgstr ""
+msgstr "启动画面设置"
 
 #: xfce4-session.xml214(title)
 msgid "Splash screen settings dialog"
-msgstr ""
+msgstr "启动画面设置对话框"
 
 #: xfce4-session.xml222(phrase)
 msgid "Shows the <application>@PACKAGE_NAME@</application> splash screen settings dialog."
-msgstr ""
+msgstr "显示 <application>@PACKAGE_NAME@</application> 启动画面设置对话框"
 
 #: xfce4-session.xml228(para)
 msgid "On the left, the dialog shows a list of all installed engines. Select an engine, and you will see, if available, a preview and information about it. You can click on the <guibutton>Test</guibutton> button to see a demonstration of the selected splash screen engine."
-msgstr ""
+msgstr "在左边，对话框显示已安装引擎的列表。选择一个引擎，如果可以，您会看到相关"
+"信息的预览，点击 <guibutton>测试</guibutton> 按钮可以看到所选"
+"启动画面的演示"
 
 #: xfce4-session.xml234(para)
 msgid "<application>@PACKAGE_NAME@</application> provides three Splash themes engines by default. Their respective configuration options - if any - are available from the <guibutton>Configure</guibutton> button."
-msgstr ""
+msgstr "默认 <application>@PACKAGE_NAME@</application> 有三个启动画面引擎。"
+"如果有的话，点击 <guibutton>配置</guibutton> 按钮可以得到它们"
+"各自的配置选项"
 
 #: xfce4-session.xml240(title)
 msgid "Shutdown/reboot options"
@@ -214,7 +248,8 @@ msgstr "关机/重启选项"
 
 #: xfce4-session.xml242(para)
 msgid "<application>@PACKAGE_NAME@</application> supports shutting down your computer when you log out of your desktop session. To be able to shutdown the computer, you have to be listed in the systems <filename>sudoers</filename> file, in particular, you must be allowed to execute the command <filename>${libdir}/xfce4/session/xfsm-shutdown-helper</filename> (<filename>/usr/sbin/xfsm-shutdown-helper</filename> on Debian GNU/Linux) as user root (where <filename>${libdir}</filename> is the <filename role=\"directory\">lib</filename> sub directory in the prefix you installed <application>@PACKAGE_NAME@</application>, for example <filename role=\"directory\">/usr/local/lib/xfce4/session</filename>)."
-msgstr ""
+msgstr "<application>@PACKAGE_NAME@</application> 支持在您注销桌面会话时"
+"关闭您的计算机。"
 
 #: xfce4-session.xml253(para)
 msgid "For example, lets say, you installed <application>@PACKAGE_NAME@</application> into <filename role=\"directory\">/usr/local</filename>, your hostname is <emphasis>myhost</emphasis> and your user account is named <emphasis>myuser</emphasis>, then you would have to add the following line to your <filename>sudoers</filename> file (remember to use <application>visudo</application> to edit that file):"
