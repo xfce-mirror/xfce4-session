@@ -97,19 +97,18 @@ msgstr "导言"
 #: xfce4-session.xml80(para)
 msgid "<application>@PACKAGE_NAME@</application> is a session manager for Xfce 4. Its task is to save the state of your desktop (opened applications and their location) and restore it during a next startup. You can create several different sessions and choose one of them on startup."
 msgstr ""
-"<application>@PACKAGE_NAME@</application> 是 Xfce 4 的会话管理器。"
-"它的任务是保存您的桌面状态(打开的程序及其位置)并在您"
-"下次启动桌面时恢复使用。您可以创建几个不同的会话并"
-"选择其中的某一个来启动。"
+"<application>@PACKAGE_NAME@</application> 是 Xfce 4 的会话管理器。它的任务是保存"
+"您的桌面状态(打开的程序及其位置)并在您下次启动桌面时恢复使用。"
+"您可以创建几个不同的会话并选择其中的某一个来启动。"
 
 #: xfce4-session.xml86(para)
 msgid "<application>@PACKAGE_NAME@</application> provides session management for both X11R6 and legacy X11R5 protocols. If you don't need legacy session management support, you can disable it at compile time, giving --disable-legacy-sm to ./configure. Do <emphasis>NOT EVER</emphasis> run <application>smproxy</application> in session that is managed by <application>@PACKAGE_NAME@</application>, or weird things will happen. The included legacy session management does everything that <application>smproxy</application> would do, and besides that, it also supports multiscreen display."
 msgstr ""
 "<application>@PACKAGE_NAME@</application> 管理 X11R6 和旧 X11R5 协议会话。"
 "如果您不需要旧的会话管理支持，编译时您可以在 "
-"./configure 中添加 --disable-legacy-sm 禁用它。千万 "
-"<emphasis>不要</emphasis> 在 <application>@PACKAGE_NAME@</application> "
-"管理的会话中运行 <application>smproxy</application> ，否则会出现奇怪"
+"./configure 中添加 --disable-legacy-sm 禁用它。 "
+"<emphasis>千万不要</emphasis> 在 <application>@PACKAGE_NAME@</application> 管理"
+"的会话中运行 <application>smproxy</application> ，否则会出现奇怪"
 "情况。内含的旧会话管理会做一切 <application>smproxy</application> "
 "该做的事情，另外，它还支持多屏显示支持。"
 
@@ -119,16 +118,16 @@ msgstr "会话管理器设置"
 
 #: xfce4-session.xml100(title)
 msgid "General preferences"
-msgstr "一般首选项"
+msgstr "普通首选项"
 
 #: xfce4-session.xml103(title)
 msgid "<application>@PACKAGE_NAME@</application> general preferences"
-msgstr "<application>@PACKAGE_NAME@</application> 一般首选项"
+msgstr "<application>@PACKAGE_NAME@</application> 普通首选项"
 
 #: xfce4-session.xml111(phrase)
 msgid "Shows the General tab of the <application>@PACKAGE_NAME@</application> settings dialog."
 msgstr ""
-"显示 <application>@PACKAGE_NAME@</application> 设置对话框的一般标签。"
+"显示 <application>@PACKAGE_NAME@</application> 设置对话框的普通标签。"
 
 #: xfce4-session.xml119(term)
 msgid "Display chooser on login"
@@ -180,7 +179,7 @@ msgid "Enable this option if you need the GNOME keyring daemon to be run on star
 msgstr "如果您需要在桌面启动时运行 GNOME keyring daemon ，启用此"
 "选项。此选项还会让 <application>@PACKAGE_NAME@</application> 在桌面启动时启用 "
 "Gnome 辅助技术(如果在 Gnome 控制中心中已启用)。"
-"详情请参看 Gnome 文档中的相关主题"
+"详情请参看 Gnome 文档中的相关主题。"
 
 #: xfce4-session.xml177(term)
 msgid "Launch KDE services on startup"
@@ -234,8 +233,8 @@ msgstr "在左边，对话框显示已安装引擎的列表。选择一个引擎
 
 #: xfce4-session.xml234(para)
 msgid "<application>@PACKAGE_NAME@</application> provides three Splash themes engines by default. Their respective configuration options - if any - are available from the <guibutton>Configure</guibutton> button."
-msgstr "默认 <application>@PACKAGE_NAME@</application> 有三个启动画面引擎。"
-"如果有的话，点击 <guibutton>配置</guibutton> 按钮可以得到它们各自的配置选项。"
+msgstr "默认 <application>@PACKAGE_NAME@</application> 有三个启动画面引擎。如果有的话，"
+"点击 <guibutton>配置</guibutton> 按钮可以得到它们各自的配置选项。"
 
 #: xfce4-session.xml240(title)
 msgid "Shutdown/reboot options"
@@ -302,7 +301,7 @@ msgid "A list of system directories that contain configuration data. By default 
 msgstr "包含配置数据的系统目录列表。默认情况下面板会在 "
 "<filename role=\"directory\">${sysconfdir}/xdg/</filename> 和 "
 "<filename role=\"directory\">/etc/xdg/</filename> 下寻找。 "
-"${sysconfdir} 的值取决于程序如果编译，对于二进制文件包通常位于 "
+"${sysconfdir} 的值取决于程序如何编译，对于二进制文件包通常位于 "
 "<filename role=\"directory\">/etc/</filename>"
 
 #: xfce4-session.xml303(term)
@@ -321,9 +320,9 @@ msgstr "${XDG_CONFIG_DIRS}/autostart/"
 #: xfce4-session.xml314(para)
 msgid "This is the location where the list of applications that should be automatically run on login is stored. Each autostarted application is represented by a <filename>.desktop</filename> file (see the <ulink type=\"http\" url=\"http://standards.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html\">Desktop Entry Specification</ulink> for details)."
 msgstr "此处是存储所有登录时要自动运行的应用程序列表的位置。"
-"每个自动启动的应用程序都用 <filename>.desktop</filename> 文件表示"
-"(详情参看 <ulink type=\"http\" url=\"http://standards.freedesktop.org/desktop"
-"-entry-spec/desktop-entry-spec-latest.html\">桌面条目规定</ulink> )。"
+"每个自动启动的应用程序都用 <filename>.desktop</filename> 文件表示(详情参看 "
+"<ulink type=\"http\" url=\"http://standards.freedesktop.org/desktop-entry-spec"
+"/desktop-entry-spec-latest.html\">Desktop Entry Specification</ulink> )。"
 
 #: xfce4-session.xml320(para)
 msgid "Prior to Xfce 4.3, the list of autostarted applications was stored in <filename role=\"directory\">~/Desktop/Autostart</filename>, which contained scripts and symbolic links to applications. If you run <application>@PACKAGE_NAME@</application> @PACKAGE_VERSION@ or above for the first time, it will automatically migrate the autostart items from the old location to the standard location and place a <filename>LOCATION-CHANGED.txt</filename> file in the old directory, that describes the location change."
@@ -515,7 +514,7 @@ msgstr "关于 <application>@PACKAGE_NAME@</application>"
 msgid "<application>@PACKAGE_NAME@</application> was written by Benedikt Meurer (<email>benny@xfce.org</email>). To find more information, please visit the <ulink url=\"http://www.xfce.org\" type=\"http\">Xfce web site</ulink>."
 msgstr "<application>@PACKAGE_NAME@</application> 由 Benedikt Meurer"
 "(<email>benny@xfce.org</email>)撰写。若需更多信息，请访问"
-"<ulink url=\"http://www.xfce.org\" type=\"http\">Xfce 网址</ulink>"
+"<ulink url=\"http://www.xfce.org\" type=\"http\">Xfce web site</ulink>"
 
 #: xfce4-session.xml480(para)
 msgid "To report a bug or make a suggestion regarding this application or this manual, use the bug tracking system at <ulink url=\"http://bugzilla.xfce.org/\" type=\"http\">http://bugzilla.xfce.org/</ulink>."
