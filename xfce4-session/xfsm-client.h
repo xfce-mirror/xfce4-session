@@ -61,7 +61,7 @@ XfsmClientState xfsm_client_get_state (XfsmClient *client);
 void xfsm_client_set_state (XfsmClient     *client,
                             XfsmClientState state);
 
-G_CONST_RETURN gchar *xfsm_client_get_id (XfsmClient *client);
+const gchar *xfsm_client_get_id (XfsmClient *client);
 
 SmsConn xfsm_client_get_sms_connection (XfsmClient *client);
 
@@ -75,7 +75,7 @@ void xfsm_client_delete_properties (XfsmClient *client,
                                     gchar     **prop_names,
                                     gint        num_props);
 
-G_CONST_RETURN gchar *xfsm_client_get_object_path (XfsmClient *client);
+const gchar *xfsm_client_get_object_path (XfsmClient *client);
 
 G_END_DECLS
 
