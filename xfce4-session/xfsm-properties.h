@@ -69,7 +69,7 @@ XfsmProperties* xfsm_properties_load (XfceRc *rc, const gchar *prefix);
 
 gboolean xfsm_properties_check (const XfsmProperties *properties) G_GNUC_CONST;
 
-G_CONST_RETURN gchar *xfsm_properties_get_string (XfsmProperties *properties,
+const gchar *xfsm_properties_get_string (XfsmProperties *properties,
                                                   const gchar *property_name);
 gchar **xfsm_properties_get_strv (XfsmProperties *properties,
                                   const gchar *property_name);

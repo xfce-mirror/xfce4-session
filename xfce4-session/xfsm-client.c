@@ -278,7 +278,7 @@ xfsm_client_set_state (XfsmClient     *client,
 }
 
 
-G_CONST_RETURN gchar *
+const gchar *
 xfsm_client_get_id (XfsmClient *client)
 {
   g_return_val_if_fail (XFSM_IS_CLIENT (client), NULL);
@@ -380,7 +380,7 @@ xfsm_client_delete_properties (XfsmClient *client,
 }
 
 
-G_CONST_RETURN gchar *
+const gchar *
 xfsm_client_get_object_path (XfsmClient *client)
 {
   g_return_val_if_fail (XFSM_IS_CLIENT (client), NULL);

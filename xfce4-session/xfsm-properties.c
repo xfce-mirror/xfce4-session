@@ -409,7 +409,7 @@ xfsm_properties_check (const XfsmProperties *properties)
 }
 
 
-G_CONST_RETURN gchar *
+const gchar *
 xfsm_properties_get_string (XfsmProperties *properties,
                             const gchar *property_name)
 {
