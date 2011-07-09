@@ -16,18 +16,24 @@ if HAVE_LIBXFCE4PANEL
 panel_plugin_dir = panel-plugin
 endif
 
+desktopdir = $(XSESSION_PREFIX)/share/xsessions
+desktop_in_files = xfce.desktop.in
+desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
+
 EXTRA_DIST =								\
 	BUGS								\
 	intltool-extract.in						\
 	intltool-merge.in						\
 	intltool-update.in						\
 	xfce4-session.spec						\
-	$(config_DATA)
+	$(config_DATA)							\
+	$(desktop_in_files)
 
 DISTCLEANFILES =							\
 	intltool-extract						\
 	intltool-merge							\
-	intltool-update
+	intltool-update							\
+	$(desktop_DATA)
 
 html:
 	(cd doc && $(MAKE) $(AM_MAKEFLAGS) html)
