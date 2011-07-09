@@ -19,12 +19,14 @@ xinitrc: Makefile $(srcdir)/xinitrc.in
 	mv xinitrc.tmp xinitrc
 
 conffilesdir=@sysconfdir@/xdg/xfce4
-conffiles_DATA=\
-	xinitrc
+conffiles_DATA = \
+	xinitrc \
+	Xft.xrdb
 
 EXTRA_DIST = \
 	startxfce4.in \
-	xinitrc.in
+	xinitrc.in \
+	Xft.xrdb
 
 DISTCLEANFILES = \
 	startxfce4 \
