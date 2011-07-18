@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2011-02-12 17:50+0100\n"
-"PO-Revision-Date: 2011-07-15 19:25+0300\n"
+"PO-Revision-Date: 2011-07-18 15:58+0300\n"
 "Last-Translator: Artem Zolochevskiy <artem.zolochevskiy@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -91,11 +91,11 @@ msgstr "<application>@PACKAGE_NAME@</application> — это менеджер с
 
 #: xfce4-session.xml:73(para)
 msgid "<application>@PACKAGE_NAME@</application> provides session management for both X11R6 and legacy X11R5 protocols. If you don't need legacy session management support, you can disable it at compile time, giving --disable-legacy-sm to ./configure. Do <emphasis>NOT EVER</emphasis> run <application>smproxy</application> in session that is managed by <application>@PACKAGE_NAME@</application>, or weird things will happen. The included legacy session management does everything that <application>smproxy</application> would do, and besides that, it also supports multiscreen display."
-msgstr "<application>@PACKAGE_NAME@</application> обеспечивает управление сеансами как для X11R6, так и для устаревших X11R5 протоколов. Если вам не нужна поддержка управления устаревшими сеансами, вы можете её отключить во время сборки, передав аргумент --disable-legacy-sm в ./configure. <emphasis>НИКОГДА</emphasis> не запускайте smproxy в сеансе, управляемом <application>@PACKAGE_NAME@</application>. Входящее в состав управление устаревшими сеансами делает то же самое, что и smproxy, и, кроме этого, поддерживает многоэкранный вывод."
+msgstr "<application>@PACKAGE_NAME@</application> обеспечивает управление сеансами как для X11R6, так и для устаревших X11R5 протоколов. Если вам не нужна поддержка управления устаревшими сеансами, вы можете отключить её при сборке, передав аргумент --disable-legacy-sm в ./configure. Во избежание проблем.<emphasis>НИКОГДА</emphasis> не запускайте smproxy в сеансе, управляемом <application>@PACKAGE_NAME@</application>. Входящая в настоящее время в состав функция управления сеансами делает то же самое, что и smproxy, и, кроме этого, поддерживает многоэкранный вывод."
 
 #: xfce4-session.xml:84(title)
 msgid "Session Manager settings"
-msgstr "Настройка менеджера сеансов"
+msgstr "Настройки менеджера сеансов"
 
 #: xfce4-session.xml:87(title)
 msgid "General preferences"
@@ -103,11 +103,11 @@ msgstr "Основные настройки"
 
 #: xfce4-session.xml:90(title)
 msgid "<application>@PACKAGE_NAME@</application> general preferences"
-msgstr "Настройка сеансов. Вкладка «Общие»"
+msgstr "Общие настройки <application>@PACKAGE_NAME@</application>"
 
 #: xfce4-session.xml:98(phrase)
 msgid "Shows the General tab of the <application>@PACKAGE_NAME@</application> settings dialog."
-msgstr "Настройка сеансов. Вкладка «Общие»"
+msgstr "Показывает вкладку «Общие» диалогового окна настроек <application>@PACKAGE_NAME@</application>."
 
 #: xfce4-session.xml:106(term)
 msgid "Display chooser on login"
@@ -123,7 +123,7 @@ msgstr "Автоматически сохранять сеанс при выхо
 
 #: xfce4-session.xml:116(para)
 msgid "This option instructs the session manager to save the current session automatically when you log out. If you don't select this option you'll be prompted whether you want to save the current session on each logout."
-msgstr "Данный параметр говорит менеджеру сеансов автоматически сохранять текущий сеанс, когда вы выходите из системы. Если вы не выберете данный параметр, при выходе вам каждый раз будет задаваться соответствующий вопрос."
+msgstr "Выбор данного параметра заставляет менеджер сеансов автоматически сохранять текущий сеанс при выходе из системы. Если параметр не выбран, запрос о сохранении текущей сессии будет выводиться каждый раз при выходе из системы."
 
 #: xfce4-session.xml:124(term)
 msgid "Prompt on logout"
@@ -131,7 +131,7 @@ msgstr "Запрос при выходе"
 
 #: xfce4-session.xml:126(para)
 msgid "This option disables the logout confirmation dialog. Whether the session will be saved or not depends on whether you enabled the automatic saving of sessions on logout or not."
-msgstr "Данный параметр включает/выключает диалоговое окно подтверждения выхода из системы. Если параметр отключён, то сохранение сеанса зависит от того, включили вы автоматическое сохранение сеанса при выходе из системы или нет."
+msgstr "Данный параметр включает/отключает диалоговое окно подтверждения выхода из системы. Если параметр отключён, то сохранение сеанса зависит от того, включили вы автоматическое сохранение сеанса при выходе из системы или нет."
 
 #: xfce4-session.xml:135(title)
 msgid "Advanced preferences"
@@ -143,15 +143,15 @@ msgstr "Дополнительные настройки <application>@PACKAGE_NA
 
 #: xfce4-session.xml:146(phrase)
 msgid "Shows Advanced tab of the <application>@PACKAGE_NAME@</application> settings dialog."
-msgstr "Вкладка дополнительные настройки <application>@PACKAGE_NAME@</application>"
+msgstr "Показывает вкладку «Дополнительно» диалогового окна настроек <application>@PACKAGE_NAME@</application>."
 
 #: xfce4-session.xml:154(term)
 msgid "Launch Gnome services on startup"
 msgstr "Запускать службы GNOME при входе в систему"
 
 #: xfce4-session.xml:156(para)
-msgid "Enable this option if you need the GNOME keyring daemon to be run on startup."
-msgstr "Установите этот параметр, если вам нужно, чтобы при загрузке запускался сервис keyring из GNOME."
+msgid "Enable this option if you need the GNOME keyring daemon to be run on startup. This option also instructs <application>@PACKAGE_NAME@</application> to bring up the GNOME assistive technologies at startup (if enabled in the GNOME control center). See the GNOME documentation for more information on this topic."
+msgstr "Установите этот параметр, если вам нужно, чтобы при загрузке запускался сервис keyring из GNOME. Также этот параметр приводит к задействованию при старте вспомогательных технологий GNOME (если включено в центре управления GNOME). Обратитесь к документации GNOME для получения более подробной информации по этой теме."
 
 #: xfce4-session.xml:164(term)
 msgid "Launch KDE services on startup"
@@ -179,39 +179,39 @@ msgstr "Настройка менеджера сеансов"
 
 #: xfce4-session.xml:193(para)
 msgid "You can customize the splash-screen that <application>@PACKAGE_NAME@</application> will use when you log in to Xfce 4. There is a dedicated dialog available from the <emphasis>Xfce 4 Settings Manager</emphasis>."
-msgstr "Вы можете настроить заставку, которую <application>@PACKAGE_NAME@</application> отображает при входе в Xfce 4. Этот диалог доступен из <emphasis>менеджера настроек Xfce 4</emphasis>."
+msgstr "Вы можете настроить заставку, которую <application>@PACKAGE_NAME@</application> отображает при входе в Xfce 4. Этот диалог доступен из <emphasis>диспетчера настроек Xfce 4</emphasis>."
 
 #: xfce4-session.xml:198(title)
 msgid "Splash screen settings"
-msgstr "Вкладка «Заставка»"
+msgstr "Настройки заставки"
 
 #: xfce4-session.xml:201(title)
 msgid "Splash screen settings dialog"
-msgstr "Вкладка «Заставка»"
+msgstr "Диалоговое окно настроек заставки"
 
 #: xfce4-session.xml:209(phrase)
 msgid "Shows the <application>@PACKAGE_NAME@</application> splash screen settings dialog."
-msgstr "Настройка сеансов. Вкладка «Заставка»"
+msgstr "Показывает диалоговое окно настроек заставки <application>@PACKAGE_NAME@</application>."
 
 #: xfce4-session.xml:215(para)
 msgid "On the left, the dialog shows a list of all installed engines. Select an engine, and you will see, if available, a preview and information about it. You can click on the <guibutton>Test</guibutton> button to see a demonstration of the selected splash screen engine."
-msgstr "В левой части окна приведён список всех установленных заставок. Выберите заставку и вы увидите предварительный просмотр и сведения о ней, если они доступны. Вы можете нажать кнопку <guibutton>Проверить</guibutton>, чтобы увидеть демонстрацию выбранной заставки."
+msgstr "В левой части окна приведён список всех установленных заставок. Выберите заставку и вы увидите её предварительный просмотр и сведения о ней (при их доступности). Просмотреть демонстрацию выбранной заставки вы можете, нажав кнопку <guibutton>Проверить</guibutton>."
 
 #: xfce4-session.xml:221(para)
 msgid "<application>@PACKAGE_NAME@</application> provides three Splash themes engines by default. Their respective configuration options - if any - are available from the <guibutton>Configure</guibutton> button."
-msgstr "Параметры конфигурации заставки, если они есть, доступны по нажатию кнопки <guibutton>Настроить</guibutton>."
+msgstr "<application>@PACKAGE_NAME@</application> по умолчанию предоставляет три заставки. Их параметры (если они есть) доступны по нажатию кнопки <guibutton>Настроить</guibutton>."
 
 #: xfce4-session.xml:227(title)
 msgid "Shutdown/reboot options"
-msgstr "Параметры выключения / перезагрузки"
+msgstr "Параметры выключения/перезагрузки"
 
 #: xfce4-session.xml:229(para)
 msgid "<application>@PACKAGE_NAME@</application> supports shutting down your computer when you log out of your desktop session. To be able to shutdown the computer, you have to be listed in the systems <filename>sudoers</filename> file, in particular, you must be allowed to execute the command <filename>${HELPERDIR}/xfce4/session/xfsm-shutdown-helper</filename> (<filename>/usr/sbin/xfsm-shutdown-helper</filename> on Debian GNU/Linux) as user root (where <filename>${HELPERDIR}</filename> is the directory passed to configure with the --with-helper-path-prefix option or <filename role=\"directory\">/usr/local/lib/xfce4/session</filename> by default."
-msgstr "<application>@PACKAGE_NAME@</application> поддерживает выключение вашего компьютера при завершении сеанса работы сеанс работы. Чтобы иметь возможность выключить компьютер, вы должны быть присутствовать в системном файле <filename>sudoers</filename>, в частности, вам должно быть разрешено выполнять команды <filename>${HELPERDIR}/xfce4/session/xfsm-shutdown-helper</filename> (<filename>/usr/sbin/xfsm-shutdown-helper</filename> в Debian GNU/Linux) с правами администратора (где <filename>${HELPERDIR}</filename> это каталог переданный скрипту configure в параметре --with-helper-path-prefix или <filename role=\"directory\">/usr/local/lib/xfce4/session</filename> по умолчанию."
+msgstr "<application>@PACKAGE_NAME@</application> поддерживает возможность выключения вашего компьютера при завершении сеанса работы. Чтобы иметь возможность выключить компьютер, сведения о вашей учётной записи должны присутствовать в системном файле <filename>sudoers</filename>, в частности, вам должно быть разрешено выполнять команды <filename>${HELPERDIR}/xfce4/session/xfsm-shutdown-helper</filename> (<filename>/usr/sbin/xfsm-shutdown-helper</filename> в Debian GNU/Linux) с правами администратора (где <filename>${HELPERDIR}</filename> – это каталог, переданный скрипту configure в параметре --with-helper-path-prefix или <filename role=\"directory\">/usr/local/lib/xfce4/session</filename> по умолчанию)."
 
 #: xfce4-session.xml:239(para)
 msgid "For example, lets say, you built <application>@PACKAGE_NAME@</application> with the default options, your hostname is <emphasis>myhost</emphasis> and your user account is named <emphasis>myuser</emphasis>, then you would have to add the following line to your <filename>sudoers</filename> file (remember to use <application>visudo</application> to edit that file):"
-msgstr "Например, вы собрали <application>@PACKAGE_NAME@</application> с опциями по умолчанию, имя вашего компьютера <emphasis>myhost</emphasis> и имя пользователя <emphasis>myuser</emphasis>. В этом случае вам следует добавить следующую строку в файл <filename>sudoers</filename> (не забудьте что использовать <application>visudo</application> для редактирования этого файла):"
+msgstr "Например, вы собрали <application>@PACKAGE_NAME@</application> с опциями по умолчанию, имя вашего компьютера <emphasis>myhost</emphasis>, а имя пользователя – <emphasis>myuser</emphasis>. В этом случае вам следует добавить следующую строку в файл <filename>sudoers</filename> (не забудьте использовать <application>visudo</application> для редактирования этого файла):"
 
 #: xfce4-session.xml:246(programlisting)
 #, no-wrap
@@ -232,7 +232,7 @@ msgstr "Файлы и переменные окружения"
 
 #: xfce4-session.xml:259(para)
 msgid "Xfce now uses the Basedir Specification as defined on <ulink url=\"http://freedesktop.org/\" type=\"http\">Freedesktop.org</ulink> to locate its data and configuration files. This means that file locations will be specified as a path relative to the directories described in the specification."
-msgstr "Xfce использует Basedir Specification, определённую <ulink url=\"http://freedesktop.org/\" type=\"http\">Freedesktop.org</ulink> для размещения данных и конфигурационных файлов. Это означает, что расположение файлов будет определяться как относительный путь от каталогов, описанных в спецификации."
+msgstr "Для размещения данных и конфигурационных файлов Xfce использует стандарт Basedir Specification, определённый <ulink url=\"http://freedesktop.org/\" type=\"http\">Freedesktop.org</ulink>. Это означает, что расположение файлов будет определяться как относительный путь от каталогов, описанных в спецификации."
 
 #: xfce4-session.xml:267(term)
 msgid "${XDG_CONFIG_HOME}"
@@ -248,7 +248,7 @@ msgstr "${XDG_CONFIG_DIRS}"
 
 #: xfce4-session.xml:278(para)
 msgid "A list of system directories that contain configuration data. By default the panel will look in <filename role=\"directory\">${sysconfdir}/xdg/</filename> and <filename role=\"directory\">/etc/xdg/</filename>. The value of ${sysconfdir} depends on how the program was build and will often be <filename role=\"directory\">/etc/</filename> for binary packages."
-msgstr "Список системных каталогов, содержащих данные конфигурации. По умолчанию <filename role=\"directory\">${sysconfdir}/xdg/</filename> и <filename role=\"directory\">/etc/xdg/</filename>. Значение ${sysconfdir} зависит от того, как программа была собрана, и часто устанавливается в <filename role=\"directory\">/etc/</filename> для бинарных пакетов."
+msgstr "Список системных каталогов, содержащих данные конфигурации. По умолчанию это <filename role=\"directory\">${sysconfdir}/xdg/</filename> и <filename role=\"directory\">/etc/xdg/</filename>. Значение ${sysconfdir} зависит от того, как программа была собрана, и в случае бинарных пакетов часто устанавливается в <filename role=\"directory\">/etc/</filename>."
 
 #: xfce4-session.xml:289(term)
 msgid "${XDG_CACHE_HOME}"
@@ -256,7 +256,7 @@ msgstr "${XDG_CACHE_HOME}"
 
 #: xfce4-session.xml:291(para)
 msgid "Specifies the root for all user-specific cache data. If this environment variable is unset, it defaults to <filename role=\"directory\">~/.cache</filename>."
-msgstr "Определяет корневой каталог для кэшированных данных пользователя. Если данная переменная окружения не определена, она по умолчанию устанавливается в <filename role=\"directory\">~/.cache</filename>."
+msgstr "Определяет корневой каталог для кэшированных данных пользователя. Если данная переменная окружения не определена, то она по умолчанию устанавливается в <filename role=\"directory\">~/.cache</filename>."
 
 #: xfce4-session.xml:298(term)
 msgid "${XDG_CONFIG_DIRS}/autostart/"
@@ -268,7 +268,7 @@ msgstr "Это место, в котором хранится список пр�
 
 #: xfce4-session.xml:306(para)
 msgid "Prior to Xfce 4.3, the list of autostarted applications was stored in <filename role=\"directory\">~/Desktop/Autostart</filename>, which contained scripts and symbolic links to applications. If you run <application>@PACKAGE_NAME@</application> @PACKAGE_VERSION@ or above for the first time, it will automatically migrate the autostart items from the old location to the standard location and place a <filename>LOCATION-CHANGED.txt</filename> file in the old directory, that describes the location change."
-msgstr "До версии 4.3 список автоматически запускаемых приложений хранился в каталоге <filename role=\"directory\">~/Desktop/Autostart</filename> и состоял из скриптов и символических ссылок на приложения. При первом запуске <application>@PACKAGE_NAME@</application> версии @PACKAGE_VERSION@ или выше он автоматически переместит элементы автозапуска из старого расположения в стандартное и поместит в старый каталог файл <filename>LOCATION-CHANGED.txt</filename>, описывающий изменение места расположения."
+msgstr "До версии Xfce 4.3 список автоматически запускаемых приложений хранился в каталоге <filename role=\"directory\">~/Desktop/Autostart</filename> и состоял из скриптов и символических ссылок на приложения. При первом запуске <application>@PACKAGE_NAME@</application> версии @PACKAGE_VERSION@ или выше он автоматически переместит элементы автозапуска из старого месторасположения в стандартное, а в старый каталог поместит файл <filename>LOCATION-CHANGED.txt</filename>, описывающий изменение месторасположения."
 
 #: xfce4-session.xml:317(term)
 msgid "${XDG_CONFIG_DIRS}/xfce4-session/xfce4-session.rc"
@@ -276,7 +276,7 @@ msgstr "${XDG_CONFIG_DIRS}/xfce4-session/xfce4-session.rc"
 
 #: xfce4-session.xml:319(para)
 msgid "This is the location of the configuration file that includes the various settings for <application>@PACKAGE_NAME@</application>, which can be changed from the settings dialog."
-msgstr "Место расположения конфигурационного файла, содержащего различные настройки <application>@PACKAGE_NAME@</application>, которые могут быть изменены из диалогового окна настроек."
+msgstr "Месторасположение конфигурационного файла, содержащего различные настройки <application>@PACKAGE_NAME@</application>, которые могут быть изменены из диалогового окна настроек."
 
 #: xfce4-session.xml:326(term)
 msgid "${XDG_CONFIG_DIRS}/xfce4-session/xfce4-splash.rc"
@@ -284,7 +284,7 @@ msgstr "${XDG_CONFIG_DIRS}/xfce4-session/xfce4-splash.rc"
 
 #: xfce4-session.xml:328(para)
 msgid "This is the location of the configuration file that includes the configuration for the splash screen, which can be changed from the settings dialog."
-msgstr "Место расположения конфигурационного файла, содержащего настройки заставки, которые могут быть изменены из диалогового окна настроек."
+msgstr "Месторасположение конфигурационного файла, содержащего настройки заставки, которые могут быть изменены из диалогового окна настроек."
 
 #: xfce4-session.xml:335(term)
 msgid "${XDG_CACHE_HOME}/sessions/"
@@ -300,11 +300,11 @@ msgstr "${sysconfdir}/xdg/xfce4/kiosk/kioskrc"
 
 #: xfce4-session.xml:345(para)
 msgid "Kiosk mode configuration file. See <ulink url=\"#xfsm-kiosk-mode\">next section</ulink> for an explanation."
-msgstr "Конфигурационный файл режима киоска. См. <ulink url=\"#xfsm-kiosk-mode\">следующий раздел</ulink> для получения объяснений."
+msgstr "Конфигурационный файл режима киоска. Пояснения содержатся в <ulink url=\"#xfsm-kiosk-mode\">следующем разделе</ulink>."
 
 #: xfce4-session.xml:351(para)
 msgid "None of the configuration files, except the <filename>kioskrc</filename>, are designed to be edited by hand during a Xfce session; in fact, the changes will be overwritten if you edit them while the session manager or the settings managers are running."
-msgstr "Ни один из конфигурационных файлов, за исключением <filename>kioskrc</filename>, не следует редактировать вручную во время сеанса Xfce; фактически, изменения будут затёрты, если вы сделаете их во время работы менеджера сеансов или менеджера настроек."
+msgstr "Ни один из конфигурационных файлов, за исключением <filename>kioskrc</filename>, не следует редактировать вручную во время сеанса работы Xfce. Изменения, сделанные во время работы менеджера сеансов или менеджера настроек, будут перезаписаны."
 
 #: xfce4-session.xml:356(para)
 msgid "System administrators might want to customize the file <filename>${sysconfdir}/xdg/xfce4-session/xfce4-session.rc</filename> to change the default applications that are run on Xfce startup. For example, if you want to start the <application>xfce4-iconbox</application> instead of the <application>xftaskbar4</application>, you would change the <emphasis>[Failsafe Session]</emphasis> section like to something like this:"
@@ -343,7 +343,7 @@ msgstr "Режим киоска"
 
 #: xfce4-session.xml:380(para)
 msgid "The session manager offers support for the Kiosk Mode, that helps to prevent users from making changes to their session settings. To use it you have to edit or create the file <filename>${sysconfdir}/xdg/xfce4/kiosk/kioskrc</filename>."
-msgstr "Менеджер сеансов обеспечивает поддержку режима киоска, который предотвращает внесение пользователями изменений в настройки сеанса. Чтобы его использовать, вам необходимо отредактировать или создать файл <filename>${sysconfdir}/xdg/xfce4/kiosk/kioskrc</filename>."
+msgstr "Менеджер сеансов обеспечивает поддержку режима киоска, который предотвращает внесение пользователями изменений в настройки сеанса. Для того чтобы его использовать, вам необходимо отредактировать или создать файл <filename>${sysconfdir}/xdg/xfce4/kiosk/kioskrc</filename>."
 
 #: xfce4-session.xml:385(para)
 msgid "The way to explain the format of this file is by using an example. The xfce4-session section of your <filename>kioskrc</filename> might look like this:"
@@ -372,7 +372,7 @@ msgstr ""
 
 #: xfce4-session.xml:399(para)
 msgid "This allows all users to change their splash, chooser and logout settings, but allows only users in the group <emphasis>wheel</emphasis> to customize the compatibility settings and shutdown the system. No one will be allowed to adjust the security settings."
-msgstr "Это позволяет всем пользователям изменять их заставку, настройки выбора сеанса и выхода из системы, но только пользователям из группы <emphasis>wheel</emphasis> позволено настраивать параметры совместимости и выключать систему. Никому не разрешено устанавливать параметры безопасности."
+msgstr "Это позволяет всем пользователям изменять их заставку, настройки выбора сеанса и выхода из системы. Однако настраивать параметры совместимости и выключать систему позволено только пользователям из группы <emphasis>wheel</emphasis>. Никому не разрешено устанавливать параметры безопасности."
 
 #: xfce4-session.xml:404(para)
 msgid "The session manager supports the following KIOSK capabilities:"
@@ -440,7 +440,7 @@ msgstr "Чтобы сообщить об ошибке или внести пре
 
 #: xfce4-session.xml:472(para)
 msgid "If you have questions about the use or installation of this package, please ask on the <ulink url=\"http://lunar-linux.org/mailman/listinfo/xfce\" type=\"http\">xfce</ulink> mailing list. Development discussion takes place on the <ulink url=\"http://lunar-linux.org/mailman/listinfo/xfce4-dev\" type=\"http\">xfce4-dev</ulink> mailing list."
-msgstr "Если у вас есть вопросы по использованию или установке этого пакета, пожалуйста, задайте их в <ulink url=\"http://lunar-linux.org/mailman/listinfo/xfce\" type=\"http\">списке рассылки xfce</ulink>. Обсуждение разработки происходит в <ulink url=\"http://lunar-linux.org/mailman/listinfo/xfce4-dev\" type=\"http\">списке рассылки xfce4-dev</ulink>"
+msgstr "Если у вас есть вопросы по использованию или установке этого пакета, пожалуйста, задайте их в <ulink url=\"http://lunar-linux.org/mailman/listinfo/xfce\" type=\"http\">списке рассылки xfce</ulink>. Обсуждение разработки происходит в <ulink url=\"http://lunar-linux.org/mailman/listinfo/xfce4-dev\" type=\"http\">списке рассылки xfce4-dev</ulink>."
 
 #: xfce4-session.xml:481(para)
 msgid "This program is distributed under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version."
