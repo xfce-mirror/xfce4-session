@@ -245,7 +245,7 @@ msgstr "${XDG_CONFIG_HOME}"
 
 #: ./xfce4-session.xml269(para)
 msgid "The first base directory to look for configuration files. By default this is set to <filename role=\"directory\">~/.config/</filename>."
-msgstr ""
+msgstr "El primer directorio base para mirar por los archivos de configuración. Por defecto es establecido a <filename role=\"directory\">~/.config/</filename>."
 
 #: ./xfce4-session.xml276(term)
 msgid "${XDG_CONFIG_DIRS}"
@@ -330,6 +330,17 @@ msgid ""
 "Client3_Command=xfdesktop\n"
 "Client3_PerScreen=False\n"
 msgstr ""
+"\n"
+"[Failsafe Session]\n"
+"Count=4\n"
+"Client0_Command=xfwm4\n"
+"Client0_PerScreen=False\n"
+"Client1_Command=xfce4-panel\n"
+"Client1_PerScreen=True\n"
+"Client2_Command=xfce4-iconbox\n"
+"Client2_PerScreen=True\n"
+"Client3_Command=xfdesktop\n"
+"Client3_PerScreen=False\n"
 
 #: ./xfce4-session.xml378(title)
 msgid "Kiosk Mode"
@@ -370,11 +381,11 @@ msgstr ""
 
 #: ./xfce4-session.xml404(para)
 msgid "The session manager supports the following KIOSK capabilities:"
-msgstr ""
+msgstr "El manejador de sesiones soporta las siguientes capacidades de KIOSK:"
 
 #: ./xfce4-session.xml408(term)
 msgid "CustomizeSplash"
-msgstr ""
+msgstr "PersonalizarSplash"
 
 #: ./xfce4-session.xml410(para)
 msgid "Whether or not the user is allowed to customize the splash screen."
@@ -382,7 +393,7 @@ msgstr ""
 
 #: ./xfce4-session.xml415(term)
 msgid "CustomizeChooser"
-msgstr ""
+msgstr "PersonalizarSelector"
 
 #: ./xfce4-session.xml417(para)
 msgid "Whether or not the user is allowed to customize the session chooser settings."
@@ -390,7 +401,7 @@ msgstr ""
 
 #: ./xfce4-session.xml422(term)
 msgid "CustomizeLogout"
-msgstr ""
+msgstr "PersonalizarCerrarSesion"
 
 #: ./xfce4-session.xml424(para)
 msgid "Whether or not the user is allowed to customize the logout settings."
