@@ -67,7 +67,7 @@ msgstr "Balou thema"
 
 #: ../engines/balou/config.c:951
 msgid "Configure Balou..."
-msgstr "Balou configureren..."
+msgstr "Balou instellen..."
 
 #: ../engines/balou/config.c:994
 msgid "Balou"
@@ -87,7 +87,7 @@ msgstr "Muizen Beginscherm Machine"
 
 #: ../engines/simple/simple.c:346
 msgid "Configure Simple..."
-msgstr "Simple configureren..."
+msgstr "Simple instellen..."
 
 #: ../engines/simple/simple.c:357
 msgid "Font"
@@ -385,7 +385,7 @@ msgstr "Opdracht:"
 
 #: ../settings/xfae-dialog.c:184
 msgid "Select a command"
-msgstr "Selecteer een opdracht"
+msgstr "Kies een opdracht"
 
 #: ../settings/xfae-dialog.c:233
 msgid "Edit application"
@@ -394,7 +394,7 @@ msgstr "Toepassing bewerken"
 #: ../settings/xfae-model.c:562
 #, c-format
 msgid "Failed to unlink %s: %s"
-msgstr "Kon koppeling voor %s niet verwijderen: %s"
+msgstr "Kon %s niet ontkoppelen: %s"
 
 #: ../settings/xfae-model.c:651
 #, c-format
@@ -409,12 +409,12 @@ msgstr "Schrijven naar bestand %s is mislukt"
 #: ../settings/xfae-model.c:732
 #, c-format
 msgid "Failed to open %s for reading"
-msgstr "Het openen van %s om te lezen is mislukt"
+msgstr "Kon %s niet openen om te lezen"
 
 #: ../settings/xfae-model.c:841 ../settings/xfae-model.c:898
 #, c-format
 msgid "Failed to open %s for writing"
-msgstr "Het openen van %s om te schrijven is mislukt"
+msgstr "Kon %s niet openen om te schrijven"
 
 #: ../settings/xfae-window.c:101
 msgid ""
@@ -422,8 +422,8 @@ msgid ""
 "you login to your Xfce desktop, in addition to the applications that were "
 "saved when you logged out last time:"
 msgstr ""
-"Hieronder staat de lijst met programma's die automatisch worden opgestart "
-"wanneer u zich aanmeldt in uw Xfce-werkomgeving, naast de programma's die "
+"Hieronder staat de lijst met toepassingen die automatisch worden opgestart "
+"wanneer u zich aanmeldt in uw Xfce-werkomgeving, naast de toepassingen die "
 "werden opgeslagen toen u zich de laatste keer afmeldde:"
 
 #: ../settings/xfae-window.c:289
@@ -485,7 +485,7 @@ msgstr "Gebouwd met Gtk+-%d.%d.%d, draaiend met Gtk+-%d.%d.%d"
 #. verify that the DNS settings are ok
 #: ../xfce4-session/main.c:251
 msgid "Verifying DNS settings"
-msgstr "Bezig met verifiëren instellingen DNS"
+msgstr "Bezig met verifiëren DNS-instellingen"
 
 #: ../xfce4-session/main.c:254
 msgid "Loading session data"
@@ -518,7 +518,7 @@ msgstr "Sessie _bewaren voor toekomstige aanmeldingen"
 
 #: ../xfce4-session/shutdown.c:668
 msgid "Please enter your password:"
-msgstr "Wachtwoord invoeren a.u.b.:"
+msgstr "Voer a.u.b. uw wachtwoord in:"
 
 #: ../xfce4-session/shutdown.c:700
 msgid "<b>An error occurred</b>"
@@ -656,20 +656,20 @@ msgstr "Sessie in slaapstand brengen is mislukt"
 #: ../xfce4-session/xfsm-manager.c:1414
 #, c-format
 msgid "Can only terminate clients when in the idle state"
-msgstr "Kan alleen cliënten beëindigen wanneer die niet anderszins bezig zijn"
+msgstr "Kan alleen cliënten beëindigen wanneer die niets aan het doen zijn"
 
 #: ../xfce4-session/xfsm-manager.c:1955
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
-"Sessiebeheerder moet niet anderszins bezig zijn wanneer een controlepunt "
+"Sessiebeheerder moet niets aan het doen zijn wanneer een controlepunt "
 "wordt gevraagd"
 
 #: ../xfce4-session/xfsm-manager.c:1996
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
-"Sessiebeheerder moet niet anderszins bezig zijn wanneer een afsluiting wordt "
+"Sessiebeheerder moet niets aan het doen zijn wanneer een afsluiting wordt "
 "gevraagd"
 
 #: ../xfce4-session/xfsm-manager.c:2003
@@ -680,12 +680,12 @@ msgstr "Ongeldig afsluittype \"%u\""
 #: ../xfce4-session/xfsm-shutdown-helper.c:1601
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
-msgstr "Fout bij het zenden van opdracht naar afsluithelper: %s"
+msgstr "Fout bij het zenden van opdracht naar afsluithulp: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:1615
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
-msgstr "Fout bij het ontvangen van een antwoord van afsluithelper: %s"
+msgstr "Fout bij het ontvangen van een antwoord van afsluithulp: %s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:1624
 #, c-format
@@ -694,11 +694,11 @@ msgstr "Afsluitopdracht is mislukt"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:1802
 msgid "Suspend failed, no backend supported"
-msgstr "Pauzestand is mislukt, onderliggende dienst wordt niet ondersteund"
+msgstr "Pauzestand mislukt, achtergronddienst niet ondersteund"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:1829
 msgid "Hibernate failed, no backend supported"
-msgstr "Slaapstand is mislukt, onderliggende dienst wordt niet ondersteund"
+msgstr "Slaapstand mislukt, achtergronddienst niet ondersteund"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:1859
 msgid "Shutdown Command not found"
@@ -778,7 +778,7 @@ msgstr "Bezig met starten VI Verbeterde Tekstbewerker"
 
 #: ../xfce4-session/xfsm-startup.c:151
 msgid "Starting the Session Management Proxy"
-msgstr "Bezig met starten van de proxy van het sessiebeheer"
+msgstr "Bezig met starten van proxy van sessiebeheer"
 
 #: ../xfce4-session/xfsm-startup.c:153
 msgid "Starting the X-Chat IRC Client"
@@ -817,9 +817,9 @@ msgstr ""
 "  %s\n"
 "\n"
 "hier kunt u .desktop-bestanden plaatsen van de toepassingen die\n"
-"automatisch moeten worden opgestart wanneer u zich aanmeldt in Xfce. De "
-"bestanden in\n"
-"uw oude autostart-map zijn succesvol overgezet naar de nieuwe locatie.\n"
+"automatisch moeten worden opgestart wanneer u zich aanmeldt in Xfce.\n"
+"De bestanden in uw oude autostart-map zijn succesvol overgezet naar de\n"
+"nieuwe locatie.\n"
 "U zou deze oude autostart-map nu moeten verwijderen.\n"
 
 #: ../xfce4-session/xfsm-startup.c:458
@@ -1019,7 +1019,7 @@ msgid ""
 "Start GNOME services, such as gnome-keyring and the GNOME accessibility "
 "framework"
 msgstr ""
-"Start GNOME-diensten, zoals de sleutelbos en de toegankelijkheidsstructuur"
+"Start GNOME-diensten, zoals sleutelbos en de toegankelijkheidsstructuur"
 
 #: ../settings/xfce4-session-settings.glade.h:30
 msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
