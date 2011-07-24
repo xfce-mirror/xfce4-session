@@ -1,5 +1,6 @@
 bin_SCRIPTS= \
-	startxfce4
+	startxfce4 \
+	xflock4
 
 # cannot be set from configure, because ${prefix} is not expanded
 edit = sed \
