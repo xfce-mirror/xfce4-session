@@ -247,9 +247,12 @@ main (int argc, char **argv)
   dpy = gdk_display_get_default ();
   init_display (manager, dpy, channel, opt_disable_tcp);
 
-  /* verify that the DNS settings are ok */
-  xfsm_splash_screen_next (splash_screen, _("Verifying DNS settings"));
-  xfsm_dns_check ();
+  if (!opt_disable_tcp && xfconf_channel_get_bool (channel, "/security/EnableTcp", FALSE))
+    {
+      /* verify that the DNS settings are ok */
+      xfsm_splash_screen_next (splash_screen, _("Verifying DNS settings"));
+      xfsm_dns_check ();
+    }
 
   xfsm_splash_screen_next (splash_screen, _("Loading session data"));
 
