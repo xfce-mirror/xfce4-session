@@ -211,12 +211,14 @@ msgid "Shutdown/reboot options"
 msgstr "Opciones de apagado/reinicio"
 
 #: ./xfce4-session.xml229(para)
+#, fuzzy
 msgid "<application>@PACKAGE_NAME@</application> supports shutting down your computer when you log out of your desktop session. To be able to shutdown the computer, you have to be listed in the systems <filename>sudoers</filename> file, in particular, you must be allowed to execute the command <filename>${HELPERDIR}/xfce4/session/xfsm-shutdown-helper</filename> (<filename>/usr/sbin/xfsm-shutdown-helper</filename> on Debian GNU/Linux) as user root (where <filename>${HELPERDIR}</filename> is the directory passed to configure with the --with-helper-path-prefix option or <filename role=\"directory\">/usr/local/lib/xfce4/session</filename> by default."
-msgstr ""
+msgstr "<application> @ @ Nombre_paquete </application> apoya el cierre de su computadora cuando usted salga de su sesión de escritorio. Para ser capaz de apagar la computadora, usted tiene que estar lista en los sistemas de <filename> sudoers </filename> archivo, en particular, usted debe ser permitido para ejecutar el comando <filename> $ {} HELPERDIR / xfce4/session/xfsm-shutdown-helper </filename> ( <filename> / Usr / sbin / shutdown-xfsm-ayuda </filename> en Debian GNU / Linux) como root (donde <filename> $ {} HELPERDIR </filename> es el directorio que se pasa a configurar con la opción - with-helper-path-prefix opción o <filename role=\"directory\"> / Usr/local/lib/xfce4/session </filename> por defecto."
 
 #: ./xfce4-session.xml239(para)
+#, fuzzy
 msgid "For example, lets say, you built <application>@PACKAGE_NAME@</application> with the default options, your hostname is <emphasis>myhost</emphasis> and your user account is named <emphasis>myuser</emphasis>, then you would have to add the following line to your <filename>sudoers</filename> file (remember to use <application>visudo</application> to edit that file):"
-msgstr ""
+msgstr "Por ejemplo, digamos, que construyó <application> @ @ Nombre_paquete </application> con las opciones por defecto, su nombre es <emphasis> myhost </emphasis> y su cuenta de usuario se denomina <emphasis> miusuario </emphasis> , Entonces habría que añadir la siguiente línea a su <filename> sudoers </filename> archivo (recuerde usar <application> visudo </application> para editar el archivo):"
 
 #: ./xfce4-session.xml246(programlisting)
 #, no-wrap
@@ -252,8 +254,9 @@ msgid "${XDG_CONFIG_DIRS}"
 msgstr "${XDG_CONFIG_DIRS}"
 
 #: ./xfce4-session.xml278(para)
+#, fuzzy
 msgid "A list of system directories that contain configuration data. By default the panel will look in <filename role=\"directory\">${sysconfdir}/xdg/</filename> and <filename role=\"directory\">/etc/xdg/</filename>. The value of ${sysconfdir} depends on how the program was build and will often be <filename role=\"directory\">/etc/</filename> for binary packages."
-msgstr ""
+msgstr "Una lista de directorios del sistema que contienen datos de configuración. Por defecto, el panel examinará en <filename role=\"directory\"> $ {Sysconfdir} / xdg / </filename> y <filename role=\"directory\"> / Etc / xdg / </filename> . El valor de $ {sysconfdir} depende de cómo el programa fue construido y será a menudo <filename role=\"directory\"> / Etc / </filename> para paquetes binarios."
 
 #: ./xfce4-session.xml289(term)
 msgid "${XDG_CACHE_HOME}"
@@ -272,8 +275,9 @@ msgid "This is the location where the list of applications that should be automa
 msgstr ""
 
 #: ./xfce4-session.xml306(para)
+#, fuzzy
 msgid "Prior to Xfce 4.3, the list of autostarted applications was stored in <filename role=\"directory\">~/Desktop/Autostart</filename>, which contained scripts and symbolic links to applications. If you run <application>@PACKAGE_NAME@</application> @PACKAGE_VERSION@ or above for the first time, it will automatically migrate the autostart items from the old location to the standard location and place a <filename>LOCATION-CHANGED.txt</filename> file in the old directory, that describes the location change."
-msgstr ""
+msgstr "Antes de Xfce 4.3, la lista de aplicaciones autostarted se almacenan en <filename role=\"directory\"> ~ / Desktop / Autostart </filename> , Que contiene los scripts y los enlaces simbólicos a las aplicaciones. Si se ejecuta <application> @ @ Nombre_paquete </application> @ @ Versión_del_paquete o por encima, por primera vez, se migrará automáticamente los puntos de inicio automático de la ubicación anterior de la ubicación estándar y un lugar <filename> UBICACIÓN-CHANGED.txt </filename> archivo en el directorio anterior, que describe el cambio de ubicación."
 
 #: ./xfce4-session.xml317(term)
 msgid "${XDG_CONFIG_DIRS}/xfce4-session/xfce4-session.rc"
@@ -308,12 +312,14 @@ msgid "Kiosk mode configuration file. See <ulink url=\"#xfsm-kiosk-mode\">next s
 msgstr "Archivo de configuración del modo Kiosk. Mire la <ulink url=\"#xfsm-kiosk-mode\">siguiente sección</ulink> para una explicación."
 
 #: ./xfce4-session.xml351(para)
+#, fuzzy
 msgid "None of the configuration files, except the <filename>kioskrc</filename>, are designed to be edited by hand during a Xfce session; in fact, the changes will be overwritten if you edit them while the session manager or the settings managers are running."
-msgstr ""
+msgstr "Ninguno de los archivos de configuración, a excepción de la <filename> kioskrc </filename> , Están diseñados para ser editado a mano durante una sesión de Xfce, de hecho, los cambios se sobrescribirán si se edita, mientras que el gestor de sesiones o los administradores de valores se están ejecutando."
 
 #: ./xfce4-session.xml356(para)
+#, fuzzy
 msgid "System administrators might want to customize the file <filename>${sysconfdir}/xdg/xfce4-session/xfce4-session.rc</filename> to change the default applications that are run on Xfce startup. For example, if you want to start the <application>xfce4-iconbox</application> instead of the <application>xftaskbar4</application>, you would change the <emphasis>[Failsafe Session]</emphasis> section like to something like this:"
-msgstr ""
+msgstr "Los administradores del sistema que desee para personalizar el archivo <filename> $ {Sysconfdir} / xdg/xfce4-session/xfce4-session.rc </filename> para cambiar las aplicaciones predeterminadas que se ejecutan en el arranque Xfce. Por ejemplo, si desea iniciar la <application> xfce4-caja de iconos </application> en lugar de la <application> xftaskbar4 </application> , Tendría que cambiar la <emphasis> [Sesión a prueba de fallos] </emphasis> sección como a algo como esto:"
 
 #: ./xfce4-session.xml363(programlisting)
 #, no-wrap
@@ -351,8 +357,9 @@ msgid "The session manager offers support for the Kiosk Mode, that helps to prev
 msgstr ""
 
 #: ./xfce4-session.xml385(para)
+#, fuzzy
 msgid "The way to explain the format of this file is by using an example. The xfce4-session section of your <filename>kioskrc</filename> might look like this:"
-msgstr ""
+msgstr "La manera de explicar el formato de este fichero es con un ejemplo. La sección de xfce4-session de su <filename> kioskrc </filename> podría tener este aspecto:"
 
 #: ./xfce4-session.xml389(programlisting)
 #, no-wrap
@@ -376,8 +383,9 @@ msgstr ""
 "CustomizeSecurity=NONE\n"
 
 #: ./xfce4-session.xml399(para)
+#, fuzzy
 msgid "This allows all users to change their splash, chooser and logout settings, but allows only users in the group <emphasis>wheel</emphasis> to customize the compatibility settings and shutdown the system. No one will be allowed to adjust the security settings."
-msgstr ""
+msgstr "Esto permite a los usuarios a cambiar sus salpicaduras, selector de cierre de sesión y la configuración, pero permite a los usuarios sólo en el grupo <emphasis> rueda </emphasis> para personalizar la configuración de compatibilidad y apagar el sistema. A nadie se le permite ajustar la configuración de seguridad."
 
 #: ./xfce4-session.xml404(para)
 msgid "The session manager supports the following KIOSK capabilities:"
@@ -420,16 +428,18 @@ msgid "CustomizeSecurity"
 msgstr "PersonalizarSeguridad"
 
 #: ./xfce4-session.xml439(para)
+#, fuzzy
 msgid "Whether or not the user is allowed to customize the security settings. This is one of the most <emphasis>IMPORTANT</emphasis> settings, since it prevents users (actually <filename>libICE</filename>) from binding to a TCP port."
-msgstr ""
+msgstr "Independientemente de que el usuario puede personalizar la configuración de seguridad. Este es uno de los más <emphasis> IMPORTANTE </emphasis> configuración, ya que evita que los usuarios (en realidad <filename> Libice </filename> ) Se una a un puerto TCP."
 
 #: ./xfce4-session.xml446(term)
 msgid "Shutdown"
 msgstr "Apagar"
 
 #: ./xfce4-session.xml448(para)
+#, fuzzy
 msgid "Whether or not the user is allowed to shutdown (reboot or poweroff) the system. If a user lacks this capability the reboot and poweroff options in the shutdown dialog will be greyed out."
-msgstr ""
+msgstr "Si el usuario tiene permiso para apagar (o reiniciar poweroff) del sistema. Si un usuario no tiene esta capacidad de reiniciar y opciones poweroff en el diálogo de cierre será de color gris."
 
 #: ./xfce4-session.xml458(title)
 msgid "About <application>@PACKAGE_NAME@</application>"
@@ -440,12 +450,14 @@ msgid "<application>@PACKAGE_NAME@</application> was written by Benedikt Meurer 
 msgstr "<application>@PACKAGE_NAME@</application> fue escrito por Benedikt Meurer (<email>benny@xfce.org</email>). Para buscar más información, por favor visite <ulink url=\"http://www.xfce.org\" type=\"http\">el sitio web de Xfce</ulink>."
 
 #: ./xfce4-session.xml466(para)
+#, fuzzy
 msgid "To report a bug or make a suggestion regarding this application or this manual, use the bug tracking system at <ulink url=\"http://bugzilla.xfce.org/\" type=\"http\">http://bugzilla.xfce.org/</ulink>."
-msgstr ""
+msgstr "Para informar de un error o hacer alguna sugerencia concerniente esta aplicación o este manual, el uso del sistema de seguimiento de errores en <ulink url=\"http://bugzilla.xfce.org/\" type=\"http\"> http://bugzilla.xfce.org/ </ulink> ."
 
 #: ./xfce4-session.xml472(para)
+#, fuzzy
 msgid "If you have questions about the use or installation of this package, please ask on the <ulink url=\"http://lunar-linux.org/mailman/listinfo/xfce\" type=\"http\">xfce</ulink> mailing list. Development discussion takes place on the <ulink url=\"http://lunar-linux.org/mailman/listinfo/xfce4-dev\" type=\"http\">xfce4-dev</ulink> mailing list."
-msgstr ""
+msgstr "Si usted tiene preguntas sobre el uso o la instalación de este paquete, por favor pregunte en la <ulink url=\"http://lunar-linux.org/mailman/listinfo/xfce\" type=\"http\"> xfce </ulink> listas de correo. Discusión sobre el desarrollo se lleva a cabo en el <ulink url=\"http://lunar-linux.org/mailman/listinfo/xfce4-dev\" type=\"http\"> xfce4-dev </ulink> listas de correo."
 
 #: ./xfce4-session.xml481(para)
 msgid "This program is distributed under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version."
