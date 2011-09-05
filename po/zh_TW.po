@@ -1,6 +1,6 @@
-# Traditional Chinese translations for xfce4-panel package.
-# Copyright (C) 2002-2006 The Xfce development team.
-# This file is distributed under the same license as the xfce4-panel package.
+# Traditional Chinese translations for xfce4-session package.
+# Copyright (C) 2003-2005, 2010 The Xfce development team.
+# This file is distributed under the same license as the xfce4-session package.
 # umm <umm@pchome.com.tw>, 2003.
 # Ambrose Li <acli@ada.dhs.org>, 2004.
 # Hydonsingore Cia <hydonsingore@educities.edu.tw>, 2005.
@@ -8,10 +8,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-panel 4.7.0\n"
+"Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-04 22:12+0000\n"
-"PO-Revision-Date: 2011-09-05 11:38+0800\n"
+"POT-Creation-Date: 2011-09-04 22:13+0000\n"
+"PO-Revision-Date: 2011-09-05 11:44+0800\n"
 "Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -19,1609 +19,1187 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: zh_TW\n"
 
-#: ../panel-desktop-handler.desktop.in.h:1
-msgid "Add a new launcher to the panel based on the information of this desktop file"
-msgstr "加入新的啟動器 (以此桌面檔資訊為基礎) 至面板"
+#: ../engines/balou/balou-theme.c:110
+msgid "No description given"
+msgstr "沒有說明"
 
-#: ../panel-desktop-handler.desktop.in.h:2
-msgid "Create Launcher on the panel"
-msgstr "於面板上建立啟動器"
+#: ../engines/balou/config.c:324
+msgid "Choose theme file to install..."
+msgstr "請選擇要安裝的主題檔案..."
 
-#: ../panel-preferences.desktop.in.h:1
-msgid "Customize the panel"
-msgstr "自訂面板"
-
-#: ../panel-preferences.desktop.in.h:2
-#: ../panel/panel-preferences-dialog.glade.h:26
-#: ../panel/panel-window.c:2275
-#: ../migrate/main.c:100
-msgid "Panel"
-msgstr "面板"
-
-#: ../common/panel-utils.c:157
-msgid "_Read Online"
-msgstr "線上閱讀(_R)"
-
-#: ../common/panel-utils.c:158
-msgid "You can read the user manual online. This manual may however not exactly match your panel version."
-msgstr "您可以線上閱讀使用者手冊。該手冊有可能不與您的面板版本吻合。"
-
-#: ../common/panel-utils.c:160
-msgid "The user manual is not installed on your computer"
-msgstr "您的電腦上沒有安裝使用者手冊"
-
-#. display an error message to the user
-#: ../common/panel-utils.c:175
-msgid "Failed to open the documentation browser"
-msgstr "未能開啟文件瀏覽器"
-
-#. I18N: %s is the name of the plugin
-#: ../libxfce4panel/xfce-panel-plugin.c:919
-#: ../panel/panel-preferences-dialog.c:1056
+#: ../engines/balou/config.c:336
 #, c-format
-msgid "Are you sure that you want to remove \"%s\"?"
-msgstr "您確定要移除「%s」嗎？"
+msgid "Unable to install splash theme from file \"%s\""
+msgstr "無法從檔案「%s」安裝啟動畫面主題"
 
-#: ../libxfce4panel/xfce-panel-plugin.c:924
-#: ../panel/panel-preferences-dialog.c:1059
-msgid "If you remove the item from the panel, it is permanently lost."
-msgstr "如果您要從面板移除該項目，它將永遠消失。"
+#: ../engines/balou/config.c:339
+msgid "Theme File Error"
+msgstr "主題檔案錯誤"
 
-#. move item
-#: ../libxfce4panel/xfce-panel-plugin.c:1084
-msgid "_Move"
-msgstr "移動(_M)"
+# TODO 譯文有待改進
+#: ../engines/balou/config.c:342
+msgid "Please check that the file is a valid splash theme archive."
+msgstr "請核實該檔案是否為有效的啟動畫面主題檔案。"
 
-#: ../libxfce4panel/xfce-panel-plugin.c:1118
-msgid "Pane_l"
-msgstr "面板(_L)"
-
-#. add new items
-#: ../libxfce4panel/xfce-panel-plugin.c:1126
-#: ../panel/panel-window.c:2287
-msgid "Add _New Items..."
-msgstr "加入新項目(_N)..."
-
-#. customize panel
-#: ../libxfce4panel/xfce-panel-plugin.c:1137
-#: ../panel/panel-window.c:2298
-msgid "Panel Pr_eferences..."
-msgstr "面板偏好設定(_E)..."
-
-#. logout item
-#: ../libxfce4panel/xfce-panel-plugin.c:1154
-#: ../panel/panel-window.c:2314
-msgid "Log _Out"
-msgstr "登出(_O)"
-
-#: ../panel/main.c:79
-msgid "Show the 'Panel Preferences' dialog"
-msgstr "顯示「面板偏好設定」對話窗"
-
-#: ../panel/main.c:79
-#: ../panel/main.c:80
-msgid "PANEL-NUMBER"
-msgstr "面板號碼"
-
-#: ../panel/main.c:80
-msgid "Show the 'Add New Items' dialog"
-msgstr "顯示「加入新項目」對話窗"
-
-#: ../panel/main.c:81
-msgid "Save the panel configuration"
-msgstr "儲存面板組態"
-
-#: ../panel/main.c:82
-msgid "Add a new plugin to the panel"
-msgstr "加入新插件至面板"
-
-#: ../panel/main.c:82
-msgid "PLUGIN-NAME"
-msgstr "插件名稱"
-
-#: ../panel/main.c:83
-msgid "Restart the running panel instance"
-msgstr "重新啟動執行中的面板實體"
-
-#: ../panel/main.c:84
-msgid "Quit the running panel instance"
-msgstr "退出執行中的面板實體"
-
-#: ../panel/main.c:85
-msgid "Do not wait for a window manager on startup"
-msgstr "啟動時不要等候視窗管理程式"
-
-#: ../panel/main.c:86
-#: ../plugins/applicationsmenu/xfce4-popup-applicationsmenu.sh:33
-#: ../plugins/directorymenu/xfce4-popup-directorymenu.sh:33
-#: ../plugins/windowmenu/xfce4-popup-windowmenu.sh:33
-msgid "Print version information and exit"
-msgstr "印出版本資訊並離開"
-
-#. parse context options
-#: ../panel/main.c:250
-msgid "[ARGUMENTS...]"
-msgstr "[參數...]"
-
-#: ../panel/main.c:257
+#: ../engines/balou/config.c:402
 #, c-format
-msgid "Type \"%s --help\" for usage."
-msgstr "輸入 \"%s --help\" 以瞭解用法。"
+msgid "Unable to remove splash theme \"%s\" from directory %s."
+msgstr "無法從目錄 %s 中移除啟動畫面主題「%s」。"
 
-#: ../panel/main.c:276
+#: ../engines/balou/config.c:491
+msgid "Choose theme filename..."
+msgstr "選擇主題的檔案名稱..."
+
+#: ../engines/balou/config.c:624
+msgid "_Install new theme"
+msgstr "安裝新主題(_I)"
+
+#: ../engines/balou/config.c:633
+msgid "_Remove theme"
+msgstr "移除主題(_R)"
+
+#: ../engines/balou/config.c:650
+msgid "_Export theme"
+msgstr "匯出主題(_E)"
+
+#: ../engines/balou/config.c:866
+msgid "Balou theme"
+msgstr "「Balou」主題"
+
+#: ../engines/balou/config.c:951
+msgid "Configure Balou..."
+msgstr "設置 Balou..."
+
+#: ../engines/balou/config.c:994
+msgid "Balou"
+msgstr "Balou"
+
+#: ../engines/balou/config.c:995
+msgid "Balou Splash Engine"
+msgstr "Balou 開機畫面引擎"
+
+#: ../engines/mice/mice.c:373
+msgid "Mice"
+msgstr "Mice"
+
+#: ../engines/mice/mice.c:374
+msgid "Mice Splash Engine"
+msgstr "Mice 開機畫面引擎"
+
+#: ../engines/simple/simple.c:346
+msgid "Configure Simple..."
+msgstr "設置 Simple..."
+
+#: ../engines/simple/simple.c:357
+msgid "Font"
+msgstr "字型"
+
+#: ../engines/simple/simple.c:367
+msgid "Colors"
+msgstr "顏色"
+
+#: ../engines/simple/simple.c:375
+msgid "Background color:"
+msgstr "背景顏色："
+
+#: ../engines/simple/simple.c:388
+msgid "Text color:"
+msgstr "文字顏色："
+
+#: ../engines/simple/simple.c:401
+msgid "Image"
+msgstr "圖像"
+
+#: ../engines/simple/simple.c:409
+msgid "Use custom image"
+msgstr "使用自訂圖像"
+
+#: ../engines/simple/simple.c:413
+msgid "Choose image..."
+msgstr "選擇圖像..."
+
+#: ../engines/simple/simple.c:419
+msgid "Images"
+msgstr "圖像"
+
+#: ../engines/simple/simple.c:425
+msgid "All files"
+msgstr "全部檔案"
+
+#: ../engines/simple/simple.c:497
+msgid "Simple"
+msgstr "Simple"
+
+#: ../engines/simple/simple.c:498
+msgid "Simple Splash Engine"
+msgstr "Simple 開機畫面引擎"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:86
+msgid "Session"
+msgstr "工作階段"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:87
+msgid "Loc_k screen"
+msgstr "鎖住畫面(_K)"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:88
+#: ../panel-plugin/xfsm-logout-plugin.c:128
+msgid "_Suspend"
+msgstr "暫停(_S)"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:89
+#: ../panel-plugin/xfsm-logout-plugin.c:135
+#: ../xfce4-session/shutdown.c:599
+msgid "_Hibernate"
+msgstr "休眠(_H)"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:90
+#: ../panel-plugin/xfsm-logout-plugin.c:121
+msgid "_Reboot"
+msgstr "重新開機(_R)"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:91
+#: ../panel-plugin/xfsm-logout-plugin.c:114
+msgid "Shut _down"
+msgstr "關機(_D)"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:92
+#: ../panel-plugin/xfsm-logout-plugin.c:107
+msgid "_Log out"
+msgstr "登出(_L)"
+
+#. XFSM_SHUTDOWN_ASK
+#. XFSM_SHUTDOWN_LOGOUT
+#: ../panel-plugin/xfsm-logout-plugin.c:105
+msgid "Are you sure you want to log out?"
+msgstr "您確定要登出？"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:106
+#, c-format
+msgid "You will be logged out in %u seconds."
+msgstr "您將於 %u 秒內登出。"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:109
+msgid "Failed to log out."
+msgstr "無法登出。"
+
+#. XFSM_SHUTDOWN_HALT
+#: ../panel-plugin/xfsm-logout-plugin.c:112
+msgid "Are you sure you want to shut down?"
+msgstr "您確定要關機？"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:113
+#, c-format
+msgid "Your system will shut down in %u seconds."
+msgstr "您的系統將於 %u 秒內關閉。"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:116
+msgid "Failed to shut down."
+msgstr "無法關機。"
+
+#. XFSM_SHUTDOWN_REBOOT
+#: ../panel-plugin/xfsm-logout-plugin.c:119
+msgid "Are you sure you want to reboot?"
+msgstr "您確定要重新開機？"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:120
+#, c-format
+msgid "Your system will reboot in %u seconds."
+msgstr "您的系統將於 %u 秒內重新開機。"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:123
+msgid "Failed to reboot."
+msgstr "無法重新開機。"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:130
+msgid "Failed to suspend"
+msgstr "無法暫停"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:137
+msgid "Failed to hibernate"
+msgstr "無法休眠"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:150
+msgid "Xflock4 could not be launched"
+msgstr "Xflock4 無法啟動"
+
+#: ../panel-plugin/xfsm-logout-plugin.c:222
+msgid "Close Session"
+msgstr "關閉工作階段"
+
+#: ../settings/main.c:43
+msgid "Settings manager socket"
+msgstr "設定值管理員 socket"
+
+#: ../settings/main.c:43
+msgid "SOCKET ID"
+msgstr "SOCKET ID"
+
+#: ../settings/main.c:44
+msgid "Version information"
+msgstr "版本資訊"
+
+#: ../settings/main.c:74
+#, c-format
+msgid "Type '%s --help' for usage."
+msgstr "請輸入 '%s --help' 以瞭解用法。"
+
+#: ../settings/main.c:86
+#: ../xfce4-session/main.c:219
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce 開發團隊。保留所有權利。"
 
-#: ../panel/main.c:277
+#: ../settings/main.c:87
+#: ../xfce4-session/main.c:225
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "請回報錯誤至 <%s>。"
 
-#: ../panel/main.c:328
-msgid "There is already a running instance"
-msgstr "已經有執行中的實體"
-
-#. spawn ourselfs again
-#: ../panel/main.c:378
-msgid "Restarting..."
-msgstr "正在重新啟動..."
-
-#: ../panel/main.c:393
-msgid "Failed to show the preferences dialog"
-msgstr "未能顯示偏好設定對話窗"
-
-#: ../panel/main.c:395
-msgid "Failed to show the add new items dialog"
-msgstr "未能顯示加入新項目對話窗"
-
-#: ../panel/main.c:397
-msgid "Failed to save the panel configuration"
-msgstr "未能儲存面板組態"
-
-#: ../panel/main.c:399
-msgid "Failed to add a plugin to the panel"
-msgstr "未能加入插件至面板"
-
-#: ../panel/main.c:401
-msgid "Failed to restart the panel"
-msgstr "未能重新啟動面板"
-
-#: ../panel/main.c:403
-msgid "Failed to quit the panel"
-msgstr "未能退出面板"
-
-#: ../panel/main.c:405
-msgid "Failed to send D-Bus message"
-msgstr "未能傳送 D-Bus 訊息"
-
-#: ../panel/main.c:416
-msgid "Do you want to start the panel? If you do, make sure you save the session on logout, so the panel is automatically started the next time you login."
-msgstr "您想要啟動面板嗎？如果要的話，請確認在登出時您有儲存工作階段，這樣該面板才能在下一次您登入時自動啟動。"
-
-#: ../panel/main.c:419
-#: ../panel/main.c:433
-#, c-format
-msgid "No running instance of %s was found"
-msgstr "找不到執行中的 %s 實體"
-
-#: ../panel/panel-application.c:217
-msgid "Failed to launch the migration application"
-msgstr "未能啟動轉移應用程式"
-
-#: ../panel/panel-application.c:1595
-#: ../plugins/actions/actions.c:421
-msgid "You have started X without session manager. Clicking Quit will close the X server."
-msgstr "若您未透過工作階段管理程式啟動 X。只要點擊「退出」就會關閉 X 伺服器。"
-
-#: ../panel/panel-application.c:1596
-#: ../plugins/actions/actions.c:422
-msgid "Are you sure you want to quit the panel?"
-msgstr "您確定要退出該面板嗎？"
-
-#: ../panel/panel-application.c:1604
-#: ../plugins/actions/actions.c:430
-#, c-format
-msgid "Failed to execute command \"%s\""
-msgstr "未能執行指令 \"%s\""
-
-#: ../panel/panel-dbus-client.c:208
-msgid "Invalid plugin event syntax specified. Use PLUGIN-NAME:NAME[:TYPE:VALUE]."
-msgstr "指定了無效的插件事件語法。請使用 PLUGIN-NAME:NAME[:TYPE:VALUE]。"
-
-#: ../panel/panel-dbus-client.c:241
-#, c-format
-msgid "Invalid hint type \"%s\". Valid types are bool, double, int, string and uint."
-msgstr "無效的暗示類型「%s」。有效的類型為真假值 (bool)、倍精度 (double)、整數 (int)、字串 (string)、單位 (unit)。"
-
-#: ../panel/panel-dialogs.c:76
-msgid "The panel of the Xfce Desktop Environment"
-msgstr "Xfce 桌面環境的面板"
-
-#: ../panel/panel-dialogs.c:81
-msgid "translator-credits"
-msgstr "Cheng-Chia Tseng <pswo10680@gmail.com>, 2010."
-
-#. setup the dialog
-#: ../panel/panel-dialogs.c:122
-#: ../plugins/launcher/launcher-dialog.glade.h:1
-msgid "Add New Item"
-msgstr "加入新項目"
-
-#: ../panel/panel-dialogs.c:136
-msgid "Please choose a panel for the new plugin:"
-msgstr "請為新插件選擇面板："
-
-#. I18N: panel combo box in the preferences dialog
-#: ../panel/panel-dialogs.c:147
-#: ../panel/panel-preferences-dialog.c:775
-#, c-format
-msgid "Panel %d"
-msgstr "面板 %d"
-
-#: ../panel/panel-dialogs.c:183
-msgid "Because the panel is running in kiosk mode, you are not allowed to make changes to the panel configuration as a regular user"
-msgstr "因為面板正在以 kiosk 模式執行中，您不被允許以一般使用者身份變更面板的組態"
-
-#: ../panel/panel-dialogs.c:185
-msgid "Modifying the panel is not allowed"
-msgstr "修改面板不被允許"
-
-#: ../panel/panel-item-dialog.c:188
-msgid "Add New Items"
-msgstr "加入新項目"
-
-#: ../panel/panel-item-dialog.c:190
-msgid "Add new plugins to the panel"
-msgstr "加入新插件至面板"
-
-#: ../panel/panel-item-dialog.c:214
-#: ../plugins/launcher/launcher-dialog.glade.h:23
-msgid "_Search:"
-msgstr "搜尋(_S)："
-
-#: ../panel/panel-item-dialog.c:222
-msgid "Enter search phrase here"
-msgstr "在這裡輸入搜尋詞語"
-
-#: ../panel/panel-plugin-external.c:426
-#, c-format
-msgid "Plugin \"%s\" unexpectedly left the panel, do you want to restart it?"
-msgstr "插件「%s」無預期退出面板，您想要重新啟動它嗎？"
-
-#: ../panel/panel-plugin-external.c:428
-#, c-format
-msgid "The plugin restarted more than once in the last %d seconds. If you press Execute the panel will try to restart the plugin otherwise it will be permanently removed from the panel."
-msgstr "該插件在 %d 秒內重新啟動超過一次。若您按下「執行」，面板將試著重新啟動該插件，否則它將永久自面板上移除。"
-
-#: ../panel/panel-preferences-dialog.c:460
-msgid "Automatic"
-msgstr "自動"
-
-#. I18N: screen name in the output selector
-#: ../panel/panel-preferences-dialog.c:479
-#, c-format
-msgid "Screen %d"
-msgstr "螢幕 %d"
-
-#. I18N: monitor name in the output selector
-#: ../panel/panel-preferences-dialog.c:505
-#, c-format
-msgid "Monitor %d"
-msgstr "顯示器 %d"
-
-#: ../panel/panel-preferences-dialog.c:836
-msgid "The panel and plugin configurations will be permanently removed"
-msgstr "面板與插件組態將被永久移除"
-
-#: ../panel/panel-preferences-dialog.c:837
-#, c-format
-msgid "Are you sure you want to remove panel %d?"
-msgstr "您確定要移除面板 %d 嗎？"
-
-#. I18N: append (external) in the preferences dialog if the plugin
-#. * runs external
-#: ../panel/panel-preferences-dialog.c:920
-#, c-format
-msgid "%s <span color=\"grey\" size=\"small\">(external)</span>"
-msgstr "%s <span color=\"grey\" size=\"small\">(外部)</span>"
-
-#. I18N: tooltip in preferences dialog when hovering an item in the list
-#. * for external plugins
-#: ../panel/panel-preferences-dialog.c:925
-#, c-format
-msgid ""
-"Internal name: %s-%d\n"
-"PID: %d"
-msgstr ""
-"內部名稱：%s-%d\n"
-"PID: %d"
-
-#. I18N: tooltip in preferences dialog when hovering an item in the list
-#. * for internal plugins
-#: ../panel/panel-preferences-dialog.c:937
-#, c-format
-msgid "Internal name: %s-%d"
-msgstr "內部名稱：%s-%d"
-
-#: ../panel/panel-preferences-dialog.glade.h:1
-msgid "A_utomatically increase the length"
-msgstr "自動增加長度(_U)"
-
-#: ../panel/panel-preferences-dialog.glade.h:2
-msgid "Add a new panel"
-msgstr "加入新面板"
-
-#: ../panel/panel-preferences-dialog.glade.h:3
-msgid "Add new item to this panel"
-msgstr "加入新項目至此面板"
-
-#: ../panel/panel-preferences-dialog.glade.h:4
-msgid "Alpha value of the panel background, with 0 being fully transparent and 100 fully opaque."
-msgstr "背景的 Alpha 值，0 代表完全透明，100 代表完全不透明。"
-
-#: ../panel/panel-preferences-dialog.glade.h:5
-msgid "Appeara_nce"
-msgstr "外觀(_N)"
-
-#: ../panel/panel-preferences-dialog.glade.h:6
-msgid "Automatically show and _hide the panel"
-msgstr "自動顯示與隱藏面板(_H)"
-
-#: ../panel/panel-preferences-dialog.glade.h:7
-msgid "Background"
-msgstr "背景"
-
-#: ../panel/panel-preferences-dialog.glade.h:8
-msgid "Background image"
-msgstr "背景影像"
-
-#: ../panel/panel-preferences-dialog.glade.h:9
-msgid "C_olor:"
-msgstr "色彩(_O)："
-
-#: ../panel/panel-preferences-dialog.glade.h:10
-msgid "D_isplay"
-msgstr "顯示(_I)"
-
-#: ../panel/panel-preferences-dialog.glade.h:11
-msgid "Don't _reserve space on borders"
-msgstr "邊緣不要保留空間(_R)"
-
-#: ../panel/panel-preferences-dialog.glade.h:12
-#: ../plugins/launcher/launcher-dialog.glade.h:9
-msgid "Edit the currently selected item"
-msgstr "編輯目前所選的項目"
-
-#: ../panel/panel-preferences-dialog.glade.h:13
-msgid "Enable compositing in the window manager for opacity settings in the panel."
-msgstr "為面板的不透明度設定值啟用視窗管理程式的混成功能。"
-
-#: ../panel/panel-preferences-dialog.glade.h:14
-#: ../plugins/launcher/launcher-dialog.glade.h:10
-msgid "General"
-msgstr "一般"
-
-#: ../panel/panel-preferences-dialog.glade.h:15
-msgid "Horizontal"
-msgstr "水平"
-
-#: ../panel/panel-preferences-dialog.glade.h:16
-msgid "Ite_ms"
-msgstr "項目(_M)"
-
-#: ../panel/panel-preferences-dialog.glade.h:18
-#, no-c-format
-msgid "L_ength (%):"
-msgstr "長度 (%)(_E)："
-
-#. I18N: name of the section (frame) in the panel preferences where the user can define the length and size of the panel
-#: ../panel/panel-preferences-dialog.glade.h:20
-msgid "Measurements"
-msgstr "測量"
-
-#: ../panel/panel-preferences-dialog.glade.h:21
-#: ../plugins/launcher/launcher-dialog.glade.h:13
-msgid "Move currently selected item down by one row"
-msgstr "將目前所選的項目向下移動一列"
-
-#: ../panel/panel-preferences-dialog.glade.h:22
-#: ../plugins/launcher/launcher-dialog.glade.h:14
-msgid "Move currently selected item up by one row"
-msgstr "將目前所選的項目向上移動一列"
-
-#: ../panel/panel-preferences-dialog.glade.h:23
-msgid "None (use system style)"
-msgstr "無 (使用系統樣式)"
-
-#: ../panel/panel-preferences-dialog.glade.h:24
-msgid "O_utput:"
-msgstr "輸入(_U)："
-
-#: ../panel/panel-preferences-dialog.glade.h:25
-msgid "Opacity"
-msgstr "不透明度"
-
-#: ../panel/panel-preferences-dialog.glade.h:27
-msgid "Pick a Panel Color"
-msgstr "挑選面板顏色"
-
-#: ../panel/panel-preferences-dialog.glade.h:28
-msgid "Remove currently selected item"
-msgstr "移除目前所選的項目"
-
-#: ../panel/panel-preferences-dialog.glade.h:29
-msgid "Remove the currently selected panel"
-msgstr "移除目前所選的面板"
-
-#: ../panel/panel-preferences-dialog.glade.h:30
-msgid "Select A Background Image"
-msgstr "選取背景影像"
-
-#: ../panel/panel-preferences-dialog.glade.h:31
-msgid "Select this option if you want maximized windows to cover the area behind the panel. This only works when the panel is attached to a screen edge."
-msgstr "如果您像要讓最大化視窗蓋住面板後的區域，請選取此選項。這只對於附在螢幕邊緣的面板有效。"
-
-#: ../panel/panel-preferences-dialog.glade.h:32
-msgid "Select this option to automatically increase the length of the panel if the plugins request more space."
-msgstr "選取此選項以在插件需要更多空間時自動增長面板。"
-
-#: ../panel/panel-preferences-dialog.glade.h:33
-msgid "Select this option to extend the panel over multiple monitors."
-msgstr "選取此選項以將面板擴展至多個螢幕。"
-
-#: ../panel/panel-preferences-dialog.glade.h:34
-msgid "Select this option to hide the handles of the panel and lock its position."
-msgstr "選取此選項以隱藏面板的控制把並且鎖住其位置。"
-
-#: ../panel/panel-preferences-dialog.glade.h:35
-msgid "Select this option to hide the panel when the pointer is not above it. This only works when the panel is attached to a screen edge."
-msgstr "選取此選項以在指標不在面板上時隱藏面板。這只對於附在螢幕邊緣的面板有效。"
-
-#: ../panel/panel-preferences-dialog.glade.h:36
-msgid "Show about information of the currently selected item"
-msgstr "顯示關於目前所選項目的資訊"
-
-#: ../panel/panel-preferences-dialog.glade.h:37
-msgid "Solid color"
-msgstr "填滿色彩"
-
-#: ../panel/panel-preferences-dialog.glade.h:38
-msgid "Span mo_nitors"
-msgstr "跨越螢幕(_N)"
-
-#: ../panel/panel-preferences-dialog.glade.h:39
-msgid "Transparency when the pointer is hovering over the panel, with 0 being fully transparent and 100 fully opaque."
-msgstr "當指標停在面板上時的透明度，0 代表完全透明，100 代表完全不透明。"
-
-#: ../panel/panel-preferences-dialog.glade.h:40
-msgid "Transparency when the pointer is not hovering over the panel, with 0 being fully transparent and 100 fully opaque."
-msgstr "當指標沒有停在面板上時的透明度，0 代表完全透明，100 代表完全不透明。"
-
-#: ../panel/panel-preferences-dialog.glade.h:41
-msgid "Vertical"
-msgstr "垂直"
-
-#: ../panel/panel-preferences-dialog.glade.h:42
-msgid "_Alpha:"
-msgstr "_Alpha："
-
-#. I18N: label for the enter transparency slider
-#: ../panel/panel-preferences-dialog.glade.h:44
-msgid "_Enter:"
-msgstr "進入(_E)："
-
-#: ../panel/panel-preferences-dialog.glade.h:45
-msgid "_File:"
-msgstr "檔案(_F)："
-
-#. I18N: label for the leave transparency slider
-#: ../panel/panel-preferences-dialog.glade.h:47
-msgid "_Leave:"
-msgstr "退出(_L)："
-
-#: ../panel/panel-preferences-dialog.glade.h:48
-msgid "_Lock panel"
-msgstr "鎖住面板(_L)"
-
-#: ../panel/panel-preferences-dialog.glade.h:49
-msgid "_Orientation:"
-msgstr "方向(_O)："
-
-#: ../panel/panel-preferences-dialog.glade.h:50
-msgid "_Size (pixels):"
-msgstr "大小 (像素)(_S)："
-
-#: ../panel/panel-preferences-dialog.glade.h:51
-#: ../plugins/separator/separator-dialog.glade.h:8
-msgid "_Style:"
-msgstr "樣式(_S)："
-
-#: ../panel/panel-tic-tac-toe.c:123
-msgid "_New Game"
-msgstr "新增遊戲(_N)"
-
-#: ../panel/panel-tic-tac-toe.c:134
-msgid "_Level:"
-msgstr "等級(_L)："
-
-#: ../panel/panel-tic-tac-toe.c:140
-msgid "Novice"
-msgstr "新手"
-
-#: ../panel/panel-tic-tac-toe.c:141
-msgid "Intermediate"
-msgstr "中等"
-
-#: ../panel/panel-tic-tac-toe.c:142
-msgid "Experienced"
-msgstr "老手"
-
-#: ../panel/panel-tic-tac-toe.c:143
-msgid "Expert"
-msgstr "專家"
-
-#: ../migrate/main.c:94
-msgid "Welcome to the first start of the panel"
-msgstr "歡迎初次使用本面板"
-
-#: ../migrate/main.c:96
-msgid "Because the panel moved to a new system for storing the settings, it has to load a fresh initial configuration."
-msgstr "由於該面板移動至新系統，若要儲存設定值它必須載入全新的初始組態。"
-
-#: ../migrate/main.c:99
-msgid "Choose below which setup you want for the first startup."
-msgstr "從下方選擇您想要最先啟動的設置。"
-
-#: ../migrate/main.c:105
-msgid "Migrate old config"
-msgstr "轉移舊組態"
-
-#: ../migrate/main.c:106
-msgid "Migrate the old 4.6 configuration to Xfconf"
-msgstr "轉移舊式 4.6 組態至 Xfconf"
-
-#: ../migrate/main.c:111
-msgid "Use default config"
-msgstr "使用預設組態"
-
-#: ../migrate/main.c:112
-msgid "Load the default configuration"
-msgstr "載入預設組態"
-
-#: ../migrate/main.c:117
-msgid "One empty panel"
-msgstr "一個空面板"
-
-#: ../migrate/main.c:118
-msgid "Start with one empty panel"
-msgstr "以空面板作為開始"
-
-#: ../migrate/main.c:131
-msgid "Failed to migrate the old panel configuration"
-msgstr "未能轉移舊式面板組態"
-
-#: ../migrate/main.c:144
-msgid "Failed to load the default configuration"
-msgstr "未能載入預設組態"
-
-#: ../plugins/actions/actions-dialog.glade.h:1
-#: ../plugins/actions/actions.desktop.in.h:1
-msgid "Action Buttons"
-msgstr "動作按鈕"
-
-#: ../plugins/actions/actions-dialog.glade.h:2
-msgid "Button Actions"
-msgstr "按鈕動作"
-
-#: ../plugins/actions/actions-dialog.glade.h:3
-msgid "_First button:"
-msgstr "第一個按鈕(_F)："
-
-#: ../plugins/actions/actions-dialog.glade.h:4
-msgid "_Second button:"
-msgstr "第二個按鈕(_S)："
-
-#: ../plugins/actions/actions.c:108
-msgid "Disabled"
-msgstr "停用"
-
-#: ../plugins/actions/actions.c:109
-msgid "Log Out Dialog"
-msgstr "登出對話窗"
-
-#: ../plugins/actions/actions.c:110
-msgid "Log Out"
-msgstr "登出"
-
-#: ../plugins/actions/actions.c:111
-msgid "Lock Screen"
-msgstr "鎖住螢幕"
-
-#: ../plugins/actions/actions.c:112
-msgid "Shut Down"
-msgstr "關機"
-
-#: ../plugins/actions/actions.c:113
-msgid "Restart"
-msgstr "重新啟動"
-
-#: ../plugins/actions/actions.c:114
-msgid "Suspend"
-msgstr "暫停"
-
-#: ../plugins/actions/actions.c:115
-msgid "Hibernate"
-msgstr "休眠"
-
-#: ../plugins/actions/actions.desktop.in.h:2
-msgid "Log out, lock or other system actions"
-msgstr "登出、鎖住螢幕或是其它系統動作"
-
-#: ../plugins/applicationsmenu/applicationsmenu-dialog.glade.h:1
-#: ../plugins/clock/clock-dialog.glade.h:3
-#: ../plugins/directorymenu/directorymenu-dialog.glade.h:1
-#: ../plugins/pager/pager-dialog.glade.h:1
-#: ../plugins/separator/separator-dialog.glade.h:1
-#: ../plugins/systray/systray-dialog.glade.h:1
-#: ../plugins/tasklist/tasklist-dialog.glade.h:2
-#: ../plugins/windowmenu/windowmenu-dialog.glade.h:1
-msgid "Appearance"
-msgstr "外觀"
-
-#. I18N: default tooltip of the application menu
-#: ../plugins/applicationsmenu/applicationsmenu-dialog.glade.h:2
-#: ../plugins/applicationsmenu/applicationsmenu.c:38
-#: ../plugins/applicationsmenu/applicationsmenu.desktop.in.h:1
-msgid "Applications Menu"
-msgstr "應用程式選單"
-
-#: ../plugins/applicationsmenu/applicationsmenu-dialog.glade.h:3
-msgid "Button _title:"
-msgstr "按鈕標題(_T)："
-
-#: ../plugins/applicationsmenu/applicationsmenu-dialog.glade.h:4
-msgid "Ed_it Menu"
-msgstr "編輯選單(_I)"
-
-#: ../plugins/applicationsmenu/applicationsmenu-dialog.glade.h:5
-msgid "Menu File"
-msgstr "選單檔案"
-
-#: ../plugins/applicationsmenu/applicationsmenu-dialog.glade.h:6
-msgid "Menu _file:"
-msgstr "選單檔案(_F)："
-
-#: ../plugins/applicationsmenu/applicationsmenu-dialog.glade.h:7
-msgid "Select A Menu File"
-msgstr "選取選單檔案"
-
-#: ../plugins/applicationsmenu/applicationsmenu-dialog.glade.h:8
-msgid "Select this option to show the generic application name in the menu, for example \"File Manager\" instead of \"Thunar\""
-msgstr "選取此選項以在選單內顯示通用應用程式名稱，舉例：「檔案管理員」而不是「Thunar」"
-
-#: ../plugins/applicationsmenu/applicationsmenu-dialog.glade.h:9
-msgid "Show application d_escription in tooltip"
-msgstr "於提示框顯示應用程式描述(_E)"
-
-#: ../plugins/applicationsmenu/applicationsmenu-dialog.glade.h:10
-msgid "Show generic application n_ames"
-msgstr "顯示通用應用程式名稱(_N)"
-
-#: ../plugins/applicationsmenu/applicationsmenu-dialog.glade.h:11
-msgid "Show ic_ons in menu"
-msgstr "於選單內顯示圖示(_O)"
-
-#: ../plugins/applicationsmenu/applicationsmenu-dialog.glade.h:12
-msgid "Use c_ustom menu file:"
-msgstr "使用自訂選單檔案(_U)："
-
-#: ../plugins/applicationsmenu/applicationsmenu-dialog.glade.h:13
-msgid "Use the _default menu"
-msgstr "使用預設選單(_D)"
-
-#: ../plugins/applicationsmenu/applicationsmenu-dialog.glade.h:14
-#: ../plugins/directorymenu/directorymenu-dialog.glade.h:9
-msgid "_Icon:"
-msgstr "圖示(_I)："
-
-#: ../plugins/applicationsmenu/applicationsmenu-dialog.glade.h:15
-msgid "_Show button title"
-msgstr "顯示按鈕標題(_S)"
-
-#: ../plugins/applicationsmenu/applicationsmenu.c:485
-#: ../plugins/directorymenu/directorymenu.c:369
-msgid "Select An Icon"
-msgstr "選取圖示"
-
-#: ../plugins/applicationsmenu/applicationsmenu.c:524
-#: ../plugins/applicationsmenu/applicationsmenu.c:765
-#: ../plugins/launcher/launcher.c:2295
-#, c-format
-msgid "Failed to execute command \"%s\"."
-msgstr "未能執行「%s」。"
-
-#: ../plugins/applicationsmenu/applicationsmenu.c:1021
-msgid "No applications found"
-msgstr "找不到應用程式"
-
-#: ../plugins/applicationsmenu/applicationsmenu.c:1044
-msgid "Failed to load the applications menu"
-msgstr "未能載入應用程式選單"
-
-#: ../plugins/applicationsmenu/applicationsmenu.desktop.in.h:2
-msgid "Show a menu containing categories of installed applications"
-msgstr "顯示包含已安裝應用程式分類的選單"
-
-#: ../plugins/applicationsmenu/xfce4-popup-applicationsmenu.sh:27
-#: ../plugins/directorymenu/xfce4-popup-directorymenu.sh:27
-#: ../plugins/windowmenu/xfce4-popup-windowmenu.sh:27
-msgid "Usage:"
-msgstr "用法："
-
-#: ../plugins/applicationsmenu/xfce4-popup-applicationsmenu.sh:28
-#: ../plugins/directorymenu/xfce4-popup-directorymenu.sh:28
-#: ../plugins/windowmenu/xfce4-popup-windowmenu.sh:28
-msgid "OPTION"
-msgstr "選項"
-
-#: ../plugins/applicationsmenu/xfce4-popup-applicationsmenu.sh:30
-#: ../plugins/directorymenu/xfce4-popup-directorymenu.sh:30
-#: ../plugins/windowmenu/xfce4-popup-windowmenu.sh:30
-msgid "Options:"
-msgstr "選項："
-
-#: ../plugins/applicationsmenu/xfce4-popup-applicationsmenu.sh:31
-#: ../plugins/directorymenu/xfce4-popup-directorymenu.sh:31
-#: ../plugins/windowmenu/xfce4-popup-windowmenu.sh:31
-msgid "Popup menu at current mouse position"
-msgstr "於目前滑鼠位置彈出選單"
-
-#: ../plugins/applicationsmenu/xfce4-popup-applicationsmenu.sh:32
-#: ../plugins/directorymenu/xfce4-popup-directorymenu.sh:32
-#: ../plugins/windowmenu/xfce4-popup-windowmenu.sh:32
-msgid "Show help options"
-msgstr "顯示幫助選項"
-
-#: ../plugins/clock/clock.c:146
-msgid "Week %V"
-msgstr "第 %V 週"
-
-#: ../plugins/clock/clock.c:407
-msgid "Failed to execute clock command"
-msgstr "未能執行時鐘指令"
-
-#: ../plugins/clock/clock.c:719
-msgid "Custom Format"
-msgstr "自訂格式"
-
-#: ../plugins/clock/clock-dialog.glade.h:1
-msgid "24-_hour clock"
-msgstr "24小時制時鐘(_H)"
-
-#: ../plugins/clock/clock-dialog.glade.h:2
-msgid "Analog"
-msgstr "指針式"
-
-#: ../plugins/clock/clock-dialog.glade.h:4
-msgid "Binary"
-msgstr "二進位"
-
-#  set names to use in option menus
-#: ../plugins/clock/clock-dialog.glade.h:5
-#: ../plugins/clock/clock.desktop.in.h:1
-msgid "Clock"
-msgstr "時鐘"
-
-#: ../plugins/clock/clock-dialog.glade.h:6
-msgid "Clock Options"
-msgstr "時鐘選項"
-
-#: ../plugins/clock/clock-dialog.glade.h:7
-msgid "Digital"
-msgstr "數位式"
-
-#: ../plugins/clock/clock-dialog.glade.h:8
-msgid "Display _seconds"
-msgstr "顯示秒(_S)"
-
-#: ../plugins/clock/clock-dialog.glade.h:9
-msgid "F_ormat:"
-msgstr "格式(_O)："
-
-#. I18N: the fuzziness the *precision* of the fuzzy clock. Time steps of 5, 15 or parts of the day.
-#: ../plugins/clock/clock-dialog.glade.h:11
-msgid "F_uzziness:"
-msgstr "模糊度(_U)："
-
-#: ../plugins/clock/clock-dialog.glade.h:12
-msgid "Fl_ash time separators"
-msgstr "讓時間分隔符閃爍(_F)"
-
-#: ../plugins/clock/clock-dialog.glade.h:13
-msgid "Fuzzy"
-msgstr "模糊"
-
-#: ../plugins/clock/clock-dialog.glade.h:14
-msgid "LCD"
-msgstr "LCD"
-
-#: ../plugins/clock/clock-dialog.glade.h:15
-msgid "Sho_w AM/PM"
-msgstr "顯示 AM/PM(_W)"
-
-#: ../plugins/clock/clock-dialog.glade.h:16
-#: ../plugins/systray/systray-dialog.glade.h:5
-msgid "Show _frame"
-msgstr "顯示框架(_F)"
-
-#: ../plugins/clock/clock-dialog.glade.h:17
-msgid "Show _inactive dots"
-msgstr "顯示非作用中的點(_I)"
-
-#: ../plugins/clock/clock-dialog.glade.h:18
-msgid "Show gri_d"
-msgstr "顯示格欄(_F)"
-
-#: ../plugins/clock/clock-dialog.glade.h:20
-#, no-c-format
-msgid "The format describes the date and time parts to insert into the file name. For example, %Y will be substituted with the year, %m with the month and %d with the day. See the documentation of the date utility for additional information."
-msgstr "要插入檔案名稱內用來描述日期與時間的格式。舉例來說，%Y 會被年份替換，%m 會被月份替換，而 %d 則是日期。請查看日期公用程式的文件以瞭解額外資訊。"
-
-#: ../plugins/clock/clock-dialog.glade.h:21
-msgid "True _binary clock"
-msgstr "真實二進位時鐘(_B)"
-
-#: ../plugins/clock/clock-dialog.glade.h:22
-msgid "_Layout:"
-msgstr "配置(_L)："
-
-#: ../plugins/clock/clock-dialog.glade.h:23
-msgid "_Tooltip format:"
-msgstr "提示框格式(_T)："
-
-#: ../plugins/clock/clock-fuzzy.c:86
-msgid "Night"
-msgstr "深夜"
-
-#: ../plugins/clock/clock-fuzzy.c:87
-msgid "Early morning"
-msgstr "清晨"
-
-#: ../plugins/clock/clock-fuzzy.c:88
-msgid "Morning"
-msgstr "早上"
-
-#: ../plugins/clock/clock-fuzzy.c:89
-msgid "Almost noon"
-msgstr "傍午"
-
-#: ../plugins/clock/clock-fuzzy.c:90
-msgid "Noon"
-msgstr "中午"
-
-#: ../plugins/clock/clock-fuzzy.c:91
-msgid "Afternoon"
-msgstr "午後"
-
-#: ../plugins/clock/clock-fuzzy.c:92
-msgid "Evening"
-msgstr "傍晚"
-
-#: ../plugins/clock/clock-fuzzy.c:93
-msgid "Late evening"
-msgstr "晚上"
-
-#. I18N: %0 will be replaced with the preceding hour, %1 with
-#. * the comming hour
-#: ../plugins/clock/clock-fuzzy.c:100
-#, no-c-format
-msgid "%0 o'clock"
-msgstr "%0點鐘"
-
-#: ../plugins/clock/clock-fuzzy.c:101
-#, no-c-format
-msgid "five past %0"
-msgstr "%0點過五分"
-
-#: ../plugins/clock/clock-fuzzy.c:102
-#, no-c-format
-msgid "ten past %0"
-msgstr "%0點過十分"
-
-#: ../plugins/clock/clock-fuzzy.c:103
-#, no-c-format
-msgid "quarter past %0"
-msgstr "%0點過十五分"
-
-#: ../plugins/clock/clock-fuzzy.c:104
-#, no-c-format
-msgid "twenty past %0"
-msgstr "%0點過二十分"
-
-#: ../plugins/clock/clock-fuzzy.c:105
-#, no-c-format
-msgid "twenty five past %0"
-msgstr "%0點過二十五分"
-
-#: ../plugins/clock/clock-fuzzy.c:106
-#, no-c-format
-msgid "half past %0"
-msgstr "%0點半"
-
-#: ../plugins/clock/clock-fuzzy.c:107
-#, no-c-format
-msgid "twenty five to %1"
-msgstr "二十五分後%1點"
-
-#: ../plugins/clock/clock-fuzzy.c:108
-#, no-c-format
-msgid "twenty to %1"
-msgstr "二十分後%1點"
-
-#: ../plugins/clock/clock-fuzzy.c:109
-#, no-c-format
-msgid "quarter to %1"
-msgstr "十五分後%1點"
-
-#: ../plugins/clock/clock-fuzzy.c:110
-#, no-c-format
-msgid "ten to %1"
-msgstr "十分後%1點"
-
-#: ../plugins/clock/clock-fuzzy.c:111
-#, no-c-format
-msgid "five to %1"
-msgstr "五分後%1點"
-
-#: ../plugins/clock/clock-fuzzy.c:112
-#, no-c-format
-msgid "%1 o'clock"
-msgstr "%1點鐘"
-
-#. I18N: some languages have a singular form for the first hour,
-#. * other languages should just use the same strings as above
-#: ../plugins/clock/clock-fuzzy.c:119
-#, no-c-format
-msgctxt "one"
-msgid "%0 o'clock"
-msgstr "%0點鐘"
-
-#: ../plugins/clock/clock-fuzzy.c:120
-#, no-c-format
-msgctxt "one"
-msgid "five past %0"
-msgstr "%0點過五分"
-
-#: ../plugins/clock/clock-fuzzy.c:121
-#, no-c-format
-msgctxt "one"
-msgid "ten past %0"
-msgstr "%0點過十分"
-
-#: ../plugins/clock/clock-fuzzy.c:122
-#, no-c-format
-msgctxt "one"
-msgid "quarter past %0"
-msgstr "%0點過十五分"
-
-#: ../plugins/clock/clock-fuzzy.c:123
-#, no-c-format
-msgctxt "one"
-msgid "twenty past %0"
-msgstr "%0點過二十分"
-
-#: ../plugins/clock/clock-fuzzy.c:124
-#, no-c-format
-msgctxt "one"
-msgid "twenty five past %0"
-msgstr "%0點過二十五分"
-
-#: ../plugins/clock/clock-fuzzy.c:125
-#, no-c-format
-msgctxt "one"
-msgid "half past %0"
-msgstr "%0點半"
-
-#: ../plugins/clock/clock-fuzzy.c:126
-#, no-c-format
-msgctxt "one"
-msgid "twenty five to %1"
-msgstr "二十五分後%1點"
-
-#: ../plugins/clock/clock-fuzzy.c:127
-#, no-c-format
-msgctxt "one"
-msgid "twenty to %1"
-msgstr "二十分後%1點"
-
-#: ../plugins/clock/clock-fuzzy.c:128
-#, no-c-format
-msgctxt "one"
-msgid "quarter to %1"
-msgstr "十五分後%1點"
-
-#: ../plugins/clock/clock-fuzzy.c:129
-#, no-c-format
-msgctxt "one"
-msgid "ten to %1"
-msgstr "十分後%1點"
-
-#: ../plugins/clock/clock-fuzzy.c:130
-#, no-c-format
-msgctxt "one"
-msgid "five to %1"
-msgstr "五分後%1點"
-
-#: ../plugins/clock/clock-fuzzy.c:131
-#, no-c-format
-msgctxt "one"
-msgid "%1 o'clock"
-msgstr "%1點鐘"
-
-#: ../plugins/clock/clock-fuzzy.c:136
-msgid "one"
-msgstr "一"
-
-#: ../plugins/clock/clock-fuzzy.c:137
-msgid "two"
-msgstr "二"
-
-#: ../plugins/clock/clock-fuzzy.c:138
-msgid "three"
-msgstr "三"
-
-#: ../plugins/clock/clock-fuzzy.c:139
-msgid "four"
-msgstr "四"
-
-#: ../plugins/clock/clock-fuzzy.c:140
-msgid "five"
-msgstr "五"
-
-#: ../plugins/clock/clock-fuzzy.c:141
-msgid "six"
-msgstr "六"
-
-#: ../plugins/clock/clock-fuzzy.c:142
-msgid "seven"
-msgstr "七"
-
-#: ../plugins/clock/clock-fuzzy.c:143
-msgid "eight"
-msgstr "八"
-
-#: ../plugins/clock/clock-fuzzy.c:144
-msgid "nine"
-msgstr "九"
-
-#: ../plugins/clock/clock-fuzzy.c:145
-msgid "ten"
-msgstr "十"
-
-#: ../plugins/clock/clock-fuzzy.c:146
-msgid "eleven"
-msgstr "十一"
-
-#: ../plugins/clock/clock-fuzzy.c:147
-msgid "twelve"
-msgstr "十二"
-
-#: ../plugins/clock/clock.desktop.in.h:2
-msgid "What time is it?"
-msgstr "現在幾點？"
-
-#: ../plugins/directorymenu/directorymenu.c:243
-#: ../plugins/directorymenu/directorymenu.desktop.in.h:1
-#: ../plugins/directorymenu/directorymenu-dialog.glade.h:2
-msgid "Directory Menu"
-msgstr "目錄選單"
-
-#: ../plugins/directorymenu/directorymenu.c:550
-#, c-format
-msgid "Failed to launch application \"%s\""
-msgstr "無法啟動應用程式「%s」"
-
-#: ../plugins/directorymenu/directorymenu.c:581
-#, c-format
-msgid "Failed to query content type for \"%s\""
-msgstr "無法查詢「%s」的內容類型"
-
-#: ../plugins/directorymenu/directorymenu.c:590
-#, c-format
-msgid "No default application found for \"%s\""
-msgstr "找不到「%s」的預設應用程式"
-
-#: ../plugins/directorymenu/directorymenu.c:605
-#, c-format
-msgid "Failed to launch default application for \"%s\""
-msgstr "無法為「%s」啟動預設應用程式"
-
-#: ../plugins/directorymenu/directorymenu.c:697
-#, c-format
-msgid "Failed to execute the preferred application for category \"%s\""
-msgstr "未能執行分類「%s」的偏好應用程式"
-
-#: ../plugins/directorymenu/directorymenu.c:770
-msgid "Open Folder"
-msgstr "開啟資料夾"
-
-#: ../plugins/directorymenu/directorymenu.c:781
-msgid "Open in Terminal"
-msgstr "在終端機內開啟"
-
-#: ../plugins/directorymenu/directorymenu.desktop.in.h:2
-msgid "Show a directory tree in a menu"
-msgstr "在選單內顯示目錄樹"
-
-#: ../plugins/directorymenu/directorymenu-dialog.glade.h:3
-msgid "Enter a list of patterns that will be used to determine which files are visible in a directory. If you specify more than one pattern here, the list items must be separated with semicolons (e.g. *.txt;*.doc)."
-msgstr "輸入用來決定目錄內哪些檔案可見的樣式清單。若您在此處指定超過一種樣式，那些清單項目一定要以半形分號隔開 (例：*.txt;*.doc)。"
-
-#: ../plugins/directorymenu/directorymenu-dialog.glade.h:4
-#: ../plugins/tasklist/tasklist-dialog.glade.h:5
-#: ../plugins/windowmenu/windowmenu-dialog.glade.h:5
-msgid "Filtering"
-msgstr "過濾方式"
-
-#: ../plugins/directorymenu/directorymenu-dialog.glade.h:5
-msgid "Select A Directory"
-msgstr "選取目錄"
-
-#: ../plugins/directorymenu/directorymenu-dialog.glade.h:6
-msgid "Show _hidden files"
-msgstr "顯示隱藏檔(_F)"
-
-#: ../plugins/directorymenu/directorymenu-dialog.glade.h:7
-msgid "_Base Directory:"
-msgstr "基礎目錄(_B)："
-
-#: ../plugins/directorymenu/directorymenu-dialog.glade.h:8
-msgid "_File Pattern:"
-msgstr "檔案樣式(_F)："
-
-#: ../plugins/launcher/launcher.c:406
-msgid "Open launcher menu"
-msgstr "開啟啟動器選單"
-
-#: ../plugins/launcher/launcher.c:1574
-msgid "Unnamed Item"
-msgstr "未命名項目"
-
-#: ../plugins/launcher/launcher.c:1715
-msgid "No items"
-msgstr "無項目"
-
-#: ../plugins/launcher/launcher-dialog.c:744
-msgid "If you delete an item, it will be permanently removed"
-msgstr "若您刪除項目，它將被永遠移除"
-
-#: ../plugins/launcher/launcher-dialog.c:745
-#, c-format
-msgid "Are you sure you want to remove \"%s\"?"
-msgstr "您確定要移除「%s」嗎？"
-
-#: ../plugins/launcher/launcher-dialog.c:746
-msgid "Unnamed item"
-msgstr "未命名項目"
-
-#: ../plugins/launcher/launcher-dialog.c:791
-msgid "Failed to open desktop item editor"
-msgstr "未能開啟桌面項目編輯器"
-
-#: ../plugins/launcher/launcher-dialog.glade.h:2
-msgid "Add a new empty item"
-msgstr "加入新的空項目"
-
-#: ../plugins/launcher/launcher-dialog.glade.h:3
-msgid "Add one or more existing items to the launcher"
-msgstr "加入一個或多個現存的項目至啟動器"
-
-#: ../plugins/launcher/launcher-dialog.glade.h:4
-msgid "Advanced"
-msgstr "進階"
-
-#: ../plugins/launcher/launcher-dialog.glade.h:5
-msgid "Default"
-msgstr "預設"
-
-#: ../plugins/launcher/launcher-dialog.glade.h:6
-msgid "Delete the currently selected item"
-msgstr "刪除目前所選的項目"
-
-#: ../plugins/launcher/launcher-dialog.glade.h:7
-msgid "Disable t_ooltips"
-msgstr "停用提示框(_O)"
-
-#: ../plugins/launcher/launcher-dialog.glade.h:8
-msgid "East"
-msgstr "東方"
-
-#: ../plugins/launcher/launcher-dialog.glade.h:11
-msgid "Inside Button"
-msgstr "按鈕內"
-
-#: ../plugins/launcher/launcher-dialog.glade.h:12
-#: ../plugins/launcher/launcher.desktop.in.h:1
-msgid "Launcher"
-msgstr "啟動器"
-
-#: ../plugins/launcher/launcher-dialog.glade.h:15
-msgid "North"
-msgstr "北方"
-
-#: ../plugins/launcher/launcher-dialog.glade.h:16
-msgid "Select this option to disable the tooltips when moving over the panel button or menu items."
-msgstr "選取此選項以停用移動至面板按鈕上方或選單項目上方所顯示的提示框"
-
-#: ../plugins/launcher/launcher-dialog.glade.h:17
-msgid "Select this option to move the clicked menu item to the panel."
-msgstr "選取此項目將點擊的選單項目移至面板。"
-
-#: ../plugins/launcher/launcher-dialog.glade.h:18
-msgid "Show _label instead of icon"
-msgstr "顯示標籤而不是圖示(_L)"
-
-#: ../plugins/launcher/launcher-dialog.glade.h:19
-msgid "Show last _used item in panel"
-msgstr "在面板內顯示最近使用的項目(_U)"
-
-#: ../plugins/launcher/launcher-dialog.glade.h:20
-msgid "South"
-msgstr "南方"
-
-#: ../plugins/launcher/launcher-dialog.glade.h:21
-msgid "West"
-msgstr "西方"
-
-#: ../plugins/launcher/launcher-dialog.glade.h:22
-msgid "_Arrow button position:"
-msgstr "箭號按鈕位置(_A)："
-
-#: ../plugins/launcher/launcher.desktop.in.h:2
-msgid "Program launcher with optional menu"
-msgstr "程式啟動器，可附加選單"
-
-#: ../plugins/pager/pager.c:353
-#: ../plugins/pager/pager-dialog.glade.h:8
-msgid "Workspace _Settings..."
-msgstr "工作區設定值(_S)..."
-
-#: ../plugins/pager/pager.c:429
-msgid "Unable to open the workspace settings"
-msgstr "無法開啟工作區設定值"
-
-#: ../plugins/pager/pager-buttons.c:561
-#: ../plugins/windowmenu/windowmenu.c:854
-#, c-format
-msgid "Workspace %d"
-msgstr "工作區 %d"
-
-#: ../plugins/pager/pager-dialog.glade.h:2
-#: ../plugins/tasklist/tasklist-dialog.glade.h:3
-msgid "Behaviour"
-msgstr "行為"
-
-#: ../plugins/pager/pager-dialog.glade.h:3
-msgid "Number of _rows:"
-msgstr "列數(_R)："
-
-#: ../plugins/pager/pager-dialog.glade.h:4
-msgid "Show a miniature view of the workspace with rectangles for the visible windows"
-msgstr "顯示工作區的微型檢視，以矩形代表可見視窗"
-
-#: ../plugins/pager/pager-dialog.glade.h:5
-msgid "Show mi_niature view"
-msgstr "顯示微型檢視(_N)"
-
-#: ../plugins/pager/pager-dialog.glade.h:6
-msgid "Switch workspaces using the mouse _wheel"
-msgstr "用滑鼠滾輪切換工作區(_W)"
-
-#: ../plugins/pager/pager-dialog.glade.h:7
-#: ../plugins/pager/pager.desktop.in.h:2
-msgid "Workspace Switcher"
-msgstr "工作區切換器"
-
-#: ../plugins/pager/pager.desktop.in.h:1
-msgid "Switch between virtual desktops"
-msgstr "在虛擬桌面之間切換"
-
-#: ../plugins/separator/separator-dialog.glade.h:2
-msgid "Dots"
-msgstr "點"
-
-#: ../plugins/separator/separator-dialog.glade.h:3
-msgid "Handle"
-msgstr "控制把"
-
-#: ../plugins/separator/separator-dialog.glade.h:4
-msgid "New Line"
-msgstr "新列"
-
-#: ../plugins/separator/separator-dialog.glade.h:5
-#: ../plugins/separator/separator.desktop.in.h:2
-msgid "Separator"
-msgstr "分隔符"
-
-#: ../plugins/separator/separator-dialog.glade.h:6
-msgid "Transparent"
-msgstr "透明"
-
-#: ../plugins/separator/separator-dialog.glade.h:7
-msgid "_Expand"
-msgstr "延展(_E)"
-
-#: ../plugins/separator/separator.desktop.in.h:1
-msgid "Adds a separator or space between panel items"
-msgstr "在面板項目間加入分隔符或空格"
-
-#: ../plugins/showdesktop/showdesktop.c:199
-msgid "Restore the minimized windows"
-msgstr "還原最小化的視窗"
-
-#: ../plugins/showdesktop/showdesktop.c:201
-msgid "Minimize all open windows and show the desktop"
-msgstr "最小化所有開啟視窗並顯示桌面"
-
-#: ../plugins/showdesktop/showdesktop.c:204
-#: ../plugins/showdesktop/showdesktop.desktop.in.h:2
-msgid "Show Desktop"
-msgstr "顯示桌面"
-
-#: ../plugins/showdesktop/showdesktop.desktop.in.h:1
-msgid "Hide all windows and show the desktop"
-msgstr "隱藏所有視窗並顯示桌面"
-
-#: ../plugins/systray/systray.c:385
-msgid "Unable to start the notification area"
-msgstr "無法啟動通知區域"
-
-#. create fake error and show it
-#: ../plugins/systray/systray.c:855
-msgid "Most likely another widget took over the function of a notification area. This area will be unused."
-msgstr "很有可能另一套工具組接管了通知區域的功能。此區域將無法使用。"
-
-#: ../plugins/systray/systray.c:857
-msgid "The notification area lost selection"
-msgstr "通知區域失去選取項目"
-
-#: ../plugins/systray/systray.c:1010
-msgid "Are you sure you want to clear the list of known applications?"
-msgstr "您確定要清除已知應用程式的清單嗎？"
-
-#: ../plugins/systray/systray-dialog.glade.h:2
-msgid "C_lear Known Applications"
-msgstr "清除已知應用程式(_L)"
-
-#: ../plugins/systray/systray-dialog.glade.h:3
-msgid "Known Applications"
-msgstr "已知應用程式"
-
-#: ../plugins/systray/systray-dialog.glade.h:4
-#: ../plugins/systray/systray.desktop.in.h:2
-msgid "Notification Area"
-msgstr "通知區域"
-
-#: ../plugins/systray/systray-dialog.glade.h:6
-msgid "_Maximum icon size (px):"
-msgstr "最大圖示大小 (px)(_M)："
-
-#: ../plugins/systray/systray-manager.c:404
-#, c-format
-msgid "Failed to acquire manager selection for screen %d"
-msgstr "未能獲取螢幕 %d 的管理程式選取"
-
-#: ../plugins/systray/systray.desktop.in.h:1
-msgid "Area where notification icons appear"
-msgstr "顯示通知圖示的區域"
-
-#: ../plugins/tasklist/tasklist-dialog.glade.h:1
+#: ../settings/main.c:96
+#: ../xfce4-session/main.c:231
+msgid "Unable to contact settings server"
+msgstr "無法聯絡設定值伺服器"
+
+#: ../settings/main.c:115
+msgid "Unable to create user interface from embedded definition data"
+msgstr "無法從內嵌定義資料建立使用者介面"
+
+#: ../settings/main.c:128
+msgid "_Application Autostart"
+msgstr "應用程式自動啟動(_A)"
+
+#: ../settings/session-editor.c:61
+msgid "If running"
+msgstr "如果正在執行中"
+
+#: ../settings/session-editor.c:62
 msgid "Always"
 msgstr "總是"
 
-#: ../plugins/tasklist/tasklist-dialog.glade.h:4
-msgid "D_raw window frame when hovering a button"
-msgstr "當滑鼠停在按鈕上時繪製視窗框架(_D)"
+#: ../settings/session-editor.c:63
+msgid "Immediately"
+msgstr "立刻"
 
-#: ../plugins/tasklist/tasklist-dialog.glade.h:6
-msgid "Group title and timestamp"
-msgstr "群組標題與時間戳記"
-
-#: ../plugins/tasklist/tasklist-dialog.glade.h:7
-msgid "Group title and window title"
-msgstr "群組標題與視窗標題"
-
-#: ../plugins/tasklist/tasklist-dialog.glade.h:8
+#: ../settings/session-editor.c:64
 msgid "Never"
 msgstr "永不"
 
-#: ../plugins/tasklist/tasklist-dialog.glade.h:9
-msgid "None, allow drag-and-drop"
-msgstr "無，允許拖放"
+#: ../settings/session-editor.c:129
+msgid "Session Save Error"
+msgstr "工作階段儲存錯誤"
 
-#: ../plugins/tasklist/tasklist-dialog.glade.h:10
-msgid "Restore minimized windows to current _workspace"
-msgstr "還原最小化視窗至目前工作區(_W)"
+#: ../settings/session-editor.c:130
+msgid "Unable to save the session"
+msgstr "無法儲存工作階段"
 
-#: ../plugins/tasklist/tasklist-dialog.glade.h:11
-msgid "Ro_tate buttons in vertical panel"
-msgstr "旋轉垂直面板上的按鈕(_T)"
+#: ../settings/session-editor.c:170
+msgid "Clear sessions"
+msgstr "清除工作階段"
 
-#: ../plugins/tasklist/tasklist-dialog.glade.h:12
-msgid "Show _flat buttons"
-msgstr "顯示扁平按鈕(_F)"
+#: ../settings/session-editor.c:171
+msgid "Are you sure you want to empty the session cache?"
+msgstr "您確定要清空工作階段快取？"
 
-#: ../plugins/tasklist/tasklist-dialog.glade.h:13
-msgid "Show _handle"
-msgstr "顯示控制把(_F)"
+#: ../settings/session-editor.c:172
+msgid "The saved states of your applications will not be restored during your next login."
+msgstr "您應用程式儲存的狀態在下次您登入時不會被復原。"
 
-#: ../plugins/tasklist/tasklist-dialog.glade.h:14
-msgid "Show button _labels"
-msgstr "顯示按鈕標籤(_L)"
+#: ../settings/session-editor.c:174
+msgid "_Proceed"
+msgstr "處理(_P)"
 
-#: ../plugins/tasklist/tasklist-dialog.glade.h:15
-msgid "Show only _minimized windows"
-msgstr "只顯示最小化的視窗(_M)"
+#: ../settings/session-editor.c:212
+msgid "You might need to delete some files manually in "
+msgstr "您可能需要手動刪除一些檔案於"
 
-#: ../plugins/tasklist/tasklist-dialog.glade.h:16
-msgid "Show windows from _all workspaces or viewports"
-msgstr "顯示所有工作區或 viewport 內的視窗(_A)"
+#: ../settings/session-editor.c:216
+msgid "All Xfce cache files could not be cleared"
+msgstr "所有的 Xfce 快取檔無法被清除"
 
-#: ../plugins/tasklist/tasklist-dialog.glade.h:17
-msgid "Show windows from all mo_nitors"
-msgstr "顯示所有螢幕的視窗(_N)"
-
-#: ../plugins/tasklist/tasklist-dialog.glade.h:18
-msgid "Sorting _order:"
-msgstr "排序(_O)："
-
-#: ../plugins/tasklist/tasklist-dialog.glade.h:19
-msgid "Timestamp"
-msgstr "時間戳記"
-
-#: ../plugins/tasklist/tasklist-dialog.glade.h:20
-msgid "When space is limited"
-msgstr "當空間受到限制時"
-
-#: ../plugins/tasklist/tasklist-dialog.glade.h:21
-#: ../plugins/tasklist/tasklist.desktop.in.h:2
-msgid "Window Buttons"
-msgstr "視窗按鈕"
-
-#: ../plugins/tasklist/tasklist-dialog.glade.h:22
-msgid "Window _grouping:"
-msgstr "視窗群組(_G)："
-
-#: ../plugins/tasklist/tasklist-dialog.glade.h:23
-msgid "Window title"
-msgstr "視窗標題"
-
-#: ../plugins/tasklist/tasklist-dialog.glade.h:24
-msgid "_Switch windows using the mouse wheel"
-msgstr "用滑鼠滾輪切換視窗(_S)"
-
-#: ../plugins/tasklist/tasklist-widget.c:3199
-msgid "Mi_nimize All"
-msgstr "最小化全部(_N)"
-
-#: ../plugins/tasklist/tasklist-widget.c:3208
-msgid "Un_minimize All"
-msgstr "取消"
-
-#: ../plugins/tasklist/tasklist-widget.c:3214
-msgid "Ma_ximize All"
-msgstr "最大化全部(_X)"
-
-#: ../plugins/tasklist/tasklist-widget.c:3223
-msgid "_Unmaximize All"
-msgstr "取消最大化(_U)"
-
-#: ../plugins/tasklist/tasklist-widget.c:3233
-msgid "_Close All"
-msgstr "關閉全部(_C)"
-
-#: ../plugins/tasklist/tasklist.desktop.in.h:1
-msgid "Switch between open windows using buttons"
-msgstr "使用按鈕在開啟視窗間切換"
-
-#: ../plugins/windowmenu/windowmenu.c:652
-msgid "Desktop"
-msgstr "桌面"
-
-#: ../plugins/windowmenu/windowmenu.c:1243
-msgid "No Windows"
-msgstr "無視窗"
-
-#: ../plugins/windowmenu/windowmenu.c:1258
-msgid "Urgent Windows"
-msgstr "緊急視窗"
-
-#: ../plugins/windowmenu/windowmenu.c:1300
-msgid "Add Workspace"
-msgstr "新增工作區"
-
-#: ../plugins/windowmenu/windowmenu.c:1320
+#: ../settings/session-editor.c:250
 #, c-format
-msgid "Remove Workspace \"%s\""
-msgstr "移除工作區「%s」"
+msgid "Are you sure you want to terminate \"%s\"?"
+msgstr "您確定要終止「%s」？"
 
-#: ../plugins/windowmenu/windowmenu.c:1322
+#: ../settings/session-editor.c:253
+#: ../settings/session-editor.c:281
+msgid "Terminate Program"
+msgstr "終止程式"
+
+#: ../settings/session-editor.c:255
+msgid "The application will lose any unsaved state and will not be restarted in your next session."
+msgstr "應用程式將喪失任何尚未儲存的狀態，並且無法在您下次的工作階段復原。"
+
+#: ../settings/session-editor.c:257
+#: ../settings/xfce4-session-settings.glade.h:37
+msgid "_Quit Program"
+msgstr "退出程式(_Q)"
+
+#: ../settings/session-editor.c:282
+msgid "Unable to terminate program."
+msgstr "無法終止程式。"
+
+#: ../settings/session-editor.c:460
+msgid "(Unknown program)"
+msgstr "(不明程式)"
+
+#: ../settings/session-editor.c:680
+msgid "Priority"
+msgstr "優先權"
+
+#: ../settings/session-editor.c:688
+msgid "PID"
+msgstr "PID"
+
+#: ../settings/session-editor.c:694
+msgid "Program"
+msgstr "程式"
+
+#: ../settings/session-editor.c:719
+msgid "Restart Style"
+msgstr "重新啟動樣式"
+
+#: ../settings/splash-settings.c:291
+#: ../settings/splash-settings.c:294
+#: ../settings/splash-settings.c:297
+#: ../settings/splash-settings.c:300
+#: ../settings/splash-settings.c:357
+msgid "None"
+msgstr "無"
+
+#: ../settings/xfae-dialog.c:78
+msgid "Add application"
+msgstr "新增應用程式"
+
+#: ../settings/xfae-dialog.c:92
+msgid "Name:"
+msgstr "名稱："
+
+#: ../settings/xfae-dialog.c:109
+msgid "Description:"
+msgstr "敘述："
+
+#: ../settings/xfae-dialog.c:124
+msgid "Command:"
+msgstr "指令"
+
+#: ../settings/xfae-dialog.c:184
+msgid "Select a command"
+msgstr "選擇指令"
+
+#: ../settings/xfae-dialog.c:233
+msgid "Edit application"
+msgstr "編輯應用程式"
+
+#: ../settings/xfae-model.c:562
 #, c-format
-msgid "Remove Workspace %d"
-msgstr "移除工作區 %d"
+msgid "Failed to unlink %s: %s"
+msgstr "無法取消 %s 的連結：%s"
 
-#: ../plugins/windowmenu/windowmenu-dialog.glade.h:2
-msgid "Arrow"
-msgstr "箭號"
+#: ../settings/xfae-model.c:651
+#, c-format
+msgid "Failed to create file %s"
+msgstr "無法建立檔案 %s"
 
-#: ../plugins/windowmenu/windowmenu-dialog.glade.h:3
-msgid "Button layout:"
-msgstr "按鈕配置："
+#: ../settings/xfae-model.c:673
+#, c-format
+msgid "Failed to write file %s"
+msgstr "無法寫入檔案 %s"
 
-#: ../plugins/windowmenu/windowmenu-dialog.glade.h:4
-msgid "Enable _urgency notification"
-msgstr "啟用緊急通知(_U)"
+#: ../settings/xfae-model.c:732
+#, c-format
+msgid "Failed to open %s for reading"
+msgstr "無法開啟 %s 以讀取"
 
-#: ../plugins/windowmenu/windowmenu-dialog.glade.h:6
-msgid "Icon"
-msgstr "圖示"
+#: ../settings/xfae-model.c:841
+#: ../settings/xfae-model.c:898
+#, c-format
+msgid "Failed to open %s for writing"
+msgstr "無法開啟 %s 以寫入"
 
-#: ../plugins/windowmenu/windowmenu-dialog.glade.h:7
-msgid "Show windows from _all workspaces"
-msgstr "顯示所有工作區的視窗(_A)"
+#: ../settings/xfae-window.c:101
+msgid "Below is the list of applications that will be started automatically when you login to your Xfce desktop, in addition to the applications that were saved when you logged out last time:"
+msgstr "以下是當您登入 Xfce 桌面時會自動啟動的應用程式清單，此外還有您上次登出時儲存的應用程式："
 
-#: ../plugins/windowmenu/windowmenu-dialog.glade.h:8
-msgid "Show workspace _names"
-msgstr "顯示工作區名稱(_N)"
+#: ../settings/xfae-window.c:289
+#, c-format
+msgid "Failed adding \"%s\""
+msgstr "加入「%s」失敗"
 
-#: ../plugins/windowmenu/windowmenu-dialog.glade.h:9
-msgid "Show workspace a_ctions"
-msgstr "顯示工作區動作(_C)"
+#: ../settings/xfae-window.c:320
+#: ../settings/xfae-window.c:334
+msgid "Failed to remove item"
+msgstr "無法移除項目"
 
-#: ../plugins/windowmenu/windowmenu-dialog.glade.h:10
-#: ../plugins/windowmenu/windowmenu.desktop.in.h:2
-msgid "Window Menu"
-msgstr "視窗選單"
+#: ../settings/xfae-window.c:326
+msgid "This will permanently remove the application from the list of automatically started applications"
+msgstr "這會從自動啟動應用程式清單中永久性移除該應用程式"
 
-#: ../plugins/windowmenu/windowmenu.desktop.in.h:1
-msgid "Switch between open windows using a menu"
-msgstr "使用選單在開啟視窗間切換"
+#: ../settings/xfae-window.c:328
+#, c-format
+msgid "Are you sure you want to remove \"%s\""
+msgstr "您確定要移除「%s」？"
 
-#~ msgid "Failed to remove the desktop file from the config directory"
-#~ msgstr "未能從組態目錄移除桌面檔"
+#: ../settings/xfae-window.c:362
+msgid "Failed to edit item"
+msgstr "無法編輯項目"
 
-#~ msgid "_Number of rows:"
-#~ msgstr "列數(_N)："
+#: ../settings/xfae-window.c:382
+#, c-format
+msgid "Failed to edit item \"%s\""
+msgstr "無法編輯項目「%s」"
 
-#~ msgid "Create a new launcher on the Xfce Panel"
-#~ msgstr "在 Xfce 面板上建立新的啟動器"
+#: ../settings/xfae-window.c:410
+msgid "Failed to toggle item"
+msgstr "無法切換項目"
 
-#~ msgid "Panel Preferences"
-#~ msgstr "面板偏好設定"
+#: ../xfce4-session/main.c:76
+msgid "Disable binding to TCP ports"
+msgstr "停用 TCP 連接埠的綁定"
 
-#~ msgid "_Xfce Panel"
-#~ msgstr "Xfce 面板(_X)"
+#: ../xfce4-session/main.c:77
+#: ../xfce4-session-logout/main.c:93
+msgid "Print version information and exit"
+msgstr "印出版本資訊並離開"
 
-#~ msgid "Transparency"
-#~ msgstr "透明度"
+#: ../xfce4-session/main.c:140
+msgid "Loading desktop settings"
+msgstr "載入桌面設定值中"
 
-#~ msgid "Transparency when the pointer is not hovering the panel."
-#~ msgstr "當指標不在面板上時的透明度。"
+#: ../xfce4-session/main.c:220
+msgid "Written by Benedikt Meurer <benny@xfce.org>."
+msgstr "由  Benedikt Meurer 編寫 <benny@xfce.org>。"
 
-#~ msgid "Xfce Panel"
-#~ msgstr "Xfce 面板"
+#: ../xfce4-session/main.c:221
+#, c-format
+msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
+msgstr "以 Gtk+-%d.%d.%d 組建，正在以 Gtk+-%d.%d.%d 執行中"
 
-#~ msgid "Xfce Menu"
-#~ msgstr "Xfce 選單"
+#. verify that the DNS settings are ok
+#: ../xfce4-session/main.c:253
+msgid "Verifying DNS settings"
+msgstr "核實 DNS 設定中"
 
-#~ msgid "_Restart"
-#~ msgstr "重新啟動"
+#: ../xfce4-session/main.c:257
+msgid "Loading session data"
+msgstr "載入工作階段資料中"
 
-#~ msgid "Failed to open manual"
-#~ msgstr "無法執行\"%s\""
+#: ../xfce4-session/shutdown.c:372
+#, c-format
+msgid "<span size='large'><b>Log out %s</b></span>"
+msgstr "<span size='large'><b>登出 %s</b></span>"
 
-#~ msgid "C_ompositing"
-#~ msgstr "位置"
+#: ../xfce4-session/shutdown.c:422
+msgid "_Log Out"
+msgstr "登出(_L)"
 
-#~ msgid "Action Button"
-#~ msgstr "動作按鈕"
+#: ../xfce4-session/shutdown.c:457
+msgid "_Restart"
+msgstr "重新啟動(_R)"
+
+#: ../xfce4-session/shutdown.c:499
+msgid "Shut _Down"
+msgstr "關機(_D)"
+
+#: ../xfce4-session/shutdown.c:561
+msgid "Sus_pend"
+msgstr "暫停(_P)"
+
+#: ../xfce4-session/shutdown.c:608
+msgid "_Save session for future logins"
+msgstr "儲存工作階段以供往後使用(_S)"
+
+#: ../xfce4-session/shutdown.c:668
+msgid "Please enter your password:"
+msgstr "請輸入密碼："
+
+#: ../xfce4-session/shutdown.c:700
+msgid "<b>An error occurred</b>"
+msgstr "<b>An error occurred</b>"
+
+#: ../xfce4-session/shutdown.c:714
+msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
+msgstr "您的密碼可能輸入錯誤，或者系統管理員不允許使用您的帳戶關機。"
+
+#: ../xfce4-session/shutdown.c:833
+#: ../xfce4-session/xfsm-manager.c:1122
+msgid "Shutdown Failed"
+msgstr "關機失敗"
+
+#: ../xfce4-session/shutdown.c:835
+msgid "Unable to perform shutdown"
+msgstr "無法執行關機"
+
+#: ../xfce4-session/xfsm-chooser.c:90
+#, c-format
+msgid "Last accessed: %s"
+msgstr "最後存取：%s"
+
+# XXX 暫譯
+#: ../xfce4-session/xfsm-chooser.c:172
+msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
+msgstr "請選擇您要載入的工作階段。要載入一個工作階段，雙擊工作階段的名稱即可。"
+
+#. "Logout" button
+#: ../xfce4-session/xfsm-chooser.c:198
+msgid "Log out"
+msgstr "登出"
+
+#: ../xfce4-session/xfsm-chooser.c:200
+msgid "Cancel the login attempt and return to the login screen."
+msgstr "取消登入，並返回登入畫面。"
+
+#. "New" button
+#: ../xfce4-session/xfsm-chooser.c:207
+msgid "New session"
+msgstr "新增工作階段"
+
+#: ../xfce4-session/xfsm-chooser.c:208
+msgid "Create a new session."
+msgstr "建立一個新的工作階段。"
+
+#: ../xfce4-session/xfsm-client.c:506
+#: ../xfce4-session/xfsm-client.c:532
+#: ../xfce4-session/xfsm-client.c:571
+#, c-format
+msgid "The client doesn't have any properties set yet"
+msgstr "客戶端尚未設定任何屬性"
+
+#: ../xfce4-session/xfsm-compat-gnome.c:246
+msgid "Starting The Gnome Keyring Daemon"
+msgstr "啟動 Gnome 鑰匙圈幕後程式中"
+
+#: ../xfce4-session/xfsm-compat-kde.c:124
+msgid "Starting KDE services"
+msgstr "啟動 KDE 服務中"
+
+#: ../xfce4-session/xfsm-dns.c:78
+msgid "(Unknown)"
+msgstr "(不明)"
+
+#: ../xfce4-session/xfsm-dns.c:147
+#, c-format
+msgid ""
+"Could not look up internet address for %s.\n"
+"This will prevent Xfce from operating correctly.\n"
+"It may be possible to correct the problem by adding\n"
+"%s to the file /etc/hosts on your system."
+msgstr ""
+"無法取得 %s 的IP位址，\n"
+"Xfce 將因而無法正常運作。\n"
+"在 /etc/hosts 加入「%s」\n"
+"可能可以改正這個問題。"
+
+#: ../xfce4-session/xfsm-dns.c:154
+msgid "Continue anyway"
+msgstr "無論如何都要繼續"
+
+#: ../xfce4-session/xfsm-dns.c:155
+msgid "Try again"
+msgstr "重試"
+
+#: ../xfce4-session/xfsm-manager.c:604
+#, c-format
+msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
+msgstr "無法得知防失敗工作階段的名稱。可能原因：xfcond 並非執行中 (D-Bus 設置問題)；環境變數 $XDG_CONFIG_DIRS 的設定不正確 (一定要包含「%s」)，或是 xfce4-session 安裝不正確。"
+
+#: ../xfce4-session/xfsm-manager.c:615
+#, c-format
+msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
+msgstr "指定的防失敗工作階段 (「%s」) 並未標記為防失敗工作階段。"
+
+#: ../xfce4-session/xfsm-manager.c:662
+msgid "The list of applications in the failsafe session is empty."
+msgstr "防失敗工作階段內的應用程式清單是空的。"
+
+#. FIXME: migrate this into the splash screen somehow so the
+#. * window doesn't look ugly (right now now WM is running, so it
+#. * won't have window decorations).
+#: ../xfce4-session/xfsm-manager.c:709
+msgid "Session Manager Error"
+msgstr "工作階段管理程式錯誤"
+
+#: ../xfce4-session/xfsm-manager.c:711
+msgid "Unable to load a failsafe session"
+msgstr "無法載入防失敗工作階段"
+
+#: ../xfce4-session/xfsm-manager.c:1125
+msgid "Failed to suspend session"
+msgstr "無法暫停工作階段"
+
+#: ../xfce4-session/xfsm-manager.c:1126
+msgid "Failed to hibernate session"
+msgstr "無法休眠工作階段"
+
+#: ../xfce4-session/xfsm-manager.c:1414
+#, c-format
+msgid "Can only terminate clients when in the idle state"
+msgstr "只能在客戶端為閒置狀態時終止它們"
+
+#: ../xfce4-session/xfsm-manager.c:1955
+#, c-format
+msgid "Session manager must be in idle state when requesting a checkpoint"
+msgstr "當請求檢查點時，工作階段管理程式一定要處於閒置狀態"
+
+#: ../xfce4-session/xfsm-manager.c:1996
+#, c-format
+msgid "Session manager must be in idle state when requesting a shutdown"
+msgstr "當請求關機時，工作階段管理程式一定要處於閒置狀態"
+
+#: ../xfce4-session/xfsm-manager.c:2003
+#, c-format
+msgid "Invalid shutdown type \"%u\""
+msgstr "無效的關機類型「%u」"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:1601
+#, c-format
+msgid "Error sending command to shutdown helper: %s"
+msgstr "傳送指令至關機輔助程式時發生錯誤：%s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:1615
+#, c-format
+msgid "Error receiving response from shutdown helper: %s"
+msgstr "從關機輔助程式接收回應時發生錯誤：%s"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:1624
+#, c-format
+msgid "Shutdown command failed"
+msgstr "關機指令失敗"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:1802
+msgid "Suspend failed, no backend supported"
+msgstr "暫停失敗，後端程式未支援"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:1829
+msgid "Hibernate failed, no backend supported"
+msgstr "休眠失敗，後端程式未支援"
+
+#: ../xfce4-session/xfsm-shutdown-helper.c:1859
+msgid "Shutdown Command not found"
+msgstr "找不到關機指令"
+
+#: ../xfce4-session/xfsm-splash-screen.c:178
+msgid "Choose session"
+msgstr "選擇工作階段"
+
+#: ../xfce4-session/xfsm-splash-screen.c:208
+msgid "Choose session name"
+msgstr "選擇工作階段名稱"
+
+#: ../xfce4-session/xfsm-splash-screen.c:222
+msgid "Choose a name for the new session:"
+msgstr "請為工作階段改個名稱："
+
+#: ../xfce4-session/xfsm-startup.c:115
+msgid "Starting the Volume Controller"
+msgstr "啟動音量控制器中"
+
+#: ../xfce4-session/xfsm-startup.c:117
+msgid "Starting the Panel"
+msgstr "啟動面板中"
+
+#: ../xfce4-session/xfsm-startup.c:119
+msgid "Starting the Desktop Manager"
+msgstr "啟動桌面管理程式中"
+
+#: ../xfce4-session/xfsm-startup.c:121
+msgid "Starting the Taskbar"
+msgstr "啟動工作列中"
+
+#: ../xfce4-session/xfsm-startup.c:123
+msgid "Starting the Window Manager"
+msgstr "啟動視窗管理程式中"
+
+#: ../xfce4-session/xfsm-startup.c:127
+msgid "Starting the Gnome Terminal Emulator"
+msgstr "啟動 Gnome 終端機中"
+
+#: ../xfce4-session/xfsm-startup.c:131
+msgid "Starting the KDE Advanced Text Editor"
+msgstr "啟動 KDE 進階文字編輯器中"
+
+#: ../xfce4-session/xfsm-startup.c:133
+msgid "Starting the KDE Clipboard Manager"
+msgstr "啟動 KDE 剪貼簿管理程式中"
+
+#: ../xfce4-session/xfsm-startup.c:135
+msgid "Starting the KDE Mail Reader"
+msgstr "啟動 KDE 郵件閱讀器中"
+
+#: ../xfce4-session/xfsm-startup.c:137
+msgid "Starting the KDE News Reader"
+msgstr "啟動 KDE 新聞閱讀器中"
+
+#: ../xfce4-session/xfsm-startup.c:139
+msgid "Starting the Konqueror"
+msgstr "啟動 Konqueror 中"
+
+#: ../xfce4-session/xfsm-startup.c:141
+msgid "Starting the KDE Terminal Emulator"
+msgstr "啟動 KDE 終端機中"
+
+#: ../xfce4-session/xfsm-startup.c:145
+msgid "Starting the Beep Media Player"
+msgstr "啟動 Beep Media Player 中"
+
+#: ../xfce4-session/xfsm-startup.c:147
+msgid "Starting The Gimp"
+msgstr "啟動 Gimp 中"
+
+#: ../xfce4-session/xfsm-startup.c:149
+msgid "Starting the VI Improved Editor"
+msgstr "啟動 VI Improved 文字編輯器中"
+
+#: ../xfce4-session/xfsm-startup.c:151
+msgid "Starting the Session Management Proxy"
+msgstr "啟動工作階段管理代理程式中"
+
+#: ../xfce4-session/xfsm-startup.c:153
+msgid "Starting the X-Chat IRC Client"
+msgstr "啟動 X-Chat 中"
+
+#: ../xfce4-session/xfsm-startup.c:155
+msgid "Starting the X Multimedia System"
+msgstr "啟動 X Multimedia System 中"
+
+#: ../xfce4-session/xfsm-startup.c:157
+msgid "Starting the X Terminal Emulator"
+msgstr "啟動 X 終端機中"
+
+#: ../xfce4-session/xfsm-startup.c:159
+#, c-format
+msgid "Starting %s"
+msgstr "啟動 %s 中"
+
+#: ../xfce4-session/xfsm-startup.c:283
+#, c-format
+msgid ""
+"The location and the format of the autostart directory has changed.\n"
+"The new location is\n"
+"\n"
+"  %s\n"
+"\n"
+"where you can place .desktop files to, that describe the applications\n"
+"to start when you login to your Xfce desktop. The files in your old\n"
+"autostart directory have been successfully migrated to the new\n"
+"location.\n"
+"You should delete this directory now.\n"
+msgstr ""
+"自動啟動目錄的位置有所更改。\n"
+"新的位置在\n"
+"\n"
+"  %s\n"
+"\n"
+"該處可放置 .desktop 檔案，在這些檔案中描述您登入 Xfce 桌面時會啟動的應用程式。您位於先前自動啟動目錄的檔案已經成功地遷移到新的位置。\n"
+"您應該現在就刪除本目錄。\n"
+
+#: ../xfce4-session/xfsm-startup.c:458
+msgid "Performing Autostart..."
+msgstr "執行自動啟動中..."
+
+#: ../xfce4-session/xfsm-startup.c:564
+msgid "Starting Assistive Technologies"
+msgstr "正在啟動輔助科技"
+
+#: ../xfce4-session-logout/main.c:69
+msgid "Log out without displaying the logout dialog"
+msgstr "登出且不顯示登出對話窗"
+
+#: ../xfce4-session-logout/main.c:73
+msgid "Halt without displaying the logout dialog"
+msgstr "關機且不顯示登出對話窗"
+
+#: ../xfce4-session-logout/main.c:77
+msgid "Reboot without displaying the logout dialog"
+msgstr "重新開機且不顯示登出對話窗"
+
+#: ../xfce4-session-logout/main.c:81
+msgid "Suspend without displaying the logout dialog"
+msgstr "暫停且不顯示登出對話窗"
+
+#: ../xfce4-session-logout/main.c:85
+msgid "Hibernate without displaying the logout dialog"
+msgstr "休眠並且不顯示登出對話窗"
+
+#: ../xfce4-session-logout/main.c:89
+msgid "Log out quickly; don't save the session"
+msgstr "快速登出；不要儲存工作階段"
+
+#: ../xfce4-session-logout/main.c:107
+msgid "Logout Error"
+msgstr "登出錯誤"
+
+#: ../xfce4-session-logout/main.c:110
+#: ../xfce4-session-logout/main.c:117
+msgid "Unknown error"
+msgstr "不明錯誤"
+
+#: ../xfce4-session-logout/main.c:178
+msgid "Unable to contact D-Bus session bus."
+msgstr "無法聯絡 D-Bus 工作階段 bus。"
+
+#: ../xfce4-session-logout/main.c:190
+msgid "Failed to create new D-Bus message"
+msgstr "無法建立新的 D-Bus 訊息"
+
+#: ../xfce4-session-logout/main.c:206
+msgid "Failed to receive a reply from the session manager"
+msgstr "無法從工作階段管理員接收回應"
+
+#: ../xfce4-session-logout/main.c:214
+msgid "Received error while trying to log out"
+msgstr "當嘗試登出時接收到錯誤"
+
+#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
+msgid "Log Out"
+msgstr "登出"
+
+#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:2
+msgid "Log out of the Xfce Desktop"
+msgstr "登出 Xfce 桌面"
+
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
+msgid "Session Menu"
+msgstr "工作階段選單"
+
+#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
+msgid "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
+msgstr "顯示有鎖住畫面、暫停、關機、登出等選項的選單"
+
+#: ../settings/xfce-session-settings.desktop.in.h:1
+#: ../settings/xfce4-session-settings.glade.h:14
+msgid "Customize desktop startup and splash screen"
+msgstr "自訂桌面起始與開機畫面"
+
+#: ../settings/xfce-session-settings.desktop.in.h:2
+#: ../settings/xfce4-session-settings.glade.h:28
+msgid "Session and Startup"
+msgstr "工作階段與起始"
+
+#: ../settings/xfce4-session-settings.glade.h:1
+msgid "<b>Author:</b>"
+msgstr "<b>作者：</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:2
+msgid "<b>Compatibility</b>"
+msgstr "<b>相容性</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:3
+msgid "<b>Description:</b>"
+msgstr "<b>說明：</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:4
+msgid "<b>Homepage:</b>"
+msgstr "<b>網頁：</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:5
+msgid "<b>Information</b>"
+msgstr "<b>資訊</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:6
+msgid "<b>Logout Settings</b>"
+msgstr "<b>登出設定值</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:7
+msgid "<b>Security</b>"
+msgstr "<b>安全性</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:8
+msgid "<b>Session Chooser</b>"
+msgstr "<b>工作階段選擇器</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:9
+msgid "<b>Version:</b>"
+msgstr "<b>版本：</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:10
+msgid "Ad_vanced"
+msgstr "進階(_V)"
+
+#: ../settings/xfce4-session-settings.glade.h:11
+msgid "Always save the session when logging out"
+msgstr "登出時總是儲存工作階段"
+
+#: ../settings/xfce4-session-settings.glade.h:12
+msgid "Automatically save session on _logout"
+msgstr "登出時自動儲存工作階段(_L)"
+
+#: ../settings/xfce4-session-settings.glade.h:13
+msgid "Con_figure"
+msgstr "設置(_F)"
+
+#: ../settings/xfce4-session-settings.glade.h:15
+msgid "Demonstrates the selected splash screen"
+msgstr "示範一下所選的起動畫面"
+
+#: ../settings/xfce4-session-settings.glade.h:16
+msgid "Display the session chooser every time Xfce starts"
+msgstr "每次 Xfce 啟動時都顯示工作階段選擇器"
+
+#: ../settings/xfce4-session-settings.glade.h:17
+msgid "Empty the session cache"
+msgstr "清空工作階段快取"
+
+#: ../settings/xfce4-session-settings.glade.h:18
+msgid "Launch GN_OME services on startup"
+msgstr "啟始時同時啟動 GN_OME 服務"
+
+#: ../settings/xfce4-session-settings.glade.h:19
+msgid "Launch _KDE services on startup"
+msgstr "起始時同時啟動 _KDE 服務"
+
+#: ../settings/xfce4-session-settings.glade.h:20
+msgid "Manage _remote applications"
+msgstr "管理遠端應用程式(_R)"
+
+#: ../settings/xfce4-session-settings.glade.h:21
+msgid "Manage remote applications over the network (this may be a security risk)"
+msgstr "透過網路管理遠端應用程式 (這可能有安全上的風險)"
+
+# NOTE 這裡所講的「panel」其實係一個視窗，並非一個面板
+#: ../settings/xfce4-session-settings.glade.h:22
+msgid "Opens the configuration panel for the selected splash screen"
+msgstr "為所選的起動畫面開啟設置面板"
+
+#: ../settings/xfce4-session-settings.glade.h:23
+msgid "Prompt for confirmation when logging out"
+msgstr "當登出時跳出確認提示"
+
+#: ../settings/xfce4-session-settings.glade.h:24
+msgid "Quit the program, and remove it from the session"
+msgstr "退出程式，並且從工作階段中移除它"
+
+#: ../settings/xfce4-session-settings.glade.h:25
+msgid "S_plash"
+msgstr "開機畫面(_P)"
+
+#: ../settings/xfce4-session-settings.glade.h:26
+msgid "Save Sessio_n"
+msgstr "儲存工作階段(_N)"
+
+#: ../settings/xfce4-session-settings.glade.h:27
+msgid "Saving Session"
+msgstr "正在儲存工作階段"
+
+#: ../settings/xfce4-session-settings.glade.h:29
+msgid "Start GNOME services, such as gnome-keyring and the GNOME accessibility framework"
+msgstr "啟動 GNOME 服務，像是 gnome-keyring 與 GNOME 輔助科技架構"
+
+#: ../settings/xfce4-session-settings.glade.h:30
+msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
+msgstr "啟動 KDE 服務，像是「kdeinit」、DCOP、ARTS"
+
+#: ../settings/xfce4-session-settings.glade.h:31
+msgid "These applications are a part of the currently-running session, and can be saved when you log out.  Changes below will only take effect when the session is saved."
+msgstr "這些應用程式都是目前正在執行的工作階段的一部分，並且當您登出時能儲存下來。以下的變更只會在工作階段儲存時始發揮效力。"
+
+#: ../settings/xfce4-session-settings.glade.h:32
+msgid "Your session is being saved.  If you do not wish to wait, you may close this window."
+msgstr "您的工作階段正被儲存。如果您不希望等候，沒關係您可以關閉此視窗。"
+
+#: ../settings/xfce4-session-settings.glade.h:33
+msgid "_Clear saved sessions"
+msgstr "清除儲存的工作階段(_C)"
+
+#: ../settings/xfce4-session-settings.glade.h:34
+msgid "_Display chooser on login"
+msgstr "登入時顯示選擇器(_D)"
+
+#: ../settings/xfce4-session-settings.glade.h:35
+msgid "_General"
+msgstr "一般(_G)"
+
+#: ../settings/xfce4-session-settings.glade.h:36
+msgid "_Prompt on logout"
+msgstr "登出時先問清楚(_P)"
+
+#: ../settings/xfce4-session-settings.glade.h:38
+msgid "_Session"
+msgstr "工作階段(_S)"
+
+#: ../settings/xfce4-session-settings.glade.h:39
+msgid "_Test"
+msgstr "測試(_T)"
+
+#: ../settings/xfce4-session-settings.glade.h:40
+msgid "label"
+msgstr "標籤"
+
+#~ msgid "Hibernate"
+#~ msgstr "休眠"
+
+#~ msgid "Tips and Tricks"
+#~ msgstr "秘訣與撇步"
+
+#~ msgid "Fortunes"
+#~ msgstr "幸運小語"
+
+#~ msgid "Could not load tips database (%s)."
+#~ msgstr "無法載入秘訣資料庫 (%s)。"
+
+#~ msgid "Invalid output of fortune."
+#~ msgstr "fortune 的輸出無效。"
+
+#~ msgid "Executing fortune failed (%s)"
+#~ msgstr "執行 fortune 失敗(%s)"
+
+#~ msgid "Error while loading tips."
+#~ msgstr "當載入秘訣時發生錯誤。"
+
+#~ msgid "Display tips on _startup"
+#~ msgstr "開始時顯示秘訣(_S)"
+
+#~ msgid "Next"
+#~ msgstr "下一個"
+
+#~ msgid "Tips and tricks"
+#~ msgstr "秘訣與撇步"
+
+#~ msgid "xfce4-tips"
+#~ msgstr "xfce4-tips"
+
+#~ msgid "Session Error"
+#~ msgstr "工作階段錯誤"
+
+#~ msgid "Session Settings"
+#~ msgstr "工作階段設定值"
+
+#~ msgid "Internal Error"
+#~ msgstr "內部錯誤"
+
+#~ msgid "This is likely a problem with your Xfce installation"
+#~ msgstr "這很可能是您的 Xfce 安裝過程有問題"
+
+#~ msgid "Terminate \"%s\""
+#~ msgstr "終止「%s」"
+
+#~ msgid "Xfce Session Manager"
+#~ msgstr "Xfce 工作階段管理員"
+
+#~ msgid "Invalid shutdown type"
+#~ msgstr "無效的關機類型"
+
+#~ msgid "No HAL method for command %d"
+#~ msgstr "指令 %d 沒有 HAL 方法"
+
+#~ msgid ""
+#~ "Program \"sudo\" was not found.  You will not be able to shutdown your "
+#~ "system from within Xfce."
+#~ msgstr "找不到「sudo」程式。您將無法從 Xfce 底下關閉系統。"
+
+#~ msgid "Unable to create parent pipe: %s"
+#~ msgstr "無法建立親代管線：%s"
+
+#~ msgid "Unable to create child pipe: %s"
+#~ msgstr "無法建立子代管線：%s"
+
+#~ msgid "Unable to fork sudo helper: %s"
+#~ msgstr "無法將 sudo 輔助程式叉開：%s"
+
+#~ msgid "Unable to read response from sudo helper: %s"
+#~ msgstr "無法從 sudo 輔助程式讀取回應：%s"
+
+#~ msgid "Unable to open parent pipe: %s"
+#~ msgstr "無法開啟親代管線：%s"
+
+#~ msgid "Unable to open child pipe: %s"
+#~ msgstr "無法開啟子代管線：%s"
+
+#~ msgid "Got unexpected reply from sudo shutdown helper"
+#~ msgstr "從 sudo 關機輔助程式接到非預期的回應"
+
+#~ msgid ""
+#~ "Suspend and Hibernate are only supported through HAL, which is unavailable"
+#~ msgstr "「暫停」與「休眠」只能透過 HAL 提供支援，而它卻無法使用"
+
+#~ msgid "Session and Startup Settings"
+#~ msgstr "設定與工作階段及啟動相關的各種選項"
+
+#~ msgid "Sessions and Startup Settings"
+#~ msgstr "工作階段及啟動設定"
+
+#~ msgid "Xfce 4 Sessions and Startup Settings"
+#~ msgstr "Xfce 4 工作階段及啟動設定"
+
+#~ msgid "Remove the selected application from the session."
+#~ msgstr "示範一下選取的起動畫面。"
+
+#~ msgid ""
+#~ "If set, the session manager will ask you to choose a session every time "
+#~ "you log in to Xfce."
+#~ msgstr ""
+#~ "設定這個選項後，每當您登入 Xfce 時，工作階段選擇器都會要求您選擇一個工作階"
+#~ "段。"
+
+#~ msgid ""
+#~ "This option instructs the session manager to save the current session "
+#~ "automatically when you log out. If you don't select this option you'll be "
+#~ "prompted whether you want to save the current session on each logout."
+#~ msgstr ""
+#~ "這個選項令工作階段管理程式在您登出時自動儲存工作階段。如果您不選擇這樣做，"
+#~ "每當您登出時，您都會被問及要不要儲存工作階段。"
+
+#~ msgid ""
+#~ "This option disables the logout confirmation dialog. Whether the session "
+#~ "will be saved or not depends on whether you enabled the automatic saving "
+#~ "of sessions on logout or not."
+#~ msgstr ""
+#~ "這個選項決定是否在登出時先問清楚是否登出。至於工作階段是否會被儲存，則視乎"
+#~ "您有否選擇「登出時自動儲存工作階段」。"
+
+#~ msgid "Launch Gnome services on startup"
+#~ msgstr "啟動時同時啟動 Gnome 服務"
+
+#~ msgid ""
+#~ "Enable this if you plan to use Gnome applications. This will instruct the "
+#~ "session manager to start some vital Gnome services for you. You should "
+#~ "also enable this if you want to use the Assistive Technologies that ship "
+#~ "with Gnome."
+#~ msgstr ""
+#~ "如果您打算使用 Gnome 的應用程式，就應使用這個選項。這令工作階段管理程式為"
+#~ "您啟動一些重要的 Gnome 服務；此外，假如您希望使用 Gnome 的 Assistive "
+#~ "Technologies 的話，也應使用這個選項。"
+
+#~ msgid ""
+#~ "Enable this option if you plan to run KDE applications as part of your "
+#~ "Xfce Desktop session. This will notably increase the startup time, but on "
+#~ "the other hand, KDE applications will startup faster. Some KDE "
+#~ "applications may not work at all if you don't enable this option."
+#~ msgstr ""
+#~ "如果您打算在 Xfce 的桌面工作階段內使用 KDE 的應用程式，就應使用這個選項。"
+#~ "這會明顯的拖長 Xfce 的啟動時間，卻可加快 KDE 應用程式的啟動。除非你使用這"
+#~ "個選項，某些 KDE 的應用程式可能會完全不能運作。"
+
+#~ msgid "Security"
+#~ msgstr "保安"
+
+#~ msgid ""
+#~ "Allow the session manager to manage applications running on remote hosts. "
+#~ "Do not enable this option unless you know what you are doing."
+#~ msgstr ""
+#~ "容許工作階段管理程式管理在遠端主機執行的應用程式。除非您明瞭這是做什麼的，"
+#~ "切勿使用這個選項。"
+
+#~ msgid "Button Label|Sessions and Startup"
+#~ msgstr "工作階段及啟動"
+
+#~ msgid "Splash Screen Settings"
+#~ msgstr "起動畫面設定"
+
+#~ msgid "Button Label|Splash Screen"
+#~ msgstr "啟動畫面"
+
+#~ msgid "Autostarted applications"
+#~ msgstr "自動開啟的應用程式"
+
+#~ msgid "Xfce 4 Splash Screen Settings"
+#~ msgstr "Xfce 4 啟動畫面設定"
+
+#~ msgid "Autostarted Applications"
+#~ msgstr "自動啟動的應用程式"
+
+#~ msgid "Edit the list of autostarted applications"
+#~ msgstr "編輯自動啟動的應用程式清單"
+
+#~ msgid "Xfce 4 Autostarted Applications"
+#~ msgstr "Xfce 4 自動啟動應用程式"
