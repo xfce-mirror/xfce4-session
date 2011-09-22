@@ -110,6 +110,15 @@ else
   AC_MSG_ERROR([iceauth missing, please check your X11 installation])
 fi
 
+dnl Find a location for the session desktop file
+AC_MSG_CHECKING([what xsession-prefix to use])
+AC_ARG_WITH([xsession-prefix],
+            AC_HELP_STRING([--with-xsession-prefix=XSESSION_PREFIX], [What should be the prefix for the xsession .desktop file?]),
+  [], [with_xsession_prefix="/usr"])
+XSESSION_PREFIX=$with_xsession_prefix
+AC_SUBST([XSESSION_PREFIX])
+AC_MSG_RESULT([$with_xsession_prefix])
+
 dnl Check for rm
 AC_PATH_PROG([RM], [rm])
 if test x"$RM" != x""; then
