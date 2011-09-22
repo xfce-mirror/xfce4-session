@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-09 04:11+0000\n"
+"POT-Creation-Date: 2011-09-22 04:13+0000\n"
 "PO-Revision-Date: 2010-01-28 15:03+0100\n"
 "Last-Translator: Cristian Marchi <cri.penta@gmail.com>\n"
 "Language-Team: Italian <xfce-it-translators@googlegroups.com>\n"
@@ -16,6 +16,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: it\n"
+
+#: ../xfce.desktop.in.h:1
+msgid "Use this session to run Xfce as your desktop environment"
+msgstr "Usare questa sessione per avviare Xfce come ambiente grafico"
+
+#: ../xfce.desktop.in.h:2
+msgid "Xfce Session"
+msgstr "Sessione di Xfce"
 
 # GLOSSARIO
 # failed = non riuscito
@@ -478,11 +486,11 @@ msgstr ""
 "Compilato con Gtk+-%d.%d.%d, eseguendo Gtk+-%d.%d.%d"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:251
+#: ../xfce4-session/main.c:253
 msgid "Verifying DNS settings"
 msgstr "Verifica delle impostazioni DNS in corso..."
 
-#: ../xfce4-session/main.c:254
+#: ../xfce4-session/main.c:257
 msgid "Loading session data"
 msgstr "Caricamento dei dati di sessione in corso..."
 
@@ -531,30 +539,30 @@ msgstr "Spegnimento non riuscito"
 msgid "Unable to perform shutdown"
 msgstr "Impossibile eseguire lo spegnimento"
 
-#: ../xfce4-session/xfsm-chooser.c:91
+#: ../xfce4-session/xfsm-chooser.c:90
 #, c-format
 msgid "Last accessed: %s"
 msgstr "Ultimo accesso: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:177
+#: ../xfce4-session/xfsm-chooser.c:172
 msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
 msgstr "Scegliere la sessione da ripristinare; si può semplicemente fare doppio clic sul nome della sessione."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:203
+#: ../xfce4-session/xfsm-chooser.c:198
 msgid "Log out"
 msgstr "Uscita"
 
-#: ../xfce4-session/xfsm-chooser.c:205
+#: ../xfce4-session/xfsm-chooser.c:200
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Annulla il tentativo di accesso e ritorna alla schermata di accesso."
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:212
+#: ../xfce4-session/xfsm-chooser.c:207
 msgid "New session"
 msgstr "Nuova sessione"
 
-#: ../xfce4-session/xfsm-chooser.c:213
+#: ../xfce4-session/xfsm-chooser.c:208
 msgid "Create a new session."
 msgstr "Crea una nuova sessione"
 
@@ -635,17 +643,17 @@ msgstr "Ibernazione della sessione non riuscita"
 msgid "Can only terminate clients when in the idle state"
 msgstr "È possibile terminare un client solamente quando è inattivo"
 
-#: ../xfce4-session/xfsm-manager.c:1951
+#: ../xfce4-session/xfsm-manager.c:1955
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Il gestore di sessione deve essere inattivo alla richiesta di un punto di controllo"
 
-#: ../xfce4-session/xfsm-manager.c:1992
+#: ../xfce4-session/xfsm-manager.c:1996
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Il gestore di sessione deve essere inattivo alla richiesta dello spegnimento"
 
-#: ../xfce4-session/xfsm-manager.c:1999
+#: ../xfce4-session/xfsm-manager.c:2003
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Tipo di spegnimento \"%u\" non valido"
@@ -1095,9 +1103,6 @@ msgstr "etichetta"
 
 #~ msgid "Terminate \"%s\""
 #~ msgstr "Termina \"%s\""
-
-#~ msgid "Xfce Session Manager"
-#~ msgstr "Gestore di sessione di Xfce"
 
 #~ msgid "Session Error"
 #~ msgstr "Errore di sessione"
