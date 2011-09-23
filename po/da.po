@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-session 4.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-09 04:11+0000\n"
+"POT-Creation-Date: 2011-09-23 16:13+0000\n"
 "PO-Revision-Date: 2010-02-07 21:05+0100\n"
 "Last-Translator: Per Kongstad <p_kongstad@op.pl>\n"
 "Language-Team: Danish <dank@dansk-gruppen.dk>\n"
@@ -19,6 +19,14 @@ msgstr ""
 "X-Poedit-Language: Danish\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Country: DENMARK\n"
+
+#: ../xfce.desktop.in.h:1
+msgid "Use this session to run Xfce as your desktop environment"
+msgstr "Brug denne session til at køre Xfce som dit skrivebord"
+
+#: ../xfce.desktop.in.h:2
+msgid "Xfce Session"
+msgstr "Session til Xfce"
 
 #: ../engines/balou/balou-theme.c:110
 msgid "No description given"
@@ -469,11 +477,11 @@ msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
 msgstr "Bygget med Gtk+-%d.%d.%d, kørende med Gtk+-%d.%d.%d"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:251
+#: ../xfce4-session/main.c:253
 msgid "Verifying DNS settings"
 msgstr "Afprøver DNS-indstillinger"
 
-#: ../xfce4-session/main.c:254
+#: ../xfce4-session/main.c:257
 msgid "Loading session data"
 msgstr "Indlæser sessionsdata"
 
@@ -522,30 +530,30 @@ msgstr "Luk ned fejlede"
 msgid "Unable to perform shutdown"
 msgstr "Kunne ikke udføre luk ned"
 
-#: ../xfce4-session/xfsm-chooser.c:91
+#: ../xfce4-session/xfsm-chooser.c:90
 #, c-format
 msgid "Last accessed: %s"
 msgstr "Sidst tilgået: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:177
+#: ../xfce4-session/xfsm-chooser.c:172
 msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
 msgstr "Vælg den session du vil genskabe. Du kan dobbeltklikke på sessionsnavnet for at genskabe sessionen."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:203
+#: ../xfce4-session/xfsm-chooser.c:198
 msgid "Log out"
 msgstr "Logud"
 
-#: ../xfce4-session/xfsm-chooser.c:205
+#: ../xfce4-session/xfsm-chooser.c:200
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Afbryd logindforsøget og returnér til logindskærmen."
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:212
+#: ../xfce4-session/xfsm-chooser.c:207
 msgid "New session"
 msgstr "Ny session"
 
-#: ../xfce4-session/xfsm-chooser.c:213
+#: ../xfce4-session/xfsm-chooser.c:208
 msgid "Create a new session."
 msgstr "Opret en ny session."
 
@@ -626,17 +634,17 @@ msgstr "Kunne ikke bringe session i dvalestilstand"
 msgid "Can only terminate clients when in the idle state"
 msgstr "Kan kun afbryde klienter når de befinder sig i tomgang"
 
-#: ../xfce4-session/xfsm-manager.c:1951
+#: ../xfce4-session/xfsm-manager.c:1955
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Sessionhåndtering skal befinde sig i tomgang, når der anmodes om et tjekpunkt"
 
-#: ../xfce4-session/xfsm-manager.c:1992
+#: ../xfce4-session/xfsm-manager.c:1996
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Sessionhåndtering skal befinde sig i tomgang, når der anmodes om at lukke ned"
 
-#: ../xfce4-session/xfsm-manager.c:1999
+#: ../xfce4-session/xfsm-manager.c:2003
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Ugyldig type af luk ned \"%u\""
@@ -1087,9 +1095,6 @@ msgstr "mærkat"
 
 #~ msgid "Suspend and Hibernate are only supported through HAL, which is unavailable"
 #~ msgstr "Hvile- og dvaletilstand er kun understøttet gennem HAL, som ikke er tilgængelig"
-
-#~ msgid "Xfce Session Manager"
-#~ msgstr "Sessionshåndtering til Xfce"
 
 #~ msgid "Session Error"
 #~ msgstr "Sessionsfejl"
