@@ -63,6 +63,10 @@ AC_CHECK_HEADERS([asm/unistd.h errno.h fcntl.h limits.h \
 AC_CHECK_FUNCS([getaddrinfo gethostbyname gethostname getpwuid setsid \
                 sigaction strdup sync vfork])
 
+dnl Check for required libraries
+AC_CHECK_LIBM
+AC_SUBST(LIBM)
+
 dnl Check for X11 installed
 XDT_CHECK_LIBX11_REQUIRE()
 
