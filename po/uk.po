@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-09 10:11+0000\n"
+"POT-Creation-Date: 2011-09-27 16:14+0000\n"
 "PO-Revision-Date: 2009-01-26 16:03+0200\n"
 "Last-Translator: Dmitry Nikitin <luckas_fb@mail.ru>\n"
 "Language-Team: Ukrainian <xfce4-dev@xfce.org>\n"
@@ -17,6 +17,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: uk\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: ../xfce.desktop.in.h:1
+msgid "Use this session to run Xfce as your desktop environment"
+msgstr "Використайте цей сеанс для запуску Xfce як Вашого типого середовища."
+
+#: ../xfce.desktop.in.h:2
+msgid "Xfce Session"
+msgstr "Сеанс Xfce"
 
 #: ../engines/balou/balou-theme.c:110
 msgid "No description given"
@@ -464,11 +472,11 @@ msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
 msgstr "Побудовано з Gtk+-%d.%d.%d, запущено в Gtk+-%d.%d.%d"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:251
+#: ../xfce4-session/main.c:253
 msgid "Verifying DNS settings"
 msgstr "Перевірка параметрів DNS"
 
-#: ../xfce4-session/main.c:254
+#: ../xfce4-session/main.c:257
 msgid "Loading session data"
 msgstr "Завантаження відомостей про сеанс"
 
@@ -517,30 +525,30 @@ msgstr "Неможливо вимкнути"
 msgid "Unable to perform shutdown"
 msgstr "Не вдалось виконати зупинку"
 
-#: ../xfce4-session/xfsm-chooser.c:91
+#: ../xfce4-session/xfsm-chooser.c:90
 #, c-format
 msgid "Last accessed: %s"
 msgstr "Запущено останній раз: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:177
+#: ../xfce4-session/xfsm-chooser.c:172
 msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
 msgstr "Виберіть сеанс, який бажаєте відновити. Щоб завантажити сеанс, можете просто двічі клацнути на його назві."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:203
+#: ../xfce4-session/xfsm-chooser.c:198
 msgid "Log out"
 msgstr "Вийти з сеансу"
 
-#: ../xfce4-session/xfsm-chooser.c:205
+#: ../xfce4-session/xfsm-chooser.c:200
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Скасувати спробу входу та повернутись до екрану входу у систему."
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:212
+#: ../xfce4-session/xfsm-chooser.c:207
 msgid "New session"
 msgstr "Новий сеанс"
 
-#: ../xfce4-session/xfsm-chooser.c:213
+#: ../xfce4-session/xfsm-chooser.c:208
 msgid "Create a new session."
 msgstr "Створити новий сеанс."
 
@@ -621,17 +629,17 @@ msgstr "Невдача для сплячого сеансу"
 msgid "Can only terminate clients when in the idle state"
 msgstr "Можна тільки завершити клієнтів коли перебуваєш в стані очікування"
 
-#: ../xfce4-session/xfsm-manager.c:1951
+#: ../xfce4-session/xfsm-manager.c:1955
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Менеджер сеансу мусить бути в стані очікування коли запитується місце перевірки"
 
-#: ../xfce4-session/xfsm-manager.c:1992
+#: ../xfce4-session/xfsm-manager.c:1996
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Менеджер сеансу мусить бути в стані очікування коли запитується вимкнення"
 
-#: ../xfce4-session/xfsm-manager.c:1999
+#: ../xfce4-session/xfsm-manager.c:2003
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Неправильний тип вимкнення \"%u\""
@@ -1058,9 +1066,6 @@ msgstr "мітка"
 
 #~ msgid "Terminate \"%s\""
 #~ msgstr "Завершити \"%s\""
-
-#~ msgid "Xfce Session Manager"
-#~ msgstr "Менеджер сеансів Xfce"
 
 #~ msgid "Invalid shutdown type"
 #~ msgstr "Неправильний тип вимкнення \"%u\""
