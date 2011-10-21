@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-30 10:11+0000\n"
+"POT-Creation-Date: 2011-10-20 22:07+0000\n"
 "PO-Revision-Date: 2010-04-06 13:28+0800\n"
 "Last-Translator: Hunt Xu <huntxu@live.cn>\n"
 "Language-Team: Chinese/Simplified <xfce-i18n@xfce.org>\n"
@@ -19,6 +19,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
+
+#: ../xfce.desktop.in.h:1
+msgid "Use this session to run Xfce as your desktop environment"
+msgstr "使用这个会话将 Xfce 作为您的桌面环境"
+
+#: ../xfce.desktop.in.h:2
+msgid "Xfce Session"
+msgstr "Xfce 会话"
 
 #: ../engines/balou/balou-theme.c:110
 msgid "No description given"
@@ -297,7 +305,9 @@ msgid "Are you sure you want to empty the session cache?"
 msgstr "您确实要清除会话缓存吗？"
 
 #: ../settings/session-editor.c:172
-msgid "The saved states of your applications will not be restored during your next login."
+msgid ""
+"The saved states of your applications will not be restored during your next "
+"login."
 msgstr "已保存的程序状态在您下次登录时不会恢复。"
 
 #: ../settings/session-editor.c:174
@@ -322,7 +332,9 @@ msgid "Terminate Program"
 msgstr "终止程序"
 
 #: ../settings/session-editor.c:255
-msgid "The application will lose any unsaved state and will not be restarted in your next session."
+msgid ""
+"The application will lose any unsaved state and will not be restarted in "
+"your next session."
 msgstr "该应用程序中任何没有保存的东西都会丢失，而且您下次登入时不会启动它。"
 
 #: ../settings/session-editor.c:257
@@ -410,7 +422,10 @@ msgid "Failed to open %s for writing"
 msgstr "打开要写入的 %s 失败"
 
 #: ../settings/xfae-window.c:101
-msgid "Below is the list of applications that will be started automatically when you login to your Xfce desktop, in addition to the applications that were saved when you logged out last time:"
+msgid ""
+"Below is the list of applications that will be started automatically when "
+"you login to your Xfce desktop, in addition to the applications that were "
+"saved when you logged out last time:"
 msgstr ""
 "除了您上次退出 Xfce 桌面时保存的应用程序外，下面列出的应用程序会在您登入\n"
 "时自动启动:"
@@ -425,7 +440,9 @@ msgid "Failed to remove item"
 msgstr "移除项目失败"
 
 #: ../settings/xfae-window.c:326
-msgid "This will permanently remove the application from the list of automatically started applications"
+msgid ""
+"This will permanently remove the application from the list of automatically "
+"started applications"
 msgstr "这将把该应用程序从自动启动应用程序的列表中永久移除"
 
 #: ../settings/xfae-window.c:328
@@ -468,11 +485,11 @@ msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
 msgstr "使用 Gtk+-%d.%d.%d 进行编译，现在运行于 Gtk+-%d.%d.%d 之上"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:251
+#: ../xfce4-session/main.c:253
 msgid "Verifying DNS settings"
 msgstr "正在确认 DNS 设置"
 
-#: ../xfce4-session/main.c:254
+#: ../xfce4-session/main.c:257
 msgid "Loading session data"
 msgstr "正在读取会话数据"
 
@@ -510,7 +527,9 @@ msgid "<b>An error occurred</b>"
 msgstr "<b>出现一个错误</b>"
 
 #: ../xfce4-session/shutdown.c:714
-msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
+msgid ""
+"Either the password you entered is invalid, or the system administrator "
+"disallows shutting down this computer with your user account."
 msgstr "您所输入的密码不正确，或者系统管理员不允许您的帐户关闭该计算机。"
 
 #: ../xfce4-session/shutdown.c:833 ../xfce4-session/xfsm-manager.c:1122
@@ -527,7 +546,9 @@ msgid "Last accessed: %s"
 msgstr "最后访问: %s"
 
 #: ../xfce4-session/xfsm-chooser.c:172
-msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
+msgid ""
+"Choose the session you want to restore. You can simply double-click the "
+"session name to restore it."
 msgstr "选择您希望恢复的会话。您可以简单地双击会话名称来选择。"
 
 #. "Logout" button
@@ -587,15 +608,20 @@ msgstr "重试"
 
 #: ../xfce4-session/xfsm-manager.c:604
 #, c-format
-msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
+msgid ""
+"Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
+"running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
+"incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr ""
 "无法确定应急会话的名称。可能的原因有: xfconfd 没有运行(用来设置 D-Bus)；\n"
-"环境变量 $XDG_CONFIG_DIRS 设置不对(必须包含 \"%s\" )；或者 xfce4-session 安装\n"
+"环境变量 $XDG_CONFIG_DIRS 设置不对(必须包含 \"%s\" )；或者 xfce4-session 安"
+"装\n"
 "不正确。"
 
 #: ../xfce4-session/xfsm-manager.c:615
 #, c-format
-msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
+msgid ""
+"The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "指定的应急会话(\"%s\")未被标记为应急会话。"
 
 #: ../xfce4-session/xfsm-manager.c:662
@@ -626,17 +652,17 @@ msgstr "休眠会话失败"
 msgid "Can only terminate clients when in the idle state"
 msgstr "客户程序空闲时方可被终止"
 
-#: ../xfce4-session/xfsm-manager.c:1951
+#: ../xfce4-session/xfsm-manager.c:1955
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "会话管理器空闲时才会接受断点测试请求"
 
-#: ../xfce4-session/xfsm-manager.c:1992
+#: ../xfce4-session/xfsm-manager.c:1996
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "会话管理器空闲时才可请求关机"
 
-#: ../xfce4-session/xfsm-manager.c:1999
+#: ../xfce4-session/xfsm-manager.c:2003
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "无效的关机类型 \"%u\""
@@ -855,7 +881,8 @@ msgid "Session Menu"
 msgstr "会话菜单"
 
 #: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
-msgid "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
+msgid ""
+"Shows a menu with options to lock the screen, suspend, shutdown, or log out"
 msgstr "显示一个菜单用以锁屏、挂起、关机或注销"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
@@ -945,7 +972,8 @@ msgid "Manage _remote applications"
 msgstr "管理远程应用(_R)"
 
 #: ../settings/xfce4-session-settings.glade.h:21
-msgid "Manage remote applications over the network (this may be a security risk)"
+msgid ""
+"Manage remote applications over the network (this may be a security risk)"
 msgstr "通过网络管理远程应用程序（存在安全隐患）"
 
 #: ../settings/xfce4-session-settings.glade.h:22
@@ -973,7 +1001,9 @@ msgid "Saving Session"
 msgstr "正在保存会话"
 
 #: ../settings/xfce4-session-settings.glade.h:29
-msgid "Start GNOME services, such as gnome-keyring and the GNOME accessibility framework"
+msgid ""
+"Start GNOME services, such as gnome-keyring and the GNOME accessibility "
+"framework"
 msgstr "启动 GNOME 服务，例如 gnome-keyring 和 GNOME 协助框架"
 
 #: ../settings/xfce4-session-settings.glade.h:30
@@ -981,13 +1011,18 @@ msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
 msgstr "启动 KDE 服务，例如 \"kdeinit\", DCOP, 以及 ARTS"
 
 #: ../settings/xfce4-session-settings.glade.h:31
-msgid "These applications are a part of the currently-running session, and can be saved when you log out.  Changes below will only take effect when the session is saved."
+msgid ""
+"These applications are a part of the currently-running session, and can be "
+"saved when you log out.  Changes below will only take effect when the "
+"session is saved."
 msgstr ""
 "这行应用程序所在的会话正在运行，您在注销时可保存它们。以下的改变只在\n"
 "您保存会话后才生效。"
 
 #: ../settings/xfce4-session-settings.glade.h:32
-msgid "Your session is being saved.  If you do not wish to wait, you may close this window."
+msgid ""
+"Your session is being saved.  If you do not wish to wait, you may close this "
+"window."
 msgstr "正在保存您的会话，您可以直接关闭此窗口，不需要等待。"
 
 #: ../settings/xfce4-session-settings.glade.h:33
@@ -1066,16 +1101,15 @@ msgstr "标签"
 #~ msgid "Terminate \"%s\""
 #~ msgstr "终止“%s”"
 
-#~ msgid "Xfce Session Manager"
-#~ msgstr "Xfce 会话管理器管理器"
-
 #~ msgid "Invalid shutdown type"
 #~ msgstr "无效的关机类型"
 
 #~ msgid "No HAL method for command %d"
 #~ msgstr "没有与命令 %d 对应的 HAL 方法"
 
-#~ msgid "Program \"sudo\" was not found.  You will not be able to shutdown your system from within Xfce."
+#~ msgid ""
+#~ "Program \"sudo\" was not found.  You will not be able to shutdown your "
+#~ "system from within Xfce."
 #~ msgstr "找不到“sudo”程序。无法从 Xfce 桌面关机。"
 
 #~ msgid "Unable to create parent pipe: %s"
@@ -1099,7 +1133,8 @@ msgstr "标签"
 #~ msgid "Got unexpected reply from sudo shutdown helper"
 #~ msgstr "sudo 关机助手返回异常"
 
-#~ msgid "Suspend and Hibernate are only supported through HAL, which is unavailable"
+#~ msgid ""
+#~ "Suspend and Hibernate are only supported through HAL, which is unavailable"
 #~ msgstr "HAL 不存在，所以无法挂起或休眠"
 
 #~ msgid "Unexpected error from HAL"
@@ -1123,29 +1158,59 @@ msgstr "标签"
 #~ msgid "Remove the selected application from the session."
 #~ msgstr "从会话中移除所选应用程序"
 
-#~ msgid "If set, the session manager will ask you to choose a session every time you log in to Xfce."
+#~ msgid ""
+#~ "If set, the session manager will ask you to choose a session every time "
+#~ "you log in to Xfce."
 #~ msgstr "如果选择该项，会话管理器将会在每次登录 Xfce 时要求您选择会话。"
 
-#~ msgid "This option instructs the session manager to save the current session automatically when you log out. If you don't select this option you'll be prompted whether you want to save the current session on each logout."
-#~ msgstr "该选项指示会话管理器在您退出时自动保存当前会话。如果您不选择该选项，在每次退出时您将被询问是否保存当前会话。"
+#~ msgid ""
+#~ "This option instructs the session manager to save the current session "
+#~ "automatically when you log out. If you don't select this option you'll be "
+#~ "prompted whether you want to save the current session on each logout."
+#~ msgstr ""
+#~ "该选项指示会话管理器在您退出时自动保存当前会话。如果您不选择该选项，在每次"
+#~ "退出时您将被询问是否保存当前会话。"
 
-#~ msgid "This option disables the logout confirmation dialog. Whether the session will be saved or not depends on whether you enabled the automatic saving of sessions on logout or not."
-#~ msgstr "该选项将将禁止退出确认对话框。是否保存对话取决于您是否启动了退出时自动保存会话。"
+#~ msgid ""
+#~ "This option disables the logout confirmation dialog. Whether the session "
+#~ "will be saved or not depends on whether you enabled the automatic saving "
+#~ "of sessions on logout or not."
+#~ msgstr ""
+#~ "该选项将将禁止退出确认对话框。是否保存对话取决于您是否启动了退出时自动保存"
+#~ "会话。"
 
 #~ msgid "Launch Gnome services on startup"
 #~ msgstr "启动时启动 Gnome 服务"
 
-#~ msgid "Enable this if you plan to use Gnome applications. This will instruct the session manager to start some vital Gnome services for you. You should also enable this if you want to use the Assistive Technologies that ship with Gnome."
-#~ msgstr "如果您计划使用 Gnome 应用程序请启用该项。这将使会话管理器为您启动若干重要的 Gnome 服务。如果您希望使用 Gnome 所带的 Assistive Technologies ，您也需要启动该项。"
+#~ msgid ""
+#~ "Enable this if you plan to use Gnome applications. This will instruct the "
+#~ "session manager to start some vital Gnome services for you. You should "
+#~ "also enable this if you want to use the Assistive Technologies that ship "
+#~ "with Gnome."
+#~ msgstr ""
+#~ "如果您计划使用 Gnome 应用程序请启用该项。这将使会话管理器为您启动若干重要"
+#~ "的 Gnome 服务。如果您希望使用 Gnome 所带的 Assistive Technologies ，您也需"
+#~ "要启动该项。"
 
-#~ msgid "Enable this option if you plan to run KDE applications as part of your Xfce Desktop session. This will notably increase the startup time, but on the other hand, KDE applications will startup faster. Some KDE applications may not work at all if you don't enable this option."
-#~ msgstr "如果您计划使用 KDE 应用程序作为您的 Xfce 桌面会话的一部分，请启用该项。这将显著加场馆程序启动时间，但是另一方面，KDE 程序将会启动得较快。如果您不启用该选项，某些 KDE 程序将无法运行。"
+#~ msgid ""
+#~ "Enable this option if you plan to run KDE applications as part of your "
+#~ "Xfce Desktop session. This will notably increase the startup time, but on "
+#~ "the other hand, KDE applications will startup faster. Some KDE "
+#~ "applications may not work at all if you don't enable this option."
+#~ msgstr ""
+#~ "如果您计划使用 KDE 应用程序作为您的 Xfce 桌面会话的一部分，请启用该项。这"
+#~ "将显著加场馆程序启动时间，但是另一方面，KDE 程序将会启动得较快。如果您不启"
+#~ "用该选项，某些 KDE 程序将无法运行。"
 
 #~ msgid "Security"
 #~ msgstr "安全"
 
-#~ msgid "Allow the session manager to manage applications running on remote hosts. Do not enable this option unless you know what you are doing."
-#~ msgstr "允许会话管理器管理运行于远程主机的程序。如果您不理解该项的含义请不要启用该项。"
+#~ msgid ""
+#~ "Allow the session manager to manage applications running on remote hosts. "
+#~ "Do not enable this option unless you know what you are doing."
+#~ msgstr ""
+#~ "允许会话管理器管理运行于远程主机的程序。如果您不理解该项的含义请不要启用该"
+#~ "项。"
 
 #~ msgid "Button Label|Sessions and Startup"
 #~ msgstr "会话管理及启动"
