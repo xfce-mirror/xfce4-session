@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-26 10:13+0000\n"
+"POT-Creation-Date: 2011-10-22 10:07+0000\n"
 "PO-Revision-Date: 2011-08-02 18:03+0300\n"
 "Last-Translator: Artem Zolochevskiy <artem.zolochevskiy@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -25,6 +25,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../xfce.desktop.in.h:1
+msgid "Use this session to run Xfce as your desktop environment"
+msgstr ""
+
+#: ../xfce.desktop.in.h:2
+msgid "Xfce Session"
+msgstr "Сеанс"
 
 #: ../engines/balou/balou-theme.c:110
 msgid "No description given"
@@ -303,8 +311,12 @@ msgid "Are you sure you want to empty the session cache?"
 msgstr "Вы действительно хотите очистить кэш сеансов?"
 
 #: ../settings/session-editor.c:172
-msgid "The saved states of your applications will not be restored during your next login."
-msgstr "Сохранённые состояния ваших приложений не будут восстановлены при следующем сеансе."
+msgid ""
+"The saved states of your applications will not be restored during your next "
+"login."
+msgstr ""
+"Сохранённые состояния ваших приложений не будут восстановлены при следующем "
+"сеансе."
 
 #: ../settings/session-editor.c:174
 msgid "_Proceed"
@@ -328,8 +340,12 @@ msgid "Terminate Program"
 msgstr "Завершить приложение"
 
 #: ../settings/session-editor.c:255
-msgid "The application will lose any unsaved state and will not be restarted in your next session."
-msgstr "Все несохранённые данные приложения будут потеряны и оно не будет перезапущено при следующем сеансе."
+msgid ""
+"The application will lose any unsaved state and will not be restarted in "
+"your next session."
+msgstr ""
+"Все несохранённые данные приложения будут потеряны и оно не будет "
+"перезапущено при следующем сеансе."
 
 #: ../settings/session-editor.c:257
 #: ../settings/xfce4-session-settings.glade.h:37
@@ -416,8 +432,14 @@ msgid "Failed to open %s for writing"
 msgstr "Не удалось открыть файл %s для записи"
 
 #: ../settings/xfae-window.c:101
-msgid "Below is the list of applications that will be started automatically when you login to your Xfce desktop, in addition to the applications that were saved when you logged out last time:"
-msgstr "В списке ниже находятся приложения, которые будут запущены автоматически в начале сеанса Xfce в дополнение к приложениям, которые были сохранены во время последнего завершения сеанса:"
+msgid ""
+"Below is the list of applications that will be started automatically when "
+"you login to your Xfce desktop, in addition to the applications that were "
+"saved when you logged out last time:"
+msgstr ""
+"В списке ниже находятся приложения, которые будут запущены автоматически в "
+"начале сеанса Xfce в дополнение к приложениям, которые были сохранены во "
+"время последнего завершения сеанса:"
 
 #: ../settings/xfae-window.c:289
 #, c-format
@@ -429,7 +451,9 @@ msgid "Failed to remove item"
 msgstr "Не удалось удалить элемент"
 
 #: ../settings/xfae-window.c:326
-msgid "This will permanently remove the application from the list of automatically started applications"
+msgid ""
+"This will permanently remove the application from the list of automatically "
+"started applications"
 msgstr "Приложение будет навсегда удалено из списка автозагрузки"
 
 #: ../settings/xfae-window.c:328
@@ -514,8 +538,12 @@ msgid "<b>An error occurred</b>"
 msgstr "<b>Произошла ошибка</b>"
 
 #: ../xfce4-session/shutdown.c:714
-msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
-msgstr "Либо введённый пароль неверен, либо администратор запретил вам выключать компьютер."
+msgid ""
+"Either the password you entered is invalid, or the system administrator "
+"disallows shutting down this computer with your user account."
+msgstr ""
+"Либо введённый пароль неверен, либо администратор запретил вам выключать "
+"компьютер."
 
 #: ../xfce4-session/shutdown.c:833 ../xfce4-session/xfsm-manager.c:1122
 msgid "Shutdown Failed"
@@ -531,8 +559,12 @@ msgid "Last accessed: %s"
 msgstr "Последний раз использовался: %s"
 
 #: ../xfce4-session/xfsm-chooser.c:172
-msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
-msgstr "Выберите сеанс, который вы хотите восстановить. Вы можете просто дважды щёлкнуть на названии сеанса чтобы загрузить его."
+msgid ""
+"Choose the session you want to restore. You can simply double-click the "
+"session name to restore it."
+msgstr ""
+"Выберите сеанс, который вы хотите восстановить. Вы можете просто дважды "
+"щёлкнуть на названии сеанса чтобы загрузить его."
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:198
@@ -593,12 +625,20 @@ msgstr "Повторить попытку"
 
 #: ../xfce4-session/xfsm-manager.c:604
 #, c-format
-msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
-msgstr "Не удалось определить имя безопасного сеанса. Возможные причины: xfconfd не запущен (проблемы настройки D-Bus); переменная окружения $XDG_CONFIG_DIRS установлена неверно (должна включать в себя «%s»), или неверно установлен xfce4-session."
+msgid ""
+"Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
+"running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
+"incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
+msgstr ""
+"Не удалось определить имя безопасного сеанса. Возможные причины: xfconfd не "
+"запущен (проблемы настройки D-Bus); переменная окружения $XDG_CONFIG_DIRS "
+"установлена неверно (должна включать в себя «%s»), или неверно установлен "
+"xfce4-session."
 
 #: ../xfce4-session/xfsm-manager.c:615
 #, c-format
-msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
+msgid ""
+"The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Указанный безопасный сеанс («%s») не помечен как безопасный."
 
 #: ../xfce4-session/xfsm-manager.c:662
@@ -632,12 +672,14 @@ msgstr "Завершение возможно только для клиенто
 #: ../xfce4-session/xfsm-manager.c:1955
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
-msgstr "Менеджер сеансов должен быть в режиме ожидания при запросе контрольной точки"
+msgstr ""
+"Менеджер сеансов должен быть в режиме ожидания при запросе контрольной точки"
 
 #: ../xfce4-session/xfsm-manager.c:1996
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
-msgstr "Менеджер сеансов должен быть в режиме ожидании при запросе на выключение"
+msgstr ""
+"Менеджер сеансов должен быть в режиме ожидании при запросе на выключение"
 
 #: ../xfce4-session/xfsm-manager.c:2003
 #, c-format
@@ -858,8 +900,11 @@ msgid "Session Menu"
 msgstr "Меню сеанса"
 
 #: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
-msgid "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
-msgstr "Выводит меню, позволяющее заблокировать экран, перейти в ждущий режим или завершить работу"
+msgid ""
+"Shows a menu with options to lock the screen, suspend, shutdown, or log out"
+msgstr ""
+"Выводит меню, позволяющее заблокировать экран, перейти в ждущий режим или "
+"завершить работу"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
 #: ../settings/xfce4-session-settings.glade.h:14
@@ -948,7 +993,8 @@ msgid "Manage _remote applications"
 msgstr "Управлять удалёнными приложениями"
 
 #: ../settings/xfce4-session-settings.glade.h:21
-msgid "Manage remote applications over the network (this may be a security risk)"
+msgid ""
+"Manage remote applications over the network (this may be a security risk)"
 msgstr "Управлять удалёнными приложениями по сети (это может быть небезопасно)"
 
 #: ../settings/xfce4-session-settings.glade.h:22
@@ -976,19 +1022,31 @@ msgid "Saving Session"
 msgstr "Сохранение сеанса"
 
 #: ../settings/xfce4-session-settings.glade.h:29
-msgid "Start GNOME services, such as gnome-keyring and the GNOME accessibility framework"
-msgstr "Запускать службы GNOME, такие как gnome-keyring и подсистема специальных возможностей GNOME"
+msgid ""
+"Start GNOME services, such as gnome-keyring and the GNOME accessibility "
+"framework"
+msgstr ""
+"Запускать службы GNOME, такие как gnome-keyring и подсистема специальных "
+"возможностей GNOME"
 
 #: ../settings/xfce4-session-settings.glade.h:30
 msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
 msgstr "Запускать службы KDE, такие как kdeinit, DCOP и ARTS"
 
 #: ../settings/xfce4-session-settings.glade.h:31
-msgid "These applications are a part of the currently-running session, and can be saved when you log out.  Changes below will only take effect when the session is saved."
-msgstr "Эти приложения являются частью текущего запущенного сеанса и могут быть сохранены при завершении сеанса. Изменения, сделанные ниже, вступят в силу только при сохранении сеанса."
+msgid ""
+"These applications are a part of the currently-running session, and can be "
+"saved when you log out.  Changes below will only take effect when the "
+"session is saved."
+msgstr ""
+"Эти приложения являются частью текущего запущенного сеанса и могут быть "
+"сохранены при завершении сеанса. Изменения, сделанные ниже, вступят в силу "
+"только при сохранении сеанса."
 
 #: ../settings/xfce4-session-settings.glade.h:32
-msgid "Your session is being saved.  If you do not wish to wait, you may close this window."
+msgid ""
+"Your session is being saved.  If you do not wish to wait, you may close this "
+"window."
 msgstr "Сеанс сохранён. Если вы не хотите ждать, можете закрыть это окно."
 
 #: ../settings/xfce4-session-settings.glade.h:33
