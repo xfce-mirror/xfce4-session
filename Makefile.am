@@ -1,5 +1,3 @@
-# $Id$
-
 SUBDIRS =								\
 	libxfsm								\
 	doc								\
@@ -10,12 +8,7 @@ SUBDIRS =								\
 	scripts								\
 	xfce4-session							\
 	xfce4-session-logout						\
-	xfsm-shutdown-helper						\
-	$(panel_plugin_dir)
-
-if HAVE_LIBXFCE4PANEL
-panel_plugin_dir = panel-plugin
-endif
+	xfsm-shutdown-helper
 
 desktopdir = $(XSESSION_PREFIX)/share/xsessions
 desktop_in_files = xfce.desktop.in
