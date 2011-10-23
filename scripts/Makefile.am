@@ -27,7 +27,8 @@ conffiles_DATA = \
 EXTRA_DIST = \
 	startxfce4.in \
 	xinitrc.in \
-	Xft.xrdb
+	Xft.xrdb \
+	xflock4
 
 DISTCLEANFILES = \
 	startxfce4 \
