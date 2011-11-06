@@ -1,29 +1,6 @@
 /*-
  * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
- * All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2, or (at your option)
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301 USA.
- *
- * Parts of this file where taken from gnome-session/logout.c, which
- * was written by Owen Taylor <otaylor@redhat.com>.
- */
-
-/* $Id$ */
-/*-
- * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2011      Nick Schermer <nick@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -62,18 +39,8 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-
-#ifdef HAVE_GETPWUID
-#ifdef HAVE_SYS_TYPES_H
-#include <sys/types.h>
-#endif
-#ifdef HAVE_PWD_H
-#include <pwd.h>
-#endif
-#endif
-
-#ifdef HAVE_ASM_UNISTD_H
-#include <asm/unistd.h>  /* for __NR_ioprio_set */
+#ifdef HAVE_MATH_H
+#include <math.h>
 #endif
 
 #include <libxfce4util/libxfce4util.h>
@@ -82,177 +49,122 @@
 #include <libxfsm/xfsm-util.h>
 
 #include <xfce4-session/xfsm-logout-dialog.h>
-#include <xfce4-session/xfsm-compat-gnome.h>
-#include <xfce4-session/xfsm-compat-kde.h>
 #include <xfce4-session/xfsm-fadeout.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-legacy.h>
-#include <xfce4-session/xfsm-shutdown-helper.h>
+#include <xfce4-session/xfsm-error.h>
 
-#define BORDER    6
-
-
-static XfsmShutdownHelper *shutdown_helper = NULL;
-
-static GtkWidget *shutdown_dialog = NULL;
-
-#ifdef SESSION_SCREENSHOTS
-static void
-screenshot_save (const gchar *session_name, GdkPixmap *pm, GdkRectangle *area)
-{
-  gchar *display_name;
-  gchar *resource;
-  gchar *filename;
-  GdkDisplay *dpy;
-  GdkPixbuf *spb;
-  GdkPixbuf *pb;
-
-  pb = gdk_pixbuf_get_from_drawable (NULL, GDK_DRAWABLE (pm), NULL,
-                                     0, 0, 0, 0, area->width, area->height);
-
-  if (pb != NULL)
-    {
-      /* scale down the pixbuf */
-      spb = gdk_pixbuf_scale_simple (pb, 52, 43, GDK_INTERP_HYPER);
-
-      if (spb != NULL)
-        {
-          /* determine thumb file */
-          dpy = gdk_drawable_get_display (GDK_DRAWABLE (pm));
-          display_name = xfsm_gdk_display_get_fullname (dpy);
-          resource = g_strconcat ("sessions/thumbs-", display_name,
-                                  "/", session_name, ".png", NULL);
-          filename = xfce_resource_save_location (XFCE_RESOURCE_CACHE,
-                                                  resource, TRUE);
-          g_free (display_name);
-          g_free (resource);
-
-          gdk_pixbuf_save (spb, filename, "png", NULL, NULL);
-
-          g_object_unref (G_OBJECT (spb));
-          g_free (filename);
-        }
-
-      g_object_unref (G_OBJECT (pb));
-    }
-}
+#ifdef GDK_WINDOWING_X11
+#include <X11/Xlib.h>
+#include <gdk/gdkx.h>
 #endif
 
 
-static void
-entry_activate_cb (GtkWidget *entry, GtkDialog *dialog)
+
+#define BORDER   6
+#define SHOTSIZE 64
+
+
+
+static void       xfsm_logout_dialog_finalize (GObject          *object);
+static GtkWidget *xfsm_logout_dialog_button   (const gchar      *title,
+                                               const gchar      *icon_name,
+                                               const gchar      *icon_name_fallback,
+                                               XfsmShutdownType  type,
+                                               XfsmLogoutDialog *dialog);
+static void       xfsm_logout_dialog_activate (XfsmLogoutDialog *dialog);
+
+
+
+enum
 {
-  gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+  MODE_LOGOUT_BUTTONS,
+  MODE_ASK_PASSWORD,
+  MODE_SHOW_ERROR,
+  N_MODES
+};
+
+struct _XfsmLogoutDialogClass
+{
+  GtkDialogClass __parent__;
+};
+
+struct _XfsmLogoutDialog
+{
+  GtkDialog __parent__;
+
+  /* set when a button is clicked */
+  XfsmShutdownType  type_clicked;
+
+  /* save session checkbox */
+  GtkWidget        *save_session;
+
+  /* mode widgets */
+  GtkWidget        *box[N_MODES];
+
+  /* dialog buttons */
+  GtkWidget        *button_cancel;
+  GtkWidget        *button_ok;
+  GtkWidget        *button_close;
+
+  /* password entry */
+  GtkWidget        *password_entry;
+
+  /* error label */
+  GtkWidget        *error_label;
+
+  /* pm instance */
+  XfsmShutdown     *shutdown;
+};
+
+
+
+G_DEFINE_TYPE (XfsmLogoutDialog, xfsm_logout_dialog, GTK_TYPE_DIALOG)
+
+
+
+static void
+xfsm_logout_dialog_class_init (XfsmLogoutDialogClass *klass)
+{
+  GObjectClass *gobject_class;
+
+  gobject_class = G_OBJECT_CLASS (klass);
+  gobject_class->finalize = xfsm_logout_dialog_finalize;
 }
 
-static void
-logout_button_clicked (GtkWidget *b, gint *shutdown_type)
-{
-    *shutdown_type = XFSM_SHUTDOWN_LOGOUT;
 
-    gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
-}
 
 static void
-reboot_button_clicked (GtkWidget *b, gint *shutdown_type)
+xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
 {
-    *shutdown_type = XFSM_SHUTDOWN_REBOOT;
-
-    gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
-}
-
-static void
-halt_button_clicked (GtkWidget *b, gint *shutdown_type)
-{
-    *shutdown_type = XFSM_SHUTDOWN_HALT;
-
-    gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
-}
-
-static void
-suspend_button_clicked (GtkWidget *b, gint *shutdown_type)
-{
-    *shutdown_type = XFSM_SHUTDOWN_SUSPEND;
-
-    gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
-}
-
-static void
-hibernate_button_clicked (GtkWidget *b, gint *shutdown_type)
-{
-    *shutdown_type = XFSM_SHUTDOWN_HIBERNATE;
-
-    gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
-}
-
-/*
- */
-gboolean
-xfsm_logout_dialog (const gchar      *session_name,
-                    XfsmShutdownType *shutdown_type,
-                    gboolean         *save_session)
-{
-  gboolean accessibility;
-  GtkIconTheme *icon_theme;
-  XfsmFadeout *fadeout = NULL;
-  GdkScreen *screen;
-  GtkWidget *dialog;
-  GtkWidget *label;
-  GtkWidget *dbox;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
-  GtkWidget *vbox2;
-  GtkWidget *image;
-  GtkWidget *checkbox;
-  GtkWidget *entry_vbox;
-  GtkWidget *entry;
-  GtkWidget *hidden;
-  GtkWidget *logout_button;
-  GtkWidget *reboot_button;
-  GtkWidget *halt_button;
-  GtkWidget *suspend_button = NULL;
-  GtkWidget *hibernate_button = NULL;
-  GtkWidget *cancel_button;
-  GtkWidget *ok_button;
-  GdkPixbuf *icon;
-  gboolean saveonexit;
-  gboolean autosave;
-  gboolean prompt;
-  gboolean show_suspend;
-  gboolean show_hibernate;
-
-  gboolean show_restart;
-  gboolean show_shutdown;
-
-  gboolean require_password;
-
-  gint monitor;
-  gint result;
-  XfceKiosk *kiosk;
-  gboolean kiosk_can_shutdown;
-  gboolean kiosk_can_save_session;
+  const gchar   *username;
+  GtkWidget     *label;
+  gchar         *label_str;
+  PangoAttrList *attrs;
+  GtkWidget     *vbox;
+  GtkWidget     *main_vbox;
+  GtkWidget     *hbox;
+  GtkWidget     *button;
+  XfceKiosk     *kiosk;
+  gboolean       can_shutdown;
+  gboolean       kiosk_can_shutdown;
+  gboolean       kiosk_can_save_session;
+  gboolean       save_session = FALSE;
+  gboolean       can_restart;
+  gboolean       can_suspend = FALSE;
+  gboolean       can_hibernate = FALSE;
+  GError        *error = NULL;
   XfconfChannel *channel;
-#ifdef SESSION_SCREENSHOTS
-  GdkRectangle screenshot_area;
-  GdkWindow *root;
-  GdkPixmap *screenshot_pm = NULL;
-  GdkGC *screenshot_gc;
-#endif
-#ifdef HAVE_GETPWUID
-  struct passwd *pw;
-#endif
+  GtkWidget     *entry;
+  GtkWidget     *image;
+  GtkWidget     *separator;
 
-  g_return_val_if_fail(save_session != NULL, FALSE);
-  g_return_val_if_fail(shutdown_type != NULL, FALSE);
+  dialog->type_clicked = XFSM_SHUTDOWN_LOGOUT;
 
-  icon_theme = gtk_icon_theme_get_default ();
-
-  /* destroy any previously running shutdown helper first */
-  if (shutdown_helper != NULL)
-    {
-      g_object_unref (shutdown_helper);
-      shutdown_helper = NULL;
-    }
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
+  gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
+  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
   /* load kiosk settings */
   kiosk = xfce_kiosk_new ("xfce4-session");
@@ -260,549 +172,744 @@ xfsm_logout_dialog (const gchar      *session_name,
   kiosk_can_save_session = xfce_kiosk_query (kiosk, "SaveSession");
   xfce_kiosk_free (kiosk);
 
-  /* load configuration */
+  /* load xfconf settings */
   channel = xfsm_open_config ();
-  channel = xfconf_channel_get ("xfce4-session");
-  saveonexit = xfconf_channel_get_bool (channel, "/general/SaveOnExit", TRUE);
-  autosave = xfconf_channel_get_bool (channel, "/general/AutoSave", FALSE);
-  prompt = xfconf_channel_get_bool (channel, "/general/PromptOnLogout", TRUE);
-  show_suspend = xfconf_channel_get_bool (channel, "/shutdown/ShowSuspend", TRUE);
-  show_hibernate = xfconf_channel_get_bool (channel, "/shutdown/ShowHibernate", TRUE);
+  if (kiosk_can_save_session)
+    save_session = xfconf_channel_get_bool (channel, "/general/SaveOnExit", TRUE);
 
-  /* make the session-save settings obey the kiosk settings */
-  if (!kiosk_can_save_session)
+  main_vbox = gtk_vbox_new (FALSE, BORDER);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), BORDER);
+  gtk_widget_show (main_vbox);
+
+  /* label showing the users' name */
+  username = g_get_real_name ();
+  if (username == NULL || *username == '\0')
+    username = g_get_user_name ();
+
+  label_str = g_strdup_printf (_("Log out %s"), username);
+  label = gtk_label_new (label_str);
+  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
+  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, TRUE, 0);
+  gtk_widget_show (label);
+  g_free (label_str);
+
+  attrs = pango_attr_list_new ();
+  pango_attr_list_insert (attrs, pango_attr_scale_new (PANGO_SCALE_LARGE));
+  pango_attr_list_insert (attrs, pango_attr_weight_new (PANGO_WEIGHT_BOLD));
+  gtk_label_set_attributes (GTK_LABEL (label), attrs);
+  pango_attr_list_unref (attrs);
+
+  separator = gtk_hseparator_new ();
+  gtk_box_pack_start (GTK_BOX (main_vbox), separator, FALSE, TRUE, 0);
+  gtk_widget_show (separator);
+
+  /**
+   * Start mode MODE_LOGOUT_BUTTONS
+   **/
+  dialog->box[MODE_LOGOUT_BUTTONS] = vbox = gtk_vbox_new (FALSE, BORDER);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
+
+  hbox = gtk_hbox_new (TRUE, BORDER);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
+  gtk_widget_show (hbox);
+
+  dialog->shutdown = xfsm_shutdown_get ();
+
+  /**
+   * Cancel
+   **/
+  dialog->button_cancel = gtk_dialog_add_button (GTK_DIALOG (dialog),
+                                                 GTK_STOCK_CANCEL,
+                                                 GTK_RESPONSE_CANCEL);
+
+  /**
+   * Ok, for password mode
+   **/
+  dialog->button_ok = gtk_dialog_add_button (GTK_DIALOG (dialog),
+                                             GTK_STOCK_OK,
+                                             GTK_RESPONSE_OK);
+  gtk_widget_hide (dialog->button_ok);
+
+  /**
+   * Close, for password error
+   **/
+  dialog->button_close = gtk_dialog_add_button (GTK_DIALOG (dialog),
+                                                GTK_STOCK_CLOSE,
+                                                GTK_RESPONSE_CANCEL);
+  gtk_widget_hide (dialog->button_close);
+
+  /**
+   * Logout
+   **/
+  button = xfsm_logout_dialog_button (_("_Log Out"), "system-log-out",
+                                      "xfsm-logout", XFSM_SHUTDOWN_LOGOUT,
+                                      dialog);
+
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+  gtk_widget_grab_focus (button);
+
+  /**
+   * Reboot
+   **/
+  can_restart = kiosk_can_shutdown;
+  if (can_restart)
     {
-      saveonexit = FALSE;
-      autosave = FALSE;
+      if (!xfsm_shutdown_can_restart (dialog->shutdown, &can_restart, &error))
+        {
+          g_printerr ("%s: Querying CanRestart failed, %s\n\n",
+                      PACKAGE_NAME, ERROR_MSG (error));
+          g_clear_error (&error);
+
+          can_restart = FALSE;
+        }
     }
 
-  /* if PromptOnLogout is off, saving depends on AutoSave */
-  if (!prompt)
+  button = xfsm_logout_dialog_button (_("_Restart"), "system-reboot",
+                                      "xfsm-reboot", XFSM_SHUTDOWN_RESTART,
+                                      dialog);
+
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_set_sensitive (button, can_restart);
+  gtk_widget_show (button);
+
+  /**
+   * Shutdown
+   **/
+  can_shutdown = kiosk_can_shutdown;
+  if (can_shutdown)
     {
-      *shutdown_type = XFSM_SHUTDOWN_LOGOUT;
-      *save_session = autosave;
+      if (!xfsm_shutdown_can_shutdown (dialog->shutdown, &can_shutdown, &error))
+        {
+          g_printerr ("%s: Querying CanShutdown failed. %s\n\n",
+                      PACKAGE_NAME, ERROR_MSG (error));
+          g_clear_error (&error);
+
+          can_shutdown = FALSE;
+        }
+    }
+
+  button = xfsm_logout_dialog_button (_("Shut _Down"), "system-shutdown",
+                                      "xfsm-shutdown", XFSM_SHUTDOWN_SHUTDOWN,
+                                      dialog);
+
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_set_sensitive (button, can_shutdown);
+  gtk_widget_show (button);
+
+  /**
+   * Suspend and Hibernate
+   **/
+  if (kiosk_can_shutdown)
+    {
+      /**
+       * Suspend
+       *
+       * Hide the button if Xfpm is not installed
+       **/
+      if (xfconf_channel_get_bool (channel, "/shutdown/ShowSuspend", TRUE))
+        {
+          if (xfsm_shutdown_can_suspend (dialog->shutdown, &can_suspend, &error))
+            {
+              button = xfsm_logout_dialog_button (_("Sus_pend"), "system-suspend",
+                                                  "xfsm-suspend", XFSM_SHUTDOWN_SUSPEND,
+                                                  dialog);
+
+              gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+              gtk_widget_set_sensitive (button, can_suspend);
+              gtk_widget_show (button);
+            }
+          else
+            {
+              g_printerr ("%s: Querying CanSuspend failed. %s\n\n",
+                          PACKAGE_NAME, ERROR_MSG (error));
+              g_clear_error (&error);
+            }
+        }
+
+      /**
+       * Hibernate
+       *
+       * Hide the button if Xfpm is not installed
+       **/
+      if (xfconf_channel_get_bool (channel, "/shutdown/ShowHibernate", TRUE))
+        {
+          if (xfsm_shutdown_can_hibernate (dialog->shutdown, &can_hibernate, &error))
+            {
+              button = xfsm_logout_dialog_button (_("_Hibernate"), "system-hibernate",
+                                                  "xfsm-hibernate", XFSM_SHUTDOWN_HIBERNATE,
+                                                  dialog);
+
+              gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+              gtk_widget_set_sensitive (button, can_hibernate);
+              gtk_widget_show (button);
+            }
+          else
+            {
+              g_printerr ("%s: Querying CanHibernate failed. %s\n\n",
+                          PACKAGE_NAME, ERROR_MSG (error));
+              g_clear_error (&error);
+            }
+        }
+    }
+
+  /**
+   * Save session
+   **/
+  if (kiosk_can_save_session
+      && !xfconf_channel_get_bool (channel, "/general/AutoSave", FALSE))
+    {
+      dialog->save_session = gtk_check_button_new_with_mnemonic (_("_Save session for future logins"));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->save_session), save_session);
+      gtk_box_pack_start (GTK_BOX (vbox), dialog->save_session, FALSE, TRUE, BORDER);
+      gtk_widget_show (dialog->save_session);
+    }
+
+  attrs = pango_attr_list_new ();
+  pango_attr_list_insert (attrs, pango_attr_weight_new (PANGO_WEIGHT_BOLD));
+
+  /**
+   * Start mode MODE_ASK_PASSWORD
+   **/
+  dialog->box[MODE_ASK_PASSWORD] = vbox = gtk_vbox_new (FALSE, BORDER);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
+
+  hbox = gtk_hbox_new (FALSE, BORDER * 2);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
+  gtk_widget_show (hbox);
+
+  image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_AUTHENTICATION, GTK_ICON_SIZE_DIALOG);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
+
+  vbox = gtk_vbox_new (FALSE, BORDER);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  label = gtk_label_new (_("Please enter your password"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.00, 0.50);
+  gtk_label_set_attributes (GTK_LABEL (label), attrs);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  dialog->password_entry = entry = gtk_entry_new ();
+  gtk_entry_set_visibility (GTK_ENTRY (entry), FALSE);
+  gtk_entry_set_width_chars (GTK_ENTRY (entry), 30);
+  gtk_box_pack_start (GTK_BOX (vbox), entry, TRUE, TRUE, 0);
+  g_signal_connect_swapped (G_OBJECT (entry), "activate",
+                            G_CALLBACK (xfsm_logout_dialog_activate), dialog);
+  gtk_widget_show (entry);
+
+  /**
+   * Start mode MODE_SHOW_ERROR
+   **/
+  dialog->box[MODE_SHOW_ERROR] = vbox = gtk_vbox_new (FALSE, BORDER);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
+
+  hbox = gtk_hbox_new (FALSE, BORDER * 2);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
+  gtk_widget_show (hbox);
+
+  image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_ERROR, GTK_ICON_SIZE_DIALOG);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
+
+  vbox = gtk_vbox_new (FALSE, BORDER);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  label = gtk_label_new (_("An error occurred"));
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.00, 0.50);
+  gtk_label_set_attributes (GTK_LABEL (label), attrs);
+  gtk_widget_show (label);
+
+  label = gtk_label_new (_("Either the password you entered is "
+                           "invalid, or the system administrator "
+                           "disallows shutting down this computer "
+                           "with your user account."));
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
+  gtk_widget_show (label);
+
+  pango_attr_list_unref (attrs);
+}
+
+
+
+static void
+xfsm_logout_dialog_finalize (GObject *object)
+{
+  XfsmLogoutDialog *dialog = XFSM_LOGOUT_DIALOG (object);
+
+  g_object_unref (G_OBJECT (dialog->shutdown));
+
+  (*G_OBJECT_CLASS (xfsm_logout_dialog_parent_class)->finalize) (object);
+}
+
+
+
+static void
+xfsm_logout_dialog_set_mode (XfsmLogoutDialog *dialog,
+                             gint              mode)
+{
+  gint i;
+
+  for (i = 0; i < N_MODES; i++)
+    gtk_widget_set_visible (dialog->box[i], i == mode);
+
+  gtk_widget_set_visible (dialog->button_cancel, mode != MODE_SHOW_ERROR);
+  gtk_widget_set_visible (dialog->button_ok, mode == MODE_ASK_PASSWORD);
+  gtk_widget_set_visible (dialog->button_close, mode == MODE_SHOW_ERROR);
+}
+
+
+
+static void
+xfsm_logout_dialog_button_clicked (GtkWidget        *button,
+                                   XfsmLogoutDialog *dialog)
+{
+  gint *val;
+
+  val = g_object_get_data (G_OBJECT (button), "shutdown-type");
+  g_assert (val != NULL);
+  dialog->type_clicked = *val;
+
+  gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+}
+
+
+
+static GtkWidget *
+xfsm_logout_dialog_button (const gchar      *title,
+                           const gchar      *icon_name,
+                           const gchar      *icon_name_fallback,
+                           XfsmShutdownType  type,
+                           XfsmLogoutDialog *dialog)
+{
+  GtkWidget    *button;
+  GtkWidget    *vbox;
+  GdkPixbuf    *pixbuf;
+  GtkWidget    *image;
+  GtkWidget    *label;
+  static gint   icon_size = 0;
+  gint          w, h;
+  gint         *val;
+  GtkIconTheme *icon_theme;
+
+  g_return_val_if_fail (XFSM_IS_LOGOUT_DIALOG (dialog), NULL);
+
+  val = g_new0 (gint, 1);
+  *val = type;
+
+  button = gtk_button_new ();
+  g_object_set_data_full (G_OBJECT (button), "shutdown-type", val, g_free);
+  g_signal_connect (G_OBJECT (button), "clicked",
+      G_CALLBACK (xfsm_logout_dialog_button_clicked), dialog);
+
+  vbox = gtk_vbox_new (FALSE, BORDER);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), BORDER);
+  gtk_container_add (GTK_CONTAINER (button), vbox);
+  gtk_widget_show (vbox);
+
+  if (G_UNLIKELY (icon_size == 0))
+    {
+      if (gtk_icon_size_lookup (GTK_ICON_SIZE_DND, &w, &h))
+        icon_size = MAX (w, h);
+      else
+        icon_size = 32;
+    }
+
+  icon_theme = gtk_icon_theme_get_for_screen (gtk_window_get_screen (GTK_WINDOW (dialog)));
+  pixbuf = gtk_icon_theme_load_icon (icon_theme, icon_name, icon_size, 0, NULL);
+  if (G_UNLIKELY (pixbuf == NULL))
+    {
+      pixbuf = gtk_icon_theme_load_icon (icon_theme, icon_name_fallback,
+                                         icon_size, GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                         NULL);
+    }
+
+  image = gtk_image_new_from_pixbuf (pixbuf);
+  gtk_box_pack_start (GTK_BOX (vbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
+
+  label = gtk_label_new_with_mnemonic (title);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  return button;
+}
+
+
+
+static void
+xfsm_logout_dialog_activate (XfsmLogoutDialog *dialog)
+{
+  g_return_if_fail (XFSM_IS_LOGOUT_DIALOG (dialog));
+  gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+}
+
+
+
+static GdkPixbuf *
+xfsm_logout_dialog_screenshot_new (GdkScreen *screen)
+{
+  GdkRectangle  rect, screen_rect;
+  GdkWindow    *window;
+  GdkPixbuf    *screenshot;
+  gint          x, y;
+
+  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
+
+  screen_rect.x = 0;
+  screen_rect.y = 0;
+  screen_rect.width = gdk_screen_get_width (screen);
+  screen_rect.height = gdk_screen_get_height (screen);
+
+  window = gdk_screen_get_root_window (screen);
+  gdk_drawable_get_size (GDK_DRAWABLE (window), &rect.width, &rect.height);
+  gdk_window_get_origin (window, &x, &y);
+
+  rect.x = x;
+  rect.y = y;
+
+  if (!gdk_rectangle_intersect (&rect, &screen_rect, &rect))
+    return NULL;
+
+  screenshot = gdk_pixbuf_get_from_drawable  (NULL,
+                                             GDK_DRAWABLE (window),
+                                             NULL,
+                                             0, 0,
+                                             0, 0,
+                                             rect.width,
+                                             rect.height);
+
+  gdk_display_beep (gdk_screen_get_display (screen));
+
+  return screenshot;
+}
+
+
+
+static GdkPixbuf *
+exo_gdk_pixbuf_scale_ratio (GdkPixbuf *source,
+                            gint       dest_size)
+{
+  gdouble wratio;
+  gdouble hratio;
+  gint    source_width;
+  gint    source_height;
+  gint    dest_width;
+  gint    dest_height;
+
+  g_return_val_if_fail (GDK_IS_PIXBUF (source), NULL);
+  g_return_val_if_fail (dest_size > 0, NULL);
+
+  source_width  = gdk_pixbuf_get_width  (source);
+  source_height = gdk_pixbuf_get_height (source);
+
+  wratio = (gdouble) source_width  / (gdouble) dest_size;
+  hratio = (gdouble) source_height / (gdouble) dest_size;
+
+  if (hratio > wratio)
+    {
+      dest_width  = rint (source_width / hratio);
+      dest_height = dest_size;
+    }
+  else
+    {
+      dest_width  = dest_size;
+      dest_height = rint (source_height / wratio);
+    }
+
+  return gdk_pixbuf_scale_simple (source, MAX (dest_width, 1),
+                                  MAX (dest_height, 1), GDK_INTERP_BILINEAR);
+}
+
+
+
+static void
+xfsm_logout_dialog_screenshot_save (GdkPixbuf   *screenshot,
+                                    GdkScreen   *screen,
+                                    const gchar *session_name)
+{
+  GdkPixbuf  *scaled;
+  gchar      *path;
+  gchar      *display_name;
+  GdkDisplay *dpy;
+  GError     *error = NULL;
+  gchar      *filename;
+
+  g_return_if_fail (GDK_IS_PIXBUF (screenshot));
+  g_return_if_fail (GDK_IS_SCREEN (screen));
+
+  scaled = exo_gdk_pixbuf_scale_ratio (screenshot, SHOTSIZE);
+  if (G_LIKELY (scaled != NULL))
+    {
+      dpy = gdk_screen_get_display (screen);
+      display_name = xfsm_gdk_display_get_fullname (dpy);
+      path = g_strconcat ("sessions/thumbs-", display_name, "/", session_name, ".png", NULL);
+      filename = xfce_resource_save_location (XFCE_RESOURCE_CACHE, path, TRUE);
+      g_free (display_name);
+      g_free (path);
+
+      if (!gdk_pixbuf_save (scaled, filename, "png", &error, NULL))
+        {
+          g_warning ("Failed to save session screenshot: %s", error->message);
+          g_error_free (error);
+        }
+
+      g_free (filename);
+      g_object_unref (G_OBJECT (scaled));
+    }
+}
+
+
+
+static gint
+xfsm_logout_dialog_run (GtkDialog *dialog,
+                        gboolean   grab_input)
+{
+  GdkWindow *window;
+  gint       ret;
+
+  if (grab_input)
+    {
+      gtk_widget_show_now (GTK_WIDGET (dialog));
+
+      window = gtk_widget_get_window (GTK_WIDGET (dialog));
+      if (gdk_keyboard_grab (window, FALSE, GDK_CURRENT_TIME) != GDK_GRAB_SUCCESS)
+        g_critical ("Failed to grab the keyboard for logout window");
+
+#ifdef GDK_WINDOWING_X11
+      /* force input to the dialog */
+      gdk_error_trap_push ();
+      XSetInputFocus (GDK_DISPLAY (),
+                      GDK_WINDOW_XWINDOW (window),
+                      RevertToParent, CurrentTime);
+      gdk_error_trap_pop ();
+#endif
+    }
+
+  ret = gtk_dialog_run (dialog);
+
+  if (grab_input)
+    gdk_keyboard_ungrab (GDK_CURRENT_TIME);
+
+  return ret;
+}
+
+
+
+gboolean
+xfsm_logout_dialog (const gchar      *session_name,
+                    XfsmShutdownType *return_type,
+                    gboolean         *return_save_session)
+{
+  gint              result;
+  GtkWidget        *hidden;
+  gboolean          a11y;
+  GtkWidget        *dialog;
+  GdkScreen        *screen;
+  gint              monitor;
+  GdkPixbuf        *screenshot = NULL;
+  XfsmFadeout      *fadeout = NULL;
+  XfsmLogoutDialog *xfsm_dialog;
+  XfconfChannel    *channel = xfsm_open_config ();
+  XfceKiosk        *kiosk;
+  gboolean          autosave;
+  gboolean          kiosk_can_save_session;
+  const gchar      *text;
+  XfsmPassState     state;
+
+  g_return_val_if_fail (return_type != NULL, FALSE);
+  g_return_val_if_fail (return_save_session != NULL, FALSE);
+
+  /* get autosave state */
+  kiosk = xfce_kiosk_new ("xfce4-session");
+  kiosk_can_save_session = xfce_kiosk_query (kiosk, "SaveSession");
+  xfce_kiosk_free (kiosk);
+
+  if (kiosk_can_save_session)
+    autosave = xfconf_channel_get_bool (channel, "/general/AutoSave", FALSE);
+  else
+    autosave = FALSE;
+
+  /* check if we need to bother the user */
+  if (!xfconf_channel_get_bool (channel, "/general/PromptOnLogout", TRUE))
+    {
+      *return_type = XFSM_SHUTDOWN_LOGOUT;
+      *return_save_session = autosave;
 
       return TRUE;
     }
 
-  /* spawn the helper early so we know what it supports when
-   * constructing the dialog */
-  shutdown_helper = xfsm_shutdown_helper_new ();
-
-  /* It's really bad here if someone else has the pointer
-   * grabbed, so we first grab the pointer and keyboard
-   * to an offscreen window, and then once we have the
-   * server grabbed, move that to our dialog.
-   */
-  gtk_rc_reparse_all ();
-
-  /* get screen with pointer */
+  /* decide on which screen we should show the dialog */
   screen = xfce_gdk_screen_get_active (&monitor);
-  if (screen == NULL)
+  if (G_UNLIKELY (screen == NULL))
     {
       screen = gdk_screen_get_default ();
       monitor = 0;
     }
 
-  /* Try to grab Input on a hidden window first */
+  /* check if accessibility is enabled */
   hidden = gtk_invisible_new_for_screen (screen);
-  gtk_widget_show_now (hidden);
+  gtk_widget_show (hidden);
+  a11y = GTK_IS_ACCESSIBLE (gtk_widget_get_accessible (hidden));
 
-  accessibility = GTK_IS_ACCESSIBLE (gtk_widget_get_accessible (hidden));
-
-  if (!accessibility)
+  if (G_LIKELY (!a11y))
     {
+      /* wait until we can grab the keyboard, we need this for
+       * the dialog when running it */
       for (;;)
         {
-          if (gdk_pointer_grab (hidden->window, TRUE, 0, NULL, NULL,
-                                GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS)
+          if (gdk_keyboard_grab (gtk_widget_get_window (hidden), FALSE,
+                                 GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS)
             {
-              if (gdk_keyboard_grab (hidden->window, FALSE, GDK_CURRENT_TIME)
-                  == GDK_GRAB_SUCCESS)
-                {
-                  break;
-                }
-
-              gdk_pointer_ungrab (GDK_CURRENT_TIME);
+              gdk_keyboard_ungrab (GDK_CURRENT_TIME);
+              break;
             }
 
-          g_usleep (50 * 1000);
+          g_usleep (G_USEC_PER_SEC / 20);
         }
 
-#ifdef SESSION_SCREENSHOTS
-      /* grab a screenshot */
-      root = gdk_screen_get_root_window (screen);
-      gdk_screen_get_monitor_geometry (screen, monitor, &screenshot_area);
-      screenshot_pm = gdk_pixmap_new (GDK_DRAWABLE (root),
-                                      screenshot_area.width,
-                                      screenshot_area.height,
-                                      -1);
-      screenshot_gc = gdk_gc_new (GDK_DRAWABLE (screenshot_pm));
-      gdk_gc_set_function (screenshot_gc, GDK_COPY);
-      gdk_gc_set_subwindow (screenshot_gc, TRUE);
-      gdk_draw_drawable (GDK_DRAWABLE (screenshot_pm),
-                         screenshot_gc,
-                         GDK_DRAWABLE (root),
-                         screenshot_area.x,
-                         screenshot_area.y,
-                         0,
-                         0,
-                         screenshot_area.width,
-                         screenshot_area.height);
-      g_object_unref (G_OBJECT (screenshot_gc));
-#endif
+      /* make a screenshot */
+      if (xfconf_channel_get_bool (channel, "/general/ShowScreenshots", TRUE))
+        screenshot = xfsm_logout_dialog_screenshot_new (screen);
 
       /* display fadeout */
-      fadeout = xfsm_fadeout_new (gtk_widget_get_display (hidden));
+      fadeout = xfsm_fadeout_new (gdk_screen_get_display (screen));
       gdk_flush ();
 
-      /* create confirm dialog */
-      dialog = g_object_new (GTK_TYPE_DIALOG,
+      dialog = g_object_new (XFSM_TYPE_LOGOUT_DIALOG,
                              "type", GTK_WINDOW_POPUP,
-                             NULL);
-    }
-  else
-    {
-      dialog = gtk_dialog_new ();
-      atk_object_set_role (gtk_widget_get_accessible (dialog), ATK_ROLE_ALERT);
-      gtk_window_set_decorated (GTK_WINDOW (dialog), FALSE);
-    }
+                             "screen", screen, NULL);
 
-  shutdown_dialog = dialog;
+      xfsm_window_add_border (GTK_WINDOW (dialog));
 
-  cancel_button = gtk_dialog_add_button (GTK_DIALOG (dialog), GTK_STOCK_CANCEL,
-                                         GTK_RESPONSE_CANCEL);
-
-  ok_button = gtk_dialog_add_button (GTK_DIALOG (dialog), GTK_STOCK_OK,
-                                     GTK_RESPONSE_OK);
-
-  gtk_widget_hide (ok_button);
-
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
-  gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
-  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-  gtk_window_set_screen (GTK_WINDOW (dialog), screen);
-
-  dbox = GTK_DIALOG(dialog)->vbox;
-
-  vbox = gtk_vbox_new(FALSE, BORDER);
-  gtk_box_pack_start(GTK_BOX(dbox), vbox, TRUE, TRUE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), BORDER);
-  gtk_widget_show(vbox);
-
-#ifdef HAVE_GETPWUID
-  pw = getpwuid (getuid ());
-  if (G_LIKELY(pw && pw->pw_name && *pw->pw_name))
-    {
-      gchar *text = g_strdup_printf (_("<span size='large'><b>Log out %s</b></span>"), pw->pw_name);
-      GtkWidget *logout_label = g_object_new (GTK_TYPE_LABEL,
-                                             "label", text,
-                                             "use-markup", TRUE,
-                                             "justify", GTK_JUSTIFY_CENTER,
-                                             "xalign", 0.5,
-                                             "yalign", 0.5,
-                                             NULL);
-
-      gtk_widget_show (logout_label);
-      gtk_box_pack_start (GTK_BOX (vbox), logout_label, FALSE, FALSE, 0);
-
-      g_free (text);
-    }
-#endif
-
-  hbox = gtk_hbox_new (TRUE, BORDER);
-  gtk_widget_show (hbox);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-  /* logout */
-  logout_button = gtk_button_new ();
-  gtk_widget_show (logout_button);
-  gtk_box_pack_start (GTK_BOX (hbox), logout_button, TRUE, TRUE, 0);
-
-  g_signal_connect (logout_button, "clicked",
-                    G_CALLBACK (logout_button_clicked), shutdown_type);
-
-  vbox2 = gtk_vbox_new (FALSE, BORDER);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), BORDER);
-  gtk_widget_show (vbox2);
-  gtk_container_add (GTK_CONTAINER (logout_button), vbox2);
-
-  icon = gtk_icon_theme_load_icon (icon_theme,
-                                   "system-log-out",
-                                   32,
-                                   0,
-                                   NULL);
-  if (!icon)
-    icon = gtk_icon_theme_load_icon (icon_theme,
-                                     "xfsm-logout",
-                                     32,
-                                     GTK_ICON_LOOKUP_GENERIC_FALLBACK,
-                                     NULL);
-
-  image = gtk_image_new_from_pixbuf (icon);
-  gtk_widget_show (image);
-  gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
-  g_object_unref (icon);
-
-  label = gtk_label_new_with_mnemonic (_("_Log Out"));
-  gtk_widget_show (label);
-  gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
-
-  /* reboot */
-  reboot_button = gtk_button_new ();
-  gtk_widget_show (reboot_button);
-  gtk_box_pack_start (GTK_BOX (hbox), reboot_button, TRUE, TRUE, 0);
-
-  g_signal_connect (reboot_button, "clicked",
-                    G_CALLBACK (reboot_button_clicked), shutdown_type);
-
-  vbox2 = gtk_vbox_new (FALSE, BORDER);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), BORDER);
-  gtk_widget_show (vbox2);
-  gtk_container_add (GTK_CONTAINER (reboot_button), vbox2);
-
-  icon = gtk_icon_theme_load_icon (icon_theme,
-                                   "system-reboot",
-                                   32,
-                                   0,
-                                   NULL);
-
-  if (!icon)
-    icon = gtk_icon_theme_load_icon (icon_theme,
-                                     "xfsm-reboot",
-                                     32,
-                                     GTK_ICON_LOOKUP_GENERIC_FALLBACK,
-                                     NULL);
-
-  image = gtk_image_new_from_pixbuf (icon);
-  gtk_widget_show (image);
-  gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
-  g_object_unref (icon);
-
-  label = gtk_label_new_with_mnemonic (_("_Restart"));
-  gtk_widget_show (label);
-  gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
-
-  g_object_get (shutdown_helper,
-                "user-can-restart", &show_restart,
-                NULL);
-
-  if (!kiosk_can_shutdown || !show_restart )
-    gtk_widget_set_sensitive (reboot_button, FALSE);
-
-  /* halt */
-  halt_button = gtk_button_new ();
-  gtk_widget_show (halt_button);
-  gtk_box_pack_start (GTK_BOX (hbox), halt_button, TRUE, TRUE, 0);
-
-  g_signal_connect (halt_button, "clicked",
-                    G_CALLBACK (halt_button_clicked), shutdown_type);
-
-  vbox2 = gtk_vbox_new (FALSE, BORDER);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), BORDER);
-  gtk_widget_show (vbox2);
-  gtk_container_add (GTK_CONTAINER (halt_button), vbox2);
-
-  icon = gtk_icon_theme_load_icon (icon_theme,
-                                   "system-shutdown",
-                                   32,
-                                   0,
-                                   NULL);
-
-  if (!icon)
-    icon = gtk_icon_theme_load_icon (icon_theme,
-                                     "xfsm-shutdown",
-                                     32,
-                                     GTK_ICON_LOOKUP_GENERIC_FALLBACK,
-                                     NULL);
-
-  image = gtk_image_new_from_pixbuf (icon);
-  gtk_widget_show (image);
-  gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
-  g_object_unref (icon);
-
-  label = gtk_label_new_with_mnemonic (_("Shut _Down"));
-  gtk_widget_show (label);
-  gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
-
-  g_object_get (shutdown_helper,
-                "user-can-shutdown", &show_shutdown,
-                NULL);
-
-  if (!kiosk_can_shutdown || !show_shutdown)
-    gtk_widget_set_sensitive (halt_button, FALSE);
-
-  if (show_suspend)
-    g_object_get (shutdown_helper,
-                  "user-can-suspend", &show_suspend,
-                  NULL);
-
-  if (show_hibernate)
-    g_object_get (shutdown_helper,
-                  "user-can-hibernate", &show_hibernate,
-                  NULL);
-
-
-  if (kiosk_can_shutdown && (show_suspend || show_hibernate))
-    {
-      hbox = gtk_hbox_new (FALSE, BORDER);
-      gtk_widget_show (hbox);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-    }
-
-  /* suspend */
-  if (kiosk_can_shutdown && show_suspend)
-    {
-      suspend_button = gtk_button_new ();
-      gtk_widget_show (suspend_button);
-      gtk_box_pack_start (GTK_BOX (hbox), suspend_button, TRUE, TRUE, 0);
-
-      g_signal_connect (suspend_button, "clicked",
-                        G_CALLBACK (suspend_button_clicked), shutdown_type);
-
-      vbox2 = gtk_vbox_new (FALSE, BORDER);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox2), BORDER);
-      gtk_widget_show (vbox2);
-      gtk_container_add (GTK_CONTAINER (suspend_button), vbox2);
-
-      icon = gtk_icon_theme_load_icon (icon_theme,
-                                       "system-suspend",
-                                       32,
-                                       0,
-                                       NULL);
-
-      if (!icon)
-        icon = gtk_icon_theme_load_icon (icon_theme,
-                                         "xfsm-suspend",
-                                         32,
-                                         GTK_ICON_LOOKUP_GENERIC_FALLBACK,
-                                         NULL);
-
-      image = gtk_image_new_from_pixbuf (icon);
-      gtk_widget_show (image);
-      gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
-      g_object_unref (icon);
-
-      label = gtk_label_new_with_mnemonic (_("Sus_pend"));
-      gtk_widget_show (label);
-      gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
-    }
-
-  /* hibernate */
-  if (kiosk_can_shutdown && show_hibernate)
-    {
-      hibernate_button = gtk_button_new ();
-      gtk_widget_show (hibernate_button);
-      gtk_box_pack_start (GTK_BOX (hbox), hibernate_button, TRUE, TRUE, 0);
-
-      g_signal_connect (hibernate_button, "clicked",
-                        G_CALLBACK (hibernate_button_clicked), shutdown_type);
-
-      vbox2 = gtk_vbox_new (FALSE, BORDER);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox2), BORDER);
-      gtk_widget_show (vbox2);
-      gtk_container_add (GTK_CONTAINER (hibernate_button), vbox2);
-
-      icon = gtk_icon_theme_load_icon (icon_theme,
-                                       "system-hibernate",
-                                       32,
-                                       0,
-                                       NULL);
-
-      if (!icon)
-        icon = gtk_icon_theme_load_icon (icon_theme,
-                                         "xfsm-hibernate",
-                                         32,
-                                         GTK_ICON_LOOKUP_GENERIC_FALLBACK,
-                                         NULL);
-
-      image = gtk_image_new_from_pixbuf (icon);
-      gtk_widget_show (image);
-      gtk_box_pack_start (GTK_BOX (vbox2), image, FALSE, FALSE, 0);
-      g_object_unref (icon);
-
-      label = gtk_label_new_with_mnemonic (_("_Hibernate"));
-      gtk_widget_show (label);
-      gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
-  }
-
-  /* save session */
-  if (!autosave && kiosk_can_save_session)
-    {
-      checkbox = gtk_check_button_new_with_mnemonic(
-          _("_Save session for future logins"));
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbox), saveonexit);
-      gtk_box_pack_start(GTK_BOX(vbox), checkbox, FALSE, TRUE, BORDER);
-      gtk_widget_show(checkbox);
-    }
-  else
-    {
-      checkbox = NULL;
-    }
-
-  /* create small border */
-  if (!accessibility)
-    xfsm_window_add_border (GTK_WINDOW (dialog));
-
-  /* center dialog on target monitor */
-  gtk_window_set_screen (GTK_WINDOW (dialog), screen);
-  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
-
-  /* save portion of the root window covered by the dialog */
-  if (!accessibility && shutdown_helper != NULL)
-    {
       gtk_widget_realize (dialog);
       gdk_window_set_override_redirect (dialog->window, TRUE);
       gdk_window_raise (dialog->window);
     }
+  else
+    {
+      dialog = g_object_new (XFSM_TYPE_LOGOUT_DIALOG,
+                             "decorated", !a11y,
+                             "screen", screen, NULL);
 
-  /* need to realize the dialog first! */
-  gtk_widget_show_now (dialog);
-  gtk_widget_grab_focus (logout_button);
+      gtk_window_set_keep_above (GTK_WINDOW (dialog), TRUE);
+      atk_object_set_role (gtk_widget_get_accessible (dialog), ATK_ROLE_ALERT);
+    }
 
-  /* Grab Keyboard and Mouse pointer */
-  if (!accessibility)
-    xfsm_window_grab_input (GTK_WINDOW (dialog));
+  gtk_widget_destroy (hidden);
 
-  /* run the logout dialog */
-  result = gtk_dialog_run (GTK_DIALOG(dialog));
+  xfsm_dialog = XFSM_LOGOUT_DIALOG (dialog);
 
-  if (result == GTK_RESPONSE_OK) {
-    *save_session = autosave ? autosave :
-            gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkbox));
-  }
+  /* set mode */
+  xfsm_logout_dialog_set_mode (xfsm_dialog, MODE_LOGOUT_BUTTONS);
+
+  result = xfsm_logout_dialog_run (GTK_DIALOG (dialog), !a11y);
 
   gtk_widget_hide (dialog);
 
-  g_object_get (shutdown_helper,
-                "require-password", &require_password,
-                NULL);
-
-  /* ask password */
-  if (result == GTK_RESPONSE_OK && *shutdown_type != XFSM_SHUTDOWN_LOGOUT
-      && require_password )
+  if (result == GTK_RESPONSE_OK)
     {
-      gtk_widget_show (ok_button);
+      /* check if the sudo helper needs a password */
+      if (xfsm_shutdown_password_require (xfsm_dialog->shutdown, xfsm_dialog->type_clicked))
+        {
+          /* switch mode */
+          xfsm_logout_dialog_set_mode (xfsm_dialog, MODE_ASK_PASSWORD);
 
-      gtk_widget_destroy (vbox);
+          /* don't leave artifacts on the background window */
+          xfsm_fadeout_clear (fadeout);
 
-      entry_vbox = gtk_vbox_new (FALSE, BORDER);
-      gtk_box_pack_start (GTK_BOX (dbox), entry_vbox, TRUE, TRUE, BORDER);
-      gtk_widget_show (entry_vbox);
+          /* loop for sudo password tries */
+          for (;;)
+            {
+              gtk_widget_grab_focus (xfsm_dialog->password_entry);
+              gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+              result = xfsm_logout_dialog_run (GTK_DIALOG (dialog), !a11y);
 
-      label = gtk_label_new (_("Please enter your password:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-      gtk_widget_show (label);
-      gtk_box_pack_start (GTK_BOX (entry_vbox), label, FALSE, FALSE, 0);
+              if (result == GTK_RESPONSE_OK)
+                {
+                  /* bit of visual feedback we're processing the password */
+                  gtk_widget_set_sensitive (xfsm_dialog->button_cancel, FALSE);
+                  gtk_widget_set_sensitive (xfsm_dialog->button_ok, FALSE);
 
-      entry = gtk_entry_new ();
-      gtk_entry_set_visibility(GTK_ENTRY(entry), FALSE);
-      gtk_box_pack_start (GTK_BOX (entry_vbox), entry, TRUE, TRUE, 0);
-      g_signal_connect (G_OBJECT (entry), "activate",
-                        G_CALLBACK (entry_activate_cb), dialog);
-      gtk_widget_show (entry);
+                  /* update the widgets before we lock the loop */
+                  while (gtk_events_pending ())
+                    g_main_context_iteration (NULL, FALSE);
 
-      /* center dialog on target monitor */
-      gtk_window_set_screen (GTK_WINDOW (dialog), screen);
-      gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
+                  /* send the password to the helper */
+                  text = gtk_entry_get_text (GTK_ENTRY (xfsm_dialog->password_entry));
+                  state = xfsm_shutdown_password_send (xfsm_dialog->shutdown, xfsm_dialog->type_clicked, text);
+                  gtk_entry_set_text (GTK_ENTRY (xfsm_dialog->password_entry), "");
 
-      gtk_widget_show_now (dialog);
-      gtk_widget_grab_focus (entry);
+                  gtk_widget_set_sensitive (xfsm_dialog->button_cancel, TRUE);
+                  gtk_widget_set_sensitive (xfsm_dialog->button_ok, TRUE);
 
-      /* Grab Keyboard and Mouse pointer */
-      if (!accessibility)
-        xfsm_window_grab_input (GTK_WINDOW (dialog));
+                  if (state == PASSWORD_RETRY)
+                    continue;
 
-      result = gtk_dialog_run (GTK_DIALOG (dialog));
+                  if (state == PASSWORD_FAILED)
+                    {
+                      gtk_widget_hide (dialog);
+
+                      xfsm_logout_dialog_set_mode (xfsm_dialog, MODE_SHOW_ERROR);
+                      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
+
+                      /* don't leave artifacts on the background window */
+                      xfsm_fadeout_clear (fadeout);
+
+                      /* show error */
+                      xfsm_logout_dialog_run (GTK_DIALOG (dialog), !a11y);
+
+                      result = GTK_RESPONSE_CANCEL;
+                    }
+                }
+
+              /* cancel clicked, succeeded or helper killed */
+              break;
+            }
+
+          gtk_widget_hide (dialog);
+        }
 
       if (result == GTK_RESPONSE_OK)
         {
-          const gchar *password = gtk_entry_get_text (GTK_ENTRY (entry));
+          /* store autosave state */
+          if (autosave)
+            *return_save_session = TRUE;
+          else if (xfsm_dialog->save_session != NULL)
+            *return_save_session = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (xfsm_dialog->save_session));
+          else
+            *return_save_session = FALSE;
 
-          if (!xfsm_shutdown_helper_send_password (shutdown_helper, password))
-            {
-              gtk_label_set_text (GTK_LABEL (label),
-                                  _("<b>An error occurred</b>"));
-              gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-
-              gtk_container_remove (GTK_CONTAINER (
-                    GTK_DIALOG (dialog)->action_area), cancel_button);
-              gtk_container_remove (GTK_CONTAINER (
-                    GTK_DIALOG (dialog)->action_area), ok_button);
-
-              gtk_container_remove (GTK_CONTAINER (entry_vbox), entry);
-
-              gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                     GTK_STOCK_CLOSE,
-                                     GTK_RESPONSE_CANCEL);
-
-              label = gtk_label_new (_("Either the password you entered is "
-                                       "invalid, or the system administrator "
-                                       "disallows shutting down this computer "
-                                       "with your user account."));
-              gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-              gtk_box_pack_start (GTK_BOX (entry_vbox), label, TRUE, TRUE, 0);
-              gtk_widget_show (label);
-
-              /* center dialog on target monitor */
-              gtk_window_set_screen (GTK_WINDOW (dialog), screen);
-              gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
-
-              gtk_widget_show_now (dialog);
-
-              /* Grab Keyboard and Mouse pointer */
-              if (!accessibility)
-                xfsm_window_grab_input (GTK_WINDOW (dialog));
-
-              gtk_dialog_run (GTK_DIALOG (dialog));
-
-              result = GTK_RESPONSE_CANCEL;
-            }
+          /* return the clicked action */
+          *return_type = xfsm_dialog->type_clicked;
         }
     }
 
-  gtk_widget_destroy(dialog);
-  gtk_widget_destroy(hidden);
+  if (fadeout != NULL)
+    xfsm_fadeout_destroy (fadeout);
 
-  shutdown_dialog = NULL;
+  gtk_widget_destroy (dialog);
 
-  /* Release Keyboard/Mouse pointer grab */
-  if (!accessibility)
-    {
-      xfsm_fadeout_destroy (fadeout);
-
-      gdk_pointer_ungrab (GDK_CURRENT_TIME);
-      gdk_keyboard_ungrab (GDK_CURRENT_TIME);
-      gdk_flush ();
-    }
-
-  /* process all pending events first */
-  while (gtk_events_pending ())
-    g_main_context_iteration (NULL, FALSE);
-
-  /*
-   * remember the current settings.
-   */
+  /* store channel settings if everything worked fine */
   if (result == GTK_RESPONSE_OK)
     {
       xfconf_channel_set_string (channel, "/general/SessionName", session_name);
-      xfconf_channel_set_bool (channel, "/general/SaveOnExit", *save_session);
-    }
-  else
-    {
-      g_object_unref (shutdown_helper);
-      shutdown_helper = NULL;
+      xfconf_channel_set_bool (channel, "/general/SaveOnExit", *return_save_session);
     }
 
-#ifdef SESSION_SCREENSHOTS
-  if (screenshot_pm != NULL)
+  /* save the screenshot */
+  if (screenshot != NULL)
     {
       if (result == GTK_RESPONSE_OK)
-        screenshot_save (session_name, screenshot_pm, &screenshot_area);
-
-      g_object_unref (G_OBJECT (screenshot_pm));
+        xfsm_logout_dialog_screenshot_save (screenshot, screen, session_name);
+      g_object_unref (G_OBJECT (screenshot));
     }
-#endif
 
   return (result == GTK_RESPONSE_OK);
 }

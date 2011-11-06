@@ -22,10 +22,22 @@
 #ifndef __XFSM_LOGOUT_DIALOG_H__
 #define __XFSM_LOGOUT_DIALOG_H__
 
-#include <xfce4-session/xfsm-global.h>
+#include <xfce4-session/xfsm-shutdown.h>
 
-gboolean xfsm_logout_dialog (const gchar      *session_name,
-                             XfsmShutdownType *shutdown_type,
-                             gboolean         *save_session);
+typedef struct _XfsmLogoutDialogClass XfsmLogoutDialogClass;
+typedef struct _XfsmLogoutDialog      XfsmLogoutDialog;
+
+#define XFSM_TYPE_LOGOUT_DIALOG            (xfsm_logout_dialog_get_type ())
+#define XFSM_LOGOUT_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), XFSM_TYPE_LOGOUT_DIALOG, XfsmLogoutDialog))
+#define XFSM_LOGOUT_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), XFSM_TYPE_LOGOUT_DIALOG, XfsmLogoutDialogClass))
+#define XFSM_IS_LOGOUT_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), XFSM_TYPE_LOGOUT_DIALOG))
+#define XFSM_IS_LOGOUT_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), XFSM_TYPE_LOGOUT_DIALOG))
+#define XFSM_LOGOUT_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), XFSM_TYPE_LOGOUT_DIALOG, XfsmLogoutDialogClass))
+
+GType      xfsm_logout_dialog_get_type (void) G_GNUC_CONST;
+
+gboolean   xfsm_logout_dialog          (const gchar      *session_name,
+                                        XfsmShutdownType *return_type,
+                                        gboolean         *return_save_session);
 
 #endif

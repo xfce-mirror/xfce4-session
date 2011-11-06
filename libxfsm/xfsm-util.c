@@ -175,23 +175,14 @@ xfsm_window_add_border (GtkWindow *window)
   gtk_container_add (GTK_CONTAINER (window), box1);
 }
 
-
-void
-xfsm_window_grab_input (GtkWindow *window)
-{
-  GdkWindow *xwindow = GTK_WIDGET (window)->window;
-
-  gdk_pointer_grab (xwindow, TRUE, 0, NULL, NULL, GDK_CURRENT_TIME);
-  gdk_keyboard_grab (xwindow, FALSE, GDK_CURRENT_TIME);
-  XSetInputFocus (GDK_DISPLAY (), GDK_WINDOW_XWINDOW (xwindow),
-                  RevertToParent, CurrentTime);
-}
-
-
 XfconfChannel*
 xfsm_open_config (void)
 {
-  return xfconf_channel_get ("xfce4-session");
+  static XfconfChannel *channel = NULL;
+
+  if (G_UNLIKELY (channel == NULL))
+    channel = xfconf_channel_get ("xfce4-session");
+  return channel;
 }
 
 gchar*

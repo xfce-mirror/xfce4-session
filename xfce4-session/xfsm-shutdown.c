@@ -1,6 +1,6 @@
-/* $Id$ */
 /*-
  * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2011      Nick Schermer <nick@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -36,7 +36,19 @@
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+#ifdef HAVE_SIGNAL_H
+#include <signal.h>
+#endif
 
+
+#include <dbus/dbus-glib.h>
+#include <dbus/dbus-glib-lowlevel.h>
 #include <libxfce4util/libxfce4util.h>
 #include <gtk/gtk.h>
 
@@ -48,60 +60,682 @@
 #include <xfce4-session/xfsm-fadeout.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-legacy.h>
-#include <xfce4-session/xfsm-shutdown-helper.h>
+#include <xfce4-session/xfsm-consolekit.h>
 
-gint
-xfsm_shutdown(XfsmShutdownType type)
+
+
+static void xfsm_shutdown_finalize  (GObject      *object);
+static void xfsm_shutdown_sudo_free (XfsmShutdown *shutdown);
+
+
+
+struct _XfsmShutdownClass
 {
-  gboolean            result;
-  GError             *error = NULL;
-  XfsmShutdownHelper *shutdown_helper;
+  GObjectClass __parent__;
+};
 
-  /* kludge */
-  if (type == XFSM_SHUTDOWN_ASK)
+typedef enum
+{
+  SUDO_NOT_INITIAZED,
+  SUDO_AVAILABLE,
+  SUDO_FAILED
+}
+HelperState;
+
+struct _XfsmShutdown
+{
+  GObject __parent__;
+
+  XfsmConsolekit *consolekit;
+
+  /* sudo helper */
+  HelperState     helper_state;
+  pid_t           helper_pid;
+  FILE           *helper_infile;
+  FILE           *helper_outfile;
+  guint           helper_watchid;
+  gboolean        helper_require_password;
+};
+
+
+
+G_DEFINE_TYPE (XfsmShutdown, xfsm_shutdown, G_TYPE_OBJECT)
+
+
+
+static void
+xfsm_shutdown_class_init (XfsmShutdownClass *klass)
+{
+  GObjectClass *gobject_class;
+
+  gobject_class = G_OBJECT_CLASS (klass);
+  gobject_class->finalize = xfsm_shutdown_finalize;
+}
+
+
+
+static void
+xfsm_shutdown_init (XfsmShutdown *shutdown)
+{
+  shutdown->consolekit = xfsm_consolekit_get ();
+  shutdown->helper_state = SUDO_NOT_INITIAZED;
+  shutdown->helper_require_password = FALSE;
+}
+
+
+
+static void
+xfsm_shutdown_finalize (GObject *object)
+{
+  XfsmShutdown *shutdown = XFSM_SHUTDOWN (object);
+
+  g_object_unref (G_OBJECT (shutdown->consolekit));
+
+  /* close down helper */
+  xfsm_shutdown_sudo_free (shutdown);
+
+  (*G_OBJECT_CLASS (xfsm_shutdown_parent_class)->finalize) (object);
+}
+
+
+
+static void
+xfsm_shutdown_sudo_free (XfsmShutdown *shutdown)
+{
+  gint status;
+
+  /* close down helper */
+  if (shutdown->helper_infile != NULL)
     {
-      g_warning ("xfsm_shutdown () passed XFSM_SHUTDOWN_ASK.  This is a bug.");
-      type = XFSM_SHUTDOWN_LOGOUT;
+      fclose (shutdown->helper_infile);
+      shutdown->helper_infile = NULL;
     }
 
-  /* these two remember if they were started or not */
-  xfsm_compat_gnome_shutdown ();
-  xfsm_compat_kde_shutdown ();
-
-  /* kill legacy clients */
-  xfsm_legacy_shutdown ();
-
-#if !defined(__NR_ioprio_set) && defined(HAVE_SYNC)
-  /* sync disk block in-core status with that on disk.  if
-   * we have ioprio_set (), then we've already synced. */
-  if (fork () == 0)
+  if (shutdown->helper_outfile != NULL)
     {
-# ifdef HAVE_SETSID
-      setsid ();
-# endif
-      sync ();
-      _exit (EXIT_SUCCESS);
-    }
-#endif  /* HAVE_SYNC */
-
-  if (type == XFSM_SHUTDOWN_LOGOUT)
-    return EXIT_SUCCESS;
-
-  shutdown_helper = xfsm_shutdown_helper_new ();
-  result = xfsm_shutdown_helper_send_command (shutdown_helper, type, &error);
-  g_object_unref (shutdown_helper);
-
-  if (!result)
-    {
-      xfce_message_dialog (NULL, _("Shutdown Failed"),
-                           GTK_STOCK_DIALOG_ERROR,
-                           _("Unable to perform shutdown"),
-                           error->message,
-                           GTK_STOCK_QUIT, GTK_RESPONSE_ACCEPT,
-                           NULL);
-      g_error_free (error);
-      return EXIT_FAILURE;
+      fclose (shutdown->helper_outfile);
+      shutdown->helper_outfile = NULL;
     }
 
-  return EXIT_SUCCESS;
+  if (shutdown->helper_watchid > 0)
+    {
+      g_source_remove (shutdown->helper_watchid);
+      shutdown->helper_watchid = 0;
+    }
+
+  if (shutdown->helper_pid > 0)
+    {
+      waitpid (shutdown->helper_pid, &status, 0);
+      shutdown->helper_pid = 0;
+    }
+
+  /* reset state */
+  shutdown->helper_state = SUDO_NOT_INITIAZED;
+}
+
+
+
+static void
+xfsm_shutdown_sudo_childwatch (GPid     pid,
+                               gint     status,
+                               gpointer data)
+{
+  /* close down sudo stuff */
+  xfsm_shutdown_sudo_free (XFSM_SHUTDOWN (data));
+}
+
+
+
+static gboolean
+xfsm_shutdown_sudo_init (XfsmShutdown  *shutdown,
+                         GError       **error)
+{
+  gchar  *cmd;
+  struct  rlimit rlp;
+  gchar   buf[15];
+  gint    parent_pipe[2];
+  gint    child_pipe[2];
+  gint    n;
+
+  /* return state if we succeeded */
+  if (shutdown->helper_state != SUDO_NOT_INITIAZED)
+    return shutdown->helper_state == SUDO_AVAILABLE;
+
+  g_return_val_if_fail (shutdown->helper_infile == NULL, FALSE);
+  g_return_val_if_fail (shutdown->helper_outfile == NULL, FALSE);
+  g_return_val_if_fail (shutdown->helper_watchid == 0, FALSE);
+  g_return_val_if_fail (shutdown->helper_pid == 0, FALSE);
+
+  /* assume it won't work for now */
+  shutdown->helper_state = SUDO_FAILED;
+
+  cmd = g_find_program_in_path ("sudo");
+  if (G_UNLIKELY (cmd == NULL))
+    {
+      g_set_error_literal (error, 1, 0,
+                           "The program \"sudo\" was not found");
+      return FALSE;
+    }
+
+  if (pipe (parent_pipe) == -1)
+    {
+      g_set_error (error, 1, 0,
+                   "Unable to create parent pipe: %s",
+                   strerror (errno));
+      goto err0;
+    }
+
+  if (pipe (child_pipe) == -1)
+    {
+      g_set_error (error, 1, 0,
+                   "Unable to create child pipe: %s",
+                   strerror (errno));
+      goto err1;
+    }
+
+  shutdown->helper_pid = fork ();
+  if (shutdown->helper_pid < 0)
+    {
+      g_set_error (error, 1, 0,
+                   "Unable to fork sudo helper: %s",
+                   strerror (errno));
+      goto err2;
+    }
+  else if (shutdown->helper_pid == 0)
+    {
+      /* setup signals */
+      signal (SIGPIPE, SIG_IGN);
+
+      /* setup environment */
+      xfce_setenv ("LC_ALL", "C", TRUE);
+      xfce_setenv ("LANG", "C", TRUE);
+      xfce_setenv ("LANGUAGE", "C", TRUE);
+
+      /* setup the 3 standard file handles */
+      dup2 (child_pipe[0], STDIN_FILENO);
+      dup2 (parent_pipe[1], STDOUT_FILENO);
+      dup2 (parent_pipe[1], STDERR_FILENO);
+
+      /* close all other file handles */
+      getrlimit (RLIMIT_NOFILE, &rlp);
+      for (n = 0; n < (gint) rlp.rlim_cur; ++n)
+        {
+          if (n != STDIN_FILENO && n != STDOUT_FILENO && n != STDERR_FILENO)
+            close (n);
+        }
+
+      /* execute sudo with the helper */
+      execl (cmd, "sudo", "-H", "-S", "-p",
+             "XFSM_SUDO_PASS ", "--",
+             XFSM_SHUTDOWN_HELPER_CMD, NULL);
+
+      g_free (cmd);
+      cmd = NULL;
+
+      _exit (127);
+    }
+  else
+    {
+      /* watch the sudo helper */
+      shutdown->helper_watchid = g_child_watch_add (shutdown->helper_pid,
+                                                    xfsm_shutdown_sudo_childwatch,
+                                                    shutdown);
+    }
+
+  /* read sudo/helper answer */
+  n = read (parent_pipe[0], buf, sizeof (buf));
+  if (n < 15)
+    {
+      g_set_error (error, 1, 0,
+                   "Unable to read response from sudo helper: %s",
+                   n < 0 ? strerror (errno) : "Unknown error");
+      goto err2;
+    }
+
+  /* open pipe to receive replies from sudo */
+  shutdown->helper_infile = fdopen (parent_pipe[0], "r");
+  if (shutdown->helper_infile == NULL)
+    {
+      g_set_error (error, 1, 0,
+                   "Unable to open parent pipe: %s",
+                   strerror (errno));
+      goto err2;
+    }
+  close (parent_pipe[1]);
+
+  /* open pipe to send passwords to sudo */
+  shutdown->helper_outfile = fdopen (child_pipe[1], "w");
+  if (shutdown->helper_outfile == NULL)
+    {
+      g_set_error (error, 1, 0,
+                   "Unable to open parent pipe: %s",
+                   strerror (errno));
+      goto err2;
+    }
+  close (child_pipe[0]);
+
+  /* check if NOPASSWD is set in /etc/sudoers */
+  if (memcmp (buf, "XFSM_SUDO_PASS ", 15) == 0)
+    {
+      shutdown->helper_require_password = TRUE;
+    }
+  else if (memcmp (buf, "XFSM_SUDO_DONE ", 15) == 0)
+    {
+      shutdown->helper_require_password = FALSE;
+    }
+  else
+    {
+      g_set_error (error, 1, 0,
+                   "Got unexpected reply from sudo shutdown helper");
+      goto err2;
+    }
+
+  /* if we try again */
+  shutdown->helper_state = SUDO_AVAILABLE;
+
+  return TRUE;
+
+err2:
+  xfsm_shutdown_sudo_free (shutdown);
+
+  close (child_pipe[0]);
+  close (child_pipe[1]);
+
+err1:
+  close (parent_pipe[0]);
+  close (parent_pipe[1]);
+
+err0:
+  g_free (cmd);
+
+  shutdown->helper_pid = 0;
+
+  return FALSE;
+}
+
+
+
+static gboolean
+xfsm_shutdown_sudo_try_action (XfsmShutdown      *shutdown,
+                               XfsmShutdownType   type,
+                               GError           **error)
+{
+  const gchar *action;
+  gchar        reply[256];
+
+  g_return_val_if_fail (shutdown->helper_state == SUDO_AVAILABLE, FALSE);
+  g_return_val_if_fail (shutdown->helper_outfile != NULL, FALSE);
+  g_return_val_if_fail (shutdown->helper_infile != NULL, FALSE);
+  g_return_val_if_fail (type == XFSM_SHUTDOWN_SHUTDOWN
+                        || type == XFSM_SHUTDOWN_RESTART, FALSE);
+
+  /* the command we send to sudo */
+  if (type == XFSM_SHUTDOWN_SHUTDOWN)
+    action = "POWEROFF";
+  else if (type == XFSM_SHUTDOWN_RESTART)
+    action = "REBOOT";
+  else
+    return FALSE;
+
+  /* write action to sudo helper */
+  if (fprintf (shutdown->helper_outfile, "%s\n", action) > 0)
+    fflush (shutdown->helper_outfile);
+
+  /* check if the write succeeded */
+  if (ferror (shutdown->helper_outfile) != 0)
+    {
+      /* probably succeeded but the helper got killed */
+      if (errno == EINTR)
+        return TRUE;
+
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Error sending command to shutdown helper: %s"),
+                   strerror (errno));
+      return FALSE;
+    }
+
+  /* get responce from sudo helper */
+  if (fgets (reply, sizeof (reply), shutdown->helper_infile) == NULL)
+    {
+      /* probably succeeded but the helper got killed */
+      if (errno == EINTR)
+        return TRUE;
+
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Error receiving response from shutdown helper: %s"),
+                   strerror (errno));
+      return FALSE;
+    }
+
+  if (strncmp (reply, "SUCCEED", 7) != 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Shutdown command failed"));
+
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+
+
+static XfsmPassState
+xfsm_shutdown_sudo_send_password (XfsmShutdown  *shutdown,
+                                  const gchar   *password)
+{
+  gchar        buf[1024];
+  gsize        len_buf, len_send;
+  gint         fd;
+  gsize        len;
+  gssize       result;
+  gint         attempts;
+  const gchar *errmsg = NULL;
+
+  g_return_val_if_fail (shutdown->helper_state == SUDO_AVAILABLE, PASSWORD_FAILED);
+  g_return_val_if_fail (shutdown->helper_outfile != NULL, PASSWORD_FAILED);
+  g_return_val_if_fail (shutdown->helper_infile != NULL, PASSWORD_FAILED);
+  g_return_val_if_fail (shutdown->helper_require_password, PASSWORD_FAILED);
+  g_return_val_if_fail (password != NULL, PASSWORD_FAILED);
+
+  /* write password to sudo helper */
+  g_snprintf (buf, sizeof (buf), "%s\n", password);
+  len_buf = strlen (buf);
+  len_send = fwrite (buf, 1, len_buf, shutdown->helper_outfile);
+  fflush (shutdown->helper_outfile);
+  bzero (buf, len_buf);
+
+  if (len_send != len_buf
+      || ferror (shutdown->helper_outfile) != 0)
+    {
+      errmsg = "Failed to send password to sudo";
+      goto err1;
+    }
+
+  fd = fileno (shutdown->helper_infile);
+
+  for (len = 0, attempts = 0;;)
+    {
+      result = read (fd, buf + len, 256 - len);
+
+      if (result < 0)
+        {
+          errmsg = "Failed to read data from sudo";
+          goto err1;
+        }
+      else if (result == 0)
+        {
+          /* don't try too often */
+          if (++attempts > 20)
+            {
+              errmsg = "Too many password attempts";
+              goto err1;
+            }
+
+          continue;
+        }
+      else if (result + len >= sizeof (buf))
+        {
+          errmsg = "Received too much data from sudo";
+          goto err1;
+        }
+
+      len += result;
+      buf[len] = '\0';
+
+      if (len >= 15)
+        {
+          if (g_str_has_suffix (buf, "XFSM_SUDO_PASS "))
+            {
+              return PASSWORD_RETRY;
+            }
+          else if (g_str_has_suffix (buf, "XFSM_SUDO_DONE "))
+            {
+              /* sudo is unlocked, no further passwords required */
+              shutdown->helper_require_password = FALSE;
+
+              return PASSWORD_SUCCEED;
+            }
+        }
+    }
+
+  return PASSWORD_FAILED;
+
+  err1:
+
+  g_printerr (PACKAGE_NAME ": %s.\n\n", errmsg);
+  return PASSWORD_FAILED;
+}
+
+
+
+static gboolean
+xfsm_shutdown_query_xfpm (XfsmShutdown  *shutdown,
+                          const gchar   *method,
+                          gboolean      *can_method,
+                          GError       **error)
+{
+  DBusGConnection *conn;
+  DBusGProxy      *proxy;
+  gboolean         result = FALSE;
+
+  g_return_val_if_fail (can_method != NULL, FALSE);
+
+  /* never return true if something fails */
+  *can_method = FALSE;
+
+  conn = dbus_g_bus_get (DBUS_BUS_SESSION, error);
+  if (conn == NULL)
+    return FALSE;
+
+  proxy = dbus_g_proxy_new_for_name_owner (conn, "org.xfce.Power.Manager",
+                                           "/org/xfce/PowerManager",
+                                           "org.xfce.Power.Manager", error);
+  if (proxy != NULL)
+    {
+      result = dbus_g_proxy_call (proxy, method, error,
+                                  G_TYPE_INVALID,
+                                  G_TYPE_BOOLEAN, can_method,
+                                  G_TYPE_INVALID);
+      g_object_unref (proxy);
+    }
+
+  dbus_g_connection_unref (conn);
+
+  return result;
+}
+
+
+
+XfsmShutdown *
+xfsm_shutdown_get (void)
+{
+  static XfsmShutdown *object = NULL;
+
+  if (G_LIKELY (object != NULL))
+    {
+      g_object_ref (G_OBJECT (object));
+    }
+  else
+    {
+      object = g_object_new (XFSM_TYPE_SHUTDOWN, NULL);
+      g_object_add_weak_pointer (G_OBJECT (object), (gpointer) &object);
+    }
+
+  return object;
+}
+
+
+
+gboolean
+xfsm_shutdown_password_require (XfsmShutdown     *shutdown,
+                                XfsmShutdownType  type)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  /* the helper only handled shutdown and restart */
+  if (type == XFSM_SHUTDOWN_SHUTDOWN || type == XFSM_SHUTDOWN_RESTART)
+    return shutdown->helper_require_password;
+
+  return FALSE;
+}
+
+
+
+XfsmPassState
+xfsm_shutdown_password_send (XfsmShutdown      *shutdown,
+                             XfsmShutdownType   type,
+                             const gchar       *password)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), PASSWORD_FAILED);
+  g_return_val_if_fail (password != NULL, PASSWORD_FAILED);
+
+  if ((type == XFSM_SHUTDOWN_SHUTDOWN || type == XFSM_SHUTDOWN_RESTART)
+      && shutdown->helper_state == SUDO_AVAILABLE)
+    return xfsm_shutdown_sudo_send_password (shutdown, password);
+
+  return PASSWORD_FAILED;
+}
+
+
+
+gboolean
+xfsm_shutdown_try_type (XfsmShutdown      *shutdown,
+                        XfsmShutdownType   type,
+                        GError           **error)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  switch (type)
+    {
+    case XFSM_SHUTDOWN_SHUTDOWN:
+      return xfsm_shutdown_try_shutdown (shutdown, error);
+
+    case XFSM_SHUTDOWN_RESTART:
+      return xfsm_shutdown_try_restart (shutdown, error);
+
+    case XFSM_SHUTDOWN_SUSPEND:
+      return xfsm_shutdown_try_suspend (shutdown, error);
+
+    case XFSM_SHUTDOWN_HIBERNATE:
+      return xfsm_shutdown_try_hibernate (shutdown, error);
+
+    default:
+      g_set_error (error, 1, 0, _("Unknown shutdown method %d"), type);
+      break;
+    }
+
+  return FALSE;
+}
+
+
+
+gboolean
+xfsm_shutdown_try_restart (XfsmShutdown  *shutdown,
+                           GError       **error)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  if (shutdown->helper_state == SUDO_AVAILABLE)
+    return xfsm_shutdown_sudo_try_action (shutdown, XFSM_SHUTDOWN_RESTART, error);
+  else
+    return xfsm_consolekit_try_restart (shutdown->consolekit, error);
+}
+
+
+
+gboolean
+xfsm_shutdown_try_shutdown (XfsmShutdown  *shutdown,
+                            GError       **error)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  if (shutdown->helper_state == SUDO_AVAILABLE)
+    return xfsm_shutdown_sudo_try_action (shutdown, XFSM_SHUTDOWN_SHUTDOWN, error);
+  else
+    return xfsm_consolekit_try_shutdown (shutdown->consolekit, error);
+}
+
+
+
+gboolean
+xfsm_shutdown_try_suspend (XfsmShutdown  *shutdown,
+                           GError       **error)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  return TRUE;
+}
+
+
+
+gboolean
+xfsm_shutdown_try_hibernate (XfsmShutdown  *shutdown,
+                             GError       **error)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  return TRUE;
+}
+
+
+
+gboolean
+xfsm_shutdown_can_restart (XfsmShutdown  *shutdown,
+                           gboolean      *can_restart,
+                            GError       **error)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  if (xfsm_consolekit_can_restart (shutdown->consolekit, can_restart, error))
+    return TRUE;
+
+  return xfsm_shutdown_sudo_init (shutdown, error);
+}
+
+
+
+gboolean
+xfsm_shutdown_can_shutdown (XfsmShutdown  *shutdown,
+                            gboolean      *can_shutdown,
+                            GError       **error)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  if (xfsm_consolekit_can_shutdown (shutdown->consolekit, can_shutdown, error))
+    return TRUE;
+
+  return xfsm_shutdown_sudo_init (shutdown, error);
+}
+
+
+
+/* This function only queries the CanSuspend state of
+ * xfce4-power-manager. If this package is not installed,
+ * suspend is not supported. */
+gboolean
+xfsm_shutdown_can_suspend (XfsmShutdown  *shutdown,
+                           gboolean      *can_suspend,
+                           GError       **error)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  return xfsm_shutdown_query_xfpm (shutdown, "CanSuspend",
+                                   can_suspend, error);
+}
+
+
+
+/* This function only queries the CanHibernate state of
+ * xfce4-power-manager. If this package is not installed,
+ * hibernation is not supported. */
+gboolean
+xfsm_shutdown_can_hibernate (XfsmShutdown  *shutdown,
+                             gboolean      *can_hibernate,
+                             GError       **error)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  return xfsm_shutdown_query_xfpm (shutdown, "CanHibernate",
+                                   can_hibernate, error);
 }

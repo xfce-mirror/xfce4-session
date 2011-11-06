@@ -37,6 +37,8 @@ xfce4_session_SOURCES =							\
 	xfsm-compat-gnome.h						\
 	xfsm-compat-kde.c						\
 	xfsm-compat-kde.h						\
+	xfsm-consolekit.c						\
+	xfsm-consolekit.h						\
 	xfsm-dns.c							\
 	xfsm-dns.h							\
 	xfsm-error.c							\
@@ -55,8 +57,6 @@ xfce4_session_SOURCES =							\
 	xfsm-properties.h						\
 	xfsm-shutdown.c							\
 	xfsm-shutdown.h							\
-	xfsm-shutdown-helper.c						\
-	xfsm-shutdown-helper.h						\
 	xfsm-splash-screen.c						\
 	xfsm-splash-screen.h						\
 	xfsm-startup.c							\
@@ -95,7 +95,8 @@ xfce4_session_LDADD =							\
 	$(DBUS_GLIB_LIBS)						\
 	$(LIBWNCK_LIBS)							\
 	$(XFCONF_LIBS)							\
-	$(GNOME_KEYRING_LIBS)
+	$(GNOME_KEYRING_LIBS)						\
+	-lm
 
 xfce4_session_DEPENDENCIES =						\
 	$(top_builddir)/libxfsm/libxfsm-4.6.la

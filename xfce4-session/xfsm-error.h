@@ -23,6 +23,8 @@
 #define XFSM_TYPE_ERROR  (xfsm_error_get_type ())
 #define XFSM_ERROR       (xfsm_error_get_quark ())
 
+#define ERROR_MSG(err)   ((err) != NULL ? (err)->message : "Error not set")
+
 G_BEGIN_DECLS
 
 typedef enum

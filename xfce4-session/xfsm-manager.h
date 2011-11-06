@@ -30,6 +30,7 @@
 
 #include <xfce4-session/xfsm-client.h>
 #include <xfce4-session/xfsm-global.h>
+#include <xfce4-session/xfsm-shutdown.h>
 
 G_BEGIN_DECLS
 

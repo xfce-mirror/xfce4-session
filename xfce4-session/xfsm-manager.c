@@ -71,7 +71,6 @@
 
 #include <libwnck/libwnck.h>
 
-#include <xfce4-session/xfsm-shutdown-helper.h>
 #include <libxfce4ui/libxfce4ui.h>
 
 #include <libxfsm/xfsm-splash-engine.h>
@@ -1085,8 +1084,10 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
                                    XfsmShutdownType shutdown_type,
                                    gboolean         allow_shutdown_save)
 {
-  gboolean shutdown_save = allow_shutdown_save;
-  GList *lp;
+  gboolean      shutdown_save = allow_shutdown_save;
+  GList        *lp;
+  XfsmShutdown *shutdown_helper;
+  GError       *error = NULL;
 
   if (shutdown)
     {
@@ -1111,14 +1112,11 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
       if (manager->shutdown_type == XFSM_SHUTDOWN_SUSPEND
           || manager->shutdown_type == XFSM_SHUTDOWN_HIBERNATE)
         {
-          XfsmShutdownHelper *shutdown_helper;
-          GError *error = NULL;
+          shutdown_helper = xfsm_shutdown_get ();
 
-          shutdown_helper = xfsm_shutdown_helper_new ();
-
-          if (!xfsm_shutdown_helper_send_command (shutdown_helper,
-                                                  manager->shutdown_type,
-                                                  &error))
+          if (!xfsm_shutdown_try_type (shutdown_helper,
+                                       manager->shutdown_type,
+                                       &error))
             {
               xfce_message_dialog (NULL, _("Shutdown Failed"),
                                    GTK_STOCK_DIALOG_ERROR,
@@ -1131,9 +1129,7 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
               g_error_free (error);
             }
 
-          /* clean up and return */
           g_object_unref (shutdown_helper);
-
 
           /* at this point, either we failed to suspend/hibernate, or we
            * successfully suspended/hibernated, and we've been woken back

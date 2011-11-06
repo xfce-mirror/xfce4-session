@@ -120,6 +120,15 @@ xfsm_fadeout_new (GdkDisplay *display)
 
 
 void
+xfsm_fadeout_clear (XfsmFadeout *fadeout)
+{
+  if (fadeout != NULL)
+    g_slist_foreach (fadeout->windows, (GFunc) gdk_window_clear, NULL);
+}
+
+
+
+void
 xfsm_fadeout_destroy (XfsmFadeout *fadeout)
 {
   g_slist_foreach (fadeout->windows, (GFunc) gdk_window_hide, NULL);

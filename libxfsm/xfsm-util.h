@@ -47,8 +47,6 @@ gboolean xfsm_strv_equal (gchar **a, gchar **b);
 
 void xfsm_window_add_border (GtkWindow *window);
 
-void xfsm_window_grab_input (GtkWindow *window);
-
 XfconfChannel *xfsm_open_config (void);
 
 gchar *xfsm_gdk_display_get_fullname (GdkDisplay *display);
