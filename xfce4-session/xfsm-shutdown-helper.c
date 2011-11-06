@@ -71,8 +71,8 @@
 
 #include <libxfce4util/libxfce4util.h>
 
-#include "xfsm-shutdown-helper.h"
-#include "xfsm-global.h"
+#include <xfce4-session/xfsm-shutdown-helper.h>
+#include <xfce4-session/xfsm-global.h>
 
 static void xfsm_shutdown_helper_finalize     (GObject *object);
 

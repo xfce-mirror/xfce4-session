@@ -24,8 +24,7 @@
 #define __XFSM_SHUTDOWN_HELPER_H
 
 #include <glib-object.h>
-
-#include "shutdown.h"
+#include <xfce4-session/xfsm-global.h>
 
 G_BEGIN_DECLS
 

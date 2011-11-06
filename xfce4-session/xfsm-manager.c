@@ -71,20 +71,21 @@
 
 #include <libwnck/libwnck.h>
 
-#include "xfsm-shutdown-helper.h"
+#include <xfce4-session/xfsm-shutdown-helper.h>
 #include <libxfce4ui/libxfce4ui.h>
 
 #include <libxfsm/xfsm-splash-engine.h>
 #include <libxfsm/xfsm-util.h>
 
-#include "xfsm-manager.h"
-#include "chooser-icon.h"
-#include "xfsm-chooser.h"
-#include "xfsm-global.h"
-#include "xfsm-legacy.h"
-#include "xfsm-startup.h"
-#include "xfsm-marshal.h"
-#include "xfsm-error.h"
+#include <xfce4-session/xfsm-manager.h>
+#include <xfce4-session/xfsm-chooser-icon.h>
+#include <xfce4-session/xfsm-chooser.h>
+#include <xfce4-session/xfsm-global.h>
+#include <xfce4-session/xfsm-legacy.h>
+#include <xfce4-session/xfsm-startup.h>
+#include <xfce4-session/xfsm-marshal.h>
+#include <xfce4-session/xfsm-error.h>
+#include <xfce4-session/xfsm-logout-dialog.h>
 
 
 #define DEFAULT_SESSION_NAME "Default"
@@ -480,7 +481,7 @@ xfsm_manager_choose_session (XfsmManager *manager,
             {
               if (G_UNLIKELY (preview_default == NULL))
                 {
-                  preview_default = gdk_pixbuf_new_from_inline (-1, chooser_icon_data,
+                  preview_default = gdk_pixbuf_new_from_inline (-1, xfsm_chooser_icon_data,
                                                                 FALSE, NULL);
                 }
 
@@ -766,7 +767,7 @@ xfsm_manager_restart (XfsmManager *manager)
   /* tell splash screen that the session is starting now */
   preview = xfsm_load_session_preview (manager->session_name);
   if (preview == NULL)
-    preview = gdk_pixbuf_new_from_inline (-1, chooser_icon_data, FALSE, NULL);
+    preview = gdk_pixbuf_new_from_inline (-1, xfsm_chooser_icon_data, FALSE, NULL);
   steps = g_queue_get_length (manager->failsafe_mode ? manager->failsafe_clients : manager->pending_properties);
   xfsm_splash_screen_start (splash_screen, manager->session_name, preview, steps);
   g_object_unref (preview);
@@ -1093,7 +1094,7 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
         {
           /* if we're not specifying fast shutdown, and we're ok with
            * prompting then ask the user what to do */
-          if (!shutdownDialog (manager->session_name, &manager->shutdown_type, &shutdown_save))
+          if (!xfsm_logout_dialog (manager->session_name, &manager->shutdown_type, &shutdown_save))
             return;
 
           /* |allow_shutdown_save| is ignored if we prompt the user.  i think
@@ -1813,7 +1814,7 @@ static gboolean xfsm_manager_dbus_shutdown (XfsmManager *manager,
 
 
 /* eader needs the above fwd decls */
-#include "xfsm-manager-dbus.h"
+#include <xfce4-session/xfsm-manager-dbus.h>
 
 
 static void

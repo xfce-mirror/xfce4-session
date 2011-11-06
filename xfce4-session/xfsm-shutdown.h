@@ -1,4 +1,3 @@
-/* $Id$ */
 /*-
  * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
  * All rights reserved.
@@ -22,14 +21,7 @@
 #ifndef __XFSM_SHUTDOWN_H__
 #define __XFSM_SHUTDOWN_H__
 
-#include <glib.h>
-
-#include "xfsm-global.h"
-
-/* prototypes */
-gboolean     shutdownDialog   (const gchar *sessionName,
-                               XfsmShutdownType *shutdownType,
-                               gboolean *saveSession);
+#include <xfce4-session/xfsm-global.h>
 
 gint	     xfsm_shutdown    (XfsmShutdownType type);
 

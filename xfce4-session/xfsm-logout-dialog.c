@@ -1,3 +1,26 @@
+/*-
+ * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+ * All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301 USA.
+ *
+ * Parts of this file where taken from gnome-session/logout.c, which
+ * was written by Owen Taylor <otaylor@redhat.com>.
+ */
+
 /* $Id$ */
 /*-
  * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
@@ -58,7 +81,7 @@
 
 #include <libxfsm/xfsm-util.h>
 
-#include <xfce4-session/shutdown.h>
+#include <xfce4-session/xfsm-logout-dialog.h>
 #include <xfce4-session/xfsm-compat-gnome.h>
 #include <xfce4-session/xfsm-compat-kde.h>
 #include <xfce4-session/xfsm-fadeout.h>
@@ -123,41 +146,41 @@ entry_activate_cb (GtkWidget *entry, GtkDialog *dialog)
 }
 
 static void
-logout_button_clicked (GtkWidget *b, gint *shutdownType)
+logout_button_clicked (GtkWidget *b, gint *shutdown_type)
 {
-    *shutdownType = XFSM_SHUTDOWN_LOGOUT;
+    *shutdown_type = XFSM_SHUTDOWN_LOGOUT;
 
     gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
 }
 
 static void
-reboot_button_clicked (GtkWidget *b, gint *shutdownType)
+reboot_button_clicked (GtkWidget *b, gint *shutdown_type)
 {
-    *shutdownType = XFSM_SHUTDOWN_REBOOT;
+    *shutdown_type = XFSM_SHUTDOWN_REBOOT;
 
     gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
 }
 
 static void
-halt_button_clicked (GtkWidget *b, gint *shutdownType)
+halt_button_clicked (GtkWidget *b, gint *shutdown_type)
 {
-    *shutdownType = XFSM_SHUTDOWN_HALT;
+    *shutdown_type = XFSM_SHUTDOWN_HALT;
 
     gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
 }
 
 static void
-suspend_button_clicked (GtkWidget *b, gint *shutdownType)
+suspend_button_clicked (GtkWidget *b, gint *shutdown_type)
 {
-    *shutdownType = XFSM_SHUTDOWN_SUSPEND;
+    *shutdown_type = XFSM_SHUTDOWN_SUSPEND;
 
     gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
 }
 
 static void
-hibernate_button_clicked (GtkWidget *b, gint *shutdownType)
+hibernate_button_clicked (GtkWidget *b, gint *shutdown_type)
 {
-    *shutdownType = XFSM_SHUTDOWN_HIBERNATE;
+    *shutdown_type = XFSM_SHUTDOWN_HIBERNATE;
 
     gtk_dialog_response (GTK_DIALOG (shutdown_dialog), GTK_RESPONSE_OK);
 }
@@ -165,7 +188,9 @@ hibernate_button_clicked (GtkWidget *b, gint *shutdownType)
 /*
  */
 gboolean
-shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolean *saveSession)
+xfsm_logout_dialog (const gchar      *session_name,
+                    XfsmShutdownType *shutdown_type,
+                    gboolean         *save_session)
 {
   gboolean accessibility;
   GtkIconTheme *icon_theme;
@@ -217,8 +242,8 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   struct passwd *pw;
 #endif
 
-  g_return_val_if_fail(saveSession != NULL, FALSE);
-  g_return_val_if_fail(shutdownType != NULL, FALSE);
+  g_return_val_if_fail(save_session != NULL, FALSE);
+  g_return_val_if_fail(shutdown_type != NULL, FALSE);
 
   icon_theme = gtk_icon_theme_get_default ();
 
@@ -254,8 +279,8 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   /* if PromptOnLogout is off, saving depends on AutoSave */
   if (!prompt)
     {
-      *shutdownType = XFSM_SHUTDOWN_LOGOUT;
-      *saveSession = autosave;
+      *shutdown_type = XFSM_SHUTDOWN_LOGOUT;
+      *save_session = autosave;
 
       return TRUE;
     }
@@ -395,7 +420,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gtk_box_pack_start (GTK_BOX (hbox), logout_button, TRUE, TRUE, 0);
 
   g_signal_connect (logout_button, "clicked",
-                    G_CALLBACK (logout_button_clicked), shutdownType);
+                    G_CALLBACK (logout_button_clicked), shutdown_type);
 
   vbox2 = gtk_vbox_new (FALSE, BORDER);
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), BORDER);
@@ -429,7 +454,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gtk_box_pack_start (GTK_BOX (hbox), reboot_button, TRUE, TRUE, 0);
 
   g_signal_connect (reboot_button, "clicked",
-                    G_CALLBACK (reboot_button_clicked), shutdownType);
+                    G_CALLBACK (reboot_button_clicked), shutdown_type);
 
   vbox2 = gtk_vbox_new (FALSE, BORDER);
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), BORDER);
@@ -471,7 +496,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   gtk_box_pack_start (GTK_BOX (hbox), halt_button, TRUE, TRUE, 0);
 
   g_signal_connect (halt_button, "clicked",
-                    G_CALLBACK (halt_button_clicked), shutdownType);
+                    G_CALLBACK (halt_button_clicked), shutdown_type);
 
   vbox2 = gtk_vbox_new (FALSE, BORDER);
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), BORDER);
@@ -533,7 +558,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
       gtk_box_pack_start (GTK_BOX (hbox), suspend_button, TRUE, TRUE, 0);
 
       g_signal_connect (suspend_button, "clicked",
-                        G_CALLBACK (suspend_button_clicked), shutdownType);
+                        G_CALLBACK (suspend_button_clicked), shutdown_type);
 
       vbox2 = gtk_vbox_new (FALSE, BORDER);
       gtk_container_set_border_width (GTK_CONTAINER (vbox2), BORDER);
@@ -571,7 +596,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
       gtk_box_pack_start (GTK_BOX (hbox), hibernate_button, TRUE, TRUE, 0);
 
       g_signal_connect (hibernate_button, "clicked",
-                        G_CALLBACK (hibernate_button_clicked), shutdownType);
+                        G_CALLBACK (hibernate_button_clicked), shutdown_type);
 
       vbox2 = gtk_vbox_new (FALSE, BORDER);
       gtk_container_set_border_width (GTK_CONTAINER (vbox2), BORDER);
@@ -643,7 +668,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   result = gtk_dialog_run (GTK_DIALOG(dialog));
 
   if (result == GTK_RESPONSE_OK) {
-    *saveSession = autosave ? autosave :
+    *save_session = autosave ? autosave :
             gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkbox));
   }
 
@@ -654,7 +679,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
                 NULL);
 
   /* ask password */
-  if (result == GTK_RESPONSE_OK && *shutdownType != XFSM_SHUTDOWN_LOGOUT
+  if (result == GTK_RESPONSE_OK && *shutdown_type != XFSM_SHUTDOWN_LOGOUT
       && require_password )
     {
       gtk_widget_show (ok_button);
@@ -760,8 +785,8 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
    */
   if (result == GTK_RESPONSE_OK)
     {
-      xfconf_channel_set_string (channel, "/general/SessionName", sessionName);
-      xfconf_channel_set_bool (channel, "/general/SaveOnExit", *saveSession);
+      xfconf_channel_set_string (channel, "/general/SessionName", session_name);
+      xfconf_channel_set_bool (channel, "/general/SaveOnExit", *save_session);
     }
   else
     {
@@ -773,7 +798,7 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
   if (screenshot_pm != NULL)
     {
       if (result == GTK_RESPONSE_OK)
-        screenshot_save (sessionName, screenshot_pm, &screenshot_area);
+        screenshot_save (session_name, screenshot_pm, &screenshot_area);
 
       g_object_unref (G_OBJECT (screenshot_pm));
     }
@@ -781,65 +806,3 @@ shutdownDialog(const gchar *sessionName, XfsmShutdownType *shutdownType, gboolea
 
   return (result == GTK_RESPONSE_OK);
 }
-
-
-/*
- */
-gint
-xfsm_shutdown(XfsmShutdownType type)
-{
-  gboolean result;
-  GError *error = NULL;
-
-  /* kludge */
-  if (type == XFSM_SHUTDOWN_ASK)
-    {
-      g_warning ("xfsm_shutdown () passed XFSM_SHUTDOWN_ASK.  This is a bug.");
-      type = XFSM_SHUTDOWN_LOGOUT;
-    }
-
-  /* these two remember if they were started or not */
-  xfsm_compat_gnome_shutdown ();
-  xfsm_compat_kde_shutdown ();
-
-  /* kill legacy clients */
-  xfsm_legacy_shutdown ();
-
-#if !defined(__NR_ioprio_set) && defined(HAVE_SYNC)
-  /* sync disk block in-core status with that on disk.  if
-   * we have ioprio_set (), then we've already synced. */
-  if (fork () == 0)
-    {
-# ifdef HAVE_SETSID
-      setsid ();
-# endif
-      sync ();
-      _exit (EXIT_SUCCESS);
-    }
-#endif  /* HAVE_SYNC */
-
-  if (type == XFSM_SHUTDOWN_LOGOUT)
-    return EXIT_SUCCESS;
-
-  if (shutdown_helper == NULL)
-    shutdown_helper = xfsm_shutdown_helper_new ();
-
-  result = xfsm_shutdown_helper_send_command (shutdown_helper, type, &error);
-  g_object_unref (shutdown_helper);
-  shutdown_helper = NULL;
-
-  if (!result)
-    {
-      xfce_message_dialog (NULL, _("Shutdown Failed"),
-                           GTK_STOCK_DIALOG_ERROR,
-                           _("Unable to perform shutdown"),
-                           error->message,
-                           GTK_STOCK_QUIT, GTK_RESPONSE_ACCEPT,
-                           NULL);
-      g_error_free (error);
-      return EXIT_FAILURE;
-    }
-
-  return EXIT_SUCCESS;
-}
-

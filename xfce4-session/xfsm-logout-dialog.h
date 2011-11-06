@@ -1,6 +1,6 @@
-/* $Id$ */
 /*-
  * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2011      Nick Schermer <nick@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,19 +19,13 @@
  * MA 02110-1301 USA.
  */
 
-#ifndef __XFSM_ICE_LAYER_H__
-#define __XFSM_ICE_LAYER_H__
+#ifndef __XFSM_LOGOUT_DIALOG_H__
+#define __XFSM_LOGOUT_DIALOG_H__
 
-#include <X11/ICE/ICElib.h>
+#include <xfce4-session/xfsm-global.h>
 
-#include <glib.h>
+gboolean xfsm_logout_dialog (const gchar      *session_name,
+                             XfsmShutdownType *shutdown_type,
+                             gboolean         *save_session);
 
-#include <xfce4-session/xfsm-manager.h>
-
-Bool     ice_auth_proc       (char         *hostname);
-gboolean ice_setup_listeners (int           num_listeners,
-                              IceListenObj *listen_objs,
-                              XfsmManager  *manager);
-void     ice_cleanup         (void);
-
-#endif	/* !__XFSM_ICE_LAYER_H__ */
+#endif

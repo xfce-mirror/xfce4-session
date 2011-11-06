@@ -45,7 +45,6 @@
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
 
-#include <xfce4-session/shutdown.h>
 #include <xfce4-session/xfsm-global.h>
 
 #include <libxfsm/xfsm-util.h>

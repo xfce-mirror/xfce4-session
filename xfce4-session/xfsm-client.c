@@ -32,11 +32,11 @@
 
 #include <libxfsm/xfsm-util.h>
 
-#include "xfsm-client.h"
-#include "xfsm-manager.h"
-#include "xfsm-global.h"
-#include "xfsm-marshal.h"
-#include "xfsm-error.h"
+#include <xfce4-session/xfsm-client.h>
+#include <xfce4-session/xfsm-manager.h>
+#include <xfce4-session/xfsm-global.h>
+#include <xfce4-session/xfsm-marshal.h>
+#include <xfce4-session/xfsm-error.h>
 
 #define XFSM_CLIENT_OBJECT_PATH_PREFIX  "/org/xfce/SessionClients/"
 
@@ -417,7 +417,7 @@ static gboolean xfsm_client_dbus_terminate (XfsmClient *client,
 
 
 /* header needs the above fwd decls */
-#include "xfsm-client-dbus.h"
+#include <xfce4-session/xfsm-client-dbus.h>
 
 
 static void

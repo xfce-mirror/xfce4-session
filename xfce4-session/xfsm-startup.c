@@ -56,7 +56,7 @@
 #include <xfce4-session/xfsm-manager.h>
 #include <xfce4-session/xfsm-splash-screen.h>
 
-#include "xfsm-startup.h"
+#include <xfce4-session/xfsm-startup.h>
 
 
 typedef struct

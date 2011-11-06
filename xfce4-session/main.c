@@ -60,13 +60,13 @@
 #include <libxfsm/xfsm-util.h>
 
 #include <xfce4-session/ice-layer.h>
-#include <xfce4-session/shutdown.h>
 #include <xfce4-session/sm-layer.h>
 #include <xfce4-session/xfsm-dns.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-manager.h>
+#include <xfce4-session/xfsm-shutdown.h>
 #include <xfce4-session/xfsm-startup.h>
-#include "xfsm-error.h"
+#include <xfce4-session/xfsm-error.h>
 
 static gboolean opt_disable_tcp = FALSE;
 static gboolean opt_version = FALSE;

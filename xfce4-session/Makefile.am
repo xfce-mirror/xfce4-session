@@ -1,20 +1,31 @@
-# $Id$
 
 INCLUDES =								\
 	-I$(top_builddir)						\
-	-I$(top_srcdir)
+	-DG_LOG_DOMAIN=\"xfce4-session\"				\
+	-DLIBDIR=\"$(libdir)\"						\
+	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
+	-DSYSCONFDIR=\"$(sysconfdir)\"					\
+	-DXFSM_SHUTDOWN_HELPER_CMD=\"$(HELPER_PATH_PREFIX)/xfce4/session/xfsm-shutdown-helper\" \
+	-DDBUS_API_SUBJECT_TO_CHANGE					\
+	-DWNCK_I_KNOW_THIS_IS_UNSTABLE					\
+	$(PLATFORM_CPPFLAGS)
 
 man_MANS = xfce4-session.1
 
 bin_PROGRAMS = xfce4-session
 
+xfce4_session_built_sources =						\
+	xfsm-chooser-icon.h						\
+	xfsm-client-dbus.h						\
+	xfsm-manager-dbus.h						\
+	xfsm-marshal.c							\
+	xfsm-marshal.h
+
 xfce4_session_SOURCES =							\
-	chooser-icon.h							\
+	$(xfce4_session_built_sources)					\
 	ice-layer.c							\
 	ice-layer.h							\
 	main.c								\
-	shutdown.c							\
-	shutdown.h							\
 	sm-layer.c							\
 	sm-layer.h							\
 	xfsm-chooser.c							\
@@ -36,13 +47,14 @@ xfce4_session_SOURCES =							\
 	xfsm-global.h							\
 	xfsm-legacy.c							\
 	xfsm-legacy.h							\
+	xfsm-logout-dialog.c						\
+	xfsm-logout-dialog.h						\
 	xfsm-manager.c							\
 	xfsm-manager.h							\
-	xfsm-manager-dbus.h						\
-	xfsm-marshal.c							\
-	xfsm-marshal.h							\
 	xfsm-properties.c						\
 	xfsm-properties.h						\
+	xfsm-shutdown.c							\
+	xfsm-shutdown.h							\
 	xfsm-shutdown-helper.c						\
 	xfsm-shutdown-helper.h						\
 	xfsm-splash-screen.c						\
@@ -67,6 +79,10 @@ xfce4_session_CFLAGS =							\
 	-DSYSCONFDIR=\"$(sysconfdir)\"					\
 	-DXFSM_SHUTDOWN_HELPER_CMD=\"$(HELPER_PATH_PREFIX)/xfce4/session/xfsm-shutdown-helper\"
 
+xfce4_session_LDFLAGS =							\
+	-no-undefined							\
+	$(PLATFORM_LDFLAGS)
+
 xfce4_session_LDADD =							\
 	$(top_builddir)/libxfsm/libxfsm-4.6.la				\
 	$(LIBSM_LDFLAGS)						\
@@ -84,27 +100,17 @@ xfce4_session_LDADD =							\
 xfce4_session_DEPENDENCIES =						\
 	$(top_builddir)/libxfsm/libxfsm-4.6.la
 
-
 if MAINTAINER_MODE
 
-BUILT_SOURCES =								\
-	xfsm-client-dbus.h						\
-	xfsm-manager-dbus.h						\
-	xfsm-marshal.c							\
-	xfsm-marshal.h							\
-	chooser-icon.h
+xfsm-chooser-icon.h: $(srcdir)/xfsm-chooser-icon.png
+	$(AM_V_GEN) gdk-pixbuf-csource --static --raw --stream --name=xfsm_chooser_icon_data $< > $@
 
-chooser-icon.h: $(srcdir)/chooser-icon.png
-	$(AM_V_GEN) gdk-pixbuf-csource --static --raw --stream --name=chooser_icon_data $< > $@
+xfsm-marshal.h: xfsm-marshal.list Makefile
+	$(AM_V_GEN) glib-genmarshal --prefix=xfsm_marshal --internal --header $< > $@
 
-xfsm-marshal.h: stamp-xfsm-marshal.h
-	@true
-stamp-xfsm-marshal.h: xfsm-marshal.list Makefile
-	$(AM_V_GEN) glib-genmarshal --prefix=xfsm_marshal xfsm-marshal.list --header > xfsm-marshal.h
-	echo timestamp > $(@F)
 xfsm-marshal.c: xfsm-marshal.list Makefile
-	$(AM_V_GEN) echo '#include "xfsm-marshal.h"' > $@
-	glib-genmarshal --prefix=xfsm_marshal xfsm-marshal.list --body >> xfsm-marshal.c
+	$(AM_V_GEN) echo "#include <xfce4-session/xfsm-marshal.h>" > $@ \
+	&& glib-genmarshal --prefix=xfsm_marshal --body $< >> $@
 
 xfsm-manager-dbus.h: $(srcdir)/xfsm-manager-dbus.xml
 	$(AM_V_GEN) dbus-binding-tool --mode=glib-server --prefix=xfsm_manager $< > $@
@@ -112,13 +118,19 @@ xfsm-manager-dbus.h: $(srcdir)/xfsm-manager-dbus.xml
 xfsm-client-dbus.h: $(srcdir)/xfsm-client-dbus.xml
 	$(AM_V_GEN) dbus-binding-tool --mode=glib-server --prefix=xfsm_client $< > $@
 
-DISTCLEANFILES =								\
-	$(BUILT_SOURCES)
+DISTCLEANFILES =							\
+	$(xfce4_session_built_sources)
+
+BUILT_SOURCES =								\
+	$(xfce4_session_built_sources)
 
 endif
 
-
 EXTRA_DIST =								\
 	$(man_MANS)							\
-	chooser-icon.png						\
-	xfsm-marshal.list
+	xfsm-chooser-icon.png						\
+	xfsm-marshal.list						\
+	xfsm-client-dbus.xml						\
+	xfsm-manager-dbus.xml
+
+# vi:set ts=8 sw=8 noet ai nocindent syntax=automake:

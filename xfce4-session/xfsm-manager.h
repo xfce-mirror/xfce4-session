@@ -28,8 +28,8 @@
 #include <xfconf/xfconf.h>
 #include <libxfce4util/libxfce4util.h>
 
-#include "xfsm-client.h"
-#include "shutdown.h"
+#include <xfce4-session/xfsm-client.h>
+#include <xfce4-session/xfsm-global.h>
 
 G_BEGIN_DECLS
 

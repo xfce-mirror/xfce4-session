@@ -22,7 +22,7 @@
 
 #include <dbus/dbus-glib.h>
 
-#include "xfsm-error.h"
+#include <xfce4-session/xfsm-error.h>
 
 
 GQuark

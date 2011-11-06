@@ -74,7 +74,7 @@
 
 #include <libwnck/libwnck.h>
 
-#include "xfsm-legacy.h"
+#include <xfce4-session/xfsm-legacy.h>
 #include <libxfsm/xfsm-util.h>
 
 
