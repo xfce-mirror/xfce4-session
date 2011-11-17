@@ -54,7 +54,8 @@ if test -f "$XDG_CONFIG_HOME/user-dirs.dirs"; then
     # a bit of user dir migration...
     if test -d "$HOME/Desktop" -a ! -L "$HOME/Desktop" \
             -a "$XDG_DESKTOP_DIR" \
-            -a "$HOME/Desktop" != "$XDG_DESKTOP_DIR"
+            -a "$HOME/Desktop" != "$XDG_DESKTOP_DIR" \
+            -a "$HOME" != "$XDG_DESKTOP_DIR"
     then
         echo "Migrating $HOME/Desktop to $XDG_DESKTOP_DIR..."
         test -d "$XDG_DESKTOP_DIR" && rmdir "$XDG_DESKTOP_DIR"
@@ -63,7 +64,8 @@ if test -f "$XDG_CONFIG_HOME/user-dirs.dirs"; then
 
     if test -d "$HOME/Templates" -a ! -L "$HOME/Templates" \
             -a "$XDG_TEMPLATES_DIR" \
-            -a "$HOME/Templates" != "$XDG_TEMPLATES_DIR"
+            -a "$HOME/Templates" != "$XDG_TEMPLATES_DIR" \
+            -a "$HOME" != "$XDG_TEMPLATES_DIR"
     then
         echo "Migrating $HOME/Templates to $XDG_TEMPLATES_DIR..."
         test -d "$XDG_TEMPLATES_DIR" && rmdir "$XDG_TEMPLATES_DIR"
