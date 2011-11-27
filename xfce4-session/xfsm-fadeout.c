@@ -29,24 +29,9 @@
 
 
 
-#define COLOR "#b6c4d7"
-
-
-
-typedef struct _FoScreen FoScreen;
-
-
-
-struct _FoScreen
-{
-  GdkWindow *window;
-  GdkPixmap *backbuf;
-};
-
 struct _XfsmFadeout
 {
-  GdkColor color;
-  GList   *screens;
+  GSList *windows;
 };
 
 
@@ -58,15 +43,17 @@ xfsm_fadeout_new (GdkDisplay *display)
   XfsmFadeout   *fadeout;
   GdkWindow     *root;
   GdkCursor     *cursor;
-  FoScreen      *screen;
   cairo_t       *cr;
-  GList         *lp;
   gint           width;
   gint           height;
   gint           n;
+  GdkPixbuf     *root_pixbuf;
+  GdkPixmap     *backbuf;
+  GdkScreen     *gdk_screen;
+  GdkWindow     *window;
+  GdkColor       black = { 0, };
 
-  fadeout = g_new0 (XfsmFadeout, 1);
-  gdk_color_parse (COLOR, &fadeout->color);
+  fadeout = g_slice_new0 (XfsmFadeout);
 
   cursor = gdk_cursor_new (GDK_WATCH);
 
@@ -80,39 +67,50 @@ xfsm_fadeout_new (GdkDisplay *display)
 
   for (n = 0; n < gdk_display_get_n_screens (display); ++n)
     {
-      GdkPixbuf *root_pixbuf;
+      gdk_screen = gdk_display_get_screen (display, n);
 
-      screen = g_new (FoScreen, 1);
-
-      root = gdk_screen_get_root_window (gdk_display_get_screen (display, n));
+      root = gdk_screen_get_root_window (gdk_screen);
       gdk_drawable_get_size (GDK_DRAWABLE (root), &width, &height);
-
-      screen->backbuf = gdk_pixmap_new (GDK_DRAWABLE (root), width, height, -1);
-
-      /* Copy the root window */
-      root_pixbuf = gdk_pixbuf_get_from_drawable (NULL, GDK_DRAWABLE (root), NULL,
-                                                  0, 0, 0, 0, width, height);
-      cr = gdk_cairo_create (GDK_DRAWABLE (screen->backbuf));
-      gdk_cairo_set_source_pixbuf (cr, root_pixbuf, 0, 0);
-      cairo_paint (cr);
-      gdk_cairo_set_source_color (cr, &fadeout->color);
-      cairo_paint_with_alpha (cr, 0.5);
 
       attr.width = width;
       attr.height = height;
+      window = gdk_window_new (root, &attr, GDK_WA_X | GDK_WA_Y
+                               | GDK_WA_NOREDIR | GDK_WA_CURSOR);
 
-      screen->window = gdk_window_new (root, &attr, GDK_WA_X | GDK_WA_Y
-                                       | GDK_WA_NOREDIR | GDK_WA_CURSOR);
-      gdk_window_set_back_pixmap (screen->window, screen->backbuf, FALSE);
+      if (gdk_screen_is_composited (gdk_screen)
+          && gdk_screen_get_rgba_colormap (gdk_screen) != NULL)
+        {
+          /* transparent black window */
+          gdk_window_set_background (window, &black);
+          gdk_window_set_opacity (window, 0.50);
+        }
+      else
+        {
+          /* create background for window */
+          backbuf = gdk_pixmap_new (GDK_DRAWABLE (root), width, height, -1);
+          cr = gdk_cairo_create (GDK_DRAWABLE (backbuf));
 
-      g_object_unref (root_pixbuf);
-      cairo_destroy (cr);
+          /* make of copy of the root window */
+          root_pixbuf = gdk_pixbuf_get_from_drawable (NULL, GDK_DRAWABLE (root), NULL,
+                                                      0, 0, 0, 0, width, height);
+          gdk_cairo_set_source_pixbuf (cr, root_pixbuf, 0, 0);
+          cairo_paint (cr);
+          g_object_unref (G_OBJECT (root_pixbuf));
 
-      fadeout->screens = g_list_append (fadeout->screens, screen);
+          /* draw black layer */
+          gdk_cairo_set_source_color (cr, &black);
+          cairo_paint_with_alpha (cr, 0.50);
+          cairo_destroy (cr);
+
+          gdk_window_set_back_pixmap (window, backbuf, FALSE);
+          g_object_unref (G_OBJECT (backbuf));
+        }
+
+      fadeout->windows = g_slist_prepend (fadeout->windows, window);
     }
 
-  for (lp = fadeout->screens; lp != NULL; lp = lp->next)
-    gdk_window_show (((FoScreen *) lp->data)->window);
+  /* show all windows all at once */
+  g_slist_foreach (fadeout->windows, (GFunc) gdk_window_show, NULL);
 
   gdk_cursor_unref (cursor);
 
@@ -120,21 +118,13 @@ xfsm_fadeout_new (GdkDisplay *display)
 }
 
 
+
 void
 xfsm_fadeout_destroy (XfsmFadeout *fadeout)
 {
-  FoScreen *screen;
-  GList    *lp;
-
-  for (lp = fadeout->screens; lp != NULL; lp = lp->next)
-    {
-      screen = lp->data;
-
-      gdk_window_destroy (screen->window);
-      g_object_unref (G_OBJECT (screen->backbuf));
-      g_free (screen);
-    }
-
-  g_list_free (fadeout->screens);
-  g_free (fadeout);
+  g_slist_foreach (fadeout->windows, (GFunc) gdk_window_hide, NULL);
+  g_slist_foreach (fadeout->windows, (GFunc) gdk_window_destroy, NULL);
+  
+  g_slist_free (fadeout->windows);
+  g_slice_free (XfsmFadeout, fadeout);
 }
