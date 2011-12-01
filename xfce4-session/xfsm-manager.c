@@ -95,7 +95,9 @@ struct _XfsmManager
   GObject parent;
 
   XfsmManagerState state;
-  XfsmShutdownType shutdown_type;
+
+  XfsmShutdownType  shutdown_type;
+  XfsmShutdown     *shutdown_helper;
 
   gboolean         session_chooser;
   gchar           *session_name;
@@ -227,6 +229,7 @@ xfsm_manager_init (XfsmManager *manager)
   manager->session_chooser = FALSE;
   manager->failsafe_mode = TRUE;
   manager->shutdown_type = XFSM_SHUTDOWN_LOGOUT;
+  manager->shutdown_helper = xfsm_shutdown_get ();
 
   manager->pending_properties = g_queue_new ();
   manager->starting_properties = g_queue_new ();
@@ -244,6 +247,8 @@ xfsm_manager_finalize (GObject *obj)
 
   if (manager->die_timeout_id != 0)
     g_source_remove (manager->die_timeout_id);
+
+  g_object_unref (manager->shutdown_helper);
 
   g_queue_foreach (manager->pending_properties, (GFunc) xfsm_properties_free, NULL);
   g_queue_free (manager->pending_properties);
@@ -1084,10 +1089,9 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
                                    XfsmShutdownType shutdown_type,
                                    gboolean         allow_shutdown_save)
 {
-  gboolean      shutdown_save = allow_shutdown_save;
-  GList        *lp;
-  XfsmShutdown *shutdown_helper;
-  GError       *error = NULL;
+  gboolean  shutdown_save = allow_shutdown_save;
+  GList    *lp;
+  GError   *error = NULL;
 
   if (shutdown)
     {
@@ -1112,9 +1116,7 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
       if (manager->shutdown_type == XFSM_SHUTDOWN_SUSPEND
           || manager->shutdown_type == XFSM_SHUTDOWN_HIBERNATE)
         {
-          shutdown_helper = xfsm_shutdown_get ();
-
-          if (!xfsm_shutdown_try_type (shutdown_helper,
+          if (!xfsm_shutdown_try_type (manager->shutdown_helper,
                                        manager->shutdown_type,
                                        &error))
             {
@@ -1128,8 +1130,6 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
                                    NULL);
               g_error_free (error);
             }
-
-          g_object_unref (shutdown_helper);
 
           /* at this point, either we failed to suspend/hibernate, or we
            * successfully suspended/hibernated, and we've been woken back
@@ -1211,6 +1211,8 @@ xfsm_manager_save_yourself (XfsmManager *manager,
 {
   if (G_UNLIKELY (xfsm_client_get_state (client) != XFSM_CLIENT_IDLE))
     {
+
+
       xfsm_verbose ("Client Id = %s, requested SAVE YOURSELF, but client is not in IDLE mode.\n"
                     "   Client will be nuked now.\n\n",
                     xfsm_client_get_id (client));
@@ -1803,10 +1805,22 @@ static gboolean xfsm_manager_dbus_get_state (XfsmManager *manager,
 static gboolean xfsm_manager_dbus_checkpoint (XfsmManager *manager,
                                               const gchar *session_name,
                                               GError     **error);
+static gboolean xfsm_manager_dbus_logout (XfsmManager *manager,
+                                          gboolean     show_dialog,
+                                          gboolean     allow_save,
+                                          GError     **error);
 static gboolean xfsm_manager_dbus_shutdown (XfsmManager *manager,
-                                            guint        type,
                                             gboolean     allow_save,
                                             GError     **error);
+static gboolean xfsm_manager_dbus_can_shutdown (XfsmManager *manager,
+                                                gboolean    *can_shutdown,
+                                                GError     **error);
+static gboolean xfsm_manager_dbus_restart (XfsmManager *manager,
+                                           gboolean     allow_save,
+                                           GError     **error);
+static gboolean xfsm_manager_dbus_can_restart (XfsmManager *manager,
+                                               gboolean    *can_restart,
+                                               GError     **error);
 
 
 /* eader needs the above fwd decls */
@@ -1980,10 +1994,10 @@ xfsm_manager_dbus_shutdown_idled (gpointer data)
 
 
 static gboolean
-xfsm_manager_dbus_shutdown (XfsmManager *manager,
-                            guint        type,
-                            gboolean     allow_save,
-                            GError     **error)
+xfsm_manager_save_yourself_dbus (XfsmManager       *manager,
+                                 XfsmShutdownType   type,
+                                 gboolean           allow_save,
+                                 GError           **error)
 {
   ShutdownIdleData *idata;
 
@@ -1991,13 +2005,6 @@ xfsm_manager_dbus_shutdown (XfsmManager *manager,
     {
       g_set_error (error, XFSM_ERROR, XFSM_ERROR_BAD_STATE,
                    _("Session manager must be in idle state when requesting a shutdown"));
-      return FALSE;
-    }
-
-  if (type > XFSM_SHUTDOWN_HIBERNATE)
-    {
-      g_set_error (error, XFSM_ERROR, XFSM_ERROR_BAD_VALUE,
-                   _("Invalid shutdown type \"%u\""), type);
       return FALSE;
     }
 
@@ -2009,4 +2016,64 @@ xfsm_manager_dbus_shutdown (XfsmManager *manager,
                    idata, (GDestroyNotify) g_free);
 
   return TRUE;
+}
+
+
+static gboolean
+xfsm_manager_dbus_logout (XfsmManager *manager,
+                          gboolean     show_dialog,
+                          gboolean     allow_save,
+                          GError     **error)
+{
+  XfsmShutdownType type;
+
+  g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
+
+  type = show_dialog ? XFSM_SHUTDOWN_ASK : XFSM_SHUTDOWN_LOGOUT;
+  return xfsm_manager_save_yourself_dbus (manager, type,
+                                          allow_save, error);
+}
+
+
+static gboolean
+xfsm_manager_dbus_shutdown (XfsmManager *manager,
+                            gboolean     allow_save,
+                            GError     **error)
+{
+  g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
+  return xfsm_manager_save_yourself_dbus (manager, XFSM_SHUTDOWN_SHUTDOWN,
+                                          allow_save, error);
+}
+
+
+static gboolean
+xfsm_manager_dbus_can_shutdown (XfsmManager *manager,
+                                gboolean    *can_shutdown,
+                                GError     **error)
+{
+  g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
+  return xfsm_shutdown_can_shutdown (manager->shutdown_helper,
+                                     can_shutdown, error);
+}
+
+
+static gboolean
+xfsm_manager_dbus_restart (XfsmManager *manager,
+                           gboolean     allow_save,
+                           GError     **error)
+{
+  g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
+  return xfsm_manager_save_yourself_dbus (manager, XFSM_SHUTDOWN_RESTART,
+                                          allow_save, error);
+}
+
+
+static gboolean
+xfsm_manager_dbus_can_restart (XfsmManager *manager,
+                               gboolean    *can_restart,
+                               GError     **error)
+{
+  g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
+  return xfsm_shutdown_can_restart (manager->shutdown_helper,
+                                    can_restart, error);
 }

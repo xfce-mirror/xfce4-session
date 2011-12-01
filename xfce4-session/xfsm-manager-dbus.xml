@@ -79,34 +79,41 @@
         <method name="Checkpoint">
             <arg direction="in" name="session_name" type="s"/>
         </method>
+        
+        <!--
+             void org.Xfce.Session.Manager.Logout
+        -->
+        <method name="Logout">
+            <arg direction="in" name="show_dialog" type="b"/>
+            <arg direction="in" name="allow_save" type="b"/>
+        </method>
 
         <!--
-             void org.xfce.Session.Manager.Shutdown(Unsigned Int type,
-                                                    Boolean save)
-
-             @type: Type of shutdown to request.  Valid values are:
-                    0  Prompt user for type.
-                    1  Log out of current session.
-                    2  Shut down the computer/device.
-                    3  Restart the computer/device.
-                    4  Suspend the computer/device.
-                    5  Hibernate the computer/device.
-             @allow_save: Whether or not to give applications a
-                          chance to save themselves, or to shut down
-                          immediately.  Note that this parameter is
-                          ignored for type==0.
-
-             Instructs the session manager to shut down.  Type 0 will
-             prompt the user for a shutdown type.  All other types will
-             take immediate action without user input.
-
-             Implementation note: types 2 through 5 may be implemented
-             by simply passing the message along to a power management
-             daemon after taking any SM-specific actions needed.
+             void org.Xfce.Session.Manager.Shutdown
         -->
         <method name="Shutdown">
-            <arg direction="in" name="type" type="u"/>
             <arg direction="in" name="allow_save" type="b"/>
+        </method>
+
+        <!--
+             void org.Xfce.Session.Manager.CanShutdown
+        -->
+        <method name="CanShutdown">
+            <arg direction="out" name="can_shutdown" type="b"/>
+        </method>
+
+        <!--
+             void org.Xfce.Session.Manager.Restart
+        -->
+        <method name="Restart">
+            <arg direction="in" name="allow_save" type="b"/>
+        </method>
+
+        <!--
+             void org.Xfce.Session.Manager.CanRestart
+        -->
+        <method name="CanRestart">
+            <arg direction="out" name="can_restart" type="b"/>
         </method>
 
         <!--

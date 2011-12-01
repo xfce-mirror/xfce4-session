@@ -200,8 +200,8 @@ main (int argc, char **argv)
   GdkDisplay       *dpy;
   XfconfChannel    *channel;
   XfsmShutdownType  shutdown_type;
-  XfsmShutdown     *shutdown;
-  gboolean          succeed;
+  XfsmShutdown     *shutdown_helper;
+  gboolean          succeed = TRUE;
 
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
@@ -263,8 +263,11 @@ main (int argc, char **argv)
   xfsm_manager_restart (manager);
 
   gtk_main ();
-  
+
   shutdown_type = xfsm_manager_get_shutdown_type (manager);
+
+  /* take over the ref before we release the manager */
+  shutdown_helper = xfsm_shutdown_get ();
 
   g_object_unref (manager);
   g_object_unref (channel);
@@ -275,13 +278,12 @@ main (int argc, char **argv)
   if (shutdown_type == XFSM_SHUTDOWN_SHUTDOWN
       || shutdown_type == XFSM_SHUTDOWN_RESTART)
     {
-      shutdown = xfsm_shutdown_get ();
-      succeed = xfsm_shutdown_try_type (shutdown, shutdown_type, &error);
+      succeed = xfsm_shutdown_try_type (shutdown_helper, shutdown_type, &error);
       if (!succeed)
         g_warning ("Failed to shutdown/restart: %s", ERROR_MSG (error));
-      g_object_unref (shutdown);
-      return succeed ? EXIT_SUCCESS : EXIT_FAILURE;
     }
 
-  return EXIT_SUCCESS;
+  g_object_unref (shutdown_helper);
+
+  return succeed ? EXIT_SUCCESS : EXIT_FAILURE;
 }

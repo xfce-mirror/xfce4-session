@@ -94,4 +94,6 @@ gboolean      xfsm_shutdown_can_hibernate    (XfsmShutdown      *shutdown,
                                               gboolean          *can_hibernate,
                                               GError           **error);
 
+gboolean      xfsm_shutdown_can_save_session (XfsmShutdown      *shutdown);
+
 #endif	/* !__XFSM_SHUTDOWN_H__ */

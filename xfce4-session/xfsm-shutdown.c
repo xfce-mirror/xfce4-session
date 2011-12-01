@@ -88,6 +88,10 @@ struct _XfsmShutdown
 
   XfsmConsolekit *consolekit;
 
+  /* kiosk settingw */
+  gboolean        kiosk_can_shutdown;
+  gboolean        kiosk_can_save_session;
+
   /* sudo helper */
   HelperState     helper_state;
   pid_t           helper_pid;
@@ -117,9 +121,17 @@ xfsm_shutdown_class_init (XfsmShutdownClass *klass)
 static void
 xfsm_shutdown_init (XfsmShutdown *shutdown)
 {
+  XfceKiosk *kiosk;
+
   shutdown->consolekit = xfsm_consolekit_get ();
   shutdown->helper_state = SUDO_NOT_INITIAZED;
   shutdown->helper_require_password = FALSE;
+
+  /* check kiosk */
+  kiosk = xfce_kiosk_new ("xfce4-session");
+  shutdown->kiosk_can_shutdown = xfce_kiosk_query (kiosk, "Shutdown");
+  shutdown->kiosk_can_save_session = xfce_kiosk_query (kiosk, "SaveSession");
+  xfce_kiosk_free (kiosk);
 }
 
 
@@ -547,6 +559,22 @@ xfsm_shutdown_query_xfpm (XfsmShutdown  *shutdown,
 
 
 
+static gboolean
+xfsm_shutdown_kiosk_can_shutdown (XfsmShutdown  *shutdown,
+                           GError       **error)
+{
+  if (!shutdown->kiosk_can_shutdown)
+    {
+      if (error != NULL)
+        g_set_error_literal (error, 1, 0, _("Shutdown is blocked by the kiosk settings"));
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+
+
 XfsmShutdown *
 xfsm_shutdown_get (void)
 {
@@ -636,6 +664,9 @@ xfsm_shutdown_try_restart (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
+  if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, error))
+    return FALSE;
+
   if (shutdown->helper_state == SUDO_AVAILABLE)
     return xfsm_shutdown_sudo_try_action (shutdown, XFSM_SHUTDOWN_RESTART, error);
   else
@@ -649,6 +680,9 @@ xfsm_shutdown_try_shutdown (XfsmShutdown  *shutdown,
                             GError       **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, error))
+    return FALSE;
 
   if (shutdown->helper_state == SUDO_AVAILABLE)
     return xfsm_shutdown_sudo_try_action (shutdown, XFSM_SHUTDOWN_SHUTDOWN, error);
@@ -687,6 +721,12 @@ xfsm_shutdown_can_restart (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
+  if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, NULL))
+    {
+      *can_restart = FALSE;
+      return TRUE;
+    }
+
   if (xfsm_consolekit_can_restart (shutdown->consolekit, can_restart, error))
     return TRUE;
 
@@ -701,6 +741,12 @@ xfsm_shutdown_can_shutdown (XfsmShutdown  *shutdown,
                             GError       **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, NULL))
+    {
+      *can_shutdown = FALSE;
+      return TRUE;
+    }
 
   if (xfsm_consolekit_can_shutdown (shutdown->consolekit, can_shutdown, error))
     return TRUE;
@@ -720,6 +766,12 @@ xfsm_shutdown_can_suspend (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
+  if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, NULL))
+    {
+      *can_suspend = FALSE;
+      return TRUE;
+    }
+
   return xfsm_shutdown_query_xfpm (shutdown, "CanSuspend",
                                    can_suspend, error);
 }
@@ -736,6 +788,21 @@ xfsm_shutdown_can_hibernate (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
+  if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, NULL))
+    {
+      *can_hibernate = FALSE;
+      return TRUE;
+    }
+
   return xfsm_shutdown_query_xfpm (shutdown, "CanHibernate",
                                    can_hibernate, error);
+}
+
+
+
+gboolean
+xfsm_shutdown_can_save_session (XfsmShutdown *shutdown)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+  return shutdown->kiosk_can_save_session;
 }

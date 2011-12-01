@@ -145,10 +145,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   GtkWidget     *main_vbox;
   GtkWidget     *hbox;
   GtkWidget     *button;
-  XfceKiosk     *kiosk;
   gboolean       can_shutdown;
-  gboolean       kiosk_can_shutdown;
-  gboolean       kiosk_can_save_session;
   gboolean       save_session = FALSE;
   gboolean       can_restart;
   gboolean       can_suspend = FALSE;
@@ -160,21 +157,16 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   GtkWidget     *separator;
 
   dialog->type_clicked = XFSM_SHUTDOWN_LOGOUT;
+  dialog->shutdown = xfsm_shutdown_get ();
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
   gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  /* load kiosk settings */
-  kiosk = xfce_kiosk_new ("xfce4-session");
-  kiosk_can_shutdown = xfce_kiosk_query (kiosk, "Shutdown");
-  kiosk_can_save_session = xfce_kiosk_query (kiosk, "SaveSession");
-  xfce_kiosk_free (kiosk);
-
   /* load xfconf settings */
   channel = xfsm_open_config ();
-  if (kiosk_can_save_session)
+  if (xfsm_shutdown_can_save_session (dialog->shutdown))
     save_session = xfconf_channel_get_bool (channel, "/general/SaveOnExit", TRUE);
 
   main_vbox = gtk_vbox_new (FALSE, BORDER);
@@ -214,8 +206,6 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
   gtk_widget_show (hbox);
 
-  dialog->shutdown = xfsm_shutdown_get ();
-
   /**
    * Cancel
    **/
@@ -253,17 +243,13 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   /**
    * Reboot
    **/
-  can_restart = kiosk_can_shutdown;
-  if (can_restart)
+  if (!xfsm_shutdown_can_restart (dialog->shutdown, &can_restart, &error))
     {
-      if (!xfsm_shutdown_can_restart (dialog->shutdown, &can_restart, &error))
-        {
-          g_printerr ("%s: Querying CanRestart failed, %s\n\n",
-                      PACKAGE_NAME, ERROR_MSG (error));
-          g_clear_error (&error);
+      g_printerr ("%s: Querying CanRestart failed, %s\n\n",
+                  PACKAGE_NAME, ERROR_MSG (error));
+      g_clear_error (&error);
 
-          can_restart = FALSE;
-        }
+      can_restart = FALSE;
     }
 
   button = xfsm_logout_dialog_button (_("_Restart"), "system-reboot",
@@ -277,17 +263,13 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   /**
    * Shutdown
    **/
-  can_shutdown = kiosk_can_shutdown;
-  if (can_shutdown)
+  if (!xfsm_shutdown_can_shutdown (dialog->shutdown, &can_shutdown, &error))
     {
-      if (!xfsm_shutdown_can_shutdown (dialog->shutdown, &can_shutdown, &error))
-        {
-          g_printerr ("%s: Querying CanShutdown failed. %s\n\n",
-                      PACKAGE_NAME, ERROR_MSG (error));
-          g_clear_error (&error);
+      g_printerr ("%s: Querying CanShutdown failed. %s\n\n",
+                  PACKAGE_NAME, ERROR_MSG (error));
+      g_clear_error (&error);
 
-          can_shutdown = FALSE;
-        }
+      can_shutdown = FALSE;
     }
 
   button = xfsm_logout_dialog_button (_("Shut _Down"), "system-shutdown",
@@ -299,65 +281,59 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gtk_widget_show (button);
 
   /**
-   * Suspend and Hibernate
+   * Suspend
+   *
+   * Hide the button if Xfpm is not installed
    **/
-  if (kiosk_can_shutdown)
+  if (xfconf_channel_get_bool (channel, "/shutdown/ShowSuspend", TRUE))
     {
-      /**
-       * Suspend
-       *
-       * Hide the button if Xfpm is not installed
-       **/
-      if (xfconf_channel_get_bool (channel, "/shutdown/ShowSuspend", TRUE))
+      if (xfsm_shutdown_can_suspend (dialog->shutdown, &can_suspend, &error))
         {
-          if (xfsm_shutdown_can_suspend (dialog->shutdown, &can_suspend, &error))
-            {
-              button = xfsm_logout_dialog_button (_("Sus_pend"), "system-suspend",
-                                                  "xfsm-suspend", XFSM_SHUTDOWN_SUSPEND,
-                                                  dialog);
+          button = xfsm_logout_dialog_button (_("Sus_pend"), "system-suspend",
+                                              "xfsm-suspend", XFSM_SHUTDOWN_SUSPEND,
+                                              dialog);
 
-              gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-              gtk_widget_set_sensitive (button, can_suspend);
-              gtk_widget_show (button);
-            }
-          else
-            {
-              g_printerr ("%s: Querying CanSuspend failed. %s\n\n",
-                          PACKAGE_NAME, ERROR_MSG (error));
-              g_clear_error (&error);
-            }
+          gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+          gtk_widget_set_sensitive (button, can_suspend);
+          gtk_widget_show (button);
         }
-
-      /**
-       * Hibernate
-       *
-       * Hide the button if Xfpm is not installed
-       **/
-      if (xfconf_channel_get_bool (channel, "/shutdown/ShowHibernate", TRUE))
+      else
         {
-          if (xfsm_shutdown_can_hibernate (dialog->shutdown, &can_hibernate, &error))
-            {
-              button = xfsm_logout_dialog_button (_("_Hibernate"), "system-hibernate",
-                                                  "xfsm-hibernate", XFSM_SHUTDOWN_HIBERNATE,
-                                                  dialog);
+          g_printerr ("%s: Querying CanSuspend failed. %s\n\n",
+                      PACKAGE_NAME, ERROR_MSG (error));
+          g_clear_error (&error);
+        }
+    }
 
-              gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-              gtk_widget_set_sensitive (button, can_hibernate);
-              gtk_widget_show (button);
-            }
-          else
-            {
-              g_printerr ("%s: Querying CanHibernate failed. %s\n\n",
-                          PACKAGE_NAME, ERROR_MSG (error));
-              g_clear_error (&error);
-            }
+  /**
+   * Hibernate
+   *
+   * Hide the button if Xfpm is not installed
+   **/
+  if (xfconf_channel_get_bool (channel, "/shutdown/ShowHibernate", TRUE))
+    {
+      if (xfsm_shutdown_can_hibernate (dialog->shutdown, &can_hibernate, &error))
+        {
+          button = xfsm_logout_dialog_button (_("_Hibernate"), "system-hibernate",
+                                              "xfsm-hibernate", XFSM_SHUTDOWN_HIBERNATE,
+                                              dialog);
+
+          gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+          gtk_widget_set_sensitive (button, can_hibernate);
+          gtk_widget_show (button);
+        }
+      else
+        {
+          g_printerr ("%s: Querying CanHibernate failed. %s\n\n",
+                      PACKAGE_NAME, ERROR_MSG (error));
+          g_clear_error (&error);
         }
     }
 
   /**
    * Save session
    **/
-  if (kiosk_can_save_session
+  if (xfsm_shutdown_can_save_session (dialog->shutdown)
       && !xfconf_channel_get_bool (channel, "/general/AutoSave", FALSE))
     {
       dialog->save_session = gtk_check_button_new_with_mnemonic (_("_Save session for future logins"));
@@ -717,24 +693,20 @@ xfsm_logout_dialog (const gchar      *session_name,
   XfsmFadeout      *fadeout = NULL;
   XfsmLogoutDialog *xfsm_dialog;
   XfconfChannel    *channel = xfsm_open_config ();
-  XfceKiosk        *kiosk;
   gboolean          autosave;
-  gboolean          kiosk_can_save_session;
   const gchar      *text;
   XfsmPassState     state;
+  XfsmShutdown     *shutdown;
 
   g_return_val_if_fail (return_type != NULL, FALSE);
   g_return_val_if_fail (return_save_session != NULL, FALSE);
 
-  /* get autosave state */
-  kiosk = xfce_kiosk_new ("xfce4-session");
-  kiosk_can_save_session = xfce_kiosk_query (kiosk, "SaveSession");
-  xfce_kiosk_free (kiosk);
-
-  if (kiosk_can_save_session)
+  shutdown = xfsm_shutdown_get ();
+  if (xfsm_shutdown_can_save_session (shutdown))
     autosave = xfconf_channel_get_bool (channel, "/general/AutoSave", FALSE);
   else
     autosave = FALSE;
+  g_object_unref (shutdown);
 
   /* check if we need to bother the user */
   if (!xfconf_channel_get_bool (channel, "/general/PromptOnLogout", TRUE))
