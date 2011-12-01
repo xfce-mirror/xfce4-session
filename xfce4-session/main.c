@@ -90,7 +90,7 @@ setup_environment (void)
   sm = g_getenv ("SESSION_MANAGER");
   if (sm != NULL && strlen (sm) > 0)
     {
-      fprintf (stderr, "xfce4-session: Another session manager is already running\n");
+      g_printerr ("%s: Another session manager is already running\n", PACKAGE_NAME);
       exit (EXIT_FAILURE);
     }
 
@@ -172,8 +172,8 @@ xfsm_dbus_init (void)
                                NULL);
   if (DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER != ret)
     {
-      g_error ("Another session manager is already running");
-      exit (1);
+      g_printerr ("%s: Another session manager is already running\n", PACKAGE_NAME);
+      exit (EXIT_FAILURE);
     }
 }
 
