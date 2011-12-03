@@ -88,7 +88,7 @@ struct _XfsmShutdown
 
   XfsmConsolekit *consolekit;
 
-  /* kiosk settingw */
+  /* kiosk settings */
   gboolean        kiosk_can_shutdown;
   gboolean        kiosk_can_save_session;
 
@@ -540,9 +540,11 @@ xfsm_shutdown_query_xfpm (XfsmShutdown  *shutdown,
   if (conn == NULL)
     return FALSE;
 
-  proxy = dbus_g_proxy_new_for_name_owner (conn, "org.xfce.Power.Manager",
+  proxy = dbus_g_proxy_new_for_name_owner (conn,
+                                           "org.xfce.PowerManager",
                                            "/org/xfce/PowerManager",
-                                           "org.xfce.Power.Manager", error);
+                                           "org.xfce.PowerManager",
+                                           error);
   if (proxy != NULL)
     {
       result = dbus_g_proxy_call (proxy, method, error,
