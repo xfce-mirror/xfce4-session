@@ -35,32 +35,20 @@
 #include <string.h>
 #endif
 
-#include <dbus/dbus.h>
+#include <dbus/dbus-glib.h>
+#include <dbus/dbus-glib-lowlevel.h>
 
 #include <gtk/gtk.h>
 #include <libxfce4ui/libxfce4ui.h>
 #include <libxfce4util/libxfce4util.h>
 
 
-/* copied from xfce4-session/shutdown.h -- ORDER MATTERS.  The numbers
- * correspond to the 'type' parameter of org.xfce.Session.Manager.Shutdown
- */
-typedef enum
-{
-  XFSM_SHUTDOWN_ASK = 0,
-  XFSM_SHUTDOWN_LOGOUT,
-  XFSM_SHUTDOWN_HALT,
-  XFSM_SHUTDOWN_REBOOT,
-  XFSM_SHUTDOWN_SUSPEND,
-  XFSM_SHUTDOWN_HIBERNATE,
-} XfsmShutdownType;
-
 gboolean opt_logout = FALSE;
 gboolean opt_halt = FALSE;
 gboolean opt_reboot = FALSE;
 gboolean opt_suspend = FALSE;
 gboolean opt_hibernate = FALSE;
-gboolean opt_fast = FALSE;
+gboolean allow_save = FALSE;
 gboolean opt_version = FALSE;
 
 static GOptionEntry option_entries[] =
@@ -85,7 +73,7 @@ static GOptionEntry option_entries[] =
     N_("Hibernate without displaying the logout dialog"),
     NULL
   },
-  { "fast", 'f', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_fast,
+  { "fast", 'f', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &allow_save,
     N_("Log out quickly; don't save the session"),
     NULL
   },
@@ -98,23 +86,18 @@ static GOptionEntry option_entries[] =
 
 
 static void
-xfce_session_logout_notify_error (const gchar *primary_message,
-                                  DBusError *derror,
-                                  gboolean have_display)
+xfce_session_logout_notify_error (const gchar *message,
+                                  GError      *error,
+                                  gboolean     have_display)
 {
   if (G_LIKELY (have_display))
     {
-      xfce_message_dialog (NULL, _("Logout Error"), GTK_STOCK_DIALOG_ERROR,
-                           primary_message,
-                           derror && dbus_error_is_set (derror)
-                           ? derror->message : _("Unknown error"),
-                           GTK_STOCK_CLOSE, GTK_RESPONSE_ACCEPT, NULL);
+      xfce_dialog_show_error (NULL, error, "%s", message);
     }
   else
     {
-      g_critical ("%s: %s", primary_message,
-                  derror && dbus_error_is_set (derror) ? derror->message
-                                                       : _("Unknown error"));
+      g_printerr (PACKAGE_NAME ": %s (%s).\n", message,
+                  error != NULL ? error->message : _("Unknown error"));
     }
 }
 
@@ -123,100 +106,101 @@ xfce_session_logout_notify_error (const gchar *primary_message,
 int
 main (int argc, char **argv)
 {
-  XfsmShutdownType shutdown_type = XFSM_SHUTDOWN_ASK;
-  gboolean allow_save = TRUE;
-  DBusConnection *dbus_conn;
-  DBusMessage *message, *reply;
-  DBusError derror;
-  gboolean have_display;
+  DBusGConnection *conn;
+  DBusGProxy      *proxy = NULL;
+  GError          *err = NULL;
+  gboolean         have_display;
+  gboolean         show_dialog;
+  gboolean         result = FALSE;
 
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
   have_display = gtk_init_with_args (&argc, &argv, "", option_entries, PACKAGE, NULL);
 
-  if (opt_logout)
+  if (opt_version)
     {
-      shutdown_type = XFSM_SHUTDOWN_LOGOUT;
-    }
-  else if (opt_halt)
-    {
-      shutdown_type = XFSM_SHUTDOWN_HALT;
-    }
-  else if (opt_reboot)
-    {
-      shutdown_type = XFSM_SHUTDOWN_REBOOT;
-    }
-  else if (opt_suspend)
-    {
-      shutdown_type = XFSM_SHUTDOWN_SUSPEND;
-    }
-  else if (opt_hibernate)
-    {
-      shutdown_type = XFSM_SHUTDOWN_HIBERNATE;
-    }
-  else if (opt_version)
-    {
-      printf ("%s (Xfce %s)\n\n"
-              "Copyright (c) 2010-2011\n"
-              "        The Xfce development team. All rights reserved.\n\n"
-              "Written for Xfce by Brian Tarricone <kelnos@xfce.org> and\n"
-              "Benedikt Meurer <benny@xfce.org>.\n\n"
-              "Please report bugs to <%s>.\n",
-              PACKAGE_STRING, xfce_version_string(), PACKAGE_BUGREPORT);
+      g_print ("%s %s (Xfce %s)\n\n", PACKAGE_NAME, PACKAGE_VERSION, xfce_version_string ());
+      g_print ("%s\n", "Copyright (c) 2004-2011");
+      g_print ("\t%s\n\n", _("The Xfce development team. All rights reserved."));
+      g_print ("%s\n", _("Written by Benedikt Meurer <benny@xfce.org>"));
+      g_print ("%s\n\n", _("and Brian Tarricone <kelnos@xfce.org>."));
+      g_print (_("Please report bugs to <%s>."), PACKAGE_BUGREPORT);
+      g_print ("\n");
       return EXIT_SUCCESS;
     }
 
-  if (opt_fast)
+  /* open session bus */
+  conn = dbus_g_bus_get (DBUS_BUS_SESSION, &err);
+  if (conn == NULL)
     {
-      allow_save = FALSE;
-    }
-
-  dbus_error_init (&derror);
-  dbus_conn = dbus_bus_get (DBUS_BUS_SESSION, &derror);
-  if (G_UNLIKELY (dbus_conn == NULL))
-    {
-      xfce_session_logout_notify_error (_("Unable to contact D-Bus session bus."),
-                                        &derror, have_display);
-      dbus_error_free (&derror);
+      xfce_session_logout_notify_error (_("Unable to contact D-Bus session bus"), err, have_display);
+      g_error_free (err);
       return EXIT_FAILURE;
     }
 
-  message = dbus_message_new_method_call ("org.xfce.SessionManager",
-                                          "/org/xfce/SessionManager",
-                                          "org.xfce.Session.Manager",
-                                          "Shutdown");
-  if (G_UNLIKELY (message == NULL))
+  /* create messsage */
+  if (opt_suspend || opt_hibernate)
     {
-      xfce_session_logout_notify_error (_("Failed to create new D-Bus message"),
-                                        NULL, have_display);
-      return EXIT_FAILURE;
+      proxy = dbus_g_proxy_new_for_name_owner (conn,
+                                               "org.xfce.PowerManager",
+                                               "/org/xfce/PowerManager",
+                                               "org.xfce.PowerManager",
+                                               &err);
+      if (proxy != NULL)
+        {
+          if (opt_halt)
+            {
+              result = dbus_g_proxy_call (proxy, "Suspend", &err,
+                                          G_TYPE_INVALID, G_TYPE_INVALID);
+            }
+          else
+            {
+              result = dbus_g_proxy_call (proxy, "Hibernate", &err,
+                                          G_TYPE_INVALID, G_TYPE_INVALID);
+            }
+        }
+    }
+  else
+    {
+      proxy = dbus_g_proxy_new_for_name_owner (conn,
+                                               "org.xfce.SessionManager",
+                                               "/org/xfce/SessionManager",
+                                               "org.xfce.Session.Manager",
+                                               &err);
+      if (proxy != NULL)
+        {
+          if (opt_halt)
+            {
+              result = dbus_g_proxy_call (proxy, "Shutdown", &err,
+                                          G_TYPE_BOOLEAN, allow_save,
+                                          G_TYPE_INVALID, G_TYPE_INVALID);
+            }
+          else if (opt_reboot)
+            {
+              result = dbus_g_proxy_call (proxy, "Restart", &err,
+                                          G_TYPE_BOOLEAN, allow_save,
+                                          G_TYPE_INVALID, G_TYPE_INVALID);
+            }
+          else
+            {
+              show_dialog = !opt_logout;
+              result = dbus_g_proxy_call (proxy, "Logout", &err,
+                                          G_TYPE_BOOLEAN, show_dialog,
+                                          G_TYPE_BOOLEAN, allow_save,
+                                          G_TYPE_INVALID, G_TYPE_INVALID);
+            }
+        }
     }
 
-  dbus_message_append_args (message,
-                            DBUS_TYPE_UINT32, &shutdown_type,
-                            DBUS_TYPE_BOOLEAN, &allow_save,
-                            DBUS_TYPE_INVALID);
+  if (proxy != NULL)
+    g_object_unref (proxy);
 
-  reply = dbus_connection_send_with_reply_and_block (dbus_conn, message,
-                                                     -1, &derror);
-  dbus_message_unref (message);
-
-  if (G_UNLIKELY (reply == NULL))
+  if (!result)
     {
-      xfce_session_logout_notify_error (_("Failed to receive a reply from the session manager"),
-                                        &derror, have_display);
-      dbus_error_free (&derror);
+      xfce_session_logout_notify_error (_("Received error while trying to log out"), err, have_display);
+      g_error_free (err);
       return EXIT_FAILURE;
     }
-  else if (dbus_message_get_type (reply) == DBUS_MESSAGE_TYPE_ERROR)
-    {
-      dbus_set_error_from_message (&derror, reply);
-      xfce_session_logout_notify_error (_("Received error while trying to log out"),
-                                        &derror, have_display);
-      dbus_error_free (&derror);
-      return EXIT_FAILURE;
-    }
-  dbus_message_unref (reply);
 
   return EXIT_SUCCESS;
 }
