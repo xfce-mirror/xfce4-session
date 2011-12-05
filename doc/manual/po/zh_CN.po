@@ -1,13 +1,15 @@
-# Simplified Chinese translations for xfce4-session-docs package.
-# Copyright (C) 2002-2011 The Xfce development team.
-# This file is distributed under the same license as the xfce4-session-docs package.
+# Simplified Chinese translations for xfce4-session.docs package.
+# This file is distributed under the same license as
+# the xfce4-session-docs package.
 # Chipong Luo <chipong_l@yahoo.com>, 2011.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-session-docs\n"
-"POT-Creation-Date: 2011-05-30 12:40+0200\n"
+"Project-Id-Version: xfce4-session.docs\n"
+"POT-Creation-Date: 2011-02-12 17:50+0100\n"
 "Last-Translator: Chipong Luo <chipong_l@yahoo.com>\n"
-"Language-Team: Chinese/Simplified <xfce-i18n@xfce.org>\n"
+"Language-Team: Chinese (simplified) <xfce-i18n@xfce.org>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -64,10 +66,11 @@ msgid ""
 "complete license text is available from the <ulink type=\"http\" url="
 "\"http://www.gnu.org/\">Free Software Foundation</ulink>."
 msgstr ""
-"在自由软件基金会发布的 GNU 自由文档许可协议 1.1 版本或以后版本"
-"的条款约束下发布，允许复制、分发和/或修改本文档；不要求保留特定"
-"内容、封面文本或者封底文本。许可协议全文可以通过以下链接找到："
-"<ulink type=\"http\" url=\"http://www.gnu.org/\">自由软件组织</ulink>。"
+"以自由软件基金会发布的 GNU 自由文档许可协议 1.1 "
+"版或更高版的方式允许复制、分发和/或修改此文档；"
+"不要求保留特定章节、封面文本或封底文本。完整的"
+"许可协议文本在：<ulink type=\"http\" url=\"http://www.gnu.org/"
+"\">Free Software Foundation</ulink>。"
 
 #: xfce4-session.xml:45(firstname)
 msgid "Benedikt"
@@ -96,7 +99,8 @@ msgstr "benny@xfce.org"
 #: xfce4-session.xml:56(releaseinfo)
 msgid ""
 "This manual describes the @PACKAGE_NAME@ package, version @PACKAGE_VERSION@."
-msgstr "本手册介绍了 @PACKAGE_VERSION@ 版本的 @PACKAGE_VERSION@ 。"
+msgstr ""
+"此手册介绍了 @PACKAGE_VERSION@ 版的 @PACKAGE_VERSION@。"
 
 #: xfce4-session.xml:65(title)
 msgid "Introduction"
@@ -109,6 +113,10 @@ msgid ""
 "location) and restore it during a next startup. You can create several "
 "different sessions and choose one of them on startup."
 msgstr ""
+"<application>@PACKAGE_NAME@</application> 是 Xfce 4 的会话管理器。"
+"它的任务是保存您的桌面状态(已打开的应用程序和它们"
+"的位置)并在您下次启动时恢复。您可以创建若干不同的"
+"会话并在桌面启动时选择其中之一。"
 
 #: xfce4-session.xml:73(para)
 msgid ""
@@ -122,6 +130,14 @@ msgid ""
 "<application>smproxy</application> would do, and besides that, it also "
 "supports multiscreen display."
 msgstr ""
+"<application>@PACKAGE_NAME@</application> 提供 X11R6 和旧 X11R5 "
+"协议的会话管理。如果您不需要旧的会话管理"
+"支持，编译时您可以在 ./configure 中加 "
+"--disable-legacy-sm 禁用它。<emphasis>千万不要</emphasis> "
+"在 <application>@PACKAGE_NAME@</application> 管理的会话中运行 "
+"<application>smproxy</application>，否则会有怪事发生。包含的旧会话"
+"管理会做一切 <application>smproxy</application> 该做的事情，另外，"
+"它还支持多屏显示。"
 
 #: xfce4-session.xml:84(title)
 msgid "Session Manager settings"
@@ -140,20 +156,23 @@ msgid ""
 "Shows the General tab of the <application>@PACKAGE_NAME@</application> "
 "settings dialog."
 msgstr ""
+"显示 <application>@PACKAGE_NAME@</application> 设置对话框的一般标签。"
 
 #: xfce4-session.xml:106(term)
 msgid "Display chooser on login"
-msgstr ""
+msgstr "登录时显示会话选择器"
 
 #: xfce4-session.xml:108(para)
 msgid ""
 "If set, the session manager will ask you to choose a session every time you "
 "log in to Xfce."
 msgstr ""
+"设置后，每次登录 Xfce 时会话管理器都会让您选择"
+"哪种会话。"
 
 #: xfce4-session.xml:114(term)
 msgid "Automatically save session on logout"
-msgstr "在注销时自动保存会话"
+msgstr "注销时自动保存会话"
 
 #: xfce4-session.xml:116(para)
 msgid ""
@@ -161,6 +180,9 @@ msgid ""
 "automatically when you log out. If you don't select this option you'll be "
 "prompted whether you want to save the current session on each logout."
 msgstr ""
+"此项指示会话管理器在您每次注销时都自动保存当前的"
+"会话。如果您没有选中此项，每次注销时都有提示询问"
+"您是否保存当前的会话。"
 
 #: xfce4-session.xml:124(term)
 msgid "Prompt on logout"
@@ -172,6 +194,8 @@ msgid ""
 "will be saved or not depends on whether you enabled the automatic saving of "
 "sessions on logout or not."
 msgstr ""
+"此项禁用注销确认对话框。是否保存会话取决于您是否"
+"启用在注销时自动保存会话。"
 
 #: xfce4-session.xml:135(title)
 msgid "Advanced preferences"
@@ -185,11 +209,11 @@ msgstr "<application>@PACKAGE_NAME@</application> 高级首选项"
 msgid ""
 "Shows Advanced tab of the <application>@PACKAGE_NAME@</application> settings "
 "dialog."
-msgstr ""
+msgstr "显示 <application>@PACKAGE_NAME@</application> 设置对话框的高级标签。"
 
 #: xfce4-session.xml:154(term)
 msgid "Launch Gnome services on startup"
-msgstr ""
+msgstr "桌面启动时启动 Gnome 服务"
 
 #: xfce4-session.xml:156(para)
 msgid ""
@@ -199,10 +223,15 @@ msgid ""
 "enabled in the GNOME control center). See the GNOME documentation for more "
 "information on this topic."
 msgstr ""
+"如果您需要在桌面启动时运行 GNOME keyring 守护"
+"进程，启用此项。此项还会指示 <application>@PACKAGE_NAME@</application> "
+"在桌面启动时启用 Gnome 辅助技术(如果已在 Gnome "
+"控制中心中启用)。参看 Gnome 文档获取有关此主题的"
+"详情。"
 
 #: xfce4-session.xml:164(term)
 msgid "Launch KDE services on startup"
-msgstr ""
+msgstr "桌面启动时启动 KDE 服务"
 
 #: xfce4-session.xml:166(para)
 msgid ""
@@ -211,10 +240,15 @@ msgid ""
 "other hand, KDE applications will startup faster. Some KDE applications may "
 "not work at all if you don't enable this option."
 msgstr ""
+"如果您打算将 KDE 应用程序作为 Xfce 桌面会话的"
+"一部分来运行，启用此项。这样会显著增加桌面启动"
+"时间，但另一方面，KDE 应用程序会启动得快些。"
+"如果您没有启用此项，一些 KDE 应用程序可能压根"
+"就不工作。"
 
 #: xfce4-session.xml:174(term)
 msgid "Manage remote applications"
-msgstr ""
+msgstr "管理远程应用程序"
 
 #: xfce4-session.xml:176(para)
 msgid ""
@@ -222,6 +256,9 @@ msgid ""
 "Since this option may constitute a security risk, by listening to a TCP port "
 "on your system, do not enable it unless you know what you are doing."
 msgstr ""
+"允许会话管理器管理远程主机上运行的应用程序。由于"
+"此项会监听您系统上的 TCP 端口，这会导致安全风险，"
+"所以除非您确实知道自己在做什么，不要启用此项。"
 
 #: xfce4-session.xml:180(para)
 msgid ""
@@ -229,10 +266,12 @@ msgid ""
 "session managers <ulink url=\"#xfsm-kiosk-mode\" type=\"html\">KIOSK "
 "capabilities</ulink>."
 msgstr ""
+"系统管理员可能要使用 <ulink url=\"#xfsm-kiosk-mode\" "
+"会话管理器 type=\"html\">KIOSK 功能</ulink> 全局禁用此项。"
 
 #: xfce4-session.xml:191(title)
 msgid "Customizing the Session Manager"
-msgstr ""
+msgstr "自定义会话管理器"
 
 #: xfce4-session.xml:193(para)
 msgid ""
@@ -240,20 +279,23 @@ msgid ""
 "application> will use when you log in to Xfce 4. There is a dedicated dialog "
 "available from the <emphasis>Xfce 4 Settings Manager</emphasis>."
 msgstr ""
+"您可以自定义登录 Xfce 4 时 <application>@PACKAGE_NAME@</application> "
+"要使用的启动屏幕。 <emphasis>Xfce 4 设置管理器</emphasis> 里有个"
+"专门的对话框。"
 
 #: xfce4-session.xml:198(title)
 msgid "Splash screen settings"
-msgstr ""
+msgstr "启动屏幕设置"
 
 #: xfce4-session.xml:201(title)
 msgid "Splash screen settings dialog"
-msgstr ""
+msgstr "启动屏幕设置对话框"
 
 #: xfce4-session.xml:209(phrase)
 msgid ""
 "Shows the <application>@PACKAGE_NAME@</application> splash screen settings "
 "dialog."
-msgstr ""
+msgstr "显示 <application>@PACKAGE_NAME@</application> 启动屏幕设置对话框"
 
 #: xfce4-session.xml:215(para)
 msgid ""
@@ -262,6 +304,9 @@ msgid ""
 "You can click on the <guibutton>Test</guibutton> button to see a "
 "demonstration of the selected splash screen engine."
 msgstr ""
+"在左边，对话框显示一个所有已安装引擎的列表。选择一个"
+"引擎，如果可用，您会看到预览和其相关信息，点击 <guibutton>测试</guibutton> "
+"按钮可以看到选中的启动屏幕引擎的演示。"
 
 #: xfce4-session.xml:221(para)
 msgid ""
@@ -269,10 +314,12 @@ msgid ""
 "engines by default. Their respective configuration options - if any - are "
 "available from the <guibutton>Configure</guibutton> button."
 msgstr ""
+"<application>@PACKAGE_NAME@</application> 默认有三个启动画面主题引擎。如果有的话，"
+"点击 <guibutton>配置</guibutton> 按钮可以得到它们各自的配置选项。"
 
 #: xfce4-session.xml:227(title)
 msgid "Shutdown/reboot options"
-msgstr ""
+msgstr "关机/重启选项"
 
 #: xfce4-session.xml:229(para)
 msgid ""
@@ -286,6 +333,14 @@ msgid ""
 "to configure with the --with-helper-path-prefix option or <filename role="
 "\"directory\">/usr/local/lib/xfce4/session</filename> by default."
 msgstr ""
+"<application>@PACKAGE_NAME@</application> 支持在您注销桌面会话时关闭您的计算机。"
+"要能关闭计算机，您必须列在 <filename>sudoers</filename> 文件里，特别是，"
+"必须允许您以用户 root 执行命令 <filename>${HELPERDIR}"
+"/xfce4/session/xfsm-shutdown-helper</filename>"
+"(在 Debian GNU/Linux 上为 <filename>/usr/sbin/xfsm-"
+"shutdown-helper</filename>)。(<filename>${HELPERDIR}</filename> 是默认传给 "
+"--with-helper-path-prefix 选项或 <filename role="
+"\"directory\">/usr/local/lib/xfce4/session</filename> 配置的目录)。"
 
 #: xfce4-session.xml:239(para)
 msgid ""
@@ -295,6 +350,10 @@ msgid ""
 "to add the following line to your <filename>sudoers</filename> file "
 "(remember to use <application>visudo</application> to edit that file):"
 msgstr ""
+"比如，假如您以默认选项编译 <application>@PACKAGE_NAME@</application>，"
+"您的主机名是 <emphasis>myhost</emphasis>、您的用户帐号命名为 "
+"<emphasis>myuser</emphasis>，那么您必须在 <filename>sudoers</filename> 文件"
+"(记住用 <application>visudo</application> 编辑那个文件)中添加如下行："
 
 #: xfce4-session.xml:246(programlisting)
 #, no-wrap
@@ -307,11 +366,11 @@ msgstr ""
 
 #: xfce4-session.xml:254(title)
 msgid "Advanced"
-msgstr ""
+msgstr "高级"
 
 #: xfce4-session.xml:257(title)
 msgid "Files and Environment Variables"
-msgstr ""
+msgstr "文件和环境变量"
 
 #: xfce4-session.xml:259(para)
 msgid ""
@@ -320,6 +379,10 @@ msgid ""
 "and configuration files. This means that file locations will be specified as "
 "a path relative to the directories described in the specification."
 msgstr ""
+"Xfce 现在使用 <ulink url=\"http://freedesktop.org/\" "
+"type=\"http\">Freedesktop.org</ulink> 中定义的基本目录规定放置其"
+"数据和配置文件。此意味着将按规定中描述的目录的"
+"相对路径指定文件位置。"
 
 #: xfce4-session.xml:267(term)
 msgid "${XDG_CONFIG_HOME}"
@@ -330,6 +393,8 @@ msgid ""
 "The first base directory to look for configuration files. By default this is "
 "set to <filename role=\"directory\">~/.config/</filename>."
 msgstr ""
+"查找配置文件的第一个基本目录。默认位于 "
+"<filename role=\"directory\">~/.config/</filename>。"
 
 #: xfce4-session.xml:276(term)
 msgid "${XDG_CONFIG_DIRS}"
@@ -343,6 +408,11 @@ msgid ""
 "of ${sysconfdir} depends on how the program was build and will often be "
 "<filename role=\"directory\">/etc/</filename> for binary packages."
 msgstr ""
+"包含配置数据的系统目录列表。面板默认会在 "
+"<filename role=\"directory\">${sysconfdir}/xdg/</filename> 和 "
+"<filename role=\"directory\">/etc/xdg/</filename> 下找。 "
+"${sysconfdir} 的值取决于程序如何编译，"
+"对于二进制文件包通常是 <filename role=\"directory\">/etc/</filename>。"
 
 #: xfce4-session.xml:289(term)
 msgid "${XDG_CACHE_HOME}"
@@ -354,6 +424,8 @@ msgid ""
 "variable is unset, it defaults to <filename role=\"directory\">~/.cache</"
 "filename>."
 msgstr ""
+"指定所有用户指定缓存数据的根源。如果此环境变量"
+"未设置，默认是 <filename role=\"directory\">~/.cache</filename>。"
 
 #: xfce4-session.xml:298(term)
 msgid "${XDG_CONFIG_DIRS}/autostart/"
@@ -367,6 +439,11 @@ msgid ""
 "\"http\" url=\"http://standards.freedesktop.org/desktop-entry-spec/desktop-"
 "entry-spec-latest.html\">Desktop Entry Specification</ulink> for details)."
 msgstr ""
+"此处是存储所有登录时将自动运行应用程序列表的位置。"
+"每个自启动应用程序都用 <filename>.desktop</filename> 文件表示"
+"(细节参看 <ulink type=\"http\" url=\"http://standards.freedesktop."
+"org/desktop-entry-spec/desktop-entry-spec-"
+"latest.html\">Desktop Entry Specification</ulink>)。"
 
 #: xfce4-session.xml:306(para)
 msgid ""
@@ -378,6 +455,12 @@ msgid ""
 "location to the standard location and place a <filename>LOCATION-CHANGED."
 "txt</filename> file in the old directory, that describes the location change."
 msgstr ""
+"Xfce 4.3 以前，自启动应用程序列表存储在包含脚本"
+"和应用程序符号链接的 <filename role=\"directory\">~/Desktop/Autostart</filename> 中。"
+"如果您第一次运行 @PACKAGE_VERSION@ 或更高版本的 "
+"<application>@PACKAGE_NAME@</application>，它会自动将自启动项目从原位置迁移至"
+"标准位置，并在原目录下存放一个描述位置更改的文件 "
+"<filename>LOCATION-CHANGED.txt</filename>。"
 
 #: xfce4-session.xml:317(term)
 msgid "${XDG_CONFIG_DIRS}/xfce4-session/xfce4-session.rc"
@@ -389,6 +472,8 @@ msgid ""
 "settings for <application>@PACKAGE_NAME@</application>, which can be changed "
 "from the settings dialog."
 msgstr ""
+"此处是可以在设置对话框中更改的、包含各种 "
+"<application>@PACKAGE_NAME@</application> 设置的配置文件的位置。"
 
 #: xfce4-session.xml:326(term)
 msgid "${XDG_CONFIG_DIRS}/xfce4-session/xfce4-splash.rc"
@@ -400,6 +485,8 @@ msgid ""
 "configuration for the splash screen, which can be changed from the settings "
 "dialog."
 msgstr ""
+"此处是可以在设置对话框中更改的、包含启动屏幕配置的"
+"配置文件的位置。"
 
 #: xfce4-session.xml:335(term)
 msgid "${XDG_CACHE_HOME}/sessions/"
@@ -410,6 +497,8 @@ msgid ""
 "The directory where <application>@PACKAGE_NAME@</application> and "
 "<application>xfwm4</application> store the session data to."
 msgstr ""
+"<application>@PACKAGE_NAME@</application> 和 "
+"<application>xfwm4</application> 存储会话数据的目录。"
 
 #: xfce4-session.xml:343(term)
 msgid "${sysconfdir}/xdg/xfce4/kiosk/kioskrc"
@@ -420,6 +509,8 @@ msgid ""
 "Kiosk mode configuration file. See <ulink url=\"#xfsm-kiosk-mode\">next "
 "section</ulink> for an explanation."
 msgstr ""
+"Kiosk 模式配置文件。说明参看 "
+"<ulink url=\"#xfsm-kiosk-mode\">下一章</ulink>。"
 
 #: xfce4-session.xml:351(para)
 msgid ""
@@ -428,6 +519,10 @@ msgid ""
 "changes will be overwritten if you edit them while the session manager or "
 "the settings managers are running."
 msgstr ""
+"在设计上，除了 <filename>kioskrc</filename>，配置文件不能在 "
+"Xfce 会话过程中手动编辑；事实上，如果会话"
+"管理器或设置管理器正在运行时您编辑它们，这些"
+"更改会被改写。"
 
 #: xfce4-session.xml:356(para)
 msgid ""
@@ -438,6 +533,12 @@ msgid ""
 "<application>xftaskbar4</application>, you would change the <emphasis>"
 "[Failsafe Session]</emphasis> section like to something like this:"
 msgstr ""
+"系统管理员可能要自定义文件 <filename>${sysconfdir}/xdg/"
+"xfce4-session/xfce4-session.rc</filename> 来更改 "
+"Xfce 在启动时运行的默认应用程序。比如，如果您"
+"要启动 <application>xfce4-iconbox</application> 而不是 "
+"<application>xftaskbar4</application>，您需要类似于"
+"如下更改 <emphasis>[Failsafe Session]</emphasis> 一段："
 
 #: xfce4-session.xml:363(programlisting)
 #, no-wrap
@@ -477,12 +578,18 @@ msgid ""
 "edit or create the file <filename>${sysconfdir}/xdg/xfce4/kiosk/kioskrc</"
 "filename>."
 msgstr ""
+"会话管理器还提供 Kiosk 模式支持，它能帮助用户"
+"避免更改他们的会话设置。您必须编辑或创建文件 "
+"<filename>${sysconfdir}/xdg/xfce4/kiosk/kioskrc</filename> "
+"来使用它。"
 
 #: xfce4-session.xml:385(para)
 msgid ""
 "The way to explain the format of this file is by using an example. The xfce4-"
 "session section of your <filename>kioskrc</filename> might look like this:"
 msgstr ""
+"解释此文件的格式的方法使用一个模板。<filename>kioskrc</filename> 的 "
+"xfce4-session 一段看起来应该如此："
 
 #: xfce4-session.xml:389(programlisting)
 #, no-wrap
@@ -512,50 +619,52 @@ msgid ""
 "the compatibility settings and shutdown the system. No one will be allowed "
 "to adjust the security settings."
 msgstr ""
+"这让所有用户更改他们的启动画面、会话选择器和注销"
+"方式设置，但只有 <emphasis>wheel</emphasis> 组中的用户才可以自定义"
+"兼容性设置并关闭系统。不允许用户调整安全性设置。"
 
 #: xfce4-session.xml:404(para)
 msgid "The session manager supports the following KIOSK capabilities:"
-msgstr ""
-""
+msgstr "会话管理器支持以下 KIOSK 功能："
 
 #: xfce4-session.xml:408(term)
 msgid "CustomizeSplash"
-msgstr "CustomizeSplash"
+msgstr "自定义启动画面"
 
 #: xfce4-session.xml:410(para)
 msgid "Whether or not the user is allowed to customize the splash screen."
-msgstr ""
+msgstr "是否允许用户自定义启动屏幕。"
 
 #: xfce4-session.xml:415(term)
 msgid "CustomizeChooser"
-msgstr "CustomizeChooser"
+msgstr "自定义会话选择器"
 
 #: xfce4-session.xml:417(para)
 msgid ""
 "Whether or not the user is allowed to customize the session chooser settings."
-msgstr ""
+msgstr "是否允许用户自定义会话选择器设置。"
 
 #: xfce4-session.xml:422(term)
 msgid "CustomizeLogout"
-msgstr "CustomizeLogout"
+msgstr "自定义注销方式"
 
 #: xfce4-session.xml:424(para)
 msgid "Whether or not the user is allowed to customize the logout settings."
-msgstr ""
+msgstr "是否允许用户自定义注销方式设置。"
 
 #: xfce4-session.xml:429(term)
 msgid "CustomizeCompatibility"
-msgstr "CustomizeCompatibility"
+msgstr "自定义兼容性"
 
 #: xfce4-session.xml:431(para)
 msgid ""
 "Whether or not the user is allowed to customize the compatibility settings "
 "(KDE/Gnome compat)"
-msgstr ""
+msgstr "是否允许用户自定义兼容性设置(KDE/Gnome 兼容)"
 
 #: xfce4-session.xml:437(term)
 msgid "CustomizeSecurity"
-msgstr "CustomizeSecurity"
+msgstr "自定义安全性"
 
 #: xfce4-session.xml:439(para)
 msgid ""
@@ -564,10 +673,13 @@ msgid ""
 "prevents users (actually <filename>libICE</filename>) from binding to a TCP "
 "port."
 msgstr ""
+"是否允许用户自定义安全性设置。由于它阻止用户"
+"(实际上是 <filename>libICE</filename>)与 TCP 端口绑定，"
+"所以这是 <emphasis>最重要</emphasis> 的设置。"
 
 #: xfce4-session.xml:446(term)
 msgid "Shutdown"
-msgstr ""
+msgstr "关机"
 
 #: xfce4-session.xml:448(para)
 msgid ""
@@ -575,6 +687,8 @@ msgid ""
 "system. If a user lacks this capability the reboot and poweroff options in "
 "the shutdown dialog will be greyed out."
 msgstr ""
+"是否允许用户关闭(重启或关机)系统。如果用户没有此权限，"
+"则关机对话框中的重启或关机会变成灰色。"
 
 #: xfce4-session.xml:458(title)
 msgid "About <application>@PACKAGE_NAME@</application>"
@@ -586,6 +700,9 @@ msgid ""
 "(<email>benny@xfce.org</email>). To find more information, please visit the "
 "<ulink url=\"http://www.xfce.org\" type=\"http\">Xfce web site</ulink>."
 msgstr ""
+"<application>@PACKAGE_NAME@</application> 由 Benedikt Meurer"
+"(<email>benny@xfce.org</email>)撰写。要查找更多信息，请访问"
+"<ulink url=\"http://www.xfce.org\" type=\"http\">Xfce 网络站点</ulink>。"
 
 #: xfce4-session.xml:466(para)
 msgid ""
@@ -593,6 +710,10 @@ msgid ""
 "manual, use the bug tracking system at <ulink url=\"http://bugzilla.xfce.org/"
 "\" type=\"http\">http://bugzilla.xfce.org/</ulink>."
 msgstr ""
+"无论是此应用程序还是此手册，要报告缺陷或提出建议，"
+"使用位于 <ulink url=\"http://bugzilla.xfce.org/"
+"\" type=\"http\">http://bugzilla.xfce.org/</ulink> "
+"上的缺陷追踪系统。"
 
 #: xfce4-session.xml:472(para)
 msgid ""
@@ -602,6 +723,12 @@ msgid ""
 "the <ulink url=\"http://lunar-linux.org/mailman/listinfo/xfce4-dev\" type="
 "\"http\">xfce4-dev</ulink> mailing list."
 msgstr ""
+"如果您有使用或安装此软件包方面的问题，"
+"提问请在邮件列表 <ulink url=\"http://lunar-linux."
+"org/mailman/listinfo/xfce\" type=\"http\">xfce</ulink>。"
+"开发讨论在邮件列表 <ulink url=\"http://lunar-linux."
+"org/mailman/listinfo/xfce4-dev\" type="
+"\"http\">xfce4-dev</ulink> 中进行。"
 
 #: xfce4-session.xml:481(para)
 msgid ""
@@ -609,6 +736,8 @@ msgid ""
 "License as published by the Free Software Foundation; either version 2 of "
 "the License, or (at your option) any later version."
 msgstr ""
+"此程序以自由软件基金会发布的 GNU 通用公共许可"
+"协议的第二版或(您可以选择)更高版的方式发布。"
 
 #: xfce4-session.xml:486(para)
 msgid ""
@@ -616,6 +745,11 @@ msgid ""
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
+"您应该与此程序一道收到了一份 GUN 通用公共许可"
+"协议的副本；如果没有，致信给 "
+"the Free Software Foundation, Inc.,"
+"59 Temple Place - Suite 330, Boston, "
+"MA 02111-1307, USA."
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
 #: xfce4-session.xml:0(None)
