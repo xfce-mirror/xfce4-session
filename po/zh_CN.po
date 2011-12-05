@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-18 10:36+0000\n"
+"POT-Creation-Date: 2011-12-04 22:18+0000\n"
 "PO-Revision-Date: 2010-04-06 13:28+0800\n"
 "Last-Translator: Chipong Luo <chipong_l@yahoo.com>\n"
 "Language-Team: Chinese/Simplified <xfce-i18n@xfce.org>\n"
@@ -77,7 +77,7 @@ msgstr "Balou"
 
 #: ../engines/balou/config.c:995
 msgid "Balou Splash Engine"
-msgstr "Balou 启动画面主题引擎"
+msgstr "Balou 启动画面引擎"
 
 #: ../engines/mice/mice.c:373
 msgid "Mice"
@@ -85,7 +85,7 @@ msgstr "Mice"
 
 #: ../engines/mice/mice.c:374
 msgid "Mice Splash Engine"
-msgstr "Mice 启动画面主题引擎"
+msgstr "Mice 启动画面引擎"
 
 #: ../engines/simple/simple.c:346
 msgid "Configure Simple..."
@@ -133,7 +133,7 @@ msgstr "Simple"
 
 #: ../engines/simple/simple.c:498
 msgid "Simple Splash Engine"
-msgstr "Simple 启动画面主题引擎"
+msgstr "Simple 启动画面引擎"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:86
 msgid "Session"
@@ -302,8 +302,7 @@ msgstr "终止程序"
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
-msgstr "任何没有保存的应用程序状态信息都会丢失，"
-"而且您下次登录时也不会恢复。"
+msgstr "任何没有保存的应用程序状态信息都会丢失，而且您下次登录时也不会恢复。"
 
 #: ../settings/session-editor.c:191
 #: ../settings/xfce4-session-settings.glade.h:35
@@ -334,9 +333,9 @@ msgstr "程序"
 msgid "Restart Style"
 msgstr "重启方式"
 
-#: ../settings/splash-settings.c:286 ../settings/splash-settings.c:289
-#: ../settings/splash-settings.c:292 ../settings/splash-settings.c:295
-#: ../settings/splash-settings.c:352
+#: ../settings/splash-settings.c:291 ../settings/splash-settings.c:294
+#: ../settings/splash-settings.c:297 ../settings/splash-settings.c:300
+#: ../settings/splash-settings.c:357
 msgid "None"
 msgstr "无"
 
@@ -453,11 +452,11 @@ msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
 msgstr "使用 Gtk+-%d.%d.%d 进行编译，现在运行于 Gtk+-%d.%d.%d 之上"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:258
+#: ../xfce4-session/main.c:260
 msgid "Verifying DNS settings"
 msgstr "正在校验 DNS 设置"
 
-#: ../xfce4-session/main.c:261
+#: ../xfce4-session/main.c:264
 msgid "Loading session data"
 msgstr "正在读取会话数据"
 
@@ -503,8 +502,7 @@ msgstr "<b>出现一个错误</b>"
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
-msgstr "您所输入的密码不正确，或者系统管理员"
-"不允许您的帐户关闭该计算机。"
+msgstr "您所输入的密码不正确，或者系统管理员不允许您的帐户关闭该计算机。"
 
 #: ../xfce4-session/shutdown.c:833 ../xfce4-session/xfsm-manager.c:1119
 msgid "Shutdown Failed"
@@ -514,32 +512,32 @@ msgstr "无法关机"
 msgid "Unable to perform shutdown"
 msgstr "无法执行关机"
 
-#: ../xfce4-session/xfsm-chooser.c:91
+#: ../xfce4-session/xfsm-chooser.c:90
 #, c-format
 msgid "Last accessed: %s"
 msgstr "最后访问： %s"
 
-#: ../xfce4-session/xfsm-chooser.c:177
+#: ../xfce4-session/xfsm-chooser.c:172
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr "选择您希望恢复的会话。您可以简单地双击该会话名称来进行。"
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:203
+#: ../xfce4-session/xfsm-chooser.c:198
 msgid "Log out"
 msgstr "注销"
 
-#: ../xfce4-session/xfsm-chooser.c:205
+#: ../xfce4-session/xfsm-chooser.c:200
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "取消本次登录并且返回到登录屏幕。"
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:212
+#: ../xfce4-session/xfsm-chooser.c:207
 msgid "New session"
 msgstr "新建会话"
 
-#: ../xfce4-session/xfsm-chooser.c:213
+#: ../xfce4-session/xfsm-chooser.c:208
 msgid "Create a new session."
 msgstr "创建新会话。"
 
@@ -629,17 +627,17 @@ msgstr "无法休眠会话"
 msgid "Can only terminate clients when in the idle state"
 msgstr "客户程序只有在空闲时方能被终止"
 
-#: ../xfce4-session/xfsm-manager.c:1942
+#: ../xfce4-session/xfsm-manager.c:1946
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "会话管理器必须在空闲时才会接受断点测试请求"
 
-#: ../xfce4-session/xfsm-manager.c:1983
+#: ../xfce4-session/xfsm-manager.c:1987
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "会话管理器必须在空闲时才可请求关机"
 
-#: ../xfce4-session/xfsm-manager.c:1990
+#: ../xfce4-session/xfsm-manager.c:1994
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "无效的关机类型 “%u”"
@@ -893,7 +891,7 @@ msgstr "显示一个带锁屏、挂起、关机或注销选项的菜单"
 #: ../settings/xfce-session-settings.desktop.in.h:1
 #: ../settings/xfce4-session-settings.glade.h:14
 msgid "Customize desktop startup and splash screen"
-msgstr "自定义桌面启动和启动画面"
+msgstr "自定义桌面启动和启动屏幕"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
 #: ../settings/xfce4-session-settings.glade.h:27
@@ -954,7 +952,7 @@ msgstr "配置(_F)"
 
 #: ../settings/xfce4-session-settings.glade.h:15
 msgid "Demonstrates the selected splash screen"
-msgstr "演示选中的启动画面"
+msgstr "演示选中的启动屏幕"
 
 #: ../settings/xfce4-session-settings.glade.h:16
 msgid "Display the session chooser every time Xfce starts"
@@ -979,7 +977,7 @@ msgstr "通过网络管理远程应用程序(可能有安全隐患)"
 
 #: ../settings/xfce4-session-settings.glade.h:21
 msgid "Opens the configuration panel for the selected splash screen"
-msgstr "为选中的启动画面打开配置面板"
+msgstr "为选中的启动屏幕打开配置面板"
 
 #: ../settings/xfce4-session-settings.glade.h:22
 msgid "Prompt for confirmation when logging out"
