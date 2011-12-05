@@ -105,13 +105,14 @@ msgstr ""
 #: xfce4-session.xml86(para)
 msgid "<application>@PACKAGE_NAME@</application> provides session management for both X11R6 and legacy X11R5 protocols. If you don't need legacy session management support, you can disable it at compile time, giving --disable-legacy-sm to ./configure. Do <emphasis>NOT EVER</emphasis> run <application>smproxy</application> in session that is managed by <application>@PACKAGE_NAME@</application>, or weird things will happen. The included legacy session management does everything that <application>smproxy</application> would do, and besides that, it also supports multiscreen display."
 msgstr ""
-"<application>@PACKAGE_NAME@</application> 管理 X11R6 和旧 X11R5 协议会话。"
-"如果您不需要旧的会话管理支持，编译时您可以在 "
-"./configure 中添加 --disable-legacy-sm 禁用它。 "
-"<emphasis>千万不要</emphasis> 在 <application>@PACKAGE_NAME@</application> 管理"
-"的会话中运行 <application>smproxy</application> ，否则会出现奇怪"
-"情况。内含的旧会话管理会做一切 <application>smproxy</application> "
-"该做的事情，另外，它还支持多屏显示支持。"
+"<application>@PACKAGE_NAME@</application> 提供 X11R6 和旧 X11R5 "
+"协议的会话管理。如果您不需要旧的会话管理"
+"支持，编译时您可以在 ./configure 中加 "
+"--disable-legacy-sm 禁用它。<emphasis>千万不要</emphasis> "
+"在 <application>@PACKAGE_NAME@</application> 管理的会话中运行 "
+"<application>smproxy</application>，否则会有怪事发生。包含的旧会话"
+"管理会做一切 <application>smproxy</application> 该做的事情，另外，"
+"它还支持多屏显示。"
 
 #: xfce4-session.xml97(title)
 msgid "Session Manager settings"
@@ -173,11 +174,12 @@ msgstr "显示 <application>@PACKAGE_NAME@</application> 设置对话框的高�
 
 #: xfce4-session.xml167(term)
 msgid "Launch Gnome services on startup"
-msgstr "在桌面启动时启动 Gnome 服务"
+msgstr "桌面启动时启动 Gnome 服务"
 
 #: xfce4-session.xml169(para)
 msgid "Enable this option if you need the GNOME keyring daemon to be run on startup. This option also instructs <application>@PACKAGE_NAME@</application> to bring up the GNOME assistive technologies at startup (if enabled in the GNOME control center). See the GNOME documentation for more information on this topic."
-msgstr "如果您需要在桌面启动时运行 GNOME keyring daemon ，启用此"
+msgstr ""
+"如果您需要在桌面启动时运行 GNOME keyring daemon ，启用此"
 "选项。此选项还会让 <application>@PACKAGE_NAME@</application> 在桌面启动时启用 "
 "Gnome 辅助技术(如果在 Gnome 控制中心中已启用)。"
 "详情请参看 Gnome 文档中的相关主题。"
@@ -243,14 +245,15 @@ msgstr "关机/重启选项"
 
 #: xfce4-session.xml242(para)
 msgid "<application>@PACKAGE_NAME@</application> supports shutting down your computer when you log out of your desktop session. To be able to shutdown the computer, you have to be listed in the systems <filename>sudoers</filename> file, in particular, you must be allowed to execute the command <filename>${libdir}/xfce4/session/xfsm-shutdown-helper</filename> (<filename>/usr/sbin/xfsm-shutdown-helper</filename> on Debian GNU/Linux) as user root (where <filename>${libdir}</filename> is the <filename role=\"directory\">lib</filename> sub directory in the prefix you installed <application>@PACKAGE_NAME@</application>, for example <filename role=\"directory\">/usr/local/lib/xfce4/session</filename>)."
-msgstr "<application>@PACKAGE_NAME@</application> 支持在您注销桌面会话时关闭您的计算机。"
-"要能关闭计算机，您的用户名必须列在 <filename>sudoers</filename> 文件里，"
-"特别是您必须被允许以用户 root (您安装 <application>@PACKAGE_NAME@</application> "
-"的父目录是 <filename role=\"directory\">lib</filename> ，而 "
-"<filename role=\"directory\">lib</filename> 是 <filename>${libdir}</filename> 的"
-"子目录，比如 <filename role=\"directory\">/usr/local/lib/xfce4/session</filename>)"
-"执行执行命令 <filename>${libdir}/xfce4/session/xfsm-shutdown-helper</filename> "
-"(Debian GNU/Linux 中的 <filename>/usr/sbin/xfsm-shutdown-helper</filename>) 。"
+msgstr ""
+"<application>@PACKAGE_NAME@</application> 支持在您注销桌面会话时关闭您的计算机。"
+"要能关闭计算机，您必须列在 <filename>sudoers</filename> 文件里，特别是，"
+"必须允许您以用户 root 执行命令 <filename>${HELPERDIR}"
+"/xfce4/session/xfsm-shutdown-helper</filename>"
+"(在 Debian GNU/Linux 上为 <filename>/usr/sbin/xfsm-"
+"shutdown-helper</filename>)。(<filename>${HELPERDIR}</filename> 是默认传给 "
+"--with-helper-path-prefix 选项或 <filename role="
+"\"directory\">/usr/local/lib/xfce4/session</filename> 配置的目录)。"
 
 #: xfce4-session.xml253(para)
 msgid "For example, lets say, you installed <application>@PACKAGE_NAME@</application> into <filename role=\"directory\">/usr/local</filename>, your hostname is <emphasis>myhost</emphasis> and your user account is named <emphasis>myuser</emphasis>, then you would have to add the following line to your <filename>sudoers</filename> file (remember to use <application>visudo</application> to edit that file):"
