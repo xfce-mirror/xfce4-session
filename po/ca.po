@@ -2,24 +2,33 @@
 # xfce4-session for Xfce desktop environment, catalan translation.
 # Copyright (C) 2003-2006 The Xfce development team.
 # This file is distributed under the same license as the xfce4-session package.
-# Carles Muñoz Gorriz <carlesmu@internautas.org>, 2003-2004, 2006, 2008-2010.
+# Carles Muñoz Gorriz <carlesmu@internautas.org>, 2003-2004, 2006, 2008-2011.
 # Pau Rul·lan Ferragut <paurullan@bulma.net> 2005, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-15 11:11+0000\n"
-"PO-Revision-Date: 2010-05-04 20:01+0100\n"
+"POT-Creation-Date: 2011-12-06 18:24+0000\n"
+"PO-Revision-Date: 2011-12-06 20:49+0100\n"
 "Last-Translator: Carles Muñoz Gorriz <carlesmu@internautas.org>\n"
 "Language-Team: catalan <xfce-i18n@xfce.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Language: Catalan\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Country: SPAIN\n"
+
+#: ../xfce.desktop.in.h:1
+msgid "Use this session to run Xfce as your desktop environment"
+msgstr ""
+"Empra aquesta sessió per executar l'Xfce com el vostre entorn d'escriptori"
+
+#: ../xfce.desktop.in.h:2
+msgid "Xfce Session"
+msgstr "Sessió Xfce"
 
 #: ../engines/balou/balou-theme.c:110
 msgid "No description given"
@@ -135,98 +144,6 @@ msgstr "Simple"
 msgid "Simple Splash Engine"
 msgstr "Motor per la pantalla de presentació Simple"
 
-#: ../panel-plugin/xfsm-logout-plugin.c:86
-msgid "Session"
-msgstr "Sessió"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:87
-msgid "Loc_k screen"
-msgstr "_Bloca la pantalla"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:88
-#: ../panel-plugin/xfsm-logout-plugin.c:128
-msgid "_Suspend"
-msgstr "S_uspèn"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:89
-#: ../panel-plugin/xfsm-logout-plugin.c:135 ../xfce4-session/shutdown.c:599
-msgid "_Hibernate"
-msgstr "_Hiberna"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:90
-#: ../panel-plugin/xfsm-logout-plugin.c:121
-msgid "_Reboot"
-msgstr "Torna a a_rrencar"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:91
-#: ../panel-plugin/xfsm-logout-plugin.c:114
-msgid "Shut _down"
-msgstr "_Attura"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:92
-#: ../panel-plugin/xfsm-logout-plugin.c:107
-msgid "_Log out"
-msgstr "_Surt"
-
-#. XFSM_SHUTDOWN_ASK
-#. XFSM_SHUTDOWN_LOGOUT
-#: ../panel-plugin/xfsm-logout-plugin.c:105
-msgid "Are you sure you want to log out?"
-msgstr "Esteu segur que voleu sortir?"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:106
-#, c-format
-msgid "You will be logged out in %u seconds."
-msgstr "Sortireu en %u segons."
-
-#: ../panel-plugin/xfsm-logout-plugin.c:109
-msgid "Failed to log out."
-msgstr "No s'ha pogut sortir."
-
-#. XFSM_SHUTDOWN_HALT
-#: ../panel-plugin/xfsm-logout-plugin.c:112
-msgid "Are you sure you want to shut down?"
-msgstr "Esteu segur que voleu aturar?"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:113
-#, c-format
-msgid "Your system will shut down in %u seconds."
-msgstr "El vostre sistema s'aturarà en %u segons."
-
-#: ../panel-plugin/xfsm-logout-plugin.c:116
-msgid "Failed to shut down."
-msgstr "No s'ha pogut aturar."
-
-#. XFSM_SHUTDOWN_REBOOT
-#: ../panel-plugin/xfsm-logout-plugin.c:119
-msgid "Are you sure you want to reboot?"
-msgstr "Esteu segur que voleu tornar a arrencar?"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:120
-#, c-format
-msgid "Your system will reboot in %u seconds."
-msgstr "El vostre sistema tornarà a arrancar en %u segons."
-
-#: ../panel-plugin/xfsm-logout-plugin.c:123
-msgid "Failed to reboot."
-msgstr "Impossible tornar a arrencar."
-
-#: ../panel-plugin/xfsm-logout-plugin.c:130
-msgid "Failed to suspend"
-msgstr "No s'ha pogut suspendre"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:137
-msgid "Failed to hibernate"
-msgstr "No s'ha pogut hibernar"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:150
-msgid "Xflock4 could not be launched"
-msgstr "No s'ha pogut iniciar Xflock4"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:222
-msgid "Close Session"
-msgstr "Tanca la sessió"
-
 #: ../settings/main.c:43
 msgid "Settings manager socket"
 msgstr "Sòcol del gestor d'ajustaments"
@@ -259,75 +176,109 @@ msgstr "No s'ha pogut contactar amb el gestor d'ajustaments"
 
 #: ../settings/main.c:115
 msgid "Unable to create user interface from embedded definition data"
-msgstr "No s'ha pogut crear la interfície d'usuari de la definició d'usuari incrustada"
+msgstr ""
+"No s'ha pogut crear la interfície d'usuari de la definició d'usuari "
+"incrustada"
 
 #: ../settings/main.c:128
 msgid "_Application Autostart"
 msgstr "Inici automàtic d'_aplicació"
 
-#: ../settings/session-editor.c:60
+#: ../settings/session-editor.c:61
 msgid "If running"
 msgstr "Si s'està executant"
 
-#: ../settings/session-editor.c:61
+#: ../settings/session-editor.c:62
 msgid "Always"
 msgstr "Sempre"
 
-#: ../settings/session-editor.c:62
+#: ../settings/session-editor.c:63
 msgid "Immediately"
 msgstr "Immediatament"
 
-#: ../settings/session-editor.c:63
+#: ../settings/session-editor.c:64
 msgid "Never"
 msgstr "Mai"
 
-#: ../settings/session-editor.c:128
+#: ../settings/session-editor.c:129
 msgid "Session Save Error"
 msgstr "Error al desar la sessió"
 
-#: ../settings/session-editor.c:129
+#: ../settings/session-editor.c:130
 msgid "Unable to save the session"
 msgstr "No s'ha pogut desar la sessió"
 
-#: ../settings/session-editor.c:184
+#: ../settings/session-editor.c:170
+msgid "Clear sessions"
+msgstr "Neteja les sessions"
+
+#: ../settings/session-editor.c:171
+msgid "Are you sure you want to empty the session cache?"
+msgstr "Voleu buidar la memòria cau de sessions?"
+
+#: ../settings/session-editor.c:172
+msgid ""
+"The saved states of your applications will not be restored during your next "
+"login."
+msgstr ""
+"Els estats desats de les vostres aplicacions no es reiniciaran en la següent "
+"entrada al sistema."
+
+#: ../settings/session-editor.c:174
+msgid "_Proceed"
+msgstr "_Procedeix"
+
+#: ../settings/session-editor.c:212
+msgid "You might need to delete some files manually in "
+msgstr "Pot ser haureu d'esborrar alguns fitxers manualment"
+
+#: ../settings/session-editor.c:216
+msgid "All Xfce cache files could not be cleared"
+msgstr "No s'ha pogut netejar tots els fitxers de la memòria cau de sessions"
+
+#: ../settings/session-editor.c:250
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Esteu segur que voleu finalitzar «%s»?"
 
-#: ../settings/session-editor.c:187 ../settings/session-editor.c:215
+#: ../settings/session-editor.c:253 ../settings/session-editor.c:281
 msgid "Terminate Program"
 msgstr "Finalitza el programa"
 
-#: ../settings/session-editor.c:189
-msgid "The application will lose any unsaved state and will not be restarted in your next session."
-msgstr "L'aplicació perdrà qualssevol estat no desat i no es reiniciarà a la vostre següent sessió."
+#: ../settings/session-editor.c:255
+msgid ""
+"The application will lose any unsaved state and will not be restarted in "
+"your next session."
+msgstr ""
+"L'aplicació perdrà qualssevol estat no desat i no es reiniciarà a la vostre "
+"següent sessió."
 
-#: ../settings/session-editor.c:191
-#: ../settings/xfce4-session-settings.glade.h:35
+#: ../settings/session-editor.c:257
+#: ../settings/xfce4-session-settings.glade.h:37
 msgid "_Quit Program"
 msgstr "_Surt del programa"
 
-#: ../settings/session-editor.c:216
+#: ../settings/session-editor.c:282
 msgid "Unable to terminate program."
 msgstr "No s'ha pogut finalitzar el programa."
 
-#: ../settings/session-editor.c:394
+#: ../settings/session-editor.c:460
 msgid "(Unknown program)"
 msgstr "(Programa desconegut)"
 
-#: ../settings/session-editor.c:614
+#: ../settings/session-editor.c:680
 msgid "Priority"
 msgstr "Prioritat"
 
-#: ../settings/session-editor.c:622
+#: ../settings/session-editor.c:688
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:628
+#: ../settings/session-editor.c:694
 msgid "Program"
 msgstr "Programa"
 
-#: ../settings/session-editor.c:653
+#: ../settings/session-editor.c:719
 msgid "Restart Style"
 msgstr "Reinicia l'estil"
 
@@ -387,8 +338,14 @@ msgid "Failed to open %s for writing"
 msgstr "Impossible obrir %s per escriure"
 
 #: ../settings/xfae-window.c:101
-msgid "Below is the list of applications that will be started automatically when you login to your Xfce desktop, in addition to the applications that were saved when you logged out last time:"
-msgstr "A sota teniu la llista d'aplicacions que s'iniciaran automàticament quan entreu al vostre escriptori Xfce, a més de les que es desaren el darrer cop que veu sortir:"
+msgid ""
+"Below is the list of applications that will be started automatically when "
+"you login to your Xfce desktop, in addition to the applications that were "
+"saved when you logged out last time:"
+msgstr ""
+"A sota teniu la llista d'aplicacions que s'iniciaran automàticament quan "
+"entreu al vostre escriptori Xfce, a més de les que es desaren el darrer cop "
+"que veu sortir:"
 
 #: ../settings/xfae-window.c:289
 #, c-format
@@ -400,8 +357,12 @@ msgid "Failed to remove item"
 msgstr "No s'ha pogut suprimir l'element"
 
 #: ../settings/xfae-window.c:326
-msgid "This will permanently remove the application from the list of automatically started applications"
-msgstr "Això traurà permanentment l'aplicació de la llista d'aplicacions iniciades automàticament."
+msgid ""
+"This will permanently remove the application from the list of automatically "
+"started applications"
+msgstr ""
+"Això traurà permanentment l'aplicació de la llista d'aplicacions iniciades "
+"automàticament."
 
 #: ../settings/xfae-window.c:328
 #, c-format
@@ -443,11 +404,11 @@ msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
 msgstr "Construït amb GTK+-%d.%d.%d, executant-se amb GTK+-%d.%d.%d"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:251
+#: ../xfce4-session/main.c:253
 msgid "Verifying DNS settings"
 msgstr "S'està verificant els paràmetres de DNS"
 
-#: ../xfce4-session/main.c:254
+#: ../xfce4-session/main.c:257
 msgid "Loading session data"
 msgstr "S'està carregant les dades de la sessió"
 
@@ -472,6 +433,10 @@ msgstr "_Atura"
 msgid "Sus_pend"
 msgstr "Sus_pèn"
 
+#: ../xfce4-session/shutdown.c:599
+msgid "_Hibernate"
+msgstr "_Hiberna"
+
 #: ../xfce4-session/shutdown.c:608
 msgid "_Save session for future logins"
 msgstr "_Desa la sessió per entrades futures"
@@ -485,8 +450,12 @@ msgid "<b>An error occurred</b>"
 msgstr "<b>Hi ha hagut un error</b>"
 
 #: ../xfce4-session/shutdown.c:714
-msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
-msgstr "Potser la contrasenya és invàlida o l'administrador del sistema no li té permès aturar la computadora amb el seu compte d'usuari."
+msgid ""
+"Either the password you entered is invalid, or the system administrator "
+"disallows shutting down this computer with your user account."
+msgstr ""
+"Potser la contrasenya és invàlida o l'administrador del sistema no li té "
+"permès aturar la computadora amb el seu compte d'usuari."
 
 #: ../xfce4-session/shutdown.c:833 ../xfce4-session/xfsm-manager.c:1122
 msgid "Shutdown Failed"
@@ -496,30 +465,34 @@ msgstr "L'aturada ha fallat"
 msgid "Unable to perform shutdown"
 msgstr "No s'ha pogut aturar"
 
-#: ../xfce4-session/xfsm-chooser.c:91
+#: ../xfce4-session/xfsm-chooser.c:90
 #, c-format
 msgid "Last accessed: %s"
 msgstr "Darrera entrada: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:177
-msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
-msgstr "Escolliu la sessió que voleu recuperar. Simplement feu doble clic sobre la sessió a recuperar."
+#: ../xfce4-session/xfsm-chooser.c:172
+msgid ""
+"Choose the session you want to restore. You can simply double-click the "
+"session name to restore it."
+msgstr ""
+"Escolliu la sessió que voleu recuperar. Simplement feu doble clic sobre la "
+"sessió a recuperar."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:203
+#: ../xfce4-session/xfsm-chooser.c:198
 msgid "Log out"
 msgstr "Surt"
 
-#: ../xfce4-session/xfsm-chooser.c:205
+#: ../xfce4-session/xfsm-chooser.c:200
 msgid "Cancel the login attempt and return to the login screen."
-msgstr "Cancel·la l'intent d'entrada i torna a la finestra d'inici."
+msgstr "Canceŀla l'intent d'entrada i torna a la finestra d'inici."
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:212
+#: ../xfce4-session/xfsm-chooser.c:207
 msgid "New session"
 msgstr "Sessió nova"
 
-#: ../xfce4-session/xfsm-chooser.c:213
+#: ../xfce4-session/xfsm-chooser.c:208
 msgid "Create a new session."
 msgstr "Crea una sessió nova."
 
@@ -551,7 +524,7 @@ msgid ""
 msgstr ""
 "No s'ha pogut trobat l'adreça d'internet %s.\n"
 "Això farà que Xfce no funcioni correctament.\n"
-"Potser podeu sol·lucionar aquest problema afegint\n"
+"Potser podeu soŀlucionar aquest problema afegint\n"
 "%s al fitxer /etc/hosts del vostre sistema."
 
 #: ../xfce4-session/xfsm-dns.c:154
@@ -564,13 +537,23 @@ msgstr "Torneu-ho a provar"
 
 #: ../xfce4-session/xfsm-manager.c:604
 #, c-format
-msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
-msgstr "No s'ha pogut determinar el nom de la sessió a prova d'errades. Motius probables: xfconfd no s'està executant (problema de configuració de D-Bus), la variable d'entorn $XDG_CONFIG_DIRS és incorrecte (ha d'incloure «%s») o xfce4-session no està instaŀlat correctament."
+msgid ""
+"Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
+"running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
+"incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
+msgstr ""
+"No s'ha pogut determinar el nom de la sessió a prova d'errades. Motius "
+"probables: xfconfd no s'està executant (problema de configuració de D-Bus), "
+"la variable d'entorn $XDG_CONFIG_DIRS és incorrecte (ha d'incloure «%s») o "
+"xfce4-session no està instaŀlat correctament."
 
 #: ../xfce4-session/xfsm-manager.c:615
 #, c-format
-msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr "La sessió a prova d'errades especificada («%s») no te l'indicador de sessió a prova d'errades."
+msgid ""
+"The specified failsafe session (\"%s\") is not marked as a failsafe session."
+msgstr ""
+"La sessió a prova d'errades especificada («%s») no te l'indicador de sessió "
+"a prova d'errades."
 
 #: ../xfce4-session/xfsm-manager.c:662
 msgid "The list of applications in the failsafe session is empty."
@@ -600,17 +583,21 @@ msgstr "No s'ha pogut hibernar la sessió"
 msgid "Can only terminate clients when in the idle state"
 msgstr "Només es poden finalitzar els clients quan l'estat és inactiu"
 
-#: ../xfce4-session/xfsm-manager.c:1951
+#: ../xfce4-session/xfsm-manager.c:1955
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
-msgstr "Cal que el gestor de sessió tingui l'estat inactiu quan es soŀlicita un punt de control"
+msgstr ""
+"Cal que el gestor de sessió tingui l'estat inactiu quan es soŀlicita un punt "
+"de control"
 
-#: ../xfce4-session/xfsm-manager.c:1992
+#: ../xfce4-session/xfsm-manager.c:1996
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
-msgstr "Cal que el gestor de sessió tingui l'estat inactiu quan es soŀlicita una aturada"
+msgstr ""
+"Cal que el gestor de sessió tingui l'estat inactiu quan es soŀlicita una "
+"aturada"
 
-#: ../xfce4-session/xfsm-manager.c:1999
+#: ../xfce4-session/xfsm-manager.c:2003
 #, c-format
 msgid "Invalid shutdown type \"%u\""
 msgstr "Tipus d'aturada «%u» errònia"
@@ -825,21 +812,14 @@ msgstr "Surt"
 msgid "Log out of the Xfce Desktop"
 msgstr "Surt de l’escriptori Xfce"
 
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
-msgid "Session Menu"
-msgstr "Menú de sessió"
-
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
-msgid "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
-msgstr "Mostra un menú amb les opcions de blocar la pantalla, suspendre, aturar o sortir"
-
 #: ../settings/xfce-session-settings.desktop.in.h:1
 #: ../settings/xfce4-session-settings.glade.h:14
 msgid "Customize desktop startup and splash screen"
-msgstr "Personalitza l'inici de l'escriptori així com llur pantalla de presentació"
+msgstr ""
+"Personalitza l'inici de l'escriptori així com llur pantalla de presentació"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
-#: ../settings/xfce4-session-settings.glade.h:27
+#: ../settings/xfce4-session-settings.glade.h:28
 msgid "Session and Startup"
 msgstr "Sessió i engegada"
 
@@ -904,84 +884,168 @@ msgid "Display the session chooser every time Xfce starts"
 msgstr "Mostra el selector de sessió cada cop que s'inicia Xfce"
 
 #: ../settings/xfce4-session-settings.glade.h:17
+msgid "Empty the session cache"
+msgstr "Buida la memòria cau de sessions"
+
+#: ../settings/xfce4-session-settings.glade.h:18
 msgid "Launch GN_OME services on startup"
 msgstr "Llança els serveis de _GNOME al engegar"
 
-#: ../settings/xfce4-session-settings.glade.h:18
+#: ../settings/xfce4-session-settings.glade.h:19
 msgid "Launch _KDE services on startup"
 msgstr "Llança els serveis de _KDE al arrancar"
 
-#: ../settings/xfce4-session-settings.glade.h:19
+#: ../settings/xfce4-session-settings.glade.h:20
 msgid "Manage _remote applications"
 msgstr "Gestiona les aplicacions _remotes"
 
-#: ../settings/xfce4-session-settings.glade.h:20
-msgid "Manage remote applications over the network (this may be a security risk)"
-msgstr "Gestiona les aplicacions remotes en ret (això pot ser un risc de seguretat)"
-
 #: ../settings/xfce4-session-settings.glade.h:21
+msgid ""
+"Manage remote applications over the network (this may be a security risk)"
+msgstr ""
+"Gestiona les aplicacions remotes en ret (això pot ser un risc de seguretat)"
+
+#: ../settings/xfce4-session-settings.glade.h:22
 msgid "Opens the configuration panel for the selected splash screen"
 msgstr "Obre el plafó de configuració de la pantalla de presentació triada"
 
-#: ../settings/xfce4-session-settings.glade.h:22
+#: ../settings/xfce4-session-settings.glade.h:23
 msgid "Prompt for confirmation when logging out"
 msgstr "Demana confirmació al sortit"
 
-#: ../settings/xfce4-session-settings.glade.h:23
+#: ../settings/xfce4-session-settings.glade.h:24
 msgid "Quit the program, and remove it from the session"
 msgstr "Tanca el programa i treu-lo de la sessió"
 
-#: ../settings/xfce4-session-settings.glade.h:24
+#: ../settings/xfce4-session-settings.glade.h:25
 msgid "S_plash"
 msgstr "_Presentació"
 
-#: ../settings/xfce4-session-settings.glade.h:25
+#: ../settings/xfce4-session-settings.glade.h:26
 msgid "Save Sessio_n"
 msgstr "_Desa la sessió"
 
-#: ../settings/xfce4-session-settings.glade.h:26
+#: ../settings/xfce4-session-settings.glade.h:27
 msgid "Saving Session"
 msgstr "Desant la sessió"
 
-#: ../settings/xfce4-session-settings.glade.h:28
-msgid "Start GNOME services, such as gnome-keyring and the GNOME accessibility framework"
-msgstr "Inicia els serveis de GNOME, com «gnome-keyring» i l'entorn d'accessibilitat de GNOME"
-
 #: ../settings/xfce4-session-settings.glade.h:29
+msgid ""
+"Start GNOME services, such as gnome-keyring and the GNOME accessibility "
+"framework"
+msgstr ""
+"Inicia els serveis de GNOME, com «gnome-keyring» i l'entorn d'accessibilitat "
+"de GNOME"
+
+#: ../settings/xfce4-session-settings.glade.h:30
 msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
 msgstr "Inicia els serveis de KDE, com «kdeinit», DCOP i ARTS"
 
-#: ../settings/xfce4-session-settings.glade.h:30
-msgid "These applications are a part of the currently-running session, and can be saved when you log out.  Changes below will only take effect when the session is saved."
-msgstr "Aquestes aplicacions formen part de la sessió que s'està executant i es poden desar al sortir. Els canvis següents només faran efecte si es desa la sessió."
-
 #: ../settings/xfce4-session-settings.glade.h:31
-msgid "Your session is being saved.  If you do not wish to wait, you may close this window."
-msgstr "S'està desant la sessió. Si no veleu esperar, podeu tancar aquesta finestra."
+msgid ""
+"These applications are a part of the currently-running session, and can be "
+"saved when you log out.  Changes below will only take effect when the "
+"session is saved."
+msgstr ""
+"Aquestes aplicacions formen part de la sessió que s'està executant i es "
+"poden desar al sortir. Els canvis següents només faran efecte si es desa la "
+"sessió."
 
 #: ../settings/xfce4-session-settings.glade.h:32
+msgid ""
+"Your session is being saved.  If you do not wish to wait, you may close this "
+"window."
+msgstr ""
+"S'està desant la sessió. Si no veleu esperar, podeu tancar aquesta finestra."
+
+#: ../settings/xfce4-session-settings.glade.h:33
+msgid "_Clear saved sessions"
+msgstr "_Neteja les sessions desades"
+
+#: ../settings/xfce4-session-settings.glade.h:34
 msgid "_Display chooser on login"
 msgstr "_Mostra el seleccionador al entrar"
 
-#: ../settings/xfce4-session-settings.glade.h:33
+#: ../settings/xfce4-session-settings.glade.h:35
 msgid "_General"
 msgstr "_General"
 
-#: ../settings/xfce4-session-settings.glade.h:34
+#: ../settings/xfce4-session-settings.glade.h:36
 msgid "_Prompt on logout"
 msgstr "_Pregunta al sortir"
 
-#: ../settings/xfce4-session-settings.glade.h:36
+#: ../settings/xfce4-session-settings.glade.h:38
 msgid "_Session"
 msgstr "_Sessió"
 
-#: ../settings/xfce4-session-settings.glade.h:37
+#: ../settings/xfce4-session-settings.glade.h:39
 msgid "_Test"
 msgstr "_Test"
 
-#: ../settings/xfce4-session-settings.glade.h:38
+#: ../settings/xfce4-session-settings.glade.h:40
 msgid "label"
 msgstr "etiqueta"
+
+#~ msgid "Session"
+#~ msgstr "Sessió"
+
+#~ msgid "Loc_k screen"
+#~ msgstr "_Bloca la pantalla"
+
+#~ msgid "_Suspend"
+#~ msgstr "S_uspèn"
+
+#~ msgid "_Reboot"
+#~ msgstr "Torna a a_rrencar"
+
+#~ msgid "Shut _down"
+#~ msgstr "_Attura"
+
+#~ msgid "_Log out"
+#~ msgstr "_Surt"
+
+#~ msgid "Are you sure you want to log out?"
+#~ msgstr "Esteu segur que voleu sortir?"
+
+#~ msgid "You will be logged out in %u seconds."
+#~ msgstr "Sortireu en %u segons."
+
+#~ msgid "Failed to log out."
+#~ msgstr "No s'ha pogut sortir."
+
+#~ msgid "Are you sure you want to shut down?"
+#~ msgstr "Esteu segur que voleu aturar?"
+
+#~ msgid "Your system will shut down in %u seconds."
+#~ msgstr "El vostre sistema s'aturarà en %u segons."
+
+#~ msgid "Failed to shut down."
+#~ msgstr "No s'ha pogut aturar."
+
+#~ msgid "Are you sure you want to reboot?"
+#~ msgstr "Esteu segur que voleu tornar a arrencar?"
+
+#~ msgid "Your system will reboot in %u seconds."
+#~ msgstr "El vostre sistema tornarà a arrancar en %u segons."
+
+#~ msgid "Failed to reboot."
+#~ msgstr "Impossible tornar a arrencar."
+
+#~ msgid "Failed to suspend"
+#~ msgstr "No s'ha pogut suspendre"
+
+#~ msgid "Failed to hibernate"
+#~ msgstr "No s'ha pogut hibernar"
+
+#~ msgid "Session Menu"
+#~ msgstr "Menú de sessió"
+
+#~ msgid ""
+#~ "Shows a menu with options to lock the screen, suspend, shutdown, or log "
+#~ "out"
+#~ msgstr ""
+#~ "Mostra un menú amb les opcions de blocar la pantalla, suspendre, aturar o "
+#~ "sortir"
 
 #~ msgid "Hibernate"
 #~ msgstr "Hiberna"
@@ -1022,8 +1086,12 @@ msgstr "etiqueta"
 #~ msgid "No HAL method for command %d"
 #~ msgstr "No hi ha cap mètode HAL per l'ordre %d"
 
-#~ msgid "Program \"sudo\" was not found.  You will not be able to shutdown your system from within Xfce."
-#~ msgstr "No s'ha trobat el programa «sudo». No podeu aturar el vostre sistema mitjançant Xfce."
+#~ msgid ""
+#~ "Program \"sudo\" was not found.  You will not be able to shutdown your "
+#~ "system from within Xfce."
+#~ msgstr ""
+#~ "No s'ha trobat el programa «sudo». No podeu aturar el vostre sistema "
+#~ "mitjançant Xfce."
 
 #~ msgid "Unable to create parent pipe: %s"
 #~ msgstr "No es pot crear el conducte pare: %s"
@@ -1046,14 +1114,14 @@ msgstr "etiqueta"
 #~ msgid "Got unexpected reply from sudo shutdown helper"
 #~ msgstr "Resposta inesperada de la utilitat d'aturada de «sudo»"
 
-#~ msgid "Suspend and Hibernate are only supported through HAL, which is unavailable"
-#~ msgstr "La suspensió i la hibernació només estan habilitats mitjançant HAL, i aquest no està disponible"
+#~ msgid ""
+#~ "Suspend and Hibernate are only supported through HAL, which is unavailable"
+#~ msgstr ""
+#~ "La suspensió i la hibernació només estan habilitats mitjançant HAL, i "
+#~ "aquest no està disponible"
 
 #~ msgid "Terminate \"%s\""
 #~ msgstr "Finalitza «%s»"
-
-#~ msgid "Xfce Session Manager"
-#~ msgstr "Gestor de sessió de Xfce"
 
 #~ msgid "Session Error"
 #~ msgstr "Error de sessió"
@@ -1088,29 +1156,64 @@ msgstr "etiqueta"
 #~ msgid "Remove the selected application from the session."
 #~ msgstr "Previsualitza la pantalla de presentació"
 
-#~ msgid "If set, the session manager will ask you to choose a session every time you log in to Xfce."
-#~ msgstr "Si és seleccionat, el gestor de sessió vos demanarà que trieu una sessió cada cop que entreu a Xfce."
+#~ msgid ""
+#~ "If set, the session manager will ask you to choose a session every time "
+#~ "you log in to Xfce."
+#~ msgstr ""
+#~ "Si és seleccionat, el gestor de sessió vos demanarà que trieu una sessió "
+#~ "cada cop que entreu a Xfce."
 
-#~ msgid "This option instructs the session manager to save the current session automatically when you log out. If you don't select this option you'll be prompted whether you want to save the current session on each logout."
-#~ msgstr "Aquesta opció indica al gestor de sessions que desi automàticament la sessió actual quan tanqueu la sessió. Si no seleccionau aquest paràmetre se vos demanarà si voleu guardar la sessió cada cop que vulgueu sortir."
+#~ msgid ""
+#~ "This option instructs the session manager to save the current session "
+#~ "automatically when you log out. If you don't select this option you'll be "
+#~ "prompted whether you want to save the current session on each logout."
+#~ msgstr ""
+#~ "Aquesta opció indica al gestor de sessions que desi automàticament la "
+#~ "sessió actual quan tanqueu la sessió. Si no seleccionau aquest paràmetre "
+#~ "se vos demanarà si voleu guardar la sessió cada cop que vulgueu sortir."
 
-#~ msgid "This option disables the logout confirmation dialog. Whether the session will be saved or not depends on whether you enabled the automatic saving of sessions on logout or not."
-#~ msgstr "Aquesta opció desactiva el diàleg de confirmació del fi de sessió. La sessió serà desada o no depenent si heu activat desar-la automàticament."
+#~ msgid ""
+#~ "This option disables the logout confirmation dialog. Whether the session "
+#~ "will be saved or not depends on whether you enabled the automatic saving "
+#~ "of sessions on logout or not."
+#~ msgstr ""
+#~ "Aquesta opció desactiva el diàleg de confirmació del fi de sessió. La "
+#~ "sessió serà desada o no depenent si heu activat desar-la automàticament."
 
 #~ msgid "Launch Gnome services on startup"
 #~ msgstr "Llança els serveis Gnome durant l'engegada"
 
-#~ msgid "Enable this if you plan to use Gnome applications. This will instruct the session manager to start some vital Gnome services for you. You should also enable this if you want to use the Assistive Technologies that ship with Gnome."
-#~ msgstr "Activeu això si teniu pensat usar aplicacions Gnome. Això indicarà al gestor de sessions que arranqui alguns serveis vitals de Gnome. És recomanable que activeu això si teniu intenció d'usar les Tecnologies d'Assistència que formen part de Gnome."
+#~ msgid ""
+#~ "Enable this if you plan to use Gnome applications. This will instruct the "
+#~ "session manager to start some vital Gnome services for you. You should "
+#~ "also enable this if you want to use the Assistive Technologies that ship "
+#~ "with Gnome."
+#~ msgstr ""
+#~ "Activeu això si teniu pensat usar aplicacions Gnome. Això indicarà al "
+#~ "gestor de sessions que arranqui alguns serveis vitals de Gnome. És "
+#~ "recomanable que activeu això si teniu intenció d'usar les Tecnologies "
+#~ "d'Assistència que formen part de Gnome."
 
-#~ msgid "Enable this option if you plan to run KDE applications as part of your Xfce Desktop session. This will notably increase the startup time, but on the other hand, KDE applications will startup faster. Some KDE applications may not work at all if you don't enable this option."
-#~ msgstr "Activeu això si teniu intenció d'executar aplicacions KDE durant la sessió d'Xfce. Això allargarà notablement la durada de l'engegada però després les aplicacions KDE arrancaran més aviat. Algunes aplicacions KDE poden no funcionar si no s'activa aquesta opció."
+#~ msgid ""
+#~ "Enable this option if you plan to run KDE applications as part of your "
+#~ "Xfce Desktop session. This will notably increase the startup time, but on "
+#~ "the other hand, KDE applications will startup faster. Some KDE "
+#~ "applications may not work at all if you don't enable this option."
+#~ msgstr ""
+#~ "Activeu això si teniu intenció d'executar aplicacions KDE durant la "
+#~ "sessió d'Xfce. Això allargarà notablement la durada de l'engegada però "
+#~ "després les aplicacions KDE arrancaran més aviat. Algunes aplicacions KDE "
+#~ "poden no funcionar si no s'activa aquesta opció."
 
 #~ msgid "Security"
 #~ msgstr "Seguretat"
 
-#~ msgid "Allow the session manager to manage applications running on remote hosts. Do not enable this option unless you know what you are doing."
-#~ msgstr "Permet al gestor de sessions encarregar-se de les aplicacions executades remotament. Habiliteu aquesta opció sols si sabeu el que feu."
+#~ msgid ""
+#~ "Allow the session manager to manage applications running on remote hosts. "
+#~ "Do not enable this option unless you know what you are doing."
+#~ msgstr ""
+#~ "Permet al gestor de sessions encarregar-se de les aplicacions executades "
+#~ "remotament. Habiliteu aquesta opció sols si sabeu el que feu."
 
 #~ msgid "Button Label|Sessions and Startup"
 #~ msgstr "Sessions i engegada"
