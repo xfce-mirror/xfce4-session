@@ -87,7 +87,7 @@ XDT_I18N([@LINGUAS@])
 
 dnl Check for required packages
 XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.8.0])
-XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-1], [4.8.0])
+XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-1], [4.9.0])
 XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [2.14.0])
 XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-1.0], [2.22])
 XDT_CHECK_PACKAGE([DBUS], [dbus-1], [1.0.0])
@@ -264,10 +264,6 @@ AC_OUTPUT([
 Makefile
 xfce4-session.spec
 doc/Makefile
-doc/manual/Makefile
-doc/manual/images/Makefile
-doc/manual/images/el/Makefile
-doc/manual/po/Makefile
 engines/Makefile
 engines/balou/Makefile
 engines/balou/scripts/Makefile
@@ -299,13 +295,6 @@ echo
 echo "Build Configuration:"
 echo
 echo " * Debugging support:              $enable_debug"
-if test x"$enable_gen_doc" = x"yes"; then
-echo " * Documentation:                  yes (generate)"
-elif test -d "${srcdir}/doc/manual/html"; then
-echo " * Documentation:                  yes (in tarball)"
-else
-echo " * Documentation:                  no"
-fi
 if test x"$enable_upower" = x"yes"; then
 echo " * UPower support:                 yes"
 else

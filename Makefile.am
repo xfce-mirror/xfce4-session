@@ -15,6 +15,9 @@ desktop_in_files = xfce.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
+distuninstallcheck_listfiles = 						\ 
+	find . -type f -print | grep -v ./share/icons/hicolor/icon-theme.cache
+
 EXTRA_DIST =								\
 	BUGS								\
 	intltool-extract.in						\
@@ -29,9 +32,6 @@ DISTCLEANFILES =							\
 	intltool-merge							\
 	intltool-update							\
 	$(desktop_DATA)
-
-html:
-	(cd doc && $(MAKE) $(AM_MAKEFLAGS) html)
 
 AUTOMAKE_OPTIONS =							\
 	1.8								\
@@ -54,7 +54,6 @@ ChangeLog: Makefile
 dist-hook: ChangeLog
 
 DISTCHECK_CONFIGURE_FLAGS =						\
-	--enable-gen-doc						\
 	--with-xsession-prefix=/tmp/$(PACKAGE)-distcheck
 
 # vi:set ts=8 sw=8 noet ai nocindent:
