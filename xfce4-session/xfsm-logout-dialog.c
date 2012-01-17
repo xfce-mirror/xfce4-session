@@ -176,7 +176,9 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
 
   /* label showing the users' name */
   username = g_get_real_name ();
-  if (username == NULL || *username == '\0')
+  if (username == NULL
+      || *username == '\0'
+      || strcmp ("Unknown", username) == 0)
     username = g_get_user_name ();
 
   label_str = g_strdup_printf (_("Log out %s"), username);
