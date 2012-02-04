@@ -60,6 +60,7 @@ xfce4_session_CFLAGS =							\
 	$(DBUS_GLIB_CFLAGS)						\
 	$(LIBWNCK_CFLAGS)						\
 	$(XFCONF_CFLAGS)						\
+	$(GMODULE_CFLAGS)						\
 	-DDBUS_API_SUBJECT_TO_CHANGE					\
 	-DWNCK_I_KNOW_THIS_IS_UNSTABLE					\
 	-DLIBDIR=\"$(libdir)\"						\
@@ -74,6 +75,7 @@ xfce4_session_LDADD =							\
 	$(LIBX11_LDFLAGS)						\
 	$(LIBX11_LIBS)							\
 	$(LIBXFCE4UI_LIBS)						\
+	$(GMODULE_LIBS)							\
 	$(DBUS_LIBS)							\
 	$(DBUS_GLIB_LIBS)						\
 	$(LIBWNCK_LIBS)							\

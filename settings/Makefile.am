@@ -28,14 +28,16 @@ xfce4_session_settings_CFLAGS = \
 	$(LIBXFCE4UTIL_CFLAGS) \
 	$(LIBXFCE4UI_CFLAGS) \
 	$(XFCONF_CFLAGS) \
-	$(DBUS_GLIB_CFLAGS)
+	$(DBUS_GLIB_CFLAGS) \
+	$(GMODULE_CFLAGS)
 
 xfce4_session_settings_LDADD = \
 	$(top_builddir)/libxfsm/libxfsm-4.6.la \
 	$(LIBXFCE4UTIL_CFLAGS) \
 	$(LIBXFCE4UI_LIBS) \
 	$(XFCONF_LIBS) \
-	$(DBUS_GLIB_LIBS)
+	$(DBUS_GLIB_LIBS) \
+	$(GMODULE_LIBS)
 
 xfce4_session_settings_DEPENDENCIES = \
 	$(top_builddir)/libxfsm/libxfsm-4.6.la
