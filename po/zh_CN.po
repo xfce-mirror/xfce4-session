@@ -8,13 +8,13 @@
 # Chris K. Zhang <plutino@gmail.com>, 2009.
 # Aron Xu <aronmalache@163.com>, 2009.
 # Hunt Xu <huntxu@live.cn>, 2009, 2010.
-# Chipong Luo <chipong_l@yahoo.com>, 2011.
+# Chipong Luo <chipong_l@yahoo.com>, 2011, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-04 22:09+0000\n"
+"POT-Creation-Date: 2012-02-07 07:45+0000\n"
 "PO-Revision-Date: 2010-04-06 13:28+0800\n"
 "Last-Translator: Chipong Luo <chipong_l@yahoo.com>\n"
 "Language-Team: Chinese (Simplified) <xfce-i18n@xfce.org>\n"
@@ -37,12 +37,12 @@ msgstr "未给定描述"
 
 #: ../engines/balou/config.c:324
 msgid "Choose theme file to install..."
-msgstr "选择要安装的主题文件..."
+msgstr "挑选要安装的主题文件..."
 
 #: ../engines/balou/config.c:336
 #, c-format
 msgid "Unable to install splash theme from file \"%s\""
-msgstr "无法从文件 “%s” 安装启动画面主题。"
+msgstr "未能从文件 “%s” 安装启动画面主题。"
 
 #: ../engines/balou/config.c:339
 msgid "Theme File Error"
@@ -56,11 +56,13 @@ msgstr ""
 #: ../engines/balou/config.c:402
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
-msgstr "未能从目录 %2$s 中移除启动画面主题 “%2$s”。"
+msgstr ""
+"未能从目录 %2$s 中移除启动画面"
+"主题 “%1$s”。"
 
 #: ../engines/balou/config.c:491
 msgid "Choose theme filename..."
-msgstr "选择主题文件名..."
+msgstr "挑选主题文件名..."
 
 #: ../engines/balou/config.c:624
 msgid "_Install new theme"
@@ -128,7 +130,7 @@ msgstr "使用自定义图片"
 
 #: ../engines/simple/simple.c:413
 msgid "Choose image..."
-msgstr "选择图片..."
+msgstr "挑选图片..."
 
 #: ../engines/simple/simple.c:419
 msgid "Images"
@@ -220,8 +222,7 @@ msgstr "您确定要清空会话缓存吗？"
 msgid ""
 "The saved states of your applications will not be restored during your next "
 "login."
-msgstr ""
-"在您下次登录时不会恢复已保存的应用程序状态。"
+msgstr "在您下次登录时不会恢复已保存的应用程序状态。"
 
 #: ../settings/session-editor.c:174
 msgid "_Proceed"
@@ -249,8 +250,8 @@ msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
 msgstr ""
-"此应用程序会丢失任何未保存的状态且在您下次登录时"
-"不会重启。"
+"此应用程序会丢失任何未保存的状态且在您下次"
+"登录时不会重启。"
 
 #: ../settings/session-editor.c:257
 #: ../settings/xfce4-session-settings.glade.h:37
@@ -259,7 +260,7 @@ msgstr "退出程序(_Q)"
 
 #: ../settings/session-editor.c:282
 msgid "Unable to terminate program."
-msgstr "未能终止程序"
+msgstr "未能终止程序。"
 
 #: ../settings/session-editor.c:460
 msgid "(Unknown program)"
@@ -314,7 +315,7 @@ msgstr "编辑应用程序"
 #: ../settings/xfae-model.c:562
 #, c-format
 msgid "Failed to unlink %s: %s"
-msgstr "无法断开 %s 链接：%s"
+msgstr "无法断开链接 %s：%s"
 
 #: ../settings/xfae-model.c:651
 #, c-format
@@ -342,8 +343,8 @@ msgid ""
 "you login to your Xfce desktop, in addition to the applications that were "
 "saved when you logged out last time:"
 msgstr ""
-"除了您上次注销时保存的应用程序外，下面是在您登录 "
-"Xfce 桌面时将自动启动的应用程序列表："
+"除了您上次注销时保存的应用程序外，下面是在您"
+"登录 Xfce 桌面时将自动启动的应用程序列表："
 
 #: ../settings/xfae-window.c:289
 #, c-format
@@ -359,7 +360,8 @@ msgid ""
 "This will permanently remove the application from the list of automatically "
 "started applications"
 msgstr ""
-"这会从自动启动应用程序列表中永远移除此应用程序。"
+"这会从自动启动应用程序列表中永远移除此应用"
+"程序。"
 
 #: ../settings/xfae-window.c:328
 #, c-format
@@ -398,7 +400,9 @@ msgstr "由 Benedikt Meurer <benny@xfce.org> 撰写。"
 #: ../xfce4-session/main.c:221
 #, c-format
 msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
-msgstr "用 Gtk+-%d.%d.%d 编译，正在以 Gtk+-%d.%d.%d 运行"
+msgstr ""
+"用 Gtk+-%d.%d.%d 编译，"
+"以 Gtk+-%d.%d.%d 运行"
 
 #. verify that the DNS settings are ok
 #: ../xfce4-session/main.c:253
@@ -451,8 +455,8 @@ msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
 msgstr ""
-"要么您输入的密码无效，要么系统管理员不允许以您的"
-"用户帐户关闭此计算机。"
+"要么您输入的密码无效，要么系统管理员不允许"
+"以您的用户帐户关闭此计算机。"
 
 #: ../xfce4-session/shutdown.c:833 ../xfce4-session/xfsm-manager.c:1122
 msgid "Shutdown Failed"
@@ -472,8 +476,8 @@ msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr ""
-"选择您要恢复的会话。您可以简单地双击会话名"
-"来恢复它。"
+"选择您要恢复的会话。您可以简单地双击会话名来"
+"恢复它。"
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:198
@@ -519,9 +523,9 @@ msgid ""
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
 msgstr ""
-"无法查找 %s 的互联网地址。这会阻止 Xfce 正常\n"
-"操作。在您系统上的 /etc/hosts 中添加 %s\n"
-"可能会更正此问题。"
+"无法查找 %s 的互联网地址。这会阻止 Xfce\n"
+"正常操作。在您的系统上的 /etc/hosts 中\n"
+"添加 %s 可能会更正此问题。"
 
 #: ../xfce4-session/xfsm-dns.c:154
 msgid "Continue anyway"
@@ -595,12 +599,12 @@ msgstr "无效的关机类型 “%u”"
 #: ../xfce4-session/xfsm-shutdown-helper.c:1601
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
-msgstr "向关机辅助器发送命令时出错：%s"
+msgstr "向关机辅助程序发送命令时出错：%s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:1615
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
-msgstr "从关机辅助器接收响应时出错：%s"
+msgstr "从关机辅助程序接收响应时出错：%s"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:1624
 #, c-format
@@ -681,7 +685,7 @@ msgstr "正在启动 KDE 终端模拟器"
 
 #: ../xfce4-session/xfsm-startup.c:145
 msgid "Starting the Beep Media Player"
-msgstr "正在启动 Beep 多媒体播放器"
+msgstr "正在启动 Beep 媒体播放器"
 
 #: ../xfce4-session/xfsm-startup.c:147
 msgid "Starting The Gimp"
@@ -731,9 +735,9 @@ msgstr ""
 "\n"
 "  %s\n"
 "\n"
-"在您放置当您登录 Xfce 桌面时要启动的应用程序的\n"
-".desktop 描述文件的位置。在您原自启动目录中的\n"
-"文件已经成功地迁移到了此新位置。\n"
+"在您放置您登录 Xfce 桌面时要启动的应用程序\n"
+"的 .desktop 描述文件的位置。您的原自启动\n"
+"目录中的文件已成功地迁移到了此新位置。\n"
 "您现在应该删除此目录。\n"
 
 #: ../xfce4-session/xfsm-startup.c:458
@@ -778,7 +782,7 @@ msgstr "未知错误"
 
 #: ../xfce4-session-logout/main.c:178
 msgid "Unable to contact D-Bus session bus."
-msgstr "未能与 D-Bus 会话主线联系。"
+msgstr "未能与 D-Bus 会话总线联系。"
 
 #: ../xfce4-session-logout/main.c:190
 msgid "Failed to create new D-Bus message"
@@ -920,13 +924,14 @@ msgid ""
 "Start GNOME services, such as gnome-keyring and the GNOME accessibility "
 "framework"
 msgstr ""
-"启动 GNOME 服务，比如 gnome-keyring 和 GNOME "
-"辅助功能框架"
+"启动 GNOME 服务，比如 gnome-keyring 和 "
+"GNOME 辅助功能框架"
 
 #: ../settings/xfce4-session-settings.glade.h:30
 msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
 msgstr ""
-"启动 KDE 服务，比如 “kdeinit”、 DCOP 和 ARTS"
+"启动 KDE 服务，比如 “kdeinit”、 DCOP 和 "
+"ARTS"
 
 #: ../settings/xfce4-session-settings.glade.h:31
 msgid ""
@@ -934,7 +939,7 @@ msgid ""
 "saved when you log out.  Changes below will only take effect when the "
 "session is saved."
 msgstr ""
-"这些应用程序是当前正在运行会话的一部分，并可以"
+"这些应用程序是当前正在运行会话的一部分，并可"
 "在您注销时保存。以下更改只在会话保存后才生效。"
 
 #: ../settings/xfce4-session-settings.glade.h:32
@@ -942,8 +947,8 @@ msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this "
 "window."
 msgstr ""
-"正在保存您的会话，如果您不愿等待，"
-"可以关闭此窗口。"
+"正在保存您的会话，如果您不愿等待，可以关闭此"
+"窗口。"
 
 #: ../settings/xfce4-session-settings.glade.h:33
 msgid "_Clear saved sessions"
@@ -951,7 +956,7 @@ msgstr "清除已保存会话"
 
 #: ../settings/xfce4-session-settings.glade.h:34
 msgid "_Display chooser on login"
-msgstr "登录时显示会话选择器(_D)"
+msgstr "登录时显示选择器(_D)"
 
 #: ../settings/xfce4-session-settings.glade.h:35
 msgid "_General"
