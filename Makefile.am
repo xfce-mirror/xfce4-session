@@ -17,6 +17,9 @@ if HAVE_LIBXFCE4PANEL
 panel_plugin_dir = panel-plugin
 endif
 
+distuninstallcheck_listfiles = \ 
+	find . -type f -print | grep -v ./share/icons/hicolor/icon-theme.cache
+
 EXTRA_DIST =								\
 	BUGS								\
 	intltool-extract.in						\
