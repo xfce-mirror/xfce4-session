@@ -24,12 +24,19 @@ conffiles_DATA = \
 	xinitrc \
 	Xft.xrdb
 
+autostartdir = $(sysconfdir)/xdg/autostart
+autostart_in_files = xscreensaver.desktop.in
+autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
+@INTLTOOL_DESKTOP_RULE@
+
 EXTRA_DIST = \
+	$(autostart_in_files) \
 	startxfce4.in \
 	xinitrc.in \
 	Xft.xrdb \
 	xflock4
 
 DISTCLEANFILES = \
+	$(autostart_DATA) \
 	startxfce4 \
 	xinitrc

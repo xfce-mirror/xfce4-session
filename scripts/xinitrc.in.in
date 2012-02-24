@@ -184,35 +184,9 @@ if test "$ssh_agent_enabled" != "false"; then
 fi
 
 
-# launch a screensaver if enabled.  do not launch if we're root or if
-# we're in a VNC session.
-screensaver_enabled=`xfconf-query -c xfce4-session -p /startup/screensaver/enabled 2> /dev/null`
-if test $UID -gt 0 -a -z "$VNCSESSION" -a "$screensaver_enabled" != "false"; then
-    screensaver_type=`xfconf-query -c xfce4-session -p /startup/screensaver/type 2> /dev/null`
-
-    case "$screensaver_type" in
-        xscreensaver)
-            xscreensaver -no-splash &
-            ;;
-
-        gnome-screensaver)
-            gnome-screensaver &
-            ;;
-
-        *)
-            if test x"`which xscreensaver 2>/dev/null`" != x""; then
-                xscreensaver -no-splash &
-            elif test x"`which gnome-screensaver 2>/dev/null`" != x""; then
-                gnome-screensaver &
-            fi
-            ;;
-    esac
-fi
-
-
 # Run xfce4-session if installed
 if which xfce4-session >/dev/null 2>&1; then
-    ck-launch-session xfce4-session
+    xfce4-session
 
     if test "$ssh_agent_kill_cmd"; then
         echo "running '$ssh_agent_kill_cmd'"
