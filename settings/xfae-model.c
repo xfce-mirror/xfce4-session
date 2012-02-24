@@ -397,16 +397,17 @@ xfae_model_iter_parent (GtkTreeModel *tree_model,
 static XfaeItem*
 xfae_item_new (const gchar *relpath)
 {
-  const gchar *value;
-  XfaeItem    *item = NULL;
-  gboolean     skip = FALSE;
-  XfceRc      *rc;
-  gchar      **only_show_in;
-  gchar      **not_show_in;
-  gchar      **args;
-  gchar       *icon_name;
-  gint         m;
-  GtkIconTheme *icon_theme;
+  const gchar   *value;
+  XfaeItem      *item = NULL;
+  gboolean       skip = FALSE;
+  XfceRc        *rc;
+  gchar        **only_show_in;
+  gchar        **not_show_in;
+  gchar        **args;
+  gchar         *icon_name;
+  gint           m;
+  GtkIconTheme  *icon_theme;
+  gchar         *command;
 
   rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG, relpath, TRUE);
   if (G_LIKELY (rc != NULL))
@@ -415,7 +416,8 @@ xfae_item_new (const gchar *relpath)
 
       /* verify that we have an application here */
       value = xfce_rc_read_entry (rc, "Type", NULL);
-      if (G_LIKELY (value != NULL && g_ascii_strcasecmp (value, "Application") == 0))
+      if (G_LIKELY (value != NULL
+          && g_ascii_strcasecmp (value, "Application") == 0))
         {
           icon_theme = gtk_icon_theme_get_default ();
 
@@ -486,6 +488,20 @@ xfae_item_new (const gchar *relpath)
 
               g_strfreev (not_show_in);
             }
+        }
+
+      value = xfce_rc_read_entry (rc, "TryExec", NULL);
+      if (value != NULL && g_shell_parse_argv (value, NULL, &args, NULL))
+        {
+          if (!g_file_test (args[0], G_FILE_TEST_EXISTS))
+            {
+               command = g_find_program_in_path (args[0]);
+               if (command == NULL)
+                 skip = TRUE;
+               g_free (command);
+            }
+
+          g_strfreev (args);
         }
 
       xfce_rc_close (rc);
