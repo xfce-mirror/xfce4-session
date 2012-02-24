@@ -45,35 +45,6 @@ if which xdg-user-dirs-update >/dev/null 2>&1; then
     xdg-user-dirs-update
 fi
 
-if test -f "$XDG_CONFIG_HOME/user-dirs.dirs"; then
-    . "$XDG_CONFIG_HOME/user-dirs.dirs"
-    # i'm deliberately not 'export'-ing the XDG_ vars, because you shouldn't
-    # rely on the env vars inside apps, since the file could be changed at
-    # any time by the user.  this is solely here for migration purposes.
-
-    # a bit of user dir migration...
-    if test -d "$HOME/Desktop" -a ! -L "$HOME/Desktop" \
-            -a "$XDG_DESKTOP_DIR" \
-            -a "$HOME/Desktop" != "$XDG_DESKTOP_DIR" \
-            -a "$HOME" != "$XDG_DESKTOP_DIR"
-    then
-        echo "Migrating $HOME/Desktop to $XDG_DESKTOP_DIR..."
-        test -d "$XDG_DESKTOP_DIR" && rmdir "$XDG_DESKTOP_DIR"
-        mv "$HOME/Desktop" "$XDG_DESKTOP_DIR" || echo "Desktop migration failed" >&2
-    fi
-
-    if test -d "$HOME/Templates" -a ! -L "$HOME/Templates" \
-            -a "$XDG_TEMPLATES_DIR" \
-            -a "$HOME/Templates" != "$XDG_TEMPLATES_DIR" \
-            -a "$HOME" != "$XDG_TEMPLATES_DIR"
-    then
-        echo "Migrating $HOME/Templates to $XDG_TEMPLATES_DIR..."
-        test -d "$XDG_TEMPLATES_DIR" && rmdir "$XDG_TEMPLATES_DIR"
-        mv "$HOME/Templates" "$XDG_TEMPLATES_DIR" || echo "Templates migration failed" >&2
-    fi
-fi
-
-
 # Modify libglade and glade environment variables so that
 # it will find the files installed by Xfce
 LIBGLADE_MODULE_PATH="$LIBGLADE_MODULE_PATH:@XFCE_LIBGLADE_MODULE_PATH@"
