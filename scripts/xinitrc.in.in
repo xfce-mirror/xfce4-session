@@ -100,69 +100,9 @@ if test x"$DBUS_SESSION_BUS_ADDRESS" = x""; then
 	fi
 fi
 
-# launch gpg-agent or ssh-agent if enabled.
-ssh_agent_enabled=`xfconf-query -c xfce4-session -p /startup/ssh-agent/enabled 2> /dev/null`
-if test "$ssh_agent_enabled" != "false"; then
-    # if the user has pam_ssh installed, it will start ssh-agent for us, but
-    # of course won't start gpg-agent.  so, if ssh-agent is already running,
-    # but we want gpg-agent (and that's not running yet) start gpg-agent
-    # without ssh support
-
-    ssh_agent_type=`xfconf-query -c xfce4-session -p /startup/ssh-agent/type 2> /dev/null`
-    if test -z "$ssh_agent_type"; then
-        if which gpg-agent >/dev/null 2>&1; then
-            ssh_agent_type=gpg-agent
-        else
-            ssh_agent_type=ssh-agent
-        fi
-    fi
-
-    # ignore stale ssh-agents
-    if test "$SSH_AGENT_PID"; then
-        if ! kill -0 $SSH_AGENT_PID; then
-            unset SSH_AGENT_PID
-            unset SSH_AUTH_SOCK
-        fi
-    fi
-
-    case "$ssh_agent_type" in
-        gpg-agent)
-            if test -z "$SSH_AGENT_PID"; then
-                eval `gpg-agent --daemon --enable-ssh-support --write-env-file $XDG_CACHE_HOME/gpg-agent-info`
-                ssh_agent_kill_cmd="kill -INT $SSH_AGENT_PID; rm -f $XDG_CACHE_HOME/gpg-agent-info"
-            elif test -z "$GPG_AGENT_INFO"; then
-                echo "ssh-agent is already running; starting gpg-agent without ssh support"
-                eval `gpg-agent --daemon --write-env-file $XDG_CACHE_HOME/gpg-agent-info`
-                ssh_agent_kill_cmd="pkill -INT ^gpg-agent\$; rm -f $XDG_CACHE_HOME/gpg-agent-info"
-            else
-                echo "gpg-agent is already running"
-            fi
-            ;;
-
-        ssh-agent)
-            if test -z "$SSH_AGENT_PID"; then
-                eval `ssh-agent -s`
-                ssh_agent_kill_cmd="ssh-agent -s -k"
-            else
-                echo "ssh-agent is already running"
-            fi
-            ;;
-
-        *)
-            echo "Unrecognized agent type '$ssh_agent_type'" >&2
-            ;;
-    esac
-fi
-
-
 # Run xfce4-session if installed
 if which xfce4-session >/dev/null 2>&1; then
     xfce4-session
-
-    if test "$ssh_agent_kill_cmd"; then
-        echo "running '$ssh_agent_kill_cmd'"
-        eval "$ssh_agent_kill_cmd"
-    fi
 
     exit 0
 fi
