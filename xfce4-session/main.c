@@ -192,6 +192,46 @@ xfsm_dbus_cleanup (void)
                          "org.xfce.SessionManager", NULL);
 }
 
+static gboolean
+xfsm_dbus_require_session (gint argc, gchar **argv)
+{
+  gchar **new_argv;
+  gchar  *path;
+  gint    i;
+  guint   m = 0;
+
+  if (g_getenv ("DBUS_SESSION_BUS_ADDRESS") != NULL)
+    return TRUE;
+
+  path = g_find_program_in_path ("dbus-launch");
+  if (path == NULL)
+    {
+      g_critical ("dbus-launch not found, the desktop will not work properly!");
+      return TRUE;
+    }
+
+  /* avoid rondtrips */
+  g_assert (!g_str_has_prefix (*argv, "dbus-launch"));
+
+  new_argv = g_new0 (gchar *, argc + 4);
+  new_argv[m++] = path;
+  new_argv[m++] = "--sh-syntax";
+  new_argv[m++] = "--exit-with-session";
+
+  for (i = 0; i < argc; i++)
+    new_argv[m++] = argv[i];
+
+  if (!execvp ("dbus-launch", new_argv))
+    {
+      g_critical ("Could not spawn %s: %s", path, g_strerror (errno));
+    }
+
+  g_free (path);
+  g_free (new_argv);
+
+  return FALSE;
+}
+
 int
 main (int argc, char **argv)
 {
@@ -203,36 +243,39 @@ main (int argc, char **argv)
   XfsmShutdown     *shutdown_helper;
   gboolean          succeed = TRUE;
 
+  if (!xfsm_dbus_require_session (argc, argv))
+    return EXIT_SUCCESS;
+
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
   /* install required signal handlers */
   signal (SIGPIPE, SIG_IGN);
 
-  if (!gtk_init_with_args (&argc, &argv, "", option_entries, GETTEXT_PACKAGE, &error)) {
-    g_error ("%s", error->message);
-    g_error_free (error);
-    return EXIT_FAILURE;
-  }
+  if (!gtk_init_with_args (&argc, &argv, "", option_entries, GETTEXT_PACKAGE, &error))
+    {
+      g_print ("%s: %s.\n", G_LOG_DOMAIN, error->message);
+      g_print (_("Type '%s --help' for usage."), G_LOG_DOMAIN);
+      g_print ("\n");
+      g_error_free (error);
+      return EXIT_FAILURE;
+    }
 
   if (opt_version)
     {
-      g_print ("%s %s (Xfce %s)\n\n", PACKAGE_NAME, PACKAGE_VERSION, xfce_version_string ());
-      g_print ("%s\n", "Copyright (c) 2003-2011");
+      g_print ("%s %s (Xfce %s)\n\n", G_LOG_DOMAIN, PACKAGE_VERSION, xfce_version_string ());
+      g_print ("%s\n", "Copyright (c) 2003-2012");
       g_print ("\t%s\n\n", _("The Xfce development team. All rights reserved."));
-      g_print ("%s\n\n", _("Written by Benedikt Meurer <benny@xfce.org>."));
-      g_print (_("Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"),
-               GTK_MAJOR_VERSION, GTK_MINOR_VERSION, GTK_MICRO_VERSION,
-               gtk_major_version, gtk_minor_version, gtk_micro_version);
-      g_print ("\n");
       g_print (_("Please report bugs to <%s>."), PACKAGE_BUGREPORT);
       g_print ("\n");
+
       return EXIT_SUCCESS;
     }
 
-  if (G_UNLIKELY (!xfconf_init (&error))) {
-    xfce_dialog_show_error (NULL, error, _("Unable to contact settings server"));
-    g_error_free (error);
-  }
+  if (!xfconf_init (&error))
+    {
+      xfce_dialog_show_error (NULL, error, _("Unable to contact settings server"));
+      g_error_free (error);
+    }
 
   /* fake a client id for the manager, so the legacy management does not
    * recognize us to be a session client.
