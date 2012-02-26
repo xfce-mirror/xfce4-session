@@ -19,6 +19,44 @@
 #  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
 
+if test "x$*" != "x"
+then
+  OPTS=""
+  for OPT in $*
+  do
+    if test "x$OPT" == "x--help"
+    then
+      # print help and exit
+      echo "Usage:"
+      echo "  startxfce4 [OPTIONS...]"
+      echo
+      echo "Options:"
+      echo "  --help                   Show help options"
+      echo "  --with-ck-launch         Start xfce4-session inside a"
+      echo "                           ConsoleKit session"
+      echo
+
+      exit 0
+    elif test "x$OPT" == "x--with-ck-launch"
+    then
+      # try to launch xfce4-session with ck-launch-session in xinitrc
+      XFCE4_SESSION_WITH_CK="1"
+      export XFCE4_SESSION_WITH_CK
+    else
+      # append
+      OPTS="$OPTS $OPT"
+    fi
+  done
+
+  if test "x${OPTS#*--}" = "x${OPTS}"
+  then
+    CLIENTRC=${OPTS}
+  else
+    SERVERRC=${OPTS#*-- }
+    CLIENTRC=${OPTS%--*}
+  fi
+fi
+
 if test "x$XDG_CONFIG_HOME" = "x"
 then
   BASEDIR="$HOME/.config/xfce4/"
@@ -59,18 +97,6 @@ else
   prog=/bin/sh
 fi
 
-if test ! "x$*" = "x"
-then
-  OPT=$*
-  if test "x${OPT#*--}" = "x${OPT}"
-  then
-    CLIENTRC=${OPT}
-  else
-    SERVERRC=${OPT#*-- }
-    CLIENTRC=${OPT%--*}
-  fi
-fi
-
 if [ -f "$HOME/.xserverrc" ]; then
   SERVERRC="$HOME/.xserverrc $SERVERRC"
 elif [ -f /etc/X11/xinit/xserverrc ]; then
@@ -90,5 +116,5 @@ elif [ -f $HOME/.xfce4/xinitrc ]; then
   exec $prog $BASEDIR/xinitrc $CLIENTRC $SERVERRC
 else
   exec $prog @_sysconfdir_@/xdg/xfce4/xinitrc $CLIENTRC $SERVERRC
-fi  
+fi
 
