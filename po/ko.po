@@ -6,15 +6,23 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
-"Report-Msgid-Bugs-To: xfce4-users-kr-i18n <xfce4-users-kr-i18n@lists.sourceforge.net>\n"
-"POT-Creation-Date: 2011-09-12 16:13+0000\n"
-"PO-Revision-Date: 2012-02-21 14:44+0900\n"
-"Last-Translator: Seong-ho, Cho <darkcircle.0426@gmail.com>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-29 04:30+0000\n"
+"PO-Revision-Date: 2012-02-29 17:37+0900\n"
+"Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language-Team: xfce4-users-kr-i18n <xfce4-users-kr-i18n@lists.sourceforge.net>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ../xfce.desktop.in.h:1
+msgid "Use this session to run Xfce as your desktop environment"
+msgstr "데스크톱 환경으로서 Xfce를 실행하기 위해 이 세션을 사용합니다"
+
+#: ../xfce.desktop.in.h:2
+msgid "Xfce Session"
+msgstr "Xfce 세션"
 
 #: ../engines/balou/balou-theme.c:110
 msgid "No description given"
@@ -129,99 +137,6 @@ msgstr "단순"
 #: ../engines/simple/simple.c:498
 msgid "Simple Splash Engine"
 msgstr "단순한 시작화면 엔진"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:86
-msgid "Session"
-msgstr "세션"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:87
-msgid "Loc_k screen"
-msgstr "화면 잠금(_k)"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:88
-#: ../panel-plugin/xfsm-logout-plugin.c:128
-msgid "_Suspend"
-msgstr "대기(_S)"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:89
-#: ../panel-plugin/xfsm-logout-plugin.c:135
-#: ../xfce4-session/shutdown.c:599
-msgid "_Hibernate"
-msgstr "최대 절전(_H)"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:90
-#: ../panel-plugin/xfsm-logout-plugin.c:121
-msgid "_Reboot"
-msgstr "재시동(_R)"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:91
-#: ../panel-plugin/xfsm-logout-plugin.c:114
-msgid "Shut _down"
-msgstr "시스템 종료(_d)"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:92
-#: ../panel-plugin/xfsm-logout-plugin.c:107
-msgid "_Log out"
-msgstr "로그아웃(_L)"
-
-#. XFSM_SHUTDOWN_ASK
-#. XFSM_SHUTDOWN_LOGOUT
-#: ../panel-plugin/xfsm-logout-plugin.c:105
-msgid "Are you sure you want to log out?"
-msgstr "정말 로그아웃 하시렵니까?"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:106
-#, c-format
-msgid "You will be logged out in %u seconds."
-msgstr "%u 초 이내로 로그아웃 할 것입니다."
-
-#: ../panel-plugin/xfsm-logout-plugin.c:109
-msgid "Failed to log out."
-msgstr "로그아웃에 실패했습니다."
-
-#. XFSM_SHUTDOWN_HALT
-#: ../panel-plugin/xfsm-logout-plugin.c:112
-msgid "Are you sure you want to shut down?"
-msgstr "정말로 종료하시렵니까?"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:113
-#, c-format
-msgid "Your system will shut down in %u seconds."
-msgstr "%u 초 이내로 종료할 것 입니다."
-
-#: ../panel-plugin/xfsm-logout-plugin.c:116
-msgid "Failed to shut down."
-msgstr "종료에 실패했습니다."
-
-#. XFSM_SHUTDOWN_REBOOT
-#: ../panel-plugin/xfsm-logout-plugin.c:119
-msgid "Are you sure you want to reboot?"
-msgstr "정말로 재시동하시렵니까?"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:120
-#, c-format
-msgid "Your system will reboot in %u seconds."
-msgstr "%u 초 이내로 재시동 할 것입니다."
-
-#: ../panel-plugin/xfsm-logout-plugin.c:123
-msgid "Failed to reboot."
-msgstr "재시동에 실패했습니다."
-
-#: ../panel-plugin/xfsm-logout-plugin.c:130
-msgid "Failed to suspend"
-msgstr "대기 모드 진입에 실패했습니다."
-
-#: ../panel-plugin/xfsm-logout-plugin.c:137
-msgid "Failed to hibernate"
-msgstr "최대절전 모드 진입에 실패했습니다."
-
-#: ../panel-plugin/xfsm-logout-plugin.c:150
-msgid "Xflock4 could not be launched"
-msgstr "Xflock4가 실행 되지 못했습니다."
-
-#: ../panel-plugin/xfsm-logout-plugin.c:222
-msgid "Close Session"
-msgstr "세션 종료"
 
 #: ../settings/main.c:43
 msgid "Settings manager socket"
@@ -500,6 +415,10 @@ msgstr "시스템 종료(_D)"
 #: ../xfce4-session/shutdown.c:561
 msgid "Sus_pend"
 msgstr "대기(_p)"
+
+#: ../xfce4-session/shutdown.c:599
+msgid "_Hibernate"
+msgstr "최대 절전(_H)"
 
 #: ../xfce4-session/shutdown.c:608
 msgid "_Save session for future logins"
@@ -854,14 +773,6 @@ msgstr "로그아웃"
 msgid "Log out of the Xfce Desktop"
 msgstr "Xfce 데스크톱의 로그아웃"
 
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
-msgid "Session Menu"
-msgstr "세션 메뉴"
-
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
-msgid "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
-msgstr "화면 잠금, 대기, 시스템 종료 혹은 로그아웃 하기위한 옵션을 메뉴로 보이기"
-
 #: ../settings/xfce-session-settings.desktop.in.h:1
 #: ../settings/xfce4-session-settings.glade.h:14
 msgid "Customize desktop startup and splash screen"
@@ -1019,6 +930,69 @@ msgstr "시험 (_T)"
 #: ../settings/xfce4-session-settings.glade.h:40
 msgid "label"
 msgstr "레이블"
+
+#~ msgid "Loc_k screen"
+#~ msgstr "화면 잠금(_k)"
+
+#~ msgid "_Suspend"
+#~ msgstr "대기(_S)"
+
+#~ msgid "_Reboot"
+#~ msgstr "재시동(_R)"
+
+#~ msgid "Shut _down"
+#~ msgstr "시스템 종료(_d)"
+
+#~ msgid "_Log out"
+#~ msgstr "로그아웃(_L)"
+
+#~ msgid "Are you sure you want to log out?"
+#~ msgstr "정말 로그아웃 하시렵니까?"
+
+#~ msgid "You will be logged out in %u seconds."
+#~ msgstr "%u 초 이내로 로그아웃 할 것입니다."
+
+#~ msgid "Failed to log out."
+#~ msgstr "로그아웃에 실패했습니다."
+
+#~ msgid "Are you sure you want to shut down?"
+#~ msgstr "정말로 종료하시렵니까?"
+
+#~ msgid "Your system will shut down in %u seconds."
+#~ msgstr "%u 초 이내로 종료할 것 입니다."
+
+#~ msgid "Failed to shut down."
+#~ msgstr "종료에 실패했습니다."
+
+#~ msgid "Are you sure you want to reboot?"
+#~ msgstr "정말로 재시동하시렵니까?"
+
+#~ msgid "Your system will reboot in %u seconds."
+#~ msgstr "%u 초 이내로 재시동 할 것입니다."
+
+#~ msgid "Failed to reboot."
+#~ msgstr "재시동에 실패했습니다."
+
+#~ msgid "Failed to suspend"
+#~ msgstr "대기 모드 진입에 실패했습니다."
+
+#~ msgid "Failed to hibernate"
+#~ msgstr "최대절전 모드 진입에 실패했습니다."
+
+#~ msgid "Xflock4 could not be launched"
+#~ msgstr "Xflock4가 실행 되지 못했습니다."
+
+#~ msgid "Close Session"
+#~ msgstr "세션 종료"
+
+#~ msgid "Session Menu"
+#~ msgstr "세션 메뉴"
+
+#~ msgid ""
+#~ "Shows a menu with options to lock the screen, suspend, shutdown, or log "
+#~ "out"
+#~ msgstr ""
+#~ "화면 잠금, 대기, 시스템 종료 혹은 로그아웃 하기위한 옵션을 메뉴로 보이기"
 
 #~ msgid "Hibernate"
 #~ msgstr "최대 절전"
