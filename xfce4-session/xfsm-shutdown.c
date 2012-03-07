@@ -541,9 +541,9 @@ xfsm_shutdown_query_xfpm (XfsmShutdown  *shutdown,
     return FALSE;
 
   proxy = dbus_g_proxy_new_for_name_owner (conn,
-                                           "org.xfce.PowerManager",
-                                           "/org/xfce/PowerManager",
-                                           "org.xfce.PowerManager",
+                                           "org.xfce.PowerManagement",
+                                           "/org/xfce/PowerManagement",
+                                           "org.xfce.PowerManagement",
                                            error);
   if (proxy != NULL)
     {
@@ -563,16 +563,52 @@ xfsm_shutdown_query_xfpm (XfsmShutdown  *shutdown,
 
 static gboolean
 xfsm_shutdown_kiosk_can_shutdown (XfsmShutdown  *shutdown,
-                           GError       **error)
+                                  GError       **error)
 {
   if (!shutdown->kiosk_can_shutdown)
     {
-      if (error != NULL)
-        g_set_error_literal (error, 1, 0, _("Shutdown is blocked by the kiosk settings"));
+      g_set_error_literal (error, 1, 0, _("Shutdown is blocked by the kiosk settings"));
       return FALSE;
     }
 
   return TRUE;
+}
+
+
+
+static gboolean
+xfsm_shutdown_run_xfpm (XfsmShutdown  *shutdown,
+                        const gchar   *method,
+                        GError       **error)
+{
+  DBusGConnection *conn;
+  DBusGProxy      *proxy;
+  gboolean         result = FALSE;
+
+  if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, error))
+    return FALSE;
+
+  conn = dbus_g_bus_get (DBUS_BUS_SESSION, error);
+  if (conn == NULL)
+    return FALSE;
+
+  proxy = dbus_g_proxy_new_for_name_owner (conn,
+                                           "org.xfce.PowerManagement",
+                                           "/org/xfce/PowerManagement",
+                                           "org.xfce.PowerManagement",
+                                           error);
+
+  if (proxy != NULL)
+    {
+      result = dbus_g_proxy_call (proxy, method, error,
+                                  G_TYPE_INVALID,
+                                  G_TYPE_INVALID);
+      g_object_unref (proxy);
+    }
+
+  dbus_g_connection_unref (conn);
+
+  return result;
 }
 
 
@@ -700,7 +736,7 @@ xfsm_shutdown_try_suspend (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
-  return TRUE;
+  return xfsm_shutdown_run_xfpm (shutdown, "Suspend", error);
 }
 
 
@@ -711,7 +747,7 @@ xfsm_shutdown_try_hibernate (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
-  return TRUE;
+  return xfsm_shutdown_run_xfpm (shutdown, "Hibernate", error);
 }
 
 
@@ -719,7 +755,7 @@ xfsm_shutdown_try_hibernate (XfsmShutdown  *shutdown,
 gboolean
 xfsm_shutdown_can_restart (XfsmShutdown  *shutdown,
                            gboolean      *can_restart,
-                            GError       **error)
+                           GError       **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
