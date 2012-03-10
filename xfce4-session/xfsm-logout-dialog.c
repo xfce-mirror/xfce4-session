@@ -142,6 +142,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gchar         *label_str;
   PangoAttrList *attrs;
   GtkWidget     *vbox;
+  GtkWidget     *button_vbox;
   GtkWidget     *main_vbox;
   GtkWidget     *hbox;
   GtkWidget     *button;
@@ -155,6 +156,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   GtkWidget     *entry;
   GtkWidget     *image;
   GtkWidget     *separator;
+  gboolean       xfpm_not_found = FALSE;
 
   dialog->type_clicked = XFSM_SHUTDOWN_LOGOUT;
   dialog->shutdown = xfsm_shutdown_get ();
@@ -204,10 +206,6 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   dialog->box[MODE_LOGOUT_BUTTONS] = vbox = gtk_vbox_new (FALSE, BORDER);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
 
-  hbox = gtk_hbox_new (TRUE, BORDER);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
-  gtk_widget_show (hbox);
-
   /**
    * Cancel
    **/
@@ -230,6 +228,15 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
                                                 GTK_STOCK_CLOSE,
                                                 GTK_RESPONSE_CANCEL);
   gtk_widget_hide (dialog->button_close);
+
+  button_vbox = gtk_vbox_new (TRUE, BORDER);
+  gtk_box_pack_start (GTK_BOX (vbox), button_vbox, FALSE, TRUE, 0);
+  gtk_widget_show (button_vbox);
+
+  /* row for logout/shutdown and reboot */
+  hbox = gtk_hbox_new (TRUE, BORDER);
+  gtk_box_pack_start (GTK_BOX (button_vbox), hbox, FALSE, TRUE, 0);
+  gtk_widget_show (hbox);
 
   /**
    * Logout
@@ -282,6 +289,10 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gtk_widget_set_sensitive (button, can_shutdown);
   gtk_widget_show (button);
 
+  /* new row for suspend/hibernate */
+  hbox = gtk_hbox_new (TRUE, BORDER);
+  gtk_box_pack_start (GTK_BOX (button_vbox), hbox, FALSE, TRUE, 0);
+
   /**
    * Suspend
    *
@@ -298,12 +309,17 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
           gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
           gtk_widget_set_sensitive (button, can_suspend);
           gtk_widget_show (button);
+
+          gtk_widget_show (hbox);
         }
       else
         {
           g_printerr ("%s: Querying CanSuspend failed. %s\n\n",
                       PACKAGE_NAME, ERROR_MSG (error));
           g_clear_error (&error);
+
+          /* don't try hibernate again */
+          xfpm_not_found = TRUE;
         }
     }
 
@@ -312,7 +328,8 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
    *
    * Hide the button if Xfpm is not installed
    **/
-  if (xfconf_channel_get_bool (channel, "/shutdown/ShowHibernate", TRUE))
+  if (!xfpm_not_found
+      && xfconf_channel_get_bool (channel, "/shutdown/ShowHibernate", TRUE))
     {
       if (xfsm_shutdown_can_hibernate (dialog->shutdown, &can_hibernate, &error))
         {
@@ -323,6 +340,8 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
           gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
           gtk_widget_set_sensitive (button, can_hibernate);
           gtk_widget_show (button);
+
+          gtk_widget_show (hbox);
         }
       else
         {
