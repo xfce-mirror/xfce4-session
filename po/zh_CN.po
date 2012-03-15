@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-10 05:24+0000\n"
+"POT-Creation-Date: 2012-03-15 05:06+0000\n"
 "PO-Revision-Date: 2010-04-06 13:28+0800\n"
 "Last-Translator: Chipong Luo <chipong.luo@yahoo.com>\n"
 "Language-Team: Chinese/Simplified <xfce-i18n@xfce.org>\n"
@@ -21,6 +21,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../engines/balou/balou-theme.c:110
 msgid "No description given"
@@ -33,7 +34,7 @@ msgstr "选择要安装的主题文件..."
 #: ../engines/balou/config.c:336
 #, c-format
 msgid "Unable to install splash theme from file \"%s\""
-msgstr "无法从文件 “%s” 安装启动画面主题。"
+msgstr "未能从文件 “%s” 安装启动画面主题。"
 
 #: ../engines/balou/config.c:339
 msgid "Theme File Error"
@@ -41,12 +42,12 @@ msgstr "主题文件错误"
 
 #: ../engines/balou/config.c:342
 msgid "Please check that the file is a valid splash theme archive."
-msgstr "请检查该文件是不是一个有效的启动画面主题文档。"
+msgstr "请检查此文件是不是一个有效的启动画面主题文档。"
 
 #: ../engines/balou/config.c:402
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
-msgstr "启动画面主题 “%s” 无法从目录 %s 中移除。"
+msgstr "启动画面主题 “%s” 未能从目录 %s 中移除。"
 
 #: ../engines/balou/config.c:491
 msgid "Choose theme filename..."
@@ -110,19 +111,19 @@ msgstr "字体颜色："
 
 #: ../engines/simple/simple.c:401
 msgid "Image"
-msgstr "图像"
+msgstr "图片"
 
 #: ../engines/simple/simple.c:409
 msgid "Use custom image"
-msgstr "使用自定义图像"
+msgstr "使用自定义图片"
 
 #: ../engines/simple/simple.c:413
 msgid "Choose image..."
-msgstr "选择图像..."
+msgstr "选择图片..."
 
 #: ../engines/simple/simple.c:419
 msgid "Images"
-msgstr "图像"
+msgstr "图片"
 
 #: ../engines/simple/simple.c:425
 msgid "All files"
@@ -147,7 +148,7 @@ msgstr "锁屏(_K)"
 #: ../panel-plugin/xfsm-logout-plugin.c:88
 #: ../panel-plugin/xfsm-logout-plugin.c:128
 msgid "_Suspend"
-msgstr "挂起(_S)"
+msgstr "待机(_S)"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:89
 #: ../panel-plugin/xfsm-logout-plugin.c:135
@@ -182,7 +183,7 @@ msgstr "您将在 %u 秒后注销。"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:109
 msgid "Failed to log out."
-msgstr "注销失败。"
+msgstr "无法注销。"
 
 #. XFSM_SHUTDOWN_HALT
 #: ../panel-plugin/xfsm-logout-plugin.c:112
@@ -196,7 +197,7 @@ msgstr "您的系统将在 %u 秒后关机。"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:116
 msgid "Failed to shut down."
-msgstr "关机失败。"
+msgstr "无法关机。"
 
 #. XFSM_SHUTDOWN_REBOOT
 #: ../panel-plugin/xfsm-logout-plugin.c:119
@@ -210,19 +211,19 @@ msgstr "您的系统将在 %u 秒后重启。"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:123
 msgid "Failed to reboot."
-msgstr "重启失败。"
+msgstr "无法重启。"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:130
 msgid "Failed to suspend"
-msgstr "挂起失败"
+msgstr "无法待机"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:137
 msgid "Failed to hibernate"
-msgstr "休眠失败"
+msgstr "无法休眠"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:150
 msgid "Xflock4 could not be launched"
-msgstr "无法启动 Xfclock4"
+msgstr "未能启动 Xfclock4"
 
 #: ../panel-plugin/xfsm-logout-plugin.c:222
 msgid "Close Session"
@@ -243,11 +244,11 @@ msgstr "版本信息"
 #: ../settings/main.c:74
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr "输入 ‘%s --help’ 显示使用说明"
+msgstr "输入 ‘%s --help’ 获取用法。"
 
 #: ../settings/main.c:86 ../xfce4-session/main.c:226
 msgid "The Xfce development team. All rights reserved."
-msgstr "Xfce 开发团队。版权所有。"
+msgstr "Xfce 开发团队。保留所有版权。"
 
 #: ../settings/main.c:87 ../xfce4-session/main.c:232
 #, c-format
@@ -256,15 +257,15 @@ msgstr "请向 <%s> 报告缺陷。"
 
 #: ../settings/main.c:96 ../xfce4-session/main.c:238 ../xfce4-tips/main.c:270
 msgid "Unable to contact settings server"
-msgstr "无法与设置服务进行联系"
+msgstr "未能与设置服务器联系"
 
 #: ../settings/main.c:115
 msgid "Unable to create user interface from embedded definition data"
-msgstr "无法从内嵌数据创建用户界面"
+msgstr "未能从内嵌数据创建用户界面"
 
 #: ../settings/main.c:128
 msgid "_Application Autostart"
-msgstr "自动启动的程序(_A)"
+msgstr "应用程序自启动(_A)"
 
 #: ../settings/session-editor.c:60
 msgid "If running"
@@ -288,7 +289,7 @@ msgstr "保存会话出错"
 
 #: ../settings/session-editor.c:129
 msgid "Unable to save the session"
-msgstr "无法保存会话"
+msgstr "未能保存会话"
 
 #: ../settings/session-editor.c:184
 #, c-format
@@ -312,7 +313,7 @@ msgstr "退出程序(_Q)"
 
 #: ../settings/session-editor.c:216
 msgid "Unable to terminate program."
-msgstr "无法终止程序"
+msgstr "未能终止程序"
 
 #: ../settings/session-editor.c:394
 msgid "(Unknown program)"
@@ -367,7 +368,7 @@ msgstr "编辑应用程序"
 #: ../settings/xfae-model.c:562
 #, c-format
 msgid "Failed to unlink %s: %s"
-msgstr "无法移除链接 %s： %s"
+msgstr "无法解除链接 %s：%s"
 
 #: ../settings/xfae-model.c:651
 #, c-format
@@ -395,8 +396,8 @@ msgid ""
 "you login to your Xfce desktop, in addition to the applications that were "
 "saved when you logged out last time:"
 msgstr ""
-"除了您上次退出 Xfce 桌面时保存的应用程序外，\n"
-"下面列出的应用程序也会在您登录时自动启动："
+"除了您上次退出 Xfce 桌面时保存的应用程序外，下面列出的"
+"应用程序也会在您登录时自启动："
 
 #: ../settings/xfae-window.c:289
 #, c-format
@@ -411,7 +412,7 @@ msgstr "无法移除项目"
 msgid ""
 "This will permanently remove the application from the list of automatically "
 "started applications"
-msgstr "这将把该应用程序从自动启动应用程序的列表中永久移除"
+msgstr "这将把此应用程序从自启动应用程序的列表中永远移除"
 
 #: ../settings/xfae-window.c:328
 #, c-format
@@ -433,11 +434,11 @@ msgstr "无法切换项目"
 
 #: ../xfce4-session/main.c:76
 msgid "Disable binding to TCP ports"
-msgstr "禁用绑定至 TCP 端口"
+msgstr "禁用与 TCP 端口绑定"
 
 #: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:93
 msgid "Print version information and exit"
-msgstr "打印版本信息并退出"
+msgstr "列印印版本信息后退出"
 
 #: ../xfce4-session/main.c:140
 msgid "Loading desktop settings"
@@ -450,7 +451,7 @@ msgstr "由 Benedikt Meurer <benny@xfce.org> 编写。"
 #: ../xfce4-session/main.c:228
 #, c-format
 msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
-msgstr "使用 Gtk+-%d.%d.%d 进行编译，现在运行于 Gtk+-%d.%d.%d 之上"
+msgstr "用 Gtk+-%d.%d.%d 编译，以 Gtk+-%d.%d.%d 运行"
 
 #. verify that the DNS settings are ok
 #: ../xfce4-session/main.c:260
@@ -459,7 +460,7 @@ msgstr "正在校验 DNS 设置"
 
 #: ../xfce4-session/main.c:264
 msgid "Loading session data"
-msgstr "正在读取会话数据"
+msgstr "正在载入会话数据"
 
 #: ../xfce4-session/shutdown.c:372
 #, c-format
@@ -481,7 +482,7 @@ msgstr "关机"
 
 #: ../xfce4-session/shutdown.c:561
 msgid "Suspend"
-msgstr "挂起"
+msgstr "待机"
 
 #: ../xfce4-session/shutdown.c:599
 msgid "Hibernate"
@@ -503,7 +504,7 @@ msgstr "<b>出现一个错误</b>"
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
-msgstr "您所输入的密码不正确，或者系统管理员不允许您的帐户关闭该计算机。"
+msgstr "您所输入的密码不正确，或者系统管理员不允许您的帐户关闭此计算机。"
 
 #: ../xfce4-session/shutdown.c:833 ../xfce4-session/xfsm-manager.c:1119
 msgid "Shutdown Failed"
@@ -511,18 +512,18 @@ msgstr "无法关机"
 
 #: ../xfce4-session/shutdown.c:835
 msgid "Unable to perform shutdown"
-msgstr "无法执行关机"
+msgstr "未能执行关机"
 
 #: ../xfce4-session/xfsm-chooser.c:90
 #, c-format
 msgid "Last accessed: %s"
-msgstr "最后访问： %s"
+msgstr "最后访问：%s"
 
 #: ../xfce4-session/xfsm-chooser.c:172
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
-msgstr "选择您希望恢复的会话。您可以简单地双击该会话名称来进行。"
+msgstr "选择您希望恢复的会话。您可以简单地双击此会话名称来进行。"
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:198
@@ -572,8 +573,8 @@ msgid ""
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
 msgstr ""
-"无法搜寻 %s 对应的网址，Xfce 会因此而无法正常运行。\n"
-"将 %s 添加到系统文件 /etc/hosts 中可能解决该问题。"
+"未能搜寻 %s 对应的网址，Xfce 会因此而无法正常运行。\n"
+"将 %s 添加到系统文件 /etc/hosts 中可能解决此问题。"
 
 #: ../xfce4-session/xfsm-dns.c:154
 msgid "Continue anyway"
@@ -590,7 +591,7 @@ msgid ""
 "running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
 "incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr ""
-"无法确定安全模式会话的名称。可能的原因有： xfconfd 没有\n"
+"未能确定安全模式会话的名称。可能的原因有： xfconfd 没有\n"
 "运行(D-Bus 设置问题)；环境变量 $XDG_CONFIG_DIRS 设置\n"
 "不对(必须包含 “%s”)；或者 xfce4-session 未正确安装。"
 
@@ -598,7 +599,7 @@ msgstr ""
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr "指定的安全模式会话(“%s”)未被标记为安全模式会话。"
+msgstr "指定的安全模式会话(“%s”)没有标记为安全模式会话。"
 
 #: ../xfce4-session/xfsm-manager.c:660
 msgid "The list of applications in the failsafe session is empty."
@@ -613,11 +614,11 @@ msgstr "会话管理器错误"
 
 #: ../xfce4-session/xfsm-manager.c:709
 msgid "Unable to load a failsafe session"
-msgstr "无法加载安全模式会话"
+msgstr "未能载入安全模式会话"
 
 #: ../xfce4-session/xfsm-manager.c:1122
 msgid "Failed to suspend session"
-msgstr "无法挂起会话"
+msgstr "无法暂停会话"
 
 #: ../xfce4-session/xfsm-manager.c:1123
 msgid "Failed to hibernate session"
@@ -660,7 +661,7 @@ msgstr "关机命令无效"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:1802
 msgid "Suspend failed, no backend supported"
-msgstr "无法挂起，没有后端被支持"
+msgstr "无法待机，没有后端被支持"
 
 #: ../xfce4-session/xfsm-shutdown-helper.c:1829
 msgid "Hibernate failed, no backend supported"
@@ -724,7 +725,7 @@ msgstr "正在启动 KDE 新闻阅读器"
 
 #: ../xfce4-session/xfsm-startup.c:139
 msgid "Starting the Konqueror"
-msgstr "正在启动 Konqueror 浏览器"
+msgstr "正在启动 Konqueror"
 
 #: ../xfce4-session/xfsm-startup.c:141
 msgid "Starting the KDE Terminal Emulator"
@@ -736,7 +737,7 @@ msgstr "正在启动 Beep 媒体播放器"
 
 #: ../xfce4-session/xfsm-startup.c:147
 msgid "Starting The Gimp"
-msgstr "正在启动 Gimp 图像处理程序"
+msgstr "正在启动 Gimp"
 
 #: ../xfce4-session/xfsm-startup.c:149
 msgid "Starting the VI Improved Editor"
@@ -748,7 +749,7 @@ msgstr "正在启动会话管理代理"
 
 #: ../xfce4-session/xfsm-startup.c:153
 msgid "Starting the X-Chat IRC Client"
-msgstr "正在启动 X-Chat IRC 客户端"
+msgstr "正在启动 X-Chat 网络聊天客户端"
 
 #: ../xfce4-session/xfsm-startup.c:155
 msgid "Starting the X Multimedia System"
@@ -777,20 +778,20 @@ msgid ""
 "location.\n"
 "You should delete this directory now.\n"
 msgstr ""
-"自动启动目录的位置和格式已经改动。\n"
+"自启动目录的位置和格式已经改动。\n"
 "新的位置是\n"
 "\n"
 "  %s\n"
 "\n"
 "在您放置 .desktop 文件的位置，此文件描述\n"
 "在您登录 Xfce 桌面时要启动的应用程序。在\n"
-"您的原自动启动目录中的文件已经成功迁移到了\n"
+"您的原自启动目录中的文件已经成功迁移到了\n"
 "新的位置。\n"
 "您现在应该删除这个目录。\n"
 
 #: ../xfce4-session/xfsm-startup.c:441
 msgid "Performing Autostart..."
-msgstr "正在执行自动启动..."
+msgstr "正在执行自启动..."
 
 #: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:284
 msgid "Tips and Tricks"
@@ -803,13 +804,13 @@ msgstr "幸运格言"
 #: ../xfce4-tips/main.c:75
 #, c-format
 msgid "Could not load tips database (%s)."
-msgstr "无法载入提示数据库(%s)。"
+msgstr "未能载入提示数据库(%s)。"
 
 #. converting it from the user's locale failed too, we give up
 #: ../xfce4-tips/main.c:190
 #, c-format
 msgid "Invalid output of fortune."
-msgstr "无法输出幸运格言。"
+msgstr "无效的幸运格言输出。"
 
 #: ../xfce4-tips/main.c:195 ../xfce4-tips/main.c:203
 #, c-format
@@ -818,7 +819,7 @@ msgstr "无法处理幸运格言(%s)"
 
 #: ../xfce4-tips/main.c:228
 msgid "Error while loading tips."
-msgstr "无法载入提示。"
+msgstr "载入提示出错。"
 
 #: ../xfce4-tips/main.c:314
 msgid "Display tips on _startup"
@@ -842,7 +843,7 @@ msgstr "不显示注销对话框直接重启"
 
 #: ../xfce4-session-logout/main.c:81
 msgid "Suspend without displaying the logout dialog"
-msgstr "不显示注销对话框直接挂起"
+msgstr "不显示注销对话框直接待机"
 
 #: ../xfce4-session-logout/main.c:85
 msgid "Hibernate without displaying the logout dialog"
@@ -862,7 +863,7 @@ msgstr "未知错误"
 
 #: ../xfce4-session-logout/main.c:178
 msgid "Unable to contact D-Bus session bus."
-msgstr "无法与 D-Bus 的会话总线进行联系。"
+msgstr "无法与 D-Bus 会话总线联系。"
 
 #: ../xfce4-session-logout/main.c:190
 msgid "Failed to create new D-Bus message"
@@ -878,7 +879,7 @@ msgstr "试图注销时收到错误信息"
 
 #: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:2
 msgid "Log out of the Xfce Desktop"
-msgstr "从 Xfce 桌面注销"
+msgstr "注销 Xfce 桌面"
 
 #: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
 msgid "Session Menu"
@@ -887,7 +888,7 @@ msgstr "会话菜单"
 #: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
 msgid ""
 "Shows a menu with options to lock the screen, suspend, shutdown, or log out"
-msgstr "显示一个带锁屏、挂起、关机或注销选项的菜单"
+msgstr "显示一个带锁屏、待机、关机或注销选项的菜单"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
 #: ../settings/xfce4-session-settings.glade.h:14
@@ -986,7 +987,7 @@ msgstr "注销时提示用户确认"
 
 #: ../settings/xfce4-session-settings.glade.h:23
 msgid "Quit the program, and remove it from the session"
-msgstr "退出该程序，并将其从会话中移除"
+msgstr "退出此程序，并将其从会话中移除"
 
 #: ../settings/xfce4-session-settings.glade.h:24
 msgid "S_plash"
@@ -1004,11 +1005,11 @@ msgstr "正在保存会话"
 msgid ""
 "Start GNOME services, such as gnome-keyring and the GNOME accessibility "
 "framework"
-msgstr "启动 GNOME 服务，例如 gnome-keyring 和 GNOME 辅助技术框架"
+msgstr "启动 GNOME 服务，比如 gnome-keyring 和 GNOME 辅助技术框架"
 
 #: ../settings/xfce4-session-settings.glade.h:29
 msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
-msgstr "启动 KDE 服务，例如 “kdeinit” 、 DCOP 、和 ARTS"
+msgstr "启动 KDE 服务，比如 “kdeinit”、 DCOP、和 ARTS"
 
 #: ../settings/xfce4-session-settings.glade.h:30
 msgid ""
@@ -1016,7 +1017,7 @@ msgid ""
 "saved when you log out.  Changes below will only take effect when the "
 "session is saved."
 msgstr ""
-"这些应用程序所在的会话正在运行，您在注销时可保存它们。\n"
+"这些应用程序所在的会话正在运行，您在注销时可保存它们。"
 "以下的更改只在您保存会话后才生效。"
 
 #: ../settings/xfce4-session-settings.glade.h:31
@@ -1055,4 +1056,4 @@ msgstr "提示与技巧"
 
 #: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
 msgid "xfce4-tips"
-msgstr "Xfce4-提示"
+msgstr "Xfce 4 提示"
