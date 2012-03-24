@@ -22,6 +22,7 @@
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 
+#include <libxfsm/xfsm-util.h>
 #include <xfce4-session/xfsm-upower.h>
 
 

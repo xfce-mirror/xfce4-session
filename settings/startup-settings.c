@@ -34,6 +34,8 @@
 
 #define ENABLE_TCP_PROP     "/security/EnableTcp"
 
+#define LOCK_SCREEN_PROP     "/shutdown/LockScreen"
+
 void
 startup_settings_init(GtkBuilder *builder)
 {
@@ -59,5 +61,9 @@ startup_settings_init(GtkBuilder *builder)
 
     xfconf_g_property_bind(channel, ENABLE_TCP_PROP, G_TYPE_BOOLEAN,
                            gtk_builder_get_object(builder, "chk_enable_tcp"),
+                           "active");
+
+    xfconf_g_property_bind(channel, LOCK_SCREEN_PROP, G_TYPE_BOOLEAN,
+                           gtk_builder_get_object(builder, "chk_lock_screen"),
                            "active");
 }
