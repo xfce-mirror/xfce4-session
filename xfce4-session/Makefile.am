@@ -60,7 +60,9 @@ xfce4_session_SOURCES =							\
 	xfsm-splash-screen.c						\
 	xfsm-splash-screen.h						\
 	xfsm-startup.c							\
-	xfsm-startup.h
+	xfsm-startup.h							\
+	xfsm-upower.c							\
+	xfsm-upower.h
 
 xfce4_session_CFLAGS =							\
 	$(GNOME_KEYRING_CFLAGS)						\

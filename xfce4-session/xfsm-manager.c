@@ -1821,6 +1821,16 @@ static gboolean xfsm_manager_dbus_restart (XfsmManager *manager,
 static gboolean xfsm_manager_dbus_can_restart (XfsmManager *manager,
                                                gboolean    *can_restart,
                                                GError     **error);
+static gboolean xfsm_manager_dbus_suspend (XfsmManager *manager,
+                                           GError     **error);
+static gboolean xfsm_manager_dbus_can_suspend (XfsmManager *manager,
+                                               gboolean    *can_suspend,
+                                               GError     **error);
+static gboolean xfsm_manager_dbus_hibernate (XfsmManager *manager,
+                                             GError     **error);
+static gboolean xfsm_manager_dbus_can_hibernate (XfsmManager *manager,
+                                                 gboolean    *can_hibernate,
+                                                 GError     **error);
 
 
 /* eader needs the above fwd decls */
@@ -2076,4 +2086,59 @@ xfsm_manager_dbus_can_restart (XfsmManager *manager,
   g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
   return xfsm_shutdown_can_restart (manager->shutdown_helper,
                                     can_restart, error);
+}
+
+
+static gboolean
+xfsm_manager_dbus_suspend (XfsmManager *manager,
+                           GError     **error)
+{
+  g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
+  return xfsm_shutdown_try_suspend (manager->shutdown_helper, error);
+}
+
+
+static gboolean
+xfsm_manager_dbus_can_suspend (XfsmManager *manager,
+                               gboolean    *can_suspend,
+                               GError     **error)
+{
+  gboolean retval;
+  gboolean auth_suspend;
+
+  g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
+  retval = xfsm_shutdown_can_suspend (manager->shutdown_helper,
+                                      can_suspend, &auth_suspend, error);
+
+  if (!auth_suspend)
+    can_suspend = FALSE;
+
+  return retval;
+}
+
+static gboolean
+xfsm_manager_dbus_hibernate (XfsmManager *manager,
+                             GError     **error)
+{
+  g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
+  return xfsm_shutdown_try_hibernate (manager->shutdown_helper, error);
+}
+
+
+static gboolean
+xfsm_manager_dbus_can_hibernate (XfsmManager *manager,
+                                 gboolean    *can_hibernate,
+                                 GError     **error)
+{
+  gboolean retval;
+  gboolean auth_hibernate;
+
+  g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
+  retval = xfsm_shutdown_can_hibernate (manager->shutdown_helper,
+                                        can_hibernate, &auth_hibernate, error);
+
+  if (!auth_hibernate)
+    can_hibernate = FALSE;
+
+  return retval;
 }

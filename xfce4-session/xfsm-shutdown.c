@@ -61,6 +61,7 @@
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-legacy.h>
 #include <xfce4-session/xfsm-consolekit.h>
+#include <xfce4-session/xfsm-upower.h>
 
 
 
@@ -87,6 +88,7 @@ struct _XfsmShutdown
   GObject __parent__;
 
   XfsmConsolekit *consolekit;
+  XfsmUPower     *upower;
 
   /* kiosk settings */
   gboolean        kiosk_can_shutdown;
@@ -124,6 +126,7 @@ xfsm_shutdown_init (XfsmShutdown *shutdown)
   XfceKiosk *kiosk;
 
   shutdown->consolekit = xfsm_consolekit_get ();
+  shutdown->upower = xfsm_upower_get ();
   shutdown->helper_state = SUDO_NOT_INITIAZED;
   shutdown->helper_require_password = FALSE;
 
@@ -142,6 +145,7 @@ xfsm_shutdown_finalize (GObject *object)
   XfsmShutdown *shutdown = XFSM_SHUTDOWN (object);
 
   g_object_unref (G_OBJECT (shutdown->consolekit));
+  g_object_unref (G_OBJECT (shutdown->upower));
 
   /* close down helper */
   xfsm_shutdown_sudo_free (shutdown);
@@ -522,46 +526,6 @@ xfsm_shutdown_sudo_send_password (XfsmShutdown  *shutdown,
 
 
 static gboolean
-xfsm_shutdown_query_xfpm (XfsmShutdown  *shutdown,
-                          const gchar   *method,
-                          gboolean      *can_method,
-                          GError       **error)
-{
-  DBusGConnection *conn;
-  DBusGProxy      *proxy;
-  gboolean         result = FALSE;
-
-  g_return_val_if_fail (can_method != NULL, FALSE);
-
-  /* never return true if something fails */
-  *can_method = FALSE;
-
-  conn = dbus_g_bus_get (DBUS_BUS_SESSION, error);
-  if (conn == NULL)
-    return FALSE;
-
-  proxy = dbus_g_proxy_new_for_name_owner (conn,
-                                           "org.xfce.PowerManagement",
-                                           "/org/xfce/PowerManagement",
-                                           "org.xfce.PowerManagement",
-                                           error);
-  if (proxy != NULL)
-    {
-      result = dbus_g_proxy_call (proxy, method, error,
-                                  G_TYPE_INVALID,
-                                  G_TYPE_BOOLEAN, can_method,
-                                  G_TYPE_INVALID);
-      g_object_unref (proxy);
-    }
-
-  dbus_g_connection_unref (conn);
-
-  return result;
-}
-
-
-
-static gboolean
 xfsm_shutdown_kiosk_can_shutdown (XfsmShutdown  *shutdown,
                                   GError       **error)
 {
@@ -572,43 +536,6 @@ xfsm_shutdown_kiosk_can_shutdown (XfsmShutdown  *shutdown,
     }
 
   return TRUE;
-}
-
-
-
-static gboolean
-xfsm_shutdown_run_xfpm (XfsmShutdown  *shutdown,
-                        const gchar   *method,
-                        GError       **error)
-{
-  DBusGConnection *conn;
-  DBusGProxy      *proxy;
-  gboolean         result = FALSE;
-
-  if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, error))
-    return FALSE;
-
-  conn = dbus_g_bus_get (DBUS_BUS_SESSION, error);
-  if (conn == NULL)
-    return FALSE;
-
-  proxy = dbus_g_proxy_new_for_name_owner (conn,
-                                           "org.xfce.PowerManagement",
-                                           "/org/xfce/PowerManagement",
-                                           "org.xfce.PowerManagement",
-                                           error);
-
-  if (proxy != NULL)
-    {
-      result = dbus_g_proxy_call (proxy, method, error,
-                                  G_TYPE_INVALID,
-                                  G_TYPE_INVALID);
-      g_object_unref (proxy);
-    }
-
-  dbus_g_connection_unref (conn);
-
-  return result;
 }
 
 
@@ -736,7 +663,7 @@ xfsm_shutdown_try_suspend (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
-  return xfsm_shutdown_run_xfpm (shutdown, "Suspend", error);
+  return xfsm_upower_try_suspend (shutdown->upower, error);
 }
 
 
@@ -747,7 +674,7 @@ xfsm_shutdown_try_hibernate (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
-  return xfsm_shutdown_run_xfpm (shutdown, "Hibernate", error);
+  return xfsm_upower_try_hibernate (shutdown->upower, error);
 }
 
 
@@ -794,12 +721,10 @@ xfsm_shutdown_can_shutdown (XfsmShutdown  *shutdown,
 
 
 
-/* This function only queries the CanSuspend state of
- * xfce4-power-manager. If this package is not installed,
- * suspend is not supported. */
 gboolean
 xfsm_shutdown_can_suspend (XfsmShutdown  *shutdown,
                            gboolean      *can_suspend,
+                           gboolean      *auth_suspend,
                            GError       **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
@@ -810,18 +735,16 @@ xfsm_shutdown_can_suspend (XfsmShutdown  *shutdown,
       return TRUE;
     }
 
-  return xfsm_shutdown_query_xfpm (shutdown, "CanSuspend",
-                                   can_suspend, error);
+  return xfsm_upower_can_suspend (shutdown->upower, can_suspend, 
+                                  auth_suspend, error);
 }
 
 
 
-/* This function only queries the CanHibernate state of
- * xfce4-power-manager. If this package is not installed,
- * hibernation is not supported. */
 gboolean
 xfsm_shutdown_can_hibernate (XfsmShutdown  *shutdown,
                              gboolean      *can_hibernate,
+                             gboolean      *auth_hibernate,
                              GError       **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
@@ -832,8 +755,8 @@ xfsm_shutdown_can_hibernate (XfsmShutdown  *shutdown,
       return TRUE;
     }
 
-  return xfsm_shutdown_query_xfpm (shutdown, "CanHibernate",
-                                   can_hibernate, error);
+  return xfsm_upower_can_hibernate (shutdown->upower, can_hibernate,
+                                    auth_hibernate, error);
 }
 
 

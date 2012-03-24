@@ -20,8 +20,8 @@
  * MA 02110-1301 USA.
  */
 
-#ifndef __XFSM_SHUTDOWN_HELPER_H__
-#define __XFSM_SHUTDOWN_HELPER_H__
+#ifndef __XFSM_CONSOLEKIT_HELPER_H__
+#define __XFSM_CONSOLEKIT_HELPER_H__
 
 typedef struct _XfsmConsolekitClass XfsmConsolekitClass;
 typedef struct _XfsmConsolekit      XfsmConsolekit;
@@ -51,4 +51,4 @@ gboolean        xfsm_consolekit_can_shutdown (XfsmConsolekit  *consolekit,
                                               gboolean        *can_shutdown,
                                               GError         **error);
 
-#endif /* !__XFSM_SHUTDOWN_HELPER_H__ */
+#endif /* !__XFSM_CONSOLEKIT_HELPER_H__ */

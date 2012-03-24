@@ -139,56 +139,42 @@ main (int argc, char **argv)
     }
 
   /* create messsage */
-  if (opt_suspend || opt_hibernate)
+  proxy = dbus_g_proxy_new_for_name_owner (conn,
+                                           "org.xfce.SessionManager",
+                                           "/org/xfce/SessionManager",
+                                           "org.xfce.Session.Manager",
+                                           &err);
+  if (proxy != NULL)
     {
-      proxy = dbus_g_proxy_new_for_name_owner (conn,
-                                               "org.xfce.PowerManager",
-                                               "/org/xfce/PowerManager",
-                                               "org.xfce.PowerManager",
-                                               &err);
-      if (proxy != NULL)
+      if (opt_halt)
         {
-          if (opt_halt)
-            {
-              result = dbus_g_proxy_call (proxy, "Suspend", &err,
-                                          G_TYPE_INVALID, G_TYPE_INVALID);
-            }
-          else
-            {
-              result = dbus_g_proxy_call (proxy, "Hibernate", &err,
-                                          G_TYPE_INVALID, G_TYPE_INVALID);
-            }
+          result = dbus_g_proxy_call (proxy, "Shutdown", &err,
+                                      G_TYPE_BOOLEAN, allow_save,
+                                      G_TYPE_INVALID, G_TYPE_INVALID);
         }
-    }
-  else
-    {
-      proxy = dbus_g_proxy_new_for_name_owner (conn,
-                                               "org.xfce.SessionManager",
-                                               "/org/xfce/SessionManager",
-                                               "org.xfce.Session.Manager",
-                                               &err);
-      if (proxy != NULL)
+      else if (opt_reboot)
         {
-          if (opt_halt)
-            {
-              result = dbus_g_proxy_call (proxy, "Shutdown", &err,
-                                          G_TYPE_BOOLEAN, allow_save,
-                                          G_TYPE_INVALID, G_TYPE_INVALID);
-            }
-          else if (opt_reboot)
-            {
-              result = dbus_g_proxy_call (proxy, "Restart", &err,
-                                          G_TYPE_BOOLEAN, allow_save,
-                                          G_TYPE_INVALID, G_TYPE_INVALID);
-            }
-          else
-            {
-              show_dialog = !opt_logout;
-              result = dbus_g_proxy_call (proxy, "Logout", &err,
-                                          G_TYPE_BOOLEAN, show_dialog,
-                                          G_TYPE_BOOLEAN, allow_save,
-                                          G_TYPE_INVALID, G_TYPE_INVALID);
-            }
+          result = dbus_g_proxy_call (proxy, "Restart", &err,
+                                      G_TYPE_BOOLEAN, allow_save,
+                                      G_TYPE_INVALID, G_TYPE_INVALID);
+        }
+      else if (opt_suspend)
+        {
+          result = dbus_g_proxy_call (proxy, "Suspend", &err,
+                                      G_TYPE_INVALID, G_TYPE_INVALID);
+        }
+      else if (opt_hibernate)
+        {
+          result = dbus_g_proxy_call (proxy, "Hibernate", &err,
+                                      G_TYPE_INVALID, G_TYPE_INVALID);
+        }
+      else
+        {
+          show_dialog = !opt_logout;
+          result = dbus_g_proxy_call (proxy, "Logout", &err,
+                                      G_TYPE_BOOLEAN, show_dialog,
+                                      G_TYPE_BOOLEAN, allow_save,
+                                      G_TYPE_INVALID, G_TYPE_INVALID);
         }
     }
 

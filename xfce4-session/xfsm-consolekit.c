@@ -98,6 +98,7 @@ xfsm_consolekit_dbus_filter (DBusConnection *connection,
   if (dbus_message_is_signal (message, DBUS_INTERFACE_LOCAL, "Disconnected")
       && g_strcmp0 (dbus_message_get_path (message), DBUS_PATH_LOCAL) == 0)
     {
+      g_debug ("Consolekit disconnected");
       xfsm_consolekit_proxy_free (XFSM_CONSOLEKIT (data));
     }
 
@@ -120,6 +121,8 @@ xfsm_consolekit_name_owner_changed (DBusGProxy     *dbus_proxy,
 
   if (g_strcmp0 (name, CK_NAME) == 0)
     {
+      g_debug ("Consolekit owner changed");
+
       /* only reconnect the consolekit proxy */
       if (consolekit->ck_proxy != NULL)
         {

@@ -151,12 +151,14 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gboolean       can_restart;
   gboolean       can_suspend = FALSE;
   gboolean       can_hibernate = FALSE;
+  gboolean       auth_suspend = FALSE;
+  gboolean       auth_hibernate = FALSE;
   GError        *error = NULL;
   XfconfChannel *channel;
   GtkWidget     *entry;
   GtkWidget     *image;
   GtkWidget     *separator;
-  gboolean       xfpm_not_found = FALSE;
+  gboolean       upower_not_found = FALSE;
 
   dialog->type_clicked = XFSM_SHUTDOWN_LOGOUT;
   dialog->shutdown = xfsm_shutdown_get ();
@@ -296,56 +298,62 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   /**
    * Suspend
    *
-   * Hide the button if Xfpm is not installed
+   * Hide the button if UPower is not installed or system cannot suspend
    **/
   if (xfconf_channel_get_bool (channel, "/shutdown/ShowSuspend", TRUE))
     {
-      if (xfsm_shutdown_can_suspend (dialog->shutdown, &can_suspend, &error))
+      if (xfsm_shutdown_can_suspend (dialog->shutdown, &can_suspend, &auth_suspend, &error))
         {
-          button = xfsm_logout_dialog_button (_("Sus_pend"), "system-suspend",
-                                              "xfsm-suspend", XFSM_SHUTDOWN_SUSPEND,
-                                              dialog);
+          if (can_suspend)
+            {
+              button = xfsm_logout_dialog_button (_("Sus_pend"), "system-suspend",
+                                                  "xfsm-suspend", XFSM_SHUTDOWN_SUSPEND,
+                                                  dialog);
 
-          gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-          gtk_widget_set_sensitive (button, can_suspend);
-          gtk_widget_show (button);
+              gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+              gtk_widget_set_sensitive (button, auth_suspend);
+              gtk_widget_show (button);
 
-          gtk_widget_show (hbox);
+              gtk_widget_show (hbox);
+            }
         }
       else
         {
-          g_printerr ("%s: Querying CanSuspend failed. %s\n\n",
+          g_printerr ("%s: Querying suspend failed: %s\n\n",
                       PACKAGE_NAME, ERROR_MSG (error));
           g_clear_error (&error);
 
           /* don't try hibernate again */
-          xfpm_not_found = TRUE;
+          upower_not_found = TRUE;
         }
     }
 
   /**
    * Hibernate
    *
-   * Hide the button if Xfpm is not installed
+   * Hide the button if UPower is not installed or system cannot suspend
    **/
-  if (!xfpm_not_found
+  if (!upower_not_found
       && xfconf_channel_get_bool (channel, "/shutdown/ShowHibernate", TRUE))
     {
-      if (xfsm_shutdown_can_hibernate (dialog->shutdown, &can_hibernate, &error))
+      if (xfsm_shutdown_can_hibernate (dialog->shutdown, &can_hibernate, &auth_hibernate, &error))
         {
-          button = xfsm_logout_dialog_button (_("_Hibernate"), "system-hibernate",
-                                              "xfsm-hibernate", XFSM_SHUTDOWN_HIBERNATE,
-                                              dialog);
+          if (can_hibernate)
+            {
+              button = xfsm_logout_dialog_button (_("_Hibernate"), "system-hibernate",
+                                                  "xfsm-hibernate", XFSM_SHUTDOWN_HIBERNATE,
+                                                  dialog);
 
-          gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-          gtk_widget_set_sensitive (button, can_hibernate);
-          gtk_widget_show (button);
+              gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+              gtk_widget_set_sensitive (button, auth_hibernate);
+              gtk_widget_show (button);
 
-          gtk_widget_show (hbox);
+              gtk_widget_show (hbox);
+            }
         }
       else
         {
-          g_printerr ("%s: Querying CanHibernate failed. %s\n\n",
+          g_printerr ("%s: Querying hibernate failed: %s\n\n",
                       PACKAGE_NAME, ERROR_MSG (error));
           g_clear_error (&error);
         }

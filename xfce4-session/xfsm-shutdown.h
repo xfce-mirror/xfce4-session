@@ -88,10 +88,12 @@ gboolean      xfsm_shutdown_can_shutdown     (XfsmShutdown      *shutdown,
 
 gboolean      xfsm_shutdown_can_suspend      (XfsmShutdown      *shutdown,
                                               gboolean          *can_suspend,
+                                              gboolean          *auth_suspend,
                                               GError           **error);
 
 gboolean      xfsm_shutdown_can_hibernate    (XfsmShutdown      *shutdown,
                                               gboolean          *can_hibernate,
+                                              gboolean          *auth_hibernate,
                                               GError           **error);
 
 gboolean      xfsm_shutdown_can_save_session (XfsmShutdown      *shutdown);

@@ -79,7 +79,7 @@
         <method name="Checkpoint">
             <arg direction="in" name="session_name" type="s"/>
         </method>
-        
+
         <!--
              void org.Xfce.Session.Manager.Logout
         -->
@@ -114,6 +114,38 @@
         -->
         <method name="CanRestart">
             <arg direction="out" name="can_restart" type="b"/>
+        </method>
+
+        <!--
+             void org.Xfce.Session.Manager.Suspend
+
+             This will possibly be removed in the future
+        -->
+        <method name="Suspend" />
+
+        <!--
+             void org.Xfce.Session.Manager.CanSuspend
+
+             This will possibly be removed in the future
+        -->
+        <method name="CanSuspend">
+            <arg direction="out" name="can_suspend" type="b"/>
+        </method>
+
+        <!--
+             void org.Xfce.Session.Manager.Hibernate
+
+             This will possibly be removed in the future
+        -->
+        <method name="Hibernate" />
+
+        <!--
+             void org.Xfce.Session.Manager.CanHibernate
+
+             This will possibly be removed in the future
+        -->
+        <method name="CanHibernate">
+            <arg direction="out" name="can_hibernate" type="b"/>
         </method>
 
         <!--
