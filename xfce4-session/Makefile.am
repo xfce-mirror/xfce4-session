@@ -1,6 +1,7 @@
 
 INCLUDES =								\
 	-I$(top_builddir)						\
+	-I$(top_srcdir)							\
 	-DG_LOG_DOMAIN=\"xfce4-session\"				\
 	-DLIBDIR=\"$(libdir)\"						\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
@@ -74,12 +75,7 @@ xfce4_session_CFLAGS =							\
 	$(LIBWNCK_CFLAGS)						\
 	$(XFCONF_CFLAGS)						\
 	$(GMODULE_CFLAGS)						\
-	-DDBUS_API_SUBJECT_TO_CHANGE					\
-	-DWNCK_I_KNOW_THIS_IS_UNSTABLE					\
-	-DLIBDIR=\"$(libdir)\"						\
-	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
-	-DSYSCONFDIR=\"$(sysconfdir)\"					\
-	-DXFSM_SHUTDOWN_HELPER_CMD=\"$(HELPER_PATH_PREFIX)/xfce4/session/xfsm-shutdown-helper\"
+	$(PLATFORM_CFLAGS)
 
 xfce4_session_LDFLAGS =							\
 	-no-undefined							\
@@ -108,10 +104,10 @@ if MAINTAINER_MODE
 xfsm-chooser-icon.h: $(srcdir)/xfsm-chooser-icon.png
 	$(AM_V_GEN) gdk-pixbuf-csource --static --raw --stream --name=xfsm_chooser_icon_data $< > $@
 
-xfsm-marshal.h: xfsm-marshal.list Makefile
+xfsm-marshal.h: $(srcdir)/xfsm-marshal.list Makefile
 	$(AM_V_GEN) glib-genmarshal --prefix=xfsm_marshal --internal --header $< > $@
 
-xfsm-marshal.c: xfsm-marshal.list Makefile
+xfsm-marshal.c: $(srcdir)/xfsm-marshal.list Makefile
 	$(AM_V_GEN) echo "#include <xfce4-session/xfsm-marshal.h>" > $@ \
 	&& glib-genmarshal --prefix=xfsm_marshal --body $< >> $@
 
