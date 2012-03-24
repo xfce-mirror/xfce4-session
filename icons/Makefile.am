@@ -2,7 +2,6 @@
 
 SUBDIRS =								\
 	48x48								\
-	64x64								\
 	72x72								\
 	128x128								\
 	scalable

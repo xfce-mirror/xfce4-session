@@ -648,55 +648,34 @@
                         <property name="bottom_padding">6</property>
                         <property name="left_padding">12</property>
                         <child>
-                          <object class="GtkHBox" id="hbox1">
+                          <object class="GtkVBox" id="vbox4">
                             <property name="visible">True</property>
-                            <property name="spacing">12</property>
+                            <property name="orientation">vertical</property>
+                            <property name="spacing">6</property>
                             <child>
-                              <object class="GtkVBox" id="vbox4">
+                              <object class="GtkCheckButton" id="chk_compat_gnome">
+                                <property name="label" translatable="yes">Launch GN_OME services on startup</property>
                                 <property name="visible">True</property>
-                                <property name="orientation">vertical</property>
-                                <property name="spacing">6</property>
-                                <child>
-                                  <object class="GtkCheckButton" id="chk_compat_gnome">
-                                    <property name="label" translatable="yes">Launch GN_OME services on startup</property>
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">False</property>
-                                    <property name="tooltip_text" translatable="yes">Start GNOME services, such as gnome-keyring and the GNOME accessibility framework</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_indicator">True</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="position">0</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkCheckButton" id="chk_compat_kde">
-                                    <property name="label" translatable="yes">Launch _KDE services on startup</property>
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">False</property>
-                                    <property name="tooltip_text" translatable="yes">Start KDE services, such as "kdeinit," DCOP, and ARTS</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_indicator">True</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="position">1</property>
-                                  </packing>
-                                </child>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="tooltip_text" translatable="yes">Start GNOME services, such as gnome-keyring and the GNOME accessibility framework</property>
+                                <property name="use_underline">True</property>
+                                <property name="draw_indicator">True</property>
                               </object>
                               <packing>
+                                <property name="expand">False</property>
                                 <property name="position">0</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkImage" id="image1">
+                              <object class="GtkCheckButton" id="chk_compat_kde">
+                                <property name="label" translatable="yes">Launch _KDE services on startup</property>
                                 <property name="visible">True</property>
-                                <property name="yalign">0</property>
-                                <property name="pixel_size">64</property>
-                                <property name="icon_name">xfsm-gnome-kde-logo</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="tooltip_text" translatable="yes">Start KDE services, such as "kdeinit," DCOP, and ARTS</property>
+                                <property name="use_underline">True</property>
+                                <property name="draw_indicator">True</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
