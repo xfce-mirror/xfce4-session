@@ -113,7 +113,7 @@ xfae_window_init (XfaeWindow *window)
                        "vadjustment", NULL,
                        "shadow-type", GTK_SHADOW_IN,
                        "vscrollbar-policy", GTK_POLICY_AUTOMATIC,
-                       "hscrollbar-policy", GTK_POLICY_NEVER,
+                       "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
                        NULL);
   gtk_box_pack_start (GTK_BOX (vbox), swin, TRUE, TRUE, 0);
   gtk_widget_show (swin);
@@ -130,6 +130,7 @@ xfae_window_init (XfaeWindow *window)
 
   model = xfae_model_new ();
   gtk_tree_view_set_model (GTK_TREE_VIEW (window->treeview), model);
+  gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (window->treeview), XFAE_MODEL_COLUMN_TOOLTIP);
   g_object_unref (G_OBJECT (model));
 
   window->selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->treeview));
@@ -160,7 +161,7 @@ xfae_window_init (XfaeWindow *window)
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_column_pack_start (column, renderer, TRUE);
   gtk_tree_view_column_set_attributes (column, renderer,
-                                       "text", XFAE_MODEL_COLUMN_NAME,
+                                       "markup", XFAE_MODEL_COLUMN_NAME,
                                        NULL);
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
@@ -444,64 +445,3 @@ xfae_window_new (void)
 {
   return g_object_new (XFAE_TYPE_WINDOW, NULL);
 }
-
-
-
-
-#if 0
-/**
- * xfae_window_create_plug_child:
- *
- * Creates a widget that can be used to embed the window contents
- * into a GtkPlug widget. After this function call, the XfaeWindow can
- * no longer be used and has to be re-created.
- *
- * Return value: A widget holding the most important contents of the
- *               window.
- **/
-GtkWidget*
-xfae_window_create_plug_child (XfaeWindow *window)
-{
-  GtkWidget *vbox;
-  GtkWidget *bbox;
-  GtkWidget *button;
-
-  g_return_val_if_fail (XFAE_IS_WINDOW (window), NULL);
-
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_widget_show (vbox);
-
-  gtk_widget_reparent (window->ibox, vbox);
-  gtk_widget_show (window->ibox);
-
-  bbox = gtk_hbutton_box_new ();
-  gtk_box_set_spacing (GTK_BOX (bbox), 12);
-  gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_CENTER);
-  gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, TRUE, 0);
-  gtk_widget_show (bbox);
-
-  button = gtk_button_new_from_stock (GTK_STOCK_ADD);
-  g_signal_connect_swapped (G_OBJECT (button), "clicked",
-                            G_CALLBACK (xfae_window_add), window);
-  gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_from_stock (GTK_STOCK_REMOVE);
-  g_signal_connect_swapped (G_OBJECT (button), "clicked",
-                            G_CALLBACK (xfae_window_remove), window);
-  gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_from_stock (GTK_STOCK_EDIT);
-  g_signal_connect_swapped (G_OBJECT (button), "clicked",
-                            G_CALLBACK (xfae_window_edit), window);
-  gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (G_OBJECT (window->selection), "changed",
-                    G_CALLBACK (xfae_window_selection_changed), button);
-  xfae_window_selection_changed (window->selection, button);
-  return vbox;
-}
-#endif

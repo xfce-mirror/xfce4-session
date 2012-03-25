@@ -40,9 +40,6 @@ typedef struct _XfaeWindow      XfaeWindow;
 GType      xfae_window_get_type          (void) G_GNUC_CONST;
 
 GtkWidget *xfae_window_new               (void) G_GNUC_MALLOC;
-#if 0
-GtkWidget *xfae_window_create_plug_child (XfaeWindow *window);
-#endif
 
 G_END_DECLS;
 

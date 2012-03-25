@@ -69,7 +69,8 @@ static gboolean           xfae_model_iter_nth_child   (GtkTreeModel       *tree_
 static gboolean           xfae_model_iter_parent      (GtkTreeModel       *tree_model,
                                                        GtkTreeIter        *iter,
                                                        GtkTreeIter        *child);
-
+static gint               xfae_model_sort_items       (gconstpointer       a,
+                                                       gconstpointer       b);
 static XfaeItem          *xfae_item_new               (const gchar        *relpath);
 static void               xfae_item_free              (XfaeItem           *item);
 static gboolean           xfae_item_is_removable      (XfaeItem           *item);
@@ -96,6 +97,10 @@ struct _XfaeItem
   gchar     *comment;
   gchar     *relpath;
   gboolean   hidden;
+  gchar     *tooltip;
+
+  gboolean   show_in_xfce;
+  gboolean   show_in_override;
 };
 
 
@@ -133,9 +138,11 @@ xfae_model_init (XfaeModel *model)
     {
       item = xfae_item_new (files[n]);
       if (G_LIKELY (item != NULL))
-        model->items = g_list_append (model->items, item);
+        model->items = g_list_prepend (model->items, item);
     }
   g_strfreev (files);
+
+  model->items = g_list_sort (model->items, xfae_model_sort_items);
 }
 
 
@@ -196,14 +203,13 @@ xfae_model_get_column_type (GtkTreeModel *tree_model,
   switch (index_)
     {
     case XFAE_MODEL_COLUMN_NAME:
+    case XFAE_MODEL_COLUMN_TOOLTIP:
       return G_TYPE_STRING;
 
     case XFAE_MODEL_COLUMN_ICON:
       return GDK_TYPE_PIXBUF;
 
     case XFAE_MODEL_COLUMN_ENABLED:
-      return G_TYPE_BOOLEAN;
-
     case XFAE_MODEL_COLUMN_REMOVABLE:
       return G_TYPE_BOOLEAN;
     }
@@ -265,6 +271,7 @@ xfae_model_get_value (GtkTreeModel *tree_model,
   XfaeModel *model = XFAE_MODEL (tree_model);
   XfaeItem  *item = ((GList *) iter->user_data)->data;
   gchar     *name;
+  gchar     *cursive;
 
   g_return_if_fail (XFAE_IS_MODEL (model));
   g_return_if_fail (iter->stamp == model->stamp);
@@ -277,6 +284,14 @@ xfae_model_get_value (GtkTreeModel *tree_model,
         name = g_strdup_printf ("%s (%s)", item->name, item->comment);
       else
         name = g_strdup (item->name);
+
+      if (!item->show_in_xfce)
+        {
+          cursive = g_markup_printf_escaped ("<i>%s</i>", name);
+          g_free (name);
+          name = cursive;
+        }
+
       g_value_take_string (value, name);
       break;
 
@@ -287,12 +302,21 @@ xfae_model_get_value (GtkTreeModel *tree_model,
 
     case XFAE_MODEL_COLUMN_ENABLED:
       g_value_init (value, G_TYPE_BOOLEAN);
-      g_value_set_boolean (value, !item->hidden);
+
+      if (item->show_in_xfce)
+        g_value_set_boolean (value, !item->hidden);
+      else
+        g_value_set_boolean (value, !item->hidden && item->show_in_override);
       break;
 
     case XFAE_MODEL_COLUMN_REMOVABLE:
       g_value_init (value, G_TYPE_BOOLEAN);
       g_value_set_boolean (value, xfae_item_is_removable (item));
+      break;
+
+    case XFAE_MODEL_COLUMN_TOOLTIP:
+      g_value_init (value, G_TYPE_STRING);
+      g_value_set_static_string (value, item->tooltip);
       break;
 
     default:
@@ -393,6 +417,21 @@ xfae_model_iter_parent (GtkTreeModel *tree_model,
 
 
 
+static gint
+xfae_model_sort_items (gconstpointer a,
+                       gconstpointer b)
+{
+  const XfaeItem *item_a = a;
+  const XfaeItem *item_b = b;
+
+  /* sort non-xfce items below */
+  if (item_a->show_in_xfce != item_b->show_in_xfce)
+    return item_a->show_in_xfce ? -1 : 1;
+
+  return g_utf8_collate (item_a->name, item_b->name);
+}
+
+
 
 static XfaeItem*
 xfae_item_new (const gchar *relpath)
@@ -404,7 +443,6 @@ xfae_item_new (const gchar *relpath)
   gchar        **only_show_in;
   gchar        **not_show_in;
   gchar        **args;
-  gchar         *icon_name;
   gint           m;
   GtkIconTheme  *icon_theme;
   gchar         *command;
@@ -428,45 +466,51 @@ xfae_item_new (const gchar *relpath)
           if (G_LIKELY (value != NULL))
             item->name = g_strdup (value);
 
-          value = xfce_rc_read_entry (rc, "Icon", NULL);
+          value = xfce_rc_read_entry (rc, "Icon", "application-x-executable");
           if (G_UNLIKELY (value != NULL))
             item->icon = gtk_icon_theme_load_icon (icon_theme, value, 16, GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
-          else
-            {
-              /* we try to be smart here in that we try to guess
-               * the icon name from the "Exec" key if no "Icon"
-               * key is provided.
-               */
-              value = xfce_rc_read_entry (rc, "Exec", NULL);
-              if (G_LIKELY (value != NULL))
-                {
-                  args = g_strsplit_set (value, " \t", -1);
-                  if (G_LIKELY (*args != NULL))
-                    {
-                      icon_name = g_path_get_basename (*args);
-                      item->icon = gtk_icon_theme_load_icon (icon_theme, icon_name, 16, GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
-                      g_free (icon_name);
-                    }
-                  g_strfreev (args);
-                }
-            }
 
           value = xfce_rc_read_entry (rc, "Comment", NULL);
           if (G_LIKELY (value != NULL))
             item->comment = g_strdup (value);
 
+          value = xfce_rc_read_entry (rc, "Exec", NULL);
+          if (G_LIKELY (value != NULL))
+            item->tooltip = g_markup_printf_escaped ("<b>%s</b> %s", _("Command:"), value);
+
           item->hidden = xfce_rc_read_bool_entry (rc, "Hidden", FALSE);
+        }
+      else
+        {
+          return NULL;
+        }
+
+      item->show_in_override = xfce_rc_read_bool_entry (rc, "X-XFCE-Autostart-Override", FALSE);
+
+      /* check the NotShowIn setting */
+      not_show_in = xfce_rc_read_list_entry (rc, "NotShowIn", ";");
+      if (G_UNLIKELY (not_show_in != NULL))
+        {
+          /* check if "XFCE" is specified */
+          for (m = 0; not_show_in[m] != NULL; ++m)
+            if (g_ascii_strcasecmp (not_show_in[m], "XFCE") == 0)
+              {
+                skip = TRUE;
+                break;
+              }
+
+          g_strfreev (not_show_in);
         }
 
       /* check the OnlyShowIn setting */
       only_show_in = xfce_rc_read_list_entry (rc, "OnlyShowIn", ";");
       if (G_UNLIKELY (only_show_in != NULL))
         {
-          /* check if "Xfce" is specified */
-          for (m = 0, skip = TRUE; only_show_in[m] != NULL; ++m)
-            if (g_ascii_strcasecmp (only_show_in[m], "Xfce") == 0)
+          /* check if "XFCE" is specified */
+          for (m = 0; only_show_in[m] != NULL; ++m)
+            if (g_ascii_strcasecmp (only_show_in[m], "XFCE") == 0)
               {
-                skip = FALSE;
+                item->show_in_xfce = TRUE;
                 break;
               }
 
@@ -474,20 +518,8 @@ xfae_item_new (const gchar *relpath)
         }
       else
         {
-          /* check the NotShowIn setting */
-          not_show_in = xfce_rc_read_list_entry (rc, "NotShowIn", ";");
-          if (G_UNLIKELY (not_show_in != NULL))
-            {
-              /* check if "Xfce" is not specified */
-              for (m = 0; not_show_in[m] != NULL; ++m)
-                if (g_ascii_strcasecmp (not_show_in[m], "Xfce") == 0)
-                  {
-                    skip = TRUE;
-                    break;
-                  }
-
-              g_strfreev (not_show_in);
-            }
+          /* no OnlyShowIn, treat it like a normal application */
+          item->show_in_xfce = TRUE;
         }
 
       value = xfce_rc_read_entry (rc, "TryExec", NULL);
@@ -531,6 +563,7 @@ xfae_item_free (XfaeItem *item)
   g_free (item->relpath);
   g_free (item->comment);
   g_free (item->name);
+  g_free (item->tooltip);
   g_free (item);
 }
 
@@ -676,6 +709,7 @@ xfae_model_add (XfaeModel   *model,
   xfce_rc_write_entry (rc, "Name", name);
   xfce_rc_write_entry (rc, "Comment", description);
   xfce_rc_write_entry (rc, "Exec", command);
+  xfce_rc_write_entry (rc, "OnlyShowIn", "XFCE;");
   xfce_rc_write_bool_entry (rc, "StartupNotify", FALSE);
   xfce_rc_write_bool_entry (rc, "Terminal", FALSE);
   xfce_rc_write_bool_entry (rc, "Hidden", FALSE);
@@ -915,12 +949,32 @@ xfae_model_toggle (XfaeModel   *model,
       return FALSE;
     }
 
-  /* perform the toggle operation :-) */
-  item->hidden = !item->hidden;
-
-  /* write the result */
   xfce_rc_set_group (rc, "Desktop Entry");
-  xfce_rc_write_bool_entry (rc, "Hidden", item->hidden);
+
+  if (item->show_in_xfce)
+    {
+      /* This is an application with no OnlyShowIn categories or with
+       * XFCE in it. In this case, toggle the Hidden flag */
+
+      item->hidden = !item->hidden;
+      xfce_rc_write_bool_entry (rc, "Hidden", item->hidden);
+    }
+  else
+    {
+      /* Normally a non-Xfce autostart application, toggle the override
+       * boolean so we don't hide the service in other desktops */
+
+      item->show_in_override = !item->show_in_override;
+      xfce_rc_write_bool_entry (rc, "X-XFCE-Autostart-Override", item->show_in_override);
+
+      /* if we override, but the item is still hidden, toggle that as well then */
+      if (item->hidden && item->show_in_override)
+        {
+          item->hidden = !item->hidden;
+          xfce_rc_write_bool_entry (rc, "Hidden", item->hidden);
+        }
+    }
+
   xfce_rc_close (rc);
 
   /* tell the view that we have most probably a new state */

@@ -311,8 +311,6 @@ xfsm_startup_autostart_xdg (XfsmManager *manager,
   const gchar *exec;
   gboolean     startup_notify;
   gboolean     terminal;
-  gboolean     gnome;
-  gboolean     kde;
   gboolean     skip;
   GError      *error = NULL;
   XfceRc      *rc;
@@ -326,10 +324,6 @@ xfsm_startup_autostart_xdg (XfsmManager *manager,
 
   /* migrate the old autostart location (if still present) */
   xfsm_startup_autostart_migrate ();
-
-  /* Get if we should start KDE and GNOME applications */
-  kde = xfsm_manager_get_compat_startup (manager, XFSM_MANAGER_COMPAT_KDE);
-  gnome = xfsm_manager_get_compat_startup (manager, XFSM_MANAGER_COMPAT_GNOME);
 
   /* pattern for only at-spi desktop files or everything */
   if (start_at_spi)
@@ -350,44 +344,44 @@ xfsm_startup_autostart_xdg (XfsmManager *manager,
       skip = xfce_rc_read_bool_entry (rc, "Hidden", FALSE);
       if (G_LIKELY (!skip))
         {
-          /* check the OnlyShowIn setting */
-          only_show_in = xfce_rc_read_list_entry (rc, "OnlyShowIn", ";");
-          if (G_UNLIKELY (only_show_in != NULL))
+          if (xfce_rc_read_bool_entry (rc, "X-XFCE-Autostart-Override", FALSE))
             {
-              /* check if "XFCE" is specified */
-              /* If we start the GNOME components, also start the applications when
-               * then "GNOME" is specified. */
-              /* If we start the KDE components, also start the applications when
-               * then "KDE" is specified. */
-              for (m = 0, skip = TRUE; only_show_in[m] != NULL; ++m)
-                {
-                  if ((g_ascii_strcasecmp (only_show_in[m], "XFCE") == 0) ||
-                      (gnome && g_ascii_strcasecmp (only_show_in[m], "GNOME") == 0) ||
-                      (kde && g_ascii_strcasecmp (only_show_in[m], "KDE") == 0))
-                    {
-                      skip = FALSE;
-                      break;
-                    }
-                }
-
-              g_strfreev (only_show_in);
+              /* override the OnlyShowIn check */
+              skip = FALSE;
             }
           else
             {
-              /* check the NotShowIn setting */
-              not_show_in = xfce_rc_read_list_entry (rc, "NotShowIn", ";");
-              if (G_UNLIKELY (not_show_in != NULL))
+              /* check the OnlyShowIn setting */
+              only_show_in = xfce_rc_read_list_entry (rc, "OnlyShowIn", ";");
+              if (G_UNLIKELY (only_show_in != NULL))
                 {
-                  /* check if "Xfce" is not specified */
-                  for (m = 0; not_show_in[m] != NULL; ++m)
-                    if (g_ascii_strcasecmp (not_show_in[m], "Xfce") == 0)
-                      {
-                        skip = TRUE;
-                        break;
-                      }
+                  /* check if "XFCE" is specified */
+                  for (m = 0, skip = TRUE; only_show_in[m] != NULL; ++m)
+                    {
+                      if (g_ascii_strcasecmp (only_show_in[m], "XFCE") == 0)
+                        {
+                          skip = FALSE;
+                          break;
+                        }
+                    }
 
-                  g_strfreev (not_show_in);
+                  g_strfreev (only_show_in);
                 }
+            }
+
+          /* check the NotShowIn setting */
+          not_show_in = xfce_rc_read_list_entry (rc, "NotShowIn", ";");
+          if (G_UNLIKELY (not_show_in != NULL))
+            {
+              /* check if "Xfce" is not specified */
+              for (m = 0; not_show_in[m] != NULL; ++m)
+                if (g_ascii_strcasecmp (not_show_in[m], "XFCE") == 0)
+                  {
+                    skip = TRUE;
+                    break;
+                  }
+
+              g_strfreev (not_show_in);
             }
 
           /* skip at-spi launchers if not in at-spi mode or don't skip

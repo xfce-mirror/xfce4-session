@@ -5,8 +5,7 @@ xfce4_session_settings_SOURCES = \
 	module.c \
 	module.h \
 	session-editor.c \
-	splash-settings.c  \
-	startup-settings.c \
+	splash-settings.c \
 	xfae-dialog.c \
 	xfae-dialog.h \
 	xfae-model.c \

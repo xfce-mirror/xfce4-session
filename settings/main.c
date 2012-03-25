@@ -63,6 +63,7 @@ main(int argc,
     GtkBuilder *builder;
     GtkWidget *notebook, *xfae_page, *lbl;
     GError *error = NULL;
+    XfconfChannel *channel;
 
     xfce_textdomain(GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
 
@@ -117,7 +118,6 @@ main(int argc,
         return EXIT_FAILURE;
     }
 
-    startup_settings_init(builder);
     splash_settings_init(builder);
     session_editor_init(builder);
 
@@ -128,6 +128,31 @@ main(int argc,
     lbl = gtk_label_new_with_mnemonic(_("_Application Autostart"));
     gtk_widget_show(lbl);
     gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), xfae_page, lbl, 2);
+
+    channel = xfconf_channel_get(SETTINGS_CHANNEL);
+
+    /* bind widgets to xfconf */
+    xfconf_g_property_bind(channel, "/chooser/AlwaysDisplay", G_TYPE_BOOLEAN,
+                           gtk_builder_get_object(builder, "chk_display_chooser"),
+                           "active");
+    xfconf_g_property_bind(channel, "/general/AutoSave", G_TYPE_BOOLEAN,
+                           gtk_builder_get_object(builder, "chk_session_autosave"),
+                           "active");
+    xfconf_g_property_bind(channel, "/general/PromptOnLogout", G_TYPE_BOOLEAN,
+                           gtk_builder_get_object(builder, "chk_logout_prompt"),
+                           "active");
+    xfconf_g_property_bind(channel, "/compat/LaunchGNOME", G_TYPE_BOOLEAN,
+                           gtk_builder_get_object(builder, "chk_compat_gnome"),
+                           "active");
+    xfconf_g_property_bind(channel, "/compat/LaunchKDE", G_TYPE_BOOLEAN,
+                           gtk_builder_get_object(builder, "chk_compat_kde"),
+                           "active");
+    xfconf_g_property_bind(channel, "/security/EnableTcp", G_TYPE_BOOLEAN,
+                           gtk_builder_get_object(builder, "chk_enable_tcp"),
+                           "active");
+    xfconf_g_property_bind(channel, "/shutdown/LockScreen", G_TYPE_BOOLEAN,
+                           gtk_builder_get_object(builder, "chk_lock_screen"),
+                           "active");
 
     if(G_UNLIKELY(opt_socket_id == 0)) {
         GtkWidget *dialog = GTK_WIDGET(gtk_builder_get_object(builder, "xfce4_session_settings_dialog"));

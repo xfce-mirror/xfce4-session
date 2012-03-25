@@ -21,7 +21,6 @@
 
 #define  SETTINGS_CHANNEL  "xfce4-session"
 
-void startup_settings_init(GtkBuilder *builder);
 void splash_settings_init(GtkBuilder *builder);
 void session_editor_init(GtkBuilder *builder);
 
