@@ -281,22 +281,51 @@ xfsm_upower_try_method (XfsmUPower   *upower,
 
 
 
-static void
-xfsm_upower_lock_screen (void)
+static gboolean
+xfsm_upower_lock_screen (XfsmUPower   *upower,
+                         const gchar  *sleep_kind,
+                         GError      **error)
 {
   XfconfChannel *channel;
-  GError *err = NULL;
+  gboolean       ret = TRUE;
+  GError        *err = NULL;
+
+  g_return_val_if_fail (sleep_kind != NULL, FALSE);
 
   channel = xfsm_open_config ();
   if (xfconf_channel_get_bool (channel, "/shutdown/LockScreen", FALSE))
     {
-      if (!g_spawn_command_line_async ("xflock4", &err))
+      if (xfsm_upower_proxy_ensure (upower, error))
         {
-          xfce_dialog_show_error (NULL, err, _("Failed to lock the screen"));
+          /* tell upower we're going to sleep, this saves some
+           * time while we sleep 1 second if xflock4 is spawned */
+          ret = dbus_g_proxy_call (upower->upower_proxy,
+                                   "AboutToSleep", &err,
+                                   G_TYPE_STRING, sleep_kind,
+                                   G_TYPE_INVALID, G_TYPE_INVALID);
+
+          /*  we don't abort on this, since it is not so critical */
+          if (!ret)
+            {
+              g_warning ("Couldn't sent that we were about to sleep: %s", err->message);
+              g_error_free (err);
+            }
+        }
+      else
+        {
+          /* proxy failed */
+          return FALSE;
         }
 
-      g_usleep (G_USEC_PER_SEC);
+      ret = g_spawn_command_line_async ("xflock4", error);
+      if (ret)
+        {
+          /* sleep 1 second so locking has time to startup */
+          g_usleep (G_USEC_PER_SEC);
+        }
     }
+
+  return ret;
 }
 
 
@@ -327,7 +356,8 @@ xfsm_upower_try_suspend (XfsmUPower  *upower,
 {
   g_return_val_if_fail (XFSM_IS_UPOWER (upower), FALSE);
 
-  xfsm_upower_lock_screen ();
+  if (!xfsm_upower_lock_screen (upower, "suspend", error))
+    return FALSE;
 
   return xfsm_upower_try_method (upower, "Suspend", error);
 }
@@ -340,7 +370,8 @@ xfsm_upower_try_hibernate (XfsmUPower  *upower,
 {
   g_return_val_if_fail (XFSM_IS_UPOWER (upower), FALSE);
 
-  xfsm_upower_lock_screen ();
+  if (!xfsm_upower_lock_screen (upower, "hibernate", error))
+    return FALSE;
 
   return xfsm_upower_try_method (upower, "Hibernate", error);
 }
