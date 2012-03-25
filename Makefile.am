@@ -38,11 +38,7 @@ AUTOMAKE_OPTIONS =							\
 	dist-bzip2
 
 distclean-local:
-	rm -rf xfce4-session.spec *.cache *~
-
-rpm: dist
-	rpmbuild -ta $(PACKAGE)-$(VERSION).tar.gz
-	@rm -f $(PACKAGE)-$(VERSION).tar.gz
+	rm -rf *.cache *~
 
 .PHONY: ChangeLog
 
