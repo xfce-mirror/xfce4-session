@@ -94,6 +94,7 @@ xfae_window_init (XfaeWindow *window)
 
   img = gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_DIALOG);
   gtk_box_pack_start (GTK_BOX (hbox), img, FALSE, FALSE, 0);
+  gtk_misc_set_alignment (GTK_MISC (img), 0.50, 0.00);
   gtk_widget_show (img);
 
   label = g_object_new (GTK_TYPE_LABEL,
@@ -101,7 +102,9 @@ xfae_window_init (XfaeWindow *window)
                         "label", _("Below is the list of applications that will be started "
                                    "automatically when you login to your Xfce desktop, "
                                    "in addition to the applications that were saved when "
-                                   "you logged out last time:"),
+                                   "you logged out last time. Cursive applications belong "
+                                   "to another desktop environment, but you can still enable "
+                                   "them if you want."),
                         "xalign", 0.0f,
                         NULL);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
