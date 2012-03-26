@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-25 08:39+0000\n"
+"POT-Creation-Date: 2012-03-26 19:27+0000\n"
 "PO-Revision-Date: 2011-09-08 19:34+0200\n"
 "Last-Translator: Pjotr\n"
 "Language-Team: Dutch (Flemish)\n"
@@ -161,27 +161,27 @@ msgstr "SOCKET ID"
 msgid "Version information"
 msgstr "Versie-informatie"
 
-#: ../settings/main.c:74 ../xfce4-session/main.c:257
+#: ../settings/main.c:75 ../xfce4-session/main.c:257
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Tik '%s --help' voor gebruiksinformatie."
 
-#: ../settings/main.c:86 ../xfce4-session/main.c:267
+#: ../settings/main.c:87 ../xfce4-session/main.c:267
 #: ../xfce4-session-logout/main.c:124
 msgid "The Xfce development team. All rights reserved."
 msgstr "De Xfce-ontwikkelploeg. Alle rechten voorbehouden."
 
-#: ../settings/main.c:87 ../xfce4-session/main.c:268
+#: ../settings/main.c:88 ../xfce4-session/main.c:268
 #: ../xfce4-session-logout/main.c:127
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Gelieve fouten te melden aan <%s>."
 
-#: ../settings/main.c:96 ../xfce4-session/main.c:276
+#: ../settings/main.c:97 ../xfce4-session/main.c:276
 msgid "Unable to contact settings server"
 msgstr "Kon geen contact maken met de instellingenserver"
 
-#: ../settings/main.c:115
+#: ../settings/main.c:116
 msgid "Unable to create user interface from embedded definition data"
 msgstr "Kon geen gebruikersomgeving maken van de ingebedde definitiegegevens"
 
@@ -305,7 +305,7 @@ msgstr "Naam:"
 msgid "Description:"
 msgstr "Beschrijving:"
 
-#: ../settings/xfae-dialog.c:124
+#: ../settings/xfae-dialog.c:124 ../settings/xfae-model.c:479
 msgid "Command:"
 msgstr "Opdracht:"
 
@@ -317,51 +317,52 @@ msgstr "Kies een opdracht"
 msgid "Edit application"
 msgstr "Toepassing bewerken"
 
-#: ../settings/xfae-model.c:578
+#: ../settings/xfae-model.c:611
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "Kon %s niet ontkoppelen: %s"
 
-#: ../settings/xfae-model.c:667
+#: ../settings/xfae-model.c:700
 #, c-format
 msgid "Failed to create file %s"
 msgstr "Kon bestand %s niet maken"
 
-#: ../settings/xfae-model.c:689
+#: ../settings/xfae-model.c:723
 #, c-format
 msgid "Failed to write file %s"
 msgstr "Schrijven naar bestand %s is mislukt"
 
-#: ../settings/xfae-model.c:748
+#: ../settings/xfae-model.c:782
 #, c-format
 msgid "Failed to open %s for reading"
 msgstr "Kon %s niet openen om te lezen"
 
-#: ../settings/xfae-model.c:857 ../settings/xfae-model.c:914
+#: ../settings/xfae-model.c:891 ../settings/xfae-model.c:948
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "Kon %s niet openen om te schrijven"
 
-#: ../settings/xfae-window.c:101
+#: ../settings/xfae-window.c:102
 msgid ""
 "Below is the list of applications that will be started automatically when "
 "you login to your Xfce desktop, in addition to the applications that were "
-"saved when you logged out last time:"
+"saved when you logged out last time. Cursive applications belong to another "
+"desktop environment, but you can still enable them if you want."
 msgstr ""
 "Hieronder staat de lijst met toepassingen die automatisch worden opgestart "
 "wanneer u zich aanmeldt in uw Xfce-werkomgeving, naast de toepassingen die "
 "werden opgeslagen toen u zich de laatste keer afmeldde:"
 
-#: ../settings/xfae-window.c:289
+#: ../settings/xfae-window.c:293
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Kon \"%s\" niet toevoegen"
 
-#: ../settings/xfae-window.c:320 ../settings/xfae-window.c:334
+#: ../settings/xfae-window.c:324 ../settings/xfae-window.c:338
 msgid "Failed to remove item"
 msgstr "Kon element %s niet verwijderen"
 
-#: ../settings/xfae-window.c:326
+#: ../settings/xfae-window.c:330
 msgid ""
 "This will permanently remove the application from the list of automatically "
 "started applications"
@@ -369,21 +370,21 @@ msgstr ""
 "Dit zal de toepassing blijvend verwijderen uit de lijst van automatisch "
 "gestarte toepassingen"
 
-#: ../settings/xfae-window.c:328
+#: ../settings/xfae-window.c:332
 #, c-format
 msgid "Are you sure you want to remove \"%s\""
 msgstr "Weet u zeker dat u \"%s\" wil verwijderen?"
 
-#: ../settings/xfae-window.c:362
+#: ../settings/xfae-window.c:366
 msgid "Failed to edit item"
 msgstr "Kon element niet bewerken"
 
-#: ../settings/xfae-window.c:382
+#: ../settings/xfae-window.c:386
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Kon element \"%s\" niet bewerken"
 
-#: ../settings/xfae-window.c:410
+#: ../settings/xfae-window.c:414
 msgid "Failed to toggle item"
 msgstr "Kon element niet schakelen"
 
@@ -710,11 +711,11 @@ msgstr ""
 "nieuwe locatie.\n"
 "U zou deze oude autostart-map nu moeten verwijderen.\n"
 
-#: ../xfce4-session/xfsm-startup.c:458
+#: ../xfce4-session/xfsm-startup.c:452
 msgid "Performing Autostart..."
 msgstr "Bezig met uitvoeren autostart..."
 
-#: ../xfce4-session/xfsm-startup.c:564
+#: ../xfce4-session/xfsm-startup.c:558
 msgid "Starting Assistive Technologies"
 msgstr "Bezig met het opstarten van ondersteunende technieken"
 
@@ -741,10 +742,6 @@ msgstr "Afsluiten wordt verhinderd door de kioskinstellingen"
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Onbekende afsluitmethode %d"
-
-#: ../xfce4-session/xfsm-upower.c:295
-msgid "Failed to lock the screen"
-msgstr "Kon het scherm niet vergrendelen"
 
 #: ../xfce4-session-logout/main.c:57
 msgid "Log out without displaying the logout dialog"
@@ -909,7 +906,9 @@ msgstr "Sluit het programma en verwijder het uit de sessie"
 
 #: ../settings/xfce4-session-settings.glade.h:26
 msgid "Run xflock4 before suspending or hibernating the system"
-msgstr "xflock4 draaien voordat het systeem in pauzestand of in slaapstand wordt gebracht"
+msgstr ""
+"xflock4 draaien voordat het systeem in pauzestand of in slaapstand wordt "
+"gebracht"
 
 #: ../settings/xfce4-session-settings.glade.h:27
 msgid "S_plash"
@@ -924,15 +923,13 @@ msgid "Saving Session"
 msgstr "Bezig met opslaan sessie"
 
 #: ../settings/xfce4-session-settings.glade.h:31
-msgid ""
-"Start GNOME services, such as gnome-keyring and the GNOME accessibility "
-"framework"
+msgid "Start GNOME services, such as gnome-keyring"
 msgstr ""
 "Start GNOME-diensten, zoals sleutelbos en de toegankelijkheidsstructuur"
 
 #: ../settings/xfce4-session-settings.glade.h:32
-msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
-msgstr "Start KDE-diensten, zoals \"kdeinit,\" DCOP, and ARTS"
+msgid "Start KDE services, such as kdeinit"
+msgstr "Start KDE-diensten, zoals kdeinit"
 
 #: ../settings/xfce4-session-settings.glade.h:33
 msgid ""
@@ -983,6 +980,9 @@ msgstr "_Proef"
 #: ../settings/xfce4-session-settings.glade.h:43
 msgid "label"
 msgstr "etiket"
+
+#~ msgid "Failed to lock the screen"
+#~ msgstr "Kon het scherm niet vergrendelen"
 
 #~ msgid "Session"
 #~ msgstr "Sessie"
