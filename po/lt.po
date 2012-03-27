@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-26 02:03+0000\n"
+"POT-Creation-Date: 2012-03-27 01:15+0000\n"
 "PO-Revision-Date: 2012-01-28 14:48+0200\n"
 "Last-Translator: Algimantas Margevičius <margevicius.algimantas@gmail.com>\n"
 "Language-Team: Lietuvių <>\n"
@@ -161,27 +161,27 @@ msgstr "LIZDO ID"
 msgid "Version information"
 msgstr "Versija"
 
-#: ../settings/main.c:74 ../xfce4-session/main.c:257
+#: ../settings/main.c:75 ../xfce4-session/main.c:257
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Bandykite „%s --help“ dėl naudojimo."
 
-#: ../settings/main.c:86 ../xfce4-session/main.c:267
+#: ../settings/main.c:87 ../xfce4-session/main.c:267
 #: ../xfce4-session-logout/main.c:124
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce kūrėjų komanda. Visos teisės saugomos."
 
-#: ../settings/main.c:87 ../xfce4-session/main.c:268
+#: ../settings/main.c:88 ../xfce4-session/main.c:268
 #: ../xfce4-session-logout/main.c:127
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Apie klaidas praneškite <%s>."
 
-#: ../settings/main.c:96 ../xfce4-session/main.c:276
+#: ../settings/main.c:97 ../xfce4-session/main.c:276
 msgid "Unable to contact settings server"
 msgstr "Nepavyko susisiekti su nustatymų serveriu"
 
-#: ../settings/main.c:115
+#: ../settings/main.c:116
 msgid "Unable to create user interface from embedded definition data"
 msgstr "Iš įmontuotų aprašymo duomenų nepavyko sukurti naudotojo sąsajos"
 
@@ -303,7 +303,7 @@ msgstr "Pavadinimas:"
 msgid "Description:"
 msgstr "Aprašymas:"
 
-#: ../settings/xfae-dialog.c:124
+#: ../settings/xfae-dialog.c:124 ../settings/xfae-model.c:479
 msgid "Command:"
 msgstr "Komanda:"
 
@@ -315,51 +315,52 @@ msgstr "Pasirinkite komandą"
 msgid "Edit application"
 msgstr "Keisti programą"
 
-#: ../settings/xfae-model.c:578
+#: ../settings/xfae-model.c:611
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "Nepavyko atsieti %s: %s"
 
-#: ../settings/xfae-model.c:667
+#: ../settings/xfae-model.c:700
 #, c-format
 msgid "Failed to create file %s"
 msgstr "Nepavyko sukurti failo %s"
 
-#: ../settings/xfae-model.c:689
+#: ../settings/xfae-model.c:723
 #, c-format
 msgid "Failed to write file %s"
 msgstr "Nepavyko įrašyti failo %s"
 
-#: ../settings/xfae-model.c:748
+#: ../settings/xfae-model.c:782
 #, c-format
 msgid "Failed to open %s for reading"
 msgstr "Nepavyko atverti %s skaitymui"
 
-#: ../settings/xfae-model.c:857 ../settings/xfae-model.c:914
+#: ../settings/xfae-model.c:891 ../settings/xfae-model.c:948
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "Nepavyko atverti %s rašymui"
 
-#: ../settings/xfae-window.c:101
+#: ../settings/xfae-window.c:102
 msgid ""
 "Below is the list of applications that will be started automatically when "
 "you login to your Xfce desktop, in addition to the applications that were "
-"saved when you logged out last time:"
+"saved when you logged out last time. Cursive applications belong to another "
+"desktop environment, but you can still enable them if you want."
 msgstr ""
 "Žemiau yra sąrašas programų, kurios bus paleistos kai prisijungsite prie "
 "Xfce darbastalio, be šių programų dar yra šios kurios buvo išsaugotos kai "
 "atsijungėte paskutinį kartą:"
 
-#: ../settings/xfae-window.c:289
+#: ../settings/xfae-window.c:293
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Nepavyko pridėti „%s“"
 
-#: ../settings/xfae-window.c:320 ../settings/xfae-window.c:334
+#: ../settings/xfae-window.c:324 ../settings/xfae-window.c:338
 msgid "Failed to remove item"
 msgstr "Elemento pašalinti nepavyko"
 
-#: ../settings/xfae-window.c:326
+#: ../settings/xfae-window.c:330
 msgid ""
 "This will permanently remove the application from the list of automatically "
 "started applications"
@@ -367,21 +368,21 @@ msgstr ""
 "Iš automatiškai paleidžiamų programų sąrašo bus visam laikui pašalinta "
 "programa"
 
-#: ../settings/xfae-window.c:328
+#: ../settings/xfae-window.c:332
 #, c-format
 msgid "Are you sure you want to remove \"%s\""
 msgstr "Ar tikrai norite pašalinti „%s“?"
 
-#: ../settings/xfae-window.c:362
+#: ../settings/xfae-window.c:366
 msgid "Failed to edit item"
 msgstr "Elemento pakeisti nepavyko"
 
-#: ../settings/xfae-window.c:382
+#: ../settings/xfae-window.c:386
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Elemento „%s“ pakeisti nepavyko"
 
-#: ../settings/xfae-window.c:410
+#: ../settings/xfae-window.c:414
 msgid "Failed to toggle item"
 msgstr "Nepavyko perjungti elemento"
 
@@ -702,11 +703,11 @@ msgstr ""
 "Jūsų seni failai buvo perkelti į naują vietą.\n"
 "Dabar galite ištrinti aplanką.\n"
 
-#: ../xfce4-session/xfsm-startup.c:458
+#: ../xfce4-session/xfsm-startup.c:452
 msgid "Performing Autostart..."
 msgstr "Vykdomas automatinis paleidimas..."
 
-#: ../xfce4-session/xfsm-startup.c:564
+#: ../xfce4-session/xfsm-startup.c:558
 msgid "Starting Assistive Technologies"
 msgstr "Paleidžiamos pagalbinės technologijos"
 
@@ -910,15 +911,13 @@ msgid "Saving Session"
 msgstr "Išsaugomas seansas"
 
 #: ../settings/xfce4-session-settings.glade.h:31
-msgid ""
-"Start GNOME services, such as gnome-keyring and the GNOME accessibility "
-"framework"
+msgid "Start GNOME services, such as gnome-keyring"
 msgstr ""
 "Paleisti GNOME tarnybas, tokias kaip gnome-raktinė ir GNOME pasiekiamumas"
 
 #: ../settings/xfce4-session-settings.glade.h:32
-msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
-msgstr "Paleisti KDE tarnybas, tokias kaip „kdeinit,“ DCOP ir ARTS"
+msgid "Start KDE services, such as kdeinit"
+msgstr "Paleisti KDE tarnybas, tokias kaip „kdeinit“"
 
 #: ../settings/xfce4-session-settings.glade.h:33
 msgid ""
