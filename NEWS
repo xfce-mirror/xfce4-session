@@ -1,15 +1,34 @@
-4.9.x
+4.9.0
 =====
 - Add accelerators to logout dialog buttons (bug #6982).
 - Add support for starting assistive technologies.
-- Remove the gconf code and dependency.
+- Remove optional dependency for gconf.
 - Remove Xfce4-tips.
-- Add Greek manual screenshots.
-- Optipng the images.
-- Reduce the size of executables by removing the nopreview images and
-  reducing the size of the splash engines.
 - Remove early xfsettingsd autostart and add it to the session.
-- Update KDE service starting to use KDE4 instead of KDE3 (bug #7382).
+- Fix crash if save timeout for a client is triggered (bug #7320).
+- Add a way to delete sessions (Bug #5730).
+- Drop usage of G_CONST_RETURN macro.
+- Add Xft.xrdb, startxfce4, xinit, xfce.desktop and xflock4
+  files from xfce-utils.
+- Explicitly link to libm where needed (bug #7953).
+- Remove the xfce4-panel logout menu plugin.
+- Don't try to remove the $HOME directory (bug #8154).
+- Remove manual and link to docs.xfce.org.
+- Show dialog in settings category.
+- Link to gmodule (bug #8340).
+- Improve fadeout code with compositing enabled.
+- Start screensaver with autostart.
+- Support the TryExec key for autostart in the settings dialog.
+- Rework the logout dialog code.
+- Cleanup the power management code.
+- Let xfce4-session handle the dbus-launch checking.
+- Add support for launching xfce4-session in consolekit.
+- Add --with-ck-launch support to startxfce4.
+- Add option to lock the screen on suspend/hibernate.
+- Remove unused icons.
+- Show all applications in autostart (bug #8014).
+- Drop gpg-agent and ssh-agent handling.
+- Translation updates ().
 
 4.8.2 (not released yet)
 =====
