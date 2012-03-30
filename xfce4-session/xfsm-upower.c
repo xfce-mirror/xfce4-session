@@ -249,10 +249,12 @@ xfsm_upower_try_method_cb (DBusGProxy     *proxy,
 
   if (!dbus_g_proxy_end_call (proxy, call, &error, G_TYPE_INVALID, G_TYPE_INVALID))
     {
-        g_warning ("Failed to suspend the system: %s %d %s",
-                   g_quark_to_string (error->domain),
-                   error->code, error->message);
-        g_error_free (error);
+      if (g_error_matches (error, DBUS_GERROR, DBUS_GERROR_NO_REPLY))
+        g_message ("Reply after suspend/hibernate timed out. Continuing...");
+      else
+        g_warning ("Failed to suspend the system: %s", error->message);
+
+      g_error_free (error);
     }
 }
 
