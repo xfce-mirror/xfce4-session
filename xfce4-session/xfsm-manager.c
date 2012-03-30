@@ -2111,7 +2111,7 @@ xfsm_manager_dbus_can_suspend (XfsmManager *manager,
                                       can_suspend, &auth_suspend, error);
 
   if (!auth_suspend)
-    can_suspend = FALSE;
+    *can_suspend = FALSE;
 
   return retval;
 }
@@ -2138,7 +2138,7 @@ xfsm_manager_dbus_can_hibernate (XfsmManager *manager,
                                         can_hibernate, &auth_hibernate, error);
 
   if (!auth_hibernate)
-    can_hibernate = FALSE;
+    *can_hibernate = FALSE;
 
   return retval;
 }
