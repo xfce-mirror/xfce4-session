@@ -225,7 +225,7 @@ msgstr "정말로 세션 캐시를 비우시렵니까?"
 
 #: ../settings/session-editor.c:172
 msgid "The saved states of your applications will not be restored during your next login."
-msgstr "다음 로그인이 진행되는 동안 프로그램의 저장된 상태는 복원되지 않을 것입니다."
+msgstr "다음 로그인을 진행하는 동안 프로그램의 저장된 상태을 복원하지 않을 것입니다."
 
 #: ../settings/session-editor.c:174
 msgid "_Proceed"
@@ -251,7 +251,7 @@ msgstr "프로그램 중단"
 
 #: ../settings/session-editor.c:255
 msgid "The application will lose any unsaved state and will not be restarted in your next session."
-msgstr "프로그램의 저장되지 않은 상태를 잃을 것이며 다음 세션에서 다시 시작 하지 않을 것입니다."
+msgstr "프로그램은 저장하지 않은 상태를 잃을 것이며 다음 세션에서 다시 시작 하지 않을 것입니다."
 
 #: ../settings/session-editor.c:257
 #: ../settings/xfce4-session-settings.glade.h:40
@@ -468,12 +468,12 @@ msgstr "다시 시도합니다"
 #: ../xfce4-session/xfsm-manager.c:609
 #, c-format
 msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
-msgstr "대체 세션 이름을 정할 수 없습니다. 가능한 원인으로는 xfconfd가 실행중에 있지 않거나(D-Bus 설정 문제), 환경변수 $XDG_CONFIG_DIRS가 잘못 설정(반드시 \"%s\"이(가) 포함되어야 합니다) 되었거나, xfce4-session이 잘못 설치되었을 수도 있습니다."
+msgstr "대체 세션 이름을 정할 수 없습니다. 가능한 원인으로는 xfconfd가 실행중에 있지 않거나(D-Bus 설정 문제), 환경변수 $XDG_CONFIG_DIRS가 잘못 설정(반드시 \"%s\"을(를) 포함해야 합니다)되었거나, xfce4-session을 잘못 설치했을 수도 있습니다."
 
 #: ../xfce4-session/xfsm-manager.c:620
 #, c-format
 msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr "정의된 대체 세션(\"%s\")이 대체 세션으로 표시되지 않았습니다."
+msgstr "지정한 대체 세션(\"%s\")을 대체 세션으로 표시하지 않았습니다."
 
 #: ../xfce4-session/xfsm-manager.c:667
 msgid "The list of applications in the failsafe session is empty."
@@ -674,8 +674,8 @@ msgstr ""
 " %s\n"
 "입니다.\n"
 "여기에 .desktop 파일을 두시고, Xfce 데크스탑에 로그인할 때 시작할\n"
-"프로그램을 선언합니다. 이전의 자동 시작 디렉터리의 파일은 새로운\n"
-"디렉터리로 자동적으로 복사되었기 때문에 이 디렉터리는 이제 삭제하셔도\n"
+"프로그램을 선언합니다. 이전의 자동 시작 디렉터리의 파일을 새로운\n"
+"디렉터리로 자동으로 복사했기 때문에 이 디렉터리는 이제 삭제하셔도\n"
 "됩니다.\n"
 
 #: ../xfce4-session/xfsm-startup.c:452
@@ -898,7 +898,7 @@ msgstr "이 프로그램들은 현재 실행중인 세션의 일부이며 로그
 
 #: ../settings/xfce4-session-settings.glade.h:34
 msgid "Your session is being saved.  If you do not wish to wait, you may close this window."
-msgstr "세션이 저장되었습니다. 기다리길 원하지 않는다면 이 창을 닫아도 됩니다."
+msgstr "세션을 저장했습니다. 기다리길 원하지 않는다면 이 창을 닫아도 됩니다."
 
 #: ../settings/xfce4-session-settings.glade.h:35
 msgid "_Clear saved sessions"
@@ -932,33 +932,3 @@ msgstr "시험(_T)"
 msgid "label"
 msgstr "레이블"
 
-#~ msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
-#~ msgstr ""
-#~ "Gtk+-%d.%d.%d와(과) 함께 빌드되었고, Gtk+-%d.%d.%d와(과) 함께 실행 중"
-
-#~ msgid "<span size='large'><b>Log out %s</b></span>"
-#~ msgstr "<span size='large'><b>%s 로그아웃</b></span>"
-
-#~ msgid "Unable to perform shutdown"
-#~ msgstr "종료를 수행할 수 없습니다"
-
-#~ msgid "Invalid shutdown type \"%u\""
-#~ msgstr "종료 유형 \"%u\"이(가) 잘못되었습니다"
-
-#~ msgid "Suspend failed, no backend supported"
-#~ msgstr "대기모드 진입에 실패했습니다. 지원되는 백엔드가 없습니다."
-
-#~ msgid "Hibernate failed, no backend supported"
-#~ msgstr "최대 절전모드 진입에 실패했습니다. 지원되는 백엔드가 없습니다."
-
-#~ msgid "Shutdown Command not found"
-#~ msgstr "종료 명령을 찾을 수 없습니다"
-
-#~ msgid "Logout Error"
-#~ msgstr "로그아웃 오류"
-
-#~ msgid "Failed to create new D-Bus message"
-#~ msgstr "새로운 D-Bus 메시지를 만드는데 실패했습니다"
-
-#~ msgid "Failed to receive a reply from the session manager"
-#~ msgstr "세션 관리자로부터 응답을 받는데 실패했습니다"
