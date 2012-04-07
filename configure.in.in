@@ -86,14 +86,14 @@ dnl Check for i18n support
 XDT_I18N([@LINGUAS@])
 
 dnl Check for required packages
-XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.8.0])
+XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.9.0])
 XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-1], [4.9.0])
-XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [2.14.0])
-XDT_CHECK_PACKAGE([GMODULE], [gmodule-2.0], [2.10.0])
-XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-1.0], [2.22])
-XDT_CHECK_PACKAGE([DBUS], [dbus-1], [1.0.0])
-XDT_CHECK_PACKAGE([DBUS_GLIB], [dbus-glib-1], [0.73])
-XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.8.0])
+XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [2.20.0])
+XDT_CHECK_PACKAGE([GMODULE], [gmodule-2.0], [2.24.0])
+XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-1.0], [2.30])
+XDT_CHECK_PACKAGE([DBUS], [dbus-1], [1.1.0])
+XDT_CHECK_PACKAGE([DBUS_GLIB], [dbus-glib-1], [0.84])
+XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.9.0])
 
 dnl Check for gnome support
 XDT_CHECK_OPTIONAL_PACKAGE([GNOME_KEYRING], [gnome-keyring-1], [2.22],
