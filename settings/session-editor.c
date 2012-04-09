@@ -209,8 +209,7 @@ session_editor_clear_sessions(GtkWidget *btn,
         if(failed){
             gchar *secondary_text;
 
-            secondary_text = g_strconcat(_("You might need to delete some files manually in "),
-                                         cache_dir_path, NULL);
+            secondary_text = g_strdup_printf (_("You might need to delete some files manually in \"%s\"."), cache_dir_path);
             xfce_dialog_show_warning(GTK_WINDOW(gtk_widget_get_toplevel(treeview)),
                                      secondary_text,
                                      _("All Xfce cache files could not be cleared"));
