@@ -137,9 +137,7 @@ xsetroot -solid black -cursor_name watch
 xfsettingsd &
 xfwm4 --daemon
 
-# start up stuff in $XDG_CONFIG_HOME/autostart/, as that looks to be
-# the new standard.  if that directory doesn't exist, try the old
-# ~/Desktop/Autostart method.  we're not going to do any migration here.
+# start up stuff in $XDG_CONFIG_HOME/autostart/
 if test -d "$XDG_CONFIG_HOME/autostart"; then
   for i in ${XDG_CONFIG_HOME}/autostart/*.desktop; do
     grep -q -E "^Hidden=true" "$i" && continue
@@ -158,12 +156,6 @@ if test -d "$XDG_CONFIG_HOME/autostart"; then
     cmd=`grep -E "^Exec=" "$i" | cut -d'=' -f2`
     if test "$cmd" && which "$cmd" >/dev/null 2>&1; then
       $cmd &
-    fi
-  done
-elif test -d "$HOME/Desktop/Autostart"; then
-  for i in `ls -1 -L ${HOME}/Desktop/Autostart/ 2>/dev/null`; do
-    if test -x $HOME/Desktop/Autostart/$i; then
-      $HOME/Desktop/Autostart/$i &
     fi
   done
 fi
@@ -196,9 +188,5 @@ EOF
 		done
 		;;
 esac
-
-if test "$ssh_agent_kill_cmd"; then
-	eval "$ssh_agent_kill_cmd"
-fi
 
 xsetroot -bg white -fg red  -solid black -cursor_name watch
