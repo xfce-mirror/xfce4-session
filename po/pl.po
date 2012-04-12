@@ -5,21 +5,22 @@
 # Wit Wiliński <madman@linux.bydg.org>, 2005.
 # Piotr Maliński <admin@rk.edu.pl>, 2005, 2006.
 # Szymon Kałasz <szymon_maestro@gazeta.pl>, 2006.
-# Piotr Sokół <psokol@jabster.pl>, 2009, 2011.
-# 
+# Piotr Sokół <psokol@jabster.pl>, 2009, 2011, 2012.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-09 13:12+0000\n"
-"PO-Revision-Date: 2011-03-24 22:34+0100\n"
+"POT-Creation-Date: 2012-04-12 04:27+0000\n"
+"PO-Revision-Date: 2012-04-12 10:00+0200\n"
 "Last-Translator: Piotr Sokół <psokol@jabster.pl>\n"
-"Language-Team: Polish <>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: polski <>\n"
 "Language: pl\n"
-"Plural-Forms: nplurals=3; plural=((n==1) ? 0 : ((n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? 1 : 2));\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bits\n"
+"Plural-Forms: nplurals=3; plural=((n==1) ? 0 : ((n%10>=2 && n%10<=4 && (n"
+"%100<10 || n%100>=20)) ? 1 : 2));\n"
 
 #: ../xfce.desktop.in.h:1
 msgid "Use this session to run Xfce as your desktop environment"
@@ -35,25 +36,25 @@ msgstr "Nie wprowadzono opisu"
 
 #: ../engines/balou/config.c:324
 msgid "Choose theme file to install..."
-msgstr "Proszę wybrać plik motywy do zainstalowania..."
+msgstr "Proszę wybrać plik stylu do zainstalowania..."
 
 #: ../engines/balou/config.c:336
 #, c-format
 msgid "Unable to install splash theme from file \"%s\""
-msgstr "Nie można zainstalować motywu ekranu powitalnego z pliku „%s”"
+msgstr "Nie można zainstalować stylu ekranu powitalnego z pliku „%s”"
 
 #: ../engines/balou/config.c:339
 msgid "Theme File Error"
-msgstr "Błąd pliku motywu"
+msgstr "Błąd pliku stylu"
 
 #: ../engines/balou/config.c:342
 msgid "Please check that the file is a valid splash theme archive."
-msgstr "Proszę sprawdzić czy plik jest poprawnym archiwum motywu."
+msgstr "Proszę sprawdzić czy plik jest poprawnym archiwum stylu."
 
 #: ../engines/balou/config.c:402
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
-msgstr "Nie można usunąć motywu ekranu powitalnego „%s” z katalogu %s."
+msgstr "Nie można usunąć stylu ekranu powitalnego „%s” z katalogu %s."
 
 #: ../engines/balou/config.c:491
 msgid "Choose theme filename..."
@@ -61,15 +62,15 @@ msgstr "Wybór pliku"
 
 #: ../engines/balou/config.c:624
 msgid "_Install new theme"
-msgstr "Za_instaluj nowy motyw..."
+msgstr "Za_instaluj nowy styl..."
 
 #: ../engines/balou/config.c:633
 msgid "_Remove theme"
-msgstr "_Usuń motyw"
+msgstr "_Usuń styl"
 
 #: ../engines/balou/config.c:650
 msgid "_Export theme"
-msgstr "_Eksportuj motyw..."
+msgstr "_Eksportuj styl..."
 
 #: ../engines/balou/config.c:866
 msgid "Balou theme"
@@ -145,11 +146,11 @@ msgstr "Prosty ekran powitalny"
 
 #: ../scripts/xscreensaver.desktop.in.h:1
 msgid "Launch screensaver and locker program"
-msgstr ""
+msgstr "Uruchamianie wygaszacza ekranu i programu blokującego ekran"
 
 #: ../scripts/xscreensaver.desktop.in.h:2
 msgid "Screensaver"
-msgstr ""
+msgstr "Wygaszacz ekranu"
 
 #: ../settings/main.c:43
 msgid "Settings manager socket"
@@ -186,6 +187,7 @@ msgstr "Nie można połączyć z serwerem ustawień"
 #: ../settings/main.c:116
 msgid "Unable to create user interface from embedded definition data"
 msgstr ""
+"Nie można utworzyć interfejsu użytkownika przy użyciu dołączonych danych"
 
 #: ../settings/main.c:128
 msgid "_Application Autostart"
@@ -216,78 +218,78 @@ msgid "Unable to save the session"
 msgstr "Nie można zapisać sesji"
 
 #: ../settings/session-editor.c:170
-#, fuzzy
 msgid "Clear sessions"
-msgstr "Kończenie sesji"
+msgstr "Czyszczenie sesji"
 
 #: ../settings/session-editor.c:171
 msgid "Are you sure you want to empty the session cache?"
-msgstr "Wyczyścić pamięć podręczną sesji"
+msgstr "Wyczyścić pamięć podręczną sesji?"
 
 #: ../settings/session-editor.c:172
-#, fuzzy
 msgid ""
 "The saved states of your applications will not be restored during your next "
 "login."
 msgstr ""
-"Program utraci niezapisane dane i nie zostanie uruchomiony podczas następnej "
-"sesji."
+"Zapisane stany programów nie zostaną przywrócone podczas następnego "
+"logowania."
 
 #: ../settings/session-editor.c:174
 msgid "_Proceed"
-msgstr ""
+msgstr "_Kontynuuj"
 
 #: ../settings/session-editor.c:212
-msgid "You might need to delete some files manually in "
+#, c-format
+msgid "You might need to delete some files manually in \"%s\"."
 msgstr ""
+"Możliwe, że niektóre pliki będzie trzeba usunąć ręcznie z położenia „%s”."
 
-#: ../settings/session-editor.c:216
+#: ../settings/session-editor.c:215
 msgid "All Xfce cache files could not be cleared"
 msgstr "Nie udało się wyczyścić wszystkich podręcznych plików sesji Xfce"
 
-#: ../settings/session-editor.c:250
+#: ../settings/session-editor.c:249
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Zakończyć program „%s”?"
 
-#: ../settings/session-editor.c:253 ../settings/session-editor.c:281
+#: ../settings/session-editor.c:252 ../settings/session-editor.c:280
 msgid "Terminate Program"
 msgstr "Kończenie programu"
 
-#: ../settings/session-editor.c:255
+#: ../settings/session-editor.c:254
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
 msgstr ""
-"Program utraci niezapisane dane i nie zostanie uruchomiony podczas następnej "
+"Program utraci niezapisany stan i nie zostanie uruchomiony podczas następnej "
 "sesji."
 
-#: ../settings/session-editor.c:257
+#: ../settings/session-editor.c:256
 #: ../settings/xfce4-session-settings.glade.h:40
 msgid "_Quit Program"
 msgstr "Za_kończ"
 
-#: ../settings/session-editor.c:282
+#: ../settings/session-editor.c:281
 msgid "Unable to terminate program."
 msgstr "Nie można zakończyć programu."
 
-#: ../settings/session-editor.c:460
+#: ../settings/session-editor.c:459
 msgid "(Unknown program)"
 msgstr "(Nieznany program)"
 
-#: ../settings/session-editor.c:680
+#: ../settings/session-editor.c:679
 msgid "Priority"
 msgstr "Priorytet"
 
-#: ../settings/session-editor.c:688
+#: ../settings/session-editor.c:687
 msgid "PID"
-msgstr "PID"
+msgstr "Identyfikator"
 
-#: ../settings/session-editor.c:694
+#: ../settings/session-editor.c:693
 msgid "Program"
 msgstr "Program"
 
-#: ../settings/session-editor.c:719
+#: ../settings/session-editor.c:718
 msgid "Restart Style"
 msgstr "Sposób ponownego uruchamiania"
 
@@ -449,7 +451,7 @@ msgstr "Klient nie posiada jeszcze żadnych ustawionych właściwości"
 
 #: ../xfce4-session/xfsm-compat-gnome.c:246
 msgid "Starting The Gnome Keyring Daemon"
-msgstr "Uruchamiam Gnome Keyring Daemon"
+msgstr "Uruchamiam demona Gnome Keyring"
 
 #: ../xfce4-session/xfsm-compat-kde.c:124
 msgid "Starting KDE services"
@@ -515,7 +517,7 @@ msgstr "Nie można wczytać sesji awaryjnej"
 
 #: ../xfce4-session/xfsm-manager.c:1123
 msgid "Shutdown Failed"
-msgstr "Nie udało się wyłączyć"
+msgstr "Nie udało się wyłączyć komputera"
 
 #: ../xfce4-session/xfsm-manager.c:1126
 msgid "Failed to suspend session"
@@ -625,7 +627,7 @@ msgstr "Uruchamianie menedżera okien"
 
 #: ../xfce4-session/xfsm-startup.c:127
 msgid "Starting the Gnome Terminal Emulator"
-msgstr "Uruchamianie Terminala Gnome"
+msgstr "Uruchamianie emulatora terminala Gnome"
 
 #: ../xfce4-session/xfsm-startup.c:131
 msgid "Starting the KDE Advanced Text Editor"
@@ -645,7 +647,7 @@ msgstr "Uruchamianie czytnika News KDE"
 
 #: ../xfce4-session/xfsm-startup.c:139
 msgid "Starting the Konqueror"
-msgstr "Uruchamianie Konqueror"
+msgstr "Uruchamianie przeglądarki Konqueror"
 
 #: ../xfce4-session/xfsm-startup.c:141
 msgid "Starting the KDE Terminal Emulator"
@@ -665,7 +667,7 @@ msgstr "Uruchamianie edytora tekstu VIM"
 
 #: ../xfce4-session/xfsm-startup.c:151
 msgid "Starting the Session Management Proxy"
-msgstr "Uruchamianie proxy menadżera sesji"
+msgstr "Uruchamianie pośrednika menadżera sesji"
 
 #: ../xfce4-session/xfsm-startup.c:153
 msgid "Starting the X-Chat IRC Client"
@@ -711,21 +713,21 @@ msgstr ""
 
 #: ../xfce4-session/xfsm-startup.c:452
 msgid "Performing Autostart..."
-msgstr "Automatyczne uruchamianie..."
+msgstr "Automatyczne uruchamianie programów..."
 
 #: ../xfce4-session/xfsm-startup.c:558
 msgid "Starting Assistive Technologies"
-msgstr "Uruchamiam technologii wspierających"
+msgstr "Uruchamianie technik ułatwień dostępu"
 
 #: ../xfce4-session/xfsm-shutdown.c:414
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
-msgstr "Wystąpił błąd podczas wysyłania polecenia do shutdown helper: %s"
+msgstr "Błąd wysyłania polecenia do shutdown helper: %s"
 
 #: ../xfce4-session/xfsm-shutdown.c:427
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
-msgstr "Wystąpił błąd podczas otrzymywania odpowiedzi od shutdown helper: %s"
+msgstr "Błąd odbierania odpowiedzi od shutdown helper: %s"
 
 #: ../xfce4-session/xfsm-shutdown.c:435
 #, c-format
@@ -949,11 +951,11 @@ msgstr ""
 
 #: ../settings/xfce4-session-settings.glade.h:35
 msgid "_Clear saved sessions"
-msgstr "_Wyczyść zapisaną sesję"
+msgstr "_Wyczyść zapisane sesje"
 
 #: ../settings/xfce4-session-settings.glade.h:36
 msgid "_Display chooser on login"
-msgstr "_Wybór sesji podczas logowania"
+msgstr "_Wybieranie sesji podczas logowania"
 
 #: ../settings/xfce4-session-settings.glade.h:37
 msgid "_General"
