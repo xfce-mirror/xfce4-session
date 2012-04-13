@@ -3,7 +3,7 @@ bin_SCRIPTS= \
 	xflock4
 
 # cannot be set from configure, because ${prefix} is not expanded
-edit = sed \
+edit = $(SED) \
 	-e "s,@_datadir_\@,$(datadir),g" \
 	-e "s,@_libdir_\@,$(libdir),g" \
 	-e "s,@_docdir_\@,$$(dirname $(docdir)),g" \
