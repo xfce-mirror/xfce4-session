@@ -51,6 +51,16 @@ gboolean opt_hibernate = FALSE;
 gboolean allow_save = FALSE;
 gboolean opt_version = FALSE;
 
+enum
+{
+  XFSM_SHUTDOWN_ASK = 0,
+  XFSM_SHUTDOWN_LOGOUT,
+  XFSM_SHUTDOWN_HALT,
+  XFSM_SHUTDOWN_REBOOT,
+  XFSM_SHUTDOWN_SUSPEND,
+  XFSM_SHUTDOWN_HIBERNATE
+};
+
 static GOptionEntry option_entries[] =
 {
   { "logout", 'l', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_logout,
@@ -112,6 +122,7 @@ main (int argc, char **argv)
   gboolean         have_display;
   gboolean         show_dialog;
   gboolean         result = FALSE;
+  guint            shutdown_type;
 
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
@@ -177,6 +188,32 @@ main (int argc, char **argv)
                                       G_TYPE_INVALID, G_TYPE_INVALID);
         }
     }
+
+  /* fallback for the old 4.8 API dbus, so users can logout if
+   * they upgraded their system, see bug #8630 */
+  if (!result && g_error_matches (err, DBUS_GERROR, DBUS_GERROR_UNKNOWN_METHOD))
+    {
+      g_clear_error (&err);
+
+      if (opt_logout)
+        shutdown_type = XFSM_SHUTDOWN_LOGOUT;
+      else if (opt_halt)
+        shutdown_type = XFSM_SHUTDOWN_HALT;
+      else if (opt_reboot)
+        shutdown_type = XFSM_SHUTDOWN_REBOOT;
+      else if (opt_suspend)
+        shutdown_type = XFSM_SHUTDOWN_SUSPEND;
+      else if (opt_hibernate)
+        shutdown_type = XFSM_SHUTDOWN_HIBERNATE;
+      else
+        shutdown_type = XFSM_SHUTDOWN_ASK;
+
+      result = dbus_g_proxy_call (proxy, "Shutdown", &err,
+                                  G_TYPE_UINT, shutdown_type,
+                                  G_TYPE_BOOLEAN, allow_save,
+                                  G_TYPE_INVALID, G_TYPE_INVALID);
+    }
+
 
   if (proxy != NULL)
     g_object_unref (proxy);
