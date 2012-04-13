@@ -1137,26 +1137,6 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
           return;
         }
     }
-#if defined(__NR_ioprio_set) && defined(HAVE_SYNC)
-  /* if we're on Linux and have ioprio_set(), we start sync()ing the
-   * disks now, and set the i/o priority to idle so we don't create
-   * a poor user experience if any apps need to interact with the user
-   * during shutdown.  if we *don't* have ioprio_set(), we sync at the
-   * end of shutdown, right before quitting.
-   */
-  if (shutdown == TRUE && fork () == 0)
-    {
-#ifdef HAVE_SETSID
-      setsid ();
-#endif
-      if(!syscall (__NR_ioprio_set, IOPRIO_WHO_PROCESS, getpid (),
-                   IOPRIO_PRIO_VALUE (IOPRIO_CLASS_IDLE, 0)))
-        {
-          sync ();
-        }
-      _exit (EXIT_SUCCESS);
-    }
-#endif
 
   if (!shutdown || shutdown_save)
     {
