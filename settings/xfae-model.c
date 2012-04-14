@@ -281,13 +281,13 @@ xfae_model_get_value (GtkTreeModel *tree_model,
     case XFAE_MODEL_COLUMN_NAME:
       g_value_init (value, G_TYPE_STRING);
       if (G_LIKELY (item->comment != NULL && *item->comment != '\0'))
-        name = g_strdup_printf ("%s (%s)", item->name, item->comment);
+        name = g_markup_printf_escaped ("%s (%s)", item->name, item->comment);
       else
-        name = g_strdup (item->name);
+        name = g_markup_printf_escaped ("%s", item->name);
 
       if (!item->show_in_xfce)
         {
-          cursive = g_markup_printf_escaped ("<i>%s</i>", name);
+          cursive = g_strdup_printf ("<i>%s</i>", name);
           g_free (name);
           name = cursive;
         }
