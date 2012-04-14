@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-29 22:51+0000\n"
+"POT-Creation-Date: 2012-04-14 08:12+0000\n"
 "PO-Revision-Date: 2011-10-22 17:16+0300\n"
 "Last-Translator: Dmitrij Smirnov <other@igus.lv>\n"
 "Language-Team: Russian\n"
@@ -174,12 +174,12 @@ msgid "Type '%s --help' for usage."
 msgstr "Наберите «%s --help» для получения информации об использовании."
 
 #: ../settings/main.c:87 ../xfce4-session/main.c:267
-#: ../xfce4-session-logout/main.c:124
+#: ../xfce4-session-logout/main.c:135
 msgid "The Xfce development team. All rights reserved."
 msgstr "Команда разработчиков Xfce. Все права защищены."
 
 #: ../settings/main.c:88 ../xfce4-session/main.c:268
-#: ../xfce4-session-logout/main.c:127
+#: ../xfce4-session-logout/main.c:138
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Об ошибках сообщайте на <%s>."
@@ -241,23 +241,24 @@ msgid "_Proceed"
 msgstr "_Продолжить"
 
 #: ../settings/session-editor.c:212
-msgid "You might need to delete some files manually in "
-msgstr "Вам может понадобиться удалить некоторые файлы вручную в"
+#, c-format
+msgid "You might need to delete some files manually in \"%s\"."
+msgstr "Вам может понадобиться удалить некоторые файлы вручную в \"%s\"."
 
-#: ../settings/session-editor.c:216
+#: ../settings/session-editor.c:215
 msgid "All Xfce cache files could not be cleared"
 msgstr "Не удалось очистить все файлы кэша Xfce"
 
-#: ../settings/session-editor.c:250
+#: ../settings/session-editor.c:249
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Вы действительно хотите завершить «%s»?"
 
-#: ../settings/session-editor.c:253 ../settings/session-editor.c:281
+#: ../settings/session-editor.c:252 ../settings/session-editor.c:280
 msgid "Terminate Program"
 msgstr "Завершить приложение"
 
-#: ../settings/session-editor.c:255
+#: ../settings/session-editor.c:254
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
@@ -265,32 +266,32 @@ msgstr ""
 "Все несохранённые данные приложения будут потеряны и оно не будет "
 "перезапущено при следующем сеансе."
 
-#: ../settings/session-editor.c:257
+#: ../settings/session-editor.c:256
 #: ../settings/xfce4-session-settings.glade.h:40
 msgid "_Quit Program"
 msgstr "_Завершить работу программы"
 
-#: ../settings/session-editor.c:282
+#: ../settings/session-editor.c:281
 msgid "Unable to terminate program."
 msgstr "Не удалось завершить приложение."
 
-#: ../settings/session-editor.c:460
+#: ../settings/session-editor.c:459
 msgid "(Unknown program)"
 msgstr "(неизвестная программа)"
 
-#: ../settings/session-editor.c:680
+#: ../settings/session-editor.c:679
 msgid "Priority"
 msgstr "Приоритет"
 
-#: ../settings/session-editor.c:688
+#: ../settings/session-editor.c:687
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:694
+#: ../settings/session-editor.c:693
 msgid "Program"
 msgstr "Приложение"
 
-#: ../settings/session-editor.c:719
+#: ../settings/session-editor.c:718
 msgid "Restart Style"
 msgstr "Способ перезагрузки"
 
@@ -397,7 +398,7 @@ msgstr "Не удалось переключить элемент"
 msgid "Disable binding to TCP ports"
 msgstr "Отключить привязку к портам TCP"
 
-#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:81
+#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:91
 msgid "Print version information and exit"
 msgstr "Показать информацию о версии и выйти"
 
@@ -529,18 +530,18 @@ msgstr "Не удалось войти в ждущий режим"
 msgid "Failed to hibernate session"
 msgstr "Не удалось войти в спящий режим"
 
-#: ../xfce4-session/xfsm-manager.c:1413
+#: ../xfce4-session/xfsm-manager.c:1393
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Завершение возможно только для клиентов в режиме ожидания"
 
-#: ../xfce4-session/xfsm-manager.c:1976
+#: ../xfce4-session/xfsm-manager.c:1956
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 "Менеджер сеансов должен быть в режиме ожидания при запросе контрольной точки"
 
-#: ../xfce4-session/xfsm-manager.c:2017
+#: ../xfce4-session/xfsm-manager.c:1997
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
@@ -744,47 +745,47 @@ msgstr "Завершение работы недоступно в режиме �
 msgid "Unknown shutdown method %d"
 msgstr "Неизвестный метод завершения работы (%d)"
 
-#: ../xfce4-session-logout/main.c:57
+#: ../xfce4-session-logout/main.c:67
 msgid "Log out without displaying the logout dialog"
 msgstr "Выходить из системы не показывая диалог завершения сеанса"
 
-#: ../xfce4-session-logout/main.c:61
+#: ../xfce4-session-logout/main.c:71
 msgid "Halt without displaying the logout dialog"
 msgstr "Выключать компьютер не показывая диалог завершения сеанса"
 
-#: ../xfce4-session-logout/main.c:65
+#: ../xfce4-session-logout/main.c:75
 msgid "Reboot without displaying the logout dialog"
 msgstr "Перезагружать компьютер не показывая диалог завершения сеанса"
 
-#: ../xfce4-session-logout/main.c:69
+#: ../xfce4-session-logout/main.c:79
 msgid "Suspend without displaying the logout dialog"
 msgstr "Переходить в ждущий режим не показывая диалог завершения сеанса"
 
-#: ../xfce4-session-logout/main.c:73
+#: ../xfce4-session-logout/main.c:83
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Переходить в спящий режим не показывая диалог завершения сеанса"
 
-#: ../xfce4-session-logout/main.c:77
+#: ../xfce4-session-logout/main.c:87
 msgid "Log out quickly; don't save the session"
 msgstr "Быстрый выход без сохранения сеанса"
 
-#: ../xfce4-session-logout/main.c:100
+#: ../xfce4-session-logout/main.c:110
 msgid "Unknown error"
 msgstr "Неизвестная ошибка"
 
-#: ../xfce4-session-logout/main.c:125
+#: ../xfce4-session-logout/main.c:136
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Авторы: Бенедикт Мёйрер <benny@xfce.org>"
 
-#: ../xfce4-session-logout/main.c:126
+#: ../xfce4-session-logout/main.c:137
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "и Брайен Тарриконе <kelnos@xfce.org>."
 
-#: ../xfce4-session-logout/main.c:136
+#: ../xfce4-session-logout/main.c:147
 msgid "Unable to contact D-Bus session bus"
 msgstr "Не удалось присоединиться к сеансовой шине D-Bus"
 
-#: ../xfce4-session-logout/main.c:186
+#: ../xfce4-session-logout/main.c:223
 msgid "Received error while trying to log out"
 msgstr "Получена ошибка при попытке завершения сеанса"
 
