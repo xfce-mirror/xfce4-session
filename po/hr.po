@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-02 19:39+0000\n"
+"POT-Creation-Date: 2012-04-15 12:57+0000\n"
 "PO-Revision-Date: 2010-05-25 22:47+0200\n"
 "Last-Translator: Petar Koretić<petar.koretic@gmail.com> <>\n"
 "Language-Team: Croatian <>\n"
@@ -165,12 +165,12 @@ msgid "Type '%s --help' for usage."
 msgstr "'%s --help' za pomoć"
 
 #: ../settings/main.c:87 ../xfce4-session/main.c:267
-#: ../xfce4-session-logout/main.c:124
+#: ../xfce4-session-logout/main.c:135
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce razvojni tim.Sva prava pridržana."
 
 #: ../settings/main.c:88 ../xfce4-session/main.c:268
-#: ../xfce4-session-logout/main.c:127
+#: ../xfce4-session-logout/main.c:138
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Prijavite probleme <%s>."
@@ -232,23 +232,24 @@ msgid "_Proceed"
 msgstr "_Nastavi"
 
 #: ../settings/session-editor.c:212
-msgid "You might need to delete some files manually in "
-msgstr "Možda ćete trebati obrisati neke datoteke ručno u"
+#, c-format
+msgid "You might need to delete some files manually in \"%s\"."
+msgstr "Možda ćete trebati ručno obrisati neke datoteke u \"%s\"."
 
-#: ../settings/session-editor.c:216
+#: ../settings/session-editor.c:215
 msgid "All Xfce cache files could not be cleared"
 msgstr "Ne mogu biti izbrisane sve datoteke Xfce međuspremnika"
 
-#: ../settings/session-editor.c:250
+#: ../settings/session-editor.c:249
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Jeste li sigurni da želite prekinuti \"%s\"?"
 
-#: ../settings/session-editor.c:253 ../settings/session-editor.c:281
+#: ../settings/session-editor.c:252 ../settings/session-editor.c:280
 msgid "Terminate Program"
 msgstr "Prekini program"
 
-#: ../settings/session-editor.c:255
+#: ../settings/session-editor.c:254
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
@@ -256,32 +257,32 @@ msgstr ""
 "Aplikacija će izgubiti sve nespremljene postavke i neće se ponovo pokrenuti "
 "u sljedećoj sesiji."
 
-#: ../settings/session-editor.c:257
+#: ../settings/session-editor.c:256
 #: ../settings/xfce4-session-settings.glade.h:40
 msgid "_Quit Program"
 msgstr "_Isključi program"
 
-#: ../settings/session-editor.c:282
+#: ../settings/session-editor.c:281
 msgid "Unable to terminate program."
 msgstr "Ne mogu ugasiti program."
 
-#: ../settings/session-editor.c:460
+#: ../settings/session-editor.c:459
 msgid "(Unknown program)"
 msgstr "(Nepoznati program)"
 
-#: ../settings/session-editor.c:680
+#: ../settings/session-editor.c:679
 msgid "Priority"
 msgstr "Prioritet"
 
-#: ../settings/session-editor.c:688
+#: ../settings/session-editor.c:687
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:694
+#: ../settings/session-editor.c:693
 msgid "Program"
 msgstr "Program"
 
-#: ../settings/session-editor.c:719
+#: ../settings/session-editor.c:718
 msgid "Restart Style"
 msgstr "Način Ponovnog Pokretanja"
 
@@ -389,7 +390,7 @@ msgstr "Ne mogu mijenjati stanje."
 msgid "Disable binding to TCP ports"
 msgstr "Onemoguće spajanje sa TCP portovima."
 
-#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:81
+#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:91
 msgid "Print version information and exit"
 msgstr "Ispis informacije o verziji i izađi"
 
@@ -522,19 +523,19 @@ msgstr "Neuspjela suspenzija sesije"
 msgid "Failed to hibernate session"
 msgstr "Neuspjela hibernacija sesije"
 
-#: ../xfce4-session/xfsm-manager.c:1413
+#: ../xfce4-session/xfsm-manager.c:1393
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Mogu samo ugasiti kada je u stanju mirovanja"
 
-#: ../xfce4-session/xfsm-manager.c:1976
+#: ../xfce4-session/xfsm-manager.c:1956
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 "Upravitelj sesijom mora biti u stanju mirovanja prilikom zahtjeva kontrolne "
 "točke"
 
-#: ../xfce4-session/xfsm-manager.c:2017
+#: ../xfce4-session/xfsm-manager.c:1997
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
@@ -737,47 +738,47 @@ msgstr ""
 msgid "Unknown shutdown method %d"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:57
+#: ../xfce4-session-logout/main.c:67
 msgid "Log out without displaying the logout dialog"
 msgstr "Odjava bez prikaza odjavnog dijaloga."
 
-#: ../xfce4-session-logout/main.c:61
+#: ../xfce4-session-logout/main.c:71
 msgid "Halt without displaying the logout dialog"
 msgstr "Gašenje bez prikaza odjavnog dijaloga"
 
-#: ../xfce4-session-logout/main.c:65
+#: ../xfce4-session-logout/main.c:75
 msgid "Reboot without displaying the logout dialog"
 msgstr "Ponovo pokretanje bez prikaza odjavnog dijaloga"
 
-#: ../xfce4-session-logout/main.c:69
+#: ../xfce4-session-logout/main.c:79
 msgid "Suspend without displaying the logout dialog"
 msgstr "Suspendiranje bez prikaza odjavnog dijaloga"
 
-#: ../xfce4-session-logout/main.c:73
+#: ../xfce4-session-logout/main.c:83
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Hibernacija bez prikaza odjavnog dijaloga"
 
-#: ../xfce4-session-logout/main.c:77
+#: ../xfce4-session-logout/main.c:87
 msgid "Log out quickly; don't save the session"
 msgstr "Brza odjava, bez spremanja sessije"
 
-#: ../xfce4-session-logout/main.c:100
+#: ../xfce4-session-logout/main.c:110
 msgid "Unknown error"
 msgstr "Nepoznata greška"
 
-#: ../xfce4-session-logout/main.c:125
+#: ../xfce4-session-logout/main.c:136
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Napisao Benedikt Meurer <benny@xfce.org>"
 
-#: ../xfce4-session-logout/main.c:126
+#: ../xfce4-session-logout/main.c:137
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:136
+#: ../xfce4-session-logout/main.c:147
 msgid "Unable to contact D-Bus session bus"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:186
+#: ../xfce4-session-logout/main.c:223
 msgid "Received error while trying to log out"
 msgstr "Došlo je do greške prilikom odjave"
 
