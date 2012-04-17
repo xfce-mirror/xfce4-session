@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-11 16:57+0000\n"
+"POT-Creation-Date: 2012-04-17 16:42+0000\n"
 "PO-Revision-Date: 2012-03-28 21:19+0100\n"
 "Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: German <xfce-i18n@xfce.org>\n"
@@ -175,12 +175,12 @@ msgid "Type '%s --help' for usage."
 msgstr "Geben Sie »%s --help« ein, um mehr über die Verwendung zu erfahren."
 
 #: ../settings/main.c:87 ../xfce4-session/main.c:267
-#: ../xfce4-session-logout/main.c:124
+#: ../xfce4-session-logout/main.c:135
 msgid "The Xfce development team. All rights reserved."
 msgstr "Das Entwicklungsteam von Xfce. Alle Rechte vorbehalten."
 
 #: ../settings/main.c:88 ../xfce4-session/main.c:268
-#: ../xfce4-session-logout/main.c:127
+#: ../xfce4-session-logout/main.c:138
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Bitte melden Sie Fehler an <%s>."
@@ -244,9 +244,9 @@ msgid "_Proceed"
 msgstr "_Fortfahren"
 
 #: ../settings/session-editor.c:212
-#, fuzzy, c-format
+#, c-format
 msgid "You might need to delete some files manually in \"%s\"."
-msgstr "Sie müssen möglicherweise in \"%s\" manuell Dateien löschen."
+msgstr "Sie müssen möglicherweise in »%s« manuell Dateien löschen."
 
 #: ../settings/session-editor.c:215
 msgid "All Xfce cache files could not be cleared"
@@ -405,7 +405,7 @@ msgstr "Eintrag konnte nicht umgeschaltet werden"
 msgid "Disable binding to TCP ports"
 msgstr "Verbinden mit TCP-Port deaktivieren"
 
-#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:81
+#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:91
 msgid "Print version information and exit"
 msgstr "Versionsinformation anzeigen und beenden"
 
@@ -538,21 +538,21 @@ msgstr "Sitzung kann nicht in den Bereitschaftsmodus versetzt werden"
 msgid "Failed to hibernate session"
 msgstr "Sitzung kann nicht in den Ruhezustand versetzt werden"
 
-#: ../xfce4-session/xfsm-manager.c:1413
+#: ../xfce4-session/xfsm-manager.c:1393
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr ""
 "Clients können nur dann beendet werden, wenn keine anderen Aufgaben "
 "durchgeführt werden"
 
-#: ../xfce4-session/xfsm-manager.c:1976
+#: ../xfce4-session/xfsm-manager.c:1956
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 "Die Sitzungsverwaltung muss unbeschäftigt sein, wenn ein Checkpoint gemacht "
 "werden soll"
 
-#: ../xfce4-session/xfsm-manager.c:2017
+#: ../xfce4-session/xfsm-manager.c:1997
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
@@ -757,47 +757,47 @@ msgstr "Herunterfahren wird von Kiosk-Einstellungen blockiert"
 msgid "Unknown shutdown method %d"
 msgstr "Methode %d zum Herunterfahren unbekannt"
 
-#: ../xfce4-session-logout/main.c:57
+#: ../xfce4-session-logout/main.c:67
 msgid "Log out without displaying the logout dialog"
 msgstr "Keinen Abmeldedialog beim Abmelden anzeigen"
 
-#: ../xfce4-session-logout/main.c:61
+#: ../xfce4-session-logout/main.c:71
 msgid "Halt without displaying the logout dialog"
 msgstr "Keinen Abmeldedialog beim Herunterfahren anzeigen"
 
-#: ../xfce4-session-logout/main.c:65
+#: ../xfce4-session-logout/main.c:75
 msgid "Reboot without displaying the logout dialog"
 msgstr "Keinen Abmeldedialog beim Neustart anzeigen"
 
-#: ../xfce4-session-logout/main.c:69
+#: ../xfce4-session-logout/main.c:79
 msgid "Suspend without displaying the logout dialog"
 msgstr "Keinen Abmeldedialog beim Bereitschaftsmodus anzeigen"
 
-#: ../xfce4-session-logout/main.c:73
+#: ../xfce4-session-logout/main.c:83
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Keinen Abmeldedialog beim Ruhezustand anzeigen"
 
-#: ../xfce4-session-logout/main.c:77
+#: ../xfce4-session-logout/main.c:87
 msgid "Log out quickly; don't save the session"
 msgstr "Schnell abmelden; Sitzung nicht speichern"
 
-#: ../xfce4-session-logout/main.c:100
+#: ../xfce4-session-logout/main.c:110
 msgid "Unknown error"
 msgstr "Unbekannter Fehler"
 
-#: ../xfce4-session-logout/main.c:125
+#: ../xfce4-session-logout/main.c:136
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Geschrieben von Benedikt Meurer <benny@xfce.org>"
 
-#: ../xfce4-session-logout/main.c:126
+#: ../xfce4-session-logout/main.c:137
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "und Brian Tarricone <kelnos@xfce.org>."
 
-#: ../xfce4-session-logout/main.c:136
+#: ../xfce4-session-logout/main.c:147
 msgid "Unable to contact D-Bus session bus"
 msgstr "D-Bus-Sitzungsbus kann nicht kontaktiert werden"
 
-#: ../xfce4-session-logout/main.c:186
+#: ../xfce4-session-logout/main.c:223
 msgid "Received error while trying to log out"
 msgstr "Fehler während des Abmeldevorgangs erhalten"
 
