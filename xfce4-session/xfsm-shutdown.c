@@ -701,7 +701,13 @@ xfsm_shutdown_can_restart (XfsmShutdown  *shutdown,
   if (xfsm_consolekit_can_restart (shutdown->consolekit, can_restart, error))
     return TRUE;
 
-  return xfsm_shutdown_sudo_init (shutdown, error);
+  if (xfsm_shutdown_sudo_init (shutdown, error))
+    {
+      *can_restart = TRUE;
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 
@@ -722,7 +728,13 @@ xfsm_shutdown_can_shutdown (XfsmShutdown  *shutdown,
   if (xfsm_consolekit_can_shutdown (shutdown->consolekit, can_shutdown, error))
     return TRUE;
 
-  return xfsm_shutdown_sudo_init (shutdown, error);
+  if (xfsm_shutdown_sudo_init (shutdown, error))
+    {
+      *can_shutdown = TRUE;
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 
