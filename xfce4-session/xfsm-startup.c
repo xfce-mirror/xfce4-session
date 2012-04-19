@@ -95,22 +95,22 @@ static void
 xfsm_startup_init_sshagent (const gchar *cmd,
                             const gchar *agent)
 {
-  gchar     *stdout = NULL;
+  gchar     *cmdoutput = NULL;
   GError    *error = NULL;
   gchar    **lines;
   guint      i;
   gchar     *p, *t;
   gchar     *variable, *value;
 
-  if (g_spawn_command_line_sync (cmd, &stdout, NULL, NULL, &error))
+  if (g_spawn_command_line_sync (cmd, &cmdoutput, NULL, NULL, &error))
     {
-      if (G_UNLIKELY (stdout == NULL))
+      if (G_UNLIKELY (cmdoutput == NULL))
         {
           g_message ("%s returned no variables to stdout", agent);
           return;
         }
 
-      lines = g_strsplit (stdout, "\n", -1);
+      lines = g_strsplit (cmdoutput, "\n", -1);
       g_assert (lines != NULL);
       for (i = 0; lines[i] != NULL; i++)
         {
@@ -140,7 +140,7 @@ xfsm_startup_init_sshagent (const gchar *cmd,
       g_error_free (error);
     }
 
-  g_free (stdout);
+  g_free (cmdoutput);
 }
 
 
