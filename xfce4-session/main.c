@@ -307,6 +307,8 @@ main (int argc, char **argv)
 
   gtk_main ();
 
+  xfsm_startup_shutdown ();
+
   shutdown_type = xfsm_manager_get_shutdown_type (manager);
 
   /* take over the ref before we release the manager */
