@@ -207,7 +207,7 @@ xfsm_startup_init (XfconfChannel *channel)
 
           if (g_strcmp0 (agent, "gpg-agent") == 0)
             {
-              envfile = xfce_resource_lookup (XFCE_RESOURCE_CACHE, "gpg-agent-info");
+              envfile = xfce_resource_save_location (XFCE_RESOURCE_CACHE, "gpg-agent-info", FALSE);
 
               if (ssh_agent_pid == NULL)
                 {
