@@ -13,11 +13,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-09 18:57+0000\n"
+"Report-Msgid-Bugs-To: <xfce-i18n@xfce.org>\n"
+"POT-Creation-Date: 2012-04-20 07:57+0000\n"
 "PO-Revision-Date: 2010-04-06 13:28+0800\n"
 "Last-Translator: Chipong Luo <chipong.luo@yahoo.com>\n"
-"Language-Team: Chinese (Simplified) <xfce-i18n@xfce.org>\n"
+"Language-Team: Chinese (Simplified) <xfce-i18n-cn@xfce.org>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -172,12 +172,12 @@ msgid "Type '%s --help' for usage."
 msgstr "输入 ‘%s --help’ 获取用法。"
 
 #: ../settings/main.c:87 ../xfce4-session/main.c:267
-#: ../xfce4-session-logout/main.c:124
+#: ../xfce4-session-logout/main.c:135
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce 开发团队。保留所有权利。"
 
 #: ../settings/main.c:88 ../xfce4-session/main.c:268
-#: ../xfce4-session-logout/main.c:127
+#: ../xfce4-session-logout/main.c:138
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "请向 <%s> 报告缺陷。"
@@ -351,8 +351,8 @@ msgid ""
 "saved when you logged out last time. Cursive applications belong to another "
 "desktop environment, but you can still enable them if you want."
 msgstr ""
-"以下是您在登录 Xfce 桌面时会自动启动的应用程序列表，包括您在上次注销时保存"
-"的应用程序。草体的应用程序属于其它桌面环境，但在需要时您仍然可以启动它们。"
+"以下是您在登录 Xfce 桌面时会自动启动的应用程序列表，包括您在上次注销时保存的"
+"应用程序。草体的应用程序属于其它桌面环境，但在需要时您仍然可以启动它们。"
 
 #: ../settings/xfae-window.c:293
 #, c-format
@@ -391,7 +391,7 @@ msgstr "无法切换项目"
 msgid "Disable binding to TCP ports"
 msgstr "禁用与 TCP 端口绑定"
 
-#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:81
+#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:91
 msgid "Print version information and exit"
 msgstr "列印版本信息后退出"
 
@@ -520,17 +520,17 @@ msgstr "未能待机会话"
 msgid "Failed to hibernate session"
 msgstr "未能休眠会话"
 
-#: ../xfce4-session/xfsm-manager.c:1413
+#: ../xfce4-session/xfsm-manager.c:1393
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "仅在空闲时可以终止客户端"
 
-#: ../xfce4-session/xfsm-manager.c:1976
+#: ../xfce4-session/xfsm-manager.c:1956
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "要求检查点时会话管理器必须处于空闲状态"
 
-#: ../xfce4-session/xfsm-manager.c:2017
+#: ../xfce4-session/xfsm-manager.c:1997
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "要求关机时会话管理器必须处于空闲状态"
@@ -593,88 +593,88 @@ msgstr "选择会话名称"
 msgid "Choose a name for the new session:"
 msgstr "为新的会话选择名称："
 
-#: ../xfce4-session/xfsm-startup.c:115
+#: ../xfce4-session/xfsm-startup.c:328
 msgid "Starting the Volume Controller"
 msgstr "正在启动音量控制器"
 
-#: ../xfce4-session/xfsm-startup.c:117
+#: ../xfce4-session/xfsm-startup.c:330
 msgid "Starting the Panel"
 msgstr "正在启动面板"
 
-#: ../xfce4-session/xfsm-startup.c:119
+#: ../xfce4-session/xfsm-startup.c:332
 msgid "Starting the Desktop Manager"
 msgstr "正在启动桌面管理器"
 
-#: ../xfce4-session/xfsm-startup.c:121
+#: ../xfce4-session/xfsm-startup.c:334
 msgid "Starting the Taskbar"
 msgstr "正在启动任务栏"
 
-#: ../xfce4-session/xfsm-startup.c:123
+#: ../xfce4-session/xfsm-startup.c:336
 msgid "Starting the Window Manager"
 msgstr "正在启动窗口管理器"
 
-#: ../xfce4-session/xfsm-startup.c:127
+#: ../xfce4-session/xfsm-startup.c:340
 msgid "Starting the Gnome Terminal Emulator"
 msgstr "正在启动 Gnome 终端模拟器"
 
-#: ../xfce4-session/xfsm-startup.c:131
+#: ../xfce4-session/xfsm-startup.c:344
 msgid "Starting the KDE Advanced Text Editor"
 msgstr "正在启动 KDE 高级文本编辑器"
 
-#: ../xfce4-session/xfsm-startup.c:133
+#: ../xfce4-session/xfsm-startup.c:346
 msgid "Starting the KDE Clipboard Manager"
 msgstr "正在启动 KDE 剪贴板管理器"
 
-#: ../xfce4-session/xfsm-startup.c:135
+#: ../xfce4-session/xfsm-startup.c:348
 msgid "Starting the KDE Mail Reader"
 msgstr "正在启动 KDE 邮件阅读器"
 
-#: ../xfce4-session/xfsm-startup.c:137
+#: ../xfce4-session/xfsm-startup.c:350
 msgid "Starting the KDE News Reader"
 msgstr "正在启动 KDE 新闻阅读器"
 
-#: ../xfce4-session/xfsm-startup.c:139
+#: ../xfce4-session/xfsm-startup.c:352
 msgid "Starting the Konqueror"
 msgstr "正在启动 Konqueror"
 
-#: ../xfce4-session/xfsm-startup.c:141
+#: ../xfce4-session/xfsm-startup.c:354
 msgid "Starting the KDE Terminal Emulator"
 msgstr "正在启动 KDE 终端模拟器"
 
-#: ../xfce4-session/xfsm-startup.c:145
+#: ../xfce4-session/xfsm-startup.c:358
 msgid "Starting the Beep Media Player"
 msgstr "正在启动 Beep 媒体播放器"
 
-#: ../xfce4-session/xfsm-startup.c:147
+#: ../xfce4-session/xfsm-startup.c:360
 msgid "Starting The Gimp"
 msgstr "正在启动 Gimp"
 
-#: ../xfce4-session/xfsm-startup.c:149
+#: ../xfce4-session/xfsm-startup.c:362
 msgid "Starting the VI Improved Editor"
 msgstr "正在启动 VI 增强编辑器"
 
-#: ../xfce4-session/xfsm-startup.c:151
+#: ../xfce4-session/xfsm-startup.c:364
 msgid "Starting the Session Management Proxy"
 msgstr "正在启动会话管理代理"
 
-#: ../xfce4-session/xfsm-startup.c:153
+#: ../xfce4-session/xfsm-startup.c:366
 msgid "Starting the X-Chat IRC Client"
 msgstr "正在启动 X-Chat IRC 客户端"
 
-#: ../xfce4-session/xfsm-startup.c:155
+#: ../xfce4-session/xfsm-startup.c:368
 msgid "Starting the X Multimedia System"
 msgstr "正在启动 X 多媒体系统"
 
-#: ../xfce4-session/xfsm-startup.c:157
+#: ../xfce4-session/xfsm-startup.c:370
 msgid "Starting the X Terminal Emulator"
 msgstr "正在启动 X 终端模拟器"
 
-#: ../xfce4-session/xfsm-startup.c:159
+#: ../xfce4-session/xfsm-startup.c:372
 #, c-format
 msgid "Starting %s"
 msgstr "正在启动 %s"
 
-#: ../xfce4-session/xfsm-startup.c:283
+#: ../xfce4-session/xfsm-startup.c:496
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -698,11 +698,11 @@ msgstr ""
 "目录中的文件已成功地迁移到了此新位置。\n"
 "您现在应该删除此目录。\n"
 
-#: ../xfce4-session/xfsm-startup.c:452
+#: ../xfce4-session/xfsm-startup.c:665
 msgid "Performing Autostart..."
 msgstr "正在执行自启动..."
 
-#: ../xfce4-session/xfsm-startup.c:558
+#: ../xfce4-session/xfsm-startup.c:771
 msgid "Starting Assistive Technologies"
 msgstr "正在启动辅助技术"
 
@@ -730,47 +730,47 @@ msgstr "kiosk 设置阻止了关机"
 msgid "Unknown shutdown method %d"
 msgstr "未知关机方式 %d"
 
-#: ../xfce4-session-logout/main.c:57
+#: ../xfce4-session-logout/main.c:67
 msgid "Log out without displaying the logout dialog"
 msgstr "注销时不显示注销对话框"
 
-#: ../xfce4-session-logout/main.c:61
+#: ../xfce4-session-logout/main.c:71
 msgid "Halt without displaying the logout dialog"
 msgstr "断开时不显示注销对话框"
 
-#: ../xfce4-session-logout/main.c:65
+#: ../xfce4-session-logout/main.c:75
 msgid "Reboot without displaying the logout dialog"
 msgstr "重启时不显示注销对话框"
 
-#: ../xfce4-session-logout/main.c:69
+#: ../xfce4-session-logout/main.c:79
 msgid "Suspend without displaying the logout dialog"
 msgstr "待机时不显示注销对话框"
 
-#: ../xfce4-session-logout/main.c:73
+#: ../xfce4-session-logout/main.c:83
 msgid "Hibernate without displaying the logout dialog"
 msgstr "休眠时不显示注销对话框"
 
-#: ../xfce4-session-logout/main.c:77
+#: ../xfce4-session-logout/main.c:87
 msgid "Log out quickly; don't save the session"
 msgstr "快速注销；不保存会话"
 
-#: ../xfce4-session-logout/main.c:100
+#: ../xfce4-session-logout/main.c:110
 msgid "Unknown error"
 msgstr "未知错误"
 
-#: ../xfce4-session-logout/main.c:125
+#: ../xfce4-session-logout/main.c:136
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "撰写者为 Benedikt Meurer <benny@xfce.org> "
 
-#: ../xfce4-session-logout/main.c:126
+#: ../xfce4-session-logout/main.c:137
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "和 Brian Tarricone <kelnos@xfce.org>。"
 
-#: ../xfce4-session-logout/main.c:136
+#: ../xfce4-session-logout/main.c:147
 msgid "Unable to contact D-Bus session bus"
 msgstr "未能与 D-Bus 会话总线联系"
 
-#: ../xfce4-session-logout/main.c:186
+#: ../xfce4-session-logout/main.c:223
 msgid "Received error while trying to log out"
 msgstr "试图注销时收到错误"
 
