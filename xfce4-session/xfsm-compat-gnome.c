@@ -84,11 +84,12 @@ child_setup (gpointer user_data)
   for (fd = 3; fd < open_max; fd++)
     {
       if (fd != keyring_lifetime_pipe[0])
-      fcntl (fd, F_SETFD, FD_CLOEXEC);
+        fcntl (fd, F_SETFD, FD_CLOEXEC);
     }
 
   fd_str = g_strdup_printf ("%d", keyring_lifetime_pipe[0]);
   g_setenv ("GNOME_KEYRING_LIFETIME_FD", fd_str, TRUE);
+  g_free (fd_str);
 }
 
 
@@ -253,28 +254,11 @@ xfsm_compat_gnome_startup (XfsmSplashScreen *splash)
 void
 xfsm_compat_gnome_shutdown (void)
 {
-  GError *error = NULL;
-  gint    status;
-
   if (G_UNLIKELY (!gnome_compat_started))
     return;
 
   /* shutdown the keyring daemon */
   gnome_keyring_daemon_shutdown ();
-
-  /* shutdown the GConf daemon */
-  if (!g_spawn_command_line_sync ("gconftool-2 --shutdown", NULL,
-                                  NULL, &status, &error))
-    {
-      g_warning ("Failed to shutdown the GConf daemon on logout: %s",
-                 error->message);
-      g_error_free (error);
-    }
-  else if (status != 0)
-    {
-      g_warning ("Failed to shutdown the GConf daemon on logout: "
-                 "gconftool-2 returned status %d", status);
-    }
 
   xfsm_compat_gnome_smproxy_shutdown ();
 
