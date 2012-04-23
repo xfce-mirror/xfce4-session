@@ -153,9 +153,28 @@ xfsm_startup_init (XfconfChannel *channel)
   gchar       *cmd;
   const gchar *ssh_agent_pid;
   pid_t        pid;
+  gboolean     gnome_keyring_found;
 
   if (xfconf_channel_get_bool (channel, "/startup/ssh-agent/enabled", TRUE))
     {
+      /* if GNOME compatibility is enabled and gnome-keyring-daemon
+       * is found, skip the gpg/ssh agent startup and wait for
+       * gnome-keyring, which is probably what the user wants */
+      if (xfconf_channel_get_bool (channel, "/compat/LaunchGNOME", FALSE))
+        {
+          cmd = g_find_program_in_path ("gnome-keyring-daemon");
+          gnome_keyring_found = (cmd != NULL);
+          g_free (cmd);
+
+          if (gnome_keyring_found)
+            {
+              g_print ("xfce4-session: %s\n",
+                       "GNOME compatibility is enabled and gnome-keyring-daemon is "
+                       "found on the system. Skipping gpg/ssh-agent startup.");
+              return;
+            }
+        }
+
       agent = xfconf_channel_get_string (channel, "/startup/ssh-agent/type", NULL);
       if (g_strcmp0 (agent, "gpg-agent") == 0
           || g_strcmp0 (agent, "ssh-agent") == 0)
