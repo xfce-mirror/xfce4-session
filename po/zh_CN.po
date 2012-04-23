@@ -13,8 +13,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session\n"
-"Report-Msgid-Bugs-To: <xfce-i18n@xfce.org>\n"
-"POT-Creation-Date: 2012-04-20 07:57+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-22 23:12+0000\n"
 "PO-Revision-Date: 2010-04-06 13:28+0800\n"
 "Last-Translator: Chipong Luo <chipong.luo@yahoo.com>\n"
 "Language-Team: Chinese (Simplified) <xfce-i18n-cn@xfce.org>\n"
@@ -43,7 +43,7 @@ msgstr "挑选要安装的主题文件..."
 #: ../engines/balou/config.c:336
 #, c-format
 msgid "Unable to install splash theme from file \"%s\""
-msgstr "未能从文件 “%s” 安装启动画面主题。"
+msgstr "未能从文件 “%s” 安装启动画面主题"
 
 #: ../engines/balou/config.c:339
 msgid "Theme File Error"
@@ -224,7 +224,7 @@ msgstr "清除会话"
 
 #: ../settings/session-editor.c:171
 msgid "Are you sure you want to empty the session cache?"
-msgstr "您确定要清空会话缓存吗？"
+msgstr "您确定要清空此会话缓存吗？"
 
 #: ../settings/session-editor.c:172
 msgid ""
@@ -352,7 +352,7 @@ msgid ""
 "desktop environment, but you can still enable them if you want."
 msgstr ""
 "以下是您在登录 Xfce 桌面时会自动启动的应用程序列表，包括您在上次注销时保存的"
-"应用程序。草体的应用程序属于其它桌面环境，但在需要时您仍然可以启动它们。"
+"应用程序。斜体的应用程序属于其它桌面环境，但在需要时您仍然可以启动它们。"
 
 #: ../settings/xfae-window.c:293
 #, c-format
@@ -402,7 +402,7 @@ msgstr "正在载入桌面设置"
 #. verify that the DNS settings are ok
 #: ../xfce4-session/main.c:298
 msgid "Verifying DNS settings"
-msgstr "正在确认 DNS 设置"
+msgstr "正在校验 DNS 设置"
 
 #: ../xfce4-session/main.c:302
 msgid "Loading session data"
@@ -417,7 +417,7 @@ msgstr "最后访问：%s"
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
-msgstr "选择您要恢复的会话。您可以简单地双击会话名来恢复它。"
+msgstr "选择您要恢复的会话。您只需双击会话名即可恢复它。"
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:198
@@ -463,8 +463,8 @@ msgid ""
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
 msgstr ""
-"无法查找 %s 的互联网地址。这会阻止 Xfce\n"
-"正常操作。在您的系统上的 /etc/hosts 中\n"
+"未能查找 %s 的互联网地址。这会阻止 Xfce\n"
+"的正常操作。在您系统上的 /etc/hosts 中\n"
 "添加 %s 可能会更正此问题。"
 
 #: ../xfce4-session/xfsm-dns.c:154
@@ -483,8 +483,8 @@ msgid ""
 "incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr ""
 "未能确定安全会话名称。可能由于：xfconfd\n"
-"没有运行(D-Bus 设置问题)；未正确设置环境\n"
-"变量 $XDG_CONFIG_DIRS(必须包含 “%s”)；\n"
+"没有运行(D-Bus 设置问题)，未正确设置环境\n"
+"变量 $XDG_CONFIG_DIRS(必须包含 “%s”)，\n"
 "或 xfce4-session 未正确安装。"
 
 #: ../xfce4-session/xfsm-manager.c:620
@@ -514,26 +514,26 @@ msgstr "无法关机"
 
 #: ../xfce4-session/xfsm-manager.c:1126
 msgid "Failed to suspend session"
-msgstr "未能挂起会话"
+msgstr "会话无法挂起"
 
 #: ../xfce4-session/xfsm-manager.c:1127
 msgid "Failed to hibernate session"
-msgstr "未能休眠会话"
+msgstr "会话无法休眠"
 
 #: ../xfce4-session/xfsm-manager.c:1393
 #, c-format
 msgid "Can only terminate clients when in the idle state"
-msgstr "仅在空闲时可以终止客户端"
+msgstr "仅在空闲时才能终止客户端"
 
 #: ../xfce4-session/xfsm-manager.c:1956
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
-msgstr "要求检查点时会话管理器必须处于空闲状态"
+msgstr "提请检查点时会话管理器必须处于空闲状态"
 
 #: ../xfce4-session/xfsm-manager.c:1997
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
-msgstr "要求关机时会话管理器必须处于空闲状态"
+msgstr "提请关机时会话管理器必须处于空闲状态"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:188
 #, c-format
@@ -591,7 +591,7 @@ msgstr "选择会话名称"
 
 #: ../xfce4-session/xfsm-splash-screen.c:222
 msgid "Choose a name for the new session:"
-msgstr "为新的会话选择名称："
+msgstr "为此新会话选择一个名称："
 
 #: ../xfce4-session/xfsm-startup.c:328
 msgid "Starting the Volume Controller"
@@ -659,7 +659,7 @@ msgstr "正在启动会话管理代理"
 
 #: ../xfce4-session/xfsm-startup.c:366
 msgid "Starting the X-Chat IRC Client"
-msgstr "正在启动 X-Chat IRC 客户端"
+msgstr "正在启动 X-Chat 网络聊天客户端"
 
 #: ../xfce4-session/xfsm-startup.c:368
 msgid "Starting the X Multimedia System"
@@ -875,7 +875,7 @@ msgstr "管理远程应用程序(_R)"
 #: ../settings/xfce4-session-settings.glade.h:22
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
-msgstr "通过网络管理远程应用程序(可能是安全风险)"
+msgstr "通过网络管理远程应用程序(可能有安全风险)"
 
 #: ../settings/xfce4-session-settings.glade.h:23
 msgid "Opens the configuration panel for the selected splash screen"
@@ -919,7 +919,7 @@ msgid ""
 "saved when you log out.  Changes below will only take effect when the "
 "session is saved."
 msgstr ""
-"这些应用程序是当前正在运行会话的一部分，并可在您注销时保存。以下更改只在会话"
+"这些应用程序是当前正在运行会话的一部分，且在您注销时可以保存。以下更改只在会话"
 "保存后才生效。"
 
 #: ../settings/xfce4-session-settings.glade.h:34
@@ -930,7 +930,7 @@ msgstr "正在保存您的会话，如果您不愿等待，可以关闭此窗口
 
 #: ../settings/xfce4-session-settings.glade.h:35
 msgid "_Clear saved sessions"
-msgstr "清除已保存会话"
+msgstr "清除已保存的会话"
 
 #: ../settings/xfce4-session-settings.glade.h:36
 msgid "_Display chooser on login"
@@ -988,7 +988,7 @@ msgstr "标签"
 #~ msgstr "注销出错"
 
 #~ msgid "Failed to create new D-Bus message"
-#~ msgstr "无法创建新的 D-Bus 消息"
+#~ msgstr "无法创建新的 D-Bus 信息"
 
 #~ msgid "Failed to receive a reply from the session manager"
 #~ msgstr "无法从会话管理器接收回复"
