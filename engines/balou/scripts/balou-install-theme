@@ -40,7 +40,7 @@ targetdir="${2}"
 
 # ensure the target directory exists
 if test ! -d "${targetdir}"; then
-  mkdirhier "${targetdir}" >/dev/null 2>&1
+  mkdir -p "${targetdir}" >/dev/null 2>&1
   if test $? -ne 0; then
     echo "Unable to create themes directory ${targetdir}." >&2
     exit 1
