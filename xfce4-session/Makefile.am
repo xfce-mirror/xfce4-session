@@ -66,7 +66,6 @@ xfce4_session_SOURCES =							\
 	xfsm-upower.h
 
 xfce4_session_CFLAGS =							\
-	$(GNOME_KEYRING_CFLAGS)						\
 	$(LIBSM_CFLAGS)							\
 	$(LIBX11_CFLAGS)						\
 	$(LIBXFCE4UI_CFLAGS)						\
@@ -93,7 +92,6 @@ xfce4_session_LDADD =							\
 	$(DBUS_GLIB_LIBS)						\
 	$(LIBWNCK_LIBS)							\
 	$(XFCONF_LIBS)							\
-	$(GNOME_KEYRING_LIBS)						\
 	-lm
 
 xfce4_session_DEPENDENCIES =						\

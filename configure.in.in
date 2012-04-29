@@ -96,11 +96,6 @@ XDT_CHECK_PACKAGE([DBUS], [dbus-1], [1.1.0])
 XDT_CHECK_PACKAGE([DBUS_GLIB], [dbus-glib-1], [0.84])
 XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.9.0])
 
-dnl Check for gnome support
-XDT_CHECK_OPTIONAL_PACKAGE([GNOME_KEYRING], [gnome-keyring-1], [2.22],
-                           [libgnome-keyring],
-                           [Extra gnome-keyring compatibility support], [no])
-
 dnl Check for debugging support
 XDT_FEATURE_DEBUG([xfsm_debug_default])
 

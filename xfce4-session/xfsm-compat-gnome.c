@@ -59,10 +59,6 @@
 
 #include <libxfce4util/libxfce4util.h>
 
-#ifdef HAVE_GNOME_KEYRING
-#include <gnome-keyring.h>
-#endif
-
 #include <xfce4-session/xfsm-compat-gnome.h>
 
 #define GNOME_KEYRING_DAEMON "gnome-keyring-daemon"
@@ -154,10 +150,6 @@ gnome_keyring_daemon_startup (void)
             }
 
           g_strfreev (lines);
-
-#ifdef HAVE_GNOME_KEYRING
-          gnome_keyring_daemon_prepare_environment_sync ();
-#endif
         }
       else
         {
