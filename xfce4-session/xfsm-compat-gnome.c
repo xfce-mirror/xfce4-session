@@ -92,15 +92,17 @@ child_setup (gpointer user_data)
 static void
 gnome_keyring_daemon_startup (void)
 {
-  GError *error = NULL;
-  gchar  *sout;
-  gchar **lines;
-  gsize   lineno;
-  gint    status;
-  long    pid;
-  gchar  *pid_str;
-  gchar  *end;
-  char *argv[3];
+  GError      *error = NULL;
+  gchar       *sout;
+  gchar      **lines;
+  gsize        lineno;
+  gint         status;
+  glong        pid;
+  gchar       *end;
+  gchar       *argv[3];
+  gchar       *p;
+  gchar       *name;
+  const gchar *value;
 
   /* Pipe to slave keyring lifetime to */
   if (pipe (keyring_lifetime_pipe))
@@ -136,17 +138,23 @@ gnome_keyring_daemon_startup (void)
 
           for (lineno = 0; lines[lineno] != NULL; lineno++)
             {
-              xfce_putenv (lines[lineno]);
+              p = strchr (lines[lineno], '=');
+              if (p == NULL)
+               continue;
 
-              if (g_str_has_prefix (lines[lineno], "GNOME_KEYRING_PID="))
+              name = g_strndup (lines[lineno], p - lines[lineno]);
+              value = p + 1;
+
+              g_setenv (name, value, TRUE);
+
+              if (g_strcmp0 (name, "GNOME_KEYRING_PID") == 0)
                 {
-                  pid_str = lines[lineno] + strlen ("GNOME_KEYRING_PID=");
-                  pid = strtol (pid_str, &end, 10);
-                  if (end != pid_str)
-                    {
-                      gnome_keyring_daemon_pid = pid;
-                    }
+                  pid = strtol (value, &end, 10);
+                  if (end != value)
+                    gnome_keyring_daemon_pid = pid;
                 }
+
+              g_free (name);
             }
 
           g_strfreev (lines);
