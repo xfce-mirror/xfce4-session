@@ -269,9 +269,9 @@ xfsm_shutdown_sudo_init (XfsmShutdown  *shutdown,
       signal (SIGPIPE, SIG_IGN);
 
       /* setup environment */
-      xfce_setenv ("LC_ALL", "C", TRUE);
-      xfce_setenv ("LANG", "C", TRUE);
-      xfce_setenv ("LANGUAGE", "C", TRUE);
+      g_setenv ("LC_ALL", "C", TRUE);
+      g_setenv ("LANG", "C", TRUE);
+      g_setenv ("LANGUAGE", "C", TRUE);
 
       /* setup the 3 standard file handles */
       dup2 (child_pipe[0], STDIN_FILENO);
