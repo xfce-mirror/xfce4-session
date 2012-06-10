@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-28 23:39+0000\n"
+"POT-Creation-Date: 2012-06-10 09:57+0000\n"
 "PO-Revision-Date: 2010-07-01 11:43+0700\n"
 "Last-Translator: Andhika Padmawan <andhika.padmawan@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
@@ -165,12 +165,12 @@ msgid "Type '%s --help' for usage."
 msgstr "Ketik '%s --help' untuk penggunaan."
 
 #: ../settings/main.c:87 ../xfce4-session/main.c:267
-#: ../xfce4-session-logout/main.c:124
+#: ../xfce4-session-logout/main.c:135
 msgid "The Xfce development team. All rights reserved."
 msgstr "Tim pengembang Xfce. Hak cipta dilindungi undang-undang."
 
 #: ../settings/main.c:88 ../xfce4-session/main.c:268
-#: ../xfce4-session-logout/main.c:127
+#: ../xfce4-session-logout/main.c:138
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Silakan laporkan kutu ke <%s>."
@@ -232,23 +232,24 @@ msgid "_Proceed"
 msgstr "_Lanjutkan"
 
 #: ../settings/session-editor.c:212
-msgid "You might need to delete some files manually in "
-msgstr "Anda mungkin perlu menghapus beberapa berkas secara manual di"
+#, c-format
+msgid "You might need to delete some files manually in \"%s\"."
+msgstr "Anda perlu menghapus beberapa berkas secara manual di \"%s\"."
 
-#: ../settings/session-editor.c:216
+#: ../settings/session-editor.c:215
 msgid "All Xfce cache files could not be cleared"
 msgstr "Semua berkas tembolok Xfce tak dapat dihapus"
 
-#: ../settings/session-editor.c:250
+#: ../settings/session-editor.c:249
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Anda yakin ingin mematikan \"%s\"?"
 
-#: ../settings/session-editor.c:253 ../settings/session-editor.c:281
+#: ../settings/session-editor.c:252 ../settings/session-editor.c:280
 msgid "Terminate Program"
 msgstr "Matikan Program"
 
-#: ../settings/session-editor.c:255
+#: ../settings/session-editor.c:254
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
@@ -256,32 +257,32 @@ msgstr ""
 "Aplikasi akan kehilangan kondisi tak tersimpan apapun dan tak akan "
 "dijalankan ulang pada sesi anda berikutnya."
 
-#: ../settings/session-editor.c:257
+#: ../settings/session-editor.c:256
 #: ../settings/xfce4-session-settings.glade.h:40
 msgid "_Quit Program"
 msgstr "_Keluar Program"
 
-#: ../settings/session-editor.c:282
+#: ../settings/session-editor.c:281
 msgid "Unable to terminate program."
 msgstr "Tak dapat mematikan program."
 
-#: ../settings/session-editor.c:460
+#: ../settings/session-editor.c:459
 msgid "(Unknown program)"
 msgstr "(Program tak diketahui)"
 
-#: ../settings/session-editor.c:680
+#: ../settings/session-editor.c:679
 msgid "Priority"
 msgstr "Prioritas"
 
-#: ../settings/session-editor.c:688
+#: ../settings/session-editor.c:687
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:694
+#: ../settings/session-editor.c:693
 msgid "Program"
 msgstr "Program"
 
-#: ../settings/session-editor.c:719
+#: ../settings/session-editor.c:718
 msgid "Restart Style"
 msgstr "Gaya Start Ulang"
 
@@ -390,7 +391,7 @@ msgstr "Gagal mengubah item"
 msgid "Disable binding to TCP ports"
 msgstr "Nonaktifkan pengikatan ke pangkalan TCP"
 
-#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:81
+#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:91
 msgid "Print version information and exit"
 msgstr "Cetak informasi versi dan keluar"
 
@@ -444,7 +445,7 @@ msgstr "Buat sebuah sesi baru."
 msgid "The client doesn't have any properties set yet"
 msgstr "Klien belum memiliki pengaturan properti apapun"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:246
+#: ../xfce4-session/xfsm-compat-gnome.c:247
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "Memulai Jurik Keyring Gnome"
 
@@ -523,18 +524,18 @@ msgstr "Gagal menyuspensi sesi"
 msgid "Failed to hibernate session"
 msgstr "Gagal menghibernasi sesi"
 
-#: ../xfce4-session/xfsm-manager.c:1413
+#: ../xfce4-session/xfsm-manager.c:1393
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Hanya dapat mematikan klien ketika dalam kondisi tak aktif"
 
-#: ../xfce4-session/xfsm-manager.c:1976
+#: ../xfce4-session/xfsm-manager.c:1956
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 "Manajer sesi harus dalam kondisi tak aktif ketika meminta titik pemeriksaan"
 
-#: ../xfce4-session/xfsm-manager.c:2017
+#: ../xfce4-session/xfsm-manager.c:1997
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
@@ -600,88 +601,88 @@ msgstr "Pilih nama sesi"
 msgid "Choose a name for the new session:"
 msgstr "Pilih nama untuk sesi baru:"
 
-#: ../xfce4-session/xfsm-startup.c:115
+#: ../xfce4-session/xfsm-startup.c:347
 msgid "Starting the Volume Controller"
 msgstr "Memulai Pengendali Volume"
 
-#: ../xfce4-session/xfsm-startup.c:117
+#: ../xfce4-session/xfsm-startup.c:349
 msgid "Starting the Panel"
 msgstr "Memulai Panel"
 
-#: ../xfce4-session/xfsm-startup.c:119
+#: ../xfce4-session/xfsm-startup.c:351
 msgid "Starting the Desktop Manager"
 msgstr "Memulai Manajer Destop"
 
-#: ../xfce4-session/xfsm-startup.c:121
+#: ../xfce4-session/xfsm-startup.c:353
 msgid "Starting the Taskbar"
 msgstr "Memulai Batang Tugas"
 
-#: ../xfce4-session/xfsm-startup.c:123
+#: ../xfce4-session/xfsm-startup.c:355
 msgid "Starting the Window Manager"
 msgstr "Memulai Manajer Jendela"
 
-#: ../xfce4-session/xfsm-startup.c:127
+#: ../xfce4-session/xfsm-startup.c:359
 msgid "Starting the Gnome Terminal Emulator"
 msgstr "Memulai Emulator Terminal Gnome"
 
-#: ../xfce4-session/xfsm-startup.c:131
+#: ../xfce4-session/xfsm-startup.c:363
 msgid "Starting the KDE Advanced Text Editor"
 msgstr "Memulai Penyunting Teks Tingkat Lanjut KDE"
 
-#: ../xfce4-session/xfsm-startup.c:133
+#: ../xfce4-session/xfsm-startup.c:365
 msgid "Starting the KDE Clipboard Manager"
 msgstr "Memulai Manajer Papan Klip KDE"
 
-#: ../xfce4-session/xfsm-startup.c:135
+#: ../xfce4-session/xfsm-startup.c:367
 msgid "Starting the KDE Mail Reader"
 msgstr "Memulai Pembaca Surat KDE"
 
-#: ../xfce4-session/xfsm-startup.c:137
+#: ../xfce4-session/xfsm-startup.c:369
 msgid "Starting the KDE News Reader"
 msgstr "Memulai Pembaca Berita KDE"
 
-#: ../xfce4-session/xfsm-startup.c:139
+#: ../xfce4-session/xfsm-startup.c:371
 msgid "Starting the Konqueror"
 msgstr "Memulai Konqueror"
 
-#: ../xfce4-session/xfsm-startup.c:141
+#: ../xfce4-session/xfsm-startup.c:373
 msgid "Starting the KDE Terminal Emulator"
 msgstr "Memulai Emulator Terminal KDE"
 
-#: ../xfce4-session/xfsm-startup.c:145
+#: ../xfce4-session/xfsm-startup.c:377
 msgid "Starting the Beep Media Player"
 msgstr "Memulai Pemutar Media Beep"
 
-#: ../xfce4-session/xfsm-startup.c:147
+#: ../xfce4-session/xfsm-startup.c:379
 msgid "Starting The Gimp"
 msgstr "Memulai Gimp"
 
-#: ../xfce4-session/xfsm-startup.c:149
+#: ../xfce4-session/xfsm-startup.c:381
 msgid "Starting the VI Improved Editor"
 msgstr "Memulai Penyunting VI Improved"
 
-#: ../xfce4-session/xfsm-startup.c:151
+#: ../xfce4-session/xfsm-startup.c:383
 msgid "Starting the Session Management Proxy"
 msgstr "Memulai Sesi Manajemen Proxy"
 
-#: ../xfce4-session/xfsm-startup.c:153
+#: ../xfce4-session/xfsm-startup.c:385
 msgid "Starting the X-Chat IRC Client"
 msgstr "Memulai Klien IRC X-Chat"
 
-#: ../xfce4-session/xfsm-startup.c:155
+#: ../xfce4-session/xfsm-startup.c:387
 msgid "Starting the X Multimedia System"
 msgstr "Memulai Sistem Multimedia X"
 
-#: ../xfce4-session/xfsm-startup.c:157
+#: ../xfce4-session/xfsm-startup.c:389
 msgid "Starting the X Terminal Emulator"
 msgstr "Memulai Emulator Terminal X"
 
-#: ../xfce4-session/xfsm-startup.c:159
+#: ../xfce4-session/xfsm-startup.c:391
 #, c-format
 msgid "Starting %s"
 msgstr "Memulai %s"
 
-#: ../xfce4-session/xfsm-startup.c:283
+#: ../xfce4-session/xfsm-startup.c:515
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -706,11 +707,11 @@ msgstr ""
 "baru.\n"
 "Anda dapat menghapus direktori ini sekarang.\n"
 
-#: ../xfce4-session/xfsm-startup.c:452
+#: ../xfce4-session/xfsm-startup.c:684
 msgid "Performing Autostart..."
 msgstr "Melakukan Start Otomatis..."
 
-#: ../xfce4-session/xfsm-startup.c:558
+#: ../xfce4-session/xfsm-startup.c:790
 msgid "Starting Assistive Technologies"
 msgstr "Memulai Teknologi Bantuan"
 
@@ -738,47 +739,47 @@ msgstr "Matikan diblok oleh pengaturan kiosk"
 msgid "Unknown shutdown method %d"
 msgstr "Metode matikan tidak dikenal %d"
 
-#: ../xfce4-session-logout/main.c:57
+#: ../xfce4-session-logout/main.c:67
 msgid "Log out without displaying the logout dialog"
 msgstr "Keluar tanpa menampilkan dialog keluar"
 
-#: ../xfce4-session-logout/main.c:61
+#: ../xfce4-session-logout/main.c:71
 msgid "Halt without displaying the logout dialog"
 msgstr "Matikan tanpa menampilkan dialog keluar"
 
-#: ../xfce4-session-logout/main.c:65
+#: ../xfce4-session-logout/main.c:75
 msgid "Reboot without displaying the logout dialog"
 msgstr "Hidupkan ulang tanpa menampilkan dialog keluar"
 
-#: ../xfce4-session-logout/main.c:69
+#: ../xfce4-session-logout/main.c:79
 msgid "Suspend without displaying the logout dialog"
 msgstr "Suspensi tanpa menampilkan dialog keluar"
 
-#: ../xfce4-session-logout/main.c:73
+#: ../xfce4-session-logout/main.c:83
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Hibernasi tanpa menampilkan dialog keluar"
 
-#: ../xfce4-session-logout/main.c:77
+#: ../xfce4-session-logout/main.c:87
 msgid "Log out quickly; don't save the session"
 msgstr "Keluar secara cepat; jangan simpan sesi"
 
-#: ../xfce4-session-logout/main.c:100
+#: ../xfce4-session-logout/main.c:110
 msgid "Unknown error"
 msgstr "Galat tak diketahui"
 
-#: ../xfce4-session-logout/main.c:125
+#: ../xfce4-session-logout/main.c:136
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Ditulis oleh Benedikt Meurer <benny@xfce.org>"
 
-#: ../xfce4-session-logout/main.c:126
+#: ../xfce4-session-logout/main.c:137
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "dan Brian Tarricone <kelnos@xfce.org>."
 
-#: ../xfce4-session-logout/main.c:136
+#: ../xfce4-session-logout/main.c:147
 msgid "Unable to contact D-Bus session bus"
 msgstr "Tak dapat menghubungi bus sesi D-BUS"
 
-#: ../xfce4-session-logout/main.c:186
+#: ../xfce4-session-logout/main.c:223
 msgid "Received error while trying to log out"
 msgstr "Menerima galat ketika mencoba log keluar"
 
