@@ -1,23 +1,23 @@
 # Copyright (C) 2003-2006 The Xfce development team.
 # This file is distributed under the same license as the xfce4-session package.
-#
+# 
 # Stavros Giannouris <stavrosg@hellug.gr>, 2005, 2006, 2007.
 # Stathis Kamperis <ekamperi@auth.gr>, 2006.
 # Evaggelos Balaskas <ebalaskas@ebalaskas.gr>, 2009.
 # Efstathios Iosifidis <iosifidis@opensuse.org>, 2012.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session git version\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-08 14:12+0000\n"
+"POT-Creation-Date: 2012-10-06 18:51+0000\n"
 "PO-Revision-Date: 2012-04-11 21:24+0300\n"
 "Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
 "Language-Team: Ελληνικά, Σύγχρονα <opensuse-translation-el@opensuse.org>\n"
-"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Poedit-Language: Greek\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -174,13 +174,13 @@ msgid "Type '%s --help' for usage."
 msgstr "Πληκτρολογήστε '%s --help' για βοήθεια."
 
 #: ../settings/main.c:87 ../xfce4-session/main.c:267
-#: ../xfce4-session-logout/main.c:124
+#: ../xfce4-session-logout/main.c:135
 msgid "The Xfce development team. All rights reserved."
 msgstr ""
 "Η ομάδα ανάπτυξης του xfce. Με την επιφύλαξη παντός νόμιμου δικαιώματος."
 
 #: ../settings/main.c:88 ../xfce4-session/main.c:268
-#: ../xfce4-session-logout/main.c:127
+#: ../xfce4-session-logout/main.c:138
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Παρακαλώ να αναφέρετε σφάλματα στο <%s>"
@@ -245,23 +245,24 @@ msgid "_Proceed"
 msgstr "_Συνέχεια"
 
 #: ../settings/session-editor.c:212
-msgid "You might need to delete some files manually in "
-msgstr "Μπορεί να χρειαστείτε να διαγράψετε μερικά αρχεία χειροκίνητα στο"
+#, c-format
+msgid "You might need to delete some files manually in \"%s\"."
+msgstr "Μπορεί να χρειαστείτε να διαγράψετε μερικά αρχεία χειροκίνητα στο \"%s\"."
 
-#: ../settings/session-editor.c:216
+#: ../settings/session-editor.c:215
 msgid "All Xfce cache files could not be cleared"
 msgstr "Αδυναμία εκκαθάρισης όλων των αρχείων της λανθάνουσας μνήμης του Xfce"
 
-#: ../settings/session-editor.c:250
+#: ../settings/session-editor.c:249
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Είστε σίγουροι ότι θέλετε να τερματίσετε το \"%s\";"
 
-#: ../settings/session-editor.c:253 ../settings/session-editor.c:281
+#: ../settings/session-editor.c:252 ../settings/session-editor.c:280
 msgid "Terminate Program"
 msgstr "Τερματισμός προγράμματος"
 
-#: ../settings/session-editor.c:255
+#: ../settings/session-editor.c:254
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
@@ -269,32 +270,32 @@ msgstr ""
 "Η εφαρμογή θα χάσει την μη αποθηκευμένη κατάσταση και δεν θα ξεκινήσει στην "
 "επόμενη συνεδρία σας."
 
-#: ../settings/session-editor.c:257
+#: ../settings/session-editor.c:256
 #: ../settings/xfce4-session-settings.glade.h:40
 msgid "_Quit Program"
 msgstr "Τ_ερματισμός προγράμματος"
 
-#: ../settings/session-editor.c:282
+#: ../settings/session-editor.c:281
 msgid "Unable to terminate program."
 msgstr "Αδυναμία τερματισμού προγράμματος."
 
-#: ../settings/session-editor.c:460
+#: ../settings/session-editor.c:459
 msgid "(Unknown program)"
 msgstr "(Άγνωστο πρόγραμμα)"
 
-#: ../settings/session-editor.c:680
+#: ../settings/session-editor.c:679
 msgid "Priority"
 msgstr "Προτεραιότητα"
 
-#: ../settings/session-editor.c:688
+#: ../settings/session-editor.c:687
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:694
+#: ../settings/session-editor.c:693
 msgid "Program"
 msgstr "Πρόγραμμα"
 
-#: ../settings/session-editor.c:719
+#: ../settings/session-editor.c:718
 msgid "Restart Style"
 msgstr "Στυλ επανεκκίνησης"
 
@@ -354,7 +355,6 @@ msgid "Failed to open %s for writing"
 msgstr "Αδυναμία ανοίγματος του '%s' για εγγραφή"
 
 #: ../settings/xfae-window.c:102
-#, fuzzy
 msgid ""
 "Below is the list of applications that will be started automatically when "
 "you login to your Xfce desktop, in addition to the applications that were "
@@ -406,7 +406,7 @@ msgstr "Αποτυχία εναλλαγής κατάστασης του αντι
 msgid "Disable binding to TCP ports"
 msgstr "Απενεργοποίηση δέσμευσης θυρών TCP"
 
-#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:81
+#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:91
 msgid "Print version information and exit"
 msgstr "Εμφάνιση πληροφοριών έκδοσης"
 
@@ -460,7 +460,7 @@ msgstr "Δημιουργία νέας συνεδρίας"
 msgid "The client doesn't have any properties set yet"
 msgstr "Ο πελάτης δεν έχεις ορίσει καμία από τις ιδιότητες μέχρι στιγμής"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:246
+#: ../xfce4-session/xfsm-compat-gnome.c:239
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "Εκκίνηση του δαίμονα GNOME Keyring."
 
@@ -540,19 +540,19 @@ msgstr "Αποτυχία αναστολής συνεδρίας"
 msgid "Failed to hibernate session"
 msgstr "Αδυναμία αδρανοποίησης συνεδρίας"
 
-#: ../xfce4-session/xfsm-manager.c:1413
+#: ../xfce4-session/xfsm-manager.c:1393
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Μπορείτε μόνο να τερματίσετε πελάτες όταν είναι σε κατάσταση αδράνειας"
 
-#: ../xfce4-session/xfsm-manager.c:1976
+#: ../xfce4-session/xfsm-manager.c:1956
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 "Ο διαχειριστής συνεδριών μπορεί να είναι σε κατάσταση αδράνειας όταν φτάσει "
 "σε ένα σημείο ελέγχου"
 
-#: ../xfce4-session/xfsm-manager.c:2017
+#: ../xfce4-session/xfsm-manager.c:1997
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
@@ -619,88 +619,88 @@ msgstr "Επιλέξτε όνομα για τη συνεδρία"
 msgid "Choose a name for the new session:"
 msgstr "Επιλέξτε ένα όνομα για τη νέα συνεδρία:"
 
-#: ../xfce4-session/xfsm-startup.c:115
+#: ../xfce4-session/xfsm-startup.c:347
 msgid "Starting the Volume Controller"
 msgstr "Εκκίνηση του Ρυθμιστή της έντασης ήχου"
 
-#: ../xfce4-session/xfsm-startup.c:117
+#: ../xfce4-session/xfsm-startup.c:349
 msgid "Starting the Panel"
 msgstr "Εκκίνηση του Ταμπλό"
 
-#: ../xfce4-session/xfsm-startup.c:119
+#: ../xfce4-session/xfsm-startup.c:351
 msgid "Starting the Desktop Manager"
 msgstr "Εκκίνηση του Διαχειριστή επιφάνειας εργασίας"
 
-#: ../xfce4-session/xfsm-startup.c:121
+#: ../xfce4-session/xfsm-startup.c:353
 msgid "Starting the Taskbar"
 msgstr "Εκκίνηση της Μπάρας εργασιών"
 
-#: ../xfce4-session/xfsm-startup.c:123
+#: ../xfce4-session/xfsm-startup.c:355
 msgid "Starting the Window Manager"
 msgstr "Εκκίνηση του Διαχειριστή παραθύρων"
 
-#: ../xfce4-session/xfsm-startup.c:127
+#: ../xfce4-session/xfsm-startup.c:359
 msgid "Starting the Gnome Terminal Emulator"
 msgstr "Εκκίνηση του Τερματικού του Gnome"
 
-#: ../xfce4-session/xfsm-startup.c:131
+#: ../xfce4-session/xfsm-startup.c:363
 msgid "Starting the KDE Advanced Text Editor"
 msgstr "Εκκίνηση του Προχωρημένου επεξεργαστή κειμένου του KDE"
 
-#: ../xfce4-session/xfsm-startup.c:133
+#: ../xfce4-session/xfsm-startup.c:365
 msgid "Starting the KDE Clipboard Manager"
 msgstr "Εφαρμογίδιο διαχείρισης προχείρου του KDE"
 
-#: ../xfce4-session/xfsm-startup.c:135
+#: ../xfce4-session/xfsm-startup.c:367
 msgid "Starting the KDE Mail Reader"
 msgstr "Εκκίνηση του Αναγνώστη ηλεκ. αλληλογραφίας του KDE"
 
-#: ../xfce4-session/xfsm-startup.c:137
+#: ../xfce4-session/xfsm-startup.c:369
 msgid "Starting the KDE News Reader"
 msgstr "Εκκίνηση του Αναγνώστη ειδήσεων του KDE"
 
-#: ../xfce4-session/xfsm-startup.c:139
+#: ../xfce4-session/xfsm-startup.c:371
 msgid "Starting the Konqueror"
 msgstr "Εκκίνηση του Konqueror"
 
-#: ../xfce4-session/xfsm-startup.c:141
+#: ../xfce4-session/xfsm-startup.c:373
 msgid "Starting the KDE Terminal Emulator"
 msgstr "Εκκίνηση του Τερματικού του KDE"
 
-#: ../xfce4-session/xfsm-startup.c:145
+#: ../xfce4-session/xfsm-startup.c:377
 msgid "Starting the Beep Media Player"
 msgstr "Εκκίνηση του Αναπαραγωγέα μέσων Beep"
 
-#: ../xfce4-session/xfsm-startup.c:147
+#: ../xfce4-session/xfsm-startup.c:379
 msgid "Starting The Gimp"
 msgstr "Εκκίνηση του Gimp"
 
-#: ../xfce4-session/xfsm-startup.c:149
+#: ../xfce4-session/xfsm-startup.c:381
 msgid "Starting the VI Improved Editor"
 msgstr "Εκκίνηση του Επεξεργαστή κειμένου VI Improved"
 
-#: ../xfce4-session/xfsm-startup.c:151
+#: ../xfce4-session/xfsm-startup.c:383
 msgid "Starting the Session Management Proxy"
 msgstr "Εκκίνηση του Μεσολαβητή διαχείρισης συνεδρίας"
 
-#: ../xfce4-session/xfsm-startup.c:153
+#: ../xfce4-session/xfsm-startup.c:385
 msgid "Starting the X-Chat IRC Client"
 msgstr "Εκκίνηση του X-Chat"
 
-#: ../xfce4-session/xfsm-startup.c:155
+#: ../xfce4-session/xfsm-startup.c:387
 msgid "Starting the X Multimedia System"
 msgstr "Εκκίνηση του XMMS"
 
-#: ../xfce4-session/xfsm-startup.c:157
+#: ../xfce4-session/xfsm-startup.c:389
 msgid "Starting the X Terminal Emulator"
 msgstr "Εκκίνηση του Τερματικού Xterm"
 
-#: ../xfce4-session/xfsm-startup.c:159
+#: ../xfce4-session/xfsm-startup.c:391
 #, c-format
 msgid "Starting %s"
 msgstr "Εκκίνηση του %s "
 
-#: ../xfce4-session/xfsm-startup.c:283
+#: ../xfce4-session/xfsm-startup.c:515
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -725,11 +725,11 @@ msgstr ""
 "νέα θέση.\n"
 "Τώρα μπορείτε να σβήσετε αυτό τον κατάλογο.\n"
 
-#: ../xfce4-session/xfsm-startup.c:452
+#: ../xfce4-session/xfsm-startup.c:684
 msgid "Performing Autostart..."
 msgstr "Αυτόματη εκκίνηση..."
 
-#: ../xfce4-session/xfsm-startup.c:558
+#: ../xfce4-session/xfsm-startup.c:790
 msgid "Starting Assistive Technologies"
 msgstr "Εκκίνηση τεχνολογιών υποβοήθησης"
 
@@ -757,47 +757,47 @@ msgstr "Ο τερματισμός εμποδίζεται από τις ρυθμ�
 msgid "Unknown shutdown method %d"
 msgstr "Άγνωστη μέθοδος τερματισμού %d"
 
-#: ../xfce4-session-logout/main.c:57
+#: ../xfce4-session-logout/main.c:67
 msgid "Log out without displaying the logout dialog"
 msgstr "Αποσύνδεση χωρίς την εμφάνιση του διαλόγου αποσύνδεσης"
 
-#: ../xfce4-session-logout/main.c:61
+#: ../xfce4-session-logout/main.c:71
 msgid "Halt without displaying the logout dialog"
 msgstr "Κλείσιμο χωρίς την εμφάνιση του διαλόγου αποσύνδεσης"
 
-#: ../xfce4-session-logout/main.c:65
+#: ../xfce4-session-logout/main.c:75
 msgid "Reboot without displaying the logout dialog"
 msgstr "Επανεκκίνηση χωρίς την εμφάνιση του διαλόγου αποσύνδεσης"
 
-#: ../xfce4-session-logout/main.c:69
+#: ../xfce4-session-logout/main.c:79
 msgid "Suspend without displaying the logout dialog"
 msgstr "Αναστολή χωρίς την εμφάνιση του διαλόγου αποσύνδεσης"
 
-#: ../xfce4-session-logout/main.c:73
+#: ../xfce4-session-logout/main.c:83
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Αδρανοποίηση χωρίς την εμφάνιση του διαλόγου αποσύνδεσης"
 
-#: ../xfce4-session-logout/main.c:77
+#: ../xfce4-session-logout/main.c:87
 msgid "Log out quickly; don't save the session"
 msgstr "Γρήγορη αποσύνδεση: να μην αποθηκευτεί η συνεδρία"
 
-#: ../xfce4-session-logout/main.c:100
+#: ../xfce4-session-logout/main.c:110
 msgid "Unknown error"
 msgstr "(Άγνωστο σφάλμα)"
 
-#: ../xfce4-session-logout/main.c:125
+#: ../xfce4-session-logout/main.c:136
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Γραμμένο από τον Benedikt Meuer <benny@xfce.org>"
 
-#: ../xfce4-session-logout/main.c:126
+#: ../xfce4-session-logout/main.c:137
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "και Brian Tarricone <kelnos@xfce.org>."
 
-#: ../xfce4-session-logout/main.c:136
+#: ../xfce4-session-logout/main.c:147
 msgid "Unable to contact D-Bus session bus"
 msgstr "Αδυναμία επικοινωνίας με τον δίαυλο συνεδρίας D-Bus"
 
-#: ../xfce4-session-logout/main.c:186
+#: ../xfce4-session-logout/main.c:223
 msgid "Received error while trying to log out"
 msgstr "Λήφθηκε σφάλμα κατά την προσπάθεια αποσύνδεσης"
 
