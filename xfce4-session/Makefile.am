@@ -38,8 +38,6 @@ xfce4_session_SOURCES =							\
 	xfsm-compat-gnome.h						\
 	xfsm-compat-kde.c						\
 	xfsm-compat-kde.h						\
-	xfsm-consolekit.c						\
-	xfsm-consolekit.h						\
 	xfsm-dns.c							\
 	xfsm-dns.h							\
 	xfsm-error.c							\
@@ -65,6 +63,16 @@ xfce4_session_SOURCES =							\
 	xfsm-upower.c							\
 	xfsm-upower.h
 
+if HAVE_SYSTEMD
+xfce4_session_SOURCES +=						\
+	xfsm-systemd.c							\
+	xfsm-systemd.h
+else
+xfce4_session_SOURCES +=						\
+	xfsm-consolekit.c						\
+	xfsm-consolekit.h
+endif
+
 xfce4_session_CFLAGS =							\
 	$(LIBSM_CFLAGS)							\
 	$(LIBX11_CFLAGS)						\
@@ -72,6 +80,7 @@ xfce4_session_CFLAGS =							\
 	$(DBUS_CFLAGS)							\
 	$(DBUS_GLIB_CFLAGS)						\
 	$(LIBWNCK_CFLAGS)						\
+	$(SYSTEMD_CFLAGS)						\
 	$(XFCONF_CFLAGS)						\
 	$(GMODULE_CFLAGS)						\
 	$(PLATFORM_CFLAGS)
@@ -91,6 +100,7 @@ xfce4_session_LDADD =							\
 	$(DBUS_LIBS)							\
 	$(DBUS_GLIB_LIBS)						\
 	$(LIBWNCK_LIBS)							\
+	$(SYSTEMD_LIBS)							\
 	$(XFCONF_LIBS)							\
 	-lm
 
