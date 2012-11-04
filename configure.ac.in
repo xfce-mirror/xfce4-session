@@ -96,6 +96,10 @@ XDT_CHECK_PACKAGE([DBUS], [dbus-1], [1.1.0])
 XDT_CHECK_PACKAGE([DBUS_GLIB], [dbus-glib-1], [0.84])
 XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.9.0])
 
+dnl Check for polkit / systemd integration
+XDT_CHECK_OPTIONAL_PACKAGE([SYSTEMD], [polkit-gobject-1], [0.100],
+                           [systemd], [Systemd support (through polit)])
+
 dnl Check for debugging support
 XDT_FEATURE_DEBUG([xfsm_debug_default])
 

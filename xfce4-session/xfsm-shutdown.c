@@ -66,10 +66,13 @@
 #include <xfce4-session/xfsm-fadeout.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-legacy.h>
-#include <xfce4-session/xfsm-consolekit.h>
 #include <xfce4-session/xfsm-upower.h>
 
-
+#ifdef HAVE_SYSTEMD
+#include <xfce4-session/xfsm-systemd.h>
+#else
+#include <xfce4-session/xfsm-consolekit.h>
+#endif
 
 static void xfsm_shutdown_finalize  (GObject      *object);
 static void xfsm_shutdown_sudo_free (XfsmShutdown *shutdown);
@@ -93,7 +96,11 @@ struct _XfsmShutdown
 {
   GObject __parent__;
 
+#ifdef HAVE_SYSTEMD
+  XfsmSystemd    *systemd;
+#else
   XfsmConsolekit *consolekit;
+#endif
   XfsmUPower     *upower;
 
   /* kiosk settings */
@@ -131,7 +138,11 @@ xfsm_shutdown_init (XfsmShutdown *shutdown)
 {
   XfceKiosk *kiosk;
 
+#ifdef HAVE_SYSTEMD
+  shutdown->systemd = xfsm_systemd_get ();
+#else
   shutdown->consolekit = xfsm_consolekit_get ();
+#endif
   shutdown->upower = xfsm_upower_get ();
   shutdown->helper_state = SUDO_NOT_INITIAZED;
   shutdown->helper_require_password = FALSE;
@@ -150,7 +161,11 @@ xfsm_shutdown_finalize (GObject *object)
 {
   XfsmShutdown *shutdown = XFSM_SHUTDOWN (object);
 
+#ifdef HAVE_SYSTEMD
+  g_object_unref (G_OBJECT (shutdown->systemd));
+#else
   g_object_unref (G_OBJECT (shutdown->consolekit));
+#endif
   g_object_unref (G_OBJECT (shutdown->upower));
 
   /* close down helper */
@@ -641,7 +656,11 @@ xfsm_shutdown_try_restart (XfsmShutdown  *shutdown,
   if (shutdown->helper_state == SUDO_AVAILABLE)
     return xfsm_shutdown_sudo_try_action (shutdown, XFSM_SHUTDOWN_RESTART, error);
   else
+#ifdef HAVE_SYSTEMD
+    return xfsm_systemd_try_restart (shutdown->systemd, error);
+#else
     return xfsm_consolekit_try_restart (shutdown->consolekit, error);
+#endif
 }
 
 
@@ -658,7 +677,11 @@ xfsm_shutdown_try_shutdown (XfsmShutdown  *shutdown,
   if (shutdown->helper_state == SUDO_AVAILABLE)
     return xfsm_shutdown_sudo_try_action (shutdown, XFSM_SHUTDOWN_SHUTDOWN, error);
   else
+#ifdef HAVE_SYSTEMD
+    return xfsm_systemd_try_shutdown (shutdown->systemd, error);
+#else
     return xfsm_consolekit_try_shutdown (shutdown->consolekit, error);
+#endif
 }
 
 
@@ -698,7 +721,11 @@ xfsm_shutdown_can_restart (XfsmShutdown  *shutdown,
       return TRUE;
     }
 
+#ifdef HAVE_SYSTEMD
+  if (xfsm_systemd_can_restart (shutdown->systemd, can_restart, error))
+#else
   if (xfsm_consolekit_can_restart (shutdown->consolekit, can_restart, error))
+#endif
     return TRUE;
 
   if (xfsm_shutdown_sudo_init (shutdown, error))
@@ -725,7 +752,11 @@ xfsm_shutdown_can_shutdown (XfsmShutdown  *shutdown,
       return TRUE;
     }
 
+#ifdef HAVE_SYSTEMD
+  if (xfsm_systemd_can_shutdown (shutdown->systemd, can_shutdown, error))
+#else
   if (xfsm_consolekit_can_shutdown (shutdown->consolekit, can_shutdown, error))
+#endif
     return TRUE;
 
   if (xfsm_shutdown_sudo_init (shutdown, error))
