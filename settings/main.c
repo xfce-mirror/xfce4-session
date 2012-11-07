@@ -125,7 +125,7 @@ main(int argc,
     xfae_page = xfae_window_new();
     gtk_widget_show(xfae_page);
     notebook = GTK_WIDGET(gtk_builder_get_object(builder, "plug-child"));
-    lbl = gtk_label_new_with_mnemonic(_("_Application Autostart"));
+    lbl = gtk_label_new_with_mnemonic(_("App_lication Autostart"));
     gtk_widget_show(lbl);
     gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), xfae_page, lbl, 2);
 
