@@ -6,20 +6,22 @@
 # Piotr Maliński <admin@rk.edu.pl>, 2005, 2006.
 # Szymon Kałasz <szymon_maestro@gazeta.pl>, 2006.
 # Piotr Sokół <psokol@jabster.pl>, 2009, 2011, 2012.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-07 05:30+0000\n"
-"PO-Revision-Date: 2012-04-12 10:00+0200\n"
+"POT-Creation-Date: 2012-11-27 06:39+0000\n"
+"PO-Revision-Date: 2012-11-27 13:09+0100\n"
 "Last-Translator: Piotr Sokół <psokol@jabster.pl>\n"
 "Language-Team: polski <>\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bits\n"
-"Language: pl\n"
-"Plural-Forms: nplurals=3; plural=((n==1) ? 0 : ((n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? 1 : 2));\n"
+"Plural-Forms: nplurals=3; plural=((n==1) ? 0 : ((n%10>=2 && n%10<=4 && (n"
+"%100<10 || n%100>=20)) ? 1 : 2));\n"
+"X-Generator: Gtranslator 2.91.5\n"
 
 #: ../xfce.desktop.in.h:1
 msgid "Use this session to run Xfce as your desktop environment"
@@ -189,8 +191,8 @@ msgstr ""
 "Nie można utworzyć interfejsu użytkownika przy użyciu dołączonych danych"
 
 #: ../settings/main.c:128
-msgid "_Application Autostart"
-msgstr "Automatyczne _uruchamianie"
+msgid "App_lication Autostart"
+msgstr "_Uruchamiane programy"
 
 #: ../settings/session-editor.c:61
 msgid "If running"
@@ -264,7 +266,7 @@ msgstr ""
 "sesji."
 
 #: ../settings/session-editor.c:256
-#: ../settings/xfce4-session-settings.glade.h:40
+#: ../settings/xfce4-session-settings.glade.h:41
 msgid "_Quit Program"
 msgstr "Za_kończ"
 
@@ -718,49 +720,49 @@ msgstr "Automatyczne uruchamianie programów..."
 msgid "Starting Assistive Technologies"
 msgstr "Uruchamianie technik ułatwień dostępu"
 
-#: ../xfce4-session/xfsm-shutdown.c:414
+#: ../xfce4-session/xfsm-shutdown.c:429
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
 msgstr "Błąd wysyłania polecenia do shutdown helper: %s"
 
-#: ../xfce4-session/xfsm-shutdown.c:427
+#: ../xfce4-session/xfsm-shutdown.c:442
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
 msgstr "Błąd odbierania odpowiedzi od shutdown helper: %s"
 
-#: ../xfce4-session/xfsm-shutdown.c:435
+#: ../xfce4-session/xfsm-shutdown.c:450
 #, c-format
 msgid "Shutdown command failed"
 msgstr "Nie udało się wykonać polecenia shutdown"
 
-#: ../xfce4-session/xfsm-shutdown.c:540
+#: ../xfce4-session/xfsm-shutdown.c:555
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Wyłączanie jest zablokowane przez ustawienia trybu kiosk"
 
-#: ../xfce4-session/xfsm-shutdown.c:623
+#: ../xfce4-session/xfsm-shutdown.c:638
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Nieznana metoda wyłączenia %d"
 
 #: ../xfce4-session-logout/main.c:67
 msgid "Log out without displaying the logout dialog"
-msgstr "Wylogowuje bez wyświetlania okna dialogowego"
+msgstr "Wylogowuje użytkownika, nie wyświetlając okna dialogowego"
 
 #: ../xfce4-session-logout/main.c:71
 msgid "Halt without displaying the logout dialog"
-msgstr "Zatrzymuje działanie systemu bez wyświetlania okna dialogowego"
+msgstr "Zatrzymuje działanie systemu, nie wyświetlając okna dialogowego"
 
 #: ../xfce4-session-logout/main.c:75
 msgid "Reboot without displaying the logout dialog"
-msgstr "Uruchamia komputer ponownie bez wyświetlania okna dialogowego"
+msgstr "Uruchamia komputer ponownie, nie wyświetlając okna dialogowego"
 
 #: ../xfce4-session-logout/main.c:79
 msgid "Suspend without displaying the logout dialog"
-msgstr "Wstrzymuje sesję bez wyświetlania okna dialogowego"
+msgstr "Wstrzymuje działanie komputera, nie wyświetlając okna dialogowego"
 
 #: ../xfce4-session-logout/main.c:83
 msgid "Hibernate without displaying the logout dialog"
-msgstr "Hibernuje sesję bez wyświetlania okna dialogowego"
+msgstr "Hibernuje działanie komputera, nie wyświetlając okna dialogowego"
 
 #: ../xfce4-session-logout/main.c:87
 msgid "Log out quickly; don't save the session"
@@ -795,12 +797,12 @@ msgid "Log out of the Xfce Desktop"
 msgstr "Kończy sesję środowiska Xfce"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
-#: ../settings/xfce4-session-settings.glade.h:15
+#: ../settings/xfce4-session-settings.glade.h:16
 msgid "Customize desktop startup and splash screen"
 msgstr "Konfiguruje uruchamianie środowiska graficznego i ekran powitalny"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
-#: ../settings/xfce4-session-settings.glade.h:30
+#: ../settings/xfce4-session-settings.glade.h:34
 msgid "Session and Startup"
 msgstr "Sesja i uruchamianie"
 
@@ -853,85 +855,101 @@ msgid "Always save the session when logging out"
 msgstr "Zapisuje sesję każdorazowo przed wylogowaniem użytkownika"
 
 #: ../settings/xfce4-session-settings.glade.h:13
-msgid "Automatically save session on _logout"
-msgstr "Zapisywanie sesji przed _wylogowaniem"
+msgid "Automatically save session on logo_ut"
+msgstr "Zapisywanie sesji przed wy_logowaniem"
 
 #: ../settings/xfce4-session-settings.glade.h:14
+msgid "Clear save_d sessions"
+msgstr "Wy_czyść zapisane sesje"
+
+#: ../settings/xfce4-session-settings.glade.h:15
 msgid "Con_figure"
 msgstr "_Konfiguruj..."
 
-#: ../settings/xfce4-session-settings.glade.h:16
+#: ../settings/xfce4-session-settings.glade.h:17
 msgid "Demonstrates the selected splash screen"
 msgstr "Wyświetla zaznaczony ekran powitalny"
 
-#: ../settings/xfce4-session-settings.glade.h:17
-msgid "Display the session chooser every time Xfce starts"
-msgstr "Wyświetla dialog wyboru sesji po każdym uruchomieniu środowiska Xfce"
-
 #: ../settings/xfce4-session-settings.glade.h:18
+msgid "Display the session chooser every time Xfce starts"
+msgstr "Wyświetla okno wyboru sesji po każdym uruchomieniu środowiska Xfce"
+
+#: ../settings/xfce4-session-settings.glade.h:19
 msgid "Empty the session cache"
 msgstr "Czyści pamięć podręczną sesji"
 
-#: ../settings/xfce4-session-settings.glade.h:19
+#: ../settings/xfce4-session-settings.glade.h:20
 msgid "Launch GN_OME services on startup"
 msgstr "Uruchamianie usług _GNOME podczas logowania"
 
-#: ../settings/xfce4-session-settings.glade.h:20
+#: ../settings/xfce4-session-settings.glade.h:21
 msgid "Launch _KDE services on startup"
 msgstr "Uruchamianie usług _KDE podczas logowania"
 
-#: ../settings/xfce4-session-settings.glade.h:21
+#: ../settings/xfce4-session-settings.glade.h:22
+msgid "Lock screen be_fore sleep"
+msgstr "_Blokowanie ekranu przed wstrzymaniem"
+
+#: ../settings/xfce4-session-settings.glade.h:23
 msgid "Manage _remote applications"
 msgstr "Zarządzanie z_dalnymi programami"
 
-#: ../settings/xfce4-session-settings.glade.h:22
+#: ../settings/xfce4-session-settings.glade.h:24
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
 msgstr ""
 "Zarządza zdalnym programami poprzez sieć (może stwarzać ryzyko "
 "niebezpieczeństwa)"
 
-#: ../settings/xfce4-session-settings.glade.h:23
+#: ../settings/xfce4-session-settings.glade.h:25
 msgid "Opens the configuration panel for the selected splash screen"
 msgstr "Konfiguruje zaznaczony ekran powitalny"
 
-#: ../settings/xfce4-session-settings.glade.h:24
-msgid "Prompt for confirmation when logging out"
-msgstr "Wyświetla dialog z prośbą o potwierdzenie wylogowania"
+#: ../settings/xfce4-session-settings.glade.h:26
+msgid "Pro_mpt on logout"
+msgstr "_Potwierdzanie przed wylogowaniem"
 
-#: ../settings/xfce4-session-settings.glade.h:25
+#: ../settings/xfce4-session-settings.glade.h:27
+msgid "Prompt for confirmation when logging out"
+msgstr "Wyświetla okno z prośbą o potwierdzenie wylogowania"
+
+#: ../settings/xfce4-session-settings.glade.h:28
 msgid "Quit the program, and remove it from the session"
 msgstr "Kończy działanie programu i usuwa go z bieżącej sesji"
 
-#: ../settings/xfce4-session-settings.glade.h:26
+#: ../settings/xfce4-session-settings.glade.h:29
 msgid "Run xflock4 before suspending or hibernating the system"
 msgstr ""
 "Uruchamia program xflock4 przed wstrzymaniem lub zahibernowaniem działania "
 "systemu"
 
-#: ../settings/xfce4-session-settings.glade.h:27
+#: ../settings/xfce4-session-settings.glade.h:30
 msgid "S_plash"
-msgstr "Ekran po_witalny"
+msgstr "_Ekran powitalny"
 
-#: ../settings/xfce4-session-settings.glade.h:28
-msgid "Save Sessio_n"
+#: ../settings/xfce4-session-settings.glade.h:31
+msgid "Save Sess_ion"
 msgstr "Z_apisz sesję"
 
-#: ../settings/xfce4-session-settings.glade.h:29
+#: ../settings/xfce4-session-settings.glade.h:32
 msgid "Saving Session"
 msgstr "Zapisywanie sesji"
 
-#: ../settings/xfce4-session-settings.glade.h:31
+#: ../settings/xfce4-session-settings.glade.h:33
+msgid "Sessio_n"
+msgstr "_Sesja"
+
+#: ../settings/xfce4-session-settings.glade.h:35
 msgid "Start GNOME services, such as gnome-keyring"
 msgstr ""
 "Uruchamia usługi środowiska GNOME takie jak „gnome-keyring” czy „GNOME "
 "accessibility framework”"
 
-#: ../settings/xfce4-session-settings.glade.h:32
+#: ../settings/xfce4-session-settings.glade.h:36
 msgid "Start KDE services, such as kdeinit"
 msgstr "Uruchamia usługi środowiska KDE, takie jak „kdeinit”"
 
-#: ../settings/xfce4-session-settings.glade.h:33
+#: ../settings/xfce4-session-settings.glade.h:37
 msgid ""
 "These applications are a part of the currently-running session, and can be "
 "saved when you log out.  Changes below will only take effect when the "
@@ -941,36 +959,19 @@ msgstr ""
 "mogą zostać przywrócone po powtórnym zalogowaniu. Po wprowadzeniu zmian na "
 "liście należy zapisać sesję."
 
-#: ../settings/xfce4-session-settings.glade.h:34
+#: ../settings/xfce4-session-settings.glade.h:38
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this "
 "window."
-msgstr ""
-"Sesja jest w trakcie zapisywania. Aby przerwać, proszę zamknąć to okno."
-
-#: ../settings/xfce4-session-settings.glade.h:35
-msgid "_Clear saved sessions"
-msgstr "_Wyczyść zapisane sesje"
-
-#: ../settings/xfce4-session-settings.glade.h:36
-msgid "_Display chooser on login"
-msgstr "_Wybieranie sesji podczas logowania"
-
-#: ../settings/xfce4-session-settings.glade.h:37
-msgid "_General"
-msgstr "_Ogólne"
-
-#: ../settings/xfce4-session-settings.glade.h:38
-msgid "_Lock screen before sleep"
-msgstr "_Blokowanie ekranu przed wstrzymaniem"
+msgstr "Trwa zapisywanie sesji. Aby przerwać, proszę zamknąć to okno."
 
 #: ../settings/xfce4-session-settings.glade.h:39
-msgid "_Prompt on logout"
-msgstr "_Potwierdzanie przed wylogowaniem"
+msgid "_Display chooser on login"
+msgstr "Wyśw_ietlanie dostępnych sesji podczas logowania"
 
-#: ../settings/xfce4-session-settings.glade.h:41
-msgid "_Session"
-msgstr "_Sesja"
+#: ../settings/xfce4-session-settings.glade.h:40
+msgid "_General"
+msgstr "_Ogólne"
 
 #: ../settings/xfce4-session-settings.glade.h:42
 msgid "_Test"
@@ -980,8 +981,8 @@ msgstr "Prze_testuj"
 msgid "label"
 msgstr "etykieta"
 
-#~ msgid "Session"
-#~ msgstr "Sesja"
+#~ msgid "_Session"
+#~ msgstr "_Sesja"
 
 #~ msgid "Loc_k screen"
 #~ msgstr "Za_blokuj ekran"
