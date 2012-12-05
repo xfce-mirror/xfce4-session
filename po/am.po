@@ -2,19 +2,28 @@
 # Copyright (C) 2002-2007 The Xfce development team.
 # This file is distributed under the same license as the xfce4-session package.
 # Tegegne Tefera <tefera@mekuria.com>, 2007.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-session 4.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-16 17:35+0100\n"
+"POT-Creation-Date: 2012-12-05 01:54+0000\n"
 "PO-Revision-Date: 2008-01-06 18:40+0100\n"
 "Last-Translator: Tegegne Tefera <tefera@mekuria.com>\n"
 "Language-Team: Amharic <l10n-am@googlegroups.com>\n"
-"Language: am\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: am\n"
+
+#: ../xfce.desktop.in.h:1
+msgid "Use this session to run Xfce as your desktop environment"
+msgstr ""
+
+#: ../xfce.desktop.in.h:2
+#, fuzzy
+msgid "Xfce Session"
+msgstr "የክፍለጊዜ ስምን ይምረጡ።"
 
 #: ../engines/balou/balou-theme.c:110
 msgid "No description given"
@@ -122,7 +131,7 @@ msgstr "ምስል"
 
 #: ../engines/simple/simple.c:425
 msgid "All files"
-msgstr ""
+msgstr "ህሉ መዝገብ"
 
 #: ../engines/simple/simple.c:497
 msgid "Simple"
@@ -132,218 +141,156 @@ msgstr "ቀላል"
 msgid "Simple Splash Engine"
 msgstr "ቀላል የርችት ሞተር"
 
-#: ../panel-plugin/xfsm-logout-plugin.c:86
-#, fuzzy
-msgid "Session"
-msgstr "ከፍለጊዜን ጨርስ"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:87
-msgid "Loc_k screen"
+#: ../scripts/xscreensaver.desktop.in.h:1
+msgid "Launch screensaver and locker program"
 msgstr ""
 
-#: ../panel-plugin/xfsm-logout-plugin.c:88
-#: ../panel-plugin/xfsm-logout-plugin.c:128
-msgid "_Suspend"
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:89
-#: ../panel-plugin/xfsm-logout-plugin.c:135
-msgid "_Hibernate"
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:90
-#: ../panel-plugin/xfsm-logout-plugin.c:121
-msgid "_Reboot"
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:91
-#: ../panel-plugin/xfsm-logout-plugin.c:114
-#, fuzzy
-msgid "Shut _down"
-msgstr "ዝጋ"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:92
-#: ../panel-plugin/xfsm-logout-plugin.c:107
-#, fuzzy
-msgid "_Log out"
-msgstr "ሎግውጣ"
-
-#. XFSM_SHUTDOWN_ASK
-#. XFSM_SHUTDOWN_LOGOUT
-#: ../panel-plugin/xfsm-logout-plugin.c:105
-msgid "Are you sure you want to log out?"
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:106
-#, c-format
-msgid "You will be logged out in %u seconds."
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:109
-msgid "Failed to log out."
-msgstr ""
-
-#. XFSM_SHUTDOWN_HALT
-#: ../panel-plugin/xfsm-logout-plugin.c:112
-msgid "Are you sure you want to shut down?"
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:113
-#, c-format
-msgid "Your system will shut down in %u seconds."
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:116
-#, fuzzy
-msgid "Failed to shut down."
-msgstr "ፋይል  %sን ለመጻፍ መክፈት አልተቻለም"
-
-#. XFSM_SHUTDOWN_REBOOT
-#: ../panel-plugin/xfsm-logout-plugin.c:119
-msgid "Are you sure you want to reboot?"
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:120
-#, c-format
-msgid "Your system will reboot in %u seconds."
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:123
-#, fuzzy
-msgid "Failed to reboot."
-msgstr "ፋይል  %sን መፍጠር አልተቻለም"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:130
-#, fuzzy
-msgid "Failed to suspend"
-msgstr "ፋይል  %sን ለመጻፍ መክፈት አልተቻለም"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:137
-#, fuzzy
-msgid "Failed to hibernate"
-msgstr "ፋይል  %sን መፍጠር አልተቻለም"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:150
-msgid "Xflock4 could not be launched"
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:222
-#, fuzzy
-msgid "Close Session"
-msgstr "ክፍለጊዜን ምረጥ"
-
-#: ../settings/main.c:42
-msgid "Settings manager socket"
-msgstr ""
-
-#: ../settings/main.c:42
-msgid "SOCKET ID"
+#: ../scripts/xscreensaver.desktop.in.h:2
+msgid "Screensaver"
 msgstr ""
 
 #: ../settings/main.c:43
+msgid "Settings manager socket"
+msgstr ""
+
+#: ../settings/main.c:43
+msgid "SOCKET ID"
+msgstr ""
+
+#: ../settings/main.c:44
 #, fuzzy
 msgid "Version information"
 msgstr "መረጃ"
 
-#: ../settings/main.c:73
+#: ../settings/main.c:75 ../xfce4-session/main.c:257
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr ""
 
-#: ../settings/main.c:85 ../xfce4-session/main.c:226
+#: ../settings/main.c:87 ../xfce4-session/main.c:267
+#: ../xfce4-session-logout/main.c:136
 msgid "The Xfce development team. All rights reserved."
 msgstr ""
 
-#: ../settings/main.c:86 ../xfce4-session/main.c:232
+#: ../settings/main.c:88 ../xfce4-session/main.c:268
+#: ../xfce4-session-logout/main.c:139
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr ""
 
-#: ../settings/main.c:95 ../xfce4-session/main.c:238 ../xfce4-tips/main.c:270
+#: ../settings/main.c:97 ../xfce4-session/main.c:276
 msgid "Unable to contact settings server"
 msgstr ""
 
-#: ../settings/main.c:114
+#: ../settings/main.c:116
 msgid "Unable to create user interface from embedded definition data"
 msgstr ""
 
-#: ../settings/main.c:127
-msgid "_Application Autostart"
-msgstr ""
-
-#: ../settings/session-editor.c:60
-msgid "If running"
+#: ../settings/main.c:128
+msgid "App_lication Autostart"
 msgstr ""
 
 #: ../settings/session-editor.c:61
-msgid "Always"
+msgid "If running"
 msgstr ""
 
 #: ../settings/session-editor.c:62
-msgid "Immediately"
+msgid "Always"
 msgstr ""
 
 #: ../settings/session-editor.c:63
+msgid "Immediately"
+msgstr ""
+
+#: ../settings/session-editor.c:64
 msgid "Never"
 msgstr ""
 
-#: ../settings/session-editor.c:128
+#: ../settings/session-editor.c:129
 msgid "Session Save Error"
 msgstr ""
 
-#: ../settings/session-editor.c:129
+#: ../settings/session-editor.c:130
 msgid "Unable to save the session"
 msgstr ""
 
-#: ../settings/session-editor.c:184
+#: ../settings/session-editor.c:170
+#, fuzzy
+msgid "Clear sessions"
+msgstr "ክፍለጊዜን ምረጥ"
+
+#: ../settings/session-editor.c:171
+msgid "Are you sure you want to empty the session cache?"
+msgstr ""
+
+#: ../settings/session-editor.c:172
+msgid ""
+"The saved states of your applications will not be restored during your next "
+"login."
+msgstr ""
+
+#: ../settings/session-editor.c:174
+msgid "_Proceed"
+msgstr ""
+
+#: ../settings/session-editor.c:212
+#, c-format
+msgid "You might need to delete some files manually in \"%s\"."
+msgstr ""
+
+#: ../settings/session-editor.c:215
+msgid "All Xfce cache files could not be cleared"
+msgstr ""
+
+#: ../settings/session-editor.c:249
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr ""
 
-#: ../settings/session-editor.c:187 ../settings/session-editor.c:215
+#: ../settings/session-editor.c:252 ../settings/session-editor.c:280
 msgid "Terminate Program"
 msgstr ""
 
-#: ../settings/session-editor.c:189
+#: ../settings/session-editor.c:254
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
 msgstr ""
 
-#: ../settings/session-editor.c:191
-#: ../settings/xfce4-session-settings.glade.h:35
+#: ../settings/session-editor.c:256
+#: ../settings/xfce4-session-settings.glade.h:41
 msgid "_Quit Program"
 msgstr ""
 
-#: ../settings/session-editor.c:216
+#: ../settings/session-editor.c:281
 msgid "Unable to terminate program."
 msgstr ""
 
-#: ../settings/session-editor.c:394
+#: ../settings/session-editor.c:459
 #, fuzzy
 msgid "(Unknown program)"
 msgstr "(የማይታወቅ)"
 
-#: ../settings/session-editor.c:614
+#: ../settings/session-editor.c:679
 msgid "Priority"
 msgstr ""
 
-#: ../settings/session-editor.c:622
+#: ../settings/session-editor.c:687
 msgid "PID"
 msgstr ""
 
-#: ../settings/session-editor.c:628
+#: ../settings/session-editor.c:693
 msgid "Program"
 msgstr ""
 
-#: ../settings/session-editor.c:653
+#: ../settings/session-editor.c:718
 #, fuzzy
 msgid "Restart Style"
 msgstr "እንደገና ጀምር"
 
-#: ../settings/splash-settings.c:286 ../settings/splash-settings.c:289
-#: ../settings/splash-settings.c:292 ../settings/splash-settings.c:295
-#: ../settings/splash-settings.c:352
+#: ../settings/splash-settings.c:291 ../settings/splash-settings.c:294
+#: ../settings/splash-settings.c:297 ../settings/splash-settings.c:300
+#: ../settings/splash-settings.c:357
 msgid "None"
 msgstr "ምንም"
 
@@ -359,7 +306,7 @@ msgstr "ስም፦"
 msgid "Description:"
 msgstr "መግለጫ፦"
 
-#: ../settings/xfae-dialog.c:124
+#: ../settings/xfae-dialog.c:124 ../settings/xfae-model.c:479
 msgid "Command:"
 msgstr "ትዕዛዝ:"
 
@@ -372,74 +319,75 @@ msgstr "ትዕዛዝ ምረጥ"
 msgid "Edit application"
 msgstr "ፕሮግራም ጨምር"
 
-#: ../settings/xfae-model.c:562
+#: ../settings/xfae-model.c:611
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "የ%sን ግኑኝነት መቁረጥ አልተቻለም ፦ %s"
 
-#: ../settings/xfae-model.c:651
+#: ../settings/xfae-model.c:700
 #, c-format
 msgid "Failed to create file %s"
 msgstr "ፋይል  %sን መፍጠር አልተቻለም"
 
-#: ../settings/xfae-model.c:673
+#: ../settings/xfae-model.c:723
 #, c-format
 msgid "Failed to write file %s"
 msgstr "ፋይል  %sን መጻፍ አልተቻለም"
 
-#: ../settings/xfae-model.c:732
+#: ../settings/xfae-model.c:782
 #, fuzzy, c-format
 msgid "Failed to open %s for reading"
 msgstr "ፋይል  %sን ለመጻፍ መክፈት አልተቻለም"
 
-#: ../settings/xfae-model.c:841 ../settings/xfae-model.c:898
+#: ../settings/xfae-model.c:891 ../settings/xfae-model.c:948
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "ፋይል  %sን ለመጻፍ መክፈት አልተቻለም"
 
-#: ../settings/xfae-window.c:101
+#: ../settings/xfae-window.c:102
 #, fuzzy
 msgid ""
 "Below is the list of applications that will be started automatically when "
 "you login to your Xfce desktop, in addition to the applications that were "
-"saved when you logged out last time:"
+"saved when you logged out last time. Cursive applications belong to another "
+"desktop environment, but you can still enable them if you want."
 msgstr ""
 "ወደ ሸፍሲ ገበታ ሲሎገቡ ባለፈው ጊዜ በሎግወጡ ጊዜ ከነበሩት\n"
 " ፕሮግራሞች በተጨማሪ የሚቀጥሉት ፕሮግራሞች በራስ ገዝ\n"
 " ይነሳሉ፦"
 
-#: ../settings/xfae-window.c:289
+#: ../settings/xfae-window.c:293
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr ""
 
-#: ../settings/xfae-window.c:320 ../settings/xfae-window.c:334
+#: ../settings/xfae-window.c:324 ../settings/xfae-window.c:338
 #, fuzzy
 msgid "Failed to remove item"
 msgstr "ፋይል  %sን መፍጠር አልተቻለም"
 
-#: ../settings/xfae-window.c:326
+#: ../settings/xfae-window.c:330
 msgid ""
 "This will permanently remove the application from the list of automatically "
 "started applications"
 msgstr ""
 
-#: ../settings/xfae-window.c:328
+#: ../settings/xfae-window.c:332
 #, c-format
 msgid "Are you sure you want to remove \"%s\""
 msgstr ""
 
-#: ../settings/xfae-window.c:362
+#: ../settings/xfae-window.c:366
 #, fuzzy
 msgid "Failed to edit item"
 msgstr "ፋይል  %sን መጻፍ አልተቻለም"
 
-#: ../settings/xfae-window.c:382
+#: ../settings/xfae-window.c:386
 #, fuzzy, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "ፋይል  %sን መጻፍ አልተቻለም"
 
-#: ../settings/xfae-window.c:410
+#: ../settings/xfae-window.c:414
 #, fuzzy
 msgid "Failed to toggle item"
 msgstr "ፋይል  %sን መጻፍ አልተቻለም"
@@ -448,7 +396,7 @@ msgstr "ፋይል  %sን መጻፍ አልተቻለም"
 msgid "Disable binding to TCP ports"
 msgstr ""
 
-#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:93
+#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:91
 #, fuzzy
 msgid "Print version information and exit"
 msgstr "መረጃ"
@@ -457,106 +405,42 @@ msgstr "መረጃ"
 msgid "Loading desktop settings"
 msgstr "የገበታ ስየማዎች በመጫን ላይ"
 
-#: ../xfce4-session/main.c:227
-msgid "Written by Benedikt Meurer <benny@xfce.org>."
-msgstr ""
-
-#: ../xfce4-session/main.c:228
-#, c-format
-msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
-msgstr ""
-
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:258
+#: ../xfce4-session/main.c:298
 msgid "Verifying DNS settings"
 msgstr "የDNS ስየማዎችን በማረጋገጥ ላይ"
 
-#: ../xfce4-session/main.c:261
+#: ../xfce4-session/main.c:302
 msgid "Loading session data"
 msgstr "የክፍለጊዜ መረጃን በመጫን ላይ"
 
-#: ../xfce4-session/shutdown.c:372
-#, c-format
-msgid "<span size='large'><b>Log out %s</b></span>"
-msgstr ""
-
-#: ../xfce4-session/shutdown.c:422
-#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
-msgid "Log Out"
-msgstr "ሎግውጣ"
-
-#: ../xfce4-session/shutdown.c:457
-msgid "Restart"
-msgstr "እንደገና ጀምር"
-
-#: ../xfce4-session/shutdown.c:499
-msgid "Shut Down"
-msgstr "ዝጋ"
-
-#: ../xfce4-session/shutdown.c:561
-msgid "Suspend"
-msgstr ""
-
-#: ../xfce4-session/shutdown.c:599
-msgid "Hibernate"
-msgstr ""
-
-#: ../xfce4-session/shutdown.c:608
-msgid "_Save session for future logins"
-msgstr "ክፍለጊዜውን ለወደፊት ሎገባዎች አስቀምጥ _S"
-
-#: ../xfce4-session/shutdown.c:668
-msgid "Please enter your password:"
-msgstr "እብክዎ ማለፊያቃልን ያስገቡ፦"
-
-#: ../xfce4-session/shutdown.c:700
-#, fuzzy
-msgid "<b>An error occurred</b>"
-msgstr "<b>ስህተት ተከስቷል</b>"
-
-#: ../xfce4-session/shutdown.c:714
-msgid ""
-"Either the password you entered is invalid, or the system administrator "
-"disallows shutting down this computer with your user account."
-msgstr ""
-"Either the password you entered is invalid, or the system administrator "
-"disallows shutting down this computer with your user account."
-
-#: ../xfce4-session/shutdown.c:833 ../xfce4-session/xfsm-manager.c:1119
-msgid "Shutdown Failed"
-msgstr ""
-
-#: ../xfce4-session/shutdown.c:835
-msgid "Unable to perform shutdown"
-msgstr ""
-
-#: ../xfce4-session/xfsm-chooser.c:91
+#: ../xfce4-session/xfsm-chooser.c:90
 #, c-format
 msgid "Last accessed: %s"
 msgstr "መጨረሻ የታየው፦ %s"
 
-#: ../xfce4-session/xfsm-chooser.c:177
+#: ../xfce4-session/xfsm-chooser.c:172
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr "እንደገና ማስነሳት የሚፈልጉት ክፍለጊዜን ይምረጡና ሁለቴ ይጫኑት።"
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:203
+#: ../xfce4-session/xfsm-chooser.c:198
 #, fuzzy
 msgid "Log out"
 msgstr "ሎግውጣ"
 
-#: ../xfce4-session/xfsm-chooser.c:205
+#: ../xfce4-session/xfsm-chooser.c:200
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "ሎግባውን ይሰርዙና ወደ ሎግባው ስክሪን ይመለሱ።"
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:212
+#: ../xfce4-session/xfsm-chooser.c:207
 msgid "New session"
 msgstr "አዲስ ክፍለጊዜ"
 
-#: ../xfce4-session/xfsm-chooser.c:213
+#: ../xfce4-session/xfsm-chooser.c:208
 msgid "Create a new session."
 msgstr "አዲስ ክፍለጊዜ ፍጠር።"
 
@@ -566,13 +450,9 @@ msgstr "አዲስ ክፍለጊዜ ፍጠር።"
 msgid "The client doesn't have any properties set yet"
 msgstr ""
 
-#: ../xfce4-session/xfsm-compat-gnome.c:301
+#: ../xfce4-session/xfsm-compat-gnome.c:247
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "የኖምን ቁልፍመያዣ አሰናጅን በማስነሳት ላይ"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:313
-msgid "Starting Gnome Assistive Technologies"
-msgstr "የኖምን ረዳት ቴክኖሎጂን በማስነሳት ላይ"
 
 #: ../xfce4-session/xfsm-compat-kde.c:124
 msgid "Starting KDE services"
@@ -603,7 +483,7 @@ msgstr "ቢሆንም ይቀጥል?"
 msgid "Try again"
 msgstr "እንደገና ሞክር"
 
-#: ../xfce4-session/xfsm-manager.c:602
+#: ../xfce4-session/xfsm-manager.c:611
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -611,84 +491,109 @@ msgid ""
 "incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:613
+#: ../xfce4-session/xfsm-manager.c:622
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:660
+#: ../xfce4-session/xfsm-manager.c:669
 msgid "The list of applications in the failsafe session is empty."
 msgstr ""
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:707
+#: ../xfce4-session/xfsm-manager.c:716
 #, fuzzy
 msgid "Session Manager Error"
 msgstr "የክፍለጊዜ ስምን ይምረጡ።"
 
-#: ../xfce4-session/xfsm-manager.c:709
+#: ../xfce4-session/xfsm-manager.c:718
 msgid "Unable to load a failsafe session"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1122
+#: ../xfce4-session/xfsm-manager.c:1127
+msgid "Shutdown Failed"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1130
 #, fuzzy
 msgid "Failed to suspend session"
 msgstr "ፋይል  %sን ለመጻፍ መክፈት አልተቻለም"
 
-#: ../xfce4-session/xfsm-manager.c:1123
+#: ../xfce4-session/xfsm-manager.c:1131
 #, fuzzy
 msgid "Failed to hibernate session"
 msgstr "ፋይል  %sን መፍጠር አልተቻለም"
 
-#: ../xfce4-session/xfsm-manager.c:1411
+#: ../xfce4-session/xfsm-manager.c:1405
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1942
+#: ../xfce4-session/xfsm-manager.c:1969
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1983
+#: ../xfce4-session/xfsm-manager.c:2010
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1990
-#, c-format
-msgid "Invalid shutdown type \"%u\""
+#: ../xfce4-session/xfsm-logout-dialog.c:188
+#, fuzzy, c-format
+msgid "Log out %s"
+msgstr "ሎግውጣ"
+
+#. *
+#. * Logout
+#. *
+#: ../xfce4-session/xfsm-logout-dialog.c:246
+#, fuzzy
+msgid "_Log Out"
+msgstr "ሎግውጣ"
+
+#: ../xfce4-session/xfsm-logout-dialog.c:266
+#, fuzzy
+msgid "_Restart"
+msgstr "እንደገና ጀምር"
+
+#: ../xfce4-session/xfsm-logout-dialog.c:286
+#, fuzzy
+msgid "Shut _Down"
+msgstr "ዝጋ"
+
+#: ../xfce4-session/xfsm-logout-dialog.c:309
+msgid "Sus_pend"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1601
-#, c-format
-msgid "Error sending command to shutdown helper: %s"
+#: ../xfce4-session/xfsm-logout-dialog.c:343
+msgid "_Hibernate"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1615
-#, c-format
-msgid "Error receiving response from shutdown helper: %s"
-msgstr ""
+#: ../xfce4-session/xfsm-logout-dialog.c:368
+msgid "_Save session for future logins"
+msgstr "ክፍለጊዜውን ለወደፊት ሎገባዎች አስቀምጥ _S"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1624
-#, c-format
-msgid "Shutdown command failed"
-msgstr ""
+#: ../xfce4-session/xfsm-logout-dialog.c:395
+#, fuzzy
+msgid "Please enter your password"
+msgstr "እብክዎ ማለፊያቃልን ያስገቡ፦"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1802
-msgid "Suspend failed, no backend supported"
-msgstr ""
+#: ../xfce4-session/xfsm-logout-dialog.c:427
+#, fuzzy
+msgid "An error occurred"
+msgstr "<b>ስህተት ተከስቷል</b>"
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1829
-msgid "Hibernate failed, no backend supported"
+#: ../xfce4-session/xfsm-logout-dialog.c:433
+msgid ""
+"Either the password you entered is invalid, or the system administrator "
+"disallows shutting down this computer with your user account."
 msgstr ""
-
-#: ../xfce4-session/xfsm-shutdown-helper.c:1859
-msgid "Shutdown Command not found"
-msgstr ""
+"Either the password you entered is invalid, or the system administrator "
+"disallows shutting down this computer with your user account."
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -702,88 +607,88 @@ msgstr "የክፍለጊዜ ስምን ይምረጡ።"
 msgid "Choose a name for the new session:"
 msgstr "ለአዲሱ ክፍለጊዜ ስምን ይምረ፦"
 
-#: ../xfce4-session/xfsm-startup.c:115
+#: ../xfce4-session/xfsm-startup.c:347
 msgid "Starting the Volume Controller"
 msgstr "የድምጽ መቆጣጠሪያን በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:117
+#: ../xfce4-session/xfsm-startup.c:349
 msgid "Starting the Panel"
 msgstr "ፓነል በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:119
+#: ../xfce4-session/xfsm-startup.c:351
 msgid "Starting the Desktop Manager"
 msgstr "የገበታ አስተዳዳሪን በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:121
+#: ../xfce4-session/xfsm-startup.c:353
 msgid "Starting the Taskbar"
 msgstr "የስራ ማስጫን በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:123
+#: ../xfce4-session/xfsm-startup.c:355
 msgid "Starting the Window Manager"
 msgstr "የመስኮት አስተዳዳሪ በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:127
+#: ../xfce4-session/xfsm-startup.c:359
 msgid "Starting the Gnome Terminal Emulator"
 msgstr "የኖም ተርሚናል አሳይን በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:131
+#: ../xfce4-session/xfsm-startup.c:363
 msgid "Starting the KDE Advanced Text Editor"
 msgstr "የኬዲን የጽሁፍ አራሚ በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:133
+#: ../xfce4-session/xfsm-startup.c:365
 msgid "Starting the KDE Clipboard Manager"
 msgstr "የኬዲን የመለጠፊያ ቦርድ አስተዳዳሪ በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:135
+#: ../xfce4-session/xfsm-startup.c:367
 msgid "Starting the KDE Mail Reader"
 msgstr "የኬዲ ተርሚናል ማሳያን በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:137
+#: ../xfce4-session/xfsm-startup.c:369
 msgid "Starting the KDE News Reader"
 msgstr "የኬዲ ዜና አንባቢን በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:139
+#: ../xfce4-session/xfsm-startup.c:371
 msgid "Starting the Konqueror"
 msgstr "ኮንከረርን በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:141
+#: ../xfce4-session/xfsm-startup.c:373
 msgid "Starting the KDE Terminal Emulator"
 msgstr "የኬዲ ተርሚናል ማሳያን በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:145
+#: ../xfce4-session/xfsm-startup.c:377
 msgid "Starting the Beep Media Player"
 msgstr "ቢፕ ሜዲያ ማጫወቻን  በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:147
+#: ../xfce4-session/xfsm-startup.c:379
 msgid "Starting The Gimp"
 msgstr "ጊምፕን በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:149
+#: ../xfce4-session/xfsm-startup.c:381
 msgid "Starting the VI Improved Editor"
 msgstr "ቪም  አራሚን ቤማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:151
+#: ../xfce4-session/xfsm-startup.c:383
 msgid "Starting the Session Management Proxy"
 msgstr "የክፍለጊዜ አስተዳዳሪ ምስለኔን በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:153
+#: ../xfce4-session/xfsm-startup.c:385
 msgid "Starting the X-Chat IRC Client"
 msgstr "የሸ-ውይይት IRC ጠሪን በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:155
+#: ../xfce4-session/xfsm-startup.c:387
 msgid "Starting the X Multimedia System"
 msgstr "የሸን የብዙሜዲያ ስርዓትን በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:157
+#: ../xfce4-session/xfsm-startup.c:389
 msgid "Starting the X Terminal Emulator"
 msgstr "የሸ ተርሚናል ማሳያን በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:159
+#: ../xfce4-session/xfsm-startup.c:391
 #, c-format
 msgid "Starting %s"
 msgstr "%s በማስነሳት ላይ"
 
-#: ../xfce4-session/xfsm-startup.c:283
+#: ../xfce4-session/xfsm-startup.c:515
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -808,118 +713,99 @@ msgstr ""
 "location.\n"
 "You should delete this directory now.\n"
 
-#: ../xfce4-session/xfsm-startup.c:441
+#: ../xfce4-session/xfsm-startup.c:684
 msgid "Performing Autostart..."
 msgstr "በራስገዝ መነሳት ስራ ላይ..."
 
-#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:284
-msgid "Tips and Tricks"
-msgstr "ምክሮች"
+#: ../xfce4-session/xfsm-startup.c:790
+#, fuzzy
+msgid "Starting Assistive Technologies"
+msgstr "የኖምን ረዳት ቴክኖሎጂን በማስነሳት ላይ"
 
-#: ../xfce4-tips/main.c:49
-msgid "Fortunes"
-msgstr "አዋቂ"
-
-#: ../xfce4-tips/main.c:75
+#: ../xfce4-session/xfsm-shutdown.c:429
 #, c-format
-msgid "Could not load tips database (%s)."
+msgid "Error sending command to shutdown helper: %s"
 msgstr ""
 
-#. converting it from the user's locale failed too, we give up
-#: ../xfce4-tips/main.c:190
+#: ../xfce4-session/xfsm-shutdown.c:442
 #, c-format
-msgid "Invalid output of fortune."
+msgid "Error receiving response from shutdown helper: %s"
 msgstr ""
 
-#: ../xfce4-tips/main.c:195 ../xfce4-tips/main.c:203
+#: ../xfce4-session/xfsm-shutdown.c:450
 #, c-format
-msgid "Executing fortune failed (%s)"
+msgid "Shutdown command failed"
 msgstr ""
 
-#: ../xfce4-tips/main.c:228
-msgid "Error while loading tips."
+#: ../xfce4-session/xfsm-shutdown.c:555
+msgid "Shutdown is blocked by the kiosk settings"
 msgstr ""
 
-#: ../xfce4-tips/main.c:314
-msgid "Display tips on _startup"
-msgstr "ምክሮችን ሲነሳ አሳይ_s"
+#: ../xfce4-session/xfsm-shutdown.c:638
+#, c-format
+msgid "Unknown shutdown method %d"
+msgstr ""
 
-#: ../xfce4-tips/main.c:338
-msgid "Next"
-msgstr "የሚቀጥለው "
-
-#: ../xfce4-session-logout/main.c:69
+#: ../xfce4-session-logout/main.c:67
 msgid "Log out without displaying the logout dialog"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:73
+#: ../xfce4-session-logout/main.c:71
 msgid "Halt without displaying the logout dialog"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:77
+#: ../xfce4-session-logout/main.c:75
 msgid "Reboot without displaying the logout dialog"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:81
+#: ../xfce4-session-logout/main.c:79
 msgid "Suspend without displaying the logout dialog"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:85
+#: ../xfce4-session-logout/main.c:83
 msgid "Hibernate without displaying the logout dialog"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:89
+#: ../xfce4-session-logout/main.c:87
 msgid "Log out quickly; don't save the session"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:107
-#, fuzzy
-msgid "Logout Error"
-msgstr "ሎግውጣ"
-
-#: ../xfce4-session-logout/main.c:110 ../xfce4-session-logout/main.c:117
+#: ../xfce4-session-logout/main.c:110
 #, fuzzy
 msgid "Unknown error"
 msgstr "(የማይታወቅ)"
 
-#: ../xfce4-session-logout/main.c:177
-msgid "Unable to contact D-Bus session bus."
+#: ../xfce4-session-logout/main.c:137
+msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:189
-#, fuzzy
-msgid "Failed to create new D-Bus message"
-msgstr "ፋይል  %sን መፍጠር አልተቻለም"
-
-#: ../xfce4-session-logout/main.c:205
-msgid "Failed to receive a reply from the session manager"
+#: ../xfce4-session-logout/main.c:138
+msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:213
+#: ../xfce4-session-logout/main.c:148
+msgid "Unable to contact D-Bus session bus"
+msgstr ""
+
+#: ../xfce4-session-logout/main.c:227
 msgid "Received error while trying to log out"
 msgstr ""
+
+#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
+msgid "Log Out"
+msgstr "ሎግውጣ"
 
 #: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:2
 msgid "Log out of the Xfce Desktop"
 msgstr ""
 
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
-#, fuzzy
-msgid "Session Menu"
-msgstr "ክፍለጊዜዎችና የመነሳት ስየማዎች"
-
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
-msgid ""
-"Shows a menu with options to lock the screen, suspend, shutdown, or log out"
-msgstr ""
-
 #: ../settings/xfce-session-settings.desktop.in.h:1
-#: ../settings/xfce4-session-settings.glade.h:14
+#: ../settings/xfce4-session-settings.glade.h:16
 msgid "Customize desktop startup and splash screen"
 msgstr ""
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
-#: ../settings/xfce4-session-settings.glade.h:27
+#: ../settings/xfce4-session-settings.glade.h:34
 #, fuzzy
 msgid "Session and Startup"
 msgstr "ክፍለጊዜና መነሳት"
@@ -962,162 +848,216 @@ msgid "<b>Session Chooser</b>"
 msgstr "ክፍለጊዜ መራጭ"
 
 #: ../settings/xfce4-session-settings.glade.h:9
+#, fuzzy
+msgid "<b>Shutdown</b>"
+msgstr "<b>ደራሲ፦</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:10
 msgid "<b>Version:</b>"
 msgstr "<b>ዝርያ፦</b>"
 
-#: ../settings/xfce4-session-settings.glade.h:10
+#: ../settings/xfce4-session-settings.glade.h:11
 #, fuzzy
 msgid "Ad_vanced"
 msgstr "በጥልቀት"
 
-#: ../settings/xfce4-session-settings.glade.h:11
+#: ../settings/xfce4-session-settings.glade.h:12
 #, fuzzy
 msgid "Always save the session when logging out"
 msgstr "ሲሎግውጡ ክፍለጊዜውን በራስገዝ ያስቀምጡ"
 
-#: ../settings/xfce4-session-settings.glade.h:12
+#: ../settings/xfce4-session-settings.glade.h:13
 #, fuzzy
-msgid "Automatically save session on _logout"
+msgid "Automatically save session on logo_ut"
 msgstr "ሲሎግውጡ ክፍለጊዜውን በራስገዝ ያስቀምጡ"
 
-#: ../settings/xfce4-session-settings.glade.h:13
+#: ../settings/xfce4-session-settings.glade.h:14
+#, fuzzy
+msgid "Clear save_d sessions"
+msgstr "አዲስ ክፍለጊዜ ፍጠር።"
+
+#: ../settings/xfce4-session-settings.glade.h:15
 #, fuzzy
 msgid "Con_figure"
 msgstr "አዘጋጅ"
 
-#: ../settings/xfce4-session-settings.glade.h:15
+#: ../settings/xfce4-session-settings.glade.h:17
 #, fuzzy
 msgid "Demonstrates the selected splash screen"
 msgstr "የተመረጠውን የርችት ስክሪን ቀድሞ ያሳያል።"
 
-#: ../settings/xfce4-session-settings.glade.h:16
+#: ../settings/xfce4-session-settings.glade.h:18
 msgid "Display the session chooser every time Xfce starts"
 msgstr ""
 
-#: ../settings/xfce4-session-settings.glade.h:17
+#: ../settings/xfce4-session-settings.glade.h:19
+#, fuzzy
+msgid "Empty the session cache"
+msgstr "የክፍለጊዜ ስምን ይምረጡ።"
+
+#: ../settings/xfce4-session-settings.glade.h:20
 #, fuzzy
 msgid "Launch GN_OME services on startup"
 msgstr "ሲነሳ የኬዲ አገልግሎቶችን አስነሳ"
 
-#: ../settings/xfce4-session-settings.glade.h:18
+#: ../settings/xfce4-session-settings.glade.h:21
 #, fuzzy
 msgid "Launch _KDE services on startup"
 msgstr "ሲነሳ የኬዲ አገልግሎቶችን አስነሳ"
 
-#: ../settings/xfce4-session-settings.glade.h:19
+#: ../settings/xfce4-session-settings.glade.h:22
+msgid "Lock screen be_fore sleep"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.glade.h:23
 #, fuzzy
 msgid "Manage _remote applications"
 msgstr "የሩቅ ፕሮግራሞችን አስተዳድር"
 
-#: ../settings/xfce4-session-settings.glade.h:20
+#: ../settings/xfce4-session-settings.glade.h:24
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
 msgstr ""
 
-#: ../settings/xfce4-session-settings.glade.h:21
+#: ../settings/xfce4-session-settings.glade.h:25
 #, fuzzy
 msgid "Opens the configuration panel for the selected splash screen"
 msgstr "ለተመረጠው የርችት ስክሪን ማሰናጃን ይከፍታል።"
 
-#: ../settings/xfce4-session-settings.glade.h:22
+#: ../settings/xfce4-session-settings.glade.h:26
+#, fuzzy
+msgid "Pro_mpt on logout"
+msgstr "ሲሎግወጣ ይነሳ"
+
+#: ../settings/xfce4-session-settings.glade.h:27
 msgid "Prompt for confirmation when logging out"
 msgstr ""
 
-#: ../settings/xfce4-session-settings.glade.h:23
+#: ../settings/xfce4-session-settings.glade.h:28
 msgid "Quit the program, and remove it from the session"
 msgstr ""
 
-#: ../settings/xfce4-session-settings.glade.h:24
+#: ../settings/xfce4-session-settings.glade.h:29
+msgid "Run xflock4 before suspending or hibernating the system"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.glade.h:30
 msgid "S_plash"
 msgstr ""
 
-#: ../settings/xfce4-session-settings.glade.h:25
+#: ../settings/xfce4-session-settings.glade.h:31
 #, fuzzy
-msgid "Save Sessio_n"
+msgid "Save Sess_ion"
 msgstr "ከፍለጊዜን ጨርስ"
 
-#: ../settings/xfce4-session-settings.glade.h:26
+#: ../settings/xfce4-session-settings.glade.h:32
 #, fuzzy
 msgid "Saving Session"
 msgstr "የክፍለጊዜ መረጃን በመጫን ላይ"
 
-#: ../settings/xfce4-session-settings.glade.h:28
-msgid ""
-"Start GNOME services, such as gnome-keyring and the GNOME accessibility "
-"framework"
+#: ../settings/xfce4-session-settings.glade.h:33
+#, fuzzy
+msgid "Sessio_n"
+msgstr "ከፍለጊዜን ጨርስ"
+
+#: ../settings/xfce4-session-settings.glade.h:35
+msgid "Start GNOME services, such as gnome-keyring"
 msgstr ""
 
-#: ../settings/xfce4-session-settings.glade.h:29
-msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
-msgstr ""
+#: ../settings/xfce4-session-settings.glade.h:36
+#, fuzzy
+msgid "Start KDE services, such as kdeinit"
+msgstr "የኬዲ አገልግሎቶችን በማስነሳት ላይ"
 
-#: ../settings/xfce4-session-settings.glade.h:30
+#: ../settings/xfce4-session-settings.glade.h:37
 msgid ""
 "These applications are a part of the currently-running session, and can be "
 "saved when you log out.  Changes below will only take effect when the "
 "session is saved."
 msgstr ""
 
-#: ../settings/xfce4-session-settings.glade.h:31
+#: ../settings/xfce4-session-settings.glade.h:38
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this "
 "window."
 msgstr ""
 
-#: ../settings/xfce4-session-settings.glade.h:32
+#: ../settings/xfce4-session-settings.glade.h:39
 #, fuzzy
 msgid "_Display chooser on login"
 msgstr "የሎግባ ማሳያ መራጭ"
 
-#: ../settings/xfce4-session-settings.glade.h:33
+#: ../settings/xfce4-session-settings.glade.h:40
 #, fuzzy
 msgid "_General"
 msgstr "አጠቃላይ"
 
-#: ../settings/xfce4-session-settings.glade.h:34
-#, fuzzy
-msgid "_Prompt on logout"
-msgstr "ሲሎግወጣ ይነሳ"
-
-#: ../settings/xfce4-session-settings.glade.h:36
-#, fuzzy
-msgid "_Session"
-msgstr "ከፍለጊዜን ጨርስ"
-
-#: ../settings/xfce4-session-settings.glade.h:37
+#: ../settings/xfce4-session-settings.glade.h:42
 #, fuzzy
 msgid "_Test"
 msgstr "ሙከራ"
 
-#: ../settings/xfce4-session-settings.glade.h:38
+#: ../settings/xfce4-session-settings.glade.h:43
 msgid "label"
 msgstr ""
 
-#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
-msgid "Tips and tricks"
-msgstr "ምክሮች"
+#~ msgid "Shut _down"
+#~ msgstr "ዝጋ"
 
-#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
-msgid "xfce4-tips"
-msgstr "የሸፍሲ ምክሮች"
+#~ msgid "_Log out"
+#~ msgstr "ሎግውጣ"
 
-#, fuzzy
+#~ msgid "Failed to shut down."
+#~ msgstr "ፋይል  %sን ለመጻፍ መክፈት አልተቻለም"
+
+#~ msgid "Failed to reboot."
+#~ msgstr "ፋይል  %sን መፍጠር አልተቻለም"
+
+#~ msgid "Failed to suspend"
+#~ msgstr "ፋይል  %sን ለመጻፍ መክፈት አልተቻለም"
+
+#~ msgid "Failed to hibernate"
+#~ msgstr "ፋይል  %sን መፍጠር አልተቻለም"
+
+#~ msgid "Tips and Tricks"
+#~ msgstr "ምክሮች"
+
+#~ msgid "Fortunes"
+#~ msgstr "አዋቂ"
+
+#~ msgid "Display tips on _startup"
+#~ msgstr "ምክሮችን ሲነሳ አሳይ_s"
+
+#~ msgid "Next"
+#~ msgstr "የሚቀጥለው "
+
+#~ msgid "Logout Error"
+#~ msgstr "ሎግውጣ"
+
+#~ msgid "Failed to create new D-Bus message"
+#~ msgstr "ፋይል  %sን መፍጠር አልተቻለም"
+
+#~ msgid "Session Menu"
+#~ msgstr "ክፍለጊዜዎችና የመነሳት ስየማዎች"
+
+#~ msgid "_Session"
+#~ msgstr "ከፍለጊዜን ጨርስ"
+
+#~ msgid "Tips and tricks"
+#~ msgstr "ምክሮች"
+
+#~ msgid "xfce4-tips"
+#~ msgstr "የሸፍሲ ምክሮች"
+
 #~ msgid "Session Error"
 #~ msgstr "የክፍለጊዜ ስምን ይምረጡ።"
 
-#, fuzzy
 #~ msgid "Session Settings"
 #~ msgstr "ክፍለጊዜዎችና የመነሳት ስየማዎች"
 
-#, fuzzy
-#~ msgid "Xfce Session Manager"
-#~ msgstr "የክፍለጊዜ ስምን ይምረጡ።"
-
-#, fuzzy
 #~ msgid "Unable to create parent pipe: %s"
 #~ msgstr "ፋይል  %sን መፍጠር አልተቻለም"
 
-#, fuzzy
 #~ msgid "Unable to create child pipe: %s"
 #~ msgstr "ፋይል  %sን መፍጠር አልተቻለም"
 
@@ -1130,7 +1070,6 @@ msgstr "የሸፍሲ ምክሮች"
 #~ msgid "Xfce 4 Sessions and Startup Settings"
 #~ msgstr "የሸፍሲ 4 ክፍለጊዜዎችና የመነሳት ስየማዎች"
 
-#, fuzzy
 #~ msgid "Remove the selected application from the session."
 #~ msgstr "የተመረጠውን የርችት ስክሪን ቀድሞ ያሳያል።"
 
