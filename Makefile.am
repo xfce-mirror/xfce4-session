@@ -32,10 +32,6 @@ DISTCLEANFILES =							\
 	intltool-update							\
 	$(desktop_DATA)
 
-AUTOMAKE_OPTIONS =							\
-	1.8								\
-	dist-bzip2
-
 distclean-local:
 	rm -rf *.cache *~
 
