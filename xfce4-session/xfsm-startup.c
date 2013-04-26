@@ -903,9 +903,10 @@ xfsm_startup_start_properties (XfsmProperties *properties,
   child_watch_data = g_new0 (XfsmStartupData, 1);
   child_watch_data->manager = g_object_ref (manager);
   child_watch_data->properties = properties;
-  g_child_watch_add_full (G_PRIORITY_LOW, properties->pid,
-                          xfsm_startup_child_watch, child_watch_data,
-                          (GDestroyNotify) xfsm_startup_data_free);
+  child_watch_data->properties->child_watch_id =
+      g_child_watch_add_full (G_PRIORITY_LOW, properties->pid,
+                              xfsm_startup_child_watch, child_watch_data,
+                              (GDestroyNotify) xfsm_startup_data_free);
 
   /* set a timeout -- client must register in a a certain amount of time
    * or it's assumed to be broken/have issues. */
