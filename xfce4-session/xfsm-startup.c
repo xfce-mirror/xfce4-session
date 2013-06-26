@@ -87,13 +87,48 @@ static void     xfsm_startup_handle_failed_startup   (XfsmProperties *properties
                                                       XfsmManager    *manager);
 
 
-static gchar *running_sshagent = NULL;
+static pid_t running_sshagent = -1;
+static pid_t running_gpgagent = -1;
+static gboolean gpgagent_ssh_enabled = FALSE;
 
 
 
-static void
-xfsm_startup_init_sshagent (const gchar *cmd,
-                            const gchar *agent)
+static pid_t
+xfsm_gpg_agent_pid (const gchar *gpg_agent_info)
+{
+  pid_t        pid = -1;
+  gchar      **fields;
+
+  if (gpg_agent_info == NULL || *gpg_agent_info == '\0')
+    return -1;
+
+  fields = g_strsplit (gpg_agent_info, ":", 3);
+  if (fields != NULL)
+    {
+      /* second field of GPG_AGENT_INFO is a PID */
+      pid = atoi (fields[1]);
+      g_strfreev (fields);
+    }
+
+  return pid;
+}
+
+
+
+static pid_t
+xfsm_ssh_agent_pid (const gchar *ssh_agent_pid)
+{
+  if (ssh_agent_pid == NULL || *ssh_agent_pid == '\0')
+    return -1;
+
+  return atoi (ssh_agent_pid);
+}
+
+
+
+static pid_t
+xfsm_startup_init_agent (const gchar *cmd,
+                         const gchar *agent)
 {
   gchar     *cmdoutput = NULL;
   GError    *error = NULL;
@@ -101,13 +136,14 @@ xfsm_startup_init_sshagent (const gchar *cmd,
   guint      i;
   gchar     *p, *t;
   gchar     *variable, *value;
+  pid_t      pid = -1;
 
   if (g_spawn_command_line_sync (cmd, &cmdoutput, NULL, NULL, &error))
     {
       if (G_UNLIKELY (cmdoutput == NULL))
         {
           g_message ("%s returned no variables to stdout", agent);
-          return;
+          return -1;
         }
 
       lines = g_strsplit (cmdoutput, "\n", -1);
@@ -124,201 +160,215 @@ xfsm_startup_init_sshagent (const gchar *cmd,
           variable = g_strndup (lines[i], p - lines[i]);
           value = g_strndup (p + 1, t - p - 1);
 
+          /* try to get agent pid from the variable */
+          if (pid <= 0)
+            {
+              if (g_strcmp0 (variable, "SSH_AGENT_PID") == 0)
+                pid = xfsm_ssh_agent_pid (value);
+              else if (g_strcmp0 (variable, "GPG_AGENT_INFO") == 0)
+                pid = xfsm_gpg_agent_pid (value);
+            }
+
           g_setenv (variable, value, TRUE);
 
           g_free (variable);
           g_free (value);
         }
       g_strfreev (lines);
-
-      /* keep this around for shutdown */
-      running_sshagent = g_strdup (agent);
     }
   else
     {
       g_warning ("Failed to spawn %s: %s", agent, error->message);
       g_error_free (error);
+
+      return -1;
     }
 
   g_free (cmdoutput);
+
+  if (pid <= 0)
+    g_warning ("%s returned no PID in the variables", agent);
+
+  return pid;
 }
+
 
 
 void
 xfsm_startup_init (XfconfChannel *channel)
 {
-  gchar       *agent;
-  gchar       *path = NULL;
-  gchar       *envfile;
+  gchar       *ssh_agent;
+  gchar       *ssh_agent_path = NULL;
+  gchar       *gpg_agent_path = NULL;
   gchar       *cmd;
-  const gchar *ssh_agent_pid;
-  pid_t        pid;
+  pid_t        agentpid;
   gboolean     gnome_keyring_found;
 
-  if (xfconf_channel_get_bool (channel, "/startup/ssh-agent/enabled", TRUE))
-    {
       /* if GNOME compatibility is enabled and gnome-keyring-daemon
        * is found, skip the gpg/ssh agent startup and wait for
        * gnome-keyring, which is probably what the user wants */
-      if (xfconf_channel_get_bool (channel, "/compat/LaunchGNOME", FALSE))
+  if (xfconf_channel_get_bool (channel, "/compat/LaunchGNOME", FALSE))
+    {
+      cmd = g_find_program_in_path ("gnome-keyring-daemon");
+      gnome_keyring_found = (cmd != NULL);
+      g_free (cmd);
+
+      if (gnome_keyring_found)
         {
-          cmd = g_find_program_in_path ("gnome-keyring-daemon");
-          gnome_keyring_found = (cmd != NULL);
+          g_print ("xfce4-session: %s\n",
+                   "GNOME compatibility is enabled and gnome-keyring-daemon is "
+                   "found on the system. Skipping gpg/ssh-agent startup.");
+          return;
+        }
+    }
+
+  if (xfconf_channel_get_bool (channel, "/startup/gpg-agent/enabled", TRUE))
+    {
+      gpg_agent_path = g_find_program_in_path ("gpg-agent");
+      if (gpg_agent_path == NULL)
+        g_printerr ("xfce4-session: %s\n",
+                    "No GPG agent found");
+    }
+
+  if (xfconf_channel_get_bool (channel, "/startup/ssh-agent/enabled", TRUE))
+    {
+      ssh_agent = xfconf_channel_get_string (channel, "/startup/ssh-agent/type", NULL);
+
+      if (ssh_agent == NULL
+          || g_strcmp0 (ssh_agent, "ssh-agent") == 0)
+        {
+          ssh_agent_path = g_find_program_in_path ("ssh-agent");
+          if (ssh_agent_path == NULL)
+            g_printerr ("xfce4-session: %s\n",
+                        "No SSH authentication agent found");
+        }
+      else if (g_strcmp0 (ssh_agent, "gpg-agent") == 0)
+        {
+          if (gpg_agent_path != NULL)
+             gpgagent_ssh_enabled = TRUE;
+           else
+               g_printerr ("xfce4-session: %s\n", "gpg-agent is configured as SSH agent, "
+                          "but gpg-agent is disabled or not found");
+        }
+      else
+        {
+          g_message ("Unknown SSH authentication agent \"%s\" set", ssh_agent);
+        }
+      g_free (ssh_agent);
+    }
+
+  if (G_LIKELY (ssh_agent_path != NULL || gpgagent_ssh_enabled))
+    {
+      agentpid = xfsm_ssh_agent_pid (g_getenv ("SSH_AGENT_PID"));
+
+      /* check if the pid is still responding (ie not stale) */
+      if (agentpid > 0 && kill (agentpid, 0) == 0)
+        {
+          g_message ("SSH authentication agent is already running");
+
+          gpgagent_ssh_enabled = FALSE;
+          g_free (ssh_agent_path);
+          ssh_agent_path = NULL;
+        }
+      else
+        {
+          g_unsetenv ("SSH_AGENT_PID");
+          g_unsetenv ("SSH_AUTH_SOCK");
+        }
+
+      if (ssh_agent_path != NULL)
+        {
+          cmd = g_strdup_printf ("%s -s", ssh_agent_path);
+          /* keep this around for shutdown */
+          running_sshagent = xfsm_startup_init_agent (cmd, "ssh-agent");
           g_free (cmd);
-
-          if (gnome_keyring_found)
-            {
-              g_print ("xfce4-session: %s\n",
-                       "GNOME compatibility is enabled and gnome-keyring-daemon is "
-                       "found on the system. Skipping gpg/ssh-agent startup.");
-              return;
-            }
+          g_free (ssh_agent_path);
         }
+    }
 
-      agent = xfconf_channel_get_string (channel, "/startup/ssh-agent/type", NULL);
-      if (g_strcmp0 (agent, "gpg-agent") == 0
-          || g_strcmp0 (agent, "ssh-agent") == 0)
+  if (G_LIKELY (gpg_agent_path != NULL))
+    {
+      agentpid = xfsm_gpg_agent_pid (g_getenv ("GPG_AGENT_INFO"));
+
+      /* check if the pid is still responding (ie not stale) */
+      if (agentpid > 0 && kill (agentpid, 0) == 0)
         {
-          path = g_find_program_in_path (agent);
+          g_message ("GPG agent is already running");
         }
-      else if (agent == NULL)
+      else
         {
-          /* lookup gpg- or ssh-agent */
-          path = g_find_program_in_path ("gpg-agent");
-          if (G_UNLIKELY (path != NULL))
+          gchar *envfile;
+
+          g_unsetenv ("GPG_AGENT_INFO");
+
+          envfile = xfce_resource_save_location (XFCE_RESOURCE_CACHE, "gpg-agent-info", FALSE);
+
+          if (gpgagent_ssh_enabled)
             {
-              agent = g_strdup ("gpg-agent");
+              cmd = g_strdup_printf ("%s --sh --daemon --enable-ssh-support "
+                                     "--write-env-file '%s'", gpg_agent_path, envfile);
             }
           else
             {
-              path = g_find_program_in_path ("ssh-agent");
-              if (path != NULL)
-                agent = g_strdup ("ssh-agent");
-            }
-        }
-      else
-        {
-          g_message ("Unknown authentication agent \"%s\" set", agent);
-
-          /* avoid more errors */
-          g_free (agent);
-          return;
-        }
-
-      if (G_LIKELY (path != NULL))
-        {
-          ssh_agent_pid = g_getenv ("SSH_AGENT_PID");
-          if (ssh_agent_pid != NULL && *ssh_agent_pid == '\0')
-            ssh_agent_pid = NULL;
-
-          if (ssh_agent_pid != NULL)
-            {
-              /* check if the pid is still responding (ie not stale) */
-              pid = atoi (ssh_agent_pid);
-              if (pid > 0 && kill (pid, 0) != 0)
-                {
-                  g_unsetenv ("SSH_AGENT_PID");
-                  g_unsetenv ("SSH_AUTH_SOCK");
-
-                  ssh_agent_pid = NULL;
-                }
+              cmd = g_strdup_printf ("%s --sh --daemon --write-env-file '%s'", gpg_agent_path, envfile);
             }
 
-          if (g_strcmp0 (agent, "gpg-agent") == 0)
-            {
-              envfile = xfce_resource_save_location (XFCE_RESOURCE_CACHE, "gpg-agent-info", FALSE);
+          /* keep this around for shutdown */
+          running_gpgagent = xfsm_startup_init_agent (cmd, "gpg-agent");
 
-              if (ssh_agent_pid == NULL)
-                {
-                  cmd = g_strdup_printf ("%s --sh --daemon --enable-ssh-support "
-                                         "--write-env-file '%s'", path, envfile);
-                  xfsm_startup_init_sshagent (cmd, agent);
-                  g_free (cmd);
-                }
-              else if (g_getenv ("GPG_AGENT_INFO") == NULL)
-                {
-                  g_message ("ssh-agent is already running; starting gpg-agent without ssh support");
-                  cmd = g_strdup_printf ("%s --sh --daemon --write-env-file '%s'", path, envfile);
-                  xfsm_startup_init_sshagent (cmd, agent);
-                  g_free (cmd);
-                }
-              else
-                {
-                  g_message ("%s is already running", agent);
-                }
-
-              g_free (envfile);
-            }
-          else if (g_strcmp0 (agent, "ssh-agent") == 0)
-            {
-              if (ssh_agent_pid == NULL)
-                {
-                  cmd = g_strdup_printf ("%s -s", path);
-                  xfsm_startup_init_sshagent (cmd, agent);
-                  g_free (cmd);
-                }
-              else
-                {
-                  g_message ("%s is already running", agent);
-                }
-            }
-        }
-      else
-        {
-          g_printerr ("xfce4-session: %s\n",
-                      "No gpg or ssh authentication agent found");
+          g_free (cmd);
+          g_free (envfile);
         }
 
-      g_free (agent);
-      g_free (path);
+      g_free (gpg_agent_path);
     }
 }
+
 
 
 void
 xfsm_startup_shutdown (void)
 {
-  gchar       *envfile;
-  const gchar *agentpid;
-  pid_t        pid;
-  gboolean     is_gpg_agent;
-
-  if (running_sshagent == NULL)
-    return;
-
-  agentpid = g_getenv ("SSH_AGENT_PID");
-  if (G_UNLIKELY (agentpid == NULL))
+  if (running_sshagent > 0)
     {
-      g_warning ("%s was started, but SSH_AGENT_PID is not set, nothing to kill", running_sshagent);
-    }
-  else
-    {
-      is_gpg_agent = g_strcmp0 (running_sshagent, "gpg-agent") == 0;
-
-      /* kill the process (gpg-agent uses SIGINT, ssh-agent SIGTERM) */
-      pid = atoi (agentpid);
-      if (pid < 1
-          || kill (pid, is_gpg_agent ? SIGINT : SIGTERM) != 0)
+      if (kill (running_sshagent, SIGTERM) == 0)
         {
-          g_warning ("Failed to kill %s with pid %s", running_sshagent, agentpid);
+         /* make sure the env values are unset */
+         g_unsetenv ("SSH_AGENT_PID");
+         g_unsetenv ("SSH_AUTH_SOCK");
+        }
+      else
+        {
+          g_warning ("Failed to kill ssh-agent with pid %d", running_sshagent);
+        }
+    }
+
+  if (running_gpgagent > 0)
+    {
+      gchar *envfile;
+      if (kill (running_gpgagent, SIGINT) == 0)
+        {
+         /* make sure the env values are unset */
+         g_unsetenv ("GPG_AGENT_INFO");
+         if (gpgagent_ssh_enabled)
+           {
+            g_unsetenv ("SSH_AGENT_PID");
+            g_unsetenv ("SSH_AUTH_SOCK");
+           }
+        }
+      else
+        {
+          g_warning ("Failed to kill gpg-agent with pid %d", running_gpgagent);
         }
 
       /* drop the info file from gpg-agent */
-      if (is_gpg_agent)
-        {
-          envfile = xfce_resource_lookup (XFCE_RESOURCE_CACHE, "gpg-agent-info");
-          if (G_LIKELY (envfile != NULL))
-            g_unlink (envfile);
-          g_free (envfile);
-        }
+      envfile = xfce_resource_lookup (XFCE_RESOURCE_CACHE, "gpg-agent-info");
+      if (G_LIKELY (envfile != NULL))
+        g_unlink (envfile);
+      g_free (envfile);
     }
-
-  /* make sure the env values are unset */
-  g_unsetenv ("SSH_AGENT_PID");
-  g_unsetenv ("SSH_AUTH_SOCK");
-
-  g_free (running_sshagent);
 }
+
 
 
 static gboolean
