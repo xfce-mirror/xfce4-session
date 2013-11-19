@@ -1,30 +1,30 @@
-# Czech translations for xfce4-session package.
-# Copyright (C) 2003-2010 The Xfce development team.
-# This file is distributed under the same license as the xfce4-session package.
-# Alois Nespor <Alois.Nespor@seznam.cz>, 2004.
-# Michal Várady <miko.vaji@gmail.com>, 2006-2012.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 # 
+# Translators:
+# Alois Nespor <Alois.Nespor@seznam.cz>, 2004
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-session 4.4.0\n"
+"Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-11 10:48+0000\n"
-"PO-Revision-Date: 2012-03-28 19:36+0100\n"
-"Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
-"Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
+"POT-Creation-Date: 2013-07-02 22:44+0200\n"
+"PO-Revision-Date: 2013-11-19 13:02+0000\n"
+"Last-Translator: Nick <nick@xfce.org>\n"
+"Language-Team: Czech (http://www.transifex.com/projects/p/xfce/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
-"X-Generator: KBabel 1.3.1\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: ../xfce.desktop.in.h:1
-msgid "Use this session to run Xfce as your desktop environment"
-msgstr "Použít tuto relaci ke spuštění Xfce jako vašeho pracovního prostředí"
-
-#: ../xfce.desktop.in.h:2
 msgid "Xfce Session"
 msgstr "Relace prostředí Xfce"
+
+#: ../xfce.desktop.in.h:2
+msgid "Use this session to run Xfce as your desktop environment"
+msgstr "Použít tuto relaci ke spuštění Xfce jako vašeho pracovního prostředí"
 
 #: ../engines/balou/balou-theme.c:110
 msgid "No description given"
@@ -141,12 +141,12 @@ msgid "Simple Splash Engine"
 msgstr "Jednoduchá spouštěcí obrazovka"
 
 #: ../scripts/xscreensaver.desktop.in.h:1
-msgid "Launch screensaver and locker program"
-msgstr "Spustí spořič obrazovky a aplikaci pro uzamykání obrazovky"
-
-#: ../scripts/xscreensaver.desktop.in.h:2
 msgid "Screensaver"
 msgstr "Spořič obrazovky"
+
+#: ../scripts/xscreensaver.desktop.in.h:2
+msgid "Launch screensaver and locker program"
+msgstr "Spustí spořič obrazovky a aplikaci pro uzamykání obrazovky"
 
 #: ../settings/main.c:43
 msgid "Settings manager socket"
@@ -252,11 +252,10 @@ msgstr "Ukončit program"
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
-msgstr ""
-"Aplikace ztratí všechna neuložená data a nespustí se ve vaší příští relaci."
+msgstr "Aplikace ztratí všechna neuložená data a nespustí se ve vaší příští relaci."
 
 #: ../settings/session-editor.c:256
-#: ../settings/xfce4-session-settings.glade.h:41
+#: ../settings/xfce4-session-settings.glade.h:30
 msgid "_Quit Program"
 msgstr "Ukončit _program"
 
@@ -345,11 +344,7 @@ msgid ""
 "you login to your Xfce desktop, in addition to the applications that were "
 "saved when you logged out last time. Cursive applications belong to another "
 "desktop environment, but you can still enable them if you want."
-msgstr ""
-"Níže najdete seznam aplikací, které budou spuštěny automaticky po přihlášení "
-"do prostředí Xfce, včetně aplikací, které byly uloženy při Vašem posledním "
-"odhlášení. Aplikace vypsané kurzívou patří k jinému pracovnímu prostředí, "
-"ale i přesto je můžete povolit."
+msgstr "Níže najdete seznam aplikací, které budou spuštěny automaticky po přihlášení do prostředí Xfce, včetně aplikací, které byly uloženy při Vašem posledním odhlášení. Aplikace vypsané kurzívou patří k jinému pracovnímu prostředí, ale i přesto je můžete povolit."
 
 #: ../settings/xfae-window.c:293
 #, c-format
@@ -364,9 +359,7 @@ msgstr "Odebrání položky se nezdařilo"
 msgid ""
 "This will permanently remove the application from the list of automatically "
 "started applications"
-msgstr ""
-"Touto akcí trvale odeberete aplikaci ze seznamu automaticky spouštěných "
-"aplikací"
+msgstr "Touto akcí trvale odeberete aplikaci ze seznamu automaticky spouštěných aplikací"
 
 #: ../settings/xfae-window.c:332
 #, c-format
@@ -416,9 +409,7 @@ msgstr "Poslední přístup: %s"
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
-msgstr ""
-"Vyberte relaci, kterou chcete obnovit. Relaci obnovíte dvojitým kliknutím na "
-"její název."
+msgstr "Vyberte relaci, kterou chcete obnovit. Relaci obnovíte dvojitým kliknutím na její název."
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:198
@@ -463,11 +454,7 @@ msgid ""
 "This will prevent Xfce from operating correctly.\n"
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
-msgstr ""
-"Nelze najít internetovou adresu pro %s,\n"
-"což brání správnému fungování Xfce.\n"
-"Problém může být vyřešen přidáním\n"
-"%s do systémového souboru /etc/hosts."
+msgstr "Nelze najít internetovou adresu pro %s,\ncož brání správnému fungování Xfce.\nProblém může být vyřešen přidáním\n%s do systémového souboru /etc/hosts."
 
 #: ../xfce4-session/xfsm-dns.c:154
 msgid "Continue anyway"
@@ -482,20 +469,15 @@ msgstr "Zkusit znovu"
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
 "running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
-"incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
-msgstr ""
-"Nelze určit název relace pro režim bezpečného spuštění. Možné příčiny: "
-"služba xfconfd není spuštěna (potíže s nastavením D-Bus); proměnná prostředí "
-"$XDG_CONFIG_DIRS není správně nastavena (musí obsahovat „%s“) nebo balíček "
-"xfce4-session není nainstalován správně."
+"incorrectly (must include \"%s\"), or xfce4-session is installed "
+"incorrectly."
+msgstr "Nelze určit název relace pro režim bezpečného spuštění. Možné příčiny: služba xfconfd není spuštěna (potíže s nastavením D-Bus); proměnná prostředí $XDG_CONFIG_DIRS není správně nastavena (musí obsahovat „%s“) nebo balíček xfce4-session není nainstalován správně."
 
 #: ../xfce4-session/xfsm-manager.c:622
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr ""
-"Zadaná relace pro bezpečné spuštění („%s“) není označrena jako relace pro "
-"bezpečné spuštění."
+msgstr "Zadaná relace pro bezpečné spuštění („%s“) není označrena jako relace pro bezpečné spuštění."
 
 #: ../xfce4-session/xfsm-manager.c:669
 msgid "The list of applications in the failsafe session is empty."
@@ -583,9 +565,7 @@ msgstr "Došlo k chybě"
 msgid ""
 "Either the password you entered is invalid, or the system administrator "
 "disallows shutting down this computer with your user account."
-msgstr ""
-"Zadané heslo je neplatné nebo správce zakázal možnost vypnutí počítače z "
-"tohoto uživatelského účtu."
+msgstr "Zadané heslo je neplatné nebo správce zakázal možnost vypnutí počítače z tohoto uživatelského účtu."
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -693,16 +673,7 @@ msgid ""
 "autostart directory have been successfully migrated to the new\n"
 "location.\n"
 "You should delete this directory now.\n"
-msgstr ""
-"Umístění a formát adresáře pro automatické spouštění byly změněny.\n"
-"Nové umístění je v\n"
-"\n"
-"  %s,\n"
-"\n"
-"kam můžete umístit soubory .desktop, které popisují aplikace, spouštěné\n"
-"po přihlášení do prostředí Xfce. Soubory v dříve používaném adresáři\n"
-" autostart byly úspěšně převedeny do nového umístění.\n"
-"Tento adresář byste nyní měli smazat.\n"
+msgstr "Umístění a formát adresáře pro automatické spouštění byly změněny.\nNové umístění je v\n\n  %s,\n\nkam můžete umístit soubory .desktop, které popisují aplikace, spouštěné\npo přihlášení do prostředí Xfce. Soubory v dříve používaném adresáři\n autostart byly úspěšně převedeny do nového umístění.\nTento adresář byste nyní měli smazat.\n"
 
 #: ../xfce4-session/xfsm-startup.c:684
 msgid "Performing Autostart..."
@@ -789,470 +760,177 @@ msgid "Log out of the Xfce Desktop"
 msgstr "Odhlásit se z prostředí Xfce"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
-#: ../settings/xfce4-session-settings.glade.h:16
-msgid "Customize desktop startup and splash screen"
-msgstr "Přizpůsobte si spouštění pracovního prostředí a uvítací obrazovky"
-
-#: ../settings/xfce-session-settings.desktop.in.h:2
-#: ../settings/xfce4-session-settings.glade.h:34
+#: ../settings/xfce4-session-settings.glade.h:3
 msgid "Session and Startup"
 msgstr "Relace a spouštění"
 
+#: ../settings/xfce-session-settings.desktop.in.h:2
+#: ../settings/xfce4-session-settings.glade.h:4
+msgid "Customize desktop startup and splash screen"
+msgstr "Přizpůsobte si spouštění pracovního prostředí a uvítací obrazovky"
+
 #: ../settings/xfce4-session-settings.glade.h:1
-msgid "<b>Author:</b>"
-msgstr "<b>Autor:</b>"
+msgid "Saving Session"
+msgstr "Ukládání relace"
 
 #: ../settings/xfce4-session-settings.glade.h:2
-msgid "<b>Compatibility</b>"
-msgstr "<b>Kompatibilita</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:3
-msgid "<b>Description:</b>"
-msgstr "<b>Popis:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:4
-msgid "<b>Homepage:</b>"
-msgstr "<b>Domovská stránka:</b>"
+msgid ""
+"Your session is being saved.  If you do not wish to wait, you may close this"
+" window."
+msgstr "Vaše relace se ukládá. Zavřete toto okno, pokud nechcete čekat."
 
 #: ../settings/xfce4-session-settings.glade.h:5
-msgid "<b>Information</b>"
-msgstr "<b>Informace</b>"
+msgid "_Display chooser on login"
+msgstr "Zobrazit _výběr při přihlašování"
 
 #: ../settings/xfce4-session-settings.glade.h:6
-msgid "<b>Logout Settings</b>"
-msgstr "<b>Nastavení odhlášení</b>"
+msgid "Display the session chooser every time Xfce starts"
+msgstr "Zobrazit výběr relací při každém spuštění Xfce"
 
 #: ../settings/xfce4-session-settings.glade.h:7
-msgid "<b>Security</b>"
-msgstr "<b>Zabezpečení</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:8
 msgid "<b>Session Chooser</b>"
 msgstr "<b>Výběr relace</b>"
 
-#: ../settings/xfce4-session-settings.glade.h:9
-msgid "<b>Shutdown</b>"
-msgstr "<b>Vypnutí</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:10
-msgid "<b>Version:</b>"
-msgstr "<b>Verze:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:11
-msgid "Ad_vanced"
-msgstr "Po_kročilé"
-
-#: ../settings/xfce4-session-settings.glade.h:12
-msgid "Always save the session when logging out"
-msgstr "Automaticky uložit relaci při odhlášení"
-
-#: ../settings/xfce4-session-settings.glade.h:13
+#: ../settings/xfce4-session-settings.glade.h:8
 msgid "Automatically save session on logo_ut"
 msgstr "Auto_maticky uložit relaci při odhlášení"
 
+#: ../settings/xfce4-session-settings.glade.h:9
+msgid "Always save the session when logging out"
+msgstr "Automaticky uložit relaci při odhlášení"
+
+#: ../settings/xfce4-session-settings.glade.h:10
+msgid "Pro_mpt on logout"
+msgstr "_Ptát se při odhlášení"
+
+#: ../settings/xfce4-session-settings.glade.h:11
+msgid "Prompt for confirmation when logging out"
+msgstr "Potvrdit volbu při odhlašování "
+
+#: ../settings/xfce4-session-settings.glade.h:12
+msgid "<b>Logout Settings</b>"
+msgstr "<b>Nastavení odhlášení</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:13
+msgid "_General"
+msgstr "_Obecné"
+
 #: ../settings/xfce4-session-settings.glade.h:14
-msgid "Clear save_d sessions"
-msgstr "_Vyčistit uložené relace"
+msgid "Opens the configuration panel for the selected splash screen"
+msgstr "Otevře konfigurační panel vybrané spouštěcí obrazovky"
 
 #: ../settings/xfce4-session-settings.glade.h:15
 msgid "Con_figure"
 msgstr "Kon_figurovat"
 
-#: ../settings/xfce4-session-settings.glade.h:17
+#: ../settings/xfce4-session-settings.glade.h:16
 msgid "Demonstrates the selected splash screen"
 msgstr "Náhled vybrané spouštěcí obrazovky"
 
+#: ../settings/xfce4-session-settings.glade.h:17
+msgid "_Test"
+msgstr "_Vyzkoušet"
+
 #: ../settings/xfce4-session-settings.glade.h:18
-msgid "Display the session chooser every time Xfce starts"
-msgstr "Zobrazit výběr relací při každém spuštění Xfce"
+msgid "<b>Description:</b>"
+msgstr "<b>Popis:</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:19
-msgid "Empty the session cache"
-msgstr "Vyprázdnit mezipaměť relace"
+msgid "<b>Version:</b>"
+msgstr "<b>Verze:</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:20
-msgid "Launch GN_OME services on startup"
-msgstr "Spustit při startu služby _GNOME"
+msgid "<b>Author:</b>"
+msgstr "<b>Autor:</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:21
-msgid "Launch _KDE services on startup"
-msgstr "Spustit při startu služby K_DE"
+msgid "<b>Homepage:</b>"
+msgstr "<b>Domovská stránka:</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:22
-msgid "Lock screen be_fore sleep"
-msgstr "Před uspáním u_zamknout obrazovku"
+msgid "label"
+msgstr "label"
 
 #: ../settings/xfce4-session-settings.glade.h:23
-msgid "Manage _remote applications"
-msgstr "Spravovat _vzdálené aplikace"
+msgid "<b>Information</b>"
+msgstr "<b>Informace</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:24
-msgid ""
-"Manage remote applications over the network (this may be a security risk)"
-msgstr "Správa vzdálených aplikací po síti (může být bezpečnostní riziko)"
-
-#: ../settings/xfce4-session-settings.glade.h:25
-msgid "Opens the configuration panel for the selected splash screen"
-msgstr "Otevře konfigurační panel vybrané spouštěcí obrazovky"
-
-#: ../settings/xfce4-session-settings.glade.h:26
-msgid "Pro_mpt on logout"
-msgstr "_Ptát se při odhlášení"
-
-#: ../settings/xfce4-session-settings.glade.h:27
-msgid "Prompt for confirmation when logging out"
-msgstr "Potvrdit volbu při odhlašování "
-
-#: ../settings/xfce4-session-settings.glade.h:28
-msgid "Quit the program, and remove it from the session"
-msgstr "Ukončí program a odebere jej z relace"
-
-#: ../settings/xfce4-session-settings.glade.h:29
-msgid "Run xflock4 before suspending or hibernating the system"
-msgstr "Před uspáním nebo hibernací systému spustí xflock4"
-
-#: ../settings/xfce4-session-settings.glade.h:30
 msgid "S_plash"
 msgstr "_Uvítací obrazovka"
 
-#: ../settings/xfce4-session-settings.glade.h:31
-msgid "Save Sess_ion"
-msgstr "Uložit rela_ci"
-
-#: ../settings/xfce4-session-settings.glade.h:32
-msgid "Saving Session"
-msgstr "Ukládání relace"
-
-#: ../settings/xfce4-session-settings.glade.h:33
-msgid "Sessio_n"
-msgstr "_Relace"
-
-#: ../settings/xfce4-session-settings.glade.h:35
-msgid "Start GNOME services, such as gnome-keyring"
-msgstr "Spustí služby prostředí GNOME, například gnome-keyring"
-
-#: ../settings/xfce4-session-settings.glade.h:36
-msgid "Start KDE services, such as kdeinit"
-msgstr "Spustí služby prostředí KDE, například „kdeinit“"
-
-#: ../settings/xfce4-session-settings.glade.h:37
+#: ../settings/xfce4-session-settings.glade.h:25
 msgid ""
 "These applications are a part of the currently-running session, and can be "
 "saved when you log out.  Changes below will only take effect when the "
 "session is saved."
-msgstr ""
-"Tyto aplikace jsou součástí právě spuštěné relace a mohou být uloženy při "
-"odhlášení. Změny uvedené níže se provedou pouze při uložení relace."
+msgstr "Tyto aplikace jsou součástí právě spuštěné relace a mohou být uloženy při odhlášení. Změny uvedené níže se provedou pouze při uložení relace."
+
+#: ../settings/xfce4-session-settings.glade.h:26
+msgid "Save Sess_ion"
+msgstr "Uložit rela_ci"
+
+#: ../settings/xfce4-session-settings.glade.h:27
+msgid "Empty the session cache"
+msgstr "Vyprázdnit mezipaměť relace"
+
+#: ../settings/xfce4-session-settings.glade.h:28
+msgid "Clear save_d sessions"
+msgstr "_Vyčistit uložené relace"
+
+#: ../settings/xfce4-session-settings.glade.h:29
+msgid "Quit the program, and remove it from the session"
+msgstr "Ukončí program a odebere jej z relace"
+
+#: ../settings/xfce4-session-settings.glade.h:31
+msgid "Sessio_n"
+msgstr "_Relace"
+
+#: ../settings/xfce4-session-settings.glade.h:32
+msgid "Launch GN_OME services on startup"
+msgstr "Spustit při startu služby _GNOME"
+
+#: ../settings/xfce4-session-settings.glade.h:33
+msgid "Start GNOME services, such as gnome-keyring"
+msgstr "Spustí služby prostředí GNOME, například gnome-keyring"
+
+#: ../settings/xfce4-session-settings.glade.h:34
+msgid "Launch _KDE services on startup"
+msgstr "Spustit při startu služby K_DE"
+
+#: ../settings/xfce4-session-settings.glade.h:35
+msgid "Start KDE services, such as kdeinit"
+msgstr "Spustí služby prostředí KDE, například „kdeinit“"
+
+#: ../settings/xfce4-session-settings.glade.h:36
+msgid "<b>Compatibility</b>"
+msgstr "<b>Kompatibilita</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:37
+msgid "Manage _remote applications"
+msgstr "Spravovat _vzdálené aplikace"
 
 #: ../settings/xfce4-session-settings.glade.h:38
 msgid ""
-"Your session is being saved.  If you do not wish to wait, you may close this "
-"window."
-msgstr "Vaše relace se ukládá. Zavřete toto okno, pokud nechcete čekat."
+"Manage remote applications over the network (this may be a security risk)"
+msgstr "Správa vzdálených aplikací po síti (může být bezpečnostní riziko)"
 
 #: ../settings/xfce4-session-settings.glade.h:39
-msgid "_Display chooser on login"
-msgstr "Zobrazit _výběr při přihlašování"
+msgid "<b>Security</b>"
+msgstr "<b>Zabezpečení</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:40
-msgid "_General"
-msgstr "_Obecné"
+msgid "Lock screen be_fore sleep"
+msgstr "Před uspáním u_zamknout obrazovku"
+
+#: ../settings/xfce4-session-settings.glade.h:41
+msgid "Run xflock4 before suspending or hibernating the system"
+msgstr "Před uspáním nebo hibernací systému spustí xflock4"
 
 #: ../settings/xfce4-session-settings.glade.h:42
-msgid "_Test"
-msgstr "_Vyzkoušet"
+msgid "<b>Shutdown</b>"
+msgstr "<b>Vypnutí</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:43
-msgid "label"
-msgstr "label"
-
-#~ msgid "_Session"
-#~ msgstr "_Relace"
-
-#~ msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
-#~ msgstr ""
-#~ "Sestaveno s knihovnou Gtk+-%d.%d.%d, spuštěno s knihovnou Gtk+-%d.%d.%d"
-
-#~ msgid "<span size='large'><b>Log out %s</b></span>"
-#~ msgstr "<span size='large'><b>Odhlásit uživatele %s</b></span>"
-
-#~ msgid "Unable to perform shutdown"
-#~ msgstr "Nelze provést vypnutí"
-
-#~ msgid "Invalid shutdown type \"%u\""
-#~ msgstr "Neplatný typ vypnutí „%u“"
-
-#~ msgid "Suspend failed, no backend supported"
-#~ msgstr ""
-#~ "Přechod do režimu spánku se nezdařil, není přítomen podporovaný backend"
-
-#~ msgid "Hibernate failed, no backend supported"
-#~ msgstr "Hibernace se nezdařila, není přítomen podporovaný backend"
-
-#~ msgid "Shutdown Command not found"
-#~ msgstr "Příkaz pro vypnutí nebyl nalezen"
-
-#~ msgid "Logout Error"
-#~ msgstr "Chyba při odhlašování"
-
-#~ msgid "Failed to create new D-Bus message"
-#~ msgstr "Nepodařilo se vytvořit novou zprávu D-Bus"
-
-#~ msgid "Failed to receive a reply from the session manager"
-#~ msgstr "Přijetí odpovědi od správce relací se nezdařilo"
-
-#~ msgid "Loc_k screen"
-#~ msgstr "U_zamknout obrazovku"
-
-#~ msgid "_Suspend"
-#~ msgstr "_Režim spánku"
-
-#~ msgid "_Reboot"
-#~ msgstr "_Rebootovat"
-
-#~ msgid "Shut _down"
-#~ msgstr "_Vypnout"
-
-#~ msgid "_Log out"
-#~ msgstr "_Odhlášení "
-
-#~ msgid "Are you sure you want to log out?"
-#~ msgstr "Opravdu se chcete odhlásit?"
-
-#~ msgid "You will be logged out in %u seconds."
-#~ msgstr "Budete odhlášeni za %u sekund."
-
-#~ msgid "Failed to log out."
-#~ msgstr "Odhlášení se nezdařilo."
-
-#~ msgid "Are you sure you want to shut down?"
-#~ msgstr "Opravdu chcete vypnout počítač?"
-
-#~ msgid "Your system will shut down in %u seconds."
-#~ msgstr "Systém se vypne za %u sekund."
-
-#~ msgid "Failed to shut down."
-#~ msgstr "Nepodařilo se vypnout počítač."
-
-#~ msgid "Are you sure you want to reboot?"
-#~ msgstr "Opravdu chcete rebootovat počítač?"
-
-#~ msgid "Your system will reboot in %u seconds."
-#~ msgstr "Systém se rebootuje za %u sekund."
-
-#~ msgid "Failed to reboot."
-#~ msgstr "Rebootování se nezdařilo."
-
-#~ msgid "Failed to suspend"
-#~ msgstr "Přechod do režimu spánku se nezdařil."
-
-#~ msgid "Failed to hibernate"
-#~ msgstr "Hibernace se nezdařila."
-
-#~ msgid "Hibernate"
-#~ msgstr "Hibernace"
-
-#~ msgid "Tips and Tricks"
-#~ msgstr "Tipy a triky"
-
-#~ msgid "Fortunes"
-#~ msgstr "Citáty"
-
-#~ msgid "Could not load tips database (%s)."
-#~ msgstr "Nelze načíst databázi tipů (%s)."
-
-#~ msgid "Invalid output of fortune."
-#~ msgstr "Neplatný výstup tipu."
-
-#~ msgid "Executing fortune failed (%s)"
-#~ msgstr "Spuštění tipu se nezdařilo (%s)"
-
-#~ msgid "Error while loading tips."
-#~ msgstr "Chyba při načítání tipů."
-
-#~ msgid "Display tips on _startup"
-#~ msgstr "Zobrazovat tipy při _spuštění"
-
-#~ msgid "Next"
-#~ msgstr "Další"
-
-#~ msgid "Session Menu"
-#~ msgstr "Nabídka relace"
-
-#~ msgid ""
-#~ "Shows a menu with options to lock the screen, suspend, shutdown, or log "
-#~ "out"
-#~ msgstr ""
-#~ "Zobrazuje nabídku s možnostmi pro uzamknutí obrazovky, přejití do režimu "
-#~ "spánku, vypnutí nebo odhlášení."
-
-#~ msgid "Tips and tricks"
-#~ msgstr "Tipy a triky"
-
-#~ msgid "xfce4-tips"
-#~ msgstr "xfce4-tips"
-
-#~ msgid "Terminate \"%s\""
-#~ msgstr "Ukončit „%s“"
-
-#~ msgid "Invalid shutdown type"
-#~ msgstr "Neplatný typ vypnutí"
-
-#~ msgid "No HAL method for command %d"
-#~ msgstr "Žádná metoda vrstvy HAL pro příkaz %d"
-
-#~ msgid ""
-#~ "Program \"sudo\" was not found.  You will not be able to shutdown your "
-#~ "system from within Xfce."
-#~ msgstr ""
-#~ "Aplikace „sudo“ nebyla nalezena.  Nebude možné vypnout systém přímo z "
-#~ "prostředí Xfce."
-
-#~ msgid "Unable to create parent pipe: %s"
-#~ msgstr "Nelze vytvořit nadřazenou rouru: %s"
-
-#~ msgid "Unable to create child pipe: %s"
-#~ msgstr "Nelze vytvořit podřazenou rouru: %s"
-
-#~ msgid "Unable to fork sudo helper: %s"
-#~ msgstr "Nelze vytvořit proces pomocníka v režimu administrátora: %s"
-
-#~ msgid "Unable to read response from sudo helper: %s"
-#~ msgstr "Nelze přečíst odpověď od pomocníka v režimu administrátora: %s"
-
-#~ msgid "Unable to open parent pipe: %s"
-#~ msgstr "Nelze otevřít nadřazenou rouru: %s"
-
-#~ msgid "Unable to open child pipe: %s"
-#~ msgstr "Nelze otevřít podřazenou rouru: %s"
-
-#~ msgid "Got unexpected reply from sudo shutdown helper"
-#~ msgstr ""
-#~ "Obdržena neočekávaná odpověď od pomocníka pro vypínání v režimu "
-#~ "administrátora"
-
-#~ msgid ""
-#~ "Suspend and Hibernate are only supported through HAL, which is unavailable"
-#~ msgstr ""
-#~ "Režim spánku a hibernace jsou podporovány pouze pomocí vrstvy HAL, která "
-#~ "nyní není dostupná"
-
-#~ msgid "Session Error"
-#~ msgstr "Chyba relace"
-
-#~ msgid "Session Settings"
-#~ msgstr "Nastavení relace"
-
-#~ msgid "Internal Error"
-#~ msgstr "Interní chyba"
-
-#~ msgid "This is likely a problem with your Xfce installation"
-#~ msgstr "Jedná se pravděpodobně o potíže s instalací prostředí Xfce"
-
-#~ msgid "Unexpected error from HAL"
-#~ msgstr "Neočekávaná chyba vrstvy HAL"
-
-#~ msgid "gtk-close"
-#~ msgstr "gtk-close"
-
-#~ msgid "gtk-help"
-#~ msgstr "gtk-help"
-
-#~ msgid "Session and Startup Settings"
-#~ msgstr "Nastavení spouštění a sezení"
-
-#~ msgid "Sessions and Startup Settings"
-#~ msgstr "Nastavení spouštění a sezení"
-
-#~ msgid "Xfce 4 Sessions and Startup Settings"
-#~ msgstr "Nastavení spouštění a sezení Xfce 4"
-
-#~ msgid "Remove the selected application from the session."
-#~ msgstr "Vyjmout vybrané aplikace ze sezení."
-
-#~ msgid "gtk-remove"
-#~ msgstr "gtk-remove"
-
-#~ msgid ""
-#~ "If set, the session manager will ask you to choose a session every time "
-#~ "you log in to Xfce."
-#~ msgstr ""
-#~ "Vyberete-li tuto možnost, budete požádáni o volbu sezení při každém "
-#~ "přihlášení do Xfce."
-
-#~ msgid ""
-#~ "This option instructs the session manager to save the current session "
-#~ "automatically when you log out. If you don't select this option you'll be "
-#~ "prompted whether you want to save the current session on each logout."
-#~ msgstr ""
-#~ "Při odhlášení správce sezení automaticky uloží právě spuštěné sezení. "
-#~ "Nevyberete-li tuto volbu, budete při každém odhlášení dotázáni, zda "
-#~ "chcete uložit aktuální sezení."
-
-#~ msgid ""
-#~ "This option disables the logout confirmation dialog. Whether the session "
-#~ "will be saved or not depends on whether you enabled the automatic saving "
-#~ "of sessions on logout or not."
-#~ msgstr ""
-#~ "Tato volba vypíná potvrzovací dialog při odhlášení. Zda bude sezení "
-#~ "uloženo nebo ne, závisí na povoleném nebo zakázaném automatickém ukládání "
-#~ "sezení při odhlášení."
-
-#~ msgid "Launch Gnome services on startup"
-#~ msgstr "Spustit při startu služby Gnome"
-
-#~ msgid ""
-#~ "Enable this if you plan to use Gnome applications. This will instruct the "
-#~ "session manager to start some vital Gnome services for you. You should "
-#~ "also enable this if you want to use the Assistive Technologies that ship "
-#~ "with Gnome."
-#~ msgstr ""
-#~ "Chcete-li spouštět aplikace Gnome jako součást sezení prostředí Xfce, "
-#~ "povolte tuto volbu. Tato volba umožní správci sezení spustit některé "
-#~ "důležité služby prostředí Gnome. Tuto volbu byste měli zapnout, chcete-li "
-#~ "používat technologie usnadnění Gnome."
-
-#~ msgid ""
-#~ "Enable this option if you plan to run KDE applications as part of your "
-#~ "Xfce Desktop session. This will notably increase the startup time, but on "
-#~ "the other hand, KDE applications will startup faster. Some KDE "
-#~ "applications may not work at all if you don't enable this option."
-#~ msgstr ""
-#~ "Chcete-li spouštět aplikace KDE jako součást sezení prostředí Xfce, "
-#~ "povolte tuto volbu. Tato volba sice může znatelně prodloužit celkový čas "
-#~ "spouštění, aplikace KDE však budou startovat rychleji. Některé aplikace "
-#~ "KDE nemusejí bez zapnutí této volby správně pracovat."
-
-#~ msgid "Security"
-#~ msgstr "Bezpečnost"
-
-#~ msgid ""
-#~ "Allow the session manager to manage applications running on remote hosts. "
-#~ "Do not enable this option unless you know what you are doing."
-#~ msgstr ""
-#~ "Povolit správci sezení ovládání aplikací běžících na vzdálených strojích. "
-#~ "Nepovolujte tuto volbu, nejste-li si jisti, k čemu slouží."
-
-#~ msgid "Button Label|Sessions and Startup"
-#~ msgstr "Sezení a spouštění"
-
-#~ msgid "Splash Screen Settings"
-#~ msgstr "Nastavení spouštěcí obrazovky"
-
-#~ msgid "Button Label|Splash Screen"
-#~ msgstr "Spouštěcí obrazovka"
-
-#~ msgid "Autostarted applications"
-#~ msgstr "Automaticky spouštěné aplikace"
-
-#~ msgid "Xfce 4 Splash Screen Settings"
-#~ msgstr "Nastavení spouštěcí obrazovky Xfce 4"
-
-#~ msgid "Autostarted Applications"
-#~ msgstr "Automaticky spouštěné aplikace"
-
-#~ msgid "Edit the list of autostarted applications"
-#~ msgstr "Upravit seznam automaticky spouštěných aplikací"
-
-#~ msgid "Xfce 4 Autostarted Applications"
-#~ msgstr "Automaticky spouštěné aplikace Xfce 4"
+msgid "Ad_vanced"
+msgstr "Po_kročilé"
