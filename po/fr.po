@@ -4,16 +4,18 @@
 # 
 # Translators:
 # jc1 <jc1.quebecos@gmail.com>, 2013
+# jc1 <jc1.quebecos@gmail.com>, 2013
 # Jean-François Wauthy <pollux@xfce.org>, 2004
-# Mike Massonnet <mmassonnet@xfce.org>, 2009
+# m8t <mmassonnet@xfce.org>, 2009
+# Urides <urien.desterres@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-02 22:44+0200\n"
-"PO-Revision-Date: 2013-07-15 13:22+0000\n"
-"Last-Translator: jc1 <jc1.quebecos@gmail.com>\n"
-"Language-Team: French (http://www.transifex.com/projects/p/xfce/language/fr/)\n"
+"PO-Revision-Date: 2014-04-24 10:09+0000\n"
+"Last-Translator: Urides <urien.desterres@gmail.com>\n"
+"Language-Team: French (http://www.transifex.com/projects/p/xfce4-session/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -318,27 +320,27 @@ msgstr "Éditer l'application"
 #: ../settings/xfae-model.c:611
 #, c-format
 msgid "Failed to unlink %s: %s"
-msgstr "Échec à la suppression du lien %s : %s"
+msgstr "Impossible de supprimer le lien %s : %s"
 
 #: ../settings/xfae-model.c:700
 #, c-format
 msgid "Failed to create file %s"
-msgstr "Échec à la création du fichier %s"
+msgstr "Impossible de créer le fichier %s"
 
 #: ../settings/xfae-model.c:723
 #, c-format
 msgid "Failed to write file %s"
-msgstr "Échec à l'écriture du fichier %s"
+msgstr "Impossible d’écrire le fichier %s"
 
 #: ../settings/xfae-model.c:782
 #, c-format
 msgid "Failed to open %s for reading"
-msgstr "Échec à l'ouverture en lecture de %s"
+msgstr "Impossible d'ouvrir %s pour la lecture"
 
 #: ../settings/xfae-model.c:891 ../settings/xfae-model.c:948
 #, c-format
 msgid "Failed to open %s for writing"
-msgstr "Échec à l'ouverture en écriture de %s"
+msgstr "Impossible d'ouvrir %s pour l'écriture"
 
 #: ../settings/xfae-window.c:102
 msgid ""
@@ -473,13 +475,13 @@ msgid ""
 "running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
 "incorrectly (must include \"%s\"), or xfce4-session is installed "
 "incorrectly."
-msgstr "Échec à l'identification du nom de la session sans échec. Causes possibles : xfconfd n'est pas en cours (problème D-Bus) ; la variable d'environnement $XDG_CONFIG_DIRS n'est pas définie correctement (elle doit contenir \"%s\") ; ou xfce4-session n'est pas installé correctement."
+msgstr "Impossible de déterminer le nom de la session  sans échec. Causes possibles : xfconfd ne fonctionne pas (problème de configuration D-Bus); la variable d'environnement $XDG_CONFIG_DIRS n'est pas définie correctement (elle doit contenir « %s ») ; ou xfce4-session n'est pas installé correctement."
 
 #: ../xfce4-session/xfsm-manager.c:622
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr "La session sans échec « %s » n'est pas marquée comme telle."
+msgstr "La session sans échec (« %s ») n'est pas marquée comme telle."
 
 #: ../xfce4-session/xfsm-manager.c:669
 msgid "The list of applications in the failsafe session is empty."
@@ -494,7 +496,7 @@ msgstr "Erreur du gestionnaire de session"
 
 #: ../xfce4-session/xfsm-manager.c:718
 msgid "Unable to load a failsafe session"
-msgstr "Aucune session sans échec n'a pu être chargée"
+msgstr "Impossible de charger une session sans échec"
 
 #: ../xfce4-session/xfsm-manager.c:1127
 msgid "Shutdown Failed"
@@ -502,11 +504,11 @@ msgstr "Mise hors tension échouée"
 
 #: ../xfce4-session/xfsm-manager.c:1130
 msgid "Failed to suspend session"
-msgstr "Échec à la mise en veille de la session"
+msgstr "Impossible de mettre en veille la session"
 
 #: ../xfce4-session/xfsm-manager.c:1131
 msgid "Failed to hibernate session"
-msgstr "Échec à la mise en hibernation de la session"
+msgstr "Impossible de mettre en hibernation de la session"
 
 #: ../xfce4-session/xfsm-manager.c:1405
 #, c-format
@@ -516,7 +518,7 @@ msgstr "La fermeture de clients n'est possible qu'en mode attente"
 #: ../xfce4-session/xfsm-manager.c:1969
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
-msgstr "Le gestionnaire de session doit être en mode attente lors d'une requête de checkpoint"
+msgstr "Le gestionnaire de session doit être en mode attente lors d'une requête d'un point de contrôle"
 
 #: ../xfce4-session/xfsm-manager.c:2010
 #, c-format
@@ -579,7 +581,7 @@ msgstr "Choix du nom de la session"
 
 #: ../xfce4-session/xfsm-splash-screen.c:222
 msgid "Choose a name for the new session:"
-msgstr "Veuillez saisir un nom pour la nouvelle session :"
+msgstr "Choisir un nom pour la nouvelle session :"
 
 #: ../xfce4-session/xfsm-startup.c:347
 msgid "Starting the Volume Controller"
@@ -643,7 +645,7 @@ msgstr "Démarrage de VI Improved Editor"
 
 #: ../xfce4-session/xfsm-startup.c:383
 msgid "Starting the Session Management Proxy"
-msgstr "Démarrage du Proxy Gestionnaire de Session"
+msgstr "Démarrage du Proxy du Gestionnaire de Session"
 
 #: ../xfce4-session/xfsm-startup.c:385
 msgid "Starting the X-Chat IRC Client"
@@ -675,7 +677,7 @@ msgid ""
 "autostart directory have been successfully migrated to the new\n"
 "location.\n"
 "You should delete this directory now.\n"
-msgstr "L'emplacement et le format du répertoire d'auto-démarrage ont changé.\nLe nouvel emplacement est\n\n  %s\n\noù vous pouvez placer les fichiers .desktop qui décrivent les applications\nà démarrer lors de votre session Xfce. Les fichiers de votre ancien répertoire\nd'auto-démarrage ont été migrés avec succès vers le nouvel emplacement.\nVous devriez supprimer l'ancien répertoire maintenant.\n"
+msgstr "L'emplacement et le format du répertoire démarrage automatique a changé.\nLe nouvel emplacement est\n\n  %s\n\noù vous pouvez placer les fichiers .desktop qui décrivent les applications\nà démarrer lorsque vous vous connectez à votre bureau Xfce. Les fichiers de votre ancien\nrépertoire de démarrage automatique ont été migrés avec succès à le nouvel emplacement.\nVous devriez supprimer ce répertoire maintenant.\n"
 
 #: ../xfce4-session/xfsm-startup.c:684
 msgid "Performing Autostart..."
@@ -698,16 +700,16 @@ msgstr "Erreur à la réception de la réponse de la commande de mise hors tensi
 #: ../xfce4-session/xfsm-shutdown.c:450
 #, c-format
 msgid "Shutdown command failed"
-msgstr "La commande de mise hors tension échoué"
+msgstr "La commande de mise hors tension a échoué"
 
 #: ../xfce4-session/xfsm-shutdown.c:555
 msgid "Shutdown is blocked by the kiosk settings"
-msgstr "La mise hors tension est bloquée par les paramètres de kiosque"
+msgstr "La mise hors tension est bloquée par les paramètres du kiosque"
 
 #: ../xfce4-session/xfsm-shutdown.c:638
 #, c-format
 msgid "Unknown shutdown method %d"
-msgstr "Méthode '%d' de mise hors tension inconnue"
+msgstr "Méthode %d de mise hors tension inconnue"
 
 #: ../xfce4-session-logout/main.c:67
 msgid "Log out without displaying the logout dialog"
@@ -731,7 +733,7 @@ msgstr "Mettre en hibernation sans demander confirmation"
 
 #: ../xfce4-session-logout/main.c:87
 msgid "Log out quickly; don't save the session"
-msgstr "Déconnexion directe sans sauvegarde de la session"
+msgstr "Déconnexion rapide ; ne pas enregistrer la session"
 
 #: ../xfce4-session-logout/main.c:110
 msgid "Unknown error"
@@ -747,11 +749,11 @@ msgstr "et Brian Tarricone <kelnos@xfce.org>"
 
 #: ../xfce4-session-logout/main.c:148
 msgid "Unable to contact D-Bus session bus"
-msgstr "Le bus de session D-Bus n'a pas pu être contacté"
+msgstr "Impossible de contacter le bus de session D-Bus"
 
 #: ../xfce4-session-logout/main.c:227
 msgid "Received error while trying to log out"
-msgstr "Erreur en cours de déconnexion"
+msgstr "Erreur reçue lors de la déconnexion"
 
 #: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
 msgid "Log Out"
@@ -759,7 +761,7 @@ msgstr "Déconnexion"
 
 #: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:2
 msgid "Log out of the Xfce Desktop"
-msgstr "Fermer la session Xfce"
+msgstr "Fermer la session du bureau Xfce"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
 #: ../settings/xfce4-session-settings.glade.h:3
@@ -769,7 +771,7 @@ msgstr "Session et démarrage"
 #: ../settings/xfce-session-settings.desktop.in.h:2
 #: ../settings/xfce4-session-settings.glade.h:4
 msgid "Customize desktop startup and splash screen"
-msgstr "Personnaliser le démarrage du bureau Xfce"
+msgstr "Personnaliser le démarrage du bureau et l'écran de démarrage"
 
 #: ../settings/xfce4-session-settings.glade.h:1
 msgid "Saving Session"
@@ -779,7 +781,7 @@ msgstr "Enregistrement de la session"
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
-msgstr "Session en cours d'enregistrement. Si vous ne souhaitez pas patienter, vous pouvez fermer cette fenêtre."
+msgstr "Votre session est enregistrée. Si vous ne souhaitez pas attendre, vous pouvez fermer cette fenêtre."
 
 #: ../settings/xfce4-session-settings.glade.h:5
 msgid "_Display chooser on login"
@@ -799,7 +801,7 @@ msgstr "_Enregistrer automatiquement la session lors de la déconnexion"
 
 #: ../settings/xfce4-session-settings.glade.h:9
 msgid "Always save the session when logging out"
-msgstr "Toujours enregistrer l'état de la session lorsque vous vous déconnectez de Xfce"
+msgstr "Toujours enregistrer la session lorsque vous vous déconnectez"
 
 #: ../settings/xfce4-session-settings.glade.h:10
 msgid "Pro_mpt on logout"
@@ -819,7 +821,7 @@ msgstr "_Principal"
 
 #: ../settings/xfce4-session-settings.glade.h:14
 msgid "Opens the configuration panel for the selected splash screen"
-msgstr "Affiche le panneau de configuration pour l'écran de démarrage sélectionné"
+msgstr "Ouvrir le panneau de configuration pour l'écran de démarrage sélectionné"
 
 #: ../settings/xfce4-session-settings.glade.h:15
 msgid "Con_figure"
@@ -915,7 +917,7 @@ msgstr "_Gérer les applications distantes"
 #: ../settings/xfce4-session-settings.glade.h:38
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
-msgstr "Gérer les applications distantes via le réseau (pose un risque de sécurité)"
+msgstr "Gérer les applications distantes via le réseau (cela peut être un risque pour la sécurité)"
 
 #: ../settings/xfce4-session-settings.glade.h:39
 msgid "<b>Security</b>"
