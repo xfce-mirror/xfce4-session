@@ -81,7 +81,7 @@ static void
 xfsm_systemd_init (XfsmSystemd *systemd)
 {
   systemd->authority = polkit_authority_get_sync (NULL, NULL);
-  systemd->subject = polkit_unix_process_new (getpid());
+  systemd->subject = polkit_unix_process_new_for_owner (getpid(), 0, -1);
 }
 
 
