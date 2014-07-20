@@ -24,7 +24,7 @@ then
   OPTS=""
   for OPT in $*
   do
-    if test "x$OPT" == "x--help"
+    if test "x$OPT" = "x--help"
     then
       # print help and exit
       echo "Usage:"
@@ -37,7 +37,7 @@ then
       echo
 
       exit 0
-    elif test "x$OPT" == "x--with-ck-launch"
+    elif test "x$OPT" = "x--with-ck-launch"
     then
       # try to launch xfce4-session with ck-launch-session in xinitrc
       XFCE4_SESSION_WITH_CK="1"
