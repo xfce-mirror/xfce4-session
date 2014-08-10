@@ -24,6 +24,7 @@
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 
+#include <libxfsm/xfsm-util.h>
 #include <xfce4-session/xfsm-systemd.h>
 
 
@@ -33,8 +34,12 @@
 #define SYSTEMD_DBUS_INTERFACE          "org.freedesktop.login1.Manager"
 #define SYSTEMD_REBOOT_ACTION           "Reboot"
 #define SYSTEMD_POWEROFF_ACTION         "PowerOff"
+#define SYSTEMD_SUSPEND_ACTION          "Suspend"
+#define SYSTEMD_HIBERNATE_ACTION        "Hibernate"
 #define SYSTEMD_REBOOT_TEST             "org.freedesktop.login1.reboot"
 #define SYSTEMD_POWEROFF_TEST           "org.freedesktop.login1.power-off"
+#define SYSTEMD_SUSPEND_TEST            "org.freedesktop.login1.suspend"
+#define SYSTEMD_HIBERNATE_TEST          "org.freedesktop.login1.hibernate"
 
 
 
@@ -91,6 +96,22 @@ xfsm_systemd_finalize (GObject *object)
 
   (*G_OBJECT_CLASS (xfsm_systemd_parent_class)->finalize) (object);
 }
+
+
+
+static gboolean
+xfsm_systemd_lock_screen (GError **error)
+{
+  XfconfChannel *channel;
+  gboolean       ret = TRUE;
+
+  channel = xfsm_open_config ();
+  if (xfconf_channel_get_bool (channel, "/shutdown/LockScreen", FALSE))
+      ret = g_spawn_command_line_async ("xflock4", error);
+
+  return ret;
+}
+
 
 
 static gboolean
@@ -205,6 +226,34 @@ xfsm_systemd_try_shutdown (XfsmSystemd  *systemd,
 
 
 gboolean
+xfsm_systemd_try_suspend (XfsmSystemd  *systemd,
+                          GError      **error)
+{
+  if (!xfsm_systemd_lock_screen (error))
+    return FALSE;
+
+  return xfsm_systemd_try_method (systemd,
+                                  SYSTEMD_SUSPEND_ACTION,
+                                  error);
+}
+
+
+
+gboolean
+xfsm_systemd_try_hibernate (XfsmSystemd  *systemd,
+                            GError      **error)
+{
+  if (!xfsm_systemd_lock_screen (error))
+    return FALSE;
+
+  return xfsm_systemd_try_method (systemd,
+                                  SYSTEMD_HIBERNATE_ACTION,
+                                  error);
+}
+
+
+
+gboolean
 xfsm_systemd_can_restart (XfsmSystemd  *systemd,
                           gboolean     *can_restart,
                           GError      **error)
@@ -226,4 +275,40 @@ xfsm_systemd_can_shutdown (XfsmSystemd  *systemd,
                                   can_shutdown,
                                   SYSTEMD_POWEROFF_TEST,
                                   error);
+}
+
+
+
+gboolean
+xfsm_systemd_can_suspend (XfsmSystemd  *systemd,
+                          gboolean     *can_suspend,
+                          gboolean     *auth_suspend,
+                          GError      **error)
+{
+  gboolean ret = FALSE;
+
+  ret = xfsm_systemd_can_method (systemd,
+                                 can_suspend,
+                                 SYSTEMD_SUSPEND_TEST,
+                                 error);
+  *auth_suspend = *can_suspend;
+  return ret;
+}
+
+
+
+gboolean
+xfsm_systemd_can_hibernate (XfsmSystemd  *systemd,
+                            gboolean     *can_hibernate,
+                            gboolean     *auth_hibernate,
+                            GError      **error)
+{
+  gboolean ret = FALSE;
+
+  ret = xfsm_systemd_can_method (systemd,
+                                 can_hibernate,
+                                 SYSTEMD_HIBERNATE_TEST,
+                                 error);
+  *auth_hibernate = *can_hibernate;
+  return ret;
 }

@@ -98,7 +98,7 @@ XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.9.0])
 
 dnl Check for polkit / systemd integration
 XDT_CHECK_OPTIONAL_PACKAGE([SYSTEMD], [polkit-gobject-1], [0.100],
-                           [systemd], [Systemd support (through polit)])
+                           [systemd], [Systemd support (through polkit)])
 
 dnl Check for debugging support
 XDT_FEATURE_DEBUG([xfsm_debug_default])
@@ -202,10 +202,10 @@ echo " * Legacy session management:      yes"
 else
 echo " * Legacy session management:      no"
 fi
-if test x"$GNOME_KEYRING_FOUND" = x"yes"; then
-echo " * Gnome Keyring support:          yes"
+if test x"$SYSTEMD_FOUND" = x"yes"; then
+echo " * Systemd support (through polkit):          yes"
 else
-echo " * Gnome Keyring support:          no"
+echo " * Systemd support (through polkit):          no"
 fi
 
 echo

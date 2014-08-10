@@ -38,6 +38,8 @@ xfce4_session_SOURCES =							\
 	xfsm-compat-gnome.h						\
 	xfsm-compat-kde.c						\
 	xfsm-compat-kde.h						\
+	xfsm-consolekit.c						\
+	xfsm-consolekit.h						\
 	xfsm-dns.c							\
 	xfsm-dns.h							\
 	xfsm-error.c							\
@@ -67,10 +69,6 @@ if HAVE_SYSTEMD
 xfce4_session_SOURCES +=						\
 	xfsm-systemd.c							\
 	xfsm-systemd.h
-else
-xfce4_session_SOURCES +=						\
-	xfsm-consolekit.c						\
-	xfsm-consolekit.h
 endif
 
 xfce4_session_CFLAGS =							\

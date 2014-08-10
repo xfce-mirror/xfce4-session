@@ -22,6 +22,8 @@
 #ifndef __XFSM_SYSTEMD_H__
 #define __XFSM_SYSTEMD_H__
 
+#define LOGIND_RUNNING() (access ("/run/systemd/seats/", F_OK) >= 0)
+
 typedef struct _XfsmSystemdClass XfsmSystemdClass;
 typedef struct _XfsmSystemd      XfsmSystemd;
 
@@ -42,12 +44,28 @@ gboolean     xfsm_systemd_try_restart  (XfsmSystemd  *systemd,
 gboolean     xfsm_systemd_try_shutdown (XfsmSystemd  *systemd,
                                         GError      **error);
 
+gboolean     xfsm_systemd_try_suspend  (XfsmSystemd  *systemd,
+                                        GError      **error);
+
+gboolean     xfsm_systemd_try_hibernate (XfsmSystemd *systemd,
+                                        GError      **error);
+
 gboolean     xfsm_systemd_can_restart  (XfsmSystemd  *systemd,
                                         gboolean     *can_restart,
                                         GError      **error);
 
 gboolean     xfsm_systemd_can_shutdown (XfsmSystemd  *systemd,
                                         gboolean     *can_shutdown,
+                                        GError      **error);
+
+gboolean     xfsm_systemd_can_suspend  (XfsmSystemd  *systemd,
+                                        gboolean     *can_suspend,
+                                        gboolean     *auth_suspend,
+                                        GError      **error);
+
+gboolean     xfsm_systemd_can_hibernate (XfsmSystemd *systemd,
+                                        gboolean     *can_hibernate,
+                                        gboolean     *auth_hibernate,
                                         GError      **error);
 
 G_END_DECLS
