@@ -63,13 +63,10 @@ xfce4_session_SOURCES =							\
 	xfsm-startup.c							\
 	xfsm-startup.h							\
 	xfsm-upower.c							\
-	xfsm-upower.h
-
-if HAVE_SYSTEMD
-xfce4_session_SOURCES +=						\
+	xfsm-upower.h							\
 	xfsm-systemd.c							\
 	xfsm-systemd.h
-endif
+
 
 xfce4_session_CFLAGS =							\
 	$(LIBSM_CFLAGS)							\
@@ -78,10 +75,11 @@ xfce4_session_CFLAGS =							\
 	$(DBUS_CFLAGS)							\
 	$(DBUS_GLIB_CFLAGS)						\
 	$(LIBWNCK_CFLAGS)						\
-	$(SYSTEMD_CFLAGS)						\
+	$(POLKIT_CFLAGS)						\
 	$(XFCONF_CFLAGS)						\
 	$(GMODULE_CFLAGS)						\
-	$(PLATFORM_CFLAGS)
+	$(PLATFORM_CFLAGS)						\
+	$(UPOWER_CFLAGS)
 
 xfce4_session_LDFLAGS =							\
 	-no-undefined							\
@@ -98,12 +96,25 @@ xfce4_session_LDADD =							\
 	$(DBUS_LIBS)							\
 	$(DBUS_GLIB_LIBS)						\
 	$(LIBWNCK_LIBS)							\
-	$(SYSTEMD_LIBS)							\
+	$(POLKIT_LIBS)							\
 	$(XFCONF_LIBS)							\
+	$(UPOWER_LIBS)							\
 	-lm
 
 xfce4_session_DEPENDENCIES =						\
 	$(top_builddir)/libxfsm/libxfsm-4.6.la
+
+if HAVE_POLKIT
+
+@INTLTOOL_POLICY_RULE@
+
+polkit_policydir = $(datadir)/polkit-1/actions
+polkit_policy_DATA =					\
+	org.xfce.session.policy
+.in2.in:
+	sed "s|[@]HELPER_PATH_PREFIX@|${HELPER_PATH_PREFIX}|" $< > $@
+
+endif
 
 if MAINTAINER_MODE
 
@@ -123,9 +134,6 @@ xfsm-manager-dbus.h: $(srcdir)/xfsm-manager-dbus.xml
 xfsm-client-dbus.h: $(srcdir)/xfsm-client-dbus.xml
 	$(AM_V_GEN) dbus-binding-tool --mode=glib-server --prefix=xfsm_client $< > $@
 
-DISTCLEANFILES =							\
-	$(xfce4_session_built_sources)
-
 BUILT_SOURCES =								\
 	$(xfce4_session_built_sources)
 
@@ -136,6 +144,12 @@ EXTRA_DIST =								\
 	xfsm-chooser-icon.png						\
 	xfsm-marshal.list						\
 	xfsm-client-dbus.xml						\
-	xfsm-manager-dbus.xml
+	xfsm-manager-dbus.xml					\
+	org.xfce.session.policy.in2
+
+DISTCLEANFILES =							\
+	$(xfce4_session_built_sources)			\
+	org.xfce.session.policy					\
+	org.xfce.session.policy.in
 
 # vi:set ts=8 sw=8 noet ai nocindent syntax=automake:

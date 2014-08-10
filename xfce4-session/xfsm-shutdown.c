@@ -51,12 +51,20 @@
 #ifdef HAVE_SIGNAL_H
 #include <signal.h>
 #endif
-
+#ifdef HAVE_SYS_SYSCTL_H
+#include <sys/sysctl.h>
+#endif
 
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 #include <libxfce4util/libxfce4util.h>
 #include <gtk/gtk.h>
+#ifdef HAVE_UPOWER
+#include <upower.h>
+#endif
+#ifdef HAVE_POLKIT
+#include <polkit/polkit.h>
+#endif
 
 #include <libxfsm/xfsm-util.h>
 
@@ -68,13 +76,24 @@
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-legacy.h>
 #include <xfce4-session/xfsm-upower.h>
-
-#ifdef HAVE_SYSTEMD
 #include <xfce4-session/xfsm-systemd.h>
-#endif
+
+
+
+#define POLKIT_AUTH_SHUTDOWN_XFSM  "org.xfce.session.xfsm-shutdown-helper"
+#define POLKIT_AUTH_RESTART_XFSM   "org.xfce.session.xfsm-shutdown-helper"
+#define POLKIT_AUTH_SUSPEND_XFSM   "org.xfce.session.xfsm-shutdown-helper"
+#define POLKIT_AUTH_HIBERNATE_XFSM "org.xfce.session.xfsm-shutdown-helper"
+
+
 
 static void xfsm_shutdown_finalize  (GObject      *object);
-static void xfsm_shutdown_sudo_free (XfsmShutdown *shutdown);
+static gboolean xfsm_shutdown_fallback_auth_shutdown  (void);
+static gboolean xfsm_shutdown_fallback_auth_restart   (void);
+static gboolean xfsm_shutdown_fallback_can_hibernate  (void);
+static gboolean xfsm_shutdown_fallback_can_suspend    (void);
+static gboolean xfsm_shutdown_fallback_auth_hibernate (void);
+static gboolean xfsm_shutdown_fallback_auth_suspend   (void);
 
 
 
@@ -83,35 +102,18 @@ struct _XfsmShutdownClass
   GObjectClass __parent__;
 };
 
-typedef enum
-{
-  SUDO_NOT_INITIAZED,
-  SUDO_AVAILABLE,
-  SUDO_FAILED
-}
-HelperState;
 
 struct _XfsmShutdown
 {
   GObject __parent__;
 
-#ifdef HAVE_SYSTEMD
   XfsmSystemd    *systemd;
-#endif
   XfsmConsolekit *consolekit;
   XfsmUPower     *upower;
 
   /* kiosk settings */
   gboolean        kiosk_can_shutdown;
   gboolean        kiosk_can_save_session;
-
-  /* sudo helper */
-  HelperState     helper_state;
-  pid_t           helper_pid;
-  FILE           *helper_infile;
-  FILE           *helper_outfile;
-  guint           helper_watchid;
-  gboolean        helper_require_password;
 };
 
 
@@ -136,18 +138,14 @@ xfsm_shutdown_init (XfsmShutdown *shutdown)
 {
   XfceKiosk *kiosk;
 
-#ifdef HAVE_SYSTEMD
   shutdown->consolekit = NULL;
   shutdown->systemd = NULL;
   if (LOGIND_RUNNING())
     shutdown->systemd = xfsm_systemd_get ();
   else
-#endif
-  shutdown->consolekit = xfsm_consolekit_get ();
+    shutdown->consolekit = xfsm_consolekit_get ();
 
   shutdown->upower = xfsm_upower_get ();
-  shutdown->helper_state = SUDO_NOT_INITIAZED;
-  shutdown->helper_require_password = FALSE;
 
   /* check kiosk */
   kiosk = xfce_kiosk_new ("xfce4-session");
@@ -163,388 +161,14 @@ xfsm_shutdown_finalize (GObject *object)
 {
   XfsmShutdown *shutdown = XFSM_SHUTDOWN (object);
 
-#ifdef HAVE_SYSTEMD
   if (shutdown->systemd != NULL)
     g_object_unref (G_OBJECT (shutdown->systemd));
-#endif
+
   if (shutdown->consolekit != NULL)
     g_object_unref (G_OBJECT (shutdown->consolekit));
   g_object_unref (G_OBJECT (shutdown->upower));
 
-  /* close down helper */
-  xfsm_shutdown_sudo_free (shutdown);
-
   (*G_OBJECT_CLASS (xfsm_shutdown_parent_class)->finalize) (object);
-}
-
-
-
-static void
-xfsm_shutdown_sudo_free (XfsmShutdown *shutdown)
-{
-  gint status;
-
-  /* close down helper */
-  if (shutdown->helper_infile != NULL)
-    {
-      fclose (shutdown->helper_infile);
-      shutdown->helper_infile = NULL;
-    }
-
-  if (shutdown->helper_outfile != NULL)
-    {
-      fclose (shutdown->helper_outfile);
-      shutdown->helper_outfile = NULL;
-    }
-
-  if (shutdown->helper_watchid > 0)
-    {
-      g_source_remove (shutdown->helper_watchid);
-      shutdown->helper_watchid = 0;
-    }
-
-  if (shutdown->helper_pid > 0)
-    {
-      waitpid (shutdown->helper_pid, &status, 0);
-      shutdown->helper_pid = 0;
-    }
-
-  /* reset state */
-  shutdown->helper_state = SUDO_NOT_INITIAZED;
-}
-
-
-
-static void
-xfsm_shutdown_sudo_childwatch (GPid     pid,
-                               gint     status,
-                               gpointer data)
-{
-  /* close down sudo stuff */
-  xfsm_shutdown_sudo_free (XFSM_SHUTDOWN (data));
-}
-
-
-
-static gboolean
-xfsm_shutdown_sudo_init (XfsmShutdown  *shutdown,
-                         GError       **error)
-{
-  gchar  *cmd;
-  struct  rlimit rlp;
-  gchar   buf[15];
-  gint    parent_pipe[2];
-  gint    child_pipe[2];
-  gint    n;
-
-  /* return state if we succeeded */
-  if (shutdown->helper_state != SUDO_NOT_INITIAZED)
-    return shutdown->helper_state == SUDO_AVAILABLE;
-
-  g_return_val_if_fail (shutdown->helper_infile == NULL, FALSE);
-  g_return_val_if_fail (shutdown->helper_outfile == NULL, FALSE);
-  g_return_val_if_fail (shutdown->helper_watchid == 0, FALSE);
-  g_return_val_if_fail (shutdown->helper_pid == 0, FALSE);
-
-  /* assume it won't work for now */
-  shutdown->helper_state = SUDO_FAILED;
-
-  cmd = g_find_program_in_path ("sudo");
-  if (G_UNLIKELY (cmd == NULL))
-    {
-      g_set_error_literal (error, 1, 0,
-                           "The program \"sudo\" was not found");
-      return FALSE;
-    }
-
-  if (pipe (parent_pipe) == -1)
-    {
-      g_set_error (error, 1, 0,
-                   "Unable to create parent pipe: %s",
-                   strerror (errno));
-      goto err0;
-    }
-
-  if (pipe (child_pipe) == -1)
-    {
-      g_set_error (error, 1, 0,
-                   "Unable to create child pipe: %s",
-                   strerror (errno));
-      goto err1;
-    }
-
-  shutdown->helper_pid = fork ();
-  if (shutdown->helper_pid < 0)
-    {
-      g_set_error (error, 1, 0,
-                   "Unable to fork sudo helper: %s",
-                   strerror (errno));
-      goto err2;
-    }
-  else if (shutdown->helper_pid == 0)
-    {
-      /* setup signals */
-      signal (SIGPIPE, SIG_IGN);
-
-      /* setup environment */
-      g_setenv ("LC_ALL", "C", TRUE);
-      g_setenv ("LANG", "C", TRUE);
-      g_setenv ("LANGUAGE", "C", TRUE);
-
-      /* setup the 3 standard file handles */
-      dup2 (child_pipe[0], STDIN_FILENO);
-      dup2 (parent_pipe[1], STDOUT_FILENO);
-      dup2 (parent_pipe[1], STDERR_FILENO);
-
-      /* close all other file handles */
-      getrlimit (RLIMIT_NOFILE, &rlp);
-      for (n = 0; n < (gint) rlp.rlim_cur; ++n)
-        {
-          if (n != STDIN_FILENO && n != STDOUT_FILENO && n != STDERR_FILENO)
-            close (n);
-        }
-
-      /* execute sudo with the helper */
-      execl (cmd, "sudo", "-H", "-S", "-p",
-             "XFSM_SUDO_PASS ", "--",
-             XFSM_SHUTDOWN_HELPER_CMD, NULL);
-
-      g_free (cmd);
-      cmd = NULL;
-
-      _exit (127);
-    }
-  else
-    {
-      /* watch the sudo helper */
-      shutdown->helper_watchid = g_child_watch_add (shutdown->helper_pid,
-                                                    xfsm_shutdown_sudo_childwatch,
-                                                    shutdown);
-    }
-
-  /* read sudo/helper answer */
-  n = read (parent_pipe[0], buf, sizeof (buf));
-  if (n < 15)
-    {
-      g_set_error (error, 1, 0,
-                   "Unable to read response from sudo helper: %s",
-                   n < 0 ? strerror (errno) : "Unknown error");
-      goto err2;
-    }
-
-  /* open pipe to receive replies from sudo */
-  shutdown->helper_infile = fdopen (parent_pipe[0], "r");
-  if (shutdown->helper_infile == NULL)
-    {
-      g_set_error (error, 1, 0,
-                   "Unable to open parent pipe: %s",
-                   strerror (errno));
-      goto err2;
-    }
-  close (parent_pipe[1]);
-
-  /* open pipe to send passwords to sudo */
-  shutdown->helper_outfile = fdopen (child_pipe[1], "w");
-  if (shutdown->helper_outfile == NULL)
-    {
-      g_set_error (error, 1, 0,
-                   "Unable to open parent pipe: %s",
-                   strerror (errno));
-      goto err2;
-    }
-  close (child_pipe[0]);
-
-  /* check if NOPASSWD is set in /etc/sudoers */
-  if (memcmp (buf, "XFSM_SUDO_PASS ", 15) == 0)
-    {
-      shutdown->helper_require_password = TRUE;
-    }
-  else if (memcmp (buf, "XFSM_SUDO_DONE ", 15) == 0)
-    {
-      shutdown->helper_require_password = FALSE;
-    }
-  else
-    {
-      g_set_error (error, 1, 0,
-                   "Got unexpected reply from sudo shutdown helper");
-      goto err2;
-    }
-
-  /* if we try again */
-  shutdown->helper_state = SUDO_AVAILABLE;
-
-  return TRUE;
-
-err2:
-  xfsm_shutdown_sudo_free (shutdown);
-
-  close (child_pipe[0]);
-  close (child_pipe[1]);
-
-err1:
-  close (parent_pipe[0]);
-  close (parent_pipe[1]);
-
-err0:
-  g_free (cmd);
-
-  shutdown->helper_pid = 0;
-
-  return FALSE;
-}
-
-
-
-static gboolean
-xfsm_shutdown_sudo_try_action (XfsmShutdown      *shutdown,
-                               XfsmShutdownType   type,
-                               GError           **error)
-{
-  const gchar *action;
-  gchar        reply[256];
-
-  g_return_val_if_fail (shutdown->helper_state == SUDO_AVAILABLE, FALSE);
-  g_return_val_if_fail (shutdown->helper_outfile != NULL, FALSE);
-  g_return_val_if_fail (shutdown->helper_infile != NULL, FALSE);
-  g_return_val_if_fail (type == XFSM_SHUTDOWN_SHUTDOWN
-                        || type == XFSM_SHUTDOWN_RESTART, FALSE);
-
-  /* the command we send to sudo */
-  if (type == XFSM_SHUTDOWN_SHUTDOWN)
-    action = "POWEROFF";
-  else if (type == XFSM_SHUTDOWN_RESTART)
-    action = "REBOOT";
-  else
-    return FALSE;
-
-  /* write action to sudo helper */
-  if (fprintf (shutdown->helper_outfile, "%s\n", action) > 0)
-    fflush (shutdown->helper_outfile);
-
-  /* check if the write succeeded */
-  if (ferror (shutdown->helper_outfile) != 0)
-    {
-      /* probably succeeded but the helper got killed */
-      if (errno == EINTR)
-        return TRUE;
-
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Error sending command to shutdown helper: %s"),
-                   strerror (errno));
-      return FALSE;
-    }
-
-  /* get responce from sudo helper */
-  if (fgets (reply, sizeof (reply), shutdown->helper_infile) == NULL)
-    {
-      /* probably succeeded but the helper got killed */
-      if (errno == EINTR)
-        return TRUE;
-
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Error receiving response from shutdown helper: %s"),
-                   strerror (errno));
-      return FALSE;
-    }
-
-  if (strncmp (reply, "SUCCEED", 7) != 0)
-    {
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Shutdown command failed"));
-
-      return FALSE;
-    }
-
-  return TRUE;
-}
-
-
-
-static XfsmPassState
-xfsm_shutdown_sudo_send_password (XfsmShutdown  *shutdown,
-                                  const gchar   *password)
-{
-  gchar        buf[1024];
-  gsize        len_buf, len_send;
-  gint         fd;
-  gsize        len;
-  gssize       result;
-  gint         attempts;
-  const gchar *errmsg = NULL;
-
-  g_return_val_if_fail (shutdown->helper_state == SUDO_AVAILABLE, PASSWORD_FAILED);
-  g_return_val_if_fail (shutdown->helper_outfile != NULL, PASSWORD_FAILED);
-  g_return_val_if_fail (shutdown->helper_infile != NULL, PASSWORD_FAILED);
-  g_return_val_if_fail (shutdown->helper_require_password, PASSWORD_FAILED);
-  g_return_val_if_fail (password != NULL, PASSWORD_FAILED);
-
-  /* write password to sudo helper */
-  g_snprintf (buf, sizeof (buf), "%s\n", password);
-  len_buf = strlen (buf);
-  len_send = fwrite (buf, 1, len_buf, shutdown->helper_outfile);
-  fflush (shutdown->helper_outfile);
-  bzero (buf, len_buf);
-
-  if (len_send != len_buf
-      || ferror (shutdown->helper_outfile) != 0)
-    {
-      errmsg = "Failed to send password to sudo";
-      goto err1;
-    }
-
-  fd = fileno (shutdown->helper_infile);
-
-  for (len = 0, attempts = 0;;)
-    {
-      result = read (fd, buf + len, 256 - len);
-
-      if (result < 0)
-        {
-          errmsg = "Failed to read data from sudo";
-          goto err1;
-        }
-      else if (result == 0)
-        {
-          /* don't try too often */
-          if (++attempts > 20)
-            {
-              errmsg = "Too many password attempts";
-              goto err1;
-            }
-
-          continue;
-        }
-      else if (result + len >= sizeof (buf))
-        {
-          errmsg = "Received too much data from sudo";
-          goto err1;
-        }
-
-      len += result;
-      buf[len] = '\0';
-
-      if (len >= 15)
-        {
-          if (g_str_has_suffix (buf, "XFSM_SUDO_PASS "))
-            {
-              return PASSWORD_RETRY;
-            }
-          else if (g_str_has_suffix (buf, "XFSM_SUDO_DONE "))
-            {
-              /* sudo is unlocked, no further passwords required */
-              shutdown->helper_require_password = FALSE;
-
-              return PASSWORD_SUCCEED;
-            }
-        }
-    }
-
-  return PASSWORD_FAILED;
-
-  err1:
-
-  g_printerr (PACKAGE_NAME ": %s.\n\n", errmsg);
-  return PASSWORD_FAILED;
 }
 
 
@@ -585,38 +209,6 @@ xfsm_shutdown_get (void)
 
 
 gboolean
-xfsm_shutdown_password_require (XfsmShutdown     *shutdown,
-                                XfsmShutdownType  type)
-{
-  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
-
-  /* the helper only handled shutdown and restart */
-  if (type == XFSM_SHUTDOWN_SHUTDOWN || type == XFSM_SHUTDOWN_RESTART)
-    return shutdown->helper_require_password;
-
-  return FALSE;
-}
-
-
-
-XfsmPassState
-xfsm_shutdown_password_send (XfsmShutdown      *shutdown,
-                             XfsmShutdownType   type,
-                             const gchar       *password)
-{
-  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), PASSWORD_FAILED);
-  g_return_val_if_fail (password != NULL, PASSWORD_FAILED);
-
-  if ((type == XFSM_SHUTDOWN_SHUTDOWN || type == XFSM_SHUTDOWN_RESTART)
-      && shutdown->helper_state == SUDO_AVAILABLE)
-    return xfsm_shutdown_sudo_send_password (shutdown, password);
-
-  return PASSWORD_FAILED;
-}
-
-
-
-gboolean
 xfsm_shutdown_try_type (XfsmShutdown      *shutdown,
                         XfsmShutdownType   type,
                         GError           **error)
@@ -647,6 +239,36 @@ xfsm_shutdown_try_type (XfsmShutdown      *shutdown,
 
 
 
+static gboolean
+xfsm_shutdown_fallback_try_action (XfsmShutdown      *shutdown,
+                                   XfsmShutdownType   type,
+                                   GError           **error)
+{
+  const gchar *action;
+  gboolean ret;
+  gint exit_status = 0;
+  gchar *command = NULL;
+
+  if (type == XFSM_SHUTDOWN_SHUTDOWN)
+    action = "shutdown";
+  if (type == XFSM_SHUTDOWN_RESTART)
+    action = "restart";
+  else if (type == XFSM_SHUTDOWN_SUSPEND)
+    action = "suspend";
+  else if (type == XFSM_SHUTDOWN_HIBERNATE)
+    action = "hibernate";
+  else
+      return FALSE;
+
+  command = g_strdup_printf ("pkexec " XFSM_SHUTDOWN_HELPER_CMD " --%s", action);
+  ret = g_spawn_command_line_sync (command, NULL, NULL, &exit_status, error);
+
+  g_free (command);
+  return ret;
+}
+
+
+
 gboolean
 xfsm_shutdown_try_restart (XfsmShutdown  *shutdown,
                            GError       **error)
@@ -656,15 +278,13 @@ xfsm_shutdown_try_restart (XfsmShutdown  *shutdown,
   if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, error))
     return FALSE;
 
-  if (shutdown->helper_state == SUDO_AVAILABLE)
-    return xfsm_shutdown_sudo_try_action (shutdown, XFSM_SHUTDOWN_RESTART, error);
-  else
-#ifdef HAVE_SYSTEMD
-    if (shutdown->systemd != NULL)
-      return xfsm_systemd_try_restart (shutdown->systemd, error);
-    else
-#endif
+  if (shutdown->systemd != NULL)
+    return xfsm_systemd_try_restart (shutdown->systemd, error);
+
+  if (shutdown->consolekit != NULL)
     return xfsm_consolekit_try_restart (shutdown->consolekit, error);
+
+  return xfsm_shutdown_fallback_try_action (shutdown, XFSM_SHUTDOWN_RESTART, error);
 }
 
 
@@ -678,15 +298,13 @@ xfsm_shutdown_try_shutdown (XfsmShutdown  *shutdown,
   if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, error))
     return FALSE;
 
-  if (shutdown->helper_state == SUDO_AVAILABLE)
-    return xfsm_shutdown_sudo_try_action (shutdown, XFSM_SHUTDOWN_SHUTDOWN, error);
-  else
-#ifdef HAVE_SYSTEMD
-    if (shutdown->systemd != NULL)
-      return xfsm_systemd_try_shutdown (shutdown->systemd, error);
-    else
-#endif
+  if (shutdown->systemd != NULL)
+    return xfsm_systemd_try_shutdown (shutdown->systemd, error);
+
+  if (shutdown->consolekit != NULL)
     return xfsm_consolekit_try_shutdown (shutdown->consolekit, error);
+
+  return xfsm_shutdown_fallback_try_action (shutdown, XFSM_SHUTDOWN_SHUTDOWN, error);
 }
 
 
@@ -697,12 +315,18 @@ xfsm_shutdown_try_suspend (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
-#ifdef HAVE_SYSTEMD
   if (shutdown->systemd != NULL)
     return xfsm_systemd_try_suspend (shutdown->systemd, error);
-  else
-#endif
-  return xfsm_upower_try_suspend (shutdown->upower, error);
+
+#ifdef HAVE_UPOWER
+#if !UP_CHECK_VERSION(0, 99, 0)
+  if (shutdown->upower != NULL)
+    return xfsm_upower_try_suspend (shutdown->upower, error);
+#endif /* UP_CHECK_VERSION */
+#endif /* HAVE_UPOWER */
+
+  xfsm_upower_lock_screen (shutdown->upower, "Suspend", error);
+  return xfsm_shutdown_fallback_try_action (shutdown, XFSM_SHUTDOWN_SUSPEND, error);
 }
 
 
@@ -713,12 +337,18 @@ xfsm_shutdown_try_hibernate (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
-#ifdef HAVE_SYSTEMD
   if (shutdown->systemd != NULL)
     return xfsm_systemd_try_hibernate (shutdown->systemd, error);
-  else
-#endif
-  return xfsm_upower_try_hibernate (shutdown->upower, error);
+
+#ifdef HAVE_UPOWER
+#if !UP_CHECK_VERSION(0, 99, 0)
+  if (shutdown->upower != NULL)
+    return xfsm_upower_try_hibernate (shutdown->upower, error);
+#endif /* UP_CHECK_VERSION */
+#endif /* HAVE_UPOWER */
+
+  xfsm_upower_lock_screen (shutdown->upower, "Hibernate", error);
+  return xfsm_shutdown_fallback_try_action (shutdown, XFSM_SHUTDOWN_HIBERNATE, error);
 }
 
 
@@ -736,24 +366,19 @@ xfsm_shutdown_can_restart (XfsmShutdown  *shutdown,
       return TRUE;
     }
 
-#ifdef HAVE_SYSTEMD
   if (shutdown->systemd != NULL)
     {
       if (xfsm_systemd_can_restart (shutdown->systemd, can_restart, error))
         return TRUE;
     }
-  else
-#endif
-  if (xfsm_consolekit_can_restart (shutdown->consolekit, can_restart, error))
-    return TRUE;
-
-  if (xfsm_shutdown_sudo_init (shutdown, error))
+  else if (shutdown->consolekit != NULL)
     {
-      *can_restart = TRUE;
-      return TRUE;
+      if (xfsm_consolekit_can_restart (shutdown->consolekit, can_restart, error))
+        return TRUE;
     }
 
-  return FALSE;
+  *can_restart = xfsm_shutdown_fallback_auth_restart ();
+  return TRUE;
 }
 
 
@@ -771,24 +396,20 @@ xfsm_shutdown_can_shutdown (XfsmShutdown  *shutdown,
       return TRUE;
     }
 
-#ifdef HAVE_SYSTEMD
   if (shutdown->systemd != NULL)
     {
       if (xfsm_systemd_can_shutdown (shutdown->systemd, can_shutdown, error))
         return TRUE;
     }
-  else
-#endif
-  if (xfsm_consolekit_can_shutdown (shutdown->consolekit, can_shutdown, error))
-    return TRUE;
 
-  if (xfsm_shutdown_sudo_init (shutdown, error))
+  if (shutdown->consolekit != NULL)
     {
-      *can_shutdown = TRUE;
-      return TRUE;
+      if (xfsm_consolekit_can_shutdown (shutdown->consolekit, can_shutdown, error))
+        return TRUE;
     }
 
-  return FALSE;
+  *can_shutdown = xfsm_shutdown_fallback_auth_shutdown ();
+  return TRUE;
 }
 
 
@@ -807,14 +428,21 @@ xfsm_shutdown_can_suspend (XfsmShutdown  *shutdown,
       return TRUE;
     }
 
-#ifdef HAVE_SYSTEMD
   if (shutdown->systemd != NULL)
     return xfsm_systemd_can_suspend (shutdown->systemd, can_suspend,
                                      auth_suspend, error);
-  else
-#endif
-  return xfsm_upower_can_suspend (shutdown->upower, can_suspend, 
-                                  auth_suspend, error);
+
+#ifdef HAVE_UPOWER
+#if !UP_CHECK_VERSION(0, 99, 0)
+  if (shutdown->upower)
+    return xfsm_upower_can_suspend (shutdown->upower, can_suspend,
+                                    auth_suspend, error);
+#endif /* UP_CHECK_VERSION */
+#endif /* HAVE_UPOWER */
+
+  *can_suspend = xfsm_shutdown_fallback_can_suspend ();
+  *auth_suspend = xfsm_shutdown_fallback_auth_suspend ();
+  return TRUE;
 }
 
 
@@ -833,14 +461,21 @@ xfsm_shutdown_can_hibernate (XfsmShutdown  *shutdown,
       return TRUE;
     }
 
-#ifdef HAVE_SYSTEMD
   if (shutdown->systemd != NULL)
     return xfsm_systemd_can_hibernate (shutdown->systemd, can_hibernate,
                                        auth_hibernate, error);
-  else
-#endif
-  return xfsm_upower_can_hibernate (shutdown->upower, can_hibernate,
-                                    auth_hibernate, error);
+
+#ifdef HAVE_UPOWER
+#if !UP_CHECK_VERSION(0, 99, 0)
+  if (shutdown->upower != NULL)
+    return xfsm_upower_can_hibernate (shutdown->upower, can_hibernate,
+                                      auth_hibernate, error);
+#endif /* UP_CHECK_VERSION */
+#endif /* HAVE_UPOWER */
+
+  *can_hibernate = xfsm_shutdown_fallback_can_hibernate ();
+  *auth_hibernate = xfsm_shutdown_fallback_auth_hibernate ();
+  return TRUE;
 }
 
 
@@ -850,4 +485,195 @@ xfsm_shutdown_can_save_session (XfsmShutdown *shutdown)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
   return shutdown->kiosk_can_save_session;
+}
+
+
+
+#ifdef BACKEND_TYPE_FREEBSD
+static gchar *
+get_string_sysctl (GError **err, const gchar *format, ...)
+{
+        va_list args;
+        gchar *name;
+        size_t value_len;
+        gchar *str = NULL;
+
+        g_return_val_if_fail(format != NULL, FALSE);
+
+        va_start (args, format);
+        name = g_strdup_vprintf (format, args);
+        va_end (args);
+
+        if (sysctlbyname (name, NULL, &value_len, NULL, 0) == 0) {
+                str = g_new (char, value_len + 1);
+                if (sysctlbyname (name, str, &value_len, NULL, 0) == 0)
+                        str[value_len] = 0;
+                else {
+                        g_free (str);
+                        str = NULL;
+                }
+        }
+
+        if (!str)
+                g_set_error (err, 0, 0, "%s", g_strerror(errno));
+
+        g_free(name);
+        return str;
+}
+
+
+
+static gboolean
+freebsd_supports_sleep_state (const gchar *state)
+{
+  gboolean ret = FALSE;
+  gchar *sleep_states;
+
+  sleep_states = get_string_sysctl (NULL, "hw.acpi.supported_sleep_state");
+  if (sleep_states != NULL)
+    {
+      if (strstr (sleep_states, state) != NULL)
+          ret = TRUE;
+    }
+
+  g_free (sleep_states);
+
+  return ret;
+}
+#endif /* BACKEND_TYPE_FREEBSD */
+
+
+
+#ifdef BACKEND_TYPE_LINUX
+static gboolean
+linux_supports_sleep_state (const gchar *state)
+{
+  gboolean ret = FALSE;
+  gchar *command;
+  GError *error = NULL;
+  gint exit_status;
+
+  /* run script from pm-utils */
+  command = g_strdup_printf ("/usr/bin/pm-is-supported --%s", state);
+
+  ret = g_spawn_command_line_sync (command, NULL, NULL, &exit_status, &error);
+  if (!ret)
+    {
+      g_warning ("failed to run script: %s", error->message);
+      g_error_free (error);
+      goto out;
+    }
+  ret = (WIFEXITED(exit_status) && (WEXITSTATUS(exit_status) == EXIT_SUCCESS));
+
+out:
+  g_free (command);
+
+  return ret;
+}
+#endif /* BACKEND_TYPE_LINUX */
+
+
+
+static gboolean
+xfsm_shutdown_fallback_can_suspend (void)
+{
+#ifdef BACKEND_TYPE_FREEBSD
+  return freebsd_supports_sleep_state ("S3");
+#endif
+#ifdef BACKEND_TYPE_LINUX
+  return linux_supports_sleep_state ("suspend");
+#endif
+#ifdef BACKEND_TYPE_OPENBSD
+  return TRUE;
+#endif
+
+  return FALSE;
+}
+
+
+
+static gboolean
+xfsm_shutdown_fallback_can_hibernate (void)
+{
+#ifdef BACKEND_TYPE_FREEBSD
+  return freebsd_supports_sleep_state ("S4");
+#endif
+#ifdef BACKEND_TYPE_LINUX
+  return linux_supports_sleep_state ("hibernate");
+#endif
+#ifdef BACKEND_TYPE_OPENBSD
+  return TRUE;
+#endif
+
+  return FALSE;
+}
+
+
+
+static gboolean
+xfsm_shutdown_fallback_check_auth (const gchar *action_id)
+{
+  gboolean auth_result = FALSE;
+#ifdef HAVE_POLKIT
+  GDBusConnection *bus;
+  PolkitAuthority *polkit;
+  PolkitAuthorizationResult *polkit_result;
+  PolkitSubject *polkit_subject;
+
+  bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, NULL);
+  polkit = polkit_authority_get_sync (NULL, NULL);
+  if (polkit != NULL && bus != NULL)
+    {
+      polkit_subject = polkit_system_bus_name_new (g_dbus_connection_get_unique_name (bus));
+      polkit_result = polkit_authority_check_authorization_sync (polkit,
+                                                                 polkit_subject,
+                                                                 action_id,
+                                                                 NULL,
+                                                                 POLKIT_CHECK_AUTHORIZATION_FLAGS_NONE,
+                                                                 NULL,
+                                                                 NULL);
+      if (polkit_result != NULL)
+        {
+          auth_result = polkit_authorization_result_get_is_authorized (polkit_result);
+          g_object_unref (polkit_result);
+        }
+
+        g_object_unref (polkit);
+        g_object_unref (bus);
+      }
+#endif /* HAVE_POLKIT */
+
+  return auth_result;
+}
+
+
+
+static gboolean
+xfsm_shutdown_fallback_auth_shutdown (void)
+{
+  return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_SHUTDOWN_XFSM);
+}
+
+
+
+static gboolean
+xfsm_shutdown_fallback_auth_restart (void)
+{
+  return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_RESTART_XFSM);
+}
+
+
+
+static gboolean
+xfsm_shutdown_fallback_auth_suspend (void)
+{
+  return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_SUSPEND_XFSM);
+}
+
+
+
+static gboolean
+xfsm_shutdown_fallback_auth_hibernate (void)
+{
+  return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_HIBERNATE_XFSM);
 }

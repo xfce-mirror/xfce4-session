@@ -21,6 +21,9 @@
 
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
+#ifdef HAVE_UPOWER
+#include <upower.h>
+#endif /* HAVE_UPOWER */
 
 #include <libxfsm/xfsm-util.h>
 #include <xfce4-session/xfsm-upower.h>
@@ -283,14 +286,13 @@ xfsm_upower_try_method (XfsmUPower   *upower,
 
 
 
-static gboolean
+gboolean
 xfsm_upower_lock_screen (XfsmUPower   *upower,
                          const gchar  *sleep_kind,
                          GError      **error)
 {
   XfconfChannel *channel;
   gboolean       ret = TRUE;
-  GError        *err = NULL;
 
   g_return_val_if_fail (sleep_kind != NULL, FALSE);
 
@@ -299,6 +301,10 @@ xfsm_upower_lock_screen (XfsmUPower   *upower,
     {
       if (xfsm_upower_proxy_ensure (upower, error))
         {
+#ifdef HAVE_UPOWER
+#if !UP_CHECK_VERSION(0, 99, 0)
+          GError        *err = NULL;
+
           /* tell upower we're going to sleep, this saves some
            * time while we sleep 1 second if xflock4 is spawned */
           ret = dbus_g_proxy_call (upower->upower_proxy,
@@ -312,6 +318,8 @@ xfsm_upower_lock_screen (XfsmUPower   *upower,
               g_warning ("Couldn't sent that we were about to sleep: %s", err->message);
               g_error_free (err);
             }
+#endif /* UP_CHECK_VERSION */
+#endif /* HAVE_UPOWER */
         }
       else
         {

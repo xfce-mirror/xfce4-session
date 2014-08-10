@@ -51,11 +51,22 @@
 #include <glib.h>
 
 /* XXX */
+#define EXIT_CODE_SUCCESS           0
+#define EXIT_CODE_FAILED            1
+#define EXIT_CODE_ARGUMENTS_INVALID 3
+#define EXIT_CODE_INVALID_USER      4
+
 #ifdef POWEROFF_CMD
 #undef POWEROFF_CMD
 #endif
 #ifdef REBOOT_CMD
 #undef REBOOT_CMD
+#endif
+#ifdef UP_BACKEND_SUSPEND_COMMAND
+#undef UP_BACKEND_SUSPEND_COMMAND
+#endif
+#ifdef UP_BACKEND_HIBERNATE_COMMAND
+#undef UP_BACKEND_HIBERNATE_COMMAND
 #endif
 
 #if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
@@ -67,6 +78,18 @@
 #else
 #define POWEROFF_CMD  "/sbin/shutdown -h now"
 #define REBOOT_CMD    "/sbin/shutdown -r now"
+#endif
+#ifdef BACKEND_TYPE_FREEBSD
+#define UP_BACKEND_SUSPEND_COMMAND "/usr/sbin/acpiconf -s 3"
+#define UP_BACKEND_HIBERNATE_COMMAND "/usr/sbin/acpiconf -s 4"
+#endif
+#if BACKEND_TYPE_LINUX
+#define UP_BACKEND_SUSPEND_COMMAND "/usr/sbin/pm-suspend"
+#define UP_BACKEND_HIBERNATE_COMMAND "/usr/sbin/pm-hibernate"
+#endif
+#ifdef BACKEND_TYPE_OPENBSD
+#define UP_BACKEND_SUSPEND_COMMAND	"/usr/sbin/zzz"
+#define UP_BACKEND_HIBERNATE_COMMAND "/usr/sbin/ZZZ"
 #endif
 
 
@@ -122,36 +145,101 @@ run (const gchar *command)
 int
 main (int argc, char **argv)
 {
-  gboolean succeed = FALSE;
-  char action[1024];
+  GOptionContext *context;
+  gint uid;
+  gint euid;
+  const gchar *pkexec_uid_str;
+  gboolean shutdown = FALSE;
+  gboolean restart = FALSE;
+  gboolean suspend = FALSE;
+  gboolean hibernate = FALSE;
 
-  /* display banner */
-  fprintf (stdout, "XFSM_SUDO_DONE ");
-  fflush (stdout);
+  const GOptionEntry options[] = {
+    { "shutdown",  '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &shutdown, "Shutdown the system", NULL },
+    { "restart",   '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &restart, "Restart the system", NULL },
+    { "suspend",   '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &suspend, "Suspend the system", NULL },
+    { "hibernate", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &hibernate, "Hibernate the system", NULL },
+    { NULL }
+  };
 
-  if (fgets (action, 1024, stdin) == NULL)
+  context = g_option_context_new (NULL);
+  g_option_context_set_summary (context, "XFCE Session Helper");
+  g_option_context_add_main_entries (context, options, NULL);
+  g_option_context_parse (context, &argc, &argv, NULL);
+  g_option_context_free (context);
+
+  /* no input */
+  if (!shutdown && !restart && !suspend && !hibernate)
     {
-      fprintf (stdout, "FAILED\n");
-      return EXIT_FAILURE;
+      puts ("No valid option was specified");
+      return EXIT_CODE_ARGUMENTS_INVALID;
     }
 
-  if (strncasecmp (action, "POWEROFF", 8) == 0)
+  /* get calling process */
+  uid = getuid ();
+  euid = geteuid ();
+  if (uid != 0 || euid != 0)
     {
-      succeed = run (POWEROFF_CMD);
-    }
-  else if (strncasecmp (action, "REBOOT", 6) == 0)
-    {
-      succeed = run (REBOOT_CMD);
-    }
-
-  if (succeed)
-    {
-      fprintf (stdout, "SUCCEED\n");
-      return EXIT_SUCCESS;
+      puts ("This program can only be used by the root user");
+      return EXIT_CODE_ARGUMENTS_INVALID;
     }
 
-  fprintf (stdout, "FAILED\n");
-  return EXIT_FAILURE;
+  /* check we're not being spoofed */
+  pkexec_uid_str = g_getenv ("PKEXEC_UID");
+  if (pkexec_uid_str == NULL)
+    {
+      puts ("This program must only be run through pkexec");
+      return EXIT_CODE_INVALID_USER;
+    }
+
+  /* run the command */
+  if(shutdown)
+    {
+      if (run (POWEROFF_CMD))
+          {
+            return EXIT_CODE_SUCCESS;
+          }
+        else
+          {
+            return EXIT_CODE_FAILED;
+          }
+    }
+  else if(restart)
+    {
+      if (run (REBOOT_CMD))
+          {
+            return EXIT_CODE_SUCCESS;
+          }
+        else
+          {
+            return EXIT_CODE_FAILED;
+          }
+    }
+  else if(suspend)
+    {
+      if (run (UP_BACKEND_SUSPEND_COMMAND))
+          {
+            return EXIT_CODE_SUCCESS;
+          }
+        else
+          {
+            return EXIT_CODE_FAILED;
+          }
+    }
+  else if(hibernate)
+    {
+      if (run (UP_BACKEND_HIBERNATE_COMMAND))
+          {
+            return EXIT_CODE_SUCCESS;
+          }
+        else
+          {
+            return EXIT_CODE_FAILED;
+          }
+    }
+
+  /* how did we get here? */
+  return EXIT_CODE_FAILED;
 }
 
 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
+<policyconfig>
+
+  <!--
+    Policy definitions for XFCE Session Manager system-wide actions.
+    Copyright (c) 2014 Eric Koegel <eric@xfce.org>
+    Based on the XFCE Power Manager policy file.
+  -->
+
+  <vendor>XFCE Session Manager</vendor>
+  <vendor_url>http://xfce.org/</vendor_url>
+  <icon_name>xfce4-session</icon_name>
+
+
+  <action id="org.xfce.session.xfsm-shutdown-helper">
+    <!-- SECURITY:
+          - A normal active user on the local machine does not need permission
+            to suspend or hibernate their system.
+     -->
+    <_description>Shutdown, restart, suspend, or hibernate the system</_description>
+    <_message>Authentication is required to shutdown, restart, suspend, or hibernate the system.</_message>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>yes</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">@HELPER_PATH_PREFIX@/xfce4/session/xfsm-shutdown-helper</annotate>
+  </action>
+
+</policyconfig>
+

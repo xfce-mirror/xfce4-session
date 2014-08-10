@@ -72,14 +72,12 @@ static GtkWidget *xfsm_logout_dialog_button   (const gchar      *title,
                                                const gchar      *icon_name_fallback,
                                                XfsmShutdownType  type,
                                                XfsmLogoutDialog *dialog);
-static void       xfsm_logout_dialog_activate (XfsmLogoutDialog *dialog);
 
 
 
 enum
 {
   MODE_LOGOUT_BUTTONS,
-  MODE_ASK_PASSWORD,
   MODE_SHOW_ERROR,
   N_MODES
 };
@@ -106,9 +104,6 @@ struct _XfsmLogoutDialog
   GtkWidget        *button_cancel;
   GtkWidget        *button_ok;
   GtkWidget        *button_close;
-
-  /* password entry */
-  GtkWidget        *password_entry;
 
   /* error label */
   GtkWidget        *error_label;
@@ -155,7 +150,6 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gboolean       auth_hibernate = FALSE;
   GError        *error = NULL;
   XfconfChannel *channel;
-  GtkWidget     *entry;
   GtkWidget     *image;
   GtkWidget     *separator;
   gboolean       upower_not_found = FALSE;
@@ -214,22 +208,6 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   dialog->button_cancel = gtk_dialog_add_button (GTK_DIALOG (dialog),
                                                  GTK_STOCK_CANCEL,
                                                  GTK_RESPONSE_CANCEL);
-
-  /**
-   * Ok, for password mode
-   **/
-  dialog->button_ok = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                             GTK_STOCK_OK,
-                                             GTK_RESPONSE_OK);
-  gtk_widget_hide (dialog->button_ok);
-
-  /**
-   * Close, for password error
-   **/
-  dialog->button_close = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                                GTK_STOCK_CLOSE,
-                                                GTK_RESPONSE_CANCEL);
-  gtk_widget_hide (dialog->button_close);
 
   button_vbox = gtk_vbox_new (TRUE, BORDER);
   gtk_box_pack_start (GTK_BOX (vbox), button_vbox, FALSE, TRUE, 0);
@@ -374,37 +352,6 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   attrs = pango_attr_list_new ();
   pango_attr_list_insert (attrs, pango_attr_weight_new (PANGO_WEIGHT_BOLD));
 
-  /**
-   * Start mode MODE_ASK_PASSWORD
-   **/
-  dialog->box[MODE_ASK_PASSWORD] = vbox = gtk_vbox_new (FALSE, BORDER);
-  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
-
-  hbox = gtk_hbox_new (FALSE, BORDER * 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
-  gtk_widget_show (hbox);
-
-  image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_AUTHENTICATION, GTK_ICON_SIZE_DIALOG);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
-
-  vbox = gtk_vbox_new (FALSE, BORDER);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  label = gtk_label_new (_("Please enter your password"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.00, 0.50);
-  gtk_label_set_attributes (GTK_LABEL (label), attrs);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  dialog->password_entry = entry = gtk_entry_new ();
-  gtk_entry_set_visibility (GTK_ENTRY (entry), FALSE);
-  gtk_entry_set_width_chars (GTK_ENTRY (entry), 30);
-  gtk_box_pack_start (GTK_BOX (vbox), entry, TRUE, TRUE, 0);
-  g_signal_connect_swapped (G_OBJECT (entry), "activate",
-                            G_CALLBACK (xfsm_logout_dialog_activate), dialog);
-  gtk_widget_show (entry);
 
   /**
    * Start mode MODE_SHOW_ERROR
@@ -428,14 +375,6 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 0.00, 0.50);
   gtk_label_set_attributes (GTK_LABEL (label), attrs);
-  gtk_widget_show (label);
-
-  label = gtk_label_new (_("Either the password you entered is "
-                           "invalid, or the system administrator "
-                           "disallows shutting down this computer "
-                           "with your user account."));
-  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-  gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);
 
   pango_attr_list_unref (attrs);
@@ -465,7 +404,6 @@ xfsm_logout_dialog_set_mode (XfsmLogoutDialog *dialog,
     gtk_widget_set_visible (dialog->box[i], i == mode);
 
   gtk_widget_set_visible (dialog->button_cancel, mode != MODE_SHOW_ERROR);
-  gtk_widget_set_visible (dialog->button_ok, mode == MODE_ASK_PASSWORD);
   gtk_widget_set_visible (dialog->button_close, mode == MODE_SHOW_ERROR);
 }
 
@@ -544,15 +482,6 @@ xfsm_logout_dialog_button (const gchar      *title,
   gtk_widget_show (label);
 
   return button;
-}
-
-
-
-static void
-xfsm_logout_dialog_activate (XfsmLogoutDialog *dialog)
-{
-  g_return_if_fail (XFSM_IS_LOGOUT_DIALOG (dialog));
-  gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 }
 
 
@@ -723,8 +652,6 @@ xfsm_logout_dialog (const gchar      *session_name,
   XfsmLogoutDialog *xfsm_dialog;
   XfconfChannel    *channel = xfsm_open_config ();
   gboolean          autosave;
-  const gchar      *text;
-  XfsmPassState     state;
   XfsmShutdown     *shutdown;
 
   g_return_val_if_fail (return_type != NULL, FALSE);
@@ -816,80 +743,16 @@ xfsm_logout_dialog (const gchar      *session_name,
 
   if (result == GTK_RESPONSE_OK)
     {
-      /* check if the sudo helper needs a password */
-      if (xfsm_shutdown_password_require (xfsm_dialog->shutdown, xfsm_dialog->type_clicked))
-        {
-          /* switch mode */
-          xfsm_logout_dialog_set_mode (xfsm_dialog, MODE_ASK_PASSWORD);
+      /* store autosave state */
+      if (autosave)
+        *return_save_session = TRUE;
+      else if (xfsm_dialog->save_session != NULL)
+        *return_save_session = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (xfsm_dialog->save_session));
+      else
+        *return_save_session = FALSE;
 
-          /* don't leave artifacts on the background window */
-          xfsm_fadeout_clear (fadeout);
-
-          /* loop for sudo password tries */
-          for (;;)
-            {
-              gtk_widget_grab_focus (xfsm_dialog->password_entry);
-              gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-              result = xfsm_logout_dialog_run (GTK_DIALOG (dialog), !a11y);
-
-              if (result == GTK_RESPONSE_OK)
-                {
-                  /* bit of visual feedback we're processing the password */
-                  gtk_widget_set_sensitive (xfsm_dialog->button_cancel, FALSE);
-                  gtk_widget_set_sensitive (xfsm_dialog->button_ok, FALSE);
-
-                  /* update the widgets before we lock the loop */
-                  while (gtk_events_pending ())
-                    g_main_context_iteration (NULL, FALSE);
-
-                  /* send the password to the helper */
-                  text = gtk_entry_get_text (GTK_ENTRY (xfsm_dialog->password_entry));
-                  state = xfsm_shutdown_password_send (xfsm_dialog->shutdown, xfsm_dialog->type_clicked, text);
-                  gtk_entry_set_text (GTK_ENTRY (xfsm_dialog->password_entry), "");
-
-                  gtk_widget_set_sensitive (xfsm_dialog->button_cancel, TRUE);
-                  gtk_widget_set_sensitive (xfsm_dialog->button_ok, TRUE);
-
-                  if (state == PASSWORD_RETRY)
-                    continue;
-
-                  if (state == PASSWORD_FAILED)
-                    {
-                      gtk_widget_hide (dialog);
-
-                      xfsm_logout_dialog_set_mode (xfsm_dialog, MODE_SHOW_ERROR);
-                      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
-
-                      /* don't leave artifacts on the background window */
-                      xfsm_fadeout_clear (fadeout);
-
-                      /* show error */
-                      xfsm_logout_dialog_run (GTK_DIALOG (dialog), !a11y);
-
-                      result = GTK_RESPONSE_CANCEL;
-                    }
-                }
-
-              /* cancel clicked, succeeded or helper killed */
-              break;
-            }
-
-          gtk_widget_hide (dialog);
-        }
-
-      if (result == GTK_RESPONSE_OK)
-        {
-          /* store autosave state */
-          if (autosave)
-            *return_save_session = TRUE;
-          else if (xfsm_dialog->save_session != NULL)
-            *return_save_session = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (xfsm_dialog->save_session));
-          else
-            *return_save_session = FALSE;
-
-          /* return the clicked action */
-          *return_type = xfsm_dialog->type_clicked;
-        }
+      /* return the clicked action */
+      *return_type = xfsm_dialog->type_clicked;
     }
 
   if (fadeout != NULL)

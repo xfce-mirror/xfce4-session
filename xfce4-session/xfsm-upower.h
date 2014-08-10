@@ -51,4 +51,8 @@ gboolean        xfsm_upower_can_hibernate    (XfsmUPower      *upower,
                                               gboolean        *auth_hibernate,
                                               GError         **error);
 
+gboolean        xfsm_upower_lock_screen      (XfsmUPower      *upower,
+                                              const gchar     *sleep_kind,
+                                              GError         **error);
+
 #endif /* !__XFSM_UPOWER_HELPER_H__ */
