@@ -20,9 +20,11 @@
 #include <config.h>
 
 #include <gio/gio.h>
-#include <polkit/polkit.h>
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
+#ifdef HAVE_POLKIT
+#include <polkit/polkit.h>
+#endif
 
 #include <libxfsm/xfsm-util.h>
 #include <xfce4-session/xfsm-systemd.h>
@@ -55,9 +57,10 @@ struct _XfsmSystemdClass
 struct _XfsmSystemd
 {
   GObject __parent__;
-
+#ifdef HAVE_POLKIT
   PolkitAuthority *authority;
   PolkitSubject   *subject;
+#endif
 };
 
 
@@ -80,8 +83,10 @@ xfsm_systemd_class_init (XfsmSystemdClass *klass)
 static void
 xfsm_systemd_init (XfsmSystemd *systemd)
 {
+#ifdef HAVE_POLKIT
   systemd->authority = polkit_authority_get_sync (NULL, NULL);
   systemd->subject = polkit_unix_process_new_for_owner (getpid(), 0, -1);
+#endif
 }
 
 
@@ -89,10 +94,12 @@ xfsm_systemd_init (XfsmSystemd *systemd)
 static void
 xfsm_systemd_finalize (GObject *object)
 {
+#ifdef HAVE_POLKIT
   XfsmSystemd *systemd = XFSM_SYSTEMD (object);
 
   g_object_unref (G_OBJECT (systemd->authority));
   g_object_unref (G_OBJECT (systemd->subject));
+#endif
 
   (*G_OBJECT_CLASS (xfsm_systemd_parent_class)->finalize) (object);
 }
@@ -120,11 +127,14 @@ xfsm_systemd_can_method (XfsmSystemd  *systemd,
                          const gchar  *method,
                          GError      **error)
 {
+#ifdef HAVE_POLKIT
   PolkitAuthorizationResult *res;
   GError                    *local_error = NULL;
+#endif
 
   *can_method = FALSE;
 
+#ifdef HAVE_POLKIT
   res = polkit_authority_check_authorization_sync (systemd->authority,
                                                    systemd->subject,
                                                    method,
@@ -143,6 +153,7 @@ xfsm_systemd_can_method (XfsmSystemd  *systemd,
                 || polkit_authorization_result_get_is_challenge (res);
 
   g_object_unref (G_OBJECT (res));
+#endif
 
   return TRUE;
 }
