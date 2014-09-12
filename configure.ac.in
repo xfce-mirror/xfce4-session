@@ -15,6 +15,7 @@ m4_define([xfsm_version_tag], [git])
 m4_define([xfsm_version], [xfsm_version_major().xfsm_version_minor().xfsm_version_micro()ifelse(xfsm_version_nano(), [], [], [.xfsm_version_nano()])ifelse(xfsm_version_tag(), [git], [xfsm_version_tag()-xfsm_version_build()], [xfsm_version_tag()])])
 
 m4_define([xfsm_debug_default], [ifelse(xfsm_version_tag(), [git], [full], [minimum])])
+m4_define([intltool_minimum_version], [0.31])
 
 dnl Initialize autoconf
 AC_COPYRIGHT([Copyright (c) 2003-2014
@@ -22,7 +23,7 @@ AC_COPYRIGHT([Copyright (c) 2003-2014
 
 Written for Xfce by Benedikt Meurer <benny@xfce.org>.])
 AC_INIT([xfce4-session], [xfsm_version], [http://bugs.xfce.org/])
-AC_PREREQ([2.59c])
+AC_PREREQ([2.60])
 AC_REVISION([$Id$])
 AC_PROG_MAKE_SET()
 
@@ -48,10 +49,15 @@ if test x"`uname | grep \"CYGWIN\"`" != x""; then
 fi
 
 dnl check for basic programs
-AC_PROG_CC()
-AM_PROG_CC_C_O()
-AC_PROG_INSTALL()
-AC_PROG_INTLTOOL()
+AC_PROG_CXX
+AC_PROG_AWK
+AC_PROG_CC
+AC_PROG_CPP
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_MAKE_SET
+AC_PROG_MKDIR_P
+IT_PROG_INTLTOOL([intltool_minimum_version], [no-xml])
 m4_ifdef([AC_PROG_SED], [AC_PROG_SED], [AC_CHECK_PROG(SED, sed, sed)])
 
 dnl check for libtool
@@ -66,6 +72,16 @@ AC_CHECK_HEADERS([asm/unistd.h errno.h fcntl.h limits.h \
                   unistd.h sys/param.h sys/user.h sys/sysctl.h math.h sys/types.h])
 AC_CHECK_FUNCS([getaddrinfo gethostbyname gethostname getpwuid setsid \
                 sigaction strdup sync vfork])
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_C_INLINE
+AC_TYPE_MODE_T
+AC_TYPE_PID_T
+AC_TYPE_SIZE_T
+AC_CHECK_HEADER_STDBOOL
+
+# Checks for library functions.
+AC_FUNC_MALLOC
 
 dnl Check for required libraries
 AC_CHECK_LIBM
@@ -195,7 +211,7 @@ AC_SUBST(XFCE_GLADE_CATALOG_PATH)
 AC_SUBST(XFCE_GLADE_PIXMAP_PATH)
 AC_SUBST(XFCE_GLADE_MODULE_PATH)
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 doc/Makefile
 engines/Makefile
@@ -219,6 +235,7 @@ xfce4-session/Makefile
 xfce4-session-logout/Makefile
 xfsm-shutdown-helper/Makefile
 ])
+AC_OUTPUT
 
 dnl ***************************
 dnl *** Print configuration ***

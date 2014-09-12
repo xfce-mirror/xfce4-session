@@ -15,7 +15,7 @@ desktop_in_files = xfce.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
-distuninstallcheck_listfiles = 						\ 
+distuninstallcheck_listfiles = 						\
 	find . -type f -print | grep -v ./share/icons/hicolor/icon-theme.cache
 
 EXTRA_DIST =								\
