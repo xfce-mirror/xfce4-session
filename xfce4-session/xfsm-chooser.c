@@ -118,7 +118,11 @@ xfsm_chooser_get_session (const XfsmChooser *chooser)
 
   bzero (&value, sizeof (value));
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (chooser->tree));
-  gtk_tree_selection_get_selected (selection, &model, &iter);
+  if (!gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      g_warning ("xfsm_chooser_get_session: !gtk_tree_selection_get_selected");
+      return NULL;
+    }
   gtk_tree_model_get_value (model, &iter, NAME_COLUMN, &value);
   name = g_value_dup_string (&value);
   g_value_unset (&value);
