@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Kiril Kirilov <cybercop_montana@abv.bg>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-02 22:44+0200\n"
-"PO-Revision-Date: 2013-11-19 13:02+0000\n"
-"Last-Translator: Nick <nick@xfce.org>\n"
-"Language-Team: Bulgarian (http://www.transifex.com/projects/p/xfce/language/bg/)\n"
+"POT-Creation-Date: 2014-08-28 18:30+0200\n"
+"PO-Revision-Date: 2014-09-16 11:52+0000\n"
+"Last-Translator: Kiril Kirilov <cybercop_montana@abv.bg>\n"
+"Language-Team: Bulgarian (http://www.transifex.com/projects/p/xfce4-session/language/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -36,20 +37,20 @@ msgstr "Избор на тема за инсталиране..."
 #: ../engines/balou/config.c:336
 #, c-format
 msgid "Unable to install splash theme from file \"%s\""
-msgstr "Не може да се инсталира splash тема от файл \"%s\""
+msgstr "Не може да се инсталира тема за стартов екран от файл \"%s\""
 
 #: ../engines/balou/config.c:339
 msgid "Theme File Error"
-msgstr "Грешка във файла на темата"
+msgstr "Грешка във файла с темата"
 
 #: ../engines/balou/config.c:342
 msgid "Please check that the file is a valid splash theme archive."
-msgstr "Моля, проверете дали файлът е валиден архив на splash тема."
+msgstr "Моля, проверете дали файлът е валиден архив на темата за стартов екран."
 
 #: ../engines/balou/config.c:402
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
-msgstr "Не може да се премахне splash тема \"%s\" от папка %s."
+msgstr "Не може да се премахне тема за стартов екран \"%s\" от папка %s."
 
 #: ../engines/balou/config.c:491
 msgid "Choose theme filename..."
@@ -81,7 +82,7 @@ msgstr "Balou"
 
 #: ../engines/balou/config.c:995
 msgid "Balou Splash Engine"
-msgstr "Balou Splash Engine"
+msgstr "Стартов екран Balou"
 
 #: ../engines/mice/mice.c:373
 msgid "Mice"
@@ -89,7 +90,7 @@ msgstr "Мишка"
 
 #: ../engines/mice/mice.c:374
 msgid "Mice Splash Engine"
-msgstr "Мишка Splash Engine"
+msgstr "Стартов екран Мишка"
 
 #: ../engines/simple/simple.c:346
 msgid "Configure Simple..."
@@ -137,7 +138,7 @@ msgstr "Основна тема"
 
 #: ../engines/simple/simple.c:498
 msgid "Simple Splash Engine"
-msgstr "Основна Splash Engine"
+msgstr "Основен стартов екран"
 
 #: ../scripts/xscreensaver.desktop.in.h:1
 msgid "Screensaver"
@@ -520,7 +521,7 @@ msgstr "Управлението на сесиите трябва да е в г�
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Управлението на сесиите трябва да е в готовност при заявка за изключване"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:188
+#: ../xfce4-session/xfsm-logout-dialog.c:182
 #, c-format
 msgid "Log out %s"
 msgstr "Изход от %s"
@@ -528,43 +529,33 @@ msgstr "Изход от %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:246
+#: ../xfce4-session/xfsm-logout-dialog.c:224
 msgid "_Log Out"
 msgstr "Изход"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:266
+#: ../xfce4-session/xfsm-logout-dialog.c:244
 msgid "_Restart"
 msgstr "Рестартиране"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:286
+#: ../xfce4-session/xfsm-logout-dialog.c:264
 msgid "Shut _Down"
 msgstr "Изключване"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:309
+#: ../xfce4-session/xfsm-logout-dialog.c:287
 msgid "Sus_pend"
 msgstr "Приспиване"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:343
+#: ../xfce4-session/xfsm-logout-dialog.c:321
 msgid "_Hibernate"
 msgstr "Дълбоко приспиване"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:368
+#: ../xfce4-session/xfsm-logout-dialog.c:346
 msgid "_Save session for future logins"
 msgstr "Запази сесията за бъдещи влизания в системата"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:395
-msgid "Please enter your password"
-msgstr "Моля, въведете вашата парола"
-
-#: ../xfce4-session/xfsm-logout-dialog.c:427
+#: ../xfce4-session/xfsm-logout-dialog.c:374
 msgid "An error occurred"
 msgstr "Възникна грешка"
-
-#: ../xfce4-session/xfsm-logout-dialog.c:433
-msgid ""
-"Either the password you entered is invalid, or the system administrator "
-"disallows shutting down this computer with your user account."
-msgstr "Или въведената паролата е грешна, или системният администратор е забранил на Вашият потребител да изключва този  компютър."
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -578,88 +569,88 @@ msgstr "Изберете име на сесията"
 msgid "Choose a name for the new session:"
 msgstr "Избери име за новата сесия:"
 
-#: ../xfce4-session/xfsm-startup.c:347
+#: ../xfce4-session/xfsm-startup.c:397
 msgid "Starting the Volume Controller"
 msgstr "Стартиране управлението на звука"
 
-#: ../xfce4-session/xfsm-startup.c:349
+#: ../xfce4-session/xfsm-startup.c:399
 msgid "Starting the Panel"
 msgstr "Стартиране на панела"
 
-#: ../xfce4-session/xfsm-startup.c:351
+#: ../xfce4-session/xfsm-startup.c:401
 msgid "Starting the Desktop Manager"
 msgstr "Стартиране управлението на десктопа"
 
-#: ../xfce4-session/xfsm-startup.c:353
+#: ../xfce4-session/xfsm-startup.c:403
 msgid "Starting the Taskbar"
 msgstr "Стартиране на лентата за задачите"
 
-#: ../xfce4-session/xfsm-startup.c:355
+#: ../xfce4-session/xfsm-startup.c:405
 msgid "Starting the Window Manager"
 msgstr "Стартиране на управлението на прозорците"
 
-#: ../xfce4-session/xfsm-startup.c:359
+#: ../xfce4-session/xfsm-startup.c:409
 msgid "Starting the Gnome Terminal Emulator"
 msgstr "Стартиране на терминала на Gnome"
 
-#: ../xfce4-session/xfsm-startup.c:363
+#: ../xfce4-session/xfsm-startup.c:413
 msgid "Starting the KDE Advanced Text Editor"
 msgstr "Стартиране на KDE Advanced Text Editor"
 
-#: ../xfce4-session/xfsm-startup.c:365
+#: ../xfce4-session/xfsm-startup.c:415
 msgid "Starting the KDE Clipboard Manager"
 msgstr "Стартиране на KDE Clipboard Manager"
 
-#: ../xfce4-session/xfsm-startup.c:367
+#: ../xfce4-session/xfsm-startup.c:417
 msgid "Starting the KDE Mail Reader"
 msgstr "Стартиране на KDE Mail Reader"
 
-#: ../xfce4-session/xfsm-startup.c:369
+#: ../xfce4-session/xfsm-startup.c:419
 msgid "Starting the KDE News Reader"
 msgstr "Стартиране на KDE News Reader"
 
-#: ../xfce4-session/xfsm-startup.c:371
+#: ../xfce4-session/xfsm-startup.c:421
 msgid "Starting the Konqueror"
 msgstr "Стартиране на Konqueror"
 
-#: ../xfce4-session/xfsm-startup.c:373
+#: ../xfce4-session/xfsm-startup.c:423
 msgid "Starting the KDE Terminal Emulator"
 msgstr "Стартиране на терминала на KDE"
 
-#: ../xfce4-session/xfsm-startup.c:377
+#: ../xfce4-session/xfsm-startup.c:427
 msgid "Starting the Beep Media Player"
 msgstr "Стартиране на Beep Media Player"
 
-#: ../xfce4-session/xfsm-startup.c:379
+#: ../xfce4-session/xfsm-startup.c:429
 msgid "Starting The Gimp"
 msgstr "Стартиране на Gimp"
 
-#: ../xfce4-session/xfsm-startup.c:381
+#: ../xfce4-session/xfsm-startup.c:431
 msgid "Starting the VI Improved Editor"
 msgstr "Стартиране на VI подобрен редактор"
 
-#: ../xfce4-session/xfsm-startup.c:383
+#: ../xfce4-session/xfsm-startup.c:433
 msgid "Starting the Session Management Proxy"
 msgstr "Стартиране на  Session Management Proxy"
 
-#: ../xfce4-session/xfsm-startup.c:385
+#: ../xfce4-session/xfsm-startup.c:435
 msgid "Starting the X-Chat IRC Client"
 msgstr "Стартиране на X-Chat IRC клиент"
 
-#: ../xfce4-session/xfsm-startup.c:387
+#: ../xfce4-session/xfsm-startup.c:437
 msgid "Starting the X Multimedia System"
 msgstr "Стартиране на X Мултимедийна система"
 
-#: ../xfce4-session/xfsm-startup.c:389
+#: ../xfce4-session/xfsm-startup.c:439
 msgid "Starting the X Terminal Emulator"
 msgstr "Стартиране терминала на X"
 
-#: ../xfce4-session/xfsm-startup.c:391
+#: ../xfce4-session/xfsm-startup.c:441
 #, c-format
 msgid "Starting %s"
 msgstr "Стартиране на %s"
 
-#: ../xfce4-session/xfsm-startup.c:515
+#: ../xfce4-session/xfsm-startup.c:565
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -674,34 +665,19 @@ msgid ""
 "You should delete this directory now.\n"
 msgstr "Пътят и форматът на папката за автостартиране е променен.\nНовият път е\n\n %s\n\nкъдето може да слагате .desktop файлове, които описват\nпрограмите за стартиране при вход в Xfce. Файловете в старата\nпапка за автостартиране, бяха успешно пренесени в новата.\nТрябва да изтриете тази папка сега.\n"
 
-#: ../xfce4-session/xfsm-startup.c:684
+#: ../xfce4-session/xfsm-startup.c:734
 msgid "Performing Autostart..."
 msgstr "Автостартиране..."
 
-#: ../xfce4-session/xfsm-startup.c:790
+#: ../xfce4-session/xfsm-startup.c:840
 msgid "Starting Assistive Technologies"
 msgstr "Стартиране на помощни технологии"
 
-#: ../xfce4-session/xfsm-shutdown.c:429
-#, c-format
-msgid "Error sending command to shutdown helper: %s"
-msgstr "Грешка при изпращане на команда към помощника за изключване: %s"
-
-#: ../xfce4-session/xfsm-shutdown.c:442
-#, c-format
-msgid "Error receiving response from shutdown helper: %s"
-msgstr "Грешка при получаване на отговор от помощника за изключване:  %s"
-
-#: ../xfce4-session/xfsm-shutdown.c:450
-#, c-format
-msgid "Shutdown command failed"
-msgstr "Командата за изключване пропадна"
-
-#: ../xfce4-session/xfsm-shutdown.c:555
+#: ../xfce4-session/xfsm-shutdown.c:182
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Изключването е блокирано от настройките на kiosk"
 
-#: ../xfce4-session/xfsm-shutdown.c:638
+#: ../xfce4-session/xfsm-shutdown.c:233
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Непознат метод за изключване %d"
@@ -766,7 +742,7 @@ msgstr "Сесия и стартиране"
 #: ../settings/xfce-session-settings.desktop.in.h:2
 #: ../settings/xfce4-session-settings.glade.h:4
 msgid "Customize desktop startup and splash screen"
-msgstr "Промяна на стартирането на десктопа и splash екрана"
+msgstr "Промяна на стартирането на десктопа и стартовият екран"
 
 #: ../settings/xfce4-session-settings.glade.h:1
 msgid "Saving Session"
@@ -816,7 +792,7 @@ msgstr "_Общи"
 
 #: ../settings/xfce4-session-settings.glade.h:14
 msgid "Opens the configuration panel for the selected splash screen"
-msgstr "Отваря панела за настройки на избраният splash екран"
+msgstr "Отваря панела за настройки на избраният стартов екран"
 
 #: ../settings/xfce4-session-settings.glade.h:15
 msgid "Con_figure"
@@ -824,7 +800,7 @@ msgstr "Конфигурирай"
 
 #: ../settings/xfce4-session-settings.glade.h:16
 msgid "Demonstrates the selected splash screen"
-msgstr "Демонстриране на избраният splash екран"
+msgstr "Демонстриране на избраният стартов екран"
 
 #: ../settings/xfce4-session-settings.glade.h:17
 msgid "_Test"
@@ -856,7 +832,7 @@ msgstr "<b>Информация</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:24
 msgid "S_plash"
-msgstr "S_plash"
+msgstr "Стартов екран"
 
 #: ../settings/xfce4-session-settings.glade.h:25
 msgid ""
