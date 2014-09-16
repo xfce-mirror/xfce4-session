@@ -28,6 +28,9 @@
 #include <stdlib.h>
 #endif
 
+#include <limits.h>
+#include <errno.h>
+
 #include <gtk/gtk.h>
 
 
@@ -77,6 +80,7 @@ int main (int argc, char **argv)
 {
   GdkPixbuf *base;
   GdkPixbuf *result;
+  glong val;
 
   gtk_init (&argc, &argv);
 
@@ -93,7 +97,23 @@ int main (int argc, char **argv)
       return EXIT_FAILURE;
     }
 
-  result = create_slide (base, atoi (argv[2]));
+  val = strtol (argv[2], NULL, 10);
+
+  /* Error checking for untrusted input */
+  if ((errno == ERANGE && (val == LONG_MAX || val == LONG_MIN)) || (errno != 0 && val == 0))
+    {
+        perror("strtol");
+        exit(EXIT_FAILURE);
+    }
+
+  /* Sanity checks */
+  if (val > INT_MAX)
+    val = INT_MAX;
+
+  if (val < 0)
+    val = 0;
+
+  result = create_slide (base, val);
 
   gdk_pixbuf_save (result, "slide.png", "png", NULL, NULL);
 
