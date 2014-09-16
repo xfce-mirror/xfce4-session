@@ -166,7 +166,7 @@ xfae_window_init (XfaeWindow *window)
   gtk_tree_view_column_set_attributes (column, renderer,
                                        "markup", XFAE_MODEL_COLUMN_NAME,
                                        NULL);
-  renderer = gtk_cell_renderer_text_new ();
+
   gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
 
   bbox = gtk_hbox_new (FALSE, 6);
