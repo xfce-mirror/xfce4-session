@@ -442,6 +442,7 @@ xfsm_legacy_perform_session_save (void)
           fd_set fds;
           int msecs;
           int fd;
+          int ret;
 
           msecs = (int)(g_timer_elapsed (timer, NULL) * 1000);
           if (msecs >= WM_SAVE_YOURSELF_TIMEOUT)
@@ -452,7 +453,15 @@ xfsm_legacy_perform_session_save (void)
           FD_SET (fd, &fds);
           tv.tv_sec = (WM_SAVE_YOURSELF_TIMEOUT - msecs) / 1000;
           tv.tv_usec = ((WM_SAVE_YOURSELF_TIMEOUT - msecs) % 1000) * 1000;
-          select (fd + 1, &fds, NULL, &fds, &tv);
+          ret = select (fd + 1, &fds, NULL, &fds, &tv);
+          if (ret == -1)
+            {
+              perror ("select");
+            }
+          else if (ret == 0)
+            {
+              g_warning ("xfsm_legacy_perform_session_save, select: no data before timeout reached");
+            }
         }
     }
   g_timer_destroy (timer);
