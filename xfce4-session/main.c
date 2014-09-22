@@ -157,7 +157,7 @@ xfsm_dbus_init (void)
 
   xfsm_error_dbus_init ();
 
-  dbus_conn = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+  dbus_conn = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
   if (G_UNLIKELY (!dbus_conn))
     {
       g_critical ("Unable to contact D-Bus session bus: %s", error ? error->message : "Unknown error");
