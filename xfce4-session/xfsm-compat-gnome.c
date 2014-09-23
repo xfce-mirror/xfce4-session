@@ -75,12 +75,19 @@ child_setup (gpointer user_data)
   gint open_max;
   gint fd;
   char *fd_str;
+  int ret;
 
   open_max = sysconf (_SC_OPEN_MAX);
   for (fd = 3; fd < open_max; fd++)
     {
       if (fd != keyring_lifetime_pipe[0])
-        fcntl (fd, F_SETFD, FD_CLOEXEC);
+        {
+          ret = fcntl (fd, F_SETFD, FD_CLOEXEC);
+          if (ret == -1)
+            {
+              perror ("child_setup: fcntl (fd, F_SETFD, FD_CLOEXEC) failed");
+            }
+        }
     }
 
   fd_str = g_strdup_printf ("%d", keyring_lifetime_pipe[0]);

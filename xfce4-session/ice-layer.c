@@ -134,6 +134,7 @@ ice_connection_watch (IceConn     ice_conn,
   GIOChannel  *channel;
   guint        watchid;
   gint         fd;
+  gint         ret;
 
   if (opening)
     {
@@ -146,7 +147,11 @@ ice_connection_watch (IceConn     ice_conn,
       /* Make sure we don't pass on these file descriptors to an
        * exec'd child process.
        */
-      fcntl (fd, F_SETFD, fcntl (fd, F_GETFD, 0) | FD_CLOEXEC);
+      ret = fcntl (fd, F_SETFD, fcntl (fd, F_GETFD, 0) | FD_CLOEXEC);
+      if (ret == -1)
+        {
+          perror ("ice_connection_watch: fcntl (fd, F_SETFD, fcntl (fd, F_GETFD, 0) | FD_CLOEXEC) failed");
+        }
 
       channel = g_io_channel_unix_new (fd);
       watchid = g_io_add_watch_full (channel, G_PRIORITY_DEFAULT,
@@ -297,6 +302,7 @@ ice_setup_listeners (int           num_listeners,
   FILE       *setup_fp;
   int         fd;
   int         n;
+  int         ret;
 
   IceSetIOErrorHandler (ice_error_handler);
   IceAddConnectionWatch (ice_connection_watch, manager);
@@ -321,7 +327,11 @@ ice_setup_listeners (int           num_listeners,
       /* Make sure we don't pass on these file descriptors to an
        * exec'd child process.
        */
-      fcntl (fd, F_SETFD, fcntl (fd, F_GETFD, 0) | FD_CLOEXEC);
+      ret = fcntl (fd, F_SETFD, fcntl (fd, F_GETFD, 0) | FD_CLOEXEC);
+      if (ret == -1)
+        {
+          perror ("ice_setup_listeners: fcntl (fd, F_SETFD, fcntl (fd, F_GETFD, 0) | FD_CLOEXEC) failed");
+        }
 
       channel = g_io_channel_unix_new (fd);
       g_io_add_watch (channel, G_IO_ERR | G_IO_HUP | G_IO_IN,
