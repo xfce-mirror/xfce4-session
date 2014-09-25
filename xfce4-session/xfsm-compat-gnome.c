@@ -83,7 +83,8 @@ child_setup (gpointer user_data)
       if (fd != keyring_lifetime_pipe[0])
         {
           ret = fcntl (fd, F_SETFD, FD_CLOEXEC);
-          if (ret == -1)
+          /* We end up trying to close a lot of non-existant FDs here */
+          if (ret == -1 && errno != EBADF)
             {
               perror ("child_setup: fcntl (fd, F_SETFD, FD_CLOEXEC) failed");
             }
