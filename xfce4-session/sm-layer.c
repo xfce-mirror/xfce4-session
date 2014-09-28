@@ -114,13 +114,11 @@ sm_init (XfconfChannel *channel,
 #ifdef HAVE__ICETRANSNOLISTEN
       _IceTransNoListen ("tcp");
 #else
-      if (G_UNLIKELY (verbose))
-        {
-          fprintf (stderr,
-                   "xfce4-session: Requested to disable tcp connections, but "
-                   "_IceTransNoListen is not available on this plattform. "
-                   "Request will be ignored.\n");
-        }
+      fprintf (stderr,
+               "xfce4-session: Requested to disable tcp connections, but "
+               "_IceTransNoListen is not available on this plattform. "
+               "Request will be ignored.\n");
+      xfsm_verbose ("_IceTransNoListen unavailable on this platform");
 #endif
     }
 
@@ -128,12 +126,16 @@ sm_init (XfconfChannel *channel,
                       2048, error))
     {
       fprintf (stderr, "xfce4-session: Unable to register XSM protocol: %s\n", error);
+      /* log to verbose so we don't have to look at both files */
+      xfsm_verbose ("xfce4-session: Unable to register XSM protocol: %s\n", error);
       exit (EXIT_FAILURE);
     }
 
   if (!IceListenForConnections (&num_listeners, &listen_objs, 2048, error))
     {
       fprintf (stderr, "xfce4-session: Unable to establish ICE listeners: %s\n", error);
+      /* log to verbose so we don't have to look at both files */
+      xfsm_verbose ("xfce4-session: Unable to establish ICE listeners: %s\n", error);
       exit (EXIT_FAILURE);
     }
 

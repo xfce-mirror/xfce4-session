@@ -626,10 +626,13 @@ xfsm_startup_autostart_xdg (XfsmManager *manager,
       skip = xfce_rc_read_bool_entry (rc, "Hidden", FALSE);
       if (G_LIKELY (!skip))
         {
+          xfsm_verbose("hidden set\n");
+
           if (xfce_rc_read_bool_entry (rc, "X-XFCE-Autostart-Override", FALSE))
             {
               /* override the OnlyShowIn check */
               skip = FALSE;
+              xfsm_verbose ("X-XFCE-Autostart-Override set, launching\n");
             }
           else
             {
@@ -643,6 +646,7 @@ xfsm_startup_autostart_xdg (XfsmManager *manager,
                       if (g_ascii_strcasecmp (only_show_in[m], "XFCE") == 0)
                         {
                           skip = FALSE;
+                          xfsm_verbose ("only show in XFCE set, launching\n");
                           break;
                         }
                     }
@@ -660,6 +664,7 @@ xfsm_startup_autostart_xdg (XfsmManager *manager,
                 if (g_ascii_strcasecmp (not_show_in[m], "XFCE") == 0)
                   {
                     skip = TRUE;
+                    xfsm_verbose ("NotShowIn Xfce set, skipping\n");
                     break;
                   }
 
@@ -671,19 +676,29 @@ xfsm_startup_autostart_xdg (XfsmManager *manager,
            * launching at-spi */
           filename = g_path_get_basename (files[n]);
           if (g_str_has_prefix (filename, "at-spi-"))
-            skip = !start_at_spi;
+            {
+              skip = !start_at_spi;
+              xfsm_verbose ("start_at_spi (a11y support), %s\n", skip ? "skipping" : "showing");
+            }
           g_free (filename);
         }
 
       /* check the "Type" key */
       type = xfce_rc_read_entry (rc, "Type", NULL);
       if (G_UNLIKELY (!skip && type != NULL && g_ascii_strcasecmp (type, "Application") != 0))
-        skip = TRUE;
+        {
+          skip = TRUE;
+          xfsm_verbose ("Type == Application, skipping\n");
+        }
 
       /* check the "TryExec" key */
       try_exec = xfce_rc_read_entry (rc, "TryExec", NULL);
       if (G_UNLIKELY (!skip && try_exec != NULL))
-        skip = !xfsm_check_valid_exec (try_exec);
+        {
+          skip = !xfsm_check_valid_exec (try_exec);
+          if (skip)
+            xfsm_verbose ("TryExec set and xfsm_check_valid_exec failed, skipping\n");
+        }
 
       /* execute the item */
       exec = xfce_rc_read_entry (rc, "Exec", NULL);
@@ -702,6 +717,7 @@ xfsm_startup_autostart_xdg (XfsmManager *manager,
                                                   &error))
             {
               g_warning ("Unable to launch \"%s\" (specified by %s): %s", exec, files[n], error->message);
+              xfsm_verbose ("Unable to launch \"%s\" (specified by %s): %s\n", exec, files[n], error->message);
               g_error_free (error);
               error = NULL;
             }
@@ -943,7 +959,14 @@ xfsm_startup_start_properties (XfsmProperties *properties,
       return FALSE;
     }
 
-  xfsm_verbose ("Launched command \"%s\" with PID %dn", *argv, (gint) pid);
+  /* Don't waste time if we're not debugging, but if we are print the
+   * command + the arguments */
+  if (xfsm_is_verbose_enabled ())
+    {
+      gchar *command = g_strjoinv (" ", argv);
+      xfsm_verbose ("Launched command \"%s\" with PID %d\n", command, (gint) pid);
+      g_free (command);
+    }
 
   g_strfreev (argv);
 
@@ -991,6 +1014,7 @@ xfsm_startup_session_continue (XfsmManager *manager)
       /* we failed to start anything, and we don't have anything else,
        * to start, so just move on to the autostart items and signal
        * the manager that we're finished */
+      xfsm_verbose ("Nothing started and nothing to start, moving to autostart items\n");
       xfsm_startup_autostart (manager);
       xfsm_manager_signal_startup_done (manager);
     }
@@ -1062,6 +1086,7 @@ xfsm_startup_session_next_prio_group (XfsmManager *manager)
         {
           g_queue_push_tail (starting_properties, properties);
           client_started = TRUE;
+          xfsm_verbose ("client id %s started\n", properties->client_id);
         }
       else
         {
@@ -1133,6 +1158,8 @@ xfsm_startup_handle_failed_startup (XfsmProperties *properties,
                                     XfsmManager    *manager)
 {
   GQueue *starting_properties = xfsm_manager_get_queue (manager, XFSM_MANAGER_QUEUE_STARTING_PROPS);
+
+  xfsm_verbose ("Client Id = %s failed to start\n", properties->client_id);
 
   /* if our timer hasn't run out yet, kill it */
   if (properties->startup_timeout_id > 0)

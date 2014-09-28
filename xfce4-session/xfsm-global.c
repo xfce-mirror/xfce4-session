@@ -73,25 +73,44 @@ xfsm_enable_verbose (void)
     }
 }
 
+gboolean
+xfsm_is_verbose_enabled (void)
+{
+  return verbose;
+}
 
 void
-xfsm_verbose_real (const gchar *format, ...)
+xfsm_verbose_real (const char *func,
+                   const char *file,
+                   int line,
+                   const char *format,
+                   ...)
 {
   static FILE *fp = NULL;
   gchar       *logfile;
   va_list      valist;
-  GTimeVal     tv;
 
   if (G_UNLIKELY (fp == NULL))
     {
       logfile = xfce_get_homefile (".xfce4-session.verbose-log", NULL);
+
+      /* rename an existing log file to -log.last */
+      if (logfile && g_file_test (logfile, G_FILE_TEST_EXISTS))
+        {
+          gchar *oldlogfile = g_strdup_printf ("%s.last", logfile);
+          if (oldlogfile)
+            {
+              rename (logfile, oldlogfile);
+              g_free (oldlogfile);
+            }
+        }
+
       fp = fopen (logfile, "w");
       g_free (logfile);
+      fprintf(fp, "log file opened\n");
     }
 
-  g_get_current_time(&tv);
-  fprintf(fp, "[%10lu] ", tv.tv_sec);
-
+  fprintf (fp, "TRACE[%s:%d] %s(): ", file, line, func);
   va_start (valist, format);
   vfprintf (fp, format, valist);
   fflush (fp);

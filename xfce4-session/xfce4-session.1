@@ -1,4 +1,4 @@
-.TH xfce4-session 1 "Nov 01, 2004"
+.TH xfce4-session 1 "Sep 28, 2014"
 .SH NAME
 xfce4-session \- Starts up the Xfce Desktop Environment
 .SH SYNOPSIS
@@ -56,6 +56,15 @@ base directory. The directories should be separated with a colon.
 Specifies the root for all user-specific cache data. If this environment
 variable is unset, it defaults to
 .I ~/.cache/
+.TP
+.B XFSM_VERBOSE
+When defined, this environment variable enables debugging messages to be
+saved to
+.I ~/.xfce4-session.verbose-log
+The log file from the last session run with this environment variable
+set is retained at
+.I ~/.xfce4-session.verbose-log.last
+These debugging messages are useful for troubleshooting and development.
 
 .SH FILES
 \fBxfce4-session\fP reads its configuration from Xfconf.
@@ -72,4 +81,4 @@ and Benedikt Meurer <benny@xfce.org>.
 Report bugs to http://bugzilla.xfce.org/.
 
 .SH COPYRIGHT
-Copyright \(co 2003-2004 Benedikt Meurer.
+Copyright \(co 2003-2014 Benedikt Meurer.

@@ -48,24 +48,22 @@ extern XfsmSplashScreen *splash_screen;
 
 #if defined(G_HAVE_ISO_VARARGS)
 
-#define xfsm_verbose(...)             \
-G_STMT_START{                         \
-  if (G_UNLIKELY (verbose))           \
-    xfsm_verbose_real (__VA_ARGS__);  \
-}G_STMT_END
+#define xfsm_verbose(...)\
+    xfsm_verbose_real (__func__, __FILE__, __LINE__, __VA_ARGS__)
 
-#elif defined(G_HAVE_GNUC_VARARGS)
+#else
 
-#define xfsm_verbose(format, ...)     \
-G_STMT_START{                         \
-  if (G_UNLIKELY (verbose))           \
-    xfsm_verbose_real ( ## format);   \
-}G_STMT_END
+#define xfsm_verbose(...)
 
 #endif
 
 void xfsm_enable_verbose (void);
-void xfsm_verbose_real (const gchar *format, ...) G_GNUC_PRINTF (1, 2);
+gboolean xfsm_is_verbose_enabled (void);
+void xfsm_verbose_real (const char *func,
+                        const char *file,
+                        int line,
+                        const char *format,
+                        ...) G_GNUC_PRINTF (4, 5);
 
 gchar *xfsm_generate_client_id (SmsConn sms_conn) G_GNUC_PURE;
 

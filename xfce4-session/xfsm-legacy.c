@@ -74,6 +74,7 @@
 
 #include <libwnck/libwnck.h>
 
+#include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-legacy.h>
 #include <libxfsm/xfsm-util.h>
 
@@ -344,7 +345,10 @@ xfsm_legacy_perform_session_save (void)
           leader = get_clientleader (window);
           if (leader == None || sm_window_list_contains (leader)
               || has_xsmp_support (window) || has_xsmp_support (leader))
-            continue;
+            {
+              xfsm_verbose ("window has no client leader or supports xspm, skipping\n");
+              continue;
+            }
 
           type = SM_WMCOMMAND;
           wmclass1 = NULL;
@@ -513,6 +517,16 @@ xfsm_legacy_store_session (XfceRc *rc)
               || sm_window->wm_client_machine == NULL)
             continue;
 
+          if (xfsm_is_verbose_enabled ())
+            {
+              gchar *command = g_strjoinv (" ", sm_window->wm_command);
+              xfsm_verbose ("saving screen %d, command %s, machine %s\n",
+                            sm_window->screen_num,
+                            command,
+                            sm_window->wm_client_machine);
+              g_free (command);
+            }
+
           g_snprintf (buffer, 256, "Legacy%d_Screen", count);
           xfce_rc_write_int_entry (rc, buffer, sm_window->screen_num);
 
@@ -551,7 +565,16 @@ xfsm_legacy_load_session (XfceRc *rc)
       g_snprintf (buffer, 256, "Legacy%d_Command", i);
       command = xfce_rc_read_list_entry (rc, buffer, NULL);
       if (command == NULL)
-        continue;
+        {
+          xfsm_verbose ("legacy command == NULL\n");
+          continue;
+        }
+      else if (xfsm_is_verbose_enabled ())
+        {
+          gchar *dbg_command = g_strjoinv (" ", command);
+          xfsm_verbose ("legacy command %s\n", dbg_command);
+          g_free (dbg_command);
+        }
 
       app = g_new0 (SmRestartApp, 1);
       app->screen_num = screen_num;

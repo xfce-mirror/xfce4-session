@@ -294,6 +294,14 @@ xfsm_manager_set_state (XfsmManager     *manager,
   old_state = manager->state;
   manager->state = state;
 
+  xfsm_verbose ("\nstate is now %s\n",
+                state == XFSM_MANAGER_STARTUP ? "XFSM_MANAGER_STARTUP" :
+                state == XFSM_MANAGER_IDLE ?  "XFSM_MANAGER_IDLE" :
+                state == XFSM_MANAGER_CHECKPOINT ? "XFSM_MANAGER_CHECKPOINT" :
+                state == XFSM_MANAGER_SHUTDOWN ? "XFSM_MANAGER_SHUTDOWN" :
+                state == XFSM_MANAGER_SHUTDOWNPHASE2 ? "XFSM_MANAGER_SHUTDOWNPHASE2" :
+                "unknown");
+
   g_signal_emit (manager, signals[SIG_STATE_CHANGED], 0, old_state, state);
 }
 
@@ -333,8 +341,13 @@ xfsm_manager_restore_active_workspace (XfsmManager *manager,
   for (n = 0; n < gdk_display_get_n_screens (display); ++n)
     {
       g_snprintf (buffer, 1024, "Screen%d_ActiveWorkspace", n);
+      xfsm_verbose ("Attempting to restore %s\n", buffer);
       if (!xfce_rc_has_entry (rc, buffer))
-        continue;
+        {
+          xfsm_verbose ("no entry found\n");
+          continue;
+        }
+
       m = xfce_rc_read_int_entry (rc, buffer, 0);
 
       screen = wnck_screen_get (n);
@@ -372,6 +385,7 @@ xfsm_manager_handle_failed_properties (XfsmManager    *manager,
 
   if (restart_style_hint == SmRestartAnyway)
     {
+      xfsm_verbose ("Client id %s died or failed to start, restarting anyway\n", properties->client_id);
       g_queue_push_tail (manager->restart_properties, properties);
     }
   else if (restart_style_hint == SmRestartImmediately)
@@ -545,19 +559,27 @@ xfsm_manager_load_session (XfsmManager *manager)
   gint            count;
 
   if (!g_file_test (manager->session_file, G_FILE_TEST_IS_REGULAR))
-    return FALSE;
+    {
+      g_warning ("xfsm_manager_load_session: Something wrong with %s, Does it exist? Permissions issue?", manager->session_file);
+      return FALSE;
+    }
 
   rc = xfce_rc_simple_open (manager->session_file, FALSE);
   if (G_UNLIKELY (rc == NULL))
+  {
+    g_warning ("xfsm_manager_load_session: unable to open %s", manager->session_file);
     return FALSE;
+  }
 
   if (manager->session_chooser && !xfsm_manager_choose_session (manager, rc))
     {
+      g_warning ("xfsm_manager_load_session: failed to choose session");
       xfce_rc_close (rc);
       return FALSE;
     }
 
   g_snprintf (buffer, 1024, "Session: %s", manager->session_name);
+  xfsm_verbose ("loading %s\n", buffer);
 
   xfce_rc_set_group (rc, buffer);
   count = xfce_rc_read_int_entry (rc, "Count", 0);
@@ -572,12 +594,20 @@ xfsm_manager_load_session (XfsmManager *manager)
       g_snprintf (buffer, 1024, "Client%d_", count);
       properties = xfsm_properties_load (rc, buffer);
       if (G_UNLIKELY (properties == NULL))
-        continue;
+        {
+          xfsm_verbose ("%s has no properties. Skipping\n", buffer);
+          continue;
+        }
       if (xfsm_properties_check (properties))
         g_queue_push_tail (manager->pending_properties, properties);
       else
-        xfsm_properties_free (properties);
+        {
+          xfsm_verbose ("%s has invalid properties. Skipping\n", buffer);
+          xfsm_properties_free (properties);
+        }
     }
+
+  xfsm_verbose ("Finished loading clients from rc file\n");
 
   /* load legacy applications */
   xfsm_legacy_load_session (rc);
@@ -1097,6 +1127,8 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
   GList    *lp;
   GError   *error = NULL;
 
+  xfsm_verbose ("entering");
+
   if (shutdown)
     {
       if (!fast && shutdown_type == XFSM_SHUTDOWN_ASK)
@@ -1196,6 +1228,8 @@ xfsm_manager_save_yourself (XfsmManager *manager,
                             gboolean     fast,
                             gboolean     global)
 {
+  xfsm_verbose ("entering");
+
   if (G_UNLIKELY (xfsm_client_get_state (client) != XFSM_CLIENT_IDLE))
     {
 
@@ -1234,6 +1268,8 @@ void
 xfsm_manager_save_yourself_phase2 (XfsmManager *manager,
                                    XfsmClient *client)
 {
+  xfsm_verbose ("entering");
+
   if (manager->state != XFSM_MANAGER_CHECKPOINT && manager->state != XFSM_MANAGER_SHUTDOWN)
     {
       SmsSaveYourselfPhase2 (xfsm_client_get_sms_connection (client));
@@ -1256,6 +1292,8 @@ xfsm_manager_save_yourself_done (XfsmManager *manager,
                                  XfsmClient  *client,
                                  gboolean     success)
 {
+  xfsm_verbose ("entering");
+
   /* In xfsm_manager_interact_done we send SmsShutdownCancelled to clients in
      XFSM_CLIENT_WAITFORINTERACT state. They respond with SmcSaveYourselfDone
      (xsmp_shutdown_cancelled in libxfce4ui library) so we allow it here. */
@@ -1417,6 +1455,8 @@ void
 xfsm_manager_perform_shutdown (XfsmManager *manager)
 {
   GList *lp;
+
+  xfsm_verbose ("entering");
 
   /* send SmDie message to all clients */
   xfsm_manager_set_state (manager, XFSM_MANAGER_SHUTDOWNPHASE2);
