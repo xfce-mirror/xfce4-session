@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-02 22:44+0200\n"
-"PO-Revision-Date: 2014-08-23 13:39+0000\n"
+"POT-Creation-Date: 2014-08-28 18:30+0200\n"
+"PO-Revision-Date: 2014-10-28 13:39+0000\n"
 "Last-Translator: Yannick Le Guen <leguen.yannick@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/xfce4-session/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -151,7 +151,7 @@ msgstr "Économiseur d'écran"
 
 #: ../scripts/xscreensaver.desktop.in.h:2
 msgid "Launch screensaver and locker program"
-msgstr "Verrouiller et lancer l'économiseur d'écran"
+msgstr "Lancer l'économiseur d'écran et le verrouilleur"
 
 #: ../settings/main.c:43
 msgid "Settings manager socket"
@@ -229,7 +229,7 @@ msgstr "Voulez-vous vraiment vider le cache des sessions ?"
 msgid ""
 "The saved states of your applications will not be restored during your next "
 "login."
-msgstr "L'état sauvegardé de vos applications ne sera pas restauré lors de votre prochaine session."
+msgstr "L'état enregistré de vos applications ne sera pas restauré lors de votre prochaine session."
 
 #: ../settings/session-editor.c:174
 msgid "_Proceed"
@@ -257,7 +257,7 @@ msgstr "Mettre fin au programme"
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
-msgstr "L'application va perdre tout état non sauvegardé et ne sera pas redémarrée dans votre prochaine session."
+msgstr "L'application va perdre tout état non enregistré et ne sera pas redémarrée dans votre prochaine session."
 
 #: ../settings/session-editor.c:256
 #: ../settings/xfce4-session-settings.glade.h:30
@@ -526,7 +526,7 @@ msgstr "Le gestionnaire de session doit être en mode attente lors d'une requêt
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Le gestionnaire de session doit être en mode attente lors d'une requête de mise hors tension"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:188
+#: ../xfce4-session/xfsm-logout-dialog.c:182
 #, c-format
 msgid "Log out %s"
 msgstr "Déconnexion de %s"
@@ -534,43 +534,33 @@ msgstr "Déconnexion de %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:246
+#: ../xfce4-session/xfsm-logout-dialog.c:224
 msgid "_Log Out"
 msgstr "_Déconnexion"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:266
+#: ../xfce4-session/xfsm-logout-dialog.c:244
 msgid "_Restart"
 msgstr "_Redémarrer"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:286
+#: ../xfce4-session/xfsm-logout-dialog.c:264
 msgid "Shut _Down"
 msgstr "_Éteindre"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:309
+#: ../xfce4-session/xfsm-logout-dialog.c:287
 msgid "Sus_pend"
 msgstr "_Mise en veille"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:343
+#: ../xfce4-session/xfsm-logout-dialog.c:321
 msgid "_Hibernate"
 msgstr "_Mise en veille prolongée"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:368
+#: ../xfce4-session/xfsm-logout-dialog.c:346
 msgid "_Save session for future logins"
 msgstr "_Enregistrer la session pour les\nprochaines connexions"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:395
-msgid "Please enter your password"
-msgstr "Veuillez entrer votre mot de passe"
-
-#: ../xfce4-session/xfsm-logout-dialog.c:427
+#: ../xfce4-session/xfsm-logout-dialog.c:374
 msgid "An error occurred"
 msgstr "Une erreur s'est produite"
-
-#: ../xfce4-session/xfsm-logout-dialog.c:433
-msgid ""
-"Either the password you entered is invalid, or the system administrator "
-"disallows shutting down this computer with your user account."
-msgstr "Soit le mot de passe que vous avez entré est invalide, soit l'administrateur du système n'autorise pas l'extinction de cet ordinateur via votre compte utilisateur."
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -584,88 +574,88 @@ msgstr "Choix du nom de la session"
 msgid "Choose a name for the new session:"
 msgstr "Choisir un nom pour la nouvelle session :"
 
-#: ../xfce4-session/xfsm-startup.c:347
+#: ../xfce4-session/xfsm-startup.c:397
 msgid "Starting the Volume Controller"
 msgstr "Démarrage du contrôleur de volume"
 
-#: ../xfce4-session/xfsm-startup.c:349
+#: ../xfce4-session/xfsm-startup.c:399
 msgid "Starting the Panel"
 msgstr "Démarrage du tableau de bord"
 
-#: ../xfce4-session/xfsm-startup.c:351
+#: ../xfce4-session/xfsm-startup.c:401
 msgid "Starting the Desktop Manager"
 msgstr "Démarrage du gestionnaire de bureau"
 
-#: ../xfce4-session/xfsm-startup.c:353
+#: ../xfce4-session/xfsm-startup.c:403
 msgid "Starting the Taskbar"
 msgstr "Démarrage de la barre de tâches"
 
-#: ../xfce4-session/xfsm-startup.c:355
+#: ../xfce4-session/xfsm-startup.c:405
 msgid "Starting the Window Manager"
 msgstr "Démarrage du gestionnaire de fenêtres"
 
-#: ../xfce4-session/xfsm-startup.c:359
+#: ../xfce4-session/xfsm-startup.c:409
 msgid "Starting the Gnome Terminal Emulator"
 msgstr "Démarrage de l'émulateur de terminal Gnome"
 
-#: ../xfce4-session/xfsm-startup.c:363
+#: ../xfce4-session/xfsm-startup.c:413
 msgid "Starting the KDE Advanced Text Editor"
 msgstr "Démarrage de l'éditeur de texte avancé de KDE"
 
-#: ../xfce4-session/xfsm-startup.c:365
+#: ../xfce4-session/xfsm-startup.c:415
 msgid "Starting the KDE Clipboard Manager"
 msgstr "Démarrage du gestionnaire de presse-papier de KDE"
 
-#: ../xfce4-session/xfsm-startup.c:367
+#: ../xfce4-session/xfsm-startup.c:417
 msgid "Starting the KDE Mail Reader"
 msgstr "Démarrage du client messagerie de KDE"
 
-#: ../xfce4-session/xfsm-startup.c:369
+#: ../xfce4-session/xfsm-startup.c:419
 msgid "Starting the KDE News Reader"
 msgstr "Démarrage du client de nouvelles de KDE"
 
-#: ../xfce4-session/xfsm-startup.c:371
+#: ../xfce4-session/xfsm-startup.c:421
 msgid "Starting the Konqueror"
 msgstr "Démarrage de Konqueror"
 
-#: ../xfce4-session/xfsm-startup.c:373
+#: ../xfce4-session/xfsm-startup.c:423
 msgid "Starting the KDE Terminal Emulator"
 msgstr "Démarrage de l'émulateur de terminal KDE"
 
-#: ../xfce4-session/xfsm-startup.c:377
+#: ../xfce4-session/xfsm-startup.c:427
 msgid "Starting the Beep Media Player"
 msgstr "Démarrage de Beep Media Player"
 
-#: ../xfce4-session/xfsm-startup.c:379
+#: ../xfce4-session/xfsm-startup.c:429
 msgid "Starting The Gimp"
 msgstr "Démarrage de The Gimp"
 
-#: ../xfce4-session/xfsm-startup.c:381
+#: ../xfce4-session/xfsm-startup.c:431
 msgid "Starting the VI Improved Editor"
 msgstr "Démarrage de VI Improved Editor"
 
-#: ../xfce4-session/xfsm-startup.c:383
+#: ../xfce4-session/xfsm-startup.c:433
 msgid "Starting the Session Management Proxy"
 msgstr "Démarrage du Proxy du Gestionnaire de Session"
 
-#: ../xfce4-session/xfsm-startup.c:385
+#: ../xfce4-session/xfsm-startup.c:435
 msgid "Starting the X-Chat IRC Client"
 msgstr "Démarrage du client IRC X-Chat"
 
-#: ../xfce4-session/xfsm-startup.c:387
+#: ../xfce4-session/xfsm-startup.c:437
 msgid "Starting the X Multimedia System"
 msgstr "Démarrage de X Multimedia System"
 
-#: ../xfce4-session/xfsm-startup.c:389
+#: ../xfce4-session/xfsm-startup.c:439
 msgid "Starting the X Terminal Emulator"
 msgstr "Démarrage du Terminal X"
 
-#: ../xfce4-session/xfsm-startup.c:391
+#: ../xfce4-session/xfsm-startup.c:441
 #, c-format
 msgid "Starting %s"
 msgstr "Démarrage de %s"
 
-#: ../xfce4-session/xfsm-startup.c:515
+#: ../xfce4-session/xfsm-startup.c:565
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -680,34 +670,19 @@ msgid ""
 "You should delete this directory now.\n"
 msgstr "L’emplacement et le format du répertoire « démarrage automatique » a changé.\nLe nouvel emplacement est\n\n  %s\n\noù vous pouvez placer les fichiers .desktop qui décrivent les applications\nà démarrer lorsque vous vous connectez à votre bureau Xfce. Les fichiers de votre ancien\nrépertoire de démarrage automatique ont été migrés avec succès vers ce nouvel emplacement.\nVous devriez supprimer ce répertoire maintenant.\n"
 
-#: ../xfce4-session/xfsm-startup.c:684
+#: ../xfce4-session/xfsm-startup.c:734
 msgid "Performing Autostart..."
 msgstr "Démarrage automatique..."
 
-#: ../xfce4-session/xfsm-startup.c:790
+#: ../xfce4-session/xfsm-startup.c:840
 msgid "Starting Assistive Technologies"
 msgstr "Démarrage des technologies d'assistance"
 
-#: ../xfce4-session/xfsm-shutdown.c:429
-#, c-format
-msgid "Error sending command to shutdown helper: %s"
-msgstr "Erreur à l'envoi de la commande de mise hors tension : %s"
-
-#: ../xfce4-session/xfsm-shutdown.c:442
-#, c-format
-msgid "Error receiving response from shutdown helper: %s"
-msgstr "Erreur à la réception de la réponse de la commande de mise hors tension : %s"
-
-#: ../xfce4-session/xfsm-shutdown.c:450
-#, c-format
-msgid "Shutdown command failed"
-msgstr "La commande de mise hors tension a échoué"
-
-#: ../xfce4-session/xfsm-shutdown.c:555
+#: ../xfce4-session/xfsm-shutdown.c:182
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "La mise hors tension est bloquée par les paramètres du kiosque"
 
-#: ../xfce4-session/xfsm-shutdown.c:638
+#: ../xfce4-session/xfsm-shutdown.c:233
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Méthode %d de mise hors tension inconnue"
@@ -869,7 +844,7 @@ msgid ""
 "These applications are a part of the currently-running session, and can be "
 "saved when you log out.  Changes below will only take effect when the "
 "session is saved."
-msgstr "Ces applications font partie de la session en cours et peuvent être sauvegardées à votre déconnexion. Les changements ne prendront effet qu'une fois la session enregistrée."
+msgstr "Ces applications font partie de la session en cours et peuvent être enregistrées lors de votre déconnexion. Les changements ci-dessous ne prendront effet qu'une fois la session enregistrée."
 
 #: ../settings/xfce4-session-settings.glade.h:26
 msgid "Save Sess_ion"
