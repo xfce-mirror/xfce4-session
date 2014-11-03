@@ -24,7 +24,7 @@
 #include <dbus/dbus-glib-lowlevel.h>
 
 #include <xfce4-session/xfsm-consolekit.h>
-
+#include <libxfsm/xfsm-util.h>
 
 
 #define CK_NAME         "org.freedesktop.ConsoleKit"
@@ -259,6 +259,48 @@ xfsm_consolekit_can_method (XfsmConsolekit  *consolekit,
 
 
 static gboolean
+xfsm_consolekit_can_sleep (XfsmConsolekit  *consolekit,
+                           const gchar     *method,
+                           gboolean        *can_method,
+                           gboolean        *auth_method,
+                           GError         **error)
+{
+  gboolean ret;
+  gchar *can_string;
+  g_return_val_if_fail (can_method != NULL, FALSE);
+
+  /* never return true if something fails */
+  *can_method = FALSE;
+
+  if (!xfsm_consolekit_proxy_ensure (consolekit, error))
+    return FALSE;
+
+  ret = dbus_g_proxy_call (consolekit->ck_proxy, method,
+                            error, G_TYPE_INVALID,
+                            G_TYPE_STRING, &can_string,
+                            G_TYPE_INVALID);
+
+  if (ret == FALSE)
+    return FALSE;
+
+  /* If yes or challenge then we can sleep, it just might take a password */
+  if (g_strcmp0 (can_string, "yes") == 0 || g_strcmp0 (can_string, "challenge") == 0)
+    {
+      *can_method = TRUE;
+      *auth_method = TRUE;
+    }
+  else
+    {
+      *can_method = FALSE;
+      *auth_method = FALSE;
+    }
+
+  return TRUE;
+}
+
+
+
+static gboolean
 xfsm_consolekit_try_method (XfsmConsolekit  *consolekit,
                             const gchar     *method,
                             GError         **error)
@@ -267,6 +309,21 @@ xfsm_consolekit_try_method (XfsmConsolekit  *consolekit,
     return FALSE;
 
   return dbus_g_proxy_call (consolekit->ck_proxy, method, error,
+                            G_TYPE_INVALID, G_TYPE_INVALID);
+}
+
+
+
+static gboolean
+xfsm_consolekit_try_sleep (XfsmConsolekit  *consolekit,
+                           const gchar     *method,
+                           GError         **error)
+{
+  if (!xfsm_consolekit_proxy_ensure (consolekit, error))
+    return FALSE;
+
+  return dbus_g_proxy_call (consolekit->ck_proxy, method, error,
+                            G_TYPE_BOOLEAN, TRUE,
                             G_TYPE_INVALID, G_TYPE_INVALID);
 }
 
@@ -337,4 +394,98 @@ xfsm_consolekit_can_shutdown (XfsmConsolekit  *consolekit,
 
   return xfsm_consolekit_can_method (consolekit, "CanStop",
                                      can_shutdown, error);
+}
+
+
+static gboolean
+lock_screen (GError **error)
+{
+  XfconfChannel *channel;
+  gboolean       ret = TRUE;
+
+  channel = xfsm_open_config ();
+  if (xfconf_channel_get_bool (channel, "/shutdown/LockScreen", FALSE))
+      ret = g_spawn_command_line_async ("xflock4", error);
+
+  return ret;
+}
+
+gboolean
+xfsm_consolekit_try_suspend (XfsmConsolekit  *consolekit,
+                             GError         **error)
+{
+  gboolean can_suspend, auth_suspend;
+
+  g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
+
+  /* Check if consolekit can suspend before we call lock screen. */
+  if (xfsm_consolekit_can_suspend (consolekit, &can_suspend, &auth_suspend, NULL))
+    {
+      if (!can_suspend)
+        return FALSE;
+    }
+  else
+    {
+      return FALSE;
+    }
+
+  if (!lock_screen (error))
+    return FALSE;
+
+  return xfsm_consolekit_try_sleep (consolekit, "Suspend", error);
+}
+
+
+
+gboolean
+xfsm_consolekit_try_hibernate (XfsmConsolekit  *consolekit,
+                               GError         **error)
+{
+  gboolean can_hibernate, auth_hibernate;
+
+  g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
+
+  /* Check if consolekit can hibernate before we call lock screen. */
+  if (xfsm_consolekit_can_hibernate (consolekit, &can_hibernate, &auth_hibernate, NULL))
+    {
+      if (!can_hibernate)
+        return FALSE;
+    }
+  else
+    {
+      return FALSE;
+    }
+
+  if (!lock_screen (error))
+    return FALSE;
+
+  return xfsm_consolekit_try_sleep (consolekit, "Hibernate", error);
+}
+
+
+
+gboolean
+xfsm_consolekit_can_suspend (XfsmConsolekit  *consolekit,
+                             gboolean        *can_suspend,
+                             gboolean        *auth_suspend,
+                             GError         **error)
+{
+  g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
+
+  return xfsm_consolekit_can_sleep (consolekit, "CanSuspend",
+                                    can_suspend, auth_suspend, error);
+}
+
+
+
+gboolean
+xfsm_consolekit_can_hibernate (XfsmConsolekit  *consolekit,
+                               gboolean        *can_hibernate,
+                               gboolean        *auth_hibernate,
+                               GError         **error)
+{
+  g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
+
+  return xfsm_consolekit_can_sleep (consolekit, "CanHibernate",
+                                    can_hibernate, auth_hibernate, error);
 }

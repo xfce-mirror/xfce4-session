@@ -57,6 +57,8 @@ xfce4_session_SOURCES =							\
 	xfsm-manager.h							\
 	xfsm-properties.c						\
 	xfsm-properties.h						\
+	xfsm-shutdown-fallback.c				\
+	xfsm-shutdown-fallback.h				\
 	xfsm-shutdown.c							\
 	xfsm-shutdown.h							\
 	xfsm-splash-screen.c						\

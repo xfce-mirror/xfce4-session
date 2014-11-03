@@ -77,23 +77,11 @@
 #include <xfce4-session/xfsm-legacy.h>
 #include <xfce4-session/xfsm-upower.h>
 #include <xfce4-session/xfsm-systemd.h>
-
-
-
-#define POLKIT_AUTH_SHUTDOWN_XFSM  "org.xfce.session.xfsm-shutdown-helper"
-#define POLKIT_AUTH_RESTART_XFSM   "org.xfce.session.xfsm-shutdown-helper"
-#define POLKIT_AUTH_SUSPEND_XFSM   "org.xfce.session.xfsm-shutdown-helper"
-#define POLKIT_AUTH_HIBERNATE_XFSM "org.xfce.session.xfsm-shutdown-helper"
+#include <xfce4-session/xfsm-shutdown-fallback.h>
 
 
 
 static void xfsm_shutdown_finalize  (GObject      *object);
-static gboolean xfsm_shutdown_fallback_auth_shutdown  (void);
-static gboolean xfsm_shutdown_fallback_auth_restart   (void);
-static gboolean xfsm_shutdown_fallback_can_hibernate  (void);
-static gboolean xfsm_shutdown_fallback_can_suspend    (void);
-static gboolean xfsm_shutdown_fallback_auth_hibernate (void);
-static gboolean xfsm_shutdown_fallback_auth_suspend   (void);
 
 
 
@@ -140,12 +128,17 @@ xfsm_shutdown_init (XfsmShutdown *shutdown)
 
   shutdown->consolekit = NULL;
   shutdown->systemd = NULL;
+  shutdown->upower = NULL;
   if (LOGIND_RUNNING())
     shutdown->systemd = xfsm_systemd_get ();
   else
     shutdown->consolekit = xfsm_consolekit_get ();
 
+#ifdef HAVE_UPOWER
+#if !UP_CHECK_VERSION(0, 99, 0)
   shutdown->upower = xfsm_upower_get ();
+#endif /* UP_CHECK_VERSION */
+#endif /* HAVE_UPOWER */
 
   /* check kiosk */
   kiosk = xfce_kiosk_new ("xfce4-session");
@@ -239,35 +232,6 @@ xfsm_shutdown_try_type (XfsmShutdown      *shutdown,
 
 
 
-static gboolean
-xfsm_shutdown_fallback_try_action (XfsmShutdown      *shutdown,
-                                   XfsmShutdownType   type,
-                                   GError           **error)
-{
-  const gchar *action;
-  gboolean ret;
-  gint exit_status = 0;
-  gchar *command = NULL;
-
-  if (type == XFSM_SHUTDOWN_SHUTDOWN)
-    action = "shutdown";
-  if (type == XFSM_SHUTDOWN_RESTART)
-    action = "restart";
-  else if (type == XFSM_SHUTDOWN_SUSPEND)
-    action = "suspend";
-  else if (type == XFSM_SHUTDOWN_HIBERNATE)
-    action = "hibernate";
-  else
-      return FALSE;
-
-  command = g_strdup_printf ("pkexec " XFSM_SHUTDOWN_HELPER_CMD " --%s", action);
-  ret = g_spawn_command_line_sync (command, NULL, NULL, &exit_status, error);
-
-  g_free (command);
-  return ret;
-}
-
-
 
 gboolean
 xfsm_shutdown_try_restart (XfsmShutdown  *shutdown,
@@ -279,12 +243,21 @@ xfsm_shutdown_try_restart (XfsmShutdown  *shutdown,
     return FALSE;
 
   if (shutdown->systemd != NULL)
-    return xfsm_systemd_try_restart (shutdown->systemd, error);
+    {
+      if (xfsm_systemd_try_restart (shutdown->systemd, NULL))
+        {
+          return TRUE;
+        }
+    }
+  else if (shutdown->consolekit != NULL)
+    {
+      if (xfsm_consolekit_try_restart (shutdown->consolekit, NULL))
+        {
+          return TRUE;
+        }
+    }
 
-  if (shutdown->consolekit != NULL)
-    return xfsm_consolekit_try_restart (shutdown->consolekit, error);
-
-  return xfsm_shutdown_fallback_try_action (shutdown, XFSM_SHUTDOWN_RESTART, error);
+  return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_RESTART, error);
 }
 
 
@@ -299,12 +272,35 @@ xfsm_shutdown_try_shutdown (XfsmShutdown  *shutdown,
     return FALSE;
 
   if (shutdown->systemd != NULL)
-    return xfsm_systemd_try_shutdown (shutdown->systemd, error);
+    {
+      if (xfsm_systemd_try_shutdown (shutdown->systemd, NULL))
+        {
+          return TRUE;
+        }
+    }
+  else if (shutdown->consolekit != NULL)
+    {
+      if (xfsm_consolekit_try_shutdown (shutdown->consolekit, NULL))
+        {
+          return TRUE;
+        }
+    }
 
-  if (shutdown->consolekit != NULL)
-    return xfsm_consolekit_try_shutdown (shutdown->consolekit, error);
+  return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_SHUTDOWN, error);
+}
 
-  return xfsm_shutdown_fallback_try_action (shutdown, XFSM_SHUTDOWN_SHUTDOWN, error);
+
+
+typedef gboolean (*SleepFunc) (gpointer object, GError **);
+
+static gboolean
+try_sleep_method (gpointer  object,
+                  SleepFunc func)
+{
+  if (object == NULL)
+    return FALSE;
+
+  return func (object, NULL);
 }
 
 
@@ -315,18 +311,21 @@ xfsm_shutdown_try_suspend (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
-  if (shutdown->systemd != NULL)
-    return xfsm_systemd_try_suspend (shutdown->systemd, error);
+  /* Try each way to suspend - it will handle NULL.
+   * In the future the upower code can go away once everyone is
+   * running upower 0.99.0+
+   */
 
-#ifdef HAVE_UPOWER
-#if !UP_CHECK_VERSION(0, 99, 0)
-  if (shutdown->upower != NULL)
-    return xfsm_upower_try_suspend (shutdown->upower, error);
-#endif /* UP_CHECK_VERSION */
-#endif /* HAVE_UPOWER */
+  if (try_sleep_method (shutdown->systemd, (SleepFunc)xfsm_systemd_try_suspend))
+    return TRUE;
 
-  xfsm_upower_lock_screen (shutdown->upower, "Suspend", error);
-  return xfsm_shutdown_fallback_try_action (shutdown, XFSM_SHUTDOWN_SUSPEND, error);
+  if (try_sleep_method (shutdown->upower, (SleepFunc)xfsm_upower_try_suspend))
+    return TRUE;
+
+  if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfsm_consolekit_try_suspend))
+    return TRUE;
+
+  return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_SUSPEND, error);
 }
 
 
@@ -337,18 +336,21 @@ xfsm_shutdown_try_hibernate (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
-  if (shutdown->systemd != NULL)
-    return xfsm_systemd_try_hibernate (shutdown->systemd, error);
+  /* Try each way to hibernate - it will handle NULL.
+   * In the future the upower code can go away once everyone is
+   * running upower 0.99.0+
+   */
 
-#ifdef HAVE_UPOWER
-#if !UP_CHECK_VERSION(0, 99, 0)
-  if (shutdown->upower != NULL)
-    return xfsm_upower_try_hibernate (shutdown->upower, error);
-#endif /* UP_CHECK_VERSION */
-#endif /* HAVE_UPOWER */
+  if (try_sleep_method (shutdown->systemd, (SleepFunc)xfsm_systemd_try_hibernate))
+    return TRUE;
 
-  xfsm_upower_lock_screen (shutdown->upower, "Hibernate", error);
-  return xfsm_shutdown_fallback_try_action (shutdown, XFSM_SHUTDOWN_HIBERNATE, error);
+  if (try_sleep_method (shutdown->upower, (SleepFunc)xfsm_upower_try_hibernate))
+    return TRUE;
+
+  if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfsm_consolekit_try_hibernate))
+    return TRUE;
+
+  return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_HIBERNATE, error);
 }
 
 
@@ -401,8 +403,7 @@ xfsm_shutdown_can_shutdown (XfsmShutdown  *shutdown,
       if (xfsm_systemd_can_shutdown (shutdown->systemd, can_shutdown, error))
         return TRUE;
     }
-
-  if (shutdown->consolekit != NULL)
+  else if (shutdown->consolekit != NULL)
     {
       if (xfsm_consolekit_can_shutdown (shutdown->consolekit, can_shutdown, error))
         return TRUE;
@@ -429,16 +430,26 @@ xfsm_shutdown_can_suspend (XfsmShutdown  *shutdown,
     }
 
   if (shutdown->systemd != NULL)
-    return xfsm_systemd_can_suspend (shutdown->systemd, can_suspend,
-                                     auth_suspend, error);
-
-#ifdef HAVE_UPOWER
-#if !UP_CHECK_VERSION(0, 99, 0)
-  if (shutdown->upower)
-    return xfsm_upower_can_suspend (shutdown->upower, can_suspend,
-                                    auth_suspend, error);
-#endif /* UP_CHECK_VERSION */
-#endif /* HAVE_UPOWER */
+    {
+      if (xfsm_systemd_can_suspend (shutdown->systemd, can_suspend, auth_suspend, NULL))
+        {
+          return TRUE;
+        }
+    }
+  else if (shutdown->upower != NULL)
+    {
+      if (xfsm_upower_can_suspend (shutdown->upower, can_suspend, auth_suspend, NULL))
+        {
+          return TRUE;
+        }
+    }
+  else if (shutdown->consolekit != NULL)
+    {
+      if (xfsm_consolekit_can_suspend (shutdown->consolekit, can_suspend, auth_suspend, NULL))
+        {
+          return TRUE;
+        }
+    }
 
   *can_suspend = xfsm_shutdown_fallback_can_suspend ();
   *auth_suspend = xfsm_shutdown_fallback_auth_suspend ();
@@ -462,16 +473,26 @@ xfsm_shutdown_can_hibernate (XfsmShutdown  *shutdown,
     }
 
   if (shutdown->systemd != NULL)
-    return xfsm_systemd_can_hibernate (shutdown->systemd, can_hibernate,
-                                       auth_hibernate, error);
-
-#ifdef HAVE_UPOWER
-#if !UP_CHECK_VERSION(0, 99, 0)
-  if (shutdown->upower != NULL)
-    return xfsm_upower_can_hibernate (shutdown->upower, can_hibernate,
-                                      auth_hibernate, error);
-#endif /* UP_CHECK_VERSION */
-#endif /* HAVE_UPOWER */
+    {
+      if (xfsm_systemd_can_hibernate (shutdown->systemd, can_hibernate, auth_hibernate, NULL))
+        {
+          return TRUE;
+        }
+    }
+  else if (shutdown->upower != NULL)
+    {
+      if (xfsm_upower_can_hibernate (shutdown->upower, can_hibernate, auth_hibernate, NULL))
+        {
+          return TRUE;
+        }
+    }
+  else if (shutdown->consolekit != NULL)
+    {
+      if (xfsm_consolekit_can_hibernate (shutdown->consolekit, can_hibernate, auth_hibernate, NULL))
+        {
+          return TRUE;
+        }
+    }
 
   *can_hibernate = xfsm_shutdown_fallback_can_hibernate ();
   *auth_hibernate = xfsm_shutdown_fallback_auth_hibernate ();
@@ -485,195 +506,4 @@ xfsm_shutdown_can_save_session (XfsmShutdown *shutdown)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
   return shutdown->kiosk_can_save_session;
-}
-
-
-
-#ifdef BACKEND_TYPE_FREEBSD
-static gchar *
-get_string_sysctl (GError **err, const gchar *format, ...)
-{
-        va_list args;
-        gchar *name;
-        size_t value_len;
-        gchar *str = NULL;
-
-        g_return_val_if_fail(format != NULL, FALSE);
-
-        va_start (args, format);
-        name = g_strdup_vprintf (format, args);
-        va_end (args);
-
-        if (sysctlbyname (name, NULL, &value_len, NULL, 0) == 0) {
-                str = g_new (char, value_len + 1);
-                if (sysctlbyname (name, str, &value_len, NULL, 0) == 0)
-                        str[value_len] = 0;
-                else {
-                        g_free (str);
-                        str = NULL;
-                }
-        }
-
-        if (!str)
-                g_set_error (err, 0, 0, "%s", g_strerror(errno));
-
-        g_free(name);
-        return str;
-}
-
-
-
-static gboolean
-freebsd_supports_sleep_state (const gchar *state)
-{
-  gboolean ret = FALSE;
-  gchar *sleep_states;
-
-  sleep_states = get_string_sysctl (NULL, "hw.acpi.supported_sleep_state");
-  if (sleep_states != NULL)
-    {
-      if (strstr (sleep_states, state) != NULL)
-          ret = TRUE;
-    }
-
-  g_free (sleep_states);
-
-  return ret;
-}
-#endif /* BACKEND_TYPE_FREEBSD */
-
-
-
-#ifdef BACKEND_TYPE_LINUX
-static gboolean
-linux_supports_sleep_state (const gchar *state)
-{
-  gboolean ret = FALSE;
-  gchar *command;
-  GError *error = NULL;
-  gint exit_status;
-
-  /* run script from pm-utils */
-  command = g_strdup_printf ("/usr/bin/pm-is-supported --%s", state);
-
-  ret = g_spawn_command_line_sync (command, NULL, NULL, &exit_status, &error);
-  if (!ret)
-    {
-      g_warning ("failed to run script: %s", error->message);
-      g_error_free (error);
-      goto out;
-    }
-  ret = (WIFEXITED(exit_status) && (WEXITSTATUS(exit_status) == EXIT_SUCCESS));
-
-out:
-  g_free (command);
-
-  return ret;
-}
-#endif /* BACKEND_TYPE_LINUX */
-
-
-
-static gboolean
-xfsm_shutdown_fallback_can_suspend (void)
-{
-#ifdef BACKEND_TYPE_FREEBSD
-  return freebsd_supports_sleep_state ("S3");
-#endif
-#ifdef BACKEND_TYPE_LINUX
-  return linux_supports_sleep_state ("suspend");
-#endif
-#ifdef BACKEND_TYPE_OPENBSD
-  return TRUE;
-#endif
-
-  return FALSE;
-}
-
-
-
-static gboolean
-xfsm_shutdown_fallback_can_hibernate (void)
-{
-#ifdef BACKEND_TYPE_FREEBSD
-  return freebsd_supports_sleep_state ("S4");
-#endif
-#ifdef BACKEND_TYPE_LINUX
-  return linux_supports_sleep_state ("hibernate");
-#endif
-#ifdef BACKEND_TYPE_OPENBSD
-  return TRUE;
-#endif
-
-  return FALSE;
-}
-
-
-
-static gboolean
-xfsm_shutdown_fallback_check_auth (const gchar *action_id)
-{
-  gboolean auth_result = FALSE;
-#ifdef HAVE_POLKIT
-  GDBusConnection *bus;
-  PolkitAuthority *polkit;
-  PolkitAuthorizationResult *polkit_result;
-  PolkitSubject *polkit_subject;
-
-  bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, NULL);
-  polkit = polkit_authority_get_sync (NULL, NULL);
-  if (polkit != NULL && bus != NULL)
-    {
-      polkit_subject = polkit_system_bus_name_new (g_dbus_connection_get_unique_name (bus));
-      polkit_result = polkit_authority_check_authorization_sync (polkit,
-                                                                 polkit_subject,
-                                                                 action_id,
-                                                                 NULL,
-                                                                 POLKIT_CHECK_AUTHORIZATION_FLAGS_NONE,
-                                                                 NULL,
-                                                                 NULL);
-      if (polkit_result != NULL)
-        {
-          auth_result = polkit_authorization_result_get_is_authorized (polkit_result);
-          g_object_unref (polkit_result);
-        }
-
-        g_object_unref (polkit);
-        g_object_unref (bus);
-      }
-#endif /* HAVE_POLKIT */
-
-  return auth_result;
-}
-
-
-
-static gboolean
-xfsm_shutdown_fallback_auth_shutdown (void)
-{
-  return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_SHUTDOWN_XFSM);
-}
-
-
-
-static gboolean
-xfsm_shutdown_fallback_auth_restart (void)
-{
-  return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_RESTART_XFSM);
-}
-
-
-
-static gboolean
-xfsm_shutdown_fallback_auth_suspend (void)
-{
-  return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_SUSPEND_XFSM);
-}
-
-
-
-static gboolean
-xfsm_shutdown_fallback_auth_hibernate (void)
-{
-  return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_HIBERNATE_XFSM);
 }

@@ -51,4 +51,21 @@ gboolean        xfsm_consolekit_can_shutdown (XfsmConsolekit  *consolekit,
                                               gboolean        *can_shutdown,
                                               GError         **error);
 
+gboolean        xfsm_consolekit_try_suspend  (XfsmConsolekit  *consolekit,
+                                              GError         **error);
+
+gboolean        xfsm_consolekit_try_hibernate(XfsmConsolekit  *consolekit,
+                                              GError         **error);
+
+gboolean        xfsm_consolekit_can_suspend  (XfsmConsolekit  *consolekit,
+                                              gboolean        *can_suspend,
+                                              gboolean        *auth_suspend,
+                                              GError         **error);
+
+gboolean        xfsm_consolekit_can_hibernate(XfsmConsolekit  *consolekit,
+                                              gboolean        *can_hibernate,
+                                              gboolean        *auth_hibernate,
+                                              GError         **error);
+
+
 #endif /* !__XFSM_CONSOLEKIT_HELPER_H__ */

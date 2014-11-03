@@ -1,0 +1,371 @@
+/*-
+ * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+ * Copyright (c) 2011      Nick Schermer <nick@xfce.org>
+ * Copyright (c) 2014      Xfce Development Team <xfce4-dev@xfce.org>
+ * All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301 USA.
+ *
+ * Parts of this file where taken from gnome-session/logout.c, which
+ * was written by Owen Taylor <otaylor@redhat.com>.
+ */
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#ifdef HAVE_SYS_TYPES_H
+#include <sys/types.h>
+#endif
+#ifdef HAVE_SYS_WAIT_H
+#include <sys/wait.h>
+#endif
+#ifdef HAVE_SYS_RESOURCE_H
+#include <sys/resource.h>
+#endif
+
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+#ifdef HAVE_SIGNAL_H
+#include <signal.h>
+#endif
+#ifdef HAVE_SYS_SYSCTL_H
+#include <sys/sysctl.h>
+#endif
+
+#include <dbus/dbus-glib.h>
+#include <dbus/dbus-glib-lowlevel.h>
+#include <libxfce4util/libxfce4util.h>
+#include <gtk/gtk.h>
+#ifdef HAVE_UPOWER
+#include <upower.h>
+#endif
+#ifdef HAVE_POLKIT
+#include <polkit/polkit.h>
+#endif
+
+#include <libxfsm/xfsm-util.h>
+#include <xfce4-session/xfsm-shutdown-fallback.h>
+
+
+
+#define POLKIT_AUTH_SHUTDOWN_XFSM  "org.xfce.session.xfsm-shutdown-helper"
+#define POLKIT_AUTH_RESTART_XFSM   "org.xfce.session.xfsm-shutdown-helper"
+#define POLKIT_AUTH_SUSPEND_XFSM   "org.xfce.session.xfsm-shutdown-helper"
+#define POLKIT_AUTH_HIBERNATE_XFSM "org.xfce.session.xfsm-shutdown-helper"
+
+
+
+
+#ifdef BACKEND_TYPE_FREEBSD
+static gchar *
+get_string_sysctl (GError **err, const gchar *format, ...)
+{
+        va_list args;
+        gchar *name;
+        size_t value_len;
+        gchar *str = NULL;
+
+        g_return_val_if_fail(format != NULL, FALSE);
+
+        va_start (args, format);
+        name = g_strdup_vprintf (format, args);
+        va_end (args);
+
+        if (sysctlbyname (name, NULL, &value_len, NULL, 0) == 0) {
+                str = g_new (char, value_len + 1);
+                if (sysctlbyname (name, str, &value_len, NULL, 0) == 0)
+                        str[value_len] = 0;
+                else {
+                        g_free (str);
+                        str = NULL;
+                }
+        }
+
+        if (!str)
+                g_set_error (err, 0, 0, "%s", g_strerror(errno));
+
+        g_free(name);
+        return str;
+}
+
+
+
+static gboolean
+freebsd_supports_sleep_state (const gchar *state)
+{
+  gboolean ret = FALSE;
+  gchar *sleep_states;
+
+  sleep_states = get_string_sysctl (NULL, "hw.acpi.supported_sleep_state");
+  if (sleep_states != NULL)
+    {
+      if (strstr (sleep_states, state) != NULL)
+          ret = TRUE;
+    }
+
+  g_free (sleep_states);
+
+  return ret;
+}
+#endif /* BACKEND_TYPE_FREEBSD */
+
+
+
+#ifdef BACKEND_TYPE_LINUX
+static gboolean
+linux_supports_sleep_state (const gchar *state)
+{
+  gboolean ret = FALSE;
+  gchar *command;
+  GError *error = NULL;
+  gint exit_status;
+
+  /* run script from pm-utils */
+  command = g_strdup_printf ("/usr/bin/pm-is-supported --%s", state);
+
+  ret = g_spawn_command_line_sync (command, NULL, NULL, &exit_status, &error);
+  if (!ret)
+    {
+      g_warning ("failed to run script: %s", error->message);
+      g_error_free (error);
+      goto out;
+    }
+  ret = (WIFEXITED(exit_status) && (WEXITSTATUS(exit_status) == EXIT_SUCCESS));
+
+out:
+  g_free (command);
+
+  return ret;
+}
+#endif /* BACKEND_TYPE_LINUX */
+
+
+
+static gboolean
+xfsm_shutdown_fallback_check_auth (const gchar *action_id)
+{
+  gboolean auth_result = FALSE;
+#ifdef HAVE_POLKIT
+  GDBusConnection *bus;
+  PolkitAuthority *polkit;
+  PolkitAuthorizationResult *polkit_result;
+  PolkitSubject *polkit_subject;
+
+  bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, NULL);
+  polkit = polkit_authority_get_sync (NULL, NULL);
+  if (polkit != NULL && bus != NULL)
+    {
+      polkit_subject = polkit_system_bus_name_new (g_dbus_connection_get_unique_name (bus));
+      polkit_result = polkit_authority_check_authorization_sync (polkit,
+                                                                 polkit_subject,
+                                                                 action_id,
+                                                                 NULL,
+                                                                 POLKIT_CHECK_AUTHORIZATION_FLAGS_NONE,
+                                                                 NULL,
+                                                                 NULL);
+      if (polkit_result != NULL)
+        {
+          auth_result = polkit_authorization_result_get_is_authorized (polkit_result);
+          g_object_unref (polkit_result);
+        }
+
+        g_object_unref (polkit);
+        g_object_unref (bus);
+      }
+#endif /* HAVE_POLKIT */
+
+  return auth_result;
+}
+
+
+
+static gboolean
+lock_screen (GError **error)
+{
+  XfconfChannel *channel;
+  gboolean       ret = TRUE;
+
+  channel = xfsm_open_config ();
+  if (xfconf_channel_get_bool (channel, "/shutdown/LockScreen", FALSE))
+      ret = g_spawn_command_line_async ("xflock4", error);
+
+  if (ret)
+    {
+      /* sleep 2 seconds so locking has time to startup */
+      g_usleep (G_USEC_PER_SEC * 2);
+    }
+
+  return ret;
+}
+
+
+
+/**
+ * xfsm_shutdown_fallback_try_action:
+ * @type:  The @XfsmShutdownType action to perform (shutdown, suspend, etc).
+ * @error: Returns a @GError if an error was encountered.
+ *
+ * Performs the @XfsmShutdownType action requested.
+ *
+ * Return value: Returns FALSE if an invalid @XfsmShutdownType action was
+ *               requested. Otherwise returns the status of the pkexec
+ *               call to the helper command.
+ **/
+gboolean
+xfsm_shutdown_fallback_try_action (XfsmShutdownType   type,
+                                   GError           **error)
+{
+  const gchar *action;
+  gboolean ret;
+  gint exit_status = 0;
+  gchar *command = NULL;
+
+  if (type == XFSM_SHUTDOWN_SHUTDOWN)
+    action = "shutdown";
+  if (type == XFSM_SHUTDOWN_RESTART)
+    action = "restart";
+  else if (type == XFSM_SHUTDOWN_SUSPEND)
+    {
+      action = "suspend";
+      /* On suspend we try to lock the screen */
+      if (!lock_screen (error))
+        return FALSE;
+    }
+  else if (type == XFSM_SHUTDOWN_HIBERNATE)
+    {
+      action = "hibernate";
+      /* On hibernate we try to lock the screen */
+      if (!lock_screen (error))
+        return FALSE;
+    }
+  else
+      return FALSE;
+
+  command = g_strdup_printf ("pkexec " XFSM_SHUTDOWN_HELPER_CMD " --%s", action);
+  ret = g_spawn_command_line_sync (command, NULL, NULL, &exit_status, error);
+
+  g_free (command);
+  return ret;
+}
+
+
+
+/**
+ * xfsm_shutdown_fallback_can_suspend:
+ *
+ * Return value: Returns whether the *system* is capable suspending.
+ **/
+gboolean
+xfsm_shutdown_fallback_can_suspend (void)
+{
+#ifdef BACKEND_TYPE_FREEBSD
+  return freebsd_supports_sleep_state ("S3");
+#endif
+#ifdef BACKEND_TYPE_LINUX
+  return linux_supports_sleep_state ("suspend");
+#endif
+#ifdef BACKEND_TYPE_OPENBSD
+  return TRUE;
+#endif
+
+  return FALSE;
+}
+
+
+
+/**
+ * xfsm_shutdown_fallback_can_hibernate:
+ *
+ * Return value: Returns whether the *system* is capable hibernating.
+ **/
+gboolean
+xfsm_shutdown_fallback_can_hibernate (void)
+{
+#ifdef BACKEND_TYPE_FREEBSD
+  return freebsd_supports_sleep_state ("S4");
+#endif
+#ifdef BACKEND_TYPE_LINUX
+  return linux_supports_sleep_state ("hibernate");
+#endif
+#ifdef BACKEND_TYPE_OPENBSD
+  return TRUE;
+#endif
+
+  return FALSE;
+}
+
+
+
+/**
+ * xfsm_shutdown_fallback_auth_shutdown:
+ *
+ * Return value: Returns whether the user is authorized to perform a shutdown.
+ **/
+gboolean
+xfsm_shutdown_fallback_auth_shutdown (void)
+{
+  return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_SHUTDOWN_XFSM);
+}
+
+
+
+/**
+ * xfsm_shutdown_fallback_auth_restart:
+ *
+ * Return value: Returns whether the user is authorized to perform a restart.
+ **/
+gboolean
+xfsm_shutdown_fallback_auth_restart (void)
+{
+  return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_RESTART_XFSM);
+}
+
+
+
+/**
+ * xfsm_shutdown_fallback_auth_suspend:
+ *
+ * Return value: Returns whether the user is authorized to perform a suspend.
+ **/
+gboolean
+xfsm_shutdown_fallback_auth_suspend (void)
+{
+  return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_SUSPEND_XFSM);
+}
+
+
+
+/**
+ * xfsm_shutdown_fallback_auth_hibernate:
+ *
+ * Return value: Returns whether the user is authorized to perform a hibernate.
+ **/
+gboolean
+xfsm_shutdown_fallback_auth_hibernate (void)
+{
+  return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_HIBERNATE_XFSM);
+}
