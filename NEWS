@@ -1,3 +1,32 @@
+4.11.1
+======
+- Add DesktopNames to .desktop file
+- Export XDG_CURRENT_DESKTOP (Bug #11239)
+- Expand usage of xfsm_verbose for debugging
+- Don't log errors when trying to close non-existent FDs
+- Add error checking for fcntl
+- Properly print the dbus error message
+- Check the return value of select
+- atoi (argv[2]) is unsafe
+- Check the return value of gtk_tree_selection_get_selected
+- gtk_cell_renderer_text_new is never used
+- Minor Autotools Updates
+- Add fallback DragonflyBSD support for suspend/hibernate
+- Use pkexec for xfsm-shutdown (Bug 9952)
+- Handle gpg and ssh agents separately
+  Patch by Mikhail Efremov
+- Non-POSIX compliant test used in startxfce4 (Bug 10828)
+  Patch by seejay
+- Update copyright year (Bug 10768)
+- polkit_unix_process_new is deprecated (Bug 10793)
+  Patch by Baurzhan Muftakhidinov
+- Add logind runtime detection to support suspend/hibernate (Bug 9952)
+  Patch by Guido Berhoerster
+- Translation Updates: Asturian (ast), Bulgarian (bg),
+  German (de), Spanish (Castilian) (es), Finnish (fi),
+  French (fr), Norwegian Bokmål (nb), Dutch (Flemish) (nl),
+  Polish (pl), Swedish (sv), Phan Vĩnh Thịnh (vi).
+
 4.11.0
 ======
 - Remove gnome-keyring remains.
