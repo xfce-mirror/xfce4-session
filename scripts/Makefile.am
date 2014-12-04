@@ -14,9 +14,9 @@ startxfce4: Makefile $(srcdir)/startxfce4.in
 	$(edit) $(srcdir)/startxfce4.in >startxfce4.tmp
 	mv startxfce4.tmp startxfce4
 
-xinitrc: Makefile $(srcdir)/xinitrc.in
+xinitrc: Makefile xinitrc.in
 	rm -f xinitrc xinitrc.tmp
-	$(edit) $(srcdir)/xinitrc.in >xinitrc.tmp
+	$(edit) xinitrc.in >xinitrc.tmp
 	mv xinitrc.tmp xinitrc
 
 conffilesdir=@sysconfdir@/xdg/xfce4
