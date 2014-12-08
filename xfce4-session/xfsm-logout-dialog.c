@@ -588,6 +588,14 @@ xfsm_logout_dialog_screenshot_save (GdkPixbuf   *screenshot,
       g_free (display_name);
       g_free (path);
 
+      if (!filename)
+        {
+          g_warning ("Unable to save screenshot, "
+                     "error calling xfce_resource_save_location with %s, "
+                     "check your permissions", path);
+          return;
+        }
+
       if (!gdk_pixbuf_save (scaled, filename, "png", &error, NULL))
         {
           g_warning ("Failed to save session screenshot: %s", error->message);
