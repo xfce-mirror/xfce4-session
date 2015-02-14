@@ -6,6 +6,11 @@ icons_DATA = 								\
 	system-log-out.png							\
 	system-reboot.png							\
 	system-shutdown.png						\
-	system-suspend.png
+	system-suspend.png						\
+	xfsm-hibernate.png						\
+	xfsm-logout.png							\
+	xfsm-reboot.png							\
+	xfsm-shutdown.png						\
+	xfsm-suspend.png
 
 EXTRA_DIST = $(icons_DATA)
