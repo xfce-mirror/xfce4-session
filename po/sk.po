@@ -6,16 +6,17 @@
 # Juraj Brosz <juro@jurajbrosz.info>, 2004
 # Robert Hartl <hartl.robert@gmail.com>, 2009-2010
 # Roman Moravčík <roman.moravcik@gmail.com>, 2006
+# Slavko <linux@slavino.sk>, 2015
 # Stefan Miklosovic <miklosovic@gmail.com>, 2008
-# Tomáš Vadina <tomasvadina+transifex@myopera.com>, 2011-2012
+# Tomáš Vadina <tomasvadina+transifex@cryptolab.net>, 2011-2012
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-02 22:44+0200\n"
-"PO-Revision-Date: 2013-11-19 13:02+0000\n"
-"Last-Translator: Nick <nick@xfce.org>\n"
-"Language-Team: Slovak (http://www.transifex.com/projects/p/xfce/language/sk/)\n"
+"POT-Creation-Date: 2014-08-28 18:30+0200\n"
+"PO-Revision-Date: 2015-02-26 09:43+0000\n"
+"Last-Translator: Slavko <linux@slavino.sk>\n"
+"Language-Team: Slovak (http://www.transifex.com/projects/p/xfce4-session/language/sk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -190,7 +191,7 @@ msgstr "Nedá sa vytvoriť používateľské prostredie z vložených údajov de
 
 #: ../settings/main.c:128
 msgid "App_lication Autostart"
-msgstr ""
+msgstr "Autosputenie ap_likácie"
 
 #: ../settings/session-editor.c:61
 msgid "If running"
@@ -525,7 +526,7 @@ msgstr "Správca sedenia musí byť pri žiadosti o checkpoint v nečinnom stave
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Správca sedení musí byť pri žiadosti o vypnutie v nečinnom stave."
 
-#: ../xfce4-session/xfsm-logout-dialog.c:188
+#: ../xfce4-session/xfsm-logout-dialog.c:182
 #, c-format
 msgid "Log out %s"
 msgstr "Odhlásiť používateľa %s"
@@ -533,43 +534,33 @@ msgstr "Odhlásiť používateľa %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:246
+#: ../xfce4-session/xfsm-logout-dialog.c:224
 msgid "_Log Out"
 msgstr "_Odhlásiť"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:266
+#: ../xfce4-session/xfsm-logout-dialog.c:244
 msgid "_Restart"
 msgstr "_Reštartovať"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:286
+#: ../xfce4-session/xfsm-logout-dialog.c:264
 msgid "Shut _Down"
 msgstr "_Vypnúť"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:309
+#: ../xfce4-session/xfsm-logout-dialog.c:287
 msgid "Sus_pend"
 msgstr "Režim _spánku"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:343
+#: ../xfce4-session/xfsm-logout-dialog.c:321
 msgid "_Hibernate"
 msgstr "_Hibernácia"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:368
+#: ../xfce4-session/xfsm-logout-dialog.c:346
 msgid "_Save session for future logins"
 msgstr "_Uložiť sedenie pre budúce prihlásenie"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:395
-msgid "Please enter your password"
-msgstr "Prosím zadajte vaše heslo"
-
-#: ../xfce4-session/xfsm-logout-dialog.c:427
+#: ../xfce4-session/xfsm-logout-dialog.c:374
 msgid "An error occurred"
 msgstr "Nastala chyba"
-
-#: ../xfce4-session/xfsm-logout-dialog.c:433
-msgid ""
-"Either the password you entered is invalid, or the system administrator "
-"disallows shutting down this computer with your user account."
-msgstr "Heslo ktoré ste zadali nie je správne, alebo systémový administrátor zablokoval vypnutie tohoto počítača z tohoto užívateľského konta."
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -583,88 +574,88 @@ msgstr "Vyberte si názov sedenia"
 msgid "Choose a name for the new session:"
 msgstr "Zvoľte si názov nového sedenia:"
 
-#: ../xfce4-session/xfsm-startup.c:347
+#: ../xfce4-session/xfsm-startup.c:397
 msgid "Starting the Volume Controller"
 msgstr "Spúšťa sa Ovládač hlasitosti"
 
-#: ../xfce4-session/xfsm-startup.c:349
+#: ../xfce4-session/xfsm-startup.c:399
 msgid "Starting the Panel"
 msgstr "Spúšťa sa Panel"
 
-#: ../xfce4-session/xfsm-startup.c:351
+#: ../xfce4-session/xfsm-startup.c:401
 msgid "Starting the Desktop Manager"
 msgstr "Spúšťa sa Správca plochy"
 
-#: ../xfce4-session/xfsm-startup.c:353
+#: ../xfce4-session/xfsm-startup.c:403
 msgid "Starting the Taskbar"
 msgstr "Spúšťa sa Panel úloh"
 
-#: ../xfce4-session/xfsm-startup.c:355
+#: ../xfce4-session/xfsm-startup.c:405
 msgid "Starting the Window Manager"
 msgstr "Spúšťa sa Správca okien"
 
-#: ../xfce4-session/xfsm-startup.c:359
+#: ../xfce4-session/xfsm-startup.c:409
 msgid "Starting the Gnome Terminal Emulator"
 msgstr "Spúšťa sa Emulátor Gnome Terminálu"
 
-#: ../xfce4-session/xfsm-startup.c:363
+#: ../xfce4-session/xfsm-startup.c:413
 msgid "Starting the KDE Advanced Text Editor"
 msgstr "Spúšťa sa KDE Advanced Text Editor"
 
-#: ../xfce4-session/xfsm-startup.c:365
+#: ../xfce4-session/xfsm-startup.c:415
 msgid "Starting the KDE Clipboard Manager"
 msgstr "Spúšťa sa KDE Clipboard Manager"
 
-#: ../xfce4-session/xfsm-startup.c:367
+#: ../xfce4-session/xfsm-startup.c:417
 msgid "Starting the KDE Mail Reader"
 msgstr "Spúšťa sa KDE Mail Reader"
 
-#: ../xfce4-session/xfsm-startup.c:369
+#: ../xfce4-session/xfsm-startup.c:419
 msgid "Starting the KDE News Reader"
 msgstr "Spúšťa sa KDE News Reader"
 
-#: ../xfce4-session/xfsm-startup.c:371
+#: ../xfce4-session/xfsm-startup.c:421
 msgid "Starting the Konqueror"
 msgstr "Spúšťa sa Konqueror"
 
-#: ../xfce4-session/xfsm-startup.c:373
+#: ../xfce4-session/xfsm-startup.c:423
 msgid "Starting the KDE Terminal Emulator"
 msgstr "Spúšťa sa KDE Terminal Emulator"
 
-#: ../xfce4-session/xfsm-startup.c:377
+#: ../xfce4-session/xfsm-startup.c:427
 msgid "Starting the Beep Media Player"
 msgstr "Spúšťa sa Beep Media Player"
 
-#: ../xfce4-session/xfsm-startup.c:379
+#: ../xfce4-session/xfsm-startup.c:429
 msgid "Starting The Gimp"
 msgstr "Spúšťa sa Gimp"
 
-#: ../xfce4-session/xfsm-startup.c:381
+#: ../xfce4-session/xfsm-startup.c:431
 msgid "Starting the VI Improved Editor"
 msgstr "Spúšťa sa VI Improved Editor"
 
-#: ../xfce4-session/xfsm-startup.c:383
+#: ../xfce4-session/xfsm-startup.c:433
 msgid "Starting the Session Management Proxy"
 msgstr "Spúšťa sa Session Management Proxy"
 
-#: ../xfce4-session/xfsm-startup.c:385
+#: ../xfce4-session/xfsm-startup.c:435
 msgid "Starting the X-Chat IRC Client"
 msgstr "Spúšťa sa X-Chat IRC Client"
 
-#: ../xfce4-session/xfsm-startup.c:387
+#: ../xfce4-session/xfsm-startup.c:437
 msgid "Starting the X Multimedia System"
 msgstr "Spúšťa sa X Multimedia System"
 
-#: ../xfce4-session/xfsm-startup.c:389
+#: ../xfce4-session/xfsm-startup.c:439
 msgid "Starting the X Terminal Emulator"
 msgstr "Spúšťa sa X Terminal Emulator"
 
-#: ../xfce4-session/xfsm-startup.c:391
+#: ../xfce4-session/xfsm-startup.c:441
 #, c-format
 msgid "Starting %s"
 msgstr "Spúšťa sa %s"
 
-#: ../xfce4-session/xfsm-startup.c:515
+#: ../xfce4-session/xfsm-startup.c:565
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -679,34 +670,19 @@ msgid ""
 "You should delete this directory now.\n"
 msgstr "Umiestnenie a formát adresára automaticky spúšťaných aplikácií je zmenený.\nNové umiestnenie je\n\n  %s\n\nkde môžete umiestniť .desktop súbory aplikácií, ktoré majú byť\nautomaticky spúšťané pri prihlásení do Xfce. Súbory v starom\nadresári automaticky spúšťaných aplikácií boli úspešne konvertované\ndo nového umiestnenia.\nStarý adresár teraz môžete vymazať.\n"
 
-#: ../xfce4-session/xfsm-startup.c:684
+#: ../xfce4-session/xfsm-startup.c:734
 msgid "Performing Autostart..."
 msgstr "Prebieha automatické spustenie..."
 
-#: ../xfce4-session/xfsm-startup.c:790
+#: ../xfce4-session/xfsm-startup.c:840
 msgid "Starting Assistive Technologies"
 msgstr "Spúšťajú sa pomocné technológie"
 
-#: ../xfce4-session/xfsm-shutdown.c:429
-#, c-format
-msgid "Error sending command to shutdown helper: %s"
-msgstr "Chyba pri odosielaní príkazu pre pomocníka pre vypnutie: %s"
-
-#: ../xfce4-session/xfsm-shutdown.c:442
-#, c-format
-msgid "Error receiving response from shutdown helper: %s"
-msgstr "Chyba pri prijímaní odpovede od pomocníka pre vypnutie: %s"
-
-#: ../xfce4-session/xfsm-shutdown.c:450
-#, c-format
-msgid "Shutdown command failed"
-msgstr "Vypnutie sa nepodarilo"
-
-#: ../xfce4-session/xfsm-shutdown.c:555
+#: ../xfce4-session/xfsm-shutdown.c:182
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Vypnutie je zablokované nastavením režimu kiosk"
 
-#: ../xfce4-session/xfsm-shutdown.c:638
+#: ../xfce4-session/xfsm-shutdown.c:233
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Neznáma metóda vypnutia %d"
@@ -797,7 +773,7 @@ msgstr "<b>Výber sedenia</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:8
 msgid "Automatically save session on logo_ut"
-msgstr ""
+msgstr "Automaticky _uložiť sedenie pri odhlásení"
 
 #: ../settings/xfce4-session-settings.glade.h:9
 msgid "Always save the session when logging out"
@@ -805,7 +781,7 @@ msgstr "Vždy uloží sedenie pri odhlásení"
 
 #: ../settings/xfce4-session-settings.glade.h:10
 msgid "Pro_mpt on logout"
-msgstr ""
+msgstr "Potvrdiť od_hlásenie"
 
 #: ../settings/xfce4-session-settings.glade.h:11
 msgid "Prompt for confirmation when logging out"
@@ -872,7 +848,7 @@ msgstr "Tieto aplikácie sú súčasťou práve bežiaceho sedenia a môžu byť
 
 #: ../settings/xfce4-session-settings.glade.h:26
 msgid "Save Sess_ion"
-msgstr ""
+msgstr "Uložiť seden_ie"
 
 #: ../settings/xfce4-session-settings.glade.h:27
 msgid "Empty the session cache"
@@ -880,7 +856,7 @@ msgstr "Vyprázdniť vyrovnávaciu pamäť sedenia"
 
 #: ../settings/xfce4-session-settings.glade.h:28
 msgid "Clear save_d sessions"
-msgstr ""
+msgstr "Vymazať uložené se_denia"
 
 #: ../settings/xfce4-session-settings.glade.h:29
 msgid "Quit the program, and remove it from the session"
@@ -888,7 +864,7 @@ msgstr "Ukončí program a odoberie ho z relácie"
 
 #: ../settings/xfce4-session-settings.glade.h:31
 msgid "Sessio_n"
-msgstr ""
+msgstr "Sede_nie"
 
 #: ../settings/xfce4-session-settings.glade.h:32
 msgid "Launch GN_OME services on startup"
@@ -925,7 +901,7 @@ msgstr "<b>Bezpečnosť</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:40
 msgid "Lock screen be_fore sleep"
-msgstr ""
+msgstr "_Zamknúť obrazovku pred uspaním"
 
 #: ../settings/xfce4-session-settings.glade.h:41
 msgid "Run xflock4 before suspending or hibernating the system"
