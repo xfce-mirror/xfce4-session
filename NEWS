@@ -1,3 +1,24 @@
+4.12.0
+======
+Stable release of xfce4-session for Xfce 4.12.
+
+* Miscellaneous bug fixes:
+- Remove AC_CHECK_HEADER_STDBOOL, it was only
+  added in autoconf 2.69 and we dont use
+  stdbool.h anyway
+- Add symlinks to the old icons (Bug #11513)
+- Rename action icon names (Bug #11513)
+- Gracefully handle the sessions dir being
+  readonly (Bug #11307)
+- Add ConsoleKit2 support
+- Create scripts/xinitrc from scripts/xinitrc.in
+  created by configure
+
+* Translation updates:
+  Asturian (ast), Bulgarian (bg), Spanish (Castilian) (es),
+  Finnish (fi), French (fr), Hebrew (he), Romanian (ro),
+  Slovak (sk), Slovenian (sl).
+
 4.11.1
 ======
 - Add DesktopNames to .desktop file
