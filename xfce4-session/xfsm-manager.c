@@ -1652,8 +1652,6 @@ xfsm_manager_store_session (XfsmManager *manager)
   GdkDisplay    *display;
   WnckScreen    *screen;
   XfceRc        *rc;
-  GFile         *session_file;
-  GFileInfo     *info;
   GList         *lp;
   gchar          prefix[64];
   gchar         *backup;
@@ -1670,32 +1668,6 @@ xfsm_manager_store_session (XfsmManager *manager)
                "writing. Session data will not be stored. Please check "
                "your installation.\n",
                manager->session_file);
-      return;
-    }
-
-  session_file = g_file_new_for_path (manager->session_file);
-
-  /* query the file, we need to make sure we can write to it */
-  info = g_file_query_info (session_file,
-                            G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE,
-                            G_FILE_QUERY_INFO_NONE,
-                            NULL,
-                            NULL);
-
-  /* if we're unable to query the file attributes or write to the file,
-   * log the failure and return */
-  if (!info || !g_file_info_get_attribute_boolean (info, G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE))
-    {
-      fprintf (stderr,
-               "xfce4-session: Unable to save changes to the session file %s"
-               "Please check your installation.\n", manager->session_file);
-
-      if (info)
-        g_object_unref (info);
-
-      xfce_rc_close (rc);
-      g_object_unref (session_file);
-
       return;
     }
 
@@ -1771,8 +1743,6 @@ xfsm_manager_store_session (XfsmManager *manager)
   xfce_rc_write_int_entry (rc, "LastAccess", time (NULL));
 
   xfce_rc_close (rc);
-
-  g_object_unref (session_file);
 
   g_free (manager->checkpoint_session_name);
   manager->checkpoint_session_name = NULL;
