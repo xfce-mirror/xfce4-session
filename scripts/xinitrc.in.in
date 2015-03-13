@@ -82,7 +82,7 @@ test -r "$BASEDIR/Xcursor.xrdb" && XRESOURCES="$XRESOURCES $BASEDIR/Xcursor.xrdb
 test -r "$HOME/.Xresources" && XRESOURCES="$XRESOURCES $HOME/.Xresources"
 
 # load all X resources (adds /dev/null to avoid an empty list that would hang the process)
-cat /dev/null $XRESOURCES | xrdb -nocpp -merge -
+cat /dev/null $XRESOURCES | xrdb -merge -
 
 # load local modmap
 test -r $HOME/.Xmodmap && xmodmap $HOME/.Xmodmap
