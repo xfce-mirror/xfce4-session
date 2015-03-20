@@ -244,26 +244,29 @@ xfsm_shutdown_fallback_try_action (XfsmShutdownType   type,
   gint exit_status = 0;
   gchar *command = NULL;
 
-  if (type == XFSM_SHUTDOWN_SHUTDOWN)
-    action = "shutdown";
-  if (type == XFSM_SHUTDOWN_RESTART)
-    action = "restart";
-  else if (type == XFSM_SHUTDOWN_SUSPEND)
-    {
+  switch (type)
+  {
+    case XFSM_SHUTDOWN_SHUTDOWN:
+      action = "shutdown";
+      break;
+    case XFSM_SHUTDOWN_RESTART:
+      action = "restart";
+      break;
+    case XFSM_SHUTDOWN_SUSPEND:
       action = "suspend";
       /* On suspend we try to lock the screen */
       if (!lock_screen (error))
         return FALSE;
-    }
-  else if (type == XFSM_SHUTDOWN_HIBERNATE)
-    {
+      break;
+    case XFSM_SHUTDOWN_HIBERNATE:
       action = "hibernate";
       /* On hibernate we try to lock the screen */
       if (!lock_screen (error))
         return FALSE;
-    }
-  else
+      break;
+    default:
       return FALSE;
+  }
 
   command = g_strdup_printf ("pkexec " XFSM_SHUTDOWN_HELPER_CMD " --%s", action);
   ret = g_spawn_command_line_sync (command, NULL, NULL, &exit_status, error);
