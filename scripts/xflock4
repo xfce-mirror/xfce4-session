@@ -24,8 +24,12 @@
 PATH=/bin:/usr/bin
 export PATH
 
+# First test for the command set in the session's xfconf channel
+LOCK_CMD=$(xfconf-query -c xfce4-session -p /general/LockCommand)
+
 # Lock by xscreensaver or gnome-screensaver, if a respective daemon is running
 for lock_cmd in \
+    "$LOCK_CMD" \
     "xscreensaver-command -lock" \
     "gnome-screensaver-command --lock"
 do
