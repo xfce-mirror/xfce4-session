@@ -33,7 +33,9 @@ for lock_cmd in \
     "xscreensaver-command -lock" \
     "gnome-screensaver-command --lock"
 do
-    $lock_cmd >/dev/null 2>&1 && exit
+    if [ ! -z "$lock_cmd" ]; then
+        $lock_cmd >/dev/null 2>&1 && exit
+    fi
 done
 
 # else run another access locking utility, if installed
