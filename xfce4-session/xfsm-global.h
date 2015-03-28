@@ -49,7 +49,10 @@ extern XfsmSplashScreen *splash_screen;
 #if defined(G_HAVE_ISO_VARARGS)
 
 #define xfsm_verbose(...)\
-    xfsm_verbose_real (__func__, __FILE__, __LINE__, __VA_ARGS__)
+G_STMT_START{ \
+  if (G_UNLIKELY (verbose)) \
+    xfsm_verbose_real (__func__, __FILE__, __LINE__, __VA_ARGS__); \
+}G_STMT_END
 
 #else
 
