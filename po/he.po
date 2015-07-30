@@ -4,6 +4,7 @@
 # 
 # Translators:
 # Dotan Kamber <kamberd@yahoo.com>, 2004,2006
+# GenghisKhan <genghiskhan@gmx.ca>, 2015
 # Jonatan Perry <Jonatan443@walla.co.il>, 2004
 # Yuval Tanny <tanai@int.gov.il>, 2004,2006
 msgid ""
@@ -11,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-28 18:30+0200\n"
-"PO-Revision-Date: 2015-02-26 16:05+0000\n"
+"PO-Revision-Date: 2015-07-30 12:55+0000\n"
 "Last-Translator: GenghisKhan <genghiskhan@gmx.ca>\n"
 "Language-Team: Hebrew (http://www.transifex.com/projects/p/xfce4-session/language/he/)\n"
 "MIME-Version: 1.0\n"
@@ -239,7 +240,7 @@ msgstr "ייתכן כי יהיה עליך למחוק ידנית קבצים מס�
 
 #: ../settings/session-editor.c:215
 msgid "All Xfce cache files could not be cleared"
-msgstr ""
+msgstr "לא היתה אפשרות לטהר את כל קבצי מטמון Xfce"
 
 #: ../settings/session-editor.c:249
 #, c-format
@@ -248,18 +249,18 @@ msgstr "האם אתה בטוח כי ברצונך לסיים את \"%s\"?"
 
 #: ../settings/session-editor.c:252 ../settings/session-editor.c:280
 msgid "Terminate Program"
-msgstr "תוכנית מסוף"
+msgstr "סיים תוכנית"
 
 #: ../settings/session-editor.c:254
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
-msgstr ""
+msgstr "היישום יאבד כל מצב לא שמור ויפעל מחדש בסשן הבא שלך."
 
 #: ../settings/session-editor.c:256
 #: ../settings/xfce4-session-settings.glade.h:30
 msgid "_Quit Program"
-msgstr "_צא מתוך תוכנית"
+msgstr "_צא מתוכנית"
 
 #: ../settings/session-editor.c:281
 msgid "Unable to terminate program."
@@ -361,7 +362,7 @@ msgstr "נכשל להסיר פריט"
 msgid ""
 "This will permanently remove the application from the list of automatically "
 "started applications"
-msgstr ""
+msgstr "זו תסיר לצמיתות את היישום מתוך הרשימה של יישומים מופעלים אוטומטית"
 
 #: ../settings/xfae-window.c:332
 #, c-format
@@ -379,15 +380,15 @@ msgstr "נכשל לערוך פריט \"%s\""
 
 #: ../settings/xfae-window.c:414
 msgid "Failed to toggle item"
-msgstr ""
+msgstr "נכשל להחליף פריט"
 
 #: ../xfce4-session/main.c:76
 msgid "Disable binding to TCP ports"
-msgstr ""
+msgstr "Disable binding to TCP ports"
 
 #: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:91
 msgid "Print version information and exit"
-msgstr ""
+msgstr "Print version information and exit"
 
 #: ../xfce4-session/main.c:140
 msgid "Loading desktop settings"
@@ -411,7 +412,7 @@ msgstr "נקרא לאחרונה: %s"
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
-msgstr "בחר את הסשן אשר ברצונך לשחזר. אתה יכול ללחוץ לחיצה כפולה על שם הסשן כדי לשחזר אותה."
+msgstr "בחר את הסשן אשר ברצונך לשחזר. אתה יכול ללחוץ לחיצה כפולה על שם סשן כדי לשחזר אותו."
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:198
@@ -435,7 +436,7 @@ msgstr "צור סשן חדש."
 #: ../xfce4-session/xfsm-client.c:571
 #, c-format
 msgid "The client doesn't have any properties set yet"
-msgstr ""
+msgstr "ללקוח עדיין אין מאפיינים מוגדרים"
 
 #: ../xfce4-session/xfsm-compat-gnome.c:247
 msgid "Starting The Gnome Keyring Daemon"
@@ -456,7 +457,7 @@ msgid ""
 "This will prevent Xfce from operating correctly.\n"
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
-msgstr " אין אפשרות לבדוק כתובת אינטרנט בשביל %s.\nזה ימנע מXfce לפעול בצורה נכונה.\nאולי אפשר לתקן את הבעיה ע\"י הוספה\n%s לקובץ /etc/hosts במערכת שלך."
+msgstr " אין אפשרות לבדוק כתובת אינטרנט בשביל %s.\nזה ימנע מXfce לפעול בצורה נכונה.\nאולי אפשר לתקן את הבעיה ע\"י הוספה\n%s לקובץ etc/hosts/ במערכת שלך."
 
 #: ../xfce4-session/xfsm-dns.c:154
 msgid "Continue anyway"
@@ -473,7 +474,7 @@ msgid ""
 "running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
 "incorrectly (must include \"%s\"), or xfce4-session is installed "
 "incorrectly."
-msgstr ""
+msgstr "לא מסוגל לקבוע שם סשן failsafe.  גורמים אפשריים: xfconfd אינו מורץ (בעיית הבניית D-Bus); משתנה סביבה XDG_CONFIG_DIRS$ מוגדר באופן שגוי (חייב להכיל \"%s\"), או xfce4-session אינו מותקן כראוי."
 
 #: ../xfce4-session/xfsm-manager.c:622
 #, c-format
@@ -511,17 +512,17 @@ msgstr "נכשל להרדים סשן"
 #: ../xfce4-session/xfsm-manager.c:1405
 #, c-format
 msgid "Can only terminate clients when in the idle state"
-msgstr ""
+msgstr "יכול לסיים לקוחות רק כאשר במצב עצל"
 
 #: ../xfce4-session/xfsm-manager.c:1969
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
-msgstr ""
+msgstr "על מנהל סשן להיות במצב עצל כאשר מבקשים נקודת ביקורת"
 
 #: ../xfce4-session/xfsm-manager.c:2010
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
-msgstr ""
+msgstr "על מנהל סשן להיות במצב עצל כאשר מבקשים כיבוי"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:182
 #, c-format
@@ -814,7 +815,7 @@ msgstr "<b>תיאור:</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:19
 msgid "<b>Version:</b>"
-msgstr "<b>גרסה:</b>"
+msgstr "<b>גרסא:</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:20
 msgid "<b>Author:</b>"
@@ -822,7 +823,7 @@ msgstr "<b>מחבר:</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:21
 msgid "<b>Homepage:</b>"
-msgstr "<b>דף בית:</b>"
+msgstr "<b>עמוד בית:</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:22
 msgid "label"
@@ -841,11 +842,11 @@ msgid ""
 "These applications are a part of the currently-running session, and can be "
 "saved when you log out.  Changes below will only take effect when the "
 "session is saved."
-msgstr "יישומים אלה הינם חלק מהסשן אשר מורץ כעת, ואפשר לשמור אותם כאשר אנחנו מתנתקים.  שינויים מטה יקבלו תוקף רק כאשר הסשן נשמר."
+msgstr "יישומים אלה הינם חלק מהסשן אשר מורץ כעת, ואפשר לשמור אותם כאשר אנחנו מתנתקים.  שינויים להלן יקבלו תוקף רק כאשר הסשן נשמר."
 
 #: ../settings/xfce4-session-settings.glade.h:26
 msgid "Save Sess_ion"
-msgstr "שמור הפע_לה"
+msgstr "_שמור סשן"
 
 #: ../settings/xfce4-session-settings.glade.h:27
 msgid "Empty the session cache"
@@ -853,7 +854,7 @@ msgstr "רוקן מטמון סשן"
 
 #: ../settings/xfce4-session-settings.glade.h:28
 msgid "Clear save_d sessions"
-msgstr "_טהר סשנים שמורות"
+msgstr "_טהר סשנים שמורים"
 
 #: ../settings/xfce4-session-settings.glade.h:29
 msgid "Quit the program, and remove it from the session"
@@ -861,7 +862,7 @@ msgstr "צא מתוך התוכנית, והסר אותה מתוך הסשן"
 
 #: ../settings/xfce4-session-settings.glade.h:31
 msgid "Sessio_n"
-msgstr "ה_פעלה"
+msgstr "ס_שן"
 
 #: ../settings/xfce4-session-settings.glade.h:32
 msgid "Launch GN_OME services on startup"
