@@ -162,7 +162,7 @@ xfsm_window_add_border (GtkWindow *window)
 
   box1 = gtk_event_box_new ();
   gtk_widget_modify_bg (box1, GTK_STATE_NORMAL,
-                        &(GTK_WIDGET(window)->style->bg [GTK_STATE_SELECTED]));
+                        &(gtk_widget_get_style (GTK_WIDGET(window))->bg [GTK_STATE_SELECTED]));
   gtk_widget_show (box1);
 
   box2 = gtk_event_box_new ();
@@ -170,7 +170,7 @@ xfsm_window_add_border (GtkWindow *window)
   gtk_container_add (GTK_CONTAINER (box1), box2);
 
   gtk_container_set_border_width (GTK_CONTAINER (box2), 6);
-  gtk_widget_reparent (GTK_BIN (window)->child, box2);
+  gtk_widget_reparent (gtk_bin_get_child(GTK_BIN (window)), box2);
 
   gtk_container_add (GTK_CONTAINER (window), box1);
 }
