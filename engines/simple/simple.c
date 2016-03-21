@@ -50,15 +50,14 @@
 typedef struct _Simple Simple;
 struct _Simple
 {
-  gboolean     dialog_active;
-  GdkWindow   *window;
-  GdkPixmap   *pixmap;
-  GdkGC       *gc;
-  PangoLayout *layout;
-  GdkRectangle area;
-  GdkRectangle textbox;
-  GdkColor     bgcolor;
-  GdkColor     fgcolor;
+  gboolean         dialog_active;
+  GdkWindow       *window;
+  PangoLayout     *layout;
+  GdkPixbuf       *logo;
+  GdkRectangle     area;
+  GdkRectangle     textbox;
+  GdkColor         bgcolor;
+  GdkColor         fgcolor;
 };
 
 
@@ -100,12 +99,12 @@ simple_setup (XfsmSplashEngine *engine,
   gchar                *font;
   gchar                *path;
   GdkWindow            *root;
-  GdkPixbuf            *logo = NULL;
   GdkCursor            *cursor;
   Simple               *simple;
   gint                  logo_width;
   gint                  logo_height;
   gint                  text_height;
+  cairo_t              *cr;
 
   simple = (Simple *) engine->user_data;
 
@@ -127,11 +126,16 @@ simple_setup (XfsmSplashEngine *engine,
                                    &geo);
 
   if (path != NULL && g_file_test (path, G_FILE_TEST_IS_REGULAR))
-    logo = gdk_pixbuf_new_from_file (path, NULL);
-  if (logo == NULL)
-    logo = gdk_pixbuf_new_from_inline (-1, fallback, FALSE, NULL);
-  logo_width = gdk_pixbuf_get_width (logo);
-  logo_height = gdk_pixbuf_get_height (logo);
+    simple->logo = gdk_pixbuf_new_from_file (path, NULL);
+  if (simple->logo == NULL)
+  {
+    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+    /* TODO: use GResource or load it as a normal pixbuf */
+    simple->logo = gdk_pixbuf_new_from_inline (-1, fallback, FALSE, NULL);
+    G_GNUC_END_IGNORE_DEPRECATIONS
+  }
+  logo_width = gdk_pixbuf_get_width (simple->logo);
+  logo_height = gdk_pixbuf_get_height (simple->logo);
 
   cursor = gdk_cursor_new (GDK_WATCH);
 
@@ -169,31 +173,15 @@ simple_setup (XfsmSplashEngine *engine,
   simple->window = gdk_window_new (root, &attr, GDK_WA_X | GDK_WA_Y
                                   | GDK_WA_NOREDIR | GDK_WA_CURSOR);
 
-  simple->pixmap = gdk_pixmap_new (simple->window,
-                                   simple->area.width,
-                                   simple->area.height,
-                                   -1);
+  cr = gdk_cairo_create (GDK_DRAWABLE (simple->window));
+  gdk_cairo_set_source_color (cr, &simple->bgcolor);
 
-  gdk_window_set_back_pixmap (simple->window, simple->pixmap, FALSE);
+  cairo_rectangle (cr, 0, 0, simple->area.width, simple->area.height);
+  cairo_fill (cr);
 
-  simple->gc = gdk_gc_new (simple->pixmap);
-  gdk_gc_set_function (simple->gc, GDK_COPY);
-  gdk_gc_set_rgb_fg_color (simple->gc, &simple->bgcolor);
-
-  gdk_draw_rectangle (simple->pixmap,
-                      simple->gc, TRUE,
-                      0, 0,
-                      simple->area.width,
-                      simple->area.height);
-
-  gdk_draw_pixbuf (simple->pixmap,
-                   simple->gc,
-                   logo,
-                   0, 0,
-                   BORDER, BORDER,
-                   logo_width,
-                   logo_height,
-                   GDK_RGB_DITHER_NONE, 0, 0);
+  cairo_move_to (cr, 0, 0);
+  gdk_cairo_set_source_pixbuf (cr, simple->logo, 0, 0);
+  cairo_paint (cr);
 
   gdk_window_add_filter (simple->window, simple_filter, simple);
   gdk_window_show (simple->window);
@@ -205,7 +193,7 @@ simple_setup (XfsmSplashEngine *engine,
   pango_font_metrics_unref (metrics);
   gdk_cursor_unref (cursor);
   g_object_unref (context);
-  g_object_unref (logo);
+  cairo_destroy (cr);
 }
 
 
@@ -215,21 +203,26 @@ simple_next (XfsmSplashEngine *engine, const gchar *text)
   Simple *simple = (Simple *) engine->user_data;
   GdkColor shcolor;
   gint tw, th, tx, ty;
+  cairo_t *cr;
 
   pango_layout_set_text (simple->layout, text, -1);
   pango_layout_get_pixel_size (simple->layout, &tw, &th);
   tx = simple->textbox.x + (simple->textbox.width - tw) / 2;
   ty = simple->textbox.y + (simple->textbox.height - th) / 2;
 
-  gdk_gc_set_rgb_fg_color (simple->gc, &simple->bgcolor);
-  gdk_draw_rectangle (simple->pixmap,
-                      simple->gc, TRUE,
-                      simple->textbox.x,
-                      simple->textbox.y,
-                      simple->textbox.width,
-                      simple->textbox.height);
+  cr = gdk_cairo_create (GDK_DRAWABLE (simple->window));
 
-  gdk_gc_set_clip_rectangle (simple->gc, &simple->textbox);
+  /* re-paint the logo */
+  gdk_cairo_set_source_pixbuf (cr, simple->logo, 0, 0);
+  cairo_paint (cr);
+
+  gdk_cairo_set_source_color (cr, &simple->bgcolor);
+  cairo_rectangle (cr,
+                   simple->textbox.x,
+                   simple->textbox.y,
+                   simple->textbox.width,
+                   simple->textbox.height);
+  cairo_fill (cr);
 
   /* draw shadow */
   shcolor.red = (simple->fgcolor.red + simple->bgcolor.red) / 2;
@@ -239,21 +232,15 @@ simple_next (XfsmSplashEngine *engine, const gchar *text)
   shcolor.green = shcolor.red;
   shcolor.blue = shcolor.red;
 
-  gdk_gc_set_rgb_fg_color (simple->gc, &shcolor);
-  gdk_draw_layout (simple->pixmap, simple->gc,
-                   tx + 2, ty + 2, simple->layout);
+  gdk_cairo_set_source_color (cr, &shcolor);
+  cairo_move_to (cr, tx + 2, ty + 2);
+  pango_cairo_show_layout (cr, simple->layout);
 
-  gdk_gc_set_rgb_fg_color (simple->gc, &simple->fgcolor);
-  gdk_draw_layout (simple->pixmap,
-                   simple->gc,
-                   tx, ty,
-                   simple->layout);
+  gdk_cairo_set_source_color (cr, &simple->fgcolor);
+  cairo_move_to (cr, tx, ty);
+  pango_cairo_show_layout (cr, simple->layout);
 
-  gdk_window_clear_area (simple->window,
-                         simple->textbox.x,
-                         simple->textbox.y,
-                         simple->textbox.width,
-                         simple->textbox.height);
+  cairo_destroy (cr);
 }
 
 
@@ -289,8 +276,7 @@ simple_destroy (XfsmSplashEngine *engine)
   gdk_window_remove_filter (simple->window, simple_filter, simple);
   gdk_window_destroy (simple->window);
   g_object_unref (simple->layout);
-  g_object_unref (simple->pixmap);
-  g_object_unref (simple->gc);
+  g_object_unref (simple->logo);
   g_free (engine->user_data);
 }
 
@@ -352,7 +338,7 @@ config_configure (XfsmSplashConfig *config,
                                         GTK_RESPONSE_CLOSE,
                                         NULL);
 
-  dbox = GTK_BOX (GTK_DIALOG (dialog)->vbox);
+  dbox = GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog)));
 
   frame = xfce_gtk_frame_box_new (_("Font"), &bin);
   gtk_box_pack_start (dbox, frame, FALSE, FALSE, 6);
@@ -487,7 +473,10 @@ config_configure (XfsmSplashConfig *config,
 static GdkPixbuf*
 config_preview (XfsmSplashConfig *config)
 {
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+  /* TODO: use GResource or load it as a normal pixbuf */
   return gdk_pixbuf_new_from_inline (-1, preview, FALSE, NULL);
+  G_GNUC_END_IGNORE_DEPRECATIONS
 }
 
 
