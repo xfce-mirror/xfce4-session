@@ -39,19 +39,19 @@ struct _XfsmFadeout
 XfsmFadeout*
 xfsm_fadeout_new (GdkDisplay *display)
 {
-  GdkWindowAttr  attr;
-  XfsmFadeout   *fadeout;
-  GdkWindow     *root;
-  GdkCursor     *cursor;
-  cairo_t       *cr;
-  gint           width;
-  gint           height;
-  gint           n;
-  GdkPixbuf     *root_pixbuf;
-  GdkPixmap     *backbuf;
-  GdkScreen     *gdk_screen;
-  GdkWindow     *window;
-  GdkColor       black = { 0, };
+  GdkWindowAttr    attr;
+  XfsmFadeout     *fadeout;
+  GdkWindow       *root;
+  GdkCursor       *cursor;
+  cairo_t         *cr;
+  gint             width;
+  gint             height;
+  gint             n;
+  GdkPixbuf       *root_pixbuf;
+  cairo_surface_t *surface;
+  GdkScreen       *gdk_screen;
+  GdkWindow       *window;
+  GdkColor         black = { 0, };
 
   fadeout = g_slice_new0 (XfsmFadeout);
 
@@ -89,8 +89,8 @@ xfsm_fadeout_new (GdkDisplay *display)
       else
         {
           /* create background for window */
-          backbuf = gdk_pixmap_new (GDK_DRAWABLE (root), width, height, -1);
-          cr = gdk_cairo_create (GDK_DRAWABLE (backbuf));
+          surface = gdk_window_create_similar_surface (root, CAIRO_CONTENT_COLOR_ALPHA, width, height);
+          cr = cairo_create (surface);
 
           /* make of copy of the root window */
           root_pixbuf = gdk_pixbuf_get_from_drawable (NULL, GDK_DRAWABLE (root), NULL,
@@ -103,9 +103,7 @@ xfsm_fadeout_new (GdkDisplay *display)
           gdk_cairo_set_source_color (cr, &black);
           cairo_paint_with_alpha (cr, 0.50);
           cairo_destroy (cr);
-
-          gdk_window_set_back_pixmap (window, backbuf, FALSE);
-          g_object_unref (G_OBJECT (backbuf));
+          cairo_surface_destroy (surface);
         }
 
       fadeout->windows = g_slist_prepend (fadeout->windows, window);
