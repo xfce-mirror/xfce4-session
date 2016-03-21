@@ -222,12 +222,12 @@ again:
                       _("Choose a name for the new session:"));
           label = gtk_label_new (title);
           gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-          gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+          gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                               label, TRUE, TRUE, 6);
           gtk_widget_show (label);
 
           entry = gtk_entry_new ();
-          gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+          gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                               entry, TRUE, TRUE, 6);
           gtk_widget_show (entry);
 

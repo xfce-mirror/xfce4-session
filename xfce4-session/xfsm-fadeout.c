@@ -70,7 +70,9 @@ xfsm_fadeout_new (GdkDisplay *display)
       gdk_screen = gdk_display_get_screen (display, n);
 
       root = gdk_screen_get_root_window (gdk_screen);
-      gdk_drawable_get_size (GDK_DRAWABLE (root), &width, &height);
+
+      width = gdk_window_get_width (root);
+      height = gdk_window_get_height (root);
 
       attr.width = width;
       attr.height = height;

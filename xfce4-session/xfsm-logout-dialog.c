@@ -158,7 +158,6 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   dialog->shutdown = xfsm_shutdown_get ();
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
-  gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
@@ -168,7 +167,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
     save_session = xfconf_channel_get_bool (channel, "/general/SaveOnExit", TRUE);
 
   main_vbox = gtk_vbox_new (FALSE, BORDER);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), main_vbox, TRUE, TRUE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), BORDER);
   gtk_widget_show (main_vbox);
 
@@ -502,7 +501,10 @@ xfsm_logout_dialog_screenshot_new (GdkScreen *screen)
   screen_rect.height = gdk_screen_get_height (screen);
 
   window = gdk_screen_get_root_window (screen);
-  gdk_drawable_get_size (GDK_DRAWABLE (window), &rect.width, &rect.height);
+
+  rect.width = gdk_window_get_width (window);
+  rect.height = gdk_window_get_height (window);
+
   gdk_window_get_origin (window, &x, &y);
 
   rect.x = x;
@@ -627,7 +629,7 @@ xfsm_logout_dialog_run (GtkDialog *dialog,
 #ifdef GDK_WINDOWING_X11
       /* force input to the dialog */
       gdk_error_trap_push ();
-      XSetInputFocus (GDK_DISPLAY (),
+      XSetInputFocus (gdk_x11_get_default_xdisplay (),
                       GDK_WINDOW_XWINDOW (window),
                       RevertToParent, CurrentTime);
       gdk_error_trap_pop ();
@@ -725,8 +727,8 @@ xfsm_logout_dialog (const gchar      *session_name,
       xfsm_window_add_border (GTK_WINDOW (dialog));
 
       gtk_widget_realize (dialog);
-      gdk_window_set_override_redirect (dialog->window, TRUE);
-      gdk_window_raise (dialog->window);
+      gdk_window_set_override_redirect (gtk_widget_get_window (dialog), TRUE);
+      gdk_window_raise (gtk_widget_get_window (dialog));
     }
   else
     {

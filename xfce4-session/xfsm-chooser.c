@@ -148,9 +148,8 @@ xfsm_chooser_init (XfsmChooser *chooser)
   GtkWidget *swin;
   GtkWidget *dbox;
 
-  dbox = GTK_DIALOG (chooser)->vbox;
+  dbox = gtk_dialog_get_content_area(GTK_DIALOG (chooser));
 
-  gtk_dialog_set_has_separator (GTK_DIALOG (chooser), FALSE);
   g_signal_connect_after (G_OBJECT (chooser), "realize",
                           G_CALLBACK (xfsm_chooser_realized), chooser);
 
@@ -233,7 +232,7 @@ xfsm_chooser_realized (GtkWidget   *widget,
   GdkCursor *cursor;
 
   cursor = gdk_cursor_new (GDK_LEFT_PTR);
-  gdk_window_set_cursor (widget->window, cursor);
+  gdk_window_set_cursor (gtk_widget_get_window(widget), cursor);
   gdk_cursor_unref (cursor);
 }
 
