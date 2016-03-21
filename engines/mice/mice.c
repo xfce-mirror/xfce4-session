@@ -50,8 +50,8 @@ typedef struct _Mice       Mice;
 struct _MiceWindow
 {
   GdkWindow *window;
-  GdkPixmap *pixmap;
-  GdkGC     *gc;
+  GdkPixbuf *pixbuf;
+  GdkColor  *color;
   int        x;
   int        y;
   Mice      *mice;
@@ -68,6 +68,8 @@ struct _Mice
   int          step;
   int          direction;
   guint        timeout_id;
+  int          pixbuf_width;
+  int          pixbuf_height;
 };
 
 
@@ -99,8 +101,7 @@ mice_filter (GdkXEvent *xevent, GdkEvent *event, gpointer user_data)
 static MiceWindow*
 mice_window_new (GdkScreen      *screen,
                  int             monitor,
-                 GdkPixmap      *pixmap,
-                 GdkGC          *gc,
+                 GdkPixbuf      *pixbuf,
                  const GdkColor *color,
                  GdkCursor      *cursor,
                  Mice           *mice)
@@ -113,8 +114,8 @@ mice_window_new (GdkScreen      *screen,
 
   mice_window = g_new0 (MiceWindow, 1);
   mice_window->mice = mice;
-  mice_window->pixmap = GDK_PIXMAP (g_object_ref (pixmap));
-  mice_window->gc = GDK_GC (g_object_ref (gc));
+  mice_window->pixbuf = GDK_PIXBUF (g_object_ref (pixbuf));
+  mice_window->color = gdk_color_copy (color);
 
   /* init win attributes */
   attr.x = geometry.x;
@@ -146,8 +147,11 @@ mice_step (Mice *mice)
 {
   MiceWindow *mice_window;
   GList      *lp;
+  cairo_t    *cr;
   int         sx;
   int         sy;
+  int         ww;
+  int         wh;
 
   sx = mice->step * mice->base_width;
   sy = 0;
@@ -155,14 +159,25 @@ mice_step (Mice *mice)
   for (lp = mice->windows; lp != NULL; lp = lp->next)
     {
       mice_window = MICE_WINDOW (lp->data);
-      gdk_draw_drawable (mice_window->window,
-                         mice_window->gc,
-                         mice_window->pixmap,
-                         sx, sy,
-                         mice_window->x,
-                         mice_window->y,
-                         mice->base_width,
-                         mice->base_height);
+
+      cr = gdk_cairo_create (GDK_DRAWABLE (mice_window->window));
+
+      ww = gdk_window_get_width (GDK_WINDOW (mice_window->window));
+      wh = gdk_window_get_height (GDK_WINDOW (mice_window->window));
+
+      /* Paint the background */
+      gdk_cairo_set_source_color (cr, mice_window->color);
+      cairo_rectangle (cr, 0, 0, ww, wh);
+      cairo_fill (cr);
+
+      /* Paint the mouse. Cairo is fun, we have to move the source image
+       * around and clip to the box to show the mouse animation */
+      gdk_cairo_set_source_pixbuf (cr, mice_window->pixbuf, mice_window->x - sx, mice_window->y - sy);
+      cairo_rectangle (cr, mice_window->x, mice_window->y, mice->base_width, mice->base_height);
+      cairo_clip (cr);
+      cairo_paint (cr);
+
+      cairo_destroy (cr);
     }
 
   if (mice->step == 0 && mice->direction < 0)
@@ -199,18 +214,14 @@ mice_setup (XfsmSplashEngine *engine,
             XfsmSplashRc     *rc)
 {
   MiceWindow   *mice_window;
-  GdkGCValues   gc_values;
-  GdkColormap  *cmap;
   GdkWindow    *root;
-  GdkPixmap    *pixmap;
   GdkPixbuf    *pixbuf;
   GdkColor      color;
   GdkCursor    *cursor;
   GdkScreen    *screen;
-  GdkGC        *gc;
+  cairo_t      *cr;
   GList        *lp;
   Mice         *mice = MICE (engine->user_data);
-  int           pw, ph;
   int           nscreens;
   int           nmonitors;
   int           n, m;
@@ -219,12 +230,15 @@ mice_setup (XfsmSplashEngine *engine,
   cursor = gdk_cursor_new (GDK_WATCH);
 
   /* load slide pixbuf */
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+  /* TODO: use GResource or load it as a normal pixbuf */
   pixbuf = gdk_pixbuf_new_from_inline (-1, slide, FALSE, NULL);
-  pw = gdk_pixbuf_get_width (pixbuf);
-  ph = gdk_pixbuf_get_height (pixbuf);
+  G_GNUC_END_IGNORE_DEPRECATIONS
+  mice->pixbuf_width = gdk_pixbuf_get_width (pixbuf);
+  mice->pixbuf_height = gdk_pixbuf_get_height (pixbuf);
 
-  mice->base_width = pw / STEPS;
-  mice->base_height = ph;
+  mice->base_width = mice->pixbuf_width / STEPS;
+  mice->base_height = mice->pixbuf_height;
   mice->step = 0;
   mice->direction = 1;
 
@@ -235,26 +249,20 @@ mice_setup (XfsmSplashEngine *engine,
       nmonitors = gdk_screen_get_n_monitors (screen);
       root = gdk_screen_get_root_window (screen);
 
-      /* allocate color */
-      cmap = gdk_drawable_get_colormap (root);
-      gdk_rgb_find_color (cmap, &color);
-
       /* create graphics context for this screen */
-      gc_values.function = GDK_COPY;
-      gc_values.graphics_exposures = FALSE;
-      gc_values.foreground = color;
-      gc = gdk_gc_new_with_values (root, &gc_values, GDK_GC_FUNCTION
-                                  | GDK_GC_EXPOSURES | GDK_GC_FOREGROUND);
+      cr = gdk_cairo_create (GDK_DRAWABLE (root));
+      gdk_cairo_set_source_color (cr, &color);
 
-      /* create pixmap for this screen */
-      pixmap = gdk_pixmap_new (root, pw, ph, -1);
-      gdk_draw_rectangle (pixmap, gc, TRUE, 0, 0, pw, ph);
-      gdk_draw_pixbuf (pixmap, gc, pixbuf, 0, 0, 0, 0,
-                       pw, ph, GDK_RGB_DITHER_NONE, 0, 0);
+      cairo_rectangle (cr, 0, 0, mice->pixbuf_width, mice->pixbuf_height);
+      cairo_fill (cr);
+
+      cairo_move_to (cr, 0, 0);
+      gdk_cairo_set_source_pixbuf (cr, pixbuf, 0, 0);
+      cairo_paint (cr);
 
       for (m = 0; m < nmonitors; ++m)
         {
-          mice_window = mice_window_new (screen, m, pixmap, gc,
+          mice_window = mice_window_new (screen, m, pixbuf,
                                          &color, cursor, mice);
           mice->windows = g_list_append (mice->windows, mice_window);
 
@@ -263,8 +271,7 @@ mice_setup (XfsmSplashEngine *engine,
         }
 
       /* cleanup for this screen */
-      g_object_unref (pixmap);
-      g_object_unref (gc);
+      cairo_destroy (cr);
     }
 
   /* show all windows and connect filters */
@@ -290,7 +297,6 @@ mice_next (XfsmSplashEngine *engine, const gchar *text)
   /* nothing to be done here */
 }
 
-
 static int
 mice_run (XfsmSplashEngine *engine,
           GtkWidget        *dialog)
@@ -306,9 +312,12 @@ mice_run (XfsmSplashEngine *engine,
   mice->dialog_active = TRUE;
 
   gdk_window_get_origin (mainwin->window, &wx, &wy);
-  gdk_drawable_get_size (mainwin->window, &ww, &wh);
+
+  ww = gdk_window_get_width (GDK_WINDOW (mainwin->window));
+  wh = gdk_window_get_height (GDK_WINDOW (mainwin->window));
+
   gtk_window_set_screen (GTK_WINDOW (dialog),
-                         gdk_drawable_get_screen (mainwin->window));
+                         gdk_window_get_screen (mainwin->window));
   gtk_widget_size_request (dialog, &requisition);
   x = wx + (ww - requisition.width) / 2;
   y = wy + (wh - requisition.height) / 2;
@@ -333,8 +342,8 @@ mice_destroy (XfsmSplashEngine *engine)
       mice_window = MICE_WINDOW (lp->data);
       gdk_window_remove_filter (mice_window->window, mice_filter, mice);
       gdk_window_destroy (mice_window->window);
-      g_object_unref (mice_window->pixmap);
-      g_object_unref (mice_window->gc);
+      g_object_unref (mice_window->pixbuf);
+      gdk_color_free (mice_window->color);
       g_free (mice_window);
     }
 
@@ -363,7 +372,10 @@ engine_init (XfsmSplashEngine *engine)
 static GdkPixbuf*
 config_preview (XfsmSplashConfig *config)
 {
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+  /* TODO: use GResource or load it as a normal pixbuf */
   return gdk_pixbuf_new_from_inline (-1, preview, FALSE, NULL);
+  G_GNUC_END_IGNORE_DEPRECATIONS
 }
 
 
