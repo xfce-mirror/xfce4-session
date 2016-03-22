@@ -291,7 +291,7 @@ config_dropped (GtkWidget *treeview, GdkDragContext *context,
   gboolean succeed = FALSE;
   GList   *fnames;
 
-  fnames = gnome_uri_list_extract_filenames ((const gchar *) data->data);
+  fnames = gnome_uri_list_extract_filenames ((const gchar *) gtk_selection_data_get_data(data));
   if (fnames != NULL)
     {
       if (g_list_length (fnames) == 1)
@@ -722,7 +722,7 @@ config_drag_begin (GtkWidget      *treeview,
   gtk_tree_model_get (model, &iter, NAME_COLUMN, &name, -1);
   filename = g_strconcat (name, ".tar.gz", NULL);
 
-  gdk_property_change (context->source_window,
+  gdk_property_change (gdk_drag_context_get_source_window(context),
                        gdk_atom_intern ("XdndDirectSave0", FALSE),
                        gdk_atom_intern ("text/plain", FALSE), 8,
                        GDK_PROP_MODE_REPLACE, (const guchar *)filename, strlen (filename));
@@ -756,7 +756,7 @@ config_drag_data_get (GtkWidget        *treeview,
   switch (info)
     {
     case TARGET_XDS:
-      if (gdk_property_get (context->source_window,
+      if (gdk_property_get (gdk_drag_context_get_source_window(context),
                             gdk_atom_intern ("XdndDirectSave0", FALSE),
                             gdk_atom_intern ("text/plain", FALSE),
                             0, 1024, FALSE, NULL, NULL, &prop_len, &prop_text)
@@ -958,7 +958,7 @@ config_configure (XfsmSplashConfig *config,
                                         NULL);
 
   ui = config_create (config->rc);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), ui, TRUE, TRUE, 6);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area(GTK_DIALOG (dialog))), ui, TRUE, TRUE, 6);
   gtk_widget_show_all (ui);
 
   gtk_dialog_run (GTK_DIALOG (dialog));

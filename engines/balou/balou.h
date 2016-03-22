@@ -58,7 +58,6 @@ void  balou_init      (Balou        *balou,
                        BalouTheme   *theme);
 void  balou_fadein    (Balou        *balou,
                        const gchar  *text);
-void  balou_fadeout   (Balou        *balou);
 int   balou_run       (Balou        *balou,
                        GtkWidget    *dialog);
 void  balou_destroy   (Balou *balou);
