@@ -126,7 +126,7 @@ xfsm_place_trash_window (GtkWindow *window,
   GdkRectangle   geometry;
 
   gdk_screen_get_monitor_geometry (screen, monitor, &geometry);
-  gtk_widget_size_request (GTK_WIDGET (window), &requisition);
+  gtk_widget_get_preferred_size (GTK_WIDGET (window), &requisition, NULL);
 
   gtk_window_move (window, 0, geometry.height - requisition.height);
 }
@@ -157,12 +157,16 @@ void
 xfsm_window_add_border (GtkWindow *window)
 {
   GtkWidget *box1, *box2;
+  GdkRGBA bg_color;
 
   gtk_widget_realize(GTK_WIDGET(window));
 
   box1 = gtk_event_box_new ();
-  gtk_widget_modify_bg (box1, GTK_STATE_NORMAL,
-                        &(gtk_widget_get_style (GTK_WIDGET(window))->bg [GTK_STATE_SELECTED]));
+  gtk_style_context_get_background_color(gtk_widget_get_style_context (GTK_WIDGET(window)),
+                                         GTK_STATE_SELECTED,
+                                         &bg_color);
+  gtk_widget_override_background_color (box1, GTK_STATE_NORMAL,
+                                        &bg_color);
   gtk_widget_show (box1);
 
   box2 = gtk_event_box_new ();
@@ -170,7 +174,7 @@ xfsm_window_add_border (GtkWindow *window)
   gtk_container_add (GTK_CONTAINER (box1), box2);
 
   gtk_container_set_border_width (GTK_CONTAINER (box2), 6);
-  gtk_widget_reparent (gtk_bin_get_child(GTK_BIN (window)), box2);
+  gtk_container_add (GTK_CONTAINER (gtk_bin_get_child (GTK_BIN (window))), box2);
 
   gtk_container_add (GTK_CONTAINER (window), box1);
 }
