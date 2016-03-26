@@ -62,38 +62,37 @@ xfae_dialog_class_init (XfaeDialogClass *klass)
 static void
 xfae_dialog_init (XfaeDialog *dialog)
 {
-  GtkWidget *table;
+  GtkWidget *content_area;
+  GtkWidget *grid;
   GtkWidget *label;
   GtkWidget *hbox;
   GtkWidget *button;
   GtkWidget *image;
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                          GTK_STOCK_OK, GTK_RESPONSE_OK,
+                          _("Cancel"), GTK_RESPONSE_CANCEL,
+                          _("OK"), GTK_RESPONSE_OK,
                           NULL);
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-  gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
   gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_OK, FALSE);
   gtk_window_set_title (GTK_WINDOW (dialog), _("Add application"));
 
-  table = g_object_new (GTK_TYPE_TABLE,
-                        "border-width", 12,
+  content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+
+  grid = g_object_new (GTK_TYPE_GRID,
+                        "width", 12,
                         "row-spacing", 6,
                         "column-spacing", 12,
-                        "n-rows", 3,
-                        "n-columns", 2,
                         "homogeneous", FALSE,
                         NULL);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), table, TRUE, TRUE, 0);
-  gtk_widget_show (table);
+  gtk_container_add (GTK_CONTAINER (content_area), grid);
+  gtk_widget_show (grid);
 
   label = g_object_new (GTK_TYPE_LABEL,
                         "label", _("Name:"),
                         "xalign", 0.0f,
                         NULL);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
   gtk_widget_show (label);
 
   dialog->name_entry = g_object_new (GTK_TYPE_ENTRY,
@@ -101,38 +100,33 @@ xfae_dialog_init (XfaeDialog *dialog)
                                      NULL);
   g_signal_connect_swapped (G_OBJECT (dialog->name_entry), "notify::text",
                             G_CALLBACK (xfae_dialog_update), dialog);
-  gtk_table_attach (GTK_TABLE (table), dialog->name_entry, 1, 2, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), dialog->name_entry, 1, 0, 1, 1);
   gtk_widget_show (dialog->name_entry);
 
   label = g_object_new (GTK_TYPE_LABEL,
                         "label", _("Description:"),
                         "xalign", 0.0f,
                         NULL);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
   gtk_widget_show (label);
 
   dialog->descr_entry = g_object_new (GTK_TYPE_ENTRY,
                                       "activates-default", TRUE,
                                       NULL);
-  gtk_table_attach (GTK_TABLE (table), dialog->descr_entry, 1, 2, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), dialog->descr_entry, 1, 1, 1, 1);
   gtk_widget_show (dialog->descr_entry);
 
   label = g_object_new (GTK_TYPE_LABEL,
                         "label", _("Command:"),
                         "xalign", 0.0f,
                         NULL);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 2, 1, 1);
   gtk_widget_show (label);
 
-  hbox = g_object_new (GTK_TYPE_HBOX,
+  hbox = g_object_new (GTK_TYPE_BOX,
                        "spacing", 6,
                        NULL);
-  gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 2, 3,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), hbox, 1, 2, 1, 1);
   gtk_widget_show (hbox);
 
   dialog->command_entry = g_object_new (GTK_TYPE_ENTRY,
@@ -151,7 +145,7 @@ xfae_dialog_init (XfaeDialog *dialog)
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  image = gtk_image_new_from_stock (GTK_STOCK_OPEN, GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name ("document-open", GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 }
@@ -184,8 +178,8 @@ xfae_dialog_browse (XfaeDialog *dialog)
   chooser = gtk_file_chooser_dialog_new (_("Select a command"),
                                          GTK_WINDOW (dialog),
                                          GTK_FILE_CHOOSER_ACTION_OPEN,
-                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                         GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
+                                         _("Cancel"), GTK_RESPONSE_CANCEL,
+                                         _("OK"), GTK_RESPONSE_ACCEPT,
                                          NULL);
 
   gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (chooser), TRUE);

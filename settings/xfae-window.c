@@ -59,7 +59,7 @@ struct _XfaeWindow
 
 
 
-G_DEFINE_TYPE (XfaeWindow, xfae_window, GTK_TYPE_VBOX);
+G_DEFINE_TYPE (XfaeWindow, xfae_window, GTK_TYPE_BOX);
 
 
 
@@ -88,13 +88,14 @@ xfae_window_init (XfaeWindow *window)
   gtk_box_set_spacing (GTK_BOX (vbox), 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
-  hbox = gtk_hbox_new (FALSE, 12);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
   gtk_widget_show (hbox);
 
-  img = gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_DIALOG);
+  img = gtk_image_new_from_icon_name ("dialog-information", GTK_ICON_SIZE_DIALOG);
   gtk_box_pack_start (GTK_BOX (hbox), img, FALSE, FALSE, 0);
-  gtk_misc_set_alignment (GTK_MISC (img), 0.50, 0.00);
+  gtk_widget_set_halign (GTK_WIDGET (img), GTK_ALIGN_CENTER);
+  gtk_widget_set_valign (GTK_WIDGET (img), GTK_ALIGN_END);
   gtk_widget_show (img);
 
   label = g_object_new (GTK_TYPE_LABEL,
@@ -169,17 +170,17 @@ xfae_window_init (XfaeWindow *window)
 
   gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
 
-  bbox = gtk_hbox_new (FALSE, 6);
+  bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, TRUE, 0);
   gtk_widget_show (bbox);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_ADD);
+  button = gtk_button_new_with_label (_("Add"));
   g_signal_connect_swapped (G_OBJECT (button), "clicked",
                             G_CALLBACK (xfae_window_add), window);
   gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_REMOVE);
+  button = gtk_button_new_with_label (_("Remove"));
   g_signal_connect_swapped (G_OBJECT (button), "clicked",
                             G_CALLBACK (xfae_window_remove), window);
   gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
@@ -189,7 +190,7 @@ xfae_window_init (XfaeWindow *window)
                     G_CALLBACK (xfae_window_selection_changed), button);
   xfae_window_selection_changed (window->selection, button);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_EDIT);
+  button = gtk_button_new_with_label (_("Edit"));
   g_signal_connect_swapped (G_OBJECT (button), "clicked",
                             G_CALLBACK (xfae_window_edit), window);
   gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
@@ -231,13 +232,13 @@ xfae_window_button_press_event (GtkWidget      *treeview,
 
           menu = gtk_menu_new ();
 
-          item = gtk_image_menu_item_new_from_stock (GTK_STOCK_ADD, NULL);
+          item = gtk_menu_item_new_with_label (_("Add"));
           g_signal_connect_swapped (G_OBJECT (item), "activate",
                                     G_CALLBACK (xfae_window_add), window);
           gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
           gtk_widget_show (item);
 
-          item = gtk_image_menu_item_new_from_stock (GTK_STOCK_REMOVE, NULL);
+          item = gtk_menu_item_new_with_label (_("Remove"));
           g_signal_connect_swapped (G_OBJECT (item), "activate",
                                     G_CALLBACK (xfae_window_remove), window);
           gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
@@ -256,7 +257,7 @@ xfae_window_button_press_event (GtkWidget      *treeview,
           g_main_loop_unref (loop);
           gtk_grab_remove (menu);
 
-          gtk_object_sink (GTK_OBJECT (menu));
+          g_object_ref_sink (menu);
 
           return TRUE;
         }
@@ -325,12 +326,12 @@ xfae_window_remove (XfaeWindow *window)
           g_error_free (error);
           return;
         }
-
-      remove_item = xfce_dialog_confirm (GTK_WINDOW (parent), GTK_STOCK_REMOVE, NULL,
+        remove_item = TRUE;
+/*      remove_item = xfce_dialog_confirm (GTK_WINDOW (parent), GTK_STOCK_REMOVE, NULL,
                                          _("This will permanently remove the application "
                                            "from the list of automatically started applications"),
                                          _("Are you sure you want to remove \"%s\""), name);
-
+*/  
       g_free (name);
 
       if (remove_item && !xfae_model_remove (XFAE_MODEL (model), &iter, &error))

@@ -69,7 +69,7 @@ xfce4-session-marshal.c: xfce4-session-marshal.list Makefile
 	$(AM_V_GEN) echo '#include "xfce4-session-marshal.h"' > $@
 	glib-genmarshal --prefix=xfce4_session_marshal xfce4-session-marshal.list --body >> xfce4-session-marshal.c
 
-xfce4-session-settings_ui.h: xfce4-session-settings.glade
+xfce4-session-settings_ui.h: xfce4-session-settings.ui
 	$(AM_V_GEN) exo-csource --static --strip-comments --strip-content --name=xfce4_session_settings_ui $< >$@
 
 xfsm-client-dbus-client.h: $(top_srcdir)/xfce4-session/xfsm-client-dbus.xml Makefile
