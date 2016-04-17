@@ -56,8 +56,8 @@ struct _Simple
   GdkPixbuf       *logo;
   GdkRectangle     area;
   GdkRectangle     textbox;
-  GdkColor         bgcolor;
-  GdkColor         fgcolor;
+  GdkRGBA          bgcolor;
+  GdkRGBA          fgcolor;
 };
 
 
@@ -110,11 +110,11 @@ simple_setup (XfsmSplashEngine *engine,
 
   /* load settings */
   color = xfsm_splash_rc_read_entry (rc, "BgColor", DEFAULT_BGCOLOR);
-  gdk_color_parse (color, &simple->bgcolor);
+  gdk_rgba_parse (&simple->bgcolor, color);
   g_free (color);
 
   color = xfsm_splash_rc_read_entry (rc, "FgColor", DEFAULT_FGCOLOR);
-  gdk_color_parse (color, &simple->fgcolor);
+  gdk_rgba_parse (&simple->fgcolor, color);
   g_free (color);
 
   font = xfsm_splash_rc_read_entry (rc, "Font", DEFAULT_FONT);
@@ -137,7 +137,7 @@ simple_setup (XfsmSplashEngine *engine,
   logo_width = gdk_pixbuf_get_width (simple->logo);
   logo_height = gdk_pixbuf_get_height (simple->logo);
 
-  cursor = gdk_cursor_new (GDK_WATCH);
+  cursor = gdk_cursor_new_for_display (gdk_window_get_display (root), GDK_WATCH);
 
   /* create pango layout */
   description = pango_font_description_from_string (font);
@@ -173,8 +173,10 @@ simple_setup (XfsmSplashEngine *engine,
   simple->window = gdk_window_new (root, &attr, GDK_WA_X | GDK_WA_Y
                                   | GDK_WA_NOREDIR | GDK_WA_CURSOR);
 
-  cr = gdk_cairo_create (GDK_DRAWABLE (simple->window));
-  gdk_cairo_set_source_color (cr, &simple->bgcolor);
+  gdk_window_show (simple->window);
+
+  cr = gdk_cairo_create (simple->window);
+  gdk_cairo_set_source_rgba (cr, &simple->bgcolor);
 
   cairo_rectangle (cr, 0, 0, simple->area.width, simple->area.height);
   cairo_fill (cr);
@@ -191,7 +193,7 @@ simple_setup (XfsmSplashEngine *engine,
   g_free (path);
   pango_font_description_free (description);
   pango_font_metrics_unref (metrics);
-  gdk_cursor_unref (cursor);
+  g_object_unref (cursor);
   g_object_unref (context);
   cairo_destroy (cr);
 }
@@ -201,7 +203,7 @@ static void
 simple_next (XfsmSplashEngine *engine, const gchar *text)
 {
   Simple *simple = (Simple *) engine->user_data;
-  GdkColor shcolor;
+  GdkRGBA shcolor;
   gint tw, th, tx, ty;
   cairo_t *cr;
 
@@ -210,13 +212,13 @@ simple_next (XfsmSplashEngine *engine, const gchar *text)
   tx = simple->textbox.x + (simple->textbox.width - tw) / 2;
   ty = simple->textbox.y + (simple->textbox.height - th) / 2;
 
-  cr = gdk_cairo_create (GDK_DRAWABLE (simple->window));
+  cr = gdk_cairo_create (simple->window);
 
   /* re-paint the logo */
   gdk_cairo_set_source_pixbuf (cr, simple->logo, 0, 0);
   cairo_paint (cr);
 
-  gdk_cairo_set_source_color (cr, &simple->bgcolor);
+  gdk_cairo_set_source_rgba (cr, &simple->bgcolor);
   cairo_rectangle (cr,
                    simple->textbox.x,
                    simple->textbox.y,
@@ -232,11 +234,11 @@ simple_next (XfsmSplashEngine *engine, const gchar *text)
   shcolor.green = shcolor.red;
   shcolor.blue = shcolor.red;
 
-  gdk_cairo_set_source_color (cr, &shcolor);
+  gdk_cairo_set_source_rgba (cr, &shcolor);
   cairo_move_to (cr, tx + 2, ty + 2);
   pango_cairo_show_layout (cr, simple->layout);
 
-  gdk_cairo_set_source_color (cr, &simple->fgcolor);
+  gdk_cairo_set_source_rgba (cr, &simple->fgcolor);
   cairo_move_to (cr, tx, ty);
   pango_cairo_show_layout (cr, simple->layout);
 
@@ -256,7 +258,7 @@ simple_run (XfsmSplashEngine *engine,
 
   simple->dialog_active = TRUE;
 
-  gtk_widget_size_request (dialog, &requisition);
+  gtk_widget_get_preferred_size (dialog, NULL, &requisition);
   x = simple->area.x + (simple->area.width - requisition.width) / 2;
   y = simple->area.y + (simple->area.height - requisition.height) / 2;
   gtk_window_move (GTK_WINDOW (dialog), x, y);
@@ -324,7 +326,7 @@ config_configure (XfsmSplashConfig *config,
   GtkWidget   *vbox;
   GtkWidget   *button;
   GtkFileFilter *filter;
-  GdkColor     color;
+  GdkRGBA      color;
   GtkBox      *dbox;
   gchar        buffer[32];
   GtkWidget   *bin;
@@ -332,9 +334,8 @@ config_configure (XfsmSplashConfig *config,
   dialog = gtk_dialog_new_with_buttons (_("Configure Simple..."),
                                         GTK_WINDOW (parent),
                                         GTK_DIALOG_MODAL
-                                        | GTK_DIALOG_NO_SEPARATOR
                                         | GTK_DIALOG_DESTROY_WITH_PARENT,
-                                        GTK_STOCK_CLOSE,
+                                        _("_Close"),
                                         GTK_RESPONSE_CLOSE,
                                         NULL);
 
@@ -354,41 +355,37 @@ config_configure (XfsmSplashConfig *config,
   gtk_box_pack_start (dbox, frame, FALSE, FALSE, 6);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (2, 2, FALSE);
+  table = gtk_grid_new ();
   gtk_container_add (GTK_CONTAINER (bin), table);
   gtk_widget_show (table);
 
   label = gtk_label_new (_("Background color:"));
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (table), label, 0, 0, 1, 1);
   gtk_widget_show (label);
 
   colorstr = xfsm_splash_rc_read_entry (config->rc, "BgColor", DEFAULT_BGCOLOR);
-  gdk_color_parse (colorstr, &color);
+  gdk_rgba_parse (&color, colorstr);
   g_free (colorstr);
-  sel_bg = gtk_color_button_new_with_color (&color);
-  gtk_table_attach (GTK_TABLE (table), sel_bg, 1, 2, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  sel_bg = gtk_color_button_new_with_rgba (&color);
+  gtk_grid_attach (GTK_GRID (table), sel_bg, 1, 0, 1, 1);
   gtk_widget_show (sel_bg);
 
   label = gtk_label_new (_("Text color:"));
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (table), label, 0, 1, 1, 1);
   gtk_widget_show (label);
 
   colorstr = xfsm_splash_rc_read_entry (config->rc, "FgColor", DEFAULT_FGCOLOR);
-  gdk_color_parse (colorstr, &color);
+  gdk_rgba_parse (&color, colorstr);
   g_free (colorstr);
-  sel_fg = gtk_color_button_new_with_color (&color);
-  gtk_table_attach (GTK_TABLE (table), sel_fg, 1, 2, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  sel_fg = gtk_color_button_new_with_rgba (&color);
+  gtk_grid_attach (GTK_GRID (table), sel_fg, 1, 1, 1, 1);
   gtk_widget_show (sel_fg);
 
   frame = xfce_gtk_frame_box_new (_("Image"), &bin);
   gtk_box_pack_start (dbox, frame, FALSE, FALSE, 6);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (bin), vbox);
   gtk_widget_show (vbox);
 
@@ -438,14 +435,14 @@ config_configure (XfsmSplashConfig *config,
   xfsm_splash_rc_write_entry (config->rc, "Font",
                               gtk_font_button_get_font_name (GTK_FONT_BUTTON (btn_font)));
 
-  gtk_color_button_get_color (GTK_COLOR_BUTTON (sel_bg), &color);
+  gtk_color_chooser_get_rgba (GTK_COLOR_CHOOSER (sel_bg), &color);
   g_snprintf (buffer, 32, "#%02x%02x%02x",
               (unsigned) color.red >> 8,
               (unsigned) color.green >> 8,
               (unsigned) color.blue >> 8);
   xfsm_splash_rc_write_entry (config->rc, "BgColor", buffer);
 
-  gtk_color_button_get_color (GTK_COLOR_BUTTON (sel_fg), &color);
+  gtk_color_chooser_get_rgba (GTK_COLOR_CHOOSER (sel_fg), &color);
   g_snprintf (buffer, 32, "#%02x%02x%02x",
               (unsigned) color.red >> 8,
               (unsigned) color.green >> 8,
