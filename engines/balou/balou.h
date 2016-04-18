@@ -37,8 +37,8 @@ typedef struct _Balou       Balou;
 
 struct _Balou
 {
-  GdkColor      bgcolor;
-  GdkColor      fgcolor;
+  GdkRGBA       bgcolor;
+  GdkRGBA       fgcolor;
 
   BalouTheme    *theme;
 
@@ -47,7 +47,6 @@ struct _Balou
   gint           nwindows;
 
   GdkRectangle   fader_area;
-  GdkPixmap     *fader_pm;
 };
 
 

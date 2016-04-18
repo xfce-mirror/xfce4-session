@@ -48,8 +48,8 @@
 
 static void       load_color_pair (const XfceRc *rc,
                                    const gchar  *name,
-                                   GdkColor     *color1_return,
-                                   GdkColor     *color2_return,
+                                   GdkRGBA      *color1_return,
+                                   GdkRGBA      *color2_return,
                                    const gchar  *color_default);
 static GdkPixbuf  *load_pixbuf    (const gchar *path,
                                    gint         available_width,
@@ -62,9 +62,9 @@ static void store_cached_preview (const BalouTheme *theme,
 
 struct _BalouTheme
 {
-  GdkColor  bgcolor1;
-  GdkColor  bgcolor2;
-  GdkColor  fgcolor;
+  GdkRGBA   bgcolor1;
+  GdkRGBA   bgcolor2;
+  GdkRGBA   fgcolor;
   gchar    *name;
   gchar    *description;
   gchar    *font;
@@ -114,8 +114,8 @@ balou_theme_load (const gchar *name)
                        DEFAULT_BGCOLOR);
 
       spec = xfce_rc_read_entry (rc, "fgcolor", DEFAULT_FGCOLOR);
-      if (!gdk_color_parse (spec, &theme->fgcolor))
-        gdk_color_parse (DEFAULT_FGCOLOR, &theme->fgcolor);
+      if (!gdk_rgba_parse (&theme->fgcolor, spec))
+        gdk_rgba_parse (&theme->fgcolor, DEFAULT_FGCOLOR);
 
       spec = xfce_rc_read_entry (rc, "font", DEFAULT_FONT);
       theme->font = g_strdup (spec);
@@ -139,9 +139,9 @@ balou_theme_load (const gchar *name)
     }
 
 set_defaults:
-  gdk_color_parse (DEFAULT_BGCOLOR, &theme->bgcolor1);
-  gdk_color_parse (DEFAULT_BGCOLOR, &theme->bgcolor2);
-  gdk_color_parse (DEFAULT_FGCOLOR, &theme->fgcolor);
+  gdk_rgba_parse (&theme->bgcolor1, DEFAULT_BGCOLOR);
+  gdk_rgba_parse (&theme->bgcolor2, DEFAULT_BGCOLOR);
+  gdk_rgba_parse (&theme->fgcolor, DEFAULT_FGCOLOR);
   theme->font = g_strdup (DEFAULT_FONT);
   theme->logo_file = NULL;
 
@@ -172,7 +172,7 @@ balou_theme_get_font (const BalouTheme *theme)
 
 void
 balou_theme_get_bgcolor (const BalouTheme *theme,
-                         GdkColor         *color_return)
+                         GdkRGBA          *color_return)
 {
   *color_return = theme->bgcolor1;
 }
@@ -180,7 +180,7 @@ balou_theme_get_bgcolor (const BalouTheme *theme,
 
 void
 balou_theme_get_fgcolor (const BalouTheme *theme,
-                         GdkColor         *color_return)
+                         GdkRGBA          *color_return)
 {
   *color_return = theme->fgcolor;
 }
@@ -203,18 +203,18 @@ balou_theme_draw_gradient (const BalouTheme *theme,
                            GdkRectangle      logobox,
                            GdkRectangle      textbox)
 {
-  GdkColor color;
+  GdkRGBA  color;
   gint     dred;
   gint     dgreen;
   gint     dblue;
   gint     i;
   cairo_t *cr;
 
-  cr = gdk_cairo_create (GDK_DRAWABLE (root));
+  cr = gdk_cairo_create (root);
 
-  if (gdk_color_equal (&theme->bgcolor1, &theme->bgcolor2))
+  if (gdk_rgba_equal (&theme->bgcolor1, &theme->bgcolor2))
     {
-      gdk_cairo_set_source_color (cr, &theme->bgcolor1);
+      gdk_cairo_set_source_rgba (cr, &theme->bgcolor1);
 
       gdk_cairo_rectangle (cr, &logobox);
       cairo_fill (cr);
@@ -235,7 +235,7 @@ balou_theme_draw_gradient (const BalouTheme *theme,
           color.green = theme->bgcolor2.green + (i * dgreen / logobox.height);
           color.blue = theme->bgcolor2.blue + (i * dblue / logobox.height);
 
-          gdk_cairo_set_source_color (cr, &color);
+          gdk_cairo_set_source_rgba (cr, &color);
           cairo_move_to(cr, logobox.x, logobox.y + i);
           cairo_line_to(cr, logobox.x + logobox.width, logobox.y + i);
           cairo_stroke(cr);
@@ -243,7 +243,7 @@ balou_theme_draw_gradient (const BalouTheme *theme,
 
     if (textbox.width != 0 && textbox.height != 0)
       {
-        gdk_cairo_set_source_color (cr, &theme->bgcolor1);
+        gdk_cairo_set_source_rgba (cr, &theme->bgcolor1);
         gdk_cairo_rectangle (cr, &textbox);
         cairo_fill(cr);
       }
@@ -292,7 +292,7 @@ balou_theme_generate_preview (const BalouTheme *theme,
     }
 
   root = gdk_screen_get_root_window (gdk_screen_get_default ());
-  cr = gdk_cairo_create(GDK_DRAWABLE(root));
+  cr = gdk_cairo_create(root);
 
   logobox.x = 0;
   logobox.y = 0;
@@ -314,9 +314,7 @@ balou_theme_generate_preview (const BalouTheme *theme,
       g_object_unref (G_OBJECT (pixbuf));
     }
 
-  /* replace with gdk_pixbuf_get_from_window in GTK 3 */
-  pixbuf = gdk_pixbuf_get_from_drawable (NULL, GDK_DRAWABLE (root),
-                                         NULL, 0, 0, 0, 0, WIDTH, HEIGHT);
+  pixbuf = gdk_pixbuf_get_from_window (root, 0, 0, WIDTH, HEIGHT);
   scaled = gdk_pixbuf_scale_simple (pixbuf, width, height, GDK_INTERP_BILINEAR);
 
   g_object_unref (pixbuf);
@@ -351,8 +349,8 @@ balou_theme_destroy (BalouTheme *theme)
 static void
 load_color_pair (const XfceRc *rc,
                  const gchar  *name,
-                 GdkColor     *color1_return,
-                 GdkColor     *color2_return,
+                 GdkRGBA      *color1_return,
+                 GdkRGBA      *color2_return,
                  const gchar  *color_default)
 {
   const gchar *spec;
@@ -361,8 +359,8 @@ load_color_pair (const XfceRc *rc,
   spec = xfce_rc_read_entry (rc, name, color_default);
   if (spec == NULL)
     {
-      gdk_color_parse (color_default, color1_return);
-      gdk_color_parse (color_default, color2_return);
+      gdk_rgba_parse (color1_return, color_default);
+      gdk_rgba_parse (color2_return, color_default);
     }
   else
     {
@@ -370,20 +368,20 @@ load_color_pair (const XfceRc *rc,
 
       if (s[0] == NULL)
         {
-          gdk_color_parse (color_default, color1_return);
-          gdk_color_parse (color_default, color2_return);
+          gdk_rgba_parse (color1_return, color_default);
+          gdk_rgba_parse (color2_return, color_default);
         }
       else if (s[1] == NULL)
         {
-          if (!gdk_color_parse (s[0], color1_return))
-            gdk_color_parse (color_default, color1_return);
+          if (!gdk_rgba_parse (color1_return, s[0]))
+            gdk_rgba_parse (color1_return, color_default);
           *color2_return = *color1_return;
         }
       else
         {
-          if (!gdk_color_parse (s[0], color2_return))
-            gdk_color_parse (color_default, color2_return);
-          if (!gdk_color_parse (s[1], color1_return))
+          if (!gdk_rgba_parse (color2_return, s[0]))
+            gdk_rgba_parse (color2_return, color_default);
+          if (!gdk_rgba_parse (color1_return, s[1]))
             *color1_return = *color2_return;
         }
 

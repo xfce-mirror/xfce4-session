@@ -24,6 +24,7 @@
 #endif
 
 #include <X11/Xlib.h>
+#include <gdk/gdkx.h>
 
 #include <engines/balou/balou.h>
 
@@ -39,10 +40,7 @@ static void            balou_window_init     (BalouWindow  *window,
                                               GdkWindow    *root,
                                               GdkCursor    *cursor);
 static void            balou_window_destroy  (BalouWindow  *window);
-#if 0
-static void            balou_window_set_text (BalouWindow  *window,
-                                              const gchar  *text);
-#endif
+
 static GdkFilterReturn balou_window_filter   (GdkXEvent    *xevent,
                                               GdkEvent     *event,
                                               gpointer      data);
@@ -98,11 +96,11 @@ balou_init (Balou        *balou,
   balou_theme_get_bgcolor (theme, &balou->bgcolor);
   balou_theme_get_fgcolor (theme, &balou->fgcolor);
 
-  cursor = gdk_cursor_new (GDK_WATCH);
+  cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
   description = pango_font_description_from_string (balou_theme_get_font (theme));
 
   /* determine number of required windows */
-  nscreens = gdk_display_get_n_screens (display);
+  nscreens = XScreenCount (gdk_x11_display_get_xdisplay (display));
   for (n = 0; n < nscreens; ++n)
     {
       screen = gdk_display_get_screen (display, n);
@@ -181,12 +179,12 @@ balou_init (Balou        *balou,
   /* draw the background and display logo pixbuf (if any) */
   window = balou->mainwin;
 
-  cr = gdk_cairo_create (GDK_DRAWABLE (window->window));
+  cr = gdk_cairo_create (window->window);
 
   ww = gdk_window_get_width (GDK_WINDOW (window->window));
   wh = gdk_window_get_height (GDK_WINDOW (window->window));
 
-  gdk_cairo_set_source_color (cr, &balou->bgcolor);
+  gdk_cairo_set_source_rgba (cr, &balou->bgcolor);
   cairo_rectangle (cr, 0, 0, ww, wh);
   cairo_fill (cr);
 
@@ -208,7 +206,7 @@ balou_init (Balou        *balou,
     }
 
   pango_font_description_free (description);
-  gdk_cursor_unref (cursor);
+  g_object_unref (cursor);
 }
 
 
@@ -237,9 +235,9 @@ balou_fadein (Balou *balou, const gchar *text)
   ww = gdk_window_get_width (GDK_WINDOW (window->window));
   wh = gdk_window_get_height (GDK_WINDOW (window->window));
 
-  cr = gdk_cairo_create (GDK_DRAWABLE (window->window));
+  cr = gdk_cairo_create (window->window);
 
-  gdk_cairo_set_source_color (cr, &balou->bgcolor);
+  gdk_cairo_set_source_rgba (cr, &balou->bgcolor);
   cairo_rectangle (cr, 0, 0, ww, wh);
   cairo_fill (cr);
 
@@ -262,11 +260,11 @@ balou_fadein (Balou *balou, const gchar *text)
   median = (window->area.width - area.width) / 2;
   for (x = 0; (median - x) > BALOU_INCREMENT; x += BALOU_INCREMENT)
     {
-      gdk_cairo_set_source_color (cr, &balou->bgcolor);
+      gdk_cairo_set_source_rgba (cr, &balou->bgcolor);
       gdk_cairo_rectangle (cr, &window->textbox);
       cairo_fill (cr);
 
-      gdk_cairo_set_source_color (cr, &balou->fgcolor);
+      gdk_cairo_set_source_rgba (cr, &balou->fgcolor);
       cairo_move_to (cr, x, window->textbox.y);
       pango_cairo_show_layout (cr, window->layout);
 
@@ -295,7 +293,7 @@ balou_run (Balou     *balou,
 
   window->dialog_active = TRUE;
 
-  gtk_widget_size_request (dialog, &requisition);
+  gtk_widget_get_preferred_size (dialog, NULL, &requisition);
   x = window->area.x + (window->area.width - requisition.width) / 2;
   y = window->area.y + (window->area.height - requisition.height) / 2;
   gtk_window_move (GTK_WINDOW (dialog), x, y);

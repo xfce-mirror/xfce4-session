@@ -35,9 +35,9 @@ const gchar *balou_theme_get_name         (const BalouTheme *theme);
 const gchar *balou_theme_get_description  (const BalouTheme *theme);
 const gchar *balou_theme_get_font         (const BalouTheme *theme);
 void         balou_theme_get_bgcolor      (const BalouTheme *theme,
-                                           GdkColor         *color_return);
+                                           GdkRGBA          *color_return);
 void         balou_theme_get_fgcolor      (const BalouTheme *theme,
-                                           GdkColor         *color_return);
+                                           GdkRGBA          *color_return);
 GdkPixbuf   *balou_theme_get_logo         (const BalouTheme *theme,
                                            gint              available_width,
                                            gint              available_height);
