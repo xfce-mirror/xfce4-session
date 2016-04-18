@@ -162,11 +162,13 @@ xfsm_window_add_border (GtkWindow *window)
   gtk_widget_realize(GTK_WIDGET(window));
 
   box1 = gtk_event_box_new ();
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
   gtk_style_context_get_background_color(gtk_widget_get_style_context (GTK_WIDGET(window)),
                                          GTK_STATE_SELECTED,
                                          &bg_color);
   gtk_widget_override_background_color (box1, GTK_STATE_NORMAL,
                                         &bg_color);
+G_GNUC_END_IGNORE_DEPRECATIONS
   gtk_widget_show (box1);
 
   box2 = gtk_event_box_new ();
