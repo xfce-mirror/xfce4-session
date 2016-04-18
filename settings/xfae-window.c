@@ -45,12 +45,12 @@ static void     xfae_window_selection_changed   (GtkTreeSelection *selection,
 
 struct _XfaeWindowClass
 {
-  GtkVBoxClass __parent__;
+  GtkBoxClass __parent__;
 };
 
 struct _XfaeWindow
 {
-  GtkVBox           __parent__;
+  GtkBox            __parent__;
 
   GtkTreeSelection *selection;
 

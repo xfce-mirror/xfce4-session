@@ -126,10 +126,10 @@ session_editor_save_session(GtkWidget *btn,
 
     if(!xfsm_manager_dbus_client_checkpoint(manager_dbus_proxy, "", &error)) {
         xfce_message_dialog(GTK_WINDOW(gtk_widget_get_toplevel(btn)),
-                            _("Session Save Error"), GTK_STOCK_DIALOG_ERROR,
+                            _("Session Save Error"), "dialog-error",
                             _("Unable to save the session"),
                             error->message,
-                            GTK_STOCK_CLOSE, GTK_RESPONSE_ACCEPT,
+                            _("_Close"), GTK_RESPONSE_ACCEPT,
                             NULL);
         gtk_widget_set_sensitive(btn, TRUE);
         g_error_free(error);
@@ -167,11 +167,11 @@ session_editor_clear_sessions(GtkWidget *btn,
     gtk_widget_set_sensitive(btn, FALSE);
 
     if(xfce_message_dialog(GTK_WINDOW(gtk_widget_get_toplevel(treeview)),
-                           _("Clear sessions"), GTK_STOCK_DIALOG_QUESTION,
+                           _("Clear sessions"), "dialog-question",
                            _("Are you sure you want to empty the session cache?"),
                            _("The saved states of your applications will not be restored during your next login."),
-                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                           XFCE_BUTTON_TYPE_MIXED, GTK_STOCK_OK, _("_Proceed"), GTK_RESPONSE_ACCEPT,
+                           _("_Cancel"), GTK_RESPONSE_CANCEL,
+                           XFCE_BUTTON_TYPE_MIXED, _("_Ok"), _("_Proceed"), GTK_RESPONSE_ACCEPT,
                            NULL) == GTK_RESPONSE_ACCEPT)
     {
         const gchar *item_name;
@@ -249,11 +249,11 @@ session_editor_quit_client(GtkWidget *btn,
     primary = g_strdup_printf(_("Are you sure you want to terminate \"%s\"?"),
                               name);
     if(xfce_message_dialog(GTK_WINDOW(gtk_widget_get_toplevel(treeview)),
-                           _("Terminate Program"), GTK_STOCK_DIALOG_QUESTION,
+                           _("Terminate Program"), "dialog-question",
                            primary,
                            _("The application will lose any unsaved state and will not be restarted in your next session."),
-                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                           XFCE_BUTTON_TYPE_MIXED, GTK_STOCK_QUIT, _("_Quit Program"), GTK_RESPONSE_ACCEPT,
+                           _("_Cancel"), GTK_RESPONSE_CANCEL,
+                           XFCE_BUTTON_TYPE_MIXED, _("_Quit"), _("_Quit Program"), GTK_RESPONSE_ACCEPT,
                            NULL) == GTK_RESPONSE_ACCEPT)
     {
         GError *error = NULL;
@@ -277,10 +277,10 @@ session_editor_quit_client(GtkWidget *btn,
 
         if(!xfsm_client_dbus_client_terminate(proxy, &error)) {
             xfce_message_dialog(GTK_WINDOW(gtk_widget_get_toplevel(treeview)),
-                                _("Terminate Program"), GTK_STOCK_DIALOG_ERROR,
+                                _("Terminate Program"), "dialog-error",
                                 _("Unable to terminate program."),
                                 error->message,
-                                GTK_STOCK_CLOSE, GTK_RESPONSE_ACCEPT,
+                                _("Close"), GTK_RESPONSE_ACCEPT,
                                 NULL);
             g_error_free(error);
         }
