@@ -24,7 +24,7 @@
 #endif
 
 #include <X11/Xlib.h>
-
+#include <gdk/gdkx.h>
 #include <gdk-pixbuf/gdk-pixdata.h>
 #include <gmodule.h>
 
@@ -51,7 +51,7 @@ struct _MiceWindow
 {
   GdkWindow *window;
   GdkPixbuf *pixbuf;
-  GdkColor  *color;
+  GdkRGBA   *color;
   int        x;
   int        y;
   Mice      *mice;
@@ -102,7 +102,7 @@ static MiceWindow*
 mice_window_new (GdkScreen      *screen,
                  int             monitor,
                  GdkPixbuf      *pixbuf,
-                 const GdkColor *color,
+                 const GdkRGBA  *color,
                  GdkCursor      *cursor,
                  Mice           *mice)
 {
@@ -115,7 +115,7 @@ mice_window_new (GdkScreen      *screen,
   mice_window = g_new0 (MiceWindow, 1);
   mice_window->mice = mice;
   mice_window->pixbuf = GDK_PIXBUF (g_object_ref (pixbuf));
-  mice_window->color = gdk_color_copy (color);
+  mice_window->color = gdk_rgba_copy (color);
 
   /* init win attributes */
   attr.x = geometry.x;
@@ -132,7 +132,7 @@ mice_window_new (GdkScreen      *screen,
                                         &attr, GDK_WA_X | GDK_WA_Y
                                         | GDK_WA_NOREDIR | GDK_WA_CURSOR);
 
-  gdk_window_set_background (mice_window->window, color);
+  gdk_window_set_background_rgba (mice_window->window, color);
 
   /* center pixmap */
   mice_window->x = (geometry.width - mice->base_width) / 2;
@@ -160,13 +160,13 @@ mice_step (Mice *mice)
     {
       mice_window = MICE_WINDOW (lp->data);
 
-      cr = gdk_cairo_create (GDK_DRAWABLE (mice_window->window));
+      cr = gdk_cairo_create (mice_window->window);
 
       ww = gdk_window_get_width (GDK_WINDOW (mice_window->window));
       wh = gdk_window_get_height (GDK_WINDOW (mice_window->window));
 
       /* Paint the background */
-      gdk_cairo_set_source_color (cr, mice_window->color);
+      gdk_cairo_set_source_rgba (cr, mice_window->color);
       cairo_rectangle (cr, 0, 0, ww, wh);
       cairo_fill (cr);
 
@@ -216,7 +216,7 @@ mice_setup (XfsmSplashEngine *engine,
   MiceWindow   *mice_window;
   GdkWindow    *root;
   GdkPixbuf    *pixbuf;
-  GdkColor      color;
+  GdkRGBA       color;
   GdkCursor    *cursor;
   GdkScreen    *screen;
   cairo_t      *cr;
@@ -226,8 +226,8 @@ mice_setup (XfsmSplashEngine *engine,
   int           nmonitors;
   int           n, m;
 
-  gdk_color_parse (COLOR, &color);
-  cursor = gdk_cursor_new (GDK_WATCH);
+  gdk_rgba_parse (&color, COLOR);
+  cursor = gdk_cursor_new_for_display (engine->display, GDK_WATCH);
 
   /* load slide pixbuf */
   G_GNUC_BEGIN_IGNORE_DEPRECATIONS
@@ -242,7 +242,7 @@ mice_setup (XfsmSplashEngine *engine,
   mice->step = 0;
   mice->direction = 1;
 
-  nscreens = gdk_display_get_n_screens (engine->display);
+  nscreens = XScreenCount (gdk_x11_display_get_xdisplay (engine->display));
   for (n = 0; n < nscreens; ++n)
     {
       screen = gdk_display_get_screen (engine->display, n);
@@ -250,8 +250,8 @@ mice_setup (XfsmSplashEngine *engine,
       root = gdk_screen_get_root_window (screen);
 
       /* create graphics context for this screen */
-      cr = gdk_cairo_create (GDK_DRAWABLE (root));
-      gdk_cairo_set_source_color (cr, &color);
+      cr = gdk_cairo_create (root);
+      gdk_cairo_set_source_rgba (cr, &color);
 
       cairo_rectangle (cr, 0, 0, mice->pixbuf_width, mice->pixbuf_height);
       cairo_fill (cr);
@@ -287,7 +287,7 @@ mice_setup (XfsmSplashEngine *engine,
 
   /* cleanup */
   g_object_unref (pixbuf);
-  gdk_cursor_unref (cursor);
+  g_object_unref (cursor);
 }
 
 
@@ -318,7 +318,7 @@ mice_run (XfsmSplashEngine *engine,
 
   gtk_window_set_screen (GTK_WINDOW (dialog),
                          gdk_window_get_screen (mainwin->window));
-  gtk_widget_size_request (dialog, &requisition);
+  gtk_widget_get_preferred_size (dialog, NULL, &requisition);
   x = wx + (ww - requisition.width) / 2;
   y = wy + (wh - requisition.height) / 2;
   gtk_window_move (GTK_WINDOW (dialog), x, y);
@@ -343,7 +343,7 @@ mice_destroy (XfsmSplashEngine *engine)
       gdk_window_remove_filter (mice_window->window, mice_filter, mice);
       gdk_window_destroy (mice_window->window);
       g_object_unref (mice_window->pixbuf);
-      gdk_color_free (mice_window->color);
+      gdk_rgba_free (mice_window->color);
       g_free (mice_window);
     }
 
