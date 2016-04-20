@@ -43,6 +43,8 @@
 #include <unistd.h>
 #endif
 
+#include <gdk/gdkx.h>
+
 #include <libxfce4util/libxfce4util.h>
 
 #include <xfce4-session/xfsm-compat-kde.h>
@@ -132,7 +134,7 @@ xfsm_compat_kde_startup (XfsmSplashScreen *splash)
   run (command);
 
   /* tell kde if we are running multi-head */
-  if (gdk_display_get_n_screens (gdk_display_get_default ()) > 1)
+  if (XScreenCount (gdk_x11_display_get_xdisplay (gdk_display_get_default ())) > 1)
     {
       g_snprintf (command, 256, "qdbus org.kde.klauncher /KLauncher setLaunchEnv "
                                 "KDE_MULTIHEAD \"true\"");

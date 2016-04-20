@@ -664,7 +664,7 @@ xfsm_legacy_shutdown (void)
 
   gdk_flush ();
 
-  gdk_error_trap_pop ();
+  gdk_error_trap_pop_ignored ();
 #endif
 }
 

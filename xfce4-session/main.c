@@ -142,9 +142,6 @@ init_display (XfsmManager   *manager,
   gdk_flush ();
 
   sm_init (channel, disable_tcp, manager);
-
-  /* gtk resource files may have changed */
-  gtk_rc_reparse_all ();
 }
 
 

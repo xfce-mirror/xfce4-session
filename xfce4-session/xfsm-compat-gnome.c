@@ -222,7 +222,7 @@ xfsm_compat_gnome_smproxy_startup (void)
 
   XSync (dpy, False);
 
-  gdk_error_trap_pop ();
+  gdk_error_trap_pop_ignored ();
 }
 
 
@@ -238,7 +238,7 @@ xfsm_compat_gnome_smproxy_shutdown (void)
       gnome_smproxy_window = None;
     }
 
-  gdk_error_trap_pop ();
+  gdk_error_trap_pop_ignored ();
 }
 
 

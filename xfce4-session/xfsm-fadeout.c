@@ -24,7 +24,7 @@
 #endif
 
 #include <gtk/gtk.h>
-
+#include <gdk/gdkx.h>
 #include <xfce4-session/xfsm-fadeout.h>
 
 
@@ -51,11 +51,11 @@ xfsm_fadeout_new (GdkDisplay *display)
   cairo_surface_t *surface;
   GdkScreen       *gdk_screen;
   GdkWindow       *window;
-  GdkColor         black = { 0, };
+  GdkRGBA          black = { 0, };
 
   fadeout = g_slice_new0 (XfsmFadeout);
 
-  cursor = gdk_cursor_new (GDK_WATCH);
+  cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
 
   attr.x = 0;
   attr.y = 0;
@@ -65,7 +65,7 @@ xfsm_fadeout_new (GdkDisplay *display)
   attr.cursor = cursor;
   attr.override_redirect = TRUE;
 
-  for (n = 0; n < gdk_display_get_n_screens (display); ++n)
+  for (n = 0; n < XScreenCount (gdk_x11_display_get_xdisplay ((display))); ++n)
     {
       gdk_screen = gdk_display_get_screen (display, n);
 
@@ -80,10 +80,10 @@ xfsm_fadeout_new (GdkDisplay *display)
                                | GDK_WA_NOREDIR | GDK_WA_CURSOR);
 
       if (gdk_screen_is_composited (gdk_screen)
-          && gdk_screen_get_rgba_colormap (gdk_screen) != NULL)
+          && gdk_screen_get_rgba_visual (gdk_screen) != NULL)
         {
           /* transparent black window */
-          gdk_window_set_background (window, &black);
+          gdk_window_set_background_rgba (window, &black);
           gdk_window_set_opacity (window, 0.50);
         }
       else
@@ -93,14 +93,13 @@ xfsm_fadeout_new (GdkDisplay *display)
           cr = cairo_create (surface);
 
           /* make of copy of the root window */
-          root_pixbuf = gdk_pixbuf_get_from_drawable (NULL, GDK_DRAWABLE (root), NULL,
-                                                      0, 0, 0, 0, width, height);
+          root_pixbuf = gdk_pixbuf_get_from_window (root, 0, 0, width, height);
           gdk_cairo_set_source_pixbuf (cr, root_pixbuf, 0, 0);
           cairo_paint (cr);
           g_object_unref (G_OBJECT (root_pixbuf));
 
           /* draw black layer */
-          gdk_cairo_set_source_color (cr, &black);
+          gdk_cairo_set_source_rgba (cr, &black);
           cairo_paint_with_alpha (cr, 0.50);
           cairo_destroy (cr);
           cairo_surface_destroy (surface);
@@ -112,7 +111,7 @@ xfsm_fadeout_new (GdkDisplay *display)
   /* show all windows all at once */
   g_slist_foreach (fadeout->windows, (GFunc) gdk_window_show, NULL);
 
-  gdk_cursor_unref (cursor);
+  g_object_unref (cursor);
 
   return fadeout;
 }
@@ -122,8 +121,10 @@ xfsm_fadeout_new (GdkDisplay *display)
 void
 xfsm_fadeout_clear (XfsmFadeout *fadeout)
 {
+/* TODO: Test if this is needed.
   if (fadeout != NULL)
     g_slist_foreach (fadeout->windows, (GFunc) gdk_window_clear, NULL);
+ */
 }
 
 

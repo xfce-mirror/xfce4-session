@@ -68,7 +68,7 @@
 
 #include <gdk-pixbuf/gdk-pixdata.h>
 #include <gtk/gtk.h>
-
+#include <gdk/gdkx.h>
 #include <libwnck/libwnck.h>
 
 #include <libxfce4ui/libxfce4ui.h>
@@ -338,7 +338,7 @@ xfsm_manager_restore_active_workspace (XfsmManager *manager,
   gint            n, m;
 
   display = gdk_display_get_default ();
-  for (n = 0; n < gdk_display_get_n_screens (display); ++n)
+  for (n = 0; n < XScreenCount (gdk_x11_display_get_xdisplay (display)); ++n)
     {
       g_snprintf (buffer, 1024, "Screen%d_ActiveWorkspace", n);
       xfsm_verbose ("Attempting to restore %s\n", buffer);
@@ -676,7 +676,7 @@ xfsm_manager_load_failsafe (XfsmManager   *manager,
                   "/sessions/%s/Client%d_PerScreen", failsafe_name, i);
       if (xfconf_channel_get_bool (channel, screen_entry, FALSE))
         {
-          for (n_screen = 0; n_screen < gdk_display_get_n_screens (display); ++n_screen)
+          for (n_screen = 0; n_screen < XScreenCount (gdk_x11_display_get_xdisplay (display)); ++n_screen)
             {
               fclient = g_new0 (FailsafeClient, 1);
               if (n_screen == 0)
@@ -747,10 +747,10 @@ xfsm_manager_load_settings (XfsmManager   *manager,
            * window doesn't look ugly (right now no WM is running, so it
            * won't have window decorations). */
           xfce_message_dialog (NULL, _("Session Manager Error"),
-                               GTK_STOCK_DIALOG_ERROR,
+                               "dialog-error",
                                _("Unable to load a failsafe session"),
                                errorstr,
-                               GTK_STOCK_QUIT, GTK_RESPONSE_ACCEPT, NULL);
+                               _("_Quit"), GTK_RESPONSE_ACCEPT, NULL);
           g_free (errorstr);
           exit (EXIT_FAILURE);
         }
@@ -1165,12 +1165,12 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
                                        &error))
             {
               xfce_message_dialog (NULL, _("Shutdown Failed"),
-                                   GTK_STOCK_DIALOG_ERROR,
+                                   "dialog-error",
                                    manager->shutdown_type == XFSM_SHUTDOWN_SUSPEND
                                    ? _("Failed to suspend session")
                                    : _("Failed to hibernate session"),
                                    error->message,
-                                   GTK_STOCK_CLOSE, GTK_RESPONSE_ACCEPT,
+                                   _("_Close"), GTK_RESPONSE_ACCEPT,
                                    NULL);
               g_error_free (error);
             }
@@ -1735,7 +1735,7 @@ xfsm_manager_store_session (XfsmManager *manager)
 
   /* store current workspace numbers */
   display = gdk_display_get_default ();
-  for (n = 0; n < gdk_display_get_n_screens (display); ++n)
+  for (n = 0; n < XScreenCount (gdk_x11_display_get_xdisplay (display)); ++n)
     {
       screen = wnck_screen_get (n);
       wnck_screen_force_update (screen);

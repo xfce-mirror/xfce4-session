@@ -209,10 +209,10 @@ again:
 
           dialog = gtk_dialog_new_with_buttons (NULL,
                                                 NULL,
-                                                GTK_DIALOG_NO_SEPARATOR,
-                                                GTK_STOCK_CANCEL,
+                                                GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                _("_Cancel"),
                                                 GTK_RESPONSE_CANCEL,
-                                                GTK_STOCK_OK,
+                                                _("_OK"),
                                                 GTK_RESPONSE_OK,
                                                 NULL);
           gtk_dialog_set_default_response (GTK_DIALOG (dialog),
