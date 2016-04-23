@@ -328,7 +328,7 @@ config_configure (XfsmSplashConfig *config,
   GtkFileFilter *filter;
   GdkRGBA      color;
   GtkBox      *dbox;
-  gchar        buffer[32];
+  gchar       *buffer;
   GtkWidget   *bin;
 
   dialog = gtk_dialog_new_with_buttons (_("Configure Simple..."),
@@ -375,6 +375,7 @@ config_configure (XfsmSplashConfig *config,
   gtk_widget_show (label);
 
   colorstr = xfsm_splash_rc_read_entry (config->rc, "FgColor", DEFAULT_FGCOLOR);
+  g_debug ("FgColor %s", colorstr);
   gdk_rgba_parse (&color, colorstr);
   g_free (colorstr);
   sel_fg = gtk_color_button_new_with_rgba (&color);
@@ -436,18 +437,14 @@ config_configure (XfsmSplashConfig *config,
                               gtk_font_button_get_font_name (GTK_FONT_BUTTON (btn_font)));
 
   gtk_color_chooser_get_rgba (GTK_COLOR_CHOOSER (sel_bg), &color);
-  g_snprintf (buffer, 32, "#%02x%02x%02x",
-              (unsigned) color.red >> 8,
-              (unsigned) color.green >> 8,
-              (unsigned) color.blue >> 8);
+  buffer = gdk_rgba_to_string (&color);
   xfsm_splash_rc_write_entry (config->rc, "BgColor", buffer);
+  g_free (buffer);
 
   gtk_color_chooser_get_rgba (GTK_COLOR_CHOOSER (sel_fg), &color);
-  g_snprintf (buffer, 32, "#%02x%02x%02x",
-              (unsigned) color.red >> 8,
-              (unsigned) color.green >> 8,
-              (unsigned) color.blue >> 8);
+  buffer = gdk_rgba_to_string (&color);
   xfsm_splash_rc_write_entry (config->rc, "FgColor", buffer);
+  g_free (buffer);
 
   path_locale = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (button));
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (checkbox))
