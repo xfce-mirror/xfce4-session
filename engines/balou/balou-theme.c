@@ -197,9 +197,10 @@ balou_theme_get_logo (const BalouTheme *theme,
 }
 
 
+
 void
 balou_theme_draw_gradient (const BalouTheme *theme,
-                           GdkWindow        *root,
+                           cairo_t          *cr,
                            GdkRectangle      logobox,
                            GdkRectangle      textbox)
 {
@@ -208,9 +209,6 @@ balou_theme_draw_gradient (const BalouTheme *theme,
   gint     dgreen;
   gint     dblue;
   gint     i;
-  cairo_t *cr;
-
-  cr = gdk_cairo_create (root);
 
   if (gdk_rgba_equal (&theme->bgcolor1, &theme->bgcolor2))
     {
@@ -248,8 +246,6 @@ balou_theme_draw_gradient (const BalouTheme *theme,
         cairo_fill(cr);
       }
     }
-
-    cairo_destroy (cr);
 }
 
 
@@ -266,6 +262,7 @@ balou_theme_generate_preview (const BalouTheme *theme,
   GdkPixbuf *pixbuf;
   GdkPixbuf *scaled;
   GdkWindow *root;
+  cairo_surface_t *surface;
   cairo_t   *cr;
   gint       pw, ph;
 
@@ -292,7 +289,11 @@ balou_theme_generate_preview (const BalouTheme *theme,
     }
 
   root = gdk_screen_get_root_window (gdk_screen_get_default ());
-  cr = gdk_cairo_create(root);
+  surface = gdk_window_create_similar_surface (root,
+                                               CAIRO_CONTENT_COLOR_ALPHA,
+                                               gdk_window_get_width (root),
+                                               gdk_window_get_height (root));
+  cr = cairo_create(surface);
 
   logobox.x = 0;
   logobox.y = 0;
@@ -300,7 +301,7 @@ balou_theme_generate_preview (const BalouTheme *theme,
   logobox.height = HEIGHT;
   textbox.x = 0;
   textbox.y = 0;
-  balou_theme_draw_gradient (theme, root, logobox, textbox);
+  balou_theme_draw_gradient (theme, cr, logobox, textbox);
 
   pixbuf = balou_theme_get_logo (theme, WIDTH, HEIGHT);
   if (pixbuf != NULL)
@@ -314,11 +315,14 @@ balou_theme_generate_preview (const BalouTheme *theme,
       g_object_unref (G_OBJECT (pixbuf));
     }
 
-  pixbuf = gdk_pixbuf_get_from_window (root, 0, 0, WIDTH, HEIGHT);
+  cairo_surface_flush (surface);
+
+  pixbuf = gdk_pixbuf_get_from_surface (surface, 0, 0, WIDTH, HEIGHT);
   scaled = gdk_pixbuf_scale_simple (pixbuf, width, height, GDK_INTERP_BILINEAR);
 
   g_object_unref (pixbuf);
   cairo_destroy(cr);
+  cairo_surface_destroy (surface);
 
   /* store preview */
   store_cached_preview (theme, scaled);

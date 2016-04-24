@@ -129,6 +129,7 @@ balou_init (Balou        *balou,
 
       for (m = 0; m < nmonitors; ++m)
         {
+          cairo_t *window_cr;
           window = balou->windows + i;
           balou_window_init (window, screen, m, root, cursor);
 
@@ -143,10 +144,14 @@ balou_init (Balou        *balou,
           window->textbox.y      += window->logobox.height;
           window->textbox.height -= window->logobox.height;
 
+          window_cr = gdk_cairo_create (window->window);
+
           balou_theme_draw_gradient (balou->theme,
-                                     root,
+                                     window_cr,
                                      window->logobox,
                                      window->textbox);
+
+          cairo_destroy (window_cr);
 
           if (mainscreen == screen && mainmonitor == m)
             balou->mainwin = window;

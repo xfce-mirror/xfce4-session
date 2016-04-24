@@ -42,7 +42,7 @@ GdkPixbuf   *balou_theme_get_logo         (const BalouTheme *theme,
                                            gint              available_width,
                                            gint              available_height);
 void         balou_theme_draw_gradient    (const BalouTheme *theme,
-                                           GdkWindow        *root,
+                                           cairo_t          *cr,
                                            GdkRectangle      logobox,
                                            GdkRectangle      textbox);
 GdkPixbuf   *balou_theme_generate_preview (const BalouTheme *theme,
