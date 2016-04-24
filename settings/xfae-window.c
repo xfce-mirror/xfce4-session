@@ -85,6 +85,8 @@ xfae_window_init (XfaeWindow *window)
   GtkWidget         *button;
 
   vbox = GTK_WIDGET(window);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (vbox),
+                                  GTK_ORIENTATION_VERTICAL);
   gtk_box_set_spacing (GTK_BOX (vbox), 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
