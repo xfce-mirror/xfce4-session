@@ -146,6 +146,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gboolean       can_restart;
   gboolean       can_suspend = FALSE;
   gboolean       can_hibernate = FALSE;
+  gboolean       can_switch_user = FALSE;
   gboolean       auth_suspend = FALSE;
   gboolean       auth_hibernate = FALSE;
   GError        *error = NULL;
@@ -331,6 +332,37 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
       else
         {
           g_printerr ("%s: Querying hibernate failed: %s\n\n",
+                      PACKAGE_NAME, ERROR_MSG (error));
+          g_clear_error (&error);
+        }
+    }
+
+  /**
+   * Switch User
+   *
+   * Hide the button if system cannot switch user, requires the display
+   * manager to provide the org.freedesktop.DisplayManager dbus API
+   **/
+  if (xfconf_channel_get_bool (channel, "/shutdown/ShowSwitchUser", TRUE))
+    {
+      if (xfsm_shutdown_can_switch_user (dialog->shutdown, &can_switch_user, &error))
+        {
+          if (can_switch_user)
+            {
+              button = xfsm_logout_dialog_button (_("Switch _User"), "avatar-default",
+                                                  "avatar-default-symbolic", XFSM_SHUTDOWN_SWITCH_USER,
+                                                  dialog);
+
+              gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+              gtk_widget_set_sensitive (button, auth_hibernate);
+              gtk_widget_show (button);
+
+              gtk_widget_show (hbox);
+            }
+        }
+      else
+        {
+          g_printerr ("%s: Querying switch user failed: %s\n\n",
                       PACKAGE_NAME, ERROR_MSG (error));
           g_clear_error (&error);
         }
