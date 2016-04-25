@@ -114,10 +114,6 @@ dnl Check for Polkit/PolicyKit
 XDT_CHECK_OPTIONAL_PACKAGE([POLKIT], [polkit-gobject-1], [0.102],
                            [polkit], [Polkit support])
 
-dnl Check for Upower
-XDT_CHECK_OPTIONAL_PACKAGE([UPOWER],[upower-glib], [0.9.7],
-			   [upower],[Upower support])
-
 dnl Check for debugging support
 XDT_FEATURE_DEBUG([xfsm_debug_default])
 

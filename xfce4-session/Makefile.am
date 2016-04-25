@@ -65,8 +65,6 @@ xfce4_session_SOURCES =							\
 	xfsm-splash-screen.h						\
 	xfsm-startup.c							\
 	xfsm-startup.h							\
-	xfsm-upower.c							\
-	xfsm-upower.h							\
 	xfsm-systemd.c							\
 	xfsm-systemd.h
 
@@ -82,8 +80,7 @@ xfce4_session_CFLAGS =							\
 	$(POLKIT_CFLAGS)						\
 	$(XFCONF_CFLAGS)						\
 	$(GMODULE_CFLAGS)						\
-	$(PLATFORM_CFLAGS)						\
-	$(UPOWER_CFLAGS)
+	$(PLATFORM_CFLAGS)
 
 xfce4_session_LDFLAGS =							\
 	-no-undefined							\
@@ -103,7 +100,6 @@ xfce4_session_LDADD =							\
 	$(LIBWNCK_LIBS)							\
 	$(POLKIT_LIBS)							\
 	$(XFCONF_LIBS)							\
-	$(UPOWER_LIBS)							\
 	-lm
 
 xfce4_session_DEPENDENCIES =						\
