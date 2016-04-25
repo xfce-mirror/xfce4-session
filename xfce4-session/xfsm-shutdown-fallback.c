@@ -56,13 +56,9 @@
 #include <sys/sysctl.h>
 #endif
 
-#include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
+#include <gio/gio.h>
 #include <libxfce4util/libxfce4util.h>
 #include <gtk/gtk.h>
-#ifdef HAVE_UPOWER
-#include <upower.h>
-#endif
 #ifdef HAVE_POLKIT
 #include <polkit/polkit.h>
 #endif
