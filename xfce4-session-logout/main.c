@@ -35,8 +35,7 @@
 #include <string.h>
 #endif
 
-#include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
+#include <gio/gio.h>
 
 #include <gtk/gtk.h>
 #include <libxfce4ui/libxfce4ui.h>
@@ -116,12 +115,11 @@ xfce_session_logout_notify_error (const gchar *message,
 int
 main (int argc, char **argv)
 {
-  DBusGConnection *conn;
-  DBusGProxy      *proxy = NULL;
+  GDBusProxy      *proxy = NULL;
   GError          *err = NULL;
   gboolean         have_display;
   gboolean         show_dialog;
-  gboolean         result = FALSE;
+  GVariant        *result = NULL;
   guint            shutdown_type;
   gboolean         allow_save;
 
@@ -132,7 +130,7 @@ main (int argc, char **argv)
   if (opt_version)
     {
       g_print ("%s %s (Xfce %s)\n\n", PACKAGE_NAME, PACKAGE_VERSION, xfce_version_string ());
-      g_print ("%s\n", "Copyright (c) 2004-2012");
+      g_print ("%s\n", "Copyright (c) 2004-2016");
       g_print ("\t%s\n\n", _("The Xfce development team. All rights reserved."));
       g_print ("%s\n", _("Written by Benedikt Meurer <benny@xfce.org>"));
       g_print ("%s\n\n", _("and Brian Tarricone <kelnos@xfce.org>."));
@@ -141,61 +139,75 @@ main (int argc, char **argv)
       return EXIT_SUCCESS;
     }
 
-  /* open session bus */
-  conn = dbus_g_bus_get (DBUS_BUS_SESSION, &err);
-  if (conn == NULL)
-    {
-      xfce_session_logout_notify_error (_("Unable to contact D-Bus session bus"), err, have_display);
-      g_error_free (err);
-      return EXIT_FAILURE;
-    }
-
   /* save the session, unless fast is provided */
   allow_save = !opt_fast;
 
   /* create messsage */
-  proxy = dbus_g_proxy_new_for_name_owner (conn,
-                                           "org.xfce.SessionManager",
-                                           "/org/xfce/SessionManager",
-                                           "org.xfce.Session.Manager",
-                                           &err);
-  if (proxy != NULL)
+  proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
+                                         G_DBUS_PROXY_FLAGS_NONE,
+                                         NULL,
+                                         "org.xfce.SessionManager",
+                                         "/org/xfce/SessionManager",
+                                         "org.xfce.Session.Manager",
+                                         NULL,
+                                         &err);
+  if (proxy == NULL)
     {
-      if (opt_halt)
-        {
-          result = dbus_g_proxy_call (proxy, "Shutdown", &err,
-                                      G_TYPE_BOOLEAN, allow_save,
-                                      G_TYPE_INVALID, G_TYPE_INVALID);
-        }
-      else if (opt_reboot)
-        {
-          result = dbus_g_proxy_call (proxy, "Restart", &err,
-                                      G_TYPE_BOOLEAN, allow_save,
-                                      G_TYPE_INVALID, G_TYPE_INVALID);
-        }
-      else if (opt_suspend)
-        {
-          result = dbus_g_proxy_call (proxy, "Suspend", &err,
-                                      G_TYPE_INVALID, G_TYPE_INVALID);
-        }
-      else if (opt_hibernate)
-        {
-          result = dbus_g_proxy_call (proxy, "Hibernate", &err,
-                                      G_TYPE_INVALID, G_TYPE_INVALID);
-        }
-      else
-        {
-          show_dialog = !opt_logout;
-          result = dbus_g_proxy_call (proxy, "Logout", &err,
-                                      G_TYPE_BOOLEAN, show_dialog,
-                                      G_TYPE_BOOLEAN, allow_save,
-                                      G_TYPE_INVALID, G_TYPE_INVALID);
-        }
+      xfce_session_logout_notify_error (_("Received error while trying to log out"), err, have_display);
+      g_error_free (err);
+      return EXIT_FAILURE;
+    }
+
+  if (opt_halt)
+    {
+      result = g_dbus_proxy_call_sync (proxy, "Shutdown",
+                                       g_variant_new_boolean(allow_save),
+                                       G_DBUS_CALL_FLAGS_NONE,
+                                       -1,
+                                       NULL,
+                                       &err);
+    }
+  else if (opt_reboot)
+    {
+      result = g_dbus_proxy_call_sync (proxy, "Restart",
+                                       g_variant_new_boolean(allow_save),
+                                       G_DBUS_CALL_FLAGS_NONE,
+                                       -1,
+                                       NULL,
+                                       &err);
+    }
+  else if (opt_suspend)
+    {
+      result = g_dbus_proxy_call_sync (proxy, "Suspend",
+                                       g_variant_new("()"),
+                                       G_DBUS_CALL_FLAGS_NONE,
+                                       -1,
+                                       NULL,
+                                       &err);
+    }
+  else if (opt_hibernate)
+    {
+      result = g_dbus_proxy_call_sync (proxy, "Hibernate",
+                                       g_variant_new("()"),
+                                       G_DBUS_CALL_FLAGS_NONE,
+                                       -1,
+                                       NULL,
+                                       &err);
+    }
+  else
+    {
+      show_dialog = !opt_logout;
+      result = g_dbus_proxy_call_sync (proxy, "Logout",
+                                       g_variant_new("(bb)",show_dialog, allow_save),
+                                       G_DBUS_CALL_FLAGS_NONE,
+                                       -1,
+                                       NULL,
+                                       &err);
     }
 
   /* fallback for the old 4.8 API dbus, so users can logout if
    * they upgraded their system, see bug #8630 */
-  if (!result && g_error_matches (err, DBUS_GERROR, DBUS_GERROR_UNKNOWN_METHOD))
+  if (!result)
     {
       g_clear_error (&err);
 
@@ -212,10 +224,12 @@ main (int argc, char **argv)
       else
         shutdown_type = XFSM_SHUTDOWN_ASK;
 
-      result = dbus_g_proxy_call (proxy, "Shutdown", &err,
-                                  G_TYPE_UINT, shutdown_type,
-                                  G_TYPE_BOOLEAN, allow_save,
-                                  G_TYPE_INVALID, G_TYPE_INVALID);
+      result = g_dbus_proxy_call_sync (proxy, "Shutdown",
+                                       g_variant_new("(yb)",shutdown_type, allow_save),
+                                       G_DBUS_CALL_FLAGS_NONE,
+                                       -1,
+                                       NULL,
+                                       &err);
     }
 
 
@@ -227,6 +241,10 @@ main (int argc, char **argv)
       xfce_session_logout_notify_error (_("Received error while trying to log out"), err, have_display);
       g_error_free (err);
       return EXIT_FAILURE;
+    }
+  else
+    {
+      g_variant_unref (result);
     }
 
   return EXIT_SUCCESS;
