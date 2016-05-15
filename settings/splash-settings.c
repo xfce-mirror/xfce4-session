@@ -270,9 +270,9 @@ splash_selection_changed (GtkTreeSelection *selection)
             }
           else
             {
-              gtk_image_set_from_stock (GTK_IMAGE (splash_image),
-                                        GTK_STOCK_MISSING_IMAGE,
-                                        GTK_ICON_SIZE_DIALOG);
+              gtk_image_set_from_icon_name (GTK_IMAGE (splash_image),
+                                            "image-missing",
+                                            GTK_ICON_SIZE_DIALOG);
             }
 
           channel = xfconf_channel_get (SETTINGS_CHANNEL);
@@ -284,9 +284,9 @@ splash_selection_changed (GtkTreeSelection *selection)
         }
       else
         {
-          gtk_image_set_from_stock (GTK_IMAGE (splash_image),
-                                    GTK_STOCK_MISSING_IMAGE,
-                                    GTK_ICON_SIZE_DIALOG);
+          gtk_image_set_from_icon_name (GTK_IMAGE (splash_image),
+                                        "image-missing",
+                                        GTK_ICON_SIZE_DIALOG);
 
           gtk_label_set_text (GTK_LABEL (splash_descr1), _("None"));
           gtk_widget_set_sensitive (splash_descr1, FALSE);

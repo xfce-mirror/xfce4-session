@@ -37,8 +37,8 @@ typedef struct _Balou       Balou;
 
 struct _Balou
 {
-  GdkColor      bgcolor;
-  GdkColor      fgcolor;
+  GdkRGBA       bgcolor;
+  GdkRGBA       fgcolor;
 
   BalouTheme    *theme;
 
@@ -47,7 +47,6 @@ struct _Balou
   gint           nwindows;
 
   GdkRectangle   fader_area;
-  GdkPixmap     *fader_pm;
 };
 
 
@@ -58,7 +57,6 @@ void  balou_init      (Balou        *balou,
                        BalouTheme   *theme);
 void  balou_fadein    (Balou        *balou,
                        const gchar  *text);
-void  balou_fadeout   (Balou        *balou);
 int   balou_run       (Balou        *balou,
                        GtkWidget    *dialog);
 void  balou_destroy   (Balou *balou);

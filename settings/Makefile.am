@@ -17,7 +17,9 @@ xfce4_session_settings_SOURCES = \
 	xfce4-session-settings-common.h \
 	xfce4-session-settings_ui.h \
 	xfsm-client-dbus-client.h \
-	xfsm-manager-dbus-client.h
+	xfsm-client-dbus-client.c \
+	xfsm-manager-dbus-client.h \
+	xfsm-manager-dbus-client.c
 
 xfce4_session_settings_CFLAGS = \
 	-DLOCALEDIR=\"$(localedir)\" \
@@ -27,7 +29,7 @@ xfce4_session_settings_CFLAGS = \
 	$(LIBXFCE4UTIL_CFLAGS) \
 	$(LIBXFCE4UI_CFLAGS) \
 	$(XFCONF_CFLAGS) \
-	$(DBUS_GLIB_CFLAGS) \
+	$(GIO_CFLAGS) \
 	$(GMODULE_CFLAGS)
 
 xfce4_session_settings_LDADD = \
@@ -35,7 +37,7 @@ xfce4_session_settings_LDADD = \
 	$(LIBXFCE4UTIL_CFLAGS) \
 	$(LIBXFCE4UI_LIBS) \
 	$(XFCONF_LIBS) \
-	$(DBUS_GLIB_LIBS) \
+	$(GIO_LIBS) \
 	$(GMODULE_LIBS)
 
 xfce4_session_settings_DEPENDENCIES = \
@@ -58,7 +60,9 @@ BUILT_SOURCES = \
 	xfce4-session-marshal.h \
 	xfce4-session-settings_ui.h \
 	xfsm-client-dbus-client.h \
-	xfsm-manager-dbus-client.h
+	xfsm-client-dbus-client.c \
+	xfsm-manager-dbus-client.h \
+	xfsm-manager-dbus-client.c
 
 xfce4-session-marshal.h: stamp-xfce4-session-marshal.h
 	@true
@@ -69,14 +73,22 @@ xfce4-session-marshal.c: xfce4-session-marshal.list Makefile
 	$(AM_V_GEN) echo '#include "xfce4-session-marshal.h"' > $@
 	glib-genmarshal --prefix=xfce4_session_marshal xfce4-session-marshal.list --body >> xfce4-session-marshal.c
 
-xfce4-session-settings_ui.h: xfce4-session-settings.glade
+xfce4-session-settings_ui.h: xfce4-session-settings.ui
 	$(AM_V_GEN) exo-csource --static --strip-comments --strip-content --name=xfce4_session_settings_ui $< >$@
 
-xfsm-client-dbus-client.h: $(top_srcdir)/xfce4-session/xfsm-client-dbus.xml Makefile
-	$(AM_V_GEN) dbus-binding-tool --mode=glib-client $(top_srcdir)/xfce4-session/xfsm-client-dbus.xml > $@
+xfsm-client-dbus-client.c xfsm-client-dbus-client.h : $(top_srcdir)/xfce4-session/xfsm-client-dbus.xml Makefile.am
+	gdbus-codegen \
+		--c-namespace=Xfsm \
+		--interface-prefix=org.xfce.Session. \
+		--generate-c-code=xfsm-client-dbus-client \
+		$(top_srcdir)/xfce4-session/xfsm-client-dbus.xml
 
-xfsm-manager-dbus-client.h: $(top_srcdir)/xfce4-session/xfsm-manager-dbus.xml Makefile
-	$(AM_V_GEN) dbus-binding-tool --mode=glib-client $(top_srcdir)/xfce4-session/xfsm-manager-dbus.xml > $@
+xfsm-manager-dbus-client.c xfsm-manager-dbus-client.h : $(top_srcdir)/xfce4-session/xfsm-manager-dbus.xml Makefile.am
+	gdbus-codegen \
+		--c-namespace=Xfsm \
+		--interface-prefix=org.xfce.Session. \
+		--generate-c-code=xfsm-manager-dbus-client \
+		$(top_srcdir)/xfce4-session/xfsm-manager-dbus.xml
 
 endif
 

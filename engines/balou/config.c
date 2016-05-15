@@ -291,7 +291,7 @@ config_dropped (GtkWidget *treeview, GdkDragContext *context,
   gboolean succeed = FALSE;
   GList   *fnames;
 
-  fnames = gnome_uri_list_extract_filenames ((const gchar *) data->data);
+  fnames = gnome_uri_list_extract_filenames ((const gchar *) gtk_selection_data_get_data(data));
   if (fnames != NULL)
     {
       if (g_list_length (fnames) == 1)
@@ -324,8 +324,8 @@ config_install_theme (GtkWidget *item,
   chooser = gtk_file_chooser_dialog_new (_("Choose theme file to install..."),
                                          GTK_WINDOW (toplevel),
                                          GTK_FILE_CHOOSER_ACTION_OPEN,
-                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                         GTK_STOCK_OPEN, GTK_RESPONSE_OK,
+                                         _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                         _("_Open"), GTK_RESPONSE_OK,
                                          NULL);
   if (gtk_dialog_run (GTK_DIALOG (chooser)) == GTK_RESPONSE_OK)
     {
@@ -337,11 +337,11 @@ config_install_theme (GtkWidget *item,
                                             file);
           xfce_message_dialog (GTK_WINDOW (toplevel),
                                _("Theme File Error"),
-                               GTK_STOCK_DIALOG_ERROR,
+                               "dialog-error",
                                primary,
                                _("Please check that the file is a valid splash "
                                  "theme archive."),
-                               GTK_STOCK_CLOSE, GTK_RESPONSE_ACCEPT, NULL);
+                               _("_Close"), GTK_RESPONSE_ACCEPT, NULL);
           g_free (primary);
         }
 
@@ -491,8 +491,8 @@ config_export_theme (GtkWidget *item,
   dialog = gtk_file_chooser_dialog_new (_("Choose theme filename..."),
                                         GTK_WINDOW (toplevel),
                                         GTK_FILE_CHOOSER_ACTION_SAVE,
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_SAVE, GTK_RESPONSE_OK,
+                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                        _("_Save"), GTK_RESPONSE_OK,
                                         NULL);
   file = g_strconcat (name, ".tar.gz", NULL);
   gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), file);
@@ -617,22 +617,17 @@ config_create_popupmenu (void)
 {
   GtkWidget *menu;
   GtkWidget *item;
-  GtkWidget *image;
 
   menu = gtk_menu_new ();
 
-  item = gtk_image_menu_item_new_with_mnemonic (_("_Install new theme"));
-  image = gtk_image_new_from_stock (GTK_STOCK_ADD, GTK_ICON_SIZE_MENU);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
+  item = gtk_menu_item_new_with_mnemonic (_("_Install new theme"));
   g_object_set_data (G_OBJECT (menu), "install-theme", item);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
   g_signal_connect (G_OBJECT (item), "activate",
                     G_CALLBACK (config_install_theme), menu);
   gtk_widget_show (item);
 
-  item = gtk_image_menu_item_new_with_mnemonic (_("_Remove theme"));
-  image = gtk_image_new_from_stock (GTK_STOCK_REMOVE, GTK_ICON_SIZE_MENU);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
+  item = gtk_menu_item_new_with_mnemonic (_("_Remove theme"));
   g_object_set_data (G_OBJECT (menu), "remove-theme", item);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 #ifdef RM_CMD
@@ -647,9 +642,7 @@ config_create_popupmenu (void)
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
   gtk_widget_show (item);
 
-  item = gtk_image_menu_item_new_with_mnemonic (_("_Export theme"));
-  image = gtk_image_new_from_stock (GTK_STOCK_SAVE, GTK_ICON_SIZE_MENU);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
+  item = gtk_menu_item_new_with_mnemonic (_("_Export theme"));
   g_object_set_data (G_OBJECT (menu), "export-theme", item);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
   g_signal_connect (G_OBJECT (item), "activate",
@@ -722,7 +715,7 @@ config_drag_begin (GtkWidget      *treeview,
   gtk_tree_model_get (model, &iter, NAME_COLUMN, &name, -1);
   filename = g_strconcat (name, ".tar.gz", NULL);
 
-  gdk_property_change (context->source_window,
+  gdk_property_change (gdk_drag_context_get_source_window(context),
                        gdk_atom_intern ("XdndDirectSave0", FALSE),
                        gdk_atom_intern ("text/plain", FALSE), 8,
                        GDK_PROP_MODE_REPLACE, (const guchar *)filename, strlen (filename));
@@ -756,7 +749,7 @@ config_drag_data_get (GtkWidget        *treeview,
   switch (info)
     {
     case TARGET_XDS:
-      if (gdk_property_get (context->source_window,
+      if (gdk_property_get (gdk_drag_context_get_source_window(context),
                             gdk_atom_intern ("XdndDirectSave0", FALSE),
                             gdk_atom_intern ("text/plain", FALSE),
                             0, 1024, FALSE, NULL, NULL, &prop_len, &prop_text)
@@ -860,12 +853,12 @@ config_create (XfsmSplashRc *rc)
 
   theme = xfsm_splash_rc_read_entry (rc, "Theme", "Default");
 
-  page = gtk_vbox_new (FALSE, BORDER);
+  page = gtk_box_new (GTK_ORIENTATION_VERTICAL, BORDER);
   gtk_container_set_border_width (GTK_CONTAINER (page), BORDER);
 
   frame = xfce_gtk_frame_box_new (_("Balou theme"), &bin);
   gtk_box_pack_start (GTK_BOX (page), frame, TRUE, TRUE, 0);
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (bin), vbox);
 
   swin = gtk_scrolled_window_new (NULL, NULL);
@@ -951,14 +944,13 @@ config_configure (XfsmSplashConfig *config,
   dialog = gtk_dialog_new_with_buttons (_("Configure Balou..."),
                                         GTK_WINDOW (parent),
                                         GTK_DIALOG_MODAL
-                                        | GTK_DIALOG_NO_SEPARATOR
                                         | GTK_DIALOG_DESTROY_WITH_PARENT,
-                                        GTK_STOCK_CLOSE,
+                                        _("_Close"),
                                         GTK_RESPONSE_CLOSE,
                                         NULL);
 
   ui = config_create (config->rc);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), ui, TRUE, TRUE, 6);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area(GTK_DIALOG (dialog))), ui, TRUE, TRUE, 6);
   gtk_widget_show_all (ui);
 
   gtk_dialog_run (GTK_DIALOG (dialog));

@@ -100,22 +100,17 @@ dnl Check for i18n support
 XDT_I18N([@LINGUAS@])
 
 dnl Check for required packages
-XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.9.0])
-XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-1], [4.12.1])
-XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [2.20.0])
+XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.12.0])
+XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [4.12.0])
+XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [3.10.0])
+XDT_CHECK_PACKAGE([GIO], [gio-2.0], [2.42.0])
 XDT_CHECK_PACKAGE([GMODULE], [gmodule-2.0], [2.24.0])
-XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-1.0], [2.30])
-XDT_CHECK_PACKAGE([DBUS], [dbus-1], [1.1.0])
-XDT_CHECK_PACKAGE([DBUS_GLIB], [dbus-glib-1], [0.84])
-XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.9.0])
+XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-3.0], [3.10])
+XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.12.0])
 
 dnl Check for Polkit/PolicyKit
 XDT_CHECK_OPTIONAL_PACKAGE([POLKIT], [polkit-gobject-1], [0.102],
                            [polkit], [Polkit support])
-
-dnl Check for Upower
-XDT_CHECK_OPTIONAL_PACKAGE([UPOWER],[upower-glib], [0.9.7],
-			   [upower],[Upower support])
 
 dnl Check for debugging support
 XDT_FEATURE_DEBUG([xfsm_debug_default])

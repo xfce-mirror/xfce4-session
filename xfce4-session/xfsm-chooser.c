@@ -148,9 +148,8 @@ xfsm_chooser_init (XfsmChooser *chooser)
   GtkWidget *swin;
   GtkWidget *dbox;
 
-  dbox = GTK_DIALOG (chooser)->vbox;
+  dbox = gtk_dialog_get_content_area(GTK_DIALOG (chooser));
 
-  gtk_dialog_set_has_separator (GTK_DIALOG (chooser), FALSE);
   g_signal_connect_after (G_OBJECT (chooser), "realize",
                           G_CALLBACK (xfsm_chooser_realized), chooser);
 
@@ -199,7 +198,7 @@ xfsm_chooser_init (XfsmChooser *chooser)
   gtk_widget_show (chooser->tree);
 
   /* "Logout" button */
-  button = xfce_gtk_button_new_mixed (GTK_STOCK_QUIT, _("Log out"));
+  button = xfce_gtk_button_new_mixed ("application-exit", _("Log out"));
   gtk_widget_set_tooltip_text (button,
                                _("Cancel the login attempt and return to "
                                  "the login screen."));
@@ -208,7 +207,7 @@ xfsm_chooser_init (XfsmChooser *chooser)
   gtk_widget_show (button);
 
   /* "New" button */
-  button = xfce_gtk_button_new_mixed (GTK_STOCK_NEW, _("New session"));
+  button = xfce_gtk_button_new_mixed ("document-new", _("New session"));
   gtk_widget_set_tooltip_text (button, _("Create a new session."));
   gtk_dialog_add_action_widget (GTK_DIALOG (chooser), button,
                                 XFSM_RESPONSE_NEW);
@@ -232,8 +231,8 @@ xfsm_chooser_realized (GtkWidget   *widget,
 {
   GdkCursor *cursor;
 
-  cursor = gdk_cursor_new (GDK_LEFT_PTR);
-  gdk_window_set_cursor (widget->window, cursor);
-  gdk_cursor_unref (cursor);
+  cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget), GDK_LEFT_PTR);
+  gdk_window_set_cursor (gtk_widget_get_window(widget), cursor);
+  g_object_unref (cursor);
 }
 

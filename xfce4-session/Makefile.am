@@ -18,7 +18,9 @@ bin_PROGRAMS = xfce4-session
 
 xfce4_session_built_sources =						\
 	xfsm-chooser-icon.h						\
+	xfsm-client-dbus.c						\
 	xfsm-client-dbus.h						\
+	xfsm-manager-dbus.c						\
 	xfsm-manager-dbus.h						\
 	xfsm-marshal.c							\
 	xfsm-marshal.h
@@ -65,8 +67,6 @@ xfce4_session_SOURCES =							\
 	xfsm-splash-screen.h						\
 	xfsm-startup.c							\
 	xfsm-startup.h							\
-	xfsm-upower.c							\
-	xfsm-upower.h							\
 	xfsm-systemd.c							\
 	xfsm-systemd.h
 
@@ -75,14 +75,12 @@ xfce4_session_CFLAGS =							\
 	$(LIBSM_CFLAGS)							\
 	$(LIBX11_CFLAGS)						\
 	$(LIBXFCE4UI_CFLAGS)						\
-	$(DBUS_CFLAGS)							\
-	$(DBUS_GLIB_CFLAGS)						\
+	$(GIO_CFLAGS)							\
 	$(LIBWNCK_CFLAGS)						\
 	$(POLKIT_CFLAGS)						\
 	$(XFCONF_CFLAGS)						\
 	$(GMODULE_CFLAGS)						\
-	$(PLATFORM_CFLAGS)						\
-	$(UPOWER_CFLAGS)
+	$(PLATFORM_CFLAGS)
 
 xfce4_session_LDFLAGS =							\
 	-no-undefined							\
@@ -96,12 +94,10 @@ xfce4_session_LDADD =							\
 	$(LIBX11_LIBS)							\
 	$(LIBXFCE4UI_LIBS)						\
 	$(GMODULE_LIBS)							\
-	$(DBUS_LIBS)							\
-	$(DBUS_GLIB_LIBS)						\
+	$(GIO_LIBS)								\
 	$(LIBWNCK_LIBS)							\
 	$(POLKIT_LIBS)							\
 	$(XFCONF_LIBS)							\
-	$(UPOWER_LIBS)							\
 	-lm
 
 xfce4_session_DEPENDENCIES =						\
@@ -131,11 +127,19 @@ xfsm-marshal.c: $(srcdir)/xfsm-marshal.list Makefile
 	$(AM_V_GEN) echo "#include <xfce4-session/xfsm-marshal.h>" > $@ \
 	&& glib-genmarshal --prefix=xfsm_marshal --body $< >> $@
 
-xfsm-manager-dbus.h: $(srcdir)/xfsm-manager-dbus.xml
-	$(AM_V_GEN) dbus-binding-tool --mode=glib-server --prefix=xfsm_manager $< > $@
+xfsm-client-dbus.c xfsm-client-dbus.h : $(srcdir)/xfsm-client-dbus.xml Makefile.am
+	gdbus-codegen \
+		--c-namespace=XfsmDbus \
+		--interface-prefix=org.xfce.Session. \
+		--generate-c-code=xfsm-client-dbus \
+		$(srcdir)/xfsm-client-dbus.xml
 
-xfsm-client-dbus.h: $(srcdir)/xfsm-client-dbus.xml
-	$(AM_V_GEN) dbus-binding-tool --mode=glib-server --prefix=xfsm_client $< > $@
+xfsm-manager-dbus.c xfsm-manager-dbus.h : $(srcdir)/xfsm-manager-dbus.xml Makefile.am
+	gdbus-codegen \
+		--c-namespace=XfsmDbus \
+		--interface-prefix=org.xfce.Session. \
+		--generate-c-code=xfsm-manager-dbus \
+		$(srcdir)/xfsm-manager-dbus.xml
 
 BUILT_SOURCES =								\
 	$(xfce4_session_built_sources)

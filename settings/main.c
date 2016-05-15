@@ -27,6 +27,8 @@
 #include <xfconf/xfconf.h>
 
 #include <gtk/gtk.h>
+#include <gtk/gtkx.h>
+#include <gdk/gdkx.h>
 
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
@@ -35,15 +37,6 @@
 #include "xfce4-session-settings-common.h"
 #include "xfce4-session-settings_ui.h"
 
-
-static GdkNativeWindow opt_socket_id = 0;
-static gboolean opt_version = FALSE;
-static GOptionEntry option_entries[] =
-{
-    { "socket-id", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_INT, &opt_socket_id, N_("Settings manager socket"), N_("SOCKET ID") },
-    { "version", 'V', 0, G_OPTION_ARG_NONE, &opt_version, N_("Version information"), NULL },
-    { NULL }
-};
 
 static void xfce4_session_settings_dialog_response (GtkDialog *dialog, gint response, gpointer userdata)
 {
@@ -61,9 +54,21 @@ main(int argc,
      char **argv)
 {
     GtkBuilder *builder;
-    GtkWidget *notebook, *xfae_page, *lbl;
+    GtkWidget *notebook;
+    GtkWidget *xfae_page;
+    GtkWidget *lbl;
     GError *error = NULL;
     XfconfChannel *channel;
+
+    Window opt_socket_id = 0;
+    gboolean opt_version = FALSE;
+
+    GOptionEntry option_entries[] =
+    {
+        { "socket-id", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_INT, &opt_socket_id, N_("Settings manager socket"), N_("SOCKET ID") },
+        { "version", 'V', 0, G_OPTION_ARG_NONE, &opt_version, N_("Version information"), NULL },
+        { NULL }
+    };
 
     xfce_textdomain(GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
 
@@ -163,20 +168,28 @@ main(int argc,
         gtk_widget_show(dialog);
 
         /* To prevent the settings dialog to be saved in the session */
-        gdk_set_sm_client_id ("FAKE ID");
+        gdk_x11_set_sm_client_id ("FAKE ID");
 
         gtk_main();
     } else {
-        GtkWidget *plug, *plug_child;
-
-        plug = gtk_plug_new(opt_socket_id);
-        gtk_widget_show(plug);
-        g_signal_connect(plug, "delete-event",
-                         G_CALLBACK(gtk_main_quit), NULL);
+        GtkWidget *plug;
+        GtkWidget *plug_child;
+        GtkWidget *parent;
 
         plug_child = GTK_WIDGET(gtk_builder_get_object(builder, "plug-child"));
-        gtk_widget_reparent(plug_child, plug);
-        gtk_widget_show(plug_child);
+        plug = gtk_plug_new(opt_socket_id);
+        gtk_widget_show (plug);
+
+        parent = gtk_widget_get_parent (plug_child);
+        if (parent)
+        {
+            g_object_ref (plug_child);
+            gtk_container_remove (GTK_CONTAINER (parent), plug_child);
+            gtk_container_add (GTK_CONTAINER (plug), plug_child);
+            g_object_unref (plug_child);
+        }
+        g_signal_connect(plug, "delete-event",
+                         G_CALLBACK(gtk_main_quit), NULL);
 
         /* Stop startup notification */
         gdk_notify_startup_complete();

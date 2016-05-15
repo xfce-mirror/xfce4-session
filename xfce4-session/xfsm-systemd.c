@@ -20,8 +20,6 @@
 #include <config.h>
 
 #include <gio/gio.h>
-#include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
 #ifdef HAVE_POLKIT
 #include <polkit/polkit.h>
 #endif

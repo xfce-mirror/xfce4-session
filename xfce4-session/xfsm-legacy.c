@@ -200,7 +200,7 @@ has_xsmp_support (Window window)
   XTextProperty tp;
   gboolean has_it = FALSE;
 
-  if (XGetTextProperty (gdk_display, window, &tp, _XA_SM_CLIENT_ID))
+  if (XGetTextProperty (gdk_x11_get_default_xdisplay (), window, &tp, _XA_SM_CLIENT_ID))
     {
       if (tp.encoding == XA_STRING && tp.format == 8 && tp.nitems != 0)
         has_it = TRUE;
@@ -222,7 +222,7 @@ get_wmcommand (Window window)
   int argc, i;
 
   gdk_error_trap_push ();
-  status = XGetCommand (gdk_display, window, &argv, &argc);
+  status = XGetCommand (gdk_x11_get_default_xdisplay (), window, &argv, &argc);
   if (gdk_error_trap_pop ())
     return NULL;
 
@@ -246,7 +246,7 @@ get_wmclientmachine (Window window)
   Status status;
 
   gdk_error_trap_push ();
-  status = XGetWMClientMachine (gdk_display, window, &tp);
+  status = XGetWMClientMachine (gdk_x11_get_default_xdisplay (), window, &tp);
   if (gdk_error_trap_pop ())
     return NULL;
 
@@ -275,7 +275,7 @@ get_clientleader (Window window)
   unsigned char *data = 0;
   Window result = window;
 
-  status = XGetWindowProperty (gdk_display, window, _XA_WM_CLIENT_LEADER,
+  status = XGetWindowProperty (gdk_x11_get_default_xdisplay (), window, _XA_WM_CLIENT_LEADER,
                                0, 10000, FALSE, XA_WINDOW, &type, &format,
                                &nitems, &extra, &data);
   if (status  == Success)
@@ -320,11 +320,11 @@ xfsm_legacy_perform_session_save (void)
   /* query X atoms */
   if (_XA_WM_SAVE_YOURSELF == None)
     {
-      _XA_SM_CLIENT_ID = XInternAtom (gdk_display, "SM_CLIENT_ID", False);
-      _XA_WM_PROTOCOLS = XInternAtom (gdk_display, "WM_PROTOCOLS", False);
-      _XA_WM_SAVE_YOURSELF = XInternAtom (gdk_display, "WM_SAVE_YOURSELF",
+      _XA_SM_CLIENT_ID = XInternAtom (gdk_x11_get_default_xdisplay (), "SM_CLIENT_ID", False);
+      _XA_WM_PROTOCOLS = XInternAtom (gdk_x11_get_default_xdisplay (), "WM_PROTOCOLS", False);
+      _XA_WM_SAVE_YOURSELF = XInternAtom (gdk_x11_get_default_xdisplay (), "WM_SAVE_YOURSELF",
                                           False);
-      _XA_WM_CLIENT_LEADER = XInternAtom (gdk_display, "WM_CLIENT_LEADER",
+      _XA_WM_CLIENT_LEADER = XInternAtom (gdk_x11_get_default_xdisplay (), "WM_CLIENT_LEADER",
                                           False);
     }
 
@@ -332,7 +332,7 @@ xfsm_legacy_perform_session_save (void)
   old_handler = XSetErrorHandler (wins_error_handler);
 
   /* query mapped windows on all screens */
-  for (n = 0; n < ScreenCount (gdk_display); ++n)
+  for (n = 0; n < ScreenCount (gdk_x11_get_default_xdisplay ()); ++n)
     {
       screen = wnck_screen_get (n);
       wnck_screen_force_update (screen);
@@ -357,7 +357,7 @@ xfsm_legacy_perform_session_save (void)
           nprotocols = 0;
           protocols = NULL;
 
-          if (XGetWMProtocols (gdk_display, leader, &protocols, &nprotocols))
+          if (XGetWMProtocols (gdk_x11_get_default_xdisplay (), leader, &protocols, &nprotocols))
             {
               for (i = 0; i < nprotocols; ++i)
                 if (protocols[i] == _XA_WM_SAVE_YOURSELF)
@@ -368,7 +368,7 @@ xfsm_legacy_perform_session_save (void)
               XFree ((void *) protocols);
             }
 
-          if (XGetClassHint (gdk_display, leader, &class_hint))
+          if (XGetClassHint (gdk_x11_get_default_xdisplay (), leader, &class_hint))
             {
               wmclass2 = g_strdup (class_hint.res_class);
               wmclass1 = g_strdup (class_hint.res_name);
@@ -382,8 +382,8 @@ xfsm_legacy_perform_session_save (void)
     }
 
   /* open fresh display for sending WM_SAVE_YOURSELF commands */
-  XSync (gdk_display, False);
-  display = XOpenDisplay (DisplayString (gdk_display));
+  XSync (gdk_x11_get_default_xdisplay (), False);
+  display = XOpenDisplay (DisplayString (gdk_x11_get_default_xdisplay ()));
   if (display == NULL)
     {
       XSetErrorHandler (old_handler);
@@ -596,7 +596,7 @@ xfsm_legacy_init (void)
   Window root;
   int n;
 
-  dpy = gdk_display;
+  dpy = gdk_x11_get_default_xdisplay ();
 
   /* Some CDE apps are broken (thanks again to Craig for the Sun Box :).
    * Bugfix found on http://bugzilla.gnome.org/long_list.cgi?buglist=81343
@@ -657,14 +657,14 @@ xfsm_legacy_shutdown (void)
     {
       sm_window = SM_WINDOW (lp->data);
       if (sm_window->wid != None)
-        XKillClient (gdk_display, sm_window->wid);
+        XKillClient (gdk_x11_get_default_xdisplay (), sm_window->wid);
     }
 
   sm_window_list_clear ();
 
   gdk_flush ();
 
-  gdk_error_trap_pop ();
+  gdk_error_trap_pop_ignored ();
 #endif
 }
 

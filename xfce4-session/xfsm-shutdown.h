@@ -40,6 +40,7 @@ typedef enum
   XFSM_SHUTDOWN_RESTART,
   XFSM_SHUTDOWN_SUSPEND,
   XFSM_SHUTDOWN_HIBERNATE,
+  XFSM_SHUTDOWN_SWITCH_USER,
 }
 XfsmShutdownType;
 
@@ -78,6 +79,9 @@ gboolean      xfsm_shutdown_try_suspend      (XfsmShutdown      *shutdown,
 gboolean      xfsm_shutdown_try_hibernate    (XfsmShutdown      *shutdown,
                                               GError           **error);
 
+gboolean      xfsm_shutdown_try_switch_user  (XfsmShutdown      *shutdown,
+                                              GError           **error);
+
 gboolean      xfsm_shutdown_can_restart      (XfsmShutdown      *shutdown,
                                               gboolean          *can_restart,
                                               GError           **error);
@@ -95,6 +99,11 @@ gboolean      xfsm_shutdown_can_hibernate    (XfsmShutdown      *shutdown,
                                               gboolean          *can_hibernate,
                                               gboolean          *auth_hibernate,
                                               GError           **error);
+
+gboolean      xfsm_shutdown_can_switch_user  (XfsmShutdown      *shutdown,
+                                              gboolean          *can_switch_user,
+                                              GError           **error);
+
 
 gboolean      xfsm_shutdown_can_save_session (XfsmShutdown      *shutdown);
 

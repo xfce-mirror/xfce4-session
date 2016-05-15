@@ -55,13 +55,9 @@
 #include <sys/sysctl.h>
 #endif
 
-#include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
+#include <gio/gio.h>
 #include <libxfce4util/libxfce4util.h>
 #include <gtk/gtk.h>
-#ifdef HAVE_UPOWER
-#include <upower.h>
-#endif
 #ifdef HAVE_POLKIT
 #include <polkit/polkit.h>
 #endif
@@ -75,7 +71,6 @@
 #include <xfce4-session/xfsm-fadeout.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-legacy.h>
-#include <xfce4-session/xfsm-upower.h>
 #include <xfce4-session/xfsm-systemd.h>
 #include <xfce4-session/xfsm-shutdown-fallback.h>
 
@@ -97,7 +92,6 @@ struct _XfsmShutdown
 
   XfsmSystemd    *systemd;
   XfsmConsolekit *consolekit;
-  XfsmUPower     *upower;
 
   /* kiosk settings */
   gboolean        kiosk_can_shutdown;
@@ -128,17 +122,11 @@ xfsm_shutdown_init (XfsmShutdown *shutdown)
 
   shutdown->consolekit = NULL;
   shutdown->systemd = NULL;
-  shutdown->upower = NULL;
+
   if (LOGIND_RUNNING())
     shutdown->systemd = xfsm_systemd_get ();
   else
     shutdown->consolekit = xfsm_consolekit_get ();
-
-#ifdef HAVE_UPOWER
-#if !UP_CHECK_VERSION(0, 99, 0)
-  shutdown->upower = xfsm_upower_get ();
-#endif /* UP_CHECK_VERSION */
-#endif /* HAVE_UPOWER */
 
   /* check kiosk */
   kiosk = xfce_kiosk_new ("xfce4-session");
@@ -159,7 +147,6 @@ xfsm_shutdown_finalize (GObject *object)
 
   if (shutdown->consolekit != NULL)
     g_object_unref (G_OBJECT (shutdown->consolekit));
-  g_object_unref (G_OBJECT (shutdown->upower));
 
   (*G_OBJECT_CLASS (xfsm_shutdown_parent_class)->finalize) (object);
 }
@@ -312,14 +299,9 @@ xfsm_shutdown_try_suspend (XfsmShutdown  *shutdown,
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
   /* Try each way to suspend - it will handle NULL.
-   * In the future the upower code can go away once everyone is
-   * running upower 0.99.0+
    */
 
   if (try_sleep_method (shutdown->systemd, (SleepFunc)xfsm_systemd_try_suspend))
-    return TRUE;
-
-  if (try_sleep_method (shutdown->upower, (SleepFunc)xfsm_upower_try_suspend))
     return TRUE;
 
   if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfsm_consolekit_try_suspend))
@@ -337,14 +319,9 @@ xfsm_shutdown_try_hibernate (XfsmShutdown  *shutdown,
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
   /* Try each way to hibernate - it will handle NULL.
-   * In the future the upower code can go away once everyone is
-   * running upower 0.99.0+
    */
 
   if (try_sleep_method (shutdown->systemd, (SleepFunc)xfsm_systemd_try_hibernate))
-    return TRUE;
-
-  if (try_sleep_method (shutdown->upower, (SleepFunc)xfsm_upower_try_hibernate))
     return TRUE;
 
   if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfsm_consolekit_try_hibernate))
@@ -353,6 +330,49 @@ xfsm_shutdown_try_hibernate (XfsmShutdown  *shutdown,
   return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_HIBERNATE, error);
 }
 
+gboolean
+xfsm_shutdown_try_switch_user (XfsmShutdown  *shutdown,
+                               GError       **error)
+{
+  GDBusProxy  *display_proxy;
+  GVariant    *unused = NULL;
+  const gchar *DBUS_NAME = "org.freedesktop.DisplayManager";
+  const gchar *DBUS_INTERFACE = "org.freedesktop.DisplayManager.Seat";
+  const gchar *DBUS_OBJECT_PATH = "/org/freedesktop/DisplayManager/Seat0";
+
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  display_proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
+                                                 G_DBUS_PROXY_FLAGS_NONE,
+                                                 NULL,
+                                                 DBUS_NAME,
+                                                 DBUS_OBJECT_PATH,
+                                                 DBUS_INTERFACE,
+                                                 NULL,
+                                                 error);
+
+  if (display_proxy == NULL || error != NULL)
+    {
+      return FALSE;
+    }
+
+  unused = g_dbus_proxy_call_sync (display_proxy,
+                                  "SwitchToGreeter",
+                                  g_variant_new ("()"),
+                                  G_DBUS_CALL_FLAGS_NONE,
+                                  3000,
+                                  NULL,
+                                  error);
+
+  if (unused != NULL)
+    {
+      g_variant_unref (unused);
+    }
+
+  g_object_unref (display_proxy);
+
+  return (error == NULL);
+}
 
 
 gboolean
@@ -436,13 +456,6 @@ xfsm_shutdown_can_suspend (XfsmShutdown  *shutdown,
           return TRUE;
         }
     }
-  else if (shutdown->upower != NULL)
-    {
-      if (xfsm_upower_can_suspend (shutdown->upower, can_suspend, auth_suspend, NULL))
-        {
-          return TRUE;
-        }
-    }
   else if (shutdown->consolekit != NULL)
     {
       if (xfsm_consolekit_can_suspend (shutdown->consolekit, can_suspend, auth_suspend, NULL))
@@ -479,13 +492,6 @@ xfsm_shutdown_can_hibernate (XfsmShutdown  *shutdown,
           return TRUE;
         }
     }
-  else if (shutdown->upower != NULL)
-    {
-      if (xfsm_upower_can_hibernate (shutdown->upower, can_hibernate, auth_hibernate, NULL))
-        {
-          return TRUE;
-        }
-    }
   else if (shutdown->consolekit != NULL)
     {
       if (xfsm_consolekit_can_hibernate (shutdown->consolekit, can_hibernate, auth_hibernate, NULL))
@@ -496,6 +502,57 @@ xfsm_shutdown_can_hibernate (XfsmShutdown  *shutdown,
 
   *can_hibernate = xfsm_shutdown_fallback_can_hibernate ();
   *auth_hibernate = xfsm_shutdown_fallback_auth_hibernate ();
+  return TRUE;
+}
+
+
+
+gboolean
+xfsm_shutdown_can_switch_user (XfsmShutdown  *shutdown,
+                               gboolean      *can_switch_user,
+                               GError       **error)
+{
+  GDBusProxy  *display_proxy;
+  gchar       *owner = NULL;
+  const gchar *DBUS_NAME = "org.freedesktop.DisplayManager";
+  const gchar *DBUS_INTERFACE = "org.freedesktop.DisplayManager.Seat";
+  const gchar *DBUS_OBJECT_PATH = g_getenv ("XDG_SEAT_PATH");
+
+  *can_switch_user = FALSE;
+
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  if (DBUS_OBJECT_PATH == NULL)
+    {
+      return TRUE;
+    }
+
+  display_proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
+                                                 G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START,
+                                                 NULL,
+                                                 DBUS_NAME,
+                                                 DBUS_OBJECT_PATH,
+                                                 DBUS_INTERFACE,
+                                                 NULL,
+                                                 error);
+
+  if (display_proxy == NULL)
+    {
+      xfsm_verbose ("display proxy returned NULL\n");
+      return FALSE;
+    }
+
+  /* is there anyone actually providing a service? */
+  owner = g_dbus_proxy_get_name_owner (display_proxy);
+  if (owner != NULL)
+  {
+    g_object_unref (display_proxy);
+    g_free (owner);
+    *can_switch_user = TRUE;
+    return TRUE;
+  }
+
+  xfsm_verbose ("no owner NULL\n");
   return TRUE;
 }
 

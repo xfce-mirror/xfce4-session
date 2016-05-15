@@ -28,7 +28,7 @@
 #include <gtk/gtk.h>
 #include <glib/gstdio.h>
 
-#include <dbus/dbus-glib.h>
+#include <gio/gio.h>
 
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
@@ -65,40 +65,37 @@ static const gchar *restart_styles[] = {
     NULL,
 };
 
-static DBusGConnection *dbus_conn = NULL;
-static DBusGProxy *manager_dbus_proxy = NULL;
+static XfsmManager *manager_dbus_proxy = NULL;
 
 
 static gboolean
 session_editor_ensure_dbus(void)
 {
-    if(G_UNLIKELY(!dbus_conn)) {
-        GError *error = NULL;
+    GError *error = NULL;
 
-        dbus_conn = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
-        if(!dbus_conn) {
-            g_critical("Unable to connect to D-Bus session bus: %s",
-                       error ? error->message : "Unknown error");
-            if(error)
-                g_error_free(error);
-        }
+    TRACE("entering");
 
-        manager_dbus_proxy = dbus_g_proxy_new_for_name(dbus_conn,
-                                                       "org.xfce.SessionManager",
-                                                       "/org/xfce/SessionManager",
-                                                       "org.xfce.Session.Manager");
+    if (manager_dbus_proxy)
+        return TRUE;
 
-        dbus_g_proxy_add_signal(manager_dbus_proxy, "ClientRegistered",
-                                G_TYPE_STRING, G_TYPE_INVALID);
-        dbus_g_proxy_add_signal(manager_dbus_proxy, "StateChanged",
-                                G_TYPE_UINT, G_TYPE_UINT, G_TYPE_INVALID);
+    manager_dbus_proxy = xfsm_manager_proxy_new_for_bus_sync(G_BUS_TYPE_SESSION,
+                                                             G_DBUS_PROXY_FLAGS_NONE,
+                                                             "org.xfce.SessionManager",
+                                                             "/org/xfce/SessionManager",
+                                                             NULL,
+                                                             &error);
+
+    if (manager_dbus_proxy == NULL) {
+        g_error ("error connecting to org.xfce.SessionManager, reason was: %s", error->message);
+        g_clear_error(&error);
+        return FALSE;
     }
 
-    return !!dbus_conn;
+    return TRUE;
 }
 
 static void
-manager_state_changed_saving(DBusGProxy *proxy,
+manager_state_changed_saving(XfsmManager *proxy,
                              guint old_state,
                              guint new_state,
                              gpointer user_data)
@@ -120,33 +117,34 @@ session_editor_save_session(GtkWidget *btn,
 {
     GtkWidget *pbar = g_object_get_data(G_OBJECT(dialog), "pbar");
     guint pulse_id;
+    guint sig_id;
     GError *error = NULL;
+
+    TRACE("entering");
 
     gtk_widget_set_sensitive(btn, FALSE);
 
-    if(!xfsm_manager_dbus_client_checkpoint(manager_dbus_proxy, "", &error)) {
+    if(!xfsm_manager_call_checkpoint_sync(manager_dbus_proxy, "", NULL, &error)) {
         xfce_message_dialog(GTK_WINDOW(gtk_widget_get_toplevel(btn)),
-                            _("Session Save Error"), GTK_STOCK_DIALOG_ERROR,
+                            _("Session Save Error"), "dialog-error",
                             _("Unable to save the session"),
                             error->message,
-                            GTK_STOCK_CLOSE, GTK_RESPONSE_ACCEPT,
+                            _("_Close"), GTK_RESPONSE_ACCEPT,
                             NULL);
         gtk_widget_set_sensitive(btn, TRUE);
         g_error_free(error);
         return;
     }
 
-    dbus_g_proxy_connect_signal(manager_dbus_proxy, "StateChanged",
-                                G_CALLBACK(manager_state_changed_saving),
-                                dialog, NULL);
+    sig_id = g_signal_connect(manager_dbus_proxy, "state_changed",
+                              G_CALLBACK(manager_state_changed_saving),
+                              dialog);
     pulse_id = g_timeout_add(250, pulse_session_save_dialog, pbar);
 
     gtk_dialog_run(GTK_DIALOG(dialog));
 
     g_source_remove(pulse_id);
-    dbus_g_proxy_disconnect_signal(manager_dbus_proxy, "StateChanged",
-                                   G_CALLBACK(manager_state_changed_saving),
-                                   dialog);
+    g_signal_handler_disconnect(manager_dbus_proxy, sig_id);
     gtk_widget_hide(dialog);
     gtk_widget_set_sensitive(btn, TRUE);
 }
@@ -164,14 +162,16 @@ static void
 session_editor_clear_sessions(GtkWidget *btn,
                               GtkWidget *treeview)
 {
+    TRACE("entering");
+
     gtk_widget_set_sensitive(btn, FALSE);
 
     if(xfce_message_dialog(GTK_WINDOW(gtk_widget_get_toplevel(treeview)),
-                           _("Clear sessions"), GTK_STOCK_DIALOG_QUESTION,
+                           _("Clear sessions"), "dialog-question",
                            _("Are you sure you want to empty the session cache?"),
                            _("The saved states of your applications will not be restored during your next login."),
-                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                           XFCE_BUTTON_TYPE_MIXED, GTK_STOCK_OK, _("_Proceed"), GTK_RESPONSE_ACCEPT,
+                           _("_Cancel"), GTK_RESPONSE_CANCEL,
+                           XFCE_BUTTON_TYPE_MIXED, _("_Ok"), _("_Proceed"), GTK_RESPONSE_ACCEPT,
                            NULL) == GTK_RESPONSE_ACCEPT)
     {
         const gchar *item_name;
@@ -231,10 +231,12 @@ session_editor_quit_client(GtkWidget *btn,
     GtkTreeSelection *sel;
     GtkTreeModel *model = NULL;
     GtkTreeIter iter;
-    DBusGProxy *proxy = NULL;
+    XfsmClient *proxy = NULL;
     gchar *name = NULL;
     guchar hint = SmRestartIfRunning;
     gchar *primary;
+
+    TRACE("entering");
 
     sel = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
     if(!gtk_tree_selection_get_selected(sel, &model, &iter))
@@ -249,11 +251,11 @@ session_editor_quit_client(GtkWidget *btn,
     primary = g_strdup_printf(_("Are you sure you want to terminate \"%s\"?"),
                               name);
     if(xfce_message_dialog(GTK_WINDOW(gtk_widget_get_toplevel(treeview)),
-                           _("Terminate Program"), GTK_STOCK_DIALOG_QUESTION,
+                           _("Terminate Program"), "dialog-question",
                            primary,
                            _("The application will lose any unsaved state and will not be restarted in your next session."),
-                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                           XFCE_BUTTON_TYPE_MIXED, GTK_STOCK_QUIT, _("_Quit Program"), GTK_RESPONSE_ACCEPT,
+                           _("_Cancel"), GTK_RESPONSE_CANCEL,
+                           XFCE_BUTTON_TYPE_MIXED, _("_Quit"), _("_Quit Program"), GTK_RESPONSE_ACCEPT,
                            NULL) == GTK_RESPONSE_ACCEPT)
     {
         GError *error = NULL;
@@ -261,26 +263,30 @@ session_editor_quit_client(GtkWidget *btn,
         if(hint != SmRestartIfRunning) {
             GHashTable *properties = g_hash_table_new(g_str_hash, g_str_equal);
             GValue val = { 0, };
+            GVariant *variant;
 
             g_value_init(&val, G_TYPE_UCHAR);
             g_value_set_uchar(&val, SmRestartIfRunning);
             g_hash_table_insert(properties, SmRestartStyleHint, &val);
 
-            if(!xfsm_client_dbus_client_set_sm_properties(proxy, properties, &error)) {
+            variant = g_variant_new ("a{sv}", properties);
+
+            if(!xfsm_client_call_set_sm_properties_sync(proxy, variant, NULL, &error)) {
                 /* FIXME: show error */
                 g_error_free(error);
             }
 
             g_value_unset(&val);
             g_hash_table_destroy(properties);
+            g_variant_unref(variant);
         }
 
-        if(!xfsm_client_dbus_client_terminate(proxy, &error)) {
+        if(!xfsm_client_call_terminate_sync(proxy, NULL, &error)) {
             xfce_message_dialog(GTK_WINDOW(gtk_widget_get_toplevel(treeview)),
-                                _("Terminate Program"), GTK_STOCK_DIALOG_ERROR,
+                                _("Terminate Program"), "dialog-error",
                                 _("Unable to terminate program."),
                                 error->message,
-                                GTK_STOCK_CLOSE, GTK_RESPONSE_ACCEPT,
+                                _("Close"), GTK_RESPONSE_ACCEPT,
                                 NULL);
             g_error_free(error);
         }
@@ -298,6 +304,8 @@ session_editor_set_from_desktop_file(GtkTreeModel *model,
 {
     XfceRc *rcfile;
     const gchar *name, *icon;
+
+    TRACE("entering");
 
     rcfile = xfce_rc_simple_open(desktop_file, TRUE);
     if(!rcfile)
@@ -329,7 +337,7 @@ session_editor_set_from_desktop_file(GtkTreeModel *model,
 }
 
 static void
-client_sm_property_changed(DBusGProxy *proxy,
+client_sm_property_changed(XfsmClient *proxy,
                            const gchar *name,
                            const GValue *value,
                            gpointer user_data)
@@ -341,6 +349,8 @@ client_sm_property_changed(DBusGProxy *proxy,
     GtkTreePath *path = gtk_tree_row_reference_get_path(rref);
     GtkTreeIter iter;
     gboolean has_desktop_file = FALSE;
+
+    TRACE("entering");
 
     if(!gtk_tree_model_get_iter(model, &iter, path)) {
         gtk_tree_path_free(path);
@@ -383,12 +393,14 @@ client_sm_property_changed(DBusGProxy *proxy,
 }
 
 static void
-client_state_changed(DBusGProxy *proxy,
+client_state_changed(XfsmClient *proxy,
                      guint old_state,
                      guint new_state,
                      gpointer user_data)
 {
     GtkTreeView *treeview = user_data;
+
+    TRACE("entering");
 
     if(new_state == 7) {  /* disconnected.  FIXME: enum this */
         GtkTreeModel *model = gtk_tree_view_get_model(treeview);
@@ -407,7 +419,7 @@ client_state_changed(DBusGProxy *proxy,
 }
 
 static void
-manager_client_registered(DBusGProxy *proxy,
+manager_client_registered(XfsmManager *proxy,
                           const gchar *object_path,
                           gpointer user_data)
 {
@@ -415,26 +427,39 @@ manager_client_registered(DBusGProxy *proxy,
     GtkTreeModel *model = gtk_tree_view_get_model(treeview);
     GtkTreePath *path;
     GtkTreeIter iter;
-    DBusGProxy *client_proxy;
-    GHashTable *properties = NULL;
+    XfsmClient *client_proxy;
     const gchar *propnames[] = {
         SmProgram, SmRestartStyleHint,SmProcessID, GsmPriority,
         GsmDesktopFile, NULL
     };
-    GValue *val;
-    const gchar *name = NULL, *pid = NULL;
+    const gchar *name = NULL, *pid = NULL, *desktop_file = NULL;
     guchar hint = SmRestartIfRunning, priority = 50;
+    GVariant *variant, *variant_value;
+    GVariantIter *variant_iter;
+    gchar *property;
     GError *error = NULL;
+
+    TRACE("entering");
 
     DBG("new client at %s", object_path);
 
-    client_proxy = dbus_g_proxy_new_for_name(dbus_conn,
-                                             "org.xfce.SessionManager",
-                                             object_path,
-                                             "org.xfce.Session.Client");
+    client_proxy = xfsm_client_proxy_new_for_bus_sync(G_BUS_TYPE_SESSION,
+                                                      G_DBUS_PROXY_FLAGS_NONE,
+                                                      "org.xfce.SessionManager",
+                                                      object_path,
+                                                      NULL,
+                                                      &error);
 
-    if(!xfsm_client_dbus_client_get_sm_properties(client_proxy, propnames,
-                                                  &properties, &error))
+    if(error != NULL)
+    {
+        g_warning("Unable to connect to org.xfce.SessionManager, reason: %s",
+                  error->message);
+        g_clear_error(&error);
+        return;
+    }
+
+    if(!xfsm_client_call_get_sm_properties_sync(client_proxy, propnames,
+                                                &variant, NULL, &error))
     {
         g_warning("Unable to get properties for client at %s: %s",
                   object_path, error->message);
@@ -443,17 +468,42 @@ manager_client_registered(DBusGProxy *proxy,
         return;
     }
 
-    if((val = g_hash_table_lookup(properties, SmProgram)))
-        name = g_value_get_string(val);
-    if((val = g_hash_table_lookup(properties, SmRestartStyleHint))) {
-        hint = g_value_get_uchar(val);
-        if(hint > SmRestartNever)
-            hint = SmRestartIfRunning;
+    g_variant_get((GVariant *)variant, "a{sv}", &variant_iter);
+    while(g_variant_iter_next(variant_iter, "{sv}", &property, &variant_value))
+    {
+            if(g_strcmp0(property, SmProgram) == 0)
+            {
+                name = g_variant_get_string(variant_value, 0);
+                DBG("name %s", name);
+            }
+            else if(g_strcmp0(property, SmRestartStyleHint) == 0)
+            {
+                hint = g_variant_get_byte(variant_value);
+                if(hint > SmRestartNever)
+                {
+                    hint = SmRestartIfRunning;
+                }
+                DBG("hint %d", hint);
+            }
+            else if(g_strcmp0(property, GsmPriority) == 0)
+            {
+                priority = g_variant_get_byte(variant_value);
+                DBG("priority %d", priority);
+            }
+            else if(g_strcmp0(property, SmProgram) == 0)
+            {
+                pid = g_variant_get_string(variant_value, 0);
+                DBG("pid %s", pid);
+            }
+            else if(g_strcmp0(property, GsmDesktopFile) == 0)
+            {
+                desktop_file = g_variant_get_string(variant_value, 0);
+                DBG("desktop_file %s", desktop_file);
+            }
+
+            g_free (property);
+            g_variant_unref (variant_value);
     }
-    if((val = g_hash_table_lookup(properties, GsmPriority)))
-        priority = g_value_get_uchar(val);
-    if((val = g_hash_table_lookup(properties, SmProcessID)))
-        pid = g_value_get_string(val);
 
     if(!name || !*name)
         name = _("(Unknown program)");
@@ -470,11 +520,9 @@ manager_client_registered(DBusGProxy *proxy,
                        COL_PID, pid,
                        -1);
 
-    if((val = g_hash_table_lookup(properties, GsmDesktopFile))
-       && G_VALUE_HOLDS_STRING(val))
+    if(desktop_file != NULL)
     {
-        session_editor_set_from_desktop_file(model, &iter,
-                                             g_value_get_string(val));
+        session_editor_set_from_desktop_file(model, &iter, desktop_file);
     }
 
     path = gtk_tree_model_get_path(model, &iter);
@@ -483,21 +531,15 @@ manager_client_registered(DBusGProxy *proxy,
                            (GDestroyNotify)gtk_tree_row_reference_free);
     gtk_tree_path_free(path);
 
-    dbus_g_proxy_add_signal(client_proxy, "SmPropertyChanged",
-                            G_TYPE_STRING, G_TYPE_VALUE,
-                            G_TYPE_INVALID);
-    dbus_g_proxy_connect_signal(client_proxy, "SmPropertyChanged",
-                                G_CALLBACK(client_sm_property_changed),
-                                treeview, NULL);
+    g_signal_connect(client_proxy, "sm_property_changed",
+                     G_CALLBACK(client_sm_property_changed),
+                     treeview);
 
     /* proxy will live as long as the client does */
-    dbus_g_proxy_add_signal(client_proxy, "StateChanged",
-                            G_TYPE_UINT, G_TYPE_UINT, G_TYPE_INVALID);
-    dbus_g_proxy_connect_signal(client_proxy, "StateChanged",
-                                G_CALLBACK(client_state_changed), treeview,
-                                NULL);
+    g_signal_connect(client_proxy, "state_changed",
+                     G_CALLBACK(client_state_changed), treeview);
 
-    g_hash_table_destroy(properties);
+    g_variant_unref(variant);
 }
 
 static GtkTreeModel *
@@ -506,6 +548,8 @@ session_editor_create_restart_style_combo_model(void)
     GtkListStore *ls = gtk_list_store_new(1, G_TYPE_STRING);
     GtkTreeIter iter;
     gint i;
+
+    TRACE("entering");
 
     for(i = 0; restart_styles[i]; ++i) {
         gtk_list_store_append(ls, &iter);
@@ -526,8 +570,10 @@ priority_changed(GtkCellRenderer *render,
     GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
     GtkTreeIter iter;
 
+    TRACE("entering");
+
     if(gtk_tree_model_get_iter(model, &iter, path)) {
-        DBusGProxy *proxy = NULL;
+        XfsmClient *proxy = NULL;
         gint new_prio_i = atoi(new_text);
         guchar old_prio, new_prio;
 
@@ -543,22 +589,25 @@ priority_changed(GtkCellRenderer *render,
                            COL_DBUS_PROXY, &proxy,
                            COL_PRIORITY, &old_prio,
                            -1);
+
+        DBG("old_prio %d, new_prio %d", old_prio, new_prio);
+
         if(old_prio != new_prio) {
-            GHashTable *properties = g_hash_table_new(g_str_hash, g_str_equal);
-            GValue val = { 0, };
+            GVariantBuilder properties;
+            GVariant *variant;
             GError *error = NULL;
 
-            g_value_init(&val, G_TYPE_UCHAR);
-            g_value_set_uchar(&val, new_prio);
-            g_hash_table_insert(properties, GsmPriority, &val);
+            g_variant_builder_init (&properties, G_VARIANT_TYPE ("a{sv}"));
+            variant = g_variant_new_byte(new_prio);
+            g_variant_builder_add (&properties, "{sv}", GsmPriority, variant);
 
-            if(!xfsm_client_dbus_client_set_sm_properties(proxy, properties, &error)) {
-                /* FIXME: show error */
+            if(!xfsm_client_call_set_sm_properties_sync(proxy, g_variant_builder_end (&properties), NULL, &error)) {
+                g_error("error setting 'GsmPriority', error: %s", error->message);
                 g_error_free(error);
             }
 
-            g_value_unset(&val);
-            g_hash_table_destroy(properties);
+            gtk_list_store_set (GTK_LIST_STORE (model), &iter,
+                                COL_PRIORITY, new_prio, -1);
         }
 
         g_object_unref(proxy);
@@ -578,10 +627,12 @@ restart_style_hint_changed(GtkCellRenderer *render,
     GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
     GtkTreeIter iter;
 
+    TRACE("entering");
+
     if(gtk_tree_model_get_iter(model, &iter, path)) {
         gint i;
         guchar old_hint = SmRestartIfRunning, hint;
-        DBusGProxy *proxy = NULL;
+        XfsmClient *proxy = NULL;
 
         gtk_tree_model_get(GTK_TREE_MODEL(model), &iter,
                            COL_DBUS_PROXY, &proxy,
@@ -595,22 +646,21 @@ restart_style_hint_changed(GtkCellRenderer *render,
             }
         }
 
+        DBG("old_hint %d, hint %d", old_hint, hint);
+
         if(old_hint != hint) {
-            GHashTable *properties = g_hash_table_new(g_str_hash, g_str_equal);
-            GValue val = { 0, };
+            GVariantBuilder properties;
+            GVariant *variant;
             GError *error = NULL;
 
-            g_value_init(&val, G_TYPE_UCHAR);
-            g_value_set_uchar(&val, hint);
-            g_hash_table_insert(properties, SmRestartStyleHint, &val);
+            g_variant_builder_init (&properties, G_VARIANT_TYPE ("a{sv}"));
+            variant = g_variant_new_byte(hint);
+            g_variant_builder_add (&properties, "{sv}", SmRestartStyleHint, variant);
 
-            if(!xfsm_client_dbus_client_set_sm_properties(proxy, properties, &error)) {
-                /* FIXME: show error */
-                g_error_free(error);
+            if(!xfsm_client_call_set_sm_properties_sync(proxy, g_variant_builder_end (&properties), NULL, &error)) {
+                g_error("error setting 'SmRestartStyleHint', error: %s", error->message);
+                g_clear_error(&error);
             }
-
-            g_value_unset(&val);
-            g_hash_table_destroy(properties);
 
             gtk_list_store_set (GTK_LIST_STORE (model), &iter,
                                 COL_RESTART_STYLE_STR, new_text, -1);
@@ -629,6 +679,8 @@ session_tree_compare_iter(GtkTreeModel *model,
                           gpointer user_data)
 {
     guchar aprio = 0, bprio = 0;
+
+    TRACE("entering");
 
     gtk_tree_model_get(model, a, COL_PRIORITY, &aprio, -1);
     gtk_tree_model_get(model, b, COL_PRIORITY, &bprio, -1);
@@ -666,10 +718,12 @@ session_editor_populate_treeview(GtkTreeView *treeview)
     GtkCellRenderer *render;
     GtkTreeViewColumn *col;
     GtkTreeModel *combo_model;
-    GPtrArray *clients = NULL;
+    gchar **clients = NULL;
     GtkListStore *ls;
     guint i;
     GError *error = NULL;
+
+    TRACE("entering");
 
     render = gtk_cell_renderer_text_new();
     g_object_set(render,
@@ -729,7 +783,7 @@ session_editor_populate_treeview(GtkTreeView *treeview)
     ls = gtk_list_store_new(N_COLS, G_TYPE_STRING, G_TYPE_STRING,
                             G_TYPE_STRING, G_TYPE_STRING, G_TYPE_UCHAR,
                             G_TYPE_STRING, G_TYPE_UCHAR, G_TYPE_STRING,
-                            DBUS_TYPE_G_PROXY, G_TYPE_BOOLEAN);
+                            G_TYPE_OBJECT, G_TYPE_BOOLEAN);
     gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(ls));
     gtk_tree_sortable_set_default_sort_func(GTK_TREE_SORTABLE(ls),
                                             session_tree_compare_iter,
@@ -739,12 +793,12 @@ session_editor_populate_treeview(GtkTreeView *treeview)
                                          GTK_SORT_ASCENDING);
     g_object_unref(ls);
 
-    dbus_g_proxy_connect_signal(manager_dbus_proxy, "ClientRegistered",
-                                G_CALLBACK(manager_client_registered),
-                                treeview, NULL);
+    g_signal_connect(manager_dbus_proxy, "client_registered",
+                     G_CALLBACK(manager_client_registered),
+                     treeview);
 
-    if(!xfsm_manager_dbus_client_list_clients(manager_dbus_proxy,
-                                              &clients, &error))
+    if(!xfsm_manager_call_list_clients_sync(manager_dbus_proxy,
+                                            &clients, NULL, &error))
     {
         g_critical("Unable to query session manager for client list: %s",
                    error->message);
@@ -752,13 +806,12 @@ session_editor_populate_treeview(GtkTreeView *treeview)
         return;
     }
 
-    for(i = 0; i < clients->len; ++i) {
-        gchar *client_op = g_ptr_array_index(clients, i);
+    for(i = 0; clients[i] != NULL; ++i) {
+        gchar *client_op = clients[i];
         manager_client_registered(manager_dbus_proxy, client_op, treeview);
-        g_free(client_op);
     }
 
-    g_ptr_array_free(clients, TRUE);
+    g_strfreev(clients);
 }
 
 void
@@ -768,15 +821,7 @@ session_editor_init(GtkBuilder *builder)
     GtkTreeView *treeview;
     GtkTreeSelection *sel;
 
-    dbus_g_object_register_marshaller(g_cclosure_marshal_VOID__STRING,
-                                      G_TYPE_NONE, G_TYPE_STRING,
-                                      G_TYPE_INVALID);
-    dbus_g_object_register_marshaller(xfce4_session_marshal_VOID__STRING_BOXED,
-                                      G_TYPE_NONE, G_TYPE_STRING,
-                                      G_TYPE_VALUE, G_TYPE_INVALID);
-    dbus_g_object_register_marshaller(xfce4_session_marshal_VOID__UINT_UINT,
-                                      G_TYPE_NONE, G_TYPE_UINT, G_TYPE_UINT,
-                                      G_TYPE_INVALID);
+    TRACE("entering");
 
     treeview = GTK_TREE_VIEW(gtk_builder_get_object(builder, "treeview_clients"));
     sel = gtk_tree_view_get_selection(treeview);

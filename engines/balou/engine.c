@@ -61,7 +61,6 @@ engine_next (XfsmSplashEngine *engine,
 {
   Balou *balou = BALOU (engine->user_data);
 
-  balou_fadeout (balou);
   balou_fadein (balou, text);
 }
 

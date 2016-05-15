@@ -20,12 +20,11 @@
  */
 
 
-#include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
+#include <gio/gio.h>
 
 #include <xfce4-session/xfsm-consolekit.h>
 #include <libxfsm/xfsm-util.h>
-
+#include "xfsm-global.h"
 
 #define CK_NAME         "org.freedesktop.ConsoleKit"
 #define CK_MANAGER_PATH "/org/freedesktop/ConsoleKit/Manager"
@@ -34,8 +33,6 @@
 
 
 static void     xfsm_consolekit_finalize     (GObject         *object);
-static gboolean xfsm_consolekit_proxy_ensure (XfsmConsolekit  *consolekit,
-                                              GError         **error);
 static void     xfsm_consolekit_proxy_free   (XfsmConsolekit *consolekit);
 
 
@@ -49,9 +46,8 @@ struct _XfsmConsolekit
 {
   GObject __parent__;
 
-  DBusGConnection *dbus_conn;
-  DBusGProxy      *ck_proxy;
-  DBusGProxy      *dbus_proxy;
+  GDBusProxy *proxy;
+  guint name_id;
 };
 
 
@@ -72,8 +68,66 @@ xfsm_consolekit_class_init (XfsmConsolekitClass *klass)
 
 
 static void
+name_acquired (GDBusConnection *connection,
+               const gchar *name,
+               const gchar *name_owner,
+               gpointer user_data)
+{
+  XfsmConsolekit *consolekit = user_data;
+
+  xfsm_verbose ("%s started up, owned by %s\n", name, name_owner);
+
+  if (consolekit->proxy != NULL)
+  {
+    xfsm_verbose ("already have a connection to consolekit\n");
+    return;
+  }
+
+  consolekit->proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
+                                                     G_DBUS_PROXY_FLAGS_NONE,
+                                                     NULL,
+                                                     CK_NAME,
+                                                     CK_MANAGER_PATH,
+                                                     CK_MANAGER_NAME,
+                                                     NULL,
+                                                     NULL);
+}
+
+
+
+static void
+name_lost (GDBusConnection *connection,
+           const gchar *name,
+           gpointer user_data)
+{
+  XfsmConsolekit *consolekit = user_data;
+
+  xfsm_verbose ("ck lost\n");
+
+  xfsm_consolekit_proxy_free (consolekit);
+}
+
+
+
+static void
 xfsm_consolekit_init (XfsmConsolekit *consolekit)
 {
+  consolekit->proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
+                                                     G_DBUS_PROXY_FLAGS_NONE,
+                                                     NULL,
+                                                     CK_NAME,
+                                                     CK_MANAGER_PATH,
+                                                     CK_MANAGER_NAME,
+                                                     NULL,
+                                                     NULL);
+
+  consolekit->name_id = g_bus_watch_name (G_BUS_TYPE_SYSTEM,
+                                          CK_NAME,
+                                          G_BUS_NAME_WATCHER_FLAGS_AUTO_START,
+                                          name_acquired,
+                                          name_lost,
+                                          consolekit,
+                                          NULL);
 }
 
 
@@ -88,149 +142,13 @@ xfsm_consolekit_finalize (GObject *object)
 
 
 
-static DBusHandlerResult
-xfsm_consolekit_dbus_filter (DBusConnection *connection,
-                             DBusMessage    *message,
-                             gpointer        data)
-{
-  g_return_val_if_fail (XFSM_IS_CONSOLEKIT (data), DBUS_HANDLER_RESULT_NOT_YET_HANDLED);
-
-  if (dbus_message_is_signal (message, DBUS_INTERFACE_LOCAL, "Disconnected")
-      && g_strcmp0 (dbus_message_get_path (message), DBUS_PATH_LOCAL) == 0)
-    {
-      g_debug ("Consolekit disconnected");
-      xfsm_consolekit_proxy_free (XFSM_CONSOLEKIT (data));
-    }
-
-  return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
-}
-
-
-
-static void
-xfsm_consolekit_name_owner_changed (DBusGProxy     *dbus_proxy,
-                                    const gchar    *name,
-                                    const gchar    *prev_owner,
-                                    const gchar    *new_owner,
-                                    XfsmConsolekit *consolekit)
-{
-  GError *err = NULL;
-
-  g_return_if_fail (XFSM_IS_CONSOLEKIT (consolekit));
-  g_return_if_fail (consolekit->dbus_proxy == dbus_proxy);
-
-  if (g_strcmp0 (name, CK_NAME) == 0)
-    {
-      g_debug ("Consolekit owner changed");
-
-      /* only reconnect the consolekit proxy */
-      if (consolekit->ck_proxy != NULL)
-        {
-          g_object_unref (G_OBJECT (consolekit->ck_proxy));
-          consolekit->ck_proxy = NULL;
-        }
-
-      if (!xfsm_consolekit_proxy_ensure (consolekit, &err))
-        {
-          g_warning ("Failed to reconnect to consolekit: %s", err->message);
-          g_error_free (err);
-        }
-    }
-}
-
-
-
-static gboolean
-xfsm_consolekit_proxy_ensure (XfsmConsolekit  *consolekit,
-                              GError         **error)
-{
-  GError         *err = NULL;
-  DBusConnection *connection;
-
-  if (consolekit->dbus_conn == NULL)
-    {
-      consolekit->dbus_conn = dbus_g_bus_get (DBUS_BUS_SYSTEM, &err);
-      if (consolekit->dbus_conn == NULL)
-        goto error1;
-
-      connection = dbus_g_connection_get_connection (consolekit->dbus_conn);
-      dbus_connection_set_exit_on_disconnect (connection, FALSE);
-      dbus_connection_add_filter (connection, xfsm_consolekit_dbus_filter, consolekit, NULL);
-    }
-
-  if (consolekit->dbus_proxy == NULL)
-    {
-      consolekit->dbus_proxy = dbus_g_proxy_new_for_name_owner (consolekit->dbus_conn,
-                                                                DBUS_SERVICE_DBUS,
-                                                                DBUS_PATH_DBUS,
-                                                                DBUS_INTERFACE_DBUS,
-                                                                &err);
-      if (consolekit->dbus_proxy == NULL)
-        goto error1;
-
-      /* (dis)connect to consolekit if stopped/started */
-      dbus_g_proxy_add_signal (consolekit->dbus_proxy,
-                               "NameOwnerChanged",
-                               G_TYPE_STRING,
-                               G_TYPE_STRING,
-                               G_TYPE_STRING,
-                               G_TYPE_INVALID);
-
-      dbus_g_proxy_connect_signal (consolekit->dbus_proxy,
-                                   "NameOwnerChanged",
-                                   G_CALLBACK (xfsm_consolekit_name_owner_changed),
-                                   consolekit, NULL);
-    }
-
-  if (consolekit->ck_proxy == NULL)
-    {
-      consolekit->ck_proxy = dbus_g_proxy_new_for_name_owner (consolekit->dbus_conn,
-                                                              CK_NAME,
-                                                              CK_MANAGER_PATH,
-                                                              CK_MANAGER_NAME,
-                                                              &err);
-      if (consolekit->ck_proxy == NULL)
-        goto error1;
-    }
-
-  return TRUE;
-
-  error1:
-
-  g_propagate_error (error, err);
-  xfsm_consolekit_proxy_free (consolekit);
-
-  return FALSE;
-}
-
-
-
 static void
 xfsm_consolekit_proxy_free (XfsmConsolekit *consolekit)
 {
-  DBusConnection *connection;
-
-  if (consolekit->ck_proxy != NULL)
+  if (consolekit->proxy != NULL)
     {
-      g_object_unref (G_OBJECT (consolekit->ck_proxy));
-      consolekit->ck_proxy = NULL;
-    }
-
-  if (consolekit->dbus_proxy != NULL)
-    {
-      g_object_unref (G_OBJECT (consolekit->dbus_proxy));
-      consolekit->dbus_proxy = NULL;
-    }
-
-  if (consolekit->dbus_conn != NULL)
-    {
-      connection = dbus_g_connection_get_connection (consolekit->dbus_conn);
-      dbus_connection_remove_filter (connection,
-                                     xfsm_consolekit_dbus_filter,
-                                     consolekit);
-
-      dbus_g_connection_unref (consolekit->dbus_conn);
-      consolekit->dbus_conn = NULL;
+      g_object_unref (G_OBJECT (consolekit->proxy));
+      consolekit->proxy = NULL;
     }
 }
 
@@ -242,18 +160,34 @@ xfsm_consolekit_can_method (XfsmConsolekit  *consolekit,
                             gboolean        *can_method,
                             GError         **error)
 {
+  GVariant *variant = NULL;
+
   g_return_val_if_fail (can_method != NULL, FALSE);
 
   /* never return true if something fails */
   *can_method = FALSE;
 
-  if (!xfsm_consolekit_proxy_ensure (consolekit, error))
+  if (!consolekit->proxy)
+  {
+    xfsm_verbose ("no ck proxy\n");
+    return FALSE;
+  }
+
+  variant = g_dbus_proxy_call_sync (consolekit->proxy,
+                                    method,
+                                    g_variant_new ("()"),
+                                    G_DBUS_CALL_FLAGS_NONE,
+                                    -1,
+                                    NULL,
+                                    error);
+
+  if (variant == NULL)
     return FALSE;
 
-  return dbus_g_proxy_call (consolekit->ck_proxy, method,
-                            error, G_TYPE_INVALID,
-                            G_TYPE_BOOLEAN, can_method,
-                            G_TYPE_INVALID);
+  g_variant_get_child (variant, 0, "b", can_method);
+
+  g_variant_unref (variant);
+  return TRUE;
 }
 
 
@@ -265,23 +199,33 @@ xfsm_consolekit_can_sleep (XfsmConsolekit  *consolekit,
                            gboolean        *auth_method,
                            GError         **error)
 {
-  gboolean ret;
   gchar *can_string;
+  GVariant *variant = NULL;
+
   g_return_val_if_fail (can_method != NULL, FALSE);
 
   /* never return true if something fails */
   *can_method = FALSE;
+  *auth_method = FALSE;
 
-  if (!xfsm_consolekit_proxy_ensure (consolekit, error))
+  if (!consolekit->proxy)
+  {
+    xfsm_verbose ("no ck proxy\n");
+    return FALSE;
+  }
+
+  variant = g_dbus_proxy_call_sync (consolekit->proxy,
+                                    method,
+                                    g_variant_new ("()"),
+                                    G_DBUS_CALL_FLAGS_NONE,
+                                    -1,
+                                    NULL,
+                                    error);
+
+  if (variant == NULL)
     return FALSE;
 
-  ret = dbus_g_proxy_call (consolekit->ck_proxy, method,
-                            error, G_TYPE_INVALID,
-                            G_TYPE_STRING, &can_string,
-                            G_TYPE_INVALID);
-
-  if (ret == FALSE)
-    return FALSE;
+  g_variant_get_child (variant, 0, "s", &can_string);
 
   /* If yes or challenge then we can sleep, it just might take a password */
   if (g_strcmp0 (can_string, "yes") == 0 || g_strcmp0 (can_string, "challenge") == 0)
@@ -295,6 +239,7 @@ xfsm_consolekit_can_sleep (XfsmConsolekit  *consolekit,
       *auth_method = FALSE;
     }
 
+  g_variant_unref (variant);
   return TRUE;
 }
 
@@ -305,11 +250,27 @@ xfsm_consolekit_try_method (XfsmConsolekit  *consolekit,
                             const gchar     *method,
                             GError         **error)
 {
-  if (!xfsm_consolekit_proxy_ensure (consolekit, error))
+  GVariant *variant = NULL;
+
+  if (!consolekit->proxy)
+  {
+    xfsm_verbose ("no ck proxy\n");
+    return FALSE;
+  }
+
+  variant = g_dbus_proxy_call_sync (consolekit->proxy,
+                                    method,
+                                    g_variant_new ("()"),
+                                    G_DBUS_CALL_FLAGS_NONE,
+                                    -1,
+                                    NULL,
+                                    error);
+
+  if (variant == NULL)
     return FALSE;
 
-  return dbus_g_proxy_call (consolekit->ck_proxy, method, error,
-                            G_TYPE_INVALID, G_TYPE_INVALID);
+  g_variant_unref (variant);
+  return TRUE;
 }
 
 
@@ -319,12 +280,27 @@ xfsm_consolekit_try_sleep (XfsmConsolekit  *consolekit,
                            const gchar     *method,
                            GError         **error)
 {
-  if (!xfsm_consolekit_proxy_ensure (consolekit, error))
+  GVariant *variant = NULL;
+
+  if (!consolekit->proxy)
+  {
+    xfsm_verbose ("no ck proxy\n");
+    return FALSE;
+  }
+
+  variant = g_dbus_proxy_call_sync (consolekit->proxy,
+                                    method,
+                                    g_variant_new_boolean (TRUE),
+                                    G_DBUS_CALL_FLAGS_NONE,
+                                    -1,
+                                    NULL,
+                                    error);
+
+  if (variant == NULL)
     return FALSE;
 
-  return dbus_g_proxy_call (consolekit->ck_proxy, method, error,
-                            G_TYPE_BOOLEAN, TRUE,
-                            G_TYPE_INVALID, G_TYPE_INVALID);
+  g_variant_unref (variant);
+  return TRUE;
 }
 
 

@@ -146,6 +146,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gboolean       can_restart;
   gboolean       can_suspend = FALSE;
   gboolean       can_hibernate = FALSE;
+  gboolean       can_switch_user = FALSE;
   gboolean       auth_suspend = FALSE;
   gboolean       auth_hibernate = FALSE;
   GError        *error = NULL;
@@ -158,7 +159,6 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   dialog->shutdown = xfsm_shutdown_get ();
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
-  gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
@@ -167,8 +167,8 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   if (xfsm_shutdown_can_save_session (dialog->shutdown))
     save_session = xfconf_channel_get_bool (channel, "/general/SaveOnExit", TRUE);
 
-  main_vbox = gtk_vbox_new (FALSE, BORDER);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox, TRUE, TRUE, 0);
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, BORDER);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), main_vbox, TRUE, TRUE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), BORDER);
   gtk_widget_show (main_vbox);
 
@@ -192,29 +192,29 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gtk_label_set_attributes (GTK_LABEL (label), attrs);
   pango_attr_list_unref (attrs);
 
-  separator = gtk_hseparator_new ();
+  separator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_box_pack_start (GTK_BOX (main_vbox), separator, FALSE, TRUE, 0);
   gtk_widget_show (separator);
 
   /**
    * Start mode MODE_LOGOUT_BUTTONS
    **/
-  dialog->box[MODE_LOGOUT_BUTTONS] = vbox = gtk_vbox_new (FALSE, BORDER);
+  dialog->box[MODE_LOGOUT_BUTTONS] = vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, BORDER);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
 
   /**
    * Cancel
    **/
   dialog->button_cancel = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                                 GTK_STOCK_CANCEL,
+                                                 _("_Cancel"),
                                                  GTK_RESPONSE_CANCEL);
 
-  button_vbox = gtk_vbox_new (TRUE, BORDER);
+  button_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, BORDER);
   gtk_box_pack_start (GTK_BOX (vbox), button_vbox, FALSE, TRUE, 0);
   gtk_widget_show (button_vbox);
 
   /* row for logout/shutdown and reboot */
-  hbox = gtk_hbox_new (TRUE, BORDER);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, BORDER);
   gtk_box_pack_start (GTK_BOX (button_vbox), hbox, FALSE, TRUE, 0);
   gtk_widget_show (hbox);
 
@@ -270,7 +270,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gtk_widget_show (button);
 
   /* new row for suspend/hibernate */
-  hbox = gtk_hbox_new (TRUE, BORDER);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, BORDER);
   gtk_box_pack_start (GTK_BOX (button_vbox), hbox, FALSE, TRUE, 0);
 
   /**
@@ -338,6 +338,37 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
     }
 
   /**
+   * Switch User
+   *
+   * Hide the button if system cannot switch user, requires the display
+   * manager to provide the org.freedesktop.DisplayManager dbus API
+   **/
+  if (xfconf_channel_get_bool (channel, "/shutdown/ShowSwitchUser", TRUE))
+    {
+      if (xfsm_shutdown_can_switch_user (dialog->shutdown, &can_switch_user, &error))
+        {
+          if (can_switch_user)
+            {
+              button = xfsm_logout_dialog_button (_("Switch _User"), "avatar-default",
+                                                  "avatar-default-symbolic", XFSM_SHUTDOWN_SWITCH_USER,
+                                                  dialog);
+
+              gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+              gtk_widget_set_sensitive (button, auth_hibernate);
+              gtk_widget_show (button);
+
+              gtk_widget_show (hbox);
+            }
+        }
+      else
+        {
+          g_printerr ("%s: Querying switch user failed: %s\n\n",
+                      PACKAGE_NAME, ERROR_MSG (error));
+          g_clear_error (&error);
+        }
+    }
+
+  /**
    * Save session
    **/
   if (xfsm_shutdown_can_save_session (dialog->shutdown)
@@ -356,24 +387,25 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   /**
    * Start mode MODE_SHOW_ERROR
    **/
-  dialog->box[MODE_SHOW_ERROR] = vbox = gtk_vbox_new (FALSE, BORDER);
+  dialog->box[MODE_SHOW_ERROR] = vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, BORDER);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
 
-  hbox = gtk_hbox_new (FALSE, BORDER * 2);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, BORDER * 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
   gtk_widget_show (hbox);
 
-  image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_ERROR, GTK_ICON_SIZE_DIALOG);
+  image = gtk_image_new_from_icon_name ("dialog-error", GTK_ICON_SIZE_DIALOG);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 
-  vbox = gtk_vbox_new (FALSE, BORDER);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, BORDER);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   label = gtk_label_new (_("An error occurred"));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.00, 0.50);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.00);
+  gtk_label_set_yalign (GTK_LABEL (label), 0.50);
   gtk_label_set_attributes (GTK_LABEL (label), attrs);
   gtk_widget_show (label);
 
@@ -451,7 +483,7 @@ xfsm_logout_dialog_button (const gchar      *title,
   g_signal_connect (G_OBJECT (button), "clicked",
       G_CALLBACK (xfsm_logout_dialog_button_clicked), dialog);
 
-  vbox = gtk_vbox_new (FALSE, BORDER);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, BORDER);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), BORDER);
   gtk_container_add (GTK_CONTAINER (button), vbox);
   gtk_widget_show (vbox);
@@ -502,7 +534,10 @@ xfsm_logout_dialog_screenshot_new (GdkScreen *screen)
   screen_rect.height = gdk_screen_get_height (screen);
 
   window = gdk_screen_get_root_window (screen);
-  gdk_drawable_get_size (GDK_DRAWABLE (window), &rect.width, &rect.height);
+
+  rect.width = gdk_window_get_width (window);
+  rect.height = gdk_window_get_height (window);
+
   gdk_window_get_origin (window, &x, &y);
 
   rect.x = x;
@@ -511,13 +546,7 @@ xfsm_logout_dialog_screenshot_new (GdkScreen *screen)
   if (!gdk_rectangle_intersect (&rect, &screen_rect, &rect))
     return NULL;
 
-  screenshot = gdk_pixbuf_get_from_drawable  (NULL,
-                                             GDK_DRAWABLE (window),
-                                             NULL,
-                                             0, 0,
-                                             0, 0,
-                                             rect.width,
-                                             rect.height);
+  screenshot = gdk_pixbuf_get_from_window  (window, 0, 0, rect.width, rect.height);
 
   gdk_display_beep (gdk_screen_get_display (screen));
 
@@ -615,29 +644,66 @@ xfsm_logout_dialog_run (GtkDialog *dialog,
 {
   GdkWindow *window;
   gint       ret;
+#if !GTK_CHECK_VERSION (3, 20, 0)
+  GdkDevice *device;
+#else
+  GdkSeat   *seat;
+#endif
 
   if (grab_input)
     {
       gtk_widget_show_now (GTK_WIDGET (dialog));
 
       window = gtk_widget_get_window (GTK_WIDGET (dialog));
-      if (gdk_keyboard_grab (window, FALSE, GDK_CURRENT_TIME) != GDK_GRAB_SUCCESS)
-        g_critical ("Failed to grab the keyboard for logout window");
+
+#if !GTK_CHECK_VERSION (3, 20, 0)
+          device = gtk_get_current_event_device ();
+
+          if (gdk_device_grab (device,
+                               window,
+                               GDK_OWNERSHIP_APPLICATION,
+                               FALSE,
+                               GDK_KEY_PRESS_MASK,
+                               NULL,
+                               GDK_CURRENT_TIME) != GDK_GRAB_SUCCESS)
+            {
+              g_critical ("Failed to grab the keyboard for logout window");
+            }
+#else
+          seat = gdk_device_get_seat (gtk_get_current_event_device ());
+
+          if (gdk_seat_grab (seat,
+                             window,
+                             GDK_SEAT_CAPABILITY_KEYBOARD,
+                             FALSE,
+                             NULL,
+                             gtk_get_current_event (),
+                             NULL,
+                             NULL) != GDK_GRAB_SUCCESS)
+            {
+              g_critical ("Failed to grab the keyboard for logout window");
+            }
+#endif
 
 #ifdef GDK_WINDOWING_X11
       /* force input to the dialog */
       gdk_error_trap_push ();
-      XSetInputFocus (GDK_DISPLAY (),
-                      GDK_WINDOW_XWINDOW (window),
+      XSetInputFocus (gdk_x11_get_default_xdisplay (),
+                      GDK_WINDOW_XID (window),
                       RevertToParent, CurrentTime);
-      gdk_error_trap_pop ();
+      gdk_error_trap_pop_ignored ();
 #endif
     }
 
   ret = gtk_dialog_run (dialog);
 
+#if !GTK_CHECK_VERSION (3, 20, 0)
   if (grab_input)
-    gdk_keyboard_ungrab (GDK_CURRENT_TIME);
+    gdk_device_ungrab (device, GDK_CURRENT_TIME);
+#else
+    if (grab_input)
+    gdk_seat_ungrab (seat);
+#endif
 
   return ret;
 }
@@ -700,13 +766,36 @@ xfsm_logout_dialog (const gchar      *session_name,
        * the dialog when running it */
       for (;;)
         {
-          if (gdk_keyboard_grab (gtk_widget_get_window (hidden), FALSE,
-                                 GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS)
+#if !GTK_CHECK_VERSION (3, 20, 0)
+          GdkDevice *device = gtk_get_current_event_device ();
+
+          if (gdk_device_grab (device,
+                               gtk_widget_get_window (hidden),
+                               GDK_OWNERSHIP_APPLICATION,
+                               FALSE,
+                               GDK_KEY_PRESS_MASK,
+                               NULL,
+                               GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS)
             {
-              gdk_keyboard_ungrab (GDK_CURRENT_TIME);
+              gdk_device_ungrab (device, GDK_CURRENT_TIME);
               break;
             }
+#else
+          GdkSeat *seat = gdk_device_get_seat (gtk_get_current_event_device ());
 
+          if (gdk_seat_grab (seat,
+                             gtk_widget_get_window (hidden),
+                             GDK_SEAT_CAPABILITY_KEYBOARD,
+                             FALSE,
+                             NULL,
+                             gtk_get_current_event (),
+                             NULL,
+                             NULL) == GDK_GRAB_SUCCESS)
+            {
+              gdk_seat_ungrab (seat);
+              break;
+            }
+#endif
           g_usleep (G_USEC_PER_SEC / 20);
         }
 
@@ -725,8 +814,8 @@ xfsm_logout_dialog (const gchar      *session_name,
       xfsm_window_add_border (GTK_WINDOW (dialog));
 
       gtk_widget_realize (dialog);
-      gdk_window_set_override_redirect (dialog->window, TRUE);
-      gdk_window_raise (dialog->window);
+      gdk_window_set_override_redirect (gtk_widget_get_window (dialog), TRUE);
+      gdk_window_raise (gtk_widget_get_window (dialog));
     }
   else
     {
