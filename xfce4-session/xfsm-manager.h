@@ -71,7 +71,7 @@ typedef struct _XfsmManager  XfsmManager;
 
 GType xfsm_manager_get_type (void) G_GNUC_CONST;
 
-XfsmManager *xfsm_manager_new (void);
+XfsmManager *xfsm_manager_new (GDBusConnection *connection);
 
 void xfsm_manager_load (XfsmManager   *manager,
                         XfconfChannel *channel);

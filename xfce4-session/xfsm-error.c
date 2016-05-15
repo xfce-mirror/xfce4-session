@@ -24,18 +24,27 @@
 
 #include <xfce4-session/xfsm-error.h>
 
+#define XFSM_DBUS_NAME "org.xfce.SessionManager"
+
+static const GDBusErrorEntry xfsm_error_entries[] =
+{
+        { XFSM_ERROR_BAD_STATE,   XFSM_DBUS_NAME ".Error.Failed" },
+        { XFSM_ERROR_BAD_VALUE,   XFSM_DBUS_NAME ".Error.General" },
+        { XFSM_ERROR_UNSUPPORTED, XFSM_DBUS_NAME ".Error.Unsupported" },
+};
 
 GQuark
 xfsm_error_get_quark (void)
 {
-  static GQuark xfsm_error_quark = 0;
+  static volatile gsize quark_volatile = 0;
 
-  if (G_UNLIKELY (xfsm_error_quark == 0))
-    xfsm_error_quark = g_quark_from_static_string ("xfsm-error-quark");
+  g_dbus_error_register_error_domain ("xfsm_error",
+                                      &quark_volatile,
+                                      xfsm_error_entries,
+                                      G_N_ELEMENTS (xfsm_error_entries));
 
-  return xfsm_error_quark;
+  return (GQuark) quark_volatile;
 }
-
 
 GType
 xfsm_error_get_type (void)
@@ -58,8 +67,19 @@ xfsm_error_get_type (void)
 }
 
 void
-xfsm_error_dbus_init (void)
+throw_error (GDBusMethodInvocation *context,
+             gint                   error_code,
+             const gchar           *format,
+             ...)
 {
-  dbus_g_error_domain_register (XFSM_ERROR, "org.xfce.Session.Manager",
-                                XFSM_TYPE_ERROR);
+        va_list args;
+        gchar *message;
+
+        va_start (args, format);
+        message = g_strdup_vprintf (format, args);
+        va_end (args);
+
+        g_dbus_method_invocation_return_error (context, XFSM_ERROR, error_code, "%s", message);
+
+        g_free (message);
 }

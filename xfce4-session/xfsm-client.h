@@ -23,6 +23,7 @@
 #define __XFSM_CLIENT_H__
 
 #include <glib-object.h>
+#include <gio/gio.h>
 
 #include <xfce4-session/xfsm-properties.h>
 
@@ -52,7 +53,8 @@ typedef enum
 GType xfsm_client_get_type (void) G_GNUC_CONST;
 
 XfsmClient *xfsm_client_new (struct _XfsmManager *manager,
-                             SmsConn              sms_conn);
+                             SmsConn              sms_conn,
+                             GDBusConnection     *connection);
 
 void xfsm_client_set_initial_properties (XfsmClient     *client,
                                          XfsmProperties *properties);

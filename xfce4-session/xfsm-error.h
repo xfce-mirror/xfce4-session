@@ -19,6 +19,7 @@
 #define __XFSM_ERRORS_H__
 
 #include <glib-object.h>
+#include <gio/gio.h>
 
 #define XFSM_TYPE_ERROR  (xfsm_error_get_type ())
 #define XFSM_ERROR       (xfsm_error_get_quark ())
@@ -37,7 +38,10 @@ typedef enum
 GType xfsm_error_get_type (void) G_GNUC_CONST;
 GQuark xfsm_error_get_quark (void) G_GNUC_CONST;
 
-void xfsm_error_dbus_init (void);
+void throw_error (GDBusMethodInvocation *context,
+                  gint                   error_code,
+                  const gchar           *format,
+                  ...);
 
 G_END_DECLS
 

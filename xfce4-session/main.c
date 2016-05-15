@@ -46,8 +46,7 @@
 #include <unistd.h>
 #endif
 
-#include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
+#include <gio/gio.h>
 
 #include <xfconf/xfconf.h>
 
@@ -70,6 +69,8 @@
 
 static gboolean opt_disable_tcp = FALSE;
 static gboolean opt_version = FALSE;
+static XfsmManager *manager = NULL;
+static XfconfChannel *channel = NULL;
 
 static GOptionEntry option_entries[] =
 {
@@ -145,49 +146,114 @@ init_display (XfsmManager   *manager,
 }
 
 
+
+static void
+bus_acquired (GDBusConnection *connection,
+              const gchar *name,
+              gpointer user_data)
+{
+  GdkDisplay       *dpy;
+
+  g_debug ("bus_acquired %s\n", name);
+
+  manager = xfsm_manager_new (connection);
+
+  if (manager == NULL) {
+          g_critical ("Could not create XfsmManager");
+  }
+
+  setup_environment ();
+
+  channel = xfsm_open_config ();
+
+  dpy = gdk_display_get_default ();
+  init_display (manager, dpy, channel, opt_disable_tcp);
+
+  if (!opt_disable_tcp && xfconf_channel_get_bool (channel, "/security/EnableTcp", FALSE))
+    {
+      /* verify that the DNS settings are ok */
+      xfsm_splash_screen_next (splash_screen, _("Verifying DNS settings"));
+      xfsm_dns_check ();
+    }
+
+  xfsm_splash_screen_next (splash_screen, _("Loading session data"));
+
+  xfsm_startup_init (channel);
+  xfsm_manager_load (manager, channel);
+  xfsm_manager_restart (manager);
+}
+
+
+
+static void
+name_acquired (GDBusConnection *connection,
+               const gchar *name,
+               gpointer user_data)
+{
+  g_debug ("name_acquired\n");
+}
+
+
+
+static void
+name_lost (GDBusConnection *connection,
+           const gchar *name,
+           gpointer user_data)
+{
+  GError           *error = NULL;
+  XfsmShutdownType  shutdown_type;
+  XfsmShutdown     *shutdown_helper;
+  gboolean          succeed = TRUE;
+
+  g_debug ("name_lost\n");
+
+  /* Release the  object */
+  g_debug ("Disconnected from D-Bus");
+
+  shutdown_type = xfsm_manager_get_shutdown_type (manager);
+
+  /* take over the ref before we release the manager */
+  shutdown_helper = xfsm_shutdown_get ();
+
+  g_object_unref (manager);
+  g_object_unref (channel);
+
+  ice_cleanup ();
+
+  if (shutdown_type == XFSM_SHUTDOWN_SHUTDOWN
+      || shutdown_type == XFSM_SHUTDOWN_RESTART)
+    {
+      succeed = xfsm_shutdown_try_type (shutdown_helper, shutdown_type, &error);
+      if (!succeed)
+        g_warning ("Failed to shutdown/restart: %s", ERROR_MSG (error));
+    }
+
+  g_object_unref (shutdown_helper);
+
+  gtk_main_quit ();
+}
+
+
+
 static void
 xfsm_dbus_init (void)
 {
-  DBusGConnection *dbus_conn;
   int              ret;
-  GError          *error = NULL;
 
-  xfsm_error_dbus_init ();
+  ret = g_bus_own_name (G_BUS_TYPE_SESSION,
+                        "org.xfce.SessionManager",
+                        G_BUS_NAME_OWNER_FLAGS_NONE,
+                        bus_acquired, name_acquired, name_lost,
+                        NULL, NULL);
 
-  dbus_conn = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
-  if (G_UNLIKELY (!dbus_conn))
-    {
-      g_critical ("Unable to contact D-Bus session bus: %s", error ? error->message : "Unknown error");
-      if (error)
-        g_error_free (error);
-      return;
-    }
-
-  ret = dbus_bus_request_name (dbus_g_connection_get_connection (dbus_conn),
-                               "org.xfce.SessionManager",
-                               DBUS_NAME_FLAG_DO_NOT_QUEUE,
-                               NULL);
-  if (DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER != ret)
+  if (ret == 0)
     {
       g_printerr ("%s: Another session manager is already running\n", PACKAGE_NAME);
       exit (EXIT_FAILURE);
     }
 }
 
-static void
-xfsm_dbus_cleanup (void)
-{
-  DBusGConnection *dbus_conn;
 
-  /* this is all not really necessary, but... */
-
-  dbus_conn = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
-  if (G_UNLIKELY (!dbus_conn))
-    return;
-
-  dbus_bus_release_name (dbus_g_connection_get_connection (dbus_conn),
-                         "org.xfce.SessionManager", NULL);
-}
 
 static gboolean
 xfsm_dbus_require_session (gint argc, gchar **argv)
@@ -232,12 +298,7 @@ xfsm_dbus_require_session (gint argc, gchar **argv)
 int
 main (int argc, char **argv)
 {
-  XfsmManager      *manager;
   GError           *error = NULL;
-  GdkDisplay       *dpy;
-  XfconfChannel    *channel;
-  XfsmShutdownType  shutdown_type;
-  XfsmShutdown     *shutdown_helper;
   gboolean          succeed = TRUE;
 
   if (!xfsm_dbus_require_session (argc, argv))
@@ -260,7 +321,7 @@ main (int argc, char **argv)
   if (opt_version)
     {
       g_print ("%s %s (Xfce %s)\n\n", G_LOG_DOMAIN, PACKAGE_VERSION, xfce_version_string ());
-      g_print ("%s\n", "Copyright (c) 2003-2014");
+      g_print ("%s\n", "Copyright (c) 2003-2016");
       g_print ("\t%s\n\n", _("The Xfce development team. All rights reserved."));
       g_print (_("Please report bugs to <%s>."), PACKAGE_BUGREPORT);
       g_print ("\n");
@@ -281,51 +342,7 @@ main (int argc, char **argv)
 
   xfsm_dbus_init ();
 
-  manager = xfsm_manager_new ();
-  setup_environment ();
-
-  channel = xfsm_open_config ();
-
-  dpy = gdk_display_get_default ();
-  init_display (manager, dpy, channel, opt_disable_tcp);
-
-  if (!opt_disable_tcp && xfconf_channel_get_bool (channel, "/security/EnableTcp", FALSE))
-    {
-      /* verify that the DNS settings are ok */
-      xfsm_splash_screen_next (splash_screen, _("Verifying DNS settings"));
-      xfsm_dns_check ();
-    }
-
-  xfsm_splash_screen_next (splash_screen, _("Loading session data"));
-
-  xfsm_startup_init (channel);
-  xfsm_manager_load (manager, channel);
-  xfsm_manager_restart (manager);
-
   gtk_main ();
-
-  xfsm_startup_shutdown ();
-
-  shutdown_type = xfsm_manager_get_shutdown_type (manager);
-
-  /* take over the ref before we release the manager */
-  shutdown_helper = xfsm_shutdown_get ();
-
-  g_object_unref (manager);
-  g_object_unref (channel);
-
-  xfsm_dbus_cleanup ();
-  ice_cleanup ();
-
-  if (shutdown_type == XFSM_SHUTDOWN_SHUTDOWN
-      || shutdown_type == XFSM_SHUTDOWN_RESTART)
-    {
-      succeed = xfsm_shutdown_try_type (shutdown_helper, shutdown_type, &error);
-      if (!succeed)
-        g_warning ("Failed to shutdown/restart: %s", ERROR_MSG (error));
-    }
-
-  g_object_unref (shutdown_helper);
 
   return succeed ? EXIT_SUCCESS : EXIT_FAILURE;
 }

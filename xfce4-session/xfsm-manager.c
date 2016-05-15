@@ -61,7 +61,7 @@
 #  endif  /* __NR_ioprio_set */
 #endif  /* HAVE_ASM_UNISTD_H */
 
-#include <dbus/dbus-glib-lowlevel.h>
+#include <gio/gio.h>
 
 #include <X11/ICE/ICElib.h>
 #include <X11/SM/SMlib.h>
@@ -76,6 +76,7 @@
 #include <libxfsm/xfsm-splash-engine.h>
 #include <libxfsm/xfsm-util.h>
 
+#include <xfce4-session/xfsm-manager-dbus.h>
 #include <xfce4-session/xfsm-manager.h>
 #include <xfce4-session/xfsm-chooser-icon.h>
 #include <xfce4-session/xfsm-chooser.h>
@@ -92,7 +93,7 @@
 
 struct _XfsmManager
 {
-  GObject parent;
+  XfsmDbusManagerSkeleton parent;
 
   XfsmManagerState state;
 
@@ -120,22 +121,12 @@ struct _XfsmManager
 
   guint            die_timeout_id;
 
-  DBusGConnection *session_bus;
+  GDBusConnection *connection;
 };
 
 typedef struct _XfsmManagerClass
 {
-  GObjectClass parent;
-
-  /*< signals >*/
-  void (*state_changed) (XfsmManager     *manager,
-                         XfsmManagerState old_state,
-                         XfsmManagerState new_state);
-
-  void (*client_registered) (XfsmManager *manager,
-                             const gchar *client_object_path);
-
-  void (*shutdown_cancelled) (XfsmManager *manager);
+  XfsmDbusManagerSkeletonClass parent;
 } XfsmManagerClass;
 
 typedef struct
@@ -152,14 +143,6 @@ typedef struct
   gboolean         allow_save;
 } ShutdownIdleData;
 
-enum
-{
-  SIG_STATE_CHANGED = 0,
-  SIG_CLIENT_REGISTERED,
-  SIG_SHUTDOWN_CANCELLED,
-  N_SIGS,
-};
-
 
 static void       xfsm_manager_finalize (GObject *obj);
 
@@ -173,14 +156,14 @@ static void       xfsm_manager_load_settings (XfsmManager   *manager,
                                               XfconfChannel *channel);
 static gboolean   xfsm_manager_load_session (XfsmManager *manager);
 static void       xfsm_manager_dbus_class_init (XfsmManagerClass *klass);
-static void       xfsm_manager_dbus_init (XfsmManager *manager);
+static void       xfsm_manager_dbus_init (XfsmManager *manager,
+                                          GDBusConnection *connection);
+static void       xfsm_manager_iface_init (XfsmDbusManagerIface *iface);
 static void       xfsm_manager_dbus_cleanup (XfsmManager *manager);
 
 
-static guint signals[N_SIGS] = { 0, };
 
-
-G_DEFINE_TYPE(XfsmManager, xfsm_manager, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_CODE (XfsmManager, xfsm_manager, XFSM_DBUS_TYPE_MANAGER_SKELETON, G_IMPLEMENT_INTERFACE (XFSM_DBUS_TYPE_MANAGER, xfsm_manager_iface_init));
 
 
 static void
@@ -189,35 +172,6 @@ xfsm_manager_class_init (XfsmManagerClass *klass)
   GObjectClass *gobject_class = (GObjectClass *)klass;
 
   gobject_class->finalize = xfsm_manager_finalize;
-
-  signals[SIG_STATE_CHANGED] = g_signal_new ("state-changed",
-                                             XFSM_TYPE_MANAGER,
-                                             G_SIGNAL_RUN_LAST,
-                                             G_STRUCT_OFFSET (XfsmManagerClass,
-                                                              state_changed),
-                                             NULL, NULL,
-                                             xfsm_marshal_VOID__UINT_UINT,
-                                             G_TYPE_NONE, 2,
-                                             G_TYPE_UINT, G_TYPE_UINT);
-
-  signals[SIG_CLIENT_REGISTERED] = g_signal_new ("client-registered",
-                                                 XFSM_TYPE_MANAGER,
-                                                 G_SIGNAL_RUN_LAST,
-                                                 G_STRUCT_OFFSET (XfsmManagerClass,
-                                                                  client_registered),
-                                                 NULL, NULL,
-                                                 g_cclosure_marshal_VOID__STRING,
-                                                 G_TYPE_NONE, 1,
-                                                 G_TYPE_STRING);
-
-  signals[SIG_SHUTDOWN_CANCELLED] = g_signal_new ("shutdown-cancelled",
-                                                  XFSM_TYPE_MANAGER,
-                                                  G_SIGNAL_RUN_LAST,
-                                                  G_STRUCT_OFFSET (XfsmManagerClass,
-                                                                   shutdown_cancelled),
-                                                  NULL, NULL,
-                                                  g_cclosure_marshal_VOID__VOID,
-                                                  G_TYPE_NONE, 0);
 
   xfsm_manager_dbus_class_init (klass);
 }
@@ -302,16 +256,16 @@ xfsm_manager_set_state (XfsmManager     *manager,
                 state == XFSM_MANAGER_SHUTDOWNPHASE2 ? "XFSM_MANAGER_SHUTDOWNPHASE2" :
                 "unknown");
 
-  g_signal_emit (manager, signals[SIG_STATE_CHANGED], 0, old_state, state);
+  xfsm_dbus_manager_emit_state_changed (XFSM_DBUS_MANAGER (manager), old_state, state);
 }
 
 
 XfsmManager *
-xfsm_manager_new (void)
+xfsm_manager_new (GDBusConnection *connection)
 {
-  XfsmManager *manager = g_object_new (XFSM_TYPE_MANAGER, NULL);
+  XfsmManager *manager = XFSM_MANAGER (g_object_new (XFSM_TYPE_MANAGER, NULL));
 
-  xfsm_manager_dbus_init (manager);
+  xfsm_manager_dbus_init (manager, connection);
 
   return manager;
 }
@@ -863,7 +817,7 @@ xfsm_manager_new_client (XfsmManager *manager,
       return NULL;
     }
 
-  client = xfsm_client_new (manager, sms_conn);
+  client = xfsm_client_new (manager, sms_conn, manager->connection);
   return client;
 }
 
@@ -959,8 +913,7 @@ xfsm_manager_register_client (XfsmManager *manager,
 
   SmsRegisterClientReply (sms_conn, (char *) xfsm_client_get_id (client));
 
-  g_signal_emit (manager, signals[SIG_CLIENT_REGISTERED], 0,
-                 xfsm_client_get_object_path (client));
+  xfsm_dbus_manager_emit_client_registered (XFSM_DBUS_MANAGER (manager), xfsm_client_get_object_path (client));
 
   if (previous_id == NULL)
     {
@@ -1099,7 +1052,7 @@ xfsm_manager_interact_done (XfsmManager *manager,
           SmsShutdownCancelled (xfsm_client_get_sms_connection (cl));
         }
 
-        g_signal_emit (manager, signals[SIG_SHUTDOWN_CANCELLED], 0);
+        xfsm_dbus_manager_emit_shutdown_cancelled (XFSM_DBUS_MANAGER (manager));
     }
   else
     {
@@ -1829,50 +1782,37 @@ xfsm_manager_get_start_at (XfsmManager *manager)
  * dbus server impl
  */
 
-static DBusHandlerResult xfsm_manager_watch_dbus_disconnect (DBusConnection *connection,
-                                                             DBusMessage *message,
-                                                             void *user_data);
-
-static gboolean xfsm_manager_dbus_get_info (XfsmManager *manager,
-                                            gchar      **OUT_name,
-                                            gchar      **OUT_version,
-                                            gchar      **OUT_vendor,
-                                            GError     **error);
-static gboolean xfsm_manager_dbus_list_clients (XfsmManager *manager,
-                                                GPtrArray  **OUT_clients,
-                                                GError     **error);
-static gboolean xfsm_manager_dbus_get_state (XfsmManager *manager,
-                                             guint       *OUT_state,
-                                             GError     **error);
-static gboolean xfsm_manager_dbus_checkpoint (XfsmManager *manager,
-                                              const gchar *session_name,
-                                              GError     **error);
-static gboolean xfsm_manager_dbus_logout (XfsmManager *manager,
-                                          gboolean     show_dialog,
-                                          gboolean     allow_save,
-                                          GError     **error);
-static gboolean xfsm_manager_dbus_shutdown (XfsmManager *manager,
-                                            gboolean     allow_save,
-                                            GError     **error);
-static gboolean xfsm_manager_dbus_can_shutdown (XfsmManager *manager,
-                                                gboolean    *can_shutdown,
-                                                GError     **error);
-static gboolean xfsm_manager_dbus_restart (XfsmManager *manager,
-                                           gboolean     allow_save,
-                                           GError     **error);
-static gboolean xfsm_manager_dbus_can_restart (XfsmManager *manager,
-                                               gboolean    *can_restart,
-                                               GError     **error);
-static gboolean xfsm_manager_dbus_suspend (XfsmManager *manager,
-                                           GError     **error);
-static gboolean xfsm_manager_dbus_can_suspend (XfsmManager *manager,
-                                               gboolean    *can_suspend,
-                                               GError     **error);
-static gboolean xfsm_manager_dbus_hibernate (XfsmManager *manager,
-                                             GError     **error);
-static gboolean xfsm_manager_dbus_can_hibernate (XfsmManager *manager,
-                                                 gboolean    *can_hibernate,
-                                                 GError     **error);
+static gboolean xfsm_manager_dbus_get_info (XfsmDbusManager *object,
+                                            GDBusMethodInvocation *invocation);
+static gboolean xfsm_manager_dbus_list_clients (XfsmDbusManager *object,
+                                                GDBusMethodInvocation *invocation);
+static gboolean xfsm_manager_dbus_get_state (XfsmDbusManager *object,
+                                             GDBusMethodInvocation *invocation);
+static gboolean xfsm_manager_dbus_checkpoint (XfsmDbusManager *object,
+                                              GDBusMethodInvocation *invocation,
+                                              const gchar *arg_session_name);
+static gboolean xfsm_manager_dbus_logout (XfsmDbusManager *object,
+                                          GDBusMethodInvocation *invocation,
+                                          gboolean arg_show_dialog,
+                                          gboolean arg_allow_save);
+static gboolean xfsm_manager_dbus_shutdown (XfsmDbusManager *object,
+                                            GDBusMethodInvocation *invocation,
+                                            gboolean arg_allow_save);
+static gboolean xfsm_manager_dbus_can_shutdown (XfsmDbusManager *object,
+                                                GDBusMethodInvocation *invocation);
+static gboolean xfsm_manager_dbus_restart (XfsmDbusManager *object,
+                                           GDBusMethodInvocation *invocation,
+                                           gboolean arg_allow_save);
+static gboolean xfsm_manager_dbus_can_restart (XfsmDbusManager *object,
+                                               GDBusMethodInvocation *invocation);
+static gboolean xfsm_manager_dbus_suspend (XfsmDbusManager *object,
+                                           GDBusMethodInvocation *invocation);
+static gboolean xfsm_manager_dbus_can_suspend (XfsmDbusManager *object,
+                                               GDBusMethodInvocation *invocation);
+static gboolean xfsm_manager_dbus_hibernate (XfsmDbusManager *object,
+                                             GDBusMethodInvocation *invocation);
+static gboolean xfsm_manager_dbus_can_hibernate (XfsmDbusManager *object,
+                                                 GDBusMethodInvocation *invocation);
 
 
 /* eader needs the above fwd decls */
@@ -1882,94 +1822,86 @@ static gboolean xfsm_manager_dbus_can_hibernate (XfsmManager *manager,
 static void
 xfsm_manager_dbus_class_init (XfsmManagerClass *klass)
 {
-  dbus_g_object_type_install_info (G_TYPE_FROM_CLASS (klass),
-                                   &dbus_glib_xfsm_manager_object_info);
 }
 
 
 static void
-xfsm_manager_dbus_init (XfsmManager *manager)
+xfsm_manager_dbus_init (XfsmManager *manager, GDBusConnection *connection)
 {
   GError *error = NULL;
-  DBusConnection *connection;
 
-  manager->session_bus = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
+  g_return_if_fail (XFSM_IS_MANAGER (manager));
 
-  if (G_UNLIKELY (!manager->session_bus))
-    {
-      g_critical ("Unable to contact D-Bus session bus: %s", error ? error->message : "Unknown error");
-      if (error)
-        g_error_free (error);
-      return;
+  manager->connection = g_object_ref (connection);
+
+  g_debug ("exporting path /org/xfce/SessionManager");
+
+  if (!g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (XFSM_DBUS_MANAGER (manager)),
+                                         manager->connection,
+                                         "/org/xfce/SessionManager",
+                                         &error)) {
+    if (error != NULL) {
+            g_critical ("error exporting interface: %s", error->message);
+            g_clear_error (&error);
+            return;
     }
+  }
 
-  connection = dbus_g_connection_get_connection (manager->session_bus);
-  dbus_connection_set_exit_on_disconnect (connection, FALSE);
-
-  dbus_g_connection_register_g_object (manager->session_bus,
-                                       "/org/xfce/SessionManager",
-                                       G_OBJECT (manager));
-
-  dbus_connection_add_filter (dbus_g_connection_get_connection (manager->session_bus),
-                              xfsm_manager_watch_dbus_disconnect,
-                              manager, NULL);
+  g_debug ("exported on %s", g_dbus_interface_skeleton_get_object_path (G_DBUS_INTERFACE_SKELETON (XFSM_DBUS_MANAGER (manager))));
 }
 
+
+static void
+xfsm_manager_iface_init (XfsmDbusManagerIface *iface)
+{
+  iface->handle_can_hibernate = xfsm_manager_dbus_can_hibernate;
+  iface->handle_can_restart = xfsm_manager_dbus_can_restart;
+  iface->handle_can_shutdown = xfsm_manager_dbus_can_shutdown;
+  iface->handle_can_suspend = xfsm_manager_dbus_can_suspend;
+  iface->handle_checkpoint = xfsm_manager_dbus_checkpoint;
+  iface->handle_get_info = xfsm_manager_dbus_get_info;
+  iface->handle_get_state = xfsm_manager_dbus_get_state;
+  iface->handle_hibernate = xfsm_manager_dbus_hibernate;
+  iface->handle_list_clients = xfsm_manager_dbus_list_clients;
+  iface->handle_logout = xfsm_manager_dbus_logout;
+  iface->handle_restart = xfsm_manager_dbus_restart;
+  iface->handle_shutdown = xfsm_manager_dbus_shutdown;
+  iface->handle_suspend = xfsm_manager_dbus_suspend;
+}
 
 static void
 xfsm_manager_dbus_cleanup (XfsmManager *manager)
 {
-  if (G_LIKELY (manager->session_bus))
+  if (G_LIKELY (manager->connection))
     {
-      dbus_connection_remove_filter (dbus_g_connection_get_connection (manager->session_bus),
-                                     xfsm_manager_watch_dbus_disconnect,
-                                     manager);
-      dbus_g_connection_unref (manager->session_bus);
-      manager->session_bus = NULL;
+      g_object_unref (manager->connection);
+      manager->connection = NULL;
     }
-}
-
-
-static DBusHandlerResult
-xfsm_manager_watch_dbus_disconnect (DBusConnection *connection,
-                                    DBusMessage *message,
-                                    void *user_data)
-{
-  if (dbus_message_is_signal (message, DBUS_INTERFACE_LOCAL, "Disconnected"))
-    {
-      g_message ("Got disconnected from D-Bus.  Unless this happened during "
-                 "session shutdown, this is probably a bad thing.");
-
-      return DBUS_HANDLER_RESULT_HANDLED;
-    }
-
-  return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
 }
 
 
 static gboolean
-xfsm_manager_dbus_get_info (XfsmManager *manager,
-                            gchar      **OUT_name,
-                            gchar      **OUT_version,
-                            gchar      **OUT_vendor,
-                            GError     **error)
+xfsm_manager_dbus_get_info (XfsmDbusManager *object,
+                            GDBusMethodInvocation *invocation)
 {
-  *OUT_name = g_strdup (PACKAGE);
-  *OUT_version = g_strdup (VERSION);
-  *OUT_vendor = g_strdup ("Xfce");
-
+  xfsm_dbus_manager_complete_get_info (object, invocation, PACKAGE, VERSION, "Xfce");
   return TRUE;
 }
 
 
 static gboolean
-xfsm_manager_dbus_list_clients (XfsmManager *manager,
-                                GPtrArray  **OUT_clients,
-                                GError     **error)
+xfsm_manager_dbus_list_clients (XfsmDbusManager *object,
+                                GDBusMethodInvocation *invocation)
 {
-  GList *lp;
+  XfsmManager *manager = XFSM_MANAGER(object);
+  GList  *lp;
+  gint    i = 0;
+  gint    num_clients;
+  gchar **clients;
 
-  *OUT_clients = g_ptr_array_sized_new (g_queue_get_length (manager->running_clients));
+  num_clients = g_queue_get_length (manager->running_clients);
+  clients = g_new0 (gchar*, num_clients + 1);
+  clients[num_clients] = NULL;
 
   for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
        lp;
@@ -1977,19 +1909,21 @@ xfsm_manager_dbus_list_clients (XfsmManager *manager,
     {
       XfsmClient *client = XFSM_CLIENT (lp->data);
       gchar *object_path = g_strdup (xfsm_client_get_object_path (client));
-      g_ptr_array_add (*OUT_clients, object_path);
+      clients[i] = object_path;
+      i++;
     }
 
-    return TRUE;
+  xfsm_dbus_manager_complete_list_clients (object, invocation, (const gchar * const*)clients);
+  g_strfreev (clients);
+  return TRUE;
 }
 
 
 static gboolean
-xfsm_manager_dbus_get_state (XfsmManager *manager,
-                             guint       *OUT_state,
-                             GError     **error)
+xfsm_manager_dbus_get_state (XfsmDbusManager *object,
+                             GDBusMethodInvocation *invocation)
 {
-  *OUT_state = manager->state;
+  xfsm_dbus_manager_complete_get_state (object, invocation, XFSM_MANAGER(object)->state);
   return TRUE;
 }
 
@@ -2008,26 +1942,28 @@ xfsm_manager_dbus_checkpoint_idled (gpointer data)
 
 
 static gboolean
-xfsm_manager_dbus_checkpoint (XfsmManager *manager,
-                              const gchar *session_name,
-                              GError     **error)
+xfsm_manager_dbus_checkpoint (XfsmDbusManager *object,
+                              GDBusMethodInvocation *invocation,
+                              const gchar *arg_session_name)
 {
+  XfsmManager *manager = XFSM_MANAGER(object);
+
   if (manager->state != XFSM_MANAGER_IDLE)
     {
-      g_set_error (error, XFSM_ERROR, XFSM_ERROR_BAD_STATE,
-                   _("Session manager must be in idle state when requesting a checkpoint"));
-      return FALSE;
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, _("Session manager must be in idle state when requesting a checkpoint"));
+      return TRUE;
     }
 
   g_free (manager->checkpoint_session_name);
-  if (session_name[0] != '\0')
-    manager->checkpoint_session_name = g_strdup (session_name);
+  if (arg_session_name[0] != '\0')
+    manager->checkpoint_session_name = g_strdup (arg_session_name);
   else
     manager->checkpoint_session_name = NULL;
 
   /* idle so the dbus call returns in the client */
   g_idle_add (xfsm_manager_dbus_checkpoint_idled, manager);
 
+  xfsm_dbus_manager_complete_checkpoint (object, invocation);
   return TRUE;
 }
 
@@ -2048,15 +1984,12 @@ xfsm_manager_dbus_shutdown_idled (gpointer data)
 static gboolean
 xfsm_manager_save_yourself_dbus (XfsmManager       *manager,
                                  XfsmShutdownType   type,
-                                 gboolean           allow_save,
-                                 GError           **error)
+                                 gboolean           allow_save)
 {
   ShutdownIdleData *idata;
 
   if (manager->state != XFSM_MANAGER_IDLE)
     {
-      g_set_error (error, XFSM_ERROR, XFSM_ERROR_BAD_STATE,
-                   _("Session manager must be in idle state when requesting a shutdown"));
       return FALSE;
     }
 
@@ -2072,115 +2005,196 @@ xfsm_manager_save_yourself_dbus (XfsmManager       *manager,
 
 
 static gboolean
-xfsm_manager_dbus_logout (XfsmManager *manager,
-                          gboolean     show_dialog,
-                          gboolean     allow_save,
-                          GError     **error)
+xfsm_manager_dbus_logout (XfsmDbusManager *object,
+                          GDBusMethodInvocation *invocation,
+                          gboolean arg_show_dialog,
+                          gboolean arg_allow_save)
 {
   XfsmShutdownType type;
 
-  g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
+  g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
 
-  type = show_dialog ? XFSM_SHUTDOWN_ASK : XFSM_SHUTDOWN_LOGOUT;
-  return xfsm_manager_save_yourself_dbus (manager, type,
-                                          allow_save, error);
+  type = arg_show_dialog ? XFSM_SHUTDOWN_ASK : XFSM_SHUTDOWN_LOGOUT;
+  if (xfsm_manager_save_yourself_dbus (XFSM_MANAGER (object), type, arg_allow_save) == FALSE)
+    {
+      throw_error (invocation, XFSM_ERROR_BAD_STATE,
+                   _("Session manager must be in idle state when requesting a shutdown"));
+      return TRUE;
+    }
+
+  xfsm_dbus_manager_complete_logout (object, invocation);
+  return TRUE;
 }
 
 
 static gboolean
-xfsm_manager_dbus_shutdown (XfsmManager *manager,
-                            gboolean     allow_save,
-                            GError     **error)
+xfsm_manager_dbus_shutdown (XfsmDbusManager *object,
+                            GDBusMethodInvocation *invocation,
+                            gboolean arg_allow_save)
 {
-  g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
-  return xfsm_manager_save_yourself_dbus (manager, XFSM_SHUTDOWN_SHUTDOWN,
-                                          allow_save, error);
+  g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
+  if (xfsm_manager_save_yourself_dbus (XFSM_MANAGER (object), XFSM_SHUTDOWN_SHUTDOWN, arg_allow_save) == FALSE)
+    {
+      throw_error (invocation, XFSM_ERROR_BAD_STATE,
+                   _("Session manager must be in idle state when requesting a shutdown"));
+      return TRUE;
+    }
+
+  xfsm_dbus_manager_complete_shutdown (object, invocation);
+  return TRUE;
 }
 
 
 static gboolean
-xfsm_manager_dbus_can_shutdown (XfsmManager *manager,
-                                gboolean    *can_shutdown,
-                                GError     **error)
+xfsm_manager_dbus_can_shutdown (XfsmDbusManager *object,
+                                GDBusMethodInvocation *invocation)
 {
-  g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
-  return xfsm_shutdown_can_shutdown (manager->shutdown_helper,
-                                     can_shutdown, error);
+  gboolean can_shutdown = FALSE;
+  GError *error = NULL;
+
+  g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
+
+  xfsm_shutdown_can_shutdown (XFSM_MANAGER (object)->shutdown_helper, &can_shutdown, &error);
+
+  if (error)
+    {
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, error->message);
+      g_clear_error(&error);
+      return TRUE;
+    }
+
+  xfsm_dbus_manager_complete_can_shutdown (object, invocation, can_shutdown);
+  return TRUE;
 }
 
 
 static gboolean
-xfsm_manager_dbus_restart (XfsmManager *manager,
-                           gboolean     allow_save,
-                           GError     **error)
+xfsm_manager_dbus_restart (XfsmDbusManager *object,
+                           GDBusMethodInvocation *invocation,
+                           gboolean arg_allow_save)
 {
-  g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
-  return xfsm_manager_save_yourself_dbus (manager, XFSM_SHUTDOWN_RESTART,
-                                          allow_save, error);
+  g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
+  if (xfsm_manager_save_yourself_dbus (XFSM_MANAGER (object), XFSM_SHUTDOWN_RESTART, arg_allow_save) == FALSE)
+    {
+      throw_error (invocation, XFSM_ERROR_BAD_STATE,
+                   _("Session manager must be in idle state when requesting a restart"));
+      return TRUE;
+    }
+
+  xfsm_dbus_manager_complete_restart (object, invocation);
+  return TRUE;
 }
 
 
 static gboolean
-xfsm_manager_dbus_can_restart (XfsmManager *manager,
-                               gboolean    *can_restart,
-                               GError     **error)
+xfsm_manager_dbus_can_restart (XfsmDbusManager *object,
+                               GDBusMethodInvocation *invocation)
 {
-  g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
-  return xfsm_shutdown_can_restart (manager->shutdown_helper,
-                                    can_restart, error);
+  gboolean can_restart = FALSE;
+  GError *error = NULL;
+
+  g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
+
+  xfsm_shutdown_can_restart (XFSM_MANAGER (object)->shutdown_helper, &can_restart, &error);
+
+  if (error)
+    {
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, error->message);
+      g_clear_error(&error);
+      return TRUE;
+    }
+
+  xfsm_dbus_manager_complete_can_restart (object, invocation, can_restart);
+  return TRUE;
 }
 
 
 static gboolean
-xfsm_manager_dbus_suspend (XfsmManager *manager,
-                           GError     **error)
+xfsm_manager_dbus_suspend (XfsmDbusManager *object,
+                           GDBusMethodInvocation *invocation)
 {
-  g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
-  return xfsm_shutdown_try_suspend (manager->shutdown_helper, error);
+  GError *error = NULL;
+
+  g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
+  if (xfsm_shutdown_try_suspend (XFSM_MANAGER (object)->shutdown_helper, &error) == FALSE)
+    {
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, error->message);
+      g_clear_error (&error);
+      return TRUE;
+    }
+
+  xfsm_dbus_manager_complete_suspend (object, invocation);
+  return TRUE;
 }
 
 
 static gboolean
-xfsm_manager_dbus_can_suspend (XfsmManager *manager,
-                               gboolean    *can_suspend,
-                               GError     **error)
+xfsm_manager_dbus_can_suspend (XfsmDbusManager *object,
+                               GDBusMethodInvocation *invocation)
 {
-  gboolean retval;
-  gboolean auth_suspend;
+  gboolean auth_suspend = FALSE;
+  gboolean can_suspend = FALSE;
+  GError *error = NULL;
 
-  g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
-  retval = xfsm_shutdown_can_suspend (manager->shutdown_helper,
-                                      can_suspend, &auth_suspend, error);
+  g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
+
+  xfsm_shutdown_can_suspend (XFSM_MANAGER (object)->shutdown_helper, &can_suspend, &auth_suspend, &error);
+
+  if (error)
+    {
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, error->message);
+      g_clear_error(&error);
+      return TRUE;
+    }
 
   if (!auth_suspend)
-    *can_suspend = FALSE;
+    can_suspend = FALSE;
 
-  return retval;
+  xfsm_dbus_manager_complete_can_suspend (object, invocation, can_suspend);
+  return TRUE;
 }
 
 static gboolean
-xfsm_manager_dbus_hibernate (XfsmManager *manager,
-                             GError     **error)
+xfsm_manager_dbus_hibernate (XfsmDbusManager *object,
+                             GDBusMethodInvocation *invocation)
 {
-  g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
-  return xfsm_shutdown_try_hibernate (manager->shutdown_helper, error);
+  GError *error = NULL;
+
+  g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
+  if (xfsm_shutdown_try_hibernate (XFSM_MANAGER (object)->shutdown_helper, &error) == FALSE)
+    {
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, error->message);
+      g_clear_error (&error);
+      return TRUE;
+    }
+
+  xfsm_dbus_manager_complete_hibernate (object, invocation);
+  return TRUE;
 }
 
 
 static gboolean
-xfsm_manager_dbus_can_hibernate (XfsmManager *manager,
-                                 gboolean    *can_hibernate,
-                                 GError     **error)
+xfsm_manager_dbus_can_hibernate (XfsmDbusManager *object,
+                                 GDBusMethodInvocation *invocation)
 {
-  gboolean retval;
-  gboolean auth_hibernate;
+  gboolean auth_hibernate = FALSE;
+  gboolean can_hibernate = FALSE;
+  GError *error = NULL;
 
-  g_return_val_if_fail (XFSM_IS_MANAGER (manager), FALSE);
-  retval = xfsm_shutdown_can_hibernate (manager->shutdown_helper,
-                                        can_hibernate, &auth_hibernate, error);
+  g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
+
+  xfsm_shutdown_can_hibernate (XFSM_MANAGER (object)->shutdown_helper, &can_hibernate, &auth_hibernate, &error);
+
+  if (error)
+    {
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, error->message);
+      g_clear_error(&error);
+      return TRUE;
+    }
 
   if (!auth_hibernate)
-    *can_hibernate = FALSE;
+    can_hibernate = FALSE;
 
-  return retval;
+  xfsm_dbus_manager_complete_can_hibernate (object, invocation, can_hibernate);
+  return TRUE;
 }
