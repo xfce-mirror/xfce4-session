@@ -161,7 +161,7 @@ main (int argc, char **argv)
   if (opt_halt)
     {
       result = g_dbus_proxy_call_sync (proxy, "Shutdown",
-                                       g_variant_new_boolean(allow_save),
+                                       g_variant_new ("(b)", allow_save),
                                        G_DBUS_CALL_FLAGS_NONE,
                                        -1,
                                        NULL,
@@ -170,7 +170,7 @@ main (int argc, char **argv)
   else if (opt_reboot)
     {
       result = g_dbus_proxy_call_sync (proxy, "Restart",
-                                       g_variant_new_boolean(allow_save),
+                                       g_variant_new ("(b)", allow_save),
                                        G_DBUS_CALL_FLAGS_NONE,
                                        -1,
                                        NULL,
@@ -209,6 +209,10 @@ main (int argc, char **argv)
    * they upgraded their system, see bug #8630 */
   if (!result)
     {
+      if (err != NULL)
+        {
+          g_print (_("Received error while trying to log out, error was %s"), err->message);
+        }
       g_clear_error (&err);
 
       if (opt_logout)
@@ -239,7 +243,7 @@ main (int argc, char **argv)
   if (!result)
     {
       xfce_session_logout_notify_error (_("Received error while trying to log out"), err, have_display);
-      g_error_free (err);
+      g_clear_error (&err);
       return EXIT_FAILURE;
     }
   else
