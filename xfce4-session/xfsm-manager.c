@@ -127,6 +127,9 @@ struct _XfsmManager
 typedef struct _XfsmManagerClass
 {
   XfsmDbusManagerSkeletonClass parent;
+
+  /*< signals >*/
+  void (*quit)(XfsmManager *manager);
 } XfsmManagerClass;
 
 typedef struct
@@ -143,6 +146,13 @@ typedef struct
   gboolean         allow_save;
 } ShutdownIdleData;
 
+enum
+{
+    MANAGER_QUIT,
+    LAST_SIGNAL,
+};
+
+static guint manager_signals[LAST_SIGNAL] = { 0, };
 
 static void       xfsm_manager_finalize (GObject *obj);
 
@@ -172,6 +182,14 @@ xfsm_manager_class_init (XfsmManagerClass *klass)
   GObjectClass *gobject_class = (GObjectClass *)klass;
 
   gobject_class->finalize = xfsm_manager_finalize;
+
+  manager_signals[MANAGER_QUIT] = g_signal_new("manager-quit",
+                                               G_OBJECT_CLASS_TYPE(gobject_class),
+                                               G_SIGNAL_RUN_FIRST,
+                                               G_STRUCT_OFFSET(XfsmManagerClass, quit),
+                                               NULL, NULL,
+                                               g_cclosure_marshal_VOID__VOID,
+                                               G_TYPE_NONE, 0);
 
   xfsm_manager_dbus_class_init (klass);
 }
@@ -1117,6 +1135,7 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
                                        manager->shutdown_type,
                                        &error))
             {
+              xfsm_verbose ("failed calling shutdown, error message was %s", error->message);
               xfce_message_dialog (NULL, _("Shutdown Failed"),
                                    "dialog-error",
                                    manager->shutdown_type == XFSM_SHUTDOWN_SUSPEND
@@ -1330,7 +1349,7 @@ xfsm_manager_close_connection (XfsmManager *manager,
           g_source_remove (manager->die_timeout_id);
           manager->die_timeout_id = 0;
         }
-      gtk_main_quit ();
+      g_signal_emit(G_OBJECT(manager), manager_signals[MANAGER_QUIT], 0);
     }
   else if (manager->state == XFSM_MANAGER_SHUTDOWN || manager->state == XFSM_MANAGER_CHECKPOINT)
     {
@@ -1412,12 +1431,20 @@ xfsm_manager_terminate_client (XfsmManager *manager,
 }
 
 
+static gboolean
+manager_quit_signal (XfsmManager *manager)
+{
+  g_signal_emit(G_OBJECT(manager), manager_signals[MANAGER_QUIT], 0);
+  return FALSE;
+}
+
+
 void
 xfsm_manager_perform_shutdown (XfsmManager *manager)
 {
   GList *lp;
 
-  xfsm_verbose ("entering");
+  xfsm_verbose ("entering\n");
 
   /* send SmDie message to all clients */
   xfsm_manager_set_state (manager, XFSM_MANAGER_SHUTDOWNPHASE2);
@@ -1461,7 +1488,7 @@ xfsm_manager_perform_shutdown (XfsmManager *manager)
 
   /* give all clients the chance to close the connection */
   manager->die_timeout_id = g_timeout_add (DIE_TIMEOUT,
-                                           (GSourceFunc) gtk_main_quit,
+                                           (GSourceFunc) manager_quit_signal,
                                            NULL);
 }
 

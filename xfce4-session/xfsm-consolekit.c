@@ -258,6 +258,8 @@ xfsm_consolekit_try_method (XfsmConsolekit  *consolekit,
     return FALSE;
   }
 
+  xfsm_verbose ("calling %s\n", method);
+
   variant = g_dbus_proxy_call_sync (consolekit->proxy,
                                     method,
                                     g_variant_new ("()"),
@@ -287,6 +289,8 @@ xfsm_consolekit_try_sleep (XfsmConsolekit  *consolekit,
     xfsm_verbose ("no ck proxy\n");
     return FALSE;
   }
+
+  xfsm_verbose ("calling %s\n", method);
 
   variant = g_dbus_proxy_call_sync (consolekit->proxy,
                                     method,
