@@ -96,7 +96,7 @@ endif
 EXTRA_DIST = \
 	$(desktop_in_files) \
 	xfce4-session.xml \
-	xfce4-session-settings.glade
+	xfce4-session-settings.ui
 
 DISTCLEANFILES = \
 	$(desktop_DATA)
