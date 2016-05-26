@@ -10,6 +10,7 @@ libmice_la_SOURCES =							\
 libmice_la_CFLAGS =							\
 	-I$(top_srcdir)							\
 	$(LIBXFCE4UI_CFLAGS)						\
+	$(LIBX11_CFLAGS)						\
 	$(XFCONF_CFLAGS)
 
 libmice_la_LDFLAGS =							\
@@ -20,6 +21,8 @@ libmice_la_LDFLAGS =							\
 libmice_la_LIBADD =							\
 	$(top_builddir)/libxfsm/libxfsm-4.6.la				\
 	$(LIBXFCE4UI_LIBS)						\
+	$(LIBX11_LDFLAGS)						\
+	$(LIBX11_LIBS)							\
 	$(XFCONF_LIBS)
 
 libmice_la_DEPENDENCIES =						\

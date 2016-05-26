@@ -20,6 +20,7 @@ libbalou_la_CFLAGS =							\
 	-I$(top_srcdir)							\
 	$(LIBXFCE4UI_CFLAGS)						\
 	$(XFCONF_CFLAGS)						\
+	$(LIBX11_CFLAGS)						\
 	-DBALOU_EXPORT_THEME=\"$(HELPER_PATH_PREFIX)/xfce4/session/balou-export-theme\" \
 	-DBALOU_INSTALL_THEME=\"$(HELPER_PATH_PREFIX)/xfce4/session/balou-install-theme\"
 
@@ -32,6 +33,8 @@ libbalou_la_LIBADD =							\
 	$(top_builddir)/libxfsm/libxfsm-4.6.la				\
 	$(LIBXFCE4UI_LIBS)						\
 	$(XFCONF_LIBS)							\
+	$(LIBX11_LDFLAGS)						\
+	$(LIBX11_LIBS)							\
 	$(LIBM)
 
 

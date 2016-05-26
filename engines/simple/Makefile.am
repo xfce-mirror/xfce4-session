@@ -17,6 +17,7 @@ libsimple_la_LDFLAGS =							\
 	-avoid-version							\
 	-no-undefined							\
 	-module								\
+	$(LIBX11_LIBS)							\
 	$(LIBX11_LDFLAGS)
 
 libsimple_la_LIBADD =							\
