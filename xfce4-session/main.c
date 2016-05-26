@@ -69,7 +69,6 @@
 
 static gboolean opt_disable_tcp = FALSE;
 static gboolean opt_version = FALSE;
-static XfsmManager *manager = NULL;
 static XfconfChannel *channel = NULL;
 static guint name_id = 0;
 
@@ -136,7 +135,6 @@ setup_environment (void)
 static void
 init_display (XfsmManager   *manager,
               GdkDisplay    *dpy,
-              XfconfChannel *channel,
               gboolean       disable_tcp)
 {
   gchar *engine;
@@ -171,6 +169,7 @@ bus_acquired (GDBusConnection *connection,
               const gchar *name,
               gpointer user_data)
 {
+  XfsmManager      *manager = XFSM_MANAGER (user_data);
   GdkDisplay       *dpy;
 
   xfsm_verbose ("bus_acquired %s\n", name);
@@ -191,7 +190,7 @@ bus_acquired (GDBusConnection *connection,
   channel = xfsm_open_config ();
 
   dpy = gdk_display_get_default ();
-  init_display (manager, dpy, channel, opt_disable_tcp);
+  init_display (manager, dpy, opt_disable_tcp);
 
   if (!opt_disable_tcp && xfconf_channel_get_bool (channel, "/security/EnableTcp", FALSE))
     {
@@ -224,6 +223,7 @@ name_lost (GDBusConnection *connection,
            const gchar *name,
            gpointer user_data)
 {
+  XfsmManager      *manager = XFSM_MANAGER (user_data);
   GError           *error = NULL;
   XfsmShutdownType  shutdown_type;
   XfsmShutdown     *shutdown_helper;
@@ -239,9 +239,6 @@ name_lost (GDBusConnection *connection,
   /* take over the ref before we release the manager */
   shutdown_helper = xfsm_shutdown_get ();
 
-  g_object_unref (manager);
-  g_object_unref (channel);
-
   ice_cleanup ();
 
   if (shutdown_type == XFSM_SHUTDOWN_SHUTDOWN
@@ -253,7 +250,13 @@ name_lost (GDBusConnection *connection,
     }
 
   g_object_unref (shutdown_helper);
+  g_object_unref (manager);
+  g_object_unref (channel);
   g_clear_error (&error);
+
+  shutdown_helper = NULL;
+  manager = NULL;
+  channel = NULL;
 
   gtk_main_quit ();
 }
@@ -261,13 +264,14 @@ name_lost (GDBusConnection *connection,
 
 
 static void
-xfsm_dbus_init (void)
+xfsm_dbus_init (XfsmManager *manager)
 {
   name_id = g_bus_own_name (G_BUS_TYPE_SESSION,
                             "org.xfce.SessionManager",
                             G_BUS_NAME_OWNER_FLAGS_NONE,
                             bus_acquired, name_acquired, name_lost,
-                            NULL, NULL);
+                            manager,
+                            NULL);
 
   if (name_id == 0)
     {
@@ -321,6 +325,7 @@ xfsm_dbus_require_session (gint argc, gchar **argv)
 int
 main (int argc, char **argv)
 {
+  XfsmManager      *manager = NULL;
   GError           *error = NULL;
   gboolean          succeed = TRUE;
 
@@ -363,7 +368,7 @@ main (int argc, char **argv)
    */
   gdk_x11_set_sm_client_id (xfsm_generate_client_id (NULL));
 
-  xfsm_dbus_init ();
+  xfsm_dbus_init (manager);
 
   gtk_main ();
 
