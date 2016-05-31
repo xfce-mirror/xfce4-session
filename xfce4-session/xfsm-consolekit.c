@@ -23,6 +23,7 @@
 #include <gio/gio.h>
 
 #include <xfce4-session/xfsm-consolekit.h>
+#include <xfce4-session/xfce-screensaver.h>
 #include <libxfsm/xfsm-util.h>
 #include "xfsm-global.h"
 
@@ -48,6 +49,7 @@ struct _XfsmConsolekit
 
   GDBusProxy *proxy;
   guint name_id;
+  XfceScreenSaver *screensaver;
 };
 
 
@@ -128,6 +130,8 @@ xfsm_consolekit_init (XfsmConsolekit *consolekit)
                                           name_lost,
                                           consolekit,
                                           NULL);
+
+  consolekit->screensaver = xfce_screensaver_new ();
 }
 
 
@@ -150,6 +154,8 @@ xfsm_consolekit_proxy_free (XfsmConsolekit *consolekit)
       g_object_unref (G_OBJECT (consolekit->proxy));
       consolekit->proxy = NULL;
     }
+
+  g_object_unref (G_OBJECT (consolekit->screensaver));
 }
 
 
@@ -378,14 +384,15 @@ xfsm_consolekit_can_shutdown (XfsmConsolekit  *consolekit,
 
 
 static gboolean
-lock_screen (GError **error)
+lock_screen (XfsmConsolekit  *consolekit,
+             GError **error)
 {
   XfconfChannel *channel;
   gboolean       ret = TRUE;
 
   channel = xfsm_open_config ();
   if (xfconf_channel_get_bool (channel, "/shutdown/LockScreen", FALSE))
-      ret = g_spawn_command_line_async ("xflock4", error);
+      ret = xfce_screensaver_lock (consolekit->screensaver);
 
   return ret;
 }
@@ -409,7 +416,7 @@ xfsm_consolekit_try_suspend (XfsmConsolekit  *consolekit,
       return FALSE;
     }
 
-  if (!lock_screen (error))
+  if (!lock_screen (consolekit, error))
     return FALSE;
 
   return xfsm_consolekit_try_sleep (consolekit, "Suspend", error);
@@ -436,7 +443,7 @@ xfsm_consolekit_try_hibernate (XfsmConsolekit  *consolekit,
       return FALSE;
     }
 
-  if (!lock_screen (error))
+  if (!lock_screen (consolekit, error))
     return FALSE;
 
   return xfsm_consolekit_try_sleep (consolekit, "Hibernate", error);

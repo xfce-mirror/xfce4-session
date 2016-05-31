@@ -65,7 +65,7 @@
 
 #include <libxfsm/xfsm-util.h>
 #include <xfce4-session/xfsm-shutdown-fallback.h>
-
+#include <xfce4-session/xfce-screensaver.h>
 
 
 #define POLKIT_AUTH_SHUTDOWN_XFSM  "org.xfce.session.xfsm-shutdown-helper"
@@ -203,17 +203,21 @@ static gboolean
 lock_screen (GError **error)
 {
   XfconfChannel *channel;
+  XfceScreenSaver *saver;
   gboolean       ret = TRUE;
 
   channel = xfsm_open_config ();
+  saver = xfce_screensaver_new ();
   if (xfconf_channel_get_bool (channel, "/shutdown/LockScreen", FALSE))
-      ret = g_spawn_command_line_async ("xflock4", error);
+      ret = xfce_screensaver_lock (saver);
 
   if (ret)
     {
       /* sleep 2 seconds so locking has time to startup */
       g_usleep (G_USEC_PER_SEC * 2);
     }
+
+  g_object_unref (G_OBJECT (saver));
 
   return ret;
 }

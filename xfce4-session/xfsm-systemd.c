@@ -26,6 +26,7 @@
 
 #include <libxfsm/xfsm-util.h>
 #include <xfce4-session/xfsm-systemd.h>
+#include <xfce4-session/xfce-screensaver.h>
 
 
 
@@ -59,6 +60,7 @@ struct _XfsmSystemd
   PolkitAuthority *authority;
   PolkitSubject   *subject;
 #endif
+  XfceScreenSaver *screensaver;
 };
 
 
@@ -85,6 +87,7 @@ xfsm_systemd_init (XfsmSystemd *systemd)
   systemd->authority = polkit_authority_get_sync (NULL, NULL);
   systemd->subject = polkit_unix_process_new_for_owner (getpid(), 0, -1);
 #endif
+  systemd->screensaver = xfce_screensaver_new ();
 }
 
 
@@ -99,20 +102,23 @@ xfsm_systemd_finalize (GObject *object)
   g_object_unref (G_OBJECT (systemd->subject));
 #endif
 
+  g_object_unref (G_OBJECT (systemd->screensaver));
+
   (*G_OBJECT_CLASS (xfsm_systemd_parent_class)->finalize) (object);
 }
 
 
 
 static gboolean
-xfsm_systemd_lock_screen (GError **error)
+xfsm_systemd_lock_screen (XfsmSystemd  *systemd,
+                          GError **error)
 {
   XfconfChannel *channel;
   gboolean       ret = TRUE;
 
   channel = xfsm_open_config ();
   if (xfconf_channel_get_bool (channel, "/shutdown/LockScreen", FALSE))
-      ret = g_spawn_command_line_async ("xflock4", error);
+      ret = xfce_screensaver_lock (systemd->screensaver);
 
   return ret;
 }
@@ -238,7 +244,7 @@ gboolean
 xfsm_systemd_try_suspend (XfsmSystemd  *systemd,
                           GError      **error)
 {
-  if (!xfsm_systemd_lock_screen (error))
+  if (!xfsm_systemd_lock_screen (systemd, error))
     return FALSE;
 
   return xfsm_systemd_try_method (systemd,
@@ -252,7 +258,7 @@ gboolean
 xfsm_systemd_try_hibernate (XfsmSystemd  *systemd,
                             GError      **error)
 {
-  if (!xfsm_systemd_lock_screen (error))
+  if (!xfsm_systemd_lock_screen (systemd, error))
     return FALSE;
 
   return xfsm_systemd_try_method (systemd,
