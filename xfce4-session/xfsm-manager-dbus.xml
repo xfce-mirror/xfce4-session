@@ -149,6 +149,34 @@
         </method>
 
         <!--
+             ObjectPath[] org.Xfce.Session.Manager.RegisterClient
+
+             @app_id: The application identifier
+             @client_startup_id: Client startup identifier
+
+             Returns:
+             @client_id: The object path of the newly registered client
+
+             Register the caller as a Session Management client.
+        -->
+        <method name="RegisterClient">
+            <arg direction="in" name="app_id" type="s" />
+            <arg direction="in" name="client_startup_id" type="s" />
+            <arg direction="out" name="client_id" type="o" />
+        </method>
+
+        <!--
+             void org.Xfce.Session.Manager.UnregisterClient
+
+             @client_id: The object path of the previously registered client
+
+             Unregister the specified client from Session Management.
+        -->
+        <method name="UnregisterClient">
+            <arg direction="in" name="client_id" type="o" />
+        </method>
+
+        <!--
              void org.xfce.Session.Manager.StateChanged(Unsigned Int old_state,
                                                         Unsigned Int new_state)
 

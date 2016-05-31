@@ -1840,6 +1840,13 @@ static gboolean xfsm_manager_dbus_hibernate (XfsmDbusManager *object,
                                              GDBusMethodInvocation *invocation);
 static gboolean xfsm_manager_dbus_can_hibernate (XfsmDbusManager *object,
                                                  GDBusMethodInvocation *invocation);
+static gboolean xfsm_manager_dbus_register_client (XfsmDbusManager *object,
+                                                   GDBusMethodInvocation *invocation,
+                                                   const gchar *arg_app_id,
+                                                   const gchar *arg_client_startup_id);
+static gboolean xfsm_manager_dbus_unregister_client (XfsmDbusManager *object,
+                                                     GDBusMethodInvocation *invocation,
+                                                     const gchar *arg_client_id);
 
 
 /* eader needs the above fwd decls */
@@ -1894,6 +1901,8 @@ xfsm_manager_iface_init (XfsmDbusManagerIface *iface)
   iface->handle_restart = xfsm_manager_dbus_restart;
   iface->handle_shutdown = xfsm_manager_dbus_shutdown;
   iface->handle_suspend = xfsm_manager_dbus_suspend;
+  iface->handle_register_client = xfsm_manager_dbus_register_client;
+  iface->handle_unregister_client = xfsm_manager_dbus_unregister_client;
 }
 
 static void
@@ -2223,5 +2232,27 @@ xfsm_manager_dbus_can_hibernate (XfsmDbusManager *object,
     can_hibernate = FALSE;
 
   xfsm_dbus_manager_complete_can_hibernate (object, invocation, can_hibernate);
+  return TRUE;
+}
+
+static gboolean
+xfsm_manager_dbus_register_client (XfsmDbusManager *object,
+                                   GDBusMethodInvocation *invocation,
+                                   const gchar *arg_app_id,
+                                   const gchar *arg_client_startup_id)
+{
+  gchar *client_id = g_strdup_printf("/org/xfce/SessionManager/%s", arg_client_startup_id);
+
+  xfsm_dbus_manager_complete_register_client (object, invocation, client_id);
+  g_free(client_id);
+  return TRUE;
+}
+
+static gboolean
+xfsm_manager_dbus_unregister_client (XfsmDbusManager *object,
+                                     GDBusMethodInvocation *invocation,
+                                     const gchar *arg_client_id)
+{
+  xfsm_dbus_manager_complete_unregister_client (object, invocation);
   return TRUE;
 }
