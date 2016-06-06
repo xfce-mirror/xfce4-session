@@ -341,7 +341,8 @@ config_install_theme (GtkWidget *item,
                                primary,
                                _("Please check that the file is a valid splash "
                                  "theme archive."),
-                               _("_Close"), GTK_RESPONSE_ACCEPT, NULL);
+                               XFCE_BUTTON_TYPE_MIXED, "window-close", _("_Close"), GTK_RESPONSE_ACCEPT,
+                               NULL);
           g_free (primary);
         }
 

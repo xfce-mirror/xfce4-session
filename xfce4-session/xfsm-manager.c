@@ -722,7 +722,7 @@ xfsm_manager_load_settings (XfsmManager   *manager,
                                "dialog-error",
                                _("Unable to load a failsafe session"),
                                errorstr,
-                               _("_Quit"), GTK_RESPONSE_ACCEPT, NULL);
+                               XFCE_BUTTON_TYPE_MIXED, "application-exit", _("_Quit"), GTK_RESPONSE_ACCEPT, NULL);
           g_free (errorstr);
           exit (EXIT_FAILURE);
         }
@@ -1142,7 +1142,7 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
                                    ? _("Failed to suspend session")
                                    : _("Failed to hibernate session"),
                                    error->message,
-                                   _("_Close"), GTK_RESPONSE_ACCEPT,
+                                   XFCE_BUTTON_TYPE_MIXED, "window-close", _("_Close"), GTK_RESPONSE_ACCEPT,
                                    NULL);
               g_error_free (error);
             }

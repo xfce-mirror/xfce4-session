@@ -129,7 +129,7 @@ session_editor_save_session(GtkWidget *btn,
                             _("Session Save Error"), "dialog-error",
                             _("Unable to save the session"),
                             error->message,
-                            _("_Close"), GTK_RESPONSE_ACCEPT,
+                            XFCE_BUTTON_TYPE_MIXED, "window-close", _("_Close"), GTK_RESPONSE_ACCEPT,
                             NULL);
         gtk_widget_set_sensitive(btn, TRUE);
         g_error_free(error);
@@ -171,7 +171,7 @@ session_editor_clear_sessions(GtkWidget *btn,
                            _("Are you sure you want to empty the session cache?"),
                            _("The saved states of your applications will not be restored during your next login."),
                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                           XFCE_BUTTON_TYPE_MIXED, _("_Ok"), _("_Proceed"), GTK_RESPONSE_ACCEPT,
+                           _("_Proceed"), GTK_RESPONSE_ACCEPT,
                            NULL) == GTK_RESPONSE_ACCEPT)
     {
         const gchar *item_name;
@@ -255,7 +255,7 @@ session_editor_quit_client(GtkWidget *btn,
                            primary,
                            _("The application will lose any unsaved state and will not be restarted in your next session."),
                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                           XFCE_BUTTON_TYPE_MIXED, _("_Quit"), _("_Quit Program"), GTK_RESPONSE_ACCEPT,
+                           XFCE_BUTTON_TYPE_MIXED, "application-exit", _("_Quit Program"), GTK_RESPONSE_ACCEPT,
                            NULL) == GTK_RESPONSE_ACCEPT)
     {
         GError *error = NULL;
@@ -286,7 +286,7 @@ session_editor_quit_client(GtkWidget *btn,
                                 _("Terminate Program"), "dialog-error",
                                 _("Unable to terminate program."),
                                 error->message,
-                                _("Close"), GTK_RESPONSE_ACCEPT,
+                                XFCE_BUTTON_TYPE_MIXED, "window-close", _("_Close"), GTK_RESPONSE_ACCEPT,
                                 NULL);
             g_error_free(error);
         }
