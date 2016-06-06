@@ -212,7 +212,7 @@ sm_register_client (SmsConn   sms_conn,
                 IceConnectionNumber (SmsGetIceConnection (sms_conn)),
                 previous_id != NULL ? previous_id : "None");
 
-  result = xfsm_manager_register_client (XFSM_CLIENT_MANAGER (client), client, previous_id);
+  result = xfsm_manager_register_client (XFSM_CLIENT_MANAGER (client), client, NULL, previous_id);
 
   if (previous_id != NULL)
     free (previous_id);

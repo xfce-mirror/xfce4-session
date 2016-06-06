@@ -855,6 +855,7 @@ xfsm_manager_reset_restart_attempts (gpointer data)
 gboolean
 xfsm_manager_register_client (XfsmManager *manager,
                               XfsmClient  *client,
+                              const gchar *dbus_client_id,
                               const gchar *previous_id)
 {
   XfsmProperties *properties = NULL;
@@ -921,21 +922,37 @@ xfsm_manager_register_client (XfsmManager *manager,
     }
   else
     {
-      client_id = xfsm_generate_client_id (sms_conn);
-      properties = xfsm_properties_new (client_id, SmsClientHostName (sms_conn));
-      xfsm_client_set_initial_properties (client, properties);
-      g_free (client_id);
+      if (sms_conn != NULL)
+        {
+          client_id = xfsm_generate_client_id (sms_conn);
+          properties = xfsm_properties_new (client_id, SmsClientHostName (sms_conn));
+          xfsm_client_set_initial_properties (client, properties);
+          g_free (client_id);
+        }
+      else
+        {
+          gchar *hostname = xfce_gethostname ();
+          properties = xfsm_properties_new (dbus_client_id, hostname);
+          xfsm_client_set_initial_properties (client, properties);
+          g_free (hostname);
+        }
     }
 
   g_queue_push_tail (manager->running_clients, client);
 
-  SmsRegisterClientReply (sms_conn, (char *) xfsm_client_get_id (client));
+  if (sms_conn != NULL)
+    {
+      SmsRegisterClientReply (sms_conn, (char *) xfsm_client_get_id (client));
+    }
 
   xfsm_dbus_manager_emit_client_registered (XFSM_DBUS_MANAGER (manager), xfsm_client_get_object_path (client));
 
   if (previous_id == NULL)
     {
-      SmsSaveYourself (sms_conn, SmSaveLocal, False, SmInteractStyleNone, False);
+      if (sms_conn != NULL)
+        {
+          SmsSaveYourself (sms_conn, SmSaveLocal, False, SmInteractStyleNone, False);
+        }
       xfsm_client_set_state (client, XFSM_CLIENT_SAVINGLOCAL);
       xfsm_manager_start_client_save_timeout (manager, client);
     }
@@ -960,8 +977,13 @@ void
 xfsm_manager_start_interact (XfsmManager *manager,
                              XfsmClient  *client)
 {
+  SmsConn sms = xfsm_client_get_sms_connection (client);
+
   /* notify client of interact */
-  SmsInteract (xfsm_client_get_sms_connection (client));
+  if (sms != NULL)
+    {
+      SmsInteract (sms);
+    }
   xfsm_client_set_state (client, XFSM_CLIENT_INTERACTING);
 
   /* stop save yourself timeout */
@@ -1062,12 +1084,17 @@ xfsm_manager_interact_done (XfsmManager *manager,
            lp = lp->next)
         {
           XfsmClient *cl = lp->data;
+          SmsConn sms = xfsm_client_get_sms_connection (cl);
+
           if (xfsm_client_get_state (cl) != XFSM_CLIENT_WAITFORINTERACT)
             continue;
 
           /* reset all clients that are waiting for interact */
           xfsm_client_set_state (client, XFSM_CLIENT_SAVING);
-          SmsShutdownCancelled (xfsm_client_get_sms_connection (cl));
+          if (sms != NULL)
+            {
+              SmsShutdownCancelled (sms);
+            }
         }
 
         xfsm_dbus_manager_emit_shutdown_cancelled (XFSM_DBUS_MANAGER (manager));
@@ -1189,8 +1216,11 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
 
       if (xfsm_client_get_state (client) != XFSM_CLIENT_SAVINGLOCAL)
         {
-          SmsSaveYourself (xfsm_client_get_sms_connection (client), save_type, shutdown,
-                           interact_style, fast);
+          SmsConn sms = xfsm_client_get_sms_connection (client);
+          if (sms != NULL)
+            {
+              SmsSaveYourself (sms, save_type, shutdown, interact_style, fast);
+            }
         }
 
       xfsm_client_set_state (client, XFSM_CLIENT_SAVING);
@@ -1231,11 +1261,15 @@ xfsm_manager_save_yourself (XfsmManager *manager,
 
   if (!global)
     {
+      SmsConn sms = xfsm_client_get_sms_connection (client);
       /* client requests a local checkpoint. We slightly ignore
        * shutdown here, since it does not make sense for a local
        * checkpoint.
        */
-      SmsSaveYourself (xfsm_client_get_sms_connection (client), save_type, FALSE, interact_style, fast);
+      if (sms != NULL)
+        {
+          SmsSaveYourself (sms, save_type, FALSE, interact_style, fast);
+        }
       xfsm_client_set_state (client, XFSM_CLIENT_SAVINGLOCAL);
       xfsm_manager_start_client_save_timeout (manager, client);
     }
@@ -1252,7 +1286,11 @@ xfsm_manager_save_yourself_phase2 (XfsmManager *manager,
 
   if (manager->state != XFSM_MANAGER_CHECKPOINT && manager->state != XFSM_MANAGER_SHUTDOWN)
     {
-      SmsSaveYourselfPhase2 (xfsm_client_get_sms_connection (client));
+      SmsConn sms = xfsm_client_get_sms_connection (client);
+      if (sms != NULL)
+        {
+          SmsSaveYourselfPhase2 (sms);
+        }
       xfsm_client_set_state (client, XFSM_CLIENT_SAVINGLOCAL);
       xfsm_manager_start_client_save_timeout (manager, client);
     }
@@ -1293,9 +1331,13 @@ xfsm_manager_save_yourself_done (XfsmManager *manager,
 
   if (xfsm_client_get_state (client) == XFSM_CLIENT_SAVINGLOCAL)
     {
+      SmsConn sms = xfsm_client_get_sms_connection (client);
       /* client completed local SaveYourself */
       xfsm_client_set_state (client, XFSM_CLIENT_IDLE);
-      SmsSaveComplete (xfsm_client_get_sms_connection (client));
+      if (sms != NULL)
+        {
+          SmsSaveComplete (sms);
+        }
     }
   else if (manager->state != XFSM_MANAGER_CHECKPOINT && manager->state != XFSM_MANAGER_SHUTDOWN)
     {
@@ -1326,10 +1368,13 @@ xfsm_manager_close_connection (XfsmManager *manager,
   if (cleanup)
     {
       SmsConn sms_conn = xfsm_client_get_sms_connection (client);
-      ice_conn = SmsGetIceConnection (sms_conn);
-      SmsCleanUp (sms_conn);
-      IceSetShutdownNegotiation (ice_conn, False);
-      IceCloseConnection (ice_conn);
+      if (sms_conn != NULL)
+        {
+          ice_conn = SmsGetIceConnection (sms_conn);
+          SmsCleanUp (sms_conn);
+          IceSetShutdownNegotiation (ice_conn, False);
+          IceCloseConnection (ice_conn);
+        }
     }
 
   if (manager->state == XFSM_MANAGER_SHUTDOWNPHASE2)
@@ -1396,7 +1441,9 @@ xfsm_manager_close_connection_by_ice_conn (XfsmManager *manager,
        lp = lp->next)
     {
       XfsmClient *client = lp->data;
-      if (SmsGetIceConnection (xfsm_client_get_sms_connection (client)) == ice_conn)
+      SmsConn sms = xfsm_client_get_sms_connection (client);
+
+      if (sms != NULL && SmsGetIceConnection (sms) == ice_conn)
         {
           xfsm_manager_close_connection (manager, client, FALSE);
           break;
@@ -1414,6 +1461,8 @@ xfsm_manager_terminate_client (XfsmManager *manager,
                                XfsmClient  *client,
                                GError **error)
 {
+  SmsConn sms = xfsm_client_get_sms_connection (client);
+
   if (manager->state != XFSM_MANAGER_IDLE
       || xfsm_client_get_state (client) != XFSM_CLIENT_IDLE)
     {
@@ -1425,7 +1474,10 @@ xfsm_manager_terminate_client (XfsmManager *manager,
       return FALSE;
     }
 
-  SmsDie (xfsm_client_get_sms_connection (client));
+  if (sms != NULL)
+    {
+      SmsDie (sms);
+    }
 
   return TRUE;
 }
@@ -1453,7 +1505,11 @@ xfsm_manager_perform_shutdown (XfsmManager *manager)
        lp = lp->next)
     {
       XfsmClient *client = lp->data;
-      SmsDie (xfsm_client_get_sms_connection (client));
+      SmsConn sms = xfsm_client_get_sms_connection (client);
+      if (sms != NULL)
+        {
+          SmsDie (sms);
+        }
     }
 
   /* check for SmRestartAnyway clients that have already quit and
@@ -1533,8 +1589,14 @@ xfsm_manager_maybe_enter_phase2 (XfsmManager *manager)
 
       if (xfsm_client_get_state (client) == XFSM_CLIENT_WAITFORPHASE2)
         {
+          SmsConn sms = xfsm_client_get_sms_connection (client);
           entered_phase2 = TRUE;
-          SmsSaveYourselfPhase2 (xfsm_client_get_sms_connection (client));
+
+          if (sms != NULL)
+            {
+              SmsSaveYourselfPhase2 (sms);
+            }
+
           xfsm_client_set_state (client, XFSM_CLIENT_SAVING);
           xfsm_manager_start_client_save_timeout (manager, client);
 
@@ -1573,8 +1635,13 @@ xfsm_manager_complete_saveyourself (XfsmManager *manager)
            lp = lp->next)
         {
           XfsmClient *client = lp->data;
+          SmsConn sms = xfsm_client_get_sms_connection (client);
+
           xfsm_client_set_state (client, XFSM_CLIENT_IDLE);
-          SmsSaveComplete (xfsm_client_get_sms_connection (client));
+          if (sms != NULL)
+            {
+              SmsSaveComplete (sms);
+            }
         }
     }
   else
@@ -2241,10 +2308,28 @@ xfsm_manager_dbus_register_client (XfsmDbusManager *object,
                                    const gchar *arg_app_id,
                                    const gchar *arg_client_startup_id)
 {
-  gchar *client_id = g_strdup_printf("/org/xfce/SessionManager/%s", arg_client_startup_id);
+  XfsmManager *manager;
+  XfsmClient *client;
+  gchar *client_id;
 
-  xfsm_dbus_manager_complete_register_client (object, invocation, client_id);
-  g_free(client_id);
+  manager = XFSM_MANAGER (object);
+
+  if (arg_client_startup_id != NULL || (g_strcmp0 (arg_client_startup_id, "") == 0))
+    {
+      client_id = g_strdup_printf ("%s%s", arg_app_id, arg_client_startup_id);
+    }
+  else
+    {
+      client_id = g_strdup (arg_app_id);
+    }
+
+  /* create a new dbus-based client */
+  client = xfsm_client_new (manager, NULL, manager->connection);
+
+  xfsm_manager_register_client (manager, client, client_id, NULL);
+
+  xfsm_dbus_manager_complete_register_client (object, invocation, xfsm_client_get_object_path (client));
+  g_free (client_id);
   return TRUE;
 }
 

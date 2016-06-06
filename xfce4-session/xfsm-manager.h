@@ -91,6 +91,7 @@ XfsmClient* xfsm_manager_new_client (XfsmManager *manager,
 
 gboolean xfsm_manager_register_client (XfsmManager *manager,
                                        XfsmClient  *client,
+                                       const gchar *dbus_client_id,
                                        const gchar *previous_id);
 
 void xfsm_manager_start_interact (XfsmManager *manager,

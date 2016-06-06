@@ -190,8 +190,6 @@ xfsm_client_new (XfsmManager *manager,
 {
   XfsmClient *client;
 
-  g_return_val_if_fail (sms_conn, NULL);
-
   client = g_object_new (XFSM_TYPE_CLIENT, NULL);
 
   client->manager = manager;
@@ -406,7 +404,7 @@ xfsm_client_dbus_init (XfsmClient *client)
       return;
     }
 
-  g_debug ("exporting path %s", client->object_path);
+  xfsm_verbose ("exporting path %s\n", client->object_path);
 
   if (!g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (XFSM_DBUS_CLIENT (client)),
                                          client->connection,
@@ -419,7 +417,7 @@ xfsm_client_dbus_init (XfsmClient *client)
     }
   }
 
-  g_debug ("exported on %s", g_dbus_interface_skeleton_get_object_path (G_DBUS_INTERFACE_SKELETON (XFSM_DBUS_CLIENT (client))));
+  xfsm_verbose ("exported on %s\n", g_dbus_interface_skeleton_get_object_path (G_DBUS_INTERFACE_SKELETON (XFSM_DBUS_CLIENT (client))));
 }
 
 static void
