@@ -79,6 +79,9 @@ void xfsm_client_delete_properties (XfsmClient *client,
 
 const gchar *xfsm_client_get_object_path (XfsmClient *client);
 
+void xfsm_client_set_pid (XfsmClient *client,
+                          pid_t       pid);
+
 G_END_DECLS
 
 #endif /* !__XFSM_CLIENT_H__ */

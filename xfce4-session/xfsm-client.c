@@ -358,6 +358,32 @@ xfsm_client_get_object_path (XfsmClient *client)
 
 
 
+void
+xfsm_client_set_pid (XfsmClient *client,
+                     pid_t       pid)
+{
+  XfsmProperties *properties;
+  gchar          *pid_str;
+
+  g_return_if_fail (XFSM_IS_CLIENT (client));
+  g_return_if_fail (client->properties != NULL);
+
+  properties = client->properties;
+
+  /* save the pid */
+  properties->pid = pid;
+
+  /* convert it to a string */
+  pid_str = g_strdup_printf ("%d", pid);
+
+  /* store the string as well (so we can export it over dbus */
+  xfsm_properties_set_string (properties, "ProcessID", pid_str);
+
+  g_free (pid_str);
+}
+
+
+
 /*
  * dbus server impl
  */

@@ -2302,6 +2302,52 @@ xfsm_manager_dbus_can_hibernate (XfsmDbusManager *object,
   return TRUE;
 }
 
+/* adapted from ConsoleKit2 whch was adapted from PolicyKit */
+static gboolean
+get_caller_info (XfsmManager *manager,
+                 const char  *sender,
+                 pid_t       *calling_pid)
+{
+        gboolean  res   = FALSE;
+        GVariant *value = NULL;
+        GError   *error = NULL;
+
+        if (sender == NULL) {
+                xfsm_verbose ("sender == NULL");
+                goto out;
+        }
+
+        if (manager->connection == NULL) {
+                xfsm_verbose ("manager->connection == NULL");
+                goto out;
+        }
+
+        value = g_dbus_connection_call_sync (manager->connection,
+                                             "org.freedesktop.DBus",
+                                             "/org/freedesktop/DBus",
+                                             "org.freedesktop.DBus",
+                                             "GetConnectionUnixProcessID",
+                                             g_variant_new ("(s)", sender),
+                                             G_VARIANT_TYPE ("(u)"),
+                                             G_DBUS_CALL_FLAGS_NONE,
+                                             -1,
+                                             NULL,
+                                             &error);
+
+        if (value == NULL) {
+                xfsm_verbose ("GetConnectionUnixProcessID() failed: %s", error->message);
+                g_error_free (error);
+                goto out;
+        }
+        g_variant_get (value, "(u)", calling_pid);
+        g_variant_unref (value);
+
+        res = TRUE;
+
+out:
+        return res;
+}
+
 static gboolean
 xfsm_manager_dbus_register_client (XfsmDbusManager *object,
                                    GDBusMethodInvocation *invocation,
@@ -2309,8 +2355,9 @@ xfsm_manager_dbus_register_client (XfsmDbusManager *object,
                                    const gchar *arg_client_startup_id)
 {
   XfsmManager *manager;
-  XfsmClient *client;
-  gchar *client_id;
+  XfsmClient  *client;
+  gchar       *client_id;
+  pid_t        pid = 0;
 
   manager = XFSM_MANAGER (object);
 
@@ -2326,7 +2373,16 @@ xfsm_manager_dbus_register_client (XfsmDbusManager *object,
   /* create a new dbus-based client */
   client = xfsm_client_new (manager, NULL, manager->connection);
 
+  /* register it so that it exports the dbus name */
   xfsm_manager_register_client (manager, client, client_id, NULL);
+
+  /* attempt to get the caller'd pid so we can monitor it */
+  if (!get_caller_info (manager, g_dbus_method_invocation_get_sender (invocation), &pid))
+    {
+      pid = 0;
+    }
+
+  xfsm_client_set_pid (client, pid);
 
   xfsm_dbus_manager_complete_register_client (object, invocation, xfsm_client_get_object_path (client));
   g_free (client_id);
