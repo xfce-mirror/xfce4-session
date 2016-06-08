@@ -349,8 +349,8 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
         {
           if (can_switch_user)
             {
-              button = xfsm_logout_dialog_button (_("Switch _User"), "avatar-default",
-                                                  "avatar-default-symbolic", XFSM_SHUTDOWN_SWITCH_USER,
+              button = xfsm_logout_dialog_button (_("Switch _User"), "system-users",
+                                                  "system-users-symbolic", XFSM_SHUTDOWN_SWITCH_USER,
                                                   dialog);
 
               gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
