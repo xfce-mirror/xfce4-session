@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Dmitry Nikitin <luckas_fb@mail.ru>, 2008
+# Yarema aka Knedlyk <yupadmin@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-02 22:44+0200\n"
-"PO-Revision-Date: 2013-11-19 13:02+0000\n"
-"Last-Translator: Nick <nick@xfce.org>\n"
-"Language-Team: Ukrainian (http://www.transifex.com/projects/p/xfce/language/uk/)\n"
+"POT-Creation-Date: 2016-06-06 12:30+0200\n"
+"PO-Revision-Date: 2016-06-17 17:50+0000\n"
+"Last-Translator: Yarema aka Knedlyk <yupadmin@gmail.com>\n"
+"Language-Team: Ukrainian (http://www.transifex.com/xfce/xfce4-session/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,6 +35,17 @@ msgstr "Без опису"
 msgid "Choose theme file to install..."
 msgstr "Виберіть файл теми для встановлення..."
 
+#: ../engines/balou/config.c:327 ../engines/balou/config.c:495
+#: ../settings/session-editor.c:173 ../settings/session-editor.c:257
+#: ../xfce4-session/xfsm-logout-dialog.c:209
+#: ../xfce4-session/xfsm-splash-screen.c:213
+msgid "_Cancel"
+msgstr "_Скасувати"
+
+#: ../engines/balou/config.c:328
+msgid "_Open"
+msgstr "_Відкрити"
+
 #: ../engines/balou/config.c:336
 #, c-format
 msgid "Unable to install splash theme from file \"%s\""
@@ -47,96 +59,106 @@ msgstr "Помилка файлу тем"
 msgid "Please check that the file is a valid splash theme archive."
 msgstr "Будь ласка перевірте що файл є правильним архівом теми заставки."
 
-#: ../engines/balou/config.c:402
+#: ../engines/balou/config.c:344 ../engines/balou/config.c:949
+#: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1145
+msgid "_Close"
+msgstr "_Закрити"
+
+#: ../engines/balou/config.c:403
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "Не вдається видалити тему заставки \"%s\" з каталогу %s."
 
-#: ../engines/balou/config.c:491
+#: ../engines/balou/config.c:492
 msgid "Choose theme filename..."
 msgstr "Виберіть файл теми..."
+
+#: ../engines/balou/config.c:496
+msgid "_Save"
+msgstr "_Зберегти"
 
 #: ../engines/balou/config.c:624
 msgid "_Install new theme"
 msgstr "_Встановити нову тему"
 
-#: ../engines/balou/config.c:633
+#: ../engines/balou/config.c:631
 msgid "_Remove theme"
 msgstr "В_идалити тему"
 
-#: ../engines/balou/config.c:650
+#: ../engines/balou/config.c:646
 msgid "_Export theme"
 msgstr "_Експортувати тему"
 
-#: ../engines/balou/config.c:866
+#: ../engines/balou/config.c:860
 msgid "Balou theme"
 msgstr "Тема Балу"
 
-#: ../engines/balou/config.c:951
+#: ../engines/balou/config.c:945
 msgid "Configure Balou..."
 msgstr "Налаштувати Балу..."
 
-#: ../engines/balou/config.c:994
+#: ../engines/balou/config.c:987
 msgid "Balou"
 msgstr "Балу"
 
-#: ../engines/balou/config.c:995
+#: ../engines/balou/config.c:988
 msgid "Balou Splash Engine"
 msgstr "Заставка Балу"
 
-#: ../engines/mice/mice.c:373
+#: ../engines/mice/mice.c:385
 msgid "Mice"
 msgstr "Миша"
 
-#: ../engines/mice/mice.c:374
+#: ../engines/mice/mice.c:386
 msgid "Mice Splash Engine"
 msgstr "Рушій заставки мишки"
 
-#: ../engines/simple/simple.c:346
+#: ../engines/simple/simple.c:334
 msgid "Configure Simple..."
 msgstr "Налаштувати простий..."
 
-#: ../engines/simple/simple.c:357
+#: ../engines/simple/simple.c:344
 msgid "Font"
 msgstr "Шрифт"
 
-#: ../engines/simple/simple.c:367
+#: ../engines/simple/simple.c:354
 msgid "Colors"
 msgstr "Кольори"
 
-#: ../engines/simple/simple.c:375
+#: ../engines/simple/simple.c:362
 msgid "Background color:"
 msgstr "Колір тла:"
 
-#: ../engines/simple/simple.c:388
+#: ../engines/simple/simple.c:373
 msgid "Text color:"
 msgstr "Колір тексту:"
 
-#: ../engines/simple/simple.c:401
+#: ../engines/simple/simple.c:385
 msgid "Image"
 msgstr "Зображення"
 
-#: ../engines/simple/simple.c:409
+#: ../engines/simple/simple.c:393
 msgid "Use custom image"
 msgstr "Використовувати інше зображення"
 
-#: ../engines/simple/simple.c:413
+#: ../engines/simple/simple.c:397
 msgid "Choose image..."
 msgstr "Вибрати зображення..."
 
-#: ../engines/simple/simple.c:419
+#: ../engines/simple/simple.c:403
 msgid "Images"
 msgstr "Зображення"
 
-#: ../engines/simple/simple.c:425
+#: ../engines/simple/simple.c:409
 msgid "All files"
 msgstr "Всі файли"
 
-#: ../engines/simple/simple.c:497
+#: ../engines/simple/simple.c:480
 msgid "Simple"
 msgstr "Проста"
 
-#: ../engines/simple/simple.c:498
+#: ../engines/simple/simple.c:481
 msgid "Simple Splash Engine"
 msgstr "Простий рушій заставки"
 
@@ -148,43 +170,43 @@ msgstr "Зберігач екрану"
 msgid "Launch screensaver and locker program"
 msgstr "Запустити програми зберігача і замикання екрану"
 
-#: ../settings/main.c:43
+#: ../settings/main.c:68
 msgid "Settings manager socket"
 msgstr "Сокет менеджера властивостей"
 
-#: ../settings/main.c:43
+#: ../settings/main.c:68
 msgid "SOCKET ID"
 msgstr "ID СОКЕТА"
 
-#: ../settings/main.c:44
+#: ../settings/main.c:69
 msgid "Version information"
 msgstr "Інформація про версію"
 
-#: ../settings/main.c:75 ../xfce4-session/main.c:257
+#: ../settings/main.c:80 ../xfce4-session/main.c:343
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Наберіть '%s --help' для використання."
 
-#: ../settings/main.c:87 ../xfce4-session/main.c:267
-#: ../xfce4-session-logout/main.c:136
+#: ../settings/main.c:92 ../xfce4-session/main.c:353
+#: ../xfce4-session-logout/main.c:134
 msgid "The Xfce development team. All rights reserved."
 msgstr "Група розробників Xfce. Усі права застережено."
 
-#: ../settings/main.c:88 ../xfce4-session/main.c:268
-#: ../xfce4-session-logout/main.c:139
+#: ../settings/main.c:93 ../xfce4-session/main.c:354
+#: ../xfce4-session-logout/main.c:137
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Будь ласка повідомляйте про помилки для <%s>."
 
-#: ../settings/main.c:97 ../xfce4-session/main.c:276
+#: ../settings/main.c:102 ../xfce4-session/main.c:362
 msgid "Unable to contact settings server"
 msgstr "Неможливо зв'язатись з сервером властивостей"
 
-#: ../settings/main.c:116
+#: ../settings/main.c:121
 msgid "Unable to create user interface from embedded definition data"
 msgstr "Неможливо створити інтерфейс користувача з типових вбудованих даних"
 
-#: ../settings/main.c:128
+#: ../settings/main.c:133
 msgid "App_lication Autostart"
 msgstr "Авто_старт програми"
 
@@ -239,47 +261,46 @@ msgstr "Можливо Вам потрібно вилучити деякі фа�
 msgid "All Xfce cache files could not be cleared"
 msgstr "Всі файли кешу Xfce не можливо очистити"
 
-#: ../settings/session-editor.c:249
+#: ../settings/session-editor.c:251
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Ви впевнені, що бажаєте завершити \"%s\"?"
 
-#: ../settings/session-editor.c:252 ../settings/session-editor.c:280
+#: ../settings/session-editor.c:254 ../settings/session-editor.c:286
 msgid "Terminate Program"
 msgstr "Завершити програму"
 
-#: ../settings/session-editor.c:254
+#: ../settings/session-editor.c:256
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
 msgstr "Програма втратить будь які незбережені зміни і не буде запускатись в наступному Вашому сеансі."
 
-#: ../settings/session-editor.c:256
-#: ../settings/xfce4-session-settings.glade.h:30
+#: ../settings/session-editor.c:258
 msgid "_Quit Program"
 msgstr "Ви_йти з програми"
 
-#: ../settings/session-editor.c:281
+#: ../settings/session-editor.c:287
 msgid "Unable to terminate program."
 msgstr "Неможливо завершити програму."
 
-#: ../settings/session-editor.c:459
+#: ../settings/session-editor.c:509
 msgid "(Unknown program)"
 msgstr "(Невідома програма)"
 
-#: ../settings/session-editor.c:679
+#: ../settings/session-editor.c:733
 msgid "Priority"
 msgstr "Пріоритет"
 
-#: ../settings/session-editor.c:687
+#: ../settings/session-editor.c:741
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:693
+#: ../settings/session-editor.c:747
 msgid "Program"
 msgstr "Програма"
 
-#: ../settings/session-editor.c:718
+#: ../settings/session-editor.c:772
 msgid "Restart Style"
 msgstr "Стиль перезавантаження"
 
@@ -289,6 +310,14 @@ msgstr "Стиль перезавантаження"
 msgid "None"
 msgstr "Нічого"
 
+#: ../settings/xfae-dialog.c:73 ../settings/xfae-dialog.c:181
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: ../settings/xfae-dialog.c:74 ../settings/xfae-dialog.c:182
+msgid "OK"
+msgstr "OK"
+
 #: ../settings/xfae-dialog.c:78
 msgid "Add application"
 msgstr "Додати програму"
@@ -297,19 +326,19 @@ msgstr "Додати програму"
 msgid "Name:"
 msgstr "Назва:"
 
-#: ../settings/xfae-dialog.c:109
+#: ../settings/xfae-dialog.c:107
 msgid "Description:"
 msgstr "Опис:"
 
-#: ../settings/xfae-dialog.c:124 ../settings/xfae-model.c:479
+#: ../settings/xfae-dialog.c:120 ../settings/xfae-model.c:479
 msgid "Command:"
 msgstr "Команда:"
 
-#: ../settings/xfae-dialog.c:184
+#: ../settings/xfae-dialog.c:178
 msgid "Select a command"
 msgstr "Виберіть команду"
 
-#: ../settings/xfae-dialog.c:233
+#: ../settings/xfae-dialog.c:227
 msgid "Edit application"
 msgstr "Редагувати програму"
 
@@ -338,7 +367,7 @@ msgstr "Не вдається відкрити %s для читання"
 msgid "Failed to open %s for writing"
 msgstr "Не вдається відкрити файл %s для запису"
 
-#: ../settings/xfae-window.c:102
+#: ../settings/xfae-window.c:105
 msgid ""
 "Below is the list of applications that will be started automatically when "
 "you login to your Xfce desktop, in addition to the applications that were "
@@ -346,57 +375,58 @@ msgid ""
 "desktop environment, but you can still enable them if you want."
 msgstr "Нижче розташований список програм, які будуть запущені автоматично, коли Ви увійдете до стільниці Xfce, додатково до програм, що були збережені, коли Ви виходили із сеансу останнього разу:"
 
-#: ../settings/xfae-window.c:293
+#: ../settings/xfae-window.c:179 ../settings/xfae-window.c:237
+msgid "Add"
+msgstr "Додати"
+
+#: ../settings/xfae-window.c:185 ../settings/xfae-window.c:243
+msgid "Remove"
+msgstr "Вилучити"
+
+#: ../settings/xfae-window.c:195
+msgid "Edit"
+msgstr "Редагувати"
+
+#: ../settings/xfae-window.c:296
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Не вдалось додати \"%s\""
 
-#: ../settings/xfae-window.c:324 ../settings/xfae-window.c:338
+#: ../settings/xfae-window.c:327 ../settings/xfae-window.c:341
 msgid "Failed to remove item"
 msgstr "Не вдається видалити елемент"
 
-#: ../settings/xfae-window.c:330
-msgid ""
-"This will permanently remove the application from the list of automatically "
-"started applications"
-msgstr "Це повністю видалить програму із списку програм, що автоматисно запускаються"
-
-#: ../settings/xfae-window.c:332
-#, c-format
-msgid "Are you sure you want to remove \"%s\""
-msgstr "Ви впевнені, що бажаєте видалити \"%s\""
-
-#: ../settings/xfae-window.c:366
+#: ../settings/xfae-window.c:369
 msgid "Failed to edit item"
 msgstr "Не вдається відредагувати елемент"
 
-#: ../settings/xfae-window.c:386
+#: ../settings/xfae-window.c:389
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Не вдається відредагувати елемент \"%s\""
 
-#: ../settings/xfae-window.c:414
+#: ../settings/xfae-window.c:417
 msgid "Failed to toggle item"
 msgstr "Не вдається перемкнути елемент"
 
-#: ../xfce4-session/main.c:76
+#: ../xfce4-session/main.c:77
 msgid "Disable binding to TCP ports"
 msgstr "Заборонити з'єднання на порти TCP"
 
-#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:91
+#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:90
 msgid "Print version information and exit"
 msgstr "Надрукувати інформацію про версію і вийти"
 
-#: ../xfce4-session/main.c:140
+#: ../xfce4-session/main.c:146
 msgid "Loading desktop settings"
 msgstr "Завантаження параметрів робочого столу"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:298
+#: ../xfce4-session/main.c:198
 msgid "Verifying DNS settings"
 msgstr "Перевірка параметрів DNS"
 
-#: ../xfce4-session/main.c:302
+#: ../xfce4-session/main.c:202
 msgid "Loading session data"
 msgstr "Завантаження відомостей про сеанс"
 
@@ -405,41 +435,35 @@ msgstr "Завантаження відомостей про сеанс"
 msgid "Last accessed: %s"
 msgstr "Запущено останній раз: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:172
+#: ../xfce4-session/xfsm-chooser.c:175
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr "Виберіть сеанс, який бажаєте відновити. Щоб завантажити сеанс, можете просто двічі клацнути на його назві."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:198
+#: ../xfce4-session/xfsm-chooser.c:201
 msgid "Log out"
 msgstr "Вийти з сеансу"
 
-#: ../xfce4-session/xfsm-chooser.c:200
+#: ../xfce4-session/xfsm-chooser.c:203
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Скасувати спробу входу та повернутись до екрану входу у систему."
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:207
+#: ../xfce4-session/xfsm-chooser.c:210
 msgid "New session"
 msgstr "Новий сеанс"
 
-#: ../xfce4-session/xfsm-chooser.c:208
+#: ../xfce4-session/xfsm-chooser.c:211
 msgid "Create a new session."
 msgstr "Створити новий сеанс."
 
-#: ../xfce4-session/xfsm-client.c:506 ../xfce4-session/xfsm-client.c:532
-#: ../xfce4-session/xfsm-client.c:571
-#, c-format
-msgid "The client doesn't have any properties set yet"
-msgstr "Клієнт не має встановлених будь яких властивостей"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:247
+#: ../xfce4-session/xfsm-compat-gnome.c:255
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "Запуск служби Gnome Keyring"
 
-#: ../xfce4-session/xfsm-compat-kde.c:124
+#: ../xfce4-session/xfsm-compat-kde.c:126
 msgid "Starting KDE services"
 msgstr "Запуск служб KDE"
 
@@ -464,7 +488,7 @@ msgstr "Продовжити"
 msgid "Try again"
 msgstr "Повторити спробу"
 
-#: ../xfce4-session/xfsm-manager.c:611
+#: ../xfce4-session/xfsm-manager.c:616
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -473,55 +497,61 @@ msgid ""
 "incorrectly."
 msgstr "Неможливо визначити назву безпечного сеансу. Можливі причини: xconfd не запущено (проблема налаштування D-Bus); неправильно встановлено змінну середовища $XDG_CONFIG_DIRS (має включати \"%s\"), або неправильно встановлено xfce4-session."
 
-#: ../xfce4-session/xfsm-manager.c:622
+#: ../xfce4-session/xfsm-manager.c:627
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Вибраний безпечний сеанс (\"%s\") не позначено як безпечний сеанс."
 
-#: ../xfce4-session/xfsm-manager.c:669
+#: ../xfce4-session/xfsm-manager.c:674
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Список програм в безпечному сеансі пустий."
 
 #. FIXME: migrate this into the splash screen somehow so the
-#. * window doesn't look ugly (right now now WM is running, so it
+#. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:716
+#: ../xfce4-session/xfsm-manager.c:721
 msgid "Session Manager Error"
 msgstr "Помилка менеджеру сеансів"
 
-#: ../xfce4-session/xfsm-manager.c:718
+#: ../xfce4-session/xfsm-manager.c:723
 msgid "Unable to load a failsafe session"
 msgstr "Неможливо завантажити безпечний сеанс"
 
-#: ../xfce4-session/xfsm-manager.c:1127
+#: ../xfce4-session/xfsm-manager.c:725
+msgid "_Quit"
+msgstr "Ви_йти"
+
+#: ../xfce4-session/xfsm-manager.c:1139
 msgid "Shutdown Failed"
 msgstr "Неможливо вимкнути"
 
-#: ../xfce4-session/xfsm-manager.c:1130
+#: ../xfce4-session/xfsm-manager.c:1142
 msgid "Failed to suspend session"
 msgstr "Невдача призупинення сеансу"
 
-#: ../xfce4-session/xfsm-manager.c:1131
+#: ../xfce4-session/xfsm-manager.c:1143
 msgid "Failed to hibernate session"
 msgstr "Невдача для сплячого сеансу"
 
-#: ../xfce4-session/xfsm-manager.c:1405
+#: ../xfce4-session/xfsm-manager.c:1423
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Можна тільки завершити клієнтів коли перебуваєш в стані очікування"
 
-#: ../xfce4-session/xfsm-manager.c:1969
-#, c-format
+#: ../xfce4-session/xfsm-manager.c:1980
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Менеджер сеансу мусить бути в стані очікування коли запитується місце перевірки"
 
-#: ../xfce4-session/xfsm-manager.c:2010
-#, c-format
+#: ../xfce4-session/xfsm-manager.c:2048 ../xfce4-session/xfsm-manager.c:2066
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Менеджер сеансу мусить бути в стані очікування коли запитується вимкнення"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:188
+#: ../xfce4-session/xfsm-manager.c:2107
+msgid "Session manager must be in idle state when requesting a restart"
+msgstr "Менеджер сеансу мусить бути в стані очікування, коли дається запит на перезавантаження"
+
+#: ../xfce4-session/xfsm-logout-dialog.c:182
 #, c-format
 msgid "Log out %s"
 msgstr "Вийти %s"
@@ -529,43 +559,37 @@ msgstr "Вийти %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:246
+#: ../xfce4-session/xfsm-logout-dialog.c:224
 msgid "_Log Out"
 msgstr "_Вийти"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:266
+#: ../xfce4-session/xfsm-logout-dialog.c:244
 msgid "_Restart"
 msgstr "_Перезавантажити"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:286
+#: ../xfce4-session/xfsm-logout-dialog.c:264
 msgid "Shut _Down"
 msgstr "Ви_мкнути"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:309
+#: ../xfce4-session/xfsm-logout-dialog.c:287
 msgid "Sus_pend"
 msgstr "_Призупинити"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:343
+#: ../xfce4-session/xfsm-logout-dialog.c:321
 msgid "_Hibernate"
 msgstr "_В сплячку"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:368
+#: ../xfce4-session/xfsm-logout-dialog.c:352
+msgid "Switch _User"
+msgstr "Переключити _користувача"
+
+#: ../xfce4-session/xfsm-logout-dialog.c:377
 msgid "_Save session for future logins"
 msgstr "З_берегти сеанс"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:395
-msgid "Please enter your password"
-msgstr "Введіть Ваш пароль"
-
-#: ../xfce4-session/xfsm-logout-dialog.c:427
+#: ../xfce4-session/xfsm-logout-dialog.c:405
 msgid "An error occurred"
 msgstr "Сталася помилка"
-
-#: ../xfce4-session/xfsm-logout-dialog.c:433
-msgid ""
-"Either the password you entered is invalid, or the system administrator "
-"disallows shutting down this computer with your user account."
-msgstr "Введений пароль - неправильний, або системний адміністратор заборонив вам вимикати комп'ютер."
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -575,92 +599,96 @@ msgstr "Виберіть сеанс"
 msgid "Choose session name"
 msgstr "Виберіть назву сеансу"
 
+#: ../xfce4-session/xfsm-splash-screen.c:215
+msgid "_OK"
+msgstr "_ОК"
+
 #: ../xfce4-session/xfsm-splash-screen.c:222
 msgid "Choose a name for the new session:"
 msgstr "Виберіть назву нового сеансу:"
 
-#: ../xfce4-session/xfsm-startup.c:347
+#: ../xfce4-session/xfsm-startup.c:397
 msgid "Starting the Volume Controller"
 msgstr "Запуск регулятора гучності"
 
-#: ../xfce4-session/xfsm-startup.c:349
+#: ../xfce4-session/xfsm-startup.c:399
 msgid "Starting the Panel"
 msgstr "Запуск панелі"
 
-#: ../xfce4-session/xfsm-startup.c:351
+#: ../xfce4-session/xfsm-startup.c:401
 msgid "Starting the Desktop Manager"
 msgstr "Запуск менеджера робочого столу"
 
-#: ../xfce4-session/xfsm-startup.c:353
+#: ../xfce4-session/xfsm-startup.c:403
 msgid "Starting the Taskbar"
 msgstr "Запуск панелі задач"
 
-#: ../xfce4-session/xfsm-startup.c:355
+#: ../xfce4-session/xfsm-startup.c:405
 msgid "Starting the Window Manager"
 msgstr "Запуск віконного менеджера"
 
-#: ../xfce4-session/xfsm-startup.c:359
+#: ../xfce4-session/xfsm-startup.c:409
 msgid "Starting the Gnome Terminal Emulator"
 msgstr "Запуск емулятора термінала Gnome"
 
-#: ../xfce4-session/xfsm-startup.c:363
+#: ../xfce4-session/xfsm-startup.c:413
 msgid "Starting the KDE Advanced Text Editor"
 msgstr "Запуск розширеного текстового редактора KDE"
 
-#: ../xfce4-session/xfsm-startup.c:365
+#: ../xfce4-session/xfsm-startup.c:415
 msgid "Starting the KDE Clipboard Manager"
 msgstr "Запуск буфера обміну KDE"
 
-#: ../xfce4-session/xfsm-startup.c:367
+#: ../xfce4-session/xfsm-startup.c:417
 msgid "Starting the KDE Mail Reader"
 msgstr "Запуск програми читання пошти для KDE"
 
-#: ../xfce4-session/xfsm-startup.c:369
+#: ../xfce4-session/xfsm-startup.c:419
 msgid "Starting the KDE News Reader"
 msgstr "Запуск програми читання новин для KDE"
 
-#: ../xfce4-session/xfsm-startup.c:371
+#: ../xfce4-session/xfsm-startup.c:421
 msgid "Starting the Konqueror"
 msgstr "Запуск Konqueror"
 
-#: ../xfce4-session/xfsm-startup.c:373
+#: ../xfce4-session/xfsm-startup.c:423
 msgid "Starting the KDE Terminal Emulator"
 msgstr "Запуск емулятора термінала KDE"
 
-#: ../xfce4-session/xfsm-startup.c:377
+#: ../xfce4-session/xfsm-startup.c:427
 msgid "Starting the Beep Media Player"
 msgstr "Запуск музичного програвача Bmp"
 
-#: ../xfce4-session/xfsm-startup.c:379
+#: ../xfce4-session/xfsm-startup.c:429
 msgid "Starting The Gimp"
 msgstr "Запуск Gimp"
 
-#: ../xfce4-session/xfsm-startup.c:381
+#: ../xfce4-session/xfsm-startup.c:431
 msgid "Starting the VI Improved Editor"
 msgstr "Запуск текстового редактора VI"
 
-#: ../xfce4-session/xfsm-startup.c:383
+#: ../xfce4-session/xfsm-startup.c:433
 msgid "Starting the Session Management Proxy"
 msgstr "Запуск проксі для керування сеансами"
 
-#: ../xfce4-session/xfsm-startup.c:385
+#: ../xfce4-session/xfsm-startup.c:435
 msgid "Starting the X-Chat IRC Client"
 msgstr "Запуск IRC-клієнта X-Chat"
 
-#: ../xfce4-session/xfsm-startup.c:387
+#: ../xfce4-session/xfsm-startup.c:437
 msgid "Starting the X Multimedia System"
 msgstr "Запуск програвача XMMS"
 
-#: ../xfce4-session/xfsm-startup.c:389
+#: ../xfce4-session/xfsm-startup.c:439
 msgid "Starting the X Terminal Emulator"
 msgstr "Запуск емулятора термінала xterm"
 
-#: ../xfce4-session/xfsm-startup.c:391
+#: ../xfce4-session/xfsm-startup.c:441
 #, c-format
 msgid "Starting %s"
 msgstr "Запуск %s"
 
-#: ../xfce4-session/xfsm-startup.c:515
+#: ../xfce4-session/xfsm-startup.c:565
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -675,81 +703,67 @@ msgid ""
 "You should delete this directory now.\n"
 msgstr "Розташування та формат каталогу автозапуску змінились.\nТепер він знаходиться у\n\n  %s\n\nТам ви можете розмістити файл .desktop, що описують програми,\nякі будуть запускатися при вході у Xfce. Файли зі старого каталогу\nавтозапуску були успішно перенесені в нове місце.\n\nТепер ви маєте видалити старий каталог.\n"
 
-#: ../xfce4-session/xfsm-startup.c:684
+#: ../xfce4-session/xfsm-startup.c:750
 msgid "Performing Autostart..."
 msgstr "Автозавантаження програм..."
 
-#: ../xfce4-session/xfsm-startup.c:790
+#: ../xfce4-session/xfsm-startup.c:856
 msgid "Starting Assistive Technologies"
 msgstr "Запуск допоміжних технологій"
 
-#: ../xfce4-session/xfsm-shutdown.c:429
-#, c-format
-msgid "Error sending command to shutdown helper: %s"
-msgstr "Помилка відсилання команди помічнику вимкнення системи: %s"
-
-#: ../xfce4-session/xfsm-shutdown.c:442
-#, c-format
-msgid "Error receiving response from shutdown helper: %s"
-msgstr "Помилка отримання відповіді від помічника вимкнення системи: %s"
-
-#: ../xfce4-session/xfsm-shutdown.c:450
-#, c-format
-msgid "Shutdown command failed"
-msgstr "Команда вимкнення системи зазнала невдачі"
-
-#: ../xfce4-session/xfsm-shutdown.c:555
+#: ../xfce4-session/xfsm-shutdown.c:162
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Завершення заблоковано налаштуванням kiosk"
 
-#: ../xfce4-session/xfsm-shutdown.c:638
+#: ../xfce4-session/xfsm-shutdown.c:213
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Невідомий метод завершення %d"
 
-#: ../xfce4-session-logout/main.c:67
+#: ../xfce4-session-logout/main.c:66
 msgid "Log out without displaying the logout dialog"
 msgstr "Завершити сеанс без діалогу підтвердження виходу"
 
-#: ../xfce4-session-logout/main.c:71
+#: ../xfce4-session-logout/main.c:70
 msgid "Halt without displaying the logout dialog"
 msgstr "Вимкнути комп'ютер без діалогу підтвердження виходу"
 
-#: ../xfce4-session-logout/main.c:75
+#: ../xfce4-session-logout/main.c:74
 msgid "Reboot without displaying the logout dialog"
 msgstr "Перезавантажити без діалогу підтвердження виходу"
 
-#: ../xfce4-session-logout/main.c:79
+#: ../xfce4-session-logout/main.c:78
 msgid "Suspend without displaying the logout dialog"
 msgstr "Призупинити комп'ютер без діалогу підтвердження виходу"
 
-#: ../xfce4-session-logout/main.c:83
+#: ../xfce4-session-logout/main.c:82
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Приспати без діалогу підтвердження виходу"
 
-#: ../xfce4-session-logout/main.c:87
+#: ../xfce4-session-logout/main.c:86
 msgid "Log out quickly; don't save the session"
 msgstr "Вийти якнайшвидше; дані сеансу не зберігати"
 
-#: ../xfce4-session-logout/main.c:110
+#: ../xfce4-session-logout/main.c:109
 msgid "Unknown error"
 msgstr "Невідома помилка"
 
-#: ../xfce4-session-logout/main.c:137
+#: ../xfce4-session-logout/main.c:135
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Написано Benedikt Meurer <benny@xfce.org>."
 
-#: ../xfce4-session-logout/main.c:138
+#: ../xfce4-session-logout/main.c:136
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "і Brian Tarricone <kelnos@xfce.org>."
 
-#: ../xfce4-session-logout/main.c:148
-msgid "Unable to contact D-Bus session bus"
-msgstr "Неможливо з'єднатись з сеансом шини D-Bus."
-
-#: ../xfce4-session-logout/main.c:227
+#: ../xfce4-session-logout/main.c:156 ../xfce4-session-logout/main.c:245
 msgid "Received error while trying to log out"
 msgstr "Отримано помилку під час спроби вийти з сеансу"
+
+#: ../xfce4-session-logout/main.c:214
+#, c-format
+msgid "Received error while trying to log out, error was %s"
+msgstr "Отримано помилку під час спроби виходу з сеансу, помилка була %s"
 
 #: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
 msgid "Log Out"
@@ -760,177 +774,9 @@ msgid "Log out of the Xfce Desktop"
 msgstr "Вийти з середовища Xfce"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
-#: ../settings/xfce4-session-settings.glade.h:3
 msgid "Session and Startup"
 msgstr "Сеанси та запуск"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
-#: ../settings/xfce4-session-settings.glade.h:4
 msgid "Customize desktop startup and splash screen"
 msgstr "Налаштувати запуск стільниці і екран заставки"
-
-#: ../settings/xfce4-session-settings.glade.h:1
-msgid "Saving Session"
-msgstr "Збереження сеансу"
-
-#: ../settings/xfce4-session-settings.glade.h:2
-msgid ""
-"Your session is being saved.  If you do not wish to wait, you may close this"
-" window."
-msgstr "Ваш сеанс було збережено. Якщо Ви не бажаєте чекати, то можете закрити це вікно."
-
-#: ../settings/xfce4-session-settings.glade.h:5
-msgid "_Display chooser on login"
-msgstr "_Відображати програму вибору сеансу при вході"
-
-#: ../settings/xfce4-session-settings.glade.h:6
-msgid "Display the session chooser every time Xfce starts"
-msgstr "Відображати програму вибору сеансу кожного разу при старті Xfce"
-
-#: ../settings/xfce4-session-settings.glade.h:7
-msgid "<b>Session Chooser</b>"
-msgstr "<b>Програма вибору сеансу</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:8
-msgid "Automatically save session on logo_ut"
-msgstr "Автоматично зберігати сеанс при вихо_ді"
-
-#: ../settings/xfce4-session-settings.glade.h:9
-msgid "Always save the session when logging out"
-msgstr "Завжди зберігати сеанс при виході"
-
-#: ../settings/xfce4-session-settings.glade.h:10
-msgid "Pro_mpt on logout"
-msgstr "За_питувати при виході"
-
-#: ../settings/xfce4-session-settings.glade.h:11
-msgid "Prompt for confirmation when logging out"
-msgstr "Запитувати підтвердження при виході з сеансу"
-
-#: ../settings/xfce4-session-settings.glade.h:12
-msgid "<b>Logout Settings</b>"
-msgstr "<b>Параметри виходу</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:13
-msgid "_General"
-msgstr "_Загальні"
-
-#: ../settings/xfce4-session-settings.glade.h:14
-msgid "Opens the configuration panel for the selected splash screen"
-msgstr "Відкриває панель конфігурації для вибраної заставки"
-
-#: ../settings/xfce4-session-settings.glade.h:15
-msgid "Con_figure"
-msgstr "Н_алаштувати"
-
-#: ../settings/xfce4-session-settings.glade.h:16
-msgid "Demonstrates the selected splash screen"
-msgstr "Демонструвати вибрану заставку"
-
-#: ../settings/xfce4-session-settings.glade.h:17
-msgid "_Test"
-msgstr "П_еревірити"
-
-#: ../settings/xfce4-session-settings.glade.h:18
-msgid "<b>Description:</b>"
-msgstr "<b>Опис:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:19
-msgid "<b>Version:</b>"
-msgstr "<b>Версія:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:20
-msgid "<b>Author:</b>"
-msgstr "<b>Автор:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:21
-msgid "<b>Homepage:</b>"
-msgstr "<b>Домашня сторінка:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:22
-msgid "label"
-msgstr "мітка"
-
-#: ../settings/xfce4-session-settings.glade.h:23
-msgid "<b>Information</b>"
-msgstr "<b>Інформація</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:24
-msgid "S_plash"
-msgstr "_Заставка"
-
-#: ../settings/xfce4-session-settings.glade.h:25
-msgid ""
-"These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "Ці програми є частиною сеансу, запущеного зараз і можуть бути збережені коли Ви вийдете з сеансу. Зміни внесені нижче матимуть ефект тільки після збереження сеансу."
-
-#: ../settings/xfce4-session-settings.glade.h:26
-msgid "Save Sess_ion"
-msgstr "Зберегти се_анс"
-
-#: ../settings/xfce4-session-settings.glade.h:27
-msgid "Empty the session cache"
-msgstr "Очистити кеш сесії"
-
-#: ../settings/xfce4-session-settings.glade.h:28
-msgid "Clear save_d sessions"
-msgstr "Видалити збереже_ні сесії"
-
-#: ../settings/xfce4-session-settings.glade.h:29
-msgid "Quit the program, and remove it from the session"
-msgstr "Вийти з програми, і видалити її з сеансу"
-
-#: ../settings/xfce4-session-settings.glade.h:31
-msgid "Sessio_n"
-msgstr "Сеан_с"
-
-#: ../settings/xfce4-session-settings.glade.h:32
-msgid "Launch GN_OME services on startup"
-msgstr "Запускати служби ГН_ОМА при завантажені"
-
-#: ../settings/xfce4-session-settings.glade.h:33
-msgid "Start GNOME services, such as gnome-keyring"
-msgstr "Запускати служби ГНОМА, такі як gnome-keyring та GNOME accessibility framework"
-
-#: ../settings/xfce4-session-settings.glade.h:34
-msgid "Launch _KDE services on startup"
-msgstr "Запускати служби _KDE при завантажені"
-
-#: ../settings/xfce4-session-settings.glade.h:35
-msgid "Start KDE services, such as kdeinit"
-msgstr "Запускати служби KDE, такі як kdeinit"
-
-#: ../settings/xfce4-session-settings.glade.h:36
-msgid "<b>Compatibility</b>"
-msgstr "<b>Сумісність</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:37
-msgid "Manage _remote applications"
-msgstr "_Керувати віддаленими програмами"
-
-#: ../settings/xfce4-session-settings.glade.h:38
-msgid ""
-"Manage remote applications over the network (this may be a security risk)"
-msgstr "Керувати віддаленими програмами по мережі (це пов'язано з ризиком безпеки)"
-
-#: ../settings/xfce4-session-settings.glade.h:39
-msgid "<b>Security</b>"
-msgstr "<b>Безпека</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:40
-msgid "Lock screen be_fore sleep"
-msgstr "Заблокувати екран пе_ред сном"
-
-#: ../settings/xfce4-session-settings.glade.h:41
-msgid "Run xflock4 before suspending or hibernating the system"
-msgstr "Запустіть xflock4 перед призупиненням або засинанням системи"
-
-#: ../settings/xfce4-session-settings.glade.h:42
-msgid "<b>Shutdown</b>"
-msgstr "<b>Завершити</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:43
-msgid "Ad_vanced"
-msgstr "_Додаткові"
