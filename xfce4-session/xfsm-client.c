@@ -49,6 +49,7 @@ struct _XfsmClient
 
   gchar           *id;
   gchar           *object_path;
+  gchar           *service_name;
 
   XfsmClientState  state;
   XfsmProperties  *properties;
@@ -112,6 +113,7 @@ xfsm_client_finalize (GObject *obj)
 
   g_free (client->id);
   g_free (client->object_path);
+  g_free (client->service_name);
 
   G_OBJECT_CLASS (xfsm_client_parent_class)->finalize (obj);
 }
@@ -354,6 +356,24 @@ xfsm_client_get_object_path (XfsmClient *client)
 {
   g_return_val_if_fail (XFSM_IS_CLIENT (client), NULL);
   return client->object_path;
+}
+
+
+
+
+void
+xfsm_client_set_service_name (XfsmClient *client,
+                              const gchar *service_name)
+{
+  g_free (client->service_name);
+  client->service_name = g_strdup (service_name);
+}
+
+
+const gchar*
+xfsm_client_get_service_name (XfsmClient *client)
+{
+  return client->service_name;
 }
 
 

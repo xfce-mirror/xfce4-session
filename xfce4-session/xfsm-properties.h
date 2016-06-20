@@ -46,6 +46,7 @@ struct _XfsmProperties
 
   gchar  *client_id;
   gchar  *hostname;
+  gchar  *service_name;
 
   GTree  *sm_properties;
 };

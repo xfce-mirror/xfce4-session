@@ -82,6 +82,11 @@ const gchar *xfsm_client_get_object_path (XfsmClient *client);
 void xfsm_client_set_pid (XfsmClient *client,
                           pid_t       pid);
 
+void         xfsm_client_set_service_name (XfsmClient *client,
+                                           const gchar *service_name);
+const gchar *xfsm_client_get_service_name (XfsmClient *client);
+
+
 G_END_DECLS
 
 #endif /* !__XFSM_CLIENT_H__ */

@@ -120,6 +120,7 @@ struct _XfsmManager
   GQueue          *failsafe_clients;
 
   guint            die_timeout_id;
+  guint            name_owner_id;
 
   GDBusConnection *connection;
 };
@@ -1921,6 +1922,45 @@ static gboolean xfsm_manager_dbus_unregister_client (XfsmDbusManager *object,
 
 
 static void
+remove_clients_for_connection (XfsmManager *manager,
+                               const gchar *service_name)
+{
+  GList       *lp;
+
+  for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
+       lp;
+       lp = lp->next)
+    {
+      XfsmClient *client = XFSM_CLIENT (lp->data);
+      if (g_strcmp0 (xfsm_client_get_service_name (client), service_name) == 0)
+        {
+          xfsm_manager_close_connection (manager, client, FALSE);
+        }
+    }
+}
+
+static void
+on_name_owner_notify (GDBusConnection *connection,
+                      const gchar     *sender_name,
+                      const gchar     *object_path,
+                      const gchar     *interface_name,
+                      const gchar     *signal_name,
+                      GVariant        *parameters,
+                      gpointer         user_data)
+{
+        XfsmManager *manager = XFSM_MANAGER (user_data);
+        gchar       *service_name,
+                    *old_service_name,
+                    *new_service_name;
+
+        g_variant_get (parameters, "(sss)", &service_name, &old_service_name, &new_service_name);
+
+        if (strlen (new_service_name) == 0) {
+                remove_clients_for_connection (manager, old_service_name);
+        }
+}
+
+static void
 xfsm_manager_dbus_class_init (XfsmManagerClass *klass)
 {
 }
@@ -1949,6 +1989,17 @@ xfsm_manager_dbus_init (XfsmManager *manager, GDBusConnection *connection)
   }
 
   g_debug ("exported on %s", g_dbus_interface_skeleton_get_object_path (G_DBUS_INTERFACE_SKELETON (XFSM_DBUS_MANAGER (manager))));
+
+  manager->name_owner_id = g_dbus_connection_signal_subscribe (manager->connection,
+                                                               "org.freedesktop.DBus",
+                                                               "org.freedesktop.DBus",
+                                                               "NameOwnerChanged",
+                                                               "/org/freedesktop/DBus",
+                                                               NULL,
+                                                               G_DBUS_SIGNAL_FLAGS_NONE,
+                                                               on_name_owner_notify,
+                                                               manager,
+                                                               NULL);
 }
 
 
@@ -1975,6 +2026,12 @@ xfsm_manager_iface_init (XfsmDbusManagerIface *iface)
 static void
 xfsm_manager_dbus_cleanup (XfsmManager *manager)
 {
+  if (manager->name_owner_id > 0 && manager->connection)
+    {
+      g_dbus_connection_signal_unsubscribe (manager->connection, manager->name_owner_id);
+      manager->name_owner_id = 0;
+    }
+
   if (G_LIKELY (manager->connection))
     {
       g_object_unref (manager->connection);
@@ -2302,6 +2359,8 @@ xfsm_manager_dbus_can_hibernate (XfsmDbusManager *object,
   return TRUE;
 }
 
+
+
 /* adapted from ConsoleKit2 whch was adapted from PolicyKit */
 static gboolean
 get_caller_info (XfsmManager *manager,
@@ -2348,6 +2407,8 @@ out:
         return res;
 }
 
+
+
 static gboolean
 xfsm_manager_dbus_register_client (XfsmDbusManager *object,
                                    GDBusMethodInvocation *invocation,
@@ -2376,7 +2437,7 @@ xfsm_manager_dbus_register_client (XfsmDbusManager *object,
   /* register it so that it exports the dbus name */
   xfsm_manager_register_client (manager, client, client_id, NULL);
 
-  /* attempt to get the caller'd pid so we can monitor it */
+  /* attempt to get the caller'd pid */
   if (!get_caller_info (manager, g_dbus_method_invocation_get_sender (invocation), &pid))
     {
       pid = 0;
@@ -2384,16 +2445,42 @@ xfsm_manager_dbus_register_client (XfsmDbusManager *object,
 
   xfsm_client_set_pid (client, pid);
 
+  /* we use the dbus service name to track clients so we know when they exit
+   * or crash */
+  xfsm_client_set_service_name (client, g_dbus_method_invocation_get_sender (invocation));
+
   xfsm_dbus_manager_complete_register_client (object, invocation, xfsm_client_get_object_path (client));
   g_free (client_id);
   return TRUE;
 }
+
+
 
 static gboolean
 xfsm_manager_dbus_unregister_client (XfsmDbusManager *object,
                                      GDBusMethodInvocation *invocation,
                                      const gchar *arg_client_id)
 {
-  xfsm_dbus_manager_complete_unregister_client (object, invocation);
+  XfsmManager *manager;
+  GList       *lp;
+
+  manager = XFSM_MANAGER (object);
+
+
+  for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
+       lp;
+       lp = lp->next)
+    {
+      XfsmClient *client = XFSM_CLIENT (lp->data);
+      if (g_strcmp0 (xfsm_client_get_object_path (client), arg_client_id) == 0)
+        {
+          xfsm_manager_close_connection (manager, client, FALSE);
+          xfsm_dbus_manager_complete_unregister_client (object, invocation);
+          return TRUE;
+        }
+    }
+
+
+  throw_error (invocation, XFSM_ERROR_BAD_VALUE, "Client with id of '%s' was not found", arg_client_id);
   return TRUE;
 }
