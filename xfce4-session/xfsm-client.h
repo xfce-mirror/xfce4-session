@@ -64,6 +64,7 @@ void xfsm_client_set_state (XfsmClient     *client,
                             XfsmClientState state);
 
 const gchar *xfsm_client_get_id (XfsmClient *client);
+const gchar *xfsm_client_get_app_id (XfsmClient *client);
 
 SmsConn xfsm_client_get_sms_connection (XfsmClient *client);
 
@@ -81,6 +82,9 @@ const gchar *xfsm_client_get_object_path (XfsmClient *client);
 
 void xfsm_client_set_pid (XfsmClient *client,
                           pid_t       pid);
+
+void xfsm_client_set_app_id (XfsmClient  *client,
+                             const gchar *app_id);
 
 void         xfsm_client_set_service_name (XfsmClient *client,
                                            const gchar *service_name);

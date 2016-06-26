@@ -29,6 +29,7 @@
 #endif
 
 #include <gio/gio.h>
+#include <gio/gdesktopappinfo.h>
 
 #include <libxfsm/xfsm-util.h>
 
@@ -48,6 +49,7 @@ struct _XfsmClient
   XfsmManager     *manager;
 
   gchar           *id;
+  gchar           *app_id;
   gchar           *object_path;
   gchar           *service_name;
 
@@ -112,6 +114,7 @@ xfsm_client_finalize (GObject *obj)
     xfsm_properties_free (client->properties);
 
   g_free (client->id);
+  g_free (client->app_id);
   g_free (client->object_path);
   g_free (client->service_name);
 
@@ -258,6 +261,14 @@ xfsm_client_get_id (XfsmClient *client)
 }
 
 
+const gchar *
+xfsm_client_get_app_id (XfsmClient *client)
+{
+  g_return_val_if_fail (XFSM_IS_CLIENT (client), NULL);
+  return client->app_id;
+}
+
+
 SmsConn
 xfsm_client_get_sms_connection (XfsmClient *client)
 {
@@ -399,12 +410,12 @@ xfsm_client_save_restart_command (XfsmClient *client)
       strv[0] = output;
       strv[1] = NULL;
 
-      xfsm_verbose ("%s restart command %s", input, output);
+      xfsm_verbose ("%s restart command %s\n", input, output);
       xfsm_properties_set_strv (properties, "RestartCommand", strv);
     }
   else
     {
-      xfsm_verbose ("Failed to get the process command line using the command %s, error was %s", input, error->message);
+      xfsm_verbose ("Failed to get the process command line using the command %s, error was %s\n", input, error->message);
     }
 
   g_free (input);
@@ -428,16 +439,72 @@ xfsm_client_save_program_name (XfsmClient *client)
       /* remove the newline at the end of the string */
       output[strcspn(output, "\n")] = 0;
 
-      xfsm_verbose ("%s program name %s", input, output);
+      xfsm_verbose ("%s program name %s\n", input, output);
       xfsm_properties_set_string (properties, "Program", output);
     }
   else
     {
-      xfsm_verbose ("Failed to get the process command line using the command %s, error was %s", input, error->message);
+      xfsm_verbose ("Failed to get the process command line using the command %s, error was %s\n", input, error->message);
     }
 
   g_free (input);
 }
+
+
+
+static void
+xfsm_client_save_desktop_file (XfsmClient *client)
+{
+  XfsmProperties  *properties   = client->properties;
+  GDesktopAppInfo *app_info     = NULL;
+  const gchar     *app_id       = client->app_id;
+  gchar           *desktop_file = NULL;
+
+  if (app_id == NULL)
+    return;
+
+  /* First attempt to append .desktop to the filename since the desktop file
+   * may match the application id. I.e. org.gnome.Devhelp.desktop matches
+   * the GApplication org.gnome.Devhelp
+   */
+  desktop_file = g_strdup_printf("%s.desktop", app_id);
+  xfsm_verbose ("looking for desktop file %s\n", desktop_file);
+  app_info = g_desktop_app_info_new (desktop_file);
+
+  if (app_info == NULL || g_desktop_app_info_get_filename (app_info) == NULL)
+  {
+    gchar *begin;
+    g_free (desktop_file);
+    desktop_file = NULL;
+
+    /* Find the last '.' and try to load that. This is because the app_id is
+     * in the funky org.xfce.parole format and the desktop file may just be
+     * parole.desktop */
+    begin = g_strrstr (app_id, ".");
+
+    /* maybe it doesn't have dots in the name? */
+    if (begin == NULL || begin++ == NULL)
+      return;
+
+    desktop_file = g_strdup_printf ("%s.desktop", begin);
+    xfsm_verbose ("looking for desktop file %s\n", desktop_file);
+    app_info = g_desktop_app_info_new (desktop_file);
+
+    if (app_info == NULL || g_desktop_app_info_get_filename (app_info) == NULL)
+      {
+        /* Failed to get a desktop file, maybe it doesn't have one */
+        xfsm_verbose ("failed to get a desktop file for the client\n");
+        g_free (desktop_file);
+        return;
+      }
+  }
+
+  /* if we got here we found a .desktop file, save it */
+  xfsm_properties_set_string (properties, "DesktopFile", g_desktop_app_info_get_filename (app_info));
+
+  g_free (desktop_file);
+}
+
 
 
 
@@ -469,6 +536,17 @@ xfsm_client_set_pid (XfsmClient *client,
   xfsm_client_save_program_name (client);
 
   g_free (pid_str);
+}
+
+
+void
+xfsm_client_set_app_id (XfsmClient  *client,
+                        const gchar *app_id)
+{
+  client->app_id = g_strdup (app_id);
+
+  /* save the desktop file */
+  xfsm_client_save_desktop_file (client);
 }
 
 

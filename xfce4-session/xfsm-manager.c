@@ -2437,6 +2437,9 @@ xfsm_manager_dbus_register_client (XfsmDbusManager *object,
   /* register it so that it exports the dbus name */
   xfsm_manager_register_client (manager, client, client_id, NULL);
 
+  /* save the app-id */
+  xfsm_client_set_app_id (client, arg_app_id);
+
   /* attempt to get the caller'd pid */
   if (!get_caller_info (manager, g_dbus_method_invocation_get_sender (invocation), &pid))
     {
