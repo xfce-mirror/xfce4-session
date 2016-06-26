@@ -953,9 +953,9 @@ xfsm_manager_register_client (XfsmManager *manager,
       if (sms_conn != NULL)
         {
           SmsSaveYourself (sms_conn, SmSaveLocal, False, SmInteractStyleNone, False);
+          xfsm_client_set_state (client, XFSM_CLIENT_SAVINGLOCAL);
+          xfsm_manager_start_client_save_timeout (manager, client);
         }
-      xfsm_client_set_state (client, XFSM_CLIENT_SAVINGLOCAL);
-      xfsm_manager_start_client_save_timeout (manager, client);
     }
 
   if (previous_id != NULL && manager->state == XFSM_MANAGER_STARTUP)
