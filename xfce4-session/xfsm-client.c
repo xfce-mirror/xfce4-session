@@ -378,6 +378,35 @@ xfsm_client_get_service_name (XfsmClient *client)
 
 
 
+static void
+xfsm_client_get_command_line (XfsmClient *client)
+{
+  XfsmProperties *properties = client->properties;
+  gchar          *input;
+  gchar          *output = NULL;
+  gint            exit_status;
+  GError         *error = NULL;
+
+  input = g_strdup_printf ("ps -p %u -o args=", properties->pid);
+
+  if(g_spawn_command_line_sync (input, &output, NULL, &exit_status, &error))
+    {
+      gchar **strv = g_new0(gchar*, 2);
+
+      strv[0] = output;
+      strv[1] = NULL;
+
+      xfsm_verbose ("%s restart command %s", input, output);
+      xfsm_properties_set_strv (properties, "RestartCommand", strv);
+    }
+  else
+    {
+      xfsm_verbose ("Failed to get the process command line, error was %s", error->message);
+    }
+}
+
+
+
 void
 xfsm_client_set_pid (XfsmClient *client,
                      pid_t       pid)
@@ -398,6 +427,9 @@ xfsm_client_set_pid (XfsmClient *client,
 
   /* store the string as well (so we can export it over dbus */
   xfsm_properties_set_string (properties, "ProcessID", pid_str);
+
+  /* get the command line for the process so we can restart it if needed */
+  xfsm_client_get_command_line (client);
 
   g_free (pid_str);
 }
