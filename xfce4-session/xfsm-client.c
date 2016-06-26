@@ -379,7 +379,7 @@ xfsm_client_get_service_name (XfsmClient *client)
 
 
 static void
-xfsm_client_get_command_line (XfsmClient *client)
+xfsm_client_save_restart_command (XfsmClient *client)
 {
   XfsmProperties *properties = client->properties;
   gchar          *input;
@@ -393,6 +393,9 @@ xfsm_client_get_command_line (XfsmClient *client)
     {
       gchar **strv = g_new0(gchar*, 2);
 
+      /* remove the newline at the end of the string */
+      output[strcspn(output, "\n")] = 0;
+
       strv[0] = output;
       strv[1] = NULL;
 
@@ -401,8 +404,39 @@ xfsm_client_get_command_line (XfsmClient *client)
     }
   else
     {
-      xfsm_verbose ("Failed to get the process command line, error was %s", error->message);
+      xfsm_verbose ("Failed to get the process command line using the command %s, error was %s", input, error->message);
     }
+
+  g_free (input);
+}
+
+
+
+static void
+xfsm_client_save_program_name (XfsmClient *client)
+{
+  XfsmProperties *properties = client->properties;
+  gchar          *input;
+  gchar          *output = NULL;
+  gint            exit_status;
+  GError         *error = NULL;
+
+  input = g_strdup_printf ("ps -p %u -o comm=", properties->pid);
+
+  if(g_spawn_command_line_sync (input, &output, NULL, &exit_status, &error))
+    {
+      /* remove the newline at the end of the string */
+      output[strcspn(output, "\n")] = 0;
+
+      xfsm_verbose ("%s program name %s", input, output);
+      xfsm_properties_set_string (properties, "Program", output);
+    }
+  else
+    {
+      xfsm_verbose ("Failed to get the process command line using the command %s, error was %s", input, error->message);
+    }
+
+  g_free (input);
 }
 
 
@@ -428,8 +462,11 @@ xfsm_client_set_pid (XfsmClient *client,
   /* store the string as well (so we can export it over dbus */
   xfsm_properties_set_string (properties, "ProcessID", pid_str);
 
-  /* get the command line for the process so we can restart it if needed */
-  xfsm_client_get_command_line (client);
+  /* save the command line for the process so we can restart it if needed */
+  xfsm_client_save_restart_command (client);
+
+  /* save the program name */
+  xfsm_client_save_program_name (client);
 
   g_free (pid_str);
 }
