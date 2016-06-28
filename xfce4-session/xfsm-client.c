@@ -885,7 +885,6 @@ xfsm_client_dbus_set_sm_properties (XfsmDbusClient *object,
       g_variant_unref (variant);
     }
 
-  g_variant_iter_free (iter);
   xfsm_dbus_client_complete_set_sm_properties (object, invocation);
   return TRUE;
 }
