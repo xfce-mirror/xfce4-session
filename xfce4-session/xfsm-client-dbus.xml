@@ -115,6 +115,24 @@
         <method name="Terminate"/>
 
         <!--
+             void org.xfce.Session.Client.EndSessionResponse(Boolean is_ok,
+                                                             String  reason)
+
+             @is_ok: Whether or not it is OK to proceed. If not, the client
+                     may want to inhibit session logout.
+             @reason: The reason it's not OK to proceed. This string will be
+                      shown to the user.
+
+             This method is how the client communicates with the session
+             manager (and user) in response to QueryEndSession and EndSession
+             when the session is about to end.
+        -->
+        <method name="EndSessionResponse">
+            <arg direction="in" name="is_ok" type="b" />
+            <arg direction="in" name="reason" type="s" />
+        </method>
+
+        <!--
              void org.xfce.Session.Client.StateChanged(Unsigned Int old_state,
                                                        Unsigned Int new_state)
 
@@ -158,6 +176,55 @@
         -->
         <signal name="SmPropertyDeleted">
             <arg name="name" type="s"/>
+        </signal>
+
+        <!--
+             void org.xfce.Session.Client.QueryEndSession(Unsigned Int flags)
+
+             @flags: 0 = a forceful quit.
+                     1 = a normal save and quit.
+
+             Emitted when the session is about to end. The client should
+             respond by calling EndSessionResponse. The client may interact
+             with the user during this time. The client should not begin
+             shutting down until the EndSession signal happens.
+        -->
+        <signal name="QueryEndSession">
+            <arg name="flags" type="u" />
+        </signal>
+
+        <!--
+             void org.xfce.Session.Client.EndSession(Unsigned Int flags)
+
+             @flags: 0 = a forceful quit.
+                     1 = a normal save and quit.
+
+             The client should save any work and then respond by
+             calling EndSessionResponse. The client must not interact with
+             the user, that should already have happened during the
+             QueryEndSession.
+        -->
+        <signal name="EndSession">
+            <arg name="flags" type="u" />
+        </signal>
+
+        <!--
+             void org.xfce.Session.Client.CancelEndSession(void)
+
+             Emitted when QueryEndSession has been canceled. Resume normal
+             operation.
+        -->
+        <signal name="CancelEndSession">
+        </signal>
+
+        <!--
+             void org.xfce.Session.Client.Stop(void)
+
+             Emitted when the client should terminate, this is the friendly
+             version giving the client time to save and exit gracefully before
+             it is forcefully killed.
+        -->
+        <signal name="Stop">
         </signal>
     </interface>
 </node>

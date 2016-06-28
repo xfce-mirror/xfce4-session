@@ -40,7 +40,7 @@ typedef struct _XfsmClient XfsmClient;
 
 typedef enum
 {
-  XFSM_CLIENT_IDLE,
+  XFSM_CLIENT_IDLE = 0,
   XFSM_CLIENT_INTERACTING,
   XFSM_CLIENT_SAVEDONE,
   XFSM_CLIENT_SAVING,
@@ -48,6 +48,7 @@ typedef enum
   XFSM_CLIENT_WAITFORINTERACT,
   XFSM_CLIENT_WAITFORPHASE2,
   XFSM_CLIENT_DISCONNECTED,
+  XFSM_CLIENT_STATE_COUNT
 } XfsmClientState;
 
 GType xfsm_client_get_type (void) G_GNUC_CONST;
@@ -90,6 +91,11 @@ void         xfsm_client_set_service_name (XfsmClient *client,
                                            const gchar *service_name);
 const gchar *xfsm_client_get_service_name (XfsmClient *client);
 
+void xfsm_client_terminate (XfsmClient *client);
+
+void xfsm_client_end_session (XfsmClient *client);
+
+void xfsm_client_cancel_shutdown (XfsmClient *client);
 
 G_END_DECLS
 

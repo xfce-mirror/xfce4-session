@@ -52,11 +52,11 @@ struct _XfsmClient
   gchar           *app_id;
   gchar           *object_path;
   gchar           *service_name;
+  guint            quit_timeout;
 
   XfsmClientState  state;
   XfsmProperties  *properties;
   SmsConn          sms_conn;
-
   GDBusConnection *connection;
 };
 
@@ -113,6 +113,9 @@ xfsm_client_finalize (GObject *obj)
   if (client->properties != NULL)
     xfsm_properties_free (client->properties);
 
+  if (client->quit_timeout != 0)
+    g_source_remove (client->quit_timeout);
+
   g_free (client->id);
   g_free (client->app_id);
   g_free (client->object_path);
@@ -123,6 +126,24 @@ xfsm_client_finalize (GObject *obj)
 
 
 
+
+static const gchar*
+get_state (XfsmClientState state)
+{
+  static const gchar *client_state[XFSM_CLIENT_STATE_COUNT] =
+    {
+      "XFSM_CLIENT_IDLE",
+      "XFSM_CLIENT_INTERACTING",
+      "XFSM_CLIENT_SAVEDONE",
+      "XFSM_CLIENT_SAVING",
+      "XFSM_CLIENT_SAVINGLOCAL",
+      "XFSM_CLIENT_WAITFORINTERACT",
+      "XFSM_CLIENT_WAITFORPHASE2",
+      "XFSM_CLIENT_DISCONNECTED"
+    };
+
+  return client_state[state];
+}
 
 static void
 xfsm_properties_discard_command_changed (XfsmProperties *properties,
@@ -238,6 +259,22 @@ xfsm_client_get_state (XfsmClient *client)
 }
 
 
+
+static const gchar*
+get_client_id (XfsmClient *client)
+{
+  const gchar *client_id;
+
+  if (client->app_id)
+    client_id = client->app_id;
+  else
+    client_id = client->id;
+
+  return client_id;
+}
+
+
+
 void
 xfsm_client_set_state (XfsmClient     *client,
                        XfsmClientState state)
@@ -249,6 +286,18 @@ xfsm_client_set_state (XfsmClient     *client,
       XfsmClientState old_state = client->state;
       client->state = state;
       xfsm_dbus_client_emit_state_changed (XFSM_DBUS_CLIENT (client), old_state, state);
+
+      xfsm_verbose ("%s client state was %s and now is %s\n", get_client_id (client), get_state(old_state), get_state(state));
+
+      /* During a save, we need to ask the client if it's ok to shutdown */
+      if (state == XFSM_CLIENT_SAVING && xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWN)
+        {
+          xfsm_dbus_client_emit_query_end_session (XFSM_DBUS_CLIENT (client), 1);
+        }
+      else if (state == XFSM_CLIENT_SAVING && xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWNPHASE2)
+        {
+          xfsm_dbus_client_emit_end_session(XFSM_DBUS_CLIENT (client), 1);
+        }
     }
 }
 
@@ -551,6 +600,62 @@ xfsm_client_set_app_id (XfsmClient  *client,
 
 
 
+static gboolean
+kill_hung_client (gpointer user_data)
+{
+  XfsmClient  *client = XFSM_CLIENT (user_data);
+
+  client->quit_timeout = 0;
+
+  if (!client->properties)
+    return FALSE;
+
+  if (client->properties->pid < 2)
+    return FALSE;
+
+  xfsm_verbose ("killing unresponsive client %s\n", get_client_id (client));
+  kill (client->properties->pid, SIGKILL);
+
+  return FALSE;
+}
+
+
+
+void
+xfsm_client_terminate (XfsmClient *client)
+{
+  xfsm_verbose ("emitting stop signal for client %s\n", get_client_id (client));
+
+  /* Ask the client to shutdown gracefully */
+  xfsm_dbus_client_emit_stop (XFSM_DBUS_CLIENT (client));
+
+  /* add a timeout so we can forcefully stop the client */
+  client->quit_timeout = g_timeout_add_seconds (15, kill_hung_client, client);
+}
+
+
+
+void
+xfsm_client_end_session (XfsmClient *client)
+{
+  xfsm_verbose ("emitting end session signal for client %s\n", get_client_id (client));
+
+  /* Start the client shutdown */
+  xfsm_dbus_client_emit_end_session (XFSM_DBUS_CLIENT (client), 1);
+}
+
+
+void xfsm_client_cancel_shutdown (XfsmClient *client)
+{
+  xfsm_verbose ("emitting cancel session signal for client %s\n", get_client_id (client));
+
+  /* Cancel the client shutdown */
+  xfsm_dbus_client_emit_cancel_end_session (XFSM_DBUS_CLIENT (client));
+
+}
+
+
+
 /*
  * dbus server impl
  */
@@ -572,10 +677,11 @@ static gboolean xfsm_client_dbus_delete_sm_properties (XfsmDbusClient *object,
                                                        const gchar *const *arg_names);
 static gboolean xfsm_client_dbus_terminate (XfsmDbusClient *object,
                                             GDBusMethodInvocation *invocation);
+static gboolean xfsm_client_dbus_end_session_response (XfsmDbusClient *object,
+                                                       GDBusMethodInvocation *invocation,
+                                                       gboolean arg_is_ok,
+                                                       const gchar *arg_reason);
 
-
-/* header needs the above fwd decls */
-#include <xfce4-session/xfsm-client-dbus.h>
 
 
 static void
@@ -623,6 +729,7 @@ xfsm_client_iface_init (XfsmDbusClientIface *iface)
         iface->handle_get_state = xfsm_client_dbus_get_state;
         iface->handle_set_sm_properties = xfsm_client_dbus_set_sm_properties;
         iface->handle_terminate = xfsm_client_dbus_terminate;
+        iface->handle_end_session_response = xfsm_client_dbus_end_session_response;
 }
 
 static void
@@ -820,5 +927,39 @@ xfsm_client_dbus_terminate (XfsmDbusClient *object,
       return TRUE;
     }
 
+  xfsm_dbus_client_complete_terminate (object, invocation);
+  return TRUE;
+}
+
+static gboolean
+xfsm_client_dbus_end_session_response (XfsmDbusClient *object,
+                                       GDBusMethodInvocation *invocation,
+                                       gboolean arg_is_ok,
+                                       const gchar *arg_reason)
+{
+  XfsmClient *client = XFSM_CLIENT (object);
+
+  xfsm_verbose ("got response for client %s, manager state is %s\n",
+                get_client_id (client),
+                xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWN ? "XFSM_MANAGER_SHUTDOWN" :
+                xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWNPHASE2 ? "XFSM_MANAGER_SHUTDOWNPHASE2" :
+                "Invalid time to respond");
+
+  if (xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWN)
+    {
+      xfsm_manager_save_yourself_done (client->manager, client, arg_is_ok);
+    }
+  else if (xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWNPHASE2)
+    {
+      xfsm_manager_close_connection (client->manager, client, TRUE);
+    }
+  else
+    {
+      throw_error (invocation, XFSM_ERROR_BAD_STATE,
+                   "This method should be sent in response to a QueryEndSession or EndSession signal only");
+      return TRUE;
+    }
+
+  xfsm_dbus_client_complete_end_session_response (object,  invocation);
   return TRUE;
 }

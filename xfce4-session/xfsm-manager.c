@@ -1087,7 +1087,8 @@ xfsm_manager_interact_done (XfsmManager *manager,
           XfsmClient *cl = lp->data;
           SmsConn sms = xfsm_client_get_sms_connection (cl);
 
-          if (xfsm_client_get_state (cl) != XFSM_CLIENT_WAITFORINTERACT)
+          /* only sms clients do the interact stuff */
+          if (sms && xfsm_client_get_state (cl) != XFSM_CLIENT_WAITFORINTERACT)
             continue;
 
           /* reset all clients that are waiting for interact */
@@ -1095,6 +1096,10 @@ xfsm_manager_interact_done (XfsmManager *manager,
           if (sms != NULL)
             {
               SmsShutdownCancelled (sms);
+            }
+          else
+            {
+              xfsm_client_cancel_shutdown (client);
             }
         }
 
@@ -1376,6 +1381,10 @@ xfsm_manager_close_connection (XfsmManager *manager,
           IceSetShutdownNegotiation (ice_conn, False);
           IceCloseConnection (ice_conn);
         }
+      else
+        {
+          xfsm_client_terminate (client);
+        }
     }
 
   if (manager->state == XFSM_MANAGER_SHUTDOWNPHASE2)
@@ -1479,6 +1488,10 @@ xfsm_manager_terminate_client (XfsmManager *manager,
     {
       SmsDie (sms);
     }
+  else
+    {
+      xfsm_client_terminate (client);
+    }
 
   return TRUE;
 }
@@ -1510,6 +1523,10 @@ xfsm_manager_perform_shutdown (XfsmManager *manager)
       if (sms != NULL)
         {
           SmsDie (sms);
+        }
+      else
+        {
+          xfsm_client_end_session (client);
         }
     }
 
