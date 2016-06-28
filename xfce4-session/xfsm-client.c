@@ -549,7 +549,7 @@ xfsm_client_save_desktop_file (XfsmClient *client)
   }
 
   /* if we got here we found a .desktop file, save it */
-  xfsm_properties_set_string (properties, "DesktopFile", g_desktop_app_info_get_filename (app_info));
+  xfsm_properties_set_string (properties, GsmDesktopFile, g_desktop_app_info_get_filename (app_info));
 
   g_free (desktop_file);
 }

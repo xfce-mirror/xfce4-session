@@ -575,7 +575,9 @@ xfsm_manager_load_session (XfsmManager *manager)
           continue;
         }
       if (xfsm_properties_check (properties))
-        g_queue_push_tail (manager->pending_properties, properties);
+        {
+          g_queue_push_tail (manager->pending_properties, properties);
+        }
       else
         {
           xfsm_verbose ("%s has invalid properties. Skipping\n", buffer);
@@ -853,6 +855,65 @@ xfsm_manager_reset_restart_attempts (gpointer data)
 }
 
 
+static XfsmProperties*
+xfsm_manager_get_pending_properties (XfsmManager *manager,
+                                     const gchar *previous_id)
+{
+  XfsmProperties *properties = NULL;
+  GList          *lp;
+
+  lp = g_queue_find_custom (manager->starting_properties,
+                            previous_id,
+                            (GCompareFunc) xfsm_properties_compare_id);
+
+  if (lp != NULL)
+    {
+      properties = XFSM_PROPERTIES (lp->data);
+      g_queue_delete_link (manager->starting_properties, lp);
+    }
+  else
+    {
+      lp = g_queue_find_custom (manager->pending_properties,
+                                previous_id,
+                                (GCompareFunc) xfsm_properties_compare_id);
+      if (lp != NULL)
+        {
+          properties = XFSM_PROPERTIES (lp->data);
+          g_queue_delete_link (manager->pending_properties, lp);
+        }
+    }
+
+  return properties;
+}
+
+static void
+xfsm_manager_handle_old_client_reregister (XfsmManager    *manager,
+                                           XfsmClient     *client,
+                                           XfsmProperties *properties)
+{
+  /* cancel startup timer */
+  if (properties->startup_timeout_id > 0)
+    {
+      g_source_remove (properties->startup_timeout_id);
+      properties->startup_timeout_id = 0;
+    }
+
+  /* cancel the old child watch, and replace it with one that
+   * doesn't really do anything but reap the child */
+  xfsm_properties_set_default_child_watch (properties);
+
+  xfsm_client_set_initial_properties (client, properties);
+
+  /* if we've been restarted, we'll want to reset the restart
+   * attempts counter if the client stays alive for a while */
+  if (properties->restart_attempts > 0 && properties->restart_attempts_reset_id == 0)
+    {
+      properties->restart_attempts_reset_id = g_timeout_add (RESTART_RESET_TIMEOUT,
+                                                             xfsm_manager_reset_restart_attempts,
+                                                             properties);
+    }
+}
+
 gboolean
 xfsm_manager_register_client (XfsmManager *manager,
                               XfsmClient  *client,
@@ -860,33 +921,14 @@ xfsm_manager_register_client (XfsmManager *manager,
                               const gchar *previous_id)
 {
   XfsmProperties *properties = NULL;
-  gchar          *client_id;
-  GList          *lp;
   SmsConn         sms_conn;
 
   sms_conn = xfsm_client_get_sms_connection (client);
 
+  /* This part is for sms based clients */
   if (previous_id != NULL)
     {
-      lp = g_queue_find_custom (manager->starting_properties,
-                                previous_id,
-                                (GCompareFunc) xfsm_properties_compare_id);
-      if (lp != NULL)
-        {
-          properties = XFSM_PROPERTIES (lp->data);
-          g_queue_delete_link (manager->starting_properties, lp);
-        }
-      else
-        {
-          lp = g_queue_find_custom (manager->pending_properties,
-                                    previous_id,
-                                    (GCompareFunc) xfsm_properties_compare_id);
-          if (lp != NULL)
-            {
-              properties = XFSM_PROPERTIES (lp->data);
-              g_queue_delete_link (manager->pending_properties, lp);
-            }
-        }
+      properties = xfsm_manager_get_pending_properties (manager, previous_id);
 
       /* If previous_id is invalid, the SM will send a BadValue error message
        * to the client and reverts to register state waiting for another
@@ -899,45 +941,45 @@ xfsm_manager_register_client (XfsmManager *manager,
           return FALSE;
         }
 
-      /* cancel startup timer */
-      if (properties->startup_timeout_id > 0)
-        {
-          g_source_remove (properties->startup_timeout_id);
-          properties->startup_timeout_id = 0;
-        }
-
-      /* cancel the old child watch, and replace it with one that
-       * doesn't really do anything but reap the child */
-      xfsm_properties_set_default_child_watch (properties);
-
-      xfsm_client_set_initial_properties (client, properties);
-
-      /* if we've been restarted, we'll want to reset the restart
-       * attempts counter if the client stays alive for a while */
-      if (properties->restart_attempts > 0 && properties->restart_attempts_reset_id == 0)
-        {
-          properties->restart_attempts_reset_id = g_timeout_add (RESTART_RESET_TIMEOUT,
-                                                                 xfsm_manager_reset_restart_attempts,
-                                                                 properties);
-        }
+      xfsm_manager_handle_old_client_reregister (manager, client, properties);
     }
   else
     {
       if (sms_conn != NULL)
         {
-          client_id = xfsm_generate_client_id (sms_conn);
+          /* new sms client */
+          gchar *client_id = xfsm_generate_client_id (sms_conn);
+
           properties = xfsm_properties_new (client_id, SmsClientHostName (sms_conn));
           xfsm_client_set_initial_properties (client, properties);
+
           g_free (client_id);
+        }
+    }
+
+  /* this part is for dbus clients */
+  if (dbus_client_id != NULL)
+    {
+      properties = xfsm_manager_get_pending_properties (manager, dbus_client_id);
+
+      if (properties != NULL)
+        {
+          xfsm_manager_handle_old_client_reregister (manager, client, properties);
+          /* need this to continue session loading during XFSM_MANAGER_STARTUP */
+          previous_id = dbus_client_id;
         }
       else
         {
+          /* new dbus client */
           gchar *hostname = xfce_gethostname ();
+
           properties = xfsm_properties_new (dbus_client_id, hostname);
           xfsm_client_set_initial_properties (client, properties);
+
           g_free (hostname);
         }
     }
+
 
   g_queue_push_tail (manager->running_clients, client);
 
