@@ -1201,10 +1201,11 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
         manager->shutdown_type = shutdown_type;
 
       /* we only save the session and quit if we're actually shutting down;
-       * suspend and hibernate will (if successful) return us to
+       * suspend, hibernate, and switch user will (if successful) return us to
        * exactly the same state, so there's no need to save session */
       if (manager->shutdown_type == XFSM_SHUTDOWN_SUSPEND
-          || manager->shutdown_type == XFSM_SHUTDOWN_HIBERNATE)
+          || manager->shutdown_type == XFSM_SHUTDOWN_HIBERNATE
+          || manager->shutdown_type == XFSM_SHUTDOWN_SWITCH_USER)
         {
           if (!xfsm_shutdown_try_type (manager->shutdown_helper,
                                        manager->shutdown_type,
@@ -1215,16 +1216,18 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
                                    "dialog-error",
                                    manager->shutdown_type == XFSM_SHUTDOWN_SUSPEND
                                    ? _("Failed to suspend session")
-                                   : _("Failed to hibernate session"),
+                                   : manager->shutdown_type == XFSM_SHUTDOWN_HIBERNATE
+                                   ? _("Failed to hibernate session")
+                                   : _("Failed to switch user"),
                                    error->message,
                                    XFCE_BUTTON_TYPE_MIXED, "window-close", _("_Close"), GTK_RESPONSE_ACCEPT,
                                    NULL);
               g_error_free (error);
             }
 
-          /* at this point, either we failed to suspend/hibernate, or we
-           * successfully suspended/hibernated, and we've been woken back
-           * up, so return control to the user */
+          /* at this point, either we failed to suspend/hibernate/switch user,
+           * or we successfully did and we've been woken back
+           * up or returned to the session, so return control to the user */
           return;
         }
     }
@@ -1967,6 +1970,8 @@ static gboolean xfsm_manager_dbus_hibernate (XfsmDbusManager *object,
                                              GDBusMethodInvocation *invocation);
 static gboolean xfsm_manager_dbus_can_hibernate (XfsmDbusManager *object,
                                                  GDBusMethodInvocation *invocation);
+static gboolean xfsm_manager_dbus_switch_user (XfsmDbusManager *object,
+                                               GDBusMethodInvocation *invocation);
 static gboolean xfsm_manager_dbus_register_client (XfsmDbusManager *object,
                                                    GDBusMethodInvocation *invocation,
                                                    const gchar *arg_app_id,
@@ -2073,6 +2078,7 @@ xfsm_manager_iface_init (XfsmDbusManagerIface *iface)
   iface->handle_get_info = xfsm_manager_dbus_get_info;
   iface->handle_get_state = xfsm_manager_dbus_get_state;
   iface->handle_hibernate = xfsm_manager_dbus_hibernate;
+  iface->handle_switch_user = xfsm_manager_dbus_switch_user;
   iface->handle_list_clients = xfsm_manager_dbus_list_clients;
   iface->handle_logout = xfsm_manager_dbus_logout;
   iface->handle_restart = xfsm_manager_dbus_restart;
@@ -2231,6 +2237,8 @@ xfsm_manager_dbus_logout (XfsmDbusManager *object,
 {
   XfsmShutdownType type;
 
+  xfsm_verbose ("entering\n");
+
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
 
   type = arg_show_dialog ? XFSM_SHUTDOWN_ASK : XFSM_SHUTDOWN_LOGOUT;
@@ -2251,6 +2259,8 @@ xfsm_manager_dbus_shutdown (XfsmDbusManager *object,
                             GDBusMethodInvocation *invocation,
                             gboolean arg_allow_save)
 {
+  xfsm_verbose ("entering\n");
+
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
   if (xfsm_manager_save_yourself_dbus (XFSM_MANAGER (object), XFSM_SHUTDOWN_SHUTDOWN, arg_allow_save) == FALSE)
     {
@@ -2270,6 +2280,8 @@ xfsm_manager_dbus_can_shutdown (XfsmDbusManager *object,
 {
   gboolean can_shutdown = FALSE;
   GError *error = NULL;
+
+  xfsm_verbose ("entering\n");
 
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
 
@@ -2292,6 +2304,8 @@ xfsm_manager_dbus_restart (XfsmDbusManager *object,
                            GDBusMethodInvocation *invocation,
                            gboolean arg_allow_save)
 {
+  xfsm_verbose ("entering\n");
+
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
   if (xfsm_manager_save_yourself_dbus (XFSM_MANAGER (object), XFSM_SHUTDOWN_RESTART, arg_allow_save) == FALSE)
     {
@@ -2311,6 +2325,8 @@ xfsm_manager_dbus_can_restart (XfsmDbusManager *object,
 {
   gboolean can_restart = FALSE;
   GError *error = NULL;
+
+  xfsm_verbose ("entering\n");
 
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
 
@@ -2334,6 +2350,8 @@ xfsm_manager_dbus_suspend (XfsmDbusManager *object,
 {
   GError *error = NULL;
 
+  xfsm_verbose ("entering\n");
+
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
   if (xfsm_shutdown_try_suspend (XFSM_MANAGER (object)->shutdown_helper, &error) == FALSE)
     {
@@ -2354,6 +2372,8 @@ xfsm_manager_dbus_can_suspend (XfsmDbusManager *object,
   gboolean auth_suspend = FALSE;
   gboolean can_suspend = FALSE;
   GError *error = NULL;
+
+  xfsm_verbose ("entering\n");
 
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
 
@@ -2379,6 +2399,8 @@ xfsm_manager_dbus_hibernate (XfsmDbusManager *object,
 {
   GError *error = NULL;
 
+  xfsm_verbose ("entering\n");
+
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
   if (xfsm_shutdown_try_hibernate (XFSM_MANAGER (object)->shutdown_helper, &error) == FALSE)
     {
@@ -2391,7 +2413,6 @@ xfsm_manager_dbus_hibernate (XfsmDbusManager *object,
   return TRUE;
 }
 
-
 static gboolean
 xfsm_manager_dbus_can_hibernate (XfsmDbusManager *object,
                                  GDBusMethodInvocation *invocation)
@@ -2399,6 +2420,8 @@ xfsm_manager_dbus_can_hibernate (XfsmDbusManager *object,
   gboolean auth_hibernate = FALSE;
   gboolean can_hibernate = FALSE;
   GError *error = NULL;
+
+  xfsm_verbose ("entering\n");
 
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
 
@@ -2415,6 +2438,26 @@ xfsm_manager_dbus_can_hibernate (XfsmDbusManager *object,
     can_hibernate = FALSE;
 
   xfsm_dbus_manager_complete_can_hibernate (object, invocation, can_hibernate);
+  return TRUE;
+}
+
+static gboolean
+xfsm_manager_dbus_switch_user (XfsmDbusManager *object,
+                               GDBusMethodInvocation *invocation)
+{
+  GError *error = NULL;
+
+  xfsm_verbose ("entering\n");
+
+  g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
+  if (xfsm_shutdown_try_switch_user (XFSM_MANAGER (object)->shutdown_helper, &error) == FALSE)
+    {
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, error->message);
+      g_clear_error (&error);
+      return TRUE;
+    }
+
+  xfsm_dbus_manager_complete_switch_user (object, invocation);
   return TRUE;
 }
 

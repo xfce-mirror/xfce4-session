@@ -209,6 +209,9 @@ xfsm_shutdown_try_type (XfsmShutdown      *shutdown,
     case XFSM_SHUTDOWN_HIBERNATE:
       return xfsm_shutdown_try_hibernate (shutdown, error);
 
+    case XFSM_SHUTDOWN_SWITCH_USER:
+      return xfsm_shutdown_try_switch_user (shutdown, error);
+
     default:
       g_set_error (error, 1, 0, _("Unknown shutdown method %d"), type);
       break;
@@ -338,7 +341,9 @@ xfsm_shutdown_try_switch_user (XfsmShutdown  *shutdown,
   GVariant    *unused = NULL;
   const gchar *DBUS_NAME = "org.freedesktop.DisplayManager";
   const gchar *DBUS_INTERFACE = "org.freedesktop.DisplayManager.Seat";
-  const gchar *DBUS_OBJECT_PATH = "/org/freedesktop/DisplayManager/Seat0";
+  const gchar *DBUS_OBJECT_PATH = g_getenv ("XDG_SEAT_PATH");
+
+  xfsm_verbose ("entering\n");
 
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
@@ -351,11 +356,13 @@ xfsm_shutdown_try_switch_user (XfsmShutdown  *shutdown,
                                                  NULL,
                                                  error);
 
-  if (display_proxy == NULL || error != NULL)
+  if (display_proxy == NULL || *error != NULL)
     {
+      xfsm_verbose ("display proxy == NULL or an error was set\n");
       return FALSE;
     }
 
+  xfsm_verbose ("calling SwitchToGreeter\n");
   unused = g_dbus_proxy_call_sync (display_proxy,
                                   "SwitchToGreeter",
                                   g_variant_new ("()"),
@@ -371,7 +378,7 @@ xfsm_shutdown_try_switch_user (XfsmShutdown  *shutdown,
 
   g_object_unref (display_proxy);
 
-  return (error == NULL);
+  return (*error == NULL);
 }
 
 
