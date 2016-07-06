@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-23 18:30+0200\n"
-"PO-Revision-Date: 2016-05-29 11:48+0000\n"
+"POT-Creation-Date: 2016-06-28 18:30+0200\n"
+"PO-Revision-Date: 2016-07-06 16:50+0000\n"
 "Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/xfce/xfce4-session/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr ""
 
 #: ../xfce.desktop.in.h:1
 msgid "Xfce Session"
-msgstr "Сеанс"
+msgstr "Сеанс Xfce"
 
 #: ../xfce.desktop.in.h:2
 msgid "Use this session to run Xfce as your desktop environment"
@@ -44,7 +44,7 @@ msgstr "Нет описания"
 msgid "Choose theme file to install..."
 msgstr "Выберите файл темы для установки..."
 
-#: ../engines/balou/config.c:327 ../engines/balou/config.c:494
+#: ../engines/balou/config.c:327 ../engines/balou/config.c:495
 #: ../settings/session-editor.c:173 ../settings/session-editor.c:257
 #: ../xfce4-session/xfsm-logout-dialog.c:209
 #: ../xfce4-session/xfsm-splash-screen.c:213
@@ -68,50 +68,50 @@ msgstr "Ошибка файла темы"
 msgid "Please check that the file is a valid splash theme archive."
 msgstr "Проверьте, что файл является правильным архивом темы заставки."
 
-#: ../engines/balou/config.c:344 ../engines/balou/config.c:948
+#: ../engines/balou/config.c:344 ../engines/balou/config.c:949
 #: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
-#: ../xfce4-session/xfsm-manager.c:1145
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1223
 msgid "_Close"
 msgstr "_Закрыть"
 
-#: ../engines/balou/config.c:402
+#: ../engines/balou/config.c:403
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "Не удалось удалить тему заставки «%s» из каталога «%s»."
 
-#: ../engines/balou/config.c:491
+#: ../engines/balou/config.c:492
 msgid "Choose theme filename..."
 msgstr "Выберите файл темы..."
 
-#: ../engines/balou/config.c:495
+#: ../engines/balou/config.c:496
 msgid "_Save"
 msgstr "_Сохранить"
 
-#: ../engines/balou/config.c:623
+#: ../engines/balou/config.c:624
 msgid "_Install new theme"
 msgstr "_Установить новую тему"
 
-#: ../engines/balou/config.c:630
+#: ../engines/balou/config.c:631
 msgid "_Remove theme"
 msgstr "У_далить тему"
 
-#: ../engines/balou/config.c:645
+#: ../engines/balou/config.c:646
 msgid "_Export theme"
 msgstr "_Экспортировать тему"
 
-#: ../engines/balou/config.c:859
+#: ../engines/balou/config.c:860
 msgid "Balou theme"
 msgstr "Тема Balou"
 
-#: ../engines/balou/config.c:944
+#: ../engines/balou/config.c:945
 msgid "Configure Balou..."
 msgstr "Настройка Balou..."
 
-#: ../engines/balou/config.c:986
+#: ../engines/balou/config.c:987
 msgid "Balou"
 msgstr "Balou"
 
-#: ../engines/balou/config.c:987
+#: ../engines/balou/config.c:988
 msgid "Balou Splash Engine"
 msgstr "Заставка Balou"
 
@@ -191,23 +191,23 @@ msgstr "ID сокета"
 msgid "Version information"
 msgstr "Информация о версии"
 
-#: ../settings/main.c:80 ../xfce4-session/main.c:338
+#: ../settings/main.c:80 ../xfce4-session/main.c:343
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Наберите «%s --help» для получения информации об использовании."
 
-#: ../settings/main.c:92 ../xfce4-session/main.c:348
-#: ../xfce4-session-logout/main.c:134
+#: ../settings/main.c:92 ../xfce4-session/main.c:353
+#: ../xfce4-session-logout/main.c:140
 msgid "The Xfce development team. All rights reserved."
 msgstr "Команда разработчиков Xfce. Все права защищены."
 
-#: ../settings/main.c:93 ../xfce4-session/main.c:349
-#: ../xfce4-session-logout/main.c:137
+#: ../settings/main.c:93 ../xfce4-session/main.c:354
+#: ../xfce4-session-logout/main.c:143
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Об ошибках сообщайте на <%s>."
 
-#: ../settings/main.c:102 ../xfce4-session/main.c:357
+#: ../settings/main.c:102 ../xfce4-session/main.c:362
 msgid "Unable to contact settings server"
 msgstr "Не удалось присоединиться к серверу настроек"
 
@@ -258,10 +258,6 @@ msgid ""
 msgstr "Сохранённые состояния ваших приложений не будут восстановлены при следующем сеансе."
 
 #: ../settings/session-editor.c:174
-msgid "_Ok"
-msgstr "О_к"
-
-#: ../settings/session-editor.c:174
 msgid "_Proceed"
 msgstr "_Продолжить"
 
@@ -289,10 +285,6 @@ msgid ""
 "your next session."
 msgstr "Все несохранённые данные приложения будут потеряны и оно не будет перезапущено при следующем сеансе."
 
-#: ../settings/session-editor.c:258 ../xfce4-session/xfsm-manager.c:725
-msgid "_Quit"
-msgstr "_Выйти"
-
 #: ../settings/session-editor.c:258
 msgid "_Quit Program"
 msgstr "За_вершить программу"
@@ -300,10 +292,6 @@ msgstr "За_вершить программу"
 #: ../settings/session-editor.c:287
 msgid "Unable to terminate program."
 msgstr "Не удалось завершить приложение."
-
-#: ../settings/session-editor.c:289
-msgid "Close"
-msgstr "Закрыть"
 
 #: ../settings/session-editor.c:509
 msgid "(Unknown program)"
@@ -430,24 +418,24 @@ msgstr "Не удалось изменить элемент «%s»"
 msgid "Failed to toggle item"
 msgstr "Не удалось переключить элемент"
 
-#: ../xfce4-session/main.c:78
+#: ../xfce4-session/main.c:77
 msgid "Disable binding to TCP ports"
 msgstr "Отключить привязку к портам TCP"
 
-#: ../xfce4-session/main.c:79 ../xfce4-session-logout/main.c:90
+#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:96
 msgid "Print version information and exit"
 msgstr "Показать информацию о версии и выйти"
 
-#: ../xfce4-session/main.c:148
+#: ../xfce4-session/main.c:146
 msgid "Loading desktop settings"
 msgstr "Загрузка настроек рабочего стола"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:199
+#: ../xfce4-session/main.c:198
 msgid "Verifying DNS settings"
 msgstr "Проверка настроек DNS"
 
-#: ../xfce4-session/main.c:203
+#: ../xfce4-session/main.c:202
 msgid "Loading session data"
 msgstr "Загрузка данных сеанса"
 
@@ -509,7 +497,7 @@ msgstr "Продолжить"
 msgid "Try again"
 msgstr "Повторить попытку"
 
-#: ../xfce4-session/xfsm-manager.c:616
+#: ../xfce4-session/xfsm-manager.c:619
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -518,53 +506,61 @@ msgid ""
 "incorrectly."
 msgstr "Не удалось определить имя безопасного сеанса. Возможные причины: xfconfd не запущен (проблемы настройки D-Bus); переменная окружения $XDG_CONFIG_DIRS установлена неверно (должна включать в себя «%s»), или неверно установлен xfce4-session."
 
-#: ../xfce4-session/xfsm-manager.c:627
+#: ../xfce4-session/xfsm-manager.c:630
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Указанный безопасный сеанс («%s») не помечен как безопасный."
 
-#: ../xfce4-session/xfsm-manager.c:674
+#: ../xfce4-session/xfsm-manager.c:677
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Список приложений безопасного сеанса пуст."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:721
+#: ../xfce4-session/xfsm-manager.c:724
 msgid "Session Manager Error"
 msgstr "Ошибка менеджера сеансов"
 
-#: ../xfce4-session/xfsm-manager.c:723
+#: ../xfce4-session/xfsm-manager.c:726
 msgid "Unable to load a failsafe session"
 msgstr "Не удалось загрузить безопасный сеанс"
 
-#: ../xfce4-session/xfsm-manager.c:1139
+#: ../xfce4-session/xfsm-manager.c:728
+msgid "_Quit"
+msgstr "_Выйти"
+
+#: ../xfce4-session/xfsm-manager.c:1215
 msgid "Shutdown Failed"
 msgstr "Не удалось выключить компьютер"
 
-#: ../xfce4-session/xfsm-manager.c:1142
+#: ../xfce4-session/xfsm-manager.c:1218
 msgid "Failed to suspend session"
 msgstr "Не удалось войти в ждущий режим"
 
-#: ../xfce4-session/xfsm-manager.c:1143
+#: ../xfce4-session/xfsm-manager.c:1220
 msgid "Failed to hibernate session"
 msgstr "Не удалось войти в спящий режим"
 
-#: ../xfce4-session/xfsm-manager.c:1423
+#: ../xfce4-session/xfsm-manager.c:1221
+msgid "Failed to switch user"
+msgstr "Не удалось переключить пользователя"
+
+#: ../xfce4-session/xfsm-manager.c:1527
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Завершение возможно только для клиентов в режиме ожидания"
 
-#: ../xfce4-session/xfsm-manager.c:1980
+#: ../xfce4-session/xfsm-manager.c:2178
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Менеджер сеансов должен быть в режиме ожидания при запросе контрольной точки"
 
-#: ../xfce4-session/xfsm-manager.c:2048 ../xfce4-session/xfsm-manager.c:2066
+#: ../xfce4-session/xfsm-manager.c:2248 ../xfce4-session/xfsm-manager.c:2268
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Менеджер сеансов ожидает завершение работы системы. Пожалуйста подождите"
 
-#: ../xfce4-session/xfsm-manager.c:2107
+#: ../xfce4-session/xfsm-manager.c:2313
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Менеджер сеансов должен быть в режиме ожидания при запросе перезапуска"
 
@@ -732,52 +728,56 @@ msgstr "Запуск вспомогательных технологий"
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Завершение работы недоступно в режиме киоска."
 
-#: ../xfce4-session/xfsm-shutdown.c:213
+#: ../xfce4-session/xfsm-shutdown.c:216
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Неизвестный метод завершения работы (%d)"
 
-#: ../xfce4-session-logout/main.c:66
+#: ../xfce4-session-logout/main.c:68
 msgid "Log out without displaying the logout dialog"
 msgstr "Выходить из системы не показывая диалог завершения сеанса"
 
-#: ../xfce4-session-logout/main.c:70
+#: ../xfce4-session-logout/main.c:72
 msgid "Halt without displaying the logout dialog"
 msgstr "Выключать компьютер не показывая диалог завершения сеанса"
 
-#: ../xfce4-session-logout/main.c:74
+#: ../xfce4-session-logout/main.c:76
 msgid "Reboot without displaying the logout dialog"
 msgstr "Перезагружать компьютер не показывая диалог завершения сеанса"
 
-#: ../xfce4-session-logout/main.c:78
+#: ../xfce4-session-logout/main.c:80
 msgid "Suspend without displaying the logout dialog"
 msgstr "Переходить в ждущий режим не показывая диалог завершения сеанса"
 
-#: ../xfce4-session-logout/main.c:82
+#: ../xfce4-session-logout/main.c:84
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Переходить в спящий режим не показывая диалог завершения сеанса"
 
-#: ../xfce4-session-logout/main.c:86
+#: ../xfce4-session-logout/main.c:88
+msgid "Switch user without displaying the logout dialog"
+msgstr "Переключать пользователя без диалога завершения сеанса"
+
+#: ../xfce4-session-logout/main.c:92
 msgid "Log out quickly; don't save the session"
 msgstr "Быстрый выход без сохранения сеанса"
 
-#: ../xfce4-session-logout/main.c:109
+#: ../xfce4-session-logout/main.c:115
 msgid "Unknown error"
 msgstr "Неизвестная ошибка"
 
-#: ../xfce4-session-logout/main.c:135
+#: ../xfce4-session-logout/main.c:141
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Авторы: Бенедикт Мёйрер <benny@xfce.org>"
 
-#: ../xfce4-session-logout/main.c:136
+#: ../xfce4-session-logout/main.c:142
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "и Брайен Тарриконе <kelnos@xfce.org>."
 
-#: ../xfce4-session-logout/main.c:156 ../xfce4-session-logout/main.c:245
+#: ../xfce4-session-logout/main.c:162 ../xfce4-session-logout/main.c:262
 msgid "Received error while trying to log out"
 msgstr "Получена ошибка при попытке завершения сеанса"
 
-#: ../xfce4-session-logout/main.c:214
+#: ../xfce4-session-logout/main.c:229
 #, c-format
 msgid "Received error while trying to log out, error was %s"
 msgstr "Ошибка при попытке завершения сеанса: %s"
