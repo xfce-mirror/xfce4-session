@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-23 18:30+0200\n"
-"PO-Revision-Date: 2016-05-25 06:02+0000\n"
+"POT-Creation-Date: 2016-06-28 18:30+0200\n"
+"PO-Revision-Date: 2016-07-29 00:11+0000\n"
 "Last-Translator: Nobuhiro Iwamatsu <iwamatsu@nigauri.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/xfce/xfce4-session/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgstr "説明はありません"
 msgid "Choose theme file to install..."
 msgstr "インストールするテーマを選択してください..."
 
-#: ../engines/balou/config.c:327 ../engines/balou/config.c:494
+#: ../engines/balou/config.c:327 ../engines/balou/config.c:495
 #: ../settings/session-editor.c:173 ../settings/session-editor.c:257
 #: ../xfce4-session/xfsm-logout-dialog.c:209
 #: ../xfce4-session/xfsm-splash-screen.c:213
@@ -60,50 +60,50 @@ msgstr "テーマファイルエラーです"
 msgid "Please check that the file is a valid splash theme archive."
 msgstr "ファイルが正しい起動画面アーカイブか確認して下さい。"
 
-#: ../engines/balou/config.c:344 ../engines/balou/config.c:948
+#: ../engines/balou/config.c:344 ../engines/balou/config.c:949
 #: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
-#: ../xfce4-session/xfsm-manager.c:1145
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1223
 msgid "_Close"
 msgstr "閉じる(_C)"
 
-#: ../engines/balou/config.c:402
+#: ../engines/balou/config.c:403
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "起動画面のテーマ \"%s\" をフォルダー %s から削除できません。"
 
-#: ../engines/balou/config.c:491
+#: ../engines/balou/config.c:492
 msgid "Choose theme filename..."
 msgstr "テーマファイル名を選択して下さい..."
 
-#: ../engines/balou/config.c:495
+#: ../engines/balou/config.c:496
 msgid "_Save"
 msgstr "保存(_S)"
 
-#: ../engines/balou/config.c:623
+#: ../engines/balou/config.c:624
 msgid "_Install new theme"
 msgstr "新しいテーマのインストール(_I)"
 
-#: ../engines/balou/config.c:630
+#: ../engines/balou/config.c:631
 msgid "_Remove theme"
 msgstr "テーマを削除(_R)"
 
-#: ../engines/balou/config.c:645
+#: ../engines/balou/config.c:646
 msgid "_Export theme"
 msgstr "テーマをエクスポート(_E)"
 
-#: ../engines/balou/config.c:859
+#: ../engines/balou/config.c:860
 msgid "Balou theme"
 msgstr "Balou テーマ"
 
-#: ../engines/balou/config.c:944
+#: ../engines/balou/config.c:945
 msgid "Configure Balou..."
 msgstr "Balou の設定..."
 
-#: ../engines/balou/config.c:986
+#: ../engines/balou/config.c:987
 msgid "Balou"
 msgstr "Balou"
 
-#: ../engines/balou/config.c:987
+#: ../engines/balou/config.c:988
 msgid "Balou Splash Engine"
 msgstr "Balou 起動画面エンジン"
 
@@ -183,23 +183,23 @@ msgstr "SOCKET ID"
 msgid "Version information"
 msgstr "バージョン情報を表示する"
 
-#: ../settings/main.c:80 ../xfce4-session/main.c:338
+#: ../settings/main.c:80 ../xfce4-session/main.c:343
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "'%s --help' と入力すると使用方法が表示されます。"
 
-#: ../settings/main.c:92 ../xfce4-session/main.c:348
-#: ../xfce4-session-logout/main.c:134
+#: ../settings/main.c:92 ../xfce4-session/main.c:353
+#: ../xfce4-session-logout/main.c:140
 msgid "The Xfce development team. All rights reserved."
 msgstr "The Xfce development team. All rights reserved."
 
-#: ../settings/main.c:93 ../xfce4-session/main.c:349
-#: ../xfce4-session-logout/main.c:137
+#: ../settings/main.c:93 ../xfce4-session/main.c:354
+#: ../xfce4-session-logout/main.c:143
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "バグは <%s> まで報告してください。"
 
-#: ../settings/main.c:102 ../xfce4-session/main.c:357
+#: ../settings/main.c:102 ../xfce4-session/main.c:362
 msgid "Unable to contact settings server"
 msgstr "設定サーバーに接続できませんでした"
 
@@ -250,10 +250,6 @@ msgid ""
 msgstr "保存されているアプリケーションの状態は次回ログイン時に復元されません。"
 
 #: ../settings/session-editor.c:174
-msgid "_Ok"
-msgstr "Ok(_O)"
-
-#: ../settings/session-editor.c:174
 msgid "_Proceed"
 msgstr "続行(_P)"
 
@@ -281,10 +277,6 @@ msgid ""
 "your next session."
 msgstr "アプリケーションは、保存されていない状態をすべて失います。また、次回のセッションで再起動されません。"
 
-#: ../settings/session-editor.c:258 ../xfce4-session/xfsm-manager.c:725
-msgid "_Quit"
-msgstr "終了(_Q)"
-
 #: ../settings/session-editor.c:258
 msgid "_Quit Program"
 msgstr "プログラム終了(_Q)"
@@ -292,10 +284,6 @@ msgstr "プログラム終了(_Q)"
 #: ../settings/session-editor.c:287
 msgid "Unable to terminate program."
 msgstr "プログラムの終了に失敗しました"
-
-#: ../settings/session-editor.c:289
-msgid "Close"
-msgstr "閉じる"
 
 #: ../settings/session-editor.c:509
 msgid "(Unknown program)"
@@ -422,24 +410,24 @@ msgstr "アイテム %s の編集に失敗しました"
 msgid "Failed to toggle item"
 msgstr "アイテムの切り替えに失敗しました。"
 
-#: ../xfce4-session/main.c:78
+#: ../xfce4-session/main.c:77
 msgid "Disable binding to TCP ports"
 msgstr "TCP ポートへのバインディングを無効にする"
 
-#: ../xfce4-session/main.c:79 ../xfce4-session-logout/main.c:90
+#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:96
 msgid "Print version information and exit"
 msgstr "バージョン情報を表示して終了する"
 
-#: ../xfce4-session/main.c:148
+#: ../xfce4-session/main.c:146
 msgid "Loading desktop settings"
 msgstr "デスクトップの設定を読み込んでいます"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:199
+#: ../xfce4-session/main.c:198
 msgid "Verifying DNS settings"
 msgstr "DNS の設定を検証しています"
 
-#: ../xfce4-session/main.c:203
+#: ../xfce4-session/main.c:202
 msgid "Loading session data"
 msgstr "セッションデータを読み込んでいます"
 
@@ -501,7 +489,7 @@ msgstr "とにかく続行する"
 msgid "Try again"
 msgstr "再試行"
 
-#: ../xfce4-session/xfsm-manager.c:616
+#: ../xfce4-session/xfsm-manager.c:619
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -510,53 +498,61 @@ msgid ""
 "incorrectly."
 msgstr "ファイルセーフセッション名を決定できません。考えられる原因: xfconfd が起動していない (D-Bus 設定の問題)、環境変数 $XDG_CONFIG_DIRS が正しく設定されていない (\"%s\" を含まなければなりません)、あるいは xfce4-session が正しくインストールされていない。"
 
-#: ../xfce4-session/xfsm-manager.c:627
+#: ../xfce4-session/xfsm-manager.c:630
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "指定されたフェイルセーフセッション (\"%s\") はフェイルセーフセッションとして設定されていません。"
 
-#: ../xfce4-session/xfsm-manager.c:674
+#: ../xfce4-session/xfsm-manager.c:677
 msgid "The list of applications in the failsafe session is empty."
 msgstr "フェイルセーフセッション内のアプリケーションリストが空です。"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:721
+#: ../xfce4-session/xfsm-manager.c:724
 msgid "Session Manager Error"
 msgstr "セッションマネージャーエラー"
 
-#: ../xfce4-session/xfsm-manager.c:723
+#: ../xfce4-session/xfsm-manager.c:726
 msgid "Unable to load a failsafe session"
 msgstr "フェイルセーフセッションを読み込めませんでした"
 
-#: ../xfce4-session/xfsm-manager.c:1139
+#: ../xfce4-session/xfsm-manager.c:728
+msgid "_Quit"
+msgstr "終了(_Q)"
+
+#: ../xfce4-session/xfsm-manager.c:1215
 msgid "Shutdown Failed"
 msgstr "シャットダウン失敗"
 
-#: ../xfce4-session/xfsm-manager.c:1142
+#: ../xfce4-session/xfsm-manager.c:1218
 msgid "Failed to suspend session"
 msgstr "セッションのサスペンドに失敗しました"
 
-#: ../xfce4-session/xfsm-manager.c:1143
+#: ../xfce4-session/xfsm-manager.c:1220
 msgid "Failed to hibernate session"
 msgstr "セッションのハイバネートに失敗しました"
 
-#: ../xfce4-session/xfsm-manager.c:1423
+#: ../xfce4-session/xfsm-manager.c:1221
+msgid "Failed to switch user"
+msgstr "ユーザの切り替えに失敗しました"
+
+#: ../xfce4-session/xfsm-manager.c:1527
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "待機状態の時のみクライアントを終了できます"
 
-#: ../xfce4-session/xfsm-manager.c:1980
+#: ../xfce4-session/xfsm-manager.c:2178
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "チェックポイントを要求するとき、セッションマネージャーは待機状態でなければなりません"
 
-#: ../xfce4-session/xfsm-manager.c:2048 ../xfce4-session/xfsm-manager.c:2066
+#: ../xfce4-session/xfsm-manager.c:2248 ../xfce4-session/xfsm-manager.c:2268
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "シャットダウンを要求するとき、セッションマネージャーは待機状態でなければなりません"
 
-#: ../xfce4-session/xfsm-manager.c:2107
+#: ../xfce4-session/xfsm-manager.c:2313
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "再起動を要求するとき、セッションマネージャーは待機状態でなければなりません"
 
@@ -724,52 +720,56 @@ msgstr "福祉情報技術を起動しています"
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "キオスク設定によってシャットダウンはブロックされました"
 
-#: ../xfce4-session/xfsm-shutdown.c:213
+#: ../xfce4-session/xfsm-shutdown.c:216
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "未知のシャットダウン方式 %d"
 
-#: ../xfce4-session-logout/main.c:66
+#: ../xfce4-session-logout/main.c:68
 msgid "Log out without displaying the logout dialog"
 msgstr "ログアウトダイアログを表示せずにログアウトする"
 
-#: ../xfce4-session-logout/main.c:70
+#: ../xfce4-session-logout/main.c:72
 msgid "Halt without displaying the logout dialog"
 msgstr "ログアウトダイアログを表示せずに停止する"
 
-#: ../xfce4-session-logout/main.c:74
+#: ../xfce4-session-logout/main.c:76
 msgid "Reboot without displaying the logout dialog"
 msgstr "ログアウトダイアログを表示せずに再起動する"
 
-#: ../xfce4-session-logout/main.c:78
+#: ../xfce4-session-logout/main.c:80
 msgid "Suspend without displaying the logout dialog"
 msgstr "ログアウトダイアログを表示せずにサスペンドする"
 
-#: ../xfce4-session-logout/main.c:82
+#: ../xfce4-session-logout/main.c:84
 msgid "Hibernate without displaying the logout dialog"
 msgstr "ログアウトダイアログを表示せずにハイバネートする"
 
-#: ../xfce4-session-logout/main.c:86
+#: ../xfce4-session-logout/main.c:88
+msgid "Switch user without displaying the logout dialog"
+msgstr "ログアウトダイアログを表示せずにユーザを切り替える"
+
+#: ../xfce4-session-logout/main.c:92
 msgid "Log out quickly; don't save the session"
 msgstr "セッションを保存せず、素早くログアウトする"
 
-#: ../xfce4-session-logout/main.c:109
+#: ../xfce4-session-logout/main.c:115
 msgid "Unknown error"
 msgstr "不明なエラー"
 
-#: ../xfce4-session-logout/main.c:135
+#: ../xfce4-session-logout/main.c:141
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Written by Benedikt Meurer <benny@xfce.org>"
 
-#: ../xfce4-session-logout/main.c:136
+#: ../xfce4-session-logout/main.c:142
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "and Brian Tarricone <kelnos@xfce.org>."
 
-#: ../xfce4-session-logout/main.c:156 ../xfce4-session-logout/main.c:245
+#: ../xfce4-session-logout/main.c:162 ../xfce4-session-logout/main.c:262
 msgid "Received error while trying to log out"
 msgstr "ログアウト中にエラーを受信しました"
 
-#: ../xfce4-session-logout/main.c:214
+#: ../xfce4-session-logout/main.c:229
 #, c-format
 msgid "Received error while trying to log out, error was %s"
 msgstr "ログアウト中にエラーを受信し、エラー %s でした。"
