@@ -1,27 +1,31 @@
-# salepetronije <salepetronije@gmail.com>, 2012.
-# Саша Петровић <salepetronije@gmail.com>, 2013.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 # 
+# Translators:
+# Саша Петровић <salepetronije@gmail.com>, 2012
+# Саша Петровић <salepetronije@gmail.com>, 2013,2016
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-session 4.4.0\n"
+"Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-05 14:00+0000\n"
-"PO-Revision-Date: 2013-03-05 14:14+0100\n"
+"POT-Creation-Date: 2016-06-28 18:30+0200\n"
+"PO-Revision-Date: 2016-08-07 20:29+0000\n"
 "Last-Translator: Саша Петровић <salepetronije@gmail.com>\n"
-"Language-Team: српски <>\n"
+"Language-Team: Serbian (http://www.transifex.com/xfce/xfce4-session/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sr\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../xfce.desktop.in.h:1
-msgid "Use this session to run Xfce as your desktop environment"
-msgstr "Користите ову сесију да покренете ИксФЦЕ као ваше радно окружење"
-
-#: ../xfce.desktop.in.h:2
 msgid "Xfce Session"
 msgstr "ИксФЦЕ сесија"
+
+#: ../xfce.desktop.in.h:2
+msgid "Use this session to run Xfce as your desktop environment"
+msgstr "Користите ову сесију да покренете ИксФЦЕ као ваше радно окружење"
 
 #: ../engines/balou/balou-theme.c:110
 msgid "No description given"
@@ -30,6 +34,17 @@ msgstr "Није дат опис"
 #: ../engines/balou/config.c:324
 msgid "Choose theme file to install..."
 msgstr "Изабери датотеку теме за уградњу..."
+
+#: ../engines/balou/config.c:327 ../engines/balou/config.c:495
+#: ../settings/session-editor.c:173 ../settings/session-editor.c:257
+#: ../xfce4-session/xfsm-logout-dialog.c:209
+#: ../xfce4-session/xfsm-splash-screen.c:213
+msgid "_Cancel"
+msgstr "_Откажи"
+
+#: ../engines/balou/config.c:328
+msgid "_Open"
+msgstr "_Отвори"
 
 #: ../engines/balou/config.c:336
 #, c-format
@@ -44,144 +59,154 @@ msgstr "Грешка у датотеци теме"
 msgid "Please check that the file is a valid splash theme archive."
 msgstr "Молим, проверите да ли је датотека исправна архива поздравне теме."
 
-#: ../engines/balou/config.c:402
+#: ../engines/balou/config.c:344 ../engines/balou/config.c:949
+#: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1223
+msgid "_Close"
+msgstr "_Затвори"
+
+#: ../engines/balou/config.c:403
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "Не могу да уклоним поздравну тему „%s“ из фасцикле %s."
 
-#: ../engines/balou/config.c:491
+#: ../engines/balou/config.c:492
 msgid "Choose theme filename..."
 msgstr "Изаберите име теме..."
+
+#: ../engines/balou/config.c:496
+msgid "_Save"
+msgstr "_Сачувај"
 
 #: ../engines/balou/config.c:624
 msgid "_Install new theme"
 msgstr "_Инсталирај нову тему"
 
-#: ../engines/balou/config.c:633
+#: ../engines/balou/config.c:631
 msgid "_Remove theme"
 msgstr "_Уклони тему"
 
-#: ../engines/balou/config.c:650
+#: ../engines/balou/config.c:646
 msgid "_Export theme"
 msgstr "_Извези тему"
 
-#: ../engines/balou/config.c:866
+#: ../engines/balou/config.c:860
 msgid "Balou theme"
 msgstr "Балу тема"
 
-#: ../engines/balou/config.c:951
+#: ../engines/balou/config.c:945
 msgid "Configure Balou..."
 msgstr "Подесите Балу..."
 
-#: ../engines/balou/config.c:994
+#: ../engines/balou/config.c:987
 msgid "Balou"
 msgstr "Балу"
 
-#: ../engines/balou/config.c:995
+#: ../engines/balou/config.c:988
 msgid "Balou Splash Engine"
 msgstr "Погон Балу поздравне теме"
 
-#: ../engines/mice/mice.c:373
+#: ../engines/mice/mice.c:385
 msgid "Mice"
 msgstr "Миш"
 
-#: ../engines/mice/mice.c:374
+#: ../engines/mice/mice.c:386
 msgid "Mice Splash Engine"
 msgstr "Погон Миш поздравне теме"
 
-#: ../engines/simple/simple.c:346
+#: ../engines/simple/simple.c:334
 msgid "Configure Simple..."
 msgstr "Подеси Једноставну..."
 
-#: ../engines/simple/simple.c:357
+#: ../engines/simple/simple.c:344
 msgid "Font"
 msgstr "Словни лик"
 
-#: ../engines/simple/simple.c:367
+#: ../engines/simple/simple.c:354
 msgid "Colors"
 msgstr "Боје"
 
-#: ../engines/simple/simple.c:375
+#: ../engines/simple/simple.c:362
 msgid "Background color:"
 msgstr "Боја позадине:"
 
-#: ../engines/simple/simple.c:388
+#: ../engines/simple/simple.c:373
 msgid "Text color:"
-msgstr "Боја текста:"
+msgstr "Боја писма:"
 
-#: ../engines/simple/simple.c:401
+#: ../engines/simple/simple.c:385
 msgid "Image"
 msgstr "Слика"
 
-#: ../engines/simple/simple.c:409
+#: ../engines/simple/simple.c:393
 msgid "Use custom image"
 msgstr "Користите произвољну слику"
 
-#: ../engines/simple/simple.c:413
+#: ../engines/simple/simple.c:397
 msgid "Choose image..."
 msgstr "Изаберите слику..."
 
-#: ../engines/simple/simple.c:419
+#: ../engines/simple/simple.c:403
 msgid "Images"
 msgstr "Слике"
 
-#: ../engines/simple/simple.c:425
+#: ../engines/simple/simple.c:409
 msgid "All files"
 msgstr "Све датотеке"
 
-#: ../engines/simple/simple.c:497
+#: ../engines/simple/simple.c:480
 msgid "Simple"
 msgstr "Једноставна"
 
-#: ../engines/simple/simple.c:498
+#: ../engines/simple/simple.c:481
 msgid "Simple Splash Engine"
 msgstr "Погон поздравне теме Једноставно"
 
 #: ../scripts/xscreensaver.desktop.in.h:1
-msgid "Launch screensaver and locker program"
-msgstr "Покрените чувар екрана и програм за закључавање"
-
-#: ../scripts/xscreensaver.desktop.in.h:2
 msgid "Screensaver"
 msgstr "Чувар екрана"
 
-#: ../settings/main.c:43
+#: ../scripts/xscreensaver.desktop.in.h:2
+msgid "Launch screensaver and locker program"
+msgstr "Покрените чувар екрана и програм за закључавање"
+
+#: ../settings/main.c:68
 msgid "Settings manager socket"
 msgstr "Прикључница управника подешавања"
 
-#: ../settings/main.c:43
+#: ../settings/main.c:68
 msgid "SOCKET ID"
 msgstr "ИБ ПРИКЉУЧНИЦЕ"
 
-#: ../settings/main.c:44
+#: ../settings/main.c:69
 msgid "Version information"
 msgstr "Подаци о издању"
 
-#: ../settings/main.c:75 ../xfce4-session/main.c:257
+#: ../settings/main.c:80 ../xfce4-session/main.c:343
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Упишите „%s --help“ за коришћење."
 
-#: ../settings/main.c:87 ../xfce4-session/main.c:267
-#: ../xfce4-session-logout/main.c:136
+#: ../settings/main.c:92 ../xfce4-session/main.c:353
+#: ../xfce4-session-logout/main.c:140
 msgid "The Xfce development team. All rights reserved."
 msgstr "ИксФЦЕ развојна дружина. Сва права су задржана."
 
-#: ../settings/main.c:88 ../xfce4-session/main.c:268
-#: ../xfce4-session-logout/main.c:139
+#: ../settings/main.c:93 ../xfce4-session/main.c:354
+#: ../xfce4-session-logout/main.c:143
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Молим пријавите грешку на <%s>."
 
-#: ../settings/main.c:97 ../xfce4-session/main.c:276
+#: ../settings/main.c:102 ../xfce4-session/main.c:362
 msgid "Unable to contact settings server"
 msgstr "Не могу да успоставим везу са служитељем подешавања"
 
-#: ../settings/main.c:116
+#: ../settings/main.c:121
 msgid "Unable to create user interface from embedded definition data"
 msgstr "Не могу да направим корисничко сучеље из угњеждених података одредница"
 
-#: ../settings/main.c:128
+#: ../settings/main.c:133
 msgid "App_lication Autostart"
 msgstr "_Почетни програми"
 
@@ -221,9 +246,7 @@ msgstr "Да ли сте сигурни да желите испразнити �
 msgid ""
 "The saved states of your applications will not be restored during your next "
 "login."
-msgstr ""
-"Сачувана стања ваших програма неће бити повраћена приликом ваше следеће "
-"пријаве."
+msgstr "Сачувана стања ваших програма неће бити повраћена приликом ваше следеће пријаве."
 
 #: ../settings/session-editor.c:174
 msgid "_Proceed"
@@ -238,49 +261,46 @@ msgstr "Можда ћете морати ручно да обришете нек
 msgid "All Xfce cache files could not be cleared"
 msgstr "Нису све датотеке у ИксФЦЕ остави могле бити обрисане"
 
-#: ../settings/session-editor.c:249
+#: ../settings/session-editor.c:251
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Да ли сте сигурни да желите да окончате „%s“?"
 
-#: ../settings/session-editor.c:252 ../settings/session-editor.c:280
+#: ../settings/session-editor.c:254 ../settings/session-editor.c:286
 msgid "Terminate Program"
 msgstr "Окончај програм"
 
-#: ../settings/session-editor.c:254
+#: ../settings/session-editor.c:256
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
-msgstr ""
-"Програм ће изгубити сва несачувана стања и неће бити покренут са вашом "
-"следећом сесијом."
+msgstr "Програм ће изгубити сва несачувана стања и неће бити покренут са вашом следећом сесијом."
 
-#: ../settings/session-editor.c:256
-#: ../settings/xfce4-session-settings.glade.h:41
+#: ../settings/session-editor.c:258
 msgid "_Quit Program"
 msgstr "_Напусти програм"
 
-#: ../settings/session-editor.c:281
+#: ../settings/session-editor.c:287
 msgid "Unable to terminate program."
 msgstr "Нисам успео да окончам програм."
 
-#: ../settings/session-editor.c:459
+#: ../settings/session-editor.c:509
 msgid "(Unknown program)"
 msgstr "(Непознати програм)"
 
-#: ../settings/session-editor.c:679
+#: ../settings/session-editor.c:733
 msgid "Priority"
 msgstr "Предност"
 
-#: ../settings/session-editor.c:687
+#: ../settings/session-editor.c:741
 msgid "PID"
 msgstr "ПИД"
 
-#: ../settings/session-editor.c:693
+#: ../settings/session-editor.c:747
 msgid "Program"
 msgstr "Програм"
 
-#: ../settings/session-editor.c:718
+#: ../settings/session-editor.c:772
 msgid "Restart Style"
 msgstr "Начин поновног покретања"
 
@@ -290,6 +310,14 @@ msgstr "Начин поновног покретања"
 msgid "None"
 msgstr "Ништа"
 
+#: ../settings/xfae-dialog.c:73 ../settings/xfae-dialog.c:181
+msgid "Cancel"
+msgstr "Откажи"
+
+#: ../settings/xfae-dialog.c:74 ../settings/xfae-dialog.c:182
+msgid "OK"
+msgstr "У реду"
+
 #: ../settings/xfae-dialog.c:78
 msgid "Add application"
 msgstr "Додај програм"
@@ -298,19 +326,19 @@ msgstr "Додај програм"
 msgid "Name:"
 msgstr "Назив:"
 
-#: ../settings/xfae-dialog.c:109
+#: ../settings/xfae-dialog.c:107
 msgid "Description:"
 msgstr "Опис:"
 
-#: ../settings/xfae-dialog.c:124 ../settings/xfae-model.c:479
+#: ../settings/xfae-dialog.c:120 ../settings/xfae-model.c:479
 msgid "Command:"
 msgstr "Наредба:"
 
-#: ../settings/xfae-dialog.c:184
+#: ../settings/xfae-dialog.c:178
 msgid "Select a command"
 msgstr "Изаберите наредбу"
 
-#: ../settings/xfae-dialog.c:233
+#: ../settings/xfae-dialog.c:227
 msgid "Edit application"
 msgstr "Уреди програм"
 
@@ -339,69 +367,66 @@ msgstr "Нисам успео да отворим %s за читање"
 msgid "Failed to open %s for writing"
 msgstr "Нисам успео да отворим %s за писање"
 
-#: ../settings/xfae-window.c:102
+#: ../settings/xfae-window.c:105
 msgid ""
 "Below is the list of applications that will be started automatically when "
 "you login to your Xfce desktop, in addition to the applications that were "
 "saved when you logged out last time. Cursive applications belong to another "
 "desktop environment, but you can still enable them if you want."
-msgstr ""
-"Испод је списак програма који ће бити покренути када се пријавите на ваше "
-"ИксФЦЕ окружење, који су додати програмима сачуваним када сте се одјавили "
-"последњи пут. Косим словима су исписани програми који припадају другим "
-"радним окружењима, али их ипак можете омогућити ако то желите."
+msgstr "Испод је списак програма који ће бити покренути када се пријавите на ваше ИксФЦЕ окружење, који су додати програмима сачуваним када сте се одјавили последњи пут. Косим словима су исписани програми који припадају другим радним окружењима, али их ипак можете омогућити ако то желите."
 
-#: ../settings/xfae-window.c:293
+#: ../settings/xfae-window.c:179 ../settings/xfae-window.c:237
+msgid "Add"
+msgstr "Додај"
+
+#: ../settings/xfae-window.c:185 ../settings/xfae-window.c:243
+msgid "Remove"
+msgstr ""
+
+#: ../settings/xfae-window.c:195
+msgid "Edit"
+msgstr ""
+
+#: ../settings/xfae-window.c:296
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Нисам успео да додам „%s“"
 
-#: ../settings/xfae-window.c:324 ../settings/xfae-window.c:338
+#: ../settings/xfae-window.c:327 ../settings/xfae-window.c:341
 msgid "Failed to remove item"
 msgstr "Нисам успео да уклоним ставку"
 
-#: ../settings/xfae-window.c:330
-msgid ""
-"This will permanently remove the application from the list of automatically "
-"started applications"
-msgstr "Ово ће трајно уклонити програм са списка почетних програма"
-
-#: ../settings/xfae-window.c:332
-#, c-format
-msgid "Are you sure you want to remove \"%s\""
-msgstr "Да ли сигурно желите да уклоните „%s“"
-
-#: ../settings/xfae-window.c:366
+#: ../settings/xfae-window.c:369
 msgid "Failed to edit item"
 msgstr "Нисам успео да уредим ставку"
 
-#: ../settings/xfae-window.c:386
+#: ../settings/xfae-window.c:389
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Нисам успео да уредим ставку „%s“"
 
-#: ../settings/xfae-window.c:414
+#: ../settings/xfae-window.c:417
 msgid "Failed to toggle item"
 msgstr "Нисам успео да заменим ставку"
 
-#: ../xfce4-session/main.c:76
+#: ../xfce4-session/main.c:77
 msgid "Disable binding to TCP ports"
 msgstr "Искључује повезивање на ТЦП прикључке"
 
-#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:91
+#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:96
 msgid "Print version information and exit"
 msgstr "Штампа податке о издању и излази"
 
-#: ../xfce4-session/main.c:140
+#: ../xfce4-session/main.c:146
 msgid "Loading desktop settings"
 msgstr "Учитавам подешавања радног окружења"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:298
+#: ../xfce4-session/main.c:198
 msgid "Verifying DNS settings"
 msgstr "Проверавам ДНС подешавања"
 
-#: ../xfce4-session/main.c:302
+#: ../xfce4-session/main.c:202
 msgid "Loading session data"
 msgstr "Учитавам податке сесије"
 
@@ -410,43 +435,35 @@ msgstr "Учитавам податке сесије"
 msgid "Last accessed: %s"
 msgstr "Последњи приступ: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:172
+#: ../xfce4-session/xfsm-chooser.c:175
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
-msgstr ""
-"Одаберите сесију коју желите да повратите. Можете једноставно кликнути "
-"двапут на назив сесије да је повратите."
+msgstr "Одаберите сесију коју желите да повратите. Можете једноставно кликнути двапут на назив сесије да је повратите."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:198
+#: ../xfce4-session/xfsm-chooser.c:201
 msgid "Log out"
 msgstr "Одјави ме"
 
-#: ../xfce4-session/xfsm-chooser.c:200
+#: ../xfce4-session/xfsm-chooser.c:203
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Откажите покушај пријаве и вратите се на екран за пријаву."
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:207
+#: ../xfce4-session/xfsm-chooser.c:210
 msgid "New session"
 msgstr "Нова сесија"
 
-#: ../xfce4-session/xfsm-chooser.c:208
+#: ../xfce4-session/xfsm-chooser.c:211
 msgid "Create a new session."
 msgstr "Направите нову сесију."
 
-#: ../xfce4-session/xfsm-client.c:506 ../xfce4-session/xfsm-client.c:532
-#: ../xfce4-session/xfsm-client.c:571
-#, c-format
-msgid "The client doesn't have any properties set yet"
-msgstr "Клијент још увек нема никаква подешавања"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:247
+#: ../xfce4-session/xfsm-compat-gnome.c:255
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "Покрећем демона Гномовог привеска кључева"
 
-#: ../xfce4-session/xfsm-compat-kde.c:124
+#: ../xfce4-session/xfsm-compat-kde.c:126
 msgid "Starting KDE services"
 msgstr "Покрећем КДЕ услуге"
 
@@ -461,11 +478,7 @@ msgid ""
 "This will prevent Xfce from operating correctly.\n"
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
-msgstr ""
-"Нисам могао приступити мрежној адреси %s.\n"
-"То ће спречити ИксФЦЕ да ради исправно\n"
-"Могуће је да ће потешкоћа бити исправљена додавањем\n"
-"%s у датотеку „/etc/hosts“ на вашем рачунару."
+msgstr "Нисам могао приступити мрежној адреси %s.\nТо ће спречити ИксФЦЕ да ради исправно\nМогуће је да ће потешкоћа бити исправљена додавањем\n%s у датотеку „/etc/hosts“ на вашем рачунару."
 
 #: ../xfce4-session/xfsm-dns.c:154
 msgid "Continue anyway"
@@ -475,71 +488,74 @@ msgstr "Ипак настави"
 msgid "Try again"
 msgstr "Покушај поново"
 
-#: ../xfce4-session/xfsm-manager.c:611
+#: ../xfce4-session/xfsm-manager.c:619
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
 "running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
-"incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
-msgstr ""
-"Нисам успео да одредим назив сесије отпорне на грешке.  Могући разлози: "
-"„xfconfd“ није покренут (грешка у подешавањима Д-сабирнице); променљива "
-"окружења „$XDG_CONFIG_DIRS“ је одређена погрешно (мора укључити „%s“), или "
-"је „xfce4-session“ погрешно уграђен."
+"incorrectly (must include \"%s\"), or xfce4-session is installed "
+"incorrectly."
+msgstr "Нисам успео да одредим назив сесије отпорне на грешке.  Могући разлози: „xfconfd“ није покренут (грешка у подешавањима Д-сабирнице); променљива окружења „$XDG_CONFIG_DIRS“ је одређена погрешно (мора укључити „%s“), или је „xfce4-session“ погрешно уграђен."
 
-#: ../xfce4-session/xfsm-manager.c:622
+#: ../xfce4-session/xfsm-manager.c:630
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr ""
-"Одређена сесија отпорна на грешке („%s“) није обележена као сесија отпорна "
-"на грешке."
+msgstr "Одређена сесија отпорна на грешке („%s“) није обележена као сесија отпорна на грешке."
 
-#: ../xfce4-session/xfsm-manager.c:669
+#: ../xfce4-session/xfsm-manager.c:677
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Списак програма сесије отпорне на грешке је празан."
 
 #. FIXME: migrate this into the splash screen somehow so the
-#. * window doesn't look ugly (right now now WM is running, so it
+#. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:716
+#: ../xfce4-session/xfsm-manager.c:724
 msgid "Session Manager Error"
 msgstr "Грешка управника сесије"
 
-#: ../xfce4-session/xfsm-manager.c:718
+#: ../xfce4-session/xfsm-manager.c:726
 msgid "Unable to load a failsafe session"
 msgstr "Нисам успео да учитам сесију отпорну на грешке"
 
-#: ../xfce4-session/xfsm-manager.c:1127
+#: ../xfce4-session/xfsm-manager.c:728
+msgid "_Quit"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1215
 msgid "Shutdown Failed"
 msgstr "Није успело гашење"
 
-#: ../xfce4-session/xfsm-manager.c:1130
+#: ../xfce4-session/xfsm-manager.c:1218
 msgid "Failed to suspend session"
 msgstr "Нисам успео да обуставим сесију"
 
-#: ../xfce4-session/xfsm-manager.c:1131
+#: ../xfce4-session/xfsm-manager.c:1220
 msgid "Failed to hibernate session"
 msgstr "Нисам успео да замрзнем сесију"
 
-#: ../xfce4-session/xfsm-manager.c:1405
+#: ../xfce4-session/xfsm-manager.c:1221
+msgid "Failed to switch user"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1527
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Клијент може бити окончан само у стању неактивности"
 
-#: ../xfce4-session/xfsm-manager.c:1969
-#, c-format
+#: ../xfce4-session/xfsm-manager.c:2178
 msgid "Session manager must be in idle state when requesting a checkpoint"
-msgstr ""
-"Управник сесије мора бити у стању неактивности при захтеву за контролном "
-"тачком"
+msgstr "Управник сесије мора бити у стању неактивности при захтеву за контролном тачком"
 
-#: ../xfce4-session/xfsm-manager.c:2010
-#, c-format
+#: ../xfce4-session/xfsm-manager.c:2248 ../xfce4-session/xfsm-manager.c:2268
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Управник сесије мора бити у стању неактивности при захтеву за гашењем"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:188
+#: ../xfce4-session/xfsm-manager.c:2313
+msgid "Session manager must be in idle state when requesting a restart"
+msgstr ""
+
+#: ../xfce4-session/xfsm-logout-dialog.c:182
 #, c-format
 msgid "Log out %s"
 msgstr "Одјава %s"
@@ -547,45 +563,37 @@ msgstr "Одјава %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:246
+#: ../xfce4-session/xfsm-logout-dialog.c:224
 msgid "_Log Out"
 msgstr "_Одјави"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:266
+#: ../xfce4-session/xfsm-logout-dialog.c:244
 msgid "_Restart"
 msgstr "_Поново покрени"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:286
+#: ../xfce4-session/xfsm-logout-dialog.c:264
 msgid "Shut _Down"
 msgstr "_Искључи"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:309
+#: ../xfce4-session/xfsm-logout-dialog.c:287
 msgid "Sus_pend"
 msgstr "Обу_стави"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:343
+#: ../xfce4-session/xfsm-logout-dialog.c:321
 msgid "_Hibernate"
 msgstr "_Замрзни"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:368
+#: ../xfce4-session/xfsm-logout-dialog.c:352
+msgid "Switch _User"
+msgstr ""
+
+#: ../xfce4-session/xfsm-logout-dialog.c:377
 msgid "_Save session for future logins"
 msgstr "_Сачувај сесију за следеће пријаве"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:395
-msgid "Please enter your password"
-msgstr "Молим унесите вашу лизинку"
-
-#: ../xfce4-session/xfsm-logout-dialog.c:427
+#: ../xfce4-session/xfsm-logout-dialog.c:405
 msgid "An error occurred"
 msgstr "Дошло је до грешке"
-
-#: ../xfce4-session/xfsm-logout-dialog.c:433
-msgid ""
-"Either the password you entered is invalid, or the system administrator "
-"disallows shutting down this computer with your user account."
-msgstr ""
-"Или је лозинка коју сте унели погрешна, или одржавалац система не дозвољава "
-"гашење рачунара са вашег корисничког налога."
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -595,92 +603,96 @@ msgstr "Изаберите сесију"
 msgid "Choose session name"
 msgstr "Изаберите назив сесије"
 
+#: ../xfce4-session/xfsm-splash-screen.c:215
+msgid "_OK"
+msgstr ""
+
 #: ../xfce4-session/xfsm-splash-screen.c:222
 msgid "Choose a name for the new session:"
 msgstr "Изаберите назив нове сесије:"
 
-#: ../xfce4-session/xfsm-startup.c:347
+#: ../xfce4-session/xfsm-startup.c:397
 msgid "Starting the Volume Controller"
 msgstr "Покрећем управљање звуком"
 
-#: ../xfce4-session/xfsm-startup.c:349
+#: ../xfce4-session/xfsm-startup.c:399
 msgid "Starting the Panel"
 msgstr "Покрећем полицу"
 
-#: ../xfce4-session/xfsm-startup.c:351
+#: ../xfce4-session/xfsm-startup.c:401
 msgid "Starting the Desktop Manager"
 msgstr "Покрећем управника радног окружења"
 
-#: ../xfce4-session/xfsm-startup.c:353
+#: ../xfce4-session/xfsm-startup.c:403
 msgid "Starting the Taskbar"
 msgstr "Покрећем траку задатака"
 
-#: ../xfce4-session/xfsm-startup.c:355
+#: ../xfce4-session/xfsm-startup.c:405
 msgid "Starting the Window Manager"
 msgstr "Покрећем управника прозора"
 
-#: ../xfce4-session/xfsm-startup.c:359
+#: ../xfce4-session/xfsm-startup.c:409
 msgid "Starting the Gnome Terminal Emulator"
 msgstr "Покрећем Гномов терминал"
 
-#: ../xfce4-session/xfsm-startup.c:363
+#: ../xfce4-session/xfsm-startup.c:413
 msgid "Starting the KDE Advanced Text Editor"
 msgstr "Покрећем напредни уређивач текста КДЕ-а"
 
-#: ../xfce4-session/xfsm-startup.c:365
+#: ../xfce4-session/xfsm-startup.c:415
 msgid "Starting the KDE Clipboard Manager"
 msgstr "Покрећем управника списка исечака за КДЕ"
 
-#: ../xfce4-session/xfsm-startup.c:367
+#: ../xfce4-session/xfsm-startup.c:417
 msgid "Starting the KDE Mail Reader"
 msgstr "Покрећем поштанско сандуче КДЕ-а"
 
-#: ../xfce4-session/xfsm-startup.c:369
+#: ../xfce4-session/xfsm-startup.c:419
 msgid "Starting the KDE News Reader"
 msgstr "Покрећем КДЕ читаоца вести"
 
-#: ../xfce4-session/xfsm-startup.c:371
+#: ../xfce4-session/xfsm-startup.c:421
 msgid "Starting the Konqueror"
 msgstr "Покрећем K-освајача"
 
-#: ../xfce4-session/xfsm-startup.c:373
+#: ../xfce4-session/xfsm-startup.c:423
 msgid "Starting the KDE Terminal Emulator"
 msgstr "Покрећем КДЕ терминал"
 
-#: ../xfce4-session/xfsm-startup.c:377
+#: ../xfce4-session/xfsm-startup.c:427
 msgid "Starting the Beep Media Player"
 msgstr "Покрећем Бип извођача садржаја"
 
-#: ../xfce4-session/xfsm-startup.c:379
+#: ../xfce4-session/xfsm-startup.c:429
 msgid "Starting The Gimp"
 msgstr "Покрећем Гнуов програм за обраду слика"
 
-#: ../xfce4-session/xfsm-startup.c:381
+#: ../xfce4-session/xfsm-startup.c:431
 msgid "Starting the VI Improved Editor"
 msgstr "Покрећем ВИ унапређени уређивач текста"
 
-#: ../xfce4-session/xfsm-startup.c:383
+#: ../xfce4-session/xfsm-startup.c:433
 msgid "Starting the Session Management Proxy"
 msgstr "Покрећем посредника управљања сесијом"
 
-#: ../xfce4-session/xfsm-startup.c:385
+#: ../xfce4-session/xfsm-startup.c:435
 msgid "Starting the X-Chat IRC Client"
 msgstr "Покрећем ИРЦ клијента Икс-ћаскања"
 
-#: ../xfce4-session/xfsm-startup.c:387
+#: ../xfce4-session/xfsm-startup.c:437
 msgid "Starting the X Multimedia System"
 msgstr "Покрећем Иксов мултимедијски систем"
 
-#: ../xfce4-session/xfsm-startup.c:389
+#: ../xfce4-session/xfsm-startup.c:439
 msgid "Starting the X Terminal Emulator"
 msgstr "Покрећем Иксов терминал"
 
-#: ../xfce4-session/xfsm-startup.c:391
+#: ../xfce4-session/xfsm-startup.c:441
 #, c-format
 msgid "Starting %s"
 msgstr "Покрећем %s"
 
-#: ../xfce4-session/xfsm-startup.c:515
+#: ../xfce4-session/xfsm-startup.c:565
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -693,93 +705,73 @@ msgid ""
 "autostart directory have been successfully migrated to the new\n"
 "location.\n"
 "You should delete this directory now.\n"
-msgstr ""
-"Путања и формат фасцикле почетних програма је измењена.\n"
-"Нова путања је\n"
-"\n"
-"  %s\n"
-"\n"
-"где можете сместити датотеке радне површи, које говоре програмима\n"
-"да се покрену кад се пријавите на ИксФЦЕ окружење. Датотеке у Вашој старој\n"
-"фасцикли су успешно премештене на ново\n"
-"место.\n"
-"Треба да обришете ову фасциклу сада.\n"
+msgstr "Путања и формат фасцикле почетних програма је измењена.\nНова путања је\n\n  %s\n\nгде можете сместити датотеке радне површи, које говоре програмима\nда се покрену кад се пријавите на ИксФЦЕ окружење. Датотеке у Вашој старој\nфасцикли су успешно премештене на ново\nместо.\nТреба да обришете ову фасциклу сада.\n"
 
-#: ../xfce4-session/xfsm-startup.c:684
+#: ../xfce4-session/xfsm-startup.c:750
 msgid "Performing Autostart..."
 msgstr "Покрећем почетне програме..."
 
-#: ../xfce4-session/xfsm-startup.c:790
+#: ../xfce4-session/xfsm-startup.c:856
 msgid "Starting Assistive Technologies"
 msgstr "Покрећем технологије приступачности"
 
-#: ../xfce4-session/xfsm-shutdown.c:429
-#, c-format
-msgid "Error sending command to shutdown helper: %s"
-msgstr "Грешка слања наредбе помоћнику искључивања: %s"
-
-#: ../xfce4-session/xfsm-shutdown.c:442
-#, c-format
-msgid "Error receiving response from shutdown helper: %s"
-msgstr "Грешка пријема одзива од помоћника искључивања: %s"
-
-#: ../xfce4-session/xfsm-shutdown.c:450
-#, c-format
-msgid "Shutdown command failed"
-msgstr "Наредба искључивања није успела"
-
-#: ../xfce4-session/xfsm-shutdown.c:555
+#: ../xfce4-session/xfsm-shutdown.c:162
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Гашење је онемогућено киоск подешавањима"
 
-#: ../xfce4-session/xfsm-shutdown.c:638
+#: ../xfce4-session/xfsm-shutdown.c:216
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Непознати начин искључења %d"
 
-#: ../xfce4-session-logout/main.c:67
+#: ../xfce4-session-logout/main.c:68
 msgid "Log out without displaying the logout dialog"
 msgstr "Одјава без приказивања прозорчета одјаве"
 
-#: ../xfce4-session-logout/main.c:71
+#: ../xfce4-session-logout/main.c:72
 msgid "Halt without displaying the logout dialog"
 msgstr "Искључивање без приказивања прозорчета одјаве"
 
-#: ../xfce4-session-logout/main.c:75
+#: ../xfce4-session-logout/main.c:76
 msgid "Reboot without displaying the logout dialog"
 msgstr "Поновно покретање без приказивања прозорчета одјаве"
 
-#: ../xfce4-session-logout/main.c:79
+#: ../xfce4-session-logout/main.c:80
 msgid "Suspend without displaying the logout dialog"
 msgstr "Обустављање без приказивања прозорчета одјаве"
 
-#: ../xfce4-session-logout/main.c:83
+#: ../xfce4-session-logout/main.c:84
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Успављивање без приказивања прозорчета одјаве"
 
-#: ../xfce4-session-logout/main.c:87
+#: ../xfce4-session-logout/main.c:88
+msgid "Switch user without displaying the logout dialog"
+msgstr ""
+
+#: ../xfce4-session-logout/main.c:92
 msgid "Log out quickly; don't save the session"
 msgstr "Одјављује се брзо; без чувања сесије"
 
-#: ../xfce4-session-logout/main.c:110
+#: ../xfce4-session-logout/main.c:115
 msgid "Unknown error"
 msgstr "Непозната грешка"
 
-#: ../xfce4-session-logout/main.c:137
+#: ../xfce4-session-logout/main.c:141
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Написао Бенедикт Мејрер <benny@xfce.org>"
 
-#: ../xfce4-session-logout/main.c:138
+#: ../xfce4-session-logout/main.c:142
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "и Брајан Тариконе <kelnos@xfce.org>."
 
-#: ../xfce4-session-logout/main.c:148
-msgid "Unable to contact D-Bus session bus"
-msgstr "Не могу да ступим у везу са сабирницу сесије Д-сабирнице"
-
-#: ../xfce4-session-logout/main.c:227
+#: ../xfce4-session-logout/main.c:162 ../xfce4-session-logout/main.c:262
 msgid "Received error while trying to log out"
 msgstr "Примио сам грешку приликом одјављивања"
+
+#: ../xfce4-session-logout/main.c:229
+#, c-format
+msgid "Received error while trying to log out, error was %s"
+msgstr ""
 
 #: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
 msgid "Log Out"
@@ -790,182 +782,9 @@ msgid "Log out of the Xfce Desktop"
 msgstr "Одјавите се са ИксФЦЕ радног окружења"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
-#: ../settings/xfce4-session-settings.glade.h:16
-msgid "Customize desktop startup and splash screen"
-msgstr "Пролагодите радно окружење и поздравни екран"
-
-#: ../settings/xfce-session-settings.desktop.in.h:2
-#: ../settings/xfce4-session-settings.glade.h:34
 msgid "Session and Startup"
 msgstr "Сесија и почетни програми"
 
-#: ../settings/xfce4-session-settings.glade.h:1
-msgid "<b>Author:</b>"
-msgstr "<b>Стваралац:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:2
-msgid "<b>Compatibility</b>"
-msgstr "<b>Усаглашеност</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:3
-msgid "<b>Description:</b>"
-msgstr "<b>Опис:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:4
-msgid "<b>Homepage:</b>"
-msgstr "<b>Почетна страница:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:5
-msgid "<b>Information</b>"
-msgstr "<b>Информације</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:6
-msgid "<b>Logout Settings</b>"
-msgstr "<b>Подешавања одјаве</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:7
-msgid "<b>Security</b>"
-msgstr "<b>Безбедност</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:8
-msgid "<b>Session Chooser</b>"
-msgstr "<b>Избирач сесије</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:9
-msgid "<b>Shutdown</b>"
-msgstr "<b>Гашење</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:10
-msgid "<b>Version:</b>"
-msgstr "<b>Издање:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:11
-msgid "Ad_vanced"
-msgstr "На_предно"
-
-#: ../settings/xfce4-session-settings.glade.h:12
-msgid "Always save the session when logging out"
-msgstr "Увек сачувај сесију при одјави"
-
-#: ../settings/xfce4-session-settings.glade.h:13
-msgid "Automatically save session on logo_ut"
-msgstr "Сам сачувај сесију при _одјави"
-
-#: ../settings/xfce4-session-settings.glade.h:14
-msgid "Clear save_d sessions"
-msgstr "_Очисти сачуване сесије"
-
-#: ../settings/xfce4-session-settings.glade.h:15
-msgid "Con_figure"
-msgstr "При_лагоди"
-
-#: ../settings/xfce4-session-settings.glade.h:17
-msgid "Demonstrates the selected splash screen"
-msgstr "Прикажи изабрани поздравни екран"
-
-#: ../settings/xfce4-session-settings.glade.h:18
-msgid "Display the session chooser every time Xfce starts"
-msgstr "Прикажи избирач сесије при сваком покретању ИксФЦЕ-а"
-
-#: ../settings/xfce4-session-settings.glade.h:19
-msgid "Empty the session cache"
-msgstr "Испразни оставу сесије"
-
-#: ../settings/xfce4-session-settings.glade.h:20
-msgid "Launch GN_OME services on startup"
-msgstr "Покрени сервисе _Гнома на покретању"
-
-#: ../settings/xfce4-session-settings.glade.h:21
-msgid "Launch _KDE services on startup"
-msgstr "Покрени сервисе КДЕ-а на покретању"
-
-#: ../settings/xfce4-session-settings.glade.h:22
-msgid "Lock screen be_fore sleep"
-msgstr "_Закључај екран пре успављивања"
-
-#: ../settings/xfce4-session-settings.glade.h:23
-msgid "Manage _remote applications"
-msgstr "Управљај удаљеним програмима"
-
-#: ../settings/xfce4-session-settings.glade.h:24
-msgid ""
-"Manage remote applications over the network (this may be a security risk)"
-msgstr ""
-"Управљајте удаљеним програмима преко мреже (ово може бити сигурносни ризик)"
-
-#: ../settings/xfce4-session-settings.glade.h:25
-msgid "Opens the configuration panel for the selected splash screen"
-msgstr "Отвара плочу поставки изабраног поздравног екрана"
-
-#: ../settings/xfce4-session-settings.glade.h:26
-msgid "Pro_mpt on logout"
-msgstr "_Питај при одјављивању"
-
-#: ../settings/xfce4-session-settings.glade.h:27
-msgid "Prompt for confirmation when logging out"
-msgstr "Упитај за потврду приликом одајве"
-
-#: ../settings/xfce4-session-settings.glade.h:28
-msgid "Quit the program, and remove it from the session"
-msgstr "Затвори програм и уклони га из сесије"
-
-#: ../settings/xfce4-session-settings.glade.h:29
-msgid "Run xflock4 before suspending or hibernating the system"
-msgstr "Покрени „xflock4“ пре успављивања или замрзавања система"
-
-#: ../settings/xfce4-session-settings.glade.h:30
-msgid "S_plash"
-msgstr "П_оздравни екран"
-
-#: ../settings/xfce4-session-settings.glade.h:31
-msgid "Save Sess_ion"
-msgstr "Сачувај _сесију"
-
-#: ../settings/xfce4-session-settings.glade.h:32
-msgid "Saving Session"
-msgstr "Чувам сесију"
-
-#: ../settings/xfce4-session-settings.glade.h:33
-msgid "Sessio_n"
-msgstr "_Сесија"
-
-#: ../settings/xfce4-session-settings.glade.h:35
-msgid "Start GNOME services, such as gnome-keyring"
-msgstr "Покрени Гномове услуге, као што је гномов привезак"
-
-#: ../settings/xfce4-session-settings.glade.h:36
-msgid "Start KDE services, such as kdeinit"
-msgstr "Покрени КДЕ услуге, као што је кде покретање"
-
-#: ../settings/xfce4-session-settings.glade.h:37
-msgid ""
-"These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr ""
-"Ови програми су део тренутно покренуте сесије, и могу бити сачувани када се "
-"одјавите. Промене испод ће ступити на снагу само ако је сесија сачувана."
-
-#: ../settings/xfce4-session-settings.glade.h:38
-msgid ""
-"Your session is being saved.  If you do not wish to wait, you may close this "
-"window."
-msgstr ""
-"Ваша сесија је сачувана. Ако не желите да чекате, можете затворити овај "
-"прозор."
-
-#: ../settings/xfce4-session-settings.glade.h:39
-msgid "_Display chooser on login"
-msgstr "_Прикажи бирач приликом пријаве"
-
-#: ../settings/xfce4-session-settings.glade.h:40
-msgid "_General"
-msgstr "_Опште"
-
-#: ../settings/xfce4-session-settings.glade.h:42
-msgid "_Test"
-msgstr "_Тест"
-
-#: ../settings/xfce4-session-settings.glade.h:43
-msgid "label"
-msgstr "натпис"
+#: ../settings/xfce-session-settings.desktop.in.h:2
+msgid "Customize desktop startup and splash screen"
+msgstr "Пролагодите радно окружење и поздравни екран"
