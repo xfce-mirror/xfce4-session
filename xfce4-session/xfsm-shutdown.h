@@ -40,6 +40,7 @@ typedef enum
   XFSM_SHUTDOWN_RESTART,
   XFSM_SHUTDOWN_SUSPEND,
   XFSM_SHUTDOWN_HIBERNATE,
+  XFSM_SHUTDOWN_HYBRID_SLEEP,
   XFSM_SHUTDOWN_SWITCH_USER,
 }
 XfsmShutdownType;
@@ -79,6 +80,9 @@ gboolean      xfsm_shutdown_try_suspend      (XfsmShutdown      *shutdown,
 gboolean      xfsm_shutdown_try_hibernate    (XfsmShutdown      *shutdown,
                                               GError           **error);
 
+gboolean      xfsm_shutdown_try_hybrid_sleep (XfsmShutdown      *shutdown,
+                                              GError           **error);
+
 gboolean      xfsm_shutdown_try_switch_user  (XfsmShutdown      *shutdown,
                                               GError           **error);
 
@@ -98,6 +102,11 @@ gboolean      xfsm_shutdown_can_suspend      (XfsmShutdown      *shutdown,
 gboolean      xfsm_shutdown_can_hibernate    (XfsmShutdown      *shutdown,
                                               gboolean          *can_hibernate,
                                               gboolean          *auth_hibernate,
+                                              GError           **error);
+
+gboolean      xfsm_shutdown_can_hybrid_sleep (XfsmShutdown      *shutdown,
+                                              gboolean          *can_hybrid_sleep,
+                                              gboolean          *auth_hybrid_sleep,
                                               GError           **error);
 
 gboolean      xfsm_shutdown_can_switch_user  (XfsmShutdown      *shutdown,

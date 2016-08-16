@@ -48,7 +48,10 @@ gboolean     xfsm_systemd_try_suspend  (XfsmSystemd  *systemd,
                                         GError      **error);
 
 gboolean     xfsm_systemd_try_hibernate (XfsmSystemd *systemd,
-                                        GError      **error);
+                                         GError      **error);
+
+gboolean     xfsm_systemd_try_hybrid_sleep (XfsmSystemd *systemd,
+                                            GError      **error);
 
 gboolean     xfsm_systemd_can_restart  (XfsmSystemd  *systemd,
                                         gboolean     *can_restart,
@@ -67,6 +70,11 @@ gboolean     xfsm_systemd_can_hibernate (XfsmSystemd *systemd,
                                         gboolean     *can_hibernate,
                                         gboolean     *auth_hibernate,
                                         GError      **error);
+
+gboolean     xfsm_systemd_can_hybrid_sleep (XfsmSystemd *systemd,
+                                            gboolean     *can_hybrid_sleep,
+                                            gboolean     *auth_hybrid_sleep,
+                                            GError      **error);
 
 G_END_DECLS
 

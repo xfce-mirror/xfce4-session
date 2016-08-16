@@ -146,9 +146,11 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gboolean       can_restart;
   gboolean       can_suspend = FALSE;
   gboolean       can_hibernate = FALSE;
+  gboolean       can_hybrid_sleep = FALSE;
   gboolean       can_switch_user = FALSE;
   gboolean       auth_suspend = FALSE;
   gboolean       auth_hibernate = FALSE;
+  gboolean       auth_hybrid_sleep = FALSE;
   GError        *error = NULL;
   XfconfChannel *channel;
   GtkWidget     *image;
@@ -269,7 +271,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gtk_widget_set_sensitive (button, can_shutdown);
   gtk_widget_show (button);
 
-  /* new row for suspend/hibernate */
+  /* new row for suspend/hibernate/hybrid sleep */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, BORDER);
   gtk_box_pack_start (GTK_BOX (button_vbox), hbox, FALSE, TRUE, 0);
 
@@ -332,6 +334,37 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
       else
         {
           g_printerr ("%s: Querying hibernate failed: %s\n\n",
+                      PACKAGE_NAME, ERROR_MSG (error));
+          g_clear_error (&error);
+        }
+    }
+
+  /**
+   * Hybrid Sleep
+   *
+   * Hide the button if UPower is not installed or system cannot suspend
+   **/
+  if (!upower_not_found
+      && xfconf_channel_get_bool (channel, "/shutdown/ShowHybridSleep", TRUE))
+    {
+      if (xfsm_shutdown_can_hybrid_sleep (dialog->shutdown, &can_hybrid_sleep, &auth_hybrid_sleep, &error))
+        {
+          if (can_hybrid_sleep)
+            {
+              button = xfsm_logout_dialog_button (_("_Hybrid Sleep"), "system-hibernate",
+                                                  "xfsm-hibernate", XFSM_SHUTDOWN_HYBRID_SLEEP,
+                                                  dialog);
+
+              gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+              gtk_widget_set_sensitive (button, auth_hybrid_sleep);
+              gtk_widget_show (button);
+
+              gtk_widget_show (hbox);
+            }
+        }
+      else
+        {
+          g_printerr ("%s: Querying hybrid-sleep failed: %s\n\n",
                       PACKAGE_NAME, ERROR_MSG (error));
           g_clear_error (&error);
         }

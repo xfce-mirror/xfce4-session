@@ -192,7 +192,7 @@ AC_DEFINE_UNQUOTED(BACKEND, "$with_backend", [backend])
 AC_SUBST(BACKEND, "$with_backend")
 
 if test x$with_backend = xlinux; then
-    AC_DEFINE(BACKEND_TYPE_LINUX, 1, [Linux suspend/hibernate backend])
+    AC_DEFINE(BACKEND_TYPE_LINUX, 1, [Linux suspend/hibernate/hybrid-sleep backend])
 fi
 if test x$with_backend = xfreebsd; then
     AC_DEFINE(BACKEND_TYPE_FREEBSD, 1, [FreeBSD suspend/hibernate backend])

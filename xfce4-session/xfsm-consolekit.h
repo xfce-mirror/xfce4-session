@@ -54,18 +54,26 @@ gboolean        xfsm_consolekit_can_shutdown (XfsmConsolekit  *consolekit,
 gboolean        xfsm_consolekit_try_suspend  (XfsmConsolekit  *consolekit,
                                               GError         **error);
 
-gboolean        xfsm_consolekit_try_hibernate(XfsmConsolekit  *consolekit,
-                                              GError         **error);
+gboolean        xfsm_consolekit_try_hibernate (XfsmConsolekit  *consolekit,
+                                               GError         **error);
+
+gboolean        xfsm_consolekit_try_hybrid_sleep (XfsmConsolekit  *consolekit,
+                                                  GError         **error);
 
 gboolean        xfsm_consolekit_can_suspend  (XfsmConsolekit  *consolekit,
                                               gboolean        *can_suspend,
                                               gboolean        *auth_suspend,
                                               GError         **error);
 
-gboolean        xfsm_consolekit_can_hibernate(XfsmConsolekit  *consolekit,
-                                              gboolean        *can_hibernate,
-                                              gboolean        *auth_hibernate,
-                                              GError         **error);
+gboolean        xfsm_consolekit_can_hibernate (XfsmConsolekit  *consolekit,
+                                               gboolean        *can_hibernate,
+                                               gboolean        *auth_hibernate,
+                                               GError         **error);
+
+gboolean        xfsm_consolekit_can_hybrid_sleep (XfsmConsolekit  *consolekit,
+                                                  gboolean        *can_hybrid_sleep,
+                                                  gboolean        *auth_hybrid_sleep,
+                                                  GError         **error);
 
 
 #endif /* !__XFSM_CONSOLEKIT_HELPER_H__ */

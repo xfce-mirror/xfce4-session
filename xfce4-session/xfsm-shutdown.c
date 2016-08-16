@@ -209,6 +209,9 @@ xfsm_shutdown_try_type (XfsmShutdown      *shutdown,
     case XFSM_SHUTDOWN_HIBERNATE:
       return xfsm_shutdown_try_hibernate (shutdown, error);
 
+    case XFSM_SHUTDOWN_HYBRID_SLEEP:
+      return xfsm_shutdown_try_hybrid_sleep (shutdown, error);
+
     case XFSM_SHUTDOWN_SWITCH_USER:
       return xfsm_shutdown_try_switch_user (shutdown, error);
 
@@ -331,6 +334,26 @@ xfsm_shutdown_try_hibernate (XfsmShutdown  *shutdown,
     return TRUE;
 
   return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_HIBERNATE, error);
+}
+
+
+
+gboolean
+xfsm_shutdown_try_hybrid_sleep (XfsmShutdown  *shutdown,
+                                GError       **error)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  /* Try each way to hybrid-sleep - it will handle NULL.
+   */
+
+  if (try_sleep_method (shutdown->systemd, (SleepFunc)xfsm_systemd_try_hybrid_sleep))
+    return TRUE;
+
+  if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfsm_consolekit_try_hybrid_sleep))
+    return TRUE;
+
+  return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_HYBRID_SLEEP, error);
 }
 
 gboolean
@@ -509,6 +532,42 @@ xfsm_shutdown_can_hibernate (XfsmShutdown  *shutdown,
 
   *can_hibernate = xfsm_shutdown_fallback_can_hibernate ();
   *auth_hibernate = xfsm_shutdown_fallback_auth_hibernate ();
+  return TRUE;
+}
+
+
+
+gboolean
+xfsm_shutdown_can_hybrid_sleep (XfsmShutdown  *shutdown,
+                                gboolean      *can_hybrid_sleep,
+                                gboolean      *auth_hybrid_sleep,
+                                GError       **error)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, NULL))
+    {
+      *can_hybrid_sleep = FALSE;
+      return TRUE;
+    }
+
+  if (shutdown->systemd != NULL)
+    {
+      if (xfsm_systemd_can_hybrid_sleep (shutdown->systemd, can_hybrid_sleep, auth_hybrid_sleep, NULL))
+        {
+          return TRUE;
+        }
+    }
+  else if (shutdown->consolekit != NULL)
+    {
+      if (xfsm_consolekit_can_hybrid_sleep (shutdown->consolekit, can_hybrid_sleep, auth_hybrid_sleep, NULL))
+        {
+          return TRUE;
+        }
+    }
+
+  *can_hybrid_sleep = xfsm_shutdown_fallback_can_hybrid_sleep ();
+  *auth_hybrid_sleep = xfsm_shutdown_fallback_auth_hybrid_sleep ();
   return TRUE;
 }
 

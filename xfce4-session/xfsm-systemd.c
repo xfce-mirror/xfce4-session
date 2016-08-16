@@ -37,10 +37,12 @@
 #define SYSTEMD_POWEROFF_ACTION         "PowerOff"
 #define SYSTEMD_SUSPEND_ACTION          "Suspend"
 #define SYSTEMD_HIBERNATE_ACTION        "Hibernate"
+#define SYSTEMD_HYBRID_SLEEP_ACTION     "HybridSleep"
 #define SYSTEMD_REBOOT_TEST             "org.freedesktop.login1.reboot"
 #define SYSTEMD_POWEROFF_TEST           "org.freedesktop.login1.power-off"
 #define SYSTEMD_SUSPEND_TEST            "org.freedesktop.login1.suspend"
 #define SYSTEMD_HIBERNATE_TEST          "org.freedesktop.login1.hibernate"
+#define SYSTEMD_HYBRID_SLEEP_TEST       "org.freedesktop.login1.hibernate"
 
 
 
@@ -269,6 +271,20 @@ xfsm_systemd_try_hibernate (XfsmSystemd  *systemd,
 
 
 gboolean
+xfsm_systemd_try_hybrid_sleep (XfsmSystemd  *systemd,
+                               GError      **error)
+{
+  if (!xfsm_systemd_lock_screen (systemd, error))
+    return FALSE;
+
+  return xfsm_systemd_try_method (systemd,
+                                  SYSTEMD_HYBRID_SLEEP_ACTION,
+                                  error);
+}
+
+
+
+gboolean
 xfsm_systemd_can_restart (XfsmSystemd  *systemd,
                           gboolean     *can_restart,
                           GError      **error)
@@ -325,5 +341,23 @@ xfsm_systemd_can_hibernate (XfsmSystemd  *systemd,
                                  SYSTEMD_HIBERNATE_TEST,
                                  error);
   *auth_hibernate = *can_hibernate;
+  return ret;
+}
+
+
+
+gboolean
+xfsm_systemd_can_hybrid_sleep (XfsmSystemd  *systemd,
+                               gboolean     *can_hybrid_sleep,
+                               gboolean     *auth_hybrid_sleep,
+                               GError      **error)
+{
+  gboolean ret = FALSE;
+
+  ret = xfsm_systemd_can_method (systemd,
+                                 can_hybrid_sleep,
+                                 SYSTEMD_HYBRID_SLEEP_TEST,
+                                 error);
+  *auth_hybrid_sleep = *can_hybrid_sleep;
   return ret;
 }

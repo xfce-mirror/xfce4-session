@@ -149,6 +149,22 @@
         </method>
 
         <!--
+             void org.Xfce.Session.Manager.HybridSleep
+
+             This will possibly be removed in the future
+        -->
+        <method name="HybridSleep" />
+
+        <!--
+             void org.Xfce.Session.Manager.CanHybridSleep
+
+             This will possibly be removed in the future
+        -->
+        <method name="CanHybridSleep">
+            <arg direction="out" name="can_hybrid_sleep" type="b"/>
+        </method>
+
+        <!--
              void org.Xfce.Session.Manager.SwitchUser
         -->
         <method name="SwitchUser" />

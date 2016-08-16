@@ -452,6 +452,33 @@ xfsm_consolekit_try_hibernate (XfsmConsolekit  *consolekit,
 
 
 gboolean
+xfsm_consolekit_try_hybrid_sleep (XfsmConsolekit  *consolekit,
+                                  GError         **error)
+{
+  gboolean can_hybrid_sleep, auth_hybrid_sleep;
+
+  g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
+
+  /* Check if consolekit can hybrid sleep before we call lock screen. */
+  if (xfsm_consolekit_can_hybrid_sleep (consolekit, &can_hybrid_sleep, &auth_hybrid_sleep, NULL))
+    {
+      if (!can_hybrid_sleep)
+        return FALSE;
+    }
+  else
+    {
+      return FALSE;
+    }
+
+  if (!lock_screen (consolekit, error))
+    return FALSE;
+
+  return xfsm_consolekit_try_sleep (consolekit, "HybridSleep", error);
+}
+
+
+
+gboolean
 xfsm_consolekit_can_suspend (XfsmConsolekit  *consolekit,
                              gboolean        *can_suspend,
                              gboolean        *auth_suspend,
@@ -475,4 +502,18 @@ xfsm_consolekit_can_hibernate (XfsmConsolekit  *consolekit,
 
   return xfsm_consolekit_can_sleep (consolekit, "CanHibernate",
                                     can_hibernate, auth_hibernate, error);
+}
+
+
+
+gboolean
+xfsm_consolekit_can_hybrid_sleep (XfsmConsolekit  *consolekit,
+                                  gboolean        *can_hybrid_sleep,
+                                  gboolean        *auth_hybrid_sleep,
+                                  GError         **error)
+{
+  g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
+
+  return xfsm_consolekit_can_sleep (consolekit, "CanHybridSleep",
+                                    can_hybrid_sleep, auth_hybrid_sleep, error);
 }

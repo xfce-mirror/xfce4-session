@@ -1201,10 +1201,11 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
         manager->shutdown_type = shutdown_type;
 
       /* we only save the session and quit if we're actually shutting down;
-       * suspend, hibernate, and switch user will (if successful) return us to
+       * suspend, hibernate, hybrid sleep and switch user will (if successful) return us to
        * exactly the same state, so there's no need to save session */
       if (manager->shutdown_type == XFSM_SHUTDOWN_SUSPEND
           || manager->shutdown_type == XFSM_SHUTDOWN_HIBERNATE
+          || manager->shutdown_type == XFSM_SHUTDOWN_HYBRID_SLEEP
           || manager->shutdown_type == XFSM_SHUTDOWN_SWITCH_USER)
         {
           if (!xfsm_shutdown_try_type (manager->shutdown_helper,
@@ -1218,6 +1219,8 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
                                    ? _("Failed to suspend session")
                                    : manager->shutdown_type == XFSM_SHUTDOWN_HIBERNATE
                                    ? _("Failed to hibernate session")
+                                   : manager->shutdown_type == XFSM_SHUTDOWN_HYBRID_SLEEP
+                                   ? _("Failed to hybrid sleep session")
                                    : _("Failed to switch user"),
                                    error->message,
                                    XFCE_BUTTON_TYPE_MIXED, "window-close", _("_Close"), GTK_RESPONSE_ACCEPT,
@@ -1225,7 +1228,7 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
               g_error_free (error);
             }
 
-          /* at this point, either we failed to suspend/hibernate/switch user,
+          /* at this point, either we failed to suspend/hibernate/hybrid sleep/switch user,
            * or we successfully did and we've been woken back
            * up or returned to the session, so return control to the user */
           return;
@@ -1970,6 +1973,10 @@ static gboolean xfsm_manager_dbus_hibernate (XfsmDbusManager *object,
                                              GDBusMethodInvocation *invocation);
 static gboolean xfsm_manager_dbus_can_hibernate (XfsmDbusManager *object,
                                                  GDBusMethodInvocation *invocation);
+static gboolean xfsm_manager_dbus_hybrid_sleep (XfsmDbusManager *object,
+                                                GDBusMethodInvocation *invocation);
+static gboolean xfsm_manager_dbus_can_hybrid_sleep (XfsmDbusManager *object,
+                                                    GDBusMethodInvocation *invocation);
 static gboolean xfsm_manager_dbus_switch_user (XfsmDbusManager *object,
                                                GDBusMethodInvocation *invocation);
 static gboolean xfsm_manager_dbus_register_client (XfsmDbusManager *object,
@@ -2071,6 +2078,7 @@ static void
 xfsm_manager_iface_init (XfsmDbusManagerIface *iface)
 {
   iface->handle_can_hibernate = xfsm_manager_dbus_can_hibernate;
+  iface->handle_can_hybrid_sleep = xfsm_manager_dbus_can_hybrid_sleep;
   iface->handle_can_restart = xfsm_manager_dbus_can_restart;
   iface->handle_can_shutdown = xfsm_manager_dbus_can_shutdown;
   iface->handle_can_suspend = xfsm_manager_dbus_can_suspend;
@@ -2078,6 +2086,7 @@ xfsm_manager_iface_init (XfsmDbusManagerIface *iface)
   iface->handle_get_info = xfsm_manager_dbus_get_info;
   iface->handle_get_state = xfsm_manager_dbus_get_state;
   iface->handle_hibernate = xfsm_manager_dbus_hibernate;
+  iface->handle_hybrid_sleep = xfsm_manager_dbus_hybrid_sleep;
   iface->handle_switch_user = xfsm_manager_dbus_switch_user;
   iface->handle_list_clients = xfsm_manager_dbus_list_clients;
   iface->handle_logout = xfsm_manager_dbus_logout;
@@ -2438,6 +2447,54 @@ xfsm_manager_dbus_can_hibernate (XfsmDbusManager *object,
     can_hibernate = FALSE;
 
   xfsm_dbus_manager_complete_can_hibernate (object, invocation, can_hibernate);
+  return TRUE;
+}
+
+static gboolean
+xfsm_manager_dbus_hybrid_sleep (XfsmDbusManager *object,
+                                GDBusMethodInvocation *invocation)
+{
+  GError *error = NULL;
+
+  xfsm_verbose ("entering\n");
+
+  g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
+  if (xfsm_shutdown_try_hybrid_sleep (XFSM_MANAGER (object)->shutdown_helper, &error) == FALSE)
+    {
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, error->message);
+      g_clear_error (&error);
+      return TRUE;
+    }
+
+  xfsm_dbus_manager_complete_hybrid_sleep (object, invocation);
+  return TRUE;
+}
+
+static gboolean
+xfsm_manager_dbus_can_hybrid_sleep (XfsmDbusManager *object,
+                                    GDBusMethodInvocation *invocation)
+{
+  gboolean auth_hybrid_sleep = FALSE;
+  gboolean can_hybrid_sleep = FALSE;
+  GError *error = NULL;
+
+  xfsm_verbose ("entering\n");
+
+  g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
+
+  xfsm_shutdown_can_hybrid_sleep (XFSM_MANAGER (object)->shutdown_helper, &can_hybrid_sleep, &auth_hybrid_sleep, &error);
+
+  if (error)
+    {
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, error->message);
+      g_clear_error(&error);
+      return TRUE;
+    }
+
+  if (!auth_hybrid_sleep)
+    can_hybrid_sleep = FALSE;
+
+  xfsm_dbus_manager_complete_can_hybrid_sleep (object, invocation, can_hybrid_sleep);
   return TRUE;
 }
 

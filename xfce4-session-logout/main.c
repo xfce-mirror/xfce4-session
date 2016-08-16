@@ -47,6 +47,7 @@ gboolean opt_halt = FALSE;
 gboolean opt_reboot = FALSE;
 gboolean opt_suspend = FALSE;
 gboolean opt_hibernate = FALSE;
+gboolean opt_hybrid_sleep = FALSE;
 gboolean opt_switch_user = FALSE;
 gboolean opt_fast = FALSE;
 gboolean opt_version = FALSE;
@@ -59,6 +60,7 @@ enum
   XFSM_SHUTDOWN_REBOOT,
   XFSM_SHUTDOWN_SUSPEND,
   XFSM_SHUTDOWN_HIBERNATE,
+  XFSM_SHUTDOWN_HYBRID_SLEEP,
   XFSM_SHUTDOWN_SWITCH_USER
 };
 
@@ -82,6 +84,10 @@ static GOptionEntry option_entries[] =
   },
   { "hibernate", 'h', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_hibernate,
     N_("Hibernate without displaying the logout dialog"),
+    NULL
+  },
+  { "hybrid-sleep", 'h', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_hybrid_sleep,
+    N_("Hybrid Sleep without displaying the logout dialog"),
     NULL
   },
   { "switch-user", 'u', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_switch_user,
@@ -200,6 +206,15 @@ main (int argc, char **argv)
                                        NULL,
                                        &err);
     }
+  else if (opt_hybrid_sleep)
+    {
+      result = g_dbus_proxy_call_sync (proxy, "HybridSleep",
+                                       g_variant_new("()"),
+                                       G_DBUS_CALL_FLAGS_NONE,
+                                       -1,
+                                       NULL,
+                                       &err);
+    }
   else if (opt_switch_user)
     {
       result = g_dbus_proxy_call_sync (proxy, "SwitchUser",
@@ -240,6 +255,8 @@ main (int argc, char **argv)
         shutdown_type = XFSM_SHUTDOWN_SUSPEND;
       else if (opt_hibernate)
         shutdown_type = XFSM_SHUTDOWN_HIBERNATE;
+      else if (opt_hybrid_sleep)
+        shutdown_type = XFSM_SHUTDOWN_HYBRID_SLEEP;
       else if (opt_switch_user)
         shutdown_type = XFSM_SHUTDOWN_SWITCH_USER;
       else

@@ -68,10 +68,11 @@
 #include <xfce4-session/xfce-screensaver.h>
 
 
-#define POLKIT_AUTH_SHUTDOWN_XFSM  "org.xfce.session.xfsm-shutdown-helper"
-#define POLKIT_AUTH_RESTART_XFSM   "org.xfce.session.xfsm-shutdown-helper"
-#define POLKIT_AUTH_SUSPEND_XFSM   "org.xfce.session.xfsm-shutdown-helper"
-#define POLKIT_AUTH_HIBERNATE_XFSM "org.xfce.session.xfsm-shutdown-helper"
+#define POLKIT_AUTH_SHUTDOWN_XFSM     "org.xfce.session.xfsm-shutdown-helper"
+#define POLKIT_AUTH_RESTART_XFSM      "org.xfce.session.xfsm-shutdown-helper"
+#define POLKIT_AUTH_SUSPEND_XFSM      "org.xfce.session.xfsm-shutdown-helper"
+#define POLKIT_AUTH_HIBERNATE_XFSM    "org.xfce.session.xfsm-shutdown-helper"
+#define POLKIT_AUTH_HYBRID_SLEEP_XFSM "org.xfce.session.xfsm-shutdown-helper"
 
 
 
@@ -264,6 +265,12 @@ xfsm_shutdown_fallback_try_action (XfsmShutdownType   type,
       if (!lock_screen (error))
         return FALSE;
       break;
+    case XFSM_SHUTDOWN_HYBRID_SLEEP:
+      action = "hybrid-sleep";
+      /* On hybrid sleep we try to lock the screen */
+      if (!lock_screen (error))
+        return FALSE;
+      break;
     default:
       return FALSE;
   }
@@ -307,6 +314,29 @@ xfsm_shutdown_fallback_can_suspend (void)
  **/
 gboolean
 xfsm_shutdown_fallback_can_hibernate (void)
+{
+#ifdef BACKEND_TYPE_FREEBSD
+  return freebsd_supports_sleep_state ("S4");
+#endif
+#ifdef BACKEND_TYPE_LINUX
+  return linux_supports_sleep_state ("hibernate");
+#endif
+#ifdef BACKEND_TYPE_OPENBSD
+  return TRUE;
+#endif
+
+  return FALSE;
+}
+
+
+
+/**
+ * xfsm_shutdown_fallback_can_hybrid_sleep:
+ *
+ * Return value: Returns whether the *system* is capable of hybrid sleep.
+ **/
+gboolean
+xfsm_shutdown_fallback_can_hybrid_sleep (void)
 {
 #ifdef BACKEND_TYPE_FREEBSD
   return freebsd_supports_sleep_state ("S4");
@@ -371,4 +401,17 @@ gboolean
 xfsm_shutdown_fallback_auth_hibernate (void)
 {
   return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_HIBERNATE_XFSM);
+}
+
+
+
+/**
+ * xfsm_shutdown_fallback_auth_hybrid_sleep:
+ *
+ * Return value: Returns whether the user is authorized to perform a hybrid sleep.
+ **/
+gboolean
+xfsm_shutdown_fallback_auth_hybrid_sleep (void)
+{
+  return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_HYBRID_SLEEP_XFSM);
 }
