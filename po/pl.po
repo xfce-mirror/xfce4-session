@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Marcin XD <m4sk1n@o2.pl>, 2016
 # Paweł Pastuła <pastulap@poczta.onet.pl>, 2003
 # Piotr Maliński <admin@rk.edu.pl>, 2005-2006
 # Piotr Sokół <psokol.l10n@gmail.com>, 2009,2011-2012,2014
@@ -13,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-06 12:30+0200\n"
-"PO-Revision-Date: 2016-06-09 19:39+0000\n"
-"Last-Translator: Piotr Strębski <strebski@o2.pl>\n"
+"POT-Creation-Date: 2016-06-28 18:30+0200\n"
+"PO-Revision-Date: 2016-09-07 21:15+0000\n"
+"Last-Translator: Marcin XD <m4sk1n@o2.pl>\n"
 "Language-Team: Polish (http://www.transifex.com/xfce/xfce4-session/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -65,7 +66,7 @@ msgstr "Proszę sprawdzić czy plik jest poprawnym archiwum stylu."
 
 #: ../engines/balou/config.c:344 ../engines/balou/config.c:949
 #: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
-#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1145
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1223
 msgid "_Close"
 msgstr "Za_mknij"
 
@@ -192,12 +193,12 @@ msgid "Type '%s --help' for usage."
 msgstr "Proszę wprowadzić „%s --help”, aby wypisać komunikat pomocy."
 
 #: ../settings/main.c:92 ../xfce4-session/main.c:353
-#: ../xfce4-session-logout/main.c:134
+#: ../xfce4-session-logout/main.c:140
 msgid "The Xfce development team. All rights reserved."
 msgstr "Zespół twórców środowiska Xfce. Wszystkie prawa zastrzeżone."
 
 #: ../settings/main.c:93 ../xfce4-session/main.c:354
-#: ../xfce4-session-logout/main.c:137
+#: ../xfce4-session-logout/main.c:143
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Proszę zgłaszać błędy na adres <%s>."
@@ -417,7 +418,7 @@ msgstr "Nie udało się przełączyć elementu"
 msgid "Disable binding to TCP ports"
 msgstr "Wyłącza powiązania portów TCP"
 
-#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:90
+#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:96
 msgid "Print version information and exit"
 msgstr "Wypisuje informacje o wersji i kończy"
 
@@ -492,7 +493,7 @@ msgstr "Kontynuuj"
 msgid "Try again"
 msgstr "Spróbuj ponownie"
 
-#: ../xfce4-session/xfsm-manager.c:616
+#: ../xfce4-session/xfsm-manager.c:619
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -501,57 +502,61 @@ msgid ""
 "incorrectly."
 msgstr "Nie można określić nazwy sesji awaryjnej. Prawdopodobne przyczyny:\nprogram xfconfd nie jest uruchomiony (problem z konfiguracją D-Bus),\nzmienna środowiskowa $XDG_CONFIG_DIRS jest nieprawidłowa (musi zawierać „%s”) lub program xfce4-session nie został poprawnie zainstalowany."
 
-#: ../xfce4-session/xfsm-manager.c:627
+#: ../xfce4-session/xfsm-manager.c:630
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Określona sesja „%s” nie jest oznaczona jako awaryjna."
 
-#: ../xfce4-session/xfsm-manager.c:674
+#: ../xfce4-session/xfsm-manager.c:677
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Lista programów sesji awaryjnej jest pusta."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:721
+#: ../xfce4-session/xfsm-manager.c:724
 msgid "Session Manager Error"
 msgstr "Błąd menedżera sesji"
 
-#: ../xfce4-session/xfsm-manager.c:723
+#: ../xfce4-session/xfsm-manager.c:726
 msgid "Unable to load a failsafe session"
 msgstr "Nie można wczytać sesji awaryjnej"
 
-#: ../xfce4-session/xfsm-manager.c:725
+#: ../xfce4-session/xfsm-manager.c:728
 msgid "_Quit"
 msgstr "Za_kończ"
 
-#: ../xfce4-session/xfsm-manager.c:1139
+#: ../xfce4-session/xfsm-manager.c:1215
 msgid "Shutdown Failed"
 msgstr "Nie udało się wyłączyć komputera"
 
-#: ../xfce4-session/xfsm-manager.c:1142
+#: ../xfce4-session/xfsm-manager.c:1218
 msgid "Failed to suspend session"
 msgstr "Nie udało się wstrzymać sesji"
 
-#: ../xfce4-session/xfsm-manager.c:1143
+#: ../xfce4-session/xfsm-manager.c:1220
 msgid "Failed to hibernate session"
 msgstr "Nie udało się zahibernować sesji"
 
-#: ../xfce4-session/xfsm-manager.c:1423
+#: ../xfce4-session/xfsm-manager.c:1221
+msgid "Failed to switch user"
+msgstr "Nie udało się zmienić użytkownika"
+
+#: ../xfce4-session/xfsm-manager.c:1527
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Można jedynie zakończyć programy w stanie bezczynności"
 
-#: ../xfce4-session/xfsm-manager.c:1980
+#: ../xfce4-session/xfsm-manager.c:2178
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Menedżer sesji musi być w stanie bezczynności podczas żądania utworzenia punktu kontrolnego"
 
-#: ../xfce4-session/xfsm-manager.c:2048 ../xfce4-session/xfsm-manager.c:2066
+#: ../xfce4-session/xfsm-manager.c:2248 ../xfce4-session/xfsm-manager.c:2268
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Menedżer sesji musi być w stanie bezczynności podczas żądania wyłączenia"
 
-#: ../xfce4-session/xfsm-manager.c:2107
+#: ../xfce4-session/xfsm-manager.c:2313
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Menedżer sesji musi być w stanie bezczynności podczas żądania ponownego uruchomienia"
 
@@ -719,52 +724,56 @@ msgstr "Uruchamianie technik ułatwień dostępu"
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Wyłączanie jest zablokowane przez ustawienia trybu kiosk"
 
-#: ../xfce4-session/xfsm-shutdown.c:213
+#: ../xfce4-session/xfsm-shutdown.c:216
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Nieznana metoda wyłączenia %d"
 
-#: ../xfce4-session-logout/main.c:66
+#: ../xfce4-session-logout/main.c:68
 msgid "Log out without displaying the logout dialog"
 msgstr "Wylogowuje użytkownika, nie wyświetlając okna dialogowego"
 
-#: ../xfce4-session-logout/main.c:70
+#: ../xfce4-session-logout/main.c:72
 msgid "Halt without displaying the logout dialog"
 msgstr "Zatrzymuje działanie systemu, nie wyświetlając okna dialogowego"
 
-#: ../xfce4-session-logout/main.c:74
+#: ../xfce4-session-logout/main.c:76
 msgid "Reboot without displaying the logout dialog"
 msgstr "Uruchamia komputer ponownie, nie wyświetlając okna dialogowego"
 
-#: ../xfce4-session-logout/main.c:78
+#: ../xfce4-session-logout/main.c:80
 msgid "Suspend without displaying the logout dialog"
 msgstr "Wstrzymuje działanie komputera, nie wyświetlając okna dialogowego"
 
-#: ../xfce4-session-logout/main.c:82
+#: ../xfce4-session-logout/main.c:84
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Hibernuje działanie komputera, nie wyświetlając okna dialogowego"
 
-#: ../xfce4-session-logout/main.c:86
+#: ../xfce4-session-logout/main.c:88
+msgid "Switch user without displaying the logout dialog"
+msgstr "Przełączenie użytkownika bez wyświetlenia okna dialogowego"
+
+#: ../xfce4-session-logout/main.c:92
 msgid "Log out quickly; don't save the session"
 msgstr "Przyspiesza proces wylogowywania, nie zapisując sesji"
 
-#: ../xfce4-session-logout/main.c:109
+#: ../xfce4-session-logout/main.c:115
 msgid "Unknown error"
 msgstr "Nieznany błąd"
 
-#: ../xfce4-session-logout/main.c:135
+#: ../xfce4-session-logout/main.c:141
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Autorzy: Benedikt Meurer <benny@xfce.org>"
 
-#: ../xfce4-session-logout/main.c:136
+#: ../xfce4-session-logout/main.c:142
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "i Brian Tarricone <kelnos@xfce.org>"
 
-#: ../xfce4-session-logout/main.c:156 ../xfce4-session-logout/main.c:245
+#: ../xfce4-session-logout/main.c:162 ../xfce4-session-logout/main.c:262
 msgid "Received error while trying to log out"
 msgstr "Wystąpił błąd podczas próby wylogowania"
 
-#: ../xfce4-session-logout/main.c:214
+#: ../xfce4-session-logout/main.c:229
 #, c-format
 msgid "Received error while trying to log out, error was %s"
 msgstr "Wystąpił błąd podczas próby wylogowania, błąd to %s"
