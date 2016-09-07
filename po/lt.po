@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-06 12:30+0200\n"
-"PO-Revision-Date: 2016-06-24 12:58+0000\n"
+"POT-Creation-Date: 2016-06-28 18:30+0200\n"
+"PO-Revision-Date: 2016-09-07 15:01+0000\n"
 "Last-Translator: Moo\n"
 "Language-Team: Lithuanian (http://www.transifex.com/xfce/xfce4-session/language/lt/)\n"
 "MIME-Version: 1.0\n"
@@ -62,7 +62,7 @@ msgstr "Įsitikinkite jog failas yra tinkamas temos archyvas."
 
 #: ../engines/balou/config.c:344 ../engines/balou/config.c:949
 #: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
-#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1145
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1223
 msgid "_Close"
 msgstr "_Užverti"
 
@@ -186,15 +186,15 @@ msgstr "Versija"
 #: ../settings/main.c:80 ../xfce4-session/main.c:343
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr "Bandykite „%s --help“ dėl naudojimo."
+msgstr "Bandykite „%s --help“, informacijai apie naudojimą."
 
 #: ../settings/main.c:92 ../xfce4-session/main.c:353
-#: ../xfce4-session-logout/main.c:134
+#: ../xfce4-session-logout/main.c:140
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce kūrėjų komanda. Visos teisės saugomos."
 
 #: ../settings/main.c:93 ../xfce4-session/main.c:354
-#: ../xfce4-session-logout/main.c:137
+#: ../xfce4-session-logout/main.c:143
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Apie klaidas praneškite <%s>."
@@ -414,7 +414,7 @@ msgstr "Nepavyko perjungti elemento"
 msgid "Disable binding to TCP ports"
 msgstr "Išjungti susiejimą su TCP prievadais"
 
-#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:90
+#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:96
 msgid "Print version information and exit"
 msgstr "Spausdinti versijos informaciją ir išeiti"
 
@@ -440,7 +440,7 @@ msgstr "Paskutinį kartą naudota: %s"
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
-msgstr "Pasirinkite seansą, kurį norite atstatyti. Paprasčiausiai dukart spustelėkite ant seanso vardo, norėdami jį atstatyti."
+msgstr "Pasirinkite seansą, kurį norite atstatyti. Paprasčiausiai du kartus spustelėkite ant seanso pavadinimo, norėdami jį atstatyti."
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:201
@@ -489,7 +489,7 @@ msgstr "Vistiek tęsti"
 msgid "Try again"
 msgstr "Bandykite dar kartą"
 
-#: ../xfce4-session/xfsm-manager.c:616
+#: ../xfce4-session/xfsm-manager.c:619
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -498,57 +498,61 @@ msgid ""
 "incorrectly."
 msgstr "Nepavyko nustatyti saugaus seanso pavadinimo.  Galimos priežastys: xfconfd neveikia (D-Bus nustatymo klaida); aplinkos kintamasis $XDG_CONFIG_DIRS nustatytas netinkamai (turi turėti „%s“), arba xfce4-session neteisingai įdiegta."
 
-#: ../xfce4-session/xfsm-manager.c:627
+#: ../xfce4-session/xfsm-manager.c:630
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Nurodytas saugus seansas („%s“) nepažymėtas kaip saugus seansas."
 
-#: ../xfce4-session/xfsm-manager.c:674
+#: ../xfce4-session/xfsm-manager.c:677
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Saugaus seanso programų sąrašas tuščias."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:721
+#: ../xfce4-session/xfsm-manager.c:724
 msgid "Session Manager Error"
 msgstr "Seanso tvarkytuvės klaida"
 
-#: ../xfce4-session/xfsm-manager.c:723
+#: ../xfce4-session/xfsm-manager.c:726
 msgid "Unable to load a failsafe session"
 msgstr "Nepavyko įkelti saugaus seanso"
 
-#: ../xfce4-session/xfsm-manager.c:725
+#: ../xfce4-session/xfsm-manager.c:728
 msgid "_Quit"
 msgstr "_Baigti"
 
-#: ../xfce4-session/xfsm-manager.c:1139
+#: ../xfce4-session/xfsm-manager.c:1215
 msgid "Shutdown Failed"
 msgstr "Išjungti nepavyko"
 
-#: ../xfce4-session/xfsm-manager.c:1142
+#: ../xfce4-session/xfsm-manager.c:1218
 msgid "Failed to suspend session"
 msgstr "Nepavyko pristabdyti seanso"
 
-#: ../xfce4-session/xfsm-manager.c:1143
+#: ../xfce4-session/xfsm-manager.c:1220
 msgid "Failed to hibernate session"
 msgstr "Nepavyko užmigdyti seanso"
 
-#: ../xfce4-session/xfsm-manager.c:1423
+#: ../xfce4-session/xfsm-manager.c:1221
+msgid "Failed to switch user"
+msgstr "Nepavyko perjungti naudotojo"
+
+#: ../xfce4-session/xfsm-manager.c:1527
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Klientus galima nutraukti tik neveiklumo būsenoje"
 
-#: ../xfce4-session/xfsm-manager.c:1980
+#: ../xfce4-session/xfsm-manager.c:2178
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Kai prašoma įrašyto taško, seanso tvarkytuvė turi būti neveiklumo būsenoje"
 
-#: ../xfce4-session/xfsm-manager.c:2048 ../xfce4-session/xfsm-manager.c:2066
+#: ../xfce4-session/xfsm-manager.c:2248 ../xfce4-session/xfsm-manager.c:2268
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Kai prašoma išjungti, seanso tvarkytuvė turi būti neveiklumo būsenoje"
 
-#: ../xfce4-session/xfsm-manager.c:2107
+#: ../xfce4-session/xfsm-manager.c:2313
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Kai prašoma paleisti iš naujo, seansų tvarkytuvė privalo būti neveiklumo būsenoje"
 
@@ -716,52 +720,56 @@ msgstr "Paleidžiamos pagalbinės technologijos"
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Išjungimas užblokuotas „kiosk“ nustatymuose"
 
-#: ../xfce4-session/xfsm-shutdown.c:213
+#: ../xfce4-session/xfsm-shutdown.c:216
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Nežinomas išjungimo būdas %d"
 
-#: ../xfce4-session-logout/main.c:66
+#: ../xfce4-session-logout/main.c:68
 msgid "Log out without displaying the logout dialog"
 msgstr "Atsijungti nerodant atsijungimo lango"
 
-#: ../xfce4-session-logout/main.c:70
+#: ../xfce4-session-logout/main.c:72
 msgid "Halt without displaying the logout dialog"
 msgstr "Sustabdyti nerodant atsijungimo dialogo"
 
-#: ../xfce4-session-logout/main.c:74
+#: ../xfce4-session-logout/main.c:76
 msgid "Reboot without displaying the logout dialog"
 msgstr "Paleisti iš naujo nerodant atsijungimo dialogo"
 
-#: ../xfce4-session-logout/main.c:78
+#: ../xfce4-session-logout/main.c:80
 msgid "Suspend without displaying the logout dialog"
 msgstr "Pristabdyti, nerodant atsijungimo dialogo"
 
-#: ../xfce4-session-logout/main.c:82
+#: ../xfce4-session-logout/main.c:84
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Užmigdyti, nerodant atsijungimo dialogo"
 
-#: ../xfce4-session-logout/main.c:86
+#: ../xfce4-session-logout/main.c:88
+msgid "Switch user without displaying the logout dialog"
+msgstr "Perjungti naudotoją, nerodant atsijungimo dialogo"
+
+#: ../xfce4-session-logout/main.c:92
 msgid "Log out quickly; don't save the session"
 msgstr "Greitai atsijungti; neįrašyti seanso"
 
-#: ../xfce4-session-logout/main.c:109
+#: ../xfce4-session-logout/main.c:115
 msgid "Unknown error"
 msgstr "Nežinoma klaida"
 
-#: ../xfce4-session-logout/main.c:135
+#: ../xfce4-session-logout/main.c:141
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Sukūrė Benedikt Meurer <benny@xfce.org>"
 
-#: ../xfce4-session-logout/main.c:136
+#: ../xfce4-session-logout/main.c:142
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "ir Brian Tarricone <kelnos@xfce.org>."
 
-#: ../xfce4-session-logout/main.c:156 ../xfce4-session-logout/main.c:245
+#: ../xfce4-session-logout/main.c:162 ../xfce4-session-logout/main.c:262
 msgid "Received error while trying to log out"
 msgstr "Bandant atsijungti gauta klaida"
 
-#: ../xfce4-session-logout/main.c:214
+#: ../xfce4-session-logout/main.c:229
 #, c-format
 msgid "Received error while trying to log out, error was %s"
 msgstr "Bandant atsijungti, buvo gauta klaida, kuri buvo %s"
