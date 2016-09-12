@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Theppitak Karoonboonyanan <thep@linux.thai.net>, 2013
+# Theppitak Karoonboonyanan <theppitak@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-02 22:44+0200\n"
-"PO-Revision-Date: 2013-10-11 08:30+0000\n"
-"Last-Translator: theppitak <theppitak@gmail.com>\n"
-"Language-Team: Thai (http://www.transifex.com/projects/p/xfce/language/th/)\n"
+"POT-Creation-Date: 2016-06-28 18:30+0200\n"
+"PO-Revision-Date: 2016-09-12 03:43+0000\n"
+"Last-Translator: Theppitak Karoonboonyanan <theppitak@gmail.com>\n"
+"Language-Team: Thai (http://www.transifex.com/xfce/xfce4-session/language/th/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,6 +35,17 @@ msgstr "ไม่มีคำบรรยาย"
 msgid "Choose theme file to install..."
 msgstr "เลือกแฟ้มชุดตกแต่งที่จะติดตั้ง..."
 
+#: ../engines/balou/config.c:327 ../engines/balou/config.c:495
+#: ../settings/session-editor.c:173 ../settings/session-editor.c:257
+#: ../xfce4-session/xfsm-logout-dialog.c:209
+#: ../xfce4-session/xfsm-splash-screen.c:213
+msgid "_Cancel"
+msgstr "_ยกเลิก"
+
+#: ../engines/balou/config.c:328
+msgid "_Open"
+msgstr "_เปิด"
+
 #: ../engines/balou/config.c:336
 #, c-format
 msgid "Unable to install splash theme from file \"%s\""
@@ -47,96 +59,106 @@ msgstr "ข้อผิดพลาดในแฟ้มชุดตกแต่
 msgid "Please check that the file is a valid splash theme archive."
 msgstr "กรุณาตรวจสอบว่าแฟ้มนี้เป็นแฟ้มจัดเก็บชุดหน้าไตเติลที่ใช้การได้"
 
-#: ../engines/balou/config.c:402
+#: ../engines/balou/config.c:344 ../engines/balou/config.c:949
+#: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1223
+msgid "_Close"
+msgstr "ปิ_ด"
+
+#: ../engines/balou/config.c:403
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "ไม่สามารถลบชุดหน้าไตเติล \"%s\" จากไดเรกทอรี %s"
 
-#: ../engines/balou/config.c:491
+#: ../engines/balou/config.c:492
 msgid "Choose theme filename..."
 msgstr "ตั้งชื่อแฟ้มชุดตกแต่ง..."
+
+#: ../engines/balou/config.c:496
+msgid "_Save"
+msgstr "_บันทึก"
 
 #: ../engines/balou/config.c:624
 msgid "_Install new theme"
 msgstr "_ติดตั้งชุดตกแต่งใหม่"
 
-#: ../engines/balou/config.c:633
+#: ../engines/balou/config.c:631
 msgid "_Remove theme"
 msgstr "_ลบชุดตกแต่ง"
 
-#: ../engines/balou/config.c:650
+#: ../engines/balou/config.c:646
 msgid "_Export theme"
 msgstr "_ส่งออกชุดตกแต่ง"
 
-#: ../engines/balou/config.c:866
+#: ../engines/balou/config.c:860
 msgid "Balou theme"
 msgstr "ชุดตกแต่งบาลู"
 
-#: ../engines/balou/config.c:951
+#: ../engines/balou/config.c:945
 msgid "Configure Balou..."
 msgstr "ตั้งค่าบาลู..."
 
-#: ../engines/balou/config.c:994
+#: ../engines/balou/config.c:987
 msgid "Balou"
 msgstr "บาลู"
 
-#: ../engines/balou/config.c:995
+#: ../engines/balou/config.c:988
 msgid "Balou Splash Engine"
 msgstr "กลไกหน้าไตเติลบาลู"
 
-#: ../engines/mice/mice.c:373
+#: ../engines/mice/mice.c:385
 msgid "Mice"
 msgstr "ไมซ์"
 
-#: ../engines/mice/mice.c:374
+#: ../engines/mice/mice.c:386
 msgid "Mice Splash Engine"
 msgstr "กลไกหน้าไตเติลไมซ์"
 
-#: ../engines/simple/simple.c:346
+#: ../engines/simple/simple.c:334
 msgid "Configure Simple..."
 msgstr "ตั้งค่าชุดตกแต่งง่ายๆ..."
 
-#: ../engines/simple/simple.c:357
+#: ../engines/simple/simple.c:344
 msgid "Font"
 msgstr "แบบอักษร"
 
-#: ../engines/simple/simple.c:367
+#: ../engines/simple/simple.c:354
 msgid "Colors"
 msgstr "สี"
 
-#: ../engines/simple/simple.c:375
+#: ../engines/simple/simple.c:362
 msgid "Background color:"
 msgstr "สีพื้นหลัง:"
 
-#: ../engines/simple/simple.c:388
+#: ../engines/simple/simple.c:373
 msgid "Text color:"
 msgstr "สีตัวอักษร:"
 
-#: ../engines/simple/simple.c:401
+#: ../engines/simple/simple.c:385
 msgid "Image"
 msgstr "รูปภาพ"
 
-#: ../engines/simple/simple.c:409
+#: ../engines/simple/simple.c:393
 msgid "Use custom image"
 msgstr "กำหนดรูปภาพเอง"
 
-#: ../engines/simple/simple.c:413
+#: ../engines/simple/simple.c:397
 msgid "Choose image..."
 msgstr "เลือกรูปภาพ..."
 
-#: ../engines/simple/simple.c:419
+#: ../engines/simple/simple.c:403
 msgid "Images"
 msgstr "รูปภาพ"
 
-#: ../engines/simple/simple.c:425
+#: ../engines/simple/simple.c:409
 msgid "All files"
 msgstr "ทุกแฟ้ม"
 
-#: ../engines/simple/simple.c:497
+#: ../engines/simple/simple.c:480
 msgid "Simple"
 msgstr "ง่ายๆ"
 
-#: ../engines/simple/simple.c:498
+#: ../engines/simple/simple.c:481
 msgid "Simple Splash Engine"
 msgstr "กลไกหน้าไตเติลง่ายๆ"
 
@@ -148,43 +170,43 @@ msgstr "โปรแกรมรักษาหน้าจอ"
 msgid "Launch screensaver and locker program"
 msgstr "เรียกโปรแกรมรักษาและล็อคหน้าจอ"
 
-#: ../settings/main.c:43
+#: ../settings/main.c:68
 msgid "Settings manager socket"
 msgstr "ซ็อกเก็ตของโปรแกรมจัดการค่าตั้ง"
 
-#: ../settings/main.c:43
+#: ../settings/main.c:68
 msgid "SOCKET ID"
 msgstr "หมายเลขซ็อกเก็ต"
 
-#: ../settings/main.c:44
+#: ../settings/main.c:69
 msgid "Version information"
 msgstr "ข้อมูลรุ่นโปรแกรม"
 
-#: ../settings/main.c:75 ../xfce4-session/main.c:257
+#: ../settings/main.c:80 ../xfce4-session/main.c:343
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "ลองสั่ง '%s --help' เพื่อดูวิธีใช้"
 
-#: ../settings/main.c:87 ../xfce4-session/main.c:267
-#: ../xfce4-session-logout/main.c:136
+#: ../settings/main.c:92 ../xfce4-session/main.c:353
+#: ../xfce4-session-logout/main.c:140
 msgid "The Xfce development team. All rights reserved."
 msgstr "The Xfce development team. All rights reserved."
 
-#: ../settings/main.c:88 ../xfce4-session/main.c:268
-#: ../xfce4-session-logout/main.c:139
+#: ../settings/main.c:93 ../xfce4-session/main.c:354
+#: ../xfce4-session-logout/main.c:143
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "หากพบปัญหา กรุณารายงานไปที่ <%s>"
 
-#: ../settings/main.c:97 ../xfce4-session/main.c:276
+#: ../settings/main.c:102 ../xfce4-session/main.c:362
 msgid "Unable to contact settings server"
 msgstr "ไม่สามารถติดต่อเซิร์ฟเวอร์ค่าตั้ง"
 
-#: ../settings/main.c:116
+#: ../settings/main.c:121
 msgid "Unable to create user interface from embedded definition data"
 msgstr "ไม่สามารถสร้างส่วนติดต่อผู้ใช้จากข้อมูลข้อกำหนดที่ฝังตัวมา"
 
-#: ../settings/main.c:128
+#: ../settings/main.c:133
 msgid "App_lication Autostart"
 msgstr "เรียกโปรแกรม_อัตโนมัติ"
 
@@ -239,47 +261,46 @@ msgstr "คุณอาจต้องลบแฟ้มบางแฟ้มใ
 msgid "All Xfce cache files could not be cleared"
 msgstr "ไม่สามารถล้างแฟ้มแคชทั้งหมดของ Xfce ได้"
 
-#: ../settings/session-editor.c:249
+#: ../settings/session-editor.c:251
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการจบการทำงานของ \"%s\"?"
 
-#: ../settings/session-editor.c:252 ../settings/session-editor.c:280
+#: ../settings/session-editor.c:254 ../settings/session-editor.c:286
 msgid "Terminate Program"
 msgstr "จบโปรแกรม"
 
-#: ../settings/session-editor.c:254
+#: ../settings/session-editor.c:256
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
 msgstr "โปรแกรมดังกล่าวจะสูญเสียสถานะการทำงานที่ยังไม่เก็บบันทึก และจะไม่ถูกเรียกใหม่ในการเข้าวาระครั้งหน้าของคุณ"
 
-#: ../settings/session-editor.c:256
-#: ../settings/xfce4-session-settings.glade.h:30
+#: ../settings/session-editor.c:258
 msgid "_Quit Program"
 msgstr "_ออกจากโปรแกรม"
 
-#: ../settings/session-editor.c:281
+#: ../settings/session-editor.c:287
 msgid "Unable to terminate program."
 msgstr "ไม่สามารถจบการทำงานของโปรแกรม"
 
-#: ../settings/session-editor.c:459
+#: ../settings/session-editor.c:509
 msgid "(Unknown program)"
 msgstr "(โปรแกรมนิรนาม)"
 
-#: ../settings/session-editor.c:679
+#: ../settings/session-editor.c:733
 msgid "Priority"
 msgstr "ความสำคัญ"
 
-#: ../settings/session-editor.c:687
+#: ../settings/session-editor.c:741
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:693
+#: ../settings/session-editor.c:747
 msgid "Program"
 msgstr "โปรแกรม"
 
-#: ../settings/session-editor.c:718
+#: ../settings/session-editor.c:772
 msgid "Restart Style"
 msgstr "รูปแบบการเปิดซ้ำ"
 
@@ -289,6 +310,14 @@ msgstr "รูปแบบการเปิดซ้ำ"
 msgid "None"
 msgstr "ไม่มี"
 
+#: ../settings/xfae-dialog.c:73 ../settings/xfae-dialog.c:181
+msgid "Cancel"
+msgstr "ยกเลิก"
+
+#: ../settings/xfae-dialog.c:74 ../settings/xfae-dialog.c:182
+msgid "OK"
+msgstr "ตกลง"
+
 #: ../settings/xfae-dialog.c:78
 msgid "Add application"
 msgstr "เพิ่มโปรแกรม"
@@ -297,19 +326,19 @@ msgstr "เพิ่มโปรแกรม"
 msgid "Name:"
 msgstr "ชื่อ:"
 
-#: ../settings/xfae-dialog.c:109
+#: ../settings/xfae-dialog.c:107
 msgid "Description:"
 msgstr "คำบรรยาย:"
 
-#: ../settings/xfae-dialog.c:124 ../settings/xfae-model.c:479
+#: ../settings/xfae-dialog.c:120 ../settings/xfae-model.c:479
 msgid "Command:"
 msgstr "คำสั่ง:"
 
-#: ../settings/xfae-dialog.c:184
+#: ../settings/xfae-dialog.c:178
 msgid "Select a command"
 msgstr "เลือกคำสั่ง"
 
-#: ../settings/xfae-dialog.c:233
+#: ../settings/xfae-dialog.c:227
 msgid "Edit application"
 msgstr "แก้ไขโปรแกรม"
 
@@ -338,7 +367,7 @@ msgstr "เปิดแฟ้ม %s เพื่ออ่านไม่สำ�
 msgid "Failed to open %s for writing"
 msgstr "เปิดแฟ้ม %s เพื่อเขียนไม่สำเร็จ"
 
-#: ../settings/xfae-window.c:102
+#: ../settings/xfae-window.c:105
 msgid ""
 "Below is the list of applications that will be started automatically when "
 "you login to your Xfce desktop, in addition to the applications that were "
@@ -346,57 +375,58 @@ msgid ""
 "desktop environment, but you can still enable them if you want."
 msgstr "ด้านล่างนี้คือรายชื่อของโปรแกรมที่จะเปิดทำงานโดยอัตโนมัติเมื่อคุณเข้าระบบสู่เดสก์ท็อป Xfce นอกเหนือจากโปรแกรมที่บันทึกไว้ขณะที่คุณออกจากระบบครั้งล่าสุด โปรแกรมที่เป็นตัวเอียงเป็นของเดสก์ท็อปอื่น แต่คุณยังสามารถเปิดใช้ได้ถ้าคุณต้องการ"
 
-#: ../settings/xfae-window.c:293
+#: ../settings/xfae-window.c:179 ../settings/xfae-window.c:237
+msgid "Add"
+msgstr "เพิ่ม"
+
+#: ../settings/xfae-window.c:185 ../settings/xfae-window.c:243
+msgid "Remove"
+msgstr "ลบออก"
+
+#: ../settings/xfae-window.c:195
+msgid "Edit"
+msgstr "แก้ไข"
+
+#: ../settings/xfae-window.c:296
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "เพิ่ม \"%s\" ไม่สำเร็จ"
 
-#: ../settings/xfae-window.c:324 ../settings/xfae-window.c:338
+#: ../settings/xfae-window.c:327 ../settings/xfae-window.c:341
 msgid "Failed to remove item"
 msgstr "ลบรายการไม่สำเร็จ"
 
-#: ../settings/xfae-window.c:330
-msgid ""
-"This will permanently remove the application from the list of automatically "
-"started applications"
-msgstr "นี่จะเป็นการลบโปรแกรมนี้ออกจากรายชื่อของโปรแกรมที่จะเรียกเปิดโดยอัตโนมัติอย่างถาวร"
-
-#: ../settings/xfae-window.c:332
-#, c-format
-msgid "Are you sure you want to remove \"%s\""
-msgstr "คุณแน่ใจหรือไม่ว่าคุณต้องการลบ \"%s\""
-
-#: ../settings/xfae-window.c:366
+#: ../settings/xfae-window.c:369
 msgid "Failed to edit item"
 msgstr "แก้ไขรายการไม่สำเร็จ"
 
-#: ../settings/xfae-window.c:386
+#: ../settings/xfae-window.c:389
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "แก้ไขรายการ \"%s\" ไม่สำเร็จ"
 
-#: ../settings/xfae-window.c:414
+#: ../settings/xfae-window.c:417
 msgid "Failed to toggle item"
 msgstr "สลับค่าของรายการไม่สำเร็จ"
 
-#: ../xfce4-session/main.c:76
+#: ../xfce4-session/main.c:77
 msgid "Disable binding to TCP ports"
 msgstr "ปิดการ bind กับพอร์ต TCP"
 
-#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:91
+#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:96
 msgid "Print version information and exit"
 msgstr "แสดงข้อมูลรุ่นแล้วจบการทำงาน"
 
-#: ../xfce4-session/main.c:140
+#: ../xfce4-session/main.c:146
 msgid "Loading desktop settings"
 msgstr "กำลังโหลดค่าตั้งของเดสก์ท็อป"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:298
+#: ../xfce4-session/main.c:198
 msgid "Verifying DNS settings"
 msgstr "กำลังตรวจสอบค่าตั้ง DNS"
 
-#: ../xfce4-session/main.c:302
+#: ../xfce4-session/main.c:202
 msgid "Loading session data"
 msgstr "กำลังโหลดข้อมูลวาระ"
 
@@ -405,41 +435,35 @@ msgstr "กำลังโหลดข้อมูลวาระ"
 msgid "Last accessed: %s"
 msgstr "เข้าถึงล่าสุด: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:172
+#: ../xfce4-session/xfsm-chooser.c:175
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr "เลือกวาระที่คุณต้องการกู้คืน คุณสามารถดับเบิลคลิกที่ชื่อวาระที่จะกู้คืนก็ได้"
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:198
+#: ../xfce4-session/xfsm-chooser.c:201
 msgid "Log out"
 msgstr "ออกจากระบบ"
 
-#: ../xfce4-session/xfsm-chooser.c:200
+#: ../xfce4-session/xfsm-chooser.c:203
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "ยกเลิกความพยายามเข้าระบบครั้งนี้ และกลับไปที่หน้าจอเข้าระบบ"
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:207
+#: ../xfce4-session/xfsm-chooser.c:210
 msgid "New session"
 msgstr "วาระใหม่"
 
-#: ../xfce4-session/xfsm-chooser.c:208
+#: ../xfce4-session/xfsm-chooser.c:211
 msgid "Create a new session."
 msgstr "สร้างวาระใหม่"
 
-#: ../xfce4-session/xfsm-client.c:506 ../xfce4-session/xfsm-client.c:532
-#: ../xfce4-session/xfsm-client.c:571
-#, c-format
-msgid "The client doesn't have any properties set yet"
-msgstr "ไคลเอนต์ยังไม่ได้กำหนดคุณสมบัติใดเลย"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:247
+#: ../xfce4-session/xfsm-compat-gnome.c:255
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "กำลังเรียกเปิดดีมอนพวงกุญแจของ GNOME"
 
-#: ../xfce4-session/xfsm-compat-kde.c:124
+#: ../xfce4-session/xfsm-compat-kde.c:126
 msgid "Starting KDE services"
 msgstr "กำลังเรียกเปิดบริการต่างๆ ของ KDE"
 
@@ -464,7 +488,7 @@ msgstr "ยืนยันทำต่อไป"
 msgid "Try again"
 msgstr "ลองอีกครั้ง"
 
-#: ../xfce4-session/xfsm-manager.c:611
+#: ../xfce4-session/xfsm-manager.c:619
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -473,55 +497,65 @@ msgid ""
 "incorrectly."
 msgstr "ไม่สามารถพิจารณาชื่อของวาระ failsafe ได้ สาเหตุที่เป็นไปได้คือ xfconfd อาจไม่ได้ทำงานอยู่ (ปัญหาการตั้งค่าของ D-Bus), ตัวแปรภาวะแวดล้อม $XDG_CONFIG_DIRS กำหนดค่าไว้ไม่ถูกต้อง (ต้องมี \"%s\" ด้วย), หรือติดตั้ง xfce4-session ไว้ไม่สมบูรณ์"
 
-#: ../xfce4-session/xfsm-manager.c:622
+#: ../xfce4-session/xfsm-manager.c:630
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "วาระ failsafe (\"%s\") ที่ระบุ ไม่ได้ถูกทำเครื่องหมายไว้ว่าเป็นวาระ failsafe"
 
-#: ../xfce4-session/xfsm-manager.c:669
+#: ../xfce4-session/xfsm-manager.c:677
 msgid "The list of applications in the failsafe session is empty."
 msgstr "รายชื่อของโปรแกรมในวาระ failsafe ว่างเปล่าอยู่"
 
 #. FIXME: migrate this into the splash screen somehow so the
-#. * window doesn't look ugly (right now now WM is running, so it
+#. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:716
+#: ../xfce4-session/xfsm-manager.c:724
 msgid "Session Manager Error"
 msgstr "ข้อผิดพลาดในโปรแกรมจัดการวาระ"
 
-#: ../xfce4-session/xfsm-manager.c:718
+#: ../xfce4-session/xfsm-manager.c:726
 msgid "Unable to load a failsafe session"
 msgstr "ไม่สามารถโหลดวาระ failsafe"
 
-#: ../xfce4-session/xfsm-manager.c:1127
+#: ../xfce4-session/xfsm-manager.c:728
+msgid "_Quit"
+msgstr "_ออก"
+
+#: ../xfce4-session/xfsm-manager.c:1215
 msgid "Shutdown Failed"
 msgstr "ปิดระบบไม่สำเร็จ"
 
-#: ../xfce4-session/xfsm-manager.c:1130
+#: ../xfce4-session/xfsm-manager.c:1218
 msgid "Failed to suspend session"
 msgstr "พักวาระไม่สำเร็จ"
 
-#: ../xfce4-session/xfsm-manager.c:1131
+#: ../xfce4-session/xfsm-manager.c:1220
 msgid "Failed to hibernate session"
 msgstr "จำศีลวาระไม่สำเร็จ"
 
-#: ../xfce4-session/xfsm-manager.c:1405
+#: ../xfce4-session/xfsm-manager.c:1221
+msgid "Failed to switch user"
+msgstr "สลับผู้ใช้ไม่สำเร็จ"
+
+#: ../xfce4-session/xfsm-manager.c:1527
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "สามารถจบการทำงานของไคลเอนต์ได้เมื่ออยู่ในสถานะเดินเครื่องเปล่าเท่านั้น"
 
-#: ../xfce4-session/xfsm-manager.c:1969
-#, c-format
+#: ../xfce4-session/xfsm-manager.c:2178
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "โปรแกรมจัดการวาระต้องอยู่ในสถานะเดินเครื่องเปล่าขณะร้องขอจุดตรวจสอบ"
 
-#: ../xfce4-session/xfsm-manager.c:2010
-#, c-format
+#: ../xfce4-session/xfsm-manager.c:2248 ../xfce4-session/xfsm-manager.c:2268
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "โปรแกรมจัดการวาระต้องอยู่ในสถานะเดินเครื่องเปล่าขณะร้องขอการปิดระบบ"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:188
+#: ../xfce4-session/xfsm-manager.c:2313
+msgid "Session manager must be in idle state when requesting a restart"
+msgstr "โปรแกรมจัดการวาระต้องอยู่ในสถานะเดินเครื่องเปล่าขณะร้องขอการเริ่มเปิดเครื่องใหม่"
+
+#: ../xfce4-session/xfsm-logout-dialog.c:182
 #, c-format
 msgid "Log out %s"
 msgstr "ออกจากวาระของ %s"
@@ -529,43 +563,37 @@ msgstr "ออกจากวาระของ %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:246
+#: ../xfce4-session/xfsm-logout-dialog.c:224
 msgid "_Log Out"
 msgstr "_ออกจากระบบ"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:266
+#: ../xfce4-session/xfsm-logout-dialog.c:244
 msgid "_Restart"
 msgstr "เ_ริ่มเปิดเครื่องใหม่"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:286
+#: ../xfce4-session/xfsm-logout-dialog.c:264
 msgid "Shut _Down"
 msgstr "ปิ_ดเครื่อง"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:309
+#: ../xfce4-session/xfsm-logout-dialog.c:287
 msgid "Sus_pend"
 msgstr "_พักเครื่อง"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:343
+#: ../xfce4-session/xfsm-logout-dialog.c:321
 msgid "_Hibernate"
-msgstr "_จำศึลเครื่อง"
+msgstr "_จำศีลเครื่อง"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:368
+#: ../xfce4-session/xfsm-logout-dialog.c:352
+msgid "Switch _User"
+msgstr "_สลับผู้ใช้"
+
+#: ../xfce4-session/xfsm-logout-dialog.c:377
 msgid "_Save session for future logins"
 msgstr "_บันทึกวาระสำหรับใช้เข้าระบบครั้งต่อไป"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:395
-msgid "Please enter your password"
-msgstr "กรุณาป้อนรหัสผ่านของคุณ"
-
-#: ../xfce4-session/xfsm-logout-dialog.c:427
+#: ../xfce4-session/xfsm-logout-dialog.c:405
 msgid "An error occurred"
 msgstr "เกิดข้อผิดพลาด"
-
-#: ../xfce4-session/xfsm-logout-dialog.c:433
-msgid ""
-"Either the password you entered is invalid, or the system administrator "
-"disallows shutting down this computer with your user account."
-msgstr "รหัสผ่านที่คุณป้อนไม่ถูกต้อง หรือมิฉะนั้น ผู้ดูแลระบบก็อาจห้ามปิดเครื่องด้วยบัญชีผู้ใช้ของคุณ"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -575,92 +603,96 @@ msgstr "เลือกวาระ"
 msgid "Choose session name"
 msgstr "ตั้งชื่อวาระ"
 
+#: ../xfce4-session/xfsm-splash-screen.c:215
+msgid "_OK"
+msgstr "_ตกลง"
+
 #: ../xfce4-session/xfsm-splash-screen.c:222
 msgid "Choose a name for the new session:"
 msgstr "ตั้งชื่อสำหรับวาระใหม่นี้:"
 
-#: ../xfce4-session/xfsm-startup.c:347
+#: ../xfce4-session/xfsm-startup.c:397
 msgid "Starting the Volume Controller"
 msgstr "กำลังเรียกเปิดตัวจัดการความดังเสียง"
 
-#: ../xfce4-session/xfsm-startup.c:349
+#: ../xfce4-session/xfsm-startup.c:399
 msgid "Starting the Panel"
 msgstr "กำลังเรียกเปิดพาเนล"
 
-#: ../xfce4-session/xfsm-startup.c:351
+#: ../xfce4-session/xfsm-startup.c:401
 msgid "Starting the Desktop Manager"
 msgstr "กำลังเรียกเปิดโปรแกรมจัดการพื้นโต๊ะ"
 
-#: ../xfce4-session/xfsm-startup.c:353
+#: ../xfce4-session/xfsm-startup.c:403
 msgid "Starting the Taskbar"
 msgstr "กำลังเรียกเปิดแถบงาน"
 
-#: ../xfce4-session/xfsm-startup.c:355
+#: ../xfce4-session/xfsm-startup.c:405
 msgid "Starting the Window Manager"
 msgstr "กำลังเรียกเปิดโปรแกรมจัดการหน้าต่าง"
 
-#: ../xfce4-session/xfsm-startup.c:359
+#: ../xfce4-session/xfsm-startup.c:409
 msgid "Starting the Gnome Terminal Emulator"
 msgstr "กำลังเรียกเปิดโปรแกรมจำลองเทอร์มินัลของ GNOME"
 
-#: ../xfce4-session/xfsm-startup.c:363
+#: ../xfce4-session/xfsm-startup.c:413
 msgid "Starting the KDE Advanced Text Editor"
 msgstr "กำลังเรียกเปิดเครื่องมือแก้ไขข้อความขั้นสูงของ KDE"
 
-#: ../xfce4-session/xfsm-startup.c:365
+#: ../xfce4-session/xfsm-startup.c:415
 msgid "Starting the KDE Clipboard Manager"
 msgstr "กำลังเรียกเปิดโปรแกรมจัดการคลิปบอร์ดของ KDE"
 
-#: ../xfce4-session/xfsm-startup.c:367
+#: ../xfce4-session/xfsm-startup.c:417
 msgid "Starting the KDE Mail Reader"
 msgstr "กำลังเรียกเปิดโปรแกรมอ่านเมลของ KDE"
 
-#: ../xfce4-session/xfsm-startup.c:369
+#: ../xfce4-session/xfsm-startup.c:419
 msgid "Starting the KDE News Reader"
 msgstr "กำลังเรียกเปิดโปรแกรมอ่านข่าวของ KDE"
 
-#: ../xfce4-session/xfsm-startup.c:371
+#: ../xfce4-session/xfsm-startup.c:421
 msgid "Starting the Konqueror"
 msgstr "กำลังเรียกเปิด Konqueror"
 
-#: ../xfce4-session/xfsm-startup.c:373
+#: ../xfce4-session/xfsm-startup.c:423
 msgid "Starting the KDE Terminal Emulator"
 msgstr "กำลังเรียกเปิดโปรแกรมจำลองเทอร์มินัลของ KDE"
 
-#: ../xfce4-session/xfsm-startup.c:377
+#: ../xfce4-session/xfsm-startup.c:427
 msgid "Starting the Beep Media Player"
 msgstr "กำลังเรียกเปิดโปรแกรมเล่นสื่อ Beep"
 
-#: ../xfce4-session/xfsm-startup.c:379
+#: ../xfce4-session/xfsm-startup.c:429
 msgid "Starting The Gimp"
 msgstr "กำลังเรียกเปิด The Gimp"
 
-#: ../xfce4-session/xfsm-startup.c:381
+#: ../xfce4-session/xfsm-startup.c:431
 msgid "Starting the VI Improved Editor"
 msgstr "กำลังเรียกเปิดเครื่องมือแก้ไขข้อความ VI Improved"
 
-#: ../xfce4-session/xfsm-startup.c:383
+#: ../xfce4-session/xfsm-startup.c:433
 msgid "Starting the Session Management Proxy"
 msgstr "กำลังเรียกเปิดพร็อกซีจัดการวาระ"
 
-#: ../xfce4-session/xfsm-startup.c:385
+#: ../xfce4-session/xfsm-startup.c:435
 msgid "Starting the X-Chat IRC Client"
 msgstr "กำลังเรียกเปิดลูกข่าย IRC X-Chat"
 
-#: ../xfce4-session/xfsm-startup.c:387
+#: ../xfce4-session/xfsm-startup.c:437
 msgid "Starting the X Multimedia System"
 msgstr "กำลังเรียกเปิดระบบสื่อประสมของ X"
 
-#: ../xfce4-session/xfsm-startup.c:389
+#: ../xfce4-session/xfsm-startup.c:439
 msgid "Starting the X Terminal Emulator"
 msgstr "กำลังเรียกเปิดโปรแกรมจำลองเทอร์มินัลของ X"
 
-#: ../xfce4-session/xfsm-startup.c:391
+#: ../xfce4-session/xfsm-startup.c:441
 #, c-format
 msgid "Starting %s"
 msgstr "กำลังเรียกเปิด %s"
 
-#: ../xfce4-session/xfsm-startup.c:515
+#: ../xfce4-session/xfsm-startup.c:565
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -675,81 +707,71 @@ msgid ""
 "You should delete this directory now.\n"
 msgstr "มีการเปลี่ยนตำแหน่งเก็บและรูปแบบของแฟ้ม autostart ไปแล้ว\nตำแหน่งใหม่คือ\n\n  %s\n\nซึ่งคุณสามารถเก็บแฟ้ม .desktop ต่างๆ ซึ่งใช้บรรยายโปรแกรมที่จะเรียกเปิด\nเมื่อคุณเข้าระบบสู่เดสก์ท็อป Xfce แฟ้มต่างๆ ในไดเรกทอรี autostart เดิมของคุณ\nได้ถูกโอนย้ายมายังตำแหน่งใหม่เรียบร้อยแล้ว\nคุณควรลบไดเรกทอรีนี้ได้แล้ว\n"
 
-#: ../xfce4-session/xfsm-startup.c:684
+#: ../xfce4-session/xfsm-startup.c:750
 msgid "Performing Autostart..."
 msgstr "กำลังดำเนินการ Autostart..."
 
-#: ../xfce4-session/xfsm-startup.c:790
+#: ../xfce4-session/xfsm-startup.c:856
 msgid "Starting Assistive Technologies"
 msgstr "กำลังเรียกเปิดเทคโนโลยีสิ่งอำนวยความสะดวก"
 
-#: ../xfce4-session/xfsm-shutdown.c:429
-#, c-format
-msgid "Error sending command to shutdown helper: %s"
-msgstr "เกิดข้อผิดพลาดขณะส่งคำสั่งไปยังตัวช่วยปิดระบบ: %s"
-
-#: ../xfce4-session/xfsm-shutdown.c:442
-#, c-format
-msgid "Error receiving response from shutdown helper: %s"
-msgstr "เกิดข้อผิดพลาดขณะรับผลตอบกลับจากตัวช่วยปิดระบบ: %s"
-
-#: ../xfce4-session/xfsm-shutdown.c:450
-#, c-format
-msgid "Shutdown command failed"
-msgstr "คำสั่งปิดระบบล้มเหลว"
-
-#: ../xfce4-session/xfsm-shutdown.c:555
+#: ../xfce4-session/xfsm-shutdown.c:162
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "การปิดระบบถูกปิดกั้นโดยค่าตั้งของตู้ขายของ"
 
-#: ../xfce4-session/xfsm-shutdown.c:638
+#: ../xfce4-session/xfsm-shutdown.c:216
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "พบวิธีการปิดระบบ %d ซึ่งไม่รู้จัก"
 
-#: ../xfce4-session-logout/main.c:67
+#: ../xfce4-session-logout/main.c:68
 msgid "Log out without displaying the logout dialog"
 msgstr "ออกจากระบบโดยไม่ต้องแสดงกล่องโต้ตอบออกจากระบบ"
 
-#: ../xfce4-session-logout/main.c:71
+#: ../xfce4-session-logout/main.c:72
 msgid "Halt without displaying the logout dialog"
 msgstr "ปิดเครื่องโดยไม่ต้องแสดงกล่องโต้ตอบออกจากระบบ"
 
-#: ../xfce4-session-logout/main.c:75
+#: ../xfce4-session-logout/main.c:76
 msgid "Reboot without displaying the logout dialog"
 msgstr "เริ่มเปิดเครื่องใหม่โดยไม่ต้องแสดงกล่องโต้ตอบออกจากระบบ"
 
-#: ../xfce4-session-logout/main.c:79
+#: ../xfce4-session-logout/main.c:80
 msgid "Suspend without displaying the logout dialog"
 msgstr "พักเครื่องโดยไม่ต้องแสดงกล่องโต้ตอบออกจากระบบ"
 
-#: ../xfce4-session-logout/main.c:83
+#: ../xfce4-session-logout/main.c:84
 msgid "Hibernate without displaying the logout dialog"
-msgstr "จำศึลเครื่องโดยไม่ต้องแสดงกล่องโต้ตอบออกจากระบบ"
+msgstr "จำศีลเครื่องโดยไม่ต้องแสดงกล่องโต้ตอบออกจากระบบ"
 
-#: ../xfce4-session-logout/main.c:87
+#: ../xfce4-session-logout/main.c:88
+msgid "Switch user without displaying the logout dialog"
+msgstr "สลับผู้ใช้โดยไม่ต้องแสดงกล่องโต้ตอบออกจากระบบ"
+
+#: ../xfce4-session-logout/main.c:92
 msgid "Log out quickly; don't save the session"
 msgstr "ออกจากระบบอย่างเร็วโดยไม่ต้องบันทึกวาระ"
 
-#: ../xfce4-session-logout/main.c:110
+#: ../xfce4-session-logout/main.c:115
 msgid "Unknown error"
 msgstr "เกิดข้อผิดพลาดไม่ทราบสาเหตุ"
 
-#: ../xfce4-session-logout/main.c:137
+#: ../xfce4-session-logout/main.c:141
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "เขียนโดย Benedikt Meurer <benny@xfce.org>"
 
-#: ../xfce4-session-logout/main.c:138
+#: ../xfce4-session-logout/main.c:142
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "และ Brian Tarricone <kelnos@xfce.org>."
 
-#: ../xfce4-session-logout/main.c:148
-msgid "Unable to contact D-Bus session bus"
-msgstr "ไม่สามารถติดต่อบัสวาระของ D-Bus"
-
-#: ../xfce4-session-logout/main.c:227
+#: ../xfce4-session-logout/main.c:162 ../xfce4-session-logout/main.c:262
 msgid "Received error while trying to log out"
 msgstr "ได้รับรายงานข้อผิดพลาดขณะพยายามออกจากระบบ"
+
+#: ../xfce4-session-logout/main.c:229
+#, c-format
+msgid "Received error while trying to log out, error was %s"
+msgstr "พบข้อผิดพลาดขณะพยายามออกจากระบบ ข้อผิดพลาดคือ %s"
 
 #: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
 msgid "Log Out"
@@ -760,177 +782,9 @@ msgid "Log out of the Xfce Desktop"
 msgstr "ออกจากเดสก์ท็อป Xfce"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
-#: ../settings/xfce4-session-settings.glade.h:3
 msgid "Session and Startup"
 msgstr "วาระและการเริ่ม"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
-#: ../settings/xfce4-session-settings.glade.h:4
 msgid "Customize desktop startup and splash screen"
 msgstr "ปรับแต่งการเริ่มต้นเดสก์ท็อปและหน้าจอไตเติล"
-
-#: ../settings/xfce4-session-settings.glade.h:1
-msgid "Saving Session"
-msgstr "กำลังบันทึกวาระ"
-
-#: ../settings/xfce4-session-settings.glade.h:2
-msgid ""
-"Your session is being saved.  If you do not wish to wait, you may close this"
-" window."
-msgstr "กำลังบันทึกวาระของคุณ ถ้าคุณไม่ต้องการคอย คุณก็สามารถปิดหน้าต่างนี้ได้"
-
-#: ../settings/xfce4-session-settings.glade.h:5
-msgid "_Display chooser on login"
-msgstr "แ_สดงกล่องเลือกเมื่อเข้าระบบ"
-
-#: ../settings/xfce4-session-settings.glade.h:6
-msgid "Display the session chooser every time Xfce starts"
-msgstr "แสดงกล่องเลือกวาระทุกครั้งที่ Xfce เริ่มทำงาน"
-
-#: ../settings/xfce4-session-settings.glade.h:7
-msgid "<b>Session Chooser</b>"
-msgstr "<b>กล่องเลือกวาระ</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:8
-msgid "Automatically save session on logo_ut"
-msgstr "บันทึกวาระโดยอัตโนมัติเมื่อออ_กจากระบบ"
-
-#: ../settings/xfce4-session-settings.glade.h:9
-msgid "Always save the session when logging out"
-msgstr "บันทึกวาระเสมอเมื่อออกจากระบบ"
-
-#: ../settings/xfce4-session-settings.glade.h:10
-msgid "Pro_mpt on logout"
-msgstr "_ถามก่อนออกจากระบบ"
-
-#: ../settings/xfce4-session-settings.glade.h:11
-msgid "Prompt for confirmation when logging out"
-msgstr "ถามยืนยันก่อนออกจากระบบ"
-
-#: ../settings/xfce4-session-settings.glade.h:12
-msgid "<b>Logout Settings</b>"
-msgstr "<b>การออกจากระบบ</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:13
-msgid "_General"
-msgstr "_ทั่วไป"
-
-#: ../settings/xfce4-session-settings.glade.h:14
-msgid "Opens the configuration panel for the selected splash screen"
-msgstr "เปิดเครื่องมือตั้งค่าสำหรับชุดหน้าไตเติลที่เลือก"
-
-#: ../settings/xfce4-session-settings.glade.h:15
-msgid "Con_figure"
-msgstr "ตั้ง_ค่า"
-
-#: ../settings/xfce4-session-settings.glade.h:16
-msgid "Demonstrates the selected splash screen"
-msgstr "สาธิตการทำงานของหน้าไตเติลที่เลือก"
-
-#: ../settings/xfce4-session-settings.glade.h:17
-msgid "_Test"
-msgstr "ทด_สอบ"
-
-#: ../settings/xfce4-session-settings.glade.h:18
-msgid "<b>Description:</b>"
-msgstr "<b>คำบรรยาย:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:19
-msgid "<b>Version:</b>"
-msgstr "<b>รุ่น:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:20
-msgid "<b>Author:</b>"
-msgstr "<b>ผู้เขียน:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:21
-msgid "<b>Homepage:</b>"
-msgstr "<b>เว็บไซต์:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:22
-msgid "label"
-msgstr "ฉลาก"
-
-#: ../settings/xfce4-session-settings.glade.h:23
-msgid "<b>Information</b>"
-msgstr "<b>ข้อมูล</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:24
-msgid "S_plash"
-msgstr "หน้าไ_ตเติล"
-
-#: ../settings/xfce4-session-settings.glade.h:25
-msgid ""
-"These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "โปรแกรมเหล่านี้เป็นส่วนหนึ่งของวาระที่กำลังทำงานอยู่ และสามารถบันทึกไว้เมื่อคุณออกจากระบบได้ การเปลี่ยนแปลงต่างๆ ข้างล่างนี้จะมีผลก็ต่อเมื่อมีการบันทึกวาระเกิดขึ้น"
-
-#: ../settings/xfce4-session-settings.glade.h:26
-msgid "Save Sess_ion"
-msgstr "_บันทึกวาระ"
-
-#: ../settings/xfce4-session-settings.glade.h:27
-msgid "Empty the session cache"
-msgstr "ล้างแคชของวาระ"
-
-#: ../settings/xfce4-session-settings.glade.h:28
-msgid "Clear save_d sessions"
-msgstr "_ล้างวาระที่บันทึกไว้"
-
-#: ../settings/xfce4-session-settings.glade.h:29
-msgid "Quit the program, and remove it from the session"
-msgstr "จบการทำงานของโปรแกรม และลบตัวโปรแกรมออกจากวาระ"
-
-#: ../settings/xfce4-session-settings.glade.h:31
-msgid "Sessio_n"
-msgstr "วา_ระ"
-
-#: ../settings/xfce4-session-settings.glade.h:32
-msgid "Launch GN_OME services on startup"
-msgstr "เปิดบริการของ _GNOME เมื่อเริ่มวาระ"
-
-#: ../settings/xfce4-session-settings.glade.h:33
-msgid "Start GNOME services, such as gnome-keyring"
-msgstr "เปิดบริการต่างๆ ของ GNOME เช่น gnome-keyring"
-
-#: ../settings/xfce4-session-settings.glade.h:34
-msgid "Launch _KDE services on startup"
-msgstr "เปิดบริการของ _KDE เมื่อเริ่มวาระ"
-
-#: ../settings/xfce4-session-settings.glade.h:35
-msgid "Start KDE services, such as kdeinit"
-msgstr "เปิดบริการต่างๆ ของ KDE เช่น kdeinit"
-
-#: ../settings/xfce4-session-settings.glade.h:36
-msgid "<b>Compatibility</b>"
-msgstr "<b>ความเข้ากันได้</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:37
-msgid "Manage _remote applications"
-msgstr "จัดการโปรแกรมผ่านเ_ครือข่าย"
-
-#: ../settings/xfce4-session-settings.glade.h:38
-msgid ""
-"Manage remote applications over the network (this may be a security risk)"
-msgstr "จัดการโปรแกรมผ่านเครือข่าย (อาจทำให้เกิดความเสี่ยงในระบบรักษาความปลอดภัย)"
-
-#: ../settings/xfce4-session-settings.glade.h:39
-msgid "<b>Security</b>"
-msgstr "<b>การรักษาความปลอดภัย</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:40
-msgid "Lock screen be_fore sleep"
-msgstr "ล็อคหน้าจอ_ก่อนพักเครื่อง"
-
-#: ../settings/xfce4-session-settings.glade.h:41
-msgid "Run xflock4 before suspending or hibernating the system"
-msgstr "เรียกทำงาน xflock4 ก่อนที่จะพักเครื่องหรือจำศึลเครื่อง"
-
-#: ../settings/xfce4-session-settings.glade.h:42
-msgid "<b>Shutdown</b>"
-msgstr "<b>การปิดระบบ</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:43
-msgid "Ad_vanced"
-msgstr "_ขั้นสูง"
