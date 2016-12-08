@@ -5,13 +5,14 @@
 # Translators:
 # Morten Juhl-Johansen Zölde-Fejér <morten@writtenandread.net>, 2016
 # Ole Guldberg <olegb@omgwtf.dk>, 2008
+# scootergrisen, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-06 12:30+0200\n"
-"PO-Revision-Date: 2016-06-23 18:26+0000\n"
-"Last-Translator: Morten Juhl-Johansen Zölde-Fejér <morten@writtenandread.net>\n"
+"POT-Creation-Date: 2016-06-28 18:30+0200\n"
+"PO-Revision-Date: 2016-12-08 23:23+0000\n"
+"Last-Translator: scootergrisen\n"
 "Language-Team: Danish (http://www.transifex.com/xfce/xfce4-session/language/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -61,7 +62,7 @@ msgstr "Tjek at filen er et gyldigt opstartsbillede-arkiv."
 
 #: ../engines/balou/config.c:344 ../engines/balou/config.c:949
 #: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
-#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1145
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1223
 msgid "_Close"
 msgstr "_Luk"
 
@@ -188,12 +189,12 @@ msgid "Type '%s --help' for usage."
 msgstr "Tast '%s --help' for anvendelse."
 
 #: ../settings/main.c:92 ../xfce4-session/main.c:353
-#: ../xfce4-session-logout/main.c:134
+#: ../xfce4-session-logout/main.c:140
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce-udviklingsholdet. Alle rettigheder forbeholdes."
 
 #: ../settings/main.c:93 ../xfce4-session/main.c:354
-#: ../xfce4-session-logout/main.c:137
+#: ../xfce4-session-logout/main.c:143
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Rapportér venligst fejl til <%s>."
@@ -413,7 +414,7 @@ msgstr "Kunne ikke skifte element"
 msgid "Disable binding to TCP ports"
 msgstr "Slå binding til TCP-porte fra"
 
-#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:90
+#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:96
 msgid "Print version information and exit"
 msgstr "Udskriv versionsinformation og afslut"
 
@@ -488,7 +489,7 @@ msgstr "Forsæt alligevel"
 msgid "Try again"
 msgstr "Prøv igen"
 
-#: ../xfce4-session/xfsm-manager.c:616
+#: ../xfce4-session/xfsm-manager.c:619
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -497,57 +498,61 @@ msgid ""
 "incorrectly."
 msgstr "Kunne ikke finde fejlsikret sessionsnavn. Mulige årsager; xfconfd kører ikke (D-Bus indstillingsproblem); miljøvariablen $XDG_CONFIG_DIRS er forkert indstillet (skal indeholde \"%s\"), eller xfce4-session er forkert installeret."
 
-#: ../xfce4-session/xfsm-manager.c:627
+#: ../xfce4-session/xfsm-manager.c:630
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Den angivne fejlsikrede session (\"%s\") er ikke markeret som en fejlsikker session."
 
-#: ../xfce4-session/xfsm-manager.c:674
+#: ../xfce4-session/xfsm-manager.c:677
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Listen over programmer i den fejlsikrede session er tom."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:721
+#: ../xfce4-session/xfsm-manager.c:724
 msgid "Session Manager Error"
 msgstr "Fejl i sessionshåndtering"
 
-#: ../xfce4-session/xfsm-manager.c:723
+#: ../xfce4-session/xfsm-manager.c:726
 msgid "Unable to load a failsafe session"
 msgstr "Kunne ikke indlæse en fejlsikret session"
 
-#: ../xfce4-session/xfsm-manager.c:725
+#: ../xfce4-session/xfsm-manager.c:728
 msgid "_Quit"
 msgstr "_Afslut"
 
-#: ../xfce4-session/xfsm-manager.c:1139
+#: ../xfce4-session/xfsm-manager.c:1215
 msgid "Shutdown Failed"
 msgstr "Luk ned fejlede"
 
-#: ../xfce4-session/xfsm-manager.c:1142
+#: ../xfce4-session/xfsm-manager.c:1218
 msgid "Failed to suspend session"
 msgstr "Kunne ikke bringe session i hviletilstand"
 
-#: ../xfce4-session/xfsm-manager.c:1143
+#: ../xfce4-session/xfsm-manager.c:1220
 msgid "Failed to hibernate session"
 msgstr "Kunne ikke bringe session i dvalestilstand"
 
-#: ../xfce4-session/xfsm-manager.c:1423
+#: ../xfce4-session/xfsm-manager.c:1221
+msgid "Failed to switch user"
+msgstr "Kunne ikke skifte bruger"
+
+#: ../xfce4-session/xfsm-manager.c:1527
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Kan kun afbryde klienter når de befinder sig i tomgang"
 
-#: ../xfce4-session/xfsm-manager.c:1980
+#: ../xfce4-session/xfsm-manager.c:2178
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Sessionhåndtering skal befinde sig i tomgang, når der anmodes om et tjekpunkt"
 
-#: ../xfce4-session/xfsm-manager.c:2048 ../xfce4-session/xfsm-manager.c:2066
+#: ../xfce4-session/xfsm-manager.c:2248 ../xfce4-session/xfsm-manager.c:2268
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Sessionhåndtering skal befinde sig i tomgang, når der anmodes om at lukke ned"
 
-#: ../xfce4-session/xfsm-manager.c:2107
+#: ../xfce4-session/xfsm-manager.c:2313
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Sessionhåndtering skal være ledig, når der anmodes om at lukke ned"
 
@@ -715,52 +720,56 @@ msgstr "Starter hjælpeteknologier"
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Luk ned er blokeret af indstillingerne til kiosktilstand"
 
-#: ../xfce4-session/xfsm-shutdown.c:213
+#: ../xfce4-session/xfsm-shutdown.c:216
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Ukendt luk ned metode %d"
 
-#: ../xfce4-session-logout/main.c:66
+#: ../xfce4-session-logout/main.c:68
 msgid "Log out without displaying the logout dialog"
 msgstr "Logud uden at vise dialogen logud"
 
-#: ../xfce4-session-logout/main.c:70
+#: ../xfce4-session-logout/main.c:72
 msgid "Halt without displaying the logout dialog"
 msgstr "Luk ned uden at vise dialogen logud"
 
-#: ../xfce4-session-logout/main.c:74
+#: ../xfce4-session-logout/main.c:76
 msgid "Reboot without displaying the logout dialog"
 msgstr "Genstart uden at vise dialogen logud"
 
-#: ../xfce4-session-logout/main.c:78
+#: ../xfce4-session-logout/main.c:80
 msgid "Suspend without displaying the logout dialog"
 msgstr "Til hviletilstand uden at vise dialogen logud"
 
-#: ../xfce4-session-logout/main.c:82
+#: ../xfce4-session-logout/main.c:84
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Til dvaletilstand uden at vise dialogen logud"
 
-#: ../xfce4-session-logout/main.c:86
+#: ../xfce4-session-logout/main.c:88
+msgid "Switch user without displaying the logout dialog"
+msgstr "Skift bruger uden at vise dialogen logud"
+
+#: ../xfce4-session-logout/main.c:92
 msgid "Log out quickly; don't save the session"
 msgstr "Logud hurtigt; undlad at gemme sessionen"
 
-#: ../xfce4-session-logout/main.c:109
+#: ../xfce4-session-logout/main.c:115
 msgid "Unknown error"
 msgstr "Ukendt fejl"
 
-#: ../xfce4-session-logout/main.c:135
+#: ../xfce4-session-logout/main.c:141
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Skrevet af Benedikt Meurer <benny@xfce.org>"
 
-#: ../xfce4-session-logout/main.c:136
+#: ../xfce4-session-logout/main.c:142
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "og Brian Tarricone <kelnos@xfce.org>."
 
-#: ../xfce4-session-logout/main.c:156 ../xfce4-session-logout/main.c:245
+#: ../xfce4-session-logout/main.c:162 ../xfce4-session-logout/main.c:262
 msgid "Received error while trying to log out"
 msgstr "Modtog fejl under forsøg på logud"
 
-#: ../xfce4-session-logout/main.c:214
+#: ../xfce4-session-logout/main.c:229
 #, c-format
 msgid "Received error while trying to log out, error was %s"
 msgstr "Der opstod en fejl, da du forsøgte at logge ud. Fejlen var %s"
