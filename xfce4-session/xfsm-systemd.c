@@ -95,9 +95,9 @@ xfsm_systemd_init (XfsmSystemd *systemd)
 static void
 xfsm_systemd_finalize (GObject *object)
 {
-#ifdef HAVE_POLKIT
   XfsmSystemd *systemd = XFSM_SYSTEMD (object);
 
+#ifdef HAVE_POLKIT
   g_object_unref (G_OBJECT (systemd->authority));
   g_object_unref (G_OBJECT (systemd->subject));
 #endif
