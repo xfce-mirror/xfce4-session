@@ -1,3 +1,20 @@
+4.13.0
+======
+- xfsm has been ported to Gtk3.
+- xfsm now does session management for clients using the Gtk application
+  dbus interface.
+- xfsm has been ported to GDBus.
+- Add a switch user button to the logout dialog (Bug #10345)
+- UPower dependency has been removed as the suspend/hibernate dbus calls
+  were dropped from it.
+- Handle screensaver with it's own object (Bug #12603)
+- Fix a crash when warning about the screenlocker (Bug #12603)
+- When locking fallback to xflock4 first (Bug #12603)
+- Add switch-user to the xfsm-logout program
+- Translation updates: am, ast, ca, da, de, el, en_AU, es, fi, fr, gl, he,
+  hr, hu, id, is, it, ja, kk, ko, lt, ms, nb, nl, nn, oc, pl, pt, pt_BR,
+  ru, sk, sr, sv, th, tr, uk, zh_CN,  zh_TW
+
 4.12.0
 ======
 Stable release of xfce4-session for Xfce 4.12.
