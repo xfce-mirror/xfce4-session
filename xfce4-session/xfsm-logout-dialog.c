@@ -644,9 +644,8 @@ xfsm_logout_dialog_run (GtkDialog *dialog,
 {
   GdkWindow *window;
   gint       ret;
-#if !GTK_CHECK_VERSION (3, 20, 0)
   GdkDevice *device;
-#else
+#if 0 /* GTK_CHECK_VERSION (3, 20, 0) */
   GdkSeat   *seat;
 #endif
 
@@ -656,33 +655,32 @@ xfsm_logout_dialog_run (GtkDialog *dialog,
 
       window = gtk_widget_get_window (GTK_WIDGET (dialog));
 
-#if !GTK_CHECK_VERSION (3, 20, 0)
-          device = gtk_get_current_event_device ();
+      device = gtk_get_current_event_device ();
 
-          if (gdk_device_grab (device,
-                               window,
-                               GDK_OWNERSHIP_APPLICATION,
-                               FALSE,
-                               GDK_KEY_PRESS_MASK,
-                               NULL,
-                               GDK_CURRENT_TIME) != GDK_GRAB_SUCCESS)
-            {
-              g_critical ("Failed to grab the keyboard for logout window");
-            }
-#else
-          seat = gdk_device_get_seat (gtk_get_current_event_device ());
+      if (gdk_device_grab (device,
+                           window,
+                           GDK_OWNERSHIP_APPLICATION,
+                           FALSE,
+                           GDK_KEY_PRESS_MASK,
+                           NULL,
+                           GDK_CURRENT_TIME) != GDK_GRAB_SUCCESS)
+        {
+          g_critical ("Failed to grab the keyboard for logout window");
+        }
+#if 0 /* GTK_CHECK_VERSION (3, 20, 0) */
+      seat = gdk_device_get_seat (gtk_get_current_event_device ());
 
-          if (gdk_seat_grab (seat,
-                             window,
-                             GDK_SEAT_CAPABILITY_KEYBOARD,
-                             FALSE,
-                             NULL,
-                             gtk_get_current_event (),
-                             NULL,
-                             NULL) != GDK_GRAB_SUCCESS)
-            {
-              g_critical ("Failed to grab the keyboard for logout window");
-            }
+      if (gdk_seat_grab (seat,
+                         window,
+                         GDK_SEAT_CAPABILITY_KEYBOARD,
+                         FALSE,
+                         NULL,
+                         gtk_get_current_event (),
+                         NULL,
+                         NULL) != GDK_GRAB_SUCCESS)
+        {
+          g_critical ("Failed to grab the keyboard for logout window");
+        }
 #endif
 
 #ifdef GDK_WINDOWING_X11
@@ -697,10 +695,9 @@ xfsm_logout_dialog_run (GtkDialog *dialog,
 
   ret = gtk_dialog_run (dialog);
 
-#if !GTK_CHECK_VERSION (3, 20, 0)
   if (grab_input)
     gdk_device_ungrab (device, GDK_CURRENT_TIME);
-#else
+#if 0 /*GTK_CHECK_VERSION (3, 20, 0) */
     if (grab_input)
     gdk_seat_ungrab (seat);
 #endif
@@ -766,7 +763,6 @@ xfsm_logout_dialog (const gchar      *session_name,
        * the dialog when running it */
       for (;;)
         {
-#if !GTK_CHECK_VERSION (3, 20, 0)
           GdkDevice *device = gtk_get_current_event_device ();
 
           if (gdk_device_grab (device,
@@ -780,7 +776,7 @@ xfsm_logout_dialog (const gchar      *session_name,
               gdk_device_ungrab (device, GDK_CURRENT_TIME);
               break;
             }
-#else
+#if 0 /*GTK_CHECK_VERSION (3, 20, 0)*/
           GdkSeat *seat = gdk_device_get_seat (gtk_get_current_event_device ());
 
           if (gdk_seat_grab (seat,
