@@ -80,10 +80,8 @@ xfae_dialog_init (XfaeDialog *dialog)
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 
   grid = g_object_new (GTK_TYPE_GRID,
-                        "width", 12,
                         "row-spacing", 6,
                         "column-spacing", 12,
-                        "homogeneous", FALSE,
                         NULL);
   gtk_container_add (GTK_CONTAINER (content_area), grid);
   gtk_widget_show (grid);
