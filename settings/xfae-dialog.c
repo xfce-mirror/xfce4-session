@@ -98,8 +98,7 @@ xfae_dialog_init (XfaeDialog *dialog)
   dialog->name_entry = g_object_new (GTK_TYPE_ENTRY,
                                      "activates-default", TRUE,
                                      NULL);
-  g_signal_connect_swapped (G_OBJECT (dialog->name_entry), "notify::text",
-                            G_CALLBACK (xfae_dialog_update), dialog);
+
   gtk_grid_attach (GTK_GRID (grid), dialog->name_entry, 1, 0, 1, 1);
   gtk_widget_show (dialog->name_entry);
 
@@ -132,10 +131,14 @@ xfae_dialog_init (XfaeDialog *dialog)
   dialog->command_entry = g_object_new (GTK_TYPE_ENTRY,
                                         "activates-default", TRUE,
                                         NULL);
-  g_signal_connect_swapped (G_OBJECT (dialog->command_entry), "notify::text",
-                            G_CALLBACK (xfae_dialog_update), dialog);
+
   gtk_box_pack_start (GTK_BOX (hbox), dialog->command_entry, TRUE, TRUE, 0);
   gtk_widget_show (dialog->command_entry);
+
+  g_signal_connect_swapped (G_OBJECT (dialog->name_entry), "notify::text",
+                            G_CALLBACK (xfae_dialog_update), dialog);
+  g_signal_connect_swapped (G_OBJECT (dialog->command_entry), "notify::text",
+                            G_CALLBACK (xfae_dialog_update), dialog);
 
   button = g_object_new (GTK_TYPE_BUTTON,
                          "can-default", FALSE,
