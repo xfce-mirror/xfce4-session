@@ -100,7 +100,10 @@ xfsm_verbose_real (const char *func,
           gchar *oldlogfile = g_strdup_printf ("%s.last", logfile);
           if (oldlogfile)
             {
-              rename (logfile, oldlogfile);
+              if (rename (logfile, oldlogfile) != 0)
+                {
+                  g_warning ("unable to rename logfile");
+                }
               g_free (oldlogfile);
             }
         }
