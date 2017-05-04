@@ -105,7 +105,12 @@ check_for_dns (void)
     return FALSE;
 
   if (g_ascii_strncasecmp (result->ai_canonname, hostname, 0) != 0)
-    return FALSE;
+    {
+      freeaddrinfo (result);
+      return FALSE;
+    }
+
+  freeaddrinfo (result);
 #else
 #ifdef HAVE_GETHOSTBYNAME
   if (gethostbyname (hostname) == NULL)
