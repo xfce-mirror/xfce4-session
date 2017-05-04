@@ -178,6 +178,7 @@ bus_acquired (GDBusConnection *connection,
 
   if (manager == NULL) {
           g_critical ("Could not create XfsmManager");
+          return;
   }
 
   g_signal_connect(G_OBJECT(manager),
