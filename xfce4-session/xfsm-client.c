@@ -698,8 +698,6 @@ xfsm_client_dbus_init (XfsmClient *client)
   if (G_UNLIKELY(!client->connection))
     {
       g_critical ("Unable to contact D-Bus session bus: %s", error ? error->message : "Unknown error");
-      if (error)
-        g_clear_error (&error);
       return;
     }
 
