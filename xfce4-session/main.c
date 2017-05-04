@@ -328,7 +328,6 @@ main (int argc, char **argv)
 {
   XfsmManager      *manager = NULL;
   GError           *error = NULL;
-  gboolean          succeed = TRUE;
 
   if (!xfsm_dbus_require_session (argc, argv))
     return EXIT_SUCCESS;
@@ -373,5 +372,5 @@ main (int argc, char **argv)
 
   gtk_main ();
 
-  return succeed ? EXIT_SUCCESS : EXIT_FAILURE;
+  return EXIT_SUCCESS;
 }
