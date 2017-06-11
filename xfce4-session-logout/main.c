@@ -82,11 +82,11 @@ static GOptionEntry option_entries[] =
     N_("Suspend without displaying the logout dialog"),
     NULL
   },
-  { "hibernate", 'h', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_hibernate,
+  { "hibernate", 'i', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_hibernate,
     N_("Hibernate without displaying the logout dialog"),
     NULL
   },
-  { "hybrid-sleep", 'h', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_hybrid_sleep,
+  { "hybrid-sleep", 'b', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_hybrid_sleep,
     N_("Hybrid Sleep without displaying the logout dialog"),
     NULL
   },
