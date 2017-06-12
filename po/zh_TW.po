@@ -6,15 +6,15 @@
 # Ambrose Li <acli@ada.dhs.org>, 2004
 # Cheng-Chia Tseng <pswo10680@gmail.com>, 2010
 # Hydonsingore Cia <hydonsingore@educities.edu.tw>, 2005
-# Jeff Huang <s8321414@gmail.com>, 2016
+# Jeff Huang <s8321414@gmail.com>, 2016-2017
 # umm <umm@pchome.com.tw>, 2003
 # Walter Cheuk <wwycheuk@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 18:30+0200\n"
-"PO-Revision-Date: 2016-06-30 06:29+0000\n"
+"POT-Creation-Date: 2017-06-11 12:30+0200\n"
+"PO-Revision-Date: 2017-06-12 00:29+0000\n"
 "Last-Translator: Jeff Huang <s8321414@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/xfce/xfce4-session/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,7 @@ msgstr "請選擇要安裝的主題檔案..."
 
 #: ../engines/balou/config.c:327 ../engines/balou/config.c:495
 #: ../settings/session-editor.c:173 ../settings/session-editor.c:257
-#: ../xfce4-session/xfsm-logout-dialog.c:209
+#: ../xfce4-session/xfsm-logout-dialog.c:211
 #: ../xfce4-session/xfsm-splash-screen.c:213
 msgid "_Cancel"
 msgstr "取消(_C)"
@@ -65,7 +65,7 @@ msgstr "請核實該檔案是否為有效的起動畫面主題檔案。"
 
 #: ../engines/balou/config.c:344 ../engines/balou/config.c:949
 #: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
-#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1223
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1226
 msgid "_Close"
 msgstr "關閉(_C)"
 
@@ -192,12 +192,12 @@ msgid "Type '%s --help' for usage."
 msgstr "請輸入 '%s --help' 以瞭解用法。"
 
 #: ../settings/main.c:92 ../xfce4-session/main.c:353
-#: ../xfce4-session-logout/main.c:140
+#: ../xfce4-session-logout/main.c:146
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce 開發團隊。保留所有權利。"
 
 #: ../settings/main.c:93 ../xfce4-session/main.c:354
-#: ../xfce4-session-logout/main.c:143
+#: ../xfce4-session-logout/main.c:149
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "請回報錯誤至 <%s>。"
@@ -314,11 +314,11 @@ msgstr "重新啟動樣式"
 msgid "None"
 msgstr "無"
 
-#: ../settings/xfae-dialog.c:73 ../settings/xfae-dialog.c:181
+#: ../settings/xfae-dialog.c:73 ../settings/xfae-dialog.c:182
 msgid "Cancel"
 msgstr "取消"
 
-#: ../settings/xfae-dialog.c:74 ../settings/xfae-dialog.c:182
+#: ../settings/xfae-dialog.c:74 ../settings/xfae-dialog.c:183
 msgid "OK"
 msgstr "是"
 
@@ -326,23 +326,23 @@ msgstr "是"
 msgid "Add application"
 msgstr "加入應用程式"
 
-#: ../settings/xfae-dialog.c:92
+#: ../settings/xfae-dialog.c:90
 msgid "Name:"
 msgstr "名稱："
 
-#: ../settings/xfae-dialog.c:107
+#: ../settings/xfae-dialog.c:104
 msgid "Description:"
 msgstr "敘述："
 
-#: ../settings/xfae-dialog.c:120 ../settings/xfae-model.c:479
+#: ../settings/xfae-dialog.c:117 ../settings/xfae-model.c:479
 msgid "Command:"
 msgstr "指令"
 
-#: ../settings/xfae-dialog.c:178
+#: ../settings/xfae-dialog.c:179
 msgid "Select a command"
 msgstr "選擇指令"
 
-#: ../settings/xfae-dialog.c:227
+#: ../settings/xfae-dialog.c:228
 msgid "Edit application"
 msgstr "編輯應用程式"
 
@@ -417,7 +417,7 @@ msgstr "無法切換項目"
 msgid "Disable binding to TCP ports"
 msgstr "停用 TCP 連接埠的綁定"
 
-#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:96
+#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:102
 msgid "Print version information and exit"
 msgstr "印出版本資訊並離開"
 
@@ -426,11 +426,11 @@ msgid "Loading desktop settings"
 msgstr "載入桌面設定值中"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:198
+#: ../xfce4-session/main.c:199
 msgid "Verifying DNS settings"
 msgstr "核實 DNS 設定中"
 
-#: ../xfce4-session/main.c:202
+#: ../xfce4-session/main.c:203
 msgid "Loading session data"
 msgstr "載入工作階段資料中"
 
@@ -475,7 +475,7 @@ msgstr "啟動 KDE 服務中"
 msgid "(Unknown)"
 msgstr "(不明)"
 
-#: ../xfce4-session/xfsm-dns.c:147
+#: ../xfce4-session/xfsm-dns.c:152
 #, c-format
 msgid ""
 "Could not look up internet address for %s.\n"
@@ -484,11 +484,11 @@ msgid ""
 "%s to the file /etc/hosts on your system."
 msgstr "無法取得 %s 的 IP 位址，\nXfce 將因而無法正常運作。\n在 /etc/hosts 加入「%s」\n可能可以改正這個問題。"
 
-#: ../xfce4-session/xfsm-dns.c:154
+#: ../xfce4-session/xfsm-dns.c:159
 msgid "Continue anyway"
 msgstr "無論如何都要繼續"
 
-#: ../xfce4-session/xfsm-dns.c:155
+#: ../xfce4-session/xfsm-dns.c:160
 msgid "Try again"
 msgstr "重試"
 
@@ -526,40 +526,44 @@ msgstr "無法載入防失敗工作階段"
 msgid "_Quit"
 msgstr "退出(_Q)"
 
-#: ../xfce4-session/xfsm-manager.c:1215
+#: ../xfce4-session/xfsm-manager.c:1216
 msgid "Shutdown Failed"
 msgstr "關機失敗"
 
-#: ../xfce4-session/xfsm-manager.c:1218
+#: ../xfce4-session/xfsm-manager.c:1219
 msgid "Failed to suspend session"
 msgstr "無法暫停工作階段"
 
-#: ../xfce4-session/xfsm-manager.c:1220
+#: ../xfce4-session/xfsm-manager.c:1221
 msgid "Failed to hibernate session"
 msgstr "無法休眠工作階段"
 
-#: ../xfce4-session/xfsm-manager.c:1221
+#: ../xfce4-session/xfsm-manager.c:1223
+msgid "Failed to hybrid sleep session"
+msgstr "工作階段混合睡眠失敗"
+
+#: ../xfce4-session/xfsm-manager.c:1224
 msgid "Failed to switch user"
 msgstr "切換使用者失敗"
 
-#: ../xfce4-session/xfsm-manager.c:1527
+#: ../xfce4-session/xfsm-manager.c:1530
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "只能在客戶端為閒置狀態時終止它們"
 
-#: ../xfce4-session/xfsm-manager.c:2178
+#: ../xfce4-session/xfsm-manager.c:2187
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "當請求檢查點時，工作階段管理程式一定要處於閒置狀態"
 
-#: ../xfce4-session/xfsm-manager.c:2248 ../xfce4-session/xfsm-manager.c:2268
+#: ../xfce4-session/xfsm-manager.c:2257 ../xfce4-session/xfsm-manager.c:2277
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "當請求關機時，工作階段管理程式一定要處於閒置狀態"
 
-#: ../xfce4-session/xfsm-manager.c:2313
+#: ../xfce4-session/xfsm-manager.c:2322
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "當請求重新啟動時，工作階段管理程式一定要處於閒置狀態"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:182
+#: ../xfce4-session/xfsm-logout-dialog.c:184
 #, c-format
 msgid "Log out %s"
 msgstr "登出 %s"
@@ -567,35 +571,39 @@ msgstr "登出 %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:224
+#: ../xfce4-session/xfsm-logout-dialog.c:226
 msgid "_Log Out"
 msgstr "登出(_L)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:244
+#: ../xfce4-session/xfsm-logout-dialog.c:246
 msgid "_Restart"
 msgstr "重新啟動(_R)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:264
+#: ../xfce4-session/xfsm-logout-dialog.c:266
 msgid "Shut _Down"
 msgstr "關機(_D)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:287
+#: ../xfce4-session/xfsm-logout-dialog.c:289
 msgid "Sus_pend"
 msgstr "暫停(_P)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:321
+#: ../xfce4-session/xfsm-logout-dialog.c:323
 msgid "_Hibernate"
 msgstr "休眠(_H)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:352
+#: ../xfce4-session/xfsm-logout-dialog.c:354
+msgid "_Hybrid Sleep"
+msgstr "混合睡眠(_H)"
+
+#: ../xfce4-session/xfsm-logout-dialog.c:385
 msgid "Switch _User"
 msgstr "切換使用者(_U)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:377
+#: ../xfce4-session/xfsm-logout-dialog.c:410
 msgid "_Save session for future logins"
 msgstr "儲存工作階段以供往後使用(_S)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:405
+#: ../xfce4-session/xfsm-logout-dialog.c:438
 msgid "An error occurred"
 msgstr "遭遇錯誤"
 
@@ -723,56 +731,60 @@ msgstr "正在啟動輔助科技"
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "關機被 kiosk 設定阻擋"
 
-#: ../xfce4-session/xfsm-shutdown.c:216
+#: ../xfce4-session/xfsm-shutdown.c:219
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "未知關機方法 %d"
 
-#: ../xfce4-session-logout/main.c:68
+#: ../xfce4-session-logout/main.c:70
 msgid "Log out without displaying the logout dialog"
 msgstr "登出且不顯示登出對話窗"
 
-#: ../xfce4-session-logout/main.c:72
+#: ../xfce4-session-logout/main.c:74
 msgid "Halt without displaying the logout dialog"
 msgstr "關機且不顯示登出對話窗"
 
-#: ../xfce4-session-logout/main.c:76
+#: ../xfce4-session-logout/main.c:78
 msgid "Reboot without displaying the logout dialog"
 msgstr "重新開機且不顯示登出對話窗"
 
-#: ../xfce4-session-logout/main.c:80
+#: ../xfce4-session-logout/main.c:82
 msgid "Suspend without displaying the logout dialog"
 msgstr "暫停且不顯示登出對話窗"
 
-#: ../xfce4-session-logout/main.c:84
+#: ../xfce4-session-logout/main.c:86
 msgid "Hibernate without displaying the logout dialog"
 msgstr "休眠並且不顯示登出對話窗"
 
-#: ../xfce4-session-logout/main.c:88
+#: ../xfce4-session-logout/main.c:90
+msgid "Hybrid Sleep without displaying the logout dialog"
+msgstr "不顯示登出對話框的混合睡眠"
+
+#: ../xfce4-session-logout/main.c:94
 msgid "Switch user without displaying the logout dialog"
 msgstr "不顯示登出對話框切換使用者"
 
-#: ../xfce4-session-logout/main.c:92
+#: ../xfce4-session-logout/main.c:98
 msgid "Log out quickly; don't save the session"
 msgstr "快速登出；不要儲存工作階段"
 
-#: ../xfce4-session-logout/main.c:115
+#: ../xfce4-session-logout/main.c:121
 msgid "Unknown error"
 msgstr "不明錯誤"
 
-#: ../xfce4-session-logout/main.c:141
+#: ../xfce4-session-logout/main.c:147
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "由 Benedikt Meurer 編寫 <benny@xfce.org>"
 
-#: ../xfce4-session-logout/main.c:142
+#: ../xfce4-session-logout/main.c:148
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "與 Brian Tarricone <kelnos@xfce.org>。"
 
-#: ../xfce4-session-logout/main.c:162 ../xfce4-session-logout/main.c:262
+#: ../xfce4-session-logout/main.c:168 ../xfce4-session-logout/main.c:279
 msgid "Received error while trying to log out"
 msgstr "當嘗試登出時接收到錯誤"
 
-#: ../xfce4-session-logout/main.c:229
+#: ../xfce4-session-logout/main.c:244
 #, c-format
 msgid "Received error while trying to log out, error was %s"
 msgstr "當嘗試登出時接收到錯誤，錯誤為 %s"
