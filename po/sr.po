@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 18:30+0200\n"
-"PO-Revision-Date: 2017-04-30 10:28+0000\n"
+"POT-Creation-Date: 2017-06-11 12:30+0200\n"
+"PO-Revision-Date: 2017-06-14 17:34+0000\n"
 "Last-Translator: Саша Петровић <salepetronije@gmail.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/xfce/xfce4-session/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +37,7 @@ msgstr "Изабери датотеку теме за уградњу..."
 
 #: ../engines/balou/config.c:327 ../engines/balou/config.c:495
 #: ../settings/session-editor.c:173 ../settings/session-editor.c:257
-#: ../xfce4-session/xfsm-logout-dialog.c:209
+#: ../xfce4-session/xfsm-logout-dialog.c:211
 #: ../xfce4-session/xfsm-splash-screen.c:213
 msgid "_Cancel"
 msgstr "_Откажи"
@@ -61,7 +61,7 @@ msgstr "Молим, проверите да ли је датотека испр�
 
 #: ../engines/balou/config.c:344 ../engines/balou/config.c:949
 #: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
-#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1223
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1226
 msgid "_Close"
 msgstr "_Затвори"
 
@@ -188,12 +188,12 @@ msgid "Type '%s --help' for usage."
 msgstr "Упишите „%s --help“ за коришћење."
 
 #: ../settings/main.c:92 ../xfce4-session/main.c:353
-#: ../xfce4-session-logout/main.c:140
+#: ../xfce4-session-logout/main.c:146
 msgid "The Xfce development team. All rights reserved."
 msgstr "Развојна дружина ИксФЦЕ-а. Сва права су задржана."
 
 #: ../settings/main.c:93 ../xfce4-session/main.c:354
-#: ../xfce4-session-logout/main.c:143
+#: ../xfce4-session-logout/main.c:149
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Молим пријавите грешку на <%s>."
@@ -310,11 +310,11 @@ msgstr "Начин поновног покретања"
 msgid "None"
 msgstr "Ништа"
 
-#: ../settings/xfae-dialog.c:73 ../settings/xfae-dialog.c:181
+#: ../settings/xfae-dialog.c:73 ../settings/xfae-dialog.c:182
 msgid "Cancel"
 msgstr "Откажи"
 
-#: ../settings/xfae-dialog.c:74 ../settings/xfae-dialog.c:182
+#: ../settings/xfae-dialog.c:74 ../settings/xfae-dialog.c:183
 msgid "OK"
 msgstr "У реду"
 
@@ -322,23 +322,23 @@ msgstr "У реду"
 msgid "Add application"
 msgstr "Додај програм"
 
-#: ../settings/xfae-dialog.c:92
+#: ../settings/xfae-dialog.c:90
 msgid "Name:"
 msgstr "Назив:"
 
-#: ../settings/xfae-dialog.c:107
+#: ../settings/xfae-dialog.c:104
 msgid "Description:"
 msgstr "Опис:"
 
-#: ../settings/xfae-dialog.c:120 ../settings/xfae-model.c:479
+#: ../settings/xfae-dialog.c:117 ../settings/xfae-model.c:479
 msgid "Command:"
 msgstr "Наредба:"
 
-#: ../settings/xfae-dialog.c:178
+#: ../settings/xfae-dialog.c:179
 msgid "Select a command"
 msgstr "Изаберите наредбу"
 
-#: ../settings/xfae-dialog.c:227
+#: ../settings/xfae-dialog.c:228
 msgid "Edit application"
 msgstr "Уреди програм"
 
@@ -413,7 +413,7 @@ msgstr "Нисам успео да заменим ставку"
 msgid "Disable binding to TCP ports"
 msgstr "Искључује повезивање на прикључке ТЦП-а"
 
-#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:96
+#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:102
 msgid "Print version information and exit"
 msgstr "Штампа податке о издању и излази"
 
@@ -422,11 +422,11 @@ msgid "Loading desktop settings"
 msgstr "Учитавам подешавања радног окружења"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:198
+#: ../xfce4-session/main.c:199
 msgid "Verifying DNS settings"
 msgstr "Проверавам подешавања ДНС-а"
 
-#: ../xfce4-session/main.c:202
+#: ../xfce4-session/main.c:203
 msgid "Loading session data"
 msgstr "Учитавам податке седнице"
 
@@ -471,7 +471,7 @@ msgstr "Покрећем услуге КДЕ-а"
 msgid "(Unknown)"
 msgstr "(Непознато)"
 
-#: ../xfce4-session/xfsm-dns.c:147
+#: ../xfce4-session/xfsm-dns.c:152
 #, c-format
 msgid ""
 "Could not look up internet address for %s.\n"
@@ -480,11 +480,11 @@ msgid ""
 "%s to the file /etc/hosts on your system."
 msgstr "Нисам могао приступити мрежној адреси %s.\nТо ће спречити ИксФЦЕ да ради исправно\nМогуће је да ће потешкоћа бити исправљена додавањем\n%s у датотеку „/etc/hosts“ на вашем рачунару."
 
-#: ../xfce4-session/xfsm-dns.c:154
+#: ../xfce4-session/xfsm-dns.c:159
 msgid "Continue anyway"
 msgstr "Ипак настави"
 
-#: ../xfce4-session/xfsm-dns.c:155
+#: ../xfce4-session/xfsm-dns.c:160
 msgid "Try again"
 msgstr "Покушај поново"
 
@@ -522,40 +522,44 @@ msgstr "Нисам успео да учитам седницу отпорну н
 msgid "_Quit"
 msgstr "_Напусти"
 
-#: ../xfce4-session/xfsm-manager.c:1215
+#: ../xfce4-session/xfsm-manager.c:1216
 msgid "Shutdown Failed"
 msgstr "Није успело искључивање"
 
-#: ../xfce4-session/xfsm-manager.c:1218
+#: ../xfce4-session/xfsm-manager.c:1219
 msgid "Failed to suspend session"
 msgstr "Нисам успео да обуставим седницу"
 
-#: ../xfce4-session/xfsm-manager.c:1220
+#: ../xfce4-session/xfsm-manager.c:1221
 msgid "Failed to hibernate session"
 msgstr "Нисам успео да замрзнем седницу"
 
-#: ../xfce4-session/xfsm-manager.c:1221
+#: ../xfce4-session/xfsm-manager.c:1223
+msgid "Failed to hybrid sleep session"
+msgstr "Нисам успео укрштено успавати седницу"
+
+#: ../xfce4-session/xfsm-manager.c:1224
 msgid "Failed to switch user"
 msgstr "Није успела замена корисника"
 
-#: ../xfce4-session/xfsm-manager.c:1527
+#: ../xfce4-session/xfsm-manager.c:1530
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Клијент може бити окончан само у стању мировања"
 
-#: ../xfce4-session/xfsm-manager.c:2178
+#: ../xfce4-session/xfsm-manager.c:2187
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Управник седнице мора бити у стању мировања при захтеву за контролном тачком"
 
-#: ../xfce4-session/xfsm-manager.c:2248 ../xfce4-session/xfsm-manager.c:2268
+#: ../xfce4-session/xfsm-manager.c:2257 ../xfce4-session/xfsm-manager.c:2277
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Управник седнице мора бити у стању мировања при захтеву за искључивањем"
 
-#: ../xfce4-session/xfsm-manager.c:2313
+#: ../xfce4-session/xfsm-manager.c:2322
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Управник седнице мора бити у стању мировања при захтеву за препокретање"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:182
+#: ../xfce4-session/xfsm-logout-dialog.c:184
 #, c-format
 msgid "Log out %s"
 msgstr "Одјава %s"
@@ -563,35 +567,39 @@ msgstr "Одјава %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:224
+#: ../xfce4-session/xfsm-logout-dialog.c:226
 msgid "_Log Out"
 msgstr "_Одјави"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:244
+#: ../xfce4-session/xfsm-logout-dialog.c:246
 msgid "_Restart"
 msgstr "_Поново покрени"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:264
+#: ../xfce4-session/xfsm-logout-dialog.c:266
 msgid "Shut _Down"
 msgstr "_Искључи"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:287
+#: ../xfce4-session/xfsm-logout-dialog.c:289
 msgid "Sus_pend"
 msgstr "Обу_стави"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:321
+#: ../xfce4-session/xfsm-logout-dialog.c:323
 msgid "_Hibernate"
 msgstr "_Замрзни"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:352
+#: ../xfce4-session/xfsm-logout-dialog.c:354
+msgid "_Hybrid Sleep"
+msgstr "Укрштено _спавање"
+
+#: ../xfce4-session/xfsm-logout-dialog.c:385
 msgid "Switch _User"
 msgstr "Промени корисника"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:377
+#: ../xfce4-session/xfsm-logout-dialog.c:410
 msgid "_Save session for future logins"
 msgstr "_Сачувај седницу за следеће пријаве"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:405
+#: ../xfce4-session/xfsm-logout-dialog.c:438
 msgid "An error occurred"
 msgstr "Дошло је до грешке"
 
@@ -719,56 +727,60 @@ msgstr "Покрећем технологије приступачности"
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Искључивање је онемогућено услужним подешавањима"
 
-#: ../xfce4-session/xfsm-shutdown.c:216
+#: ../xfce4-session/xfsm-shutdown.c:219
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Непознати начин искључења %d"
 
-#: ../xfce4-session-logout/main.c:68
+#: ../xfce4-session-logout/main.c:70
 msgid "Log out without displaying the logout dialog"
 msgstr "Одјава без приказивања прозорчета одјаве"
 
-#: ../xfce4-session-logout/main.c:72
+#: ../xfce4-session-logout/main.c:74
 msgid "Halt without displaying the logout dialog"
 msgstr "Искључивање без приказивања прозорчета одјаве"
 
-#: ../xfce4-session-logout/main.c:76
+#: ../xfce4-session-logout/main.c:78
 msgid "Reboot without displaying the logout dialog"
 msgstr "Поновно покретање без приказивања прозорчета одјаве"
 
-#: ../xfce4-session-logout/main.c:80
+#: ../xfce4-session-logout/main.c:82
 msgid "Suspend without displaying the logout dialog"
 msgstr "Обустављање без приказивања прозорчета одјаве"
 
-#: ../xfce4-session-logout/main.c:84
+#: ../xfce4-session-logout/main.c:86
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Успављивање без приказивања прозорчета одјаве"
 
-#: ../xfce4-session-logout/main.c:88
+#: ../xfce4-session-logout/main.c:90
+msgid "Hybrid Sleep without displaying the logout dialog"
+msgstr "Укрштено спавање без приказа прозорчета одјаве"
+
+#: ../xfce4-session-logout/main.c:94
 msgid "Switch user without displaying the logout dialog"
 msgstr "Промени корисника без приказа прозорчета одјаве"
 
-#: ../xfce4-session-logout/main.c:92
+#: ../xfce4-session-logout/main.c:98
 msgid "Log out quickly; don't save the session"
 msgstr "Одјављује се брзо; без чувања седнице"
 
-#: ../xfce4-session-logout/main.c:115
+#: ../xfce4-session-logout/main.c:121
 msgid "Unknown error"
 msgstr "Непозната грешка"
 
-#: ../xfce4-session-logout/main.c:141
+#: ../xfce4-session-logout/main.c:147
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Написао Бенедикт Мејрер <benny@xfce.org>"
 
-#: ../xfce4-session-logout/main.c:142
+#: ../xfce4-session-logout/main.c:148
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "и Брајан Тариконе <kelnos@xfce.org>."
 
-#: ../xfce4-session-logout/main.c:162 ../xfce4-session-logout/main.c:262
+#: ../xfce4-session-logout/main.c:168 ../xfce4-session-logout/main.c:279
 msgid "Received error while trying to log out"
 msgstr "Примио сам грешку приликом одјављивања"
 
-#: ../xfce4-session-logout/main.c:229
+#: ../xfce4-session-logout/main.c:244
 #, c-format
 msgid "Received error while trying to log out, error was %s"
 msgstr "Примљена је грешка при покушају одјаве, грешка беше %s"
