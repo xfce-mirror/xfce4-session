@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-11 12:30+0200\n"
-"PO-Revision-Date: 2017-06-16 23:10+0000\n"
+"PO-Revision-Date: 2017-06-17 22:29+0000\n"
 "Last-Translator: Moo\n"
 "Language-Team: Lithuanian (http://www.transifex.com/xfce/xfce4-session/language/lt/)\n"
 "MIME-Version: 1.0\n"
@@ -374,7 +374,7 @@ msgid ""
 "you login to your Xfce desktop, in addition to the applications that were "
 "saved when you logged out last time. Cursive applications belong to another "
 "desktop environment, but you can still enable them if you want."
-msgstr "Žemiau yra sąrašas programų, kurios bus paleistos kai prisijungsite prie Xfce darbalaukio, be šių programų dar yra šios kurios buvo įrašytos kai atsijungėte paskutinį kartą. Kursyvu pavaizduotos programos priklauso kitai darbalaukio aplinkai, tačiau, jeigu norite, vis tiek galite jas įjungti:"
+msgstr "Be tų programų, kurios buvo įrašytos, kai paskutinį kartą atsijungėte, žemiau yra sąrašas programų, kurios bus automatiškai paleistos, kai prisijungsite prie Xfce darbalaukio. Kursyvu pavaizduotos programos priklauso kitai darbalaukio aplinkai, tačiau, jeigu norite, vis tiek galite jas įjungti."
 
 #: ../settings/xfae-window.c:179 ../settings/xfae-window.c:237
 msgid "Add"
@@ -395,16 +395,16 @@ msgstr "Nepavyko pridėti „%s“"
 
 #: ../settings/xfae-window.c:327 ../settings/xfae-window.c:341
 msgid "Failed to remove item"
-msgstr "Elemento pašalinti nepavyko"
+msgstr "Nepavyko pašalinti elemento"
 
 #: ../settings/xfae-window.c:369
 msgid "Failed to edit item"
-msgstr "Elemento pakeisti nepavyko"
+msgstr "Nepavyko taisyti elemento"
 
 #: ../settings/xfae-window.c:389
 #, c-format
 msgid "Failed to edit item \"%s\""
-msgstr "Elemento „%s“ pakeisti nepavyko"
+msgstr "Nepavyko taisyti elemento „%s“"
 
 #: ../settings/xfae-window.c:417
 msgid "Failed to toggle item"
@@ -483,11 +483,11 @@ msgstr "Nepavyko rasti interneto adreso %s.\nTai neleis Xfce tinkamai veikti.\nG
 
 #: ../xfce4-session/xfsm-dns.c:159
 msgid "Continue anyway"
-msgstr "Vistiek tęsti"
+msgstr "Vis tiek tęsti"
 
 #: ../xfce4-session/xfsm-dns.c:160
 msgid "Try again"
-msgstr "Bandykite dar kartą"
+msgstr "Bandyti dar kartą"
 
 #: ../xfce4-session/xfsm-manager.c:619
 #, c-format
@@ -496,7 +496,7 @@ msgid ""
 "running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
 "incorrectly (must include \"%s\"), or xfce4-session is installed "
 "incorrectly."
-msgstr "Nepavyko nustatyti saugaus seanso pavadinimo.  Galimos priežastys: xfconfd neveikia (D-Bus nustatymo klaida); aplinkos kintamasis $XDG_CONFIG_DIRS nustatytas netinkamai (turi turėti „%s“), arba xfce4-session neteisingai įdiegta."
+msgstr "Nepavyko nustatyti saugaus seanso pavadinimo.  Galimos priežastys: xfconfd neveikia (D-Bus sąrankos klaida); aplinkos kintamasis $XDG_CONFIG_DIRS nustatytas netinkamai (turi turėti „%s“), arba xfce4-session neteisingai įdiegta."
 
 #: ../xfce4-session/xfsm-manager.c:630
 #, c-format
@@ -558,7 +558,7 @@ msgstr "Kai prašoma išjungti, seanso tvarkytuvė turi būti neveiklumo būseno
 
 #: ../xfce4-session/xfsm-manager.c:2322
 msgid "Session manager must be in idle state when requesting a restart"
-msgstr "Kai prašoma paleisti iš naujo, seansų tvarkytuvė privalo būti neveiklumo būsenoje"
+msgstr "Kai prašoma paleisti iš naujo, seanso tvarkytuvė privalo būti neveiklumo būsenoje"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:184
 #, c-format
@@ -590,7 +590,7 @@ msgstr "_Užmigdyti"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:354
 msgid "_Hybrid Sleep"
-msgstr "Mišraus miego būsena"
+msgstr "_Mišraus miego būsena"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:385
 msgid "Switch _User"
@@ -610,7 +610,7 @@ msgstr "Pasirinkti seansą"
 
 #: ../xfce4-session/xfsm-splash-screen.c:208
 msgid "Choose session name"
-msgstr "Pasirinkite seanso vardą"
+msgstr "Pasirinkite seanso pavadinimą"
 
 #: ../xfce4-session/xfsm-splash-screen.c:215
 msgid "_OK"
@@ -618,7 +618,7 @@ msgstr "_Gerai"
 
 #: ../xfce4-session/xfsm-splash-screen.c:222
 msgid "Choose a name for the new session:"
-msgstr "Pasirinkite naujo seanso naują vardą:"
+msgstr "Pasirinkite naujojo seanso naują pavadinimą:"
 
 #: ../xfce4-session/xfsm-startup.c:397
 msgid "Starting the Volume Controller"
