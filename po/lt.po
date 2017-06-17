@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-11 12:30+0200\n"
-"PO-Revision-Date: 2017-06-12 14:11+0000\n"
+"PO-Revision-Date: 2017-06-16 23:10+0000\n"
 "Last-Translator: Moo\n"
 "Language-Team: Lithuanian (http://www.transifex.com/xfce/xfce4-session/language/lt/)\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgstr "Aprašo nėra"
 
 #: ../engines/balou/config.c:324
 msgid "Choose theme file to install..."
-msgstr "Pasirinkite temos bylą, kurią norite įdiegti..."
+msgstr "Pasirinkite temos, kurią norite įdiegti, failą..."
 
 #: ../engines/balou/config.c:327 ../engines/balou/config.c:495
 #: ../settings/session-editor.c:173 ../settings/session-editor.c:257
@@ -50,7 +50,7 @@ msgstr "_Atverti"
 #: ../engines/balou/config.c:336
 #, c-format
 msgid "Unable to install splash theme from file \"%s\""
-msgstr "Neįmanoma įdiegti temos iš failo „%s“"
+msgstr "Nepavyko įdiegti prisistatymo temos iš failo „%s“"
 
 #: ../engines/balou/config.c:339
 msgid "Theme File Error"
@@ -58,7 +58,7 @@ msgstr "Temos failo klaida"
 
 #: ../engines/balou/config.c:342
 msgid "Please check that the file is a valid splash theme archive."
-msgstr "Įsitikinkite jog failas yra tinkamas temos archyvas."
+msgstr "Įsitikinkite, kad failas yra tinkamas prisistatymo temos archyvas."
 
 #: ../engines/balou/config.c:344 ../engines/balou/config.c:949
 #: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
@@ -69,7 +69,7 @@ msgstr "_Užverti"
 #: ../engines/balou/config.c:403
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
-msgstr "Neįmanoma pašalinti demonstracinės temos „%s“ iš aplanko „%s“."
+msgstr "Nepavyko pašalinti prisistatymo temos „%s“ iš katalogo „%s“."
 
 #: ../engines/balou/config.c:492
 msgid "Choose theme filename..."
@@ -85,7 +85,7 @@ msgstr "Įd_iegti naują temą"
 
 #: ../engines/balou/config.c:631
 msgid "_Remove theme"
-msgstr "_Pašalinti temą"
+msgstr "Ša_linti temą"
 
 #: ../engines/balou/config.c:646
 msgid "_Export theme"
@@ -105,7 +105,7 @@ msgstr "Balou tema"
 
 #: ../engines/balou/config.c:988
 msgid "Balou Splash Engine"
-msgstr "Balou pasveikinimo modulis"
+msgstr "Balou prisistatymo modulis"
 
 #: ../engines/mice/mice.c:385
 msgid "Mice"
@@ -113,7 +113,7 @@ msgstr "Pelės"
 
 #: ../engines/mice/mice.c:386
 msgid "Mice Splash Engine"
-msgstr "Pelių pasveikinimo modulis"
+msgstr "Pelių prisistatymo modulis"
 
 #: ../engines/simple/simple.c:334
 msgid "Configure Simple..."
@@ -141,11 +141,11 @@ msgstr "Paveikslas"
 
 #: ../engines/simple/simple.c:393
 msgid "Use custom image"
-msgstr "Naudoti pasirinktą atvaizdą"
+msgstr "Naudoti tinkintą paveikslą"
 
 #: ../engines/simple/simple.c:397
 msgid "Choose image..."
-msgstr "Pasirinkite atvaizdą..."
+msgstr "Pasirinkite paveikslą..."
 
 #: ../engines/simple/simple.c:403
 msgid "Images"
@@ -161,7 +161,7 @@ msgstr "Paprasta"
 
 #: ../engines/simple/simple.c:481
 msgid "Simple Splash Engine"
-msgstr "Paprastas pasveikinimo modulis"
+msgstr "Paprastas prisistatymo modulis"
 
 #: ../scripts/xscreensaver.desktop.in.h:1
 msgid "Screensaver"
@@ -181,12 +181,12 @@ msgstr "LIZDO ID"
 
 #: ../settings/main.c:69
 msgid "Version information"
-msgstr "Versija"
+msgstr "Versijos informacija"
 
 #: ../settings/main.c:80 ../xfce4-session/main.c:343
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr "Bandykite „%s --help“, informacijai apie naudojimą."
+msgstr "Rašykite „%s --help“, informacijai apie naudojimą."
 
 #: ../settings/main.c:92 ../xfce4-session/main.c:353
 #: ../xfce4-session-logout/main.c:146
@@ -197,7 +197,7 @@ msgstr "Xfce kūrėjų komanda. Visos teisės saugomos."
 #: ../xfce4-session-logout/main.c:149
 #, c-format
 msgid "Please report bugs to <%s>."
-msgstr "Apie klaidas praneškite <%s>."
+msgstr "Prašome apie klaidas pranešti <%s>."
 
 #: ../settings/main.c:102 ../xfce4-session/main.c:362
 msgid "Unable to contact settings server"
@@ -205,7 +205,7 @@ msgstr "Nepavyko susisiekti su nustatymų serveriu"
 
 #: ../settings/main.c:121
 msgid "Unable to create user interface from embedded definition data"
-msgstr "Iš įmontuotų aprašymo duomenų nepavyko sukurti naudotojo sąsajos"
+msgstr "Nepavyko sukurti naudotojo sąsajos iš įtaisyto apibrėžimo duomenų"
 
 #: ../settings/main.c:133
 msgid "App_lication Autostart"
@@ -256,11 +256,11 @@ msgstr "_Tęsti"
 #: ../settings/session-editor.c:212
 #, c-format
 msgid "You might need to delete some files manually in \"%s\"."
-msgstr "Kai kuriuos failus iš „%s“ jums gali tekti ištrinti patiems "
+msgstr "Kai kuriuos failus iš „%s“ jums gali tekti ištrinti rankiniu būdu."
 
 #: ../settings/session-editor.c:215
 msgid "All Xfce cache files could not be cleared"
-msgstr "Nepavyko ištrinti visų Xfce podėlio failų"
+msgstr "Nepavyko išvalyti visų Xfce podėlio failų"
 
 #: ../settings/session-editor.c:251
 #, c-format
