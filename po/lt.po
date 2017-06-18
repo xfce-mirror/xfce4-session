@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-11 12:30+0200\n"
-"PO-Revision-Date: 2017-06-17 22:29+0000\n"
+"PO-Revision-Date: 2017-06-17 23:46+0000\n"
 "Last-Translator: Moo\n"
 "Language-Team: Lithuanian (http://www.transifex.com/xfce/xfce4-session/language/lt/)\n"
 "MIME-Version: 1.0\n"
@@ -275,7 +275,7 @@ msgstr "Baigti programos darbą"
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
-msgstr "Visi neįrašyti programos duomenys, bus prarasti ir neatstatyti kitame seanse."
+msgstr "Visi neįrašyti programos duomenys bus prarasti ir kitame seanse neatstatyti."
 
 #: ../settings/session-editor.c:258
 msgid "_Quit Program"
@@ -496,28 +496,28 @@ msgid ""
 "running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
 "incorrectly (must include \"%s\"), or xfce4-session is installed "
 "incorrectly."
-msgstr "Nepavyko nustatyti saugaus seanso pavadinimo.  Galimos priežastys: xfconfd neveikia (D-Bus sąrankos klaida); aplinkos kintamasis $XDG_CONFIG_DIRS nustatytas netinkamai (turi turėti „%s“), arba xfce4-session neteisingai įdiegta."
+msgstr "Nepavyko nustatyti gedimams atsparaus seanso pavadinimo.  Galimos priežastys: xfconfd neveikia (D-Bus sąrankos klaida); aplinkos kintamasis $XDG_CONFIG_DIRS nustatytas netinkamai (turi turėti „%s“), arba xfce4-session neteisingai įdiegta."
 
 #: ../xfce4-session/xfsm-manager.c:630
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr "Nurodytas saugus seansas („%s“) nepažymėtas kaip saugus seansas."
+msgstr "Nurodytas gedimams atsparus seansas („%s“) nėra pažymėtas kaip gedimams atsparus seansas."
 
 #: ../xfce4-session/xfsm-manager.c:677
 msgid "The list of applications in the failsafe session is empty."
-msgstr "Saugaus seanso programų sąrašas tuščias."
+msgstr "Gedimams atsparaus seanso programų sąrašas tuščias."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
 #: ../xfce4-session/xfsm-manager.c:724
 msgid "Session Manager Error"
-msgstr "Seanso tvarkytuvės klaida"
+msgstr "Seansų tvarkytuvės klaida"
 
 #: ../xfce4-session/xfsm-manager.c:726
 msgid "Unable to load a failsafe session"
-msgstr "Nepavyko įkelti saugaus seanso"
+msgstr "Nepavyko įkelti gedimams atsparaus seanso"
 
 #: ../xfce4-session/xfsm-manager.c:728
 msgid "_Quit"
@@ -550,15 +550,15 @@ msgstr "Klientų darbą galima baigti tik neveiklumo būsenoje"
 
 #: ../xfce4-session/xfsm-manager.c:2187
 msgid "Session manager must be in idle state when requesting a checkpoint"
-msgstr "Kai prašoma įrašyto taško, seanso tvarkytuvė turi būti neveiklumo būsenoje"
+msgstr "Kai prašoma įrašyto kontrolinio taško, seansų tvarkytuvė turi būti neveiklumo būsenoje"
 
 #: ../xfce4-session/xfsm-manager.c:2257 ../xfce4-session/xfsm-manager.c:2277
 msgid "Session manager must be in idle state when requesting a shutdown"
-msgstr "Kai prašoma išjungti, seanso tvarkytuvė turi būti neveiklumo būsenoje"
+msgstr "Kai prašoma išjungti, seansų tvarkytuvė turi būti neveiklumo būsenoje"
 
 #: ../xfce4-session/xfsm-manager.c:2322
 msgid "Session manager must be in idle state when requesting a restart"
-msgstr "Kai prašoma paleisti iš naujo, seanso tvarkytuvė privalo būti neveiklumo būsenoje"
+msgstr "Kai prašoma paleisti iš naujo, seansų tvarkytuvė privalo būti neveiklumo būsenoje"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:184
 #, c-format
@@ -642,11 +642,11 @@ msgstr "Paleidžiama langų tvarkytuvė"
 
 #: ../xfce4-session/xfsm-startup.c:409
 msgid "Starting the Gnome Terminal Emulator"
-msgstr "Paleidžiamas Gnome terminalas"
+msgstr "Paleidžiamas Gnome terminalo emuliatorius"
 
 #: ../xfce4-session/xfsm-startup.c:413
 msgid "Starting the KDE Advanced Text Editor"
-msgstr "Paleidžiamas KDE tekstinis redaktorius"
+msgstr "Paleidžiamas KDE išplėstinis tekstų redaktorius"
 
 #: ../xfce4-session/xfsm-startup.c:415
 msgid "Starting the KDE Clipboard Manager"
@@ -670,7 +670,7 @@ msgstr "Paleidžiamas KDE terminalo emuliatorius"
 
 #: ../xfce4-session/xfsm-startup.c:427
 msgid "Starting the Beep Media Player"
-msgstr "Paleidžiama Beep Media Player"
+msgstr "Paleidžiamas Beep medijos grotuvas"
 
 #: ../xfce4-session/xfsm-startup.c:429
 msgid "Starting The Gimp"
@@ -678,7 +678,7 @@ msgstr "Paleidžiama Gimp"
 
 #: ../xfce4-session/xfsm-startup.c:431
 msgid "Starting the VI Improved Editor"
-msgstr "Paleidžiamas VI Improved tekstinis redaktorius"
+msgstr "Paleidžiamas VI Improved tekstų redaktorius"
 
 #: ../xfce4-session/xfsm-startup.c:433
 msgid "Starting the Session Management Proxy"
@@ -690,7 +690,7 @@ msgstr "Paleidžiamas X-Chat IRC klientas"
 
 #: ../xfce4-session/xfsm-startup.c:437
 msgid "Starting the X Multimedia System"
-msgstr "Paleidžiama X Multimedia System"
+msgstr "Paleidžiama X multimedijos sistema"
 
 #: ../xfce4-session/xfsm-startup.c:439
 msgid "Starting the X Terminal Emulator"
@@ -714,7 +714,7 @@ msgid ""
 "autostart directory have been successfully migrated to the new\n"
 "location.\n"
 "You should delete this directory now.\n"
-msgstr "Automatinio paleidimo aplanko vieta ir formatas pasikeitė.\nNauja vieta yra\n\n  %s\n\nten jūs galite įdėti .desktop failus, kurie aprašo programas\nkurios bus paleistos kai prisijungsite prie Xfce darbalaukio.\nJūsų seni failai buvo perkelti į naują vietą.\nDabar galite ištrinti aplanką.\n"
+msgstr "Automatinio paleidimo katalogo vieta ir formatas pasikeitė.\nNauja vieta yra\n\n  %s\n\nten jūs galite įdėti .desktop failus, kurie aprašo programas,\nkurios bus paleistos, kai prisijungsite prie Xfce darbalaukio.\nJūsų seni failai buvo sėkmingai perkelti į naująją vietą.\nDabar turėtumėte ištrinti šį katalogą.\n"
 
 #: ../xfce4-session/xfsm-startup.c:750
 msgid "Performing Autostart..."
@@ -735,15 +735,15 @@ msgstr "Nežinomas išjungimo būdas %d"
 
 #: ../xfce4-session-logout/main.c:70
 msgid "Log out without displaying the logout dialog"
-msgstr "Atsijungti nerodant atsijungimo lango"
+msgstr "Atsijungti, nerodant atsijungimo dialogo"
 
 #: ../xfce4-session-logout/main.c:74
 msgid "Halt without displaying the logout dialog"
-msgstr "Sustabdyti nerodant atsijungimo dialogo"
+msgstr "Išjungti, nerodant atsijungimo dialogo"
 
 #: ../xfce4-session-logout/main.c:78
 msgid "Reboot without displaying the logout dialog"
-msgstr "Paleisti iš naujo nerodant atsijungimo dialogo"
+msgstr "Paleisti iš naujo, nerodant atsijungimo dialogo"
 
 #: ../xfce4-session-logout/main.c:82
 msgid "Suspend without displaying the logout dialog"
@@ -779,7 +779,7 @@ msgstr "ir Brian Tarricone <kelnos@xfce.org>."
 
 #: ../xfce4-session-logout/main.c:168 ../xfce4-session-logout/main.c:279
 msgid "Received error while trying to log out"
-msgstr "Bandant atsijungti gauta klaida"
+msgstr "Bandant atsijungti, gauta klaida"
 
 #: ../xfce4-session-logout/main.c:244
 #, c-format
