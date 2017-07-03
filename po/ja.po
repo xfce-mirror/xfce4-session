@@ -4,14 +4,14 @@
 # 
 # Translators:
 # Daichi Kawahata <daichi@xfce.org>, 2005
-# Nobuhiro Iwamatsu <iwamatsu@nigauri.org>, 2008,2016
+# Nobuhiro Iwamatsu <iwamatsu@nigauri.org>, 2008,2016-2017
 # Zhao Ji <zhao-ji@awz.ne.jp>, 2003
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 18:30+0200\n"
-"PO-Revision-Date: 2016-07-29 00:11+0000\n"
+"POT-Creation-Date: 2017-06-11 12:30+0200\n"
+"PO-Revision-Date: 2017-07-03 07:45+0000\n"
 "Last-Translator: Nobuhiro Iwamatsu <iwamatsu@nigauri.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/xfce/xfce4-session/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr "インストールするテーマを選択してください..."
 
 #: ../engines/balou/config.c:327 ../engines/balou/config.c:495
 #: ../settings/session-editor.c:173 ../settings/session-editor.c:257
-#: ../xfce4-session/xfsm-logout-dialog.c:209
+#: ../xfce4-session/xfsm-logout-dialog.c:211
 #: ../xfce4-session/xfsm-splash-screen.c:213
 msgid "_Cancel"
 msgstr "キャンセル(_C)"
@@ -62,7 +62,7 @@ msgstr "ファイルが正しい起動画面アーカイブか確認して下さ
 
 #: ../engines/balou/config.c:344 ../engines/balou/config.c:949
 #: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
-#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1223
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1226
 msgid "_Close"
 msgstr "閉じる(_C)"
 
@@ -189,12 +189,12 @@ msgid "Type '%s --help' for usage."
 msgstr "'%s --help' と入力すると使用方法が表示されます。"
 
 #: ../settings/main.c:92 ../xfce4-session/main.c:353
-#: ../xfce4-session-logout/main.c:140
+#: ../xfce4-session-logout/main.c:146
 msgid "The Xfce development team. All rights reserved."
 msgstr "The Xfce development team. All rights reserved."
 
 #: ../settings/main.c:93 ../xfce4-session/main.c:354
-#: ../xfce4-session-logout/main.c:143
+#: ../xfce4-session-logout/main.c:149
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "バグは <%s> まで報告してください。"
@@ -311,11 +311,11 @@ msgstr "再起動スタイル"
 msgid "None"
 msgstr "なし"
 
-#: ../settings/xfae-dialog.c:73 ../settings/xfae-dialog.c:181
+#: ../settings/xfae-dialog.c:73 ../settings/xfae-dialog.c:182
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: ../settings/xfae-dialog.c:74 ../settings/xfae-dialog.c:182
+#: ../settings/xfae-dialog.c:74 ../settings/xfae-dialog.c:183
 msgid "OK"
 msgstr "OK"
 
@@ -323,23 +323,23 @@ msgstr "OK"
 msgid "Add application"
 msgstr "アプリケーションの追加"
 
-#: ../settings/xfae-dialog.c:92
+#: ../settings/xfae-dialog.c:90
 msgid "Name:"
 msgstr "名前:"
 
-#: ../settings/xfae-dialog.c:107
+#: ../settings/xfae-dialog.c:104
 msgid "Description:"
 msgstr "説明:"
 
-#: ../settings/xfae-dialog.c:120 ../settings/xfae-model.c:479
+#: ../settings/xfae-dialog.c:117 ../settings/xfae-model.c:479
 msgid "Command:"
 msgstr "コマンド:"
 
-#: ../settings/xfae-dialog.c:178
+#: ../settings/xfae-dialog.c:179
 msgid "Select a command"
 msgstr "コマンドを選択してください"
 
-#: ../settings/xfae-dialog.c:227
+#: ../settings/xfae-dialog.c:228
 msgid "Edit application"
 msgstr "アプリケーションの編集"
 
@@ -414,7 +414,7 @@ msgstr "アイテムの切り替えに失敗しました。"
 msgid "Disable binding to TCP ports"
 msgstr "TCP ポートへのバインディングを無効にする"
 
-#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:96
+#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:102
 msgid "Print version information and exit"
 msgstr "バージョン情報を表示して終了する"
 
@@ -423,11 +423,11 @@ msgid "Loading desktop settings"
 msgstr "デスクトップの設定を読み込んでいます"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:198
+#: ../xfce4-session/main.c:199
 msgid "Verifying DNS settings"
 msgstr "DNS の設定を検証しています"
 
-#: ../xfce4-session/main.c:202
+#: ../xfce4-session/main.c:203
 msgid "Loading session data"
 msgstr "セッションデータを読み込んでいます"
 
@@ -472,7 +472,7 @@ msgstr "KDE サービスを開始しています"
 msgid "(Unknown)"
 msgstr "(不明)"
 
-#: ../xfce4-session/xfsm-dns.c:147
+#: ../xfce4-session/xfsm-dns.c:152
 #, c-format
 msgid ""
 "Could not look up internet address for %s.\n"
@@ -481,11 +481,11 @@ msgid ""
 "%s to the file /etc/hosts on your system."
 msgstr "%s のインターネットアドレスを参照できませんでした。\nこれは Xfce をきちんと動作させる上での妨げになる\nでしょう。あなたのシステムのファイル /etc/hosts に\n%s を加えることで問題を解決できるかもしれません。"
 
-#: ../xfce4-session/xfsm-dns.c:154
+#: ../xfce4-session/xfsm-dns.c:159
 msgid "Continue anyway"
 msgstr "とにかく続行する"
 
-#: ../xfce4-session/xfsm-dns.c:155
+#: ../xfce4-session/xfsm-dns.c:160
 msgid "Try again"
 msgstr "再試行"
 
@@ -523,40 +523,44 @@ msgstr "フェイルセーフセッションを読み込めませんでした"
 msgid "_Quit"
 msgstr "終了(_Q)"
 
-#: ../xfce4-session/xfsm-manager.c:1215
+#: ../xfce4-session/xfsm-manager.c:1216
 msgid "Shutdown Failed"
 msgstr "シャットダウン失敗"
 
-#: ../xfce4-session/xfsm-manager.c:1218
+#: ../xfce4-session/xfsm-manager.c:1219
 msgid "Failed to suspend session"
 msgstr "セッションのサスペンドに失敗しました"
 
-#: ../xfce4-session/xfsm-manager.c:1220
+#: ../xfce4-session/xfsm-manager.c:1221
 msgid "Failed to hibernate session"
 msgstr "セッションのハイバネートに失敗しました"
 
-#: ../xfce4-session/xfsm-manager.c:1221
+#: ../xfce4-session/xfsm-manager.c:1223
+msgid "Failed to hybrid sleep session"
+msgstr "セッションのハイブリッドスリープに失敗しました"
+
+#: ../xfce4-session/xfsm-manager.c:1224
 msgid "Failed to switch user"
 msgstr "ユーザの切り替えに失敗しました"
 
-#: ../xfce4-session/xfsm-manager.c:1527
+#: ../xfce4-session/xfsm-manager.c:1530
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "待機状態の時のみクライアントを終了できます"
 
-#: ../xfce4-session/xfsm-manager.c:2178
+#: ../xfce4-session/xfsm-manager.c:2187
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "チェックポイントを要求するとき、セッションマネージャーは待機状態でなければなりません"
 
-#: ../xfce4-session/xfsm-manager.c:2248 ../xfce4-session/xfsm-manager.c:2268
+#: ../xfce4-session/xfsm-manager.c:2257 ../xfce4-session/xfsm-manager.c:2277
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "シャットダウンを要求するとき、セッションマネージャーは待機状態でなければなりません"
 
-#: ../xfce4-session/xfsm-manager.c:2313
+#: ../xfce4-session/xfsm-manager.c:2322
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "再起動を要求するとき、セッションマネージャーは待機状態でなければなりません"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:182
+#: ../xfce4-session/xfsm-logout-dialog.c:184
 #, c-format
 msgid "Log out %s"
 msgstr "%s のログアウト"
@@ -564,35 +568,39 @@ msgstr "%s のログアウト"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:224
+#: ../xfce4-session/xfsm-logout-dialog.c:226
 msgid "_Log Out"
 msgstr "ログアウト(_L)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:244
+#: ../xfce4-session/xfsm-logout-dialog.c:246
 msgid "_Restart"
 msgstr "再起動(_R)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:264
+#: ../xfce4-session/xfsm-logout-dialog.c:266
 msgid "Shut _Down"
 msgstr "シャットダウン(_D)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:287
+#: ../xfce4-session/xfsm-logout-dialog.c:289
 msgid "Sus_pend"
 msgstr "サスペンド(_P)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:321
+#: ../xfce4-session/xfsm-logout-dialog.c:323
 msgid "_Hibernate"
 msgstr "ハイバネート(_H)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:352
+#: ../xfce4-session/xfsm-logout-dialog.c:354
+msgid "_Hybrid Sleep"
+msgstr "ハイブリッドスリープ(_H)"
+
+#: ../xfce4-session/xfsm-logout-dialog.c:385
 msgid "Switch _User"
 msgstr "ユーザーの切り替え(_U)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:377
+#: ../xfce4-session/xfsm-logout-dialog.c:410
 msgid "_Save session for future logins"
 msgstr "次回ログインのためセッションを保存する(_S)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:405
+#: ../xfce4-session/xfsm-logout-dialog.c:438
 msgid "An error occurred"
 msgstr "エラーが発生しました"
 
@@ -720,56 +728,60 @@ msgstr "福祉情報技術を起動しています"
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "キオスク設定によってシャットダウンはブロックされました"
 
-#: ../xfce4-session/xfsm-shutdown.c:216
+#: ../xfce4-session/xfsm-shutdown.c:219
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "未知のシャットダウン方式 %d"
 
-#: ../xfce4-session-logout/main.c:68
+#: ../xfce4-session-logout/main.c:70
 msgid "Log out without displaying the logout dialog"
 msgstr "ログアウトダイアログを表示せずにログアウトする"
 
-#: ../xfce4-session-logout/main.c:72
+#: ../xfce4-session-logout/main.c:74
 msgid "Halt without displaying the logout dialog"
 msgstr "ログアウトダイアログを表示せずに停止する"
 
-#: ../xfce4-session-logout/main.c:76
+#: ../xfce4-session-logout/main.c:78
 msgid "Reboot without displaying the logout dialog"
 msgstr "ログアウトダイアログを表示せずに再起動する"
 
-#: ../xfce4-session-logout/main.c:80
+#: ../xfce4-session-logout/main.c:82
 msgid "Suspend without displaying the logout dialog"
 msgstr "ログアウトダイアログを表示せずにサスペンドする"
 
-#: ../xfce4-session-logout/main.c:84
+#: ../xfce4-session-logout/main.c:86
 msgid "Hibernate without displaying the logout dialog"
 msgstr "ログアウトダイアログを表示せずにハイバネートする"
 
-#: ../xfce4-session-logout/main.c:88
+#: ../xfce4-session-logout/main.c:90
+msgid "Hybrid Sleep without displaying the logout dialog"
+msgstr "ログアウトダイアログを表示せずにハイブリッドスリープする"
+
+#: ../xfce4-session-logout/main.c:94
 msgid "Switch user without displaying the logout dialog"
 msgstr "ログアウトダイアログを表示せずにユーザを切り替える"
 
-#: ../xfce4-session-logout/main.c:92
+#: ../xfce4-session-logout/main.c:98
 msgid "Log out quickly; don't save the session"
 msgstr "セッションを保存せず、素早くログアウトする"
 
-#: ../xfce4-session-logout/main.c:115
+#: ../xfce4-session-logout/main.c:121
 msgid "Unknown error"
 msgstr "不明なエラー"
 
-#: ../xfce4-session-logout/main.c:141
+#: ../xfce4-session-logout/main.c:147
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Written by Benedikt Meurer <benny@xfce.org>"
 
-#: ../xfce4-session-logout/main.c:142
+#: ../xfce4-session-logout/main.c:148
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "and Brian Tarricone <kelnos@xfce.org>."
 
-#: ../xfce4-session-logout/main.c:162 ../xfce4-session-logout/main.c:262
+#: ../xfce4-session-logout/main.c:168 ../xfce4-session-logout/main.c:279
 msgid "Received error while trying to log out"
 msgstr "ログアウト中にエラーを受信しました"
 
-#: ../xfce4-session-logout/main.c:229
+#: ../xfce4-session-logout/main.c:244
 #, c-format
 msgid "Received error while trying to log out, error was %s"
 msgstr "ログアウト中にエラーを受信し、エラー %s でした。"
