@@ -63,6 +63,7 @@
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-manager.h>
 #include <xfce4-session/xfsm-splash-screen.h>
+#include <xfce4-session/xfsm-systemd.h>
 
 #include <xfce4-session/xfsm-startup.h>
 
@@ -201,6 +202,8 @@ xfsm_startup_init (XfconfChannel *channel)
   gchar       *ssh_agent_path = NULL;
   gchar       *gpg_agent_path = NULL;
   gchar       *cmd;
+  gchar       *cmdoutput = NULL;
+  GError      *error = NULL;
   pid_t        agentpid;
   gboolean     gnome_keyring_found;
 
@@ -281,8 +284,27 @@ xfsm_startup_init (XfconfChannel *channel)
           cmd = g_strdup_printf ("%s -s", ssh_agent_path);
           /* keep this around for shutdown */
           running_sshagent = xfsm_startup_init_agent (cmd, "ssh-agent");
+          /* update dbus environment */
+          if (LOGIND_RUNNING())
+            {
+              cmd = g_strdup_printf ("%s", "dbus-update-activation-environment --systemd SSH_AUTH_SOCK");
+            }
+          else
+            {
+              cmd = g_strdup_printf ("%s", "dbus-update-activation-environment SSH_AUTH_SOCK");
+            }
+          g_spawn_command_line_sync (cmd, &cmdoutput, NULL, NULL, &error);
+
+          if (error)
+            {
+              g_warning ("failed to call dbus-update-activation-environment. Output was %s, error was %s",
+                         cmdoutput, error->message);
+            }
+
           g_free (cmd);
           g_free (ssh_agent_path);
+          g_clear_pointer (&cmdoutput, g_free);
+          g_clear_error (&error);
         }
     }
 
