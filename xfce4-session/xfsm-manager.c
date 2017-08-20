@@ -1611,7 +1611,7 @@ xfsm_manager_perform_shutdown (XfsmManager *manager)
   /* give all clients the chance to close the connection */
   manager->die_timeout_id = g_timeout_add (DIE_TIMEOUT,
                                            (GSourceFunc) manager_quit_signal,
-                                           NULL);
+                                           manager);
 }
 
 
