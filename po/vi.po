@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# truongap <truongap.ars@gmail.com>, 2014
+# Duy Truong Nguyen <truongap.ars@gmail.com>, 2014
 # Lâm Vĩnh Niên <nienvl@yahoo.ca>, 2004
 # Phan Vĩnh Thịnh <teppi82@gmail.com>, 2006
 # Phan Vĩnh Thịnh <teppi@vnlinux.org>, 2006
@@ -11,10 +11,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-02 22:44+0200\n"
-"PO-Revision-Date: 2014-04-28 14:48+0000\n"
-"Last-Translator: truongap <truongap.ars@gmail.com>\n"
-"Language-Team: Vietnamese (http://www.transifex.com/projects/p/xfce4-session/language/vi/)\n"
+"POT-Creation-Date: 2017-06-11 12:30+0200\n"
+"PO-Revision-Date: 2017-09-19 18:02+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
+"Language-Team: Vietnamese (http://www.transifex.com/xfce/xfce4-session/language/vi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -37,6 +37,17 @@ msgstr "Không có mô tả nào"
 msgid "Choose theme file to install..."
 msgstr "Chọn tập tin sắc thái để cài đặt..."
 
+#: ../engines/balou/config.c:327 ../engines/balou/config.c:495
+#: ../settings/session-editor.c:173 ../settings/session-editor.c:257
+#: ../xfce4-session/xfsm-logout-dialog.c:211
+#: ../xfce4-session/xfsm-splash-screen.c:213
+msgid "_Cancel"
+msgstr ""
+
+#: ../engines/balou/config.c:328
+msgid "_Open"
+msgstr ""
+
 #: ../engines/balou/config.c:336
 #, c-format
 msgid "Unable to install splash theme from file \"%s\""
@@ -50,96 +61,106 @@ msgstr "Lỗi tệp tin chủ đề"
 msgid "Please check that the file is a valid splash theme archive."
 msgstr ""
 
-#: ../engines/balou/config.c:402
+#: ../engines/balou/config.c:344 ../engines/balou/config.c:949
+#: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1226
+msgid "_Close"
+msgstr ""
+
+#: ../engines/balou/config.c:403
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "Không thể gỡ bỏ sắc thái màn hình khởi động \"%s\" từ thư mục %s."
 
-#: ../engines/balou/config.c:491
+#: ../engines/balou/config.c:492
 msgid "Choose theme filename..."
 msgstr "Chọn tên tập tin sắc thái..."
+
+#: ../engines/balou/config.c:496
+msgid "_Save"
+msgstr ""
 
 #: ../engines/balou/config.c:624
 msgid "_Install new theme"
 msgstr "_Cài đặt sắc thái mới"
 
-#: ../engines/balou/config.c:633
+#: ../engines/balou/config.c:631
 msgid "_Remove theme"
 msgstr "_Gỡ bỏ sắc thái"
 
-#: ../engines/balou/config.c:650
+#: ../engines/balou/config.c:646
 msgid "_Export theme"
 msgstr "_Xuất sắc thái"
 
-#: ../engines/balou/config.c:866
+#: ../engines/balou/config.c:860
 msgid "Balou theme"
 msgstr "Sắc thái Balou"
 
-#: ../engines/balou/config.c:951
+#: ../engines/balou/config.c:945
 msgid "Configure Balou..."
 msgstr "Cấu hình Balou..."
 
-#: ../engines/balou/config.c:994
+#: ../engines/balou/config.c:987
 msgid "Balou"
 msgstr "Balou"
 
-#: ../engines/balou/config.c:995
+#: ../engines/balou/config.c:988
 msgid "Balou Splash Engine"
 msgstr "Hình ảnh khởi động balou"
 
-#: ../engines/mice/mice.c:373
+#: ../engines/mice/mice.c:385
 msgid "Mice"
 msgstr "Chú chuột"
 
-#: ../engines/mice/mice.c:374
+#: ../engines/mice/mice.c:386
 msgid "Mice Splash Engine"
 msgstr "Hình ảnh khởi động Chú chuột"
 
-#: ../engines/simple/simple.c:346
+#: ../engines/simple/simple.c:334
 msgid "Configure Simple..."
 msgstr "Cấu hình Đơn giản..."
 
-#: ../engines/simple/simple.c:357
+#: ../engines/simple/simple.c:344
 msgid "Font"
 msgstr "Phông"
 
-#: ../engines/simple/simple.c:367
+#: ../engines/simple/simple.c:354
 msgid "Colors"
 msgstr "Màu sắc"
 
-#: ../engines/simple/simple.c:375
+#: ../engines/simple/simple.c:362
 msgid "Background color:"
 msgstr "Màu nền:"
 
-#: ../engines/simple/simple.c:388
+#: ../engines/simple/simple.c:373
 msgid "Text color:"
 msgstr "Màu chữ:"
 
-#: ../engines/simple/simple.c:401
+#: ../engines/simple/simple.c:385
 msgid "Image"
 msgstr "Hình ảnh"
 
-#: ../engines/simple/simple.c:409
+#: ../engines/simple/simple.c:393
 msgid "Use custom image"
 msgstr "Dùng hình ảnh riêng"
 
-#: ../engines/simple/simple.c:413
+#: ../engines/simple/simple.c:397
 msgid "Choose image..."
 msgstr "Chọn hình ảnh..."
 
-#: ../engines/simple/simple.c:419
+#: ../engines/simple/simple.c:403
 msgid "Images"
 msgstr "Hình ảnh"
 
-#: ../engines/simple/simple.c:425
+#: ../engines/simple/simple.c:409
 msgid "All files"
 msgstr "Mọi tệp tin"
 
-#: ../engines/simple/simple.c:497
+#: ../engines/simple/simple.c:480
 msgid "Simple"
 msgstr "Đơn giản"
 
-#: ../engines/simple/simple.c:498
+#: ../engines/simple/simple.c:481
 msgid "Simple Splash Engine"
 msgstr "Khởi động đơn giản"
 
@@ -151,43 +172,43 @@ msgstr "Trình bảo vệ màn hình"
 msgid "Launch screensaver and locker program"
 msgstr "Chạy trình bảo vệ màn hình và chương trình khóa"
 
-#: ../settings/main.c:43
+#: ../settings/main.c:68
 msgid "Settings manager socket"
 msgstr ""
 
-#: ../settings/main.c:43
+#: ../settings/main.c:68
 msgid "SOCKET ID"
 msgstr ""
 
-#: ../settings/main.c:44
+#: ../settings/main.c:69
 msgid "Version information"
 msgstr "Thông tin phiên bản"
 
-#: ../settings/main.c:75 ../xfce4-session/main.c:257
+#: ../settings/main.c:80 ../xfce4-session/main.c:343
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr ""
 
-#: ../settings/main.c:87 ../xfce4-session/main.c:267
-#: ../xfce4-session-logout/main.c:136
+#: ../settings/main.c:92 ../xfce4-session/main.c:353
+#: ../xfce4-session-logout/main.c:146
 msgid "The Xfce development team. All rights reserved."
 msgstr "Nhóm phát triển Xfce. Tất cả các quyền đã được bảo lưu"
 
-#: ../settings/main.c:88 ../xfce4-session/main.c:268
-#: ../xfce4-session-logout/main.c:139
+#: ../settings/main.c:93 ../xfce4-session/main.c:354
+#: ../xfce4-session-logout/main.c:149
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Hãy thống báo lỗi đến <%s>"
 
-#: ../settings/main.c:97 ../xfce4-session/main.c:276
+#: ../settings/main.c:102 ../xfce4-session/main.c:362
 msgid "Unable to contact settings server"
 msgstr "Không thể liên lạc với máy chủ cài đặt"
 
-#: ../settings/main.c:116
+#: ../settings/main.c:121
 msgid "Unable to create user interface from embedded definition data"
 msgstr ""
 
-#: ../settings/main.c:128
+#: ../settings/main.c:133
 msgid "App_lication Autostart"
 msgstr "Tự khởi chạy ứng dụng"
 
@@ -242,47 +263,46 @@ msgstr "Bạn có thể cần phải xóa một số tệp tin bằng tay trong 
 msgid "All Xfce cache files could not be cleared"
 msgstr "Mọi tệp tin trong  bộ nhớ đẹm không thể bị xóa"
 
-#: ../settings/session-editor.c:249
+#: ../settings/session-editor.c:251
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Bạn có thực sự muốn kết thúc \"%s\"?"
 
-#: ../settings/session-editor.c:252 ../settings/session-editor.c:280
+#: ../settings/session-editor.c:254 ../settings/session-editor.c:286
 msgid "Terminate Program"
 msgstr "Kết thúc chương trình"
 
-#: ../settings/session-editor.c:254
+#: ../settings/session-editor.c:256
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
 msgstr ""
 
-#: ../settings/session-editor.c:256
-#: ../settings/xfce4-session-settings.glade.h:30
+#: ../settings/session-editor.c:258
 msgid "_Quit Program"
 msgstr "_Thoát chương trình"
 
-#: ../settings/session-editor.c:281
+#: ../settings/session-editor.c:287
 msgid "Unable to terminate program."
 msgstr "Không thể kết thúc chương trình"
 
-#: ../settings/session-editor.c:459
+#: ../settings/session-editor.c:509
 msgid "(Unknown program)"
 msgstr "(Không rõ chương trình)"
 
-#: ../settings/session-editor.c:679
+#: ../settings/session-editor.c:733
 msgid "Priority"
 msgstr "Độ ưu tiên"
 
-#: ../settings/session-editor.c:687
+#: ../settings/session-editor.c:741
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:693
+#: ../settings/session-editor.c:747
 msgid "Program"
 msgstr "Chương trình"
 
-#: ../settings/session-editor.c:718
+#: ../settings/session-editor.c:772
 msgid "Restart Style"
 msgstr ""
 
@@ -292,27 +312,35 @@ msgstr ""
 msgid "None"
 msgstr "Không"
 
+#: ../settings/xfae-dialog.c:73 ../settings/xfae-dialog.c:182
+msgid "Cancel"
+msgstr ""
+
+#: ../settings/xfae-dialog.c:74 ../settings/xfae-dialog.c:183
+msgid "OK"
+msgstr ""
+
 #: ../settings/xfae-dialog.c:78
 msgid "Add application"
 msgstr "Thêm ứng dụng"
 
-#: ../settings/xfae-dialog.c:92
+#: ../settings/xfae-dialog.c:90
 msgid "Name:"
 msgstr "Tên:"
 
-#: ../settings/xfae-dialog.c:109
+#: ../settings/xfae-dialog.c:104
 msgid "Description:"
 msgstr "Mô tả:"
 
-#: ../settings/xfae-dialog.c:124 ../settings/xfae-model.c:479
+#: ../settings/xfae-dialog.c:117 ../settings/xfae-model.c:479
 msgid "Command:"
 msgstr "Câu lệnh:"
 
-#: ../settings/xfae-dialog.c:184
+#: ../settings/xfae-dialog.c:179
 msgid "Select a command"
 msgstr "Chọn một câu lệnh"
 
-#: ../settings/xfae-dialog.c:233
+#: ../settings/xfae-dialog.c:228
 msgid "Edit application"
 msgstr "Sử chương trình"
 
@@ -341,7 +369,7 @@ msgstr "Mở %s để đọc, thất bại"
 msgid "Failed to open %s for writing"
 msgstr "Không mở được %s để ghi"
 
-#: ../settings/xfae-window.c:102
+#: ../settings/xfae-window.c:105
 msgid ""
 "Below is the list of applications that will be started automatically when "
 "you login to your Xfce desktop, in addition to the applications that were "
@@ -349,57 +377,58 @@ msgid ""
 "desktop environment, but you can still enable them if you want."
 msgstr "Danh sách ứng dụng sẽ tự động chạy khi bạn đăng nhập vào màn hình Xfce của bạn, ngoài ra còn có những ứng dụng đã được lưu khi bạn đăng xuất lần cuối. Ứng dụng đi kèm với màn hình làm việc khác, nhưng bạn vẫn có thể kích hoạt chúng nếu muốn."
 
-#: ../settings/xfae-window.c:293
+#: ../settings/xfae-window.c:179 ../settings/xfae-window.c:237
+msgid "Add"
+msgstr ""
+
+#: ../settings/xfae-window.c:185 ../settings/xfae-window.c:243
+msgid "Remove"
+msgstr ""
+
+#: ../settings/xfae-window.c:195
+msgid "Edit"
+msgstr ""
+
+#: ../settings/xfae-window.c:296
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Thất bại khi thêm \"%s\""
 
-#: ../settings/xfae-window.c:324 ../settings/xfae-window.c:338
+#: ../settings/xfae-window.c:327 ../settings/xfae-window.c:341
 msgid "Failed to remove item"
 msgstr "Thất bại khi gỡ bỏ mục"
 
-#: ../settings/xfae-window.c:330
-msgid ""
-"This will permanently remove the application from the list of automatically "
-"started applications"
-msgstr "Điều này sẽ xóa bỏ vĩnh viễn ứng dụng ra khỏi danh sách các ứng dụng tự động khởi chạy"
-
-#: ../settings/xfae-window.c:332
-#, c-format
-msgid "Are you sure you want to remove \"%s\""
-msgstr "Bạn có chắc là muốn gỡ bỏ \"%s\""
-
-#: ../settings/xfae-window.c:366
+#: ../settings/xfae-window.c:369
 msgid "Failed to edit item"
 msgstr "Thất bại khi sửa mục"
 
-#: ../settings/xfae-window.c:386
+#: ../settings/xfae-window.c:389
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Thất bại khi sửa mục \"%s\""
 
-#: ../settings/xfae-window.c:414
+#: ../settings/xfae-window.c:417
 msgid "Failed to toggle item"
 msgstr ""
 
-#: ../xfce4-session/main.c:76
+#: ../xfce4-session/main.c:77
 msgid "Disable binding to TCP ports"
 msgstr ""
 
-#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:91
+#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:102
 msgid "Print version information and exit"
 msgstr "In thông tin phiên bản và thoát"
 
-#: ../xfce4-session/main.c:140
+#: ../xfce4-session/main.c:146
 msgid "Loading desktop settings"
 msgstr "Tải các thiết lập desktop"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:298
+#: ../xfce4-session/main.c:199
 msgid "Verifying DNS settings"
 msgstr "Xác nhậ các thiết lập DNS"
 
-#: ../xfce4-session/main.c:302
+#: ../xfce4-session/main.c:203
 msgid "Loading session data"
 msgstr "Tải các dữ liệu phiên"
 
@@ -408,41 +437,35 @@ msgstr "Tải các dữ liệu phiên"
 msgid "Last accessed: %s"
 msgstr "Truy cập cuối: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:172
+#: ../xfce4-session/xfsm-chooser.c:175
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr "Chọn phiên bạn muốn khôi phục. Bạn có thể chỉ cần nhấp kép vào tên phiên để khôi phục."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:198
+#: ../xfce4-session/xfsm-chooser.c:201
 msgid "Log out"
 msgstr "Đăng xuất"
 
-#: ../xfce4-session/xfsm-chooser.c:200
+#: ../xfce4-session/xfsm-chooser.c:203
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Huỷ đăng nhập và quay trở lại màn hình đăng nhập."
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:207
+#: ../xfce4-session/xfsm-chooser.c:210
 msgid "New session"
 msgstr "Phiên mới"
 
-#: ../xfce4-session/xfsm-chooser.c:208
+#: ../xfce4-session/xfsm-chooser.c:211
 msgid "Create a new session."
 msgstr "Tạo phiên mới."
 
-#: ../xfce4-session/xfsm-client.c:506 ../xfce4-session/xfsm-client.c:532
-#: ../xfce4-session/xfsm-client.c:571
-#, c-format
-msgid "The client doesn't have any properties set yet"
-msgstr ""
-
-#: ../xfce4-session/xfsm-compat-gnome.c:247
+#: ../xfce4-session/xfsm-compat-gnome.c:255
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "Khởi dộng Gnome Keyring Daemon"
 
-#: ../xfce4-session/xfsm-compat-kde.c:124
+#: ../xfce4-session/xfsm-compat-kde.c:126
 msgid "Starting KDE services"
 msgstr "Khởi động các dịch vụ KDE"
 
@@ -450,7 +473,7 @@ msgstr "Khởi động các dịch vụ KDE"
 msgid "(Unknown)"
 msgstr "(Không rõ)"
 
-#: ../xfce4-session/xfsm-dns.c:147
+#: ../xfce4-session/xfsm-dns.c:152
 #, c-format
 msgid ""
 "Could not look up internet address for %s.\n"
@@ -459,15 +482,15 @@ msgid ""
 "%s to the file /etc/hosts on your system."
 msgstr "Không thể tra địa chỉ internet cho %s.\nĐiểu này sẽ ngăn Xfce hoạt động đúng.\nCó thể giải quyết vấn đề bằng cách thêm\n%s vào tập tin /etc/hosts trên hệ thống."
 
-#: ../xfce4-session/xfsm-dns.c:154
+#: ../xfce4-session/xfsm-dns.c:159
 msgid "Continue anyway"
 msgstr "Dù sao thì vẫn tiếp tục"
 
-#: ../xfce4-session/xfsm-dns.c:155
+#: ../xfce4-session/xfsm-dns.c:160
 msgid "Try again"
 msgstr "Thử lại"
 
-#: ../xfce4-session/xfsm-manager.c:611
+#: ../xfce4-session/xfsm-manager.c:619
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -476,55 +499,69 @@ msgid ""
 "incorrectly."
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:622
+#: ../xfce4-session/xfsm-manager.c:630
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:669
+#: ../xfce4-session/xfsm-manager.c:677
 msgid "The list of applications in the failsafe session is empty."
 msgstr ""
 
 #. FIXME: migrate this into the splash screen somehow so the
-#. * window doesn't look ugly (right now now WM is running, so it
+#. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:716
+#: ../xfce4-session/xfsm-manager.c:724
 msgid "Session Manager Error"
 msgstr "Lỗi trình quản lý phiên chạy"
 
-#: ../xfce4-session/xfsm-manager.c:718
+#: ../xfce4-session/xfsm-manager.c:726
 msgid "Unable to load a failsafe session"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1127
+#: ../xfce4-session/xfsm-manager.c:728
+msgid "_Quit"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1216
 msgid "Shutdown Failed"
 msgstr "Tắt máy, thất bại"
 
-#: ../xfce4-session/xfsm-manager.c:1130
+#: ../xfce4-session/xfsm-manager.c:1219
 msgid "Failed to suspend session"
 msgstr "Phiên chạy tạm dừng, thất bại"
 
-#: ../xfce4-session/xfsm-manager.c:1131
+#: ../xfce4-session/xfsm-manager.c:1221
 msgid "Failed to hibernate session"
 msgstr "Phiên chạy ngủ đông thất bại"
 
-#: ../xfce4-session/xfsm-manager.c:1405
+#: ../xfce4-session/xfsm-manager.c:1223
+msgid "Failed to hybrid sleep session"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1224
+msgid "Failed to switch user"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1530
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1969
-#, c-format
+#: ../xfce4-session/xfsm-manager.c:2187
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:2010
-#, c-format
+#: ../xfce4-session/xfsm-manager.c:2257 ../xfce4-session/xfsm-manager.c:2277
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
 
-#: ../xfce4-session/xfsm-logout-dialog.c:188
+#: ../xfce4-session/xfsm-manager.c:2322
+msgid "Session manager must be in idle state when requesting a restart"
+msgstr ""
+
+#: ../xfce4-session/xfsm-logout-dialog.c:184
 #, c-format
 msgid "Log out %s"
 msgstr "Đăng xuất %s"
@@ -532,43 +569,41 @@ msgstr "Đăng xuất %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:246
+#: ../xfce4-session/xfsm-logout-dialog.c:226
 msgid "_Log Out"
 msgstr "Đăng _xuất"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:266
+#: ../xfce4-session/xfsm-logout-dialog.c:246
 msgid "_Restart"
 msgstr "Khởi động _lại"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:286
+#: ../xfce4-session/xfsm-logout-dialog.c:266
 msgid "Shut _Down"
 msgstr "_Tắt máy"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:309
+#: ../xfce4-session/xfsm-logout-dialog.c:289
 msgid "Sus_pend"
 msgstr "Tạm _dừng"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:343
+#: ../xfce4-session/xfsm-logout-dialog.c:323
 msgid "_Hibernate"
 msgstr "_Ngủ đông"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:368
+#: ../xfce4-session/xfsm-logout-dialog.c:354
+msgid "_Hybrid Sleep"
+msgstr ""
+
+#: ../xfce4-session/xfsm-logout-dialog.c:385
+msgid "Switch _User"
+msgstr ""
+
+#: ../xfce4-session/xfsm-logout-dialog.c:410
 msgid "_Save session for future logins"
 msgstr "_Lưu phiên cho lần đăng nhập sau"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:395
-msgid "Please enter your password"
-msgstr "Hãy nhập mật khẩu của bạn"
-
-#: ../xfce4-session/xfsm-logout-dialog.c:427
+#: ../xfce4-session/xfsm-logout-dialog.c:438
 msgid "An error occurred"
 msgstr "Đã xảy ra một lỗi"
-
-#: ../xfce4-session/xfsm-logout-dialog.c:433
-msgid ""
-"Either the password you entered is invalid, or the system administrator "
-"disallows shutting down this computer with your user account."
-msgstr "Hoặc bạn điền sai mật khẩu, hoặc nhà quản trị hệ thống không cho phép tắt máy tính với tài khoản của bạn."
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -578,92 +613,96 @@ msgstr "Đóng phiên"
 msgid "Choose session name"
 msgstr "Chọn tên phiên"
 
+#: ../xfce4-session/xfsm-splash-screen.c:215
+msgid "_OK"
+msgstr ""
+
 #: ../xfce4-session/xfsm-splash-screen.c:222
 msgid "Choose a name for the new session:"
 msgstr "Chọn tên cho phiên mới:"
 
-#: ../xfce4-session/xfsm-startup.c:347
+#: ../xfce4-session/xfsm-startup.c:397
 msgid "Starting the Volume Controller"
 msgstr "Khởi động Bàn điều khiển âm lượng"
 
-#: ../xfce4-session/xfsm-startup.c:349
+#: ../xfce4-session/xfsm-startup.c:399
 msgid "Starting the Panel"
 msgstr "Khởi dộng Panel"
 
-#: ../xfce4-session/xfsm-startup.c:351
+#: ../xfce4-session/xfsm-startup.c:401
 msgid "Starting the Desktop Manager"
 msgstr "Khởi động Trình quản lí desktop"
 
-#: ../xfce4-session/xfsm-startup.c:353
+#: ../xfce4-session/xfsm-startup.c:403
 msgid "Starting the Taskbar"
 msgstr "Khởi động Thanh tác vụ"
 
-#: ../xfce4-session/xfsm-startup.c:355
+#: ../xfce4-session/xfsm-startup.c:405
 msgid "Starting the Window Manager"
 msgstr "Khởi động Trình quản lí cửa sổ"
 
-#: ../xfce4-session/xfsm-startup.c:359
+#: ../xfce4-session/xfsm-startup.c:409
 msgid "Starting the Gnome Terminal Emulator"
 msgstr "Khởi động Trình giả lập trạm cuối Gnome"
 
-#: ../xfce4-session/xfsm-startup.c:363
+#: ../xfce4-session/xfsm-startup.c:413
 msgid "Starting the KDE Advanced Text Editor"
 msgstr "Khởi động Trình soạn thảo văn bản cao cấp KDE"
 
-#: ../xfce4-session/xfsm-startup.c:365
+#: ../xfce4-session/xfsm-startup.c:415
 msgid "Starting the KDE Clipboard Manager"
 msgstr "Khởi động Trình quản lí clipboard KDE"
 
-#: ../xfce4-session/xfsm-startup.c:367
+#: ../xfce4-session/xfsm-startup.c:417
 msgid "Starting the KDE Mail Reader"
 msgstr "Khởi động Trình đọc thư KDE"
 
-#: ../xfce4-session/xfsm-startup.c:369
+#: ../xfce4-session/xfsm-startup.c:419
 msgid "Starting the KDE News Reader"
 msgstr "Khởi động Trình đọc tin KDE"
 
-#: ../xfce4-session/xfsm-startup.c:371
+#: ../xfce4-session/xfsm-startup.c:421
 msgid "Starting the Konqueror"
 msgstr "Khởi động Konqueror"
 
-#: ../xfce4-session/xfsm-startup.c:373
+#: ../xfce4-session/xfsm-startup.c:423
 msgid "Starting the KDE Terminal Emulator"
 msgstr "Khởi động Trình giả lập trạm cuối KDE"
 
-#: ../xfce4-session/xfsm-startup.c:377
+#: ../xfce4-session/xfsm-startup.c:427
 msgid "Starting the Beep Media Player"
 msgstr "Khởi động Beep Media Player"
 
-#: ../xfce4-session/xfsm-startup.c:379
+#: ../xfce4-session/xfsm-startup.c:429
 msgid "Starting The Gimp"
 msgstr "Khởi động Gimp"
 
-#: ../xfce4-session/xfsm-startup.c:381
+#: ../xfce4-session/xfsm-startup.c:431
 msgid "Starting the VI Improved Editor"
 msgstr "Khỏi động VI Improved Editor"
 
-#: ../xfce4-session/xfsm-startup.c:383
+#: ../xfce4-session/xfsm-startup.c:433
 msgid "Starting the Session Management Proxy"
 msgstr "Khởi động Proxy quản lí phiên"
 
-#: ../xfce4-session/xfsm-startup.c:385
+#: ../xfce4-session/xfsm-startup.c:435
 msgid "Starting the X-Chat IRC Client"
 msgstr "Khởi động Trạm khách IRC X-Chat"
 
-#: ../xfce4-session/xfsm-startup.c:387
+#: ../xfce4-session/xfsm-startup.c:437
 msgid "Starting the X Multimedia System"
 msgstr "Khởi động X Multimedia System"
 
-#: ../xfce4-session/xfsm-startup.c:389
+#: ../xfce4-session/xfsm-startup.c:439
 msgid "Starting the X Terminal Emulator"
 msgstr "Khởi động Trình giả lập trạm cuối X"
 
-#: ../xfce4-session/xfsm-startup.c:391
+#: ../xfce4-session/xfsm-startup.c:441
 #, c-format
 msgid "Starting %s"
 msgstr "Khởi động %s"
 
-#: ../xfce4-session/xfsm-startup.c:515
+#: ../xfce4-session/xfsm-startup.c:565
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -678,81 +717,75 @@ msgid ""
 "You should delete this directory now.\n"
 msgstr "Vị trí và định dạng của thư mục autostart đã thay đổi.\nVị trí mới là\n\n  %s.\n\nNgười dùng có thể đặt vào đó các tập tin .desktop cho những ứng\ndụng sẽ chạy khi đăng nhập. Những tập tin trong thư mục\nautostart cũ được nhập thành công tới vị trí mới.\nCó thể xóa thư mục cũ này.\n"
 
-#: ../xfce4-session/xfsm-startup.c:684
+#: ../xfce4-session/xfsm-startup.c:750
 msgid "Performing Autostart..."
 msgstr "Thực hiện Autostart..."
 
-#: ../xfce4-session/xfsm-startup.c:790
+#: ../xfce4-session/xfsm-startup.c:856
 msgid "Starting Assistive Technologies"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown.c:429
-#, c-format
-msgid "Error sending command to shutdown helper: %s"
-msgstr "Lỗi khi gửi lệnh đến trình trợ giúp tắt máy: %s"
-
-#: ../xfce4-session/xfsm-shutdown.c:442
-#, c-format
-msgid "Error receiving response from shutdown helper: %s"
-msgstr "Lỗi khi nhận hồi đáp từ trình trợ giúp tắt máy: %s"
-
-#: ../xfce4-session/xfsm-shutdown.c:450
-#, c-format
-msgid "Shutdown command failed"
-msgstr "Lệnh tắt máy, thất bại"
-
-#: ../xfce4-session/xfsm-shutdown.c:555
+#: ../xfce4-session/xfsm-shutdown.c:162
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Tắt máy bị khóa bởi cài đặt kiosk"
 
-#: ../xfce4-session/xfsm-shutdown.c:638
+#: ../xfce4-session/xfsm-shutdown.c:219
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Không rõ phương pháp tắt máy %d"
 
-#: ../xfce4-session-logout/main.c:67
+#: ../xfce4-session-logout/main.c:70
 msgid "Log out without displaying the logout dialog"
 msgstr "Đăng xuất mà không hiện hôp thoại"
 
-#: ../xfce4-session-logout/main.c:71
+#: ../xfce4-session-logout/main.c:74
 msgid "Halt without displaying the logout dialog"
 msgstr "Tắt máy mà không hiện hôp thoại"
 
-#: ../xfce4-session-logout/main.c:75
+#: ../xfce4-session-logout/main.c:78
 msgid "Reboot without displaying the logout dialog"
 msgstr "Khởi động lại mà không hiện hôp thoại"
 
-#: ../xfce4-session-logout/main.c:79
+#: ../xfce4-session-logout/main.c:82
 msgid "Suspend without displaying the logout dialog"
 msgstr "Tạm dừng mà không hiện hôp thoại"
 
-#: ../xfce4-session-logout/main.c:83
+#: ../xfce4-session-logout/main.c:86
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Ngủ đông mà không hiện hôp thoại"
 
-#: ../xfce4-session-logout/main.c:87
+#: ../xfce4-session-logout/main.c:90
+msgid "Hybrid Sleep without displaying the logout dialog"
+msgstr ""
+
+#: ../xfce4-session-logout/main.c:94
+msgid "Switch user without displaying the logout dialog"
+msgstr ""
+
+#: ../xfce4-session-logout/main.c:98
 msgid "Log out quickly; don't save the session"
 msgstr "Đăng xuất nhanh chóng, không lưu phiên chạy"
 
-#: ../xfce4-session-logout/main.c:110
+#: ../xfce4-session-logout/main.c:121
 msgid "Unknown error"
 msgstr "Không rõ lỗi"
 
-#: ../xfce4-session-logout/main.c:137
+#: ../xfce4-session-logout/main.c:147
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Được viết bởi Benedikt Meurer <benny@xfce.org>"
 
-#: ../xfce4-session-logout/main.c:138
+#: ../xfce4-session-logout/main.c:148
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "và Brian Tarricone <kelnos@xfce.org>."
 
-#: ../xfce4-session-logout/main.c:148
-msgid "Unable to contact D-Bus session bus"
-msgstr "Không thể liên lạc D-Bus session bus"
-
-#: ../xfce4-session-logout/main.c:227
+#: ../xfce4-session-logout/main.c:168 ../xfce4-session-logout/main.c:279
 msgid "Received error while trying to log out"
 msgstr "Nhận được lỗi trong khi cố gắng đăng xuất"
+
+#: ../xfce4-session-logout/main.c:244
+#, c-format
+msgid "Received error while trying to log out, error was %s"
+msgstr ""
 
 #: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
 msgid "Log Out"
@@ -763,177 +796,9 @@ msgid "Log out of the Xfce Desktop"
 msgstr "Đăng xuất khỏi màn hình Xfce"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
-#: ../settings/xfce4-session-settings.glade.h:3
 msgid "Session and Startup"
 msgstr "Phiên chạy và khởi động"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
-#: ../settings/xfce4-session-settings.glade.h:4
 msgid "Customize desktop startup and splash screen"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:1
-msgid "Saving Session"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:2
-msgid ""
-"Your session is being saved.  If you do not wish to wait, you may close this"
-" window."
-msgstr "Phiên chạy đang được lưu. Nếu bạn không muốn đợi, bạn có thể đóng cửa sổ này."
-
-#: ../settings/xfce4-session-settings.glade.h:5
-msgid "_Display chooser on login"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:6
-msgid "Display the session chooser every time Xfce starts"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:7
-msgid "<b>Session Chooser</b>"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:8
-msgid "Automatically save session on logo_ut"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:9
-msgid "Always save the session when logging out"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:10
-msgid "Pro_mpt on logout"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:11
-msgid "Prompt for confirmation when logging out"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:12
-msgid "<b>Logout Settings</b>"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:13
-msgid "_General"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:14
-msgid "Opens the configuration panel for the selected splash screen"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:15
-msgid "Con_figure"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:16
-msgid "Demonstrates the selected splash screen"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:17
-msgid "_Test"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:18
-msgid "<b>Description:</b>"
-msgstr "<b>Miêu tả:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:19
-msgid "<b>Version:</b>"
-msgstr "<b>Phiên bản:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:20
-msgid "<b>Author:</b>"
-msgstr "<b>Tác giả:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:21
-msgid "<b>Homepage:</b>"
-msgstr "<b>Trang nhà:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:22
-msgid "label"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:23
-msgid "<b>Information</b>"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:24
-msgid "S_plash"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:25
-msgid ""
-"These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:26
-msgid "Save Sess_ion"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:27
-msgid "Empty the session cache"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:28
-msgid "Clear save_d sessions"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:29
-msgid "Quit the program, and remove it from the session"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:31
-msgid "Sessio_n"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:32
-msgid "Launch GN_OME services on startup"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:33
-msgid "Start GNOME services, such as gnome-keyring"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:34
-msgid "Launch _KDE services on startup"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:35
-msgid "Start KDE services, such as kdeinit"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:36
-msgid "<b>Compatibility</b>"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:37
-msgid "Manage _remote applications"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:38
-msgid ""
-"Manage remote applications over the network (this may be a security risk)"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:39
-msgid "<b>Security</b>"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:40
-msgid "Lock screen be_fore sleep"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:41
-msgid "Run xflock4 before suspending or hibernating the system"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:42
-msgid "<b>Shutdown</b>"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:43
-msgid "Ad_vanced"
 msgstr ""
