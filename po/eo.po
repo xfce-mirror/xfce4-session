@@ -1,21 +1,30 @@
-# Esperanto translations for the xfce4-session package.
-# Copyright (C) 2003-2006 The Xfce development team.
-# This file is distributed under the same license as the xfce4-session package.
-# Sylvain Vedrenne <gnu_sylvain@xfce.org>, 2005-2006.
-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Robin van der Vliet <info@robinvandervliet.nl>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-session 4.4.0\n"
+"Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-16 17:35+0100\n"
-"PO-Revision-Date: 2006-09-08 22:06+0200\n"
-"Last-Translator: Sylvain Vedrenne <gnu_sylvain@xfce.org>\n"
-"Language-Team: Esperanto <debian-l10n-esperanto@lists.debian.org>\n"
-"Language: eo\n"
+"POT-Creation-Date: 2017-06-11 12:30+0200\n"
+"PO-Revision-Date: 2017-09-19 18:02+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
+"Language-Team: Esperanto (http://www.transifex.com/xfce/xfce4-session/language/eo/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: eo\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../xfce.desktop.in.h:1
+msgid "Xfce Session"
+msgstr "Xfce-seanco"
+
+#: ../xfce.desktop.in.h:2
+msgid "Use this session to run Xfce as your desktop environment"
+msgstr ""
 
 #: ../engines/balou/balou-theme.c:110
 msgid "No description given"
@@ -25,562 +34,435 @@ msgstr "Nenia priskribo"
 msgid "Choose theme file to install..."
 msgstr "Elektu kiun etosan dosieron instali..."
 
+#: ../engines/balou/config.c:327 ../engines/balou/config.c:495
+#: ../settings/session-editor.c:173 ../settings/session-editor.c:257
+#: ../xfce4-session/xfsm-logout-dialog.c:211
+#: ../xfce4-session/xfsm-splash-screen.c:213
+msgid "_Cancel"
+msgstr ""
+
+#: ../engines/balou/config.c:328
+msgid "_Open"
+msgstr ""
+
 #: ../engines/balou/config.c:336
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to install splash theme from file \"%s\""
-msgstr "Malsukcesis forigi ekaperantetoson \"%s\" el dosierujo %s."
+msgstr ""
 
 #: ../engines/balou/config.c:339
 msgid "Theme File Error"
 msgstr ""
 
 #: ../engines/balou/config.c:342
-#, fuzzy
 msgid "Please check that the file is a valid splash theme archive."
 msgstr ""
-"Malsukcesis instali ekaperantetoson el dosiero %s. Bonvolu kontroli ke tiu "
-"dosiero estas valida arkivo de ekaperantetoso."
 
-#: ../engines/balou/config.c:402
+#: ../engines/balou/config.c:344 ../engines/balou/config.c:949
+#: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1226
+msgid "_Close"
+msgstr ""
+
+#: ../engines/balou/config.c:403
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "Malsukcesis forigi ekaperantetoson \"%s\" el dosierujo %s."
 
-#: ../engines/balou/config.c:491
+#: ../engines/balou/config.c:492
 msgid "Choose theme filename..."
 msgstr "Elektu dosiernomon de etoso..."
 
+#: ../engines/balou/config.c:496
+msgid "_Save"
+msgstr ""
+
 #: ../engines/balou/config.c:624
 msgid "_Install new theme"
-msgstr "_Instalu novan etoson"
+msgstr "_Instali novan etoson"
 
-#: ../engines/balou/config.c:633
+#: ../engines/balou/config.c:631
 msgid "_Remove theme"
-msgstr "_Forigu etoson"
+msgstr "_Forigi etoson"
 
-#: ../engines/balou/config.c:650
+#: ../engines/balou/config.c:646
 msgid "_Export theme"
-msgstr "_Alŝutu etoson"
+msgstr "_Eksporti etoson"
 
-#: ../engines/balou/config.c:866
+#: ../engines/balou/config.c:860
 msgid "Balou theme"
 msgstr "Balua etoso"
 
-#: ../engines/balou/config.c:951
+#: ../engines/balou/config.c:945
 msgid "Configure Balou..."
-msgstr "Agordu Baluon..."
+msgstr "Agordi Baluon..."
 
-#: ../engines/balou/config.c:994
+#: ../engines/balou/config.c:987
 msgid "Balou"
 msgstr "Baluo"
 
-#: ../engines/balou/config.c:995
+#: ../engines/balou/config.c:988
 msgid "Balou Splash Engine"
 msgstr "La Ekaperanta Lanĉetoso 'Baluo'"
 
-#: ../engines/mice/mice.c:373
+#: ../engines/mice/mice.c:385
 msgid "Mice"
 msgstr "Musoj"
 
-#: ../engines/mice/mice.c:374
+#: ../engines/mice/mice.c:386
 msgid "Mice Splash Engine"
 msgstr "La Ekaperanta Lanĉetoso 'Musoj'"
 
-#: ../engines/simple/simple.c:346
+#: ../engines/simple/simple.c:334
 msgid "Configure Simple..."
 msgstr "Agordu la Simplan etoson..."
 
-#: ../engines/simple/simple.c:357
+#: ../engines/simple/simple.c:344
 msgid "Font"
 msgstr "Tiparo"
 
-#: ../engines/simple/simple.c:367
+#: ../engines/simple/simple.c:354
 msgid "Colors"
 msgstr "Koloroj"
 
-#: ../engines/simple/simple.c:375
+#: ../engines/simple/simple.c:362
 msgid "Background color:"
 msgstr "Fona koloro:"
 
-#: ../engines/simple/simple.c:388
+#: ../engines/simple/simple.c:373
 msgid "Text color:"
 msgstr "Teksta koloro:"
 
-#: ../engines/simple/simple.c:401
+#: ../engines/simple/simple.c:385
 msgid "Image"
 msgstr "Bildo"
 
-#: ../engines/simple/simple.c:409
+#: ../engines/simple/simple.c:393
 msgid "Use custom image"
 msgstr "Uzu laŭmendan bildon"
 
-#: ../engines/simple/simple.c:413
+#: ../engines/simple/simple.c:397
 msgid "Choose image..."
 msgstr "Elektu bildon..."
 
-#: ../engines/simple/simple.c:419
-#, fuzzy
+#: ../engines/simple/simple.c:403
 msgid "Images"
-msgstr "Bildo"
+msgstr "Bildoj"
 
-#: ../engines/simple/simple.c:425
+#: ../engines/simple/simple.c:409
 msgid "All files"
-msgstr ""
+msgstr "Ĉiuj dosieroj"
 
-#: ../engines/simple/simple.c:497
+#: ../engines/simple/simple.c:480
 msgid "Simple"
 msgstr "Simpla"
 
-#: ../engines/simple/simple.c:498
+#: ../engines/simple/simple.c:481
 msgid "Simple Splash Engine"
 msgstr "'Simpla' Ekaperanta Lanĉetoso"
 
-#: ../panel-plugin/xfsm-logout-plugin.c:86
-#, fuzzy
-msgid "Session"
-msgstr "Finu la Seancon"
+#: ../scripts/xscreensaver.desktop.in.h:1
+msgid "Screensaver"
+msgstr "Ekrankurteno"
 
-#: ../panel-plugin/xfsm-logout-plugin.c:87
-msgid "Loc_k screen"
+#: ../scripts/xscreensaver.desktop.in.h:2
+msgid "Launch screensaver and locker program"
 msgstr ""
 
-#: ../panel-plugin/xfsm-logout-plugin.c:88
-#: ../panel-plugin/xfsm-logout-plugin.c:128
-msgid "_Suspend"
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:89
-#: ../panel-plugin/xfsm-logout-plugin.c:135
-msgid "_Hibernate"
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:90
-#: ../panel-plugin/xfsm-logout-plugin.c:121
-msgid "_Reboot"
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:91
-#: ../panel-plugin/xfsm-logout-plugin.c:114
-#, fuzzy
-msgid "Shut _down"
-msgstr "Malŝaltu"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:92
-#: ../panel-plugin/xfsm-logout-plugin.c:107
-#, fuzzy
-msgid "_Log out"
-msgstr "Adiaŭu"
-
-#. XFSM_SHUTDOWN_ASK
-#. XFSM_SHUTDOWN_LOGOUT
-#: ../panel-plugin/xfsm-logout-plugin.c:105
-msgid "Are you sure you want to log out?"
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:106
-#, c-format
-msgid "You will be logged out in %u seconds."
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:109
-msgid "Failed to log out."
-msgstr ""
-
-#. XFSM_SHUTDOWN_HALT
-#: ../panel-plugin/xfsm-logout-plugin.c:112
-msgid "Are you sure you want to shut down?"
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:113
-#, c-format
-msgid "Your system will shut down in %u seconds."
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:116
-#, fuzzy
-msgid "Failed to shut down."
-msgstr "Malsukcesis malfermi %s por skribadi"
-
-#. XFSM_SHUTDOWN_REBOOT
-#: ../panel-plugin/xfsm-logout-plugin.c:119
-msgid "Are you sure you want to reboot?"
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:120
-#, c-format
-msgid "Your system will reboot in %u seconds."
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:123
-#, fuzzy
-msgid "Failed to reboot."
-msgstr "Malsukcesis krei la dosieron %s"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:130
-#, fuzzy
-msgid "Failed to suspend"
-msgstr "Malsukcesis malfermi %s por skribadi"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:137
-#, fuzzy
-msgid "Failed to hibernate"
-msgstr "Malsukcesis krei la dosieron %s"
-
-#: ../panel-plugin/xfsm-logout-plugin.c:150
-msgid "Xflock4 could not be launched"
-msgstr ""
-
-#: ../panel-plugin/xfsm-logout-plugin.c:222
-#, fuzzy
-msgid "Close Session"
-msgstr "Elektu seancon"
-
-#: ../settings/main.c:42
+#: ../settings/main.c:68
 msgid "Settings manager socket"
 msgstr ""
 
-#: ../settings/main.c:42
+#: ../settings/main.c:68
 msgid "SOCKET ID"
 msgstr ""
 
-#: ../settings/main.c:43
-#, fuzzy
+#: ../settings/main.c:69
 msgid "Version information"
-msgstr "Informigo"
+msgstr ""
 
-#: ../settings/main.c:73
+#: ../settings/main.c:80 ../xfce4-session/main.c:343
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr ""
 
-#: ../settings/main.c:85 ../xfce4-session/main.c:226
+#: ../settings/main.c:92 ../xfce4-session/main.c:353
+#: ../xfce4-session-logout/main.c:146
 msgid "The Xfce development team. All rights reserved."
 msgstr ""
 
-#: ../settings/main.c:86 ../xfce4-session/main.c:232
+#: ../settings/main.c:93 ../xfce4-session/main.c:354
+#: ../xfce4-session-logout/main.c:149
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr ""
 
-#: ../settings/main.c:95 ../xfce4-session/main.c:238 ../xfce4-tips/main.c:270
+#: ../settings/main.c:102 ../xfce4-session/main.c:362
 msgid "Unable to contact settings server"
 msgstr ""
 
-#: ../settings/main.c:114
+#: ../settings/main.c:121
 msgid "Unable to create user interface from embedded definition data"
 msgstr ""
 
-#: ../settings/main.c:127
-msgid "_Application Autostart"
-msgstr ""
-
-#: ../settings/session-editor.c:60
-msgid "If running"
+#: ../settings/main.c:133
+msgid "App_lication Autostart"
 msgstr ""
 
 #: ../settings/session-editor.c:61
-msgid "Always"
+msgid "If running"
 msgstr ""
 
 #: ../settings/session-editor.c:62
-msgid "Immediately"
-msgstr ""
+msgid "Always"
+msgstr "Ĉiam"
 
 #: ../settings/session-editor.c:63
-msgid "Never"
-msgstr ""
+msgid "Immediately"
+msgstr "Tuj"
 
-#: ../settings/session-editor.c:128
+#: ../settings/session-editor.c:64
+msgid "Never"
+msgstr "Neniam"
+
+#: ../settings/session-editor.c:129
 msgid "Session Save Error"
 msgstr ""
 
-#: ../settings/session-editor.c:129
+#: ../settings/session-editor.c:130
 msgid "Unable to save the session"
 msgstr ""
 
-#: ../settings/session-editor.c:184
+#: ../settings/session-editor.c:170
+msgid "Clear sessions"
+msgstr ""
+
+#: ../settings/session-editor.c:171
+msgid "Are you sure you want to empty the session cache?"
+msgstr ""
+
+#: ../settings/session-editor.c:172
+msgid ""
+"The saved states of your applications will not be restored during your next "
+"login."
+msgstr ""
+
+#: ../settings/session-editor.c:174
+msgid "_Proceed"
+msgstr ""
+
+#: ../settings/session-editor.c:212
+#, c-format
+msgid "You might need to delete some files manually in \"%s\"."
+msgstr ""
+
+#: ../settings/session-editor.c:215
+msgid "All Xfce cache files could not be cleared"
+msgstr ""
+
+#: ../settings/session-editor.c:251
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr ""
 
-#: ../settings/session-editor.c:187 ../settings/session-editor.c:215
+#: ../settings/session-editor.c:254 ../settings/session-editor.c:286
 msgid "Terminate Program"
 msgstr ""
 
-#: ../settings/session-editor.c:189
+#: ../settings/session-editor.c:256
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
 msgstr ""
 
-#: ../settings/session-editor.c:191
-#: ../settings/xfce4-session-settings.glade.h:35
+#: ../settings/session-editor.c:258
 msgid "_Quit Program"
 msgstr ""
 
-#: ../settings/session-editor.c:216
+#: ../settings/session-editor.c:287
 msgid "Unable to terminate program."
 msgstr ""
 
-#: ../settings/session-editor.c:394
-#, fuzzy
+#: ../settings/session-editor.c:509
 msgid "(Unknown program)"
-msgstr "(Nekonata)"
+msgstr "(Nekonata programo)"
 
-#: ../settings/session-editor.c:614
+#: ../settings/session-editor.c:733
 msgid "Priority"
 msgstr ""
 
-#: ../settings/session-editor.c:622
+#: ../settings/session-editor.c:741
 msgid "PID"
 msgstr ""
 
-#: ../settings/session-editor.c:628
+#: ../settings/session-editor.c:747
 msgid "Program"
+msgstr "Program"
+
+#: ../settings/session-editor.c:772
+msgid "Restart Style"
 msgstr ""
 
-#: ../settings/session-editor.c:653
-#, fuzzy
-msgid "Restart Style"
-msgstr "Restartigu"
-
-#: ../settings/splash-settings.c:286 ../settings/splash-settings.c:289
-#: ../settings/splash-settings.c:292 ../settings/splash-settings.c:295
-#: ../settings/splash-settings.c:352
+#: ../settings/splash-settings.c:291 ../settings/splash-settings.c:294
+#: ../settings/splash-settings.c:297 ../settings/splash-settings.c:300
+#: ../settings/splash-settings.c:357
 msgid "None"
 msgstr "Nenia"
+
+#: ../settings/xfae-dialog.c:73 ../settings/xfae-dialog.c:182
+msgid "Cancel"
+msgstr ""
+
+#: ../settings/xfae-dialog.c:74 ../settings/xfae-dialog.c:183
+msgid "OK"
+msgstr ""
 
 #: ../settings/xfae-dialog.c:78
 msgid "Add application"
 msgstr "Aldonu aplikaĵon"
 
-#: ../settings/xfae-dialog.c:92
+#: ../settings/xfae-dialog.c:90
 msgid "Name:"
 msgstr "Nomo:"
 
-#: ../settings/xfae-dialog.c:109
+#: ../settings/xfae-dialog.c:104
 msgid "Description:"
 msgstr "Priskribo:"
 
-#: ../settings/xfae-dialog.c:124
+#: ../settings/xfae-dialog.c:117 ../settings/xfae-model.c:479
 msgid "Command:"
 msgstr "Komando:"
 
-#: ../settings/xfae-dialog.c:184
+#: ../settings/xfae-dialog.c:179
 msgid "Select a command"
 msgstr "Elektu komandon"
 
-#: ../settings/xfae-dialog.c:233
-#, fuzzy
+#: ../settings/xfae-dialog.c:228
 msgid "Edit application"
-msgstr "Aldonu aplikaĵon"
+msgstr "Redakti aplikaĵo"
 
-#: ../settings/xfae-model.c:562
+#: ../settings/xfae-model.c:611
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "Malsukcesis malligi %s: %s"
 
-#: ../settings/xfae-model.c:651
+#: ../settings/xfae-model.c:700
 #, c-format
 msgid "Failed to create file %s"
 msgstr "Malsukcesis krei la dosieron %s"
 
-#: ../settings/xfae-model.c:673
+#: ../settings/xfae-model.c:723
 #, c-format
 msgid "Failed to write file %s"
 msgstr "Malsukcesis surdiskigi la dosieron %s"
 
-#: ../settings/xfae-model.c:732
-#, fuzzy, c-format
+#: ../settings/xfae-model.c:782
+#, c-format
 msgid "Failed to open %s for reading"
-msgstr "Malsukcesis malfermi %s por skribadi"
+msgstr ""
 
-#: ../settings/xfae-model.c:841 ../settings/xfae-model.c:898
+#: ../settings/xfae-model.c:891 ../settings/xfae-model.c:948
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "Malsukcesis malfermi %s por skribadi"
 
-#: ../settings/xfae-window.c:101
-#, fuzzy
+#: ../settings/xfae-window.c:105
 msgid ""
 "Below is the list of applications that will be started automatically when "
 "you login to your Xfce desktop, in addition to the applications that were "
-"saved when you logged out last time:"
+"saved when you logged out last time. Cursive applications belong to another "
+"desktop environment, but you can still enable them if you want."
 msgstr ""
-"Malsupre estas la listo de la aplikaĵoj kiuj estos startigitaj\n"
-"aŭtomate kiam vi ensalutos en vian Xfce labortablon,\n"
-"aldonitaj al la aplikaĵoj kiuj jam estis konservitaj kiam\n"
-"vi ensalutis je la antaŭa fojo:"
 
-#: ../settings/xfae-window.c:289
+#: ../settings/xfae-window.c:179 ../settings/xfae-window.c:237
+msgid "Add"
+msgstr ""
+
+#: ../settings/xfae-window.c:185 ../settings/xfae-window.c:243
+msgid "Remove"
+msgstr ""
+
+#: ../settings/xfae-window.c:195
+msgid "Edit"
+msgstr ""
+
+#: ../settings/xfae-window.c:296
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr ""
 
-#: ../settings/xfae-window.c:320 ../settings/xfae-window.c:334
-#, fuzzy
+#: ../settings/xfae-window.c:327 ../settings/xfae-window.c:341
 msgid "Failed to remove item"
-msgstr "Malsukcesis krei la dosieron %s"
-
-#: ../settings/xfae-window.c:326
-msgid ""
-"This will permanently remove the application from the list of automatically "
-"started applications"
 msgstr ""
 
-#: ../settings/xfae-window.c:328
-#, c-format
-msgid "Are you sure you want to remove \"%s\""
-msgstr ""
-
-#: ../settings/xfae-window.c:362
-#, fuzzy
+#: ../settings/xfae-window.c:369
 msgid "Failed to edit item"
-msgstr "Malsukcesis surdiskigi la dosieron %s"
+msgstr ""
 
-#: ../settings/xfae-window.c:382
-#, fuzzy, c-format
+#: ../settings/xfae-window.c:389
+#, c-format
 msgid "Failed to edit item \"%s\""
-msgstr "Malsukcesis surdiskigi la dosieron %s"
+msgstr ""
 
-#: ../settings/xfae-window.c:410
-#, fuzzy
+#: ../settings/xfae-window.c:417
 msgid "Failed to toggle item"
-msgstr "Malsukcesis surdiskigi la dosieron %s"
+msgstr ""
 
-#: ../xfce4-session/main.c:76
+#: ../xfce4-session/main.c:77
 msgid "Disable binding to TCP ports"
 msgstr ""
 
-#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:93
-#, fuzzy
+#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:102
 msgid "Print version information and exit"
-msgstr "Informigo"
+msgstr "Presi informojn pri versio kaj halti"
 
-#: ../xfce4-session/main.c:140
+#: ../xfce4-session/main.c:146
 msgid "Loading desktop settings"
 msgstr "Ŝargante labortablajn parametrojn"
 
-#: ../xfce4-session/main.c:227
-msgid "Written by Benedikt Meurer <benny@xfce.org>."
-msgstr ""
-
-#: ../xfce4-session/main.c:228
-#, c-format
-msgid "Built with Gtk+-%d.%d.%d, running with Gtk+-%d.%d.%d"
-msgstr ""
-
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:258
+#: ../xfce4-session/main.c:199
 msgid "Verifying DNS settings"
 msgstr "Kontrolante DNS parametrojn"
 
-#: ../xfce4-session/main.c:261
+#: ../xfce4-session/main.c:203
 msgid "Loading session data"
 msgstr "Ŝargante seancajn datumojn"
 
-#: ../xfce4-session/shutdown.c:372
-#, c-format
-msgid "<span size='large'><b>Log out %s</b></span>"
-msgstr ""
-
-#: ../xfce4-session/shutdown.c:422
-#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
-msgid "Log Out"
-msgstr "Adiaŭu"
-
-#: ../xfce4-session/shutdown.c:457
-msgid "Restart"
-msgstr "Restartigu"
-
-#: ../xfce4-session/shutdown.c:499
-msgid "Shut Down"
-msgstr "Malŝaltu"
-
-#: ../xfce4-session/shutdown.c:561
-msgid "Suspend"
-msgstr ""
-
-#: ../xfce4-session/shutdown.c:599
-msgid "Hibernate"
-msgstr ""
-
-#: ../xfce4-session/shutdown.c:608
-msgid "_Save session for future logins"
-msgstr "_Konservu tiun seancon por estontaj ensalutoj"
-
-#: ../xfce4-session/shutdown.c:668
-msgid "Please enter your password:"
-msgstr "Bonvolu enskribi vian pasvorton:"
-
-#: ../xfce4-session/shutdown.c:700
-#, fuzzy
-msgid "<b>An error occurred</b>"
-msgstr "<b>Eraro okazis</b>"
-
-#: ../xfce4-session/shutdown.c:714
-msgid ""
-"Either the password you entered is invalid, or the system administrator "
-"disallows shutting down this computer with your user account."
-msgstr ""
-"Aŭ la enskribita pasvorto ne taŭgas, aŭ la sistemestro malpermesas malŝalti "
-"ĉi tiun komputilon per via uzantokonto."
-
-#: ../xfce4-session/shutdown.c:833 ../xfce4-session/xfsm-manager.c:1119
-msgid "Shutdown Failed"
-msgstr ""
-
-#: ../xfce4-session/shutdown.c:835
-msgid "Unable to perform shutdown"
-msgstr ""
-
-#: ../xfce4-session/xfsm-chooser.c:91
+#: ../xfce4-session/xfsm-chooser.c:90
 #, c-format
 msgid "Last accessed: %s"
 msgstr "Antaŭe uzita je: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:177
+#: ../xfce4-session/xfsm-chooser.c:175
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
-msgstr ""
-"Elektu la seancon kiun vi volas reaktivigi. Sufiĉas duoble alklaki la nomon "
-"de seanco por ĝin reaktivigi."
+msgstr "Elektu la seancon kiun vi volas reaktivigi. Sufiĉas duoble alklaki la nomon de seanco por ĝin reaktivigi."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:203
-#, fuzzy
+#: ../xfce4-session/xfsm-chooser.c:201
 msgid "Log out"
-msgstr "Adiaŭu"
+msgstr "Elsaluti"
 
-#: ../xfce4-session/xfsm-chooser.c:205
+#: ../xfce4-session/xfsm-chooser.c:203
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Rezignu la ensalutan provon kaj reiru al la ensalutpaĝo."
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:212
+#: ../xfce4-session/xfsm-chooser.c:210
 msgid "New session"
 msgstr "Novan seancon"
 
-#: ../xfce4-session/xfsm-chooser.c:213
+#: ../xfce4-session/xfsm-chooser.c:211
 msgid "Create a new session."
-msgstr "Kreu novan seancon."
+msgstr "Krei novan seancon."
 
-#: ../xfce4-session/xfsm-client.c:506 ../xfce4-session/xfsm-client.c:532
-#: ../xfce4-session/xfsm-client.c:571
-#, c-format
-msgid "The client doesn't have any properties set yet"
-msgstr ""
-
-#: ../xfce4-session/xfsm-compat-gnome.c:301
+#: ../xfce4-session/xfsm-compat-gnome.c:255
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "Lanĉante la Gnoman Ŝlosilaran Demonon"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:313
-msgid "Starting Gnome Assistive Technologies"
-msgstr "Lanĉante la Gnomajn Asistantajn Teknologiojn"
-
-#: ../xfce4-session/xfsm-compat-kde.c:124
+#: ../xfce4-session/xfsm-compat-kde.c:126
 msgid "Starting KDE services"
 msgstr "Lanĉante KDE servojn"
 
@@ -588,208 +470,236 @@ msgstr "Lanĉante KDE servojn"
 msgid "(Unknown)"
 msgstr "(Nekonata)"
 
-#: ../xfce4-session/xfsm-dns.c:147
+#: ../xfce4-session/xfsm-dns.c:152
 #, c-format
 msgid ""
 "Could not look up internet address for %s.\n"
 "This will prevent Xfce from operating correctly.\n"
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
-msgstr ""
-"Malsukcesis serĉi la retadreson por %s.\n"
-"Tio malpermesos ke Xfce funkciu korekte.\n"
-"Eble vi povas forigi la problemon aldonante\n"
-"%s al la dosiero /etc/hosts en via sistemo."
+msgstr "Malsukcesis serĉi la retadreson por %s.\nTio malpermesos ke Xfce funkciu korekte.\nEble vi povas forigi la problemon aldonante\n%s al la dosiero /etc/hosts en via sistemo."
 
-#: ../xfce4-session/xfsm-dns.c:154
+#: ../xfce4-session/xfsm-dns.c:159
 msgid "Continue anyway"
 msgstr "Daŭrigu malgraŭe"
 
-#: ../xfce4-session/xfsm-dns.c:155
+#: ../xfce4-session/xfsm-dns.c:160
 msgid "Try again"
 msgstr "Provu denove"
 
-#: ../xfce4-session/xfsm-manager.c:602
+#: ../xfce4-session/xfsm-manager.c:619
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
 "running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
-"incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
+"incorrectly (must include \"%s\"), or xfce4-session is installed "
+"incorrectly."
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:613
+#: ../xfce4-session/xfsm-manager.c:630
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:660
+#: ../xfce4-session/xfsm-manager.c:677
 msgid "The list of applications in the failsafe session is empty."
 msgstr ""
 
 #. FIXME: migrate this into the splash screen somehow so the
-#. * window doesn't look ugly (right now now WM is running, so it
+#. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:707
-#, fuzzy
+#: ../xfce4-session/xfsm-manager.c:724
 msgid "Session Manager Error"
-msgstr "Elektu seancnomon"
+msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:709
+#: ../xfce4-session/xfsm-manager.c:726
 msgid "Unable to load a failsafe session"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1122
-#, fuzzy
+#: ../xfce4-session/xfsm-manager.c:728
+msgid "_Quit"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1216
+msgid "Shutdown Failed"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1219
 msgid "Failed to suspend session"
-msgstr "Malsukcesis malfermi %s por skribadi"
+msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1123
-#, fuzzy
+#: ../xfce4-session/xfsm-manager.c:1221
 msgid "Failed to hibernate session"
-msgstr "Malsukcesis krei la dosieron %s"
+msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1411
+#: ../xfce4-session/xfsm-manager.c:1223
+msgid "Failed to hybrid sleep session"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1224
+msgid "Failed to switch user"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1530
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1942
-#, c-format
+#: ../xfce4-session/xfsm-manager.c:2187
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1983
-#, c-format
+#: ../xfce4-session/xfsm-manager.c:2257 ../xfce4-session/xfsm-manager.c:2277
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1990
+#: ../xfce4-session/xfsm-manager.c:2322
+msgid "Session manager must be in idle state when requesting a restart"
+msgstr ""
+
+#: ../xfce4-session/xfsm-logout-dialog.c:184
 #, c-format
-msgid "Invalid shutdown type \"%u\""
+msgid "Log out %s"
+msgstr "Elsaluti %s"
+
+#. *
+#. * Logout
+#. *
+#: ../xfce4-session/xfsm-logout-dialog.c:226
+msgid "_Log Out"
+msgstr "_Elsaluti"
+
+#: ../xfce4-session/xfsm-logout-dialog.c:246
+msgid "_Restart"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1601
-#, c-format
-msgid "Error sending command to shutdown helper: %s"
+#: ../xfce4-session/xfsm-logout-dialog.c:266
+msgid "Shut _Down"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1615
-#, c-format
-msgid "Error receiving response from shutdown helper: %s"
+#: ../xfce4-session/xfsm-logout-dialog.c:289
+msgid "Sus_pend"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1624
-#, c-format
-msgid "Shutdown command failed"
+#: ../xfce4-session/xfsm-logout-dialog.c:323
+msgid "_Hibernate"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1802
-msgid "Suspend failed, no backend supported"
+#: ../xfce4-session/xfsm-logout-dialog.c:354
+msgid "_Hybrid Sleep"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1829
-msgid "Hibernate failed, no backend supported"
+#: ../xfce4-session/xfsm-logout-dialog.c:385
+msgid "Switch _User"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown-helper.c:1859
-msgid "Shutdown Command not found"
+#: ../xfce4-session/xfsm-logout-dialog.c:410
+msgid "_Save session for future logins"
+msgstr "_Konservu tiun seancon por estontaj ensalutoj"
+
+#: ../xfce4-session/xfsm-logout-dialog.c:438
+msgid "An error occurred"
 msgstr ""
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
-msgstr "Elektu seancon"
+msgstr "Elekti seancon"
 
 #: ../xfce4-session/xfsm-splash-screen.c:208
 msgid "Choose session name"
-msgstr "Elektu seancnomon"
+msgstr "Elekti seancnomon"
+
+#: ../xfce4-session/xfsm-splash-screen.c:215
+msgid "_OK"
+msgstr ""
 
 #: ../xfce4-session/xfsm-splash-screen.c:222
 msgid "Choose a name for the new session:"
-msgstr "Elektu nomon por la nova seanco"
+msgstr "Elekti nomon por la nova seanco"
 
-#: ../xfce4-session/xfsm-startup.c:115
+#: ../xfce4-session/xfsm-startup.c:397
 msgid "Starting the Volume Controller"
 msgstr "Lanĉante la Kontrolilon de Sono"
 
-#: ../xfce4-session/xfsm-startup.c:117
+#: ../xfce4-session/xfsm-startup.c:399
 msgid "Starting the Panel"
 msgstr "Lanĉante la Panelon"
 
-#: ../xfce4-session/xfsm-startup.c:119
+#: ../xfce4-session/xfsm-startup.c:401
 msgid "Starting the Desktop Manager"
 msgstr "Lanĉante la Administrilon de Labortablo"
 
-#: ../xfce4-session/xfsm-startup.c:121
+#: ../xfce4-session/xfsm-startup.c:403
 msgid "Starting the Taskbar"
 msgstr "Lanĉante la Taskostrion"
 
-#: ../xfce4-session/xfsm-startup.c:123
+#: ../xfce4-session/xfsm-startup.c:405
 msgid "Starting the Window Manager"
 msgstr "Lanĉante la Fenestradministrilon"
 
-#: ../xfce4-session/xfsm-startup.c:127
+#: ../xfce4-session/xfsm-startup.c:409
 msgid "Starting the Gnome Terminal Emulator"
 msgstr "Lanĉante la Gnoman Imitilon de Terminalo"
 
-#: ../xfce4-session/xfsm-startup.c:131
+#: ../xfce4-session/xfsm-startup.c:413
 msgid "Starting the KDE Advanced Text Editor"
 msgstr "Lanĉante la KDE Evoluan Redaktilon de Teksto"
 
-#: ../xfce4-session/xfsm-startup.c:133
+#: ../xfce4-session/xfsm-startup.c:415
 msgid "Starting the KDE Clipboard Manager"
 msgstr "Lanĉante la KDE Administrilon de Poŝo"
 
-#: ../xfce4-session/xfsm-startup.c:135
+#: ../xfce4-session/xfsm-startup.c:417
 msgid "Starting the KDE Mail Reader"
 msgstr "Lanĉante la KDE Retpoŝtolegilon"
 
-#: ../xfce4-session/xfsm-startup.c:137
+#: ../xfce4-session/xfsm-startup.c:419
 msgid "Starting the KDE News Reader"
 msgstr "Lanĉante la KDE Novaĵlegilon"
 
-#: ../xfce4-session/xfsm-startup.c:139
+#: ../xfce4-session/xfsm-startup.c:421
 msgid "Starting the Konqueror"
 msgstr "Lanĉante Konkerilon"
 
-#: ../xfce4-session/xfsm-startup.c:141
+#: ../xfce4-session/xfsm-startup.c:423
 msgid "Starting the KDE Terminal Emulator"
 msgstr "Lanĉante la KDE Imitilon de Terminalo"
 
-#: ../xfce4-session/xfsm-startup.c:145
+#: ../xfce4-session/xfsm-startup.c:427
 msgid "Starting the Beep Media Player"
 msgstr "Lanĉante la Bipan Legilon de Mediumo"
 
-#: ../xfce4-session/xfsm-startup.c:147
+#: ../xfce4-session/xfsm-startup.c:429
 msgid "Starting The Gimp"
 msgstr "Lanĉante la Gimpon"
 
-#: ../xfce4-session/xfsm-startup.c:149
+#: ../xfce4-session/xfsm-startup.c:431
 msgid "Starting the VI Improved Editor"
 msgstr "Lanĉante la VI Plibonigitan Redaktilon"
 
-#: ../xfce4-session/xfsm-startup.c:151
+#: ../xfce4-session/xfsm-startup.c:433
 msgid "Starting the Session Management Proxy"
 msgstr "Lanĉante la Seancadministrilan Prokuron"
 
-#: ../xfce4-session/xfsm-startup.c:153
+#: ../xfce4-session/xfsm-startup.c:435
 msgid "Starting the X-Chat IRC Client"
 msgstr "Lanĉante la X-Chat IRC Klienton"
 
-#: ../xfce4-session/xfsm-startup.c:155
+#: ../xfce4-session/xfsm-startup.c:437
 msgid "Starting the X Multimedia System"
 msgstr "Lanĉante la Ksan Plurmediuman Sistemon"
 
-#: ../xfce4-session/xfsm-startup.c:157
+#: ../xfce4-session/xfsm-startup.c:439
 msgid "Starting the X Terminal Emulator"
 msgstr "Lanĉante la Ksan Imitilon de Terminalo"
 
-#: ../xfce4-session/xfsm-startup.c:159
+#: ../xfce4-session/xfsm-startup.c:441
 #, c-format
 msgid "Starting %s"
 msgstr "Lanĉante %s"
 
-#: ../xfce4-session/xfsm-startup.c:283
+#: ../xfce4-session/xfsm-startup.c:565
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -802,423 +712,90 @@ msgid ""
 "autostart directory have been successfully migrated to the new\n"
 "location.\n"
 "You should delete this directory now.\n"
-msgstr ""
-"La loko kaj la modelo de la aŭtolanĉa dosierujo ŝanĝis.\n"
-"La nova loko estas\n"
-"\n"
-"  %s\n"
-"\n"
-"kie vi povas enmeti .desktop dosierojn, kiuj priskribas la aplikaĵojn\n"
-"startindajn kiam vi ensalutas en vian Xfce labortablon. La dosieroj de\n"
-"via malnova aŭtolanĉa dosierujo sukcese estis movigitaj al la nova loko.\n"
-"Vi devus viŝi la malnovan dosierujon nun.\n"
+msgstr "La loko kaj la modelo de la aŭtolanĉa dosierujo ŝanĝis.\nLa nova loko estas\n\n  %s\n\nkie vi povas enmeti .desktop dosierojn, kiuj priskribas la aplikaĵojn\nstartindajn kiam vi ensalutas en vian Xfce labortablon. La dosieroj de\nvia malnova aŭtolanĉa dosierujo sukcese estis movigitaj al la nova loko.\nVi devus viŝi la malnovan dosierujon nun.\n"
 
-#: ../xfce4-session/xfsm-startup.c:441
+#: ../xfce4-session/xfsm-startup.c:750
 msgid "Performing Autostart..."
 msgstr "Plenumante la Aŭtolanĉon..."
 
-#: ../xfce4-tips/main.c:48 ../xfce4-tips/main.c:284
-msgid "Tips and Tricks"
-msgstr "Arkanoj"
+#: ../xfce4-session/xfsm-startup.c:856
+msgid "Starting Assistive Technologies"
+msgstr ""
 
-#: ../xfce4-tips/main.c:49
-msgid "Fortunes"
-msgstr "Fortunoj"
+#: ../xfce4-session/xfsm-shutdown.c:162
+msgid "Shutdown is blocked by the kiosk settings"
+msgstr ""
 
-#: ../xfce4-tips/main.c:75
+#: ../xfce4-session/xfsm-shutdown.c:219
 #, c-format
-msgid "Could not load tips database (%s)."
+msgid "Unknown shutdown method %d"
 msgstr ""
 
-#. converting it from the user's locale failed too, we give up
-#: ../xfce4-tips/main.c:190
-#, c-format
-msgid "Invalid output of fortune."
-msgstr ""
-
-#: ../xfce4-tips/main.c:195 ../xfce4-tips/main.c:203
-#, c-format
-msgid "Executing fortune failed (%s)"
-msgstr ""
-
-#: ../xfce4-tips/main.c:228
-msgid "Error while loading tips."
-msgstr ""
-
-#: ../xfce4-tips/main.c:314
-msgid "Display tips on _startup"
-msgstr "Montru arkaneron dum la _komenco"
-
-#: ../xfce4-tips/main.c:338
-msgid "Next"
-msgstr "Sekvanta"
-
-#: ../xfce4-session-logout/main.c:69
+#: ../xfce4-session-logout/main.c:70
 msgid "Log out without displaying the logout dialog"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:73
+#: ../xfce4-session-logout/main.c:74
 msgid "Halt without displaying the logout dialog"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:77
+#: ../xfce4-session-logout/main.c:78
 msgid "Reboot without displaying the logout dialog"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:81
+#: ../xfce4-session-logout/main.c:82
 msgid "Suspend without displaying the logout dialog"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:85
+#: ../xfce4-session-logout/main.c:86
 msgid "Hibernate without displaying the logout dialog"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:89
+#: ../xfce4-session-logout/main.c:90
+msgid "Hybrid Sleep without displaying the logout dialog"
+msgstr ""
+
+#: ../xfce4-session-logout/main.c:94
+msgid "Switch user without displaying the logout dialog"
+msgstr ""
+
+#: ../xfce4-session-logout/main.c:98
 msgid "Log out quickly; don't save the session"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:107
-#, fuzzy
-msgid "Logout Error"
-msgstr "Adiaŭu"
-
-#: ../xfce4-session-logout/main.c:110 ../xfce4-session-logout/main.c:117
-#, fuzzy
+#: ../xfce4-session-logout/main.c:121
 msgid "Unknown error"
-msgstr "(Nekonata)"
+msgstr "Nekonata eraro"
 
-#: ../xfce4-session-logout/main.c:177
-msgid "Unable to contact D-Bus session bus."
+#: ../xfce4-session-logout/main.c:147
+msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:189
-#, fuzzy
-msgid "Failed to create new D-Bus message"
-msgstr "Malsukcesis krei la dosieron %s"
-
-#: ../xfce4-session-logout/main.c:205
-msgid "Failed to receive a reply from the session manager"
+#: ../xfce4-session-logout/main.c:148
+msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:213
+#: ../xfce4-session-logout/main.c:168 ../xfce4-session-logout/main.c:279
 msgid "Received error while trying to log out"
 msgstr ""
+
+#: ../xfce4-session-logout/main.c:244
+#, c-format
+msgid "Received error while trying to log out, error was %s"
+msgstr ""
+
+#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
+msgid "Log Out"
+msgstr "Elsaluti"
 
 #: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:2
 msgid "Log out of the Xfce Desktop"
 msgstr ""
 
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:1
-#, fuzzy
-msgid "Session Menu"
-msgstr "Seancaj kaj Startigaj Parametroj"
-
-#: ../panel-plugin/xfsm-logout-plugin.desktop.in.h:2
-msgid ""
-"Shows a menu with options to lock the screen, suspend, shutdown, or log out"
-msgstr ""
-
 #: ../settings/xfce-session-settings.desktop.in.h:1
-#: ../settings/xfce4-session-settings.glade.h:14
-msgid "Customize desktop startup and splash screen"
+msgid "Session and Startup"
 msgstr ""
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
-#: ../settings/xfce4-session-settings.glade.h:27
-#, fuzzy
-msgid "Session and Startup"
-msgstr "Seancoj kaj Komenco"
-
-#: ../settings/xfce4-session-settings.glade.h:1
-msgid "<b>Author:</b>"
-msgstr "<b>Aŭtoro:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:2
-#, fuzzy
-msgid "<b>Compatibility</b>"
-msgstr "Kongrueco"
-
-#: ../settings/xfce4-session-settings.glade.h:3
-msgid "<b>Description:</b>"
-msgstr "<b>Priskribo:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:4
-msgid "<b>Homepage:</b>"
-msgstr "<b>Hejmpaĝo:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:5
-#, fuzzy
-msgid "<b>Information</b>"
-msgstr "Informigo"
-
-#: ../settings/xfce4-session-settings.glade.h:6
-#, fuzzy
-msgid "<b>Logout Settings</b>"
-msgstr "Elsalutaj parametroj"
-
-#: ../settings/xfce4-session-settings.glade.h:7
-#, fuzzy
-msgid "<b>Security</b>"
-msgstr "<b>Priskribo:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:8
-#, fuzzy
-msgid "<b>Session Chooser</b>"
-msgstr "Elektilo de Seanco"
-
-#: ../settings/xfce4-session-settings.glade.h:9
-msgid "<b>Version:</b>"
-msgstr "<b>Eldono:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:10
-#, fuzzy
-msgid "Ad_vanced"
-msgstr "Evoluaĵoj"
-
-#: ../settings/xfce4-session-settings.glade.h:11
-#, fuzzy
-msgid "Always save the session when logging out"
-msgstr "Aŭtomate konservu la seancon ĉe elsaluto"
-
-#: ../settings/xfce4-session-settings.glade.h:12
-#, fuzzy
-msgid "Automatically save session on _logout"
-msgstr "Aŭtomate konservu la seancon ĉe elsaluto"
-
-#: ../settings/xfce4-session-settings.glade.h:13
-#, fuzzy
-msgid "Con_figure"
-msgstr "Konfiguru"
-
-#: ../settings/xfce4-session-settings.glade.h:15
-#, fuzzy
-msgid "Demonstrates the selected splash screen"
-msgstr "Demonstras la elektitan ekaperantekranon."
-
-#: ../settings/xfce4-session-settings.glade.h:16
-msgid "Display the session chooser every time Xfce starts"
+msgid "Customize desktop startup and splash screen"
 msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:17
-#, fuzzy
-msgid "Launch GN_OME services on startup"
-msgstr "Lanĉi KDE servojn dum la komenco"
-
-#: ../settings/xfce4-session-settings.glade.h:18
-#, fuzzy
-msgid "Launch _KDE services on startup"
-msgstr "Lanĉi KDE servojn dum la komenco"
-
-#: ../settings/xfce4-session-settings.glade.h:19
-#, fuzzy
-msgid "Manage _remote applications"
-msgstr "Administru forajn aplikaĵojn"
-
-#: ../settings/xfce4-session-settings.glade.h:20
-msgid ""
-"Manage remote applications over the network (this may be a security risk)"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:21
-#, fuzzy
-msgid "Opens the configuration panel for the selected splash screen"
-msgstr "Malfermas la konfigurilan panelon pri la elektita ekaperantekrano."
-
-#: ../settings/xfce4-session-settings.glade.h:22
-msgid "Prompt for confirmation when logging out"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:23
-msgid "Quit the program, and remove it from the session"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:24
-msgid "S_plash"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:25
-#, fuzzy
-msgid "Save Sessio_n"
-msgstr "Finu la Seancon"
-
-#: ../settings/xfce4-session-settings.glade.h:26
-#, fuzzy
-msgid "Saving Session"
-msgstr "Ŝargante seancajn datumojn"
-
-#: ../settings/xfce4-session-settings.glade.h:28
-msgid ""
-"Start GNOME services, such as gnome-keyring and the GNOME accessibility "
-"framework"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:29
-msgid "Start KDE services, such as \"kdeinit,\" DCOP, and ARTS"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:30
-msgid ""
-"These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:31
-msgid ""
-"Your session is being saved.  If you do not wish to wait, you may close this "
-"window."
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:32
-#, fuzzy
-msgid "_Display chooser on login"
-msgstr "Montru la elektilon dum la ensaluto"
-
-#: ../settings/xfce4-session-settings.glade.h:33
-#, fuzzy
-msgid "_General"
-msgstr "Ĝeneralaĵoj"
-
-#: ../settings/xfce4-session-settings.glade.h:34
-#, fuzzy
-msgid "_Prompt on logout"
-msgstr "Demandu ĉe la elsaluto"
-
-#: ../settings/xfce4-session-settings.glade.h:36
-#, fuzzy
-msgid "_Session"
-msgstr "Finu la Seancon"
-
-#: ../settings/xfce4-session-settings.glade.h:37
-#, fuzzy
-msgid "_Test"
-msgstr "Testu"
-
-#: ../settings/xfce4-session-settings.glade.h:38
-msgid "label"
-msgstr ""
-
-#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:1
-msgid "Tips and tricks"
-msgstr "Arkanoj"
-
-#: ../xfce4-tips/xfce4-tips-autostart.desktop.in.h:2
-msgid "xfce4-tips"
-msgstr "xfce4-tips (Xfce 4 arkanoj)"
-
-#, fuzzy
-#~ msgid "Session Error"
-#~ msgstr "Elektu seancnomon"
-
-#, fuzzy
-#~ msgid "Session Settings"
-#~ msgstr "Seancaj kaj Startigaj Parametroj"
-
-#, fuzzy
-#~ msgid "Xfce Session Manager"
-#~ msgstr "Elektu seancnomon"
-
-#, fuzzy
-#~ msgid "Unable to create parent pipe: %s"
-#~ msgstr "Malsukcesis krei la dosieron %s"
-
-#, fuzzy
-#~ msgid "Unable to create child pipe: %s"
-#~ msgstr "Malsukcesis krei la dosieron %s"
-
-#~ msgid "Session and Startup Settings"
-#~ msgstr "Seancaj kaj Startigaj Parametroj"
-
-#~ msgid "Sessions and Startup Settings"
-#~ msgstr "Seancoj kaj Startigaj Parametroj"
-
-#~ msgid "Xfce 4 Sessions and Startup Settings"
-#~ msgstr "Xfce 4 Seancoj kaj Startigaj Parametroj"
-
-#, fuzzy
-#~ msgid "Remove the selected application from the session."
-#~ msgstr "Demonstras la elektitan ekaperantekranon."
-
-#~ msgid ""
-#~ "If set, the session manager will ask you to choose a session every time "
-#~ "you log in to Xfce."
-#~ msgstr ""
-#~ "Se aktivigita, la seancadministrilo demandos al vi elektu seancon ĉiufoje "
-#~ "kiam vi ensalutas en Xfce."
-
-#~ msgid ""
-#~ "This option instructs the session manager to save the current session "
-#~ "automatically when you log out. If you don't select this option you'll be "
-#~ "prompted whether you want to save the current session on each logout."
-#~ msgstr ""
-#~ "Ĉi tiu opcio signifas ke la seancadministrilo konservas la kurantan "
-#~ "seancon aŭtomate kiam vi elsalutas. Se vi ne elektas tiun opcion, vi "
-#~ "estos demandita ĉu vi volas konservi la kurantan seancon ĉe ĉiu elsaluto."
-
-#~ msgid ""
-#~ "This option disables the logout confirmation dialog. Whether the session "
-#~ "will be saved or not depends on whether you enabled the automatic saving "
-#~ "of sessions on logout or not."
-#~ msgstr ""
-#~ "Ĉi tiu opcio malaktivigas la elsalutan konfirmdialogon. La seanco estos "
-#~ "konservita kondiĉe ke vi antaŭe aktivigis la aŭtomatan konservigon de "
-#~ "seanco ĉe la elsaluto."
-
-#~ msgid "Launch Gnome services on startup"
-#~ msgstr "Lanĉu Gnomajn servojn dum la komenco"
-
-#~ msgid ""
-#~ "Enable this if you plan to use Gnome applications. This will instruct the "
-#~ "session manager to start some vital Gnome services for you. You should "
-#~ "also enable this if you want to use the Assistive Technologies that ship "
-#~ "with Gnome."
-#~ msgstr ""
-#~ "Elektu ĉi tion se vi intencas uzi Gnomajn programojn. Ĉi-tio faros ke la "
-#~ "administrilo de seanco lanĉos gravegajn Gnomajn servojn por vi. Vi devus "
-#~ "ankaŭ elekti tion se vi volas uzi la Asistantajn Teknologiojn kiuj "
-#~ "kunestas Gnomon."
-
-#~ msgid ""
-#~ "Enable this option if you plan to run KDE applications as part of your "
-#~ "Xfce Desktop session. This will notably increase the startup time, but on "
-#~ "the other hand, KDE applications will startup faster. Some KDE "
-#~ "applications may not work at all if you don't enable this option."
-#~ msgstr ""
-#~ "Elektu tiun opcion se vi intencas uzi KDE programojn kiel partoj de via "
-#~ "Xfce seanco. Ĉi tio rimarkinde plilongigos la komencdaŭron de la seanco, "
-#~ "sed aliflanke KDE programoj komenciĝos pli rapide. Kelkaj KDE programoj "
-#~ "eble eĉ ne funkcios se vi ne elektas ĉi tiun opcion."
-
-#~ msgid "Security"
-#~ msgstr "Sekurigo"
-
-#~ msgid ""
-#~ "Allow the session manager to manage applications running on remote hosts. "
-#~ "Do not enable this option unless you know what you are doing."
-#~ msgstr ""
-#~ "Permesas ke la seancadministrilo administras aplikaĵojn ĉe foraj gastigaj "
-#~ "komputiloj. Se vi elektas ĉi tiun opcion, ne faru tion hazarde."
-
-#~ msgid "Button Label|Sessions and Startup"
-#~ msgstr "Butona etikedo|Seancoj kaj Komenco"
-
-#~ msgid "Splash Screen Settings"
-#~ msgstr "Ekaperantekranaj Parametroj"
-
-#~ msgid "Button Label|Splash Screen"
-#~ msgstr "Butona etikedo|Ekaperantekrano"
-
-#~ msgid "Autostarted applications"
-#~ msgstr "Aŭtolanĉindaj aplikaĵoj"
-
-#~ msgid "Xfce 4 Splash Screen Settings"
-#~ msgstr "Xfce 4 Ekaperantektranaj Parametroj"
-
-#~ msgid "Autostarted Applications"
-#~ msgstr "Aŭtolanĉindaj aplikaĵoj"
-
-#~ msgid "Edit the list of autostarted applications"
-#~ msgstr "Modifu la liston de aŭtolanĉindaj aplikaĵoj"
-
-#~ msgid "Xfce 4 Autostarted Applications"
-#~ msgstr "Xfce 4 Aŭtolanĉindaj Aplikaĵoj"
