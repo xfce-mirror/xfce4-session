@@ -1,29 +1,31 @@
-# Korean translations for xfce4-session package.
-# Copyright (C) 2002-2006 The Xfce development team.
-# This file is distributed under the same license as the xfce4-session package.
-# ByungHyun Choi <byunghyun.choi@gmail.com>, 2005.
-# Seong-ho Cho <darkcircle.0426@gmail.com>, 2011, 2012.
-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# ByungHyun Choi <byunghyun.choi@gmail.com>, 2005
+# Seong-ho Cho <darkcircle.0426@gmail.com>, 2011-2012
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-session 4.4.0\n"
+"Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-10 00:42+0000\n"
-"PO-Revision-Date: 2012-04-10 10:12+0900\n"
-"Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
-"Language-Team: xfce-i18n <xfce-i18n@xfce.org>\n"
-"Language: ko\n"
+"POT-Creation-Date: 2013-07-02 23:14+0200\n"
+"PO-Revision-Date: 2017-09-19 18:03+0000\n"
+"Last-Translator: Nick Schermer <nick@xfce.org>\n"
+"Language-Team: Korean (http://www.transifex.com/xfce/xfce4-session/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../xfce.desktop.in.h:1
-msgid "Use this session to run Xfce as your desktop environment"
-msgstr "데스크톱 환경으로서 Xfce를 실행하기 위해 이 세션을 사용합니다"
-
-#: ../xfce.desktop.in.h:2
 msgid "Xfce Session"
 msgstr "Xfce 세션"
+
+#: ../xfce.desktop.in.h:2
+msgid "Use this session to run Xfce as your desktop environment"
+msgstr "데스크톱 환경으로서 Xfce를 실행하기 위해 이 세션을 사용합니다"
 
 #: ../engines/balou/balou-theme.c:110
 msgid "No description given"
@@ -140,12 +142,12 @@ msgid "Simple Splash Engine"
 msgstr "단순한 시작화면 엔진"
 
 #: ../scripts/xscreensaver.desktop.in.h:1
-msgid "Launch screensaver and locker program"
-msgstr "화면 보호기 및 잠금 프로그램 실행하기"
-
-#: ../scripts/xscreensaver.desktop.in.h:2
 msgid "Screensaver"
 msgstr "화면 보호기"
+
+#: ../scripts/xscreensaver.desktop.in.h:2
+msgid "Launch screensaver and locker program"
+msgstr "화면 보호기 및 잠금 프로그램 실행하기"
 
 #: ../settings/main.c:43
 msgid "Settings manager socket"
@@ -159,27 +161,23 @@ msgstr "SOCKET ID"
 msgid "Version information"
 msgstr "버전 정보"
 
-#: ../settings/main.c:75
-#: ../xfce4-session/main.c:257
+#: ../settings/main.c:75 ../xfce4-session/main.c:257
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "사용방법을 보려면 '%s --help'를 입력합니다."
 
-#: ../settings/main.c:87
-#: ../xfce4-session/main.c:267
-#: ../xfce4-session-logout/main.c:124
+#: ../settings/main.c:87 ../xfce4-session/main.c:267
+#: ../xfce4-session-logout/main.c:136
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce 개발 팀. All rights reserved."
 
-#: ../settings/main.c:88
-#: ../xfce4-session/main.c:268
-#: ../xfce4-session-logout/main.c:127
+#: ../settings/main.c:88 ../xfce4-session/main.c:268
+#: ../xfce4-session-logout/main.c:139
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "<%s>로 버그를 알려주시기 바랍니다."
 
-#: ../settings/main.c:97
-#: ../xfce4-session/main.c:276
+#: ../settings/main.c:97 ../xfce4-session/main.c:276
 msgid "Unable to contact settings server"
 msgstr "설정 서버로 연결할 수 없습니다"
 
@@ -224,7 +222,9 @@ msgid "Are you sure you want to empty the session cache?"
 msgstr "정말로 세션 캐시를 비우시렵니까?"
 
 #: ../settings/session-editor.c:172
-msgid "The saved states of your applications will not be restored during your next login."
+msgid ""
+"The saved states of your applications will not be restored during your next "
+"login."
 msgstr "다음 로그인을 진행하는 동안 프로그램의 저장한 상태를 복원하지 않을 것입니다."
 
 #: ../settings/session-editor.c:174
@@ -245,17 +245,18 @@ msgstr "모든 Xfce 캐시 파일이 지워질 수 없었습니다"
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "정말로 \"%s\"을(를) 중단하시렵니까?"
 
-#: ../settings/session-editor.c:252
-#: ../settings/session-editor.c:280
+#: ../settings/session-editor.c:252 ../settings/session-editor.c:280
 msgid "Terminate Program"
 msgstr "프로그램 중단"
 
 #: ../settings/session-editor.c:254
-msgid "The application will lose any unsaved state and will not be restarted in your next session."
+msgid ""
+"The application will lose any unsaved state and will not be restarted in "
+"your next session."
 msgstr "프로그램은 저장하지 않은 상태를 잃을 것이며 다음 세션에서 다시 시작 하지 않을 것입니다."
 
 #: ../settings/session-editor.c:256
-#: ../settings/xfce4-session-settings.glade.h:40
+#: ../settings/xfce4-session-settings.glade.h:28
 msgid "_Quit Program"
 msgstr "프로그램 종료(_Q)"
 
@@ -283,10 +284,8 @@ msgstr "프로그램"
 msgid "Restart Style"
 msgstr "다시 시작 방식"
 
-#: ../settings/splash-settings.c:291
-#: ../settings/splash-settings.c:294
-#: ../settings/splash-settings.c:297
-#: ../settings/splash-settings.c:300
+#: ../settings/splash-settings.c:291 ../settings/splash-settings.c:294
+#: ../settings/splash-settings.c:297 ../settings/splash-settings.c:300
 #: ../settings/splash-settings.c:357
 msgid "None"
 msgstr "없음"
@@ -303,8 +302,7 @@ msgstr "이름:"
 msgid "Description:"
 msgstr "설명:"
 
-#: ../settings/xfae-dialog.c:124
-#: ../settings/xfae-model.c:479
+#: ../settings/xfae-dialog.c:124 ../settings/xfae-model.c:479
 msgid "Command:"
 msgstr "명령:"
 
@@ -336,14 +334,17 @@ msgstr "파일 %s을(를) 기록하지 못 했습니다."
 msgid "Failed to open %s for reading"
 msgstr "%s을(를) 읽기 위해 여는데 실패했습니다"
 
-#: ../settings/xfae-model.c:891
-#: ../settings/xfae-model.c:948
+#: ../settings/xfae-model.c:891 ../settings/xfae-model.c:948
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "%s을(를) 기록하기 위해 열지 못 했습니다."
 
 #: ../settings/xfae-window.c:102
-msgid "Below is the list of applications that will be started automatically when you login to your Xfce desktop, in addition to the applications that were saved when you logged out last time. Cursive applications belong to another desktop environment, but you can still enable them if you want."
+msgid ""
+"Below is the list of applications that will be started automatically when "
+"you login to your Xfce desktop, in addition to the applications that were "
+"saved when you logged out last time. Cursive applications belong to another "
+"desktop environment, but you can still enable them if you want."
 msgstr "다음은 Xfce 데스크톱에 로그인할 때 자동으로 시작하는 프로그램의 목록이며, 마지막으로 로그아웃할 때 저장하는 프로그램의 목록입니다. 필기체로 표시한 프로그램은 다른 데스크톱 환경의 것이지만, 원한다면 여전히 활성화 할 수 있습니다."
 
 #: ../settings/xfae-window.c:293
@@ -351,13 +352,14 @@ msgstr "다음은 Xfce 데스크톱에 로그인할 때 자동으로 시작하�
 msgid "Failed adding \"%s\""
 msgstr "\"%s\"을(를) 추가하는데 실패했습니다"
 
-#: ../settings/xfae-window.c:324
-#: ../settings/xfae-window.c:338
+#: ../settings/xfae-window.c:324 ../settings/xfae-window.c:338
 msgid "Failed to remove item"
 msgstr "항목을 제거하는데 실패했습니다"
 
 #: ../settings/xfae-window.c:330
-msgid "This will permanently remove the application from the list of automatically started applications"
+msgid ""
+"This will permanently remove the application from the list of automatically "
+"started applications"
 msgstr "이 동작은 자동으로 시작하는 프로그램의 목록에서 프로그램을 완전히 제거할 것입니다"
 
 #: ../settings/xfae-window.c:332
@@ -382,8 +384,7 @@ msgstr "항목을 전환하는데 실패했습니다"
 msgid "Disable binding to TCP ports"
 msgstr "TCP 포트 바인딩 비활성화"
 
-#: ../xfce4-session/main.c:77
-#: ../xfce4-session-logout/main.c:81
+#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:91
 msgid "Print version information and exit"
 msgstr "버전 정보를 출력하고 끝냅니다"
 
@@ -406,7 +407,9 @@ msgid "Last accessed: %s"
 msgstr "마지막 접근: %s"
 
 #: ../xfce4-session/xfsm-chooser.c:172
-msgid "Choose the session you want to restore. You can simply double-click the session name to restore it."
+msgid ""
+"Choose the session you want to restore. You can simply double-click the "
+"session name to restore it."
 msgstr "사용하고자 하는 세션을 선택합니다. 원하시는 세션 이름을 두 번 누르면 됩니다."
 
 #. "Logout" button
@@ -427,14 +430,13 @@ msgstr "새로운 세션"
 msgid "Create a new session."
 msgstr "새로운 세션을 만듭니다."
 
-#: ../xfce4-session/xfsm-client.c:506
-#: ../xfce4-session/xfsm-client.c:532
+#: ../xfce4-session/xfsm-client.c:506 ../xfce4-session/xfsm-client.c:532
 #: ../xfce4-session/xfsm-client.c:571
 #, c-format
 msgid "The client doesn't have any properties set yet"
 msgstr "클라이언트가 아직 어떤 기본 설정사항도 지니고 있지 않습니다"
 
-#: ../xfce4-session/xfsm-compat-gnome.c:246
+#: ../xfce4-session/xfsm-compat-gnome.c:247
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "그놈 keyring 데몬 시작 중"
 
@@ -453,10 +455,7 @@ msgid ""
 "This will prevent Xfce from operating correctly.\n"
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
-msgstr ""
-"%s에 대한 인터넷 주소를 찾을 수 없습니다.\n"
-"이로 인해 Xfce가 정상적으로 동작하지 않을 수 있습니다.\n"
-"%s을(를) 시스템의 /etc/hosts에 추가하여 해결할 수도 있습니다."
+msgstr "%s에 대한 인터넷 주소를 찾을 수 없습니다.\n이로 인해 Xfce가 정상적으로 동작하지 않을 수 있습니다.\n%s을(를) 시스템의 /etc/hosts에 추가하여 해결할 수도 있습니다."
 
 #: ../xfce4-session/xfsm-dns.c:154
 msgid "Continue anyway"
@@ -466,54 +465,59 @@ msgstr "계속 진행합니다"
 msgid "Try again"
 msgstr "다시 시도합니다"
 
-#: ../xfce4-session/xfsm-manager.c:609
+#: ../xfce4-session/xfsm-manager.c:611
 #, c-format
-msgid "Unable to determine failsafe session name.  Possible causes: xfconfd isn't running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set incorrectly (must include \"%s\"), or xfce4-session is installed incorrectly."
+msgid ""
+"Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
+"running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
+"incorrectly (must include \"%s\"), or xfce4-session is installed "
+"incorrectly."
 msgstr "대체 세션 이름을 정할 수 없습니다. 가능한 원인으로는 xfconfd가 실행중에 있지 않거나(D-Bus 설정 문제), 환경변수 $XDG_CONFIG_DIRS를 잘못 설정(반드시 \"%s\"을(를) 포함해야 합니다)했거나, xfce4-session을 잘못 설치했을 수도 있습니다."
 
-#: ../xfce4-session/xfsm-manager.c:620
+#: ../xfce4-session/xfsm-manager.c:622
 #, c-format
-msgid "The specified failsafe session (\"%s\") is not marked as a failsafe session."
+msgid ""
+"The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "지정한 대체 세션(\"%s\")을 대체 세션으로 표시하지 않았습니다."
 
-#: ../xfce4-session/xfsm-manager.c:667
+#: ../xfce4-session/xfsm-manager.c:669
 msgid "The list of applications in the failsafe session is empty."
 msgstr "대체 세션에 사용할 프로그램의 목록이 비어 있습니다."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now now WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:714
+#: ../xfce4-session/xfsm-manager.c:716
 msgid "Session Manager Error"
 msgstr "세션 관리자 오류"
 
-#: ../xfce4-session/xfsm-manager.c:716
+#: ../xfce4-session/xfsm-manager.c:718
 msgid "Unable to load a failsafe session"
 msgstr "대체 세션을 로드할 수 없습니다"
 
-#: ../xfce4-session/xfsm-manager.c:1123
+#: ../xfce4-session/xfsm-manager.c:1127
 msgid "Shutdown Failed"
 msgstr "종료 실패"
 
-#: ../xfce4-session/xfsm-manager.c:1126
+#: ../xfce4-session/xfsm-manager.c:1130
 msgid "Failed to suspend session"
 msgstr "세션을 대기모드로 진입 시키는데 실패했습니다"
 
-#: ../xfce4-session/xfsm-manager.c:1127
+#: ../xfce4-session/xfsm-manager.c:1131
 msgid "Failed to hibernate session"
 msgstr "세션을 최대 절전모드로 진입 시키는데 실패했습니다"
 
-#: ../xfce4-session/xfsm-manager.c:1413
+#: ../xfce4-session/xfsm-manager.c:1405
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "대기 상태일 때만 클라이언트를 중지할 수 있습니다"
 
-#: ../xfce4-session/xfsm-manager.c:1976
+#: ../xfce4-session/xfsm-manager.c:1969
 #, c-format
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "세션 관리자는 체크포인트를 요청할 때 대기 상태에 있어야 합니다"
 
-#: ../xfce4-session/xfsm-manager.c:2017
+#: ../xfce4-session/xfsm-manager.c:2010
 #, c-format
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "세션 관리자는 종료를 요청할 때 대기 상태에 있어야 합니다"
@@ -559,7 +563,9 @@ msgid "An error occurred"
 msgstr "오류가 발생했습니다"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:433
-msgid "Either the password you entered is invalid, or the system administrator disallows shutting down this computer with your user account."
+msgid ""
+"Either the password you entered is invalid, or the system administrator "
+"disallows shutting down this computer with your user account."
 msgstr "입력한 암호가 틀렸거나, 시스템 관리자가 계정을 막아 놓았을 것입니다."
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
@@ -574,88 +580,88 @@ msgstr "세션 이름을 선택합니다."
 msgid "Choose a name for the new session:"
 msgstr "새로운 세션의 이름을 선택:"
 
-#: ../xfce4-session/xfsm-startup.c:115
+#: ../xfce4-session/xfsm-startup.c:347
 msgid "Starting the Volume Controller"
 msgstr "음량 조절기 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:117
+#: ../xfce4-session/xfsm-startup.c:349
 msgid "Starting the Panel"
 msgstr "패널 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:119
+#: ../xfce4-session/xfsm-startup.c:351
 msgid "Starting the Desktop Manager"
 msgstr "데스크톱 관리자 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:121
+#: ../xfce4-session/xfsm-startup.c:353
 msgid "Starting the Taskbar"
 msgstr "작업표시줄 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:123
+#: ../xfce4-session/xfsm-startup.c:355
 msgid "Starting the Window Manager"
 msgstr "창 관리자 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:127
+#: ../xfce4-session/xfsm-startup.c:359
 msgid "Starting the Gnome Terminal Emulator"
 msgstr "그놈 터미널 에뮬레이터 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:131
+#: ../xfce4-session/xfsm-startup.c:363
 msgid "Starting the KDE Advanced Text Editor"
 msgstr "KDE 고급 텍스트 편집기 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:133
+#: ../xfce4-session/xfsm-startup.c:365
 msgid "Starting the KDE Clipboard Manager"
 msgstr "KDE 클립보드 관리자 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:135
+#: ../xfce4-session/xfsm-startup.c:367
 msgid "Starting the KDE Mail Reader"
 msgstr "KDE 편지 읽기 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:137
+#: ../xfce4-session/xfsm-startup.c:369
 msgid "Starting the KDE News Reader"
 msgstr "KDE 뉴스 읽기 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:139
+#: ../xfce4-session/xfsm-startup.c:371
 msgid "Starting the Konqueror"
 msgstr "컹커러 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:141
+#: ../xfce4-session/xfsm-startup.c:373
 msgid "Starting the KDE Terminal Emulator"
 msgstr "KDE 터미널 에뮬레이터 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:145
+#: ../xfce4-session/xfsm-startup.c:377
 msgid "Starting the Beep Media Player"
 msgstr "삑 미디어 재생기 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:147
+#: ../xfce4-session/xfsm-startup.c:379
 msgid "Starting The Gimp"
 msgstr "김프 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:149
+#: ../xfce4-session/xfsm-startup.c:381
 msgid "Starting the VI Improved Editor"
 msgstr "VIM 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:151
+#: ../xfce4-session/xfsm-startup.c:383
 msgid "Starting the Session Management Proxy"
 msgstr "세션 관리 프락시 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:153
+#: ../xfce4-session/xfsm-startup.c:385
 msgid "Starting the X-Chat IRC Client"
 msgstr "X-Chat IRC 클라이언트 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:155
+#: ../xfce4-session/xfsm-startup.c:387
 msgid "Starting the X Multimedia System"
 msgstr "X 멀티미디어 시스템 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:157
+#: ../xfce4-session/xfsm-startup.c:389
 msgid "Starting the X Terminal Emulator"
 msgstr "X 터미널 에뮬레이터 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:159
+#: ../xfce4-session/xfsm-startup.c:391
 #, c-format
 msgid "Starting %s"
 msgstr "%s 시작 중"
 
-#: ../xfce4-session/xfsm-startup.c:283
+#: ../xfce4-session/xfsm-startup.c:515
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -668,90 +674,81 @@ msgid ""
 "autostart directory have been successfully migrated to the new\n"
 "location.\n"
 "You should delete this directory now.\n"
-msgstr ""
-"자동 시작 디렉터리의 위치와 형식이 바뀌었습니다.\n"
-"새로운 위치는\n"
-"\n"
-" %s\n"
-"입니다.\n"
-"여기에 .desktop 파일을 두시고, Xfce 데크스탑에 로그인할 때 시작할\n"
-"프로그램을 선언합니다. 이전의 자동 시작 디렉터리의 파일을 새로운\n"
-"디렉터리로 자동으로 복사했기 때문에 이 디렉터리는 이제 삭제하셔도\n"
-"됩니다.\n"
+msgstr "자동 시작 디렉터리의 위치와 형식이 바뀌었습니다.\n새로운 위치는\n\n %s\n입니다.\n여기에 .desktop 파일을 두시고, Xfce 데크스탑에 로그인할 때 시작할\n프로그램을 선언합니다. 이전의 자동 시작 디렉터리의 파일을 새로운\n디렉터리로 자동으로 복사했기 때문에 이 디렉터리는 이제 삭제하셔도\n됩니다.\n"
 
-#: ../xfce4-session/xfsm-startup.c:452
+#: ../xfce4-session/xfsm-startup.c:684
 msgid "Performing Autostart..."
 msgstr "자동실행 수행 중..."
 
-#: ../xfce4-session/xfsm-startup.c:558
+#: ../xfce4-session/xfsm-startup.c:790
 msgid "Starting Assistive Technologies"
 msgstr "보조 기술 시작 중"
 
-#: ../xfce4-session/xfsm-shutdown.c:414
+#: ../xfce4-session/xfsm-shutdown.c:429
 #, c-format
 msgid "Error sending command to shutdown helper: %s"
 msgstr "종료 도우미로 명령을 보내는데 오류가 발생했습니다: %s"
 
-#: ../xfce4-session/xfsm-shutdown.c:427
+#: ../xfce4-session/xfsm-shutdown.c:442
 #, c-format
 msgid "Error receiving response from shutdown helper: %s"
 msgstr "종료 도우미의 응답을 기다리는데 오류가 발생했습니다: %s"
 
-#: ../xfce4-session/xfsm-shutdown.c:435
+#: ../xfce4-session/xfsm-shutdown.c:450
 #, c-format
 msgid "Shutdown command failed"
 msgstr "종료 명령이 실패했습니다"
 
-#: ../xfce4-session/xfsm-shutdown.c:540
+#: ../xfce4-session/xfsm-shutdown.c:555
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "키오스크 설정이 종료를 멈추었습니다"
 
-#: ../xfce4-session/xfsm-shutdown.c:623
+#: ../xfce4-session/xfsm-shutdown.c:638
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "알 수 없는 종료 방식 %d"
 
-#: ../xfce4-session-logout/main.c:57
+#: ../xfce4-session-logout/main.c:67
 msgid "Log out without displaying the logout dialog"
 msgstr "로그아웃 대화상자를 표시하지 않고 로그아웃"
 
-#: ../xfce4-session-logout/main.c:61
+#: ../xfce4-session-logout/main.c:71
 msgid "Halt without displaying the logout dialog"
 msgstr "로그아웃 대화상자를 표시하지 않고 종료"
 
-#: ../xfce4-session-logout/main.c:65
+#: ../xfce4-session-logout/main.c:75
 msgid "Reboot without displaying the logout dialog"
 msgstr "로그아웃 대화상자를 표시하지 않고 재시동"
 
-#: ../xfce4-session-logout/main.c:69
+#: ../xfce4-session-logout/main.c:79
 msgid "Suspend without displaying the logout dialog"
 msgstr "로그아웃 대화상자를 표시하지 않고 대기"
 
-#: ../xfce4-session-logout/main.c:73
+#: ../xfce4-session-logout/main.c:83
 msgid "Hibernate without displaying the logout dialog"
 msgstr "로그아웃 대화상자를 표시하지 않고 최대 절전"
 
-#: ../xfce4-session-logout/main.c:77
+#: ../xfce4-session-logout/main.c:87
 msgid "Log out quickly; don't save the session"
 msgstr "신속히 로그아웃하고 세션을 저장하지 않습니다"
 
-#: ../xfce4-session-logout/main.c:100
+#: ../xfce4-session-logout/main.c:110
 msgid "Unknown error"
 msgstr "알 수 없는 오류"
 
-#: ../xfce4-session-logout/main.c:125
+#: ../xfce4-session-logout/main.c:137
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Benedikt Meurer <benny@xfce.org>와"
 
-#: ../xfce4-session-logout/main.c:126
+#: ../xfce4-session-logout/main.c:138
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "Brian Tarricone <kelnos@xfce.org>이 작성했습니다."
 
-#: ../xfce4-session-logout/main.c:136
+#: ../xfce4-session-logout/main.c:148
 msgid "Unable to contact D-Bus session bus"
 msgstr "D-Bus 세션 버스에 연결할 수 없습니다"
 
-#: ../xfce4-session-logout/main.c:186
+#: ../xfce4-session-logout/main.c:227
 msgid "Received error while trying to log out"
 msgstr "로그아웃을 시도하는 동안 오류를 수신했습니다"
 
@@ -764,172 +761,177 @@ msgid "Log out of the Xfce Desktop"
 msgstr "Xfce 데스크톱의 로그아웃"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
-#: ../settings/xfce4-session-settings.glade.h:15
-msgid "Customize desktop startup and splash screen"
-msgstr "데스크톱 시동과 시작 화면을 설정합니다"
-
-#: ../settings/xfce-session-settings.desktop.in.h:2
-#: ../settings/xfce4-session-settings.glade.h:30
+#: ../settings/xfce4-session-settings.glade.h:1
 msgid "Session and Startup"
 msgstr "세션 및 시동"
 
-#: ../settings/xfce4-session-settings.glade.h:1
-msgid "<b>Author:</b>"
-msgstr "<b>만든이:</b>"
-
+#: ../settings/xfce-session-settings.desktop.in.h:2
 #: ../settings/xfce4-session-settings.glade.h:2
-msgid "<b>Compatibility</b>"
-msgstr "<b>호환성</b>"
+msgid "Customize desktop startup and splash screen"
+msgstr "데스크톱 시동과 시작 화면을 설정합니다"
 
 #: ../settings/xfce4-session-settings.glade.h:3
-msgid "<b>Description:</b>"
-msgstr "<b>설명:</b>"
+msgid "_Display chooser on login"
+msgstr "로그인시 선택기 표시(_D)"
 
 #: ../settings/xfce4-session-settings.glade.h:4
-msgid "<b>Homepage:</b>"
-msgstr "<b>홈페이지:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:5
-msgid "<b>Information</b>"
-msgstr "<b>정보</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:6
-msgid "<b>Logout Settings</b>"
-msgstr "<b>로그아웃 설정</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:7
-msgid "<b>Security</b>"
-msgstr "<b>보안</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:8
-msgid "<b>Session Chooser</b>"
-msgstr "<b>세션 선택</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:9
-msgid "<b>Shutdown</b>"
-msgstr "<b>종료</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:10
-msgid "<b>Version:</b>"
-msgstr "<b>버전:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:11
-msgid "Ad_vanced"
-msgstr "고급(_V)"
-
-#: ../settings/xfce4-session-settings.glade.h:12
-msgid "Always save the session when logging out"
-msgstr "로그아웃 할 때 항상 세션을 저장"
-
-#: ../settings/xfce4-session-settings.glade.h:13
-msgid "Automatically save session on _logout"
-msgstr "로그아웃 할 때 세션을 자동으로 저장(_L)"
-
-#: ../settings/xfce4-session-settings.glade.h:14
-msgid "Con_figure"
-msgstr "환경설정(_F)"
-
-#: ../settings/xfce4-session-settings.glade.h:16
-msgid "Demonstrates the selected splash screen"
-msgstr "선택한 시작화면을 미리 보여줍니다"
-
-#: ../settings/xfce4-session-settings.glade.h:17
 msgid "Display the session chooser every time Xfce starts"
 msgstr "Xfce가 시작할 때마다 세션 선택기를 보여줍니다"
 
-#: ../settings/xfce4-session-settings.glade.h:18
-msgid "Empty the session cache"
-msgstr "세션 캐시를 비웁니다"
+#: ../settings/xfce4-session-settings.glade.h:5
+msgid "<b>Session Chooser</b>"
+msgstr "<b>세션 선택</b>"
 
-#: ../settings/xfce4-session-settings.glade.h:19
-msgid "Launch GN_OME services on startup"
-msgstr "시동시 그놈 서비스를 시작합니다(_O)"
+#: ../settings/xfce4-session-settings.glade.h:6
+msgid "Automatically save session on _logout"
+msgstr "로그아웃 할 때 세션을 자동으로 저장(_L)"
 
-#: ../settings/xfce4-session-settings.glade.h:20
-msgid "Launch _KDE services on startup"
-msgstr "시동시 KDE 서비스를 시작합니다(_K)"
+#: ../settings/xfce4-session-settings.glade.h:7
+msgid "Always save the session when logging out"
+msgstr "로그아웃 할 때 항상 세션을 저장"
 
-#: ../settings/xfce4-session-settings.glade.h:21
-msgid "Manage _remote applications"
-msgstr "원격 프로그램 관리(_R)"
+#: ../settings/xfce4-session-settings.glade.h:8
+msgid "_Prompt on logout"
+msgstr "로그아웃 시 질문(_P)"
 
-#: ../settings/xfce4-session-settings.glade.h:22
-msgid "Manage remote applications over the network (this may be a security risk)"
-msgstr "네트워크를 통한 원격 관리 (보안 문제를 일으킬 수도 있습니다)"
-
-#: ../settings/xfce4-session-settings.glade.h:23
-msgid "Opens the configuration panel for the selected splash screen"
-msgstr "선택한 시작화면에 대한 설정 패널 열기"
-
-#: ../settings/xfce4-session-settings.glade.h:24
+#: ../settings/xfce4-session-settings.glade.h:9
 msgid "Prompt for confirmation when logging out"
 msgstr "로그아웃시 확인 질문"
 
-#: ../settings/xfce4-session-settings.glade.h:25
-msgid "Quit the program, and remove it from the session"
-msgstr "프로그램을 종료하고 세션에서 제거"
+#: ../settings/xfce4-session-settings.glade.h:10
+msgid "<b>Logout Settings</b>"
+msgstr "<b>로그아웃 설정</b>"
 
-#: ../settings/xfce4-session-settings.glade.h:26
-msgid "Run xflock4 before suspending or hibernating the system"
-msgstr "시스템을 대기 또는 최대 절전하기 전에 xflock4 실행하기"
+#: ../settings/xfce4-session-settings.glade.h:11
+msgid "_General"
+msgstr "일반(_G)"
 
-#: ../settings/xfce4-session-settings.glade.h:27
+#: ../settings/xfce4-session-settings.glade.h:12
+msgid "Opens the configuration panel for the selected splash screen"
+msgstr "선택한 시작화면에 대한 설정 패널 열기"
+
+#: ../settings/xfce4-session-settings.glade.h:13
+msgid "Con_figure"
+msgstr "환경설정(_F)"
+
+#: ../settings/xfce4-session-settings.glade.h:14
+msgid "Demonstrates the selected splash screen"
+msgstr "선택한 시작화면을 미리 보여줍니다"
+
+#: ../settings/xfce4-session-settings.glade.h:15
+msgid "_Test"
+msgstr "시험(_T)"
+
+#: ../settings/xfce4-session-settings.glade.h:16
+msgid "<b>Description:</b>"
+msgstr "<b>설명:</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:17
+msgid "<b>Version:</b>"
+msgstr "<b>버전:</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:18
+msgid "<b>Author:</b>"
+msgstr "<b>만든이:</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:19
+msgid "<b>Homepage:</b>"
+msgstr "<b>홈페이지:</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:20
+msgid "label"
+msgstr "레이블"
+
+#: ../settings/xfce4-session-settings.glade.h:21
+msgid "<b>Information</b>"
+msgstr "<b>정보</b>"
+
+#: ../settings/xfce4-session-settings.glade.h:22
 msgid "S_plash"
 msgstr "시작화면(_P)"
 
-#: ../settings/xfce4-session-settings.glade.h:28
+#: ../settings/xfce4-session-settings.glade.h:23
+msgid ""
+"These applications are a part of the currently-running session, and can be "
+"saved when you log out.  Changes below will only take effect when the "
+"session is saved."
+msgstr "이 프로그램들은 현재 실행중인 세션의 일부이며 로그아웃시 저장할 수 있습니다. 세션을 저장할 때 아래의 내용만을 반영할 것입니다."
+
+#: ../settings/xfce4-session-settings.glade.h:24
 msgid "Save Sessio_n"
 msgstr "세션 저장(_N)"
 
+#: ../settings/xfce4-session-settings.glade.h:25
+msgid "Empty the session cache"
+msgstr "세션 캐시를 비웁니다"
+
+#: ../settings/xfce4-session-settings.glade.h:26
+msgid "_Clear saved sessions"
+msgstr "저장한 세션을 지웁니다(_C)"
+
+#: ../settings/xfce4-session-settings.glade.h:27
+msgid "Quit the program, and remove it from the session"
+msgstr "프로그램을 종료하고 세션에서 제거"
+
 #: ../settings/xfce4-session-settings.glade.h:29
-msgid "Saving Session"
-msgstr "세션 저장 중"
+msgid "_Session"
+msgstr "세션(_S)"
+
+#: ../settings/xfce4-session-settings.glade.h:30
+msgid "Launch GN_OME services on startup"
+msgstr "시동시 그놈 서비스를 시작합니다(_O)"
 
 #: ../settings/xfce4-session-settings.glade.h:31
 msgid "Start GNOME services, such as gnome-keyring"
 msgstr "그놈 키 모음과 같은 그놈 서비스를 시작합니다"
 
 #: ../settings/xfce4-session-settings.glade.h:32
+msgid "Launch _KDE services on startup"
+msgstr "시동시 KDE 서비스를 시작합니다(_K)"
+
+#: ../settings/xfce4-session-settings.glade.h:33
 msgid "Start KDE services, such as kdeinit"
 msgstr "kdeinit과 같은 KDE 서비스를 시작합니다"
 
-#: ../settings/xfce4-session-settings.glade.h:33
-msgid "These applications are a part of the currently-running session, and can be saved when you log out.  Changes below will only take effect when the session is saved."
-msgstr "이 프로그램들은 현재 실행중인 세션의 일부이며 로그아웃시 저장할 수 있습니다. 세션을 저장할 때 아래의 내용만을 반영할 것입니다."
-
 #: ../settings/xfce4-session-settings.glade.h:34
-msgid "Your session is being saved.  If you do not wish to wait, you may close this window."
-msgstr "세션을 저장했습니다. 기다리길 원하지 않는다면 이 창을 닫아도 됩니다."
+msgid "<b>Compatibility</b>"
+msgstr "<b>호환성</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:35
-msgid "_Clear saved sessions"
-msgstr "저장한 세션을 지웁니다(_C)"
+msgid "Manage _remote applications"
+msgstr "원격 프로그램 관리(_R)"
 
 #: ../settings/xfce4-session-settings.glade.h:36
-msgid "_Display chooser on login"
-msgstr "로그인시 선택기 표시(_D)"
+msgid ""
+"Manage remote applications over the network (this may be a security risk)"
+msgstr "네트워크를 통한 원격 관리 (보안 문제를 일으킬 수도 있습니다)"
 
 #: ../settings/xfce4-session-settings.glade.h:37
-msgid "_General"
-msgstr "일반(_G)"
+msgid "<b>Security</b>"
+msgstr "<b>보안</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:38
 msgid "_Lock screen before sleep"
 msgstr "일시중지 전 화면 잠그기(_L)"
 
 #: ../settings/xfce4-session-settings.glade.h:39
-msgid "_Prompt on logout"
-msgstr "로그아웃 시 질문(_P)"
+msgid "Run xflock4 before suspending or hibernating the system"
+msgstr "시스템을 대기 또는 최대 절전하기 전에 xflock4 실행하기"
+
+#: ../settings/xfce4-session-settings.glade.h:40
+msgid "<b>Shutdown</b>"
+msgstr "<b>종료</b>"
 
 #: ../settings/xfce4-session-settings.glade.h:41
-msgid "_Session"
-msgstr "세션(_S)"
+msgid "Ad_vanced"
+msgstr "고급(_V)"
 
 #: ../settings/xfce4-session-settings.glade.h:42
-msgid "_Test"
-msgstr "시험(_T)"
+msgid "Saving Session"
+msgstr "세션 저장 중"
 
 #: ../settings/xfce4-session-settings.glade.h:43
-msgid "label"
-msgstr "레이블"
-
+msgid ""
+"Your session is being saved.  If you do not wish to wait, you may close this"
+" window."
+msgstr "세션을 저장했습니다. 기다리길 원하지 않는다면 이 창을 닫아도 됩니다."
