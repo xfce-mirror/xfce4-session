@@ -9,10 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-02 22:44+0200\n"
-"PO-Revision-Date: 2013-11-19 13:02+0000\n"
-"Last-Translator: Nick <nick@xfce.org>\n"
-"Language-Team: Bengali (http://www.transifex.com/projects/p/xfce/language/bn/)\n"
+"POT-Creation-Date: 2017-06-11 12:30+0200\n"
+"PO-Revision-Date: 2017-09-19 18:02+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
+"Language-Team: Bengali (http://www.transifex.com/xfce/xfce4-session/language/bn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -35,6 +35,17 @@ msgstr "কোন বিবরন দেয়া নেই"
 msgid "Choose theme file to install..."
 msgstr "ইনস্টল করার জন্য থীম ফাইল পছন্দ করুন..."
 
+#: ../engines/balou/config.c:327 ../engines/balou/config.c:495
+#: ../settings/session-editor.c:173 ../settings/session-editor.c:257
+#: ../xfce4-session/xfsm-logout-dialog.c:211
+#: ../xfce4-session/xfsm-splash-screen.c:213
+msgid "_Cancel"
+msgstr ""
+
+#: ../engines/balou/config.c:328
+msgid "_Open"
+msgstr ""
+
 #: ../engines/balou/config.c:336
 #, c-format
 msgid "Unable to install splash theme from file \"%s\""
@@ -48,96 +59,106 @@ msgstr "থীম ফাইলে ত্রুটি "
 msgid "Please check that the file is a valid splash theme archive."
 msgstr "অনুগ্রহ করে পরীক্ষা করুন যে ফাইলটি একটি কার্যকর স্প্ল্যাশ থীম আর্কাইভ।"
 
-#: ../engines/balou/config.c:402
+#: ../engines/balou/config.c:344 ../engines/balou/config.c:949
+#: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1226
+msgid "_Close"
+msgstr ""
+
+#: ../engines/balou/config.c:403
 #, c-format
 msgid "Unable to remove splash theme \"%s\" from directory %s."
 msgstr "ডিরেক্টরি %2$s থেকে %1$s স্প্ল্যাশ থীম অপসারণ করতে ব্যর্থ।"
 
-#: ../engines/balou/config.c:491
+#: ../engines/balou/config.c:492
 msgid "Choose theme filename..."
 msgstr "থীম ফাইলের নাম পছন্দ করুন..."
+
+#: ../engines/balou/config.c:496
+msgid "_Save"
+msgstr ""
 
 #: ../engines/balou/config.c:624
 msgid "_Install new theme"
 msgstr "নতুন থীম ইনস্টল (_I)"
 
-#: ../engines/balou/config.c:633
+#: ../engines/balou/config.c:631
 msgid "_Remove theme"
 msgstr "থীম অপসারণ (_R)"
 
-#: ../engines/balou/config.c:650
+#: ../engines/balou/config.c:646
 msgid "_Export theme"
 msgstr "থীম এক্সপোর্ট (_E)"
 
-#: ../engines/balou/config.c:866
+#: ../engines/balou/config.c:860
 msgid "Balou theme"
 msgstr "বালু থীম"
 
-#: ../engines/balou/config.c:951
+#: ../engines/balou/config.c:945
 msgid "Configure Balou..."
 msgstr "বালু কনফিগার..."
 
-#: ../engines/balou/config.c:994
+#: ../engines/balou/config.c:987
 msgid "Balou"
 msgstr "বালু"
 
-#: ../engines/balou/config.c:995
+#: ../engines/balou/config.c:988
 msgid "Balou Splash Engine"
 msgstr "বালু স্প্ল্যাশ ইঞ্জিন"
 
-#: ../engines/mice/mice.c:373
+#: ../engines/mice/mice.c:385
 msgid "Mice"
 msgstr "মাইস"
 
-#: ../engines/mice/mice.c:374
+#: ../engines/mice/mice.c:386
 msgid "Mice Splash Engine"
 msgstr "মাইস স্প্ল্যাশ ইঞ্জিন"
 
-#: ../engines/simple/simple.c:346
+#: ../engines/simple/simple.c:334
 msgid "Configure Simple..."
 msgstr "সহজ কনফিগার..."
 
-#: ../engines/simple/simple.c:357
+#: ../engines/simple/simple.c:344
 msgid "Font"
 msgstr "ফন্ট"
 
-#: ../engines/simple/simple.c:367
+#: ../engines/simple/simple.c:354
 msgid "Colors"
 msgstr "রং"
 
-#: ../engines/simple/simple.c:375
+#: ../engines/simple/simple.c:362
 msgid "Background color:"
 msgstr "পটভূমির রং:"
 
-#: ../engines/simple/simple.c:388
+#: ../engines/simple/simple.c:373
 msgid "Text color:"
 msgstr "টেক্সটের রং:"
 
-#: ../engines/simple/simple.c:401
+#: ../engines/simple/simple.c:385
 msgid "Image"
 msgstr "ছবি"
 
-#: ../engines/simple/simple.c:409
+#: ../engines/simple/simple.c:393
 msgid "Use custom image"
 msgstr "স্বনির্ধারিত ছবি ব্যবহার"
 
-#: ../engines/simple/simple.c:413
+#: ../engines/simple/simple.c:397
 msgid "Choose image..."
 msgstr "ছবি পছন্দ..."
 
-#: ../engines/simple/simple.c:419
+#: ../engines/simple/simple.c:403
 msgid "Images"
 msgstr "ছবি"
 
-#: ../engines/simple/simple.c:425
+#: ../engines/simple/simple.c:409
 msgid "All files"
 msgstr "সকল ফাইল"
 
-#: ../engines/simple/simple.c:497
+#: ../engines/simple/simple.c:480
 msgid "Simple"
 msgstr "সহজ"
 
-#: ../engines/simple/simple.c:498
+#: ../engines/simple/simple.c:481
 msgid "Simple Splash Engine"
 msgstr "সহজ স্প্ল্যাশ ইঞ্জিন"
 
@@ -149,43 +170,43 @@ msgstr ""
 msgid "Launch screensaver and locker program"
 msgstr ""
 
-#: ../settings/main.c:43
+#: ../settings/main.c:68
 msgid "Settings manager socket"
 msgstr "সেটিংস ব্যবস্থাপক সকেট"
 
-#: ../settings/main.c:43
+#: ../settings/main.c:68
 msgid "SOCKET ID"
 msgstr "SOCKET ID"
 
-#: ../settings/main.c:44
+#: ../settings/main.c:69
 msgid "Version information"
 msgstr "সংস্করণ তথ্যাবলী"
 
-#: ../settings/main.c:75 ../xfce4-session/main.c:257
+#: ../settings/main.c:80 ../xfce4-session/main.c:343
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "ব্যবহারের জন্য '%s --সহায়তা' টাইপ করুন।"
 
-#: ../settings/main.c:87 ../xfce4-session/main.c:267
-#: ../xfce4-session-logout/main.c:136
+#: ../settings/main.c:92 ../xfce4-session/main.c:353
+#: ../xfce4-session-logout/main.c:146
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce ডেভেলপমেন্ট টিম। সকল অধিকার সংরক্ষিত।"
 
-#: ../settings/main.c:88 ../xfce4-session/main.c:268
-#: ../xfce4-session-logout/main.c:139
+#: ../settings/main.c:93 ../xfce4-session/main.c:354
+#: ../xfce4-session-logout/main.c:149
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "অনুগ্রহ করে বাগসমূহ <%s>-এ রিপোর্ট করুন।"
 
-#: ../settings/main.c:97 ../xfce4-session/main.c:276
+#: ../settings/main.c:102 ../xfce4-session/main.c:362
 msgid "Unable to contact settings server"
 msgstr "সেটিংস সার্ভারের সাথে যোগাযোগ করতে ব্যর্থ"
 
-#: ../settings/main.c:116
+#: ../settings/main.c:121
 msgid "Unable to create user interface from embedded definition data"
 msgstr "সন্নিবেশিত সংজ্ঞার উপাত্ত থেকে ব্যবহারকারী ইন্টারফেস তৈরি করতে ব্যর্থ"
 
-#: ../settings/main.c:128
+#: ../settings/main.c:133
 msgid "App_lication Autostart"
 msgstr ""
 
@@ -240,47 +261,46 @@ msgstr ""
 msgid "All Xfce cache files could not be cleared"
 msgstr ""
 
-#: ../settings/session-editor.c:249
+#: ../settings/session-editor.c:251
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "আপনি কি নিশ্চিত আপনি \"%s\" সমাপ্ত করতে চান?"
 
-#: ../settings/session-editor.c:252 ../settings/session-editor.c:280
+#: ../settings/session-editor.c:254 ../settings/session-editor.c:286
 msgid "Terminate Program"
 msgstr "প্রোগ্রাম সমাপ্ত"
 
-#: ../settings/session-editor.c:254
+#: ../settings/session-editor.c:256
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
 msgstr "অ্যাপ্লিকেশনটি যেকোন অসংরক্ষিত অবস্থা হারাবে এবং পরবর্তী সেশনে পুনরায় আরম্ভ হতে পারবে না।"
 
-#: ../settings/session-editor.c:256
-#: ../settings/xfce4-session-settings.glade.h:30
+#: ../settings/session-editor.c:258
 msgid "_Quit Program"
 msgstr "প্রোগ্রাম থেকে প্রস্থান (_Q)"
 
-#: ../settings/session-editor.c:281
+#: ../settings/session-editor.c:287
 msgid "Unable to terminate program."
 msgstr "প্রোগ্রাম সমাপ্ত করতে ব্যর্থ।"
 
-#: ../settings/session-editor.c:459
+#: ../settings/session-editor.c:509
 msgid "(Unknown program)"
 msgstr "(অজানা প্রোগ্রাম)"
 
-#: ../settings/session-editor.c:679
+#: ../settings/session-editor.c:733
 msgid "Priority"
 msgstr "অগ্রাধিকার"
 
-#: ../settings/session-editor.c:687
+#: ../settings/session-editor.c:741
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:693
+#: ../settings/session-editor.c:747
 msgid "Program"
 msgstr "প্রোগ্রাম"
 
-#: ../settings/session-editor.c:718
+#: ../settings/session-editor.c:772
 msgid "Restart Style"
 msgstr "শৈলী পুনরায় শুরু করুন"
 
@@ -290,27 +310,35 @@ msgstr "শৈলী পুনরায় শুরু করুন"
 msgid "None"
 msgstr "কোনটি না"
 
+#: ../settings/xfae-dialog.c:73 ../settings/xfae-dialog.c:182
+msgid "Cancel"
+msgstr ""
+
+#: ../settings/xfae-dialog.c:74 ../settings/xfae-dialog.c:183
+msgid "OK"
+msgstr ""
+
 #: ../settings/xfae-dialog.c:78
 msgid "Add application"
 msgstr "অ্যাপ্লিকেশন যোগ"
 
-#: ../settings/xfae-dialog.c:92
+#: ../settings/xfae-dialog.c:90
 msgid "Name:"
 msgstr "নাম:"
 
-#: ../settings/xfae-dialog.c:109
+#: ../settings/xfae-dialog.c:104
 msgid "Description:"
 msgstr "বিবরন:"
 
-#: ../settings/xfae-dialog.c:124 ../settings/xfae-model.c:479
+#: ../settings/xfae-dialog.c:117 ../settings/xfae-model.c:479
 msgid "Command:"
 msgstr "কমান্ড:"
 
-#: ../settings/xfae-dialog.c:184
+#: ../settings/xfae-dialog.c:179
 msgid "Select a command"
 msgstr "কমান্ড নির্বাচন করুন"
 
-#: ../settings/xfae-dialog.c:233
+#: ../settings/xfae-dialog.c:228
 msgid "Edit application"
 msgstr "অ্যাপ্লিকেশন সম্পাদনা"
 
@@ -339,7 +367,7 @@ msgstr "পড়ার জন্য %s খুলতে ব্যর্থ"
 msgid "Failed to open %s for writing"
 msgstr "লেখার জন্য %s খুলতে ব্যর্থ"
 
-#: ../settings/xfae-window.c:102
+#: ../settings/xfae-window.c:105
 msgid ""
 "Below is the list of applications that will be started automatically when "
 "you login to your Xfce desktop, in addition to the applications that were "
@@ -347,57 +375,58 @@ msgid ""
 "desktop environment, but you can still enable them if you want."
 msgstr ""
 
-#: ../settings/xfae-window.c:293
+#: ../settings/xfae-window.c:179 ../settings/xfae-window.c:237
+msgid "Add"
+msgstr ""
+
+#: ../settings/xfae-window.c:185 ../settings/xfae-window.c:243
+msgid "Remove"
+msgstr ""
+
+#: ../settings/xfae-window.c:195
+msgid "Edit"
+msgstr ""
+
+#: ../settings/xfae-window.c:296
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "\"%s\" যোগ করতে ব্যর্থ"
 
-#: ../settings/xfae-window.c:324 ../settings/xfae-window.c:338
+#: ../settings/xfae-window.c:327 ../settings/xfae-window.c:341
 msgid "Failed to remove item"
 msgstr "আইটেম অপসারণ করতে ব্যর্থ"
 
-#: ../settings/xfae-window.c:330
-msgid ""
-"This will permanently remove the application from the list of automatically "
-"started applications"
-msgstr "এটি স্বয়ংক্রিয়ভাবে আরম্ভকৃত অ্যাপ্লিকেশনসমূহের তালিকা থেকে এই অ্যাপ্লিকেশনটি চিরতরে অপসারণ করবে"
-
-#: ../settings/xfae-window.c:332
-#, c-format
-msgid "Are you sure you want to remove \"%s\""
-msgstr "আপনি কি নিশ্চিত আপনি \"%s\" অপসারণ করতে চান"
-
-#: ../settings/xfae-window.c:366
+#: ../settings/xfae-window.c:369
 msgid "Failed to edit item"
 msgstr "আইটেম সম্পাদনা করতে ব্যর্থ"
 
-#: ../settings/xfae-window.c:386
+#: ../settings/xfae-window.c:389
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "\"%s\" আইটেম সম্পাদনা করতে ব্যর্থ"
 
-#: ../settings/xfae-window.c:414
+#: ../settings/xfae-window.c:417
 msgid "Failed to toggle item"
 msgstr "আইটেম টগল করতে ব্যর্থ"
 
-#: ../xfce4-session/main.c:76
+#: ../xfce4-session/main.c:77
 msgid "Disable binding to TCP ports"
 msgstr "TCP পোর্টের বাইন্ডিং নিষ্ক্রিয়"
 
-#: ../xfce4-session/main.c:77 ../xfce4-session-logout/main.c:91
+#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:102
 msgid "Print version information and exit"
 msgstr "সংস্করণ তথ্যাবলী মুদ্রণ করে প্রস্থান"
 
-#: ../xfce4-session/main.c:140
+#: ../xfce4-session/main.c:146
 msgid "Loading desktop settings"
 msgstr "ডেস্কটপ সেটিংসমূহ লোড করা হচ্ছে"
 
 #. verify that the DNS settings are ok
-#: ../xfce4-session/main.c:298
+#: ../xfce4-session/main.c:199
 msgid "Verifying DNS settings"
 msgstr "DNS সেটিংসমূহ যাচাই করা হচ্ছে"
 
-#: ../xfce4-session/main.c:302
+#: ../xfce4-session/main.c:203
 msgid "Loading session data"
 msgstr "সেশন উপাত্ত লোড করা হচ্ছে"
 
@@ -406,41 +435,35 @@ msgstr "সেশন উপাত্ত লোড করা হচ্ছে"
 msgid "Last accessed: %s"
 msgstr "সর্বশেষ প্রবেশ: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:172
+#: ../xfce4-session/xfsm-chooser.c:175
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr "আপনি যে সেশনটি পুনরুদ্ধার করতে চান তা পছন্দ করুন। আপনি খুব সহজেই শুধুমাত্র সেশনের নামের উপর ডবল ক্লিক করে তা পুনরুদ্ধার করতে পারেন।"
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:198
+#: ../xfce4-session/xfsm-chooser.c:201
 msgid "Log out"
 msgstr "লগআউট"
 
-#: ../xfce4-session/xfsm-chooser.c:200
+#: ../xfce4-session/xfsm-chooser.c:203
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "লগইনের প্রচেষ্টা বাতিল করুন এবং লগইন পর্দায় ফিরে যান।"
 
 #. "New" button
-#: ../xfce4-session/xfsm-chooser.c:207
+#: ../xfce4-session/xfsm-chooser.c:210
 msgid "New session"
 msgstr "নতুন সেশন"
 
-#: ../xfce4-session/xfsm-chooser.c:208
+#: ../xfce4-session/xfsm-chooser.c:211
 msgid "Create a new session."
 msgstr "নতুন সেশন তৈরি করুন।"
 
-#: ../xfce4-session/xfsm-client.c:506 ../xfce4-session/xfsm-client.c:532
-#: ../xfce4-session/xfsm-client.c:571
-#, c-format
-msgid "The client doesn't have any properties set yet"
-msgstr "ক্লায়েন্ট এখনও কোন বৈশিষ্ট্যাবলী নির্ধারণ করেনি"
-
-#: ../xfce4-session/xfsm-compat-gnome.c:247
+#: ../xfce4-session/xfsm-compat-gnome.c:255
 msgid "Starting The Gnome Keyring Daemon"
 msgstr "জিনোম কীরিং ডিমন আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-compat-kde.c:124
+#: ../xfce4-session/xfsm-compat-kde.c:126
 msgid "Starting KDE services"
 msgstr "KDE সার্ভিসসমূহ আরম্ভ করা হচ্ছে"
 
@@ -448,7 +471,7 @@ msgstr "KDE সার্ভিসসমূহ আরম্ভ করা হচ�
 msgid "(Unknown)"
 msgstr "(অজানা)"
 
-#: ../xfce4-session/xfsm-dns.c:147
+#: ../xfce4-session/xfsm-dns.c:152
 #, c-format
 msgid ""
 "Could not look up internet address for %s.\n"
@@ -457,15 +480,15 @@ msgid ""
 "%s to the file /etc/hosts on your system."
 msgstr "%s-এর জন্য ইন্টারনেট ঠিকানা খুঁজে পাওয়া যায়নি।\nএটি Xfce-কে সঠিকভাবে অপারেট করতে রোধ করবে।\nআপনার সিস্টেমের file /etc/hosts-তে %s যোগ করার ফলে\nহয়ত এই সমস্যার সমাধান সম্ভব হতে পারে।"
 
-#: ../xfce4-session/xfsm-dns.c:154
+#: ../xfce4-session/xfsm-dns.c:159
 msgid "Continue anyway"
 msgstr "যেকোনভাবেই হোক চালিয়ে যান"
 
-#: ../xfce4-session/xfsm-dns.c:155
+#: ../xfce4-session/xfsm-dns.c:160
 msgid "Try again"
 msgstr "পুনরায় চেষ্টা করুন"
 
-#: ../xfce4-session/xfsm-manager.c:611
+#: ../xfce4-session/xfsm-manager.c:619
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -474,55 +497,69 @@ msgid ""
 "incorrectly."
 msgstr "ফেইলসেইফ সেশনের নাম নির্ধারণ করতে ব্যর্থ।  সম্ভাব্য কারণসমূহ: xfconfd সচল নেই (D-Bus সেটআপ সমস্যা); এনভায়রনমেন্ট চলক $XDG_CONFIG_DIRS ভুলভাবে নির্ধারণ করা হয়েছে (\"%s\" অবশ্যই অন্তর্ভুক্ত থাকতে হবে), অথবা xfce4-সেশন সঠিকভাবে ইনস্টল করা হয়নি।"
 
-#: ../xfce4-session/xfsm-manager.c:622
+#: ../xfce4-session/xfsm-manager.c:630
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "উল্লিখিত ফেইলসেইফ সেশন (\"%s\") ফেইলসেইফ সেশন হিসেবে চিহ্নিত করা নেই।"
 
-#: ../xfce4-session/xfsm-manager.c:669
+#: ../xfce4-session/xfsm-manager.c:677
 msgid "The list of applications in the failsafe session is empty."
 msgstr "ফেইলসেইফ সেশনে অ্যাপ্লিকেশনসমূহের তালিকাটি ফাঁকা।"
 
 #. FIXME: migrate this into the splash screen somehow so the
-#. * window doesn't look ugly (right now now WM is running, so it
+#. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:716
+#: ../xfce4-session/xfsm-manager.c:724
 msgid "Session Manager Error"
 msgstr "সেশন ব্যবস্থাপক ত্রুটি "
 
-#: ../xfce4-session/xfsm-manager.c:718
+#: ../xfce4-session/xfsm-manager.c:726
 msgid "Unable to load a failsafe session"
 msgstr "ফেইলসেইফ সেশন লোড করতে ব্যর্থ"
 
-#: ../xfce4-session/xfsm-manager.c:1127
+#: ../xfce4-session/xfsm-manager.c:728
+msgid "_Quit"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1216
 msgid "Shutdown Failed"
 msgstr "বন্ধ ব্যর্থ"
 
-#: ../xfce4-session/xfsm-manager.c:1130
+#: ../xfce4-session/xfsm-manager.c:1219
 msgid "Failed to suspend session"
 msgstr "সেশন বাতিল করতে ব্যর্থ"
 
-#: ../xfce4-session/xfsm-manager.c:1131
+#: ../xfce4-session/xfsm-manager.c:1221
 msgid "Failed to hibernate session"
 msgstr "সেশন হাইবারনেট করতে ব্যর্থ"
 
-#: ../xfce4-session/xfsm-manager.c:1405
+#: ../xfce4-session/xfsm-manager.c:1223
+msgid "Failed to hybrid sleep session"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1224
+msgid "Failed to switch user"
+msgstr ""
+
+#: ../xfce4-session/xfsm-manager.c:1530
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "শুধুমাত্র নিষ্ক্রিয় অবস্থায় ক্লায়েন্টদের বাতিল করতে পারে"
 
-#: ../xfce4-session/xfsm-manager.c:1969
-#, c-format
+#: ../xfce4-session/xfsm-manager.c:2187
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "চেকপয়েন্ট অনুরোধ করার সময় সেশন ব্যবস্থাপককে অবশ্যই নিষ্ক্রিয় অবস্থায় থাকতে হবে"
 
-#: ../xfce4-session/xfsm-manager.c:2010
-#, c-format
+#: ../xfce4-session/xfsm-manager.c:2257 ../xfce4-session/xfsm-manager.c:2277
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "বন্ধ অনুরোধ করার সময় সেশন ব্যবস্থাপককে অবশ্যই নিষ্ক্রিয় অবস্থায় থাকতে হবে"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:188
+#: ../xfce4-session/xfsm-manager.c:2322
+msgid "Session manager must be in idle state when requesting a restart"
+msgstr ""
+
+#: ../xfce4-session/xfsm-logout-dialog.c:184
 #, c-format
 msgid "Log out %s"
 msgstr ""
@@ -530,43 +567,41 @@ msgstr ""
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:246
+#: ../xfce4-session/xfsm-logout-dialog.c:226
 msgid "_Log Out"
 msgstr ""
 
-#: ../xfce4-session/xfsm-logout-dialog.c:266
+#: ../xfce4-session/xfsm-logout-dialog.c:246
 msgid "_Restart"
 msgstr ""
 
-#: ../xfce4-session/xfsm-logout-dialog.c:286
+#: ../xfce4-session/xfsm-logout-dialog.c:266
 msgid "Shut _Down"
 msgstr ""
 
-#: ../xfce4-session/xfsm-logout-dialog.c:309
+#: ../xfce4-session/xfsm-logout-dialog.c:289
 msgid "Sus_pend"
 msgstr ""
 
-#: ../xfce4-session/xfsm-logout-dialog.c:343
+#: ../xfce4-session/xfsm-logout-dialog.c:323
 msgid "_Hibernate"
 msgstr "হাইবারনেট (_H)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:368
+#: ../xfce4-session/xfsm-logout-dialog.c:354
+msgid "_Hybrid Sleep"
+msgstr ""
+
+#: ../xfce4-session/xfsm-logout-dialog.c:385
+msgid "Switch _User"
+msgstr ""
+
+#: ../xfce4-session/xfsm-logout-dialog.c:410
 msgid "_Save session for future logins"
 msgstr "ভবিষ্যত লগইনের জন্য সেশন সংরক্ষণ (_S)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:395
-msgid "Please enter your password"
-msgstr ""
-
-#: ../xfce4-session/xfsm-logout-dialog.c:427
+#: ../xfce4-session/xfsm-logout-dialog.c:438
 msgid "An error occurred"
 msgstr ""
-
-#: ../xfce4-session/xfsm-logout-dialog.c:433
-msgid ""
-"Either the password you entered is invalid, or the system administrator "
-"disallows shutting down this computer with your user account."
-msgstr "আপনি যে পাসওয়ার্ডটি দিয়েছেন তা সম্ভবত অকার্যকর, অথবা সিস্টেম প্রশাসক আপনার ব্যবহারকারী অ্যাকাউন্ট থেকে কম্পিউটার বন্ধ করার অনুমোদন দেয়নি।"
 
 #: ../xfce4-session/xfsm-splash-screen.c:178
 msgid "Choose session"
@@ -576,92 +611,96 @@ msgstr "সেশন পছন্দ"
 msgid "Choose session name"
 msgstr "সেশনের নাম পছন্দ"
 
+#: ../xfce4-session/xfsm-splash-screen.c:215
+msgid "_OK"
+msgstr ""
+
 #: ../xfce4-session/xfsm-splash-screen.c:222
 msgid "Choose a name for the new session:"
 msgstr "নতুন সেশনের জন্য নাম পছন্দ:"
 
-#: ../xfce4-session/xfsm-startup.c:347
+#: ../xfce4-session/xfsm-startup.c:397
 msgid "Starting the Volume Controller"
 msgstr "ভলিউম কন্ট্রোলার আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:349
+#: ../xfce4-session/xfsm-startup.c:399
 msgid "Starting the Panel"
 msgstr "প্যানেল আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:351
+#: ../xfce4-session/xfsm-startup.c:401
 msgid "Starting the Desktop Manager"
 msgstr "ডেস্কটপ ব্যবস্থাপক আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:353
+#: ../xfce4-session/xfsm-startup.c:403
 msgid "Starting the Taskbar"
 msgstr "টাস্কবার আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:355
+#: ../xfce4-session/xfsm-startup.c:405
 msgid "Starting the Window Manager"
 msgstr "উইন্ডো ব্যবস্থাপক আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:359
+#: ../xfce4-session/xfsm-startup.c:409
 msgid "Starting the Gnome Terminal Emulator"
 msgstr "জিনোম টার্মিনাল এমুলেটর আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:363
+#: ../xfce4-session/xfsm-startup.c:413
 msgid "Starting the KDE Advanced Text Editor"
 msgstr "KDE উচ্চ পর্যায়ের টেক্সট সম্পাদক আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:365
+#: ../xfce4-session/xfsm-startup.c:415
 msgid "Starting the KDE Clipboard Manager"
 msgstr "KDE ক্লিপবোর্ড ব্যবস্থাপক আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:367
+#: ../xfce4-session/xfsm-startup.c:417
 msgid "Starting the KDE Mail Reader"
 msgstr "KDE মেইল পাঠক আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:369
+#: ../xfce4-session/xfsm-startup.c:419
 msgid "Starting the KDE News Reader"
 msgstr "KDE সংবাদ পাঠক আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:371
+#: ../xfce4-session/xfsm-startup.c:421
 msgid "Starting the Konqueror"
 msgstr "Konqueror আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:373
+#: ../xfce4-session/xfsm-startup.c:423
 msgid "Starting the KDE Terminal Emulator"
 msgstr "KDE টার্মিনাল এমুলেটর আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:377
+#: ../xfce4-session/xfsm-startup.c:427
 msgid "Starting the Beep Media Player"
 msgstr "বিপ মিডিয়া প্লেয়ার আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:379
+#: ../xfce4-session/xfsm-startup.c:429
 msgid "Starting The Gimp"
 msgstr "গিম্প আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:381
+#: ../xfce4-session/xfsm-startup.c:431
 msgid "Starting the VI Improved Editor"
 msgstr "VI উন্নত সম্পাদক আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:383
+#: ../xfce4-session/xfsm-startup.c:433
 msgid "Starting the Session Management Proxy"
 msgstr "সেশন ব্যবস্থাপনা প্রক্সি আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:385
+#: ../xfce4-session/xfsm-startup.c:435
 msgid "Starting the X-Chat IRC Client"
 msgstr "X-কথোপকথন IRC ক্লায়েন্ট আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:387
+#: ../xfce4-session/xfsm-startup.c:437
 msgid "Starting the X Multimedia System"
 msgstr "X মাল্টিমিডিয়া সিস্টেম আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:389
+#: ../xfce4-session/xfsm-startup.c:439
 msgid "Starting the X Terminal Emulator"
 msgstr "X টার্মিনাল এমুলেটর আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:391
+#: ../xfce4-session/xfsm-startup.c:441
 #, c-format
 msgid "Starting %s"
 msgstr "%s আরম্ভ করা হচ্ছে"
 
-#: ../xfce4-session/xfsm-startup.c:515
+#: ../xfce4-session/xfsm-startup.c:565
 #, c-format
 msgid ""
 "The location and the format of the autostart directory has changed.\n"
@@ -676,81 +715,75 @@ msgid ""
 "You should delete this directory now.\n"
 msgstr "স্বয়ংক্রিয় স্টার্টের ডিরেক্টরির অবস্থান এবং ফরম্যাট পরিবর্তিত হয়েছে।\nনতুন অবস্থান হল\n\n  %s\n\nযেখানে আপনি .desktop ফাইলগুলো রাখতে পারেন, যা\nXfce ডেস্কটপ চালুর সময় অ্যাপ্লিকেশনগুলো ব্যাখ্যা করে।পুরাতন\nস্বয়ংক্রিয় স্টার্ট ডিরেক্টরিতে সফল ভাবে নতুন\nঅবস্থানে মাইগ্রেট করতে পারে।\nআপনার এখনই ডিরেক্টরি মুছে ফেলা উচিত।\n"
 
-#: ../xfce4-session/xfsm-startup.c:684
+#: ../xfce4-session/xfsm-startup.c:750
 msgid "Performing Autostart..."
 msgstr "স্বয়ংক্রিয়ভাবে আরম্ভ কার্যকর করা হচ্ছে..."
 
-#: ../xfce4-session/xfsm-startup.c:790
+#: ../xfce4-session/xfsm-startup.c:856
 msgid "Starting Assistive Technologies"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown.c:429
-#, c-format
-msgid "Error sending command to shutdown helper: %s"
-msgstr "সহায়তাকারী বন্ধ করার কমান্ড প্রেরণে ত্রুটি: %s"
-
-#: ../xfce4-session/xfsm-shutdown.c:442
-#, c-format
-msgid "Error receiving response from shutdown helper: %s"
-msgstr "বন্ধ সহায়তাকারীর কাছ থেকে প্রতিক্রিয়া গ্রহণে ত্রুটি: %s"
-
-#: ../xfce4-session/xfsm-shutdown.c:450
-#, c-format
-msgid "Shutdown command failed"
-msgstr "বন্ধের কমান্ড ব্যর্থ"
-
-#: ../xfce4-session/xfsm-shutdown.c:555
+#: ../xfce4-session/xfsm-shutdown.c:162
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown.c:638
+#: ../xfce4-session/xfsm-shutdown.c:219
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:67
+#: ../xfce4-session-logout/main.c:70
 msgid "Log out without displaying the logout dialog"
 msgstr "লগআউট ডায়ালগ না দেখিয়েই লগআউট"
 
-#: ../xfce4-session-logout/main.c:71
+#: ../xfce4-session-logout/main.c:74
 msgid "Halt without displaying the logout dialog"
 msgstr "লগআউট ডায়ালগ না দেখিয়েই হল্ট"
 
-#: ../xfce4-session-logout/main.c:75
+#: ../xfce4-session-logout/main.c:78
 msgid "Reboot without displaying the logout dialog"
 msgstr "লগআউট ডায়ালগ না দেখিয়েই রিবুট"
 
-#: ../xfce4-session-logout/main.c:79
+#: ../xfce4-session-logout/main.c:82
 msgid "Suspend without displaying the logout dialog"
 msgstr "লগআউট ডায়ালগ না দেখিয়েই সাসপেন্ড"
 
-#: ../xfce4-session-logout/main.c:83
+#: ../xfce4-session-logout/main.c:86
 msgid "Hibernate without displaying the logout dialog"
 msgstr "লগআউট ডায়ালগ না দেখিয়েই হাইবারনেট"
 
-#: ../xfce4-session-logout/main.c:87
+#: ../xfce4-session-logout/main.c:90
+msgid "Hybrid Sleep without displaying the logout dialog"
+msgstr ""
+
+#: ../xfce4-session-logout/main.c:94
+msgid "Switch user without displaying the logout dialog"
+msgstr ""
+
+#: ../xfce4-session-logout/main.c:98
 msgid "Log out quickly; don't save the session"
 msgstr "দ্রুত লগআউট করুন; সেশন সংরক্ষণ করা যাবে না"
 
-#: ../xfce4-session-logout/main.c:110
+#: ../xfce4-session-logout/main.c:121
 msgid "Unknown error"
 msgstr "অজানা ত্রুটি "
 
-#: ../xfce4-session-logout/main.c:137
+#: ../xfce4-session-logout/main.c:147
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:138
+#: ../xfce4-session-logout/main.c:148
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:148
-msgid "Unable to contact D-Bus session bus"
-msgstr ""
-
-#: ../xfce4-session-logout/main.c:227
+#: ../xfce4-session-logout/main.c:168 ../xfce4-session-logout/main.c:279
 msgid "Received error while trying to log out"
 msgstr "লগআউটের চেষ্টা করার সময় ত্রুটি গৃহীত হয়েছে"
+
+#: ../xfce4-session-logout/main.c:244
+#, c-format
+msgid "Received error while trying to log out, error was %s"
+msgstr ""
 
 #: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
 msgid "Log Out"
@@ -761,177 +794,9 @@ msgid "Log out of the Xfce Desktop"
 msgstr ""
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
-#: ../settings/xfce4-session-settings.glade.h:3
 msgid "Session and Startup"
 msgstr "সেশন এবং আরম্ভ"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
-#: ../settings/xfce4-session-settings.glade.h:4
 msgid "Customize desktop startup and splash screen"
 msgstr "ডেস্কটপ আরম্ভ এবং স্প্ল্যাশ স্ক্রীন স্বনির্ধারণ"
-
-#: ../settings/xfce4-session-settings.glade.h:1
-msgid "Saving Session"
-msgstr "সেশন সংরক্ষণ করা হচ্ছে"
-
-#: ../settings/xfce4-session-settings.glade.h:2
-msgid ""
-"Your session is being saved.  If you do not wish to wait, you may close this"
-" window."
-msgstr "আপনার সেশন সংরক্ষণ করা হয়েছে। আপনি অপেক্ষা করতে না চাইলে এই উইন্ডোটি বন্ধ করতে পারেন।"
-
-#: ../settings/xfce4-session-settings.glade.h:5
-msgid "_Display chooser on login"
-msgstr "লগ ইনের পর বাছাইকারক প্রদর্শন (_D)"
-
-#: ../settings/xfce4-session-settings.glade.h:6
-msgid "Display the session chooser every time Xfce starts"
-msgstr "প্রতিবার Xfce আরম্ভের সময় সেশন বাছাইকারক প্রদর্শন"
-
-#: ../settings/xfce4-session-settings.glade.h:7
-msgid "<b>Session Chooser</b>"
-msgstr "<b>সেশন বাছাইকারক</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:8
-msgid "Automatically save session on logo_ut"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:9
-msgid "Always save the session when logging out"
-msgstr "সর্বদা লগআউটের সময় সেশন সংরক্ষণ করা হবে"
-
-#: ../settings/xfce4-session-settings.glade.h:10
-msgid "Pro_mpt on logout"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:11
-msgid "Prompt for confirmation when logging out"
-msgstr "লগআউট করার সময় নিশ্চিতকরণের জন্য সচেতন করা হবে"
-
-#: ../settings/xfce4-session-settings.glade.h:12
-msgid "<b>Logout Settings</b>"
-msgstr "<b>লগআউট সেটিংসমূহ</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:13
-msgid "_General"
-msgstr "সাধারণ (_G)"
-
-#: ../settings/xfce4-session-settings.glade.h:14
-msgid "Opens the configuration panel for the selected splash screen"
-msgstr "নির্বাচিত স্প্ল্যাশ স্ক্রীনের জন্য কনফিগারেশন প্যানেল খোলা হবে"
-
-#: ../settings/xfce4-session-settings.glade.h:15
-msgid "Con_figure"
-msgstr "কনফিগার (_f)"
-
-#: ../settings/xfce4-session-settings.glade.h:16
-msgid "Demonstrates the selected splash screen"
-msgstr "নির্বাচিত স্প্ল্যাশ স্ক্রীন প্রতিপাদন করা হবে"
-
-#: ../settings/xfce4-session-settings.glade.h:17
-msgid "_Test"
-msgstr "পরীক্ষণ (_T)"
-
-#: ../settings/xfce4-session-settings.glade.h:18
-msgid "<b>Description:</b>"
-msgstr "<b>বিবরন:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:19
-msgid "<b>Version:</b>"
-msgstr "<b>সংস্করণ:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:20
-msgid "<b>Author:</b>"
-msgstr "<b>রচয়িতা:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:21
-msgid "<b>Homepage:</b>"
-msgstr "<b>প্রধান পাতা:</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:22
-msgid "label"
-msgstr "লেবেল"
-
-#: ../settings/xfce4-session-settings.glade.h:23
-msgid "<b>Information</b>"
-msgstr "<b>তথ্য</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:24
-msgid "S_plash"
-msgstr "স্প্ল্যাশ (_p)"
-
-#: ../settings/xfce4-session-settings.glade.h:25
-msgid ""
-"These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "এই অ্যাপ্লিকেশনগুলো বর্তমানে সচল সেশনের একটি অংশ, এবং লগআউট করার সময়ই সংরক্ষণ করা যাবে। নিম্নোক্ত পরিবর্তনসমূহ কেবলমাত্র সেশন সংরক্ষিত হওয়ার পরই কার্যকর হবে।"
-
-#: ../settings/xfce4-session-settings.glade.h:26
-msgid "Save Sess_ion"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:27
-msgid "Empty the session cache"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:28
-msgid "Clear save_d sessions"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:29
-msgid "Quit the program, and remove it from the session"
-msgstr "প্রোগ্রাম থেকে প্রস্থান, এবং সেশন থেকে এটি অপসারণ"
-
-#: ../settings/xfce4-session-settings.glade.h:31
-msgid "Sessio_n"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:32
-msgid "Launch GN_OME services on startup"
-msgstr "আরম্ভের সময় জিনোম সার্ভিসসমূহ চালু করা হবে (_O)"
-
-#: ../settings/xfce4-session-settings.glade.h:33
-msgid "Start GNOME services, such as gnome-keyring"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:34
-msgid "Launch _KDE services on startup"
-msgstr "আরম্ভের সময় KDE সার্ভিসসমূহ চালু করা হবে (_K)"
-
-#: ../settings/xfce4-session-settings.glade.h:35
-msgid "Start KDE services, such as kdeinit"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:36
-msgid "<b>Compatibility</b>"
-msgstr "<b>সুসংগতি</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:37
-msgid "Manage _remote applications"
-msgstr "দূরবর্তী অ্যাপ্লিকেশন পরিচালনা (_r)"
-
-#: ../settings/xfce4-session-settings.glade.h:38
-msgid ""
-"Manage remote applications over the network (this may be a security risk)"
-msgstr "নেটওয়ার্কের মাধ্যমে দূরবর্তী অ্যাপ্লিকেশনসমূহ পরিচালনা (এটা হয়ত নিরাপত্তার জন্য হুমকি হতে পারে)"
-
-#: ../settings/xfce4-session-settings.glade.h:39
-msgid "<b>Security</b>"
-msgstr "<b>নিরাপত্তা</b>"
-
-#: ../settings/xfce4-session-settings.glade.h:40
-msgid "Lock screen be_fore sleep"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:41
-msgid "Run xflock4 before suspending or hibernating the system"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:42
-msgid "<b>Shutdown</b>"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.glade.h:43
-msgid "Ad_vanced"
-msgstr "উন্নত (_v)"
