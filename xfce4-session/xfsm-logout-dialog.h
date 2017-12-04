@@ -38,6 +38,7 @@ GType      xfsm_logout_dialog_get_type (void) G_GNUC_CONST;
 
 gboolean   xfsm_logout_dialog          (const gchar      *session_name,
                                         XfsmShutdownType *return_type,
-                                        gboolean         *return_save_session);
+                                        gboolean         *return_save_session,
+                                        gboolean          accessibility);
 
 #endif

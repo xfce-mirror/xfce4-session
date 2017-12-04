@@ -1189,8 +1189,13 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
         {
           /* if we're not specifying fast shutdown, and we're ok with
            * prompting then ask the user what to do */
-          if (!xfsm_logout_dialog (manager->session_name, &manager->shutdown_type, &shutdown_save))
-            return;
+          if (!xfsm_logout_dialog (manager->session_name,
+                                   &manager->shutdown_type,
+                                   &shutdown_save,
+                                   manager->start_at))
+            {
+              return;
+            }
 
           /* |allow_shutdown_save| is ignored if we prompt the user.  i think
            * this is the right thing to do. */

@@ -743,11 +743,11 @@ xfsm_logout_dialog_run (GtkDialog *dialog,
 gboolean
 xfsm_logout_dialog (const gchar      *session_name,
                     XfsmShutdownType *return_type,
-                    gboolean         *return_save_session)
+                    gboolean         *return_save_session,
+                    gboolean          accessibility)
 {
   gint              result;
   GtkWidget        *hidden;
-  gboolean          a11y;
   GtkWidget        *dialog;
   GdkScreen        *screen;
   gint              monitor;
@@ -785,12 +785,11 @@ xfsm_logout_dialog (const gchar      *session_name,
       monitor = 0;
     }
 
-  /* check if accessibility is enabled */
   hidden = gtk_invisible_new_for_screen (screen);
   gtk_widget_show (hidden);
-  a11y = GTK_IS_ACCESSIBLE (gtk_widget_get_accessible (hidden));
 
-  if (G_LIKELY (!a11y))
+  /* check if accessibility is enabled */
+  if (G_LIKELY (!accessibility))
     {
       /* wait until we can grab the keyboard, we need this for
        * the dialog when running it */
@@ -849,7 +848,7 @@ xfsm_logout_dialog (const gchar      *session_name,
   else
     {
       dialog = g_object_new (XFSM_TYPE_LOGOUT_DIALOG,
-                             "decorated", !a11y,
+                             "decorated", !accessibility,
                              "screen", screen, NULL);
 
       gtk_window_set_keep_above (GTK_WINDOW (dialog), TRUE);
@@ -863,7 +862,7 @@ xfsm_logout_dialog (const gchar      *session_name,
   /* set mode */
   xfsm_logout_dialog_set_mode (xfsm_dialog, MODE_LOGOUT_BUTTONS);
 
-  result = xfsm_logout_dialog_run (GTK_DIALOG (dialog), !a11y);
+  result = xfsm_logout_dialog_run (GTK_DIALOG (dialog), !accessibility);
 
   gtk_widget_hide (dialog);
 
