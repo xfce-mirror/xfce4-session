@@ -102,8 +102,6 @@ struct _XfsmLogoutDialog
 
   /* dialog buttons */
   GtkWidget        *button_cancel;
-  GtkWidget        *button_ok;
-  GtkWidget        *button_close;
 
   /* error label */
   GtkWidget        *error_label;
@@ -469,7 +467,6 @@ xfsm_logout_dialog_set_mode (XfsmLogoutDialog *dialog,
     gtk_widget_set_visible (dialog->box[i], i == mode);
 
   gtk_widget_set_visible (dialog->button_cancel, mode != MODE_SHOW_ERROR);
-  gtk_widget_set_visible (dialog->button_close, mode == MODE_SHOW_ERROR);
 }
 
 
@@ -820,7 +817,6 @@ xfsm_logout_dialog (const gchar      *session_name,
 
       /* display fadeout */
       fadeout = xfsm_fadeout_new (gdk_screen_get_display (screen));
-      gdk_flush ();
 
       dialog = g_object_new (XFSM_TYPE_LOGOUT_DIALOG,
                              "type", GTK_WINDOW_POPUP,

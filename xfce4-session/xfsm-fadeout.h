@@ -30,7 +30,6 @@ G_BEGIN_DECLS;
 typedef struct _XfsmFadeout XfsmFadeout;
 
 XfsmFadeout *xfsm_fadeout_new     (GdkDisplay  *display);
-void         xfsm_fadeout_clear   (XfsmFadeout *fadeout);
 void         xfsm_fadeout_destroy (XfsmFadeout *fadeout);
 
 G_END_DECLS;

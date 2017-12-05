@@ -157,7 +157,12 @@ void
 xfsm_window_add_border (GtkWindow *window)
 {
   GtkWidget *box1, *box2;
-  GdkRGBA bg_color;
+  GtkWidget *child;
+  GdkRGBA    bg_color;
+
+  child = gtk_bin_get_child (GTK_BIN (window));
+  if (G_UNLIKELY (child == NULL))
+    return;
 
   gtk_widget_realize(GTK_WIDGET(window));
 
@@ -176,9 +181,12 @@ G_GNUC_END_IGNORE_DEPRECATIONS
   gtk_container_add (GTK_CONTAINER (box1), box2);
 
   gtk_container_set_border_width (GTK_CONTAINER (box2), 6);
-  gtk_container_add (GTK_CONTAINER (gtk_bin_get_child (GTK_BIN (window))), box2);
 
+  g_object_ref (child);
+  gtk_container_remove (GTK_CONTAINER (window), child);
   gtk_container_add (GTK_CONTAINER (window), box1);
+  gtk_container_add (GTK_CONTAINER (box2), child);
+  g_object_unref (child);
 }
 
 XfconfChannel*

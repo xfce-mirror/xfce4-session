@@ -24,117 +24,171 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <gdk/gdkx.h>
 #include <xfce4-session/xfsm-fadeout.h>
+
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+#include <cairo-xlib.h>
+#endif
 
 
 
 struct _XfsmFadeout
 {
-  GSList *windows;
+#ifdef GDK_WINDOWING_X11
+  Display *xdisplay;
+  GSList  *xwindows;
+#endif
 };
+
+
+
+#ifdef GDK_WINDOWING_X11
+static Window
+xfsm_x11_fadeout_new_window (GdkDisplay *display,
+                             GdkScreen *screen)
+{
+  XSetWindowAttributes  attr;
+  Display              *xdisplay;
+  Window                xwindow;
+  GdkWindow            *root;
+  GdkCursor            *cursor;
+  cairo_t              *cr;
+  gint                  width;
+  gint                  height;
+  GdkPixbuf            *root_pixbuf;
+  cairo_surface_t      *surface;
+  gulong                mask = 0;
+  gulong                opacity;
+  gboolean              composited;
+
+  gdk_error_trap_push ();
+
+  xdisplay = gdk_x11_display_get_xdisplay (display);
+  root = gdk_screen_get_root_window (screen);
+
+  width = gdk_window_get_width (root);
+  height = gdk_window_get_height (root);
+
+  composited = gdk_screen_is_composited (screen)
+               && gdk_screen_get_rgba_visual (screen) != NULL;
+
+  cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
+
+  if (!composited)
+    {
+      /* create a copy of root window before showing the fadeout */
+      root_pixbuf = gdk_pixbuf_get_from_window (root, 0, 0, width, height);
+    }
+
+  attr.cursor = gdk_x11_cursor_get_xcursor (cursor);
+  mask |= CWCursor;
+
+  attr.override_redirect = TRUE;
+  mask |= CWOverrideRedirect;
+
+  attr.background_pixel = BlackPixel (xdisplay, gdk_x11_screen_get_screen_number (screen));
+  mask |= CWBackPixel;
+
+  xwindow = XCreateWindow (xdisplay, gdk_x11_window_get_xid (root),
+                           0, 0, width, height, 0, CopyFromParent,
+                           InputOutput, CopyFromParent, mask, &attr);
+
+  g_object_unref (cursor);
+
+  if (composited)
+    {
+      /* apply transparency before map */
+      opacity = 0.5 * 0xffffffff;
+      XChangeProperty (xdisplay, xwindow,
+                       gdk_x11_get_xatom_by_name_for_display (display, "_NET_WM_WINDOW_OPACITY"),
+                       XA_CARDINAL, 32, PropModeReplace, (guchar *)&opacity, 1);
+    }
+
+  XMapWindow (xdisplay, xwindow);
+
+  if (!composited)
+    {
+      /* create background for window */
+      surface = cairo_xlib_surface_create (xdisplay, xwindow,
+                                           gdk_x11_visual_get_xvisual (gdk_screen_get_system_visual (screen)),
+                                           0, 0);
+      cairo_xlib_surface_set_size (surface, width, height);
+      cr = cairo_create (surface);
+
+      /* draw the copy of the root window */
+      gdk_cairo_set_source_pixbuf (cr, root_pixbuf, 0, 0);
+      cairo_paint (cr);
+      g_object_unref (root_pixbuf);
+
+      /* draw black transparent layer */
+      cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
+      cairo_paint (cr);
+      cairo_destroy (cr);
+      cairo_surface_destroy (surface);
+    }
+
+  gdk_flush ();
+  gdk_error_trap_pop_ignored ();
+
+  return xwindow;
+}
+#endif
 
 
 
 XfsmFadeout*
 xfsm_fadeout_new (GdkDisplay *display)
 {
-  GdkWindowAttr    attr;
   XfsmFadeout     *fadeout;
-  GdkWindow       *root;
-  GdkCursor       *cursor;
-  cairo_t         *cr;
-  gint             width;
-  gint             height;
+  GdkScreen       *screen;
+#ifdef GDK_WINDOWING_X11
+  Window           xwindow;
+#endif
   gint             n;
-  GdkPixbuf       *root_pixbuf;
-  cairo_surface_t *surface;
-  GdkScreen       *gdk_screen;
-  GdkWindow       *window;
-  GdkRGBA          black = { 0, };
 
   fadeout = g_slice_new0 (XfsmFadeout);
 
-  cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
+#ifdef GDK_WINDOWING_X11
+  fadeout->xdisplay = gdk_x11_display_get_xdisplay (display);
 
-  attr.x = 0;
-  attr.y = 0;
-  attr.event_mask = 0;
-  attr.wclass = GDK_INPUT_OUTPUT;
-  attr.window_type = GDK_WINDOW_TEMP;
-  attr.cursor = cursor;
-  attr.override_redirect = TRUE;
-
-  for (n = 0; n < XScreenCount (gdk_x11_display_get_xdisplay ((display))); ++n)
+  for (n = 0; n < XScreenCount (fadeout->xdisplay); ++n)
     {
-      gdk_screen = gdk_display_get_screen (display, n);
-
-      root = gdk_screen_get_root_window (gdk_screen);
-
-      width = gdk_window_get_width (root);
-      height = gdk_window_get_height (root);
-
-      attr.width = width;
-      attr.height = height;
-      window = gdk_window_new (root, &attr, GDK_WA_X | GDK_WA_Y
-                               | GDK_WA_NOREDIR | GDK_WA_CURSOR);
-
-      if (gdk_screen_is_composited (gdk_screen)
-          && gdk_screen_get_rgba_visual (gdk_screen) != NULL)
-        {
-          /* transparent black window */
-          gdk_window_set_background_rgba (window, &black);
-          gdk_window_set_opacity (window, 0.50);
-        }
-      else
-        {
-          /* create background for window */
-          surface = gdk_window_create_similar_surface (root, CAIRO_CONTENT_COLOR_ALPHA, width, height);
-          cr = cairo_create (surface);
-
-          /* make of copy of the root window */
-          root_pixbuf = gdk_pixbuf_get_from_window (root, 0, 0, width, height);
-          gdk_cairo_set_source_pixbuf (cr, root_pixbuf, 0, 0);
-          cairo_paint (cr);
-          g_object_unref (G_OBJECT (root_pixbuf));
-
-          /* draw black layer */
-          gdk_cairo_set_source_rgba (cr, &black);
-          cairo_paint_with_alpha (cr, 0.50);
-          cairo_destroy (cr);
-          cairo_surface_destroy (surface);
-        }
-
-      fadeout->windows = g_slist_prepend (fadeout->windows, window);
+      screen = gdk_display_get_screen (display, n);
+      xwindow = xfsm_x11_fadeout_new_window (display, screen);
+      fadeout->xwindows = g_slist_prepend (fadeout->xwindows, GINT_TO_POINTER (xwindow));
     }
-
-  /* show all windows all at once */
-  g_slist_foreach (fadeout->windows, (GFunc) gdk_window_show, NULL);
-
-  g_object_unref (cursor);
+#endif
 
   return fadeout;
 }
 
 
 
-void
-xfsm_fadeout_clear (XfsmFadeout *fadeout)
+#ifdef GDK_WINDOWING_X11
+static void
+xfsm_fadeout_destroy_foreach (gpointer data, gpointer user_data)
 {
-/* TODO: Test if this is needed.
-  if (fadeout != NULL)
-    g_slist_foreach (fadeout->windows, (GFunc) gdk_window_clear, NULL);
- */
+  XfsmFadeout *fadeout = user_data;
+  Window       xwindow = GPOINTER_TO_INT (data);
+
+  XDestroyWindow (fadeout->xdisplay, xwindow);
 }
+#endif
 
 
 
 void
 xfsm_fadeout_destroy (XfsmFadeout *fadeout)
 {
-  g_slist_foreach (fadeout->windows, (GFunc) gdk_window_hide, NULL);
-  g_slist_foreach (fadeout->windows, (GFunc) gdk_window_destroy, NULL);
-  
-  g_slist_free (fadeout->windows);
+#ifdef GDK_WINDOWING_X11
+  gdk_error_trap_push ();
+  g_slist_foreach (fadeout->xwindows, xfsm_fadeout_destroy_foreach, fadeout);
+  gdk_flush ();
+  gdk_error_trap_pop_ignored ();
+#endif
+
   g_slice_free (XfsmFadeout, fadeout);
 }
