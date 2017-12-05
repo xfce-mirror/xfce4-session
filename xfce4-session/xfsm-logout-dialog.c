@@ -671,6 +671,18 @@ xfsm_logout_dialog_screenshot_save (GdkPixbuf   *screenshot,
 
 
 
+static void
+xfsm_logout_dialog_grab_callback (GdkSeat   *seat,
+                                  GdkWindow *window,
+                                  gpointer   user_data)
+{
+  /* ensure window is mapped to avoid unsuccessful grabs */
+  if (!gdk_window_is_visible (window))
+    gdk_window_show (window);
+}
+
+
+
 static gint
 xfsm_logout_dialog_run (GtkDialog *dialog,
                         gboolean   grab_input)
@@ -678,9 +690,7 @@ xfsm_logout_dialog_run (GtkDialog *dialog,
   GdkWindow *window;
   gint       ret;
   GdkDevice *device;
-#if 0 /* GTK_CHECK_VERSION (3, 20, 0) */
   GdkSeat   *seat;
-#endif
 
   if (grab_input)
     {
@@ -689,32 +699,18 @@ xfsm_logout_dialog_run (GtkDialog *dialog,
       window = gtk_widget_get_window (GTK_WIDGET (dialog));
 
       device = gtk_get_current_event_device ();
+      seat = device != NULL
+             ? gdk_device_get_seat (device)
+             : gdk_display_get_default_seat (gtk_widget_get_display (GTK_WIDGET (dialog)));
 
-      if (gdk_device_grab (device,
-                           window,
-                           GDK_OWNERSHIP_APPLICATION,
-                           FALSE,
-                           GDK_KEY_PRESS_MASK,
-                           NULL,
-                           GDK_CURRENT_TIME) != GDK_GRAB_SUCCESS)
-        {
-          g_critical ("Failed to grab the keyboard for logout window");
-        }
-#if 0 /* GTK_CHECK_VERSION (3, 20, 0) */
-      seat = gdk_device_get_seat (gtk_get_current_event_device ());
-
-      if (gdk_seat_grab (seat,
-                         window,
+      if (gdk_seat_grab (seat, window,
                          GDK_SEAT_CAPABILITY_KEYBOARD,
-                         FALSE,
-                         NULL,
-                         gtk_get_current_event (),
-                         NULL,
+                         FALSE, NULL, NULL,
+                         xfsm_logout_dialog_grab_callback,
                          NULL) != GDK_GRAB_SUCCESS)
         {
           g_critical ("Failed to grab the keyboard for logout window");
         }
-#endif
 
 #ifdef GDK_WINDOWING_X11
       /* force input to the dialog */
@@ -729,11 +725,7 @@ xfsm_logout_dialog_run (GtkDialog *dialog,
   ret = gtk_dialog_run (dialog);
 
   if (grab_input)
-    gdk_device_ungrab (device, GDK_CURRENT_TIME);
-#if 0 /*GTK_CHECK_VERSION (3, 20, 0) */
-    if (grab_input)
     gdk_seat_ungrab (seat);
-#endif
 
   return ret;
 }
@@ -757,6 +749,9 @@ xfsm_logout_dialog (const gchar      *session_name,
   XfconfChannel    *channel = xfsm_open_config ();
   gboolean          autosave;
   XfsmShutdown     *shutdown;
+  GdkDevice        *device;
+  GdkSeat          *seat;
+  gint              grab_count = 0;
 
   g_return_val_if_fail (return_type != NULL, FALSE);
   g_return_val_if_fail (return_save_session != NULL, FALSE);
@@ -795,35 +790,27 @@ xfsm_logout_dialog (const gchar      *session_name,
        * the dialog when running it */
       for (;;)
         {
-          GdkDevice *device = gtk_get_current_event_device ();
+          device = gtk_get_current_event_device ();
+          seat = device != NULL
+                 ? gdk_device_get_seat (device)
+                 : gdk_display_get_default_seat (gtk_widget_get_display (hidden));
 
-          if (gdk_device_grab (device,
-                               gtk_widget_get_window (hidden),
-                               GDK_OWNERSHIP_APPLICATION,
-                               FALSE,
-                               GDK_KEY_PRESS_MASK,
-                               NULL,
-                               GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS)
-            {
-              gdk_device_ungrab (device, GDK_CURRENT_TIME);
-              break;
-            }
-#if 0 /*GTK_CHECK_VERSION (3, 20, 0)*/
-          GdkSeat *seat = gdk_device_get_seat (gtk_get_current_event_device ());
-
-          if (gdk_seat_grab (seat,
-                             gtk_widget_get_window (hidden),
+          if (gdk_seat_grab (seat, gtk_widget_get_window (hidden),
                              GDK_SEAT_CAPABILITY_KEYBOARD,
-                             FALSE,
-                             NULL,
-                             gtk_get_current_event (),
-                             NULL,
+                             FALSE, NULL, NULL,
+                             xfsm_logout_dialog_grab_callback,
                              NULL) == GDK_GRAB_SUCCESS)
             {
               gdk_seat_ungrab (seat);
               break;
             }
-#endif
+
+          if (grab_count++ >= 40)
+            {
+              g_critical ("Failed to grab the keyboard for logout window");
+              break;
+            }
+
           g_usleep (G_USEC_PER_SEC / 20);
         }
 
