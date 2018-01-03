@@ -201,14 +201,6 @@ if test x$with_backend = xopenbsd; then
     AC_DEFINE(BACKEND_TYPE_OPENBSD, 1, [OpenBSD suspend/hibernate backend])
 fi
 
-dnl check for location Xfce glade files were installed to
-XFCE_GLADE_CATALOG_PATH="`pkg-config --variable glade_catalogdir libxfce4ui-1`"
-XFCE_GLADE_PIXMAP_PATH="`pkg-config --variable glade_pixmapdir libxfce4ui-1`"
-XFCE_GLADE_MODULE_PATH="`pkg-config --variable glade_moduledir libxfce4ui-1`"
-AC_SUBST(XFCE_GLADE_CATALOG_PATH)
-AC_SUBST(XFCE_GLADE_PIXMAP_PATH)
-AC_SUBST(XFCE_GLADE_MODULE_PATH)
-
 AC_CONFIG_FILES([
 Makefile
 doc/Makefile

@@ -50,15 +50,6 @@ if which xdg-user-dirs-update >/dev/null 2>&1; then
     xdg-user-dirs-update
 fi
 
-# Modify libglade and glade environment variables so that
-# it will find the files installed by Xfce
-GLADE_CATALOG_PATH="$GLADE_CATALOG_PATH:@XFCE_GLADE_CATALOG_PATH@"
-GLADE_PIXMAP_PATH="$GLADE_PIXMAP_PATH:@XFCE_GLADE_PIXMAP_PATH@"
-GLADE_MODULE_PATH="$GLADE_MODULE_PATH:@XFCE_GLADE_MODULE_PATH@"
-export GLADE_CATALOG_PATH
-export GLADE_PIXMAP_PATH
-export GLADE_MODULE_PATH
-
 # For now, start with an empty list
 XRESOURCES=""
 
