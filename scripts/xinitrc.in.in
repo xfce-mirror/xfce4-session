@@ -46,7 +46,7 @@ fi
 
 # set up XDG user directores.  see
 # http://freedesktop.org/wiki/Software/xdg-user-dirs
-if which xdg-user-dirs-update >/dev/null 2>&1; then
+if command -v xdg-user-dirs-update >/dev/null 2>&1; then
     xdg-user-dirs-update
 fi
 
@@ -79,12 +79,12 @@ cat /dev/null $XRESOURCES | xrdb -merge -
 test -r $HOME/.Xmodmap && xmodmap $HOME/.Xmodmap
 
 # run xfce4-session if installed
-if which xfce4-session >/dev/null 2>&1; then
+if command -v xfce4-session >/dev/null 2>&1; then
 
   # check if we start xfce4-session with ck-launch-session. this is only
   # required for starting from a console, not a login manager
   if test "x$XFCE4_SESSION_WITH_CK" = "x1"; then
-    if which ck-launch-session >/dev/null 2>&1; then
+    if command -v ck-launch-session >/dev/null 2>&1; then
       ck-launch-session xfce4-session
     else
       echo
@@ -117,7 +117,7 @@ fi
 
 # Use dbus-launch if installed.
 if test x"$DBUS_SESSION_BUS_ADDRESS" = x""; then
-  if which dbus-launch >/dev/null 2>&1; then
+  if command -v dbus-launch >/dev/null 2>&1; then
     eval `dbus-launch --sh-syntax --exit-with-session`
     # some older versions of dbus don't export the var properly
     export DBUS_SESSION_BUS_ADDRESS
@@ -147,11 +147,11 @@ if test -d "$XDG_CONFIG_HOME/autostart"; then
     # check for TryExec
     trycmd=`grep -E "^TryExec=" "$i" | cut -d'=' -f2`
     if test "$trycmd"; then
-      which "$trycmd" >/dev/null 2>&1 || continue
+      command -v "$trycmd" >/dev/null 2>&1 || continue
     fi
 
     cmd=`grep -E "^Exec=" "$i" | cut -d'=' -f2`
-    if test "$cmd" && which "$cmd" >/dev/null 2>&1; then
+    if test "$cmd" && command -v "$cmd" >/dev/null 2>&1; then
       $cmd &
     fi
   done
@@ -160,7 +160,7 @@ fi
 xfdesktop&
 orage &
 
-panel=`which xfce4-panel`
+panel=`command -v xfce4-panel`
 case "x$panel" in
 	x|xno*)
 		;;
