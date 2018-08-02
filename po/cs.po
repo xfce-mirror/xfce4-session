@@ -5,19 +5,20 @@
 # Translators:
 # Alois Nespor <Alois.Nespor@seznam.cz>, 2004
 # Michal Várady <miko.vaji@gmail.com>, 2016-2017
+# Pavel Borecki <pavel.borecki@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-11 12:30+0200\n"
-"PO-Revision-Date: 2017-09-19 18:02+0000\n"
-"Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
+"PO-Revision-Date: 2018-08-02 14:09+0000\n"
+"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/xfce/xfce4-session/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
 #: ../xfce.desktop.in.h:1
 msgid "Xfce Session"
@@ -390,7 +391,7 @@ msgstr "Upravit"
 #: ../settings/xfae-window.c:296
 #, c-format
 msgid "Failed adding \"%s\""
-msgstr "Přidání \"%s\" se nezdařilo"
+msgstr "Přidání „%s“ se nezdařilo"
 
 #: ../settings/xfae-window.c:327 ../settings/xfae-window.c:341
 msgid "Failed to remove item"
@@ -403,7 +404,7 @@ msgstr "Úprava položky se nezdařila"
 #: ../settings/xfae-window.c:389
 #, c-format
 msgid "Failed to edit item \"%s\""
-msgstr "Úprava položky \"%s\" se nezdařila"
+msgstr "Úprava položky „%s“ se nezdařila"
 
 #: ../settings/xfae-window.c:417
 msgid "Failed to toggle item"
@@ -411,11 +412,11 @@ msgstr "Přepnutí položky se nezdařilo"
 
 #: ../xfce4-session/main.c:77
 msgid "Disable binding to TCP ports"
-msgstr "Zakázat vazbu portů TCP"
+msgstr "Nenavazovat na TCP porty"
 
 #: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:102
 msgid "Print version information and exit"
-msgstr "Zobrazí informace o verzi a ukončí se"
+msgstr "Zobrazit informace o verzi a ukončit"
 
 #: ../xfce4-session/main.c:146
 msgid "Loading desktop settings"
