@@ -468,7 +468,10 @@ xfae_item_new (const gchar *relpath)
 
           value = xfce_rc_read_entry (rc, "Icon", "application-x-executable");
           if (G_UNLIKELY (value != NULL))
-            item->icon = gtk_icon_theme_load_icon (icon_theme, value, 16, GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
+            {
+              item->icon = gtk_icon_theme_load_icon (icon_theme, value, 16,
+                GTK_ICON_LOOKUP_GENERIC_FALLBACK | GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
+            }
 
           value = xfce_rc_read_entry (rc, "Comment", NULL);
           if (G_LIKELY (value != NULL))

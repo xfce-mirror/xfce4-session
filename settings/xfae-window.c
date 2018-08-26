@@ -97,7 +97,7 @@ xfae_window_init (XfaeWindow *window)
   img = gtk_image_new_from_icon_name ("dialog-information", GTK_ICON_SIZE_DIALOG);
   gtk_box_pack_start (GTK_BOX (hbox), img, FALSE, FALSE, 0);
   gtk_widget_set_halign (GTK_WIDGET (img), GTK_ALIGN_CENTER);
-  gtk_widget_set_valign (GTK_WIDGET (img), GTK_ALIGN_END);
+  gtk_widget_set_valign (GTK_WIDGET (img), GTK_ALIGN_CENTER);
   gtk_widget_show (img);
 
   label = g_object_new (GTK_TYPE_LABEL,
