@@ -27,7 +27,6 @@
 #include <X11/SM/SMlib.h>
 
 #include <xfce4-session/xfsm-splash-screen.h>
-#include <dbus/dbus.h>
 
 typedef struct _FailsafeClient FailsafeClient;
 struct _FailsafeClient

@@ -20,8 +20,6 @@
 #include <config.h>
 #endif
 
-#include <dbus/dbus-glib.h>
-
 #include <xfce4-session/xfsm-error.h>
 
 #define XFSM_DBUS_NAME "org.xfce.SessionManager"
