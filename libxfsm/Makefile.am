@@ -6,7 +6,8 @@ lib_LTLIBRARIES = libxfsm-4.6.la
 
 libxfsm_4_6_la_SOURCES =						\
 	xfsm-util.h							\
-	xfsm-util.c
+	xfsm-util.c							\
+	xfsm-shutdown-common.h
 
 libxfsm_4_6_la_CFLAGS =							\
 	$(LIBX11_CFLAGS)						\

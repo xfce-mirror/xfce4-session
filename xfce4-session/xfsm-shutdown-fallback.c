@@ -2,6 +2,7 @@
  * Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
  * Copyright (c) 2011      Nick Schermer <nick@xfce.org>
  * Copyright (c) 2014      Xfce Development Team <xfce4-dev@xfce.org>
+ * Copyright (c) 2018      Ali Abdallah <ali@xfce.org>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -59,14 +60,25 @@
 #include <gio/gio.h>
 #include <libxfce4util/libxfce4util.h>
 #include <gtk/gtk.h>
+#include <glib/gstdio.h>
+
 #ifdef HAVE_POLKIT
 #include <polkit/polkit.h>
 #endif
 
+#include <pwd.h>
+#include <grp.h>
+
+#define MAX_USER_GROUPS 100
+
 #include <libxfsm/xfsm-util.h>
+#include <libxfsm/xfsm-shutdown-common.h>
 #include <xfce4-session/xfsm-shutdown-fallback.h>
 #include <xfce4-session/xfce-screensaver.h>
 
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
+#define __BACKEND_TYPE_BSD__ 1
+#endif
 
 #define POLKIT_AUTH_SHUTDOWN_XFSM     "org.xfce.session.xfsm-shutdown-helper"
 #define POLKIT_AUTH_RESTART_XFSM      "org.xfce.session.xfsm-shutdown-helper"
@@ -117,12 +129,39 @@ freebsd_supports_sleep_state (const gchar *state)
   gboolean ret = FALSE;
   gchar *sleep_states;
 
+#if defined(__FreeBSD__)
+  gboolean status;
+  gint v;
+  size_t value_len = sizeof(int);
+#endif
+
   sleep_states = get_string_sysctl (NULL, "hw.acpi.supported_sleep_state");
   if (sleep_states != NULL)
     {
       if (strstr (sleep_states, state) != NULL)
           ret = TRUE;
     }
+
+#if defined(__FreeBSD__)
+  /* On FreeBSD, S4 is not supported unless S4BIOS is available.
+   * If S4 will ever be implemented on FreeBSD, we can disable S4bios
+   * check below, using #if __FreeBSD_version >= XXXXXX.
+   **/
+  if (g_strcmp0(state, "S4") == 0)
+  {
+    status = sysctlbyname ("hw.acpi.s4bios", &v, &value_len, NULL, 0) == 0;
+    if (G_UNLIKELY(!status))
+    {
+      g_warning ("sysctl failed on 'hw.acpi.s4bios'");
+    }
+    else
+    {
+      /* No S4Bios support */
+      if (v == 0)
+        ret = FALSE;
+    }
+  }
+#endif /* __FreeBSD__ */
 
   g_free (sleep_states);
 
@@ -162,8 +201,86 @@ out:
 
 
 
+#ifdef __BACKEND_TYPE_BSD__
 static gboolean
-xfsm_shutdown_fallback_check_auth (const gchar *action_id)
+xfsm_shutdown_fallback_user_is_operator (void)
+{
+  struct passwd *pw;
+  gid_t groups[MAX_USER_GROUPS];
+  int max_grp = MAX_USER_GROUPS;
+  int i = 0;
+  int ret;
+  static gboolean is_operator = FALSE;
+  static gboolean once = FALSE;
+
+  /* Only check once */
+  if (once == TRUE)
+    goto out;
+
+  pw = getpwuid (getuid());
+
+  ret = getgrouplist (pw->pw_name, pw->pw_gid, groups, &max_grp);
+
+  if (ret < 0)
+    {
+      fprintf (stderr,
+               "Failed to get user group list, user belongs to more than %u groups?\n",
+               MAX_USER_GROUPS);
+      goto out;
+    }
+
+  once = TRUE;
+
+  for (i = 0; i < max_grp; i++)
+    {
+      struct group *gr;
+
+      gr = getgrgid (groups[i]);
+      if (strncmp(gr->gr_name, "operator", 8) == 0)
+        {
+          is_operator = TRUE;
+          break;
+        }
+    }
+out:
+  return is_operator;
+}
+#endif /* __BACKEND_TYPE_BSD__ */
+
+
+
+#ifdef __BACKEND_TYPE_BSD__
+static gboolean
+xfsm_shutdown_fallback_bsd_check_auth (XfsmShutdownType shutdown_type)
+{
+  gboolean auth_result = FALSE;
+  switch (shutdown_type)
+    {
+    /* On the BSDs users of the operator group are allowed to shutdown/restart the system */
+    case XFSM_SHUTDOWN_SHUTDOWN:
+    case XFSM_SHUTDOWN_RESTART:
+      auth_result = xfsm_shutdown_fallback_user_is_operator ();
+      break;
+    case XFSM_SHUTDOWN_SUSPEND:
+    case XFSM_SHUTDOWN_HIBERNATE:
+    case XFSM_SHUTDOWN_HYBRID_SLEEP:
+      /* Check rw access on '/var/run/apmdev' on OpenBSD and to /dev/acpi'
+       * for the other BSDs */
+      auth_result = g_access(BSD_SLEEP_ACCESS_NODE, R_OK|W_OK) == 0;
+      break;
+    default:
+      g_warning ("Unexpected shutdow id '%d'\n", shutdown_type);
+      break;
+    }
+
+  return auth_result;
+}
+#endif /* __BACKEND_TYPE_BSD__ */
+
+
+
+static gboolean
+xfsm_shutdown_fallback_check_auth_polkit (const gchar *action_id)
 {
   gboolean auth_result = FALSE;
 #ifdef HAVE_POLKIT
@@ -240,33 +357,41 @@ gboolean
 xfsm_shutdown_fallback_try_action (XfsmShutdownType   type,
                                    GError           **error)
 {
-  const gchar *action;
-  gboolean ret;
+  const gchar *xfsm_helper_action;
+  const gchar *cmd;
+  gboolean ret = FALSE;
   gint exit_status = 0;
+#ifdef HAVE_POLKIT
   gchar *command = NULL;
+#endif
 
   switch (type)
   {
     case XFSM_SHUTDOWN_SHUTDOWN:
-      action = "shutdown";
+      xfsm_helper_action = "shutdown";
+      cmd = POWEROFF_CMD;
       break;
     case XFSM_SHUTDOWN_RESTART:
-      action = "restart";
+      xfsm_helper_action = "restart";
+      cmd = REBOOT_CMD;
       break;
     case XFSM_SHUTDOWN_SUSPEND:
-      action = "suspend";
+      xfsm_helper_action = "suspend";
+      cmd = UP_BACKEND_SUSPEND_COMMAND;
       /* On suspend we try to lock the screen */
       if (!lock_screen (error))
         return FALSE;
       break;
     case XFSM_SHUTDOWN_HIBERNATE:
-      action = "hibernate";
+      xfsm_helper_action = "hibernate";
+      cmd = UP_BACKEND_HIBERNATE_COMMAND;
       /* On hibernate we try to lock the screen */
       if (!lock_screen (error))
         return FALSE;
       break;
     case XFSM_SHUTDOWN_HYBRID_SLEEP:
-      action = "hybrid-sleep";
+      xfsm_helper_action = "hybrid-sleep";
+      cmd = UP_BACKEND_HIBERNATE_COMMAND;
       /* On hybrid sleep we try to lock the screen */
       if (!lock_screen (error))
         return FALSE;
@@ -275,10 +400,22 @@ xfsm_shutdown_fallback_try_action (XfsmShutdownType   type,
       return FALSE;
   }
 
-  command = g_strdup_printf ("pkexec " XFSM_SHUTDOWN_HELPER_CMD " --%s", action);
+#ifdef __BACKEND_TYPE_BSD__
+  /* Make sure we can use native shutdown commands */
+  if (xfsm_shutdown_fallback_bsd_check_auth (type))
+    {
+      return g_spawn_command_line_sync (cmd, NULL, NULL, &exit_status, error);
+    }
+#endif
+
+  /* xfsm-shutdown-helper requires polkit to run */
+#ifdef HAVE_POLKIT
+  command = g_strdup_printf ("pkexec " XFSM_SHUTDOWN_HELPER_CMD " --%s", xfsm_helper_action);
+
   ret = g_spawn_command_line_sync (command, NULL, NULL, &exit_status, error);
 
   g_free (command);
+#endif
   return ret;
 }
 
@@ -345,7 +482,7 @@ xfsm_shutdown_fallback_can_hybrid_sleep (void)
   return linux_supports_sleep_state ("hibernate");
 #endif
 #ifdef BACKEND_TYPE_OPENBSD
-  return TRUE;
+  return FALSE;
 #endif
 
   return FALSE;
@@ -361,7 +498,12 @@ xfsm_shutdown_fallback_can_hybrid_sleep (void)
 gboolean
 xfsm_shutdown_fallback_auth_shutdown (void)
 {
-  return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_SHUTDOWN_XFSM);
+#ifdef __BACKEND_TYPE_BSD__
+  gboolean ret_val = xfsm_shutdown_fallback_bsd_check_auth (XFSM_SHUTDOWN_SHUTDOWN);
+  if (ret_val)
+    return TRUE;
+#endif
+  return xfsm_shutdown_fallback_check_auth_polkit (POLKIT_AUTH_SHUTDOWN_XFSM);
 }
 
 
@@ -374,7 +516,12 @@ xfsm_shutdown_fallback_auth_shutdown (void)
 gboolean
 xfsm_shutdown_fallback_auth_restart (void)
 {
-  return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_RESTART_XFSM);
+#ifdef __BACKEND_TYPE_BSD__
+  gboolean ret_val = xfsm_shutdown_fallback_bsd_check_auth (XFSM_SHUTDOWN_RESTART);
+  if (ret_val)
+    return TRUE;
+#endif
+  return xfsm_shutdown_fallback_check_auth_polkit (POLKIT_AUTH_RESTART_XFSM);
 }
 
 
@@ -387,7 +534,12 @@ xfsm_shutdown_fallback_auth_restart (void)
 gboolean
 xfsm_shutdown_fallback_auth_suspend (void)
 {
-  return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_SUSPEND_XFSM);
+#ifdef __BACKEND_TYPE_BSD__
+  gboolean ret_val = xfsm_shutdown_fallback_bsd_check_auth (XFSM_SHUTDOWN_SUSPEND);
+  if (ret_val)
+    return TRUE;
+#endif
+  return xfsm_shutdown_fallback_check_auth_polkit (POLKIT_AUTH_SUSPEND_XFSM);
 }
 
 
@@ -400,7 +552,12 @@ xfsm_shutdown_fallback_auth_suspend (void)
 gboolean
 xfsm_shutdown_fallback_auth_hibernate (void)
 {
-  return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_HIBERNATE_XFSM);
+#ifdef __BACKEND_TYPE_BSD__
+  gboolean ret_val = xfsm_shutdown_fallback_bsd_check_auth (XFSM_SHUTDOWN_HIBERNATE);
+  if (ret_val)
+    return TRUE;
+#endif
+  return xfsm_shutdown_fallback_check_auth_polkit (POLKIT_AUTH_HIBERNATE_XFSM);
 }
 
 
@@ -413,5 +570,10 @@ xfsm_shutdown_fallback_auth_hibernate (void)
 gboolean
 xfsm_shutdown_fallback_auth_hybrid_sleep (void)
 {
-  return xfsm_shutdown_fallback_check_auth (POLKIT_AUTH_HYBRID_SLEEP_XFSM);
+#ifdef __BACKEND_TYPE_BSD__
+  gboolean ret_val = xfsm_shutdown_fallback_bsd_check_auth (XFSM_SHUTDOWN_HYBRID_SLEEP);
+  if (ret_val)
+    return TRUE;
+#endif
+  return xfsm_shutdown_fallback_check_auth_polkit (POLKIT_AUTH_HYBRID_SLEEP_XFSM);
 }

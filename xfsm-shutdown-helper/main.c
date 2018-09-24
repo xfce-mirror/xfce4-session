@@ -48,6 +48,8 @@
 #include <unistd.h>
 #endif
 
+#include "libxfsm/xfsm-shutdown-common.h"
+
 #include <glib.h>
 
 /* XXX */
@@ -55,42 +57,6 @@
 #define EXIT_CODE_FAILED            1
 #define EXIT_CODE_ARGUMENTS_INVALID 3
 #define EXIT_CODE_INVALID_USER      4
-
-#ifdef POWEROFF_CMD
-#undef POWEROFF_CMD
-#endif
-#ifdef REBOOT_CMD
-#undef REBOOT_CMD
-#endif
-#ifdef UP_BACKEND_SUSPEND_COMMAND
-#undef UP_BACKEND_SUSPEND_COMMAND
-#endif
-#ifdef UP_BACKEND_HIBERNATE_COMMAND
-#undef UP_BACKEND_HIBERNATE_COMMAND
-#endif
-
-#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
-#define POWEROFF_CMD  "/sbin/shutdown -p now"
-#define REBOOT_CMD    "/sbin/shutdown -r now"
-#elif defined(sun) || defined(__sun)
-#define POWEROFF_CMD  "/usr/sbin/shutdown -i 5 -g 0 -y"
-#define REBOOT_CMD    "/usr/sbin/shutdown -i 6 -g 0 -y"
-#else
-#define POWEROFF_CMD  "/sbin/shutdown -h now"
-#define REBOOT_CMD    "/sbin/shutdown -r now"
-#endif
-#ifdef BACKEND_TYPE_FREEBSD
-#define UP_BACKEND_SUSPEND_COMMAND "/usr/sbin/acpiconf -s 3"
-#define UP_BACKEND_HIBERNATE_COMMAND "/usr/sbin/acpiconf -s 4"
-#endif
-#if BACKEND_TYPE_LINUX
-#define UP_BACKEND_SUSPEND_COMMAND "/usr/sbin/pm-suspend"
-#define UP_BACKEND_HIBERNATE_COMMAND "/usr/sbin/pm-hibernate"
-#endif
-#ifdef BACKEND_TYPE_OPENBSD
-#define UP_BACKEND_SUSPEND_COMMAND	"/usr/sbin/zzz"
-#define UP_BACKEND_HIBERNATE_COMMAND "/usr/sbin/ZZZ"
-#endif
 
 
 static gboolean
