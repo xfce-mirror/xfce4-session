@@ -63,6 +63,7 @@ xfsm_x11_fadeout_new_window (GdkDisplay *display,
   gulong                mask = 0;
   gulong                opacity;
   gboolean              composited;
+  gint                  scale;
 
   gdk_error_trap_push ();
 
@@ -76,6 +77,10 @@ xfsm_x11_fadeout_new_window (GdkDisplay *display,
                && gdk_screen_get_rgba_visual (screen) != NULL;
 
   cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
+
+  scale = gdk_window_get_scale_factor (root);
+  width *= scale;
+  height *= scale;
 
   if (!composited)
     {
