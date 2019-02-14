@@ -225,19 +225,19 @@ xfsm_manager_finalize (GObject *obj)
 
   g_object_unref (manager->shutdown_helper);
 
-  g_queue_foreach (manager->pending_properties, (GFunc) xfsm_properties_free, NULL);
+  g_queue_foreach (manager->pending_properties, (GFunc) G_CALLBACK (xfsm_properties_free), NULL);
   g_queue_free (manager->pending_properties);
 
-  g_queue_foreach (manager->starting_properties, (GFunc) xfsm_properties_free, NULL);
+  g_queue_foreach (manager->starting_properties, (GFunc) G_CALLBACK (xfsm_properties_free), NULL);
   g_queue_free (manager->starting_properties);
 
-  g_queue_foreach (manager->restart_properties, (GFunc) xfsm_properties_free, NULL);
+  g_queue_foreach (manager->restart_properties, (GFunc) G_CALLBACK (xfsm_properties_free), NULL);
   g_queue_free (manager->restart_properties);
 
-  g_queue_foreach (manager->running_clients, (GFunc) g_object_unref, NULL);
+  g_queue_foreach (manager->running_clients, (GFunc) G_CALLBACK (g_object_unref), NULL);
   g_queue_free (manager->running_clients);
 
-  g_queue_foreach (manager->failsafe_clients, (GFunc) xfsm_failsafe_client_free, NULL);
+  g_queue_foreach (manager->failsafe_clients, (GFunc) G_CALLBACK (xfsm_failsafe_client_free), NULL);
   g_queue_free (manager->failsafe_clients);
 
   g_free (manager->session_name);
@@ -294,7 +294,7 @@ static gboolean
 xfsm_manager_startup (XfsmManager *manager)
 {
   xfsm_startup_foreign (manager);
-  g_queue_sort (manager->pending_properties, (GCompareDataFunc) xfsm_properties_compare, NULL);
+  g_queue_sort (manager->pending_properties, (GCompareDataFunc) G_CALLBACK (xfsm_properties_compare), NULL);
   xfsm_startup_begin (manager);
   return FALSE;
 }
@@ -1739,7 +1739,7 @@ xfsm_manager_start_client_save_timeout (XfsmManager *manager,
    * timer, this call will clear it. */
   g_object_set_data_full (G_OBJECT (client), "--save-timeout-id",
                           GUINT_TO_POINTER (sdata->timeout_id),
-                          (GDestroyNotify) g_source_remove);
+                          (GDestroyNotify) G_CALLBACK (g_source_remove));
 }
 
 

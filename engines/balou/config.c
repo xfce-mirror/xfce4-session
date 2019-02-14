@@ -881,7 +881,7 @@ config_create (XfsmSplashRc *rc)
                                GTK_SELECTION_SINGLE);
   g_signal_connect (G_OBJECT (selection), "changed",
                     G_CALLBACK (config_selection_changed), NULL);
-  g_idle_add ((GSourceFunc)config_selection_changed, selection);
+  g_idle_add (G_SOURCE_FUNC (config_selection_changed),  selection);
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
   gtk_container_add (GTK_CONTAINER (swin), treeview);
 

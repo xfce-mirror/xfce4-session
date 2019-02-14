@@ -27,6 +27,7 @@
 #include <string.h>
 #endif
 
+#include <glib-object.h>
 #include <engines/balou/gnome-uri.h>
 
 /*** the next three routines are taken straight from gnome-libs so that the
@@ -40,7 +41,7 @@
 void
 gnome_uri_list_free_strings (GList * list)
 {
-    g_list_foreach (list, (GFunc) g_free, NULL);
+    g_list_foreach (list, (GFunc) G_CALLBACK (g_free), NULL);
     g_list_free (list);
 }
 

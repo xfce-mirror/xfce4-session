@@ -193,7 +193,7 @@ xfsm_properties_new (const gchar *client_id,
   properties->hostname  = g_strdup (hostname);
   properties->pid       = -1;
 
-  properties->sm_properties = g_tree_new_full ((GCompareDataFunc) strcmp,
+  properties->sm_properties = g_tree_new_full ((GCompareDataFunc) G_CALLBACK (strcmp),
                                                NULL,
                                                (GDestroyNotify) g_free,
                                                (GDestroyNotify) xfsm_g_value_free);
@@ -697,7 +697,7 @@ xfsm_properties_set_default_child_watch (XfsmProperties *properties)
       /* if the PID is still open, we need to close it,
        * or it will become a zombie when it quits */
       g_child_watch_add (properties->pid,
-                         (GChildWatchFunc) g_spawn_close_pid,
+                         (GChildWatchFunc) G_CALLBACK (g_spawn_close_pid),
                          NULL);
       properties->pid = -1;
     }

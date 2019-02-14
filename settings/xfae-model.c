@@ -172,7 +172,7 @@ xfae_model_finalize (GObject *object)
   XfaeModel *model = XFAE_MODEL (object);
 
   /* free all items */
-  g_list_foreach (model->items, (GFunc) xfae_item_free, NULL);
+  g_list_foreach (model->items, (GFunc) G_CALLBACK(xfae_item_free), NULL);
   g_list_free (model->items);
 
   G_OBJECT_CLASS (xfae_model_parent_class)->finalize (object);
