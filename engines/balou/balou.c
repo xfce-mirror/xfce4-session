@@ -80,7 +80,7 @@ balou_init (Balou        *balou,
   cairo_t              *cr;
   gint                  layout_height;
   gint                  nmonitors;
-  gint                  i = 0;
+  gint                  i;
   gint                  m;
   gint                  px;
   gint                  py;
@@ -122,7 +122,7 @@ balou_init (Balou        *balou,
   for (m = 0; m < nmonitors; ++m)
     {
       cairo_t *window_cr;
-      window = balou->windows + i;
+      window = balou->windows + m;
       balou_window_init (window, screen, m, root, cursor);
 
       window->layout = PANGO_LAYOUT (g_object_ref (layout));
@@ -147,8 +147,6 @@ balou_init (Balou        *balou,
 
       if (mainscreen == screen && mainmonitor == m)
         balou->mainwin = window;
-
-      ++i;
     }
 
   g_object_unref (context);
