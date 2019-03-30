@@ -645,20 +645,11 @@ xfsm_manager_load_failsafe (XfsmManager   *manager,
 
       g_snprintf (screen_entry, sizeof (screen_entry),
                   "/sessions/%s/Client%d_PerScreen", failsafe_name, i);
-      if (xfconf_channel_get_bool (channel, screen_entry, FALSE))
-        {
-          fclient = g_new0 (FailsafeClient, 1);
-          fclient->command = command;
-          fclient->screen = gdk_screen_get_default ();
-          g_queue_push_tail (manager->failsafe_clients, fclient);
-        }
-      else
-        {
-          fclient = g_new0 (FailsafeClient, 1);
-          fclient->command = command;
-          fclient->screen = gdk_screen_get_default ();
-          g_queue_push_tail (manager->failsafe_clients, fclient);
-        }
+
+      fclient = g_new0 (FailsafeClient, 1);
+      fclient->command = command;
+      fclient->screen = gdk_screen_get_default ();
+      g_queue_push_tail (manager->failsafe_clients, fclient);
     }
 
   if (g_queue_peek_head (manager->failsafe_clients) == NULL)
