@@ -39,7 +39,7 @@ struct _XfsmFadeout
 {
 #ifdef GDK_WINDOWING_X11
   Display *xdisplay;
-  GSList  *xwindows;
+  Window  *xwindow;
 #endif
 };
 
@@ -149,34 +149,17 @@ xfsm_fadeout_new (GdkDisplay *display)
 {
   XfsmFadeout     *fadeout;
   GdkScreen       *screen;
-#ifdef GDK_WINDOWING_X11
-  Window           xwindow;
-#endif
 
   fadeout = g_slice_new0 (XfsmFadeout);
 
 #ifdef GDK_WINDOWING_X11
   fadeout->xdisplay = gdk_x11_display_get_xdisplay (display);
   screen = gdk_display_get_default_screen (display);
-  xwindow = xfsm_x11_fadeout_new_window (display, screen);
-  fadeout->xwindows = g_slist_prepend (fadeout->xwindows, GINT_TO_POINTER (xwindow));
+  fadeout->xwindow = GINT_TO_POINTER (xfsm_x11_fadeout_new_window (display, screen));
 #endif
 
   return fadeout;
 }
-
-
-
-#ifdef GDK_WINDOWING_X11
-static void
-xfsm_fadeout_destroy_foreach (gpointer data, gpointer user_data)
-{
-  XfsmFadeout *fadeout = user_data;
-  Window       xwindow = GPOINTER_TO_INT (data);
-
-  XDestroyWindow (fadeout->xdisplay, xwindow);
-}
-#endif
 
 
 
@@ -185,7 +168,7 @@ xfsm_fadeout_destroy (XfsmFadeout *fadeout)
 {
 #ifdef GDK_WINDOWING_X11
   gdk_error_trap_push ();
-  g_slist_foreach (fadeout->xwindows, xfsm_fadeout_destroy_foreach, fadeout);
+  XDestroyWindow (fadeout->xdisplay, GPOINTER_TO_INT (fadeout->xwindow));
   gdk_flush ();
   gdk_error_trap_pop_ignored ();
 #endif
