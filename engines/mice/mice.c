@@ -222,9 +222,8 @@ mice_setup (XfsmSplashEngine *engine,
   cairo_t      *cr;
   GList        *lp;
   Mice         *mice = MICE (engine->user_data);
-  int           nscreens;
   int           nmonitors;
-  int           n, m;
+  int           m;
 
   gdk_rgba_parse (&color, COLOR);
   cursor = gdk_cursor_new_for_display (engine->display, GDK_WATCH);
@@ -242,37 +241,32 @@ mice_setup (XfsmSplashEngine *engine,
   mice->step = 0;
   mice->direction = 1;
 
-  nscreens = XScreenCount (gdk_x11_display_get_xdisplay (engine->display));
-  for (n = 0; n < nscreens; ++n)
+  screen = gdk_display_get_default_screen (engine->display);
+  nmonitors = gdk_screen_get_n_monitors (screen);
+  root = gdk_screen_get_root_window (screen);
+
+  /* create graphics context for this screen */
+  cr = gdk_cairo_create (root);
+  gdk_cairo_set_source_rgba (cr, &color);
+
+  cairo_rectangle (cr, 0, 0, mice->pixbuf_width, mice->pixbuf_height);
+  cairo_fill (cr);
+
+  cairo_move_to (cr, 0, 0);
+  gdk_cairo_set_source_pixbuf (cr, pixbuf, 0, 0);
+  cairo_paint (cr);
+
+  for (m = 0; m < nmonitors; ++m)
     {
-      screen = gdk_display_get_screen (engine->display, n);
-      nmonitors = gdk_screen_get_n_monitors (screen);
-      root = gdk_screen_get_root_window (screen);
+      mice_window = mice_window_new (screen, m, pixbuf,
+                                     &color, cursor, mice);
+      mice->windows = g_list_append (mice->windows, mice_window);
 
-      /* create graphics context for this screen */
-      cr = gdk_cairo_create (root);
-      gdk_cairo_set_source_rgba (cr, &color);
-
-      cairo_rectangle (cr, 0, 0, mice->pixbuf_width, mice->pixbuf_height);
-      cairo_fill (cr);
-
-      cairo_move_to (cr, 0, 0);
-      gdk_cairo_set_source_pixbuf (cr, pixbuf, 0, 0);
-      cairo_paint (cr);
-
-      for (m = 0; m < nmonitors; ++m)
-        {
-          mice_window = mice_window_new (screen, m, pixbuf,
-                                         &color, cursor, mice);
-          mice->windows = g_list_append (mice->windows, mice_window);
-
-          if (screen == engine->primary_screen && m == engine->primary_monitor)
-            mice->mainwin = mice_window;
-        }
-
-      /* cleanup for this screen */
-      cairo_destroy (cr);
+      if (screen == engine->primary_screen && m == engine->primary_monitor)
+        mice->mainwin = mice_window;
     }
+  cairo_destroy (cr);
+
 
   /* show all windows and connect filters */
   for (lp = mice->windows; lp != NULL; lp = lp->next)

@@ -603,14 +603,12 @@ xfsm_manager_load_failsafe (XfsmManager   *manager,
 {
   FailsafeClient *fclient;
   gchar          *failsafe_name;
-  GdkDisplay     *display;
   gchar           propbuf[4096];
   gchar         **command;
   gchar           command_entry[256];
   gchar           screen_entry[256];
   gint            count;
   gint            i;
-  gint            n_screen;
 
   failsafe_name = xfconf_channel_get_string (channel, "/general/FailsafeSessionName", NULL);
   if (G_UNLIKELY (!failsafe_name))
@@ -634,8 +632,6 @@ xfsm_manager_load_failsafe (XfsmManager   *manager,
       return FALSE;
     }
 
-  display = gdk_display_get_default ();
-
   g_snprintf (propbuf, sizeof (propbuf), "/sessions/%s/Count", failsafe_name);
   count = xfconf_channel_get_int (channel, propbuf, 0);
 
@@ -651,16 +647,10 @@ xfsm_manager_load_failsafe (XfsmManager   *manager,
                   "/sessions/%s/Client%d_PerScreen", failsafe_name, i);
       if (xfconf_channel_get_bool (channel, screen_entry, FALSE))
         {
-          for (n_screen = 0; n_screen < XScreenCount (gdk_x11_display_get_xdisplay (display)); ++n_screen)
-            {
-              fclient = g_new0 (FailsafeClient, 1);
-              if (n_screen == 0)
-                fclient->command = command;
-              else
-                fclient->command = g_strdupv (command);
-              fclient->screen = gdk_display_get_screen (display, n_screen);
-              g_queue_push_tail (manager->failsafe_clients, fclient);
-            }
+          fclient = g_new0 (FailsafeClient, 1);
+          fclient->command = command;
+          fclient->screen = gdk_screen_get_default ();
+          g_queue_push_tail (manager->failsafe_clients, fclient);
         }
       else
         {

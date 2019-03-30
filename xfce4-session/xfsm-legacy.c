@@ -629,8 +629,7 @@ xfsm_legacy_startup (void)
 
   for (lp = restart_apps; lp != NULL; lp = lp->next)
     {
-      screen = gdk_display_get_screen (gdk_display_get_default (),
-                                       SM_RESTART_APP (lp->data)->screen_num);
+      screen = gdk_screen_get_default ();
       xfsm_start_application (SM_RESTART_APP (lp->data)->command, NULL,
                               screen, NULL, NULL, NULL);
       g_strfreev (SM_RESTART_APP (lp->data)->command);

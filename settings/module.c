@@ -206,7 +206,7 @@ module_test (Module     *module,
   screen = xfce_gdk_screen_get_active (&monitor);
   if (G_UNLIKELY (screen == NULL) || (gdk_screen_get_display(screen) != display))
     {
-      screen  = gdk_display_get_screen (display, 0);
+      screen  = gdk_display_get_default_screen (display);
       monitor = 0;
     }
 

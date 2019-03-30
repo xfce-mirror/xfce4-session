@@ -152,19 +152,14 @@ xfsm_fadeout_new (GdkDisplay *display)
 #ifdef GDK_WINDOWING_X11
   Window           xwindow;
 #endif
-  gint             n;
 
   fadeout = g_slice_new0 (XfsmFadeout);
 
 #ifdef GDK_WINDOWING_X11
   fadeout->xdisplay = gdk_x11_display_get_xdisplay (display);
-
-  for (n = 0; n < XScreenCount (fadeout->xdisplay); ++n)
-    {
-      screen = gdk_display_get_screen (display, n);
-      xwindow = xfsm_x11_fadeout_new_window (display, screen);
-      fadeout->xwindows = g_slist_prepend (fadeout->xwindows, GINT_TO_POINTER (xwindow));
-    }
+  screen = gdk_display_get_default_screen (display);
+  xwindow = xfsm_x11_fadeout_new_window (display, screen);
+  fadeout->xwindows = g_slist_prepend (fadeout->xwindows, GINT_TO_POINTER (xwindow));
 #endif
 
   return fadeout;

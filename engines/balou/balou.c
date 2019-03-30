@@ -80,9 +80,7 @@ balou_init (Balou        *balou,
   cairo_t              *cr;
   gint                  layout_height;
   gint                  nmonitors;
-  gint                  nscreens;
-  gint                  i;
-  gint                  n;
+  gint                  i = 0;
   gint                  m;
   gint                  px;
   gint                  py;
@@ -100,68 +98,61 @@ balou_init (Balou        *balou,
   description = pango_font_description_from_string (balou_theme_get_font (theme));
 
   /* determine number of required windows */
-  nscreens = XScreenCount (gdk_x11_display_get_xdisplay (display));
-  for (n = 0; n < nscreens; ++n)
-    {
-      screen = gdk_display_get_screen (display, n);
-      nmonitors = gdk_screen_get_n_monitors (screen);
-      for (m = 0; m < nmonitors; ++m)
-        balou->nwindows++;
-    }
+  screen = gdk_display_get_default_screen (display);
+  nmonitors = gdk_screen_get_n_monitors (screen);
+  for (m = 0; m < nmonitors; ++m)
+    balou->nwindows++;
 
   /* create windows */
   balou->windows = g_new (BalouWindow, balou->nwindows);
-  for (i = n = 0; n < nscreens; ++n)
+  screen = gdk_display_get_default_screen (display);
+  nmonitors = gdk_screen_get_n_monitors (screen);
+  root = gdk_screen_get_root_window (screen);
+
+  /* create pango layout for this screen */
+  context = gdk_pango_context_get_for_screen (screen);
+  pango_context_set_font_description (context, description);
+  layout = pango_layout_new (context);
+  metrics = pango_context_get_metrics (context, description, NULL);
+  layout_height = (pango_font_metrics_get_ascent (metrics)
+                 + pango_font_metrics_get_descent (metrics)) / PANGO_SCALE
+                 + 3;
+  pango_font_metrics_unref (metrics);
+
+  for (m = 0; m < nmonitors; ++m)
     {
-      screen = gdk_display_get_screen (display, n);
-      nmonitors = gdk_screen_get_n_monitors (screen);
-      root = gdk_screen_get_root_window (screen);
+      cairo_t *window_cr;
+      window = balou->windows + i;
+      balou_window_init (window, screen, m, root, cursor);
 
-      /* create pango layout for this screen */
-      context = gdk_pango_context_get_for_screen (screen);
-      pango_context_set_font_description (context, description);
-      layout = pango_layout_new (context);
-      metrics = pango_context_get_metrics (context, description, NULL);
-      layout_height = (pango_font_metrics_get_ascent (metrics)
-                      + pango_font_metrics_get_descent (metrics)) / PANGO_SCALE
-                     + 3;
-      pango_font_metrics_unref (metrics);
+      window->layout = PANGO_LAYOUT (g_object_ref (layout));
 
-      for (m = 0; m < nmonitors; ++m)
-        {
-          cairo_t *window_cr;
-          window = balou->windows + i;
-          balou_window_init (window, screen, m, root, cursor);
+      /* calculate box dimensions */
+      window->logobox         = window->area;
+      window->logobox.x       = 0;
+      window->logobox.height -= layout_height;
+      window->textbox         = window->area;
+      window->textbox.x       = 0;
+      window->textbox.y      += window->logobox.height;
+      window->textbox.height -= window->logobox.height;
 
-          window->layout = PANGO_LAYOUT (g_object_ref (layout));
+      window_cr = gdk_cairo_create (window->window);
 
-          /* calculate box dimensions */
-          window->logobox         = window->area;
-          window->logobox.x       = 0;
-          window->logobox.height -= layout_height;
-          window->textbox         = window->area;
-          window->textbox.x       = 0;
-          window->textbox.y      += window->logobox.height;
-          window->textbox.height -= window->logobox.height;
+      balou_theme_draw_gradient (balou->theme,
+                                 window_cr,
+                                 window->logobox,
+                                 window->textbox);
 
-          window_cr = gdk_cairo_create (window->window);
+      cairo_destroy (window_cr);
 
-          balou_theme_draw_gradient (balou->theme,
-                                     window_cr,
-                                     window->logobox,
-                                     window->textbox);
+      if (mainscreen == screen && mainmonitor == m)
+        balou->mainwin = window;
 
-          cairo_destroy (window_cr);
-
-          if (mainscreen == screen && mainmonitor == m)
-            balou->mainwin = window;
-
-          ++i;
-        }
-
-      g_object_unref (context);
-      g_object_unref (layout);
+      ++i;
     }
+
+  g_object_unref (context);
+  g_object_unref (layout);
 
   /* show splash windows */
   for (i = 0; i < balou->nwindows; ++i)

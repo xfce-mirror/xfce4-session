@@ -70,7 +70,7 @@ xfsm_splash_screen_new (GdkDisplay  *display,
 
   if (G_UNLIKELY (screen == NULL) || (gdk_screen_get_display (screen) != display))
     {
-      screen  = gdk_display_get_screen (display, 0);
+      screen  = gdk_display_get_default_screen (display);
       monitor = 0;
     }
 
