@@ -70,6 +70,7 @@ static void       xfsm_logout_dialog_finalize (GObject          *object);
 static GtkWidget *xfsm_logout_dialog_button   (const gchar      *title,
                                                const gchar      *icon_name,
                                                const gchar      *icon_name_fallback,
+                                               const gchar      *icon_name_fallback2,
                                                XfsmShutdownType  type,
                                                XfsmLogoutDialog *dialog);
 
@@ -222,8 +223,8 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
    * Logout
    **/
   button = xfsm_logout_dialog_button (_("_Log Out"), "system-log-out",
-                                      "xfsm-logout", XFSM_SHUTDOWN_LOGOUT,
-                                      dialog);
+                                      "xfsm-logout", NULL,
+                                      XFSM_SHUTDOWN_LOGOUT, dialog);
 
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
@@ -242,8 +243,8 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
     }
 
   button = xfsm_logout_dialog_button (_("_Restart"), "system-reboot",
-                                      "xfsm-reboot", XFSM_SHUTDOWN_RESTART,
-                                      dialog);
+                                      "xfsm-reboot", NULL,
+                                      XFSM_SHUTDOWN_RESTART, dialog);
 
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_set_sensitive (button, can_restart);
@@ -262,8 +263,8 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
     }
 
   button = xfsm_logout_dialog_button (_("Shut _Down"), "system-shutdown",
-                                      "xfsm-shutdown", XFSM_SHUTDOWN_SHUTDOWN,
-                                      dialog);
+                                      "xfsm-shutdown", NULL,
+                                      XFSM_SHUTDOWN_SHUTDOWN, dialog);
 
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_set_sensitive (button, can_shutdown);
@@ -285,8 +286,8 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
           if (can_suspend)
             {
               button = xfsm_logout_dialog_button (_("Sus_pend"), "system-suspend",
-                                                  "xfsm-suspend", XFSM_SHUTDOWN_SUSPEND,
-                                                  dialog);
+                                                  "xfsm-suspend", NULL,
+                                                  XFSM_SHUTDOWN_SUSPEND, dialog);
 
               gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
               gtk_widget_set_sensitive (button, auth_suspend);
@@ -319,8 +320,8 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
           if (can_hibernate)
             {
               button = xfsm_logout_dialog_button (_("_Hibernate"), "system-hibernate",
-                                                  "xfsm-hibernate", XFSM_SHUTDOWN_HIBERNATE,
-                                                  dialog);
+                                                  "xfsm-hibernate", NULL,
+                                                  XFSM_SHUTDOWN_HIBERNATE, dialog);
 
               gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
               gtk_widget_set_sensitive (button, auth_hibernate);
@@ -349,9 +350,9 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
         {
           if (can_hybrid_sleep)
             {
-              button = xfsm_logout_dialog_button (_("_Hybrid Sleep"), "system-hibernate",
-                                                  "xfsm-hibernate", XFSM_SHUTDOWN_HYBRID_SLEEP,
-                                                  dialog);
+              button = xfsm_logout_dialog_button (_("_Hybrid Sleep"), "system-suspend-hibernate",
+                                                  "system-hibernate", "xfsm-hibernate",
+                                                  XFSM_SHUTDOWN_HYBRID_SLEEP, dialog);
 
               gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
               gtk_widget_set_sensitive (button, auth_hybrid_sleep);
@@ -381,8 +382,8 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
           if (can_switch_user)
             {
               button = xfsm_logout_dialog_button (_("Switch _User"), "system-users",
-                                                  "system-users-symbolic", XFSM_SHUTDOWN_SWITCH_USER,
-                                                  dialog);
+                                                  "system-users-symbolic", NULL,
+                                                  XFSM_SHUTDOWN_SWITCH_USER, dialog);
 
               gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
               gtk_widget_set_sensitive (button, auth_hibernate);
@@ -490,6 +491,7 @@ static GtkWidget *
 xfsm_logout_dialog_button (const gchar      *title,
                            const gchar      *icon_name,
                            const gchar      *icon_name_fallback,
+                           const gchar      *icon_name_fallback2,
                            XfsmShutdownType  type,
                            XfsmLogoutDialog *dialog)
 {
@@ -528,9 +530,17 @@ xfsm_logout_dialog_button (const gchar      *title,
 
   icon_theme = gtk_icon_theme_get_for_screen (gtk_window_get_screen (GTK_WINDOW (dialog)));
   pixbuf = gtk_icon_theme_load_icon (icon_theme, icon_name, icon_size, 0, NULL);
+
   if (G_UNLIKELY (pixbuf == NULL))
     {
       pixbuf = gtk_icon_theme_load_icon (icon_theme, icon_name_fallback,
+                                         icon_size, GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                         NULL);
+    }
+
+  if (G_UNLIKELY (pixbuf == NULL))
+    {
+      pixbuf = gtk_icon_theme_load_icon (icon_theme, icon_name_fallback2,
                                          icon_size, GTK_ICON_LOOKUP_GENERIC_FALLBACK,
                                          NULL);
     }
