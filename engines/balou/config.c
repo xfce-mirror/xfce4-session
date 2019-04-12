@@ -881,7 +881,11 @@ config_create (XfsmSplashRc *rc)
                                GTK_SELECTION_SINGLE);
   g_signal_connect (G_OBJECT (selection), "changed",
                     G_CALLBACK (config_selection_changed), NULL);
+#if GLIB_CHECK_VERSION (2, 58, 0) /* TODO: Remove when glib 2.58 is required in configure.ac.in*/
   g_idle_add (G_SOURCE_FUNC (config_selection_changed),  selection);
+#else
+  g_idle_add ((GSourceFunc)config_selection_changed, selection);
+#endif
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
   gtk_container_add (GTK_CONTAINER (swin), treeview);
 
