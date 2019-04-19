@@ -160,21 +160,6 @@ else
   AC_MSG_RESULT([yes])
 fi
 
-dnl check for linux/ioprio.h, and also check that the header actually
-dnl works, as some kernels have bad headers.  using AC_CHECK_HEADERS()
-dnl prints a scary warning with a request to report a bug if it fails,
-dnl but we do not want that.
-AC_MSG_CHECKING([whether linux/ioprio.h exists and actually works])
-AC_COMPILE_IFELSE([
-AC_INCLUDES_DEFAULT
-#include <linux/ioprio.h>
-                ], [linux_ioprio_works=yes], [linux_ioprio_works=no])
-AC_MSG_RESULT([$linux_ioprio_works])
-if test "x$linux_ioprio_works" = "xyes"; then
-  AC_DEFINE([HAVE_WORKING_LINUX_IOPRIO_H], [1],
-            [Defined if linux/ioprio.h not only exists, but works properly])
-fi
-
 dnl Compile time default choice of backend
 AC_ARG_WITH([backend],
 	    AS_HELP_STRING([--with-backend=<option>],

@@ -41,26 +41,6 @@
 #include <unistd.h>
 #endif
 
-/* unfortunately, glibc doesn't have a wrapper for the ioprio_set ()
- * syscall, so we have to do it the hard way.  also, it seems some
- * systems don't have <linux/ioprio.h>, so i'll copy the defines here.
- */
-#ifdef HAVE_ASM_UNISTD_H
-#  include <asm/unistd.h>
-#  include <sys/syscall.h>
-#  ifdef __NR_ioprio_set
-#    ifdef HAVE_WORKING_LINUX_IOPRIO_H
-#      include <linux/ioprio.h>
-#    else  /* if !HAVE_WORKING_LINUX_IOPRIO_H */
-#      define IOPRIO_CLASS_SHIFT              (13)
-#      define IOPRIO_PRIO_MASK                ((1UL << IOPRIO_CLASS_SHIFT) - 1)
-#      define IOPRIO_PRIO_VALUE(class, data)  (((class) << IOPRIO_CLASS_SHIFT) | data)
-#      define IOPRIO_WHO_PROCESS              (1)
-#      define IOPRIO_CLASS_IDLE               (3)
-#    endif  /* !HAVE_WORKING_LINUX_IOPRIO_H */
-#  endif  /* __NR_ioprio_set */
-#endif  /* HAVE_ASM_UNISTD_H */
-
 #include <gio/gio.h>
 
 #include <X11/ICE/ICElib.h>
