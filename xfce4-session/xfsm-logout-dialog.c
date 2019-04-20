@@ -350,7 +350,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
         {
           if (can_hybrid_sleep)
             {
-              button = xfsm_logout_dialog_button (_("_Hybrid Sleep"), "system-suspend-hibernate",
+              button = xfsm_logout_dialog_button (_("H_ybrid Sleep"), "system-suspend-hibernate",
                                                   "system-hibernate", "xfsm-hibernate",
                                                   XFSM_SHUTDOWN_HYBRID_SLEEP, dialog);
 
