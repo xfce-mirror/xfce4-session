@@ -4,14 +4,14 @@
 # 
 # Translators:
 # Cristian Marchi <cri.penta@gmail.com>, 2013,2016
-# Emanuele Petriglia <inbox@emanuelepetriglia.me>, 2018
+# Emanuele Petriglia <inbox@emanuelepetriglia.me>, 2018-2019
 # Luca Marrocco <buildup@libero.it>, 2003
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-26 18:31+0200\n"
-"PO-Revision-Date: 2018-10-27 09:12+0000\n"
+"POT-Creation-Date: 2019-04-21 00:31+0200\n"
+"PO-Revision-Date: 2019-04-22 13:19+0000\n"
 "Last-Translator: Emanuele Petriglia <inbox@emanuelepetriglia.me>\n"
 "Language-Team: Italian (http://www.transifex.com/xfce/xfce4-session/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr "Scegliere il file del tema da installare…"
 
 #: ../engines/balou/config.c:327 ../engines/balou/config.c:495
 #: ../settings/session-editor.c:173 ../settings/session-editor.c:257
-#: ../xfce4-session/xfsm-logout-dialog.c:209
+#: ../xfce4-session/xfsm-logout-dialog.c:210
 #: ../xfce4-session/xfsm-splash-screen.c:213
 msgid "_Cancel"
 msgstr "A_nnulla"
@@ -60,9 +60,9 @@ msgstr "Errore nel file del tema"
 msgid "Please check that the file is a valid splash theme archive."
 msgstr "Verificare che il file sia un archivio del tema di avvio valido."
 
-#: ../engines/balou/config.c:344 ../engines/balou/config.c:949
+#: ../engines/balou/config.c:344 ../engines/balou/config.c:953
 #: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
-#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1231
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1212
 msgid "_Close"
 msgstr "_Chiudi"
 
@@ -95,23 +95,23 @@ msgstr "_Esporta il tema"
 msgid "Balou theme"
 msgstr "Tema Balou"
 
-#: ../engines/balou/config.c:945
+#: ../engines/balou/config.c:949
 msgid "Configure Balou..."
 msgstr "Configura Balou…"
 
-#: ../engines/balou/config.c:987
+#: ../engines/balou/config.c:991
 msgid "Balou"
 msgstr "Balou"
 
-#: ../engines/balou/config.c:988
+#: ../engines/balou/config.c:992
 msgid "Balou Splash Engine"
 msgstr "Motore di avvio Balou"
 
-#: ../engines/mice/mice.c:385
+#: ../engines/mice/mice.c:379
 msgid "Mice"
 msgstr "Topi"
 
-#: ../engines/mice/mice.c:386
+#: ../engines/mice/mice.c:380
 msgid "Mice Splash Engine"
 msgstr "Motore di avvio Topi"
 
@@ -489,7 +489,7 @@ msgstr "Continua comunque"
 msgid "Try again"
 msgstr "Riprova"
 
-#: ../xfce4-session/xfsm-manager.c:619
+#: ../xfce4-session/xfsm-manager.c:617
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -498,69 +498,69 @@ msgid ""
 "incorrectly."
 msgstr "Impossibile determinare il nome della sessione di ripristino. Possibili cause: xfconfd non è in esecuzione (problema nell'impostazione di D-Bus), la variabile di ambiente $XDG_CONFIG_DIRS è impostata in modo errato (deve includere \"%s\"), oppure xfce4-session non è installato correttamente."
 
-#: ../xfce4-session/xfsm-manager.c:630
+#: ../xfce4-session/xfsm-manager.c:628
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "La sessione di ripristino specificata (\"%s\") non è identificata come sessione di ripristino."
 
-#: ../xfce4-session/xfsm-manager.c:677
+#: ../xfce4-session/xfsm-manager.c:658
 msgid "The list of applications in the failsafe session is empty."
 msgstr "L'elenco delle applicazioni della sessione di ripristino è vuoto."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:724
+#: ../xfce4-session/xfsm-manager.c:705
 msgid "Session Manager Error"
 msgstr "Errore del gestore di sessione"
 
-#: ../xfce4-session/xfsm-manager.c:726
+#: ../xfce4-session/xfsm-manager.c:707
 msgid "Unable to load a failsafe session"
 msgstr "Impossibile avviare una sessione di ripristino"
 
-#: ../xfce4-session/xfsm-manager.c:728
+#: ../xfce4-session/xfsm-manager.c:709
 msgid "_Quit"
 msgstr "_Esci"
 
-#: ../xfce4-session/xfsm-manager.c:1221
+#: ../xfce4-session/xfsm-manager.c:1202
 msgid "Shutdown Failed"
 msgstr "Spegnimento non riuscito"
 
-#: ../xfce4-session/xfsm-manager.c:1224
+#: ../xfce4-session/xfsm-manager.c:1205
 msgid "Failed to suspend session"
 msgstr "Sospensione della sessione non riuscito"
 
-#: ../xfce4-session/xfsm-manager.c:1226
+#: ../xfce4-session/xfsm-manager.c:1207
 msgid "Failed to hibernate session"
 msgstr "Ibernazione della sessione non riuscita"
 
-#: ../xfce4-session/xfsm-manager.c:1228
+#: ../xfce4-session/xfsm-manager.c:1209
 msgid "Failed to hybrid sleep session"
 msgstr "Addormentamento ibrido della sessione non riuscito"
 
-#: ../xfce4-session/xfsm-manager.c:1229
+#: ../xfce4-session/xfsm-manager.c:1210
 msgid "Failed to switch user"
 msgstr "Impossibile cambiare utente"
 
-#: ../xfce4-session/xfsm-manager.c:1535
+#: ../xfce4-session/xfsm-manager.c:1516
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "È possibile terminare un client solamente quando è inattivo"
 
-#: ../xfce4-session/xfsm-manager.c:2192
+#: ../xfce4-session/xfsm-manager.c:2173
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Il gestore di sessione deve essere inattivo alla richiesta di un punto di controllo"
 
-#: ../xfce4-session/xfsm-manager.c:2262 ../xfce4-session/xfsm-manager.c:2282
+#: ../xfce4-session/xfsm-manager.c:2243 ../xfce4-session/xfsm-manager.c:2263
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Il gestore di sessione deve essere inattivo alla richiesta dello spegnimento"
 
-#: ../xfce4-session/xfsm-manager.c:2327
+#: ../xfce4-session/xfsm-manager.c:2308
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Il gestore di sessione deve essere inattivo alla richiesta di riavvio"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:182
+#: ../xfce4-session/xfsm-logout-dialog.c:183
 #, c-format
 msgid "Log out %s"
 msgstr "Uscita di %s"
@@ -568,39 +568,39 @@ msgstr "Uscita di %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:224
+#: ../xfce4-session/xfsm-logout-dialog.c:225
 msgid "_Log Out"
 msgstr "_Esci"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:244
+#: ../xfce4-session/xfsm-logout-dialog.c:245
 msgid "_Restart"
 msgstr "_Riavvia"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:264
+#: ../xfce4-session/xfsm-logout-dialog.c:265
 msgid "Shut _Down"
 msgstr "_Spegni"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:287
+#: ../xfce4-session/xfsm-logout-dialog.c:288
 msgid "Sus_pend"
 msgstr "Sos_pendi"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:321
+#: ../xfce4-session/xfsm-logout-dialog.c:322
 msgid "_Hibernate"
 msgstr "_Iberna"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:352
-msgid "_Hybrid Sleep"
+#: ../xfce4-session/xfsm-logout-dialog.c:353
+msgid "H_ybrid Sleep"
 msgstr "_Addormentamento ibrido"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:383
+#: ../xfce4-session/xfsm-logout-dialog.c:384
 msgid "Switch _User"
 msgstr "Cambia _utente"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:408
+#: ../xfce4-session/xfsm-logout-dialog.c:409
 msgid "_Save session for future logins"
 msgstr "S_alva la sessione per i prossimi accessi"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:436
+#: ../xfce4-session/xfsm-logout-dialog.c:437
 msgid "An error occurred"
 msgstr "Si è verificato un errore"
 
@@ -891,16 +891,16 @@ msgid ""
 msgstr "Queste applicazioni fanno parte della sessione attualmente in esecuzione e possono essere salvate quando si esce. I cambiamenti effettuati qui sotto avranno effetto solamente quando la sessione verrà salvata."
 
 #: ../settings/xfce4-session-settings.ui.h:23
+msgid "Save Sess_ion"
+msgstr "Salva sess_ione"
+
+#: ../settings/xfce4-session-settings.ui.h:24
 msgid "Empty the session cache"
 msgstr "Pulisce la cache della sessione"
 
-#: ../settings/xfce4-session-settings.ui.h:24
+#: ../settings/xfce4-session-settings.ui.h:25
 msgid "Clear save_d sessions"
 msgstr "Elimina le sessioni s_alvate"
-
-#: ../settings/xfce4-session-settings.ui.h:25
-msgid "Save Sess_ion"
-msgstr "Salva sess_ione"
 
 #: ../settings/xfce4-session-settings.ui.h:26
 msgid "Quit the program, and remove it from the session"
