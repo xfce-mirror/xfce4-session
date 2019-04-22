@@ -5,13 +5,13 @@
 # Translators:
 # ByungHyun Choi <byunghyun.choi@gmail.com>, 2005
 # 박정규(Jung-Kyu Park) <bagjunggyu@gmail.com>, 2017
-# Seong-ho Cho <darkcircle.0426@gmail.com>, 2011-2013,2016
+# Seong-ho Cho <darkcircle.0426@gmail.com>, 2011-2013,2016,2019
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-26 18:31+0200\n"
-"PO-Revision-Date: 2018-09-14 00:26+0000\n"
+"POT-Creation-Date: 2019-04-21 00:31+0200\n"
+"PO-Revision-Date: 2019-04-22 01:11+0000\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language-Team: Korean (http://www.transifex.com/xfce/xfce4-session/language/ko/)\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr "설치하고자 하는 테마를 선택합니다..."
 
 #: ../engines/balou/config.c:327 ../engines/balou/config.c:495
 #: ../settings/session-editor.c:173 ../settings/session-editor.c:257
-#: ../xfce4-session/xfsm-logout-dialog.c:209
+#: ../xfce4-session/xfsm-logout-dialog.c:210
 #: ../xfce4-session/xfsm-splash-screen.c:213
 msgid "_Cancel"
 msgstr "취소(_C)"
@@ -60,9 +60,9 @@ msgstr "테마 파일 오류"
 msgid "Please check that the file is a valid splash theme archive."
 msgstr "파일이 올바른 시작 화면 테마 아카이브인지 확인하여 주십시오."
 
-#: ../engines/balou/config.c:344 ../engines/balou/config.c:949
+#: ../engines/balou/config.c:344 ../engines/balou/config.c:953
 #: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
-#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1231
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1212
 msgid "_Close"
 msgstr "닫기(_O)"
 
@@ -95,23 +95,23 @@ msgstr "테마 내보내기(_E)"
 msgid "Balou theme"
 msgstr "Balou 테마"
 
-#: ../engines/balou/config.c:945
+#: ../engines/balou/config.c:949
 msgid "Configure Balou..."
 msgstr "Balou 테마 설정..."
 
-#: ../engines/balou/config.c:987
+#: ../engines/balou/config.c:991
 msgid "Balou"
 msgstr "Balou"
 
-#: ../engines/balou/config.c:988
+#: ../engines/balou/config.c:992
 msgid "Balou Splash Engine"
 msgstr "Balou 시작 화면 엔진"
 
-#: ../engines/mice/mice.c:385
+#: ../engines/mice/mice.c:379
 msgid "Mice"
 msgstr "쥐돌이"
 
-#: ../engines/mice/mice.c:386
+#: ../engines/mice/mice.c:380
 msgid "Mice Splash Engine"
 msgstr "쥐돌이 시작 화면 엔진"
 
@@ -489,7 +489,7 @@ msgstr "계속 진행합니다"
 msgid "Try again"
 msgstr "다시 시도합니다"
 
-#: ../xfce4-session/xfsm-manager.c:619
+#: ../xfce4-session/xfsm-manager.c:617
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -498,69 +498,69 @@ msgid ""
 "incorrectly."
 msgstr "대체 세션 이름을 정할 수 없습니다. 가능한 원인으로는 xfconfd가 실행중에 있지 않거나(D-Bus 설정 문제), 환경변수 $XDG_CONFIG_DIRS를 잘못 설정(반드시 \"%s\"을(를) 포함해야 합니다)했거나, xfce4-session을 잘못 설치했을 수도 있습니다."
 
-#: ../xfce4-session/xfsm-manager.c:630
+#: ../xfce4-session/xfsm-manager.c:628
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "지정한 대체 세션(\"%s\")을 대체 세션으로 표시하지 않았습니다."
 
-#: ../xfce4-session/xfsm-manager.c:677
+#: ../xfce4-session/xfsm-manager.c:658
 msgid "The list of applications in the failsafe session is empty."
 msgstr "대체 세션에 사용할 프로그램의 목록이 비어 있습니다."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:724
+#: ../xfce4-session/xfsm-manager.c:705
 msgid "Session Manager Error"
 msgstr "세션 관리자 오류"
 
-#: ../xfce4-session/xfsm-manager.c:726
+#: ../xfce4-session/xfsm-manager.c:707
 msgid "Unable to load a failsafe session"
 msgstr "대체 세션을 로드할 수 없습니다"
 
-#: ../xfce4-session/xfsm-manager.c:728
+#: ../xfce4-session/xfsm-manager.c:709
 msgid "_Quit"
 msgstr "끝내기(_Q)"
 
-#: ../xfce4-session/xfsm-manager.c:1221
+#: ../xfce4-session/xfsm-manager.c:1202
 msgid "Shutdown Failed"
 msgstr "종료 실패"
 
-#: ../xfce4-session/xfsm-manager.c:1224
+#: ../xfce4-session/xfsm-manager.c:1205
 msgid "Failed to suspend session"
 msgstr "세션을 대기모드로 진입 시키는데 실패했습니다"
 
-#: ../xfce4-session/xfsm-manager.c:1226
+#: ../xfce4-session/xfsm-manager.c:1207
 msgid "Failed to hibernate session"
 msgstr "세션을 최대 절전모드로 진입 시키는데 실패했습니다"
 
-#: ../xfce4-session/xfsm-manager.c:1228
+#: ../xfce4-session/xfsm-manager.c:1209
 msgid "Failed to hybrid sleep session"
 msgstr "하이브리드 슬립 모드로 바꾸지 못했습니다"
 
-#: ../xfce4-session/xfsm-manager.c:1229
+#: ../xfce4-session/xfsm-manager.c:1210
 msgid "Failed to switch user"
 msgstr "사용자 전환 실패"
 
-#: ../xfce4-session/xfsm-manager.c:1535
+#: ../xfce4-session/xfsm-manager.c:1516
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "대기 상태일 때만 클라이언트를 중지할 수 있습니다"
 
-#: ../xfce4-session/xfsm-manager.c:2192
+#: ../xfce4-session/xfsm-manager.c:2173
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "세션 관리자는 체크포인트를 요청할 때 대기 상태에 있어야 합니다"
 
-#: ../xfce4-session/xfsm-manager.c:2262 ../xfce4-session/xfsm-manager.c:2282
+#: ../xfce4-session/xfsm-manager.c:2243 ../xfce4-session/xfsm-manager.c:2263
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "세션 관리자는 종료를 요청할 때 대기 상태에 있어야 합니다"
 
-#: ../xfce4-session/xfsm-manager.c:2327
+#: ../xfce4-session/xfsm-manager.c:2308
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "세션 관리자는 다시 시작할 때 대기 상태에 있어야 합니다"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:182
+#: ../xfce4-session/xfsm-logout-dialog.c:183
 #, c-format
 msgid "Log out %s"
 msgstr "%s 로그아웃"
@@ -568,39 +568,39 @@ msgstr "%s 로그아웃"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:224
+#: ../xfce4-session/xfsm-logout-dialog.c:225
 msgid "_Log Out"
 msgstr "로그아웃(_L)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:244
+#: ../xfce4-session/xfsm-logout-dialog.c:245
 msgid "_Restart"
 msgstr "다시 시작(_R)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:264
+#: ../xfce4-session/xfsm-logout-dialog.c:265
 msgid "Shut _Down"
 msgstr "시스템 종료(_D)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:287
+#: ../xfce4-session/xfsm-logout-dialog.c:288
 msgid "Sus_pend"
 msgstr "대기(_P)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:321
+#: ../xfce4-session/xfsm-logout-dialog.c:322
 msgid "_Hibernate"
 msgstr "최대 절전(_H)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:352
-msgid "_Hybrid Sleep"
-msgstr "하이브리드 슬립 모드(_H)"
+#: ../xfce4-session/xfsm-logout-dialog.c:353
+msgid "H_ybrid Sleep"
+msgstr "하이브리드 방식 대기(_Y)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:383
+#: ../xfce4-session/xfsm-logout-dialog.c:384
 msgid "Switch _User"
 msgstr "사용자 전환(_U)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:408
+#: ../xfce4-session/xfsm-logout-dialog.c:409
 msgid "_Save session for future logins"
 msgstr "다음 로그인에 대비하여 세션 저장(_S)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:436
+#: ../xfce4-session/xfsm-logout-dialog.c:437
 msgid "An error occurred"
 msgstr "오류가 발생했습니다"
 
@@ -891,16 +891,16 @@ msgid ""
 msgstr "이 프로그램은 현재 실행 중인 세션의 일부이며 로그아웃 할 때 저장할 수 있습니다. 세션을 저장할 때 아래의 내용만을 반영합니다."
 
 #: ../settings/xfce4-session-settings.ui.h:23
+msgid "Save Sess_ion"
+msgstr "세션 저장(_I)"
+
+#: ../settings/xfce4-session-settings.ui.h:24
 msgid "Empty the session cache"
 msgstr "세션 캐시를 비웁니다"
 
-#: ../settings/xfce4-session-settings.ui.h:24
+#: ../settings/xfce4-session-settings.ui.h:25
 msgid "Clear save_d sessions"
 msgstr "저장한 세션 지우기(_D)"
-
-#: ../settings/xfce4-session-settings.ui.h:25
-msgid "Save Sess_ion"
-msgstr "세션 저장(_I)"
 
 #: ../settings/xfce4-session-settings.ui.h:26
 msgid "Quit the program, and remove it from the session"
