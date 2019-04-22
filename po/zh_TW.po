@@ -6,15 +6,15 @@
 # Ambrose Li <acli@ada.dhs.org>, 2004
 # Cheng-Chia Tseng <pswo10680@gmail.com>, 2010
 # Hydonsingore Cia <hydonsingore@educities.edu.tw>, 2005
-# Jeff Huang <s8321414@gmail.com>, 2016-2018
+# Jeff Huang <s8321414@gmail.com>, 2016-2019
 # umm <umm@pchome.com.tw>, 2003
 # Walter Cheuk <wwycheuk@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-26 18:31+0200\n"
-"PO-Revision-Date: 2018-09-14 00:19+0000\n"
+"POT-Creation-Date: 2019-04-21 00:31+0200\n"
+"PO-Revision-Date: 2019-04-22 12:37+0000\n"
 "Last-Translator: Jeff Huang <s8321414@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/xfce/xfce4-session/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,7 @@ msgstr "請選擇要安裝的主題檔案..."
 
 #: ../engines/balou/config.c:327 ../engines/balou/config.c:495
 #: ../settings/session-editor.c:173 ../settings/session-editor.c:257
-#: ../xfce4-session/xfsm-logout-dialog.c:209
+#: ../xfce4-session/xfsm-logout-dialog.c:210
 #: ../xfce4-session/xfsm-splash-screen.c:213
 msgid "_Cancel"
 msgstr "取消(_C)"
@@ -63,9 +63,9 @@ msgstr "主題檔案出錯"
 msgid "Please check that the file is a valid splash theme archive."
 msgstr "請核實該檔案是否為有效的起動畫面主題檔案。"
 
-#: ../engines/balou/config.c:344 ../engines/balou/config.c:949
+#: ../engines/balou/config.c:344 ../engines/balou/config.c:953
 #: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
-#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1231
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1212
 msgid "_Close"
 msgstr "關閉(_C)"
 
@@ -98,23 +98,23 @@ msgstr "匯出主題(_E)"
 msgid "Balou theme"
 msgstr "「Balou」主題"
 
-#: ../engines/balou/config.c:945
+#: ../engines/balou/config.c:949
 msgid "Configure Balou..."
 msgstr "設置 Balou..."
 
-#: ../engines/balou/config.c:987
+#: ../engines/balou/config.c:991
 msgid "Balou"
 msgstr "Balou"
 
-#: ../engines/balou/config.c:988
+#: ../engines/balou/config.c:992
 msgid "Balou Splash Engine"
 msgstr "Balou 起動畫面引擎"
 
-#: ../engines/mice/mice.c:385
+#: ../engines/mice/mice.c:379
 msgid "Mice"
 msgstr "Mice"
 
-#: ../engines/mice/mice.c:386
+#: ../engines/mice/mice.c:380
 msgid "Mice Splash Engine"
 msgstr "Mice 起動畫面引擎"
 
@@ -492,7 +492,7 @@ msgstr "無論如何都要繼續"
 msgid "Try again"
 msgstr "重試"
 
-#: ../xfce4-session/xfsm-manager.c:619
+#: ../xfce4-session/xfsm-manager.c:617
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -501,69 +501,69 @@ msgid ""
 "incorrectly."
 msgstr "無法得知防失敗工作階段的名稱。可能原因：xfcond 並非執行中 (D-Bus 設置問題)；環境變數 $XDG_CONFIG_DIRS 的設定不正確 (一定要包含「%s」)，或是 xfce4-session 安裝不正確。"
 
-#: ../xfce4-session/xfsm-manager.c:630
+#: ../xfce4-session/xfsm-manager.c:628
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "指定的防失敗工作階段 (「%s」) 並未標記為防失敗工作階段。"
 
-#: ../xfce4-session/xfsm-manager.c:677
+#: ../xfce4-session/xfsm-manager.c:658
 msgid "The list of applications in the failsafe session is empty."
 msgstr "防失敗工作階段內的應用程式清單是空的。"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:724
+#: ../xfce4-session/xfsm-manager.c:705
 msgid "Session Manager Error"
 msgstr "工作階段管理程式出錯"
 
-#: ../xfce4-session/xfsm-manager.c:726
+#: ../xfce4-session/xfsm-manager.c:707
 msgid "Unable to load a failsafe session"
 msgstr "無法載入防失敗工作階段"
 
-#: ../xfce4-session/xfsm-manager.c:728
+#: ../xfce4-session/xfsm-manager.c:709
 msgid "_Quit"
 msgstr "退出(_Q)"
 
-#: ../xfce4-session/xfsm-manager.c:1221
+#: ../xfce4-session/xfsm-manager.c:1202
 msgid "Shutdown Failed"
 msgstr "關機失敗"
 
-#: ../xfce4-session/xfsm-manager.c:1224
+#: ../xfce4-session/xfsm-manager.c:1205
 msgid "Failed to suspend session"
 msgstr "無法暫停工作階段"
 
-#: ../xfce4-session/xfsm-manager.c:1226
+#: ../xfce4-session/xfsm-manager.c:1207
 msgid "Failed to hibernate session"
 msgstr "無法休眠工作階段"
 
-#: ../xfce4-session/xfsm-manager.c:1228
+#: ../xfce4-session/xfsm-manager.c:1209
 msgid "Failed to hybrid sleep session"
 msgstr "工作階段混合睡眠失敗"
 
-#: ../xfce4-session/xfsm-manager.c:1229
+#: ../xfce4-session/xfsm-manager.c:1210
 msgid "Failed to switch user"
 msgstr "切換使用者失敗"
 
-#: ../xfce4-session/xfsm-manager.c:1535
+#: ../xfce4-session/xfsm-manager.c:1516
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "只能在客戶端為閒置狀態時終止它們"
 
-#: ../xfce4-session/xfsm-manager.c:2192
+#: ../xfce4-session/xfsm-manager.c:2173
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "當請求檢查點時，工作階段管理程式一定要處於閒置狀態"
 
-#: ../xfce4-session/xfsm-manager.c:2262 ../xfce4-session/xfsm-manager.c:2282
+#: ../xfce4-session/xfsm-manager.c:2243 ../xfce4-session/xfsm-manager.c:2263
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "當請求關機時，工作階段管理程式一定要處於閒置狀態"
 
-#: ../xfce4-session/xfsm-manager.c:2327
+#: ../xfce4-session/xfsm-manager.c:2308
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "當請求重新啟動時，工作階段管理程式一定要處於閒置狀態"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:182
+#: ../xfce4-session/xfsm-logout-dialog.c:183
 #, c-format
 msgid "Log out %s"
 msgstr "登出 %s"
@@ -571,39 +571,39 @@ msgstr "登出 %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:224
+#: ../xfce4-session/xfsm-logout-dialog.c:225
 msgid "_Log Out"
 msgstr "登出(_L)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:244
+#: ../xfce4-session/xfsm-logout-dialog.c:245
 msgid "_Restart"
 msgstr "重新啟動(_R)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:264
+#: ../xfce4-session/xfsm-logout-dialog.c:265
 msgid "Shut _Down"
 msgstr "關機(_D)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:287
+#: ../xfce4-session/xfsm-logout-dialog.c:288
 msgid "Sus_pend"
 msgstr "暫停(_P)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:321
+#: ../xfce4-session/xfsm-logout-dialog.c:322
 msgid "_Hibernate"
 msgstr "休眠(_H)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:352
-msgid "_Hybrid Sleep"
-msgstr "混合睡眠(_H)"
+#: ../xfce4-session/xfsm-logout-dialog.c:353
+msgid "H_ybrid Sleep"
+msgstr "混合式睡眠(_Y)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:383
+#: ../xfce4-session/xfsm-logout-dialog.c:384
 msgid "Switch _User"
 msgstr "切換使用者(_U)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:408
+#: ../xfce4-session/xfsm-logout-dialog.c:409
 msgid "_Save session for future logins"
 msgstr "儲存工作階段以供往後使用(_S)"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:436
+#: ../xfce4-session/xfsm-logout-dialog.c:437
 msgid "An error occurred"
 msgstr "遭遇錯誤"
 
@@ -894,16 +894,16 @@ msgid ""
 msgstr "這些應用程式是目前執行的工作階段的一部份，當您登出時可以被儲存。下面的變更將只會在工作階段儲存時生效。"
 
 #: ../settings/xfce4-session-settings.ui.h:23
+msgid "Save Sess_ion"
+msgstr "儲存工作階段(_I)"
+
+#: ../settings/xfce4-session-settings.ui.h:24
 msgid "Empty the session cache"
 msgstr "清空工作階段快取"
 
-#: ../settings/xfce4-session-settings.ui.h:24
+#: ../settings/xfce4-session-settings.ui.h:25
 msgid "Clear save_d sessions"
 msgstr "清除已儲存的工作階段(_D)"
-
-#: ../settings/xfce4-session-settings.ui.h:25
-msgid "Save Sess_ion"
-msgstr "儲存工作階段(_I)"
 
 #: ../settings/xfce4-session-settings.ui.h:26
 msgid "Quit the program, and remove it from the session"
