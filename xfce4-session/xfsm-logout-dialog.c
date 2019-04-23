@@ -162,6 +162,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+  gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (dialog)), "xfsm-logout-dialog");
 
   /* load xfconf settings */
   channel = xfsm_open_config ();
@@ -183,6 +184,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   label_str = g_strdup_printf (_("Log out %s"), username);
   label = gtk_label_new (label_str);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
+  gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (label)), "xfsm-logout-label");
   gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, TRUE, 0);
   gtk_widget_show (label);
   g_free (label_str);
@@ -212,11 +214,13 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
 
   button_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, BORDER);
   gtk_box_pack_start (GTK_BOX (vbox), button_vbox, FALSE, TRUE, 0);
+  gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (button_vbox)), "xfsm-logout-buttons");
   gtk_widget_show (button_vbox);
 
   /* row for logout/shutdown and reboot */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, BORDER);
   gtk_box_pack_start (GTK_BOX (button_vbox), hbox, FALSE, TRUE, 0);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_widget_show (hbox);
 
   /**
@@ -272,6 +276,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
 
   /* new row for suspend/hibernate/hybrid sleep */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, BORDER);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (button_vbox), hbox, FALSE, TRUE, 0);
 
   /**
