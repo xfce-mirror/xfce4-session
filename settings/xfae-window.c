@@ -87,11 +87,11 @@ xfae_window_init (XfaeWindow *window)
   vbox = GTK_WIDGET(window);
   gtk_orientable_set_orientation (GTK_ORIENTABLE (vbox),
                                   GTK_ORIENTATION_VERTICAL);
-  gtk_box_set_spacing (GTK_BOX (vbox), 6);
+  gtk_box_set_spacing (GTK_BOX (vbox), 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 6);
   gtk_widget_show (hbox);
 
   img = gtk_image_new_from_icon_name ("dialog-information", GTK_ICON_SIZE_DIALOG);
@@ -172,8 +172,9 @@ xfae_window_init (XfaeWindow *window)
 
   gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
 
-  bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, TRUE, 0);
+  gtk_style_context_add_class (gtk_widget_get_style_context (bbox), "inline-toolbar");
   gtk_widget_show (bbox);
 
   button = gtk_button_new_with_label (_("Add"));
