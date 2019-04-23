@@ -837,8 +837,6 @@ xfsm_logout_dialog (const gchar      *session_name,
                              "type", GTK_WINDOW_POPUP,
                              "screen", screen, NULL);
 
-      xfsm_window_add_border (GTK_WINDOW (dialog));
-
       gtk_widget_realize (dialog);
       gdk_window_set_override_redirect (gtk_widget_get_window (dialog), TRUE);
       gdk_window_raise (gtk_widget_get_window (dialog));
