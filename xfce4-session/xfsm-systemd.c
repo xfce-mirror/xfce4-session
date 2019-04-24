@@ -38,11 +38,11 @@
 #define SYSTEMD_SUSPEND_ACTION          "Suspend"
 #define SYSTEMD_HIBERNATE_ACTION        "Hibernate"
 #define SYSTEMD_HYBRID_SLEEP_ACTION     "HybridSleep"
-#define SYSTEMD_REBOOT_TEST             "org.freedesktop.login1.reboot"
-#define SYSTEMD_POWEROFF_TEST           "org.freedesktop.login1.power-off"
-#define SYSTEMD_SUSPEND_TEST            "org.freedesktop.login1.suspend"
-#define SYSTEMD_HIBERNATE_TEST          "org.freedesktop.login1.hibernate"
-#define SYSTEMD_HYBRID_SLEEP_TEST       "org.freedesktop.login1.hibernate"
+#define SYSTEMD_REBOOT_TEST             "CanReboot"
+#define SYSTEMD_POWEROFF_TEST           "CanPowerOff"
+#define SYSTEMD_SUSPEND_TEST            "CanSuspend"
+#define SYSTEMD_HIBERNATE_TEST          "CanHibernate"
+#define SYSTEMD_HYBRID_SLEEP_TEST       "CanHybridSleep"
 
 
 
@@ -132,33 +132,42 @@ xfsm_systemd_can_method (XfsmSystemd  *systemd,
                          const gchar  *method,
                          GError      **error)
 {
-#ifdef HAVE_POLKIT
-  PolkitAuthorizationResult *res;
-  GError                    *local_error = NULL;
-#endif
-
+  GDBusConnection *bus;
+  GError *local_error = NULL;
+  GVariant *dbus_ret;
+  const gchar *str;
   *can_method = FALSE;
 
-#ifdef HAVE_POLKIT
-  res = polkit_authority_check_authorization_sync (systemd->authority,
-                                                   systemd->subject,
-                                                   method,
-                                                   NULL,
-                                                   POLKIT_CHECK_AUTHORIZATION_FLAGS_NONE,
-                                                   NULL,
-                                                   &local_error);
+  bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, error);
+  if (G_UNLIKELY (bus == NULL))
+    return FALSE;
 
-  if (res == NULL)
+  dbus_ret = g_dbus_connection_call_sync (bus,
+                                          SYSTEMD_DBUS_NAME,
+                                          SYSTEMD_DBUS_PATH,
+                                          SYSTEMD_DBUS_INTERFACE,
+                                          method,
+                                          NULL,
+                                          NULL,
+                                          G_DBUS_CALL_FLAGS_NONE,
+                                          -1,
+                                          NULL,
+                                          &local_error);
+
+  if (dbus_ret != NULL)
+    {
+      g_variant_get (dbus_ret, "(&s)", &str);
+      if (!strcmp (str, "yes"))
+        *can_method = TRUE;
+    }
+
+  g_object_unref (G_OBJECT (bus));
+
+  if (local_error != NULL)
     {
       g_propagate_error (error, local_error);
       return FALSE;
     }
-
-  *can_method = polkit_authorization_result_get_is_authorized (res)
-                || polkit_authorization_result_get_is_challenge (res);
-
-  g_object_unref (G_OBJECT (res));
-#endif
 
   return TRUE;
 }
