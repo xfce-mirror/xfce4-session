@@ -43,6 +43,7 @@
 #include <unistd.h>
 #endif
 
+#include <gtk/gtk.h>
 #include <gdk/gdkx.h>
 
 #include <libxfce4util/libxfce4util.h>
@@ -115,15 +116,12 @@ run (const gchar *command)
 
 
 void
-xfsm_compat_kde_startup (XfsmSplashScreen *splash)
+xfsm_compat_kde_startup ()
 {
   gchar command[256];
 
   if (G_UNLIKELY (kde_compat_started))
     return;
-
-  if (G_LIKELY (splash != NULL))
-    xfsm_splash_screen_next (splash, _("Starting KDE services"));
 
   run ("kdeinit4");
 
@@ -156,4 +154,3 @@ xfsm_compat_kde_shutdown (void)
 
   kde_compat_started = FALSE;
 }
-

@@ -58,7 +58,6 @@
 
 /* global variables */
 gboolean          verbose = FALSE;
-XfsmSplashScreen *splash_screen = NULL;
 
 void
 xfsm_failsafe_client_free (FailsafeClient *fclient)

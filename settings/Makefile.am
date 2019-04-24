@@ -2,10 +2,7 @@ bin_PROGRAMS = xfce4-session-settings
 
 xfce4_session_settings_SOURCES = \
 	main.c \
-	module.c \
-	module.h \
 	session-editor.c \
-	splash-settings.c \
 	xfae-dialog.c \
 	xfae-dialog.h \
 	xfae-model.c \
@@ -23,7 +20,6 @@ xfce4_session_settings_SOURCES = \
 
 xfce4_session_settings_CFLAGS = \
 	-DLOCALEDIR=\"$(localedir)\" \
-	-DMODULESDIR=\"$(libdir)/xfce4/session/splash-engines\" \
 	-DG_LOG_DOMAIN=\"xfce4-session-settings\" \
 	-I$(top_srcdir) \
 	$(LIBXFCE4UTIL_CFLAGS) \

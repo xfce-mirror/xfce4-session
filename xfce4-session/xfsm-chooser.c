@@ -36,7 +36,6 @@
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
 
-#include <libxfsm/xfsm-splash-engine.h>
 #include <libxfsm/xfsm-util.h>
 
 #include <xfce4-session/xfsm-chooser.h>
@@ -146,12 +145,20 @@ xfsm_chooser_init (XfsmChooser *chooser)
   GtkListStore *model;
   GtkWidget *button;
   GtkWidget *swin;
+  GtkWidget *vbox;
+  GtkWidget *label;
   GtkWidget *dbox;
 
   dbox = gtk_dialog_get_content_area(GTK_DIALOG (chooser));
 
   g_signal_connect_after (G_OBJECT (chooser), "realize",
                           G_CALLBACK (xfsm_chooser_realized), chooser);
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_widget_set_margin_bottom (vbox, 6);
+  gtk_box_pack_start (GTK_BOX (dbox), vbox, TRUE, TRUE, 0);
+  label = gtk_label_new (_("Choose session"));
+  gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
 
   /* scrolled window */
   swin = gtk_scrolled_window_new (NULL, NULL);
@@ -160,8 +167,11 @@ xfsm_chooser_init (XfsmChooser *chooser)
                                   GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (swin),
                                        GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (dbox), swin, TRUE, TRUE, 0);
-  gtk_widget_show (swin);
+  gtk_scrolled_window_set_min_content_height (GTK_SCROLLED_WINDOW (swin),
+                                              200);
+  gtk_box_pack_start (GTK_BOX (vbox), swin, TRUE, TRUE, 0);
+
+  gtk_widget_show_all (vbox);
 
   /* tree view */
   model = gtk_list_store_new (N_COLUMNS,
@@ -235,4 +245,3 @@ xfsm_chooser_realized (GtkWidget   *widget,
   gdk_window_set_cursor (gtk_widget_get_window(widget), cursor);
   g_object_unref (cursor);
 }
-

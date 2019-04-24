@@ -1,4 +1,0 @@
-SUBDIRS =								\
-	balou								\
-	mice								\
-	simple

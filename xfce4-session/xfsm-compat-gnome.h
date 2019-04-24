@@ -24,9 +24,7 @@
 #ifndef __XFSM_COMPAT_GNOME_H__
 #define __XFSM_COMPAT_GNOME_H__
 
-#include <xfce4-session/xfsm-splash-screen.h>
-
-void xfsm_compat_gnome_startup (XfsmSplashScreen *splash);
+void xfsm_compat_gnome_startup ();
 void xfsm_compat_gnome_shutdown (void);
 
 #endif /* !__XFSM_COMPAT_GNOME_H__ */

@@ -23,10 +23,9 @@
 #define __XFSM_GLOBAL_H__
 
 #include <glib.h>
-
+#include <gdk/gdkx.h>
 #include <X11/SM/SMlib.h>
 
-#include <xfce4-session/xfsm-splash-screen.h>
 #include <xfce4-session/xfsm-shutdown.h> /* XfsmShutdownType */
 
 #include "settings/xfae-model.h" /* XfsmRunHook */
@@ -45,8 +44,6 @@ void xfsm_failsafe_client_free (FailsafeClient *fclient);
 
 
 extern gboolean          verbose;
-extern XfsmSplashScreen *splash_screen;
-
 
 #if defined(G_HAVE_ISO_VARARGS)
 

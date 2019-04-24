@@ -5,8 +5,6 @@ AM_CPPFLAGS =								\
 lib_LTLIBRARIES = libxfsm-4.6.la
 
 libxfsm_4_6_la_SOURCES =						\
-	xfsm-splash-rc.c						\
-	xfsm-splash-rc.h						\
 	xfsm-util.h							\
 	xfsm-util.c
 
@@ -30,16 +28,8 @@ libxfsm_4_6_la_LIBADD =							\
 	$(LIBXFCE4UI_LIBS)						\
 	$(XFCONF_LIBS)
 
-
 libxfsmincludedir =							\
 	$(includedir)/xfce4/xfce4-session-4.6/libxfsm
 
-libxfsminclude_HEADERS = 						\
-	xfsm-splash-engine.h						\
-	xfsm-splash-rc.h
-
-
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = xfce4-session-2.0.pc
-
-

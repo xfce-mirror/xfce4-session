@@ -42,6 +42,9 @@ G_BEGIN_DECLS
 #define SAVE_TIMEOUT           (    60 * 1000)
 #define STARTUP_TIMEOUT        (     8 * 1000)
 #define RESTART_RESET_TIMEOUT  (5 * 60 * 1000)
+#define XFSM_CHOOSE_LOGOUT  0
+#define XFSM_CHOOSE_LOAD    1
+#define XFSM_CHOOSE_NEW     2
 
 typedef enum
 {

@@ -37,6 +37,7 @@ G_BEGIN_DECLS;
 
 typedef struct _XfsmChooser XfsmChooser;
 typedef struct _XfsmChooserClass XfsmChooserClass;
+typedef struct _XfsmSessionInfo  XfsmSessionInfo;
 
 struct _XfsmChooserClass
 {
@@ -48,6 +49,13 @@ struct _XfsmChooser
   GtkDialog dialog;
 
   GtkWidget *tree;
+};
+
+struct _XfsmSessionInfo
+{
+  gchar     *name;      /* name of the session */
+  time_t     atime;     /* last access time */
+  GdkPixbuf *preview;   /* preview icon (52x42) */
 };
 
 GType xfsm_chooser_get_type (void) G_GNUC_CONST;

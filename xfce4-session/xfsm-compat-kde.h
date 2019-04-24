@@ -22,10 +22,8 @@
 #ifndef __XFSM_COMPAT_KDE_H__
 #define __XFSM_COMPAT_KDE_H__
 
-#include <xfce4-session/xfsm-splash-screen.h>
 
-
-void xfsm_compat_kde_startup (XfsmSplashScreen *splash);
+void xfsm_compat_kde_startup ();
 void xfsm_compat_kde_shutdown (void);
 
 #endif /* !__XFSM_COMPAT_KDE_H__ */

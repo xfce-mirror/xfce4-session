@@ -62,7 +62,6 @@
 #include <xfce4-session/xfsm-compat-kde.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-manager.h>
-#include <xfce4-session/xfsm-splash-screen.h>
 #include <xfce4-session/xfsm-systemd.h>
 
 #include <xfce4-session/xfsm-startup.h>
@@ -392,20 +391,6 @@ xfsm_startup_shutdown (void)
 }
 
 
-
-static gboolean
-destroy_splash (gpointer user_data)
-{
-  if (G_LIKELY (splash_screen != NULL))
-    {
-      xfsm_splash_screen_free (splash_screen);
-      splash_screen = NULL;
-    }
-
-  return FALSE;
-}
-
-
 static const gchar*
 figure_app_name (const gchar *program_path)
 {
@@ -470,21 +455,7 @@ figure_app_name (const gchar *program_path)
 static void
 xfsm_startup_autostart (XfsmManager *manager)
 {
-  gint n;
-
-  n = xfsm_launch_desktop_files_on_login (FALSE);
-
-  if (n > 0)
-    {
-      if (G_LIKELY (splash_screen != NULL))
-        xfsm_splash_screen_next (splash_screen, _("Performing Autostart..."));
-
-      g_timeout_add (2000, destroy_splash, NULL);
-    }
-  else
-    {
-      g_timeout_add (1000, destroy_splash, NULL);
-    }
+  xfsm_launch_desktop_files_on_login (FALSE);
 }
 
 
@@ -493,10 +464,10 @@ void
 xfsm_startup_foreign (XfsmManager *manager)
 {
   if (xfsm_manager_get_compat_startup(manager, XFSM_MANAGER_COMPAT_KDE))
-    xfsm_compat_kde_startup (splash_screen);
+    xfsm_compat_kde_startup ();
 
   if (xfsm_manager_get_compat_startup(manager, XFSM_MANAGER_COMPAT_GNOME))
-    xfsm_compat_gnome_startup (splash_screen);
+    xfsm_compat_gnome_startup ();
 }
 
 
@@ -582,9 +553,6 @@ xfsm_startup_at (XfsmManager *manager)
 
   if (n > 0)
     {
-      if (G_LIKELY (splash_screen != NULL))
-        xfsm_splash_screen_next (splash_screen, _("Starting Assistive Technologies"));
-
       xfsm_startup_at_set_gtk_modules ();
 
       /* wait for 2 seconds until the at-spi registered, not very nice
@@ -632,14 +600,6 @@ xfsm_startup_failsafe (XfsmManager *manager)
 
   while ((fclient = g_queue_pop_head (failsafe_clients)))
     {
-      /* FIXME: splash */
-      /* let the user know whats going on */
-      if (G_LIKELY (splash_screen != NULL))
-        {
-          xfsm_splash_screen_next (splash_screen,
-                                   figure_app_name (fclient->command[0]));
-        }
-
       /* start the application */
       xfsm_start_application (fclient->command, NULL, fclient->screen,
                               NULL, NULL, NULL);
@@ -777,39 +737,6 @@ xfsm_startup_session_next_prio_group (XfsmManager *manager)
           /* we're not starting this one yet; put it back */
           g_queue_push_head (pending_properties, properties);
           break;
-        }
-
-      /* FIXME: splash */
-      if (G_LIKELY (splash_screen != NULL))
-        {
-          const gchar *app_name = NULL;
-          const gchar *desktop_file;
-          XfceRc      *rcfile = NULL;
-
-          desktop_file = xfsm_properties_get_string (properties, GsmDesktopFile);
-
-          if (desktop_file)
-            {
-              rcfile = xfce_rc_simple_open (desktop_file, TRUE);
-              if (rcfile)
-                {
-                  xfce_rc_set_group (rcfile, "Desktop Entry");
-                  app_name = xfce_rc_read_entry (rcfile, "Name", NULL);
-                }
-            }
-
-          if (!app_name)
-            app_name = figure_app_name (xfsm_properties_get_string (properties,
-                                                                    SmProgram));
-
-          xfsm_splash_screen_next (splash_screen, app_name);
-
-          if (rcfile)
-            {
-              /* delay closing because app_name belongs to the rcfile
-               * if we found it in the file */
-              xfce_rc_close (rcfile);
-            }
         }
 
       if (G_LIKELY (xfsm_startup_start_properties (properties, manager)))

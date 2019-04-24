@@ -53,7 +53,6 @@
 
 #include <libxfce4ui/libxfce4ui.h>
 
-#include <libxfsm/xfsm-splash-engine.h>
 #include <libxfsm/xfsm-util.h>
 
 #include <xfce4-session/xfsm-manager-dbus.h>
@@ -135,6 +134,9 @@ enum
 
 static guint manager_signals[LAST_SIGNAL] = { 0, };
 
+int               xfsm_splash_screen_choose (GList            *sessions,
+                                             const gchar      *default_session,
+                                             gchar           **name_return);
 static void       xfsm_manager_finalize (GObject *obj);
 
 static gboolean   xfsm_manager_startup (XfsmManager *manager);
@@ -473,7 +475,7 @@ xfsm_manager_choose_session (XfsmManager *manager,
 
   if (sessions != NULL)
     {
-      result = xfsm_splash_screen_choose (splash_screen, sessions,
+      result = xfsm_splash_screen_choose (sessions,
                                           manager->session_name, &name);
 
       if (result == XFSM_CHOOSE_LOGOUT)
@@ -643,6 +645,118 @@ xfsm_manager_load_failsafe (XfsmManager   *manager,
 }
 
 
+int
+xfsm_splash_screen_choose (GList            *sessions,
+                           const gchar      *default_session,
+                           gchar           **name_return)
+{
+  GdkDisplay *display;
+  GdkScreen  *screen;
+  int         monitor;
+  GtkWidget  *chooser;
+  GtkWidget  *label;
+  GtkWidget  *dialog;
+  GtkWidget  *entry;
+  gchar       title[256];
+  int         result;
+
+  g_assert (default_session != NULL);
+
+
+again:
+      display = gdk_display_get_default ();
+      screen = xfce_gdk_screen_get_active (&monitor);
+
+      if (G_UNLIKELY (screen == NULL))
+        {
+          screen  = gdk_display_get_default_screen (display);
+          monitor = 0;
+        }
+
+      chooser = g_object_new (XFSM_TYPE_CHOOSER,
+                              "type", GTK_WINDOW_POPUP,
+                              NULL);
+      xfsm_window_add_border (GTK_WINDOW (chooser));
+      xfsm_chooser_set_sessions (XFSM_CHOOSER (chooser),
+                                 sessions, default_session);
+      gtk_window_set_screen (GTK_WINDOW (chooser), screen);
+      gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_CENTER);
+      result = gtk_dialog_run (GTK_DIALOG (chooser));
+
+      if (result == XFSM_RESPONSE_LOAD)
+        {
+          if (name_return != NULL)
+            *name_return = xfsm_chooser_get_session (XFSM_CHOOSER (chooser));
+          result = XFSM_CHOOSE_LOAD;
+        }
+      else if (result == XFSM_RESPONSE_NEW)
+        {
+          result = XFSM_CHOOSE_NEW;
+        }
+      else
+        {
+          result = XFSM_CHOOSE_LOGOUT;
+        }
+
+      gtk_widget_destroy (chooser);
+
+      if (result == XFSM_CHOOSE_NEW)
+        {
+          dialog = gtk_dialog_new_with_buttons (NULL,
+                                                NULL,
+                                                GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                _("_Cancel"),
+                                                GTK_RESPONSE_CANCEL,
+                                                _("_OK"),
+                                                GTK_RESPONSE_OK,
+                                                NULL);
+          gtk_dialog_set_default_response (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK);
+          gtk_window_set_screen (GTK_WINDOW (dialog), screen);
+          gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
+          g_snprintf (title, 256, "<big>%s</big>",
+                      _("Choose a name for the new session:"));
+          label = gtk_label_new (title);
+          gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+          gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                              label, TRUE, TRUE, 6);
+          gtk_widget_show (label);
+
+          entry = gtk_entry_new ();
+          gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                              entry, TRUE, TRUE, 6);
+          gtk_widget_show (entry);
+
+          xfsm_window_add_border (GTK_WINDOW (dialog));
+
+again1:
+          result = gtk_dialog_run (GTK_DIALOG (dialog));
+
+          if (result != GTK_RESPONSE_OK)
+            {
+              gtk_widget_destroy (dialog);
+              goto again;
+            }
+
+          if (name_return != NULL)
+            {
+              *name_return = gtk_editable_get_chars (GTK_EDITABLE (entry),
+                                                     0, -1);
+              if (strlen (*name_return) == 0)
+                {
+                  g_free (*name_return);
+                  goto again1;
+                }
+            }
+
+          gtk_widget_destroy (dialog);
+          result = XFSM_CHOOSE_NEW;
+        }
+
+  return result;
+}
+
+
 static void
 xfsm_manager_load_settings (XfsmManager   *manager,
                             XfconfChannel *channel)
@@ -673,12 +787,6 @@ xfsm_manager_load_settings (XfsmManager   *manager,
 
       if (!xfsm_manager_load_failsafe (manager, channel, &errorstr))
         {
-          if (G_LIKELY (splash_screen != NULL))
-            {
-              xfsm_splash_screen_free (splash_screen);
-              splash_screen = NULL;
-            }
-
           /* FIXME: migrate this into the splash screen somehow so the
            * window doesn't look ugly (right now no WM is running, so it
            * won't have window decorations). */
@@ -731,26 +839,10 @@ xfsm_manager_load (XfsmManager   *manager,
 gboolean
 xfsm_manager_restart (XfsmManager *manager)
 {
-  GdkPixbuf *preview;
-  unsigned   steps;
-
   g_assert (manager->session_name != NULL);
 
   /* setup legacy application handling */
   xfsm_legacy_init ();
-
-  /* tell splash screen that the session is starting now */
-  preview = xfsm_load_session_preview (manager->session_name);
-  if (preview == NULL)
-    {
-      G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-      /* TODO: Turn this into a normal pixbuf? */
-      preview = gdk_pixbuf_new_from_inline (-1, xfsm_chooser_icon_data, FALSE, NULL);
-      G_GNUC_END_IGNORE_DEPRECATIONS
-    }
-  steps = g_queue_get_length (manager->failsafe_mode ? manager->failsafe_clients : manager->pending_properties);
-  xfsm_splash_screen_start (splash_screen, manager->session_name, preview, steps);
-  g_object_unref (preview);
 
   g_idle_add ((GSourceFunc) xfsm_manager_startup, manager);
 

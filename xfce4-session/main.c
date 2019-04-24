@@ -137,14 +137,6 @@ init_display (XfsmManager   *manager,
               GdkDisplay    *dpy,
               gboolean       disable_tcp)
 {
-  gchar *engine;
-
-  engine = xfconf_channel_get_string (channel, "/splash/Engine", "mice");
-
-  splash_screen = xfsm_splash_screen_new (dpy, engine);
-  g_free (engine);
-  xfsm_splash_screen_next (splash_screen, _("Loading desktop settings"));
-
   gdk_flush ();
 
   sm_init (channel, disable_tcp, manager);
@@ -195,12 +187,10 @@ bus_acquired (GDBusConnection *connection,
 
   if (!opt_disable_tcp && xfconf_channel_get_bool (channel, "/security/EnableTcp", FALSE))
     {
-      /* verify that the DNS settings are ok */
-      xfsm_splash_screen_next (splash_screen, _("Verifying DNS settings"));
+      /* verify that the DNS settings are ok */      
       xfsm_dns_check ();
     }
 
-  xfsm_splash_screen_next (splash_screen, _("Loading session data"));
 
   xfsm_startup_init (channel);
   xfsm_manager_load (manager, channel);

@@ -243,7 +243,7 @@ xfsm_compat_gnome_smproxy_shutdown (void)
 
 
 void
-xfsm_compat_gnome_startup (XfsmSplashScreen *splash)
+xfsm_compat_gnome_startup ()
 {
   if (G_UNLIKELY (gnome_compat_started))
     return;
@@ -251,8 +251,6 @@ xfsm_compat_gnome_startup (XfsmSplashScreen *splash)
   xfsm_compat_gnome_smproxy_startup ();
 
   /* fire up the keyring daemon */
-  if (G_LIKELY (splash != NULL))
-    xfsm_splash_screen_next (splash, _("Starting The Gnome Keyring Daemon"));
   gnome_keyring_daemon_startup ();
 
   gnome_compat_started = TRUE;
@@ -272,4 +270,3 @@ xfsm_compat_gnome_shutdown (void)
 
   gnome_compat_started = FALSE;
 }
-

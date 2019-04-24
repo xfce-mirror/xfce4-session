@@ -167,7 +167,7 @@ xfsm_dns_check (void)
 
       gtk_dialog_set_default_response (GTK_DIALOG (msgbox), RESPONSE_TRY_AGAIN);
 
-      response = xfsm_splash_screen_run (splash_screen, msgbox);
+      response = gtk_dialog_run (GTK_DIALOG (msgbox));
       if (response != RESPONSE_TRY_AGAIN)
         break;
 
@@ -177,5 +177,3 @@ xfsm_dns_check (void)
   if (msgbox != NULL)
     gtk_widget_destroy (msgbox);
 }
-
-

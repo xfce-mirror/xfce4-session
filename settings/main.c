@@ -123,7 +123,6 @@ main(int argc,
         return EXIT_FAILURE;
     }
 
-    splash_settings_init(builder);
     session_editor_init(builder);
 
     /* FIXME: someday, glade-ify this, maybe. */
@@ -132,7 +131,7 @@ main(int argc,
     notebook = GTK_WIDGET(gtk_builder_get_object(builder, "plug-child"));
     lbl = gtk_label_new_with_mnemonic(_("App_lication Autostart"));
     gtk_widget_show(lbl);
-    gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), xfae_page, lbl, 2);
+    gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), xfae_page, lbl, 1);
 
     channel = xfconf_channel_get(SETTINGS_CHANNEL);
 

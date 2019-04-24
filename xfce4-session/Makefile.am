@@ -63,8 +63,6 @@ xfce4_session_SOURCES =							\
 	xfsm-shutdown-fallback.h				\
 	xfsm-shutdown.c							\
 	xfsm-shutdown.h							\
-	xfsm-splash-screen.c						\
-	xfsm-splash-screen.h						\
 	xfsm-startup.c							\
 	xfsm-startup.h							\
 	xfce-screensaver.c						\
