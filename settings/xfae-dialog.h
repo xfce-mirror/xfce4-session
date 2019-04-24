@@ -23,6 +23,7 @@
 #define __XFAE_DIALOG_H__
 
 #include <gtk/gtk.h>
+#include "xfae-model.h" /* Type XfsmRunHook */
 
 G_BEGIN_DECLS;
 
@@ -40,12 +41,14 @@ GType      xfae_dialog_get_type (void) G_GNUC_CONST;
 
 GtkWidget *xfae_dialog_new      (const gchar *name,
                                  const gchar *descr,
-                                 const gchar *command);
+                                 const gchar *command,
+                                 XfsmRunHook  trigger);
 
-void       xfae_dialog_get      (XfaeDialog *dialog,
-                                 gchar     **name,
-                                 gchar     **descr,
-                                 gchar     **command);
+void       xfae_dialog_get      (XfaeDialog   *dialog,
+                                 gchar       **name,
+                                 gchar       **descr,
+                                 gchar       **command,
+                                 XfsmRunHook  *trigger);
 
 G_END_DECLS;
 

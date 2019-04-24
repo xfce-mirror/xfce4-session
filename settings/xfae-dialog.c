@@ -44,6 +44,7 @@ struct _XfaeDialog
   GtkWidget *name_entry;
   GtkWidget *descr_entry;
   GtkWidget *command_entry;
+  GtkWidget *run_hook_combo;
 };
 
 
@@ -62,12 +63,15 @@ xfae_dialog_class_init (XfaeDialogClass *klass)
 static void
 xfae_dialog_init (XfaeDialog *dialog)
 {
-  GtkWidget *content_area;
-  GtkWidget *grid;
-  GtkWidget *label;
-  GtkWidget *hbox;
-  GtkWidget *button;
-  GtkWidget *image;
+  GtkWidget  *content_area;
+  GtkWidget  *grid;
+  GtkWidget  *label;
+  GtkWidget  *hbox;
+  GtkWidget  *button;
+  GtkWidget  *image;
+  GEnumClass *klass;
+  GEnumValue *enum_struct;
+  guint       i;
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
                           _("Cancel"), GTK_RESPONSE_CANCEL,
@@ -127,6 +131,27 @@ xfae_dialog_init (XfaeDialog *dialog)
                        NULL);
   gtk_grid_attach (GTK_GRID (grid), hbox, 1, 2, 1, 1);
   gtk_widget_show (hbox);
+
+  label = g_object_new (GTK_TYPE_LABEL,
+                        "label", _("Trigger:"),
+                        "xalign", 0.0f,
+                        NULL);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 3, 1, 1);
+  gtk_widget_show (label);
+
+  dialog->run_hook_combo = gtk_combo_box_text_new ();
+  gtk_widget_set_margin_bottom (dialog->run_hook_combo, 5);
+  klass = g_type_class_ref (XFSM_TYPE_RUN_HOOK);
+  for (i = 0; i < klass->n_values; ++i)
+    {
+      enum_struct =  g_enum_get_value (klass, i);
+      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (dialog->run_hook_combo), enum_struct->value_nick);
+    }
+  g_type_class_unref (klass);
+  gtk_combo_box_set_active (GTK_COMBO_BOX (dialog->run_hook_combo), 0);
+
+  gtk_grid_attach (GTK_GRID (grid), dialog->run_hook_combo, 1, 3, 1, 1);
+  gtk_widget_show (dialog->run_hook_combo);
 
   dialog->command_entry = g_object_new (GTK_TYPE_ENTRY,
                                         "activates-default", TRUE,
@@ -217,7 +242,8 @@ xfae_dialog_browse (XfaeDialog *dialog)
 GtkWidget*
 xfae_dialog_new (const gchar *name,
                  const gchar *descr,
-                 const gchar *command)
+                 const gchar *command,
+                 XfsmRunHook  run_hook)
 {
   XfaeDialog *dialog = g_object_new (XFAE_TYPE_DIALOG, NULL);
 
@@ -227,6 +253,7 @@ xfae_dialog_new (const gchar *name,
     gtk_entry_set_text (GTK_ENTRY (dialog->descr_entry), descr );
   if (command)
     gtk_entry_set_text (GTK_ENTRY (dialog->command_entry), command);
+  gtk_combo_box_set_active (GTK_COMBO_BOX (dialog->run_hook_combo), run_hook);
   if (name != NULL || descr != NULL || command != NULL)
     gtk_window_set_title (GTK_WINDOW (dialog), _("Edit application"));
 
@@ -246,19 +273,22 @@ xfae_dialog_new (const gchar *name,
  * from the @dialog.
  **/
 void
-xfae_dialog_get (XfaeDialog *dialog,
-                 gchar     **name,
-                 gchar     **descr,
-                 gchar     **command)
+xfae_dialog_get (XfaeDialog   *dialog,
+                 gchar       **name,
+                 gchar       **descr,
+                 gchar       **command,
+                 XfsmRunHook  *run_hook)
 {
   g_return_if_fail (XFAE_IS_DIALOG (dialog));
   g_return_if_fail (name != NULL);
   g_return_if_fail (descr != NULL);
   g_return_if_fail (command != NULL);
+  g_return_if_fail (run_hook != NULL);
 
   *name = gtk_editable_get_chars (GTK_EDITABLE (dialog->name_entry), 0, -1);
   *descr = gtk_editable_get_chars (GTK_EDITABLE (dialog->descr_entry), 0, -1);
   *command = gtk_editable_get_chars (GTK_EDITABLE (dialog->command_entry), 0, -1);
+  *run_hook = gtk_combo_box_get_active (GTK_COMBO_BOX (dialog->run_hook_combo));
 
   g_strstrip (*name);
   g_strstrip (*descr);

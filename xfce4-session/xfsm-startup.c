@@ -472,7 +472,7 @@ xfsm_startup_autostart (XfsmManager *manager)
 {
   gint n;
 
-  n = xfsm_startup_autostart_xdg (FALSE);
+  n = xfsm_launch_desktop_files_on_login (FALSE);
 
   if (n > 0)
     {
@@ -578,7 +578,7 @@ xfsm_startup_at (XfsmManager *manager)
   gint n, i;
 
   /* start at-spi-dbus-bus and/or at-spi-registryd */
-  n = xfsm_startup_autostart_xdg (TRUE);
+  n = xfsm_launch_desktop_files_on_login (TRUE);
 
   if (n > 0)
     {
@@ -913,5 +913,3 @@ xfsm_startup_handle_failed_startup (XfsmProperties *properties,
       xfsm_startup_session_continue (manager);
     }
 }
-
-

@@ -75,7 +75,29 @@ static XfaeItem          *xfae_item_new               (const gchar        *relpa
 static void               xfae_item_free              (XfaeItem           *item);
 static gboolean           xfae_item_is_removable      (XfaeItem           *item);
 
+GType
+xfsm_run_hook_get_type (void)
+{
+  static GType type = G_TYPE_INVALID;
 
+  if (G_UNLIKELY (type == G_TYPE_INVALID))
+    {
+      static const GEnumValue values[] =
+      {
+        { XFSM_RUN_HOOK_LOGIN,        "XFSM_RUN_HOOK_LOGIN",        N_ ("on login"),        },
+        { XFSM_RUN_HOOK_LOGOUT,       "XFSM_RUN_HOOK_LOGOUT",       N_ ("on logout"),       },
+        { XFSM_RUN_HOOK_SHUTDOWN,     "XFSM_RUN_HOOK_SHUTDOWN",     N_ ("on shutdown"),     },
+        { XFSM_RUN_HOOK_RESTART,      "XFSM_RUN_HOOK_RESTART",      N_ ("on restart"),      },
+        { XFSM_RUN_HOOK_SUSPEND,      "XFSM_RUN_HOOK_SUSPEND",      N_ ("on suspend"),      },
+        { XFSM_RUN_HOOK_HIBERNATE,    "XFSM_RUN_HOOK_HIBERNATE",    N_ ("on hibernate"),    },
+        { XFSM_RUN_HOOK_HYBRID_SLEEP, "XFSM_RUN_HOOK_HYBRID_SLEEP", N_ ("on hybrid sleep"), },
+        { XFSM_RUN_HOOK_SWITCH_USER,  "XFSM_RUN_HOOK_SWITCH_USER",  N_ ("on switch user"),  },
+        { 0,                          NULL,                         NULL,                   },
+      };
+      type = g_enum_register_static ("XfsmRunHook", values);
+    }
+  return type;
+}
 
 struct _XfaeModelClass
 {
@@ -92,12 +114,13 @@ struct _XfaeModel
 
 struct _XfaeItem
 {
-  gchar     *name;
-  GdkPixbuf *icon;
-  gchar     *comment;
-  gchar     *relpath;
-  gboolean   hidden;
-  gchar     *tooltip;
+  gchar       *name;
+  GdkPixbuf   *icon;
+  gchar       *comment;
+  gchar       *relpath;
+  gboolean     hidden;
+  gchar       *tooltip;
+  XfsmRunHook  run_hook;
 
   gboolean   show_in_xfce;
   gboolean   show_in_override;
@@ -204,6 +227,7 @@ xfae_model_get_column_type (GtkTreeModel *tree_model,
     {
     case XFAE_MODEL_COLUMN_NAME:
     case XFAE_MODEL_COLUMN_TOOLTIP:
+    case XFAE_MODEL_RUN_HOOK:
       return G_TYPE_STRING;
 
     case XFAE_MODEL_COLUMN_ICON:
@@ -262,16 +286,50 @@ xfae_model_get_path (GtkTreeModel *tree_model,
 
 
 
+gboolean
+xfae_model_set_run_hook (GtkTreeModel  *tree_model,
+                         GtkTreePath   *path,
+                         GtkTreeIter   *iter,
+                         XfsmRunHook    run_hook,
+                         GError       **error)
+{
+  XfaeItem *item = ((GList *) iter->user_data)->data;
+  XfceRc   *rc;
+
+  /* try to open the resource config */
+  rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG, item->relpath, FALSE);
+  if (G_UNLIKELY (rc == NULL))
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (EIO),
+                   _("Failed to open %s for writing"), item->relpath);
+      return FALSE;
+    }
+
+  xfce_rc_set_group (rc, "Desktop Entry");
+  item->run_hook = run_hook;
+  xfce_rc_write_int_entry (rc, "RunHook", item->run_hook);
+  xfce_rc_close (rc);
+
+  /* tell the view that we have most probably a new state */
+  gtk_tree_model_row_changed (tree_model, path, iter);
+
+  return TRUE;
+}
+
+
+
 static void
 xfae_model_get_value (GtkTreeModel *tree_model,
                       GtkTreeIter  *iter,
                       gint          column,
                       GValue       *value)
 {
-  XfaeModel *model = XFAE_MODEL (tree_model);
-  XfaeItem  *item = ((GList *) iter->user_data)->data;
-  gchar     *name;
-  gchar     *cursive;
+  XfaeModel  *model = XFAE_MODEL (tree_model);
+  XfaeItem   *item = ((GList *) iter->user_data)->data;
+  gchar      *name;
+  gchar      *cursive;
+  GEnumClass *klass;
+  GEnumValue *enum_struct;
 
   g_return_if_fail (XFAE_IS_MODEL (model));
   g_return_if_fail (iter->stamp == model->stamp);
@@ -317,6 +375,14 @@ xfae_model_get_value (GtkTreeModel *tree_model,
     case XFAE_MODEL_COLUMN_TOOLTIP:
       g_value_init (value, G_TYPE_STRING);
       g_value_set_static_string (value, item->tooltip);
+      break;
+
+    case XFAE_MODEL_RUN_HOOK:
+      g_value_init (value, G_TYPE_STRING);
+      klass = g_type_class_ref (XFSM_TYPE_RUN_HOOK);
+      enum_struct =  g_enum_get_value (klass, item->run_hook);
+      g_type_class_unref (klass);
+      g_value_set_static_string (value, enum_struct->value_nick);
       break;
 
     default:
@@ -481,6 +547,7 @@ xfae_item_new (const gchar *relpath)
           if (G_LIKELY (value != NULL))
             item->tooltip = g_markup_printf_escaped ("<b>%s</b> %s", _("Command:"), value);
 
+          item->run_hook = xfce_rc_read_int_entry (rc, "RunHook", XFSM_RUN_HOOK_LOGIN);
           item->hidden = xfce_rc_read_bool_entry (rc, "Hidden", FALSE);
         }
       else
@@ -644,6 +711,7 @@ xfae_model_new (void)
  * @name        : the user visible name of the new item.
  * @description : the description for the new item.
  * @command     : the command for the new item.
+ * @run_hook    : hook/trigger on which the command should be executed.
  * @error       : return locations for errors or %NULL.
  *
  * Attempts to add a new item with the given parameters
@@ -656,6 +724,7 @@ xfae_model_add (XfaeModel   *model,
                 const gchar *name,
                 const gchar *description,
                 const gchar *command,
+                XfsmRunHook  run_hook,
                 GError     **error)
 {
   GtkTreePath *path;
@@ -713,6 +782,7 @@ xfae_model_add (XfaeModel   *model,
   xfce_rc_write_entry (rc, "Comment", description);
   xfce_rc_write_entry (rc, "Exec", command);
   xfce_rc_write_entry (rc, "OnlyShowIn", "XFCE;");
+  xfce_rc_write_int_entry (rc, "RunHook", run_hook);
   xfce_rc_write_bool_entry (rc, "StartupNotify", FALSE);
   xfce_rc_write_bool_entry (rc, "Terminal", FALSE);
   xfce_rc_write_bool_entry (rc, "Hidden", FALSE);
@@ -763,6 +833,7 @@ xfae_model_get (XfaeModel    *model,
                 gchar       **name,
                 gchar       **description,
                 gchar       **command,
+                XfsmRunHook  *run_hook,
                 GError      **error)
 {
   XfaeItem    *item;
@@ -798,6 +869,9 @@ xfae_model_get (XfaeModel    *model,
   value = xfce_rc_read_entry (rc, "Exec", NULL);
   if (command != NULL)
     *command = g_strdup (value);
+
+  if (run_hook != NULL)
+    *run_hook = xfce_rc_read_int_entry (rc, "RunHook", XFSM_RUN_HOOK_LOGIN);
 
   xfce_rc_close (rc);
 
@@ -859,6 +933,7 @@ xfae_model_remove (XfaeModel   *model,
  * @name        : the user visible name of the new item.
  * @description : the description for the new item.
  * @command     : the command for the new item.
+ * @run_hook    : hook/trigger on which the command should be executed.
  * @error       : return locations for errors or %NULL.
  *
  * Attempts to edit an item with the given parameters
@@ -872,6 +947,7 @@ xfae_model_edit (XfaeModel   *model,
                  const gchar *name,
                  const gchar *description,
                  const gchar *command,
+                 XfsmRunHook  run_hook,
                  GError     **error)
 {
   GtkTreePath *path;
@@ -903,6 +979,7 @@ xfae_model_edit (XfaeModel   *model,
   xfce_rc_write_entry (rc, "Name", name);
   xfce_rc_write_entry (rc, "Comment", description);
   xfce_rc_write_entry (rc, "Exec", command);
+  xfce_rc_write_int_entry (rc, "RunHook", run_hook);
   xfce_rc_close (rc);
 
   /* tell the view that we have most probably a new state */

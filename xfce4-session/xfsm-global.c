@@ -258,7 +258,7 @@ xfsm_check_valid_exec (const gchar *exec)
 
 
 static void
-xfsm_startup_autostart_migrate (void)
+xfsm_autostart_migrate (void)
 {
   const gchar *entry;
   gchar        source_path[4096];
@@ -360,10 +360,55 @@ xfsm_startup_autostart_migrate (void)
 
 
 gint
-xfsm_startup_autostart_xdg (gboolean     start_at_spi)
+xfsm_launch_desktop_files_on_shutdown (gboolean         start_at_spi,
+                                       XfsmShutdownType shutdown_type)
+{
+  switch (shutdown_type)
+    {
+    case XFSM_SHUTDOWN_LOGOUT:
+      return xfsm_launch_desktop_files_on_run_hook (start_at_spi, XFSM_RUN_HOOK_LOGOUT);
+
+    case XFSM_SHUTDOWN_SHUTDOWN:
+      return xfsm_launch_desktop_files_on_run_hook (start_at_spi, XFSM_RUN_HOOK_SHUTDOWN);
+
+    case XFSM_SHUTDOWN_RESTART:
+      return xfsm_launch_desktop_files_on_run_hook (start_at_spi, XFSM_RUN_HOOK_RESTART);
+
+    case XFSM_SHUTDOWN_SUSPEND:
+      return xfsm_launch_desktop_files_on_run_hook (start_at_spi, XFSM_RUN_HOOK_SUSPEND);
+
+    case XFSM_SHUTDOWN_HIBERNATE:
+      return xfsm_launch_desktop_files_on_run_hook (start_at_spi, XFSM_RUN_HOOK_HIBERNATE);
+
+    case XFSM_SHUTDOWN_HYBRID_SLEEP:
+      return xfsm_launch_desktop_files_on_run_hook (start_at_spi, XFSM_RUN_HOOK_HYBRID_SLEEP);
+
+    case XFSM_SHUTDOWN_SWITCH_USER:
+      return xfsm_launch_desktop_files_on_run_hook (start_at_spi, XFSM_RUN_HOOK_SWITCH_USER);
+
+    default:
+      g_error ("Failed to convert shutdown type '%d' to run hook name.", shutdown_type);
+      return FALSE;
+    }
+}
+
+
+
+gint
+xfsm_launch_desktop_files_on_login (gboolean start_at_spi)
+{
+  return xfsm_launch_desktop_files_on_run_hook (start_at_spi, XFSM_RUN_HOOK_LOGIN);
+}
+
+
+
+gint
+xfsm_launch_desktop_files_on_run_hook (gboolean    start_at_spi,
+                                       XfsmRunHook run_hook)
 {
   const gchar *try_exec;
   const gchar *type;
+  XfsmRunHook  run_hook_from_file;
   const gchar *exec;
   gboolean     startup_notify;
   gboolean     terminal;
@@ -379,7 +424,7 @@ xfsm_startup_autostart_xdg (gboolean     start_at_spi)
   const gchar *pattern;
 
   /* migrate the old autostart location (if still present) */
-  xfsm_startup_autostart_migrate ();
+  xfsm_autostart_migrate ();
 
   /* pattern for only at-spi desktop files or everything */
   if (start_at_spi)
@@ -398,6 +443,12 @@ xfsm_startup_autostart_xdg (gboolean     start_at_spi)
 
       /* check the Hidden key */
       skip = xfce_rc_read_bool_entry (rc, "Hidden", FALSE);
+      run_hook_from_file = xfce_rc_read_int_entry (rc, "RunHook", XFSM_RUN_HOOK_LOGIN);
+
+      /* only execute scripts with match the requested run hook */
+      if (run_hook != run_hook_from_file)
+        skip = TRUE;
+
       if (G_LIKELY (!skip))
         {
           xfsm_verbose("hidden set\n");

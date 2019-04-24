@@ -1166,6 +1166,8 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
       if (shutdown_type != XFSM_SHUTDOWN_ASK)
         manager->shutdown_type = shutdown_type;
 
+      xfsm_launch_desktop_files_on_shutdown (FALSE, manager->shutdown_type);
+
       /* we only save the session and quit if we're actually shutting down;
        * suspend, hibernate, hybrid sleep and switch user will (if successful) return us to
        * exactly the same state, so there's no need to save session */

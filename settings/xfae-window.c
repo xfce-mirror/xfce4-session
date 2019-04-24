@@ -28,18 +28,22 @@
 #include "xfae-dialog.h"
 #include "xfae-model.h"
 
+#include <xfce4-session/xfsm-global.h>
 #include <libxfce4ui/libxfce4ui.h>
 
-static void     xfae_window_add                 (XfaeWindow       *window);
-static void     xfae_window_remove              (XfaeWindow       *window);
-static void     xfae_window_edit                (XfaeWindow       *window);
-static gboolean xfae_window_button_press_event  (GtkWidget        *treeview,
-                                                 GdkEventButton   *event,
-                                                 XfaeWindow       *window);
-static void     xfae_window_item_toggled        (XfaeWindow       *window,
-                                                 gchar            *path_string);
-static void     xfae_window_selection_changed   (GtkTreeSelection *selection,
-                                                 GtkWidget        *remove_button);
+static void          xfae_window_add                          (XfaeWindow       *window);
+static void          xfae_window_remove                       (XfaeWindow       *window);
+static void          xfae_window_edit                         (XfaeWindow       *window);
+static gboolean      xfae_window_button_press_event           (GtkWidget        *treeview,
+                                                               GdkEventButton   *event,
+                                                               XfaeWindow       *window);
+static void          xfae_window_item_toggled                 (XfaeWindow       *window,
+                                                               gchar            *path_string);
+static void          xfae_window_selection_changed            (GtkTreeSelection *selection,
+                                                               GtkWidget        *remove_button);
+static GtkTreeModel* xfae_window_create_run_hooks_combo_model (void);
+
+
 
 
 
@@ -66,6 +70,36 @@ G_DEFINE_TYPE (XfaeWindow, xfae_window, GTK_TYPE_BOX);
 static void
 xfae_window_class_init (XfaeWindowClass *klass)
 {
+}
+
+
+
+static void
+run_hook_changed (GtkCellRenderer *render,
+                  const gchar     *path_str,
+                  const gchar     *new_text,
+                  gpointer         user_data)
+{
+    GEnumClass   *klass;
+    GEnumValue   *enum_struct;
+    GtkTreeView  *treeview = user_data;
+    GtkTreeModel *model = gtk_tree_view_get_model (treeview);
+    GtkTreePath  *path = gtk_tree_path_new_from_string (path_str);
+    GtkTreeIter   iter;
+    GError       *error = NULL;
+
+    if (gtk_tree_model_get_iter (model, &iter, path))
+      {
+        klass = g_type_class_ref (XFSM_TYPE_RUN_HOOK);
+        enum_struct = g_enum_get_value_by_nick (klass, new_text);
+        g_type_class_unref (klass);
+        if (!xfae_model_set_run_hook (model, path, &iter, enum_struct->value, &error))
+          {
+            xfce_dialog_show_error (NULL, error, _("Failed to set run hook"));
+            g_error_free (error);
+          }
+      }
+    gtk_tree_path_free (path);
 }
 
 
@@ -102,12 +136,12 @@ xfae_window_init (XfaeWindow *window)
 
   label = g_object_new (GTK_TYPE_LABEL,
                         "justify", GTK_JUSTIFY_LEFT,
-                        "label", _("Below is the list of applications that will be started "
-                                   "automatically when you login to your Xfce desktop, "
-                                   "in addition to the applications that were saved when "
-                                   "you logged out last time. Cursive applications belong "
-                                   "to another desktop environment, but you can still enable "
-                                   "them if you want."),
+                        "label", _("List of applications that will be started "
+                                   "automatically on specific events like login, logout, shutdown, etc.\n"
+                                   "On login additionally all applications that were saved "
+                                   "on your last logout will be started.\n"
+                                   "Cursive applications belong to another desktop environment, "
+                                   "but you can still enable them if you want."),
                         "xalign", 0.0f,
                         NULL);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
@@ -159,6 +193,27 @@ xfae_window_init (XfaeWindow *window)
                          "reorderable", FALSE,
                          "resizable", FALSE,
                          NULL);
+  renderer = gtk_cell_renderer_combo_new ();
+  model = xfae_window_create_run_hooks_combo_model ();
+  g_object_set (renderer,
+                "has-entry", FALSE,
+                "model", model,
+                "text-column", 0,
+                "editable", TRUE,
+                "mode", GTK_CELL_RENDERER_MODE_EDITABLE,
+                NULL);
+  g_signal_connect (renderer, "edited", G_CALLBACK (run_hook_changed), window->treeview);
+
+  gtk_tree_view_column_pack_start (column, renderer, FALSE);
+  gtk_tree_view_column_set_attributes (column, renderer,
+                                       "text", XFAE_MODEL_RUN_HOOK,
+                                       NULL);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
+  g_object_unref (model);
+  column = g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
+                         "reorderable", FALSE,
+                         "resizable", FALSE,
+                         NULL);
   renderer = gtk_cell_renderer_pixbuf_new ();
   gtk_tree_view_column_pack_start (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column, renderer,
@@ -202,6 +257,28 @@ xfae_window_init (XfaeWindow *window)
   g_signal_connect (G_OBJECT (window->selection), "changed",
                     G_CALLBACK (xfae_window_selection_changed), button);
   xfae_window_selection_changed (window->selection, button);
+}
+
+
+
+static GtkTreeModel *
+xfae_window_create_run_hooks_combo_model (void)
+{
+    GtkListStore *ls = gtk_list_store_new (1, G_TYPE_STRING);
+    GEnumClass   *klass;
+    GEnumValue   *enum_struct;
+    GtkTreeIter   iter;
+    guint i;
+
+    klass = g_type_class_ref (XFSM_TYPE_RUN_HOOK);
+    for (i = 0; i < klass->n_values; ++i)
+      {
+        gtk_list_store_append (ls, &iter);
+        enum_struct = g_enum_get_value (klass, i);
+        gtk_list_store_set (ls, &iter, 0, enum_struct->value_nick, -1);
+      }
+    g_type_class_unref (klass);
+    return GTK_TREE_MODEL (ls);
 }
 
 
@@ -281,18 +358,19 @@ xfae_window_add (XfaeWindow *window)
   gchar        *name;
   gchar        *descr;
   gchar        *command;
+  XfsmRunHook   run_hook;
 
-  dialog = xfae_dialog_new (NULL, NULL, NULL);
+  dialog = xfae_dialog_new (NULL, NULL, NULL, XFSM_RUN_HOOK_LOGIN);
   parent = gtk_widget_get_toplevel (GTK_WIDGET (window));
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent));
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
       gtk_widget_hide (dialog);
 
-      xfae_dialog_get (XFAE_DIALOG (dialog), &name, &descr, &command);
+      xfae_dialog_get (XFAE_DIALOG (dialog), &name, &descr, &command, &run_hook);
 
       model = gtk_tree_view_get_model (GTK_TREE_VIEW (window->treeview));
-      if (!xfae_model_add (XFAE_MODEL (model), name, descr, command, &error))
+      if (!xfae_model_add (XFAE_MODEL (model), name, descr, command, run_hook, &error))
         {
           xfce_dialog_show_error (GTK_WINDOW (parent), error, _("Failed adding \"%s\""), name);
           g_error_free (error);
@@ -323,7 +401,7 @@ xfae_window_remove (XfaeWindow *window)
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->treeview));
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
-      if (!xfae_model_get (XFAE_MODEL (model), &iter, &name, NULL, NULL, &error))
+      if (!xfae_model_get (XFAE_MODEL (model), &iter, &name, NULL, NULL, NULL, &error))
         {
           xfce_dialog_show_error (GTK_WINDOW (parent), error, _("Failed to remove item"));
           g_error_free (error);
@@ -334,7 +412,7 @@ xfae_window_remove (XfaeWindow *window)
                                          _("This will permanently remove the application "
                                            "from the list of automatically started applications"),
                                          _("Are you sure you want to remove \"%s\""), name);
-*/  
+*/
       g_free (name);
 
       if (remove_item && !xfae_model_remove (XFAE_MODEL (model), &iter, &error))
@@ -357,6 +435,7 @@ xfae_window_edit (XfaeWindow *window)
   gchar            *name;
   gchar            *descr;
   gchar            *command;
+  XfsmRunHook       run_hook;
   GtkWidget        *parent;
   GtkWidget        *dialog;
 
@@ -365,14 +444,14 @@ xfae_window_edit (XfaeWindow *window)
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->treeview));
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
-      if (!xfae_model_get (XFAE_MODEL (model), &iter, &name, &descr, &command, &error))
+      if (!xfae_model_get (XFAE_MODEL (model), &iter, &name, &descr, &command, &run_hook, &error))
         {
           xfce_dialog_show_error (GTK_WINDOW (parent), error, _("Failed to edit item"));
           g_error_free (error);
           return;
         }
 
-      dialog = xfae_dialog_new (name, descr, command);
+      dialog = xfae_dialog_new (name, descr, command, run_hook);
       gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent));
 
       g_free (command);
@@ -383,9 +462,9 @@ xfae_window_edit (XfaeWindow *window)
         {
 	  gtk_widget_hide (dialog);
 
-	  xfae_dialog_get (XFAE_DIALOG (dialog), &name, &descr, &command);
+	  xfae_dialog_get (XFAE_DIALOG (dialog), &name, &descr, &command, &run_hook);
 
-          if (!xfae_model_edit (XFAE_MODEL (model), &iter, name, descr, command, &error))
+          if (!xfae_model_edit (XFAE_MODEL (model), &iter, name, descr, command, run_hook, &error))
             {
               xfce_dialog_show_error (GTK_WINDOW (parent), error, _("Failed to edit item \"%s\""), name);
               g_error_free (error);
