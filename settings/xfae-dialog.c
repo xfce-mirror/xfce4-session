@@ -95,6 +95,7 @@ xfae_dialog_init (XfaeDialog *dialog)
 
   dialog->name_entry = g_object_new (GTK_TYPE_ENTRY,
                                      "activates-default", TRUE,
+                                      "hexpand", TRUE,
                                      NULL);
 
   gtk_grid_attach (GTK_GRID (grid), dialog->name_entry, 1, 0, 1, 1);
@@ -109,6 +110,7 @@ xfae_dialog_init (XfaeDialog *dialog)
 
   dialog->descr_entry = g_object_new (GTK_TYPE_ENTRY,
                                       "activates-default", TRUE,
+                                      "hexpand", TRUE,
                                       NULL);
   gtk_grid_attach (GTK_GRID (grid), dialog->descr_entry, 1, 1, 1, 1);
   gtk_widget_show (dialog->descr_entry);
@@ -128,6 +130,7 @@ xfae_dialog_init (XfaeDialog *dialog)
 
   dialog->command_entry = g_object_new (GTK_TYPE_ENTRY,
                                         "activates-default", TRUE,
+                                        "hexpand", TRUE,
                                         NULL);
 
   gtk_box_pack_start (GTK_BOX (hbox), dialog->command_entry, TRUE, TRUE, 0);
