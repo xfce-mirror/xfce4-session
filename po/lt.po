@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-21 00:31+0200\n"
-"PO-Revision-Date: 2019-04-21 20:03+0000\n"
+"POT-Creation-Date: 2019-04-25 06:31+0200\n"
+"PO-Revision-Date: 2019-04-25 20:29+0000\n"
 "Last-Translator: Moo\n"
 "Language-Team: Lithuanian (http://www.transifex.com/xfce/xfce4-session/language/lt/)\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr "Pasirinkite temos, kurią norite įdiegti, failą..."
 
 #: ../engines/balou/config.c:327 ../engines/balou/config.c:495
 #: ../settings/session-editor.c:173 ../settings/session-editor.c:257
-#: ../xfce4-session/xfsm-logout-dialog.c:210
+#: ../xfce4-session/xfsm-logout-dialog.c:212
 #: ../xfce4-session/xfsm-splash-screen.c:213
 msgid "_Cancel"
 msgstr "_Atsisakyti"
@@ -62,7 +62,7 @@ msgstr "Įsitikinkite, kad failas yra tinkamas prisistatymo temos archyvas."
 
 #: ../engines/balou/config.c:344 ../engines/balou/config.c:953
 #: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
-#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1212
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1194
 msgid "_Close"
 msgstr "_Užverti"
 
@@ -311,102 +311,142 @@ msgstr "Paleidimo iš naujo stilius"
 msgid "None"
 msgstr "Nieko"
 
-#: ../settings/xfae-dialog.c:73 ../settings/xfae-dialog.c:182
+#: ../settings/xfae-dialog.c:77 ../settings/xfae-dialog.c:210
 msgid "Cancel"
 msgstr "Atsisakyti"
 
-#: ../settings/xfae-dialog.c:74 ../settings/xfae-dialog.c:183
+#: ../settings/xfae-dialog.c:78 ../settings/xfae-dialog.c:211
 msgid "OK"
 msgstr "Gerai"
 
-#: ../settings/xfae-dialog.c:78
+#: ../settings/xfae-dialog.c:82
 msgid "Add application"
 msgstr "Pridėti programą"
 
-#: ../settings/xfae-dialog.c:90
+#: ../settings/xfae-dialog.c:94
 msgid "Name:"
 msgstr "Pavadinimas:"
 
-#: ../settings/xfae-dialog.c:104
+#: ../settings/xfae-dialog.c:109
 msgid "Description:"
 msgstr "Aprašas:"
 
-#: ../settings/xfae-dialog.c:117 ../settings/xfae-model.c:482
+#: ../settings/xfae-dialog.c:123 ../settings/xfae-model.c:548
 msgid "Command:"
 msgstr "Komanda:"
 
-#: ../settings/xfae-dialog.c:179
+#: ../settings/xfae-dialog.c:136
+msgid "Trigger:"
+msgstr "Paleisti:"
+
+#: ../settings/xfae-dialog.c:207
 msgid "Select a command"
 msgstr "Pasirinkite komandą"
 
-#: ../settings/xfae-dialog.c:228
+#: ../settings/xfae-dialog.c:258
 msgid "Edit application"
 msgstr "Taisyti programą"
 
-#: ../settings/xfae-model.c:614
-#, c-format
-msgid "Failed to unlink %s: %s"
-msgstr "Nepavyko atsieti %s: %s"
+#: ../settings/xfae-model.c:87
+msgid "on login"
+msgstr "prisijungiant"
 
-#: ../settings/xfae-model.c:703
-#, c-format
-msgid "Failed to create file %s"
-msgstr "Nepavyko sukurti failo %s"
+#: ../settings/xfae-model.c:88
+msgid "on logout"
+msgstr "atsijungiant"
 
-#: ../settings/xfae-model.c:726
-#, c-format
-msgid "Failed to write file %s"
-msgstr "Nepavyko įrašyti failo %s"
+#: ../settings/xfae-model.c:89
+msgid "on shutdown"
+msgstr "išjungiant"
 
-#: ../settings/xfae-model.c:785
-#, c-format
-msgid "Failed to open %s for reading"
-msgstr "Nepavyko atverti %s skaitymui"
+#: ../settings/xfae-model.c:90
+msgid "on restart"
+msgstr "paleidžiant iš naujo"
 
-#: ../settings/xfae-model.c:894 ../settings/xfae-model.c:951
+#: ../settings/xfae-model.c:91
+msgid "on suspend"
+msgstr "pristabdant"
+
+#: ../settings/xfae-model.c:92
+msgid "on hibernate"
+msgstr "užmigdant"
+
+#: ../settings/xfae-model.c:93
+msgid "on hybrid sleep"
+msgstr "įvedant į mišraus miego būseną"
+
+#: ../settings/xfae-model.c:94
+msgid "on switch user"
+msgstr "perjungiant naudotoją"
+
+#: ../settings/xfae-model.c:304 ../settings/xfae-model.c:970
+#: ../settings/xfae-model.c:1028
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "Nepavyko atverti %s rašymui"
 
-#: ../settings/xfae-window.c:105
-msgid ""
-"Below is the list of applications that will be started automatically when "
-"you login to your Xfce desktop, in addition to the applications that were "
-"saved when you logged out last time. Cursive applications belong to another "
-"desktop environment, but you can still enable them if you want."
-msgstr "Be tų programų, kurios buvo įrašytos, kai paskutinį kartą atsijungėte, žemiau yra sąrašas programų, kurios bus automatiškai paleistos, kai prisijungsite prie Xfce darbalaukio. Kursyvu pavaizduotos programos priklauso kitai darbalaukio aplinkai, tačiau, jeigu norite, vis tiek galite jas įjungti."
+#: ../settings/xfae-model.c:681
+#, c-format
+msgid "Failed to unlink %s: %s"
+msgstr "Nepavyko atsieti %s: %s"
 
-#: ../settings/xfae-window.c:179 ../settings/xfae-window.c:237
+#: ../settings/xfae-model.c:772
+#, c-format
+msgid "Failed to create file %s"
+msgstr "Nepavyko sukurti failo %s"
+
+#: ../settings/xfae-model.c:796
+#, c-format
+msgid "Failed to write file %s"
+msgstr "Nepavyko įrašyti failo %s"
+
+#: ../settings/xfae-model.c:856
+#, c-format
+msgid "Failed to open %s for reading"
+msgstr "Nepavyko atverti %s skaitymui"
+
+#: ../settings/xfae-window.c:98
+msgid "Failed to set run hook"
+msgstr "Nepavyko nustatyti paleidimo gaudyklės"
+
+#: ../settings/xfae-window.c:139
+msgid ""
+"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
+"On login additionally all applications that were saved on your last logout will be started.\n"
+"Cursive applications belong to another desktop environment, but you can still enable them if you want."
+msgstr "Sąrašas programų, kurios esant tam tikriems įvykiams (prisijungimui, išjungimui, atsijungimui ir t.t.) bus paleidžiamos automatiškai.\nBe to, prisijungiant, bus paleidžiamos visos programos, kurios buvo įrašytos paskutinio atsijungimo metu.\nKursyvu pavaizduotos programos priklauso kitai darbalaukio aplinkai, tačiau, jeigu norite, vis tiek galite jas įjungti."
+
+#: ../settings/xfae-window.c:235 ../settings/xfae-window.c:315
 msgid "Add"
 msgstr "Pridėti"
 
-#: ../settings/xfae-window.c:185 ../settings/xfae-window.c:243
+#: ../settings/xfae-window.c:241 ../settings/xfae-window.c:321
 msgid "Remove"
 msgstr "Šalinti"
 
-#: ../settings/xfae-window.c:195
+#: ../settings/xfae-window.c:251
 msgid "Edit"
 msgstr "Taisyti"
 
-#: ../settings/xfae-window.c:296
+#: ../settings/xfae-window.c:375
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Nepavyko pridėti „%s“"
 
-#: ../settings/xfae-window.c:327 ../settings/xfae-window.c:341
+#: ../settings/xfae-window.c:406 ../settings/xfae-window.c:420
 msgid "Failed to remove item"
 msgstr "Nepavyko pašalinti elemento"
 
-#: ../settings/xfae-window.c:369
+#: ../settings/xfae-window.c:449
 msgid "Failed to edit item"
 msgstr "Nepavyko taisyti elemento"
 
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:469
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Nepavyko taisyti elemento „%s“"
 
-#: ../settings/xfae-window.c:417
+#: ../settings/xfae-window.c:497
 msgid "Failed to toggle item"
 msgstr "Nepavyko perjungti elemento"
 
@@ -489,7 +529,7 @@ msgstr "Vis tiek tęsti"
 msgid "Try again"
 msgstr "Bandyti dar kartą"
 
-#: ../xfce4-session/xfsm-manager.c:617
+#: ../xfce4-session/xfsm-manager.c:597
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -498,69 +538,69 @@ msgid ""
 "incorrectly."
 msgstr "Nepavyko nustatyti gedimams atsparaus seanso pavadinimo.  Galimos priežastys: xfconfd neveikia (D-Bus sąrankos klaida); aplinkos kintamasis $XDG_CONFIG_DIRS nustatytas netinkamai (turi turėti „%s“), arba xfce4-session neteisingai įdiegta."
 
-#: ../xfce4-session/xfsm-manager.c:628
+#: ../xfce4-session/xfsm-manager.c:608
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Nurodytas gedimams atsparus seansas („%s“) nėra pažymėtas kaip gedimams atsparus seansas."
 
-#: ../xfce4-session/xfsm-manager.c:658
+#: ../xfce4-session/xfsm-manager.c:638
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Gedimams atsparaus seanso programų sąrašas tuščias."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:705
+#: ../xfce4-session/xfsm-manager.c:685
 msgid "Session Manager Error"
 msgstr "Seansų tvarkytuvės klaida"
 
-#: ../xfce4-session/xfsm-manager.c:707
+#: ../xfce4-session/xfsm-manager.c:687
 msgid "Unable to load a failsafe session"
 msgstr "Nepavyko įkelti gedimams atsparaus seanso"
 
-#: ../xfce4-session/xfsm-manager.c:709
+#: ../xfce4-session/xfsm-manager.c:689
 msgid "_Quit"
 msgstr "_Išeiti"
 
-#: ../xfce4-session/xfsm-manager.c:1202
+#: ../xfce4-session/xfsm-manager.c:1184
 msgid "Shutdown Failed"
 msgstr "Išjungti nepavyko"
 
-#: ../xfce4-session/xfsm-manager.c:1205
+#: ../xfce4-session/xfsm-manager.c:1187
 msgid "Failed to suspend session"
 msgstr "Nepavyko pristabdyti seanso"
 
-#: ../xfce4-session/xfsm-manager.c:1207
+#: ../xfce4-session/xfsm-manager.c:1189
 msgid "Failed to hibernate session"
 msgstr "Nepavyko užmigdyti seanso"
 
-#: ../xfce4-session/xfsm-manager.c:1209
+#: ../xfce4-session/xfsm-manager.c:1191
 msgid "Failed to hybrid sleep session"
 msgstr "Nepavyko įvesti seanso į mišraus miego būseną"
 
-#: ../xfce4-session/xfsm-manager.c:1210
+#: ../xfce4-session/xfsm-manager.c:1192
 msgid "Failed to switch user"
 msgstr "Nepavyko perjungti naudotojo"
 
-#: ../xfce4-session/xfsm-manager.c:1516
+#: ../xfce4-session/xfsm-manager.c:1498
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Klientų darbą galima baigti tik neveiklumo būsenoje"
 
-#: ../xfce4-session/xfsm-manager.c:2173
+#: ../xfce4-session/xfsm-manager.c:2155
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Kai prašoma įrašyto kontrolinio taško, seansų tvarkytuvė turi būti neveiklumo būsenoje"
 
-#: ../xfce4-session/xfsm-manager.c:2243 ../xfce4-session/xfsm-manager.c:2263
+#: ../xfce4-session/xfsm-manager.c:2225 ../xfce4-session/xfsm-manager.c:2245
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Kai prašoma išjungti, seansų tvarkytuvė turi būti neveiklumo būsenoje"
 
-#: ../xfce4-session/xfsm-manager.c:2308
+#: ../xfce4-session/xfsm-manager.c:2290
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Kai prašoma paleisti iš naujo, seansų tvarkytuvė privalo būti neveiklumo būsenoje"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:183
+#: ../xfce4-session/xfsm-logout-dialog.c:184
 #, c-format
 msgid "Log out %s"
 msgstr "Atsijungti %s"
@@ -568,39 +608,39 @@ msgstr "Atsijungti %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:225
+#: ../xfce4-session/xfsm-logout-dialog.c:229
 msgid "_Log Out"
 msgstr "_Atsijungti"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:245
+#: ../xfce4-session/xfsm-logout-dialog.c:249
 msgid "_Restart"
 msgstr "Paleisti iš _naujo"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:265
+#: ../xfce4-session/xfsm-logout-dialog.c:269
 msgid "Shut _Down"
 msgstr "_Išjungti"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:288
+#: ../xfce4-session/xfsm-logout-dialog.c:293
 msgid "Sus_pend"
 msgstr "Pri_stabdyti"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:322
+#: ../xfce4-session/xfsm-logout-dialog.c:327
 msgid "_Hibernate"
 msgstr "_Užmigdyti"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:353
+#: ../xfce4-session/xfsm-logout-dialog.c:358
 msgid "H_ybrid Sleep"
 msgstr "_Mišraus miego būsena"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:384
+#: ../xfce4-session/xfsm-logout-dialog.c:389
 msgid "Switch _User"
 msgstr "Perjungti na_udotoją"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:409
+#: ../xfce4-session/xfsm-logout-dialog.c:414
 msgid "_Save session for future logins"
 msgstr "Į_rašyti seansą būsimiems prisijungimams"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:437
+#: ../xfce4-session/xfsm-logout-dialog.c:442
 msgid "An error occurred"
 msgstr "Įvyko klaida"
 
@@ -701,26 +741,11 @@ msgstr "Paleidžiamas X terminalo emuliatorius"
 msgid "Starting %s"
 msgstr "Paleidžiama %s"
 
-#: ../xfce4-session/xfsm-startup.c:587
-#, c-format
-msgid ""
-"The location and the format of the autostart directory has changed.\n"
-"The new location is\n"
-"\n"
-"  %s\n"
-"\n"
-"where you can place .desktop files to, that describe the applications\n"
-"to start when you login to your Xfce desktop. The files in your old\n"
-"autostart directory have been successfully migrated to the new\n"
-"location.\n"
-"You should delete this directory now.\n"
-msgstr "Automatinio paleidimo katalogo vieta ir formatas pasikeitė.\nNauja vieta yra\n\n  %s\n\nten jūs galite įdėti .desktop failus, kurie aprašo programas,\nkurios bus paleistos, kai prisijungsite prie Xfce darbalaukio.\nJūsų seni failai buvo sėkmingai perkelti į naująją vietą.\nDabar turėtumėte ištrinti šį katalogą.\n"
-
-#: ../xfce4-session/xfsm-startup.c:772
+#: ../xfce4-session/xfsm-startup.c:480
 msgid "Performing Autostart..."
 msgstr "Vykdomas automatinis paleidimas..."
 
-#: ../xfce4-session/xfsm-startup.c:878
+#: ../xfce4-session/xfsm-startup.c:586
 msgid "Starting Assistive Technologies"
 msgstr "Paleidžiamos pagalbinės technologijos"
 
