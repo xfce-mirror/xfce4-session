@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-21 00:31+0200\n"
-"PO-Revision-Date: 2019-04-21 05:20+0000\n"
+"POT-Creation-Date: 2019-04-25 06:31+0200\n"
+"PO-Revision-Date: 2019-04-25 10:33+0000\n"
 "Last-Translator: Kiril Kirilov <cybercop_montana@abv.bg>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/xfce/xfce4-session/language/bg/)\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr "Избор на тема за инсталиране..."
 
 #: ../engines/balou/config.c:327 ../engines/balou/config.c:495
 #: ../settings/session-editor.c:173 ../settings/session-editor.c:257
-#: ../xfce4-session/xfsm-logout-dialog.c:210
+#: ../xfce4-session/xfsm-logout-dialog.c:212
 #: ../xfce4-session/xfsm-splash-screen.c:213
 msgid "_Cancel"
 msgstr "Отказ"
@@ -62,7 +62,7 @@ msgstr "Моля, проверете дали файлът е валиден а�
 
 #: ../engines/balou/config.c:344 ../engines/balou/config.c:953
 #: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
-#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1212
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1194
 msgid "_Close"
 msgstr "_Затваряне"
 
@@ -311,102 +311,142 @@ msgstr "Рестартирай стила"
 msgid "None"
 msgstr "Без"
 
-#: ../settings/xfae-dialog.c:73 ../settings/xfae-dialog.c:182
+#: ../settings/xfae-dialog.c:77 ../settings/xfae-dialog.c:210
 msgid "Cancel"
 msgstr "Отказ"
 
-#: ../settings/xfae-dialog.c:74 ../settings/xfae-dialog.c:183
+#: ../settings/xfae-dialog.c:78 ../settings/xfae-dialog.c:211
 msgid "OK"
 msgstr "Да"
 
-#: ../settings/xfae-dialog.c:78
+#: ../settings/xfae-dialog.c:82
 msgid "Add application"
 msgstr "Добави приложение"
 
-#: ../settings/xfae-dialog.c:90
+#: ../settings/xfae-dialog.c:94
 msgid "Name:"
 msgstr "Име:"
 
-#: ../settings/xfae-dialog.c:104
+#: ../settings/xfae-dialog.c:109
 msgid "Description:"
 msgstr "Описание:"
 
-#: ../settings/xfae-dialog.c:117 ../settings/xfae-model.c:482
+#: ../settings/xfae-dialog.c:123 ../settings/xfae-model.c:548
 msgid "Command:"
 msgstr "Команда:"
 
-#: ../settings/xfae-dialog.c:179
+#: ../settings/xfae-dialog.c:136
+msgid "Trigger:"
+msgstr "Тригер:"
+
+#: ../settings/xfae-dialog.c:207
 msgid "Select a command"
 msgstr "Избери команда"
 
-#: ../settings/xfae-dialog.c:228
+#: ../settings/xfae-dialog.c:258
 msgid "Edit application"
 msgstr "Редактирай приложение"
 
-#: ../settings/xfae-model.c:614
-#, c-format
-msgid "Failed to unlink %s: %s"
-msgstr "Не може да се премахне връзка %s: %s"
+#: ../settings/xfae-model.c:87
+msgid "on login"
+msgstr "при влизане"
 
-#: ../settings/xfae-model.c:703
-#, c-format
-msgid "Failed to create file %s"
-msgstr "Не може да се създаде файл %s"
+#: ../settings/xfae-model.c:88
+msgid "on logout"
+msgstr "при излизане"
 
-#: ../settings/xfae-model.c:726
-#, c-format
-msgid "Failed to write file %s"
-msgstr "Не може да се запише файл %s"
+#: ../settings/xfae-model.c:89
+msgid "on shutdown"
+msgstr "при изключване"
 
-#: ../settings/xfae-model.c:785
-#, c-format
-msgid "Failed to open %s for reading"
-msgstr "Не може да се отвори %s за четене"
+#: ../settings/xfae-model.c:90
+msgid "on restart"
+msgstr "при рестартиране"
 
-#: ../settings/xfae-model.c:894 ../settings/xfae-model.c:951
+#: ../settings/xfae-model.c:91
+msgid "on suspend"
+msgstr "при приспиване"
+
+#: ../settings/xfae-model.c:92
+msgid "on hibernate"
+msgstr "при дълбоко приспиване"
+
+#: ../settings/xfae-model.c:93
+msgid "on hybrid sleep"
+msgstr "при хибридно приспиване"
+
+#: ../settings/xfae-model.c:94
+msgid "on switch user"
+msgstr "при смяна на потребител"
+
+#: ../settings/xfae-model.c:304 ../settings/xfae-model.c:970
+#: ../settings/xfae-model.c:1028
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "Не може да се отвори %s за запис"
 
-#: ../settings/xfae-window.c:105
-msgid ""
-"Below is the list of applications that will be started automatically when "
-"you login to your Xfce desktop, in addition to the applications that were "
-"saved when you logged out last time. Cursive applications belong to another "
-"desktop environment, but you can still enable them if you want."
-msgstr "Отдолу е списъкът с програми, които ще бъдат автоматично стартирани, когато влезете във Вашият Xfce десктоп, в допълнение на програмите, които са били запазени при последното Ви влизане. Някои приложения принадлежат към друга десктоп среда, но можете да ги разрешите, ако искате."
+#: ../settings/xfae-model.c:681
+#, c-format
+msgid "Failed to unlink %s: %s"
+msgstr "Не може да се премахне връзка %s: %s"
 
-#: ../settings/xfae-window.c:179 ../settings/xfae-window.c:237
+#: ../settings/xfae-model.c:772
+#, c-format
+msgid "Failed to create file %s"
+msgstr "Не може да се създаде файл %s"
+
+#: ../settings/xfae-model.c:796
+#, c-format
+msgid "Failed to write file %s"
+msgstr "Не може да се запише файл %s"
+
+#: ../settings/xfae-model.c:856
+#, c-format
+msgid "Failed to open %s for reading"
+msgstr "Не може да се отвори %s за четене"
+
+#: ../settings/xfae-window.c:98
+msgid "Failed to set run hook"
+msgstr "Неуспешно задаване на стартово действие"
+
+#: ../settings/xfae-window.c:139
+msgid ""
+"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
+"On login additionally all applications that were saved on your last logout will be started.\n"
+"Cursive applications belong to another desktop environment, but you can still enable them if you want."
+msgstr "Списък на приложения, които ще се стартират автоматично при конкретни събития, като вход, изход, изключване и др.\nОсвен това при влизане в системата се стартират всички приложения, записани при последното ви излизане.\nКурсивните приложения принадлежат към друга работна среда, но, въпреки това можете да ги активирате, ако искате."
+
+#: ../settings/xfae-window.c:235 ../settings/xfae-window.c:315
 msgid "Add"
 msgstr "Добавяне"
 
-#: ../settings/xfae-window.c:185 ../settings/xfae-window.c:243
+#: ../settings/xfae-window.c:241 ../settings/xfae-window.c:321
 msgid "Remove"
 msgstr "Премахване"
 
-#: ../settings/xfae-window.c:195
+#: ../settings/xfae-window.c:251
 msgid "Edit"
 msgstr "Редактиране"
 
-#: ../settings/xfae-window.c:296
+#: ../settings/xfae-window.c:375
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Неуспешно добавяне на „%s“"
 
-#: ../settings/xfae-window.c:327 ../settings/xfae-window.c:341
+#: ../settings/xfae-window.c:406 ../settings/xfae-window.c:420
 msgid "Failed to remove item"
 msgstr "Не може да се премахне обект"
 
-#: ../settings/xfae-window.c:369
+#: ../settings/xfae-window.c:449
 msgid "Failed to edit item"
 msgstr "Не може да се редактира обект"
 
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:469
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Неуспешно редактиране на обекта „%s“"
 
-#: ../settings/xfae-window.c:417
+#: ../settings/xfae-window.c:497
 msgid "Failed to toggle item"
 msgstr "Не може да се превключи обекта"
 
@@ -489,7 +529,7 @@ msgstr "Продължи въпреки това"
 msgid "Try again"
 msgstr "Опитай отново"
 
-#: ../xfce4-session/xfsm-manager.c:617
+#: ../xfce4-session/xfsm-manager.c:597
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -498,69 +538,69 @@ msgid ""
 "incorrectly."
 msgstr "Не може да се определи името на безопасната сесия. Възможни причини: xfconfd не работи (D-Bus проблем с настройките); променливата на средата  $XDG_CONFIG_DIRS не е зададена коректно (трябва да включва „%s“), или xfce4-session е инсталирана неправилно."
 
-#: ../xfce4-session/xfsm-manager.c:628
+#: ../xfce4-session/xfsm-manager.c:608
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Посочената безопасна сесия („%s“) не е маркирана като такава."
 
-#: ../xfce4-session/xfsm-manager.c:658
+#: ../xfce4-session/xfsm-manager.c:638
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Списъкът с програми за безопасна сесия е празен."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:705
+#: ../xfce4-session/xfsm-manager.c:685
 msgid "Session Manager Error"
 msgstr "Грешка в управлението на сесиите"
 
-#: ../xfce4-session/xfsm-manager.c:707
+#: ../xfce4-session/xfsm-manager.c:687
 msgid "Unable to load a failsafe session"
 msgstr "Не може да се зареди безопасна сесия"
 
-#: ../xfce4-session/xfsm-manager.c:709
+#: ../xfce4-session/xfsm-manager.c:689
 msgid "_Quit"
 msgstr "_Изход"
 
-#: ../xfce4-session/xfsm-manager.c:1202
+#: ../xfce4-session/xfsm-manager.c:1184
 msgid "Shutdown Failed"
 msgstr "Изключването е неуспешно"
 
-#: ../xfce4-session/xfsm-manager.c:1205
+#: ../xfce4-session/xfsm-manager.c:1187
 msgid "Failed to suspend session"
 msgstr "Не може да се приспи сесията"
 
-#: ../xfce4-session/xfsm-manager.c:1207
+#: ../xfce4-session/xfsm-manager.c:1189
 msgid "Failed to hibernate session"
 msgstr "Не може дълбоко да се приспи сесията"
 
-#: ../xfce4-session/xfsm-manager.c:1209
+#: ../xfce4-session/xfsm-manager.c:1191
 msgid "Failed to hybrid sleep session"
 msgstr "Хибридното приспиване на сесията е неуспешно"
 
-#: ../xfce4-session/xfsm-manager.c:1210
+#: ../xfce4-session/xfsm-manager.c:1192
 msgid "Failed to switch user"
 msgstr "Смяната на потребителя е неуспешна"
 
-#: ../xfce4-session/xfsm-manager.c:1516
+#: ../xfce4-session/xfsm-manager.c:1498
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Може да се спират клиенти само когато са в готовност"
 
-#: ../xfce4-session/xfsm-manager.c:2173
+#: ../xfce4-session/xfsm-manager.c:2155
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Управлението на сесиите трябва да е в готовност при заявка за проверка"
 
-#: ../xfce4-session/xfsm-manager.c:2243 ../xfce4-session/xfsm-manager.c:2263
+#: ../xfce4-session/xfsm-manager.c:2225 ../xfce4-session/xfsm-manager.c:2245
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Управлението на сесиите трябва да е в готовност при заявка за изключване"
 
-#: ../xfce4-session/xfsm-manager.c:2308
+#: ../xfce4-session/xfsm-manager.c:2290
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Управлението на сесиите, трябва да бъде в състояние на покой при заявка за рестартиране"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:183
+#: ../xfce4-session/xfsm-logout-dialog.c:184
 #, c-format
 msgid "Log out %s"
 msgstr "Изход от %s"
@@ -568,39 +608,39 @@ msgstr "Изход от %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:225
+#: ../xfce4-session/xfsm-logout-dialog.c:229
 msgid "_Log Out"
 msgstr "Изход"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:245
+#: ../xfce4-session/xfsm-logout-dialog.c:249
 msgid "_Restart"
 msgstr "Рестартиране"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:265
+#: ../xfce4-session/xfsm-logout-dialog.c:269
 msgid "Shut _Down"
 msgstr "Изключване"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:288
+#: ../xfce4-session/xfsm-logout-dialog.c:293
 msgid "Sus_pend"
 msgstr "Приспиване"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:322
+#: ../xfce4-session/xfsm-logout-dialog.c:327
 msgid "_Hibernate"
 msgstr "Дълбоко приспиване"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:353
+#: ../xfce4-session/xfsm-logout-dialog.c:358
 msgid "H_ybrid Sleep"
 msgstr "Хибридно приспиване"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:384
+#: ../xfce4-session/xfsm-logout-dialog.c:389
 msgid "Switch _User"
 msgstr "Смяна на _Потребител"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:409
+#: ../xfce4-session/xfsm-logout-dialog.c:414
 msgid "_Save session for future logins"
 msgstr "Запази сесията за бъдещи влизания в системата"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:437
+#: ../xfce4-session/xfsm-logout-dialog.c:442
 msgid "An error occurred"
 msgstr "Възникна грешка"
 
@@ -701,26 +741,11 @@ msgstr "Стартиране терминала на X"
 msgid "Starting %s"
 msgstr "Стартиране на %s"
 
-#: ../xfce4-session/xfsm-startup.c:587
-#, c-format
-msgid ""
-"The location and the format of the autostart directory has changed.\n"
-"The new location is\n"
-"\n"
-"  %s\n"
-"\n"
-"where you can place .desktop files to, that describe the applications\n"
-"to start when you login to your Xfce desktop. The files in your old\n"
-"autostart directory have been successfully migrated to the new\n"
-"location.\n"
-"You should delete this directory now.\n"
-msgstr "Пътят и форматът на папката за автостартиране е променен.\nНовият път е\n\n %s\n\nкъдето може да слагате .desktop файлове, които описват\nпрограмите за стартиране при вход в Xfce. Файловете в старата\nпапка за автостартиране, бяха успешно пренесени в новата.\nТрябва да изтриете тази папка сега.\n"
-
-#: ../xfce4-session/xfsm-startup.c:772
+#: ../xfce4-session/xfsm-startup.c:480
 msgid "Performing Autostart..."
 msgstr "Автостартиране..."
 
-#: ../xfce4-session/xfsm-startup.c:878
+#: ../xfce4-session/xfsm-startup.c:586
 msgid "Starting Assistive Technologies"
 msgstr "Стартиране на помощни технологии"
 
