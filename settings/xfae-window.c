@@ -236,12 +236,16 @@ xfae_window_init (XfaeWindow *window)
   gtk_widget_show (bbox);
 
   button = gtk_button_new_with_label (_("Add"));
+  img = gtk_image_new_from_icon_name ("list-add-symbolic", GTK_ICON_SIZE_BUTTON);
+  gtk_button_set_image (GTK_BUTTON (button), img);
   g_signal_connect_swapped (G_OBJECT (button), "clicked",
                             G_CALLBACK (xfae_window_add), window);
   gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   button = gtk_button_new_with_label (_("Remove"));
+  img = gtk_image_new_from_icon_name ("list-remove-symbolic", GTK_ICON_SIZE_BUTTON);
+  gtk_button_set_image (GTK_BUTTON (button), img);
   g_signal_connect_swapped (G_OBJECT (button), "clicked",
                             G_CALLBACK (xfae_window_remove), window);
   gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
@@ -252,6 +256,8 @@ xfae_window_init (XfaeWindow *window)
   xfae_window_selection_changed (window->selection, button);
 
   button = gtk_button_new_with_label (_("Edit"));
+  img = gtk_image_new_from_icon_name ("document-edit-symbolic", GTK_ICON_SIZE_BUTTON);
+  gtk_button_set_image (GTK_BUTTON (button), img);
   g_signal_connect_swapped (G_OBJECT (button), "clicked",
                             G_CALLBACK (xfae_window_edit), window);
   gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
