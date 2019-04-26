@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Demiray Muhterem <mdemiray@msn.com>, 2019
 # Demiray Muhterem <mdemiray@msn.com>, 2018
 # Emin Tufan <etcetin@gmail.com>, 2018
 # Erçin EKER <ercin.eker@linux.org.tr>, 2004
@@ -14,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-26 18:31+0200\n"
-"PO-Revision-Date: 2018-10-19 16:04+0000\n"
-"Last-Translator: Emin Tufan <etcetin@gmail.com>\n"
+"POT-Creation-Date: 2019-04-25 06:31+0200\n"
+"PO-Revision-Date: 2019-04-26 12:47+0000\n"
+"Last-Translator: Demiray Muhterem <mdemiray@msn.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/xfce/xfce4-session/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,7 +43,7 @@ msgstr "Kurmak için tema dosyasını seçin..."
 
 #: ../engines/balou/config.c:327 ../engines/balou/config.c:495
 #: ../settings/session-editor.c:173 ../settings/session-editor.c:257
-#: ../xfce4-session/xfsm-logout-dialog.c:209
+#: ../xfce4-session/xfsm-logout-dialog.c:212
 #: ../xfce4-session/xfsm-splash-screen.c:213
 msgid "_Cancel"
 msgstr "_İptal"
@@ -64,9 +65,9 @@ msgstr "Tema Dosya Hatası"
 msgid "Please check that the file is a valid splash theme archive."
 msgstr "Lütfen geçerli bir tema arşivi olup olmadığını denetleyin."
 
-#: ../engines/balou/config.c:344 ../engines/balou/config.c:949
+#: ../engines/balou/config.c:344 ../engines/balou/config.c:953
 #: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
-#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1231
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1194
 msgid "_Close"
 msgstr "_Kapat"
 
@@ -99,23 +100,23 @@ msgstr "Temayı _aktar"
 msgid "Balou theme"
 msgstr "Balou teması"
 
-#: ../engines/balou/config.c:945
+#: ../engines/balou/config.c:949
 msgid "Configure Balou..."
 msgstr "Balou'yu Yapılandır..."
 
-#: ../engines/balou/config.c:987
+#: ../engines/balou/config.c:991
 msgid "Balou"
 msgstr "Balou teması"
 
-#: ../engines/balou/config.c:988
+#: ../engines/balou/config.c:992
 msgid "Balou Splash Engine"
 msgstr "Balou Açılış Motoru"
 
-#: ../engines/mice/mice.c:385
+#: ../engines/mice/mice.c:379
 msgid "Mice"
 msgstr "Mice teması"
 
-#: ../engines/mice/mice.c:386
+#: ../engines/mice/mice.c:380
 msgid "Mice Splash Engine"
 msgstr "Mice Açılış Motoru"
 
@@ -315,102 +316,142 @@ msgstr "Stili Sıfırla"
 msgid "None"
 msgstr "Hiçbiri"
 
-#: ../settings/xfae-dialog.c:73 ../settings/xfae-dialog.c:182
+#: ../settings/xfae-dialog.c:77 ../settings/xfae-dialog.c:210
 msgid "Cancel"
 msgstr "İptal"
 
-#: ../settings/xfae-dialog.c:74 ../settings/xfae-dialog.c:183
+#: ../settings/xfae-dialog.c:78 ../settings/xfae-dialog.c:211
 msgid "OK"
 msgstr "Tamam"
 
-#: ../settings/xfae-dialog.c:78
+#: ../settings/xfae-dialog.c:82
 msgid "Add application"
 msgstr "Uygulama ekle"
 
-#: ../settings/xfae-dialog.c:90
+#: ../settings/xfae-dialog.c:94
 msgid "Name:"
 msgstr "Ad:"
 
-#: ../settings/xfae-dialog.c:104
+#: ../settings/xfae-dialog.c:109
 msgid "Description:"
 msgstr "Açıklama:"
 
-#: ../settings/xfae-dialog.c:117 ../settings/xfae-model.c:482
+#: ../settings/xfae-dialog.c:123 ../settings/xfae-model.c:548
 msgid "Command:"
 msgstr "Komut:"
 
-#: ../settings/xfae-dialog.c:179
+#: ../settings/xfae-dialog.c:136
+msgid "Trigger:"
+msgstr "Tetikleme:"
+
+#: ../settings/xfae-dialog.c:207
 msgid "Select a command"
 msgstr "Bir komut seç"
 
-#: ../settings/xfae-dialog.c:228
+#: ../settings/xfae-dialog.c:258
 msgid "Edit application"
 msgstr "Uygulamayı düzenle"
 
-#: ../settings/xfae-model.c:614
-#, c-format
-msgid "Failed to unlink %s: %s"
-msgstr "Bağ oluşturulamadı: %s %s"
+#: ../settings/xfae-model.c:87
+msgid "on login"
+msgstr "giriş yaparken"
 
-#: ../settings/xfae-model.c:703
-#, c-format
-msgid "Failed to create file %s"
-msgstr "%s dosyası oluşturulamadı"
+#: ../settings/xfae-model.c:88
+msgid "on logout"
+msgstr "çıkış yaparken"
 
-#: ../settings/xfae-model.c:726
-#, c-format
-msgid "Failed to write file %s"
-msgstr "%s dosyasına yazma hatası"
+#: ../settings/xfae-model.c:89
+msgid "on shutdown"
+msgstr "kapatırken"
 
-#: ../settings/xfae-model.c:785
-#, c-format
-msgid "Failed to open %s for reading"
-msgstr "%s dosyası açılamıyor"
+#: ../settings/xfae-model.c:90
+msgid "on restart"
+msgstr "yeniden başlatırken"
 
-#: ../settings/xfae-model.c:894 ../settings/xfae-model.c:951
+#: ../settings/xfae-model.c:91
+msgid "on suspend"
+msgstr "askıda"
+
+#: ../settings/xfae-model.c:92
+msgid "on hibernate"
+msgstr "uykuda"
+
+#: ../settings/xfae-model.c:93
+msgid "on hybrid sleep"
+msgstr "hibrit uykuda"
+
+#: ../settings/xfae-model.c:94
+msgid "on switch user"
+msgstr "kullanıcı değişirken"
+
+#: ../settings/xfae-model.c:304 ../settings/xfae-model.c:970
+#: ../settings/xfae-model.c:1028
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "%s dosyasında yazmaya uygun açılamıyor"
 
-#: ../settings/xfae-window.c:105
-msgid ""
-"Below is the list of applications that will be started automatically when "
-"you login to your Xfce desktop, in addition to the applications that were "
-"saved when you logged out last time. Cursive applications belong to another "
-"desktop environment, but you can still enable them if you want."
-msgstr "Son çıkış yaptığınızda kayıt ettiğiniz uygulamalara ek olarak aşağıdaki listede bulunan uygulamalar Xfce masaüstüne giriş yaptığınızda otomatik olarak çalışacaktır. Uygulamalar diğer masaüstüne aittir ancak isterseniz etkinleştirebilirsiniz."
+#: ../settings/xfae-model.c:681
+#, c-format
+msgid "Failed to unlink %s: %s"
+msgstr "Bağ oluşturulamadı: %s %s"
 
-#: ../settings/xfae-window.c:179 ../settings/xfae-window.c:237
+#: ../settings/xfae-model.c:772
+#, c-format
+msgid "Failed to create file %s"
+msgstr "%s dosyası oluşturulamadı"
+
+#: ../settings/xfae-model.c:796
+#, c-format
+msgid "Failed to write file %s"
+msgstr "%s dosyasına yazma hatası"
+
+#: ../settings/xfae-model.c:856
+#, c-format
+msgid "Failed to open %s for reading"
+msgstr "%s dosyası açılamıyor"
+
+#: ../settings/xfae-window.c:98
+msgid "Failed to set run hook"
+msgstr "Çalışma kancası ayarlanamadı"
+
+#: ../settings/xfae-window.c:139
+msgid ""
+"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
+"On login additionally all applications that were saved on your last logout will be started.\n"
+"Cursive applications belong to another desktop environment, but you can still enable them if you want."
+msgstr "Giriş, çıkış, kapatma, vb. belirli olaylarda otomatik olarak başlatılacak uygulamaların listesi\nGiriş yaparken, son çıkışınıza kaydedilen tüm uygulamalar başlatılacaktır.\nİmleç uygulamalar başka bir masaüstü ortamına aittir, ancak isterseniz bunları hala etkinleştirebilirsiniz."
+
+#: ../settings/xfae-window.c:235 ../settings/xfae-window.c:315
 msgid "Add"
 msgstr "Ekle"
 
-#: ../settings/xfae-window.c:185 ../settings/xfae-window.c:243
+#: ../settings/xfae-window.c:241 ../settings/xfae-window.c:321
 msgid "Remove"
 msgstr "Kaldır"
 
-#: ../settings/xfae-window.c:195
+#: ../settings/xfae-window.c:251
 msgid "Edit"
 msgstr "Düzenle"
 
-#: ../settings/xfae-window.c:296
+#: ../settings/xfae-window.c:375
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Ekleme başarısız \"%s\""
 
-#: ../settings/xfae-window.c:327 ../settings/xfae-window.c:341
+#: ../settings/xfae-window.c:406 ../settings/xfae-window.c:420
 msgid "Failed to remove item"
 msgstr "Silme işlemi başarısız."
 
-#: ../settings/xfae-window.c:369
+#: ../settings/xfae-window.c:449
 msgid "Failed to edit item"
 msgstr "Düzenleme başarısız."
 
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:469
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "\"%s\"' düzenleme başarısız."
 
-#: ../settings/xfae-window.c:417
+#: ../settings/xfae-window.c:497
 msgid "Failed to toggle item"
 msgstr "Öge değiştirilemedi"
 
@@ -493,7 +534,7 @@ msgstr "Yine de devam et"
 msgid "Try again"
 msgstr "Yeniden dene"
 
-#: ../xfce4-session/xfsm-manager.c:619
+#: ../xfce4-session/xfsm-manager.c:597
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -502,69 +543,69 @@ msgid ""
 "incorrectly."
 msgstr "Güvenli oturum adı belirleme olanaksız. Olası nedenler: xfconfd çalışmıyor (D-Bus kurulum problemi); ortam değişkeni $XDG_CONFIG_DIRS yalnış ayarlanmış (\"%s\" 'in içinde olmalı), veya xfce4-session yanlış yüklenmiş."
 
-#: ../xfce4-session/xfsm-manager.c:630
+#: ../xfce4-session/xfsm-manager.c:608
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Belirlenmiş günveli oturum (\"%s\") güvenli oturum olarak işaretlenmemiş."
 
-#: ../xfce4-session/xfsm-manager.c:677
+#: ../xfce4-session/xfsm-manager.c:638
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Güvenli oturum için uygulama listesi boş."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:724
+#: ../xfce4-session/xfsm-manager.c:685
 msgid "Session Manager Error"
 msgstr "Oturum Yöneticisi Hatası"
 
-#: ../xfce4-session/xfsm-manager.c:726
+#: ../xfce4-session/xfsm-manager.c:687
 msgid "Unable to load a failsafe session"
 msgstr "Güvenli oturum yükleme olanaksız"
 
-#: ../xfce4-session/xfsm-manager.c:728
+#: ../xfce4-session/xfsm-manager.c:689
 msgid "_Quit"
 msgstr "_Çıkış"
 
-#: ../xfce4-session/xfsm-manager.c:1221
+#: ../xfce4-session/xfsm-manager.c:1184
 msgid "Shutdown Failed"
 msgstr "Bilgisayar Kapatılamadı"
 
-#: ../xfce4-session/xfsm-manager.c:1224
+#: ../xfce4-session/xfsm-manager.c:1187
 msgid "Failed to suspend session"
 msgstr "Oturum askıya alınamadı"
 
-#: ../xfce4-session/xfsm-manager.c:1226
+#: ../xfce4-session/xfsm-manager.c:1189
 msgid "Failed to hibernate session"
 msgstr "Oturum beklemeye alınamadı"
 
-#: ../xfce4-session/xfsm-manager.c:1228
+#: ../xfce4-session/xfsm-manager.c:1191
 msgid "Failed to hybrid sleep session"
 msgstr "Oturum melez uyku durumuna geçemedi"
 
-#: ../xfce4-session/xfsm-manager.c:1229
+#: ../xfce4-session/xfsm-manager.c:1192
 msgid "Failed to switch user"
 msgstr "Kullanıcı değiştirilemedi"
 
-#: ../xfce4-session/xfsm-manager.c:1535
+#: ../xfce4-session/xfsm-manager.c:1498
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "İstemciler yalnızca uzakta durumunda sonlandırılabilir"
 
-#: ../xfce4-session/xfsm-manager.c:2192
+#: ../xfce4-session/xfsm-manager.c:2155
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Denetleme noktası istenirken oturum yöneticisi uzakta durumunda olmalıdır"
 
-#: ../xfce4-session/xfsm-manager.c:2262 ../xfce4-session/xfsm-manager.c:2282
+#: ../xfce4-session/xfsm-manager.c:2225 ../xfce4-session/xfsm-manager.c:2245
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Kapatma istenirken oturum yöneticisi uzakta durumunda olmak zorunda"
 
-#: ../xfce4-session/xfsm-manager.c:2327
+#: ../xfce4-session/xfsm-manager.c:2290
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Kapatma istenirken oturum yöneticisi çalışmıyor olmalıdır"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:182
+#: ../xfce4-session/xfsm-logout-dialog.c:184
 #, c-format
 msgid "Log out %s"
 msgstr "%s çıkışını yap"
@@ -572,39 +613,39 @@ msgstr "%s çıkışını yap"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:224
+#: ../xfce4-session/xfsm-logout-dialog.c:229
 msgid "_Log Out"
 msgstr "_Çıkış Yap"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:244
+#: ../xfce4-session/xfsm-logout-dialog.c:249
 msgid "_Restart"
 msgstr "Yeniden Başla"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:264
+#: ../xfce4-session/xfsm-logout-dialog.c:269
 msgid "Shut _Down"
 msgstr "Kapat"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:287
+#: ../xfce4-session/xfsm-logout-dialog.c:293
 msgid "Sus_pend"
 msgstr "Askıya al"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:321
+#: ../xfce4-session/xfsm-logout-dialog.c:327
 msgid "_Hibernate"
 msgstr "Beklemeye al"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:352
-msgid "_Hybrid Sleep"
-msgstr "_Melez Uyku"
+#: ../xfce4-session/xfsm-logout-dialog.c:358
+msgid "H_ybrid Sleep"
+msgstr "H_ibrit Uyku"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:383
+#: ../xfce4-session/xfsm-logout-dialog.c:389
 msgid "Switch _User"
 msgstr "Kullanıcı _Değiştir"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:408
+#: ../xfce4-session/xfsm-logout-dialog.c:414
 msgid "_Save session for future logins"
 msgstr "_Sonraki girişler için oturumu kaydet"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:436
+#: ../xfce4-session/xfsm-logout-dialog.c:442
 msgid "An error occurred"
 msgstr "Bir hata oluştu"
 
@@ -705,26 +746,11 @@ msgstr "X Uçbirim Öykünücüsü Başlatılıyor"
 msgid "Starting %s"
 msgstr "%s başlatılıyor"
 
-#: ../xfce4-session/xfsm-startup.c:587
-#, c-format
-msgid ""
-"The location and the format of the autostart directory has changed.\n"
-"The new location is\n"
-"\n"
-"  %s\n"
-"\n"
-"where you can place .desktop files to, that describe the applications\n"
-"to start when you login to your Xfce desktop. The files in your old\n"
-"autostart directory have been successfully migrated to the new\n"
-"location.\n"
-"You should delete this directory now.\n"
-msgstr "Açılışta çalışacakların dizin adresi ve biçimi değişmiştir.\nXfce masaüstüne giriş yaptığınızda çalışacak uygulamaların\ntanımlandığı .desktop dosyalarının yerleştirileceği yeni dizin\n  %s\n\nEski dizindeki dosyaların tamamı başarıyla yeni dizine\ntaşınmıştır.\nBu dizini artık silebilirsiniz.\n"
-
-#: ../xfce4-session/xfsm-startup.c:772
+#: ../xfce4-session/xfsm-startup.c:480
 msgid "Performing Autostart..."
 msgstr "Oto-Başlat Çalışıyor..."
 
-#: ../xfce4-session/xfsm-startup.c:878
+#: ../xfce4-session/xfsm-startup.c:586
 msgid "Starting Assistive Technologies"
 msgstr "Yardımcı Teknolojiler Başlatılıyor"
 
@@ -895,16 +921,16 @@ msgid ""
 msgstr "Bu uygulamalar şu anda kullandığınız oturumun bir parçası ve çıkış yaptığınızda kaydedilecek. Aşağıdaki değişiklikler yalnızca oturum kaydedildiğinde geçerli olacak."
 
 #: ../settings/xfce4-session-settings.ui.h:23
+msgid "Save Sess_ion"
+msgstr "Oturu_mu Kaydet"
+
+#: ../settings/xfce4-session-settings.ui.h:24
 msgid "Empty the session cache"
 msgstr "Oturum önbelleğini boşalt"
 
-#: ../settings/xfce4-session-settings.ui.h:24
+#: ../settings/xfce4-session-settings.ui.h:25
 msgid "Clear save_d sessions"
 msgstr "_Kayıtlı oturumları temizle"
-
-#: ../settings/xfce4-session-settings.ui.h:25
-msgid "Save Sess_ion"
-msgstr "Oturu_mu Kaydet"
 
 #: ../settings/xfce4-session-settings.ui.h:26
 msgid "Quit the program, and remove it from the session"
