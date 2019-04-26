@@ -45,8 +45,6 @@ void xfsm_place_trash_window (GtkWindow *window,
 /* XXX - move to libxfce4util? */
 gboolean xfsm_strv_equal (gchar **a, gchar **b);
 
-void xfsm_window_add_border (GtkWindow *window);
-
 XfconfChannel *xfsm_open_config (void);
 
 gchar *xfsm_gdk_display_get_fullname (GdkDisplay *display);

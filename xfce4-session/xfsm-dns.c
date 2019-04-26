@@ -161,7 +161,7 @@ xfsm_dns_check (void)
                                   NULL);
 
           gtk_window_set_screen (GTK_WINDOW (msgbox), screen);
-          xfsm_window_add_border (GTK_WINDOW (msgbox));
+          gtk_container_set_border_width (GTK_CONTAINER (msgbox), 6);
           gtk_window_set_position (GTK_WINDOW (msgbox), GTK_WIN_POS_CENTER);
         }
 

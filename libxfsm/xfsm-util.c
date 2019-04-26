@@ -153,42 +153,6 @@ xfsm_strv_equal (gchar **a, gchar **b)
 }
 
 
-void
-xfsm_window_add_border (GtkWindow *window)
-{
-  GtkWidget *box1, *box2;
-  GtkWidget *child;
-  GdkRGBA    bg_color;
-
-  child = gtk_bin_get_child (GTK_BIN (window));
-  if (G_UNLIKELY (child == NULL))
-    return;
-
-  gtk_widget_realize(GTK_WIDGET(window));
-
-  box1 = gtk_event_box_new ();
-G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-  gtk_style_context_get_background_color(gtk_widget_get_style_context (GTK_WIDGET(window)),
-                                         GTK_STATE_SELECTED,
-                                         &bg_color);
-  gtk_widget_override_background_color (box1, GTK_STATE_NORMAL,
-                                        &bg_color);
-G_GNUC_END_IGNORE_DEPRECATIONS
-  gtk_widget_show (box1);
-
-  box2 = gtk_event_box_new ();
-  gtk_widget_show (box2);
-  gtk_container_add (GTK_CONTAINER (box1), box2);
-
-  gtk_container_set_border_width (GTK_CONTAINER (box2), 6);
-
-  g_object_ref (child);
-  gtk_container_remove (GTK_CONTAINER (window), child);
-  gtk_container_add (GTK_CONTAINER (window), box1);
-  gtk_container_add (GTK_CONTAINER (box2), child);
-  g_object_unref (child);
-}
-
 XfconfChannel*
 xfsm_open_config (void)
 {
@@ -237,4 +201,3 @@ xfsm_gdk_display_get_fullname (GdkDisplay *display)
 
   return g_strdup (buffer);
 }
-
