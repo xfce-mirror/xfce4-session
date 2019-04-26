@@ -170,6 +170,7 @@ xfae_window_init (XfaeWindow *window)
 
   model = xfae_model_new ();
   gtk_tree_view_set_model (GTK_TREE_VIEW (window->treeview), model);
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (window->treeview), TRUE);
   gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (window->treeview), XFAE_MODEL_COLUMN_TOOLTIP);
   g_object_unref (G_OBJECT (model));
 
@@ -193,6 +194,7 @@ xfae_window_init (XfaeWindow *window)
                          "reorderable", FALSE,
                          "resizable", FALSE,
                          NULL);
+  gtk_tree_view_column_set_title (column, _("Trigger"));
   renderer = gtk_cell_renderer_combo_new ();
   model = xfae_window_create_run_hooks_combo_model ();
   g_object_set (renderer,
@@ -214,6 +216,7 @@ xfae_window_init (XfaeWindow *window)
                          "reorderable", FALSE,
                          "resizable", FALSE,
                          NULL);
+  gtk_tree_view_column_set_title (column, _("Program"));
   renderer = gtk_cell_renderer_pixbuf_new ();
   gtk_tree_view_column_pack_start (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column, renderer,
