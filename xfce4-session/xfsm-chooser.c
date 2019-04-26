@@ -148,6 +148,7 @@ xfsm_chooser_init (XfsmChooser *chooser)
   GtkWidget *vbox;
   GtkWidget *label;
   GtkWidget *dbox;
+  gchar title[256];
 
   dbox = gtk_dialog_get_content_area(GTK_DIALOG (chooser));
 
@@ -157,7 +158,10 @@ xfsm_chooser_init (XfsmChooser *chooser)
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_widget_set_margin_bottom (vbox, 6);
   gtk_box_pack_start (GTK_BOX (dbox), vbox, TRUE, TRUE, 0);
-  label = gtk_label_new (_("Choose session"));
+  g_snprintf (title, 256, "<big><b>%s</b></big>",
+              _("Choose a session"));
+  label = gtk_label_new (title);
+  gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
 
   /* scrolled window */
@@ -217,10 +221,19 @@ xfsm_chooser_init (XfsmChooser *chooser)
   gtk_widget_show (button);
 
   /* "New" button */
-  button = xfce_gtk_button_new_mixed ("document-new", _("New session"));
+  button = xfce_gtk_button_new_mixed ("document-new", _("Create new session"));
   gtk_widget_set_tooltip_text (button, _("Create a new session."));
   gtk_dialog_add_action_widget (GTK_DIALOG (chooser), button,
                                 XFSM_RESPONSE_NEW);
+  gtk_widget_show (button);
+
+  /* "Start" button */
+  button = xfce_gtk_button_new_mixed ("", _("Start"));
+  gtk_widget_set_tooltip_text (button, _("Start an existing session."));
+  gtk_style_context_add_class (gtk_widget_get_style_context (button), "suggested-action");
+  gtk_dialog_set_default_response (GTK_DIALOG (chooser), XFSM_RESPONSE_LOAD);
+  gtk_dialog_add_action_widget (GTK_DIALOG (chooser), button,
+                                XFSM_RESPONSE_LOAD);
   gtk_widget_show (button);
 }
 

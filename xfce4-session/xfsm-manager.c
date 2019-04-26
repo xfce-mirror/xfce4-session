@@ -676,11 +676,12 @@ again:
       chooser = g_object_new (XFSM_TYPE_CHOOSER,
                               "type", GTK_WINDOW_POPUP,
                               NULL);
-      xfsm_window_add_border (GTK_WINDOW (chooser));
+      gtk_container_set_border_width (GTK_CONTAINER (chooser), 6);
       xfsm_chooser_set_sessions (XFSM_CHOOSER (chooser),
                                  sessions, default_session);
       gtk_window_set_screen (GTK_WINDOW (chooser), screen);
       gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_CENTER);
+      gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (chooser)), "xfsm-session-chooser");
       result = gtk_dialog_run (GTK_DIALOG (chooser));
 
       if (result == XFSM_RESPONSE_LOAD)
@@ -702,6 +703,7 @@ again:
 
       if (result == XFSM_CHOOSE_NEW)
         {
+          GtkWidget *button;
           dialog = gtk_dialog_new_with_buttons (NULL,
                                                 NULL,
                                                 GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -714,20 +716,24 @@ again:
                                            GTK_RESPONSE_OK);
           gtk_window_set_screen (GTK_WINDOW (dialog), screen);
           gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
-          g_snprintf (title, 256, "<big>%s</big>",
-                      _("Choose a name for the new session:"));
+          gtk_container_set_border_width (GTK_CONTAINER (dialog), 12);
+          gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (dialog)), "xfsm-session-chooser");
+          g_snprintf (title, 256, "<big><b>%s</b></big>",
+                      _("Name for the new session"));
           label = gtk_label_new (title);
           gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
           gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                               label, TRUE, TRUE, 6);
           gtk_widget_show (label);
 
+          button = gtk_dialog_get_widget_for_response (GTK_DIALOG (dialog),
+                                                       GTK_RESPONSE_OK);
+          gtk_style_context_add_class (gtk_widget_get_style_context (button), "suggested-action");
+
           entry = gtk_entry_new ();
           gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                               entry, TRUE, TRUE, 6);
           gtk_widget_show (entry);
-
-          xfsm_window_add_border (GTK_WINDOW (dialog));
 
 again1:
           result = gtk_dialog_run (GTK_DIALOG (dialog));
