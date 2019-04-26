@@ -212,7 +212,7 @@ xfsm_chooser_init (XfsmChooser *chooser)
   gtk_widget_show (chooser->tree);
 
   /* "Logout" button */
-  button = xfce_gtk_button_new_mixed ("application-exit", _("Log out"));
+  button = xfce_gtk_button_new_mixed ("application-exit", _("Log Out"));
   gtk_widget_set_tooltip_text (button,
                                _("Cancel the login attempt and return to "
                                  "the login screen."));
@@ -221,7 +221,7 @@ xfsm_chooser_init (XfsmChooser *chooser)
   gtk_widget_show (button);
 
   /* "New" button */
-  button = xfce_gtk_button_new_mixed ("document-new", _("Create new session"));
+  button = xfce_gtk_button_new_mixed ("document-new", _("Create New Session"));
   gtk_widget_set_tooltip_text (button, _("Create a new session."));
   gtk_dialog_add_action_widget (GTK_DIALOG (chooser), button,
                                 XFSM_RESPONSE_NEW);
