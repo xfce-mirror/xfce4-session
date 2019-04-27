@@ -69,8 +69,6 @@
 #include <pwd.h>
 #include <grp.h>
 
-#define MAX_USER_GROUPS 100
-
 #include <libxfsm/xfsm-util.h>
 #include <libxfsm/xfsm-shutdown-common.h>
 #include <xfce4-session/xfsm-shutdown-fallback.h>
@@ -206,8 +204,8 @@ static gboolean
 xfsm_shutdown_fallback_user_is_operator (void)
 {
   struct passwd *pw;
-  gid_t groups[MAX_USER_GROUPS];
-  int max_grp = MAX_USER_GROUPS;
+  int max_grp = sysconf(_SC_NGROUPS_MAX);
+  gid_t *groups;
   int i = 0;
   int ret;
   static gboolean is_operator = FALSE;
@@ -217,6 +215,19 @@ xfsm_shutdown_fallback_user_is_operator (void)
   if (once == TRUE)
     goto out;
 
+  if (max_grp == -1)
+    {
+      fprintf (stderr, "sysconf(_SC_NGROUPS_MAX) failed");
+      return FALSE;
+    }
+
+  groups = malloc(sizeof(gid_t) * max_grp);
+  if (groups == NULL)
+    {
+      fprintf (stderr, "malloc(sizeof(gid_t) * max_grp) failed");
+      return FALSE;
+    }
+
   pw = getpwuid (getuid());
 
   ret = getgrouplist (pw->pw_name, pw->pw_gid, groups, &max_grp);
@@ -225,7 +236,8 @@ xfsm_shutdown_fallback_user_is_operator (void)
     {
       fprintf (stderr,
                "Failed to get user group list, user belongs to more than %u groups?\n",
-               MAX_USER_GROUPS);
+               max_grp);
+      free(groups);
       goto out;
     }
 
@@ -242,6 +254,7 @@ xfsm_shutdown_fallback_user_is_operator (void)
           break;
         }
     }
+  free(groups);
 out:
   return is_operator;
 }
