@@ -1,5 +1,5 @@
 dnl
-dnl Copyright (c) 2003-2014
+dnl Copyright (c) 2003-2019
 dnl         The Xfce development team. All rights reserved.
 dnl
 dnl Written for Xfce by Benedikt Meurer <benny@xfce.org>.
@@ -15,7 +15,7 @@ m4_define([xfsm_version_tag], [git])
 m4_define([xfsm_version], [xfsm_version_major().xfsm_version_minor().xfsm_version_micro()ifelse(xfsm_version_nano(), [], [], [.xfsm_version_nano()])ifelse(xfsm_version_tag(), [git], [xfsm_version_tag()-xfsm_version_build()], [xfsm_version_tag()])])
 
 m4_define([xfsm_debug_default], [ifelse(xfsm_version_tag(), [git], [yes], [minimum])])
-m4_define([intltool_minimum_version], [0.31])
+m4_define([intltool_minimum_version], [0.35])
 
 dnl Initialize autoconf
 AC_COPYRIGHT([Copyright (c) 2003-2019
