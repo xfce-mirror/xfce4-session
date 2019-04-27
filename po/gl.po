@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-21 00:31+0200\n"
-"PO-Revision-Date: 2019-04-23 06:06+0000\n"
+"POT-Creation-Date: 2019-04-25 06:31+0200\n"
+"PO-Revision-Date: 2019-04-27 17:14+0000\n"
 "Last-Translator: Daniel Muñiz Fontoira <dani@damufo.com>\n"
 "Language-Team: Galician (http://www.transifex.com/xfce/xfce4-session/language/gl/)\n"
 "MIME-Version: 1.0\n"
@@ -39,7 +39,7 @@ msgstr "Escolla o ficheiro do tema a instalar..."
 
 #: ../engines/balou/config.c:327 ../engines/balou/config.c:495
 #: ../settings/session-editor.c:173 ../settings/session-editor.c:257
-#: ../xfce4-session/xfsm-logout-dialog.c:210
+#: ../xfce4-session/xfsm-logout-dialog.c:212
 #: ../xfce4-session/xfsm-splash-screen.c:213
 msgid "_Cancel"
 msgstr "_Cancelar"
@@ -63,7 +63,7 @@ msgstr "Comprobe se o ficheiro é un arquivo válido de tema de benvida."
 
 #: ../engines/balou/config.c:344 ../engines/balou/config.c:953
 #: ../engines/simple/simple.c:338 ../settings/session-editor.c:132
-#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1212
+#: ../settings/session-editor.c:289 ../xfce4-session/xfsm-manager.c:1194
 msgid "_Close"
 msgstr "_Pechar"
 
@@ -312,102 +312,142 @@ msgstr "Reiniciar o estilo"
 msgid "None"
 msgstr "Ningún"
 
-#: ../settings/xfae-dialog.c:73 ../settings/xfae-dialog.c:182
+#: ../settings/xfae-dialog.c:77 ../settings/xfae-dialog.c:210
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: ../settings/xfae-dialog.c:74 ../settings/xfae-dialog.c:183
+#: ../settings/xfae-dialog.c:78 ../settings/xfae-dialog.c:211
 msgid "OK"
 msgstr "Aceptar"
 
-#: ../settings/xfae-dialog.c:78
+#: ../settings/xfae-dialog.c:82
 msgid "Add application"
 msgstr "Engadir aplicación"
 
-#: ../settings/xfae-dialog.c:90
+#: ../settings/xfae-dialog.c:94
 msgid "Name:"
 msgstr "Nome:"
 
-#: ../settings/xfae-dialog.c:104
+#: ../settings/xfae-dialog.c:109
 msgid "Description:"
 msgstr "Descrición:"
 
-#: ../settings/xfae-dialog.c:117 ../settings/xfae-model.c:482
+#: ../settings/xfae-dialog.c:123 ../settings/xfae-model.c:548
 msgid "Command:"
 msgstr "Orde:"
 
-#: ../settings/xfae-dialog.c:179
+#: ../settings/xfae-dialog.c:136
+msgid "Trigger:"
+msgstr "Activador:"
+
+#: ../settings/xfae-dialog.c:207
 msgid "Select a command"
 msgstr "Seleccione unha orde"
 
-#: ../settings/xfae-dialog.c:228
+#: ../settings/xfae-dialog.c:258
 msgid "Edit application"
 msgstr "Editar aplicación"
 
-#: ../settings/xfae-model.c:614
-#, c-format
-msgid "Failed to unlink %s: %s"
-msgstr "Non se puido eliminar «%s»: %s"
+#: ../settings/xfae-model.c:87
+msgid "on login"
+msgstr "Ao entrar na sesión"
 
-#: ../settings/xfae-model.c:703
-#, c-format
-msgid "Failed to create file %s"
-msgstr "Non se puido crea-lo ficheiro «%s»"
+#: ../settings/xfae-model.c:88
+msgid "on logout"
+msgstr "Ao saír da sesión"
 
-#: ../settings/xfae-model.c:726
-#, c-format
-msgid "Failed to write file %s"
-msgstr "Non se puido escribir no ficheiro «%s»"
+#: ../settings/xfae-model.c:89
+msgid "on shutdown"
+msgstr "Ao apagar"
 
-#: ../settings/xfae-model.c:785
-#, c-format
-msgid "Failed to open %s for reading"
-msgstr "Produciuse un erro ao abrir %s para lectura"
+#: ../settings/xfae-model.c:90
+msgid "on restart"
+msgstr "Ao reiniciar"
 
-#: ../settings/xfae-model.c:894 ../settings/xfae-model.c:951
+#: ../settings/xfae-model.c:91
+msgid "on suspend"
+msgstr "Ao suspender"
+
+#: ../settings/xfae-model.c:92
+msgid "on hibernate"
+msgstr "Ao hibernar"
+
+#: ../settings/xfae-model.c:93
+msgid "on hybrid sleep"
+msgstr "Ao suspender de xeito híbrido"
+
+#: ../settings/xfae-model.c:94
+msgid "on switch user"
+msgstr "ao mudar de usuario"
+
+#: ../settings/xfae-model.c:304 ../settings/xfae-model.c:970
+#: ../settings/xfae-model.c:1028
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "Non se puido abrir «%s» para escritura"
 
-#: ../settings/xfae-window.c:105
-msgid ""
-"Below is the list of applications that will be started automatically when "
-"you login to your Xfce desktop, in addition to the applications that were "
-"saved when you logged out last time. Cursive applications belong to another "
-"desktop environment, but you can still enable them if you want."
-msgstr "Embaixo está a lista de aplicativos que se inician automaticamente ao comezar unha sesión no escritorio Xfce, ademais das aplicacións que foron gardadas cando rematou a súa última sesión. Os aplicativos en cursiva pertencen a outro entorno de escritorio, aínda que tamén se poden activar se se quere."
+#: ../settings/xfae-model.c:681
+#, c-format
+msgid "Failed to unlink %s: %s"
+msgstr "Non se puido eliminar «%s»: %s"
 
-#: ../settings/xfae-window.c:179 ../settings/xfae-window.c:237
+#: ../settings/xfae-model.c:772
+#, c-format
+msgid "Failed to create file %s"
+msgstr "Non se puido crea-lo ficheiro «%s»"
+
+#: ../settings/xfae-model.c:796
+#, c-format
+msgid "Failed to write file %s"
+msgstr "Non se puido escribir no ficheiro «%s»"
+
+#: ../settings/xfae-model.c:856
+#, c-format
+msgid "Failed to open %s for reading"
+msgstr "Produciuse un erro ao abrir %s para lectura"
+
+#: ../settings/xfae-window.c:98
+msgid "Failed to set run hook"
+msgstr "Fallo ao definir o enganche de execución"
+
+#: ../settings/xfae-window.c:139
+msgid ""
+"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
+"On login additionally all applications that were saved on your last logout will be started.\n"
+"Cursive applications belong to another desktop environment, but you can still enable them if you want."
+msgstr "Listaxe de aplicativos que se iniciarán automaticamente ao producirse accións específicas como entrar na sesión, saír da sesión, apagar, etc.\nAo entrar na sesión tamén se iniciarán todos os aplicativos gardados na última saída.\nOs aplicativos en cursivo pertencen a outro contorno de escritorio, máis aínda así pode habilitalos se o desexa."
+
+#: ../settings/xfae-window.c:235 ../settings/xfae-window.c:315
 msgid "Add"
 msgstr "Engadir"
 
-#: ../settings/xfae-window.c:185 ../settings/xfae-window.c:243
+#: ../settings/xfae-window.c:241 ../settings/xfae-window.c:321
 msgid "Remove"
 msgstr "Eliminar"
 
-#: ../settings/xfae-window.c:195
+#: ../settings/xfae-window.c:251
 msgid "Edit"
 msgstr "Modificar"
 
-#: ../settings/xfae-window.c:296
+#: ../settings/xfae-window.c:375
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Produciuse un erro ao engadir \"%s\""
 
-#: ../settings/xfae-window.c:327 ../settings/xfae-window.c:341
+#: ../settings/xfae-window.c:406 ../settings/xfae-window.c:420
 msgid "Failed to remove item"
 msgstr "Produciuse un erro ao eliminar o elemento"
 
-#: ../settings/xfae-window.c:369
+#: ../settings/xfae-window.c:449
 msgid "Failed to edit item"
 msgstr "Produciuse un erro ao editar o elemento"
 
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:469
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Produciuse un erro ao editar o elemento \"%s\""
 
-#: ../settings/xfae-window.c:417
+#: ../settings/xfae-window.c:497
 msgid "Failed to toggle item"
 msgstr "Produciuse un erro ao activar o elemento"
 
@@ -490,7 +530,7 @@ msgstr "Continuar de tódolos xeitos"
 msgid "Try again"
 msgstr "Tentalo de novo"
 
-#: ../xfce4-session/xfsm-manager.c:617
+#: ../xfce4-session/xfsm-manager.c:597
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -499,69 +539,69 @@ msgid ""
 "incorrectly."
 msgstr "Non foi posible determinar o nome da sesión a proba de erros. Causas posibles: xfconfd non se está executando (problema de configuración de D-Bus), a variable de contorno $XDG_CONFIG_DIRS está mal definida (debe incluír \"%s\"), ou xfce4-session está mal instalado."
 
-#: ../xfce4-session/xfsm-manager.c:628
+#: ../xfce4-session/xfsm-manager.c:608
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "A sesión a proba de erros especificada (\"%s\") non está marcada como sesión a proba de erros."
 
-#: ../xfce4-session/xfsm-manager.c:658
+#: ../xfce4-session/xfsm-manager.c:638
 msgid "The list of applications in the failsafe session is empty."
 msgstr "A lista de aplicacións da sesión a proba de erros está baleira."
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:705
+#: ../xfce4-session/xfsm-manager.c:685
 msgid "Session Manager Error"
 msgstr "Erro do xestor de sesións"
 
-#: ../xfce4-session/xfsm-manager.c:707
+#: ../xfce4-session/xfsm-manager.c:687
 msgid "Unable to load a failsafe session"
 msgstr "Non foi posible cargar unha sesión a proba de erros"
 
-#: ../xfce4-session/xfsm-manager.c:709
+#: ../xfce4-session/xfsm-manager.c:689
 msgid "_Quit"
 msgstr "_Saír"
 
-#: ../xfce4-session/xfsm-manager.c:1202
+#: ../xfce4-session/xfsm-manager.c:1184
 msgid "Shutdown Failed"
 msgstr "Erro ao apagar"
 
-#: ../xfce4-session/xfsm-manager.c:1205
+#: ../xfce4-session/xfsm-manager.c:1187
 msgid "Failed to suspend session"
 msgstr "Produciuse un erro ao suspender a sesión"
 
-#: ../xfce4-session/xfsm-manager.c:1207
+#: ../xfce4-session/xfsm-manager.c:1189
 msgid "Failed to hibernate session"
 msgstr "Produciuse un erro ao hibernar a sesión"
 
-#: ../xfce4-session/xfsm-manager.c:1209
+#: ../xfce4-session/xfsm-manager.c:1191
 msgid "Failed to hybrid sleep session"
 msgstr "Fallou a suspensión híbrida da sesión"
 
-#: ../xfce4-session/xfsm-manager.c:1210
+#: ../xfce4-session/xfsm-manager.c:1192
 msgid "Failed to switch user"
 msgstr "Fallou ó mudar de usuario"
 
-#: ../xfce4-session/xfsm-manager.c:1516
+#: ../xfce4-session/xfsm-manager.c:1498
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Só pode terminar os clientes cando está en estado inactivo"
 
-#: ../xfce4-session/xfsm-manager.c:2173
+#: ../xfce4-session/xfsm-manager.c:2155
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "O xestor de sesión debe estar en estado inactivo ao solicitar un punto de control"
 
-#: ../xfce4-session/xfsm-manager.c:2243 ../xfce4-session/xfsm-manager.c:2263
+#: ../xfce4-session/xfsm-manager.c:2225 ../xfce4-session/xfsm-manager.c:2245
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "O xestor de sesións debe estar en estado inactivo ao solicitar un apagado"
 
-#: ../xfce4-session/xfsm-manager.c:2308
+#: ../xfce4-session/xfsm-manager.c:2290
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "O xestor de sesións debe estar en estado inactivo ao solicitar un reinicio"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:183
+#: ../xfce4-session/xfsm-logout-dialog.c:184
 #, c-format
 msgid "Log out %s"
 msgstr "Rematar a sesión %s"
@@ -569,39 +609,39 @@ msgstr "Rematar a sesión %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:225
+#: ../xfce4-session/xfsm-logout-dialog.c:229
 msgid "_Log Out"
 msgstr "R_ematar a sesión"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:245
+#: ../xfce4-session/xfsm-logout-dialog.c:249
 msgid "_Restart"
 msgstr "_Reiniciar"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:265
+#: ../xfce4-session/xfsm-logout-dialog.c:269
 msgid "Shut _Down"
 msgstr "_Apagar"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:288
+#: ../xfce4-session/xfsm-logout-dialog.c:293
 msgid "Sus_pend"
 msgstr "Sus_pender"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:322
+#: ../xfce4-session/xfsm-logout-dialog.c:327
 msgid "_Hibernate"
 msgstr "_Hibernar"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:353
+#: ../xfce4-session/xfsm-logout-dialog.c:358
 msgid "H_ybrid Sleep"
 msgstr "Suspensión _híbrida"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:384
+#: ../xfce4-session/xfsm-logout-dialog.c:389
 msgid "Switch _User"
 msgstr "Mudar de _usuario"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:409
+#: ../xfce4-session/xfsm-logout-dialog.c:414
 msgid "_Save session for future logins"
 msgstr "Garda-la _sesión para sesións futuras"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:437
+#: ../xfce4-session/xfsm-logout-dialog.c:442
 msgid "An error occurred"
 msgstr "Produciuse un erro"
 
@@ -702,26 +742,11 @@ msgstr "Iniciando o emulador de terminal do X"
 msgid "Starting %s"
 msgstr "Iniciando %s"
 
-#: ../xfce4-session/xfsm-startup.c:587
-#, c-format
-msgid ""
-"The location and the format of the autostart directory has changed.\n"
-"The new location is\n"
-"\n"
-"  %s\n"
-"\n"
-"where you can place .desktop files to, that describe the applications\n"
-"to start when you login to your Xfce desktop. The files in your old\n"
-"autostart directory have been successfully migrated to the new\n"
-"location.\n"
-"You should delete this directory now.\n"
-msgstr "Alterouse a localización e o formato do directorio de autoarrinque.\nA nova localización é\n\n  %s\n\nonde pode pó-los ficheiros .desktop, que describen as\naplicacións a executar cando se inicie a súa sesión do Xfce.\nMovéronse con éxito os ficheiros do directorio de\nautoarrinque antigo á nova localización.\nAgora débeo eliminar.\n"
-
-#: ../xfce4-session/xfsm-startup.c:772
+#: ../xfce4-session/xfsm-startup.c:480
 msgid "Performing Autostart..."
 msgstr "Realizando autoarrinque..."
 
-#: ../xfce4-session/xfsm-startup.c:878
+#: ../xfce4-session/xfsm-startup.c:586
 msgid "Starting Assistive Technologies"
 msgstr "Iniciando as tecnoloxías de asistencia"
 
