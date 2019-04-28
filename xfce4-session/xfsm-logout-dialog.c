@@ -502,11 +502,8 @@ xfsm_logout_dialog_button (const gchar      *title,
 {
   GtkWidget    *button;
   GtkWidget    *vbox;
-  GdkPixbuf    *pixbuf;
   GtkWidget    *image;
   GtkWidget    *label;
-  static gint   icon_size = 0;
-  gint          w, h;
   gint         *val;
   GtkIconTheme *icon_theme;
 
@@ -525,32 +522,17 @@ xfsm_logout_dialog_button (const gchar      *title,
   gtk_container_add (GTK_CONTAINER (button), vbox);
   gtk_widget_show (vbox);
 
-  if (G_UNLIKELY (icon_size == 0))
-    {
-      if (gtk_icon_size_lookup (GTK_ICON_SIZE_DND, &w, &h))
-        icon_size = MAX (w, h);
-      else
-        icon_size = 32;
-    }
+  icon_theme = gtk_icon_theme_get_default ();
 
-  icon_theme = gtk_icon_theme_get_for_screen (gtk_window_get_screen (GTK_WINDOW (dialog)));
-  pixbuf = gtk_icon_theme_load_icon (icon_theme, icon_name, icon_size, 0, NULL);
+  image = gtk_image_new ();
+  if (gtk_icon_theme_has_icon (icon_theme, icon_name))
+      gtk_image_set_from_icon_name (GTK_IMAGE (image), icon_name, GTK_ICON_SIZE_DND);
+  else if (gtk_icon_theme_has_icon (icon_theme, icon_name_fallback))
+      gtk_image_set_from_icon_name (GTK_IMAGE (image), icon_name_fallback, GTK_ICON_SIZE_DND);
+  else if (gtk_icon_theme_has_icon (icon_theme, icon_name_fallback2))
+      gtk_image_set_from_icon_name (GTK_IMAGE (image), icon_name_fallback2, GTK_ICON_SIZE_DND);
 
-  if (G_UNLIKELY (pixbuf == NULL))
-    {
-      pixbuf = gtk_icon_theme_load_icon (icon_theme, icon_name_fallback,
-                                         icon_size, GTK_ICON_LOOKUP_GENERIC_FALLBACK,
-                                         NULL);
-    }
-
-  if (G_UNLIKELY (pixbuf == NULL))
-    {
-      pixbuf = gtk_icon_theme_load_icon (icon_theme, icon_name_fallback2,
-                                         icon_size, GTK_ICON_LOOKUP_GENERIC_FALLBACK,
-                                         NULL);
-    }
-
-  image = gtk_image_new_from_pixbuf (pixbuf);
+  gtk_image_set_pixel_size (GTK_IMAGE (image), 32);
   gtk_box_pack_start (GTK_BOX (vbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 
