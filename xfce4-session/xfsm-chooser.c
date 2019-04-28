@@ -106,6 +106,68 @@ xfsm_chooser_set_sessions (XfsmChooser *chooser,
 }
 
 
+static void
+xfsm_chooser_new_session (GtkButton *button,
+                          XfsmChooser *chooser)
+{
+  gtk_dialog_response (GTK_DIALOG (chooser), XFSM_RESPONSE_NEW);
+}
+
+
+static void
+xfsm_chooser_logout (GtkButton *button,
+                     XfsmChooser *chooser)
+{
+  gtk_dialog_response (GTK_DIALOG (chooser), GTK_RESPONSE_CANCEL);
+}
+
+
+static void
+xfsm_chooser_start_session (GtkButton *button,
+                            XfsmChooser *chooser)
+{
+  gtk_dialog_response (GTK_DIALOG (chooser), XFSM_RESPONSE_LOAD);
+}
+
+
+static void
+xfsm_chooser_delete_session (GtkButton *button,
+                             XfsmChooser *chooser)
+{
+  XfceRc *rc;
+  gchar *session_file;
+  gchar *display_name;
+  gchar *resource_name;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  GtkTreeSelection *selection;
+  gchar *session;
+
+  display_name = xfsm_gdk_display_get_fullname (gdk_display_get_default ());
+  resource_name = g_strconcat ("sessions/xfce4-session-", display_name, NULL);
+  session_file = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource_name, TRUE);
+
+  if (!g_file_test (session_file, G_FILE_TEST_IS_REGULAR))
+    {
+      g_warning ("xfsm_manager_load_session: Something wrong with %s, Does it exist? Permissions issue?", session_file);
+      return;
+    }
+
+  /* Remove the session from the treeview */
+  model = gtk_tree_view_get_model (GTK_TREE_VIEW (chooser->tree));
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (chooser->tree));
+  gtk_tree_selection_get_selected (selection, &model, &iter);
+  gtk_list_store_remove (GTK_LIST_STORE (model), &iter);
+
+  /* Remove the session from session file */
+  session = g_strdup_printf ("Session: %s", xfsm_chooser_get_session (chooser));
+  rc = xfce_rc_simple_open (session_file, FALSE);
+  xfce_rc_delete_group (rc, session, FALSE);
+  xfce_rc_close (rc);
+  g_free (session);
+}
+
+
 gchar*
 xfsm_chooser_get_session (const XfsmChooser *chooser)
 {
@@ -146,6 +208,7 @@ xfsm_chooser_init (XfsmChooser *chooser)
   GtkWidget *button;
   GtkWidget *swin;
   GtkWidget *vbox;
+  GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *dbox;
   gchar title[256];
@@ -155,13 +218,14 @@ xfsm_chooser_init (XfsmChooser *chooser)
   g_signal_connect_after (G_OBJECT (chooser), "realize",
                           G_CALLBACK (xfsm_chooser_realized), chooser);
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_widget_set_margin_bottom (vbox, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 9);
   gtk_box_pack_start (GTK_BOX (dbox), vbox, TRUE, TRUE, 0);
   g_snprintf (title, 256, "<big><b>%s</b></big>",
-              _("Choose a session"));
+              _("Session Manager"));
   label = gtk_label_new (title);
   gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+  gtk_widget_set_margin_bottom (label, 12);
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
 
   /* scrolled window */
@@ -174,8 +238,6 @@ xfsm_chooser_init (XfsmChooser *chooser)
   gtk_scrolled_window_set_min_content_height (GTK_SCROLLED_WINDOW (swin),
                                               200);
   gtk_box_pack_start (GTK_BOX (vbox), swin, TRUE, TRUE, 0);
-
-  gtk_widget_show_all (vbox);
 
   /* tree view */
   model = gtk_list_store_new (N_COLUMNS,
@@ -209,32 +271,51 @@ xfsm_chooser_init (XfsmChooser *chooser)
                     G_CALLBACK (xfsm_chooser_row_activated), chooser);
   gtk_container_add (GTK_CONTAINER (swin), chooser->tree);
   gtk_widget_set_size_request (chooser->tree, -1, 150);
-  gtk_widget_show (chooser->tree);
+
+  /* Session Treeview inline toolbar */
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
+  gtk_widget_set_margin_bottom (hbox, 12);
+  gtk_style_context_add_class (gtk_widget_get_style_context (hbox), "inline-toolbar");
+
+  /* "New" button */
+  button = gtk_button_new_from_icon_name ("list-add-symbolic", GTK_ICON_SIZE_BUTTON);//xfce_gtk_button_new_mixed ("document-new", _("Create New Session"));
+  gtk_widget_set_tooltip_text (button, _("Create a new session."));
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (xfsm_chooser_new_session), chooser);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+
+  /* "Delete" button */
+  button = gtk_button_new_from_icon_name ("list-remove-symbolic", GTK_ICON_SIZE_BUTTON); //xfce_gtk_button_new_mixed ("document-new", _("Delete Session"));
+  gtk_widget_set_tooltip_text (button, _("Delete a saved session."));
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (xfsm_chooser_delete_session), chooser);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+
+  /* Button box */
+  hbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (hbox), GTK_BUTTONBOX_EDGE);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
 
   /* "Logout" button */
   button = xfce_gtk_button_new_mixed ("application-exit", _("Log Out"));
   gtk_widget_set_tooltip_text (button,
                                _("Cancel the login attempt and return to "
                                  "the login screen."));
-  gtk_dialog_add_action_widget (GTK_DIALOG (chooser), button,
-                                GTK_RESPONSE_CANCEL);
-  gtk_widget_show (button);
-
-  /* "New" button */
-  button = xfce_gtk_button_new_mixed ("document-new", _("Create New Session"));
-  gtk_widget_set_tooltip_text (button, _("Create a new session."));
-  gtk_dialog_add_action_widget (GTK_DIALOG (chooser), button,
-                                XFSM_RESPONSE_NEW);
-  gtk_widget_show (button);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (xfsm_chooser_logout), chooser);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
   /* "Start" button */
   button = xfce_gtk_button_new_mixed ("", _("Start"));
   gtk_widget_set_tooltip_text (button, _("Start an existing session."));
   gtk_style_context_add_class (gtk_widget_get_style_context (button), "suggested-action");
   gtk_dialog_set_default_response (GTK_DIALOG (chooser), XFSM_RESPONSE_LOAD);
-  gtk_dialog_add_action_widget (GTK_DIALOG (chooser), button,
-                                XFSM_RESPONSE_LOAD);
-  gtk_widget_show (button);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (xfsm_chooser_start_session), chooser);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+
+  gtk_widget_show_all (vbox);
 }
 
 
