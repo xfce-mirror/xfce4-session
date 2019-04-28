@@ -391,66 +391,6 @@ xfsm_startup_shutdown (void)
 }
 
 
-static const gchar*
-figure_app_name (const gchar *program_path)
-{
-  static char progbuf[256];
-  gchar *prog;
-
-  prog = g_path_get_basename (program_path);
-
-  /* Xfce applications */
-  if (strcmp (prog, "xfce4-mixer") == 0)
-    return _("Starting the Volume Controller");
-  else if (strcmp (prog, "xfce4-panel") == 0)
-    return _("Starting the Panel");
-  else if (strcmp (prog, "xfdesktop") == 0)
-    return _("Starting the Desktop Manager");
-  else if (strcmp (prog, "xftaskbar4") == 0)
-    return _("Starting the Taskbar");
-  else if (strcmp (prog, "xfwm4") == 0)
-    return _("Starting the Window Manager");
-
-  /* Gnome applications */
-  if (strcmp (prog, "gnome-terminal") == 0)
-    return _("Starting the Gnome Terminal Emulator");
-
-  /* KDE applications */
-  if (strcmp (prog, "kate") == 0)
-    return _("Starting the KDE Advanced Text Editor");
-  else if (strcmp (prog, "klipper") == 0)
-    return _("Starting the KDE Clipboard Manager");
-  else if (strcmp (prog, "kmail") == 0)
-    return _("Starting the KDE Mail Reader");
-  else if (strcmp (prog, "knews") == 0)
-    return _("Starting the KDE News Reader");
-  else if (strcmp (prog, "konqueror") == 0)
-    return _("Starting the Konqueror");
-  else if (strcmp (prog, "konsole") == 0)
-    return _("Starting the KDE Terminal Emulator");
-
-  /* 3rd party applications */
-  if (strcmp (prog, "beep-media-player") == 0)
-    return _("Starting the Beep Media Player");
-  else if (strncmp (prog, "gimp", 4) == 0)
-    return _("Starting The Gimp");
-  else if (strcmp (prog, "gvim") == 0)
-    return _("Starting the VI Improved Editor");
-  else if (strcmp (prog, "smproxy") == 0)
-    return _("Starting the Session Management Proxy");
-  else if (strcmp (prog, "xchat") == 0 || strcmp (prog, "xchat2") == 0)
-    return _("Starting the X-Chat IRC Client");
-  else if (strcmp (prog, "xmms") == 0)
-    return _("Starting the X Multimedia System");
-  else if (strcmp (prog, "xterm") == 0)
-    return _("Starting the X Terminal Emulator");
-
-  g_snprintf (progbuf, 256, _("Starting %s"), prog);
-
-  return progbuf;
-}
-
-
 
 static void
 xfsm_startup_autostart (XfsmManager *manager)
@@ -469,6 +409,7 @@ xfsm_startup_foreign (XfsmManager *manager)
   if (xfsm_manager_get_compat_startup(manager, XFSM_MANAGER_COMPAT_GNOME))
     xfsm_compat_gnome_startup ();
 }
+
 
 
 static void
