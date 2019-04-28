@@ -243,7 +243,7 @@ xfsm_compat_gnome_smproxy_shutdown (void)
 
 
 void
-xfsm_compat_gnome_startup ()
+xfsm_compat_gnome_startup (void)
 {
   if (G_UNLIKELY (gnome_compat_started))
     return;

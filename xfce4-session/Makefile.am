@@ -98,7 +98,7 @@ xfce4_session_LDADD =							\
 	$(LIBWNCK_LIBS)							\
 	$(POLKIT_LIBS)							\
 	$(XFCONF_LIBS)							\
-	-lm
+	$(LIBM)
 
 xfce4_session_DEPENDENCIES =						\
 	$(top_builddir)/libxfsm/libxfsm-4.6.la

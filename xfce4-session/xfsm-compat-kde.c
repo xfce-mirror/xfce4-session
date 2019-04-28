@@ -116,7 +116,7 @@ run (const gchar *command)
 
 
 void
-xfsm_compat_kde_startup ()
+xfsm_compat_kde_startup (void)
 {
   gchar command[256];
 
