@@ -1,6 +1,7 @@
 # $Id$
 
 SUBDIRS =								\
+	48x48-actions						\
 	48x48								\
 	128x128								\
 	scalable
