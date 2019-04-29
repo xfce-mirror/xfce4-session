@@ -162,6 +162,8 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+  /* Use Adwaita's keycap style to get a meaningful look out of the box */
+  gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (dialog)), "keycap");
   gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (dialog)), "xfsm-logout-dialog");
 
   /* load xfconf settings */
@@ -171,7 +173,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, BORDER);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), main_vbox, TRUE, TRUE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), BORDER);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_widget_show (main_vbox);
 
   /* label showing the users' name */
