@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-28 00:32+0200\n"
-"PO-Revision-Date: 2019-04-28 08:37+0000\n"
+"POT-Creation-Date: 2019-04-29 00:30+0200\n"
+"PO-Revision-Date: 2019-04-29 07:09+0000\n"
 "Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/xfce/xfce4-session/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -337,41 +337,44 @@ msgstr "Zobrazit informace o verzi a ukončit"
 msgid "Last accessed: %s"
 msgstr "Poslední přístup: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:162
-msgid "Choose a session"
-msgstr "Zvolte relaci"
+#: ../xfce4-session/xfsm-chooser.c:225
+msgid "Session Manager"
+msgstr "Správce relace"
 
-#: ../xfce4-session/xfsm-chooser.c:189
+#: ../xfce4-session/xfsm-chooser.c:251
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr "Vyberte relaci, kterou chcete obnovit. Relaci obnovíte dvojitým kliknutím na její název."
 
+#. "New" button
+#. xfce_gtk_button_new_mixed ("document-new", _("Create New Session"));
+#: ../xfce4-session/xfsm-chooser.c:283
+msgid "Create a new session."
+msgstr "Vytvořit novou relaci."
+
+#. "Delete" button
+#. xfce_gtk_button_new_mixed ("document-new", _("Delete Session"));
+#: ../xfce4-session/xfsm-chooser.c:290
+msgid "Delete a saved session."
+msgstr "Smazat uloženou relaci"
+
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:215
+#: ../xfce4-session/xfsm-chooser.c:301
 #: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
 msgid "Log Out"
 msgstr "Odhlásit se"
 
-#: ../xfce4-session/xfsm-chooser.c:217
+#: ../xfce4-session/xfsm-chooser.c:303
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Zrušit odhlášení a vrátit se zpět do přihlašovací obrazovky,"
 
-#. "New" button
-#: ../xfce4-session/xfsm-chooser.c:224
-msgid "Create New Session"
-msgstr "Vytvořit novou relaci"
-
-#: ../xfce4-session/xfsm-chooser.c:225
-msgid "Create a new session."
-msgstr "Vytvořit novou relaci."
-
 #. "Start" button
-#: ../xfce4-session/xfsm-chooser.c:231
+#: ../xfce4-session/xfsm-chooser.c:310
 msgid "Start"
 msgstr "Spustit"
 
-#: ../xfce4-session/xfsm-chooser.c:232
+#: ../xfce4-session/xfsm-chooser.c:311
 msgid "Start an existing session."
 msgstr "Spustit existující relaci"
 
@@ -533,87 +536,6 @@ msgstr "_Uložit relaci pro příští přihlášení"
 #: ../xfce4-session/xfsm-logout-dialog.c:442
 msgid "An error occurred"
 msgstr "Došlo k chybě"
-
-#: ../xfce4-session/xfsm-startup.c:404
-msgid "Starting the Volume Controller"
-msgstr "Spouští se ovladač hlasitosti"
-
-#: ../xfce4-session/xfsm-startup.c:406
-msgid "Starting the Panel"
-msgstr "Spouští se panel"
-
-#: ../xfce4-session/xfsm-startup.c:408
-msgid "Starting the Desktop Manager"
-msgstr "Spouští se správce plochy"
-
-#: ../xfce4-session/xfsm-startup.c:410
-msgid "Starting the Taskbar"
-msgstr "Spouští se panel úloh"
-
-#: ../xfce4-session/xfsm-startup.c:412
-msgid "Starting the Window Manager"
-msgstr "Spouští se správce oken"
-
-#: ../xfce4-session/xfsm-startup.c:416
-msgid "Starting the Gnome Terminal Emulator"
-msgstr "Spouští se Emulátor terminálu pro prostředí Gnome"
-
-#: ../xfce4-session/xfsm-startup.c:420
-msgid "Starting the KDE Advanced Text Editor"
-msgstr "Spouští se Rozšířený textový editor pro KDE"
-
-#: ../xfce4-session/xfsm-startup.c:422
-msgid "Starting the KDE Clipboard Manager"
-msgstr "Spouští se Správce schránky pro KDE"
-
-#: ../xfce4-session/xfsm-startup.c:424
-msgid "Starting the KDE Mail Reader"
-msgstr "Spouští se aplikace pro čtení pošty pro KDE"
-
-#: ../xfce4-session/xfsm-startup.c:426
-msgid "Starting the KDE News Reader"
-msgstr "Spouští se aplikace pro čtení příspěvků v diskuzních skupinách pro KDE"
-
-#: ../xfce4-session/xfsm-startup.c:428
-msgid "Starting the Konqueror"
-msgstr "Spouští se Konqueror"
-
-#: ../xfce4-session/xfsm-startup.c:430
-msgid "Starting the KDE Terminal Emulator"
-msgstr "Spouští se Emulátor terminálu pro KDE"
-
-#: ../xfce4-session/xfsm-startup.c:434
-msgid "Starting the Beep Media Player"
-msgstr "Spouští se přehrávač Beep Media Player"
-
-#: ../xfce4-session/xfsm-startup.c:436
-msgid "Starting The Gimp"
-msgstr "Spouští se Gimp"
-
-#: ../xfce4-session/xfsm-startup.c:438
-msgid "Starting the VI Improved Editor"
-msgstr "Spouští se editor VIM"
-
-#: ../xfce4-session/xfsm-startup.c:440
-msgid "Starting the Session Management Proxy"
-msgstr "Spouští se proxy správce relace"
-
-#: ../xfce4-session/xfsm-startup.c:442
-msgid "Starting the X-Chat IRC Client"
-msgstr "Spouští se IRC klient X-Chat"
-
-#: ../xfce4-session/xfsm-startup.c:444
-msgid "Starting the X Multimedia System"
-msgstr "Spouští se přehrávač XMMS"
-
-#: ../xfce4-session/xfsm-startup.c:446
-msgid "Starting the X Terminal Emulator"
-msgstr "Spouští se emulátor terminálu xterm"
-
-#: ../xfce4-session/xfsm-startup.c:448
-#, c-format
-msgid "Starting %s"
-msgstr "Spouští se %s"
 
 #: ../xfce4-session/xfsm-shutdown.c:162
 msgid "Shutdown is blocked by the kiosk settings"
