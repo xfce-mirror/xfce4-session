@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-28 00:32+0200\n"
-"PO-Revision-Date: 2019-04-28 14:29+0000\n"
+"POT-Creation-Date: 2019-04-29 00:30+0200\n"
+"PO-Revision-Date: 2019-04-30 06:59+0000\n"
 "Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>\n"
 "Language-Team: Catalan (http://www.transifex.com/xfce/xfce4-session/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -339,41 +339,44 @@ msgstr "Imprimeix la informació de la versió i surt"
 msgid "Last accessed: %s"
 msgstr "Últim accés: %s"
 
-#: ../xfce4-session/xfsm-chooser.c:162
-msgid "Choose a session"
-msgstr "Seleccioneu una sessió"
+#: ../xfce4-session/xfsm-chooser.c:225
+msgid "Session Manager"
+msgstr "Gestor de sessions"
 
-#: ../xfce4-session/xfsm-chooser.c:189
+#: ../xfce4-session/xfsm-chooser.c:251
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr "Escolliu la sessió que voleu restaurar. Podeu fer simplement doble clic al nom de la sessió per restaurar-la."
 
+#. "New" button
+#. xfce_gtk_button_new_mixed ("document-new", _("Create New Session"));
+#: ../xfce4-session/xfsm-chooser.c:283
+msgid "Create a new session."
+msgstr "Crea una sessió nova."
+
+#. "Delete" button
+#. xfce_gtk_button_new_mixed ("document-new", _("Delete Session"));
+#: ../xfce4-session/xfsm-chooser.c:290
+msgid "Delete a saved session."
+msgstr "Suprimeix una sessió desada."
+
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:215
+#: ../xfce4-session/xfsm-chooser.c:301
 #: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
 msgid "Log Out"
 msgstr "Surt"
 
-#: ../xfce4-session/xfsm-chooser.c:217
+#: ../xfce4-session/xfsm-chooser.c:303
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Cancel·la l'intent d'inici de sessió i torna a la finestra d'inici de sessió."
 
-#. "New" button
-#: ../xfce4-session/xfsm-chooser.c:224
-msgid "Create New Session"
-msgstr "Crea una sessió nova"
-
-#: ../xfce4-session/xfsm-chooser.c:225
-msgid "Create a new session."
-msgstr "Crea una sessió nova."
-
 #. "Start" button
-#: ../xfce4-session/xfsm-chooser.c:231
+#: ../xfce4-session/xfsm-chooser.c:310
 msgid "Start"
 msgstr "Inicia"
 
-#: ../xfce4-session/xfsm-chooser.c:232
+#: ../xfce4-session/xfsm-chooser.c:311
 msgid "Start an existing session."
 msgstr "Inicia una sessió existent."
 
@@ -535,87 +538,6 @@ msgstr "De_sa la sessió per entrades futures"
 #: ../xfce4-session/xfsm-logout-dialog.c:442
 msgid "An error occurred"
 msgstr "S'ha produït un error"
-
-#: ../xfce4-session/xfsm-startup.c:404
-msgid "Starting the Volume Controller"
-msgstr "S'està iniciant el controlador de volum"
-
-#: ../xfce4-session/xfsm-startup.c:406
-msgid "Starting the Panel"
-msgstr "S'està iniciant el tauler"
-
-#: ../xfce4-session/xfsm-startup.c:408
-msgid "Starting the Desktop Manager"
-msgstr "S'està iniciant el gestor d'escriptori"
-
-#: ../xfce4-session/xfsm-startup.c:410
-msgid "Starting the Taskbar"
-msgstr "S'està iniciant la barra de tasques"
-
-#: ../xfce4-session/xfsm-startup.c:412
-msgid "Starting the Window Manager"
-msgstr "S'està iniciant el gestor de finestres"
-
-#: ../xfce4-session/xfsm-startup.c:416
-msgid "Starting the Gnome Terminal Emulator"
-msgstr "S'està iniciant el terminal de Gnome"
-
-#: ../xfce4-session/xfsm-startup.c:420
-msgid "Starting the KDE Advanced Text Editor"
-msgstr "S'està iniciant l'editor de text avançat de KDE"
-
-#: ../xfce4-session/xfsm-startup.c:422
-msgid "Starting the KDE Clipboard Manager"
-msgstr "S'està iniciant el gestor del porta-retalls de KDE"
-
-#: ../xfce4-session/xfsm-startup.c:424
-msgid "Starting the KDE Mail Reader"
-msgstr "S'està iniciant el lector de correus de KDE"
-
-#: ../xfce4-session/xfsm-startup.c:426
-msgid "Starting the KDE News Reader"
-msgstr "S'està iniciant el lector de notícies de KDE"
-
-#: ../xfce4-session/xfsm-startup.c:428
-msgid "Starting the Konqueror"
-msgstr "S'està iniciant Konqueror"
-
-#: ../xfce4-session/xfsm-startup.c:430
-msgid "Starting the KDE Terminal Emulator"
-msgstr "S'està iniciant l'emulador de terminal de KDE"
-
-#: ../xfce4-session/xfsm-startup.c:434
-msgid "Starting the Beep Media Player"
-msgstr "S'està iniciant el reproductor d'avisos sonors"
-
-#: ../xfce4-session/xfsm-startup.c:436
-msgid "Starting The Gimp"
-msgstr "S'està iniciant Gimp"
-
-#: ../xfce4-session/xfsm-startup.c:438
-msgid "Starting the VI Improved Editor"
-msgstr "S'està iniciant l'editor Vim"
-
-#: ../xfce4-session/xfsm-startup.c:440
-msgid "Starting the Session Management Proxy"
-msgstr "S'està iniciant el servidor intermediari del gestor de sessió"
-
-#: ../xfce4-session/xfsm-startup.c:442
-msgid "Starting the X-Chat IRC Client"
-msgstr "S'està iniciant el client IRC X-Chat"
-
-#: ../xfce4-session/xfsm-startup.c:444
-msgid "Starting the X Multimedia System"
-msgstr "S'està iniciant el sistema multimèdia de les X"
-
-#: ../xfce4-session/xfsm-startup.c:446
-msgid "Starting the X Terminal Emulator"
-msgstr "S'està iniciant l'emulador del terminal de les X"
-
-#: ../xfce4-session/xfsm-startup.c:448
-#, c-format
-msgid "Starting %s"
-msgstr "S'està iniciant %s"
 
 #: ../xfce4-session/xfsm-shutdown.c:162
 msgid "Shutdown is blocked by the kiosk settings"
