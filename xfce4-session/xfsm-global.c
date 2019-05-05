@@ -254,110 +254,6 @@ xfsm_check_valid_exec (const gchar *exec)
   return result;
 }
 
-
-
-static void
-xfsm_autostart_migrate (void)
-{
-  const gchar *entry;
-  gchar        source_path[4096];
-  gchar        target_path[4096];
-  gchar       *source;
-  gchar       *target;
-  FILE        *fp;
-  GDir        *dp;
-
-  /* migrate the content */
-  source = xfce_get_homefile ("Desktop", "Autostart/", NULL);
-  dp = g_dir_open (source, 0, NULL);
-  if (G_UNLIKELY (dp != NULL))
-    {
-      /* check if the LOCATION-CHANGED.txt file exists and the target can be opened */
-      g_snprintf (source_path, 4096, "%s/LOCATION-CHANGED.txt", source);
-      target = xfce_resource_save_location (XFCE_RESOURCE_CONFIG, "autostart/", TRUE);
-      if (G_LIKELY (target != NULL && !g_file_test (source_path, G_FILE_TEST_IS_REGULAR)))
-        {
-          g_message ("Trying to migrate autostart items from %s to %s...", source, target);
-
-          for (;;)
-            {
-              entry = g_dir_read_name (dp);
-              if (entry == NULL)
-                break;
-
-              /* determine full source and dest paths */
-              g_snprintf (source_path, 4096, "%s%s", source, entry);
-              g_snprintf (target_path, 4096, "%s%s", target, entry);
-
-              /* try to move the file */
-              if (rename (source_path, target_path) < 0)
-                {
-                  g_warning ("Failed to rename %s to %s: %s",
-                              source_path, target_path,
-                              g_strerror (errno));
-                  continue;
-                }
-
-              /* check if the file is executable */
-              if (!g_file_test (target_path, G_FILE_TEST_IS_EXECUTABLE))
-                continue;
-
-              /* generate a .desktop file for the executable file */
-              g_snprintf (source_path, 4096, "%s.desktop", target_path);
-              if (!g_file_test (source_path, G_FILE_TEST_IS_REGULAR))
-                {
-                  fp = fopen (source_path, "w");
-                  if (G_LIKELY (fp != NULL))
-                    {
-                      fprintf (fp,
-                               "# This file was automatically generated for the autostart\n"
-                               "# item %s\n"
-                               "[Desktop Entry]\n"
-                               "Type=Application\n"
-                               "Exec=%s\n"
-                               "Hidden=False\n"
-                               "Terminal=False\n"
-                               "StartupNotify=False\n"
-                               "Version=0.9.4\n"
-                               "Name=%s\n",
-                               entry, target_path, entry);
-                      fclose (fp);
-                    }
-                  else
-                    {
-                      g_warning ("Failed to create a .desktop file for %s: %s",
-                                 target_path, g_strerror (errno));
-                    }
-                }
-            }
-
-          /* create the LOCATION-CHANGED.txt file to let the user know */
-          g_snprintf (source_path, 4096, "%s/LOCATION-CHANGED.txt", source);
-          fp = fopen (source_path, "w");
-          if (G_LIKELY (fp != NULL))
-            {
-              g_fprintf (fp, _("The location and the format of the autostart directory has changed.\n"
-                               "The new location is\n"
-                               "\n"
-                               "  %s\n"
-                               "\n"
-                               "where you can place .desktop files to, that describe the applications\n"
-                               "to start when you login to your Xfce desktop. The files in your old\n"
-                               "autostart directory have been successfully migrated to the new\n"
-                               "location.\n"
-                               "You should delete this directory now.\n"), target);
-              fclose (fp);
-            }
-
-          g_free (target);
-        }
-
-      g_dir_close (dp);
-    }
-}
-
-
-
 gint
 xfsm_launch_desktop_files_on_shutdown (gboolean         start_at_spi,
                                        XfsmShutdownType shutdown_type)
@@ -421,9 +317,6 @@ xfsm_launch_desktop_files_on_run_hook (gboolean    start_at_spi,
   gint         n, m;
   gchar       *filename;
   const gchar *pattern;
-
-  /* migrate the old autostart location (if still present) */
-  xfsm_autostart_migrate ();
 
   /* pattern for only at-spi desktop files or everything */
   if (start_at_spi)
