@@ -78,112 +78,23 @@ cat /dev/null $XRESOURCES | xrdb -merge -
 # load local modmap
 test -r $HOME/.Xmodmap && xmodmap $HOME/.Xmodmap
 
-# run xfce4-session if installed
-if command -v xfce4-session >/dev/null 2>&1; then
-
-  # check if we start xfce4-session with ck-launch-session. this is only
-  # required for starting from a console, not a login manager
-  if test "x$XFCE4_SESSION_WITH_CK" = "x1"; then
-    if command -v ck-launch-session >/dev/null 2>&1; then
-      ck-launch-session xfce4-session
-    else
-      echo
-      echo "You have tried to start Xfce with consolekit support, but"
-      echo "ck-launch-session is not installed."
-      echo "Aborted startup..."
-      echo
-
-      exit 1
-    fi
+# check if we start xfce4-session with ck-launch-session. this is only
+# required for starting from a console, not a login manager
+if test "x$XFCE4_SESSION_WITH_CK" = "x1"; then
+  if command -v ck-launch-session >/dev/null 2>&1; then
+    ck-launch-session xfce4-session
   else
-    # start xfce4-session normally
-    xfce4-session
+    echo
+    echo "You have tried to start Xfce with consolekit support, but"
+    echo "ck-launch-session is not installed."
+    echo "Aborted startup..."
+    echo
+    exit 1
   fi
-
-  exit 0
+else
+  # start xfce4-session normally
+  xfce4-session
 fi
 
-##################
-# IMPORTANT NOTE #
-##################
-
-# Everything below here ONLY gets executed if you are NOT using xfce4-session
-# (Xfce's session manager).  If you are using the session manager, everything
-# below is handled by it, and the code below is not executed at all.  If you're
-# not sure if you're using the session manager, type 'ps -e|grep xfce4-session'
-# in a terminal while Xfce is running.
-
-##################
-
-# Use dbus-launch if installed.
-if test x"$DBUS_SESSION_BUS_ADDRESS" = x""; then
-  if command -v dbus-launch >/dev/null 2>&1; then
-    eval `dbus-launch --sh-syntax --exit-with-session`
-    # some older versions of dbus don't export the var properly
-    export DBUS_SESSION_BUS_ADDRESS
-  else
-    echo "Could not find dbus-launch; Xfce will not work properly" >&2
-    fi
-fi
-
-# this is only necessary when running w/o xfce4-session
-xsetroot -solid black -cursor_name watch
-
-# or use old-fashioned startup script otherwise
-
-xfsettingsd &
-xfwm4 --daemon
-
-# start up stuff in $XDG_CONFIG_HOME/autostart/
-if test -d "$XDG_CONFIG_HOME/autostart"; then
-  for i in ${XDG_CONFIG_HOME}/autostart/*.desktop; do
-    grep -q -E "^Hidden=true" "$i" && continue
-    if grep -q -E "^OnlyShowIn=" "$i"; then
-      # need to test twice, as lack of the line entirely means we still run it
-      grep -E "^OnlyShowIn=" "$i" | grep -q 'XFCE;' || continue
-    fi
-    grep -E "^NotShowIn=" "$i" | grep -q 'XFCE;' && continue
-
-    # check for TryExec
-    trycmd=`grep -E "^TryExec=" "$i" | cut -d'=' -f2`
-    if test "$trycmd"; then
-      command -v "$trycmd" >/dev/null 2>&1 || continue
-    fi
-
-    cmd=`grep -E "^Exec=" "$i" | cut -d'=' -f2`
-    if test "$cmd" && command -v "$cmd" >/dev/null 2>&1; then
-      $cmd &
-    fi
-  done
-fi
-
-xfdesktop&
-orage &
-
-panel=`command -v xfce4-panel`
-case "x$panel" in
-	x|xno*)
-		;;
-	*)
-		$panel
-		ret=$?
-		while test $ret -ne 0; do
-			xmessage -center -file - -timeout 20 -title Error <<EOF
-A crash occured in the panel
-Please report this to the xfce4-dev@xfce.org list
-or on http://bugs.xfce.org
-Meanwhile the panel will be restarted
-EOF
-			cat >&2 <<EOF
-A crash occured in the panel
-Please report this to the xfce4-dev@xfce.org list
-or on http://bugs.xfce.org
-Meanwhile the panel will be restarted
-EOF
-			$panel
-			ret=$?
-		done
-		;;
-esac
-
-xsetroot -bg white -fg red  -solid black -cursor_name watch
+# if we got here, then exec failed
+exit 1
