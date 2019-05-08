@@ -82,7 +82,7 @@ test -r $HOME/.Xmodmap && xmodmap $HOME/.Xmodmap
 # required for starting from a console, not a login manager
 if test "x$XFCE4_SESSION_WITH_CK" = "x1"; then
   if command -v ck-launch-session >/dev/null 2>&1; then
-    ck-launch-session xfce4-session
+    exec ck-launch-session xfce4-session
   else
     echo
     echo "You have tried to start Xfce with consolekit support, but"
@@ -93,7 +93,7 @@ if test "x$XFCE4_SESSION_WITH_CK" = "x1"; then
   fi
 else
   # start xfce4-session normally
-  xfce4-session
+  exec xfce4-session
 fi
 
 # if we got here, then exec failed
