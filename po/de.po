@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-29 00:30+0200\n"
-"PO-Revision-Date: 2019-04-29 09:21+0000\n"
+"POT-Creation-Date: 2019-05-08 19:30+0200\n"
+"PO-Revision-Date: 2019-05-09 11:56+0000\n"
 "Last-Translator: Vinzenz Vietzke <vinz@vinzv.de>\n"
 "Language-Team: German (http://www.transifex.com/xfce/xfce4-session/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -127,7 +127,7 @@ msgstr "Die vormals gesicherten Zustände der Anwendungen gehen verloren und wer
 
 #: ../settings/session-editor.c:173 ../settings/session-editor.c:257
 #: ../xfce4-session/xfsm-manager.c:710
-#: ../xfce4-session/xfsm-logout-dialog.c:212
+#: ../xfce4-session/xfsm-logout-dialog.c:214
 msgid "_Cancel"
 msgstr "_Abbrechen"
 
@@ -290,7 +290,7 @@ msgid ""
 "List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
 "On login additionally all applications that were saved on your last logout will be started.\n"
 "Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr "Liste der Anwendungen, die bei bestimmten Ereignissen wie Login, Logout, Herunterfahren, etc. automatisch gestartet werden.\nBeim Login werden zusätzlich alle Anwendungen gestartet, die bei Ihrem letzten Abmelden gespeichert wurden.\nKursive Anwendungen gehören zu einer anderen Desktop-Umgebung, aber Sie können sie trotzdem aktivieren, wenn Sie möchten."
+msgstr "Liste der Anwendungen, die bei bestimmten Ereignissen wie An- und Abmelden, Herunterfahren, etc. automatisch gestartet werden.\nBeim Anmelden werden zusätzlich alle Anwendungen gestartet, die bei Ihrem letzten Abmeldevorgang gespeichert wurden.\nKursive Anwendungen gehören zu einer anderen Desktop-Umgebung, aber Sie können sie trotzdem aktivieren, wenn Sie möchten."
 
 #: ../settings/xfae-window.c:197
 msgid "Trigger"
@@ -405,21 +405,6 @@ msgstr "Trotzdem fortfahren"
 msgid "Try again"
 msgstr "Erneut versuchen"
 
-#: ../xfce4-session/xfsm-global.c:339
-#, c-format
-msgid ""
-"The location and the format of the autostart directory has changed.\n"
-"The new location is\n"
-"\n"
-"  %s\n"
-"\n"
-"where you can place .desktop files to, that describe the applications\n"
-"to start when you login to your Xfce desktop. The files in your old\n"
-"autostart directory have been successfully migrated to the new\n"
-"location.\n"
-"You should delete this directory now.\n"
-msgstr "Der Ort und das Format des Autostartordners haben sich geändert.\nDer neue Ort ist\n\n  %s,\n\nwo .desktop-Dateien abgelegt werden können, die die Anwendungen festlegen,\ndie beim Anmelden an der Xfce-Arbeitsumgebung gestartet werden sollen. Die\nDateien im alten Autostartordner wurden erfolgreich zum neuen Ort\nübertragen. Sie sollten diesen Ordner jetzt löschen.\n"
-
 #: ../xfce4-session/xfsm-manager.c:599
 #, c-format
 msgid ""
@@ -499,7 +484,7 @@ msgstr "Die Sitzungsverwaltung darf nicht beschäftigt sein, wenn heruntergefahr
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Die Sitzungsverwaltung darf nicht beschäftigt sein, wenn ein Neustart durchgeführt werden soll"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:184
+#: ../xfce4-session/xfsm-logout-dialog.c:186
 #, c-format
 msgid "Log out %s"
 msgstr "%s abmelden"
@@ -507,39 +492,39 @@ msgstr "%s abmelden"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:229
+#: ../xfce4-session/xfsm-logout-dialog.c:231
 msgid "_Log Out"
 msgstr "Ab_melden"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:249
+#: ../xfce4-session/xfsm-logout-dialog.c:251
 msgid "_Restart"
 msgstr "_Neustarten"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:269
+#: ../xfce4-session/xfsm-logout-dialog.c:271
 msgid "Shut _Down"
 msgstr "_Herunterfahren"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:293
+#: ../xfce4-session/xfsm-logout-dialog.c:295
 msgid "Sus_pend"
 msgstr "_Bereitschaft"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:327
+#: ../xfce4-session/xfsm-logout-dialog.c:329
 msgid "_Hibernate"
 msgstr "_Ruhezustand"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:358
+#: ../xfce4-session/xfsm-logout-dialog.c:360
 msgid "H_ybrid Sleep"
 msgstr "_Ruhezustand"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:389
+#: ../xfce4-session/xfsm-logout-dialog.c:391
 msgid "Switch _User"
 msgstr "Benutzer _wechseln"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:414
+#: ../xfce4-session/xfsm-logout-dialog.c:416
 msgid "_Save session for future logins"
 msgstr "_Sitzung für zukünftige Anmeldungen speichern"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:442
+#: ../xfce4-session/xfsm-logout-dialog.c:444
 msgid "An error occurred"
 msgstr "Ein Fehler ist aufgetreten"
 
@@ -628,7 +613,7 @@ msgstr "Zeigt die Sitzungsauswahl bei jedem Start von Xfce an"
 
 #: ../settings/xfce4-session-settings.ui.h:4
 msgid "<b>Session Chooser</b>"
-msgstr "<b>Sitzungsübersicht</b>"
+msgstr "<b>Sitzungsauswahl</b>"
 
 #: ../settings/xfce4-session-settings.ui.h:5
 msgid "Automatically save session on logo_ut"
@@ -675,7 +660,7 @@ msgstr "Sitzu_ng"
 
 #: ../settings/xfce4-session-settings.ui.h:16
 msgid "Launch GN_OME services on startup"
-msgstr "Laufzeitumgebung für _GNOME beim Starten laden"
+msgstr "Dienste für _GNOME beim Starten laden"
 
 #: ../settings/xfce4-session-settings.ui.h:17
 msgid "Start GNOME services, such as gnome-keyring"
@@ -683,7 +668,7 @@ msgstr "GNOME-Dienste starten, z.B. gnome-keyring"
 
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid "Launch _KDE services on startup"
-msgstr "Laufzeitumgebung für _KDE beim Starten laden"
+msgstr "Dienste für _KDE beim Starten laden"
 
 #: ../settings/xfce4-session-settings.ui.h:19
 msgid "Start KDE services, such as kdeinit"
