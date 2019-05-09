@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-29 00:30+0200\n"
-"PO-Revision-Date: 2019-04-28 22:31+0000\n"
-"Last-Translator: Nuno Miguel <nunomgue@gmail.com>\n"
+"POT-Creation-Date: 2019-05-08 19:30+0200\n"
+"PO-Revision-Date: 2019-05-08 22:57+0000\n"
+"Last-Translator: Rui <xymarior@yandex.com>\n"
 "Language-Team: Portuguese (http://www.transifex.com/xfce/xfce4-session/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -122,7 +122,7 @@ msgstr "O estado das aplicações não será restaurado na próxima sessão."
 
 #: ../settings/session-editor.c:173 ../settings/session-editor.c:257
 #: ../xfce4-session/xfsm-manager.c:710
-#: ../xfce4-session/xfsm-logout-dialog.c:212
+#: ../xfce4-session/xfsm-logout-dialog.c:214
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -289,7 +289,7 @@ msgstr "Lista de aplicações a iniciar automaticamente através de eventos espe
 
 #: ../settings/xfae-window.c:197
 msgid "Trigger"
-msgstr ""
+msgstr "Acionador"
 
 #: ../settings/xfae-window.c:238 ../settings/xfae-window.c:324
 msgid "Add"
@@ -358,7 +358,7 @@ msgstr "Criar uma nova sessão."
 #. xfce_gtk_button_new_mixed ("document-new", _("Delete Session"));
 #: ../xfce4-session/xfsm-chooser.c:290
 msgid "Delete a saved session."
-msgstr ""
+msgstr "Eliminar uma sessão guardada."
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:301
@@ -373,11 +373,11 @@ msgstr "Cancelar o início de sessão e regressar ao ecrã de entrada."
 #. "Start" button
 #: ../xfce4-session/xfsm-chooser.c:310
 msgid "Start"
-msgstr ""
+msgstr "Iniciar"
 
 #: ../xfce4-session/xfsm-chooser.c:311
 msgid "Start an existing session."
-msgstr ""
+msgstr "Iniciar uma sessão existente."
 
 #: ../xfce4-session/xfsm-dns.c:78
 msgid "(Unknown)"
@@ -399,21 +399,6 @@ msgstr "Continuar, ainda assim"
 #: ../xfce4-session/xfsm-dns.c:160
 msgid "Try again"
 msgstr "Tentar novamente"
-
-#: ../xfce4-session/xfsm-global.c:339
-#, c-format
-msgid ""
-"The location and the format of the autostart directory has changed.\n"
-"The new location is\n"
-"\n"
-"  %s\n"
-"\n"
-"where you can place .desktop files to, that describe the applications\n"
-"to start when you login to your Xfce desktop. The files in your old\n"
-"autostart directory have been successfully migrated to the new\n"
-"location.\n"
-"You should delete this directory now.\n"
-msgstr "O local e o formato do diretório de arranque automático foram alterados.\nA nova localização é\n\n  %s\n\nonde pode colocar os ficheiros .desktop que listam as aplicações\na iniciar com a sessão. Os ficheiros no seu antigo diretório\nde arranque automático foram migrados com sucesso para a nova\nlocalização.\nDeve apagar o diretório antigo agora.\n"
 
 #: ../xfce4-session/xfsm-manager.c:599
 #, c-format
@@ -440,7 +425,7 @@ msgstr "_OK"
 
 #: ../xfce4-session/xfsm-manager.c:722
 msgid "Name for the new session"
-msgstr ""
+msgstr "Nome da nova sessão"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
@@ -494,7 +479,7 @@ msgstr "O gestor de sessões tem de estar inativo ao solicitar o encerramento"
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Gestor de sessão tem de estar em modo de pausa para reiniciar"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:184
+#: ../xfce4-session/xfsm-logout-dialog.c:186
 #, c-format
 msgid "Log out %s"
 msgstr "Terminar sessão de %s"
@@ -502,39 +487,39 @@ msgstr "Terminar sessão de %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:229
+#: ../xfce4-session/xfsm-logout-dialog.c:231
 msgid "_Log Out"
 msgstr "_Sair"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:249
+#: ../xfce4-session/xfsm-logout-dialog.c:251
 msgid "_Restart"
 msgstr "_Reiniciar"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:269
+#: ../xfce4-session/xfsm-logout-dialog.c:271
 msgid "Shut _Down"
 msgstr "_Desligar"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:293
+#: ../xfce4-session/xfsm-logout-dialog.c:295
 msgid "Sus_pend"
 msgstr "Sus_pender"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:327
+#: ../xfce4-session/xfsm-logout-dialog.c:329
 msgid "_Hibernate"
 msgstr "_Hibernar"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:358
+#: ../xfce4-session/xfsm-logout-dialog.c:360
 msgid "H_ybrid Sleep"
 msgstr "S_uspensão híbrida"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:389
+#: ../xfce4-session/xfsm-logout-dialog.c:391
 msgid "Switch _User"
 msgstr "Trocar de _utilizador"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:414
+#: ../xfce4-session/xfsm-logout-dialog.c:416
 msgid "_Save session for future logins"
 msgstr "_Guardar sessão para futuras utilizações"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:442
+#: ../xfce4-session/xfsm-logout-dialog.c:444
 msgid "An error occurred"
 msgstr "Ocorreu um erro"
 
@@ -611,7 +596,7 @@ msgstr "Sessão e arranque"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
 msgid "Customize desktop startup"
-msgstr ""
+msgstr "Personalizar arranque do ambiente de trabalho"
 
 #: ../settings/xfce4-session-settings.ui.h:2
 msgid "_Display chooser on login"
@@ -662,7 +647,7 @@ msgstr "Gravar sessã_o"
 
 #: ../settings/xfce4-session-settings.ui.h:13
 msgid "Clear Save_d Sessions"
-msgstr ""
+msgstr "Limpar sessões guar_dadas"
 
 #: ../settings/xfce4-session-settings.ui.h:15
 msgid "Sessio_n"
