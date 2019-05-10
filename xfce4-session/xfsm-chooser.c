@@ -52,16 +52,6 @@ static void xfsm_chooser_realized      (GtkWidget         *widget,
                                         XfsmChooser       *chooser);
 
 
-enum
-{
-  PREVIEW_COLUMN,
-  NAME_COLUMN,
-  TITLE_COLUMN,
-  ATIME_COLUMN,
-  N_COLUMNS,
-};
-
-
 
 G_DEFINE_TYPE (XfsmChooser, xfsm_chooser, GTK_TYPE_DIALOG)
 
@@ -72,37 +62,11 @@ xfsm_chooser_set_sessions (XfsmChooser *chooser,
                            GList       *sessions,
                            const gchar *default_session)
 {
-  XfsmSessionInfo *session;
   GtkTreeModel    *model;
-  GtkTreeIter      iter;
-  gchar           *accessed;
-  gchar           *title;
-  GList           *lp;
 
   model = gtk_tree_view_get_model (GTK_TREE_VIEW (chooser->tree));
-  gtk_list_store_clear (GTK_LIST_STORE (model));
 
-  for (lp = sessions; lp != NULL; lp = lp->next)
-    {
-      session = (XfsmSessionInfo *) lp->data;
-
-      accessed = g_strdup_printf (_("Last accessed: %s"),
-                                  ctime (&session->atime));
-      title = g_strdup_printf ("<b><big>%s</big></b>\n"
-                               "<small><i>%s</i></small>",
-                               session->name, accessed);
-
-      gtk_list_store_append (GTK_LIST_STORE (model), &iter);
-      gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-                          PREVIEW_COLUMN, session->preview,
-                          NAME_COLUMN, session->name,
-                          TITLE_COLUMN, title,
-                          ATIME_COLUMN, session->atime,
-                          -1);
-
-      g_free (accessed);
-      g_free (title);
-    }
+  settings_list_sessions_populate (GTK_TREE_MODEL (model), sessions);
 }
 
 
@@ -201,10 +165,6 @@ xfsm_chooser_class_init (XfsmChooserClass *klass)
 static void
 xfsm_chooser_init (XfsmChooser *chooser)
 {
-  GtkTreeSelection *selection;
-  GtkTreeViewColumn *column;
-  GtkCellRenderer *renderer;
-  GtkListStore *model;
   GtkWidget *button;
   GtkWidget *swin;
   GtkWidget *vbox;
@@ -240,33 +200,12 @@ xfsm_chooser_init (XfsmChooser *chooser)
   gtk_box_pack_start (GTK_BOX (vbox), swin, TRUE, TRUE, 0);
 
   /* tree view */
-  model = gtk_list_store_new (N_COLUMNS,
-                              GDK_TYPE_PIXBUF,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING,
-                              G_TYPE_INT);
-  chooser->tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL(model));
-  g_object_unref (G_OBJECT (model));
+  chooser->tree = gtk_tree_view_new ();
+  settings_list_sessions_treeview_init (GTK_TREE_VIEW (chooser->tree));
   gtk_widget_set_tooltip_text (chooser->tree,
                                _("Choose the session you want to restore. "
                                  "You can simply double-click the session "
                                  "name to restore it."));
-
-  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (chooser->tree), FALSE);
-  column = gtk_tree_view_column_new ();
-  renderer = gtk_cell_renderer_pixbuf_new ();
-  gtk_tree_view_column_pack_start (column, renderer, FALSE);
-  gtk_tree_view_column_set_attributes (column, renderer,
-                                       "pixbuf", PREVIEW_COLUMN,
-                                       NULL);
-  renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_column_pack_start (column, renderer, TRUE);
-  gtk_tree_view_column_set_attributes (column, renderer,
-                                       "markup", TITLE_COLUMN,
-                                       NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (chooser->tree), column);
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (chooser->tree));
-  gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
   g_signal_connect (G_OBJECT (chooser->tree), "row-activated",
                     G_CALLBACK (xfsm_chooser_row_activated), chooser);
   gtk_container_add (GTK_CONTAINER (swin), chooser->tree);

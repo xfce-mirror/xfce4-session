@@ -174,31 +174,6 @@ xfsm_generate_client_id (SmsConn sms_conn)
 }
 
 
-GdkPixbuf *
-xfsm_load_session_preview (const gchar *name)
-{
-  GdkDisplay *display;
-  GdkPixbuf  *pb = NULL;
-  gchar *display_name;
-  gchar *filename;
-  gchar *path;
-
-  /* determine thumb file */
-  display = gdk_display_get_default ();
-  display_name = xfsm_gdk_display_get_fullname (display);
-  path = g_strconcat ("sessions/thumbs-", display_name, "/", name, ".png", NULL);
-  filename = xfce_resource_lookup (XFCE_RESOURCE_CACHE, path);
-  g_free (display_name);
-  g_free (path);
-
-  if (filename != NULL)
-    pb = gdk_pixbuf_new_from_file (filename, NULL);
-  g_free (filename);
-
-  return pb;
-}
-
-
 GValue *
 xfsm_g_value_new (GType gtype)
 {

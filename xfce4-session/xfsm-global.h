@@ -69,8 +69,6 @@ void xfsm_verbose_real (const char *func,
 
 gchar *xfsm_generate_client_id (SmsConn sms_conn) G_GNUC_PURE;
 
-GdkPixbuf *xfsm_load_session_preview (const gchar *name);
-
 GValue *xfsm_g_value_new (GType gtype);
 void    xfsm_g_value_free (GValue *value);
 

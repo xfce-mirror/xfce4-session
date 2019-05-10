@@ -33,6 +33,8 @@
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
 
+#include <libxfsm/xfsm-util.h>
+
 #include "xfae-window.h"
 #include "xfce4-session-settings-common.h"
 #include "xfce4-session-settings_ui.h"
@@ -49,6 +51,26 @@ static void xfce4_session_settings_dialog_response (GtkDialog *dialog, gint resp
     }
 }
 
+static void
+xfce4_session_settings_show_saved_sessions (GtkBuilder *builder,
+                                            XfceRc     *rc,
+                                            gboolean    visible)
+{
+    GtkWidget *notebook = GTK_WIDGET (gtk_builder_get_object (builder, "plug-child"));
+    GtkWidget *sessions_treeview = GTK_WIDGET (gtk_builder_get_object (builder, "saved-sessions-list"));
+    GtkTreeModel    *model;
+    GList *sessions;
+
+    gtk_widget_set_visible (gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 3), visible);
+    if (visible == FALSE)
+        return;
+
+    settings_list_sessions_treeview_init (GTK_TREE_VIEW (sessions_treeview));
+    sessions = settings_list_sessions (rc);
+    model = gtk_tree_view_get_model (GTK_TREE_VIEW (sessions_treeview));
+    settings_list_sessions_populate (model, sessions);
+}
+
 int
 main(int argc,
      char **argv)
@@ -59,6 +81,8 @@ main(int argc,
     GtkWidget *lbl;
     GError *error = NULL;
     XfconfChannel *channel;
+    XfceRc *rc;
+    gboolean visible;
 
     Window opt_socket_id = 0;
     gboolean opt_version = FALSE;
@@ -125,6 +149,8 @@ main(int argc,
 
     session_editor_init(builder);
 
+    channel = xfconf_channel_get (SETTINGS_CHANNEL);
+
     /* FIXME: someday, glade-ify this, maybe. */
     xfae_page = xfae_window_new();
     gtk_widget_show(xfae_page);
@@ -133,7 +159,13 @@ main(int argc,
     gtk_widget_show(lbl);
     gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), xfae_page, lbl, 1);
 
-    channel = xfconf_channel_get(SETTINGS_CHANNEL);
+    /* Check if there are saved sessions and if so, show the "Saved Sessions" tab */
+    rc = settings_list_sessions_open_rc ();
+    if (rc)
+        visible = TRUE;
+    else
+        visible = FALSE;
+    xfce4_session_settings_show_saved_sessions (builder, rc, visible);
 
     /* bind widgets to xfconf */
     xfconf_g_property_bind(channel, "/chooser/AlwaysDisplay", G_TYPE_BOOLEAN,

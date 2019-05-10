@@ -33,6 +33,8 @@
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
 
+#include <libxfsm/xfsm-util.h>
+
 #include "xfce4-session-settings-common.h"
 #include "xfce4-session-marshal.h"
 #include "xfsm-client-dbus-client.h"
@@ -113,9 +115,16 @@ pulse_session_save_dialog(gpointer data)
 
 static void
 session_editor_save_session(GtkWidget *btn,
-                            GtkWidget *dialog)
+                            GtkBuilder *builder)
 {
+    GtkWidget *dialog = GTK_WIDGET (gtk_builder_get_object (builder, "dialog_saving"));
+    GtkWidget *treeview = GTK_WIDGET (gtk_builder_get_object (builder, "saved-sessions-list"));
+    GtkWidget *notebook = GTK_WIDGET (gtk_builder_get_object (builder, "plug-child"));
+    GtkWidget *btn_clear = GTK_WIDGET (gtk_builder_get_object(builder, "btn_clear_sessions"));
     GtkWidget *pbar = g_object_get_data(G_OBJECT(dialog), "pbar");
+    GtkTreeModel    *model;
+    GList *sessions;
+    XfceRc *rc;
     guint pulse_id;
     guint sig_id;
     GError *error = NULL;
@@ -147,6 +156,17 @@ session_editor_save_session(GtkWidget *btn,
     g_signal_handler_disconnect(manager_dbus_proxy, sig_id);
     gtk_widget_hide(dialog);
     gtk_widget_set_sensitive(btn, TRUE);
+    /* After saving the session we ensure the clear button is sensitive */
+    gtk_widget_set_sensitive (btn_clear, TRUE);
+    /* Always make sure the "Saved Sessions" tab is visible  and the treeview is populated after saving a session */
+    rc = settings_list_sessions_open_rc ();
+    if (rc)
+    {
+        gtk_widget_show (gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 3));
+        sessions = settings_list_sessions (rc);
+        model = gtk_tree_view_get_model (GTK_TREE_VIEW (treeview));
+        settings_list_sessions_populate (model, sessions);
+    }
 }
 
 static void
@@ -160,8 +180,10 @@ session_editor_sel_changed_btn(GtkTreeSelection *sel,
 
 static void
 session_editor_clear_sessions(GtkWidget *btn,
-                              GtkWidget *treeview)
+                              GtkBuilder *builder)
 {
+    GtkWidget *treeview = GTK_WIDGET (gtk_builder_get_object (builder, "treeview_clients"));
+    GtkWidget *notebook = GTK_WIDGET (gtk_builder_get_object (builder, "plug-child"));
     TRACE("entering");
 
     gtk_widget_set_sensitive(btn, FALSE);
@@ -218,6 +240,9 @@ session_editor_clear_sessions(GtkWidget *btn,
 
         g_dir_close(cache_dir);
         g_free(cache_dir_path);
+
+        /* Always make sure the "Saved Sessions" tab is hidden after deleting all sessions */
+        gtk_widget_hide (gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 3));
     }
     else {
         gtk_widget_set_sensitive(btn, TRUE);
@@ -833,11 +858,11 @@ session_editor_init(GtkBuilder *builder)
 
     btn_save = gtk_builder_get_object(builder, "btn_save_session");
     g_signal_connect(btn_save, "clicked",
-                     G_CALLBACK(session_editor_save_session), GTK_WIDGET(dlg_saving));
+                     G_CALLBACK(session_editor_save_session), builder);
 
     btn_clear = gtk_builder_get_object(builder, "btn_clear_sessions");
     g_signal_connect(btn_clear, "clicked",
-                     G_CALLBACK(session_editor_clear_sessions), treeview);
+                     G_CALLBACK(session_editor_clear_sessions), builder);
 
     btn_quit = gtk_builder_get_object(builder, "btn_quit_client");
     g_signal_connect(btn_quit, "clicked",

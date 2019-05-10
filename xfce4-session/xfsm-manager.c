@@ -67,9 +67,6 @@
 #include <xfce4-session/xfsm-logout-dialog.h>
 
 
-#define DEFAULT_SESSION_NAME "Default"
-
-
 struct _XfsmManager
 {
   XfsmDbusManagerSkeleton parent;
@@ -432,46 +429,13 @@ xfsm_manager_choose_session (XfsmManager *manager,
                              XfceRc      *rc)
 {
   XfsmSessionInfo *session;
-  GdkPixbuf       *preview_default = NULL;
   gboolean         load = FALSE;
   GList           *sessions = NULL;
   GList           *lp;
-  gchar          **groups;
   gchar           *name;
   gint             result;
-  gint             n;
 
-  groups = xfce_rc_get_groups (rc);
-  for (n = 0; groups[n] != NULL; ++n)
-    {
-      if (strncmp (groups[n], "Session: ", 9) == 0)
-        {
-          xfce_rc_set_group (rc, groups[n]);
-          session = g_new0 (XfsmSessionInfo, 1);
-          session->name = groups[n] + 9;
-          session->atime = xfce_rc_read_int_entry (rc, "LastAccess", 0);
-          session->preview = xfsm_load_session_preview (session->name);
-
-          if (session->preview == NULL)
-            {
-              if (G_UNLIKELY (preview_default == NULL))
-                {
-                  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-                  /* TODO: Turn this into a normal pixbuf? */
-                  preview_default = gdk_pixbuf_new_from_inline (-1, xfsm_chooser_icon_data,
-                                                                FALSE, NULL);
-                  G_GNUC_END_IGNORE_DEPRECATIONS
-                }
-
-              session->preview = GDK_PIXBUF (g_object_ref (preview_default));
-            }
-
-          sessions = g_list_append (sessions, session);
-        }
-    }
-
-  if (preview_default != NULL)
-    g_object_unref (preview_default);
+  sessions = settings_list_sessions (rc);
 
   if (sessions != NULL)
     {
@@ -501,8 +465,6 @@ xfsm_manager_choose_session (XfsmManager *manager,
 
       g_list_free (sessions);
     }
-
-  g_strfreev (groups);
 
   return load;
 }

@@ -201,3 +201,184 @@ xfsm_gdk_display_get_fullname (GdkDisplay *display)
 
   return g_strdup (buffer);
 }
+
+GdkPixbuf *
+xfsm_load_session_preview (const gchar *name)
+{
+  GdkDisplay *display;
+  GdkPixbuf  *pb = NULL;
+  gchar *display_name;
+  gchar *filename;
+  gchar *path;
+
+  /* determine thumb file */
+  display = gdk_display_get_default ();
+  display_name = xfsm_gdk_display_get_fullname (display);
+  path = g_strconcat ("sessions/thumbs-", display_name, "/", name, ".png", NULL);
+  filename = xfce_resource_lookup (XFCE_RESOURCE_CACHE, path);
+  g_free (display_name);
+  g_free (path);
+
+  if (filename != NULL)
+    pb = gdk_pixbuf_new_from_file (filename, NULL);
+  g_free (filename);
+
+  return pb;
+}
+
+XfceRc *
+settings_list_sessions_open_rc (void)
+{
+  XfceRc *rc;
+  gchar *display_name;
+  gchar *resource_name;
+  gchar *session_file;
+
+  display_name  = xfsm_gdk_display_get_fullname (gdk_display_get_default ());
+  resource_name = g_strconcat ("sessions/xfce4-session-", display_name, NULL);
+  session_file  = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource_name, TRUE);
+  g_free (resource_name);
+  g_free (display_name);
+
+  if (!g_file_test (session_file, G_FILE_TEST_IS_REGULAR))
+    {
+      g_warning ("xfsm_manager_load_session: Something wrong with %s, Does it exist? Permissions issue?", session_file);
+      return FALSE;
+    }
+
+  rc = xfce_rc_simple_open (session_file, FALSE);
+  if (G_UNLIKELY (rc == NULL))
+  {
+    g_warning ("xfsm_manager_load_session: unable to open %s", session_file);
+    return FALSE;
+  }
+  return rc;
+}
+
+GList *
+settings_list_sessions (XfceRc *rc)
+{
+  XfsmSessionInfo *session;
+  GdkPixbuf       *preview_default = NULL;
+  GList           *sessions = NULL;
+  gchar          **groups;
+  gint             n;
+
+  groups = xfce_rc_get_groups (rc);
+  for (n = 0; groups[n] != NULL; ++n)
+    {
+      if (strncmp (groups[n], "Session: ", 9) == 0)
+        {
+          xfce_rc_set_group (rc, groups[n]);
+          session = g_new0 (XfsmSessionInfo, 1);
+          session->name = g_strdup (groups[n] + 9);
+          session->atime = xfce_rc_read_int_entry (rc, "LastAccess", 0);
+          session->preview = xfsm_load_session_preview (session->name);
+
+          if (session->preview == NULL)
+            {
+              if (G_UNLIKELY (preview_default == NULL))
+                {
+                  preview_default = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                                              "xfce4-logo", 64,
+                                                              GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
+                }
+
+              session->preview = GDK_PIXBUF (g_object_ref (preview_default));
+            }
+
+          sessions = g_list_append (sessions, session);
+        }
+    }
+
+  if (preview_default != NULL)
+    g_object_unref (preview_default);
+
+  g_strfreev (groups);
+
+  return sessions;
+}
+
+void
+settings_list_sessions_treeview_init (GtkTreeView *treeview)
+{
+  GtkTreeSelection *selection;
+  GtkTreeViewColumn *column;
+  GtkCellRenderer *renderer;
+  GtkListStore *model;
+
+  model = gtk_list_store_new (N_COLUMNS,
+                              GDK_TYPE_PIXBUF,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_INT);
+
+  gtk_tree_view_set_model (GTK_TREE_VIEW (treeview), GTK_TREE_MODEL (model));
+  g_object_unref (G_OBJECT (model));
+
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), TRUE);
+  column = gtk_tree_view_column_new ();
+  renderer = gtk_cell_renderer_pixbuf_new ();
+  gtk_tree_view_column_pack_start (column, renderer, FALSE);
+  gtk_tree_view_column_set_attributes (column, renderer,
+                                       "pixbuf", PREVIEW_COLUMN,
+                                       NULL);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+
+  column = gtk_tree_view_column_new ();
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_tree_view_column_set_title (column, _("Session"));
+  gtk_tree_view_column_pack_start (column, renderer, TRUE);
+  gtk_tree_view_column_set_expand (column, TRUE);
+  gtk_tree_view_column_set_attributes (column, renderer,
+                                       "markup", TITLE_COLUMN,
+                                       NULL);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+
+  column = gtk_tree_view_column_new ();
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_tree_view_column_set_alignment (column, 1.0);
+  gtk_tree_view_column_set_title (column, _("Last accessed"));
+  gtk_tree_view_column_pack_start (column, renderer, TRUE);
+  gtk_tree_view_column_set_attributes (column, renderer,
+                                       "text", ACCESSED_COLUMN,
+                                       NULL);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
+  gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
+}
+
+void
+settings_list_sessions_populate (GtkTreeModel *model,
+                                 GList        *sessions)
+{
+  XfsmSessionInfo *session;
+  GtkTreeIter      iter;
+  gchar           *accessed;
+  gchar           *title;
+  GList           *lp;
+
+  gtk_list_store_clear (GTK_LIST_STORE (model));
+
+  for (lp = sessions; lp != NULL; lp = lp->next)
+    {
+      session = (XfsmSessionInfo *) lp->data;
+
+      title = g_strdup_printf ("<b>%s</b>", session->name);
+      accessed = g_strstrip (g_strdup (ctime (&session->atime)));
+
+      gtk_list_store_append (GTK_LIST_STORE (model), &iter);
+      gtk_list_store_set (GTK_LIST_STORE (model), &iter,
+                          PREVIEW_COLUMN, session->preview,
+                          NAME_COLUMN, session->name,
+                          TITLE_COLUMN, title,
+                          ACCESSED_COLUMN, accessed,
+                          ATIME_COLUMN, session->atime,
+                          -1);
+
+      g_free (accessed);
+      g_free (title);
+    }
+}

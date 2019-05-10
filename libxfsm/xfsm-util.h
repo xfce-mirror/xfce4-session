@@ -31,6 +31,28 @@
 
 G_BEGIN_DECLS;
 
+#define DEFAULT_SESSION_NAME "Default"
+
+typedef struct _XfsmSessionInfo  XfsmSessionInfo;
+
+struct _XfsmSessionInfo
+{
+  gchar     *name;      /* name of the session */
+  time_t     atime;     /* last access time */
+  GdkPixbuf *preview;   /* preview icon (52x42) */
+};
+
+enum
+{
+  PREVIEW_COLUMN,
+  NAME_COLUMN,
+  TITLE_COLUMN,
+  ACCESSED_COLUMN,
+  ATIME_COLUMN,
+  N_COLUMNS,
+};
+
+
 gboolean xfsm_start_application (gchar      **command,
                                  gchar      **environment,
                                  GdkScreen   *screen,
@@ -49,6 +71,16 @@ XfconfChannel *xfsm_open_config (void);
 
 gchar *xfsm_gdk_display_get_fullname (GdkDisplay *display);
 
+GdkPixbuf *xfsm_load_session_preview (const gchar *name);
+
+XfceRc *settings_list_sessions_open_rc (void);
+
+GList *settings_list_sessions (XfceRc *rc);
+
+void settings_list_sessions_treeview_init (GtkTreeView *treeview);
+
+void settings_list_sessions_populate (GtkTreeModel *model,
+                                      GList       *sessions);
 
 G_END_DECLS;
 
