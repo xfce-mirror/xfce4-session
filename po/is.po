@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Sveinn í Felli <sv1@fellsnet.is>, 2011,2013-2014,2017-2018
+# Sveinn í Felli <sv1@fellsnet.is>, 2011,2013-2014,2017-2019
 # Sveinn í Felli <sv1@fellsnet.is>, 2011,2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-29 00:30+0200\n"
-"PO-Revision-Date: 2019-04-28 22:31+0000\n"
+"POT-Creation-Date: 2019-05-08 19:30+0200\n"
+"PO-Revision-Date: 2019-05-10 08:17+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic (http://www.transifex.com/xfce/xfce4-session/language/is/)\n"
 "MIME-Version: 1.0\n"
@@ -120,7 +120,7 @@ msgstr "Vistuð staða forritanna þinna verður ekki endurheimt þegar þú skr
 
 #: ../settings/session-editor.c:173 ../settings/session-editor.c:257
 #: ../xfce4-session/xfsm-manager.c:710
-#: ../xfce4-session/xfsm-logout-dialog.c:212
+#: ../xfce4-session/xfsm-logout-dialog.c:214
 msgid "_Cancel"
 msgstr "_Hætta við"
 
@@ -206,7 +206,7 @@ msgstr "Skipun:"
 
 #: ../settings/xfae-dialog.c:136
 msgid "Trigger:"
-msgstr ""
+msgstr "Vekjari:"
 
 #: ../settings/xfae-dialog.c:207
 msgid "Select a command"
@@ -218,35 +218,35 @@ msgstr "Breyta forriti"
 
 #: ../settings/xfae-model.c:87
 msgid "on login"
-msgstr ""
+msgstr "við innskráningu"
 
 #: ../settings/xfae-model.c:88
 msgid "on logout"
-msgstr ""
+msgstr "við útskráningu"
 
 #: ../settings/xfae-model.c:89
 msgid "on shutdown"
-msgstr ""
+msgstr "þegar er slökkt"
 
 #: ../settings/xfae-model.c:90
 msgid "on restart"
-msgstr ""
+msgstr "við endurræsingu"
 
 #: ../settings/xfae-model.c:91
 msgid "on suspend"
-msgstr ""
+msgstr "þegar sett er í bið"
 
 #: ../settings/xfae-model.c:92
 msgid "on hibernate"
-msgstr ""
+msgstr "þegar lagt er í dvala"
 
 #: ../settings/xfae-model.c:93
 msgid "on hybrid sleep"
-msgstr ""
+msgstr "við blandaða svæfingu (hybrid)"
 
 #: ../settings/xfae-model.c:94
 msgid "on switch user"
-msgstr ""
+msgstr "þegar skipt er um notanda"
 
 #: ../settings/xfae-model.c:304 ../settings/xfae-model.c:970
 #: ../settings/xfae-model.c:1028
@@ -287,7 +287,7 @@ msgstr ""
 
 #: ../settings/xfae-window.c:197
 msgid "Trigger"
-msgstr ""
+msgstr "Vekja"
 
 #: ../settings/xfae-window.c:238 ../settings/xfae-window.c:324
 msgid "Add"
@@ -356,7 +356,7 @@ msgstr "Búa til nýja setu."
 #. xfce_gtk_button_new_mixed ("document-new", _("Delete Session"));
 #: ../xfce4-session/xfsm-chooser.c:290
 msgid "Delete a saved session."
-msgstr ""
+msgstr "Eyða vistaðri setu."
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:301
@@ -371,11 +371,11 @@ msgstr "Hætta við innskráningu og fara aftur í innskráningarglugga."
 #. "Start" button
 #: ../xfce4-session/xfsm-chooser.c:310
 msgid "Start"
-msgstr ""
+msgstr "Byrja"
 
 #: ../xfce4-session/xfsm-chooser.c:311
 msgid "Start an existing session."
-msgstr ""
+msgstr "Ræsa fyrirliggjandi setu."
 
 #: ../xfce4-session/xfsm-dns.c:78
 msgid "(Unknown)"
@@ -397,21 +397,6 @@ msgstr "Halda samt áfram"
 #: ../xfce4-session/xfsm-dns.c:160
 msgid "Try again"
 msgstr "Reyna aftur"
-
-#: ../xfce4-session/xfsm-global.c:339
-#, c-format
-msgid ""
-"The location and the format of the autostart directory has changed.\n"
-"The new location is\n"
-"\n"
-"  %s\n"
-"\n"
-"where you can place .desktop files to, that describe the applications\n"
-"to start when you login to your Xfce desktop. The files in your old\n"
-"autostart directory have been successfully migrated to the new\n"
-"location.\n"
-"You should delete this directory now.\n"
-msgstr "Staðsetning og snið sjálfræsimöppunnar (autostart directory) hefur breyst.\nNýja staðsetningin er\n\n  %s\n\nþar sem þú getur sett skjáborðsskrár (.desktop) sem lýsa þá hvaða forrit\neigi að ræsa þegar þú skráir þig inn í Xfce skjáborðsumhverfið. Skrárnar í gömlu\nsjálfræsimöppunni voru fluttar í nýju möppuna.\nÞú ættia að eyða þessari möppu núna.\n"
 
 #: ../xfce4-session/xfsm-manager.c:599
 #, c-format
@@ -438,7 +423,7 @@ msgstr "Í _lagi"
 
 #: ../xfce4-session/xfsm-manager.c:722
 msgid "Name for the new session"
-msgstr ""
+msgstr "Veldu heiti á nýju setuna"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
@@ -492,7 +477,7 @@ msgstr "Setustýring verður að vera aðgerðalaus þegar beðið er um að sl�
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Setustýring verður að vera aðgerðalaus þegar beðið er um endurræsingu"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:184
+#: ../xfce4-session/xfsm-logout-dialog.c:186
 #, c-format
 msgid "Log out %s"
 msgstr "Skrá út %s"
@@ -500,39 +485,39 @@ msgstr "Skrá út %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:229
+#: ../xfce4-session/xfsm-logout-dialog.c:231
 msgid "_Log Out"
 msgstr "S_krá út"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:249
+#: ../xfce4-session/xfsm-logout-dialog.c:251
 msgid "_Restart"
 msgstr "Endu_rræsa"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:269
+#: ../xfce4-session/xfsm-logout-dialog.c:271
 msgid "Shut _Down"
 msgstr "_Slökkva"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:293
+#: ../xfce4-session/xfsm-logout-dialog.c:295
 msgid "Sus_pend"
 msgstr "Setja í _bið"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:327
+#: ../xfce4-session/xfsm-logout-dialog.c:329
 msgid "_Hibernate"
 msgstr "Le_ggja í dvala"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:358
+#: ../xfce4-session/xfsm-logout-dialog.c:360
 msgid "H_ybrid Sleep"
-msgstr ""
+msgstr "_Blönduð svæfing"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:389
+#: ../xfce4-session/xfsm-logout-dialog.c:391
 msgid "Switch _User"
 msgstr "Skipta _um notanda"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:414
+#: ../xfce4-session/xfsm-logout-dialog.c:416
 msgid "_Save session for future logins"
 msgstr "_Vista setu fyrir seinni tíma innskráningar"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:442
+#: ../xfce4-session/xfsm-logout-dialog.c:444
 msgid "An error occurred"
 msgstr "Villa kom upp"
 
@@ -609,7 +594,7 @@ msgstr "Seta og ræsing"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
 msgid "Customize desktop startup"
-msgstr ""
+msgstr "Sérsníða ræsingu skjáborðs"
 
 #: ../settings/xfce4-session-settings.ui.h:2
 msgid "_Display chooser on login"
@@ -660,7 +645,7 @@ msgstr "V_ista setu"
 
 #: ../settings/xfce4-session-settings.ui.h:13
 msgid "Clear Save_d Sessions"
-msgstr ""
+msgstr "Hreinsa _vistaðar setur"
 
 #: ../settings/xfce4-session-settings.ui.h:15
 msgid "Sessio_n"
