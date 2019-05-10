@@ -681,6 +681,8 @@ again:
                                  sessions, default_session);
       gtk_window_set_screen (GTK_WINDOW (chooser), screen);
       gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_CENTER);
+      /* Use Adwaita's keycap style to get a meaningful look out of the box */
+      gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (chooser)), "keycap");
       gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (chooser)), "xfsm-session-chooser");
       result = gtk_dialog_run (GTK_DIALOG (chooser));
 
@@ -717,6 +719,8 @@ again:
           gtk_window_set_screen (GTK_WINDOW (dialog), screen);
           gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
           gtk_container_set_border_width (GTK_CONTAINER (dialog), 12);
+          /* Use Adwaita's keycap style to get a meaningful look out of the box */
+          gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (dialog)), "keycap");
           gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (dialog)), "xfsm-session-chooser");
           g_snprintf (title, 256, "<big><b>%s</b></big>",
                       _("Name for the new session"));
