@@ -165,6 +165,12 @@ session_editor_save_session(GtkWidget *btn,
         gtk_widget_show (gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 3));
         sessions = settings_list_sessions (rc);
         model = gtk_tree_view_get_model (GTK_TREE_VIEW (treeview));
+        /* If the treeview hasn't been initialized we do it now */
+        if (!GTK_IS_LIST_STORE (model))
+        {
+            settings_list_sessions_treeview_init (GTK_TREE_VIEW (treeview));
+            model = gtk_tree_view_get_model (GTK_TREE_VIEW (treeview));
+        }
         settings_list_sessions_populate (model, sessions);
     }
 }
