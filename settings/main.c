@@ -79,10 +79,15 @@ main(int argc,
     GtkWidget *notebook;
     GtkWidget *xfae_page;
     GtkWidget *lbl;
+    GtkWidget *label_active_session;
     GError *error = NULL;
     XfconfChannel *channel;
     XfceRc *rc;
     gboolean visible;
+    gchar *active_session;
+    gchar *active_session_label;
+    const gchar *format;
+    gchar *markup;
 
     Window opt_socket_id = 0;
     gboolean opt_version = FALSE;
@@ -158,6 +163,14 @@ main(int argc,
     lbl = gtk_label_new_with_mnemonic(_("App_lication Autostart"));
     gtk_widget_show(lbl);
     gtk_notebook_insert_page(GTK_NOTEBOOK(notebook), xfae_page, lbl, 1);
+
+    label_active_session = GTK_WIDGET (gtk_builder_get_object (builder, "label_active_session"));
+    active_session = xfconf_channel_get_string (channel, "/general/SessionName", "Default");
+    active_session_label = _("Currently active session:");
+    format = "%s <b>%s</b>";
+    markup = g_markup_printf_escaped (format, active_session_label, active_session);
+    gtk_label_set_markup (GTK_LABEL (label_active_session), markup);
+    g_free (markup);
 
     /* Check if there are saved sessions and if so, show the "Saved Sessions" tab */
     rc = settings_list_sessions_open_rc ();
