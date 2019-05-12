@@ -144,7 +144,8 @@ static void       xfsm_manager_cancel_client_save_timeout (XfsmManager *manager,
 static gboolean   xfsm_manager_save_timeout (gpointer user_data);
 static void       xfsm_manager_load_settings (XfsmManager   *manager,
                                               XfconfChannel *channel);
-static gboolean   xfsm_manager_load_session (XfsmManager *manager);
+static gboolean   xfsm_manager_load_session (XfsmManager *manager,
+                                             XfconfChannel *channel);
 static void       xfsm_manager_dbus_class_init (XfsmManagerClass *klass);
 static void       xfsm_manager_dbus_init (XfsmManager *manager,
                                           GDBusConnection *connection);
@@ -471,7 +472,8 @@ xfsm_manager_choose_session (XfsmManager *manager,
 
 
 static gboolean
-xfsm_manager_load_session (XfsmManager *manager)
+xfsm_manager_load_session (XfsmManager   *manager,
+                           XfconfChannel *channel)
 {
   XfsmProperties *properties;
   gchar           buffer[1024];
@@ -500,6 +502,7 @@ xfsm_manager_load_session (XfsmManager *manager)
 
   g_snprintf (buffer, 1024, "Session: %s", manager->session_name);
   xfsm_verbose ("loading %s\n", buffer);
+  xfconf_channel_set_string (channel, "/general/SessionName", manager->session_name);
 
   xfce_rc_set_group (rc, buffer);
   count = xfce_rc_read_int_entry (rc, "Count", 0);
@@ -747,7 +750,7 @@ xfsm_manager_load_settings (XfsmManager   *manager,
 
   manager->session_chooser = xfconf_channel_get_bool (channel, "/chooser/AlwaysDisplay", FALSE);
 
-  session_loaded = xfsm_manager_load_session (manager);
+  session_loaded = xfsm_manager_load_session (manager, channel);
 
   if (session_loaded)
     {
