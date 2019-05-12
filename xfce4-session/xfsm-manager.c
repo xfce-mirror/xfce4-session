@@ -697,6 +697,7 @@ again:
           gtk_style_context_add_class (gtk_widget_get_style_context (button), "suggested-action");
 
           entry = gtk_entry_new ();
+          gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
           gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                               entry, TRUE, TRUE, 6);
           gtk_widget_show (entry);
