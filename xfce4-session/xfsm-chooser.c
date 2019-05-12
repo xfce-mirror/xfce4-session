@@ -94,44 +94,6 @@ xfsm_chooser_start_session (GtkButton *button,
 }
 
 
-static void
-xfsm_chooser_delete_session (GtkButton *button,
-                             XfsmChooser *chooser)
-{
-  XfceRc *rc;
-  gchar *session_file;
-  gchar *display_name;
-  gchar *resource_name;
-  GtkTreeModel *model;
-  GtkTreeIter iter;
-  GtkTreeSelection *selection;
-  gchar *session;
-
-  display_name = xfsm_gdk_display_get_fullname (gdk_display_get_default ());
-  resource_name = g_strconcat ("sessions/xfce4-session-", display_name, NULL);
-  session_file = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource_name, TRUE);
-
-  if (!g_file_test (session_file, G_FILE_TEST_IS_REGULAR))
-    {
-      g_warning ("xfsm_manager_load_session: Something wrong with %s, Does it exist? Permissions issue?", session_file);
-      return;
-    }
-
-  /* Remove the session from the treeview */
-  model = gtk_tree_view_get_model (GTK_TREE_VIEW (chooser->tree));
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (chooser->tree));
-  gtk_tree_selection_get_selected (selection, &model, &iter);
-  gtk_list_store_remove (GTK_LIST_STORE (model), &iter);
-
-  /* Remove the session from session file */
-  session = g_strdup_printf ("Session: %s", xfsm_chooser_get_session (chooser));
-  rc = xfce_rc_simple_open (session_file, FALSE);
-  xfce_rc_delete_group (rc, session, FALSE);
-  xfce_rc_close (rc);
-  g_free (session);
-}
-
-
 gchar*
 xfsm_chooser_get_session (const XfsmChooser *chooser)
 {
@@ -218,17 +180,17 @@ xfsm_chooser_init (XfsmChooser *chooser)
   gtk_style_context_add_class (gtk_widget_get_style_context (hbox), "inline-toolbar");
 
   /* "New" button */
-  button = gtk_button_new_from_icon_name ("list-add-symbolic", GTK_ICON_SIZE_BUTTON);//xfce_gtk_button_new_mixed ("document-new", _("Create New Session"));
+  button = gtk_button_new_from_icon_name ("list-add-symbolic", GTK_ICON_SIZE_BUTTON);
   gtk_widget_set_tooltip_text (button, _("Create a new session."));
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (xfsm_chooser_new_session), chooser);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
   /* "Delete" button */
-  button = gtk_button_new_from_icon_name ("list-remove-symbolic", GTK_ICON_SIZE_BUTTON); //xfce_gtk_button_new_mixed ("document-new", _("Delete Session"));
+  button = gtk_button_new_from_icon_name ("list-remove-symbolic", GTK_ICON_SIZE_BUTTON);
   gtk_widget_set_tooltip_text (button, _("Delete a saved session."));
   g_signal_connect (G_OBJECT (button), "clicked",
-                    G_CALLBACK (xfsm_chooser_delete_session), chooser);
+                    G_CALLBACK (settings_list_sessions_delete_session), GTK_TREE_VIEW (chooser->tree));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
   /* Button box */

@@ -53,34 +53,38 @@ enum
 };
 
 
-gboolean xfsm_start_application (gchar      **command,
-                                 gchar      **environment,
-                                 GdkScreen   *screen,
-                                 const gchar *current_directory,
-                                 const gchar *client_machine,
-                                 const gchar *user_id);
+gboolean       xfsm_start_application                (gchar      **command,
+                                                      gchar      **environment,
+                                                      GdkScreen   *screen,
+                                                      const gchar *current_directory,
+                                                      const gchar *client_machine,
+                                                      const gchar *user_id);
 
-void xfsm_place_trash_window (GtkWindow *window,
-                              GdkScreen *screen,
-                              gint       monitor);
+void           xfsm_place_trash_window               (GtkWindow *window,
+                                                      GdkScreen *screen,
+                                                      gint       monitor);
 
 /* XXX - move to libxfce4util? */
-gboolean xfsm_strv_equal (gchar **a, gchar **b);
+gboolean       xfsm_strv_equal                       (gchar **a,
+                                                      gchar **b);
 
-XfconfChannel *xfsm_open_config (void);
+XfconfChannel *xfsm_open_config                      (void);
 
-gchar *xfsm_gdk_display_get_fullname (GdkDisplay *display);
+gchar         *xfsm_gdk_display_get_fullname         (GdkDisplay *display);
 
-GdkPixbuf *xfsm_load_session_preview (const gchar *name);
+GdkPixbuf     *xfsm_load_session_preview             (const gchar *name);
 
-XfceRc *settings_list_sessions_open_rc (void);
+XfceRc        *settings_list_sessions_open_rc        (void);
 
-GList *settings_list_sessions (XfceRc *rc);
+GList         *settings_list_sessions                (XfceRc *rc);
 
-void settings_list_sessions_treeview_init (GtkTreeView *treeview);
+void           settings_list_sessions_treeview_init  (GtkTreeView *treeview);
 
-void settings_list_sessions_populate (GtkTreeModel *model,
-                                      GList       *sessions);
+void           settings_list_sessions_populate       (GtkTreeModel *model,
+                                                      GList       *sessions);
+
+void           settings_list_sessions_delete_session (GtkButton *button,
+                                                      GtkTreeView *treeview);
 
 G_END_DECLS;
 

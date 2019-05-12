@@ -382,3 +382,50 @@ settings_list_sessions_populate (GtkTreeModel *model,
       g_free (title);
     }
 }
+
+void
+settings_list_sessions_delete_session (GtkButton   *button,
+                                       GtkTreeView *treeview)
+{
+  XfceRc            *rc;
+  gchar             *session_file;
+  gchar             *display_name;
+  gchar             *resource_name;
+  GtkTreeModel      *model;
+  GtkTreeIter        iter;
+  GtkTreeSelection  *selection;
+  GValue             value;
+  gchar             *session;
+
+  display_name = xfsm_gdk_display_get_fullname (gdk_display_get_default ());
+  resource_name = g_strconcat ("sessions/xfce4-session-", display_name, NULL);
+  session_file = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource_name, TRUE);
+
+  if (!g_file_test (session_file, G_FILE_TEST_IS_REGULAR))
+    {
+      g_warning ("xfsm_manager_load_session: Something wrong with %s, Does it exist? Permissions issue?", session_file);
+      return;
+    }
+
+  /* Remove the session from session file */
+  bzero (&value, sizeof (value));
+  selection = gtk_tree_view_get_selection (treeview);
+  if (!gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      g_warning ("xfsm_chooser_get_session: !gtk_tree_selection_get_selected");
+      return;
+    }
+  gtk_tree_model_get_value (model, &iter, NAME_COLUMN, &value);
+  session = g_strdup_printf ("Session: %s", g_value_get_string (&value));
+  g_value_unset (&value);
+  rc = xfce_rc_simple_open (session_file, FALSE);
+  xfce_rc_delete_group (rc, session, FALSE);
+  xfce_rc_close (rc);
+  g_free (session);
+
+  /* Remove the session from the treeview */
+  model = gtk_tree_view_get_model (treeview);
+  selection = gtk_tree_view_get_selection (treeview);
+  gtk_tree_selection_get_selected (selection, &model, &iter);
+  gtk_list_store_remove (GTK_LIST_STORE (model), &iter);
+}

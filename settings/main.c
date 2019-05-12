@@ -80,6 +80,8 @@ main(int argc,
     GtkWidget *xfae_page;
     GtkWidget *lbl;
     GtkWidget *label_active_session;
+    GObject *delete_button;
+    GObject *treeview;
     GError *error = NULL;
     XfconfChannel *channel;
     XfceRc *rc;
@@ -171,6 +173,10 @@ main(int argc,
     markup = g_markup_printf_escaped (format, active_session_label, active_session);
     gtk_label_set_markup (GTK_LABEL (label_active_session), markup);
     g_free (markup);
+
+    delete_button = gtk_builder_get_object (builder, "btn_delete_session");
+    treeview = gtk_builder_get_object (builder, "saved-sessions-list");
+    g_signal_connect (delete_button, "clicked", G_CALLBACK (settings_list_sessions_delete_session), GTK_TREE_VIEW (treeview));
 
     /* Check if there are saved sessions and if so, show the "Saved Sessions" tab */
     rc = settings_list_sessions_open_rc ();
