@@ -551,9 +551,15 @@ manager_client_registered(XfsmManager *proxy,
                        COL_PID, pid,
                        -1);
 
-    if(desktop_file != NULL)
+    if (desktop_file != NULL)
     {
-        session_editor_set_from_desktop_file(model, &iter, desktop_file);
+        session_editor_set_from_desktop_file (model, &iter, desktop_file);
+    }
+    else if (gtk_icon_theme_has_icon (gtk_icon_theme_get_default (), name))
+    {
+        gtk_list_store_set (GTK_LIST_STORE (model), &iter,
+                            COL_ICON_NAME, name,
+                            -1);
     }
 
     path = gtk_tree_model_get_path(model, &iter);
