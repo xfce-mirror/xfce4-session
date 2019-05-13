@@ -521,7 +521,7 @@ manager_client_registered(XfsmManager *proxy,
                 priority = g_variant_get_byte(variant_value);
                 DBG("priority %d", priority);
             }
-            else if(g_strcmp0(property, SmProgram) == 0)
+            else if(g_strcmp0(property, SmProcessID) == 0)
             {
                 pid = g_variant_get_string(variant_value, 0);
                 DBG("pid %s", pid);
