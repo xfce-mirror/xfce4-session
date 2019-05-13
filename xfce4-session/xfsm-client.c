@@ -871,9 +871,9 @@ xfsm_client_dbus_set_sm_properties (XfsmDbusClient *object,
       return TRUE;
     }
 
-  g_variant_get (arg_properties, "a(sv)", &iter);
+  g_variant_get (arg_properties, "a{sv}", &iter);
 
-  while (g_variant_iter_next (iter, "(sv)", &prop_name, &variant))
+  while (g_variant_iter_next (iter, "{sv}", &prop_name, &variant))
     {
       GValue value;
 
