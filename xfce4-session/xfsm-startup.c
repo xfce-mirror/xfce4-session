@@ -522,6 +522,7 @@ xfsm_startup_begin (XfsmManager *manager)
 
   if (xfsm_manager_get_use_failsafe_mode (manager))
     {
+      xfsm_verbose ("Starting the session in failsafe mode.");
       xfsm_startup_failsafe (manager);
       xfsm_startup_autostart (manager);
       xfsm_manager_signal_startup_done (manager);

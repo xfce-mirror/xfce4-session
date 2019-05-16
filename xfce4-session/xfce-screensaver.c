@@ -366,7 +366,7 @@ xfce_screensaver_new (void)
 static gboolean
 xfce_reset_screen_saver (XfceScreenSaver *saver)
 {
-    TRACE("entering");
+    TRACE("entering\n");
 
     /* If we found an interface during the setup, use it */
     if (saver->priv->proxy)

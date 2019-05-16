@@ -1210,7 +1210,7 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
   GList    *lp;
   GError   *error = NULL;
 
-  xfsm_verbose ("entering");
+  xfsm_verbose ("entering\n");
 
   if (shutdown)
     {
@@ -1328,7 +1328,7 @@ xfsm_manager_save_yourself (XfsmManager *manager,
                             gboolean     fast,
                             gboolean     global)
 {
-  xfsm_verbose ("entering");
+  xfsm_verbose ("entering\n");
 
   if (G_UNLIKELY (xfsm_client_get_state (client) != XFSM_CLIENT_IDLE))
     {
@@ -1372,7 +1372,7 @@ void
 xfsm_manager_save_yourself_phase2 (XfsmManager *manager,
                                    XfsmClient *client)
 {
-  xfsm_verbose ("entering");
+  xfsm_verbose ("entering\n");
 
   if (manager->state != XFSM_MANAGER_CHECKPOINT && manager->state != XFSM_MANAGER_SHUTDOWN)
     {
@@ -1400,7 +1400,7 @@ xfsm_manager_save_yourself_done (XfsmManager *manager,
                                  XfsmClient  *client,
                                  gboolean     success)
 {
-  xfsm_verbose ("entering");
+  xfsm_verbose ("entering\n");
 
   /* In xfsm_manager_interact_done we send SmsShutdownCancelled to clients in
      XFSM_CLIENT_WAITFORINTERACT state. They respond with SmcSaveYourselfDone

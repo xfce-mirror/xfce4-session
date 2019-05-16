@@ -75,7 +75,7 @@ session_editor_ensure_dbus(void)
 {
     GError *error = NULL;
 
-    TRACE("entering");
+    TRACE("entering\n");
 
     if (manager_dbus_proxy)
         return TRUE;
@@ -129,7 +129,7 @@ session_editor_save_session(GtkWidget *btn,
     guint sig_id;
     GError *error = NULL;
 
-    TRACE("entering");
+    TRACE("entering\n");
 
     gtk_widget_set_sensitive(btn, FALSE);
 
@@ -190,7 +190,7 @@ session_editor_clear_sessions(GtkWidget *btn,
 {
     GtkWidget *treeview = GTK_WIDGET (gtk_builder_get_object (builder, "treeview_clients"));
     GtkWidget *notebook = GTK_WIDGET (gtk_builder_get_object (builder, "plug-child"));
-    TRACE("entering");
+    TRACE("entering\n");
 
     gtk_widget_set_sensitive(btn, FALSE);
 
@@ -267,7 +267,7 @@ session_editor_quit_client(GtkWidget *btn,
     guchar hint = SmRestartIfRunning;
     gchar *primary;
 
-    TRACE("entering");
+    TRACE("entering\n");
 
     sel = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
     if(!gtk_tree_selection_get_selected(sel, &model, &iter))
@@ -336,7 +336,7 @@ session_editor_set_from_desktop_file(GtkTreeModel *model,
     XfceRc *rcfile;
     const gchar *name, *icon;
 
-    TRACE("entering");
+    TRACE("entering\n");
 
     rcfile = xfce_rc_simple_open(desktop_file, TRUE);
     if(!rcfile)
@@ -381,7 +381,7 @@ client_sm_property_changed(XfsmClient *proxy,
     GtkTreeIter iter;
     gboolean has_desktop_file = FALSE;
 
-    TRACE("entering");
+    TRACE("entering\n");
 
     if(!gtk_tree_model_get_iter(model, &iter, path)) {
         gtk_tree_path_free(path);
@@ -431,7 +431,7 @@ client_state_changed(XfsmClient *proxy,
 {
     GtkTreeView *treeview = user_data;
 
-    TRACE("entering");
+    TRACE("entering\n");
 
     if(new_state == 7) {  /* disconnected.  FIXME: enum this */
         GtkTreeModel *model = gtk_tree_view_get_model(treeview);
@@ -470,7 +470,7 @@ manager_client_registered(XfsmManager *proxy,
     gchar *property;
     GError *error = NULL;
 
-    TRACE("entering");
+    TRACE("entering\n");
 
     DBG("new client at %s", object_path);
 
@@ -586,7 +586,7 @@ session_editor_create_restart_style_combo_model(void)
     GtkTreeIter iter;
     gint i;
 
-    TRACE("entering");
+    TRACE("entering\n");
 
     for(i = 0; restart_styles[i]; ++i) {
         gtk_list_store_append(ls, &iter);
@@ -607,7 +607,7 @@ priority_changed(GtkCellRenderer *render,
     GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
     GtkTreeIter iter;
 
-    TRACE("entering");
+    TRACE("entering\n");
 
     if(gtk_tree_model_get_iter(model, &iter, path)) {
         XfsmClient *proxy = NULL;
@@ -664,7 +664,7 @@ restart_style_hint_changed(GtkCellRenderer *render,
     GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
     GtkTreeIter iter;
 
-    TRACE("entering");
+    TRACE("entering\n");
 
     if(gtk_tree_model_get_iter(model, &iter, path)) {
         gint i;
@@ -717,7 +717,7 @@ session_tree_compare_iter(GtkTreeModel *model,
 {
     guchar aprio = 0, bprio = 0;
 
-    TRACE("entering");
+    TRACE("entering\n");
 
     gtk_tree_model_get(model, a, COL_PRIORITY, &aprio, -1);
     gtk_tree_model_get(model, b, COL_PRIORITY, &bprio, -1);
@@ -760,7 +760,7 @@ session_editor_populate_treeview(GtkTreeView *treeview)
     guint i;
     GError *error = NULL;
 
-    TRACE("entering");
+    TRACE("entering\n");
 
     render = gtk_cell_renderer_text_new();
     g_object_set(render,
@@ -858,7 +858,7 @@ session_editor_init(GtkBuilder *builder)
     GtkTreeView *treeview;
     GtkTreeSelection *sel;
 
-    TRACE("entering");
+    TRACE("entering\n");
 
     treeview = GTK_TREE_VIEW(gtk_builder_get_object(builder, "treeview_clients"));
     sel = gtk_tree_view_get_selection(treeview);
