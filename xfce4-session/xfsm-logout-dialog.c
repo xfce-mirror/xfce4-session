@@ -393,7 +393,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
                                                   XFSM_SHUTDOWN_SWITCH_USER, dialog);
 
               gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-              gtk_widget_set_sensitive (button, auth_hibernate);
+              gtk_widget_set_sensitive (button, can_switch_user);
               gtk_widget_show (button);
 
               gtk_widget_show (hbox);
