@@ -371,7 +371,7 @@ xfsm_shutdown_fallback_try_action (XfsmShutdownType   type,
                                    GError           **error)
 {
   const gchar *xfsm_helper_action;
-  const gchar *cmd;
+  const gchar *cmd __attribute__((unused));
   gboolean ret = FALSE;
   gint exit_status = 0;
 #ifdef HAVE_POLKIT
