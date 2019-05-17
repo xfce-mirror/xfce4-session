@@ -61,7 +61,6 @@ typedef enum
     XFSM_MANAGER_QUEUE_STARTING_PROPS,
     XFSM_MANAGER_QUEUE_RESTART_PROPS,
     XFSM_MANAGER_QUEUE_RUNNING_CLIENTS,
-    XFSM_MANAGER_QUEUE_FAILSAFE_CLIENTS,
 } XfsmManagerQueueType;
 
 typedef enum
@@ -156,6 +155,8 @@ GQueue *xfsm_manager_get_queue (XfsmManager         *manager,
                                 XfsmManagerQueueType q_type);
 
 gboolean xfsm_manager_get_use_failsafe_mode (XfsmManager *manager);
+
+void xfsm_manager_increase_failsafe_pending_clients (XfsmManager *manager);
 
 gboolean xfsm_manager_get_compat_startup (XfsmManager          *manager,
                                           XfsmManagerCompatType type);

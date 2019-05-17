@@ -35,4 +35,3 @@ gboolean xfsm_startup_start_properties (XfsmProperties *properties,
                                         XfsmManager    *manager);
 
 #endif /* !__XFSM_STARTUP_H__ */
-

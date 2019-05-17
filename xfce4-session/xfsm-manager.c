@@ -93,7 +93,7 @@ struct _XfsmManager
   GQueue          *running_clients;
 
   gboolean         failsafe_mode;
-  GQueue          *failsafe_clients;
+  gint             failsafe_clients_pending;
 
   guint            die_timeout_id;
   guint            name_owner_id;
@@ -190,7 +190,7 @@ xfsm_manager_init (XfsmManager *manager)
   manager->starting_properties = g_queue_new ();
   manager->restart_properties = g_queue_new ();
   manager->running_clients = g_queue_new ();
-  manager->failsafe_clients = g_queue_new ();
+  manager->failsafe_clients_pending = 0;
 }
 
 static void
@@ -216,9 +216,6 @@ xfsm_manager_finalize (GObject *obj)
 
   g_queue_foreach (manager->running_clients, (GFunc) G_CALLBACK (g_object_unref), NULL);
   g_queue_free (manager->running_clients);
-
-  g_queue_foreach (manager->failsafe_clients, (GFunc) G_CALLBACK (xfsm_failsafe_client_free), NULL);
-  g_queue_free (manager->failsafe_clients);
 
   g_free (manager->session_name);
   g_free (manager->session_file);
@@ -548,14 +545,19 @@ xfsm_manager_load_failsafe (XfsmManager   *manager,
                             XfconfChannel *channel,
                             gchar        **error)
 {
-  FailsafeClient *fclient;
+  XfsmProperties *properties;
   gchar          *failsafe_name;
   gchar           propbuf[4096];
+  gchar          *hostname;
+  gchar          *client_id = NULL;
   gchar         **command;
   gchar           command_entry[256];
-  gchar           screen_entry[256];
+  gchar           priority_entry[256];
+  gint            priority;
   gint            count;
   gint            i;
+
+  hostname = xfce_gethostname ();
 
   failsafe_name = xfconf_channel_get_string (channel, "/general/FailsafeSessionName", NULL);
   if (G_UNLIKELY (!failsafe_name))
@@ -584,22 +586,25 @@ xfsm_manager_load_failsafe (XfsmManager   *manager,
 
   for (i = 0; i < count; ++i)
     {
+      properties = xfsm_properties_new (client_id, hostname);
       g_snprintf (command_entry, sizeof (command_entry),
                   "/sessions/%s/Client%d_Command", failsafe_name, i);
       command = xfconf_channel_get_string_list (channel, command_entry);
       if (G_UNLIKELY (command == NULL))
         continue;
 
-      g_snprintf (screen_entry, sizeof (screen_entry),
-                  "/sessions/%s/Client%d_PerScreen", failsafe_name, i);
+      g_snprintf (priority_entry, sizeof (priority_entry),
+                  "/sessions/%s/Client%d_Priority", failsafe_name, i);
+      priority = xfconf_channel_get_int (channel, priority_entry, 50);
 
-      fclient = g_new0 (FailsafeClient, 1);
-      fclient->command = command;
-      fclient->screen = gdk_screen_get_default ();
-      g_queue_push_tail (manager->failsafe_clients, fclient);
+      xfsm_properties_set_string (properties, SmProgram, command[0]);
+      xfsm_properties_set_strv (properties, SmRestartCommand, g_strdupv(command));
+      xfsm_properties_set_uchar (properties, GsmPriority, priority);
+      g_queue_push_tail (manager->pending_properties, properties);
     }
+  g_queue_sort (manager->pending_properties, (GCompareDataFunc) G_CALLBACK (xfsm_properties_compare), NULL);
 
-  if (g_queue_peek_head (manager->failsafe_clients) == NULL)
+  if (g_queue_peek_head (manager->pending_properties) == NULL)
     {
       if (error)
         *error = g_strdup (_("The list of applications in the failsafe session is empty."));
@@ -974,6 +979,9 @@ xfsm_manager_register_client (XfsmManager *manager,
     }
   else
     {
+      xfsm_verbose ("No previous_id found.\n");
+      if (manager->failsafe_mode)
+        xfsm_verbose ("Plus, we're obviously running in failsafe mode.\n");
       if (sms_conn != NULL)
         {
           /* new sms client */
@@ -989,6 +997,9 @@ xfsm_manager_register_client (XfsmManager *manager,
   /* this part is for dbus clients */
   if (dbus_client_id != NULL)
     {
+      xfsm_verbose ("dbus_client_id found: %s.\n", dbus_client_id);
+      if (manager->failsafe_mode)
+        xfsm_verbose ("Plus, we're obviously running in failsafe mode.\n");
       properties = xfsm_manager_get_pending_properties (manager, dbus_client_id);
 
       if (properties != NULL)
@@ -1008,6 +1019,8 @@ xfsm_manager_register_client (XfsmManager *manager,
           g_free (hostname);
         }
     }
+  else
+    xfsm_verbose ("No dbus_client_id found.\n");
 
 
   g_queue_push_tail (manager->running_clients, client);
@@ -1029,7 +1042,8 @@ xfsm_manager_register_client (XfsmManager *manager,
         }
     }
 
-  if (previous_id != NULL && manager->state == XFSM_MANAGER_STARTUP)
+  if ((previous_id != NULL || manager->failsafe_mode)
+       && manager->state == XFSM_MANAGER_STARTUP)
     {
       /* Only continue the startup if the previous_id matched one of
        * the starting_properties. If there was no match above,
@@ -1037,6 +1051,11 @@ xfsm_manager_register_client (XfsmManager *manager,
        * in failsafe mode because in that case the failsafe session is
        * started all at once.
        */
+      if (manager->failsafe_mode)
+        {
+          if (--manager->failsafe_clients_pending == 0)
+            g_queue_clear (manager->starting_properties);
+        }
       if (g_queue_peek_head (manager->starting_properties) == NULL)
         xfsm_startup_session_continue (manager);
     }
@@ -1934,8 +1953,6 @@ xfsm_manager_get_queue (XfsmManager         *manager,
         return manager->restart_properties;
       case XFSM_MANAGER_QUEUE_RUNNING_CLIENTS:
         return manager->running_clients;
-      case XFSM_MANAGER_QUEUE_FAILSAFE_CLIENTS:
-        return manager->failsafe_clients;
       default:
         g_warning ("Requested invalid queue type %d", (gint)q_type);
         return NULL;
@@ -1947,6 +1964,13 @@ gboolean
 xfsm_manager_get_use_failsafe_mode (XfsmManager *manager)
 {
   return manager->failsafe_mode;
+}
+
+
+void
+xfsm_manager_increase_failsafe_pending_clients (XfsmManager *manager)
+{
+  manager->failsafe_clients_pending++;
 }
 
 

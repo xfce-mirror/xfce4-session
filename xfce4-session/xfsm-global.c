@@ -59,14 +59,6 @@
 /* global variables */
 gboolean          verbose = FALSE;
 
-void
-xfsm_failsafe_client_free (FailsafeClient *fclient)
-{
-  if (fclient->command)
-    g_strfreev (fclient->command);
-  g_free (fclient);
-}
-
 
 void
 xfsm_enable_verbose (void)

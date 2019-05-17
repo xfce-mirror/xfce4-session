@@ -30,18 +30,8 @@
 
 #include "settings/xfae-model.h" /* XfsmRunHook */
 
-typedef struct _FailsafeClient FailsafeClient;
-struct _FailsafeClient
-{
-  gchar    **command;
-  GdkScreen *screen;
-};
-
-void xfsm_failsafe_client_free (FailsafeClient *fclient);
-
 
 #define DEFAULT_SESSION_NAME "Default"
-
 
 extern gboolean          verbose;
 

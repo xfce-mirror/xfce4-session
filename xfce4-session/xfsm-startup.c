@@ -73,8 +73,6 @@ typedef struct
   XfsmProperties *properties;
 } XfsmStartupData;
 
-static void     xfsm_startup_failsafe                (XfsmManager *manager);
-
 static gboolean xfsm_startup_session_next_prio_group (XfsmManager *manager);
 
 static void     xfsm_startup_data_free               (XfsmStartupData *sdata);
@@ -521,32 +519,9 @@ xfsm_startup_begin (XfsmManager *manager)
     xfsm_startup_at (manager);
 
   if (xfsm_manager_get_use_failsafe_mode (manager))
-    {
-      xfsm_verbose ("Starting the session in failsafe mode.");
-      xfsm_startup_failsafe (manager);
-      xfsm_startup_autostart (manager);
-      xfsm_manager_signal_startup_done (manager);
-    }
-  else
-    {
-      xfsm_startup_session_continue (manager);
-    }
-}
+    xfsm_verbose ("Starting the session in failsafe mode.\n");
 
-
-static void
-xfsm_startup_failsafe (XfsmManager *manager)
-{
-  GQueue *failsafe_clients = xfsm_manager_get_queue (manager, XFSM_MANAGER_QUEUE_FAILSAFE_CLIENTS);
-  FailsafeClient *fclient;
-
-  while ((fclient = g_queue_pop_head (failsafe_clients)))
-    {
-      /* start the application */
-      xfsm_start_application (fclient->command, NULL, fclient->screen,
-                              NULL, NULL, NULL);
-      xfsm_failsafe_client_free (fclient);
-    }
+  xfsm_startup_session_continue (manager);
 }
 
 
@@ -596,7 +571,7 @@ xfsm_startup_start_properties (XfsmProperties *properties,
   if (xfsm_is_verbose_enabled ())
     {
       gchar *command = g_strjoinv (" ", argv);
-      xfsm_verbose ("Launched command \"%s\" with PID %d\n", command, (gint) pid);
+      xfsm_verbose ("Launching command \"%s\" with PID %d\n", command, (gint) pid);
       g_free (command);
     }
 
@@ -669,7 +644,7 @@ xfsm_startup_session_next_prio_group (XfsmManager *manager)
 
   cur_prio_group = xfsm_properties_get_uchar (properties, GsmPriority, 50);
 
-  xfsm_verbose ("Starting apps in prio group %d\n", cur_prio_group);
+  xfsm_verbose ("Starting apps in prio group %d\n (%d)", cur_prio_group, g_queue_get_length (pending_properties));
 
   while ((properties = g_queue_pop_head (pending_properties)))
     {
@@ -681,11 +656,15 @@ xfsm_startup_session_next_prio_group (XfsmManager *manager)
           break;
         }
 
+      /* as clients cannot be uniquely identified in failsafe mode we at least count
+         how many per priority group have registered */
+      if (xfsm_manager_get_use_failsafe_mode (manager))
+        xfsm_manager_increase_failsafe_pending_clients (manager);
+
       if (G_LIKELY (xfsm_startup_start_properties (properties, manager)))
         {
           g_queue_push_tail (starting_properties, properties);
           client_started = TRUE;
-          xfsm_verbose ("client id %s started\n", properties->client_id);
         }
       else
         {
