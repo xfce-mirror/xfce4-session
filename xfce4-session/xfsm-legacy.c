@@ -444,6 +444,7 @@ xfsm_legacy_perform_session_save (void)
         {
           struct timeval tv;
           fd_set fds;
+          fd_set exceptfds;
           int msecs;
           int fd;
           int ret;
@@ -455,9 +456,11 @@ xfsm_legacy_perform_session_save (void)
           fd = ConnectionNumber (display);
           FD_ZERO (&fds);
           FD_SET (fd, &fds);
+          FD_ZERO (&exceptfds);
+          FD_SET (fd, &exceptfds);
           tv.tv_sec = (WM_SAVE_YOURSELF_TIMEOUT - msecs) / 1000;
           tv.tv_usec = ((WM_SAVE_YOURSELF_TIMEOUT - msecs) % 1000) * 1000;
-          ret = select (fd + 1, &fds, NULL, &fds, &tv);
+          ret = select (fd + 1, &fds, NULL, &exceptfds, &tv);
           if (ret == -1)
             {
               perror ("select");
@@ -666,6 +669,3 @@ xfsm_legacy_shutdown (void)
   gdk_error_trap_pop_ignored ();
 #endif
 }
-
-
-
