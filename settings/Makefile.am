@@ -22,6 +22,7 @@ xfce4_session_settings_CFLAGS = \
 	-DLOCALEDIR=\"$(localedir)\" \
 	-DG_LOG_DOMAIN=\"xfce4-session-settings\" \
 	-I$(top_srcdir) \
+	-I$(top_srcdir)/libxfsm \
 	$(LIBXFCE4UTIL_CFLAGS) \
 	$(LIBXFCE4UI_CFLAGS) \
 	$(XFCONF_CFLAGS) \
@@ -29,15 +30,12 @@ xfce4_session_settings_CFLAGS = \
 	$(GMODULE_CFLAGS)
 
 xfce4_session_settings_LDADD = \
-	$(top_builddir)/libxfsm/libxfsm-4.6.la \
+	$(top_builddir)/libxfsm/libxfsm.la \
 	$(LIBXFCE4UTIL_CFLAGS) \
 	$(LIBXFCE4UI_LIBS) \
 	$(XFCONF_LIBS) \
 	$(GIO_LIBS) \
 	$(GMODULE_LIBS)
-
-xfce4_session_settings_DEPENDENCIES = \
-	$(top_builddir)/libxfsm/libxfsm-4.6.la
 
 settingsdir = $(sysconfdir)/xdg/xfce4/xfconf/xfce-perchannel-xml
 settings_DATA = xfce4-session.xml

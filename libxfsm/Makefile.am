@@ -1,36 +1,26 @@
 AM_CPPFLAGS =								\
 	-I$(top_srcdir)
 
-# common library
-lib_LTLIBRARIES = libxfsm-4.6.la
+noinst_LTLIBRARIES = libxfsm.la
 
-libxfsm_4_6_la_SOURCES =						\
+libxfsm_la_SOURCES =                    \
 	xfsm-util.h							\
 	xfsm-util.c							\
 	xfsm-shutdown-common.h
 
-libxfsm_4_6_la_CFLAGS =							\
+libxfsm_la_CFLAGS =							\
 	$(LIBX11_CFLAGS)						\
-	$(LIBXFCE4UI_CFLAGS)						\
+	$(LIBXFCE4UI_CFLAGS)                    \
+	$(LIBXFCE4UTIL_CFLAGS)                  \
 	$(XFCONF_CFLAGS)
 
-libxfsm_4_6_la_LDFLAGS =						\
-	-export-dynamic							\
-	-version-info 0:0:0						\
-	$(LIBX11_LDFLAGS)
-
 if HAVE_OS_CYGWIN
-libxfsm_4_6_la_LDFLAGS +=						\
+libxfsm_la_LDFLAGS =						\
 	-no-undefined
 endif
 
-libxfsm_4_6_la_LIBADD =							\
+libxfsm_la_LIBADD =							\
 	$(LIBX11_LIBS)							\
 	$(LIBXFCE4UI_LIBS)						\
+	$(LIBXFCE4UTIL_LIBS)                    \
 	$(XFCONF_LIBS)
-
-libxfsmincludedir =							\
-	$(includedir)/xfce4/xfce4-session-4.6/libxfsm
-
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = xfce4-session-2.0.pc

@@ -2,6 +2,7 @@
 AM_CPPFLAGS =								\
 	-I$(top_builddir)						\
 	-I$(top_srcdir)							\
+	-I$(top_srcdir)/libxfsm                                         \
 	-DG_LOG_DOMAIN=\"xfce4-session\"				\
 	-DLIBDIR=\"$(libdir)\"						\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
@@ -87,7 +88,7 @@ xfce4_session_LDFLAGS =							\
 	$(PLATFORM_LDFLAGS)
 
 xfce4_session_LDADD =							\
-	$(top_builddir)/libxfsm/libxfsm-4.6.la				\
+	$(top_builddir)/libxfsm/libxfsm.la				\
 	$(LIBSM_LDFLAGS)						\
 	$(LIBSM_LIBS)							\
 	$(LIBX11_LDFLAGS)						\
@@ -99,9 +100,6 @@ xfce4_session_LDADD =							\
 	$(POLKIT_LIBS)							\
 	$(XFCONF_LIBS)							\
 	$(LIBM)
-
-xfce4_session_DEPENDENCIES =						\
-	$(top_builddir)/libxfsm/libxfsm-4.6.la
 
 if HAVE_POLKIT
 

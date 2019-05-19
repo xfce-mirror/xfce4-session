@@ -7,6 +7,7 @@ xfsm_shutdown_helper_SOURCES =						\
 
 xfsm_shutdown_helper_CFLAGS =						\
 	-I$(top_srcdir)							\
+	-I$(top_srcdir)/libxfsm                 \
 	$(LIBXFCE4UTIL_CFLAGS)
 
 xfsm_shutdown_helper_LDFLAGS =						\
