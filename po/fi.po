@@ -6,13 +6,14 @@
 # Juha Kautto <juha@xfce.org>, 2004
 # Lasse Liehu <larso@gmx.com>, 2015
 # Pasi Lallinaho <pasi@shimmerproject.org>, 2014,2017-2018
+# Tero Mononen <tero@mononen.eu>, 2019
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-29 00:30+0200\n"
-"PO-Revision-Date: 2019-04-28 22:31+0000\n"
-"Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"POT-Creation-Date: 2019-05-14 00:31+0200\n"
+"PO-Revision-Date: 2019-06-01 13:21+0000\n"
+"Last-Translator: Tero Mononen <tero@mononen.eu>\n"
 "Language-Team: Finnish (http://www.transifex.com/xfce/xfce4-session/language/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,6 +29,14 @@ msgstr "Xfce-istunto"
 msgid "Use this session to run Xfce as your desktop environment"
 msgstr "Valitse tämä istunto käyttääksesi Xfce-työpöytäympäristöä "
 
+#: ../libxfsm/xfsm-util.c:331
+msgid "Session"
+msgstr "Istunto"
+
+#: ../libxfsm/xfsm-util.c:342
+msgid "Last accessed"
+msgstr "Viimeksi käytetty"
+
 #: ../scripts/xscreensaver.desktop.in.h:1
 msgid "Screensaver"
 msgstr "Näytönsäästäjä"
@@ -36,148 +45,152 @@ msgstr "Näytönsäästäjä"
 msgid "Launch screensaver and locker program"
 msgstr "Käynnistä näytönsäästäjä ja lukitusohjelma"
 
-#: ../settings/main.c:68
+#: ../settings/main.c:99
 msgid "Settings manager socket"
 msgstr "Asetustenhallinnan pistoke"
 
-#: ../settings/main.c:68
+#: ../settings/main.c:99
 msgid "SOCKET ID"
 msgstr "PISTOKE"
 
-#: ../settings/main.c:69
+#: ../settings/main.c:100
 msgid "Version information"
 msgstr "Versiotiedot"
 
-#: ../settings/main.c:80 ../xfce4-session/main.c:333
+#: ../settings/main.c:111 ../xfce4-session/main.c:333
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Saat käyttöohjeita kirjoittamalla \"%s --help\"."
 
-#: ../settings/main.c:92 ../xfce4-session/main.c:343
+#: ../settings/main.c:123 ../xfce4-session/main.c:343
 #: ../xfce4-session-logout/main.c:146
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce:n kehitystiimi. Kaikki oikeudet pidätetään."
 
-#: ../settings/main.c:93 ../xfce4-session/main.c:344
+#: ../settings/main.c:124 ../xfce4-session/main.c:344
 #: ../xfce4-session-logout/main.c:149
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Ilmoita ohjelmavirheistä osoitteeseen <%s>."
 
-#: ../settings/main.c:102 ../xfce4-session/main.c:352
+#: ../settings/main.c:133 ../xfce4-session/main.c:352
 msgid "Unable to contact settings server"
 msgstr "Asetuspalvelimeen ei voi yhdistää"
 
-#: ../settings/main.c:121
+#: ../settings/main.c:152
 msgid "Unable to create user interface from embedded definition data"
 msgstr "Käyttöliittymän luominen sisällytetystä kuvauksesta ei onnistu"
 
-#: ../settings/main.c:132
+#: ../settings/main.c:165
 msgid "App_lication Autostart"
 msgstr "Sovellusten _automaattinen käynnistys"
 
-#: ../settings/session-editor.c:61
+#: ../settings/main.c:171
+msgid "Currently active session:"
+msgstr "Nykyinen aktiivinen istunto:"
+
+#: ../settings/session-editor.c:63
 msgid "If running"
 msgstr "Jos käynnissä"
 
-#: ../settings/session-editor.c:62
+#: ../settings/session-editor.c:64
 msgid "Always"
 msgstr "Aina"
 
-#: ../settings/session-editor.c:63
+#: ../settings/session-editor.c:65
 msgid "Immediately"
 msgstr "Välittömästi"
 
-#: ../settings/session-editor.c:64
+#: ../settings/session-editor.c:66
 msgid "Never"
 msgstr "Ei koskaan"
 
-#: ../settings/session-editor.c:129
+#: ../settings/session-editor.c:138
 msgid "Session Save Error"
 msgstr "Istunnon tallennusvirhe"
 
-#: ../settings/session-editor.c:130
+#: ../settings/session-editor.c:139
 msgid "Unable to save the session"
 msgstr "Istuntoa ei voi tallentaa"
 
-#: ../settings/session-editor.c:132 ../settings/session-editor.c:289
-#: ../xfce4-session/xfsm-manager.c:1292
+#: ../settings/session-editor.c:141 ../settings/session-editor.c:320
+#: ../xfce4-session/xfsm-manager.c:1262
 msgid "_Close"
 msgstr "_Sulje"
 
-#: ../settings/session-editor.c:170
+#: ../settings/session-editor.c:198
 msgid "Clear sessions"
 msgstr "Poista istunnot"
 
-#: ../settings/session-editor.c:171
+#: ../settings/session-editor.c:199
 msgid "Are you sure you want to empty the session cache?"
 msgstr "Haluatko varmasti poistaa tallennetut istunnot?"
 
-#: ../settings/session-editor.c:172
+#: ../settings/session-editor.c:200
 msgid ""
 "The saved states of your applications will not be restored during your next "
 "login."
 msgstr "Sovellusten tallennettuja tiloja ei palauteta, kun kirjaudut sisään seuraavan kerran."
 
-#: ../settings/session-editor.c:173 ../settings/session-editor.c:257
-#: ../xfce4-session/xfsm-manager.c:710
-#: ../xfce4-session/xfsm-logout-dialog.c:212
+#: ../settings/session-editor.c:201 ../settings/session-editor.c:288
+#: ../xfce4-session/xfsm-manager.c:677
+#: ../xfce4-session/xfsm-logout-dialog.c:214
 msgid "_Cancel"
 msgstr "_Peruuta"
 
-#: ../settings/session-editor.c:174
+#: ../settings/session-editor.c:202
 msgid "_Proceed"
 msgstr "_Jatka"
 
-#: ../settings/session-editor.c:212
+#: ../settings/session-editor.c:240
 #, c-format
 msgid "You might need to delete some files manually in \"%s\"."
 msgstr "Sinun on ehkä poistettava tiedostoja käsin kansiosta \"%s\"."
 
-#: ../settings/session-editor.c:215
+#: ../settings/session-editor.c:243
 msgid "All Xfce cache files could not be cleared"
 msgstr "Kaikkia Xfce:n väliaikaistiedostoja ei voitu poistaa"
 
-#: ../settings/session-editor.c:251
+#: ../settings/session-editor.c:282
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Haluatko varmasti sulkea sovelluksen \"%s\"?"
 
-#: ../settings/session-editor.c:254 ../settings/session-editor.c:286
+#: ../settings/session-editor.c:285 ../settings/session-editor.c:317
 msgid "Terminate Program"
 msgstr "Sulje sovellus"
 
-#: ../settings/session-editor.c:256
+#: ../settings/session-editor.c:287
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
 msgstr "Sovelluksen tallentamattomat tiedot katoavat eikä sitä käynnistetä seuraavassa istunnossasi."
 
-#: ../settings/session-editor.c:258 ../settings/xfce4-session-settings.ui.h:14
+#: ../settings/session-editor.c:289 ../settings/xfce4-session-settings.ui.h:14
 msgid "_Quit Program"
 msgstr "_Lopeta sovellus"
 
-#: ../settings/session-editor.c:287
+#: ../settings/session-editor.c:318
 msgid "Unable to terminate program."
 msgstr "Sovelluksen sulkeminen ei onnistu."
 
-#: ../settings/session-editor.c:509
+#: ../settings/session-editor.c:540
 msgid "(Unknown program)"
 msgstr "(Tuntematon sovellus)"
 
-#: ../settings/session-editor.c:733
+#: ../settings/session-editor.c:770
 msgid "Priority"
 msgstr "Tärkeys"
 
-#: ../settings/session-editor.c:741
+#: ../settings/session-editor.c:778
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:747 ../settings/xfae-window.c:219
+#: ../settings/session-editor.c:784 ../settings/xfae-window.c:219
 msgid "Program"
 msgstr "Sovellus"
 
-#: ../settings/session-editor.c:772
+#: ../settings/session-editor.c:809
 msgid "Restart Style"
 msgstr "Käynnistystapa"
 
@@ -207,7 +220,7 @@ msgstr "Komento:"
 
 #: ../settings/xfae-dialog.c:136
 msgid "Trigger:"
-msgstr ""
+msgstr "Laukaisin:"
 
 #: ../settings/xfae-dialog.c:207
 msgid "Select a command"
@@ -219,35 +232,35 @@ msgstr "Muokkaa sovellusta"
 
 #: ../settings/xfae-model.c:87
 msgid "on login"
-msgstr ""
+msgstr "sisäänkirjauduttaessa"
 
 #: ../settings/xfae-model.c:88
 msgid "on logout"
-msgstr ""
+msgstr "uloskirjauduttaessa"
 
 #: ../settings/xfae-model.c:89
 msgid "on shutdown"
-msgstr ""
+msgstr "sammutuksessa"
 
 #: ../settings/xfae-model.c:90
 msgid "on restart"
-msgstr ""
+msgstr "uudelleenkäynnistyksessä"
 
 #: ../settings/xfae-model.c:91
 msgid "on suspend"
-msgstr ""
+msgstr "keskeytystilan yhteydessä"
 
 #: ../settings/xfae-model.c:92
 msgid "on hibernate"
-msgstr ""
+msgstr "lepotilan yhteydessä"
 
 #: ../settings/xfae-model.c:93
 msgid "on hybrid sleep"
-msgstr ""
+msgstr "hybridi unitilan yhteydessä"
 
 #: ../settings/xfae-model.c:94
 msgid "on switch user"
-msgstr ""
+msgstr "käyttäjän vaihdon yhteydessä"
 
 #: ../settings/xfae-model.c:304 ../settings/xfae-model.c:970
 #: ../settings/xfae-model.c:1028
@@ -288,7 +301,7 @@ msgstr ""
 
 #: ../settings/xfae-window.c:197
 msgid "Trigger"
-msgstr ""
+msgstr "Laukaisin"
 
 #: ../settings/xfae-window.c:238 ../settings/xfae-window.c:324
 msgid "Add"
@@ -332,51 +345,42 @@ msgstr "Älä sido TCP-portteja"
 msgid "Print version information and exit"
 msgstr "Versiotiedot"
 
-#: ../xfce4-session/xfsm-chooser.c:89
-#, c-format
-msgid "Last accessed: %s"
-msgstr "Viimeksi käytetty: %s"
-
-#: ../xfce4-session/xfsm-chooser.c:225
+#: ../xfce4-session/xfsm-chooser.c:147
 msgid "Session Manager"
 msgstr "Istunnonhallinta"
 
-#: ../xfce4-session/xfsm-chooser.c:251
+#: ../xfce4-session/xfsm-chooser.c:168
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr "Valitse istunto, jonka haluat palauttaa. Voit kaksoisnapsauttaa istunnon nimeä palauttaaksesi sen."
 
-#. "New" button
-#. xfce_gtk_button_new_mixed ("document-new", _("Create New Session"));
-#: ../xfce4-session/xfsm-chooser.c:283
+#: ../xfce4-session/xfsm-chooser.c:184
 msgid "Create a new session."
 msgstr "Luo uusi istunto."
 
-#. "Delete" button
-#. xfce_gtk_button_new_mixed ("document-new", _("Delete Session"));
-#: ../xfce4-session/xfsm-chooser.c:290
+#: ../xfce4-session/xfsm-chooser.c:191
 msgid "Delete a saved session."
-msgstr ""
+msgstr "Poista tallennettu istunto."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:301
+#: ../xfce4-session/xfsm-chooser.c:202
 #: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
 msgid "Log Out"
 msgstr "Kirjaudu ulos"
 
-#: ../xfce4-session/xfsm-chooser.c:303
+#: ../xfce4-session/xfsm-chooser.c:204
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Peruuta kirjautumisyritys ja palaa sisäänkirjautumisruutuun."
 
 #. "Start" button
-#: ../xfce4-session/xfsm-chooser.c:310
+#: ../xfce4-session/xfsm-chooser.c:211
 msgid "Start"
-msgstr ""
+msgstr "Käynnistä"
 
-#: ../xfce4-session/xfsm-chooser.c:311
+#: ../xfce4-session/xfsm-chooser.c:212
 msgid "Start an existing session."
-msgstr ""
+msgstr "Käynnistä olemassaoleva istunto."
 
 #: ../xfce4-session/xfsm-dns.c:78
 msgid "(Unknown)"
@@ -399,22 +403,7 @@ msgstr "Jatka kuitenkin"
 msgid "Try again"
 msgstr "Yritä uudelleen"
 
-#: ../xfce4-session/xfsm-global.c:339
-#, c-format
-msgid ""
-"The location and the format of the autostart directory has changed.\n"
-"The new location is\n"
-"\n"
-"  %s\n"
-"\n"
-"where you can place .desktop files to, that describe the applications\n"
-"to start when you login to your Xfce desktop. The files in your old\n"
-"autostart directory have been successfully migrated to the new\n"
-"location.\n"
-"You should delete this directory now.\n"
-msgstr "Automaattikäynnistyskansion sijainti ja muoto on muuttunut.\nUusi sijainti on\n\n  %s\n\nja sinne voit asettaa Xfce-työpöydälle kirjautuessasi suoritettavien\nsovellusten .desktop-tiedostot. Vanhassa kansiossa olleet tiedostot\non onnistuneesti haettu uuteen sijaintiin.\nVanha kansio pitäisi nyt poistaa.\n"
-
-#: ../xfce4-session/xfsm-manager.c:599
+#: ../xfce4-session/xfsm-manager.c:564
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -423,77 +412,77 @@ msgid ""
 "incorrectly."
 msgstr "Vikasietoisen istunnon nimeä ei voi määrittää. Mahdollisia syitä: xfconfd ei ole käynnissä (D-Bus -ongelma), ympäristömuuttuja $XDG_CONFIG_DIRS on väärin asetettu (pitäisi sisältää \"%s\") tai xfce4-session on asennettu väärin."
 
-#: ../xfce4-session/xfsm-manager.c:610
+#: ../xfce4-session/xfsm-manager.c:575
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Määritettyä vikasietoista istuntoa (\"%s\") ei ole merkitty vikasietoiseksi."
 
-#: ../xfce4-session/xfsm-manager.c:640
+#: ../xfce4-session/xfsm-manager.c:605
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Vikasietoinen istunto ei sisällä sovelluksia."
 
-#: ../xfce4-session/xfsm-manager.c:712
+#: ../xfce4-session/xfsm-manager.c:679
 msgid "_OK"
 msgstr "_OK"
 
-#: ../xfce4-session/xfsm-manager.c:722
+#: ../xfce4-session/xfsm-manager.c:691
 msgid "Name for the new session"
-msgstr ""
+msgstr "Uuden istunnon nimi"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:799
+#: ../xfce4-session/xfsm-manager.c:769
 msgid "Session Manager Error"
 msgstr "Istunnonhallinnan virhe"
 
-#: ../xfce4-session/xfsm-manager.c:801
+#: ../xfce4-session/xfsm-manager.c:771
 msgid "Unable to load a failsafe session"
 msgstr "Vikasietoista istuntoa ei voi ladata"
 
-#: ../xfce4-session/xfsm-manager.c:803
+#: ../xfce4-session/xfsm-manager.c:773
 msgid "_Quit"
 msgstr "_Lopeta"
 
-#: ../xfce4-session/xfsm-manager.c:1282
+#: ../xfce4-session/xfsm-manager.c:1252
 msgid "Shutdown Failed"
 msgstr "Sammutus epäonnistui"
 
-#: ../xfce4-session/xfsm-manager.c:1285
+#: ../xfce4-session/xfsm-manager.c:1255
 msgid "Failed to suspend session"
 msgstr "Keskeytystilaan asettaminen epäonnistui"
 
-#: ../xfce4-session/xfsm-manager.c:1287
+#: ../xfce4-session/xfsm-manager.c:1257
 msgid "Failed to hibernate session"
 msgstr "Lepotilaan asettaminen epäonnistui"
 
-#: ../xfce4-session/xfsm-manager.c:1289
+#: ../xfce4-session/xfsm-manager.c:1259
 msgid "Failed to hybrid sleep session"
 msgstr "Istunnon hybridiunitilaan siirtyminen epäonnistui"
 
-#: ../xfce4-session/xfsm-manager.c:1290
+#: ../xfce4-session/xfsm-manager.c:1260
 msgid "Failed to switch user"
 msgstr "Käyttäjän vaihtaminen epäonnistui"
 
-#: ../xfce4-session/xfsm-manager.c:1596
+#: ../xfce4-session/xfsm-manager.c:1566
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Asiakasohjelmia voi sulkea vain joutenollessa"
 
-#: ../xfce4-session/xfsm-manager.c:2253
+#: ../xfce4-session/xfsm-manager.c:2223
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Istunnonhallinnan on oltava jouten pyydettäessä varmistuspistettä"
 
-#: ../xfce4-session/xfsm-manager.c:2323 ../xfce4-session/xfsm-manager.c:2343
+#: ../xfce4-session/xfsm-manager.c:2293 ../xfce4-session/xfsm-manager.c:2313
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Istunnonhallinnan on oltava jouten pyydettäessä sammutusta"
 
-#: ../xfce4-session/xfsm-manager.c:2388
+#: ../xfce4-session/xfsm-manager.c:2358
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Istunnonhallinnan on oltava jouten pyydettäessä uudelleenkäynnistystä"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:184
+#: ../xfce4-session/xfsm-logout-dialog.c:186
 #, c-format
 msgid "Log out %s"
 msgstr "Kirjaa ulos %s"
@@ -501,39 +490,39 @@ msgstr "Kirjaa ulos %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:229
+#: ../xfce4-session/xfsm-logout-dialog.c:231
 msgid "_Log Out"
 msgstr "Kirjaudu _ulos"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:249
+#: ../xfce4-session/xfsm-logout-dialog.c:251
 msgid "_Restart"
 msgstr "_Käynnistä\nuudelleen"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:269
+#: ../xfce4-session/xfsm-logout-dialog.c:271
 msgid "Shut _Down"
 msgstr "_Sammuta"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:293
+#: ../xfce4-session/xfsm-logout-dialog.c:295
 msgid "Sus_pend"
 msgstr "K_eskeytystila"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:327
+#: ../xfce4-session/xfsm-logout-dialog.c:329
 msgid "_Hibernate"
 msgstr "L_epotila"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:358
+#: ../xfce4-session/xfsm-logout-dialog.c:360
 msgid "H_ybrid Sleep"
 msgstr ""
 
-#: ../xfce4-session/xfsm-logout-dialog.c:389
+#: ../xfce4-session/xfsm-logout-dialog.c:391
 msgid "Switch _User"
 msgstr "Vaihda _käyttäjää"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:414
+#: ../xfce4-session/xfsm-logout-dialog.c:416
 msgid "_Save session for future logins"
 msgstr "_Tallenna istunto"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:442
+#: ../xfce4-session/xfsm-logout-dialog.c:444
 msgid "An error occurred"
 msgstr "Virhe"
 
@@ -610,7 +599,7 @@ msgstr "Istunto ja käynnistys"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
 msgid "Customize desktop startup"
-msgstr ""
+msgstr "Mukauta työpöydän käynnistystä"
 
 #: ../settings/xfce4-session-settings.ui.h:2
 msgid "_Display chooser on login"
@@ -649,78 +638,90 @@ msgid "_General"
 msgstr "_Yleiset"
 
 #: ../settings/xfce4-session-settings.ui.h:11
-msgid ""
-"These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "Nämä sovellukset sisältyvät tämänhetkiseen istuntoon ja voidaan tallentaa uloskirjauksen yhteydessä. Tekemäsi muutokset astuvat voimaan vasta, kun istunto tallennetaan."
+msgid "Currently active session: <b>Default</b>"
+msgstr "Nykyinen aktiivinen istunto: <b>Oletus</b>"
 
 #: ../settings/xfce4-session-settings.ui.h:12
 msgid "Save Sess_ion"
 msgstr "Tallenna _istunto"
 
 #: ../settings/xfce4-session-settings.ui.h:13
+msgid ""
+"These applications are a part of the currently-running session, and can be "
+"saved when you log out.  Changes below will only take effect when the "
+"session is saved."
+msgstr "Nämä sovellukset sisältyvät tämänhetkiseen istuntoon ja voidaan tallentaa uloskirjauksen yhteydessä. Tekemäsi muutokset astuvat voimaan vasta, kun istunto tallennetaan."
+
+#: ../settings/xfce4-session-settings.ui.h:15
+msgid "Current Sessio_n"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.ui.h:16
+msgid "Delete the selected session"
+msgstr "Poista valittu istunto"
+
+#: ../settings/xfce4-session-settings.ui.h:17
 msgid "Clear Save_d Sessions"
 msgstr ""
 
-#: ../settings/xfce4-session-settings.ui.h:15
-msgid "Sessio_n"
-msgstr "Istu_nto"
+#: ../settings/xfce4-session-settings.ui.h:18
+msgid "Saved _Sessions"
+msgstr ""
 
-#: ../settings/xfce4-session-settings.ui.h:16
+#: ../settings/xfce4-session-settings.ui.h:19
 msgid "Launch GN_OME services on startup"
 msgstr "Alusta _GNOME-palvelut käynnistäessä"
 
-#: ../settings/xfce4-session-settings.ui.h:17
+#: ../settings/xfce4-session-settings.ui.h:20
 msgid "Start GNOME services, such as gnome-keyring"
 msgstr "Käynnistä GNOME-palvelut kuten avainrengas"
 
-#: ../settings/xfce4-session-settings.ui.h:18
+#: ../settings/xfce4-session-settings.ui.h:21
 msgid "Launch _KDE services on startup"
 msgstr "Alusta _KDE-palvelut käynnistetäessä"
 
-#: ../settings/xfce4-session-settings.ui.h:19
+#: ../settings/xfce4-session-settings.ui.h:22
 msgid "Start KDE services, such as kdeinit"
 msgstr "Käynnistä KDE-palvelut kuten kdeinit"
 
-#: ../settings/xfce4-session-settings.ui.h:20
+#: ../settings/xfce4-session-settings.ui.h:23
 msgid "<b>Compatibility</b>"
 msgstr "<b>Yhteensopivuus</b>"
 
-#: ../settings/xfce4-session-settings.ui.h:21
+#: ../settings/xfce4-session-settings.ui.h:24
 msgid "Manage _remote applications"
 msgstr "Hallitse etäso_velluksia"
 
-#: ../settings/xfce4-session-settings.ui.h:22
+#: ../settings/xfce4-session-settings.ui.h:25
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
 msgstr "Hallitse etäsovelluksia verkon yli (voi muodostaa turvallisuusriskin)"
 
-#: ../settings/xfce4-session-settings.ui.h:23
+#: ../settings/xfce4-session-settings.ui.h:26
 msgid "<b>Security</b>"
 msgstr "<b>Turvallisuus</b>"
 
-#: ../settings/xfce4-session-settings.ui.h:24
+#: ../settings/xfce4-session-settings.ui.h:27
 msgid "Lock screen be_fore sleep"
 msgstr "Lukitse näyttö _ennen keskeytys- ja lepotilaan siirtymistä"
 
-#: ../settings/xfce4-session-settings.ui.h:25
+#: ../settings/xfce4-session-settings.ui.h:28
 msgid "Run xflock4 before suspending or hibernating the system"
 msgstr "Suorita xflock4 ennen keskytys- tai lepotilaan siirtymistä"
 
-#: ../settings/xfce4-session-settings.ui.h:26
+#: ../settings/xfce4-session-settings.ui.h:29
 msgid "<b>Shutdown</b>"
 msgstr "<b>Sammutus</b>"
 
-#: ../settings/xfce4-session-settings.ui.h:27
+#: ../settings/xfce4-session-settings.ui.h:30
 msgid "Ad_vanced"
 msgstr "_Lisäasetukset"
 
-#: ../settings/xfce4-session-settings.ui.h:28
+#: ../settings/xfce4-session-settings.ui.h:31
 msgid "Saving Session"
 msgstr "Tallennetaan istunto"
 
-#: ../settings/xfce4-session-settings.ui.h:29
+#: ../settings/xfce4-session-settings.ui.h:32
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
