@@ -292,24 +292,17 @@ session_editor_quit_client(GtkWidget *btn,
         GError *error = NULL;
 
         if(hint != SmRestartIfRunning) {
-            GHashTable *properties = g_hash_table_new(g_str_hash, g_str_equal);
-            GValue val = { 0, };
+            GVariantBuilder properties;
             GVariant *variant;
 
-            g_value_init(&val, G_TYPE_UCHAR);
-            g_value_set_uchar(&val, SmRestartIfRunning);
-            g_hash_table_insert(properties, SmRestartStyleHint, &val);
+            g_variant_builder_init (&properties, G_VARIANT_TYPE ("a{sv}"));
+            variant = g_variant_new_byte(SmRestartIfRunning);
+            g_variant_builder_add (&properties, "{sv}", SmRestartStyleHint, variant);
 
-            variant = g_variant_new ("a{sv}", properties);
-
-            if(!xfsm_client_call_set_sm_properties_sync(proxy, variant, NULL, &error)) {
-                /* FIXME: show error */
-                g_error_free(error);
+            if(!xfsm_client_call_set_sm_properties_sync(proxy, g_variant_builder_end (&properties), NULL, &error)) {
+                g_error("error setting 'SmRestartStyleHint', error: %s", error->message);
+                g_clear_error(&error);
             }
-
-            g_value_unset(&val);
-            g_hash_table_destroy(properties);
-            g_variant_unref(variant);
         }
 
         if(!xfsm_client_call_terminate_sync(proxy, NULL, &error)) {
@@ -640,7 +633,7 @@ priority_changed(GtkCellRenderer *render,
 
             if(!xfsm_client_call_set_sm_properties_sync(proxy, g_variant_builder_end (&properties), NULL, &error)) {
                 g_error("error setting 'GsmPriority', error: %s", error->message);
-                g_error_free(error);
+                g_clear_error(&error);
             }
 
             gtk_list_store_set (GTK_LIST_STORE (model), &iter,
