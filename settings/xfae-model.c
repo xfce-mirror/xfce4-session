@@ -857,6 +857,8 @@ xfae_model_get (XfaeModel    *model,
       return FALSE;
     }
 
+  xfce_rc_set_group (rc, "Desktop Entry");
+
   /* read the resource config */
   value = xfce_rc_read_entry (rc, "Name", NULL);
   if (name != NULL)
