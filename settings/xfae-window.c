@@ -193,6 +193,28 @@ xfae_window_init (XfaeWindow *window)
   column = g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
                          "reorderable", FALSE,
                          "resizable", FALSE,
+                         "expand", TRUE,
+                         NULL);
+  gtk_tree_view_column_set_title (column, _("Program"));
+  renderer = gtk_cell_renderer_pixbuf_new ();
+  gtk_tree_view_column_pack_start (column, renderer, FALSE);
+  gtk_tree_view_column_set_attributes (column, renderer,
+                                       "pixbuf", XFAE_MODEL_COLUMN_ICON,
+                                       NULL);
+  renderer = gtk_cell_renderer_text_new ();
+  g_object_set (renderer,
+                "ellipsize", PANGO_ELLIPSIZE_END,
+                NULL);
+  gtk_tree_view_column_pack_start (column, renderer, TRUE);
+  gtk_tree_view_column_set_attributes (column, renderer,
+                                       "markup", XFAE_MODEL_COLUMN_NAME,
+                                       NULL);
+
+  gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
+
+  column = g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
+                         "reorderable", FALSE,
+                         "resizable", FALSE,
                          NULL);
   gtk_tree_view_column_set_title (column, _("Trigger"));
   renderer = gtk_cell_renderer_combo_new ();
@@ -212,23 +234,6 @@ xfae_window_init (XfaeWindow *window)
                                        NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
   g_object_unref (model);
-  column = g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
-                         "reorderable", FALSE,
-                         "resizable", FALSE,
-                         NULL);
-  gtk_tree_view_column_set_title (column, _("Program"));
-  renderer = gtk_cell_renderer_pixbuf_new ();
-  gtk_tree_view_column_pack_start (column, renderer, FALSE);
-  gtk_tree_view_column_set_attributes (column, renderer,
-                                       "pixbuf", XFAE_MODEL_COLUMN_ICON,
-                                       NULL);
-  renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_column_pack_start (column, renderer, TRUE);
-  gtk_tree_view_column_set_attributes (column, renderer,
-                                       "markup", XFAE_MODEL_COLUMN_NAME,
-                                       NULL);
-
-  gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
 
   bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, TRUE, 0);
