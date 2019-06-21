@@ -74,20 +74,22 @@ xfae_dialog_init (XfaeDialog *dialog)
   guint       i;
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          _("Cancel"), GTK_RESPONSE_CANCEL,
-                          _("OK"), GTK_RESPONSE_OK,
+                          _("_Cancel"), GTK_RESPONSE_CANCEL,
+                          _("_OK"), GTK_RESPONSE_OK,
                           NULL);
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
   gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_OK, FALSE);
   gtk_window_set_title (GTK_WINDOW (dialog), _("Add application"));
 
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+  gtk_container_set_border_width (GTK_CONTAINER (content_area), 6);
 
   grid = g_object_new (GTK_TYPE_GRID,
                         "row-spacing", 6,
                         "column-spacing", 12,
                         NULL);
   gtk_container_add (GTK_CONTAINER (content_area), grid);
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 6);
   gtk_widget_show (grid);
 
   label = g_object_new (GTK_TYPE_LABEL,
