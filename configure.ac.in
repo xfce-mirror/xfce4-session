@@ -207,6 +207,11 @@ echo
 echo "Build Configuration:"
 echo
 echo " * Debugging support:              $enable_debug"
+if test x"$POLKIT_FOUND" = x"yes"; then
+echo " * Polkit/PolicyKit support:       yes"
+else
+echo " * Polkit/PolicyKit support:       no"
+fi
 if test x"$enable_legacy_sm" = x"yes"; then
 echo " * Legacy session management:      yes"
 else
