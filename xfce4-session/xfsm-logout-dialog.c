@@ -131,30 +131,31 @@ xfsm_logout_dialog_class_init (XfsmLogoutDialogClass *klass)
 static void
 xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
 {
-  const gchar   *username;
-  GtkWidget     *label;
-  gchar         *label_str;
-  PangoAttrList *attrs;
-  GtkWidget     *vbox;
-  GtkWidget     *button_vbox;
-  GtkWidget     *main_vbox;
-  GtkWidget     *hbox;
-  GtkWidget     *button;
-  gboolean       can_shutdown;
-  gboolean       save_session = FALSE;
-  gboolean       can_restart;
-  gboolean       can_suspend = FALSE;
-  gboolean       can_hibernate = FALSE;
-  gboolean       can_hybrid_sleep = FALSE;
-  gboolean       can_switch_user = FALSE;
-  gboolean       auth_suspend = FALSE;
-  gboolean       auth_hibernate = FALSE;
-  gboolean       auth_hybrid_sleep = FALSE;
-  GError        *error = NULL;
-  XfconfChannel *channel;
-  GtkWidget     *image;
-  GtkWidget     *separator;
-  gboolean       upower_not_found = FALSE;
+  const gchar    *username;
+  GtkWidget      *label;
+  gchar          *label_str;
+  PangoAttrList  *attrs;
+  GtkWidget      *vbox;
+  GtkWidget      *button_vbox;
+  GtkWidget      *main_vbox;
+  GtkWidget      *hbox;
+  GtkWidget      *button;
+  gboolean        can_shutdown;
+  gboolean        save_session = FALSE;
+  gboolean        can_restart;
+  gboolean        can_suspend = FALSE;
+  gboolean        can_hibernate = FALSE;
+  gboolean        can_hybrid_sleep = FALSE;
+  gboolean        can_switch_user = FALSE;
+  gboolean        auth_suspend = FALSE;
+  gboolean        auth_hibernate = FALSE;
+  gboolean        auth_hybrid_sleep = FALSE;
+  GError         *error = NULL;
+  XfconfChannel  *channel;
+  GtkWidget      *image;
+  GtkWidget      *separator;
+  gboolean        upower_not_found = FALSE;
+  GtkCssProvider *provider;
 
   dialog->type_clicked = XFSM_SHUTDOWN_LOGOUT;
   dialog->shutdown = xfsm_shutdown_get ();
@@ -165,6 +166,12 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   /* Use Adwaita's keycap style to get a meaningful look out of the box */
   gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (dialog)), "keycap");
   gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (dialog)), "xfsm-logout-dialog");
+  provider = gtk_css_provider_new ();
+  gtk_css_provider_load_from_data (provider, ".xfsm-logout-dialog { font-size: initial; }", -1, NULL);
+  gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (dialog)),
+                                  GTK_STYLE_PROVIDER (provider),
+                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+  g_object_unref (provider);
 
   /* load xfconf settings */
   channel = xfsm_open_config ();
