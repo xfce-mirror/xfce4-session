@@ -78,6 +78,12 @@ cat /dev/null $XRESOURCES | xrdb -merge -
 # load local modmap
 test -r $HOME/.Xmodmap && xmodmap $HOME/.Xmodmap
 
+# if XAUTHLOCALHOSTNAME is not set in systemd user session, starting of xfce4-notifyd, DISPLAY etc. will fail
+if command -v systemctl >/dev/null 2>&1 && systemctl --user list-jobs >/dev/null 2>&1; then # user session is running
+  dbus-update-activation-environment --systemd XAUTHLOCALHOSTNAME=$XAUTHLOCALHOSTNAME
+fi
+
+
 # check if we start xfce4-session with ck-launch-session. this is only
 # required for starting from a console, not a login manager
 if test "x$XFCE4_SESSION_WITH_CK" = "x1"; then
