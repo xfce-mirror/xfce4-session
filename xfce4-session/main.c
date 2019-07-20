@@ -353,6 +353,10 @@ main (int argc, char **argv)
       g_error_free (error);
     }
 
+  /* Process all pending events prior to start DBUS */
+  while (gtk_events_pending ())
+    gtk_main_iteration ();
+
   /* fake a client id for the manager, so the legacy management does not
    * recognize us to be a session client.
    */
