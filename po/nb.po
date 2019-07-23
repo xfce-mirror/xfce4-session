@@ -9,15 +9,16 @@
 # Erlend Østlie <erlendandreas12368@gmail.com>, 2018
 # Eskild Hustvedt <eskild@goldenfiles.com>, 2004
 # Harald H. <haarektrans@gmail.com>, 2014
+# Kjell Cato Heskjestad <cato@heskjestad.xyz>, 2019
 # Terje Uriansrud <terje@uriansrud.net>, 2009
 # Terje Uriansrud <ter@operamail.com>, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-29 00:30+0200\n"
-"PO-Revision-Date: 2019-04-28 22:31+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"POT-Creation-Date: 2019-05-14 00:31+0200\n"
+"PO-Revision-Date: 2019-07-23 15:25+0000\n"
+"Last-Translator: Kjell Cato Heskjestad <cato@heskjestad.xyz>\n"
 "Language-Team: Norwegian Bokmål (http://www.transifex.com/xfce/xfce4-session/language/nb/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,6 +34,14 @@ msgstr "Xfce-økt"
 msgid "Use this session to run Xfce as your desktop environment"
 msgstr "Kjør Xfce som skrivebordsmiljø denne økta."
 
+#: ../libxfsm/xfsm-util.c:331
+msgid "Session"
+msgstr "Økt"
+
+#: ../libxfsm/xfsm-util.c:342
+msgid "Last accessed"
+msgstr "Sist aksessert"
+
 #: ../scripts/xscreensaver.desktop.in.h:1
 msgid "Screensaver"
 msgstr "Skjermsparer"
@@ -41,148 +50,152 @@ msgstr "Skjermsparer"
 msgid "Launch screensaver and locker program"
 msgstr "Kjør skjermsparer og skjermlås"
 
-#: ../settings/main.c:68
+#: ../settings/main.c:99
 msgid "Settings manager socket"
 msgstr "Innstillingsbehandler sokkel"
 
-#: ../settings/main.c:68
+#: ../settings/main.c:99
 msgid "SOCKET ID"
 msgstr "SOKKEL-ID"
 
-#: ../settings/main.c:69
+#: ../settings/main.c:100
 msgid "Version information"
 msgstr "Versjonsinformasjon"
 
-#: ../settings/main.c:80 ../xfce4-session/main.c:333
+#: ../settings/main.c:111 ../xfce4-session/main.c:333
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Skriv '%s --help' for hjelp"
 
-#: ../settings/main.c:92 ../xfce4-session/main.c:343
+#: ../settings/main.c:123 ../xfce4-session/main.c:343
 #: ../xfce4-session-logout/main.c:146
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce Utviklingsteam. Alle rettigheter reservert."
 
-#: ../settings/main.c:93 ../xfce4-session/main.c:344
+#: ../settings/main.c:124 ../xfce4-session/main.c:344
 #: ../xfce4-session-logout/main.c:149
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Rapporter feil til <%s>."
 
-#: ../settings/main.c:102 ../xfce4-session/main.c:352
+#: ../settings/main.c:133 ../xfce4-session/main.c:352
 msgid "Unable to contact settings server"
 msgstr "Klarte ikke kontakte innstillingstjener"
 
-#: ../settings/main.c:121
+#: ../settings/main.c:152
 msgid "Unable to create user interface from embedded definition data"
 msgstr "Klarte ikke opprette brukergrensesnitt fra vedlagte definisjonsdata"
 
-#: ../settings/main.c:132
+#: ../settings/main.c:165
 msgid "App_lication Autostart"
-msgstr "Autokjøring av App_likasjoner"
+msgstr "A_utokjøring av programmer"
 
-#: ../settings/session-editor.c:61
+#: ../settings/main.c:171
+msgid "Currently active session:"
+msgstr "Gjeldende økt:"
+
+#: ../settings/session-editor.c:63
 msgid "If running"
 msgstr "Hvis kjører"
 
-#: ../settings/session-editor.c:62
+#: ../settings/session-editor.c:64
 msgid "Always"
 msgstr "Alltid"
 
-#: ../settings/session-editor.c:63
+#: ../settings/session-editor.c:65
 msgid "Immediately"
 msgstr "Umiddelbart"
 
-#: ../settings/session-editor.c:64
+#: ../settings/session-editor.c:66
 msgid "Never"
 msgstr "Aldri"
 
-#: ../settings/session-editor.c:129
+#: ../settings/session-editor.c:138
 msgid "Session Save Error"
 msgstr "Feil ved lagring av økt"
 
-#: ../settings/session-editor.c:130
+#: ../settings/session-editor.c:139
 msgid "Unable to save the session"
 msgstr "Klarte ikke å lagre økten"
 
-#: ../settings/session-editor.c:132 ../settings/session-editor.c:289
-#: ../xfce4-session/xfsm-manager.c:1292
+#: ../settings/session-editor.c:141 ../settings/session-editor.c:320
+#: ../xfce4-session/xfsm-manager.c:1262
 msgid "_Close"
 msgstr "_Lukk"
 
-#: ../settings/session-editor.c:170
+#: ../settings/session-editor.c:198
 msgid "Clear sessions"
 msgstr "Tøm økter"
 
-#: ../settings/session-editor.c:171
+#: ../settings/session-editor.c:199
 msgid "Are you sure you want to empty the session cache?"
 msgstr "Er du sikker på at du vil tømme økt-historikkens hurtiglager?"
 
-#: ../settings/session-editor.c:172
+#: ../settings/session-editor.c:200
 msgid ""
 "The saved states of your applications will not be restored during your next "
 "login."
 msgstr "Lagrede programtilstander vil ikke bli gjenopprettet ved neste innlogging."
 
-#: ../settings/session-editor.c:173 ../settings/session-editor.c:257
-#: ../xfce4-session/xfsm-manager.c:710
-#: ../xfce4-session/xfsm-logout-dialog.c:212
+#: ../settings/session-editor.c:201 ../settings/session-editor.c:288
+#: ../xfce4-session/xfsm-manager.c:677
+#: ../xfce4-session/xfsm-logout-dialog.c:214
 msgid "_Cancel"
 msgstr "_Avbryt"
 
-#: ../settings/session-editor.c:174
+#: ../settings/session-editor.c:202
 msgid "_Proceed"
 msgstr "_Fortsett"
 
-#: ../settings/session-editor.c:212
+#: ../settings/session-editor.c:240
 #, c-format
 msgid "You might need to delete some files manually in \"%s\"."
-msgstr "Kan hende du må slette noen filer manuelt i \"%s\"."
+msgstr "Kan hende du må slette noen filer manuelt i «%s»."
 
-#: ../settings/session-editor.c:215
+#: ../settings/session-editor.c:243
 msgid "All Xfce cache files could not be cleared"
-msgstr "Kunne ikke slette alle hurtilager-filer for Xfce"
+msgstr "Kunne ikke slette alle hurtiglager-filer for Xfce"
 
-#: ../settings/session-editor.c:251
+#: ../settings/session-editor.c:282
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Er du sikker på at du vil avslutte «%s»?"
 
-#: ../settings/session-editor.c:254 ../settings/session-editor.c:286
+#: ../settings/session-editor.c:285 ../settings/session-editor.c:317
 msgid "Terminate Program"
 msgstr "Avslutte program"
 
-#: ../settings/session-editor.c:256
+#: ../settings/session-editor.c:287
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
 msgstr "Programmet vil miste all ulagret informasjon og vil ikke bli omstartet den neste økten."
 
-#: ../settings/session-editor.c:258 ../settings/xfce4-session-settings.ui.h:14
+#: ../settings/session-editor.c:289 ../settings/xfce4-session-settings.ui.h:14
 msgid "_Quit Program"
 msgstr "_Avslutt program"
 
-#: ../settings/session-editor.c:287
+#: ../settings/session-editor.c:318
 msgid "Unable to terminate program."
 msgstr "Klarte ikke å avslutte program"
 
-#: ../settings/session-editor.c:509
+#: ../settings/session-editor.c:540
 msgid "(Unknown program)"
 msgstr "(Ukjent program)"
 
-#: ../settings/session-editor.c:733
+#: ../settings/session-editor.c:770
 msgid "Priority"
 msgstr "Prioritet"
 
-#: ../settings/session-editor.c:741
+#: ../settings/session-editor.c:778
 msgid "PID"
 msgstr "Pid"
 
-#: ../settings/session-editor.c:747 ../settings/xfae-window.c:219
+#: ../settings/session-editor.c:784 ../settings/xfae-window.c:219
 msgid "Program"
 msgstr "Program"
 
-#: ../settings/session-editor.c:772
+#: ../settings/session-editor.c:809
 msgid "Restart Style"
 msgstr "Omstartstrategi"
 
@@ -220,7 +233,7 @@ msgstr "Velg en kommando"
 
 #: ../settings/xfae-dialog.c:258
 msgid "Edit application"
-msgstr "Rediger applikasjon"
+msgstr "Rediger program"
 
 #: ../settings/xfae-model.c:87
 msgid "on login"
@@ -331,57 +344,48 @@ msgstr "Klarte ikke endre element av/på"
 
 #: ../xfce4-session/main.c:77
 msgid "Disable binding to TCP ports"
-msgstr "Ikke bind til TCP porter"
+msgstr "Ikke bind til TCP-porter"
 
 #: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:102
 msgid "Print version information and exit"
 msgstr "Skriv ut versjonsinformasjon og avslutt"
 
-#: ../xfce4-session/xfsm-chooser.c:89
-#, c-format
-msgid "Last accessed: %s"
-msgstr "Sist åpnet: %s"
-
-#: ../xfce4-session/xfsm-chooser.c:225
+#: ../xfce4-session/xfsm-chooser.c:147
 msgid "Session Manager"
 msgstr "Øktbehandler"
 
-#: ../xfce4-session/xfsm-chooser.c:251
+#: ../xfce4-session/xfsm-chooser.c:168
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr "Velg økten du ønsker å gjenopprette. Du kan dobbeltklikke øktnavnet for å gjenopprette økten."
 
-#. "New" button
-#. xfce_gtk_button_new_mixed ("document-new", _("Create New Session"));
-#: ../xfce4-session/xfsm-chooser.c:283
+#: ../xfce4-session/xfsm-chooser.c:184
 msgid "Create a new session."
 msgstr "Lag ny økt"
 
-#. "Delete" button
-#. xfce_gtk_button_new_mixed ("document-new", _("Delete Session"));
-#: ../xfce4-session/xfsm-chooser.c:290
+#: ../xfce4-session/xfsm-chooser.c:191
 msgid "Delete a saved session."
-msgstr ""
+msgstr "Slett en lagret økt."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:301
+#: ../xfce4-session/xfsm-chooser.c:202
 #: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
 msgid "Log Out"
 msgstr "Logg ut"
 
-#: ../xfce4-session/xfsm-chooser.c:303
+#: ../xfce4-session/xfsm-chooser.c:204
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Avbryt innloggingsforsøket og returner til innloggingsbildet."
 
 #. "Start" button
-#: ../xfce4-session/xfsm-chooser.c:310
+#: ../xfce4-session/xfsm-chooser.c:211
 msgid "Start"
 msgstr ""
 
-#: ../xfce4-session/xfsm-chooser.c:311
+#: ../xfce4-session/xfsm-chooser.c:212
 msgid "Start an existing session."
-msgstr ""
+msgstr "Start en eksisterende økt."
 
 #: ../xfce4-session/xfsm-dns.c:78
 msgid "(Unknown)"
@@ -404,22 +408,7 @@ msgstr "Fortsett allikevel"
 msgid "Try again"
 msgstr "Prøv på nytt"
 
-#: ../xfce4-session/xfsm-global.c:339
-#, c-format
-msgid ""
-"The location and the format of the autostart directory has changed.\n"
-"The new location is\n"
-"\n"
-"  %s\n"
-"\n"
-"where you can place .desktop files to, that describe the applications\n"
-"to start when you login to your Xfce desktop. The files in your old\n"
-"autostart directory have been successfully migrated to the new\n"
-"location.\n"
-"You should delete this directory now.\n"
-msgstr "Plasseringen og formatet for mappen autostart er endret.\nNy plassering er\n\n  %s\n\nhvor du kan plassere .desktop filer, som beskriver programmene\nsom startes når du logger inn i Xfce miljøet. Filene i din gamle \nautostart mappe har blitt vellykket flyttet til ny plassering.\nDu burde slette denne katalogen nå.\n"
-
-#: ../xfce4-session/xfsm-manager.c:599
+#: ../xfce4-session/xfsm-manager.c:564
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -428,77 +417,77 @@ msgid ""
 "incorrectly."
 msgstr "Klarte ikke å avgjøre feilsikkert øktnavn. Mulige årsaker: «xfconfd» kjører ikke (D-Bus oppsett problem); miljøvariabel «$XDG_CONFIG_DIRS» er satt feil (må inkludere «%s») eller «xfce-session» er feil installert."
 
-#: ../xfce4-session/xfsm-manager.c:610
+#: ../xfce4-session/xfsm-manager.c:575
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Den spesifiserte feilsikre økten («%s») er ikke markert som en feilsikker økt."
 
-#: ../xfce4-session/xfsm-manager.c:640
+#: ../xfce4-session/xfsm-manager.c:605
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Listen over programmer i den feilsikre økten er tom."
 
-#: ../xfce4-session/xfsm-manager.c:712
+#: ../xfce4-session/xfsm-manager.c:679
 msgid "_OK"
 msgstr "_OK"
 
-#: ../xfce4-session/xfsm-manager.c:722
+#: ../xfce4-session/xfsm-manager.c:691
 msgid "Name for the new session"
-msgstr ""
+msgstr "Den nye øktens navn"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:799
+#: ../xfce4-session/xfsm-manager.c:769
 msgid "Session Manager Error"
 msgstr "Øktbehandler-feil"
 
-#: ../xfce4-session/xfsm-manager.c:801
+#: ../xfce4-session/xfsm-manager.c:771
 msgid "Unable to load a failsafe session"
 msgstr "Klarte ikke å laste en feilsikker økt"
 
-#: ../xfce4-session/xfsm-manager.c:803
+#: ../xfce4-session/xfsm-manager.c:773
 msgid "_Quit"
 msgstr "_Avslutt"
 
-#: ../xfce4-session/xfsm-manager.c:1282
+#: ../xfce4-session/xfsm-manager.c:1252
 msgid "Shutdown Failed"
 msgstr "Avslutning feilet"
 
-#: ../xfce4-session/xfsm-manager.c:1285
+#: ../xfce4-session/xfsm-manager.c:1255
 msgid "Failed to suspend session"
 msgstr "Klarte ikke å gå til hvilemodus"
 
-#: ../xfce4-session/xfsm-manager.c:1287
+#: ../xfce4-session/xfsm-manager.c:1257
 msgid "Failed to hibernate session"
 msgstr "Klarte ikke å gå til dvalemodus"
 
-#: ../xfce4-session/xfsm-manager.c:1289
+#: ../xfce4-session/xfsm-manager.c:1259
 msgid "Failed to hybrid sleep session"
 msgstr "Klarte ikke å sette i gang hybriddvalemodusøkt"
 
-#: ../xfce4-session/xfsm-manager.c:1290
+#: ../xfce4-session/xfsm-manager.c:1260
 msgid "Failed to switch user"
 msgstr "Klarte ikke å bytte bruker"
 
-#: ../xfce4-session/xfsm-manager.c:1596
+#: ../xfce4-session/xfsm-manager.c:1566
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Kan bare terminere klienter som er inaktive"
 
-#: ../xfce4-session/xfsm-manager.c:2253
+#: ../xfce4-session/xfsm-manager.c:2223
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Øktbehandler må være inaktiv ved etterspørring av sjekkpunkt"
 
-#: ../xfce4-session/xfsm-manager.c:2323 ../xfce4-session/xfsm-manager.c:2343
+#: ../xfce4-session/xfsm-manager.c:2293 ../xfce4-session/xfsm-manager.c:2313
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Øktbehandler må være inaktiv ved avslutting"
 
-#: ../xfce4-session/xfsm-manager.c:2388
+#: ../xfce4-session/xfsm-manager.c:2358
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Øktbehandler må være inaktiv når en omstart forespørres"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:184
+#: ../xfce4-session/xfsm-logout-dialog.c:186
 #, c-format
 msgid "Log out %s"
 msgstr "Logg ut %s"
@@ -506,39 +495,39 @@ msgstr "Logg ut %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:229
+#: ../xfce4-session/xfsm-logout-dialog.c:231
 msgid "_Log Out"
 msgstr "_Logg ut"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:249
+#: ../xfce4-session/xfsm-logout-dialog.c:251
 msgid "_Restart"
 msgstr "_Start på nytt"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:269
+#: ../xfce4-session/xfsm-logout-dialog.c:271
 msgid "Shut _Down"
 msgstr "_Avslutt"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:293
+#: ../xfce4-session/xfsm-logout-dialog.c:295
 msgid "Sus_pend"
 msgstr "Hvile_modus"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:327
+#: ../xfce4-session/xfsm-logout-dialog.c:329
 msgid "_Hibernate"
 msgstr "_Dvalemodus"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:358
+#: ../xfce4-session/xfsm-logout-dialog.c:360
 msgid "H_ybrid Sleep"
 msgstr ""
 
-#: ../xfce4-session/xfsm-logout-dialog.c:389
+#: ../xfce4-session/xfsm-logout-dialog.c:391
 msgid "Switch _User"
 msgstr "Bytt _bruker"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:414
+#: ../xfce4-session/xfsm-logout-dialog.c:416
 msgid "_Save session for future logins"
 msgstr "_Lagre økt for fremtidige innlogginger"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:442
+#: ../xfce4-session/xfsm-logout-dialog.c:444
 msgid "An error occurred"
 msgstr "Det oppstod en feil"
 
@@ -615,7 +604,7 @@ msgstr "Økt og oppstart"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
 msgid "Customize desktop startup"
-msgstr ""
+msgstr "Tilpass skrivebordsoppstart"
 
 #: ../settings/xfce4-session-settings.ui.h:2
 msgid "_Display chooser on login"
@@ -654,78 +643,90 @@ msgid "_General"
 msgstr "_Generelt"
 
 #: ../settings/xfce4-session-settings.ui.h:11
-msgid ""
-"These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "Disse programmene er del av den gjeldende økten og kan lagres ved utlogging. Endringer nedenfor vil kun gjøres gjeldende når økten lagres."
+msgid "Currently active session: <b>Default</b>"
+msgstr ""
 
 #: ../settings/xfce4-session-settings.ui.h:12
 msgid "Save Sess_ion"
 msgstr "Lagre ø_kt"
 
 #: ../settings/xfce4-session-settings.ui.h:13
-msgid "Clear Save_d Sessions"
-msgstr ""
+msgid ""
+"These applications are a part of the currently-running session, and can be "
+"saved when you log out.  Changes below will only take effect when the "
+"session is saved."
+msgstr "Disse programmene er del av den gjeldende økten og kan lagres ved utlogging. Endringer nedenfor vil kun gjøres gjeldende når økten lagres."
 
 #: ../settings/xfce4-session-settings.ui.h:15
-msgid "Sessio_n"
-msgstr "Øk_t"
+msgid "Current Sessio_n"
+msgstr "G_jeldende økt"
 
 #: ../settings/xfce4-session-settings.ui.h:16
+msgid "Delete the selected session"
+msgstr "Slett den valgte økten"
+
+#: ../settings/xfce4-session-settings.ui.h:17
+msgid "Clear Save_d Sessions"
+msgstr "Glem l_agrede økter"
+
+#: ../settings/xfce4-session-settings.ui.h:18
+msgid "Saved _Sessions"
+msgstr "_Lagrede økter"
+
+#: ../settings/xfce4-session-settings.ui.h:19
 msgid "Launch GN_OME services on startup"
 msgstr "Start GN_OME tjenester ved oppstart"
 
-#: ../settings/xfce4-session-settings.ui.h:17
+#: ../settings/xfce4-session-settings.ui.h:20
 msgid "Start GNOME services, such as gnome-keyring"
 msgstr "Start GNOME-tjenester, som gnome-nøkkelvelv"
 
-#: ../settings/xfce4-session-settings.ui.h:18
+#: ../settings/xfce4-session-settings.ui.h:21
 msgid "Launch _KDE services on startup"
-msgstr "Start _KDE tjenester ved oppstart"
+msgstr "Start _KDE-tjenester ved oppstart"
 
-#: ../settings/xfce4-session-settings.ui.h:19
+#: ../settings/xfce4-session-settings.ui.h:22
 msgid "Start KDE services, such as kdeinit"
 msgstr "Start KDE-tjenester, som kdeinit"
 
-#: ../settings/xfce4-session-settings.ui.h:20
+#: ../settings/xfce4-session-settings.ui.h:23
 msgid "<b>Compatibility</b>"
 msgstr "<b>Samspill</b>"
 
-#: ../settings/xfce4-session-settings.ui.h:21
+#: ../settings/xfce4-session-settings.ui.h:24
 msgid "Manage _remote applications"
 msgstr "Håndtere _eksterne programmer"
 
-#: ../settings/xfce4-session-settings.ui.h:22
+#: ../settings/xfce4-session-settings.ui.h:25
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
 msgstr "Håntere eksterne programmer over nettverket (dette kan være en sikkerhetsrisiko)"
 
-#: ../settings/xfce4-session-settings.ui.h:23
+#: ../settings/xfce4-session-settings.ui.h:26
 msgid "<b>Security</b>"
 msgstr "<b>Sikkerhet</b>"
 
-#: ../settings/xfce4-session-settings.ui.h:24
+#: ../settings/xfce4-session-settings.ui.h:27
 msgid "Lock screen be_fore sleep"
 msgstr "Lås skjerm f_ør dvalgang"
 
-#: ../settings/xfce4-session-settings.ui.h:25
+#: ../settings/xfce4-session-settings.ui.h:28
 msgid "Run xflock4 before suspending or hibernating the system"
 msgstr "Kjør xflock4 før hvile- eller dvale-modus igangsettes"
 
-#: ../settings/xfce4-session-settings.ui.h:26
+#: ../settings/xfce4-session-settings.ui.h:29
 msgid "<b>Shutdown</b>"
 msgstr "<b>Skru av</b>"
 
-#: ../settings/xfce4-session-settings.ui.h:27
+#: ../settings/xfce4-session-settings.ui.h:30
 msgid "Ad_vanced"
 msgstr "A_vansert"
 
-#: ../settings/xfce4-session-settings.ui.h:28
+#: ../settings/xfce4-session-settings.ui.h:31
 msgid "Saving Session"
 msgstr "Lagrer økt"
 
-#: ../settings/xfce4-session-settings.ui.h:29
+#: ../settings/xfce4-session-settings.ui.h:32
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
