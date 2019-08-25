@@ -327,7 +327,7 @@ main (int argc, char **argv)
   /* install required signal handlers */
   signal (SIGPIPE, SIG_IGN);
 
-  if (!gtk_init_with_args (&argc, &argv, "", option_entries, GETTEXT_PACKAGE, &error))
+  if (!gtk_init_with_args (&argc, &argv, NULL, option_entries, GETTEXT_PACKAGE, &error))
     {
       g_print ("%s: %s.\n", G_LOG_DOMAIN, error->message);
       g_print (_("Type '%s --help' for usage."), G_LOG_DOMAIN);

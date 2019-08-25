@@ -137,7 +137,7 @@ main (int argc, char **argv)
 
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
-  have_display = gtk_init_with_args (&argc, &argv, "", option_entries, PACKAGE, NULL);
+  have_display = gtk_init_with_args (&argc, &argv, NULL, option_entries, PACKAGE, NULL);
 
   if (opt_version)
     {
