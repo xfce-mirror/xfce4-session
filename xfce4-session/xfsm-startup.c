@@ -126,7 +126,8 @@ xfsm_ssh_agent_pid (const gchar *ssh_agent_pid)
 
 static pid_t
 xfsm_startup_init_agent (const gchar *cmd,
-                         const gchar *agent)
+                         const gchar *agent,
+                         gboolean want_pid)
 {
   gchar     *cmdoutput = NULL;
   GError    *error = NULL;
@@ -159,7 +160,7 @@ xfsm_startup_init_agent (const gchar *cmd,
           value = g_strndup (p + 1, t - p - 1);
 
           /* try to get agent pid from the variable */
-          if (pid <= 0)
+          if (want_pid && pid <= 0)
             {
               if (g_strcmp0 (variable, "SSH_AGENT_PID") == 0)
                 pid = xfsm_ssh_agent_pid (value);
@@ -184,12 +185,30 @@ xfsm_startup_init_agent (const gchar *cmd,
 
   g_free (cmdoutput);
 
+  if (!want_pid)
+    pid = 1;
+
   if (pid <= 0)
     g_warning ("%s returned no PID in the variables", agent);
 
   return pid;
 }
 
+
+static void xfsm_gpg_agent_shutdown(gboolean quiet)
+{
+      GError      *error = NULL;
+
+      g_spawn_command_line_sync ("gpgconf --kill gpg-agent",
+                                 NULL, NULL, NULL, &error);
+      if (error)
+        {
+          if (!quiet)
+            g_warning ("failed to kill gpg-agent via gpgconf, error was %s",
+                       error->message);
+          g_error_free (error);
+        }
+}
 
 
 void
@@ -280,7 +299,7 @@ xfsm_startup_init (XfconfChannel *channel)
         {
           cmd = g_strdup_printf ("%s -s", ssh_agent_path);
           /* keep this around for shutdown */
-          running_sshagent = xfsm_startup_init_agent (cmd, "ssh-agent");
+          running_sshagent = xfsm_startup_init_agent (cmd, "ssh-agent", TRUE);
           g_free (cmd);
 
           /* update dbus environment */
@@ -309,33 +328,26 @@ xfsm_startup_init (XfconfChannel *channel)
 
   if (G_LIKELY (gpg_agent_path != NULL))
     {
-      agentpid = xfsm_gpg_agent_pid (g_getenv ("GPG_AGENT_INFO"));
-
-      /* check if the pid is still responding (ie not stale) */
-      if (agentpid > 0 && kill (agentpid, 0) == 0)
+      xfsm_gpg_agent_shutdown (TRUE);
         {
-          g_message ("GPG agent is already running");
-        }
-      else
-        {
+          gboolean want_pid;
+          gchar *cmd_tmp;
           gchar *envfile;
 
           g_unsetenv ("GPG_AGENT_INFO");
 
           envfile = xfce_resource_save_location (XFCE_RESOURCE_CACHE, "gpg-agent-info", FALSE);
 
-          if (gpgagent_ssh_enabled)
-            {
-              cmd = g_strdup_printf ("%s --sh --daemon --enable-ssh-support "
-                                     "--write-env-file '%s'", gpg_agent_path, envfile);
-            }
-          else
-            {
-              cmd = g_strdup_printf ("%s --sh --daemon --write-env-file '%s'", gpg_agent_path, envfile);
-            }
+          cmd_tmp = g_strdup_printf ("%s --sh --daemon%s", gpg_agent_path,
+                                     gpgagent_ssh_enabled ?
+                                     " --enable-ssh-support" : "");
+
+          cmd = cmd_tmp;
+          want_pid = FALSE;
 
           /* keep this around for shutdown */
-          running_gpgagent = xfsm_startup_init_agent (cmd, "gpg-agent");
+          running_gpgagent = xfsm_startup_init_agent (cmd, "gpg-agent",
+                                                      want_pid);
 
           g_free (cmd);
           g_free (envfile);
@@ -366,27 +378,7 @@ xfsm_startup_shutdown (void)
 
   if (running_gpgagent > 0)
     {
-      gchar *envfile;
-      if (kill (running_gpgagent, SIGINT) == 0)
-        {
-         /* make sure the env values are unset */
-         g_unsetenv ("GPG_AGENT_INFO");
-         if (gpgagent_ssh_enabled)
-           {
-            g_unsetenv ("SSH_AGENT_PID");
-            g_unsetenv ("SSH_AUTH_SOCK");
-           }
-        }
-      else
-        {
-          g_warning ("Failed to kill gpg-agent with pid %d", running_gpgagent);
-        }
-
-      /* drop the info file from gpg-agent */
-      envfile = xfce_resource_lookup (XFCE_RESOURCE_CACHE, "gpg-agent-info");
-      if (G_LIKELY (envfile != NULL))
-        g_unlink (envfile);
-      g_free (envfile);
+      xfsm_gpg_agent_shutdown (FALSE);
     }
 }
 
