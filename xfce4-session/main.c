@@ -366,5 +366,7 @@ main (int argc, char **argv)
 
   gtk_main ();
 
+  xfsm_startup_shutdown ();
+
   return EXIT_SUCCESS;
 }
