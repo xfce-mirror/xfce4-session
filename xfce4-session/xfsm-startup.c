@@ -281,6 +281,8 @@ xfsm_startup_init (XfconfChannel *channel)
           cmd = g_strdup_printf ("%s -s", ssh_agent_path);
           /* keep this around for shutdown */
           running_sshagent = xfsm_startup_init_agent (cmd, "ssh-agent");
+          g_free (cmd);
+
           /* update dbus environment */
           if (LOGIND_RUNNING())
             {
