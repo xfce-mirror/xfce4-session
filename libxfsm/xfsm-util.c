@@ -350,6 +350,23 @@ settings_list_sessions_treeview_init (GtkTreeView *treeview)
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
 }
 
+static gint
+compare_session_atime (XfsmSessionInfo *session1,
+                       XfsmSessionInfo *session2)
+{
+  if (session1->atime < session2->atime)
+    return 1;
+  if (session1->atime > session2->atime)
+    return -1;
+  return 0;
+}
+
+static GList *
+sort_sessions_on_atime (GList *sessions)
+{
+  return g_list_sort (sessions, (GCompareFunc) compare_session_atime);
+}
+
 void
 settings_list_sessions_populate (GtkTreeModel *model,
                                  GList        *sessions)
@@ -359,6 +376,8 @@ settings_list_sessions_populate (GtkTreeModel *model,
   gchar           *accessed;
   gchar           *title;
   GList           *lp;
+
+  sessions = sort_sessions_on_atime (sessions);
 
   gtk_list_store_clear (GTK_LIST_STORE (model));
 
