@@ -111,42 +111,16 @@ xfae_window_init (XfaeWindow *window)
   GtkCellRenderer   *renderer;
   GtkTreeModel      *model;
   GtkWidget         *vbox;
-  GtkWidget         *hbox;
   GtkWidget         *img;
-  GtkWidget         *label;
   GtkWidget         *swin;
   GtkWidget         *bbox;
   GtkWidget         *button;
 
-  vbox = GTK_WIDGET(window);
+  vbox = GTK_WIDGET (window);
   gtk_orientable_set_orientation (GTK_ORIENTABLE (vbox),
                                   GTK_ORIENTATION_VERTICAL);
   gtk_box_set_spacing (GTK_BOX (vbox), 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 6);
-  gtk_widget_show (hbox);
-
-  img = gtk_image_new_from_icon_name ("dialog-information", GTK_ICON_SIZE_DIALOG);
-  gtk_box_pack_start (GTK_BOX (hbox), img, FALSE, FALSE, 0);
-  gtk_widget_set_halign (GTK_WIDGET (img), GTK_ALIGN_CENTER);
-  gtk_widget_set_valign (GTK_WIDGET (img), GTK_ALIGN_START);
-  gtk_widget_show (img);
-
-  label = g_object_new (GTK_TYPE_LABEL,
-                        "justify", GTK_JUSTIFY_LEFT,
-                        "label", _("List of applications that will be started "
-                                   "automatically on specific events like login, logout, shutdown, etc.\n"
-                                   "On login additionally all applications that were saved "
-                                   "on your last logout will be started.\n"
-                                   "Cursive applications belong to another desktop environment, "
-                                   "but you can still enable them if you want."),
-                        "xalign", 0.0f,
-                        NULL);
-  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
-  gtk_widget_show (label);
 
   swin = g_object_new (GTK_TYPE_SCROLLED_WINDOW,
                        "hadjustment", NULL,
