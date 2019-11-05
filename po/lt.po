@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 00:31+0200\n"
-"PO-Revision-Date: 2019-08-01 06:18+0000\n"
+"POT-Creation-Date: 2019-11-05 06:30+0100\n"
+"PO-Revision-Date: 2019-11-05 14:00+0000\n"
 "Last-Translator: Moo\n"
 "Language-Team: Lithuanian (http://www.transifex.com/xfce/xfce4-session/language/lt/)\n"
 "MIME-Version: 1.0\n"
@@ -186,7 +186,7 @@ msgstr "Pirmenybė"
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:777 ../settings/xfae-window.c:198
+#: ../settings/session-editor.c:777 ../settings/xfae-window.c:172
 msgid "Program"
 msgstr "Programa"
 
@@ -296,48 +296,37 @@ msgstr "Nepavyko atverti %s skaitymui"
 msgid "Failed to set run hook"
 msgstr "Nepavyko nustatyti paleidimo gaudyklės"
 
-#: ../settings/xfae-window.c:139
-msgid ""
-"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
-"On login additionally all applications that were saved on your last logout will be started.\n"
-"Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr "Sąrašas programų, kurios esant tam tikriems įvykiams (prisijungimui, išjungimui, atsijungimui ir t.t.) bus paleidžiamos automatiškai.\nBe to, prisijungiant, bus paleidžiamos visos programos, kurios buvo įrašytos paskutinio atsijungimo metu.\nKursyvu pavaizduotos programos priklauso kitai darbalaukio aplinkai, tačiau, jeigu norite, vis tiek galite jas įjungti."
-
-#: ../settings/xfae-window.c:219
+#: ../settings/xfae-window.c:193
 msgid "Trigger"
 msgstr "Paleisti"
 
-#: ../settings/xfae-window.c:243 ../settings/xfae-window.c:329
+#: ../settings/xfae-window.c:303
 msgid "Add"
 msgstr "Pridėti"
 
-#: ../settings/xfae-window.c:251 ../settings/xfae-window.c:335
+#: ../settings/xfae-window.c:309
 msgid "Remove"
 msgstr "Šalinti"
 
-#: ../settings/xfae-window.c:263
-msgid "Edit"
-msgstr "Taisyti"
-
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:363
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Nepavyko pridėti „%s“"
 
-#: ../settings/xfae-window.c:420 ../settings/xfae-window.c:434
+#: ../settings/xfae-window.c:394 ../settings/xfae-window.c:408
 msgid "Failed to remove item"
 msgstr "Nepavyko pašalinti elemento"
 
-#: ../settings/xfae-window.c:463
+#: ../settings/xfae-window.c:437
 msgid "Failed to edit item"
 msgstr "Nepavyko taisyti elemento"
 
-#: ../settings/xfae-window.c:483
+#: ../settings/xfae-window.c:457
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Nepavyko taisyti elemento „%s“"
 
-#: ../settings/xfae-window.c:511
+#: ../settings/xfae-window.c:485
 msgid "Failed to toggle item"
 msgstr "Nepavyko perjungti elemento"
 
@@ -664,9 +653,9 @@ msgstr "Įrašyt_i seansą"
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid ""
 "These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "Šios programos yra dabar veikiančio seanso dalis ir gali būti įrašytos atsijungiant.  Žemiau esantys pakeitimai įsigalios tik įrašius seansą."
+"saved now or when you log out.  Changes below will only take effect when the"
+" session is saved."
+msgstr "Šios programos yra dabar veikiančio seanso dalis ir gali būti įrašytos dabar arba atsijungiant.  Žemiau esantys pakeitimai įsigalios tik įrašius seansą."
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
