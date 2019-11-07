@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 00:31+0200\n"
-"PO-Revision-Date: 2019-08-01 06:18+0000\n"
+"POT-Creation-Date: 2019-11-05 06:30+0100\n"
+"PO-Revision-Date: 2019-11-07 02:26+0000\n"
 "Last-Translator: 玉堂白鹤 <yjwork@qq.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/xfce/xfce4-session/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -192,7 +192,7 @@ msgstr "优先级"
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:777 ../settings/xfae-window.c:198
+#: ../settings/session-editor.c:777 ../settings/xfae-window.c:172
 msgid "Program"
 msgstr "程序"
 
@@ -302,48 +302,37 @@ msgstr "无法打开 %s 来读取"
 msgid "Failed to set run hook"
 msgstr "无法设置运行挂钩"
 
-#: ../settings/xfae-window.c:139
-msgid ""
-"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
-"On login additionally all applications that were saved on your last logout will be started.\n"
-"Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr "将在登录，注销，关闭等特定事件上自动启动的应用程序列表。\n在登录时，将额外启动上次注销时保存的所有应用程序。\n斜体的应用程序属于其它桌面环境，但在需要时您仍然可以启动它们。"
-
-#: ../settings/xfae-window.c:219
+#: ../settings/xfae-window.c:193
 msgid "Trigger"
 msgstr "触发器"
 
-#: ../settings/xfae-window.c:243 ../settings/xfae-window.c:329
+#: ../settings/xfae-window.c:303
 msgid "Add"
 msgstr "添加"
 
-#: ../settings/xfae-window.c:251 ../settings/xfae-window.c:335
+#: ../settings/xfae-window.c:309
 msgid "Remove"
 msgstr "移除"
 
-#: ../settings/xfae-window.c:263
-msgid "Edit"
-msgstr "编辑"
-
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:363
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "无法添加 “%s”"
 
-#: ../settings/xfae-window.c:420 ../settings/xfae-window.c:434
+#: ../settings/xfae-window.c:394 ../settings/xfae-window.c:408
 msgid "Failed to remove item"
 msgstr "无法移除项目"
 
-#: ../settings/xfae-window.c:463
+#: ../settings/xfae-window.c:437
 msgid "Failed to edit item"
 msgstr "无法编辑项目"
 
-#: ../settings/xfae-window.c:483
+#: ../settings/xfae-window.c:457
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "无法编辑项目 “%s”"
 
-#: ../settings/xfae-window.c:511
+#: ../settings/xfae-window.c:485
 msgid "Failed to toggle item"
 msgstr "无法切换项目"
 
@@ -670,9 +659,9 @@ msgstr "保存会话(_I)"
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid ""
 "These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "这些应用程序是当前正在运行会话的一部分，且在您注销时可以保存。以下更改只在会话保存后才生效。"
+"saved now or when you log out.  Changes below will only take effect when the"
+" session is saved."
+msgstr "这些应用程序是当前正在运行会话的一部分，可以立即保存或在注销时保存。以下更改只在会话保存后才生效。"
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
