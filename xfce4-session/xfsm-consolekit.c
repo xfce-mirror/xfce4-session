@@ -155,7 +155,11 @@ xfsm_consolekit_proxy_free (XfsmConsolekit *consolekit)
       consolekit->proxy = NULL;
     }
 
-  g_object_unref (G_OBJECT (consolekit->screensaver));
+  if (consolekit->screensaver != NULL)
+    {
+      g_object_unref (G_OBJECT (consolekit->screensaver));
+      consolekit->screensaver = NULL;
+    }
 }
 
 
