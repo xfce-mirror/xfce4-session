@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 00:31+0200\n"
-"PO-Revision-Date: 2019-08-28 01:32+0000\n"
+"POT-Creation-Date: 2019-11-05 06:30+0100\n"
+"PO-Revision-Date: 2019-12-18 23:45+0000\n"
 "Last-Translator: Nobuhiro Iwamatsu <iwamatsu@nigauri.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/xfce/xfce4-session/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -186,7 +186,7 @@ msgstr "優先順位"
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:777 ../settings/xfae-window.c:198
+#: ../settings/session-editor.c:777 ../settings/xfae-window.c:172
 msgid "Program"
 msgstr "プログラム"
 
@@ -296,48 +296,37 @@ msgstr "読み込むために %s を開くことに失敗しました"
 msgid "Failed to set run hook"
 msgstr "実行フックの設定に失敗しました"
 
-#: ../settings/xfae-window.c:139
-msgid ""
-"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
-"On login additionally all applications that were saved on your last logout will be started.\n"
-"Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr "ログイン、ログアウト、シャットダウンなどの特定のイベントで自動的に開始されるアプリケーションのリストです。\nさらにログイン時には、最後のログアウトで保存されたすべてのアプリケーションが開始されます。\n斜体で表示されているアプリケーションは他のデスクトップ環境のものですが、必要であれば起動させることができます。"
-
-#: ../settings/xfae-window.c:219
+#: ../settings/xfae-window.c:193
 msgid "Trigger"
 msgstr "トリガー"
 
-#: ../settings/xfae-window.c:243 ../settings/xfae-window.c:329
+#: ../settings/xfae-window.c:303
 msgid "Add"
 msgstr "追加"
 
-#: ../settings/xfae-window.c:251 ../settings/xfae-window.c:335
+#: ../settings/xfae-window.c:309
 msgid "Remove"
 msgstr "削除"
 
-#: ../settings/xfae-window.c:263
-msgid "Edit"
-msgstr "編集"
-
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:363
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "\"%s\" の追加に失敗しました"
 
-#: ../settings/xfae-window.c:420 ../settings/xfae-window.c:434
+#: ../settings/xfae-window.c:394 ../settings/xfae-window.c:408
 msgid "Failed to remove item"
 msgstr "アイテムの削除に失敗しました。"
 
-#: ../settings/xfae-window.c:463
+#: ../settings/xfae-window.c:437
 msgid "Failed to edit item"
 msgstr "アイテムの編集に失敗しました。"
 
-#: ../settings/xfae-window.c:483
+#: ../settings/xfae-window.c:457
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "アイテム %s の編集に失敗しました"
 
-#: ../settings/xfae-window.c:511
+#: ../settings/xfae-window.c:485
 msgid "Failed to toggle item"
 msgstr "アイテムの切り替えに失敗しました。"
 
@@ -664,9 +653,9 @@ msgstr "セッションを保存する(_I)"
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid ""
 "These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "これらのアプリケーションは現在のセッションの一部でログアウト時に保存することができます。以下の変更は、セッションが保存された場合にのみ有効になります。"
+"saved now or when you log out.  Changes below will only take effect when the"
+" session is saved."
+msgstr "これらのアプリケーションは現在のセッションの一部のため、ログアウト時に保存することができます。以下の変更は、セッションが保存された場合にのみ有効になります。"
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
