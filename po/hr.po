@@ -7,7 +7,7 @@
 # Edin Veskovic <edin.lockedin@gmail.com>, 2018-2019
 # Edin Veskovic <edin.lockedin@gmail.com>, 2017
 # Ivica  Kolić <ikoli@yahoo.com>, 2010
-# Ivica  Kolić <ikoli@yahoo.com>, 2010,2013
+# Ivica  Kolić <ikoli@yahoo.com>, 2010,2013,2019
 # Lovro Kudelić <lovro.kudelic@outlook.com>, 2016
 # Luka Mikec, 2013
 # Luka Mikec, 2013
@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 00:31+0200\n"
-"PO-Revision-Date: 2019-09-27 05:16+0000\n"
+"POT-Creation-Date: 2019-11-05 06:30+0100\n"
+"PO-Revision-Date: 2019-12-23 21:55+0000\n"
 "Last-Translator: Ivica  Kolić <ikoli@yahoo.com>\n"
 "Language-Team: Croatian (http://www.transifex.com/xfce/xfce4-session/language/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -193,7 +193,7 @@ msgstr "Prioritet"
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:777 ../settings/xfae-window.c:198
+#: ../settings/session-editor.c:777 ../settings/xfae-window.c:172
 msgid "Program"
 msgstr "Program"
 
@@ -303,48 +303,37 @@ msgstr "Ne mogu otvoriti %s za čitanje"
 msgid "Failed to set run hook"
 msgstr ""
 
-#: ../settings/xfae-window.c:139
-msgid ""
-"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
-"On login additionally all applications that were saved on your last logout will be started.\n"
-"Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr "List aplikacija koja će biti pokrenuta prilikom specifičnih događaja poput prijave, odjave, gašenja i slično. \nUz to, pokrenut će se i sve aplikacije spremljene tijekom odjave.\nAplikacije istaknute kurzivom pripadaju drugom radnom okruženju, ali ih isto tako možete označiti za pokretanje."
-
-#: ../settings/xfae-window.c:219
+#: ../settings/xfae-window.c:193
 msgid "Trigger"
 msgstr "Okidač"
 
-#: ../settings/xfae-window.c:243 ../settings/xfae-window.c:329
+#: ../settings/xfae-window.c:303
 msgid "Add"
 msgstr "Dodaj"
 
-#: ../settings/xfae-window.c:251 ../settings/xfae-window.c:335
+#: ../settings/xfae-window.c:309
 msgid "Remove"
 msgstr "Ukloni"
 
-#: ../settings/xfae-window.c:263
-msgid "Edit"
-msgstr "Uredi"
-
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:363
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Ne mogu dodati \"%s\""
 
-#: ../settings/xfae-window.c:420 ../settings/xfae-window.c:434
+#: ../settings/xfae-window.c:394 ../settings/xfae-window.c:408
 msgid "Failed to remove item"
 msgstr "Neuspjelo uklanjanje stavke"
 
-#: ../settings/xfae-window.c:463
+#: ../settings/xfae-window.c:437
 msgid "Failed to edit item"
 msgstr "Neuspjelo uređivanje stavke"
 
-#: ../settings/xfae-window.c:483
+#: ../settings/xfae-window.c:457
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Neuspjelo uređivanje stavke  \"%s\""
 
-#: ../settings/xfae-window.c:511
+#: ../settings/xfae-window.c:485
 msgid "Failed to toggle item"
 msgstr "Ne mogu mijenjati stanje stavke"
 
@@ -671,9 +660,9 @@ msgstr "Spremi sesi_ju"
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid ""
 "These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "Ove aplikacije se koriste u trenutno pokrenutoj sesiji i mogu se spremiti prilikom odjave. Promjene će imati učinka nakon što se spremi sesija."
+"saved now or when you log out.  Changes below will only take effect when the"
+" session is saved."
+msgstr "Ove aplikacije su dio trenutno pokrenute sesije, te se mogu spremiti sada ili prilikom odjave. Promjene će imati učinka nakon što se spremi sesija."
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
