@@ -5,15 +5,16 @@
 # 
 # Translators:
 # Xfce Bot <transifex@xfce.org>, 2019
+# UTUMI Hirosi <utuhiro78@yahoo.co.jp>, 2019
 # 
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-session\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-20 18:37+0200\n"
+"POT-Creation-Date: 2019-10-21 00:31+0200\n"
 "PO-Revision-Date: 2019-10-20 16:38+0000\n"
-"Last-Translator: Xfce Bot <transifex@xfce.org>, 2019\n"
+"Last-Translator: UTUMI Hirosi <utuhiro78@yahoo.co.jp>, 2019\n"
 "Language-Team: Japanese (https://www.transifex.com/xfce/teams/16840/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,11 +32,11 @@ msgstr "Xfce をデスクトップ環境として起動するためにこのセ�
 
 #: ../libxfsm/xfsm-util.c:331
 msgid "Session"
-msgstr ""
+msgstr "セッション"
 
 #: ../libxfsm/xfsm-util.c:342
 msgid "Last accessed"
-msgstr ""
+msgstr "最終アクセス"
 
 #: ../scripts/xscreensaver.desktop.in.h:1
 msgid "Screensaver"
@@ -87,7 +88,7 @@ msgstr "自動開始アプリケーション(_L)"
 
 #: ../settings/main.c:171
 msgid "Currently active session:"
-msgstr ""
+msgstr "現在アクティブなセッション:"
 
 #: ../settings/session-editor.c:63
 msgid "If running"
@@ -217,7 +218,7 @@ msgstr "コマンド:"
 
 #: ../settings/xfae-dialog.c:138
 msgid "Trigger:"
-msgstr ""
+msgstr "トリガー:"
 
 #: ../settings/xfae-dialog.c:209
 msgid "Select a command"
@@ -237,35 +238,35 @@ msgstr "アプリケーションの編集"
 
 #: ../settings/xfae-model.c:87
 msgid "on login"
-msgstr ""
+msgstr "ログイン時"
 
 #: ../settings/xfae-model.c:88
 msgid "on logout"
-msgstr ""
+msgstr "ログアウト時"
 
 #: ../settings/xfae-model.c:89
 msgid "on shutdown"
-msgstr ""
+msgstr "シャットダウン時"
 
 #: ../settings/xfae-model.c:90
 msgid "on restart"
-msgstr ""
+msgstr "再起動時"
 
 #: ../settings/xfae-model.c:91
 msgid "on suspend"
-msgstr ""
+msgstr "サスペンド時"
 
 #: ../settings/xfae-model.c:92
 msgid "on hibernate"
-msgstr ""
+msgstr "ハイバーネート時"
 
 #: ../settings/xfae-model.c:93
 msgid "on hybrid sleep"
-msgstr ""
+msgstr "ハイブリッドスリープ時"
 
 #: ../settings/xfae-model.c:94
 msgid "on switch user"
-msgstr ""
+msgstr "ユーザー切り替え時"
 
 #: ../settings/xfae-model.c:304 ../settings/xfae-model.c:972
 #: ../settings/xfae-model.c:1030
@@ -295,7 +296,7 @@ msgstr "読み込むために %s を開くことに失敗しました"
 
 #: ../settings/xfae-window.c:98
 msgid "Failed to set run hook"
-msgstr ""
+msgstr "実行フックの設定に失敗しました"
 
 #: ../settings/xfae-window.c:139
 msgid ""
@@ -303,10 +304,13 @@ msgid ""
 "On login additionally all applications that were saved on your last logout will be started.\n"
 "Cursive applications belong to another desktop environment, but you can still enable them if you want."
 msgstr ""
+"ログイン・ログアウト・シャットダウンなどの特定のイベントで自動的に開始されるアプリケーションのリスト。\n"
+"加えて、ログイン時には前回のログアウトで保存されたすべてのアプリケーションが開始されます。\n"
+"斜体のアプリケーションは別のデスクトップ環境に属しますが、必要に応じて有効にすることができます。"
 
 #: ../settings/xfae-window.c:219
 msgid "Trigger"
-msgstr ""
+msgstr "トリガー"
 
 #: ../settings/xfae-window.c:243 ../settings/xfae-window.c:329
 msgid "Add"
@@ -366,7 +370,7 @@ msgstr "新しいセッションを作成します。"
 
 #: ../xfce4-session/xfsm-chooser.c:191
 msgid "Delete a saved session."
-msgstr ""
+msgstr "保存されたセッションを削除する。"
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:202
@@ -381,11 +385,11 @@ msgstr "ログインを取消してログイン画面に戻ります。"
 #. "Start" button
 #: ../xfce4-session/xfsm-chooser.c:211
 msgid "Start"
-msgstr ""
+msgstr "開始する"
 
 #: ../xfce4-session/xfsm-chooser.c:212
 msgid "Start an existing session."
-msgstr ""
+msgstr "既存のセッションを開始する。"
 
 #: ../xfce4-session/xfsm-dns.c:78
 msgid "(Unknown)"
@@ -436,7 +440,7 @@ msgstr "フェイルセーフセッション内のアプリケーションリス
 
 #: ../xfce4-session/xfsm-manager.c:696
 msgid "Name for the new session"
-msgstr ""
+msgstr "新しいセッションの名前"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
@@ -520,7 +524,7 @@ msgstr "ハイバネート(_H)"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:367
 msgid "H_ybrid Sleep"
-msgstr ""
+msgstr "ハイブリッドスリープ(_Y)"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:398
 msgid "Switch _User"
@@ -607,7 +611,7 @@ msgstr "セッションと起動"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
 msgid "Customize desktop startup"
-msgstr ""
+msgstr "デスクトップの起動をカスタマイズする"
 
 #: ../settings/xfce4-session-settings.ui.h:2
 msgid "_Help"
@@ -663,7 +667,7 @@ msgstr "全般(_G)"
 
 #: ../settings/xfce4-session-settings.ui.h:16
 msgid "Currently active session: <b>Default</b>"
-msgstr ""
+msgstr "現在アクティブなセッション: <b>Default</b>"
 
 #: ../settings/xfce4-session-settings.ui.h:17
 msgid "Save Sess_ion"
@@ -679,19 +683,19 @@ msgstr ""
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
-msgstr ""
+msgstr "現在のセッション(_N)"
 
 #: ../settings/xfce4-session-settings.ui.h:21
 msgid "Delete the selected session"
-msgstr ""
+msgstr "選択したセッションを削除する"
 
 #: ../settings/xfce4-session-settings.ui.h:22
 msgid "Clear Save_d Sessions"
-msgstr ""
+msgstr "保存したセッションをクリアする(_D)"
 
 #: ../settings/xfce4-session-settings.ui.h:23
 msgid "Saved _Sessions"
-msgstr ""
+msgstr "保存したセッション(_S)"
 
 #: ../settings/xfce4-session-settings.ui.h:24
 msgid "Launch GN_OME services on startup"
