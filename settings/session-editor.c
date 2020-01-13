@@ -328,6 +328,7 @@ session_editor_set_from_desktop_file(GtkTreeModel *model,
 {
     XfceRc *rcfile;
     const gchar *name, *icon;
+    GIcon *gicon;
 
     TRACE("entering\n");
 
@@ -349,11 +350,12 @@ session_editor_set_from_desktop_file(GtkTreeModel *model,
         return;
     }
 
-    icon = xfce_rc_read_entry(rcfile, "Icon", NULL);
+    icon = xfce_rc_read_entry (rcfile, "Icon", NULL);
+    gicon = g_themed_icon_new_with_default_fallbacks (icon);
 
     gtk_list_store_set(GTK_LIST_STORE(model), iter,
                        COL_NAME, name,
-                       COL_ICON_NAME, icon,
+                       COL_ICON_NAME, gicon,
                        COL_HAS_DESKTOP_FILE, TRUE,
                        -1);
 
@@ -461,6 +463,7 @@ manager_client_registered(XfsmManager *proxy,
     GVariant *variant, *variant_value;
     GVariantIter *variant_iter;
     gchar *property;
+    GIcon *gicon;
     GError *error = NULL;
 
     TRACE("entering\n");
@@ -548,10 +551,12 @@ manager_client_registered(XfsmManager *proxy,
     {
         session_editor_set_from_desktop_file (model, &iter, desktop_file);
     }
-    else if (gtk_icon_theme_has_icon (gtk_icon_theme_get_default (), name))
+    else
     {
+        gicon = xfce_gicon_from_name (name);
+
         gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-                            COL_ICON_NAME, name,
+                            COL_ICON_NAME, gicon,
                             -1);
     }
 
@@ -781,7 +786,7 @@ session_editor_populate_treeview(GtkTreeView *treeview)
     render = gtk_cell_renderer_pixbuf_new();
     gtk_tree_view_column_pack_start(col, render, FALSE);
     gtk_tree_view_column_set_attributes(col, render,
-                                        "icon-name", COL_ICON_NAME,
+                                        "gicon", COL_ICON_NAME,
                                         NULL);
 
     render = gtk_cell_renderer_text_new();
@@ -811,7 +816,7 @@ session_editor_populate_treeview(GtkTreeView *treeview)
         return;
 
     ls = gtk_list_store_new(N_COLS, G_TYPE_STRING, G_TYPE_STRING,
-                            G_TYPE_STRING, G_TYPE_STRING, G_TYPE_UCHAR,
+                            G_TYPE_THEMED_ICON, G_TYPE_STRING, G_TYPE_UCHAR,
                             G_TYPE_STRING, G_TYPE_UCHAR, G_TYPE_STRING,
                             G_TYPE_OBJECT, G_TYPE_BOOLEAN);
     gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(ls));
