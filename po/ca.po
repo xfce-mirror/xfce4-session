@@ -6,15 +6,15 @@
 # Carles Muñoz Gorriz <carlesmu@internautas.org>, 2013
 # Davidmp <medipas@gmail.com>, 2015
 # Pau Rul·lan Ferragut <paurullan@bulma.net> 2005, 2006
-# Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2016-2019
+# Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2016-2020
 # Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 00:31+0200\n"
-"PO-Revision-Date: 2019-08-01 06:18+0000\n"
-"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
+"POT-Creation-Date: 2020-01-14 06:31+0100\n"
+"PO-Revision-Date: 2020-01-14 16:09+0000\n"
+"Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>\n"
 "Language-Team: Catalan (http://www.transifex.com/xfce/xfce4-session/language/ca/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -176,23 +176,23 @@ msgstr "_Surt del programa"
 msgid "Unable to terminate program."
 msgstr "No es pot finalitzar el programa."
 
-#: ../settings/session-editor.c:533
+#: ../settings/session-editor.c:536
 msgid "(Unknown program)"
 msgstr "(Programa desconegut)"
 
-#: ../settings/session-editor.c:763
+#: ../settings/session-editor.c:768
 msgid "Priority"
 msgstr "Prioritat"
 
-#: ../settings/session-editor.c:771
+#: ../settings/session-editor.c:776
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:777 ../settings/xfae-window.c:198
+#: ../settings/session-editor.c:782 ../settings/xfae-window.c:172
 msgid "Program"
 msgstr "Programa"
 
-#: ../settings/session-editor.c:802
+#: ../settings/session-editor.c:807
 msgid "Restart Style"
 msgstr "Estil del reinici"
 
@@ -200,7 +200,7 @@ msgstr "Estil del reinici"
 msgid "_OK"
 msgstr "D'ac_ord"
 
-#: ../settings/xfae-dialog.c:82
+#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:220
 msgid "Add application"
 msgstr "Afegeix una aplicació"
 
@@ -232,7 +232,7 @@ msgstr "Cancel·la"
 msgid "OK"
 msgstr "D'acord"
 
-#: ../settings/xfae-dialog.c:260
+#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:242
 msgid "Edit application"
 msgstr "Edita l'aplicació"
 
@@ -298,48 +298,41 @@ msgstr "Ha fallat l'obriment de «%s» per a la lectura"
 msgid "Failed to set run hook"
 msgstr "Ha fallat l'establiment del lligam d'execució"
 
-#: ../settings/xfae-window.c:139
-msgid ""
-"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
-"On login additionally all applications that were saved on your last logout will be started.\n"
-"Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr "La llista d’aplicacions que s’iniciaran automàticament en esdeveniments específics com ara l’inici de la sessió, el tancament de la sessió, l'apagada, etc.\nAmb l'inici de la sessió, s'iniciaran a més totes les aplicacions que s’hagin desat amb el tancament de la vostra última sessió.\nLes aplicacions en cursiva pertanyen a un altre entorn d’escriptori, tot i això podeu habilitar-les si voleu."
-
-#: ../settings/xfae-window.c:219
+#: ../settings/xfae-window.c:193
 msgid "Trigger"
 msgstr "Disparador"
 
-#: ../settings/xfae-window.c:243 ../settings/xfae-window.c:329
+#: ../settings/xfae-window.c:229
+msgid "Remove application"
+msgstr "Suprimeix l'aplicació"
+
+#: ../settings/xfae-window.c:306
 msgid "Add"
 msgstr "Afegeix"
 
-#: ../settings/xfae-window.c:251 ../settings/xfae-window.c:335
+#: ../settings/xfae-window.c:312
 msgid "Remove"
 msgstr "Suprimeix"
 
-#: ../settings/xfae-window.c:263
-msgid "Edit"
-msgstr "Edita"
-
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:366
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "No s'ha pogut afegir «%s»"
 
-#: ../settings/xfae-window.c:420 ../settings/xfae-window.c:434
+#: ../settings/xfae-window.c:397 ../settings/xfae-window.c:411
 msgid "Failed to remove item"
 msgstr "Ha fallat la supressió de l'element"
 
-#: ../settings/xfae-window.c:463
+#: ../settings/xfae-window.c:440
 msgid "Failed to edit item"
 msgstr "Ha fallat l'edició de l'element"
 
-#: ../settings/xfae-window.c:483
+#: ../settings/xfae-window.c:460
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Ha fallat l'edició de l'element «%s»"
 
-#: ../settings/xfae-window.c:511
+#: ../settings/xfae-window.c:488
 msgid "Failed to toggle item"
 msgstr "Ha fallat la commutació de l'element"
 
@@ -666,9 +659,9 @@ msgstr "Desa la sess_ió"
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid ""
 "These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "Aquestes aplicacions formen part de la sessió actualment en execució i es poden desar quan tanqueu la sessió. Els canvis següents només tindran efecte quan es desi la sessió."
+"saved now or when you log out.  Changes below will only take effect when the"
+" session is saved."
+msgstr "Aquestes aplicacions formen part de la sessió actualment en execució i es poden desar ara o quan tanqueu la sessió. Els canvis següents només tindran efecte quan es desi la sessió."
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
