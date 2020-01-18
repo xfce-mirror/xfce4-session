@@ -6,8 +6,8 @@
 # Abel Martín <abel.martin.ruiz@gmail.com>, 2008
 # Adolfo Jayme-Barrientos, 2013
 # Adolfo Jayme Barrientos, 2013
-# Fito JB, 2013
-# Casper casper, 2019
+# Adolfo Jayme-Barrientos, 2013
+# Casper casper, 2019-2020
 # Edscott Wilson Garcia <edscott@xfce.org>, 2004
 # Fitoschido, 2013
 # prflr88 <prflr88@gmail.com>, 2014-2015
@@ -17,9 +17,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 00:31+0200\n"
-"PO-Revision-Date: 2019-08-01 06:18+0000\n"
-"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
+"POT-Creation-Date: 2020-01-14 06:31+0100\n"
+"PO-Revision-Date: 2020-01-18 08:10+0000\n"
+"Last-Translator: Casper casper\n"
 "Language-Team: Spanish (http://www.transifex.com/xfce/xfce4-session/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -181,23 +181,23 @@ msgstr "_Salir del programa"
 msgid "Unable to terminate program."
 msgstr "No se puede finalizar el programa."
 
-#: ../settings/session-editor.c:533
+#: ../settings/session-editor.c:536
 msgid "(Unknown program)"
 msgstr "(Programa desconocido)"
 
-#: ../settings/session-editor.c:763
+#: ../settings/session-editor.c:768
 msgid "Priority"
 msgstr "Prioridad"
 
-#: ../settings/session-editor.c:771
+#: ../settings/session-editor.c:776
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:777 ../settings/xfae-window.c:198
+#: ../settings/session-editor.c:782 ../settings/xfae-window.c:172
 msgid "Program"
 msgstr "Programa"
 
-#: ../settings/session-editor.c:802
+#: ../settings/session-editor.c:807
 msgid "Restart Style"
 msgstr "Estilo de reinicio"
 
@@ -205,7 +205,7 @@ msgstr "Estilo de reinicio"
 msgid "_OK"
 msgstr "Ace_ptar"
 
-#: ../settings/xfae-dialog.c:82
+#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:220
 msgid "Add application"
 msgstr "Añadir aplicación"
 
@@ -237,7 +237,7 @@ msgstr "Cancelar"
 msgid "OK"
 msgstr "Aceptar"
 
-#: ../settings/xfae-dialog.c:260
+#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:242
 msgid "Edit application"
 msgstr "Editar aplicación"
 
@@ -303,48 +303,41 @@ msgstr "No se pudo abrir %s para lectura"
 msgid "Failed to set run hook"
 msgstr "Error al establecer la ejecución"
 
-#: ../settings/xfae-window.c:139
-msgid ""
-"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
-"On login additionally all applications that were saved on your last logout will be started.\n"
-"Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr "Lista de aplicaciones que se iniciarán automáticamente en eventos específicos como inicio de sesión, cierre de sesión, apagar, etc.\nAl iniciar sesión, además se iniciarán todas las aplicaciones que se guardaron en su último cierre de sesión.\nLas aplicaciones cursivas pertenecen a otro entorno de escritorio, pero aún puede habilitarlas si lo desea."
-
-#: ../settings/xfae-window.c:219
+#: ../settings/xfae-window.c:193
 msgid "Trigger"
 msgstr "Desencadenar"
 
-#: ../settings/xfae-window.c:243 ../settings/xfae-window.c:329
+#: ../settings/xfae-window.c:229
+msgid "Remove application"
+msgstr "Eliminar aplicación"
+
+#: ../settings/xfae-window.c:306
 msgid "Add"
 msgstr "Añadir"
 
-#: ../settings/xfae-window.c:251 ../settings/xfae-window.c:335
+#: ../settings/xfae-window.c:312
 msgid "Remove"
 msgstr "Suprimir"
 
-#: ../settings/xfae-window.c:263
-msgid "Edit"
-msgstr "Editar"
-
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:366
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "No se pudo añadir «%s»"
 
-#: ../settings/xfae-window.c:420 ../settings/xfae-window.c:434
+#: ../settings/xfae-window.c:397 ../settings/xfae-window.c:411
 msgid "Failed to remove item"
 msgstr "No se pudo eliminar el elemento"
 
-#: ../settings/xfae-window.c:463
+#: ../settings/xfae-window.c:440
 msgid "Failed to edit item"
 msgstr "No se pudo editar el elemento"
 
-#: ../settings/xfae-window.c:483
+#: ../settings/xfae-window.c:460
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "No se pudo editar el elemento «%s»"
 
-#: ../settings/xfae-window.c:511
+#: ../settings/xfae-window.c:488
 msgid "Failed to toggle item"
 msgstr "No se pudo activar/desactivar el elemento"
 
@@ -671,9 +664,9 @@ msgstr "Guardar la sesió_n"
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid ""
 "These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "Estas aplicaciones son parte de la sesión actualmente en ejecución y pueden ser guardadas cuando usted la finalice. Los cambios de abajo solo tendrán efecto cuando se guarde la sesión."
+"saved now or when you log out.  Changes below will only take effect when the"
+" session is saved."
+msgstr "Estas aplicaciones forman parte de la sesión que se está ejecutando actualmente y se pueden guardar ahora o al cerrar sesión. Los cambios a continuación solo tendrán efecto cuando se guarde la sesión."
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
