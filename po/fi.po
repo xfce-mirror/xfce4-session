@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Ammuu5, 2020
 # Jiri Grönroos <jiri.gronroos@iki.fi>, 2019
 # Juha Kautto <juha@xfce.org>, 2004
 # Juhani Numminen <juhaninumminen0@gmail.com>, 2019
@@ -13,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 00:31+0200\n"
-"PO-Revision-Date: 2019-08-05 19:13+0000\n"
-"Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"POT-Creation-Date: 2020-01-14 06:31+0100\n"
+"PO-Revision-Date: 2020-02-03 22:48+0000\n"
+"Last-Translator: Ammuu5\n"
 "Language-Team: Finnish (http://www.transifex.com/xfce/xfce4-session/language/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -177,23 +178,23 @@ msgstr "_Lopeta sovellus"
 msgid "Unable to terminate program."
 msgstr "Sovelluksen sulkeminen ei onnistu."
 
-#: ../settings/session-editor.c:533
+#: ../settings/session-editor.c:536
 msgid "(Unknown program)"
 msgstr "(Tuntematon sovellus)"
 
-#: ../settings/session-editor.c:763
+#: ../settings/session-editor.c:768
 msgid "Priority"
 msgstr "Tärkeys"
 
-#: ../settings/session-editor.c:771
+#: ../settings/session-editor.c:776
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:777 ../settings/xfae-window.c:198
+#: ../settings/session-editor.c:782 ../settings/xfae-window.c:172
 msgid "Program"
 msgstr "Sovellus"
 
-#: ../settings/session-editor.c:802
+#: ../settings/session-editor.c:807
 msgid "Restart Style"
 msgstr "Käynnistystapa"
 
@@ -201,7 +202,7 @@ msgstr "Käynnistystapa"
 msgid "_OK"
 msgstr "_OK"
 
-#: ../settings/xfae-dialog.c:82
+#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:220
 msgid "Add application"
 msgstr "Lisää sovellus"
 
@@ -233,7 +234,7 @@ msgstr "Peru"
 msgid "OK"
 msgstr "OK"
 
-#: ../settings/xfae-dialog.c:260
+#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:242
 msgid "Edit application"
 msgstr "Muokkaa sovellusta"
 
@@ -299,48 +300,41 @@ msgstr "Tiedoston %s avaaminen luettavaksi ei onnistu"
 msgid "Failed to set run hook"
 msgstr "Suorituskoukun asettaminen epäonnistui"
 
-#: ../settings/xfae-window.c:139
-msgid ""
-"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
-"On login additionally all applications that were saved on your last logout will be started.\n"
-"Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr "Lista sovelluksista, jotka käynnistetään tiettyjen tapahtumien yhteydessä, kuten sisään- tai uloskirjautuessa tai tietokonetta sammutettaessa.\nSisäänkirjautuessa käynnistetään lisäksi sovellukset, jotka tallennettiin edellisen uloskirjautumisen yhteydessä.\nKursiivilla merkityt sovellukset kuuluvat toiseen työpöytäympäristöön, mutta ovat silti käytettävissä."
-
-#: ../settings/xfae-window.c:219
+#: ../settings/xfae-window.c:193
 msgid "Trigger"
 msgstr "Laukaisin"
 
-#: ../settings/xfae-window.c:243 ../settings/xfae-window.c:329
+#: ../settings/xfae-window.c:229
+msgid "Remove application"
+msgstr "Poista sovellus"
+
+#: ../settings/xfae-window.c:306
 msgid "Add"
 msgstr "Lisää"
 
-#: ../settings/xfae-window.c:251 ../settings/xfae-window.c:335
+#: ../settings/xfae-window.c:312
 msgid "Remove"
 msgstr "Poista"
 
-#: ../settings/xfae-window.c:263
-msgid "Edit"
-msgstr "Muokkaa"
-
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:366
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Kohteen \"%s\" lisääminen epäonnistui"
 
-#: ../settings/xfae-window.c:420 ../settings/xfae-window.c:434
+#: ../settings/xfae-window.c:397 ../settings/xfae-window.c:411
 msgid "Failed to remove item"
 msgstr "Kohteen poistaminen epäonnistui"
 
-#: ../settings/xfae-window.c:463
+#: ../settings/xfae-window.c:440
 msgid "Failed to edit item"
 msgstr "Kohteen muokkaus epäonnistui"
 
-#: ../settings/xfae-window.c:483
+#: ../settings/xfae-window.c:460
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Kohteen \"%s\" muokkaus epäonnistui"
 
-#: ../settings/xfae-window.c:511
+#: ../settings/xfae-window.c:488
 msgid "Failed to toggle item"
 msgstr "Kohteen tilan muutos epäonnistui"
 
@@ -667,8 +661,8 @@ msgstr "Tallenna _istunto"
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid ""
 "These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
+"saved now or when you log out.  Changes below will only take effect when the"
+" session is saved."
 msgstr "Nämä sovellukset sisältyvät tämänhetkiseen istuntoon ja voidaan tallentaa uloskirjauksen yhteydessä. Tekemäsi muutokset astuvat voimaan vasta, kun istunto tallennetaan."
 
 #: ../settings/xfce4-session-settings.ui.h:20
