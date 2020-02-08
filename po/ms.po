@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# abuyop <abuyop@gmail.com>, 2016-2017,2019
+# abuyop <abuyop@gmail.com>, 2016-2017,2019-2020
 # Puretech <terjemah.puretech@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 00:31+0200\n"
-"PO-Revision-Date: 2019-08-01 06:18+0000\n"
-"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
+"POT-Creation-Date: 2020-01-14 06:31+0100\n"
+"PO-Revision-Date: 2020-02-08 22:11+0000\n"
+"Last-Translator: abuyop <abuyop@gmail.com>\n"
 "Language-Team: Malay (http://www.transifex.com/xfce/xfce4-session/language/ms/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -173,23 +173,23 @@ msgstr "Keluar Program"
 msgid "Unable to terminate program."
 msgstr "Tidak dapat menghentikan program."
 
-#: ../settings/session-editor.c:533
+#: ../settings/session-editor.c:536
 msgid "(Unknown program)"
 msgstr "(Program tidak diketahui)"
 
-#: ../settings/session-editor.c:763
+#: ../settings/session-editor.c:768
 msgid "Priority"
 msgstr "Keutamaan"
 
-#: ../settings/session-editor.c:771
+#: ../settings/session-editor.c:776
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:777 ../settings/xfae-window.c:198
+#: ../settings/session-editor.c:782 ../settings/xfae-window.c:172
 msgid "Program"
 msgstr "Program"
 
-#: ../settings/session-editor.c:802
+#: ../settings/session-editor.c:807
 msgid "Restart Style"
 msgstr "Gaya Mula semula"
 
@@ -197,7 +197,7 @@ msgstr "Gaya Mula semula"
 msgid "_OK"
 msgstr "_OK"
 
-#: ../settings/xfae-dialog.c:82
+#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:220
 msgid "Add application"
 msgstr "Tambah aplikasi"
 
@@ -229,7 +229,7 @@ msgstr "Batal"
 msgid "OK"
 msgstr "OK"
 
-#: ../settings/xfae-dialog.c:260
+#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:242
 msgid "Edit application"
 msgstr "Sunting aplikasi"
 
@@ -295,48 +295,41 @@ msgstr "Gagal membuka %s untuk dibaca"
 msgid "Failed to set run hook"
 msgstr "Gagal tetapkan cakuk jalan"
 
-#: ../settings/xfae-window.c:139
-msgid ""
-"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
-"On login additionally all applications that were saved on your last logout will be started.\n"
-"Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr "Senarai aplikasi yang akan bermula secara automatik ketika peristiwa khusus seperti daftar masuk, daftar keluar, matikan, dll.\nKetika daftar masuk semua aplikasi yang telah disimpan ketika daftar keluar terakhir akan dimulakan.\nAplikasi cursive milik persekitaran desktop lain, tetapi anda masih boleh benarkannya jika mahu."
-
-#: ../settings/xfae-window.c:219
+#: ../settings/xfae-window.c:193
 msgid "Trigger"
 msgstr "Pemicu"
 
-#: ../settings/xfae-window.c:243 ../settings/xfae-window.c:329
+#: ../settings/xfae-window.c:229
+msgid "Remove application"
+msgstr "Buang aplikasi"
+
+#: ../settings/xfae-window.c:306
 msgid "Add"
 msgstr "Tambah"
 
-#: ../settings/xfae-window.c:251 ../settings/xfae-window.c:335
+#: ../settings/xfae-window.c:312
 msgid "Remove"
 msgstr "Buang"
 
-#: ../settings/xfae-window.c:263
-msgid "Edit"
-msgstr "Sunting"
-
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:366
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Gagal menambah \"%s\""
 
-#: ../settings/xfae-window.c:420 ../settings/xfae-window.c:434
+#: ../settings/xfae-window.c:397 ../settings/xfae-window.c:411
 msgid "Failed to remove item"
 msgstr "Gagal membuang item"
 
-#: ../settings/xfae-window.c:463
+#: ../settings/xfae-window.c:440
 msgid "Failed to edit item"
 msgstr "Gagal menyunting item"
 
-#: ../settings/xfae-window.c:483
+#: ../settings/xfae-window.c:460
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Gagal menyunting item \"%s\""
 
-#: ../settings/xfae-window.c:511
+#: ../settings/xfae-window.c:488
 msgid "Failed to toggle item"
 msgstr "Gagal togol item"
 
@@ -663,9 +656,9 @@ msgstr "Simpan Ses_i"
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid ""
 "These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "Aplikasi ini adalah sebahagian dari sesi yang sedang-berjalan, dan boleh disimpan apabila anda mendaftar keluar.  Perubahan di bawah hanya akan berkuat kuasa apabila sesi disimpan."
+"saved now or when you log out.  Changes below will only take effect when the"
+" session is saved."
+msgstr "Aplikasi ini merupakan sebahagian daripada sesi yang masih berjalan, dan boleh disimpan sekarang atau bila anda mendaftar keluar. Perubahan di bawah hanya berkesan bila sesi disimpan."
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
