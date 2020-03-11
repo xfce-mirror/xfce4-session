@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Andhika Padmawan <andhika.padmawan@gmail.com>, 2010
+# Triyan W. Nugroho <triyan.wn@gmail.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 00:31+0200\n"
-"PO-Revision-Date: 2019-08-01 06:18+0000\n"
-"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
+"POT-Creation-Date: 2020-01-14 06:31+0100\n"
+"PO-Revision-Date: 2020-03-11 22:47+0000\n"
+"Last-Translator: Triyan W. Nugroho <triyan.wn@gmail.com>\n"
 "Language-Team: Indonesian (http://www.transifex.com/xfce/xfce4-session/language/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,11 +29,11 @@ msgstr "Gunakan sesi ini untuk menjalankan Xfce sebagai lingkungan desktop anda"
 
 #: ../libxfsm/xfsm-util.c:331
 msgid "Session"
-msgstr ""
+msgstr "Sesi"
 
 #: ../libxfsm/xfsm-util.c:342
 msgid "Last accessed"
-msgstr ""
+msgstr "Terakhir diakses"
 
 #: ../scripts/xscreensaver.desktop.in.h:1
 msgid "Screensaver"
@@ -84,7 +85,7 @@ msgstr "_Aplikasi Mulai Otomatis"
 
 #: ../settings/main.c:171
 msgid "Currently active session:"
-msgstr ""
+msgstr "Sesi yang saat ini aktif:"
 
 #: ../settings/session-editor.c:63
 msgid "If running"
@@ -172,23 +173,23 @@ msgstr "_Keluar Program"
 msgid "Unable to terminate program."
 msgstr "Tak dapat mematikan program."
 
-#: ../settings/session-editor.c:533
+#: ../settings/session-editor.c:536
 msgid "(Unknown program)"
 msgstr "(Program tak diketahui)"
 
-#: ../settings/session-editor.c:763
+#: ../settings/session-editor.c:768
 msgid "Priority"
 msgstr "Prioritas"
 
-#: ../settings/session-editor.c:771
+#: ../settings/session-editor.c:776
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:777 ../settings/xfae-window.c:198
+#: ../settings/session-editor.c:782 ../settings/xfae-window.c:172
 msgid "Program"
 msgstr "Program"
 
-#: ../settings/session-editor.c:802
+#: ../settings/session-editor.c:807
 msgid "Restart Style"
 msgstr "Gaya Start Ulang"
 
@@ -196,7 +197,7 @@ msgstr "Gaya Start Ulang"
 msgid "_OK"
 msgstr "_OK"
 
-#: ../settings/xfae-dialog.c:82
+#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:220
 msgid "Add application"
 msgstr "Tambah aplikasi"
 
@@ -214,7 +215,7 @@ msgstr "Perintah:"
 
 #: ../settings/xfae-dialog.c:138
 msgid "Trigger:"
-msgstr ""
+msgstr "Pemicu:"
 
 #: ../settings/xfae-dialog.c:209
 msgid "Select a command"
@@ -228,25 +229,25 @@ msgstr "Batal"
 msgid "OK"
 msgstr "OK"
 
-#: ../settings/xfae-dialog.c:260
+#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:242
 msgid "Edit application"
 msgstr "Sunting aplikasi"
 
 #: ../settings/xfae-model.c:87
 msgid "on login"
-msgstr ""
+msgstr "saat log masuk"
 
 #: ../settings/xfae-model.c:88
 msgid "on logout"
-msgstr ""
+msgstr "saat log keluar"
 
 #: ../settings/xfae-model.c:89
 msgid "on shutdown"
-msgstr ""
+msgstr "saat matikan"
 
 #: ../settings/xfae-model.c:90
 msgid "on restart"
-msgstr ""
+msgstr "saat hidupkan ulang"
 
 #: ../settings/xfae-model.c:91
 msgid "on suspend"
@@ -262,7 +263,7 @@ msgstr ""
 
 #: ../settings/xfae-model.c:94
 msgid "on switch user"
-msgstr ""
+msgstr "saat ganti pengguna"
 
 #: ../settings/xfae-model.c:304 ../settings/xfae-model.c:972
 #: ../settings/xfae-model.c:1030
@@ -294,48 +295,41 @@ msgstr "Gagal membuka %s untuk pembacaan"
 msgid "Failed to set run hook"
 msgstr ""
 
-#: ../settings/xfae-window.c:139
-msgid ""
-"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
-"On login additionally all applications that were saved on your last logout will be started.\n"
-"Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr ""
-
-#: ../settings/xfae-window.c:219
+#: ../settings/xfae-window.c:193
 msgid "Trigger"
-msgstr ""
+msgstr "Pemicu"
 
-#: ../settings/xfae-window.c:243 ../settings/xfae-window.c:329
+#: ../settings/xfae-window.c:229
+msgid "Remove application"
+msgstr "Hapus aplikasi"
+
+#: ../settings/xfae-window.c:306
 msgid "Add"
 msgstr "Tambah"
 
-#: ../settings/xfae-window.c:251 ../settings/xfae-window.c:335
+#: ../settings/xfae-window.c:312
 msgid "Remove"
 msgstr "Hapus"
 
-#: ../settings/xfae-window.c:263
-msgid "Edit"
-msgstr "Sunting"
-
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:366
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Gagal menambah \"%s\""
 
-#: ../settings/xfae-window.c:420 ../settings/xfae-window.c:434
+#: ../settings/xfae-window.c:397 ../settings/xfae-window.c:411
 msgid "Failed to remove item"
 msgstr "Gagal menghapus item"
 
-#: ../settings/xfae-window.c:463
+#: ../settings/xfae-window.c:440
 msgid "Failed to edit item"
 msgstr "Gagal menyunting item"
 
-#: ../settings/xfae-window.c:483
+#: ../settings/xfae-window.c:460
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Gagal menyunting item \"%s\""
 
-#: ../settings/xfae-window.c:511
+#: ../settings/xfae-window.c:488
 msgid "Failed to toggle item"
 msgstr "Gagal mengubah item"
 
@@ -363,7 +357,7 @@ msgstr "Buat sebuah sesi baru."
 
 #: ../xfce4-session/xfsm-chooser.c:191
 msgid "Delete a saved session."
-msgstr ""
+msgstr "Hapus sesi tersimpan."
 
 #. "Logout" button
 #: ../xfce4-session/xfsm-chooser.c:202
@@ -378,11 +372,11 @@ msgstr "Batalkan usaha log masuk dan kembali ke layar log masuk."
 #. "Start" button
 #: ../xfce4-session/xfsm-chooser.c:211
 msgid "Start"
-msgstr ""
+msgstr "Mulai"
 
 #: ../xfce4-session/xfsm-chooser.c:212
 msgid "Start an existing session."
-msgstr ""
+msgstr "Mulai sesi yang ada."
 
 #: ../xfce4-session/xfsm-dns.c:78
 msgid "(Unknown)"
@@ -426,7 +420,7 @@ msgstr "Senarai aplikasi di sesi darurat kosong."
 
 #: ../xfce4-session/xfsm-manager.c:696
 msgid "Name for the new session"
-msgstr ""
+msgstr "Beri nama sesi baru"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
@@ -597,7 +591,7 @@ msgstr "Sesi dan Hidupkan"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
 msgid "Customize desktop startup"
-msgstr ""
+msgstr "Pengaturan hidupkan desktop"
 
 #: ../settings/xfce4-session-settings.ui.h:2
 msgid "_Help"
@@ -653,7 +647,7 @@ msgstr "_Umum"
 
 #: ../settings/xfce4-session-settings.ui.h:16
 msgid "Currently active session: <b>Default</b>"
-msgstr ""
+msgstr "Sesi aktif saat ini: <b>Default</b>"
 
 #: ../settings/xfce4-session-settings.ui.h:17
 msgid "Save Sess_ion"
@@ -662,25 +656,25 @@ msgstr "_Simpan Sesi"
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid ""
 "These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "Aplikasi ini adalah bagian dari sesi yang berjalan saat ini, dan dapat disimpan ketika anda log keluar.  Perubahan di bawah hanya akan berfungsi ketika sesi disimpan."
+"saved now or when you log out.  Changes below will only take effect when the"
+" session is saved."
+msgstr "Aplikasi tersebut adalah bagian dari sesi yang sedang berjalan, dan dapat disimpan sekarang atau saat log keluar. Perubahan di bawah ini hanya akan diterapkan jika sesi disimpan."
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
-msgstr ""
+msgstr "Sesi Saat I_ni"
 
 #: ../settings/xfce4-session-settings.ui.h:21
 msgid "Delete the selected session"
-msgstr ""
+msgstr "Hapus sesi terpilih"
 
 #: ../settings/xfce4-session-settings.ui.h:22
 msgid "Clear Save_d Sessions"
-msgstr ""
+msgstr "Bersihkan Sesi Tersim_pan"
 
 #: ../settings/xfce4-session-settings.ui.h:23
 msgid "Saved _Sessions"
-msgstr ""
+msgstr "Sesi Ter_simpan"
 
 #: ../settings/xfce4-session-settings.ui.h:24
 msgid "Launch GN_OME services on startup"
