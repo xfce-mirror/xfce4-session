@@ -72,6 +72,7 @@ typedef enum
     SCREENSAVER_TYPE_NONE,
     SCREENSAVER_TYPE_FREEDESKTOP,
     SCREENSAVER_TYPE_CINNAMON,
+    SCREENSAVER_TYPE_XFCE,
     SCREENSAVER_TYPE_MATE,
     SCREENSAVER_TYPE_GNOME,
     SCREENSAVER_TYPE_OTHER,
@@ -251,6 +252,13 @@ xfce_screensaver_setup(XfceScreenSaver *saver)
         DBG ("using cinnamon screensaver daemon");
         saver->priv->screensaver_type = SCREENSAVER_TYPE_CINNAMON;
     } else if (screen_saver_proxy_setup (saver,
+                                         "org.xfce.ScreenSaver",
+                                         "/org/xfce/ScreenSaver",
+                                         "org.xfce.ScreenSaver"))
+    {
+        DBG ("using xfce screensaver daemon");
+        saver->priv->screensaver_type = SCREENSAVER_TYPE_XFCE;
+    } else if (screen_saver_proxy_setup (saver,
                                          "org.mate.ScreenSaver",
                                          "/org/mate/ScreenSaver",
                                          "org.mate.ScreenSaver"))
@@ -359,7 +367,7 @@ xfce_screensaver_new (void)
                                 G_OBJECT(saver),
                                 LOCK_COMMAND);
     }
-    
+
     return XFCE_SCREENSAVER (saver);
 }
 
@@ -400,7 +408,7 @@ xfce_reset_screen_saver (XfceScreenSaver *saver)
  * Calling this function with inhibit as TRUE will prevent the user's
  * screensaver from activating. This is useful when the user is watching
  * a movie or giving a presentation.
- * 
+ *
  * Calling this function with inhibit as FALSE will remove any current
  * screensaver inhibit the XfceScreenSaver object has.
  *
@@ -410,6 +418,7 @@ xfce_screensaver_inhibit (XfceScreenSaver *saver,
                           gboolean inhibit)
 {
     if (saver->priv->screensaver_type != SCREENSAVER_TYPE_FREEDESKTOP &&
+        saver->priv->screensaver_type != SCREENSAVER_TYPE_XFCE &&
         saver->priv->screensaver_type != SCREENSAVER_TYPE_MATE)
     {
         /* remove any existing keepalive */
@@ -485,6 +494,7 @@ xfce_screensaver_lock (XfceScreenSaver *saver)
 {
     switch (saver->priv->screensaver_type) {
         case SCREENSAVER_TYPE_FREEDESKTOP:
+        case SCREENSAVER_TYPE_XFCE:
         case SCREENSAVER_TYPE_MATE:
         case SCREENSAVER_TYPE_GNOME:
         {
@@ -551,7 +561,7 @@ xfce_screensaver_lock (XfceScreenSaver *saver)
             {
                 ret = g_spawn_command_line_async ("xdg-screensaver lock", NULL);
             }
-            
+
             if (!ret)
             {
                 ret = g_spawn_command_line_async ("xscreensaver-command -lock", NULL);
