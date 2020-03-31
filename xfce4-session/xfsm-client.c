@@ -847,7 +847,8 @@ xfsm_client_dbus_get_sm_properties (XfsmDbusClient *object,
     {
       GValue *value = g_tree_lookup (properties->sm_properties, arg_names[i]);
 
-      builder_add_value (&out_properties, arg_names[i], value);
+      if (value != NULL)
+        builder_add_value (&out_properties, arg_names[i], value);
     }
 
   xfsm_dbus_client_complete_get_all_sm_properties (object, invocation, g_variant_builder_end (&out_properties));
