@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Kiril Kirilov <cybercop_montana@abv.bg>, 2014-2019
+# Kiril Kirilov <cybercop_montana@abv.bg>, 2014-2020
 # Любомир Василев, 2015
 # Красимир Беров, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 00:31+0200\n"
-"PO-Revision-Date: 2019-08-01 05:44+0000\n"
+"POT-Creation-Date: 2020-04-01 00:31+0200\n"
+"PO-Revision-Date: 2020-04-01 11:58+0000\n"
 "Last-Translator: Kiril Kirilov <cybercop_montana@abv.bg>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/xfce/xfce4-session/language/bg/)\n"
 "MIME-Version: 1.0\n"
@@ -174,23 +174,23 @@ msgstr "Изход от програмата"
 msgid "Unable to terminate program."
 msgstr "Не може да се спре програмата."
 
-#: ../settings/session-editor.c:533
+#: ../settings/session-editor.c:536
 msgid "(Unknown program)"
 msgstr "(Непозната програма)"
 
-#: ../settings/session-editor.c:763
+#: ../settings/session-editor.c:768
 msgid "Priority"
 msgstr "Приоритет"
 
-#: ../settings/session-editor.c:771
+#: ../settings/session-editor.c:776
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:777 ../settings/xfae-window.c:198
+#: ../settings/session-editor.c:782 ../settings/xfae-window.c:172
 msgid "Program"
 msgstr "Програма"
 
-#: ../settings/session-editor.c:802
+#: ../settings/session-editor.c:807
 msgid "Restart Style"
 msgstr "Рестартирай стила"
 
@@ -198,7 +198,7 @@ msgstr "Рестартирай стила"
 msgid "_OK"
 msgstr "_Да"
 
-#: ../settings/xfae-dialog.c:82
+#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:220
 msgid "Add application"
 msgstr "Добави приложение"
 
@@ -230,7 +230,7 @@ msgstr "Отказ"
 msgid "OK"
 msgstr "Да"
 
-#: ../settings/xfae-dialog.c:260
+#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:242
 msgid "Edit application"
 msgstr "Редактирай приложение"
 
@@ -296,48 +296,41 @@ msgstr "Не може да се отвори %s за четене"
 msgid "Failed to set run hook"
 msgstr "Неуспешно задаване на стартово действие"
 
-#: ../settings/xfae-window.c:139
-msgid ""
-"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
-"On login additionally all applications that were saved on your last logout will be started.\n"
-"Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr "Списък на приложения, които ще се стартират автоматично при конкретни събития, като вход, изход, изключване и др.\nОсвен това при влизане в системата се стартират всички приложения, записани при последното ви излизане.\nКурсивните приложения принадлежат към друга работна среда, но, въпреки това можете да ги активирате, ако искате."
-
-#: ../settings/xfae-window.c:219
+#: ../settings/xfae-window.c:193
 msgid "Trigger"
 msgstr "Тригер"
 
-#: ../settings/xfae-window.c:243 ../settings/xfae-window.c:329
+#: ../settings/xfae-window.c:229
+msgid "Remove application"
+msgstr "Премахване на програма"
+
+#: ../settings/xfae-window.c:306
 msgid "Add"
 msgstr "Добавяне"
 
-#: ../settings/xfae-window.c:251 ../settings/xfae-window.c:335
+#: ../settings/xfae-window.c:312
 msgid "Remove"
 msgstr "Премахване"
 
-#: ../settings/xfae-window.c:263
-msgid "Edit"
-msgstr "Редактиране"
-
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:366
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Неуспешно добавяне на „%s“"
 
-#: ../settings/xfae-window.c:420 ../settings/xfae-window.c:434
+#: ../settings/xfae-window.c:397 ../settings/xfae-window.c:411
 msgid "Failed to remove item"
 msgstr "Не може да се премахне обект"
 
-#: ../settings/xfae-window.c:463
+#: ../settings/xfae-window.c:440
 msgid "Failed to edit item"
 msgstr "Не може да се редактира обект"
 
-#: ../settings/xfae-window.c:483
+#: ../settings/xfae-window.c:460
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Неуспешно редактиране на обекта „%s“"
 
-#: ../settings/xfae-window.c:511
+#: ../settings/xfae-window.c:488
 msgid "Failed to toggle item"
 msgstr "Не може да се превключи обекта"
 
@@ -601,6 +594,12 @@ msgstr "Сесия и стартиране"
 msgid "Customize desktop startup"
 msgstr "Персонализиране на стартирането на работния плот"
 
+#: ../settings/xfce-session-settings.desktop.in.h:3
+msgid ""
+"session;settings;preferences;manager;startup;login;logout;shutdown;lock "
+"screen;application;autostart;launch;services;daemon;agent;"
+msgstr "сесия;настройки;предпочитания;мениджър;стартиране;вписване;изход;изключване;заключване на екрана;програма;автоматично стартиране;стартиране;услуги;демон;агент;"
+
 #: ../settings/xfce4-session-settings.ui.h:2
 msgid "_Help"
 msgstr "_Помощ"
@@ -664,9 +663,9 @@ msgstr "Запази сесията"
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid ""
 "These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "Тези приложения са стартирани в текущата сесия и могат да бъдат запазени при излизане. Промените по-долу ще влязат в сила, само, когато сесията бъде запазена."
+"saved now or when you log out.  Changes below will only take effect when the"
+" session is saved."
+msgstr "Тези приложения са част от текущата сесия и могат да бъдат запазени сега или когато излезете. Промените по-долу ще влязат в сила, само, когато сесията бъде запазена."
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
