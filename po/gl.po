@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Daniel Muñiz Fontoira <dani@damufo.com>, 2018-2019
+# Daniel Muñiz Fontoira <dani@damufo.com>, 2018-2020
 # Iván Seoane Pardo <talivan.ivan@gmail.com>, 2006
 # Leandro Regueiro <leandro.regueiro@gmail.com>, 2008-2010,2017
 # Xosé, 2015,2017
@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 00:31+0200\n"
-"PO-Revision-Date: 2019-08-30 10:13+0000\n"
+"POT-Creation-Date: 2020-04-01 00:31+0200\n"
+"PO-Revision-Date: 2020-04-01 06:47+0000\n"
 "Last-Translator: Daniel Muñiz Fontoira <dani@damufo.com>\n"
 "Language-Team: Galician (http://www.transifex.com/xfce/xfce4-session/language/gl/)\n"
 "MIME-Version: 1.0\n"
@@ -175,23 +175,23 @@ msgstr "_Saír do programa"
 msgid "Unable to terminate program."
 msgstr "Non se puido terminar o programa."
 
-#: ../settings/session-editor.c:533
+#: ../settings/session-editor.c:536
 msgid "(Unknown program)"
 msgstr "(Programa descoñecido)"
 
-#: ../settings/session-editor.c:763
+#: ../settings/session-editor.c:768
 msgid "Priority"
 msgstr "Prioridade"
 
-#: ../settings/session-editor.c:771
+#: ../settings/session-editor.c:776
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:777 ../settings/xfae-window.c:198
+#: ../settings/session-editor.c:782 ../settings/xfae-window.c:172
 msgid "Program"
 msgstr "Programa"
 
-#: ../settings/session-editor.c:802
+#: ../settings/session-editor.c:807
 msgid "Restart Style"
 msgstr "Reiniciar o estilo"
 
@@ -199,7 +199,7 @@ msgstr "Reiniciar o estilo"
 msgid "_OK"
 msgstr "_Aceptar"
 
-#: ../settings/xfae-dialog.c:82
+#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:220
 msgid "Add application"
 msgstr "Engadir unha aplicación"
 
@@ -231,7 +231,7 @@ msgstr "Cancelar"
 msgid "OK"
 msgstr "Aceptar"
 
-#: ../settings/xfae-dialog.c:260
+#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:242
 msgid "Edit application"
 msgstr "Editar unha aplicación"
 
@@ -297,48 +297,41 @@ msgstr "Produciuse un fallo ao abrir %s para lectura"
 msgid "Failed to set run hook"
 msgstr "Produciuse un fallo ao configurar a ligazón da execución"
 
-#: ../settings/xfae-window.c:139
-msgid ""
-"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
-"On login additionally all applications that were saved on your last logout will be started.\n"
-"Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr "Listaxe de aplicacións que se iniciarán automaticamente ao producirse accións específicas como entrar na sesión, saír da sesión, apagar, etc.\nAo entrar na sesión tamén se iniciarán todas as aplicacións gardadas na última saída.\nAs aplicacións en letra cursiva pertencen a outro contorno de escritorio, máis aínda así pode activalas se o desexa."
-
-#: ../settings/xfae-window.c:219
+#: ../settings/xfae-window.c:193
 msgid "Trigger"
 msgstr "Activador"
 
-#: ../settings/xfae-window.c:243 ../settings/xfae-window.c:329
+#: ../settings/xfae-window.c:229
+msgid "Remove application"
+msgstr "Desinstalar a aplicación"
+
+#: ../settings/xfae-window.c:306
 msgid "Add"
 msgstr "Engadir"
 
-#: ../settings/xfae-window.c:251 ../settings/xfae-window.c:335
+#: ../settings/xfae-window.c:312
 msgid "Remove"
 msgstr "Eliminar"
 
-#: ../settings/xfae-window.c:263
-msgid "Edit"
-msgstr "Modificar"
-
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:366
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Produciuse un fallo ao engadir \"%s\""
 
-#: ../settings/xfae-window.c:420 ../settings/xfae-window.c:434
+#: ../settings/xfae-window.c:397 ../settings/xfae-window.c:411
 msgid "Failed to remove item"
 msgstr "Produciuse un fallo ao eliminar o elemento"
 
-#: ../settings/xfae-window.c:463
+#: ../settings/xfae-window.c:440
 msgid "Failed to edit item"
 msgstr "Produciuse un fallo ao modificar o elemento"
 
-#: ../settings/xfae-window.c:483
+#: ../settings/xfae-window.c:460
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Produciuse un fallo ao modificar o elemento \"%s\""
 
-#: ../settings/xfae-window.c:511
+#: ../settings/xfae-window.c:488
 msgid "Failed to toggle item"
 msgstr "Produciuse un fallo ao activar o elemento"
 
@@ -602,6 +595,12 @@ msgstr "Sesión e inicio"
 msgid "Customize desktop startup"
 msgstr "Personalizar o inicio do escritorio"
 
+#: ../settings/xfce-session-settings.desktop.in.h:3
+msgid ""
+"session;settings;preferences;manager;startup;login;logout;shutdown;lock "
+"screen;application;autostart;launch;services;daemon;agent;"
+msgstr "sesión;configuracións;preferencias;xestor;inicio;inicio sesión;saída da sesión;apagar;bloqueo da pantalla;aplicación;auto inicio;iniciado;servizos;servizo;axente;"
+
 #: ../settings/xfce4-session-settings.ui.h:2
 msgid "_Help"
 msgstr "_Axuda"
@@ -665,9 +664,9 @@ msgstr "Gardar a ses_ión"
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid ""
 "These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "Estas aplicacións son parte da sesión que se executa actualmente, e poden gardarse ao saír da sesión. Os cambios de embaixo só terán efecto cando se garde a sesión."
+"saved now or when you log out.  Changes below will only take effect when the"
+" session is saved."
+msgstr "Estes aplicativos son parte da sesión que se executa actualmente, e poden gardarse agora ou ao saír da sesión. Os cambios de embaixo só terán efecto cando se garde a sesión."
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
