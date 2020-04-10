@@ -47,6 +47,7 @@
 #endif
 
 #include <glib/gprintf.h>
+#include <gio/gio.h>
 
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
@@ -271,7 +272,7 @@ xfsm_launch_desktop_files_on_run_hook (gboolean    start_at_spi,
   const gchar *try_exec;
   const gchar *type;
   XfsmRunHook  run_hook_from_file;
-  const gchar *exec;
+  gchar       *exec;
   gboolean     startup_notify;
   gboolean     terminal;
   gboolean     skip;
@@ -284,6 +285,7 @@ xfsm_launch_desktop_files_on_run_hook (gboolean    start_at_spi,
   gint         n, m;
   gchar       *filename;
   const gchar *pattern;
+  gchar       *uri;
 
   /* pattern for only at-spi desktop files or everything */
   if (start_at_spi)
@@ -384,8 +386,16 @@ xfsm_launch_desktop_files_on_run_hook (gboolean    start_at_spi,
             xfsm_verbose ("TryExec set and xfsm_check_valid_exec failed, skipping\n");
         }
 
+      /* expand the field codes */
+      filename = xfce_resource_lookup (XFCE_RESOURCE_CONFIG, files[n]);
+      uri = g_filename_to_uri (filename, NULL, NULL);
+      g_free (filename);
+      exec = xfce_expand_field_codes (xfce_rc_read_entry (rc, "Exec", NULL),
+                                      xfce_rc_read_entry (rc, "Icon", NULL),
+                                      xfce_rc_read_entry (rc, "Name", NULL), uri, FALSE);
+      g_free (uri);
+
       /* execute the item */
-      exec = xfce_rc_read_entry (rc, "Exec", NULL);
       if (G_LIKELY (!skip && exec != NULL))
         {
           /* query launch parameters */
@@ -413,6 +423,7 @@ xfsm_launch_desktop_files_on_run_hook (gboolean    start_at_spi,
 
       /* cleanup */
       xfce_rc_close (rc);
+      g_free (exec);
     }
   g_strfreev (files);
 
