@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 00:31+0200\n"
-"PO-Revision-Date: 2019-09-09 07:45+0000\n"
-"Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
+"POT-Creation-Date: 2020-04-01 00:31+0200\n"
+"PO-Revision-Date: 2020-03-31 22:31+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Korean (http://www.transifex.com/xfce/xfce4-session/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -174,23 +174,23 @@ msgstr "프로그램 종료(_Q)"
 msgid "Unable to terminate program."
 msgstr "프로그램을 중단할 수 없습니다."
 
-#: ../settings/session-editor.c:533
+#: ../settings/session-editor.c:536
 msgid "(Unknown program)"
 msgstr "(알 수 없는 프로그램)"
 
-#: ../settings/session-editor.c:763
+#: ../settings/session-editor.c:768
 msgid "Priority"
 msgstr "우선순위"
 
-#: ../settings/session-editor.c:771
+#: ../settings/session-editor.c:776
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:777 ../settings/xfae-window.c:198
+#: ../settings/session-editor.c:782 ../settings/xfae-window.c:172
 msgid "Program"
 msgstr "프로그램"
 
-#: ../settings/session-editor.c:802
+#: ../settings/session-editor.c:807
 msgid "Restart Style"
 msgstr "다시 시작 방식"
 
@@ -198,7 +198,7 @@ msgstr "다시 시작 방식"
 msgid "_OK"
 msgstr "확인(_O)"
 
-#: ../settings/xfae-dialog.c:82
+#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:220
 msgid "Add application"
 msgstr "프로그램 추가"
 
@@ -230,7 +230,7 @@ msgstr "취소"
 msgid "OK"
 msgstr "확인"
 
-#: ../settings/xfae-dialog.c:260
+#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:242
 msgid "Edit application"
 msgstr "프로그램 편집"
 
@@ -296,48 +296,41 @@ msgstr "%s을(를) 읽으려면 여는데 실패했습니다"
 msgid "Failed to set run hook"
 msgstr "실행 후크 설정에 실패했습니다"
 
-#: ../settings/xfae-window.c:139
-msgid ""
-"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
-"On login additionally all applications that were saved on your last logout will be started.\n"
-"Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr "로그인, 로그아웃, 시스템 끄기 등의 각각의 동작 과정에서 자동으로 시작할 프로그램 목록입니다.\n로그인 과정에서는 마지막 로그아웃 과정에 저장한 모든 프로그램을 시작합니다.\n실행중인 프로그램은 다른 데스크톱 환경에 남지만, 원할 경우 활성화할 수 있습니다."
-
-#: ../settings/xfae-window.c:219
+#: ../settings/xfae-window.c:193
 msgid "Trigger"
 msgstr "트리거"
 
-#: ../settings/xfae-window.c:243 ../settings/xfae-window.c:329
+#: ../settings/xfae-window.c:229
+msgid "Remove application"
+msgstr ""
+
+#: ../settings/xfae-window.c:306
 msgid "Add"
 msgstr "추가"
 
-#: ../settings/xfae-window.c:251 ../settings/xfae-window.c:335
+#: ../settings/xfae-window.c:312
 msgid "Remove"
 msgstr "제거"
 
-#: ../settings/xfae-window.c:263
-msgid "Edit"
-msgstr "편집"
-
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:366
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "\"%s\"을(를) 추가하는데 실패했습니다"
 
-#: ../settings/xfae-window.c:420 ../settings/xfae-window.c:434
+#: ../settings/xfae-window.c:397 ../settings/xfae-window.c:411
 msgid "Failed to remove item"
 msgstr "항목을 제거하는데 실패했습니다"
 
-#: ../settings/xfae-window.c:463
+#: ../settings/xfae-window.c:440
 msgid "Failed to edit item"
 msgstr "항목을 편집하는데 실패했습니다"
 
-#: ../settings/xfae-window.c:483
+#: ../settings/xfae-window.c:460
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "\"%s\" 항목을 편집하는데 실패했습니다"
 
-#: ../settings/xfae-window.c:511
+#: ../settings/xfae-window.c:488
 msgid "Failed to toggle item"
 msgstr "항목을 전환하는데 실패했습니다"
 
@@ -601,6 +594,12 @@ msgstr "세션 및 시동"
 msgid "Customize desktop startup"
 msgstr "데스크톱 시작 개별 설정"
 
+#: ../settings/xfce-session-settings.desktop.in.h:3
+msgid ""
+"session;settings;preferences;manager;startup;login;logout;shutdown;lock "
+"screen;application;autostart;launch;services;daemon;agent;"
+msgstr ""
+
 #: ../settings/xfce4-session-settings.ui.h:2
 msgid "_Help"
 msgstr "도움말(_H)"
@@ -664,9 +663,9 @@ msgstr "세션 저장(_I)"
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid ""
 "These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "이 프로그램은 현재 실행 중인 세션의 일부이며 로그아웃 할 때 저장할 수 있습니다. 세션을 저장할 때 아래의 내용만을 반영합니다."
+"saved now or when you log out.  Changes below will only take effect when the"
+" session is saved."
+msgstr ""
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
