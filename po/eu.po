@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 00:31+0200\n"
-"PO-Revision-Date: 2019-08-01 10:15+0000\n"
-"Last-Translator: beriain\n"
+"POT-Creation-Date: 2020-04-01 00:31+0200\n"
+"PO-Revision-Date: 2020-03-31 22:31+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Basque (http://www.transifex.com/xfce/xfce4-session/language/eu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -173,23 +173,23 @@ msgstr "I_rten programatik"
 msgid "Unable to terminate program."
 msgstr "Ezin da programa amaitu"
 
-#: ../settings/session-editor.c:533
+#: ../settings/session-editor.c:536
 msgid "(Unknown program)"
 msgstr "(Programa ezezaguna)"
 
-#: ../settings/session-editor.c:763
+#: ../settings/session-editor.c:768
 msgid "Priority"
 msgstr "Lehentasuna"
 
-#: ../settings/session-editor.c:771
+#: ../settings/session-editor.c:776
 msgid "PID"
 msgstr "PIDa"
 
-#: ../settings/session-editor.c:777 ../settings/xfae-window.c:198
+#: ../settings/session-editor.c:782 ../settings/xfae-window.c:172
 msgid "Program"
 msgstr "Programa"
 
-#: ../settings/session-editor.c:802
+#: ../settings/session-editor.c:807
 msgid "Restart Style"
 msgstr "Berrabiarazte estiloa"
 
@@ -197,7 +197,7 @@ msgstr "Berrabiarazte estiloa"
 msgid "_OK"
 msgstr "_ADOS"
 
-#: ../settings/xfae-dialog.c:82
+#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:220
 msgid "Add application"
 msgstr "Gehitu aplikazioa"
 
@@ -229,7 +229,7 @@ msgstr "Utzi"
 msgid "OK"
 msgstr "Ados"
 
-#: ../settings/xfae-dialog.c:260
+#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:242
 msgid "Edit application"
 msgstr "Editatu aplikazioa"
 
@@ -295,48 +295,41 @@ msgstr "Ezin da %s fitxategia irakurtzeko ireki"
 msgid "Failed to set run hook"
 msgstr "Huts exekutatze krokadura ezartzen"
 
-#: ../settings/xfae-window.c:139
-msgid ""
-"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
-"On login additionally all applications that were saved on your last logout will be started.\n"
-"Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr "Saioa hasi, saioa amaitu, itzali, etab. bezalako gertaera zehatzetan automatikoki abiaraziko diren aplikazioen zerrenda.\nSaioa hasterakoan gainera zure azkeneko saio amaieran gorde ziren aplikazio guztiak abiaraziko dira.\nLetra etzanarekin ageri diren aplikazioak beste mahaigain ingurune batenak dira, baina gaitu ditzakezu hala ere nahi baduzu."
-
-#: ../settings/xfae-window.c:219
+#: ../settings/xfae-window.c:193
 msgid "Trigger"
 msgstr "Abiarazlea"
 
-#: ../settings/xfae-window.c:243 ../settings/xfae-window.c:329
+#: ../settings/xfae-window.c:229
+msgid "Remove application"
+msgstr ""
+
+#: ../settings/xfae-window.c:306
 msgid "Add"
 msgstr "Gehitu"
 
-#: ../settings/xfae-window.c:251 ../settings/xfae-window.c:335
+#: ../settings/xfae-window.c:312
 msgid "Remove"
 msgstr "Ezabatu"
 
-#: ../settings/xfae-window.c:263
-msgid "Edit"
-msgstr "Editatu"
-
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:366
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Huts /\"%s/\" gehitzerakoan"
 
-#: ../settings/xfae-window.c:420 ../settings/xfae-window.c:434
+#: ../settings/xfae-window.c:397 ../settings/xfae-window.c:411
 msgid "Failed to remove item"
 msgstr "Huts elementua ezabatzean"
 
-#: ../settings/xfae-window.c:463
+#: ../settings/xfae-window.c:440
 msgid "Failed to edit item"
 msgstr "Huts elementua editatzean"
 
-#: ../settings/xfae-window.c:483
+#: ../settings/xfae-window.c:460
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Ezin da \"%s\" elementua editatu"
 
-#: ../settings/xfae-window.c:511
+#: ../settings/xfae-window.c:488
 msgid "Failed to toggle item"
 msgstr "Huts elementua txandakatzean"
 
@@ -600,6 +593,12 @@ msgstr "Saioa eta abiaraztea"
 msgid "Customize desktop startup"
 msgstr "Mahaigainaren abioa pertsonalizatu"
 
+#: ../settings/xfce-session-settings.desktop.in.h:3
+msgid ""
+"session;settings;preferences;manager;startup;login;logout;shutdown;lock "
+"screen;application;autostart;launch;services;daemon;agent;"
+msgstr ""
+
 #: ../settings/xfce4-session-settings.ui.h:2
 msgid "_Help"
 msgstr "_Laguntza"
@@ -663,9 +662,9 @@ msgstr "Gorde sa_ioa"
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid ""
 "These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "Aplikazio hauek martxan dagoen saioaren zati dira eta gorde egin daitezke saioa ixterakoan. Beheko aldaketek saioa ixterakoan bakarrik eragingo dute."
+"saved now or when you log out.  Changes below will only take effect when the"
+" session is saved."
+msgstr ""
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
