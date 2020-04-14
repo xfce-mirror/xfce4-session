@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 00:31+0200\n"
-"PO-Revision-Date: 2019-08-01 06:18+0000\n"
-"Last-Translator: Hayk Andreasyan <hayk.andreasyan@realschool.am>\n"
+"POT-Creation-Date: 2020-04-01 00:31+0200\n"
+"PO-Revision-Date: 2020-03-31 22:31+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Armenian (Armenia) (http://www.transifex.com/xfce/xfce4-session/language/hy_AM/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -173,23 +173,23 @@ msgstr "_Դուրս գալ ծրագրից"
 msgid "Unable to terminate program."
 msgstr "Չյաջողուեց կանգնեցնել ծրագիրը"
 
-#: ../settings/session-editor.c:533
+#: ../settings/session-editor.c:536
 msgid "(Unknown program)"
 msgstr "(Անյայտ ծրագիր)"
 
-#: ../settings/session-editor.c:763
+#: ../settings/session-editor.c:768
 msgid "Priority"
 msgstr "Առաջնահերթութիւն"
 
-#: ../settings/session-editor.c:771
+#: ../settings/session-editor.c:776
 msgid "PID"
 msgstr "ԳՆՀ"
 
-#: ../settings/session-editor.c:777 ../settings/xfae-window.c:198
+#: ../settings/session-editor.c:782 ../settings/xfae-window.c:172
 msgid "Program"
 msgstr "Ծրագիր"
 
-#: ../settings/session-editor.c:802
+#: ../settings/session-editor.c:807
 msgid "Restart Style"
 msgstr "Վերագործարկման ձեւ"
 
@@ -197,7 +197,7 @@ msgstr "Վերագործարկման ձեւ"
 msgid "_OK"
 msgstr "_Բարի"
 
-#: ../settings/xfae-dialog.c:82
+#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:220
 msgid "Add application"
 msgstr "Աւելացնել ծրագիր"
 
@@ -229,7 +229,7 @@ msgstr "Փակել"
 msgid "OK"
 msgstr "OK"
 
-#: ../settings/xfae-dialog.c:260
+#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:242
 msgid "Edit application"
 msgstr "Խմբագրել ծրագիրը"
 
@@ -295,48 +295,41 @@ msgstr "Չյաջողուեց բացել %s նիշը ընթերցման համա�
 msgid "Failed to set run hook"
 msgstr "Չյաջողուեց սահմանել բեռնման կեռիկը"
 
-#: ../settings/xfae-window.c:139
-msgid ""
-"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
-"On login additionally all applications that were saved on your last logout will be started.\n"
-"Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr "Ներքեւում՝ ինքնագործարկուող ծրագրերի ցանկն է, երբ մուտք գործէք Xfce աշխատասեղանի միջավայր, ի յաւելումն այն ծրագրերի, որոնք պահուել էին վերջին մուտքի ժամանակ։ Ինքնադարձ ծրագրերը պատկանում են այլ աշխատասեղանի միջավայրի, սակայն ցանկութեան դէպքում, կարող էք միացնել նաեւ դրանք։"
-
-#: ../settings/xfae-window.c:219
+#: ../settings/xfae-window.c:193
 msgid "Trigger"
 msgstr "Շնիկ"
 
-#: ../settings/xfae-window.c:243 ../settings/xfae-window.c:329
+#: ../settings/xfae-window.c:229
+msgid "Remove application"
+msgstr ""
+
+#: ../settings/xfae-window.c:306
 msgid "Add"
 msgstr "Աւելացնել"
 
-#: ../settings/xfae-window.c:251 ../settings/xfae-window.c:335
+#: ../settings/xfae-window.c:312
 msgid "Remove"
 msgstr "Հեռացնել"
 
-#: ../settings/xfae-window.c:263
-msgid "Edit"
-msgstr "Խմբագրել"
-
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:366
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Չյաջողուեց յաւելել «%s»֊ը"
 
-#: ../settings/xfae-window.c:420 ../settings/xfae-window.c:434
+#: ../settings/xfae-window.c:397 ../settings/xfae-window.c:411
 msgid "Failed to remove item"
 msgstr "Չյաջողուեց հեռացնել տարրը"
 
-#: ../settings/xfae-window.c:463
+#: ../settings/xfae-window.c:440
 msgid "Failed to edit item"
 msgstr "Չյաջողուեց խմբագրել տարրը"
 
-#: ../settings/xfae-window.c:483
+#: ../settings/xfae-window.c:460
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Չյաջողուեց խմբագրել «%s» տարրը"
 
-#: ../settings/xfae-window.c:511
+#: ../settings/xfae-window.c:488
 msgid "Failed to toggle item"
 msgstr "Չյաջողուեց անջատել տարրը"
 
@@ -600,6 +593,12 @@ msgstr "Նիստ եւ մեկնարկ"
 msgid "Customize desktop startup"
 msgstr "Յարմարեցնել աշխատասեղանի մեկնարկումը"
 
+#: ../settings/xfce-session-settings.desktop.in.h:3
+msgid ""
+"session;settings;preferences;manager;startup;login;logout;shutdown;lock "
+"screen;application;autostart;launch;services;daemon;agent;"
+msgstr ""
+
 #: ../settings/xfce4-session-settings.ui.h:2
 msgid "_Help"
 msgstr "_Աջակցութիւն"
@@ -663,9 +662,9 @@ msgstr "Պահել նիս_տը"
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid ""
 "These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "Այս ծրագրերը կազմում են ներկայումս գործարկուող նիստի մասը եւ կարող են դուրս գալուց պահուել։ Կատարուած փոփոխութիւնները կը մտնեն ուժի մէջ, նիստի պահումից յետոյ։"
+"saved now or when you log out.  Changes below will only take effect when the"
+" session is saved."
+msgstr ""
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
