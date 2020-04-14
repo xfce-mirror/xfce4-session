@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 00:31+0200\n"
-"PO-Revision-Date: 2019-08-01 06:18+0000\n"
-"Last-Translator: Yarema aka Knedlyk <yupadmin@gmail.com>\n"
+"POT-Creation-Date: 2020-04-01 00:31+0200\n"
+"PO-Revision-Date: 2020-03-31 22:31+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/xfce/xfce4-session/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -175,23 +175,23 @@ msgstr "Ви_йти з програми"
 msgid "Unable to terminate program."
 msgstr "Неможливо завершити програму."
 
-#: ../settings/session-editor.c:533
+#: ../settings/session-editor.c:536
 msgid "(Unknown program)"
 msgstr "(Невідома програма)"
 
-#: ../settings/session-editor.c:763
+#: ../settings/session-editor.c:768
 msgid "Priority"
 msgstr "Пріоритет"
 
-#: ../settings/session-editor.c:771
+#: ../settings/session-editor.c:776
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:777 ../settings/xfae-window.c:198
+#: ../settings/session-editor.c:782 ../settings/xfae-window.c:172
 msgid "Program"
 msgstr "Програма"
 
-#: ../settings/session-editor.c:802
+#: ../settings/session-editor.c:807
 msgid "Restart Style"
 msgstr "Стиль перезавантаження"
 
@@ -199,7 +199,7 @@ msgstr "Стиль перезавантаження"
 msgid "_OK"
 msgstr "_Гаразд"
 
-#: ../settings/xfae-dialog.c:82
+#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:220
 msgid "Add application"
 msgstr "Додати програму"
 
@@ -231,7 +231,7 @@ msgstr "Скасувати"
 msgid "OK"
 msgstr "Гаразд"
 
-#: ../settings/xfae-dialog.c:260
+#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:242
 msgid "Edit application"
 msgstr "Редагувати програму"
 
@@ -297,48 +297,41 @@ msgstr "Не вдається відкрити %s для читання"
 msgid "Failed to set run hook"
 msgstr "Помилка запуску скрипта"
 
-#: ../settings/xfae-window.c:139
-msgid ""
-"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
-"On login additionally all applications that were saved on your last logout will be started.\n"
-"Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr "Нижче розташований список програм, які будуть запущені автоматично при специфічних подіях, таких як вхід, вихід, перезапуск та інших.\nДодатково програми, що були збережені, коли Ви виходили із сеансу останнього разу, будуть запущені.\nКурсивні програми належать до іншого середовища робочого столу, але Ви можете їх ввімкнути, якщо бажаєте."
-
-#: ../settings/xfae-window.c:219
+#: ../settings/xfae-window.c:193
 msgid "Trigger"
 msgstr "Перемикач:"
 
-#: ../settings/xfae-window.c:243 ../settings/xfae-window.c:329
+#: ../settings/xfae-window.c:229
+msgid "Remove application"
+msgstr ""
+
+#: ../settings/xfae-window.c:306
 msgid "Add"
 msgstr "Додати"
 
-#: ../settings/xfae-window.c:251 ../settings/xfae-window.c:335
+#: ../settings/xfae-window.c:312
 msgid "Remove"
 msgstr "Вилучити"
 
-#: ../settings/xfae-window.c:263
-msgid "Edit"
-msgstr "Редагувати"
-
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:366
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Не вдалось додати \"%s\""
 
-#: ../settings/xfae-window.c:420 ../settings/xfae-window.c:434
+#: ../settings/xfae-window.c:397 ../settings/xfae-window.c:411
 msgid "Failed to remove item"
 msgstr "Не вдається видалити елемент"
 
-#: ../settings/xfae-window.c:463
+#: ../settings/xfae-window.c:440
 msgid "Failed to edit item"
 msgstr "Не вдається відредагувати елемент"
 
-#: ../settings/xfae-window.c:483
+#: ../settings/xfae-window.c:460
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Не вдається відредагувати елемент \"%s\""
 
-#: ../settings/xfae-window.c:511
+#: ../settings/xfae-window.c:488
 msgid "Failed to toggle item"
 msgstr "Не вдається перемкнути елемент"
 
@@ -602,6 +595,12 @@ msgstr "Сеанси та запуск"
 msgid "Customize desktop startup"
 msgstr "Налаштувати запуск стільниці"
 
+#: ../settings/xfce-session-settings.desktop.in.h:3
+msgid ""
+"session;settings;preferences;manager;startup;login;logout;shutdown;lock "
+"screen;application;autostart;launch;services;daemon;agent;"
+msgstr ""
+
 #: ../settings/xfce4-session-settings.ui.h:2
 msgid "_Help"
 msgstr "_Допомога"
@@ -665,9 +664,9 @@ msgstr "Зберегти се_анс"
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid ""
 "These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "Ці програми є частиною сеансу, запущеного зараз і можуть бути збережені коли Ви вийдете з сеансу. Зміни внесені нижче матимуть ефект тільки після збереження сеансу."
+"saved now or when you log out.  Changes below will only take effect when the"
+" session is saved."
+msgstr ""
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
