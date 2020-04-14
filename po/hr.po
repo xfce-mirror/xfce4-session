@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Denis Štogl <denisstogl@gmail.com>, 2013
-# Edin Veskovic <edin.lockedin@gmail.com>, 2018-2019
+# Edin Veskovic <edin.lockedin@gmail.com>, 2018-2020
 # Edin Veskovic <edin.lockedin@gmail.com>, 2017
 # Ivica  Kolić <ikoli@yahoo.com>, 2010
 # Ivica  Kolić <ikoli@yahoo.com>, 2010,2013,2019
@@ -17,9 +17,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-05 06:30+0100\n"
-"PO-Revision-Date: 2019-12-23 21:55+0000\n"
-"Last-Translator: Ivica  Kolić <ikoli@yahoo.com>\n"
+"POT-Creation-Date: 2020-04-01 00:31+0200\n"
+"PO-Revision-Date: 2020-03-31 22:31+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Croatian (http://www.transifex.com/xfce/xfce4-session/language/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -181,23 +181,23 @@ msgstr "_Isključi program"
 msgid "Unable to terminate program."
 msgstr "Ne mogu ugasiti program."
 
-#: ../settings/session-editor.c:533
+#: ../settings/session-editor.c:536
 msgid "(Unknown program)"
 msgstr "(Nepoznati program)"
 
-#: ../settings/session-editor.c:763
+#: ../settings/session-editor.c:768
 msgid "Priority"
 msgstr "Prioritet"
 
-#: ../settings/session-editor.c:771
+#: ../settings/session-editor.c:776
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:777 ../settings/xfae-window.c:172
+#: ../settings/session-editor.c:782 ../settings/xfae-window.c:172
 msgid "Program"
 msgstr "Program"
 
-#: ../settings/session-editor.c:802
+#: ../settings/session-editor.c:807
 msgid "Restart Style"
 msgstr "Način ponovnog pokretanja"
 
@@ -205,7 +205,7 @@ msgstr "Način ponovnog pokretanja"
 msgid "_OK"
 msgstr "_OK"
 
-#: ../settings/xfae-dialog.c:82
+#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:220
 msgid "Add application"
 msgstr "Dodaj program"
 
@@ -237,7 +237,7 @@ msgstr "Otkaži"
 msgid "OK"
 msgstr "OK"
 
-#: ../settings/xfae-dialog.c:260
+#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:242
 msgid "Edit application"
 msgstr "Uredi program"
 
@@ -307,33 +307,37 @@ msgstr ""
 msgid "Trigger"
 msgstr "Okidač"
 
-#: ../settings/xfae-window.c:303
+#: ../settings/xfae-window.c:229
+msgid "Remove application"
+msgstr "Ukloni aplikaciju"
+
+#: ../settings/xfae-window.c:306
 msgid "Add"
 msgstr "Dodaj"
 
-#: ../settings/xfae-window.c:309
+#: ../settings/xfae-window.c:312
 msgid "Remove"
 msgstr "Ukloni"
 
-#: ../settings/xfae-window.c:363
+#: ../settings/xfae-window.c:366
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Ne mogu dodati \"%s\""
 
-#: ../settings/xfae-window.c:394 ../settings/xfae-window.c:408
+#: ../settings/xfae-window.c:397 ../settings/xfae-window.c:411
 msgid "Failed to remove item"
 msgstr "Neuspjelo uklanjanje stavke"
 
-#: ../settings/xfae-window.c:437
+#: ../settings/xfae-window.c:440
 msgid "Failed to edit item"
 msgstr "Neuspjelo uređivanje stavke"
 
-#: ../settings/xfae-window.c:457
+#: ../settings/xfae-window.c:460
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Neuspjelo uređivanje stavke  \"%s\""
 
-#: ../settings/xfae-window.c:485
+#: ../settings/xfae-window.c:488
 msgid "Failed to toggle item"
 msgstr "Ne mogu mijenjati stanje stavke"
 
@@ -596,6 +600,12 @@ msgstr "Sesija i pokretanje"
 #: ../settings/xfce-session-settings.desktop.in.h:2
 msgid "Customize desktop startup"
 msgstr "Prilagodi pokretanje radne površine"
+
+#: ../settings/xfce-session-settings.desktop.in.h:3
+msgid ""
+"session;settings;preferences;manager;startup;login;logout;shutdown;lock "
+"screen;application;autostart;launch;services;daemon;agent;"
+msgstr ""
 
 #: ../settings/xfce4-session-settings.ui.h:2
 msgid "_Help"
