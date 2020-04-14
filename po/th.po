@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 00:31+0200\n"
-"PO-Revision-Date: 2019-08-01 06:18+0000\n"
-"Last-Translator: Theppitak Karoonboonyanan <theppitak@gmail.com>\n"
+"POT-Creation-Date: 2020-04-01 00:31+0200\n"
+"PO-Revision-Date: 2020-03-31 22:31+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Thai (http://www.transifex.com/xfce/xfce4-session/language/th/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -173,23 +173,23 @@ msgstr "_ออกจากโปรแกรม"
 msgid "Unable to terminate program."
 msgstr "ไม่สามารถจบการทำงานของโปรแกรม"
 
-#: ../settings/session-editor.c:533
+#: ../settings/session-editor.c:536
 msgid "(Unknown program)"
 msgstr "(โปรแกรมนิรนาม)"
 
-#: ../settings/session-editor.c:763
+#: ../settings/session-editor.c:768
 msgid "Priority"
 msgstr "ความสำคัญ"
 
-#: ../settings/session-editor.c:771
+#: ../settings/session-editor.c:776
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:777 ../settings/xfae-window.c:198
+#: ../settings/session-editor.c:782 ../settings/xfae-window.c:172
 msgid "Program"
 msgstr "โปรแกรม"
 
-#: ../settings/session-editor.c:802
+#: ../settings/session-editor.c:807
 msgid "Restart Style"
 msgstr "รูปแบบการเปิดซ้ำ"
 
@@ -197,7 +197,7 @@ msgstr "รูปแบบการเปิดซ้ำ"
 msgid "_OK"
 msgstr "_ตกลง"
 
-#: ../settings/xfae-dialog.c:82
+#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:220
 msgid "Add application"
 msgstr "เพิ่มโปรแกรม"
 
@@ -229,7 +229,7 @@ msgstr "ยกเลิก"
 msgid "OK"
 msgstr "ตกลง"
 
-#: ../settings/xfae-dialog.c:260
+#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:242
 msgid "Edit application"
 msgstr "แก้ไขโปรแกรม"
 
@@ -295,48 +295,41 @@ msgstr "เปิดแฟ้ม %s เพื่ออ่านไม่สำ�
 msgid "Failed to set run hook"
 msgstr "กำหนดการทำงานที่จุด hook ไม่สำเร็จ"
 
-#: ../settings/xfae-window.c:139
-msgid ""
-"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
-"On login additionally all applications that were saved on your last logout will be started.\n"
-"Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr "รายชื่อของโปรแกรมที่จะเรียกใช้โดยอัตโนมัติเมื่อเกิดเหตุการณ์บางอย่างขึ้น เช่น การเข้าวาระ การออกจากวาระ การปิดเครื่อง ฯลฯ\nนอกจากนี้ เมื่อเข้าวาระ โปรแกรมอื่นทั้งหมดที่คุณบันทึกไว้ขณะออกจากวาระครั้งล่าสุดก็จะถูกเรียกทำงานด้วย\nโปรแกรมบางตัวอาจเป็นของสภาวะแวดล้อมเดสก์ท็อปอื่น แต่คุณก็ยังสามารถเปิดใช้ได้ถ้าคุณต้องการ"
-
-#: ../settings/xfae-window.c:219
+#: ../settings/xfae-window.c:193
 msgid "Trigger"
 msgstr "การสะกิดเรียก"
 
-#: ../settings/xfae-window.c:243 ../settings/xfae-window.c:329
+#: ../settings/xfae-window.c:229
+msgid "Remove application"
+msgstr ""
+
+#: ../settings/xfae-window.c:306
 msgid "Add"
 msgstr "เพิ่ม"
 
-#: ../settings/xfae-window.c:251 ../settings/xfae-window.c:335
+#: ../settings/xfae-window.c:312
 msgid "Remove"
 msgstr "ลบออก"
 
-#: ../settings/xfae-window.c:263
-msgid "Edit"
-msgstr "แก้ไข"
-
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:366
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "เพิ่ม \"%s\" ไม่สำเร็จ"
 
-#: ../settings/xfae-window.c:420 ../settings/xfae-window.c:434
+#: ../settings/xfae-window.c:397 ../settings/xfae-window.c:411
 msgid "Failed to remove item"
 msgstr "ลบรายการไม่สำเร็จ"
 
-#: ../settings/xfae-window.c:463
+#: ../settings/xfae-window.c:440
 msgid "Failed to edit item"
 msgstr "แก้ไขรายการไม่สำเร็จ"
 
-#: ../settings/xfae-window.c:483
+#: ../settings/xfae-window.c:460
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "แก้ไขรายการ \"%s\" ไม่สำเร็จ"
 
-#: ../settings/xfae-window.c:511
+#: ../settings/xfae-window.c:488
 msgid "Failed to toggle item"
 msgstr "สลับค่าของรายการไม่สำเร็จ"
 
@@ -600,6 +593,12 @@ msgstr "วาระและการเริ่ม"
 msgid "Customize desktop startup"
 msgstr "ปรับแต่งการเปิดวาระเดสก์ท็อป"
 
+#: ../settings/xfce-session-settings.desktop.in.h:3
+msgid ""
+"session;settings;preferences;manager;startup;login;logout;shutdown;lock "
+"screen;application;autostart;launch;services;daemon;agent;"
+msgstr ""
+
 #: ../settings/xfce4-session-settings.ui.h:2
 msgid "_Help"
 msgstr "_วิธีใช้"
@@ -663,9 +662,9 @@ msgstr "_บันทึกวาระ"
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid ""
 "These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "โปรแกรมเหล่านี้เป็นส่วนหนึ่งของวาระที่กำลังทำงานอยู่ และสามารถบันทึกไว้เมื่อคุณออกจากระบบได้ การเปลี่ยนแปลงต่างๆ ข้างล่างนี้จะมีผลก็ต่อเมื่อมีการบันทึกวาระเกิดขึ้น"
+"saved now or when you log out.  Changes below will only take effect when the"
+" session is saved."
+msgstr ""
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
