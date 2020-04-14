@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 00:31+0200\n"
-"PO-Revision-Date: 2019-08-01 06:18+0000\n"
+"POT-Creation-Date: 2020-04-01 00:31+0200\n"
+"PO-Revision-Date: 2020-03-31 22:31+0000\n"
 "Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Norwegian Nynorsk (http://www.transifex.com/xfce/xfce4-session/language/nn/)\n"
 "MIME-Version: 1.0\n"
@@ -172,23 +172,23 @@ msgstr "Avslutt programmet"
 msgid "Unable to terminate program."
 msgstr "Klarte ikkje tvinga programmet til å avslutta."
 
-#: ../settings/session-editor.c:533
+#: ../settings/session-editor.c:536
 msgid "(Unknown program)"
 msgstr "(Ukjent program)"
 
-#: ../settings/session-editor.c:763
+#: ../settings/session-editor.c:768
 msgid "Priority"
 msgstr "Prioritet"
 
-#: ../settings/session-editor.c:771
+#: ../settings/session-editor.c:776
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:777 ../settings/xfae-window.c:198
+#: ../settings/session-editor.c:782 ../settings/xfae-window.c:172
 msgid "Program"
 msgstr "Program"
 
-#: ../settings/session-editor.c:802
+#: ../settings/session-editor.c:807
 msgid "Restart Style"
 msgstr "Omstartsstil"
 
@@ -196,7 +196,7 @@ msgstr "Omstartsstil"
 msgid "_OK"
 msgstr "_OK"
 
-#: ../settings/xfae-dialog.c:82
+#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:220
 msgid "Add application"
 msgstr "Legg til program"
 
@@ -228,7 +228,7 @@ msgstr "Avbryt"
 msgid "OK"
 msgstr "OK"
 
-#: ../settings/xfae-dialog.c:260
+#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:242
 msgid "Edit application"
 msgstr "Endra program"
 
@@ -294,48 +294,41 @@ msgstr "Klarte ikkje opna «%s» for å lesa fila"
 msgid "Failed to set run hook"
 msgstr ""
 
-#: ../settings/xfae-window.c:139
-msgid ""
-"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
-"On login additionally all applications that were saved on your last logout will be started.\n"
-"Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr ""
-
-#: ../settings/xfae-window.c:219
+#: ../settings/xfae-window.c:193
 msgid "Trigger"
 msgstr ""
 
-#: ../settings/xfae-window.c:243 ../settings/xfae-window.c:329
+#: ../settings/xfae-window.c:229
+msgid "Remove application"
+msgstr ""
+
+#: ../settings/xfae-window.c:306
 msgid "Add"
 msgstr "Legg til"
 
-#: ../settings/xfae-window.c:251 ../settings/xfae-window.c:335
+#: ../settings/xfae-window.c:312
 msgid "Remove"
 msgstr "Fjern"
 
-#: ../settings/xfae-window.c:263
-msgid "Edit"
-msgstr "Endra"
-
-#: ../settings/xfae-window.c:389
+#: ../settings/xfae-window.c:366
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Klarte ikkje leggja til «%s»"
 
-#: ../settings/xfae-window.c:420 ../settings/xfae-window.c:434
+#: ../settings/xfae-window.c:397 ../settings/xfae-window.c:411
 msgid "Failed to remove item"
 msgstr "Klarte ikkje å fjerna elementet"
 
-#: ../settings/xfae-window.c:463
+#: ../settings/xfae-window.c:440
 msgid "Failed to edit item"
 msgstr "Klarte ikkje endra elementet"
 
-#: ../settings/xfae-window.c:483
+#: ../settings/xfae-window.c:460
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Klarte ikkje endra elementet «%s»"
 
-#: ../settings/xfae-window.c:511
+#: ../settings/xfae-window.c:488
 msgid "Failed to toggle item"
 msgstr "Klarte ikkje slå på/av elementet"
 
@@ -599,6 +592,12 @@ msgstr "Økt og oppstart"
 msgid "Customize desktop startup"
 msgstr ""
 
+#: ../settings/xfce-session-settings.desktop.in.h:3
+msgid ""
+"session;settings;preferences;manager;startup;login;logout;shutdown;lock "
+"screen;application;autostart;launch;services;daemon;agent;"
+msgstr ""
+
 #: ../settings/xfce4-session-settings.ui.h:2
 msgid "_Help"
 msgstr "_Hjelp"
@@ -662,9 +661,9 @@ msgstr "_Lagra økta"
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid ""
 "These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "Desse programma er ein del av økta som er i gang no, og du kan lagra dei når du loggar ut. Endringar blir berre verksame når økta er lagra."
+"saved now or when you log out.  Changes below will only take effect when the"
+" session is saved."
+msgstr ""
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
