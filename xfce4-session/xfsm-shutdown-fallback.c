@@ -53,9 +53,6 @@
 #ifdef HAVE_SIGNAL_H
 #include <signal.h>
 #endif
-#ifdef HAVE_SYS_SYSCTL_H
-#include <sys/sysctl.h>
-#endif
 
 #include <gio/gio.h>
 #include <libxfce4util/libxfce4util.h>
@@ -76,6 +73,9 @@
 
 #if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
 #define __BACKEND_TYPE_BSD__ 1
+#ifdef HAVE_SYS_SYSCTL_H
+#include <sys/sysctl.h>
+#endif
 #endif
 
 #define POLKIT_AUTH_SHUTDOWN_XFSM     "org.xfce.session.xfsm-shutdown-helper"
