@@ -51,9 +51,6 @@
 #ifdef HAVE_SIGNAL_H
 #include <signal.h>
 #endif
-#ifdef HAVE_SYS_SYSCTL_H
-#include <sys/sysctl.h>
-#endif
 
 #include <gio/gio.h>
 #include <libxfce4util/libxfce4util.h>
