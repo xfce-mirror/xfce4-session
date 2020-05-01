@@ -68,7 +68,7 @@ run (const gchar *command)
   gboolean result;
   gchar **argv;
   gchar **envp;
-  GError *err;
+  GError *err = NULL;
   gint status;
   gint argc;
 
@@ -100,6 +100,7 @@ run (const gchar *command)
 
   if (!result)
     {
+      puts (err->message);
       g_error_free (err);
       return FALSE;
     }
