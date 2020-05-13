@@ -1278,7 +1278,7 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
                                    ? _("Failed to hybrid sleep session")
                                    : _("Failed to switch user"),
                                    error->message,
-                                   XFCE_BUTTON_TYPE_MIXED, "window-close", _("_Close"), GTK_RESPONSE_ACCEPT,
+                                   XFCE_BUTTON_TYPE_MIXED, "window-close-symbolic", _("_Close"), GTK_RESPONSE_ACCEPT,
                                    NULL);
               g_error_free (error);
             }

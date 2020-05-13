@@ -138,7 +138,7 @@ session_editor_save_session(GtkWidget *btn,
                             _("Session Save Error"), "dialog-error",
                             _("Unable to save the session"),
                             error->message,
-                            XFCE_BUTTON_TYPE_MIXED, "window-close", _("_Close"), GTK_RESPONSE_ACCEPT,
+                            XFCE_BUTTON_TYPE_MIXED, "window-close-symbolic", _("_Close"), GTK_RESPONSE_ACCEPT,
                             NULL);
         gtk_widget_set_sensitive(btn, TRUE);
         g_error_free(error);
@@ -310,7 +310,7 @@ session_editor_quit_client(GtkWidget *btn,
                                 _("Terminate Program"), "dialog-error",
                                 _("Unable to terminate program."),
                                 error->message,
-                                XFCE_BUTTON_TYPE_MIXED, "window-close", _("_Close"), GTK_RESPONSE_ACCEPT,
+                                XFCE_BUTTON_TYPE_MIXED, "window-close-symbolic", _("_Close"), GTK_RESPONSE_ACCEPT,
                                 NULL);
             g_error_free(error);
         }
