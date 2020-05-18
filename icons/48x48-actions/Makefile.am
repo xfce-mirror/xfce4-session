@@ -4,6 +4,7 @@ icons_DATA = 								\
 	xfsm-logout.png							\
 	xfsm-reboot.png							\
 	xfsm-shutdown.png						\
-	xfsm-suspend.png
+	xfsm-suspend.png						\
+	xfsm-switch-user.png
 
 EXTRA_DIST = $(icons_DATA)
