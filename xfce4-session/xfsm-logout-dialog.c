@@ -535,13 +535,13 @@ xfsm_logout_dialog_button (const gchar      *title,
 
   image = gtk_image_new ();
   if (gtk_icon_theme_has_icon (icon_theme, icon_name))
-      gtk_image_set_from_icon_name (GTK_IMAGE (image), icon_name, GTK_ICON_SIZE_DND);
+      gtk_image_set_from_icon_name (GTK_IMAGE (image), icon_name, GTK_ICON_SIZE_DIALOG);
   else if (gtk_icon_theme_has_icon (icon_theme, icon_name_fallback))
-      gtk_image_set_from_icon_name (GTK_IMAGE (image), icon_name_fallback, GTK_ICON_SIZE_DND);
+      gtk_image_set_from_icon_name (GTK_IMAGE (image), icon_name_fallback, GTK_ICON_SIZE_DIALOG);
   else if (gtk_icon_theme_has_icon (icon_theme, icon_name_fallback2))
-      gtk_image_set_from_icon_name (GTK_IMAGE (image), icon_name_fallback2, GTK_ICON_SIZE_DND);
+      gtk_image_set_from_icon_name (GTK_IMAGE (image), icon_name_fallback2, GTK_ICON_SIZE_DIALOG);
 
-  gtk_image_set_pixel_size (GTK_IMAGE (image), 32);
+  gtk_image_set_pixel_size (GTK_IMAGE (image), 48);
   gtk_box_pack_start (GTK_BOX (vbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 
