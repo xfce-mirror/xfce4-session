@@ -747,6 +747,8 @@ session_tree_compare_iter(GtkTreeModel *model,
     }
 }
 
+
+
 static void
 session_editor_populate_treeview(GtkTreeView *treeview)
 {
@@ -769,6 +771,8 @@ session_editor_populate_treeview(GtkTreeView *treeview)
                                                    "text", COL_PRIORITY,
                                                    NULL);
     gtk_tree_view_append_column(treeview, col);
+    gtk_tree_view_column_set_sort_column_id(col,COL_PRIORITY);
+
     g_signal_connect(render, "edited",
                      G_CALLBACK(priority_changed), treeview);
 
@@ -777,11 +781,13 @@ session_editor_populate_treeview(GtkTreeView *treeview)
                                                    "text", COL_PID,
                                                    NULL);
     gtk_tree_view_append_column(treeview, col);
+    gtk_tree_view_column_set_sort_column_id(col,COL_PID);
 
     col = gtk_tree_view_column_new();
     gtk_tree_view_column_set_title(col, _("Program"));
     g_object_set(col, "expand", TRUE, NULL);
     gtk_tree_view_append_column(treeview, col);
+    gtk_tree_view_column_set_sort_column_id(col,COL_NAME);
 
     render = gtk_cell_renderer_pixbuf_new();
     gtk_tree_view_column_pack_start(col, render, FALSE);
@@ -808,6 +814,7 @@ session_editor_populate_treeview(GtkTreeView *treeview)
                                                    "text", COL_RESTART_STYLE_STR,
                                                    NULL);
     gtk_tree_view_append_column(treeview, col);
+    gtk_tree_view_column_set_sort_column_id(col,COL_RESTART_STYLE_STR);
     g_object_unref(combo_model);
     g_signal_connect(render, "edited",
                      G_CALLBACK(restart_style_hint_changed), treeview);
