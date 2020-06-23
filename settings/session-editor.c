@@ -747,8 +747,6 @@ session_tree_compare_iter(GtkTreeModel *model,
     }
 }
 
-
-
 static void
 session_editor_populate_treeview(GtkTreeView *treeview)
 {
