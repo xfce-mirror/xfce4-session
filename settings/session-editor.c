@@ -813,6 +813,7 @@ session_editor_populate_treeview(GtkTreeView *treeview)
                                                    NULL);
     gtk_tree_view_append_column(treeview, col);
     gtk_tree_view_column_set_sort_column_id(col,COL_RESTART_STYLE_STR);
+
     g_object_unref(combo_model);
     g_signal_connect(render, "edited",
                      G_CALLBACK(restart_style_hint_changed), treeview);
