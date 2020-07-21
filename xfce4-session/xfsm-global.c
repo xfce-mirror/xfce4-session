@@ -390,11 +390,12 @@ xfsm_launch_desktop_files_on_run_hook (gboolean    start_at_spi,
       filename = xfce_resource_lookup (XFCE_RESOURCE_CONFIG, files[n]);
       uri = g_filename_to_uri (filename, NULL, NULL);
       g_free (filename);
-      exec = xfce_expand_field_codes (xfce_rc_read_entry (rc, "Exec", NULL),
-                                      xfce_rc_read_entry (rc, "Icon", NULL),
-                                      xfce_rc_read_entry (rc, "Name", NULL),
-                                      uri,
-                                      FALSE);
+      exec = xfce_expand_desktop_entry_field_codes (xfce_rc_read_entry (rc, "Exec", NULL),
+                                                    NULL,
+                                                    xfce_rc_read_entry (rc, "Icon", NULL),
+                                                    xfce_rc_read_entry (rc, "Name", NULL),
+                                                    uri,
+                                                    FALSE);
       g_free (uri);
 
       /* execute the item */
