@@ -153,7 +153,7 @@ EXTRA_DIST =								\
 	org.xfce.session.policy.in2
 
 DISTCLEANFILES =							\
-	$(xfce4_session_built_sources)			\
+	$(BUILT_SOURCES)				\
 	org.xfce.session.policy					\
 	org.xfce.session.policy.in
 
