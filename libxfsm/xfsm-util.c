@@ -242,7 +242,7 @@ settings_list_sessions_open_rc (void)
 
   if (!g_file_test (session_file, G_FILE_TEST_IS_REGULAR))
     {
-      g_warning ("xfsm_manager_load_session: Something wrong with %s, Does it exist? Permissions issue?", session_file);
+      g_debug ("xfsm_manager_load_session: Something wrong with %s, Does it exist? Permissions issue?", session_file);
       return FALSE;
     }
 
