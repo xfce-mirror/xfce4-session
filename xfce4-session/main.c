@@ -143,7 +143,14 @@ manager_quit_cb (XfsmManager *manager, gpointer user_data)
 
   g_bus_unown_name (name_id);
 
-  name_lost (connection, "xfce4-session", manager);
+  if (XFSM_IS_MANAGER (manager))
+    {
+      name_lost (connection, "xfce4-session", manager);
+    }
+  else
+    {
+      g_critical ("Could not shut down or restart because XfsmManager is already gone.");
+    }
 }
 
 
