@@ -88,7 +88,6 @@ static void name_lost (GDBusConnection *connection,
 static void
 setup_environment (void)
 {
-  const gchar *lang;
   const gchar *sm;
   gchar       *authfile;
   int          fd;
