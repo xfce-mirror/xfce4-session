@@ -151,6 +151,7 @@ xfae_window_init (XfaeWindow *window)
   window->selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->treeview));
   gtk_tree_selection_set_mode (window->selection, GTK_SELECTION_SINGLE);
 
+  // Column "toggled"
   column = g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
                          "reorderable", FALSE,
                          "resizable", FALSE,
@@ -163,10 +164,12 @@ xfae_window_init (XfaeWindow *window)
                                        "active", XFAE_MODEL_COLUMN_ENABLED,
                                        NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
+  gtk_tree_view_column_set_sort_column_id(column, XFAE_MODEL_COLUMN_ENABLED);
 
+  // Column "Program"
   column = g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
                          "reorderable", FALSE,
-                         "resizable", FALSE,
+                         "resizable", TRUE,
                          "expand", TRUE,
                          NULL);
   gtk_tree_view_column_set_title (column, _("Program"));
@@ -184,8 +187,12 @@ xfae_window_init (XfaeWindow *window)
                                        "markup", XFAE_MODEL_COLUMN_NAME,
                                        NULL);
 
+  gtk_tree_view_column_set_sort_column_id(column, XFAE_MODEL_COLUMN_NAME);
+
   gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
 
+
+  // Column "Trigger"
   column = g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
                          "reorderable", FALSE,
                          "resizable", FALSE,
@@ -207,6 +214,8 @@ xfae_window_init (XfaeWindow *window)
                                        "text", XFAE_MODEL_RUN_HOOK,
                                        NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
+  gtk_tree_view_column_set_sort_column_id(column, XFAE_MODEL_RUN_HOOK);
+
   g_object_unref (model);
 
   bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
