@@ -169,7 +169,7 @@ xfae_window_init (XfaeWindow *window)
   // Column "Program"
   column = g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
                          "reorderable", FALSE,
-                         "resizable", TRUE,
+                         "resizable", FALSE,
                          "expand", TRUE,
                          NULL);
   gtk_tree_view_column_set_title (column, _("Program"));
