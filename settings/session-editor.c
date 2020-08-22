@@ -747,6 +747,18 @@ session_tree_compare_iter(GtkTreeModel *model,
     }
 }
 
+/**
+ * If there are sortable and `extend`able columns, the extendable colums
+ *  extend too much. Calling `gtk_tree_view_columns_autosize` upon TreeView-
+ *  realization fixes the problem
+ **/
+static void
+session_editor_correct_treeview_column_size (GtkWidget *treeview,
+                                             gpointer   user_data)
+{
+    gtk_tree_view_columns_autosize (GTK_TREE_VIEW (treeview));
+}
+
 static void
 session_editor_populate_treeview(GtkTreeView *treeview)
 {
@@ -759,6 +771,9 @@ session_editor_populate_treeview(GtkTreeView *treeview)
     GError *error = NULL;
 
     TRACE("entering\n");
+
+    // fix buggy sizing behavior of gtk
+    g_signal_connect (treeview, "realize", G_CALLBACK(session_editor_correct_treeview_column_size), NULL);
 
     render = gtk_cell_renderer_text_new();
     g_object_set(render,
