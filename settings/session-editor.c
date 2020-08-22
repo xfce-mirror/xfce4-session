@@ -786,6 +786,7 @@ session_editor_populate_treeview(GtkTreeView *treeview)
     g_object_set(col, "expand", TRUE, NULL);
     gtk_tree_view_append_column(treeview, col);
     gtk_tree_view_column_set_sort_column_id(col,COL_NAME);
+    gtk_tree_view_column_set_resizable(col, TRUE);
 
     render = gtk_cell_renderer_pixbuf_new();
     gtk_tree_view_column_pack_start(col, render, FALSE);
