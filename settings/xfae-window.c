@@ -41,6 +41,8 @@ static void          xfae_window_item_toggled                 (XfaeWindow       
                                                                gchar            *path_string);
 static void          xfae_window_selection_changed            (GtkTreeSelection *selection,
                                                                GtkWidget        *remove_button);
+static void          xfae_window_correct_treeview_column_size (GtkWidget        *treeview,
+                                                               gpointer          user_data);
 static GtkTreeModel* xfae_window_create_run_hooks_combo_model (void);
 
 
@@ -105,6 +107,15 @@ run_hook_changed (GtkCellRenderer *render,
 
 
 static void
+xfae_window_correct_treeview_column_size (GtkWidget *treeview,
+                                          gpointer   user_data)
+{
+    gtk_tree_view_columns_autosize (GTK_TREE_VIEW (treeview));
+}
+
+
+
+static void
 xfae_window_init (XfaeWindow *window)
 {
   GtkTreeViewColumn *column;
@@ -139,6 +150,10 @@ xfae_window_init (XfaeWindow *window)
                                    NULL);
   g_signal_connect (G_OBJECT (window->treeview), "button-press-event",
                     G_CALLBACK (xfae_window_button_press_event), window);
+  // fix buggy sizing behavior of gtk
+  g_signal_connect (G_OBJECT (window->treeview), "realize",
+                    G_CALLBACK(xfae_window_correct_treeview_column_size), NULL);
+
   gtk_container_add (GTK_CONTAINER (swin), window->treeview);
   gtk_widget_show (window->treeview);
 
@@ -151,6 +166,7 @@ xfae_window_init (XfaeWindow *window)
   window->selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->treeview));
   gtk_tree_selection_set_mode (window->selection, GTK_SELECTION_SINGLE);
 
+  // Column "toggled"
   column = g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
                          "reorderable", FALSE,
                          "resizable", FALSE,
@@ -163,7 +179,9 @@ xfae_window_init (XfaeWindow *window)
                                        "active", XFAE_MODEL_COLUMN_ENABLED,
                                        NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
+  gtk_tree_view_column_set_sort_column_id(column, XFAE_MODEL_COLUMN_ENABLED);
 
+  // Column "Program"
   column = g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
                          "reorderable", FALSE,
                          "resizable", FALSE,
@@ -184,8 +202,12 @@ xfae_window_init (XfaeWindow *window)
                                        "markup", XFAE_MODEL_COLUMN_NAME,
                                        NULL);
 
+  gtk_tree_view_column_set_sort_column_id(column, XFAE_MODEL_COLUMN_NAME);
+
   gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
 
+
+  // Column "Trigger"
   column = g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
                          "reorderable", FALSE,
                          "resizable", FALSE,
@@ -207,6 +229,8 @@ xfae_window_init (XfaeWindow *window)
                                        "text", XFAE_MODEL_RUN_HOOK,
                                        NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
+  gtk_tree_view_column_set_sort_column_id(column, XFAE_MODEL_RUN_HOOK);
+
   g_object_unref (model);
 
   bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
