@@ -38,42 +38,69 @@ typedef struct _XfaeItem XfaeItem;
 
 
 
-static void               xfae_model_tree_model_init  (GtkTreeModelIface  *iface);
-static void               xfae_model_finalize         (GObject            *object);
-static GtkTreeModelFlags  xfae_model_get_flags        (GtkTreeModel       *tree_model);
-static gint               xfae_model_get_n_columns    (GtkTreeModel       *tree_model);
-static GType              xfae_model_get_column_type  (GtkTreeModel       *tree_model,
-                                                       gint                index_);
-static gboolean           xfae_model_get_iter         (GtkTreeModel       *tree_model,
-                                                       GtkTreeIter        *iter,
-                                                       GtkTreePath        *path);
-static GtkTreePath       *xfae_model_get_path         (GtkTreeModel       *tree_model,
-                                                       GtkTreeIter        *iter);
-static void               xfae_model_get_value        (GtkTreeModel       *tree_model,
-                                                       GtkTreeIter        *iter,
-                                                       gint                column,
-                                                       GValue             *value);
-static gboolean           xfae_model_iter_next        (GtkTreeModel       *tree_model,
-                                                       GtkTreeIter        *iter);
-static gboolean           xfae_model_iter_children    (GtkTreeModel       *tree_model,
-                                                       GtkTreeIter        *iter,
-                                                       GtkTreeIter        *parent);
-static gboolean           xfae_model_iter_has_child   (GtkTreeModel       *tree_model,
-                                                       GtkTreeIter        *iter);
-static gint               xfae_model_iter_n_children  (GtkTreeModel       *tree_model,
-                                                       GtkTreeIter        *iter);
-static gboolean           xfae_model_iter_nth_child   (GtkTreeModel       *tree_model,
-                                                       GtkTreeIter        *iter,
-                                                       GtkTreeIter        *parent,
-                                                       gint                n);
-static gboolean           xfae_model_iter_parent      (GtkTreeModel       *tree_model,
-                                                       GtkTreeIter        *iter,
-                                                       GtkTreeIter        *child);
-static gint               xfae_model_sort_items       (gconstpointer       a,
-                                                       gconstpointer       b);
+static void               xfae_model_tree_model_init       (GtkTreeModelIface      *iface);
+static void               xfae_model_tree_sortable_init    (GtkTreeSortableIface   *iface);
+static void               xfae_model_finalize              (GObject                *object);
+static GtkTreeModelFlags  xfae_model_get_flags             (GtkTreeModel           *tree_model);
+static gint               xfae_model_get_n_columns         (GtkTreeModel           *tree_model);
+static GType              xfae_model_get_column_type       (GtkTreeModel           *tree_model,
+                                                            gint                    index_);
+static gboolean           xfae_model_get_iter              (GtkTreeModel           *tree_model,
+                                                            GtkTreeIter            *iter,
+                                                            GtkTreePath            *path);
+static GtkTreePath       *xfae_model_get_path              (GtkTreeModel           *tree_model,
+                                                            GtkTreeIter            *iter);
+static void               xfae_model_get_value             (GtkTreeModel           *tree_model,
+                                                            GtkTreeIter            *iter,
+                                                            gint                    column,
+                                                            GValue                 *value);
+static gboolean           xfae_model_iter_next             (GtkTreeModel           *tree_model,
+                                                            GtkTreeIter            *iter);
+static gboolean           xfae_model_iter_children         (GtkTreeModel           *tree_model,
+                                                            GtkTreeIter            *iter,
+                                                            GtkTreeIter            *parent);
+static gboolean           xfae_model_iter_has_child        (GtkTreeModel           *tree_model,
+                                                            GtkTreeIter            *iter);
+static gint               xfae_model_iter_n_children       (GtkTreeModel           *tree_model,
+                                                            GtkTreeIter            *iter);
+static gboolean           xfae_model_iter_nth_child        (GtkTreeModel           *tree_model,
+                                                            GtkTreeIter            *iter,
+                                                            GtkTreeIter            *parent,
+                                                            gint                    n);
+static gboolean           xfae_model_iter_parent           (GtkTreeModel           *tree_model,
+                                                            GtkTreeIter            *iter,
+                                                            GtkTreeIter            *child);
+static gboolean           xfae_model_get_sort_column_id    (GtkTreeSortable        *sortable,
+                                                            int                    *sort_column_id,
+                                                            GtkSortType            *sort_order);
+static void               xfae_model_set_sort_column_id    (GtkTreeSortable        *sortable,
+                                                            int                     sort_column_id,
+                                                            GtkSortType             order);
+static void               xfae_model_set_sort_func         (GtkTreeSortable        *sortable,
+                                                            int                     sort_column_id,
+                                                            GtkTreeIterCompareFunc  func,
+                                                            gpointer                data,
+                                                            GDestroyNotify          destroy);
+static void               xfae_model_set_default_sort_func (GtkTreeSortable        *sortable,
+                                                            GtkTreeIterCompareFunc  func,
+                                                            gpointer                data,
+                                                            GDestroyNotify          destroy);
+static gboolean           xfae_model_has_default_sort_func (GtkTreeSortable        *sortable);
+static void               xfae_model_sort                  (XfaeModel              *model);
+
+
 static XfaeItem          *xfae_item_new               (const gchar        *relpath);
 static void               xfae_item_free              (XfaeItem           *item);
 static gboolean           xfae_item_is_removable      (XfaeItem           *item);
+static gboolean           xfae_item_is_enabled        (const XfaeItem     *item);
+static gint               xfae_item_sort_default      (gconstpointer       a,
+                                                       gconstpointer       b);
+static gint               xfae_item_sort_name         (gconstpointer       a,
+                                                       gconstpointer       b);
+static gint               xfae_item_sort_enabled      (gconstpointer       a,
+                                                       gconstpointer       b);
+static gint               xfae_item_sort_hook         (gconstpointer       a,
+                                                       gconstpointer       b);
 
 GType
 xfsm_run_hook_get_type (void)
@@ -108,8 +135,10 @@ struct _XfaeModel
 {
   GObject __parent__;
 
-  gint   stamp;
-  GList *items;
+  gint        stamp;
+  GList      *items;
+  int         sort_column_id;
+  GtkSortType sort_order;
 };
 
 struct _XfaeItem
@@ -132,7 +161,9 @@ G_DEFINE_TYPE_WITH_CODE (XfaeModel,
                          xfae_model,
                          G_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GTK_TYPE_TREE_MODEL,
-                                                xfae_model_tree_model_init));
+                                                xfae_model_tree_model_init);
+                         G_IMPLEMENT_INTERFACE (GTK_TYPE_TREE_SORTABLE,
+                                                xfae_model_tree_sortable_init));
 
 
 
@@ -154,6 +185,9 @@ xfae_model_init (XfaeModel *model)
   gchar   **files;
   guint     n;
 
+  model->sort_column_id = GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID;
+  model->sort_order = GTK_SORT_DESCENDING;
+
   model->stamp = g_random_int ();
 
   files = xfce_resource_match (XFCE_RESOURCE_CONFIG, "autostart/*.desktop", TRUE);
@@ -165,7 +199,132 @@ xfae_model_init (XfaeModel *model)
     }
   g_strfreev (files);
 
-  model->items = g_list_sort (model->items, xfae_model_sort_items);
+  model->items = g_list_sort (model->items, xfae_item_sort_default);
+}
+
+
+
+static gboolean
+xfae_model_get_sort_column_id (GtkTreeSortable *sortable,
+                               int             *sort_column_id,
+                               GtkSortType     *sort_order)
+{
+  XfaeModel * model = XFAE_MODEL (sortable);
+  if (sort_column_id)
+    *sort_column_id = model->sort_column_id;
+  if (sort_order)
+    *sort_order = model->sort_order;
+
+  if (model->sort_column_id == GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID ||
+      model->sort_column_id == GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID)
+    {
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+
+
+static void
+xfae_model_set_sort_column_id (GtkTreeSortable *sortable,
+                               int              sort_column_id,
+                               GtkSortType      order)
+{
+  XfaeModel *model = XFAE_MODEL (sortable);
+
+  if ((model->sort_column_id == sort_column_id) &&
+      (model->sort_order == order))
+      return;
+
+  if ((GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID == sort_column_id) ||
+      (GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID  == sort_column_id))
+  {
+    // This path is probably never hit
+    return;
+  }
+
+  model->sort_column_id = sort_column_id;
+  model->sort_order = order;
+
+  xfae_model_sort (model);
+
+  gtk_tree_sortable_sort_column_changed (sortable);
+}
+
+
+
+static void
+xfae_model_set_sort_func (GtkTreeSortable        *sortable,
+                          int                     sort_column_id,
+                          GtkTreeIterCompareFunc  func,
+                          gpointer                data,
+                          GDestroyNotify          destroy)
+{
+  g_printerr ("xfae_model_set_sort_func not supported\n");
+  return;
+}
+
+
+
+static void
+xfae_model_set_default_sort_func (GtkTreeSortable        *sortable,
+                                  GtkTreeIterCompareFunc  func,
+                                  gpointer                data,
+                                  GDestroyNotify          destroy)
+{
+  g_printerr ("xfae_model_set_default_sort_func not supported\n");
+  return;
+}
+
+
+
+static gboolean
+xfae_model_has_default_sort_func (GtkTreeSortable *sortable)
+{
+  return FALSE;
+}
+
+
+
+static void
+xfae_model_sort (XfaeModel *model)
+{
+  // sort ASC
+  switch (model->sort_column_id)
+    {
+      case XFAE_MODEL_COLUMN_NAME:
+        model->items = g_list_sort (model->items, xfae_item_sort_name);
+        break;
+      case XFAE_MODEL_COLUMN_ENABLED:
+        model->items = g_list_sort (model->items, xfae_item_sort_enabled);
+        break;
+      case XFAE_MODEL_RUN_HOOK:
+        model->items = g_list_sort (model->items, xfae_item_sort_hook);
+        break;
+      default:
+        return;
+    }
+
+  // If necessary, reverse so we have DESC.
+  // This implementation is inefficient, but this is only rarely called.
+  if (GTK_SORT_DESCENDING == model->sort_order)
+    {
+      model->items = g_list_reverse (model->items);
+    }
+
+}
+
+
+
+static void
+xfae_model_tree_sortable_init (GtkTreeSortableIface *iface)
+{
+  iface->get_sort_column_id = xfae_model_get_sort_column_id;
+  iface->set_sort_column_id = xfae_model_set_sort_column_id;
+  iface->set_sort_func = xfae_model_set_sort_func;
+  iface->set_default_sort_func = xfae_model_set_default_sort_func;
+  iface->has_default_sort_func = xfae_model_has_default_sort_func;
 }
 
 
@@ -360,11 +519,7 @@ xfae_model_get_value (GtkTreeModel *tree_model,
 
     case XFAE_MODEL_COLUMN_ENABLED:
       g_value_init (value, G_TYPE_BOOLEAN);
-
-      if (item->show_in_xfce)
-        g_value_set_boolean (value, !item->hidden);
-      else
-        g_value_set_boolean (value, !item->hidden && item->show_in_override);
+      g_value_set_boolean (value, xfae_item_is_enabled (item));
       break;
 
     case XFAE_MODEL_COLUMN_REMOVABLE:
@@ -479,22 +634,6 @@ xfae_model_iter_parent (GtkTreeModel *tree_model,
                         GtkTreeIter  *child)
 {
   return FALSE;
-}
-
-
-
-static gint
-xfae_model_sort_items (gconstpointer a,
-                       gconstpointer b)
-{
-  const XfaeItem *item_a = a;
-  const XfaeItem *item_b = b;
-
-  /* sort non-xfce items below */
-  if (item_a->show_in_xfce != item_b->show_in_xfce)
-    return item_a->show_in_xfce ? -1 : 1;
-
-  return g_utf8_collate (item_a->name, item_b->name);
 }
 
 
@@ -686,6 +825,77 @@ xfae_item_remove (XfaeItem *item,
   g_strfreev (files);
 
   return succeed;
+}
+
+
+
+/**
+ *  Essentially determines, if the "toggle" value in the treeview
+ *   is true or false
+ **/
+static gboolean
+xfae_item_is_enabled (const XfaeItem * item)
+{
+  if (item->show_in_xfce)
+    return !item->hidden;
+
+  return !item->hidden && item->show_in_override;
+}
+
+
+
+/**
+ * Initial sorting given, when list is created first
+ **/
+static gint
+xfae_item_sort_default (gconstpointer a,
+                        gconstpointer b)
+{
+  const XfaeItem *item_a = a;
+  const XfaeItem *item_b = b;
+
+  /* sort non-xfce items below */
+  if (item_a->show_in_xfce != item_b->show_in_xfce)
+    return item_a->show_in_xfce ? -1 : 1;
+
+  return g_utf8_collate (item_a->name, item_b->name);
+}
+
+
+
+static gint
+xfae_item_sort_name  (gconstpointer a,
+                      gconstpointer b)
+{
+  const XfaeItem *item_a = a;
+  const XfaeItem *item_b = b;
+
+  return g_utf8_collate (item_a->name, item_b->name);
+}
+
+
+
+static gint
+xfae_item_sort_enabled  (gconstpointer a,
+                         gconstpointer b)
+{
+  const XfaeItem *item_a = a;
+  const XfaeItem *item_b = b;
+
+  /* Ordering: ASC = true,false; DESC = false,true */
+  return (xfae_item_is_enabled (item_b) - xfae_item_is_enabled (item_a));
+}
+
+
+
+static gint
+xfae_item_sort_hook  (gconstpointer a,
+                      gconstpointer b)
+{
+  const XfaeItem *item_a = a;
+  const XfaeItem *item_b = b;
+
+  return (item_a->run_hook - item_b->run_hook);
 }
 
 
