@@ -2,6 +2,9 @@
 
 SUBDIRS =								\
 	16x16								\
+	24x24								\
+	24x24-actions						\
+	32x32								\
 	48x48-actions						\
 	48x48								\
 	128x128								\
