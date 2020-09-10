@@ -1,7 +1,7 @@
 [![License](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://gitlab.xfce.org/xfce/xfce4-session/COPYING)
 
-xfce4-session
-====================
+# xfce4-session
+
 
 Xfce4-session is a session manager for Xfce. Its task is to save the state of your desktop (opened applications and their location) and restore it during a next startup. You can create several different sessions and choose one of them on startup. 
 
@@ -24,6 +24,7 @@ See [NEWS](https://gitlab.xfce.org/xfce/xfce4-session/-/blob/master/NEWS) for de
 [xfce4-session archive](https://archive.xfce.org/src/xfce/xfce4-session)
     or
 [xfce4-session tags](https://gitlab.xfce.org/xfce/xfce4-session/-/tags)
+
 ### Installation
 
 From source: 
