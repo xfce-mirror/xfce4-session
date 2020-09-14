@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://gitlab.xfce.org/xfce/xfce4-session/COPYING)
+[![License](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://gitlab.xfce.org/xfce/xfce4-session/-/blob/master/COPYING)
 
 # xfce4-session
 
@@ -9,7 +9,7 @@ Xfce4-session is a session manager for Xfce. Its task is to save the state of yo
 
 ### Homepage
 
-[xfce4-session documentation](https://docs.xfce.org/xfce/xfce4-session/start)
+[Xfce4-session documentation](https://docs.xfce.org/xfce/xfce4-session/start)
 
 ### Changelog
 
@@ -17,13 +17,13 @@ See [NEWS](https://gitlab.xfce.org/xfce/xfce4-session/-/blob/master/NEWS) for de
 
 ### Source Code Repository
 
-[xfce4-session source code](https://gitlab.xfce.org/xfce/xfce4-session)
+[Xfce4-session source code](https://gitlab.xfce.org/xfce/xfce4-session)
 
-### Download A Release Tarball
+### Download a Release Tarball
 
-[xfce4-session archive](https://archive.xfce.org/src/xfce/xfce4-session)
+[Xfce4-session archive](https://archive.xfce.org/src/xfce/xfce4-session)
     or
-[xfce4-session tags](https://gitlab.xfce.org/xfce/xfce4-session/-/tags)
+[Xfce4-session tags](https://gitlab.xfce.org/xfce/xfce4-session/-/tags)
 
 ### Installation
 
