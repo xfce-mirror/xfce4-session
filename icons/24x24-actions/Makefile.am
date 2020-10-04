@@ -1,4 +1,4 @@
-iconsdir = $(datadir)/icons/hicolor/48x48/actions
+iconsdir = $(datadir)/icons/hicolor/24x24/actions
 icons_DATA = 								\
 	xfsm-hibernate.png						\
 	xfsm-lock.png							\
