@@ -5,7 +5,7 @@
 # Translators:
 # Demiray Muhterem <mdemiray@msn.com>, 2019-2020
 # Demiray Muhterem <mdemiray@msn.com>, 2018
-# Emin Tufan <etcetin@gmail.com>, 2018
+# Emin Tufan <etcetin@gmail.com>, 2018,2020
 # Erçin EKER <ercin.eker@linux.org.tr>, 2004
 # Gökmen Görgen <gkmngrgn@gmail.com>, 2008-2009
 # Necdet Yücel <necdetyucel@gmail.com>, 2016-2017
@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-01 00:31+0200\n"
-"PO-Revision-Date: 2020-04-13 20:20+0000\n"
-"Last-Translator: Demiray Muhterem <mdemiray@msn.com>\n"
+"PO-Revision-Date: 2020-10-19 00:23+0000\n"
+"Last-Translator: Emin Tufan <etcetin@gmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/xfce/xfce4-session/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -56,7 +56,7 @@ msgstr "Ayarlar yöneticisi yuvası"
 
 #: ../settings/main.c:99
 msgid "SOCKET ID"
-msgstr "YUVA ID"
+msgstr "YUVA KİMLİĞİ"
 
 #: ../settings/main.c:100
 msgid "Version information"
@@ -88,7 +88,7 @@ msgstr "Tanımlama bilgisinden kullanıcı arayüzü oluşturma başarısız"
 
 #: ../settings/main.c:165
 msgid "App_lication Autostart"
-msgstr "Uygu_lama Otomatik Başlat"
+msgstr "Kendiliğinden Uygulama Başlatımı"
 
 #: ../settings/main.c:171
 msgid "Currently active session:"
@@ -222,11 +222,11 @@ msgstr "Komut:"
 
 #: ../settings/xfae-dialog.c:138
 msgid "Trigger:"
-msgstr "Tetikleme:"
+msgstr "Tetikleyici:"
 
 #: ../settings/xfae-dialog.c:209
 msgid "Select a command"
-msgstr "Bir komut seç"
+msgstr "Komut seç"
 
 #: ../settings/xfae-dialog.c:212
 msgid "Cancel"
@@ -266,7 +266,7 @@ msgstr "uykuda"
 
 #: ../settings/xfae-model.c:93
 msgid "on hybrid sleep"
-msgstr "hibrit uykuda"
+msgstr "melez uykuda"
 
 #: ../settings/xfae-model.c:94
 msgid "on switch user"
@@ -276,12 +276,12 @@ msgstr "kullanıcı değişirken"
 #: ../settings/xfae-model.c:1030
 #, c-format
 msgid "Failed to open %s for writing"
-msgstr "%s dosyasında yazmaya uygun açılamıyor"
+msgstr "%s, yazmak için açılamıyor "
 
 #: ../settings/xfae-model.c:681
 #, c-format
 msgid "Failed to unlink %s: %s"
-msgstr "Bağ oluşturulamadı: %s %s"
+msgstr "%s bağı kaldırılamadı: %s"
 
 #: ../settings/xfae-model.c:772
 #, c-format
@@ -321,7 +321,7 @@ msgstr "Kaldır"
 #: ../settings/xfae-window.c:366
 #, c-format
 msgid "Failed adding \"%s\""
-msgstr "Ekleme başarısız \"%s\""
+msgstr "\"%s\" eklenemedi"
 
 #: ../settings/xfae-window.c:397 ../settings/xfae-window.c:411
 msgid "Failed to remove item"
@@ -334,7 +334,7 @@ msgstr "Düzenleme başarısız."
 #: ../settings/xfae-window.c:460
 #, c-format
 msgid "Failed to edit item \"%s\""
-msgstr "\"%s\"' düzenleme başarısız."
+msgstr "\"%s\"' düzenlenemedi."
 
 #: ../settings/xfae-window.c:488
 msgid "Failed to toggle item"
@@ -342,7 +342,7 @@ msgstr "Öge değiştirilemedi"
 
 #: ../xfce4-session/main.c:77
 msgid "Disable binding to TCP ports"
-msgstr "TCP Port bindingi kapat"
+msgstr "TCP bağlantı noktalarına ilişkilendirmeyi kapat"
 
 #: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:102
 msgid "Print version information and exit"
@@ -383,7 +383,7 @@ msgstr "Başlat"
 
 #: ../xfce4-session/xfsm-chooser.c:212
 msgid "Start an existing session."
-msgstr "Mevcut bir oturumu başlatın."
+msgstr "Var olan oturumu başlat."
 
 #: ../xfce4-session/xfsm-dns.c:78
 msgid "(Unknown)"
@@ -475,7 +475,7 @@ msgstr "Denetleme noktası istenirken oturum yöneticisi uzakta durumunda olmal�
 
 #: ../xfce4-session/xfsm-manager.c:2317 ../xfce4-session/xfsm-manager.c:2337
 msgid "Session manager must be in idle state when requesting a shutdown"
-msgstr "Kapatma istenirken oturum yöneticisi uzakta durumunda olmak zorunda"
+msgstr "Kapatma istenirken oturum yöneticisi uzakta durumunda olmalıdır"
 
 #: ../xfce4-session/xfsm-manager.c:2382
 msgid "Session manager must be in idle state when requesting a restart"
@@ -484,7 +484,7 @@ msgstr "Kapatma istenirken oturum yöneticisi çalışmıyor olmalıdır"
 #: ../xfce4-session/xfsm-logout-dialog.c:193
 #, c-format
 msgid "Log out %s"
-msgstr "%s Oturumunu Kapat"
+msgstr "%s oturumunu kapat"
 
 #. *
 #. * Logout
@@ -523,11 +523,11 @@ msgstr "_Gelecek girişler için oturumu kaydet"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:451
 msgid "An error occurred"
-msgstr "Bir hata oluştu"
+msgstr "Hata oluştu"
 
 #: ../xfce4-session/xfsm-shutdown.c:162
 msgid "Shutdown is blocked by the kiosk settings"
-msgstr "Kapanma kiosk ayarları tarafından engellendi"
+msgstr "Kapanma kiosk ayarlarınca engellendi"
 
 #: ../xfce4-session/xfsm-shutdown.c:219
 #, c-format
@@ -604,7 +604,7 @@ msgstr "Masaüstü başlangıcını özelleştir"
 msgid ""
 "session;settings;preferences;manager;startup;login;logout;shutdown;lock "
 "screen;application;autostart;launch;services;daemon;agent;"
-msgstr "oturum;ayarlar;tercihler;yönetici;başlangıç;giriş;oturum kapatma;kapatma;kilit ekranı;uygulama;otomatik başlatma;başlatma;hizmetler;arka plan programı;aracı;"
+msgstr "oturum;ayarlar;tercihler;yönetici;başlangıç;giriş;oturum kapatma;kapatma;kilit ekranı;uygulama;otomatik başlatma;kendiliğinden başlatma;başlatma;hizmetler;arka plan programı;aracı;"
 
 #: ../settings/xfce4-session-settings.ui.h:2
 msgid "_Help"
@@ -624,7 +624,7 @@ msgstr "<b>Oturum Seçici</b>"
 
 #: ../settings/xfce4-session-settings.ui.h:7
 msgid "Automatically save session on logo_ut"
-msgstr "Oturumu kapatırken otomatik olarak kaydet"
+msgstr "Oturumu kapatırken kendiliğinden kaydet"
 
 #: ../settings/xfce4-session-settings.ui.h:8
 msgid "Always save the session when logging out"
@@ -660,7 +660,7 @@ msgstr "_Genel"
 
 #: ../settings/xfce4-session-settings.ui.h:16
 msgid "Currently active session: <b>Default</b>"
-msgstr "Şu anda aktif oturum: <b>Varsayılan</b>"
+msgstr "Şu anda aktif oturum: <b>Öntanımlı</b>"
 
 #: ../settings/xfce4-session-settings.ui.h:17
 msgid "Save Sess_ion"
@@ -671,11 +671,11 @@ msgid ""
 "These applications are a part of the currently-running session, and can be "
 "saved now or when you log out.  Changes below will only take effect when the"
 " session is saved."
-msgstr "Bu uygulamalar o anda çalışmakta olan oturumun bir parçasıdır ve şimdi veya oturumu kapattığınızda kaydedilebilir. Aşağıdaki değişiklikler sadece oturum kaydedildiğinde geçerli olacaktır."
+msgstr "Bu uygulamalar, o anda çalışan oturumun parçasıdır ve şimdi veya oturumu kapattığınızda kaydedilebilir. Aşağıdaki değişiklikler yalnızca oturum kaydedildiğinde geçerli olacaktır."
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
-msgstr "Mevcut Oturu_m"
+msgstr "Geçerli _Oturum"
 
 #: ../settings/xfce4-session-settings.ui.h:21
 msgid "Delete the selected session"
@@ -711,7 +711,7 @@ msgstr "<b>Uyumluluk</b>"
 
 #: ../settings/xfce4-session-settings.ui.h:29
 msgid "Manage _remote applications"
-msgstr "Uzaktaki uygulamala_rı yönet"
+msgstr "_Uzak uygulamaları yönet"
 
 #: ../settings/xfce4-session-settings.ui.h:30
 msgid ""
@@ -734,4 +734,4 @@ msgstr "Oturum Kaydediliyor"
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
-msgstr "Oturumunuz kaydedilmeye başlandı. Beklemek istemiyorsanız, bu pencereyi kapatabilirsiniz."
+msgstr "Oturumunuz kaydediliyor. Beklemek istemiyorsanız, bu pencereyi kapatabilirsiniz."
