@@ -347,6 +347,8 @@ lock_screen (GError **error)
       /* sleep 2 seconds so locking has time to startup */
       g_usleep (G_USEC_PER_SEC * 2);
     }
+  else
+    g_set_error (error, 1, 0, "Failed to lock the screen.");
 
   g_object_unref (G_OBJECT (saver));
 
@@ -410,6 +412,7 @@ xfsm_shutdown_fallback_try_action (XfsmShutdownType   type,
         return FALSE;
       break;
     default:
+      g_set_error (error, 1, 0, "Unknown shutdown type %d", type);
       return FALSE;
   }
 
@@ -429,6 +432,10 @@ xfsm_shutdown_fallback_try_action (XfsmShutdownType   type,
 
   g_free (command);
 #endif
+  if (!ret)
+    {
+      g_set_error (error, 1, 0, "Failed to %s (%s)", xfsm_helper_action, cmd);
+    }
   return ret;
 }
 
