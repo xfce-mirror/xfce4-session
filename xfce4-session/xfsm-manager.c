@@ -2358,7 +2358,7 @@ xfsm_manager_dbus_can_shutdown (XfsmDbusManager *object,
 
   if (error)
     {
-      throw_error (invocation, XFSM_ERROR_BAD_STATE, error->message);
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, "%s", error->message);
       g_clear_error(&error);
       return TRUE;
     }
@@ -2403,7 +2403,7 @@ xfsm_manager_dbus_can_restart (XfsmDbusManager *object,
 
   if (error)
     {
-      throw_error (invocation, XFSM_ERROR_BAD_STATE, error->message);
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, "%s", error->message);
       g_clear_error(&error);
       return TRUE;
     }
@@ -2424,7 +2424,7 @@ xfsm_manager_dbus_suspend (XfsmDbusManager *object,
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
   if (xfsm_shutdown_try_suspend (XFSM_MANAGER (object)->shutdown_helper, &error) == FALSE)
     {
-      throw_error (invocation, XFSM_ERROR_BAD_STATE, error->message);
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, "%s", error->message);
       g_clear_error (&error);
       return TRUE;
     }
@@ -2450,7 +2450,7 @@ xfsm_manager_dbus_can_suspend (XfsmDbusManager *object,
 
   if (error)
     {
-      throw_error (invocation, XFSM_ERROR_BAD_STATE, error->message);
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, "%s", error->message);
       g_clear_error(&error);
       return TRUE;
     }
@@ -2473,7 +2473,7 @@ xfsm_manager_dbus_hibernate (XfsmDbusManager *object,
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
   if (xfsm_shutdown_try_hibernate (XFSM_MANAGER (object)->shutdown_helper, &error) == FALSE)
     {
-      throw_error (invocation, XFSM_ERROR_BAD_STATE, error->message);
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, "%s", error->message);
       g_clear_error (&error);
       return TRUE;
     }
@@ -2498,7 +2498,7 @@ xfsm_manager_dbus_can_hibernate (XfsmDbusManager *object,
 
   if (error)
     {
-      throw_error (invocation, XFSM_ERROR_BAD_STATE, error->message);
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, "%s", error->message);
       g_clear_error(&error);
       return TRUE;
     }
@@ -2521,7 +2521,7 @@ xfsm_manager_dbus_hybrid_sleep (XfsmDbusManager *object,
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
   if (xfsm_shutdown_try_hybrid_sleep (XFSM_MANAGER (object)->shutdown_helper, &error) == FALSE)
     {
-      throw_error (invocation, XFSM_ERROR_BAD_STATE, error->message);
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, "%s", error->message);
       g_clear_error (&error);
       return TRUE;
     }
@@ -2546,7 +2546,7 @@ xfsm_manager_dbus_can_hybrid_sleep (XfsmDbusManager *object,
 
   if (error)
     {
-      throw_error (invocation, XFSM_ERROR_BAD_STATE, error->message);
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, "%s", error->message);
       g_clear_error(&error);
       return TRUE;
     }
@@ -2569,7 +2569,7 @@ xfsm_manager_dbus_switch_user (XfsmDbusManager *object,
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
   if (xfsm_shutdown_try_switch_user (XFSM_MANAGER (object)->shutdown_helper, &error) == FALSE)
     {
-      throw_error (invocation, XFSM_ERROR_BAD_STATE, error->message);
+      throw_error (invocation, XFSM_ERROR_BAD_STATE, "%s", error->message);
       g_clear_error (&error);
       return TRUE;
     }
