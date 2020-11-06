@@ -148,9 +148,11 @@ main(int argc,
                                 &error);
 
     if(!builder) {
-        xfce_dialog_show_error(NULL, error,
-                               _("Unable to create user interface from embedded definition data"));
-        g_error_free (error);
+        if (error) {
+            xfce_dialog_show_error(NULL, error,
+                _("Unable to create user interface from embedded definition data"));
+            g_error_free (error);
+        }
         return EXIT_FAILURE;
     }
 

@@ -137,11 +137,12 @@ session_editor_save_session(GtkWidget *btn,
         xfce_message_dialog(GTK_WINDOW(gtk_widget_get_toplevel(btn)),
                             _("Session Save Error"), "dialog-error",
                             _("Unable to save the session"),
-                            error->message,
+                            error ? error->message : "Unknown error.",
                             XFCE_BUTTON_TYPE_MIXED, "window-close-symbolic", _("_Close"), GTK_RESPONSE_ACCEPT,
                             NULL);
         gtk_widget_set_sensitive(btn, TRUE);
-        g_error_free(error);
+        if (error)
+          g_error_free(error);
         return;
     }
 
