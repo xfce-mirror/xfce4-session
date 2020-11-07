@@ -16,7 +16,7 @@
   <object class="GtkImage" id="image3">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="icon_name">window-close-symbolic</property>
+    <property name="icon_name">list-remove-symbolic</property>
   </object>
   <object class="GtkImage" id="image4">
     <property name="visible">True</property>
@@ -33,6 +33,29 @@
     <property name="can_focus">False</property>
     <property name="icon_name">help-browser</property>
   </object>
+  <object class="GtkImage" id="image8">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">help-browser</property>
+  </object>
+  <object class="GtkPopover" id="session-info">
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="margin_left">12</property>
+        <property name="margin_right">12</property>
+        <property name="margin_top">12</property>
+        <property name="margin_bottom">12</property>
+        <property name="label" translatable="yes">These applications are a part of the currently-running session,
+and can be saved now or when you log out.
+Changes below will only take effect when the session is saved.</property>
+        <property name="use_markup">True</property>
+        <property name="xalign">0</property>
+      </object>
+    </child>
+  </object>
   <object class="XfceTitledDialog" id="xfce4_session_settings_dialog">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Session and Startup</property>
@@ -40,7 +63,7 @@
     <property name="default_width">600</property>
     <property name="default_height">500</property>
     <property name="icon_name">org.xfce.session</property>
-    <property name="type_hint">dialog</property>
+    <property name="type_hint">normal</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
         <property name="visible">True</property>
@@ -295,49 +318,6 @@
                 <property name="border_width">12</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkBox">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="margin_bottom">6</property>
-                    <property name="spacing">6</property>
-                    <child>
-                      <object class="GtkLabel" id="label_active_session">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Currently active session: &lt;b&gt;Default&lt;/b&gt;</property>
-                        <property name="use_markup">True</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="btn_save_session">
-                        <property name="label" translatable="yes">Save Sess_ion</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                        <property name="valign">center</property>
-                        <property name="image">image2</property>
-                        <property name="use_underline">True</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="pack_type">end</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkInfoBar">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
@@ -347,7 +327,46 @@
                         <property name="spacing">6</property>
                         <property name="layout_style">end</property>
                         <child>
-                          <placeholder/>
+                          <object class="GtkButton" id="btn_save_session">
+                            <property name="label" translatable="yes">Save Sess_ion</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="valign">center</property>
+                            <property name="image">image2</property>
+                            <property name="use_underline">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="pack_type">end</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkMenuButton">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="popover">session-info</property>
+                            <child>
+                              <object class="GtkImage">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="icon_name">dialog-information-symbolic</property>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="circular"/>
+                            </style>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="pack_type">end</property>
+                            <property name="position">1</property>
+                            <property name="non_homogeneous">True</property>
+                          </packing>
                         </child>
                       </object>
                       <packing>
@@ -359,34 +378,17 @@
                     <child internal-child="content_area">
                       <object class="GtkBox">
                         <property name="can_focus">False</property>
-                        <property name="spacing">16</property>
                         <child>
-                          <object class="GtkImage" id="image10">
+                          <object class="GtkLabel" id="label_active_session">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="icon_name">dialog-information-symbolic</property>
-                            <property name="icon_size">3</property>
+                            <property name="label" translatable="yes">Currently active session: &lt;b&gt;Default&lt;/b&gt;</property>
+                            <property name="use_markup">True</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
                             <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="label21">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="hexpand">True</property>
-                            <property name="label" translatable="yes">These applications are a part of the currently-running session, and can be saved now or when you log out.  Changes below will only take effect when the session is saved.</property>
-                            <property name="justify">fill</property>
-                            <property name="wrap">True</property>
-                            <property name="xalign">0</property>
-                          </object>
-                          <packing>
-                            <property name="expand">True</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
                           </packing>
                         </child>
                       </object>
@@ -433,18 +435,12 @@
                     <property name="can_focus">False</property>
                     <property name="spacing">6</property>
                     <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
                       <object class="GtkBox">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <child>
+                          <placeholder/>
+                        </child>
                         <child>
                           <object class="GtkButton" id="btn_quit_client">
                             <property name="label" translatable="yes">_Quit Program</property>
@@ -465,7 +461,7 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="expand">False</property>
+                        <property name="expand">True</property>
                         <property name="fill">True</property>
                         <property name="pack_type">end</property>
                         <property name="position">3</property>
@@ -755,11 +751,6 @@
       <action-widget response="-11">button1</action-widget>
       <action-widget response="-7">button2</action-widget>
     </action-widgets>
-  </object>
-  <object class="GtkImage" id="image8">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="icon_name">help-browser</property>
   </object>
   <object class="GtkDialog" id="dialog_saving">
     <property name="can_focus">False</property>
