@@ -21,6 +21,7 @@ distuninstallcheck_listfiles = 						\
 
 EXTRA_DIST =								\
 	BUGS								\
+	README.md							\
 	intltool-extract.in						\
 	intltool-merge.in						\
 	intltool-update.in						\
