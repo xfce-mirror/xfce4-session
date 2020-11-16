@@ -838,7 +838,7 @@ session_editor_populate_treeview(GtkTreeView *treeview)
         return;
 
     ls = gtk_list_store_new(N_COLS, G_TYPE_STRING, G_TYPE_STRING,
-                            G_TYPE_THEMED_ICON, G_TYPE_STRING, G_TYPE_UCHAR,
+                            G_TYPE_ICON, G_TYPE_STRING, G_TYPE_UCHAR,
                             G_TYPE_STRING, G_TYPE_UCHAR, G_TYPE_STRING,
                             G_TYPE_OBJECT, G_TYPE_BOOLEAN);
     gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(ls));
