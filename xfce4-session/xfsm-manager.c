@@ -136,7 +136,6 @@ int               xfsm_splash_screen_choose (GList            *sessions,
                                              gchar           **name_return);
 static void       xfsm_manager_finalize (GObject *obj);
 
-static gboolean   xfsm_manager_startup (XfsmManager *manager);
 static void       xfsm_manager_start_client_save_timeout (XfsmManager *manager,
                                                           XfsmClient  *client);
 static void       xfsm_manager_cancel_client_save_timeout (XfsmManager *manager,
@@ -268,8 +267,10 @@ xfsm_manager_new (GDBusConnection *connection)
 
 
 static gboolean
-xfsm_manager_startup (XfsmManager *manager)
+xfsm_manager_startup (gpointer user_data)
 {
+  XfsmManager *manager = user_data;
+
   xfsm_startup_foreign (manager);
   g_queue_sort (manager->pending_properties, (GCompareDataFunc) G_CALLBACK (xfsm_properties_compare), NULL);
   xfsm_startup_begin (manager);
@@ -825,7 +826,7 @@ xfsm_manager_restart (XfsmManager *manager)
   /* setup legacy application handling */
   xfsm_legacy_init ();
 
-  g_idle_add ((GSourceFunc) xfsm_manager_startup, manager);
+  g_idle_add (xfsm_manager_startup, manager);
 
   return TRUE;
 }
@@ -1601,8 +1602,10 @@ xfsm_manager_terminate_client (XfsmManager *manager,
 
 
 static gboolean
-manager_quit_signal (XfsmManager *manager)
+manager_quit_signal (gpointer user_data)
 {
+  XfsmManager *manager = user_data;
+
   g_signal_emit(G_OBJECT(manager), manager_signals[MANAGER_QUIT], 0);
   return FALSE;
 }
@@ -1665,7 +1668,7 @@ xfsm_manager_perform_shutdown (XfsmManager *manager)
 
   /* give all clients the chance to close the connection */
   manager->die_timeout_id = g_timeout_add (DIE_TIMEOUT,
-                                           (GSourceFunc) manager_quit_signal,
+                                           manager_quit_signal,
                                            manager);
 }
 
