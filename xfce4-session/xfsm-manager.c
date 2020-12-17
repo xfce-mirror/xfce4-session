@@ -480,7 +480,7 @@ xfsm_manager_load_session (XfsmManager   *manager,
 
   if (!g_file_test (manager->session_file, G_FILE_TEST_IS_REGULAR))
     {
-      g_warning ("xfsm_manager_load_session: Something wrong with %s, Does it exist? Permissions issue?", manager->session_file);
+      g_debug ("xfsm_manager_load_session: Something wrong with %s, Does it exist? Permissions issue?", manager->session_file);
       return FALSE;
     }
 
