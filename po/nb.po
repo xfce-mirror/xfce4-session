@@ -1,25 +1,20 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Allan Nordhøy <epost@anotheragency.no>, 2014
-# Allan Nordhøy <epost@anotheragency.no>, 2016-2017
-# Christian Lomsdalen <christian@vindstille.net>, 2007
-# Erlend Østlie <erlendandreas12368@gmail.com>, 2018
-# Eskild Hustvedt <eskild@goldenfiles.com>, 2004
-# Harald H. <haarektrans@gmail.com>, 2014
-# Kjell Cato Heskjestad <cato@heskjestad.xyz>, 2019-2020
-# Terje Uriansrud <terje@uriansrud.net>, 2009
-# Terje Uriansrud <ter@operamail.com>, 2007
+# Xfce Bot <transifex@xfce.org>, 2021
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Xfce4-session\n"
+"Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-10 00:46+0100\n"
-"PO-Revision-Date: 2020-11-15 13:51+0000\n"
-"Last-Translator: Kjell Cato Heskjestad <cato@heskjestad.xyz>\n"
-"Language-Team: Norwegian Bokmål (http://www.transifex.com/xfce/xfce4-session/language/nb/)\n"
+"POT-Creation-Date: 2021-01-06 12:06+0100\n"
+"PO-Revision-Date: 2020-12-28 17:30+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>, 2021\n"
+"Language-Team: Norwegian Bokmål (https://www.transifex.com/xfce/teams/16840/nb/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -119,7 +114,7 @@ msgid "Unable to save the session"
 msgstr "Klarte ikke å lagre økten"
 
 #: ../settings/session-editor.c:141 ../settings/session-editor.c:314
-#: ../xfce4-session/xfsm-manager.c:1281
+#: ../xfce4-session/xfsm-manager.c:1282
 #: ../settings/xfce4-session-settings.ui.h:6
 msgid "_Close"
 msgstr "_Lukk"
@@ -136,10 +131,11 @@ msgstr "Er du sikker på at du vil tømme økt-historikkens hurtiglager?"
 msgid ""
 "The saved states of your applications will not be restored during your next "
 "login."
-msgstr "Lagrede programtilstander vil ikke bli gjenopprettet ved neste innlogging."
+msgstr ""
+"Lagrede programtilstander vil ikke bli gjenopprettet ved neste innlogging."
 
 #: ../settings/session-editor.c:202 ../settings/session-editor.c:289
-#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:682
+#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:683
 #: ../xfce4-session/xfsm-logout-dialog.c:221
 msgid "_Cancel"
 msgstr "_Avbryt"
@@ -170,7 +166,9 @@ msgstr "Avslutte program"
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
-msgstr "Programmet vil miste all ulagret informasjon og vil ikke bli omstartet den neste økten."
+msgstr ""
+"Programmet vil miste all ulagret informasjon og vil ikke bli omstartet den "
+"neste økten."
 
 #: ../settings/session-editor.c:290 ../settings/xfce4-session-settings.ui.h:21
 msgid "_Quit Program"
@@ -200,7 +198,7 @@ msgstr "Program"
 msgid "Restart Style"
 msgstr "Omstartstrategi"
 
-#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:684
+#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:685
 msgid "_OK"
 msgstr "_OK"
 
@@ -356,7 +354,9 @@ msgstr "Øktbehandler"
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
-msgstr "Velg økten du ønsker å gjenopprette. Du kan dobbeltklikke øktnavnet for å gjenopprette økten."
+msgstr ""
+"Velg økten du ønsker å gjenopprette. Du kan dobbeltklikke øktnavnet for å "
+"gjenopprette økten."
 
 #: ../xfce4-session/xfsm-chooser.c:184
 msgid "Create a new session."
@@ -396,7 +396,11 @@ msgid ""
 "This will prevent Xfce from operating correctly.\n"
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
-msgstr "Klarte ikke å slå opp internettadressen for %s.\nDette hindrer Xfce fra å fungere korrekt.\nDet kan være mulig å rette dette ved å legge til\n%s til filen /etc/hosts i filsystemet ditt."
+msgstr ""
+"Klarte ikke å slå opp internettadressen for %s.\n"
+"Dette hindrer Xfce fra å fungere korrekt.\n"
+"Det kan være mulig å rette dette ved å legge til\n"
+"%s til filen /etc/hosts i filsystemet ditt."
 
 #: ../xfce4-session/xfsm-dns.c:159
 msgid "Continue anyway"
@@ -406,78 +410,83 @@ msgstr "Fortsett allikevel"
 msgid "Try again"
 msgstr "Prøv på nytt"
 
-#: ../xfce4-session/xfsm-manager.c:566
+#: ../xfce4-session/xfsm-manager.c:567
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
 "running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
 "incorrectly (must include \"%s\"), or xfce4-session is installed "
 "incorrectly."
-msgstr "Klarte ikke å avgjøre feilsikkert øktnavn. Mulige årsaker: «xfconfd» kjører ikke (D-Bus oppsett problem); miljøvariabel «$XDG_CONFIG_DIRS» er satt feil (må inkludere «%s») eller «xfce-session» er feil installert."
+msgstr ""
+"Klarte ikke å avgjøre feilsikkert øktnavn. Mulige årsaker: «xfconfd» kjører "
+"ikke (D-Bus oppsett problem); miljøvariabel «$XDG_CONFIG_DIRS» er satt feil "
+"(må inkludere «%s») eller «xfce-session» er feil installert."
 
-#: ../xfce4-session/xfsm-manager.c:577
+#: ../xfce4-session/xfsm-manager.c:578
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr "Den spesifiserte feilsikre økten («%s») er ikke markert som en feilsikker økt."
+msgstr ""
+"Den spesifiserte feilsikre økten («%s») er ikke markert som en feilsikker "
+"økt."
 
-#: ../xfce4-session/xfsm-manager.c:610
+#: ../xfce4-session/xfsm-manager.c:611
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Listen over programmer i den feilsikre økten er tom."
 
-#: ../xfce4-session/xfsm-manager.c:696
+#: ../xfce4-session/xfsm-manager.c:697
 msgid "Name for the new session"
 msgstr "Den nye øktens navn"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:774
+#: ../xfce4-session/xfsm-manager.c:775
 msgid "Session Manager Error"
 msgstr "Øktbehandler-feil"
 
-#: ../xfce4-session/xfsm-manager.c:776
+#: ../xfce4-session/xfsm-manager.c:777
 msgid "Unable to load a failsafe session"
 msgstr "Klarte ikke å laste en feilsikker økt"
 
-#: ../xfce4-session/xfsm-manager.c:778
+#: ../xfce4-session/xfsm-manager.c:779
 msgid "_Quit"
 msgstr "_Avslutt"
 
-#: ../xfce4-session/xfsm-manager.c:1271
+#: ../xfce4-session/xfsm-manager.c:1272
 msgid "Shutdown Failed"
 msgstr "Avslutning mislyktes"
 
-#: ../xfce4-session/xfsm-manager.c:1274
+#: ../xfce4-session/xfsm-manager.c:1275
 msgid "Failed to suspend session"
 msgstr "Klarte ikke å gå til hvilemodus"
 
-#: ../xfce4-session/xfsm-manager.c:1276
+#: ../xfce4-session/xfsm-manager.c:1277
 msgid "Failed to hibernate session"
 msgstr "Klarte ikke å gå til dvalemodus"
 
-#: ../xfce4-session/xfsm-manager.c:1278
+#: ../xfce4-session/xfsm-manager.c:1279
 msgid "Failed to hybrid sleep session"
 msgstr "Klarte ikke å sette i gang hybriddvalemodusøkt"
 
-#: ../xfce4-session/xfsm-manager.c:1279
+#: ../xfce4-session/xfsm-manager.c:1280
 msgid "Failed to switch user"
 msgstr "Klarte ikke å bytte bruker"
 
-#: ../xfce4-session/xfsm-manager.c:1585
+#: ../xfce4-session/xfsm-manager.c:1586
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Kan bare terminere klienter som er inaktive"
 
-#: ../xfce4-session/xfsm-manager.c:2247
+#: ../xfce4-session/xfsm-manager.c:2250
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Øktbehandler må være inaktiv ved etterspørring av sjekkpunkt"
 
-#: ../xfce4-session/xfsm-manager.c:2317 ../xfce4-session/xfsm-manager.c:2337
+#: ../xfce4-session/xfsm-manager.c:2320 ../xfce4-session/xfsm-manager.c:2340
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Øktbehandler må være inaktiv ved avslutting"
 
-#: ../xfce4-session/xfsm-manager.c:2382
+#: ../xfce4-session/xfsm-manager.c:2385
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Øktbehandler må være inaktiv når en omstart forespørres"
 
@@ -604,14 +613,18 @@ msgstr "Tilpass skrivebordsoppstart"
 msgid ""
 "session;settings;preferences;manager;startup;login;logout;shutdown;lock "
 "screen;application;autostart;launch;services;daemon;agent;"
-msgstr "økt;innstillinger;oppsett;håndtering;oppstart;innlogging;utlogging;slå;av;lås;skjerm;program;autostart;kjør;tjenester;nisse;daemon;agent;"
+msgstr ""
+"økt;innstillinger;oppsett;håndtering;oppstart;innlogging;utlogging;slå;av;lås;skjerm;program;autostart;kjør;tjenester;nisse;daemon;agent;"
 
 #: ../settings/xfce4-session-settings.ui.h:1
 msgid ""
 "These applications are a part of the currently-running session,\n"
 "and can be saved now or when you log out.\n"
 "Changes below will only take effect when the session is saved."
-msgstr "Disse programmene er del av den gjeldende økten\nog kan lagres nå eller ved utlogging. \nEndringer nedenfor vil kun gjøres gjeldende når økten lagres."
+msgstr ""
+"Disse programmene er del av den gjeldende økten\n"
+"og kan lagres nå eller ved utlogging. \n"
+"Endringer nedenfor vil kun gjøres gjeldende når økten lagres."
 
 #: ../settings/xfce4-session-settings.ui.h:5
 msgid "_Help"
@@ -720,7 +733,9 @@ msgstr "Håndtere _eksterne programmer"
 #: ../settings/xfce4-session-settings.ui.h:33
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
-msgstr "Håndtere eksterne programmer over nettverket (dette kan være en sikkerhetsrisiko)"
+msgstr ""
+"Håndtere eksterne programmer over nettverket (dette kan være en "
+"sikkerhetsrisiko)"
 
 #: ../settings/xfce4-session-settings.ui.h:34
 msgid "<b>Security</b>"
@@ -738,4 +753,5 @@ msgstr "Lagrer økt"
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
-msgstr "Økten din lagres. Hvis du ikke ønsker å vente kan du lukke dette vinduet."
+msgstr ""
+"Økten din lagres. Hvis du ikke ønsker å vente kan du lukke dette vinduet."
