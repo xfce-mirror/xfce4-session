@@ -1,20 +1,20 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Daniel Muñiz Fontoira <dani@damufo.com>, 2018-2020
-# Iván Seoane Pardo <talivan.ivan@gmail.com>, 2006
-# Leandro Regueiro <leandro.regueiro@gmail.com>, 2008-2010,2017
-# Xosé, 2015,2017
+# Xfce Bot <transifex@xfce.org>, 2021
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Xfce4-session\n"
+"Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-08 00:45+0100\n"
-"PO-Revision-Date: 2020-11-09 09:23+0000\n"
-"Last-Translator: Daniel Muñiz Fontoira <dani@damufo.com>\n"
-"Language-Team: Galician (http://www.transifex.com/xfce/xfce4-session/language/gl/)\n"
+"POT-Creation-Date: 2021-01-06 12:06+0100\n"
+"PO-Revision-Date: 2020-12-28 17:30+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>, 2021\n"
+"Language-Team: Galician (https://www.transifex.com/xfce/teams/16840/gl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -79,7 +79,9 @@ msgstr "Non se puido contactar co servidor de configuración"
 
 #: ../settings/main.c:153
 msgid "Unable to create user interface from embedded definition data"
-msgstr "Non se puido crear a interface de usuario a partir dos datos da definición encastada"
+msgstr ""
+"Non se puido crear a interface de usuario a partir dos datos da definición "
+"encastada"
 
 #: ../settings/main.c:167
 msgid "App_lication Autostart"
@@ -114,7 +116,7 @@ msgid "Unable to save the session"
 msgstr "Non se puido gardar a sesión"
 
 #: ../settings/session-editor.c:141 ../settings/session-editor.c:314
-#: ../xfce4-session/xfsm-manager.c:1281
+#: ../xfce4-session/xfsm-manager.c:1282
 #: ../settings/xfce4-session-settings.ui.h:6
 msgid "_Close"
 msgstr "_Pechar"
@@ -131,10 +133,12 @@ msgstr "Desexa realmente baleirar a caché de sesións?"
 msgid ""
 "The saved states of your applications will not be restored during your next "
 "login."
-msgstr "Os estados gardados das súas aplicacións non se recuperarán durante a seguinte entrada á sesión."
+msgstr ""
+"Os estados gardados das súas aplicacións non se recuperarán durante a "
+"seguinte entrada á sesión."
 
 #: ../settings/session-editor.c:202 ../settings/session-editor.c:289
-#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:682
+#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:683
 #: ../xfce4-session/xfsm-logout-dialog.c:221
 msgid "_Cancel"
 msgstr "_Cancelar"
@@ -165,7 +169,9 @@ msgstr "Terminar o programa"
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
-msgstr "A aplicación ha perder calquera estado que non fora gardado e non se ha reiniciar na seguinte sesión."
+msgstr ""
+"A aplicación ha perder calquera estado que non fora gardado e non se ha "
+"reiniciar na seguinte sesión."
 
 #: ../settings/session-editor.c:290 ../settings/xfce4-session-settings.ui.h:21
 msgid "_Quit Program"
@@ -195,7 +201,7 @@ msgstr "Programa"
 msgid "Restart Style"
 msgstr "Reiniciar o estilo"
 
-#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:684
+#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:685
 msgid "_OK"
 msgstr "_Aceptar"
 
@@ -351,7 +357,9 @@ msgstr "Xestor de sesións"
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
-msgstr "Escolla a sesión que quer restaurar. Pódeo facer premendo dúas veces no nome da sesión."
+msgstr ""
+"Escolla a sesión que quer restaurar. Pódeo facer premendo dúas veces no nome"
+" da sesión."
 
 #: ../xfce4-session/xfsm-chooser.c:184
 msgid "Create a new session."
@@ -391,7 +399,11 @@ msgid ""
 "This will prevent Xfce from operating correctly.\n"
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
-msgstr "Non se puido atopar o enderezo IP para %s.\nIsto impedirá o correcto funcionamento do Xfce.\nSe cadra pode solucionarse engadindo %s ao contido\ndo ficheiro «/etc/hosts» no seu sistema."
+msgstr ""
+"Non se puido atopar o enderezo IP para %s.\n"
+"Isto impedirá o correcto funcionamento do Xfce.\n"
+"Se cadra pode solucionarse engadindo %s ao contido\n"
+"do ficheiro «/etc/hosts» no seu sistema."
 
 #: ../xfce4-session/xfsm-dns.c:159
 msgid "Continue anyway"
@@ -401,80 +413,90 @@ msgstr "Continuar de todos os xeitos"
 msgid "Try again"
 msgstr "Tentalo de novo"
 
-#: ../xfce4-session/xfsm-manager.c:566
+#: ../xfce4-session/xfsm-manager.c:567
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
 "running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
 "incorrectly (must include \"%s\"), or xfce4-session is installed "
 "incorrectly."
-msgstr "Non se puido determinar o nome da sesión a proba de fallos. As causas posíbeis son: xfconfd non se está executando (problema de configuración de D-Bus), a variábel de contorno $XDG_CONFIG_DIRS está mal definida (debe incluír \"%s\"), ou xfce4-session está mal instalado."
+msgstr ""
+"Non se puido determinar o nome da sesión a proba de fallos. As causas "
+"posíbeis son: xfconfd non se está executando (problema de configuración de "
+"D-Bus), a variábel de contorno $XDG_CONFIG_DIRS está mal definida (debe "
+"incluír \"%s\"), ou xfce4-session está mal instalado."
 
-#: ../xfce4-session/xfsm-manager.c:577
+#: ../xfce4-session/xfsm-manager.c:578
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr "A sesión a proba de fallos especificada (\"%s\") non está marcada como sesión a proba de fallos."
+msgstr ""
+"A sesión a proba de fallos especificada (\"%s\") non está marcada como "
+"sesión a proba de fallos."
 
-#: ../xfce4-session/xfsm-manager.c:610
+#: ../xfce4-session/xfsm-manager.c:611
 msgid "The list of applications in the failsafe session is empty."
 msgstr "A lista de aplicacións da sesión a proba de fallos está baleira."
 
-#: ../xfce4-session/xfsm-manager.c:696
+#: ../xfce4-session/xfsm-manager.c:697
 msgid "Name for the new session"
 msgstr "Come para a nova sesión"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:774
+#: ../xfce4-session/xfsm-manager.c:775
 msgid "Session Manager Error"
 msgstr "Fallo do xestor de sesións"
 
-#: ../xfce4-session/xfsm-manager.c:776
+#: ../xfce4-session/xfsm-manager.c:777
 msgid "Unable to load a failsafe session"
 msgstr "Non se puido cargar unha sesión a proba de fallos"
 
-#: ../xfce4-session/xfsm-manager.c:778
+#: ../xfce4-session/xfsm-manager.c:779
 msgid "_Quit"
 msgstr "_Saír"
 
-#: ../xfce4-session/xfsm-manager.c:1271
+#: ../xfce4-session/xfsm-manager.c:1272
 msgid "Shutdown Failed"
 msgstr "Produciuse un fallo ao apagar"
 
-#: ../xfce4-session/xfsm-manager.c:1274
+#: ../xfce4-session/xfsm-manager.c:1275
 msgid "Failed to suspend session"
 msgstr "Produciuse un fallo ao suspender a sesión"
 
-#: ../xfce4-session/xfsm-manager.c:1276
+#: ../xfce4-session/xfsm-manager.c:1277
 msgid "Failed to hibernate session"
 msgstr "Produciuse un fallo ao hibernar a sesión"
 
-#: ../xfce4-session/xfsm-manager.c:1278
+#: ../xfce4-session/xfsm-manager.c:1279
 msgid "Failed to hybrid sleep session"
 msgstr "Produciuse un fallo ao facer a suspensión híbrida da sesión"
 
-#: ../xfce4-session/xfsm-manager.c:1279
+#: ../xfce4-session/xfsm-manager.c:1280
 msgid "Failed to switch user"
 msgstr "Produciuse un fallo ao mudar de usuario"
 
-#: ../xfce4-session/xfsm-manager.c:1585
+#: ../xfce4-session/xfsm-manager.c:1586
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Só pode terminar os clientes cando está en estado inactivo"
 
-#: ../xfce4-session/xfsm-manager.c:2247
+#: ../xfce4-session/xfsm-manager.c:2250
 msgid "Session manager must be in idle state when requesting a checkpoint"
-msgstr "O xestor de sesión debe estar en estado inactivo ao solicitar un punto de control"
+msgstr ""
+"O xestor de sesión debe estar en estado inactivo ao solicitar un punto de "
+"control"
 
-#: ../xfce4-session/xfsm-manager.c:2317 ../xfce4-session/xfsm-manager.c:2337
+#: ../xfce4-session/xfsm-manager.c:2320 ../xfce4-session/xfsm-manager.c:2340
 msgid "Session manager must be in idle state when requesting a shutdown"
-msgstr "O xestor de sesións debe estar en estado inactivo ao solicitar un apagado"
+msgstr ""
+"O xestor de sesións debe estar en estado inactivo ao solicitar un apagado"
 
-#: ../xfce4-session/xfsm-manager.c:2382
+#: ../xfce4-session/xfsm-manager.c:2385
 msgid "Session manager must be in idle state when requesting a restart"
-msgstr "O xestor de sesións debe estar en estado inactivo ao solicitar un reinicio"
+msgstr ""
+"O xestor de sesións debe estar en estado inactivo ao solicitar un reinicio"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:193
 #, c-format
@@ -551,7 +573,8 @@ msgstr "Hibernar sen amosar o diálogo para saír da sesión"
 
 #: ../xfce4-session-logout/main.c:90
 msgid "Hybrid Sleep without displaying the logout dialog"
-msgstr "Realizar a suspensión hibrida sen amosar o diálogo para saír da sesión"
+msgstr ""
+"Realizar a suspensión hibrida sen amosar o diálogo para saír da sesión"
 
 #: ../xfce4-session-logout/main.c:94
 msgid "Switch user without displaying the logout dialog"
@@ -599,14 +622,21 @@ msgstr "Personalizar o inicio do escritorio"
 msgid ""
 "session;settings;preferences;manager;startup;login;logout;shutdown;lock "
 "screen;application;autostart;launch;services;daemon;agent;"
-msgstr "sesión;configuracións;preferencias;xestor;inicio;inicio sesión;saída da sesión;apagar;bloqueo da pantalla;aplicación;auto inicio;iniciado;servizos;servizo;axente;"
+msgstr ""
+"sesión;configuracións;preferencias;xestor;inicio;inicio sesión;saída da "
+"sesión;apagar;bloqueo da pantalla;aplicación;auto "
+"inicio;iniciado;servizos;servizo;axente;"
 
 #: ../settings/xfce4-session-settings.ui.h:1
 msgid ""
 "These applications are a part of the currently-running session,\n"
 "and can be saved now or when you log out.\n"
 "Changes below will only take effect when the session is saved."
-msgstr "Estas aplicacións son parte da sesión que se executa \nactualmente, e poden gardarse agora ou ao saír da sesión.\nOs cambios de embaixo só terán efecto cando se garde a \nsesión."
+msgstr ""
+"Estas aplicacións son parte da sesión que se executa \n"
+"actualmente, e poden gardarse agora ou ao saír da sesión.\n"
+"Os cambios de embaixo só terán efecto cando se garde a \n"
+"sesión."
 
 #: ../settings/xfce4-session-settings.ui.h:5
 msgid "_Help"
@@ -673,60 +703,67 @@ msgid "Current Sessio_n"
 msgstr "Sesió_n actual"
 
 #: ../settings/xfce4-session-settings.ui.h:23
+msgid "_Remove"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.ui.h:24
 msgid "Delete the selected session"
 msgstr "Eliminar a sesión seleccionada"
 
-#: ../settings/xfce4-session-settings.ui.h:24
+#: ../settings/xfce4-session-settings.ui.h:25
 msgid "Clear Save_d Sessions"
 msgstr "Limpar as sesións garda_das"
 
-#: ../settings/xfce4-session-settings.ui.h:25
+#: ../settings/xfce4-session-settings.ui.h:26
 msgid "Saved _Sessions"
 msgstr "_Sesións gardadas"
 
-#: ../settings/xfce4-session-settings.ui.h:26
+#: ../settings/xfce4-session-settings.ui.h:27
 msgid "Launch GN_OME services on startup"
 msgstr "Iniciar os servizos de GN_OME ao iniciar"
 
-#: ../settings/xfce4-session-settings.ui.h:27
+#: ../settings/xfce4-session-settings.ui.h:28
 msgid "Start GNOME services, such as gnome-keyring"
 msgstr "Inicia os servizos de GNOME, como gnome-keyring"
 
-#: ../settings/xfce4-session-settings.ui.h:28
+#: ../settings/xfce4-session-settings.ui.h:29
 msgid "Launch _KDE services on startup"
 msgstr "Iniciar os servizos de _KDE ao iniciar"
 
-#: ../settings/xfce4-session-settings.ui.h:29
+#: ../settings/xfce4-session-settings.ui.h:30
 msgid "Start KDE services, such as kdeinit"
 msgstr "Iniciar os servizos de KDE, como kdeinit"
 
-#: ../settings/xfce4-session-settings.ui.h:30
+#: ../settings/xfce4-session-settings.ui.h:31
 msgid "<b>Compatibility</b>"
 msgstr "<b>Compatibilidade</b>"
 
-#: ../settings/xfce4-session-settings.ui.h:31
+#: ../settings/xfce4-session-settings.ui.h:32
 msgid "Manage _remote applications"
 msgstr "Xestionar as aplicacións _remotas"
 
-#: ../settings/xfce4-session-settings.ui.h:32
+#: ../settings/xfce4-session-settings.ui.h:33
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
-msgstr "Xestiona as aplicacións remotas a través da rede (isto podería ser un risco de seguridade)"
+msgstr ""
+"Xestiona as aplicacións remotas a través da rede (isto podería ser un risco "
+"de seguridade)"
 
-#: ../settings/xfce4-session-settings.ui.h:33
+#: ../settings/xfce4-session-settings.ui.h:34
 msgid "<b>Security</b>"
 msgstr "<b>Seguranza</b>"
 
-#: ../settings/xfce4-session-settings.ui.h:34
+#: ../settings/xfce4-session-settings.ui.h:35
 msgid "Ad_vanced"
 msgstr "A_vanzado"
 
-#: ../settings/xfce4-session-settings.ui.h:35
+#: ../settings/xfce4-session-settings.ui.h:36
 msgid "Saving Session"
 msgstr "Gardando a sesión"
 
-#: ../settings/xfce4-session-settings.ui.h:36
+#: ../settings/xfce4-session-settings.ui.h:37
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
-msgstr "Estase gardando a súa sesión. Se non desexa agardar pode pechar esta xanela."
+msgstr ""
+"Estase gardando a súa sesión. Se non desexa agardar pode pechar esta xanela."
