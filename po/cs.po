@@ -1,19 +1,20 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Alois Nespor <Alois.Nespor@seznam.cz>, 2004
-# Michal Várady <miko.vaji@gmail.com>, 2016-2017,2019-2020
-# Pavel Borecki <pavel.borecki@gmail.com>, 2018
+# Xfce Bot <transifex@xfce.org>, 2021
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Xfce4-session\n"
+"Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-08 00:45+0100\n"
-"PO-Revision-Date: 2020-11-08 15:33+0000\n"
-"Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
-"Language-Team: Czech (http://www.transifex.com/xfce/xfce4-session/language/cs/)\n"
+"POT-Creation-Date: 2021-01-06 12:06+0100\n"
+"PO-Revision-Date: 2020-12-28 17:30+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>, 2021\n"
+"Language-Team: Czech (https://www.transifex.com/xfce/teams/16840/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -113,7 +114,7 @@ msgid "Unable to save the session"
 msgstr "Nelze uložit relaci"
 
 #: ../settings/session-editor.c:141 ../settings/session-editor.c:314
-#: ../xfce4-session/xfsm-manager.c:1281
+#: ../xfce4-session/xfsm-manager.c:1282
 #: ../settings/xfce4-session-settings.ui.h:6
 msgid "_Close"
 msgstr "_Zavřit"
@@ -133,7 +134,7 @@ msgid ""
 msgstr "Uložené stavy aplikací nebudou po příštím přihlášení obnoveny."
 
 #: ../settings/session-editor.c:202 ../settings/session-editor.c:289
-#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:682
+#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:683
 #: ../xfce4-session/xfsm-logout-dialog.c:221
 msgid "_Cancel"
 msgstr "_Zrušit"
@@ -164,7 +165,8 @@ msgstr "Ukončit program"
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
-msgstr "Aplikace ztratí všechna neuložená data a nespustí se ve vaší příští relaci."
+msgstr ""
+"Aplikace ztratí všechna neuložená data a nespustí se ve vaší příští relaci."
 
 #: ../settings/session-editor.c:290 ../settings/xfce4-session-settings.ui.h:21
 msgid "_Quit Program"
@@ -194,7 +196,7 @@ msgstr "Program"
 msgid "Restart Style"
 msgstr "Způsob restartování"
 
-#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:684
+#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:685
 msgid "_OK"
 msgstr "_OK"
 
@@ -350,7 +352,9 @@ msgstr "Správce relace"
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
-msgstr "Vyberte relaci, kterou chcete obnovit. Relaci obnovíte dvojitým kliknutím na její název."
+msgstr ""
+"Vyberte relaci, kterou chcete obnovit. Relaci obnovíte dvojitým kliknutím na"
+" její název."
 
 #: ../xfce4-session/xfsm-chooser.c:184
 msgid "Create a new session."
@@ -390,7 +394,11 @@ msgid ""
 "This will prevent Xfce from operating correctly.\n"
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
-msgstr "Nelze najít internetovou adresu pro %s,\ncož brání správnému fungování Xfce.\nProblém může být vyřešen přidáním\n%s do systémového souboru /etc/hosts."
+msgstr ""
+"Nelze najít internetovou adresu pro %s,\n"
+"což brání správnému fungování Xfce.\n"
+"Problém může být vyřešen přidáním\n"
+"%s do systémového souboru /etc/hosts."
 
 #: ../xfce4-session/xfsm-dns.c:159
 msgid "Continue anyway"
@@ -400,78 +408,84 @@ msgstr "Přesto pokračovat"
 msgid "Try again"
 msgstr "Zkusit znovu"
 
-#: ../xfce4-session/xfsm-manager.c:566
+#: ../xfce4-session/xfsm-manager.c:567
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
 "running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
 "incorrectly (must include \"%s\"), or xfce4-session is installed "
 "incorrectly."
-msgstr "Nelze určit název relace pro režim bezpečného spuštění. Možné příčiny: služba xfconfd není spuštěna (potíže s nastavením D-Bus); proměnná prostředí $XDG_CONFIG_DIRS není správně nastavena (musí obsahovat „%s“) nebo balíček xfce4-session není nainstalován správně."
+msgstr ""
+"Nelze určit název relace pro režim bezpečného spuštění. Možné příčiny: "
+"služba xfconfd není spuštěna (potíže s nastavením D-Bus); proměnná prostředí"
+" $XDG_CONFIG_DIRS není správně nastavena (musí obsahovat „%s“) nebo balíček "
+"xfce4-session není nainstalován správně."
 
-#: ../xfce4-session/xfsm-manager.c:577
+#: ../xfce4-session/xfsm-manager.c:578
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr "Zadaná relace pro bezpečné spuštění („%s“) není označrena jako relace pro bezpečné spuštění."
+msgstr ""
+"Zadaná relace pro bezpečné spuštění („%s“) není označrena jako relace pro "
+"bezpečné spuštění."
 
-#: ../xfce4-session/xfsm-manager.c:610
+#: ../xfce4-session/xfsm-manager.c:611
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Seznam aplikací v režimu bezpečného spuštění je prázdný."
 
-#: ../xfce4-session/xfsm-manager.c:696
+#: ../xfce4-session/xfsm-manager.c:697
 msgid "Name for the new session"
 msgstr "Název nové relace"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:774
+#: ../xfce4-session/xfsm-manager.c:775
 msgid "Session Manager Error"
 msgstr "Chyba správce relací Xfce"
 
-#: ../xfce4-session/xfsm-manager.c:776
+#: ../xfce4-session/xfsm-manager.c:777
 msgid "Unable to load a failsafe session"
 msgstr "Nelze načíst relaci režimu bezpečného spuštění"
 
-#: ../xfce4-session/xfsm-manager.c:778
+#: ../xfce4-session/xfsm-manager.c:779
 msgid "_Quit"
 msgstr "_Ukončit"
 
-#: ../xfce4-session/xfsm-manager.c:1271
+#: ../xfce4-session/xfsm-manager.c:1272
 msgid "Shutdown Failed"
 msgstr "Vypnutí se nezdařilo"
 
-#: ../xfce4-session/xfsm-manager.c:1274
+#: ../xfce4-session/xfsm-manager.c:1275
 msgid "Failed to suspend session"
 msgstr "Nepodařilo se přepnout relaci do režimu spánku"
 
-#: ../xfce4-session/xfsm-manager.c:1276
+#: ../xfce4-session/xfsm-manager.c:1277
 msgid "Failed to hibernate session"
 msgstr "Nepodařilo se hibernovat relaci"
 
-#: ../xfce4-session/xfsm-manager.c:1278
+#: ../xfce4-session/xfsm-manager.c:1279
 msgid "Failed to hybrid sleep session"
 msgstr "Nepodařilo se hybridně uspat relaci"
 
-#: ../xfce4-session/xfsm-manager.c:1279
+#: ../xfce4-session/xfsm-manager.c:1280
 msgid "Failed to switch user"
 msgstr "Nepodařilo se přepnout uživatele"
 
-#: ../xfce4-session/xfsm-manager.c:1585
+#: ../xfce4-session/xfsm-manager.c:1586
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Je možné ukončit pouze klienty v nečinném stavu "
 
-#: ../xfce4-session/xfsm-manager.c:2247
+#: ../xfce4-session/xfsm-manager.c:2250
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Správce relací musí být při žádosti o checkpoint v nečinném stavu"
 
-#: ../xfce4-session/xfsm-manager.c:2317 ../xfce4-session/xfsm-manager.c:2337
+#: ../xfce4-session/xfsm-manager.c:2320 ../xfce4-session/xfsm-manager.c:2340
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Správce relací musí být při žádosti o vypnutí v nečinném stavu"
 
-#: ../xfce4-session/xfsm-manager.c:2382
+#: ../xfce4-session/xfsm-manager.c:2385
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Správce relace musí být při žádosti o restart v nečinném stavu"
 
@@ -598,14 +612,20 @@ msgstr "Přizpůsobení spouštění pracovního prostředí"
 msgid ""
 "session;settings;preferences;manager;startup;login;logout;shutdown;lock "
 "screen;application;autostart;launch;services;daemon;agent;"
-msgstr "relace;nastavení;předvolby;správce;spuštění;přihlášení;odhlášení;vypnutí;uzamknout obrazovku;uzamknutí obrazovky;aplikace;automatické spuštění;spouštění;služby;démon;agent;"
+msgstr ""
+"relace;nastavení;předvolby;správce;spuštění;přihlášení;odhlášení;vypnutí;uzamknout"
+" obrazovku;uzamknutí obrazovky;aplikace;automatické "
+"spuštění;spouštění;služby;démon;agent;"
 
 #: ../settings/xfce4-session-settings.ui.h:1
 msgid ""
 "These applications are a part of the currently-running session,\n"
 "and can be saved now or when you log out.\n"
 "Changes below will only take effect when the session is saved."
-msgstr "Tyto aplikace jsou součástí právě spuštěné relace a mohou\nbýt uloženy nyní nebo při odhlášení.\nZměny uvedené níže se provedou pouze při uložení relace."
+msgstr ""
+"Tyto aplikace jsou součástí právě spuštěné relace a mohou\n"
+"být uloženy nyní nebo při odhlášení.\n"
+"Změny uvedené níže se provedou pouze při uložení relace."
 
 #: ../settings/xfce4-session-settings.ui.h:5
 msgid "_Help"
@@ -672,59 +692,63 @@ msgid "Current Sessio_n"
 msgstr "Tato relace"
 
 #: ../settings/xfce4-session-settings.ui.h:23
+msgid "_Remove"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.ui.h:24
 msgid "Delete the selected session"
 msgstr "Smazat vybranou relaci"
 
-#: ../settings/xfce4-session-settings.ui.h:24
+#: ../settings/xfce4-session-settings.ui.h:25
 msgid "Clear Save_d Sessions"
 msgstr "_Vyčistit uložené relace"
 
-#: ../settings/xfce4-session-settings.ui.h:25
+#: ../settings/xfce4-session-settings.ui.h:26
 msgid "Saved _Sessions"
 msgstr "Uložené _relace"
 
-#: ../settings/xfce4-session-settings.ui.h:26
+#: ../settings/xfce4-session-settings.ui.h:27
 msgid "Launch GN_OME services on startup"
 msgstr "Spustit při startu služby _GNOME"
 
-#: ../settings/xfce4-session-settings.ui.h:27
+#: ../settings/xfce4-session-settings.ui.h:28
 msgid "Start GNOME services, such as gnome-keyring"
 msgstr "Spustí služby prostředí GNOME, například gnome-keyring"
 
-#: ../settings/xfce4-session-settings.ui.h:28
+#: ../settings/xfce4-session-settings.ui.h:29
 msgid "Launch _KDE services on startup"
 msgstr "Spustit při startu služby K_DE"
 
-#: ../settings/xfce4-session-settings.ui.h:29
+#: ../settings/xfce4-session-settings.ui.h:30
 msgid "Start KDE services, such as kdeinit"
 msgstr "Spustí služby prostředí KDE, například „kdeinit“"
 
-#: ../settings/xfce4-session-settings.ui.h:30
+#: ../settings/xfce4-session-settings.ui.h:31
 msgid "<b>Compatibility</b>"
 msgstr "<b>Kompatibilita</b>"
 
-#: ../settings/xfce4-session-settings.ui.h:31
+#: ../settings/xfce4-session-settings.ui.h:32
 msgid "Manage _remote applications"
 msgstr "Sp_ravovat vzdálené aplikace"
 
-#: ../settings/xfce4-session-settings.ui.h:32
+#: ../settings/xfce4-session-settings.ui.h:33
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
 msgstr "Správa vzdálených aplikací po síti (může být bezpečnostní riziko)"
 
-#: ../settings/xfce4-session-settings.ui.h:33
+#: ../settings/xfce4-session-settings.ui.h:34
 msgid "<b>Security</b>"
 msgstr "<b>Zabezpečení</b>"
 
-#: ../settings/xfce4-session-settings.ui.h:34
+#: ../settings/xfce4-session-settings.ui.h:35
 msgid "Ad_vanced"
 msgstr "_Pokročilé"
 
-#: ../settings/xfce4-session-settings.ui.h:35
+#: ../settings/xfce4-session-settings.ui.h:36
 msgid "Saving Session"
 msgstr "Ukládání relace"
 
-#: ../settings/xfce4-session-settings.ui.h:36
+#: ../settings/xfce4-session-settings.ui.h:37
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
