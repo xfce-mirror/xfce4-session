@@ -1,24 +1,20 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Dotan Kamber <kamberd@yahoo.com>, 2004,2006
-# Elishai Eliyahu <elishai@mailfence.com>, 2016-2020
-# Elishai Eliyahu <elishai@mailfence.com>, 2020
-# GenghisKhan <genghiskhan@gmx.ca>, 2015-2016
-# Jonatan Perry <Jonatan443@walla.co.il>, 2004
-# Omeritzics Games <omeritzicschwartz@gmail.com>, 2020
-# Omeritzics Games <omeritzicschwartz@gmail.com>, 2020
-# Yuval Tanny <tanai@int.gov.il>, 2004,2006
+# Xfce Bot <transifex@xfce.org>, 2021
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Xfce4-session\n"
+"Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-10 00:46+0100\n"
-"PO-Revision-Date: 2020-11-28 18:17+0000\n"
-"Last-Translator: Elishai Eliyahu <elishai@mailfence.com>\n"
-"Language-Team: Hebrew (http://www.transifex.com/xfce/xfce4-session/language/he/)\n"
+"POT-Creation-Date: 2021-01-06 12:06+0100\n"
+"PO-Revision-Date: 2020-12-28 17:30+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>, 2021\n"
+"Language-Team: Hebrew (https://www.transifex.com/xfce/teams/16840/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -118,7 +114,7 @@ msgid "Unable to save the session"
 msgstr "לא יכול לשמור את הסשן"
 
 #: ../settings/session-editor.c:141 ../settings/session-editor.c:314
-#: ../xfce4-session/xfsm-manager.c:1281
+#: ../xfce4-session/xfsm-manager.c:1282
 #: ../settings/xfce4-session-settings.ui.h:6
 msgid "_Close"
 msgstr "_סגור"
@@ -138,7 +134,7 @@ msgid ""
 msgstr "המצבים השמורים של היישומים שלך לא ישוחזרו במהלך הכניסה הבאה שלך."
 
 #: ../settings/session-editor.c:202 ../settings/session-editor.c:289
-#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:682
+#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:683
 #: ../xfce4-session/xfsm-logout-dialog.c:221
 msgid "_Cancel"
 msgstr "_ביטול"
@@ -199,7 +195,7 @@ msgstr "תוכנית"
 msgid "Restart Style"
 msgstr "הפעל מחדש סגנון"
 
-#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:684
+#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:685
 msgid "_OK"
 msgstr "_אישור"
 
@@ -355,7 +351,9 @@ msgstr "מנהל הפעלה"
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
-msgstr "בחר את הסשן אשר ברצונך לשחזר. אתה יכול לבצע קליק כפול על שם הסשן כדי לשחזר אותו."
+msgstr ""
+"בחר את הסשן אשר ברצונך לשחזר. אתה יכול לבצע קליק כפול על שם הסשן כדי לשחזר "
+"אותו."
 
 #: ../xfce4-session/xfsm-chooser.c:184
 msgid "Create a new session."
@@ -395,7 +393,11 @@ msgid ""
 "This will prevent Xfce from operating correctly.\n"
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
-msgstr " אין אפשרות לבדוק כתובת אינטרנט בשביל %s.\nזה ימנע מ-Xfce לפעול בצורה נכונה.\nאולי אפשר לתקן את הבעיה ע\"י הוספה\n%s לקובץ etc/hosts/ במערכת שלך."
+msgstr ""
+" אין אפשרות לבדוק כתובת אינטרנט בשביל %s.\n"
+"זה ימנע מ-Xfce לפעול בצורה נכונה.\n"
+"אולי אפשר לתקן את הבעיה ע\"י הוספה\n"
+"%s לקובץ etc/hosts/ במערכת שלך."
 
 #: ../xfce4-session/xfsm-dns.c:159
 msgid "Continue anyway"
@@ -405,78 +407,81 @@ msgstr "המשך בכל זאת"
 msgid "Try again"
 msgstr "נסה שוב"
 
-#: ../xfce4-session/xfsm-manager.c:566
+#: ../xfce4-session/xfsm-manager.c:567
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
 "running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
 "incorrectly (must include \"%s\"), or xfce4-session is installed "
 "incorrectly."
-msgstr "לא מסוגל לקבוע שם סשן failsafe.  גורמים אפשריים: xfconfd אינו מורץ (בעיית הבניית D-Bus); משתנה סביבה XDG_CONFIG_DIRS$ מוגדר באופן שגוי (חייב להכיל \"%s\"), או xfce4-session אינו מותקן כראוי."
+msgstr ""
+"לא מסוגל לקבוע שם סשן failsafe.  גורמים אפשריים: xfconfd אינו מורץ (בעיית "
+"הבניית D-Bus); משתנה סביבה XDG_CONFIG_DIRS$ מוגדר באופן שגוי (חייב להכיל "
+"\"%s\"), או xfce4-session אינו מותקן כראוי."
 
-#: ../xfce4-session/xfsm-manager.c:577
+#: ../xfce4-session/xfsm-manager.c:578
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "סשן failsafe שצוין (\"%s\") אינו מסומן בתור סשן failsafe."
 
-#: ../xfce4-session/xfsm-manager.c:610
+#: ../xfce4-session/xfsm-manager.c:611
 msgid "The list of applications in the failsafe session is empty."
 msgstr "הרשימה של יישומים בתוך סשן failsafe ריקה."
 
-#: ../xfce4-session/xfsm-manager.c:696
+#: ../xfce4-session/xfsm-manager.c:697
 msgid "Name for the new session"
 msgstr "שם עבור הסשן החדש"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:774
+#: ../xfce4-session/xfsm-manager.c:775
 msgid "Session Manager Error"
 msgstr "שגיאת מנהל סשן"
 
-#: ../xfce4-session/xfsm-manager.c:776
+#: ../xfce4-session/xfsm-manager.c:777
 msgid "Unable to load a failsafe session"
 msgstr "לא מסוגל להעלות סשן failsafe"
 
-#: ../xfce4-session/xfsm-manager.c:778
+#: ../xfce4-session/xfsm-manager.c:779
 msgid "_Quit"
 msgstr "_צא"
 
-#: ../xfce4-session/xfsm-manager.c:1271
+#: ../xfce4-session/xfsm-manager.c:1272
 msgid "Shutdown Failed"
 msgstr "כיבוי נכשל"
 
-#: ../xfce4-session/xfsm-manager.c:1274
+#: ../xfce4-session/xfsm-manager.c:1275
 msgid "Failed to suspend session"
 msgstr "נכשל להשהות סשן"
 
-#: ../xfce4-session/xfsm-manager.c:1276
+#: ../xfce4-session/xfsm-manager.c:1277
 msgid "Failed to hibernate session"
 msgstr "נכשל להרדים סשן"
 
-#: ../xfce4-session/xfsm-manager.c:1278
+#: ../xfce4-session/xfsm-manager.c:1279
 msgid "Failed to hybrid sleep session"
 msgstr "נכשלה הרדמה היברידית של הסשן"
 
-#: ../xfce4-session/xfsm-manager.c:1279
+#: ../xfce4-session/xfsm-manager.c:1280
 msgid "Failed to switch user"
 msgstr "נכשלה החלפת המשתמש"
 
-#: ../xfce4-session/xfsm-manager.c:1585
+#: ../xfce4-session/xfsm-manager.c:1586
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "יכול לסיים לקוחות רק כאשר במצב עצל"
 
-#: ../xfce4-session/xfsm-manager.c:2247
+#: ../xfce4-session/xfsm-manager.c:2250
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "על מנהל סשן להיות במצב עצל כאשר מבקשים נקודת ביקורת"
 
-#: ../xfce4-session/xfsm-manager.c:2317 ../xfce4-session/xfsm-manager.c:2337
+#: ../xfce4-session/xfsm-manager.c:2320 ../xfce4-session/xfsm-manager.c:2340
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "על מנהל סשן להיות במצב עצל כאשר מבקשים כיבוי"
 
-#: ../xfce4-session/xfsm-manager.c:2382
+#: ../xfce4-session/xfsm-manager.c:2385
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "על מנהל סשן להיות במצב עצל כאשר מבקשים הפעלה מחדש"
 
@@ -603,14 +608,19 @@ msgstr "התאם אישית את הפעלת שולחן העבודה"
 msgid ""
 "session;settings;preferences;manager;startup;login;logout;shutdown;lock "
 "screen;application;autostart;launch;services;daemon;agent;"
-msgstr "session;settings;preferences;manager;startup;login;logout;shutdown;lock screen;application;autostart;launch;services;daemon;agent;"
+msgstr ""
+"session;settings;preferences;manager;startup;login;logout;shutdown;lock "
+"screen;application;autostart;launch;services;daemon;agent;"
 
 #: ../settings/xfce4-session-settings.ui.h:1
 msgid ""
 "These applications are a part of the currently-running session,\n"
 "and can be saved now or when you log out.\n"
 "Changes below will only take effect when the session is saved."
-msgstr "הישומים האלה הם חלק מהסשן שכרגע פועל,\nוניתנים לשמירה עכשיו או כאשר אתה יוצא המערכת.\nשינויים למטה יכנסו לתוקף רק כאשר הסשן נשמר."
+msgstr ""
+"הישומים האלה הם חלק מהסשן שכרגע פועל,\n"
+"וניתנים לשמירה עכשיו או כאשר אתה יוצא המערכת.\n"
+"שינויים למטה יכנסו לתוקף רק כאשר הסשן נשמר."
 
 #: ../settings/xfce4-session-settings.ui.h:5
 msgid "_Help"
@@ -737,4 +747,5 @@ msgstr "כעת שומר סשן"
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
-msgstr "הסשן שלך נשמר ברגעים אלה.  אם אין ברצונך להמתין, באפשרותך לסגור את חלון זה."
+msgstr ""
+"הסשן שלך נשמר ברגעים אלה.  אם אין ברצונך להמתין, באפשרותך לסגור את חלון זה."
