@@ -22,6 +22,17 @@
 set -eu
 unset -v IFS
 
+# find a free file descriptor
+FD=3; while { >&$FD; } 2>/dev/null; do FD=$((FD+1)); done
+
+# get string
+DEBUG=$(xfconf-query -c xfce4-session -p /general/LockDebugFile || :)
+[ -n "$DEBUG" ] && {
+	exec >"$DEBUG" 2>&1
+	eval "exec $FD>&1"
+	set -x
+} || eval "exec $FD>/dev/null"
+
 # Sleep time given in decimal number $1. The unit is second.
 # Try to do that even in a system in which sleep command does not
 # support non-integer time.
@@ -31,7 +42,7 @@ real_sleep() {
 	|| sleep "$(( ${1%%.*} + 1 ))" # in case perl is not installed
 	# and non-integer sleep is supported, determine time by ceiling
 	# function to get at least given amount of delay.
-} 2>/dev/null
+} 2>&$FD
 
 # Turn off display after given time in seconds.
 initial_dpms() {
@@ -44,7 +55,7 @@ initial_dpms() {
 # https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/signal.h.html
 set_trap() {
 	for c in EXIT ALRM HUP INT PIPE POLL PROF TERM USR1 USR2 VTALRM; do
-		eval trap -- \'$1\' $c 2>/dev/null || :
+		eval trap -- \'$1\' $c 2>&$FD || :
 	done
 }
 
@@ -157,11 +168,11 @@ for lock_cmd in \
 do
 	# To redirect stdin to /dev/null is needed at least for xscreensaver
 	# to not have 1 s delay when invoked on terminal.
-	${lock_cmd}-command --lock </dev/null 2>/dev/null && exit
+	${lock_cmd}-command --lock </dev/null 2>&$FD && exit
 done
 
 # 'gnome-screensaver-command --lock' always returns 0 even if it does
 # not lock. (Version 3.6.1 at least.)
 # Thus running with '--query' first is needed.
-[ -n "$(gnome-screensaver-command --query 2>/dev/null)" ] \
-&& gnome-screensaver-command --lock </dev/null 2>/dev/null
+[ -n "$(gnome-screensaver-command --query 2>&$FD)" ] \
+&& gnome-screensaver-command --lock </dev/null 2>&$FD
