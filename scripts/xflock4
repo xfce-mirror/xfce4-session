@@ -85,6 +85,32 @@ default() {
 	printf %s "$1"
 }
 
+run_xdg_screensaver_lock() {
+	name=xdg-screensaver # try to lock by this utility
+	if cmd=$(command -v "$name"); then
+		# ensure it is a shell script
+		read -r line <"$cmd"
+		[ "$line" = '#!/bin/sh' ] \
+		|| {
+			printf 'Error: %s is not a shell script\n' "$cmd" >&2
+			return 1
+		}
+		[ "$DEBUG" ] && { x=x; level=3; } || { x=''; level=0; }
+		# Source $cmd in shell to get the shell trace for debugging
+		ret=0
+		env XDG_UTILS_DEBUG_LEVEL=$level sh -c$x '
+			[ "$1" ] || exec 2>/dev/null
+			shift; printf "#### START DEBUG INSIDE FILE %s\n" "$0" >&2
+			. "$0"
+		' "$cmd" "$x" lock </dev/null || ret=$?
+		[ "$x" ] && printf '#### END DEBUG INSIDE FILE %s\n' "$cmd" >&2
+		return "$ret"
+	else
+		printf "Command '%s' not found.\n" "$name" >&2
+		return 1
+	fi
+}
+
 # get unsigned integer value
 DPMS_INITIAL_DELAY=$(xfconf-query -c xfce4-session \
 -p /general/LockInitialDelayDPMS || default 1)
@@ -162,8 +188,4 @@ do
 	${lock_cmd}-command --lock </dev/null 2>&$FD && exit
 done
 
-# 'gnome-screensaver-command --lock' always returns 0 even if it does
-# not lock. (Version 3.6.1 at least.)
-# Thus running with '--query' first is needed.
-[ -n "$(gnome-screensaver-command --query 2>&$FD)" ] \
-&& gnome-screensaver-command --lock </dev/null 2>&$FD
+run_xdg_screensaver_lock
