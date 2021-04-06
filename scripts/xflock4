@@ -34,6 +34,10 @@ real_sleep() {
 	# function to get at least given amount of delay.
 } 2>/dev/null
 
+# Wait a bit so that user have time to raise finger from a key if
+# the script is run in terminal.
+[ -t 0 ] && real_sleep 0.5
+
 default() {
 	printf 'Using default value %s.\n' "$1" >&2
 	printf %s "$1"
