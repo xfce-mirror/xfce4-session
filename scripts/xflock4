@@ -22,6 +22,10 @@
 #  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
 
+# Wait a bit so that user have time to raise finger from a key if
+# the script is run in terminal.
+[ -t 0 ] && sleep 1
+
 # First test for the command set in the session's xfconf channel
 LOCK_CMD=$(xfconf-query -c xfce4-session -p /general/LockCommand)
 
