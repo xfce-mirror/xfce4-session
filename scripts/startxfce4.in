@@ -71,7 +71,9 @@ then
   else
     XDG_DATA_DIRS="@_datadir_@:/usr/local/share:/usr/share"
   fi
-else
+# If $XDG_DATA_DIRS is pre-defined, but does not end with @_datadir_@, append it
+elif test "${XDG_DATA_DIRS##*:}" != "@_datadir_@"
+then
   XDG_DATA_DIRS="$XDG_DATA_DIRS:@_datadir_@"
 fi
 export XDG_DATA_DIRS
@@ -83,7 +85,9 @@ then
   else
     XDG_CONFIG_DIRS="/etc/xdg:@_sysconfdir_@/xdg"
   fi
-else
+# If $XDG_CONFIG_DIRS is pre-defined, but does not end with @_sysconfdir_@/xdg, append it
+elif test "${XDG_CONFIG_DIRS##*:}" != "@_sysconfdir_@/xdg"
+then
   XDG_CONFIG_DIRS="$XDG_CONFIG_DIRS:@_sysconfdir_@/xdg"
 fi
 export XDG_CONFIG_DIRS
