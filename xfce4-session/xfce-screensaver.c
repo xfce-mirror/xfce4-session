@@ -485,101 +485,23 @@ xfce_screensaver_inhibit (XfceScreenSaver *saver,
  * xfce_screensaver_lock:
  * @saver: The XfceScreenSaver object
  *
- * Attempts to lock the screen, either with one of the screensaver
- * dbus proxies, the xfconf lock command, or one of the
- * fallback scripts such as xdg-screensaver.
+ * Attempts to lock the screen by xflock4 script
  *
  * RETURNS TRUE if the lock attempt returns success.
  **/
 gboolean
 xfce_screensaver_lock (XfceScreenSaver *saver)
 {
-    switch (saver->priv->screensaver_type) {
-        case SCREENSAVER_TYPE_FREEDESKTOP:
-        case SCREENSAVER_TYPE_XFCE:
-        case SCREENSAVER_TYPE_MATE:
-        case SCREENSAVER_TYPE_GNOME:
-        {
-            GVariant *response = NULL;
-            response = g_dbus_proxy_call_sync (saver->priv->proxy,
-                                               "Lock",
-                                               g_variant_new ("()"),
-                                               G_DBUS_CALL_FLAGS_NONE,
-                                               -1,
-                                               NULL,
-                                               NULL);
-            if (response != NULL)
-            {
-                g_variant_unref (response);
-                return TRUE;
-            }
-            else
-            {
-                return FALSE;
-            }
-            break;
-        }
-        case SCREENSAVER_TYPE_CINNAMON:
-        {
-            GVariant *response = NULL;
-            response = g_dbus_proxy_call_sync (saver->priv->proxy,
-                                               "Lock",
-                                               g_variant_new ("(s)", PACKAGE_NAME),
-                                               G_DBUS_CALL_FLAGS_NONE,
-                                               -1,
-                                               NULL,
-                                               NULL);
-            if (response != NULL)
-            {
-                g_variant_unref (response);
-                return TRUE;
-            }
-            else
-            {
-                return FALSE;
-            }
-            break;
-        }
-        case SCREENSAVER_TYPE_OTHER:
-        {
-            gboolean ret = FALSE;
+    gboolean ret;
+    gint exit_status
 
-            if (saver->priv->lock_command != NULL)
-            {
-                DBG ("running lock command: %s", saver->priv->lock_command);
-                ret = g_spawn_command_line_async (saver->priv->lock_command, NULL);
-            }
-
-            if (!ret)
-            {
-                g_warning ("Screensaver lock command not set when attempting to lock the screen.\n"
-                           "Please set the xfconf property %s%s in xfce4-session to the desired lock command",
-                           XFSM_PROPERTIES_PREFIX, LOCK_COMMAND);
-
-                ret = g_spawn_command_line_async ("xflock4", NULL);
-            }
-
-            if (!ret)
-            {
-                ret = g_spawn_command_line_async ("xdg-screensaver lock", NULL);
-            }
-
-            if (!ret)
-            {
-                ret = g_spawn_command_line_async ("xscreensaver-command -lock", NULL);
-            }
-
-            return ret;
-            /* obviously we don't need this break statement but I'm sure some
-             * compiler or static analysis tool will complain */
-            break;
-        }
-        default:
-        {
-            g_warning ("Unknown screensaver type set when calling xfce_screensaver_lock");
-            break;
-        }
+    ret = g_spawn_command_line_sync ("xflock4", NULL, NULL, &exit_status, NULL);
+    /* 'ret' tells, if the function succeeded */
+    if (exit_status != 0)
+    {
+        /* the executable failed */
+        ret = FALSE;
     }
 
-    return FALSE;
+    return ret;
 }
