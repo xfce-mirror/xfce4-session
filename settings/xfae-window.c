@@ -238,7 +238,7 @@ xfae_window_init (XfaeWindow *window)
   gtk_style_context_add_class (gtk_widget_get_style_context (bbox), "inline-toolbar");
   gtk_widget_show (bbox);
 
-  button = gtk_button_new ();
+  button = gtk_button_new_with_label (_("Add"));
   img = gtk_image_new_from_icon_name ("list-add-symbolic", GTK_ICON_SIZE_BUTTON);
   gtk_button_set_image (GTK_BUTTON (button), img);
   gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("Add application"));
@@ -247,7 +247,7 @@ xfae_window_init (XfaeWindow *window)
   gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new ();
+  button = gtk_button_new_with_label (_("Remove"));
   img = gtk_image_new_from_icon_name ("list-remove-symbolic", GTK_ICON_SIZE_BUTTON);
   gtk_button_set_image (GTK_BUTTON (button), img);
   gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("Remove application"));
@@ -260,7 +260,7 @@ xfae_window_init (XfaeWindow *window)
                     G_CALLBACK (xfae_window_selection_changed), button);
   xfae_window_selection_changed (window->selection, button);
 
-  button = gtk_button_new ();
+  button = gtk_button_new_with_label (_("Edit"));
   img = gtk_image_new_from_icon_name ("document-edit-symbolic", GTK_ICON_SIZE_BUTTON);
   gtk_button_set_image (GTK_BUTTON (button), img);
   gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("Edit application"));
