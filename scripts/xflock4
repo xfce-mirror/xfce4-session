@@ -21,6 +21,19 @@
 #  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
 
+# Find a free file descriptor.
+FD=3; while { >&$FD; } 2>/dev/null; do FD=$((FD+1)); done
+
+# Get possible debug file path and setup redirections.
+DEBUG=$(xfconf-query -c xfce4-session -p /general/LockDebugFile || :)
+if [ -n "$DEBUG" ]; then
+    exec >"$DEBUG" 2>&1
+    eval "exec $FD>&1"
+    set -x
+else
+    eval "exec $FD>/dev/null"
+fi
+
 # Wait a bit so that user have time to raise finger from a key if
 # the script is run in terminal.
 [ -t 0 ] && sleep 1
@@ -43,7 +56,7 @@ for lock_cmd in \
 do
     # To redirect stdin to /dev/null is needed at least for xscreensaver
     # to not have 1 s delay when invoked on terminal.
-    ${lock_cmd}-command --lock </dev/null 2>/dev/null && exit
+    ${lock_cmd}-command --lock </dev/null 2>&$FD && exit
 done
 
 # Else access locking failed.
