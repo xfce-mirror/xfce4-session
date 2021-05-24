@@ -4,16 +4,16 @@
 # 
 # Translators:
 # 8b03701f910565d01acaec9ce3f558ab_e9f0fee <b5b06e8f85fb8288fe43ad0bc2422d94_32848>, 2013,2017
-# Arnold Marko <arnold.marko@gmail.com>, 2019-2020
+# Arnold Marko <arnold.marko@gmail.com>, 2019-2021
 # Kernc, 2015
 # Kernc, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-10 00:46+0100\n"
-"PO-Revision-Date: 2020-11-09 23:46+0000\n"
-"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
+"POT-Creation-Date: 2021-05-04 12:47+0200\n"
+"PO-Revision-Date: 2021-05-24 11:40+0000\n"
+"Last-Translator: Arnold Marko <arnold.marko@gmail.com>\n"
 "Language-Team: Slovenian (http://www.transifex.com/xfce/xfce4-session/language/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,7 +27,7 @@ msgstr "Xfce seja"
 
 #: ../xfce.desktop.in.h:2
 msgid "Use this session to run Xfce as your desktop environment"
-msgstr "Zaženi sejo Xfce namiznega okolja"
+msgstr "Uporabite to sejo za zagon Xfce kot vašega namizja"
 
 #: ../libxfsm/xfsm-util.c:331
 msgid "Session"
@@ -114,7 +114,7 @@ msgid "Unable to save the session"
 msgstr "Seje ni bilo mogoče shraniti"
 
 #: ../settings/session-editor.c:141 ../settings/session-editor.c:314
-#: ../xfce4-session/xfsm-manager.c:1281
+#: ../xfce4-session/xfsm-manager.c:1282
 #: ../settings/xfce4-session-settings.ui.h:6
 msgid "_Close"
 msgstr "_Zapri"
@@ -134,7 +134,7 @@ msgid ""
 msgstr "Shranjena stanja programov ob vaši naslednji prijavi ne bodo obnovljena."
 
 #: ../settings/session-editor.c:202 ../settings/session-editor.c:289
-#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:682
+#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:683
 #: ../xfce4-session/xfsm-logout-dialog.c:221
 msgid "_Cancel"
 msgstr "_Prekliči"
@@ -195,7 +195,7 @@ msgstr "Program"
 msgid "Restart Style"
 msgstr "Vrsta zagona"
 
-#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:684
+#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:685
 msgid "_OK"
 msgstr "_V redu"
 
@@ -301,17 +301,21 @@ msgstr "Nisem mogel določiti zagonskega kavlja"
 msgid "Trigger"
 msgstr "Stikalo:"
 
+#: ../settings/xfae-window.c:241 ../settings/xfae-window.c:330
+msgid "Add"
+msgstr "Dodaj"
+
+#: ../settings/xfae-window.c:250 ../settings/xfae-window.c:336
+msgid "Remove"
+msgstr "Odstrani"
+
 #: ../settings/xfae-window.c:253
 msgid "Remove application"
 msgstr "Odstrani program"
 
-#: ../settings/xfae-window.c:330
-msgid "Add"
-msgstr "Dodaj"
-
-#: ../settings/xfae-window.c:336
-msgid "Remove"
-msgstr "Odstrani"
+#: ../settings/xfae-window.c:263
+msgid "Edit"
+msgstr "Uredi"
 
 #: ../settings/xfae-window.c:390
 #, c-format
@@ -401,7 +405,7 @@ msgstr "Vseeno nadaljuj"
 msgid "Try again"
 msgstr "Poskusite ponovno"
 
-#: ../xfce4-session/xfsm-manager.c:566
+#: ../xfce4-session/xfsm-manager.c:567
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -410,69 +414,69 @@ msgid ""
 "incorrectly."
 msgstr "Ni bilo mogoče določiti imena zasilne seje. Možni razlogi: xfconfd ni zagnan (napaka v namestitvi D-Bus); okoljska spremenljivka $XDG_CONFIG_DIRS je nastavljena na napačno vrednost (mora vključevati \"%s\"), ali pa je paket xfce4-session napačno nameščen."
 
-#: ../xfce4-session/xfsm-manager.c:577
+#: ../xfce4-session/xfsm-manager.c:578
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Navedena zasilna seja (\"%s\") ni označena kot zasilna seja."
 
-#: ../xfce4-session/xfsm-manager.c:610
+#: ../xfce4-session/xfsm-manager.c:611
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Seznam programov v zasilni seji je prazen."
 
-#: ../xfce4-session/xfsm-manager.c:696
+#: ../xfce4-session/xfsm-manager.c:697
 msgid "Name for the new session"
 msgstr "Ime nove seje"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:774
+#: ../xfce4-session/xfsm-manager.c:775
 msgid "Session Manager Error"
 msgstr "Napaka upravljalnika seje"
 
-#: ../xfce4-session/xfsm-manager.c:776
+#: ../xfce4-session/xfsm-manager.c:777
 msgid "Unable to load a failsafe session"
 msgstr "Ni bilo mogoče naložiti zasilne seje"
 
-#: ../xfce4-session/xfsm-manager.c:778
+#: ../xfce4-session/xfsm-manager.c:779
 msgid "_Quit"
 msgstr "_Končaj"
 
-#: ../xfce4-session/xfsm-manager.c:1271
+#: ../xfce4-session/xfsm-manager.c:1272
 msgid "Shutdown Failed"
 msgstr "Izklapljanje ni uspelo"
 
-#: ../xfce4-session/xfsm-manager.c:1274
+#: ../xfce4-session/xfsm-manager.c:1275
 msgid "Failed to suspend session"
 msgstr "Ni bilo mogoče preiti v stanje pripravljenosti"
 
-#: ../xfce4-session/xfsm-manager.c:1276
+#: ../xfce4-session/xfsm-manager.c:1277
 msgid "Failed to hibernate session"
 msgstr "Ni bilo mogoče preiti v mirovanje"
 
-#: ../xfce4-session/xfsm-manager.c:1278
+#: ../xfce4-session/xfsm-manager.c:1279
 msgid "Failed to hybrid sleep session"
 msgstr "Neuspelo hibridno spanje za sejo"
 
-#: ../xfce4-session/xfsm-manager.c:1279
+#: ../xfce4-session/xfsm-manager.c:1280
 msgid "Failed to switch user"
 msgstr "Napaka pri zamenjavi uporabnika"
 
-#: ../xfce4-session/xfsm-manager.c:1585
+#: ../xfce4-session/xfsm-manager.c:1586
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Samo v nedejavnem načinu je mogoče uničiti odjemalce"
 
-#: ../xfce4-session/xfsm-manager.c:2247
+#: ../xfce4-session/xfsm-manager.c:2250
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Upravljalnik seje mora biti nedejaven, ko zahteva nadzorno točko"
 
-#: ../xfce4-session/xfsm-manager.c:2317 ../xfce4-session/xfsm-manager.c:2337
+#: ../xfce4-session/xfsm-manager.c:2320 ../xfce4-session/xfsm-manager.c:2340
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Upravljalnik seje mora biti nedejaven, ko zahteva zaustavitev sistema"
 
-#: ../xfce4-session/xfsm-manager.c:2382
+#: ../xfce4-session/xfsm-manager.c:2385
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Upravljalnik seje mora biti nedejaven, ko zahteva ponovni zagon sistema"
 
