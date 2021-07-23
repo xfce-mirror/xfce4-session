@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-10 00:46+0100\n"
-"PO-Revision-Date: 2021-04-24 15:08+0000\n"
-"Last-Translator: Theppitak Karoonboonyanan <theppitak@gmail.com>\n"
+"POT-Creation-Date: 2021-05-04 12:47+0200\n"
+"PO-Revision-Date: 2021-05-04 10:47+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Thai (http://www.transifex.com/xfce/xfce4-session/language/th/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -113,7 +113,7 @@ msgid "Unable to save the session"
 msgstr "ไม่สามารถบันทึกวาระได้"
 
 #: ../settings/session-editor.c:141 ../settings/session-editor.c:314
-#: ../xfce4-session/xfsm-manager.c:1281
+#: ../xfce4-session/xfsm-manager.c:1282
 #: ../settings/xfce4-session-settings.ui.h:6
 msgid "_Close"
 msgstr "ปิ_ด"
@@ -133,7 +133,7 @@ msgid ""
 msgstr "ในการเข้าระบบครั้งหน้าของคุณ จะไม่มีการคืนสถานะของโปรแกรมต่างๆ ของคุณที่บันทึกไว้"
 
 #: ../settings/session-editor.c:202 ../settings/session-editor.c:289
-#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:682
+#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:683
 #: ../xfce4-session/xfsm-logout-dialog.c:221
 msgid "_Cancel"
 msgstr "_ยกเลิก"
@@ -194,7 +194,7 @@ msgstr "โปรแกรม"
 msgid "Restart Style"
 msgstr "รูปแบบการเปิดซ้ำ"
 
-#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:684
+#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:685
 msgid "_OK"
 msgstr "_ตกลง"
 
@@ -300,17 +300,21 @@ msgstr "กำหนดการทำงานที่จุด hook ไม่
 msgid "Trigger"
 msgstr "การสะกิดเรียก"
 
+#: ../settings/xfae-window.c:241 ../settings/xfae-window.c:330
+msgid "Add"
+msgstr "เพิ่ม"
+
+#: ../settings/xfae-window.c:250 ../settings/xfae-window.c:336
+msgid "Remove"
+msgstr "ถอดถอน"
+
 #: ../settings/xfae-window.c:253
 msgid "Remove application"
 msgstr "ถอดถอนโปรแกรม"
 
-#: ../settings/xfae-window.c:330
-msgid "Add"
-msgstr "เพิ่ม"
-
-#: ../settings/xfae-window.c:336
-msgid "Remove"
-msgstr "ถอดถอน"
+#: ../settings/xfae-window.c:263
+msgid "Edit"
+msgstr "แก้ไข"
 
 #: ../settings/xfae-window.c:390
 #, c-format
@@ -400,7 +404,7 @@ msgstr "ยืนยันทำต่อไป"
 msgid "Try again"
 msgstr "ลองอีกครั้ง"
 
-#: ../xfce4-session/xfsm-manager.c:566
+#: ../xfce4-session/xfsm-manager.c:567
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -409,69 +413,69 @@ msgid ""
 "incorrectly."
 msgstr "ไม่สามารถพิจารณาชื่อของวาระ failsafe ได้ สาเหตุที่เป็นไปได้คือ xfconfd อาจไม่ได้ทำงานอยู่ (ปัญหาการตั้งค่าของ D-Bus), ตัวแปรภาวะแวดล้อม $XDG_CONFIG_DIRS กำหนดค่าไว้ไม่ถูกต้อง (ต้องมี \"%s\" ด้วย), หรือติดตั้ง xfce4-session ไว้ไม่สมบูรณ์"
 
-#: ../xfce4-session/xfsm-manager.c:577
+#: ../xfce4-session/xfsm-manager.c:578
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "วาระ failsafe (\"%s\") ที่ระบุ ไม่ได้ถูกทำเครื่องหมายไว้ว่าเป็นวาระ failsafe"
 
-#: ../xfce4-session/xfsm-manager.c:610
+#: ../xfce4-session/xfsm-manager.c:611
 msgid "The list of applications in the failsafe session is empty."
 msgstr "รายชื่อของโปรแกรมในวาระ failsafe ว่างเปล่าอยู่"
 
-#: ../xfce4-session/xfsm-manager.c:696
+#: ../xfce4-session/xfsm-manager.c:697
 msgid "Name for the new session"
 msgstr "ชื่อของวาระใหม่"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:774
+#: ../xfce4-session/xfsm-manager.c:775
 msgid "Session Manager Error"
 msgstr "ข้อผิดพลาดในโปรแกรมจัดการวาระ"
 
-#: ../xfce4-session/xfsm-manager.c:776
+#: ../xfce4-session/xfsm-manager.c:777
 msgid "Unable to load a failsafe session"
 msgstr "ไม่สามารถโหลดวาระ failsafe"
 
-#: ../xfce4-session/xfsm-manager.c:778
+#: ../xfce4-session/xfsm-manager.c:779
 msgid "_Quit"
 msgstr "_ออก"
 
-#: ../xfce4-session/xfsm-manager.c:1271
+#: ../xfce4-session/xfsm-manager.c:1272
 msgid "Shutdown Failed"
 msgstr "ปิดระบบไม่สำเร็จ"
 
-#: ../xfce4-session/xfsm-manager.c:1274
+#: ../xfce4-session/xfsm-manager.c:1275
 msgid "Failed to suspend session"
 msgstr "พักวาระไม่สำเร็จ"
 
-#: ../xfce4-session/xfsm-manager.c:1276
+#: ../xfce4-session/xfsm-manager.c:1277
 msgid "Failed to hibernate session"
 msgstr "จำศีลวาระไม่สำเร็จ"
 
-#: ../xfce4-session/xfsm-manager.c:1278
+#: ../xfce4-session/xfsm-manager.c:1279
 msgid "Failed to hybrid sleep session"
 msgstr "ทำให้วาระหลับแบบไฮบริดไม่สำเร็จ"
 
-#: ../xfce4-session/xfsm-manager.c:1279
+#: ../xfce4-session/xfsm-manager.c:1280
 msgid "Failed to switch user"
 msgstr "สลับผู้ใช้ไม่สำเร็จ"
 
-#: ../xfce4-session/xfsm-manager.c:1585
+#: ../xfce4-session/xfsm-manager.c:1586
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "สามารถจบการทำงานของไคลเอนต์ได้เมื่ออยู่ในสถานะเดินเครื่องเปล่าเท่านั้น"
 
-#: ../xfce4-session/xfsm-manager.c:2247
+#: ../xfce4-session/xfsm-manager.c:2250
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "โปรแกรมจัดการวาระต้องอยู่ในสถานะเดินเครื่องเปล่าขณะร้องขอจุดตรวจสอบ"
 
-#: ../xfce4-session/xfsm-manager.c:2317 ../xfce4-session/xfsm-manager.c:2337
+#: ../xfce4-session/xfsm-manager.c:2320 ../xfce4-session/xfsm-manager.c:2340
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "โปรแกรมจัดการวาระต้องอยู่ในสถานะเดินเครื่องเปล่าขณะร้องขอการปิดระบบ"
 
-#: ../xfce4-session/xfsm-manager.c:2382
+#: ../xfce4-session/xfsm-manager.c:2385
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "โปรแกรมจัดการวาระต้องอยู่ในสถานะเดินเครื่องเปล่าขณะร้องขอการเริ่มเปิดเครื่องใหม่"
 
