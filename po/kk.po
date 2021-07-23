@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-10 00:46+0100\n"
-"PO-Revision-Date: 2020-11-09 23:46+0000\n"
+"POT-Creation-Date: 2021-05-04 12:47+0200\n"
+"PO-Revision-Date: 2021-05-04 10:47+0000\n"
 "Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Kazakh (http://www.transifex.com/xfce/xfce4-session/language/kk/)\n"
 "MIME-Version: 1.0\n"
@@ -111,7 +111,7 @@ msgid "Unable to save the session"
 msgstr "Сессияны сақтау мүмкін емес"
 
 #: ../settings/session-editor.c:141 ../settings/session-editor.c:314
-#: ../xfce4-session/xfsm-manager.c:1281
+#: ../xfce4-session/xfsm-manager.c:1282
 #: ../settings/xfce4-session-settings.ui.h:6
 msgid "_Close"
 msgstr "_Жабу"
@@ -131,7 +131,7 @@ msgid ""
 msgstr "Қолданбаларыңыздың сақталған күйлері сіз келесі сессия бастаған кезде іске қайта қосылмайды,"
 
 #: ../settings/session-editor.c:202 ../settings/session-editor.c:289
-#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:682
+#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:683
 #: ../xfce4-session/xfsm-logout-dialog.c:221
 msgid "_Cancel"
 msgstr "Ба_с тарту"
@@ -192,7 +192,7 @@ msgstr "Бағдарлама"
 msgid "Restart Style"
 msgstr "Қайта қосу стилі"
 
-#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:684
+#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:685
 msgid "_OK"
 msgstr "_ОК"
 
@@ -298,17 +298,21 @@ msgstr "Жөнелту шартын орнату сәтсіз аяқталды"
 msgid "Trigger"
 msgstr "Триггер"
 
+#: ../settings/xfae-window.c:241 ../settings/xfae-window.c:330
+msgid "Add"
+msgstr "Қосу"
+
+#: ../settings/xfae-window.c:250 ../settings/xfae-window.c:336
+msgid "Remove"
+msgstr "Өшіру"
+
 #: ../settings/xfae-window.c:253
 msgid "Remove application"
 msgstr "Қолданбаны өшіру"
 
-#: ../settings/xfae-window.c:330
-msgid "Add"
-msgstr "Қосу"
-
-#: ../settings/xfae-window.c:336
-msgid "Remove"
-msgstr "Өшіру"
+#: ../settings/xfae-window.c:263
+msgid "Edit"
+msgstr "Түзету"
 
 #: ../settings/xfae-window.c:390
 #, c-format
@@ -398,7 +402,7 @@ msgstr "Бәрібір жалғастыру"
 msgid "Try again"
 msgstr "Қайталап көру"
 
-#: ../xfce4-session/xfsm-manager.c:566
+#: ../xfce4-session/xfsm-manager.c:567
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -407,69 +411,69 @@ msgid ""
 "incorrectly."
 msgstr "Қауіпсіз сессияның атын анықтау сәтсіз аяқталды. Мүмкін себептер: xfconfd орындалып тұрған жоқ (D-Bus орнату қатесі); қоршамның $XDG_CONFIG_DIRS айнымалысы қате (құрамында \"%s\" болуы керек), немесе xfce4-session қате орнатылған."
 
-#: ../xfce4-session/xfsm-manager.c:577
+#: ../xfce4-session/xfsm-manager.c:578
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Көрсетілген қауіпсіз сессия (\"%s\") қауіпсіз деп белгіленбеген."
 
-#: ../xfce4-session/xfsm-manager.c:610
+#: ../xfce4-session/xfsm-manager.c:611
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Қауіпсіз сессияның қолданбалар тізімі бос."
 
-#: ../xfce4-session/xfsm-manager.c:696
+#: ../xfce4-session/xfsm-manager.c:697
 msgid "Name for the new session"
 msgstr "Жаңа сессия аты"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:774
+#: ../xfce4-session/xfsm-manager.c:775
 msgid "Session Manager Error"
 msgstr "Сессиялар басқарушысының қатесі"
 
-#: ../xfce4-session/xfsm-manager.c:776
+#: ../xfce4-session/xfsm-manager.c:777
 msgid "Unable to load a failsafe session"
 msgstr "Қауіпсіз сессияны жүктеу мүмкін емес"
 
-#: ../xfce4-session/xfsm-manager.c:778
+#: ../xfce4-session/xfsm-manager.c:779
 msgid "_Quit"
 msgstr "_Шығу"
 
-#: ../xfce4-session/xfsm-manager.c:1271
+#: ../xfce4-session/xfsm-manager.c:1272
 msgid "Shutdown Failed"
 msgstr "Сөндіру сәтсіз аяқталды"
 
-#: ../xfce4-session/xfsm-manager.c:1274
+#: ../xfce4-session/xfsm-manager.c:1275
 msgid "Failed to suspend session"
 msgstr "Сессияны ұйықтату сәтсіз аяқталды"
 
-#: ../xfce4-session/xfsm-manager.c:1276
+#: ../xfce4-session/xfsm-manager.c:1277
 msgid "Failed to hibernate session"
 msgstr "Сессияны гибернациялау сәтсіз аяқталды"
 
-#: ../xfce4-session/xfsm-manager.c:1278
+#: ../xfce4-session/xfsm-manager.c:1279
 msgid "Failed to hybrid sleep session"
 msgstr "Сессияны гибридті ұйықтату сәтсіз аяқталды"
 
-#: ../xfce4-session/xfsm-manager.c:1279
+#: ../xfce4-session/xfsm-manager.c:1280
 msgid "Failed to switch user"
 msgstr "Пайдаланушыны ауыстыру сәтсіз аяқталды"
 
-#: ../xfce4-session/xfsm-manager.c:1585
+#: ../xfce4-session/xfsm-manager.c:1586
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Тек белсенді емес клиенттерді тоқтатуға болады"
 
-#: ../xfce4-session/xfsm-manager.c:2247
+#: ../xfce4-session/xfsm-manager.c:2250
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Бақылау нүктесін сұрау кезінде сессиялар басқарушысы белсенді емес болуы керек"
 
-#: ../xfce4-session/xfsm-manager.c:2317 ../xfce4-session/xfsm-manager.c:2337
+#: ../xfce4-session/xfsm-manager.c:2320 ../xfce4-session/xfsm-manager.c:2340
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Сөндіруді сұрау кезінде сессиялар басқарушысы белсенді емес болуы керек"
 
-#: ../xfce4-session/xfsm-manager.c:2382
+#: ../xfce4-session/xfsm-manager.c:2385
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Қайта іске қосуды сұрау кезінде сессиялар басқарушысы белсенді емес болуы керек"
 
