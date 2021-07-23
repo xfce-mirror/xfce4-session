@@ -22,9 +22,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-10 00:46+0100\n"
-"PO-Revision-Date: 2020-11-18 21:35+0000\n"
-"Last-Translator: AlexanderFilev <avfill@outlook.com>\n"
+"POT-Creation-Date: 2021-05-04 12:47+0200\n"
+"PO-Revision-Date: 2021-05-04 10:47+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Russian (http://www.transifex.com/xfce/xfce4-session/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -125,7 +125,7 @@ msgid "Unable to save the session"
 msgstr "Не удалось сохранить сеанс"
 
 #: ../settings/session-editor.c:141 ../settings/session-editor.c:314
-#: ../xfce4-session/xfsm-manager.c:1281
+#: ../xfce4-session/xfsm-manager.c:1282
 #: ../settings/xfce4-session-settings.ui.h:6
 msgid "_Close"
 msgstr "_Закрыть"
@@ -145,7 +145,7 @@ msgid ""
 msgstr "Сохранённые состояния ваших приложений не будут восстановлены при следующем сеансе."
 
 #: ../settings/session-editor.c:202 ../settings/session-editor.c:289
-#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:682
+#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:683
 #: ../xfce4-session/xfsm-logout-dialog.c:221
 msgid "_Cancel"
 msgstr "О_тменить"
@@ -206,7 +206,7 @@ msgstr "Приложение"
 msgid "Restart Style"
 msgstr "Способ перезагрузки"
 
-#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:684
+#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:685
 msgid "_OK"
 msgstr "О_к"
 
@@ -312,17 +312,21 @@ msgstr "Не удалось задать перехват запуска"
 msgid "Trigger"
 msgstr "Триггер"
 
+#: ../settings/xfae-window.c:241 ../settings/xfae-window.c:330
+msgid "Add"
+msgstr "Добавить"
+
+#: ../settings/xfae-window.c:250 ../settings/xfae-window.c:336
+msgid "Remove"
+msgstr "Удалить"
+
 #: ../settings/xfae-window.c:253
 msgid "Remove application"
 msgstr "Удалить приложение"
 
-#: ../settings/xfae-window.c:330
-msgid "Add"
-msgstr "Добавить"
-
-#: ../settings/xfae-window.c:336
-msgid "Remove"
-msgstr "Удалить"
+#: ../settings/xfae-window.c:263
+msgid "Edit"
+msgstr "Изменить"
 
 #: ../settings/xfae-window.c:390
 #, c-format
@@ -412,7 +416,7 @@ msgstr "Всё равно продолжить"
 msgid "Try again"
 msgstr "Повторить попытку"
 
-#: ../xfce4-session/xfsm-manager.c:566
+#: ../xfce4-session/xfsm-manager.c:567
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -421,69 +425,69 @@ msgid ""
 "incorrectly."
 msgstr "Не удалось определить имя безопасного сеанса. Возможные причины: xfconfd не запущен (проблемы настройки D-Bus); переменная окружения $XDG_CONFIG_DIRS установлена неверно (должна включать в себя «%s»), или неверно установлен xfce4-session."
 
-#: ../xfce4-session/xfsm-manager.c:577
+#: ../xfce4-session/xfsm-manager.c:578
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Указанный безопасный сеанс («%s») не помечен как безопасный."
 
-#: ../xfce4-session/xfsm-manager.c:610
+#: ../xfce4-session/xfsm-manager.c:611
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Список приложений безопасного сеанса пуст."
 
-#: ../xfce4-session/xfsm-manager.c:696
+#: ../xfce4-session/xfsm-manager.c:697
 msgid "Name for the new session"
 msgstr "Название для нового сеанса"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:774
+#: ../xfce4-session/xfsm-manager.c:775
 msgid "Session Manager Error"
 msgstr "Ошибка менеджера сеансов"
 
-#: ../xfce4-session/xfsm-manager.c:776
+#: ../xfce4-session/xfsm-manager.c:777
 msgid "Unable to load a failsafe session"
 msgstr "Не удалось загрузить безопасный сеанс"
 
-#: ../xfce4-session/xfsm-manager.c:778
+#: ../xfce4-session/xfsm-manager.c:779
 msgid "_Quit"
 msgstr "_Выйти"
 
-#: ../xfce4-session/xfsm-manager.c:1271
+#: ../xfce4-session/xfsm-manager.c:1272
 msgid "Shutdown Failed"
 msgstr "Не удалось выключить компьютер"
 
-#: ../xfce4-session/xfsm-manager.c:1274
+#: ../xfce4-session/xfsm-manager.c:1275
 msgid "Failed to suspend session"
 msgstr "Не удалось войти в ждущий режим"
 
-#: ../xfce4-session/xfsm-manager.c:1276
+#: ../xfce4-session/xfsm-manager.c:1277
 msgid "Failed to hibernate session"
 msgstr "Не удалось войти в спящий режим"
 
-#: ../xfce4-session/xfsm-manager.c:1278
+#: ../xfce4-session/xfsm-manager.c:1279
 msgid "Failed to hybrid sleep session"
 msgstr "Не удалось войти в гибридный спящий режим"
 
-#: ../xfce4-session/xfsm-manager.c:1279
+#: ../xfce4-session/xfsm-manager.c:1280
 msgid "Failed to switch user"
 msgstr "Не удалось переключить пользователя"
 
-#: ../xfce4-session/xfsm-manager.c:1585
+#: ../xfce4-session/xfsm-manager.c:1586
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Завершение возможно только для клиентов в режиме ожидания"
 
-#: ../xfce4-session/xfsm-manager.c:2247
+#: ../xfce4-session/xfsm-manager.c:2250
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Менеджер сеансов должен быть в режиме ожидания при запросе контрольной точки"
 
-#: ../xfce4-session/xfsm-manager.c:2317 ../xfce4-session/xfsm-manager.c:2337
+#: ../xfce4-session/xfsm-manager.c:2320 ../xfce4-session/xfsm-manager.c:2340
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Менеджер сеансов должен быть в режиме ожидания при запросе выключения"
 
-#: ../xfce4-session/xfsm-manager.c:2382
+#: ../xfce4-session/xfsm-manager.c:2385
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Менеджер сеансов должен быть в режиме ожидания при запросе перезапуска"
 
