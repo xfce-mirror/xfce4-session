@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-10 00:46+0100\n"
-"PO-Revision-Date: 2020-11-09 23:46+0000\n"
+"POT-Creation-Date: 2021-05-04 12:47+0200\n"
+"PO-Revision-Date: 2021-05-04 10:47+0000\n"
 "Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Lithuanian (http://www.transifex.com/xfce/xfce4-session/language/lt/)\n"
 "MIME-Version: 1.0\n"
@@ -113,7 +113,7 @@ msgid "Unable to save the session"
 msgstr "Seanso įrašyti nepavyko"
 
 #: ../settings/session-editor.c:141 ../settings/session-editor.c:314
-#: ../xfce4-session/xfsm-manager.c:1281
+#: ../xfce4-session/xfsm-manager.c:1282
 #: ../settings/xfce4-session-settings.ui.h:6
 msgid "_Close"
 msgstr "_Užverti"
@@ -133,7 +133,7 @@ msgid ""
 msgstr "Kitą kartą prisijungus, įrašytos programų būsenos nebus atstatytos."
 
 #: ../settings/session-editor.c:202 ../settings/session-editor.c:289
-#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:682
+#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:683
 #: ../xfce4-session/xfsm-logout-dialog.c:221
 msgid "_Cancel"
 msgstr "_Atsisakyti"
@@ -194,7 +194,7 @@ msgstr "Programa"
 msgid "Restart Style"
 msgstr "Paleidimo iš naujo stilius"
 
-#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:684
+#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:685
 msgid "_OK"
 msgstr "_Gerai"
 
@@ -300,17 +300,21 @@ msgstr "Nepavyko nustatyti paleidimo gaudyklės"
 msgid "Trigger"
 msgstr "Paleisti"
 
+#: ../settings/xfae-window.c:241 ../settings/xfae-window.c:330
+msgid "Add"
+msgstr "Pridėti"
+
+#: ../settings/xfae-window.c:250 ../settings/xfae-window.c:336
+msgid "Remove"
+msgstr "Šalinti"
+
 #: ../settings/xfae-window.c:253
 msgid "Remove application"
 msgstr "Šalinti programą"
 
-#: ../settings/xfae-window.c:330
-msgid "Add"
-msgstr "Pridėti"
-
-#: ../settings/xfae-window.c:336
-msgid "Remove"
-msgstr "Šalinti"
+#: ../settings/xfae-window.c:263
+msgid "Edit"
+msgstr "Taisyti"
 
 #: ../settings/xfae-window.c:390
 #, c-format
@@ -400,7 +404,7 @@ msgstr "Vis tiek tęsti"
 msgid "Try again"
 msgstr "Bandyti dar kartą"
 
-#: ../xfce4-session/xfsm-manager.c:566
+#: ../xfce4-session/xfsm-manager.c:567
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -409,69 +413,69 @@ msgid ""
 "incorrectly."
 msgstr "Nepavyko nustatyti gedimams atsparaus seanso pavadinimo.  Galimos priežastys: xfconfd neveikia (D-Bus sąrankos klaida); aplinkos kintamasis $XDG_CONFIG_DIRS nustatytas netinkamai (turi turėti „%s“), arba xfce4-session neteisingai įdiegta."
 
-#: ../xfce4-session/xfsm-manager.c:577
+#: ../xfce4-session/xfsm-manager.c:578
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Nurodytas gedimams atsparus seansas („%s“) nėra pažymėtas kaip gedimams atsparus seansas."
 
-#: ../xfce4-session/xfsm-manager.c:610
+#: ../xfce4-session/xfsm-manager.c:611
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Gedimams atsparaus seanso programų sąrašas tuščias."
 
-#: ../xfce4-session/xfsm-manager.c:696
+#: ../xfce4-session/xfsm-manager.c:697
 msgid "Name for the new session"
 msgstr "Naujo seanso pavadinimas"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:774
+#: ../xfce4-session/xfsm-manager.c:775
 msgid "Session Manager Error"
 msgstr "Seansų tvarkytuvės klaida"
 
-#: ../xfce4-session/xfsm-manager.c:776
+#: ../xfce4-session/xfsm-manager.c:777
 msgid "Unable to load a failsafe session"
 msgstr "Nepavyko įkelti gedimams atsparaus seanso"
 
-#: ../xfce4-session/xfsm-manager.c:778
+#: ../xfce4-session/xfsm-manager.c:779
 msgid "_Quit"
 msgstr "_Išeiti"
 
-#: ../xfce4-session/xfsm-manager.c:1271
+#: ../xfce4-session/xfsm-manager.c:1272
 msgid "Shutdown Failed"
 msgstr "Išjungti nepavyko"
 
-#: ../xfce4-session/xfsm-manager.c:1274
+#: ../xfce4-session/xfsm-manager.c:1275
 msgid "Failed to suspend session"
 msgstr "Nepavyko pristabdyti seanso"
 
-#: ../xfce4-session/xfsm-manager.c:1276
+#: ../xfce4-session/xfsm-manager.c:1277
 msgid "Failed to hibernate session"
 msgstr "Nepavyko užmigdyti seanso"
 
-#: ../xfce4-session/xfsm-manager.c:1278
+#: ../xfce4-session/xfsm-manager.c:1279
 msgid "Failed to hybrid sleep session"
 msgstr "Nepavyko įvesti seanso į mišraus miego būseną"
 
-#: ../xfce4-session/xfsm-manager.c:1279
+#: ../xfce4-session/xfsm-manager.c:1280
 msgid "Failed to switch user"
 msgstr "Nepavyko perjungti naudotojo"
 
-#: ../xfce4-session/xfsm-manager.c:1585
+#: ../xfce4-session/xfsm-manager.c:1586
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Klientų darbą galima baigti tik neveiklumo būsenoje"
 
-#: ../xfce4-session/xfsm-manager.c:2247
+#: ../xfce4-session/xfsm-manager.c:2250
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Kai prašoma įrašyto kontrolinio taško, seansų tvarkytuvė turi būti neveiklumo būsenoje"
 
-#: ../xfce4-session/xfsm-manager.c:2317 ../xfce4-session/xfsm-manager.c:2337
+#: ../xfce4-session/xfsm-manager.c:2320 ../xfce4-session/xfsm-manager.c:2340
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Kai prašoma išjungti, seansų tvarkytuvė turi būti neveiklumo būsenoje"
 
-#: ../xfce4-session/xfsm-manager.c:2382
+#: ../xfce4-session/xfsm-manager.c:2385
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Kai prašoma paleisti iš naujo, seansų tvarkytuvė privalo būti neveiklumo būsenoje"
 
