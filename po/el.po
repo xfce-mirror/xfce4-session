@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-10 00:46+0100\n"
-"PO-Revision-Date: 2020-11-09 23:46+0000\n"
+"POT-Creation-Date: 2021-05-04 12:47+0200\n"
+"PO-Revision-Date: 2021-05-04 10:47+0000\n"
 "Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Greek (http://www.transifex.com/xfce/xfce4-session/language/el/)\n"
 "MIME-Version: 1.0\n"
@@ -118,7 +118,7 @@ msgid "Unable to save the session"
 msgstr "Η αποθήκευση της συνεδρίας δεν είναι εφικτή"
 
 #: ../settings/session-editor.c:141 ../settings/session-editor.c:314
-#: ../xfce4-session/xfsm-manager.c:1281
+#: ../xfce4-session/xfsm-manager.c:1282
 #: ../settings/xfce4-session-settings.ui.h:6
 msgid "_Close"
 msgstr "_Κλείσιμο"
@@ -138,7 +138,7 @@ msgid ""
 msgstr "Η αποθηκευμένη κατάσταση των εφαρμογών σας δεν θα επαναφερθεί κατά την επόμενη συνεδρία σας."
 
 #: ../settings/session-editor.c:202 ../settings/session-editor.c:289
-#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:682
+#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:683
 #: ../xfce4-session/xfsm-logout-dialog.c:221
 msgid "_Cancel"
 msgstr "_Ακύρωση"
@@ -199,7 +199,7 @@ msgstr "Πρόγραμμα"
 msgid "Restart Style"
 msgstr "Στυλ επανεκκίνησης"
 
-#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:684
+#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:685
 msgid "_OK"
 msgstr "_OK"
 
@@ -305,17 +305,21 @@ msgstr "Αποτυχία ορισμού αγκίστρου - hook"
 msgid "Trigger"
 msgstr "Ενεργοποίηση"
 
+#: ../settings/xfae-window.c:241 ../settings/xfae-window.c:330
+msgid "Add"
+msgstr "Προσθήκη"
+
+#: ../settings/xfae-window.c:250 ../settings/xfae-window.c:336
+msgid "Remove"
+msgstr "Αφαίρεση"
+
 #: ../settings/xfae-window.c:253
 msgid "Remove application"
 msgstr ""
 
-#: ../settings/xfae-window.c:330
-msgid "Add"
-msgstr "Προσθήκη"
-
-#: ../settings/xfae-window.c:336
-msgid "Remove"
-msgstr "Αφαίρεση"
+#: ../settings/xfae-window.c:263
+msgid "Edit"
+msgstr "Επεξεργασία"
 
 #: ../settings/xfae-window.c:390
 #, c-format
@@ -405,7 +409,7 @@ msgstr "Συνέχεια έτσι κι αλλιώς"
 msgid "Try again"
 msgstr "Προσπάθεια ξανά"
 
-#: ../xfce4-session/xfsm-manager.c:566
+#: ../xfce4-session/xfsm-manager.c:567
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -414,69 +418,69 @@ msgid ""
 "incorrectly."
 msgstr "Αδυναμία προσδιορισμού ονόματος ασφαλούς συνεδρίας. Πιθανές αιτίες: το xfconfd δεν τρέχει (πρόβλημα ρύθμισης D-BUS), οι μεταβλητές περιβάλλοντος $XDG_CONFIG_DIRS δεν είναι ορισμένες σωστά (πρέπει να συμπεριληφθεί το \"%s\"), ή το xfce4-session δεν έχει εγκατασταθεί σωστά."
 
-#: ../xfce4-session/xfsm-manager.c:577
+#: ../xfce4-session/xfsm-manager.c:578
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Η συγκεκριμένη ασφαλής συνεδρία (\"%s\") δεν είναι σημειωμένη ως ασφαλής συνεδρία."
 
-#: ../xfce4-session/xfsm-manager.c:610
+#: ../xfce4-session/xfsm-manager.c:611
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Η λίστα των εφαρμογών στην ασφαλή συνεδρία είναι κενή."
 
-#: ../xfce4-session/xfsm-manager.c:696
+#: ../xfce4-session/xfsm-manager.c:697
 msgid "Name for the new session"
 msgstr "Όνομα για τη νέα συνεδρία"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:774
+#: ../xfce4-session/xfsm-manager.c:775
 msgid "Session Manager Error"
 msgstr "Σφάλμα Διαχειριστή Συνεδριών"
 
-#: ../xfce4-session/xfsm-manager.c:776
+#: ../xfce4-session/xfsm-manager.c:777
 msgid "Unable to load a failsafe session"
 msgstr "Αδυναμία φόρτωσης μίας ασφαλούς συνεδρίας"
 
-#: ../xfce4-session/xfsm-manager.c:778
+#: ../xfce4-session/xfsm-manager.c:779
 msgid "_Quit"
 msgstr "Έ_ξοδος"
 
-#: ../xfce4-session/xfsm-manager.c:1271
+#: ../xfce4-session/xfsm-manager.c:1272
 msgid "Shutdown Failed"
 msgstr "Ο τερματισμός απέτυχε"
 
-#: ../xfce4-session/xfsm-manager.c:1274
+#: ../xfce4-session/xfsm-manager.c:1275
 msgid "Failed to suspend session"
 msgstr "Αποτυχία αναστολής συνεδρίας"
 
-#: ../xfce4-session/xfsm-manager.c:1276
+#: ../xfce4-session/xfsm-manager.c:1277
 msgid "Failed to hibernate session"
 msgstr "Αποτυχία αδρανοποίησης συνεδρίας"
 
-#: ../xfce4-session/xfsm-manager.c:1278
+#: ../xfce4-session/xfsm-manager.c:1279
 msgid "Failed to hybrid sleep session"
 msgstr "Αποτυχία να τεθεί η συνεδρία σε υβριδική νάρκη"
 
-#: ../xfce4-session/xfsm-manager.c:1279
+#: ../xfce4-session/xfsm-manager.c:1280
 msgid "Failed to switch user"
 msgstr "Αποτυχία εναλλαγής χρήστη"
 
-#: ../xfce4-session/xfsm-manager.c:1585
+#: ../xfce4-session/xfsm-manager.c:1586
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Μπορείτε μόνο να τερματίσετε πελάτες όταν είναι σε κατάσταση αδράνειας"
 
-#: ../xfce4-session/xfsm-manager.c:2247
+#: ../xfce4-session/xfsm-manager.c:2250
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Ο διαχειριστής συνεδριών μπορεί να είναι σε κατάσταση αδράνειας όταν φτάσει σε ένα σημείο ελέγχου"
 
-#: ../xfce4-session/xfsm-manager.c:2317 ../xfce4-session/xfsm-manager.c:2337
+#: ../xfce4-session/xfsm-manager.c:2320 ../xfce4-session/xfsm-manager.c:2340
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Ο διαχειριστής συνεδρίας πρέπει να είναι σε κατάσταση αδράνειας όταν αιτείται τερματισμός"
 
-#: ../xfce4-session/xfsm-manager.c:2382
+#: ../xfce4-session/xfsm-manager.c:2385
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Ο διαχειριστής συνεδρίας πρέπει να είναι σε κατάσταση αδράνειας όταν αιτείται επανεκκίνηση"
 
