@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-10 00:46+0100\n"
-"PO-Revision-Date: 2020-11-10 09:55+0000\n"
-"Last-Translator: Luna Jernberg <bittin@cafe8bitar.se>\n"
+"POT-Creation-Date: 2021-05-04 12:47+0200\n"
+"PO-Revision-Date: 2021-05-04 10:47+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/xfce/xfce4-session/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -116,7 +116,7 @@ msgid "Unable to save the session"
 msgstr "Det gick inte att spara sessionen"
 
 #: ../settings/session-editor.c:141 ../settings/session-editor.c:314
-#: ../xfce4-session/xfsm-manager.c:1281
+#: ../xfce4-session/xfsm-manager.c:1282
 #: ../settings/xfce4-session-settings.ui.h:6
 msgid "_Close"
 msgstr "_Stäng"
@@ -136,7 +136,7 @@ msgid ""
 msgstr "Sparade tillstånd på dina program kommer inte att återställas vid nästa inloggning."
 
 #: ../settings/session-editor.c:202 ../settings/session-editor.c:289
-#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:682
+#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:683
 #: ../xfce4-session/xfsm-logout-dialog.c:221
 msgid "_Cancel"
 msgstr "_Avbryt"
@@ -197,7 +197,7 @@ msgstr "Program"
 msgid "Restart Style"
 msgstr "Omstartstyp"
 
-#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:684
+#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:685
 msgid "_OK"
 msgstr "_OK"
 
@@ -303,17 +303,21 @@ msgstr "Misslyckades med att köra krok"
 msgid "Trigger"
 msgstr "Trigger"
 
+#: ../settings/xfae-window.c:241 ../settings/xfae-window.c:330
+msgid "Add"
+msgstr "Lägg till"
+
+#: ../settings/xfae-window.c:250 ../settings/xfae-window.c:336
+msgid "Remove"
+msgstr "Ta bort"
+
 #: ../settings/xfae-window.c:253
 msgid "Remove application"
 msgstr "Ta bort program"
 
-#: ../settings/xfae-window.c:330
-msgid "Add"
-msgstr "Lägg till"
-
-#: ../settings/xfae-window.c:336
-msgid "Remove"
-msgstr "Ta bort"
+#: ../settings/xfae-window.c:263
+msgid "Edit"
+msgstr "Redigera"
 
 #: ../settings/xfae-window.c:390
 #, c-format
@@ -403,7 +407,7 @@ msgstr "Fortsätt ändå"
 msgid "Try again"
 msgstr "Försök igen"
 
-#: ../xfce4-session/xfsm-manager.c:566
+#: ../xfce4-session/xfsm-manager.c:567
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -412,69 +416,69 @@ msgid ""
 "incorrectly."
 msgstr "Det gick inte att fastställa namn på felsäker session.  Möjliga orsaker: xfconfd körs inte (D-Bus-konfigurationsproblem); miljövariabeln $XDG_CONFIG_DIRS är felaktigt inställd (måste inkludera \"%s\") eller att xfce4-session är felaktigt installerad."
 
-#: ../xfce4-session/xfsm-manager.c:577
+#: ../xfce4-session/xfsm-manager.c:578
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Den angivna felsäkra sessionen (\"%s\") är inte markerad som en felsäker session."
 
-#: ../xfce4-session/xfsm-manager.c:610
+#: ../xfce4-session/xfsm-manager.c:611
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Listan över program i den felsäkra sessionen är tom."
 
-#: ../xfce4-session/xfsm-manager.c:696
+#: ../xfce4-session/xfsm-manager.c:697
 msgid "Name for the new session"
 msgstr "Namn på den nya sessionen"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:774
+#: ../xfce4-session/xfsm-manager.c:775
 msgid "Session Manager Error"
 msgstr "Fel i sessionshanterare"
 
-#: ../xfce4-session/xfsm-manager.c:776
+#: ../xfce4-session/xfsm-manager.c:777
 msgid "Unable to load a failsafe session"
 msgstr "Det gick inte att läsa in en felsäker session"
 
-#: ../xfce4-session/xfsm-manager.c:778
+#: ../xfce4-session/xfsm-manager.c:779
 msgid "_Quit"
 msgstr "A_vsluta"
 
-#: ../xfce4-session/xfsm-manager.c:1271
+#: ../xfce4-session/xfsm-manager.c:1272
 msgid "Shutdown Failed"
 msgstr "Avstängning misslyckades"
 
-#: ../xfce4-session/xfsm-manager.c:1274
+#: ../xfce4-session/xfsm-manager.c:1275
 msgid "Failed to suspend session"
 msgstr "Misslyckades med att försätta session i vänteläge"
 
-#: ../xfce4-session/xfsm-manager.c:1276
+#: ../xfce4-session/xfsm-manager.c:1277
 msgid "Failed to hibernate session"
 msgstr "Misslyckades med att försätta session i viloläge"
 
-#: ../xfce4-session/xfsm-manager.c:1278
+#: ../xfce4-session/xfsm-manager.c:1279
 msgid "Failed to hybrid sleep session"
 msgstr "Det gick inte att starta hybridsömnsession"
 
-#: ../xfce4-session/xfsm-manager.c:1279
+#: ../xfce4-session/xfsm-manager.c:1280
 msgid "Failed to switch user"
 msgstr "Misslyckades med att byta användare"
 
-#: ../xfce4-session/xfsm-manager.c:1585
+#: ../xfce4-session/xfsm-manager.c:1586
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Kan endast terminera klienter som befinner sig i ett overksamt tillstånd"
 
-#: ../xfce4-session/xfsm-manager.c:2247
+#: ../xfce4-session/xfsm-manager.c:2250
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Sessionshanteraren måste vara i ett overksamt läge när begäran sker"
 
-#: ../xfce4-session/xfsm-manager.c:2317 ../xfce4-session/xfsm-manager.c:2337
+#: ../xfce4-session/xfsm-manager.c:2320 ../xfce4-session/xfsm-manager.c:2340
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Sessionshanteraren måste vara i overksamt läge när en avstängning begärs"
 
-#: ../xfce4-session/xfsm-manager.c:2382
+#: ../xfce4-session/xfsm-manager.c:2385
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Sessionshanteraren måste vara í viloläge när du begär en omstart"
 
