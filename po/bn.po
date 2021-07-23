@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-10 00:46+0100\n"
-"PO-Revision-Date: 2020-11-09 23:46+0000\n"
+"POT-Creation-Date: 2021-05-04 12:47+0200\n"
+"PO-Revision-Date: 2021-05-04 10:47+0000\n"
 "Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Bengali (http://www.transifex.com/xfce/xfce4-session/language/bn/)\n"
 "MIME-Version: 1.0\n"
@@ -112,7 +112,7 @@ msgid "Unable to save the session"
 msgstr "সেশন সংরক্ষণ করতে ব্যর্থ"
 
 #: ../settings/session-editor.c:141 ../settings/session-editor.c:314
-#: ../xfce4-session/xfsm-manager.c:1281
+#: ../xfce4-session/xfsm-manager.c:1282
 #: ../settings/xfce4-session-settings.ui.h:6
 msgid "_Close"
 msgstr "বন্ধ (_C)"
@@ -132,7 +132,7 @@ msgid ""
 msgstr ""
 
 #: ../settings/session-editor.c:202 ../settings/session-editor.c:289
-#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:682
+#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:683
 #: ../xfce4-session/xfsm-logout-dialog.c:221
 msgid "_Cancel"
 msgstr "বাতিল (_C)"
@@ -193,7 +193,7 @@ msgstr "প্রোগ্রাম"
 msgid "Restart Style"
 msgstr "শৈলী পুনরায় শুরু করুন"
 
-#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:684
+#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:685
 msgid "_OK"
 msgstr ""
 
@@ -299,16 +299,20 @@ msgstr ""
 msgid "Trigger"
 msgstr ""
 
+#: ../settings/xfae-window.c:241 ../settings/xfae-window.c:330
+msgid "Add"
+msgstr ""
+
+#: ../settings/xfae-window.c:250 ../settings/xfae-window.c:336
+msgid "Remove"
+msgstr ""
+
 #: ../settings/xfae-window.c:253
 msgid "Remove application"
 msgstr ""
 
-#: ../settings/xfae-window.c:330
-msgid "Add"
-msgstr ""
-
-#: ../settings/xfae-window.c:336
-msgid "Remove"
+#: ../settings/xfae-window.c:263
+msgid "Edit"
 msgstr ""
 
 #: ../settings/xfae-window.c:390
@@ -399,7 +403,7 @@ msgstr "যেকোনভাবেই হোক চালিয়ে যান"
 msgid "Try again"
 msgstr "পুনরায় চেষ্টা করুন"
 
-#: ../xfce4-session/xfsm-manager.c:566
+#: ../xfce4-session/xfsm-manager.c:567
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -408,69 +412,69 @@ msgid ""
 "incorrectly."
 msgstr "ফেইলসেইফ সেশনের নাম নির্ধারণ করতে ব্যর্থ।  সম্ভাব্য কারণসমূহ: xfconfd সচল নেই (D-Bus সেটআপ সমস্যা); এনভায়রনমেন্ট চলক $XDG_CONFIG_DIRS ভুলভাবে নির্ধারণ করা হয়েছে (\"%s\" অবশ্যই অন্তর্ভুক্ত থাকতে হবে), অথবা xfce4-সেশন সঠিকভাবে ইনস্টল করা হয়নি।"
 
-#: ../xfce4-session/xfsm-manager.c:577
+#: ../xfce4-session/xfsm-manager.c:578
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "উল্লিখিত ফেইলসেইফ সেশন (\"%s\") ফেইলসেইফ সেশন হিসেবে চিহ্নিত করা নেই।"
 
-#: ../xfce4-session/xfsm-manager.c:610
+#: ../xfce4-session/xfsm-manager.c:611
 msgid "The list of applications in the failsafe session is empty."
 msgstr "ফেইলসেইফ সেশনে অ্যাপ্লিকেশনসমূহের তালিকাটি ফাঁকা।"
 
-#: ../xfce4-session/xfsm-manager.c:696
+#: ../xfce4-session/xfsm-manager.c:697
 msgid "Name for the new session"
 msgstr ""
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:774
+#: ../xfce4-session/xfsm-manager.c:775
 msgid "Session Manager Error"
 msgstr "সেশন ব্যবস্থাপক ত্রুটি "
 
-#: ../xfce4-session/xfsm-manager.c:776
+#: ../xfce4-session/xfsm-manager.c:777
 msgid "Unable to load a failsafe session"
 msgstr "ফেইলসেইফ সেশন লোড করতে ব্যর্থ"
 
-#: ../xfce4-session/xfsm-manager.c:778
+#: ../xfce4-session/xfsm-manager.c:779
 msgid "_Quit"
 msgstr "প্রস্থান (_Q)"
 
-#: ../xfce4-session/xfsm-manager.c:1271
+#: ../xfce4-session/xfsm-manager.c:1272
 msgid "Shutdown Failed"
 msgstr "বন্ধ ব্যর্থ"
 
-#: ../xfce4-session/xfsm-manager.c:1274
+#: ../xfce4-session/xfsm-manager.c:1275
 msgid "Failed to suspend session"
 msgstr "সেশন বাতিল করতে ব্যর্থ"
 
-#: ../xfce4-session/xfsm-manager.c:1276
+#: ../xfce4-session/xfsm-manager.c:1277
 msgid "Failed to hibernate session"
 msgstr "সেশন হাইবারনেট করতে ব্যর্থ"
 
-#: ../xfce4-session/xfsm-manager.c:1278
+#: ../xfce4-session/xfsm-manager.c:1279
 msgid "Failed to hybrid sleep session"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1279
+#: ../xfce4-session/xfsm-manager.c:1280
 msgid "Failed to switch user"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1585
+#: ../xfce4-session/xfsm-manager.c:1586
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "শুধুমাত্র নিষ্ক্রিয় অবস্থায় ক্লায়েন্টদের বাতিল করতে পারে"
 
-#: ../xfce4-session/xfsm-manager.c:2247
+#: ../xfce4-session/xfsm-manager.c:2250
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "চেকপয়েন্ট অনুরোধ করার সময় সেশন ব্যবস্থাপককে অবশ্যই নিষ্ক্রিয় অবস্থায় থাকতে হবে"
 
-#: ../xfce4-session/xfsm-manager.c:2317 ../xfce4-session/xfsm-manager.c:2337
+#: ../xfce4-session/xfsm-manager.c:2320 ../xfce4-session/xfsm-manager.c:2340
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "বন্ধ অনুরোধ করার সময় সেশন ব্যবস্থাপককে অবশ্যই নিষ্ক্রিয় অবস্থায় থাকতে হবে"
 
-#: ../xfce4-session/xfsm-manager.c:2382
+#: ../xfce4-session/xfsm-manager.c:2385
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr ""
 
