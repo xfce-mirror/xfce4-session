@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-10 00:46+0100\n"
-"PO-Revision-Date: 2021-02-10 16:13+0000\n"
-"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
+"POT-Creation-Date: 2021-05-04 12:47+0200\n"
+"PO-Revision-Date: 2021-05-04 10:47+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Portuguese (http://www.transifex.com/xfce/xfce4-session/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -115,7 +115,7 @@ msgid "Unable to save the session"
 msgstr "Incapaz de guardar a sessão"
 
 #: ../settings/session-editor.c:141 ../settings/session-editor.c:314
-#: ../xfce4-session/xfsm-manager.c:1281
+#: ../xfce4-session/xfsm-manager.c:1282
 #: ../settings/xfce4-session-settings.ui.h:6
 msgid "_Close"
 msgstr "_Fechar"
@@ -135,7 +135,7 @@ msgid ""
 msgstr "O estado das aplicações não será restaurado na próxima sessão."
 
 #: ../settings/session-editor.c:202 ../settings/session-editor.c:289
-#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:682
+#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:683
 #: ../xfce4-session/xfsm-logout-dialog.c:221
 msgid "_Cancel"
 msgstr "_Cancelar"
@@ -196,7 +196,7 @@ msgstr "Programa"
 msgid "Restart Style"
 msgstr "Reiniciar estilo"
 
-#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:684
+#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:685
 msgid "_OK"
 msgstr "_OK"
 
@@ -302,17 +302,21 @@ msgstr "Falha ao estabelecer gancho executável"
 msgid "Trigger"
 msgstr "Acionador"
 
+#: ../settings/xfae-window.c:241 ../settings/xfae-window.c:330
+msgid "Add"
+msgstr "Adicionar"
+
+#: ../settings/xfae-window.c:250 ../settings/xfae-window.c:336
+msgid "Remove"
+msgstr "Remover"
+
 #: ../settings/xfae-window.c:253
 msgid "Remove application"
 msgstr "Remover aplicação"
 
-#: ../settings/xfae-window.c:330
-msgid "Add"
-msgstr "Adicionar"
-
-#: ../settings/xfae-window.c:336
-msgid "Remove"
-msgstr "Remover"
+#: ../settings/xfae-window.c:263
+msgid "Edit"
+msgstr "Editar"
 
 #: ../settings/xfae-window.c:390
 #, c-format
@@ -402,7 +406,7 @@ msgstr "Continuar, ainda assim"
 msgid "Try again"
 msgstr "Tentar novamente"
 
-#: ../xfce4-session/xfsm-manager.c:566
+#: ../xfce4-session/xfsm-manager.c:567
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -411,69 +415,69 @@ msgid ""
 "incorrectly."
 msgstr "Incapaz de determinar o nome de sessão failsafe. Causas possíveis: xfconfd não está em execução (problema de configuração do D-Bus); variável de ambiente $XDG_CONFIG_DIRS incorreta (deve incluir \"%s\") ou xfce4-session mal instalado."
 
-#: ../xfce4-session/xfsm-manager.c:577
+#: ../xfce4-session/xfsm-manager.c:578
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "A sessão failsafe especificada (\"%s\") não é reconhecida como uma sessão failsafe."
 
-#: ../xfce4-session/xfsm-manager.c:610
+#: ../xfce4-session/xfsm-manager.c:611
 msgid "The list of applications in the failsafe session is empty."
 msgstr "A lista de aplicações da sessão failsafe está vazia."
 
-#: ../xfce4-session/xfsm-manager.c:696
+#: ../xfce4-session/xfsm-manager.c:697
 msgid "Name for the new session"
 msgstr "Nome da nova sessão"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:774
+#: ../xfce4-session/xfsm-manager.c:775
 msgid "Session Manager Error"
 msgstr "Erro do gestor de sessões"
 
-#: ../xfce4-session/xfsm-manager.c:776
+#: ../xfce4-session/xfsm-manager.c:777
 msgid "Unable to load a failsafe session"
 msgstr "Incapaz de carregar a sessão \"failsafe\""
 
-#: ../xfce4-session/xfsm-manager.c:778
+#: ../xfce4-session/xfsm-manager.c:779
 msgid "_Quit"
 msgstr "_Sair"
 
-#: ../xfce4-session/xfsm-manager.c:1271
+#: ../xfce4-session/xfsm-manager.c:1272
 msgid "Shutdown Failed"
 msgstr "Falha ao desligar"
 
-#: ../xfce4-session/xfsm-manager.c:1274
+#: ../xfce4-session/xfsm-manager.c:1275
 msgid "Failed to suspend session"
 msgstr "Falha ao suspender a sessão"
 
-#: ../xfce4-session/xfsm-manager.c:1276
+#: ../xfce4-session/xfsm-manager.c:1277
 msgid "Failed to hibernate session"
 msgstr "Falha ao hibernar a sessão"
 
-#: ../xfce4-session/xfsm-manager.c:1278
+#: ../xfce4-session/xfsm-manager.c:1279
 msgid "Failed to hybrid sleep session"
 msgstr "Falhou a suspensão híbrida da sessão"
 
-#: ../xfce4-session/xfsm-manager.c:1279
+#: ../xfce4-session/xfsm-manager.c:1280
 msgid "Failed to switch user"
 msgstr "Falha ao trocar de utilizador"
 
-#: ../xfce4-session/xfsm-manager.c:1585
+#: ../xfce4-session/xfsm-manager.c:1586
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Só pode terminar clientes quando em estado inativo"
 
-#: ../xfce4-session/xfsm-manager.c:2247
+#: ../xfce4-session/xfsm-manager.c:2250
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "O gestor de sessões tem de estar inativo ao solicitar um ponto de verificação"
 
-#: ../xfce4-session/xfsm-manager.c:2317 ../xfce4-session/xfsm-manager.c:2337
+#: ../xfce4-session/xfsm-manager.c:2320 ../xfce4-session/xfsm-manager.c:2340
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "O gestor de sessões tem de estar inativo ao solicitar o encerramento"
 
-#: ../xfce4-session/xfsm-manager.c:2382
+#: ../xfce4-session/xfsm-manager.c:2385
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Gestor de sessão tem de estar em modo de pausa para reiniciar"
 
