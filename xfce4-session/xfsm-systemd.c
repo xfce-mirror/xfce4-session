@@ -25,6 +25,8 @@
 #endif
 
 #include <libxfsm/xfsm-util.h>
+#include <xfce4-session/xfsm-error.h>
+#include <xfce4-session/xfsm-packagekit.h>
 #include <xfce4-session/xfsm-systemd.h>
 #include <xfce4-session/xfce-screensaver.h>
 
@@ -62,6 +64,7 @@ struct _XfsmSystemd
   PolkitAuthority *authority;
   PolkitSubject   *subject;
 #endif
+  XfsmPackagekit *packagekit;
   XfceScreenSaver *screensaver;
 };
 
@@ -89,6 +92,7 @@ xfsm_systemd_init (XfsmSystemd *systemd)
   systemd->authority = polkit_authority_get_sync (NULL, NULL);
   systemd->subject = polkit_unix_process_new_for_owner (getpid(), 0, -1);
 #endif
+  systemd->packagekit = xfsm_packagekit_get ();
   systemd->screensaver = xfce_screensaver_new ();
 }
 
@@ -103,6 +107,7 @@ xfsm_systemd_finalize (GObject *object)
   g_object_unref (G_OBJECT (systemd->authority));
   g_object_unref (G_OBJECT (systemd->subject));
 #endif
+  g_object_unref (G_OBJECT (systemd->packagekit));
   g_object_unref (G_OBJECT (systemd->screensaver));
 
   (*G_OBJECT_CLASS (xfsm_systemd_parent_class)->finalize) (object);
@@ -232,6 +237,8 @@ gboolean
 xfsm_systemd_try_restart (XfsmSystemd  *systemd,
                           GError      **error)
 {
+  xfsm_systemd_trigger_update_restart (systemd);
+
   return xfsm_systemd_try_method (systemd,
                                   SYSTEMD_REBOOT_ACTION,
                                   error);
@@ -243,6 +250,16 @@ gboolean
 xfsm_systemd_try_shutdown (XfsmSystemd  *systemd,
                            GError      **error)
 {
+  if (xfsm_systemd_trigger_update_shutdown (systemd))
+    {
+      // To actually trigger the offline update, we need to
+      // reboot to do the upgrade. When the upgrade is complete,
+      // the computer will shut down automatically.
+      return xfsm_systemd_try_method (systemd,
+                                      SYSTEMD_REBOOT_ACTION,
+                                      error);
+    }
+
   return xfsm_systemd_try_method (systemd,
                                   SYSTEMD_POWEROFF_ACTION,
                                   error);
@@ -368,4 +385,68 @@ xfsm_systemd_can_hybrid_sleep (XfsmSystemd  *systemd,
                                  error);
   *auth_hybrid_sleep = *can_hybrid_sleep;
   return ret;
+}
+
+
+
+gboolean
+xfsm_systemd_has_update_prepared (XfsmSystemd *systemd)
+{
+  gboolean  has_updates = FALSE;
+  GError   *error = NULL;
+
+  g_return_val_if_fail (XFSM_IS_SYSTEMD (systemd), FALSE);
+
+  if (!xfsm_packagekit_has_update_prepared (systemd->packagekit, &has_updates, &error))
+    {
+      g_printerr ("%s: Querying Pacakegekit Updates failed. %s\n\n",
+                  PACKAGE_NAME, ERROR_MSG (error));
+      g_clear_error (&error);
+    }
+
+  return has_updates;
+}
+
+
+
+gboolean
+xfsm_systemd_trigger_update_restart (XfsmSystemd *systemd)
+{
+  gboolean has_updates = FALSE;
+
+  g_return_val_if_fail (XFSM_IS_SYSTEMD (systemd), FALSE);
+
+  if (!xfsm_packagekit_has_update_prepared (systemd->packagekit, &has_updates, NULL))
+    {
+      return FALSE;
+    }
+
+  if (!has_updates)
+    {
+      return FALSE;
+    }
+
+  return xfsm_packagekit_try_trigger_restart (systemd->packagekit, NULL);
+}
+
+
+
+gboolean
+xfsm_systemd_trigger_update_shutdown (XfsmSystemd *systemd)
+{
+  gboolean has_updates = FALSE;
+
+  g_return_val_if_fail (XFSM_IS_SYSTEMD (systemd), FALSE);
+
+  if (!xfsm_packagekit_has_update_prepared (systemd->packagekit, &has_updates, NULL))
+    {
+      return FALSE;
+    }
+
+  if (!has_updates)
+    {
+      return FALSE;
+    }
+
+  return xfsm_packagekit_try_trigger_shutdown (systemd->packagekit, NULL);
 }
