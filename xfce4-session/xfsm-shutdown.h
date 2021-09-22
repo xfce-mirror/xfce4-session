@@ -116,4 +116,7 @@ gboolean      xfsm_shutdown_can_switch_user  (XfsmShutdown      *shutdown,
 
 gboolean      xfsm_shutdown_can_save_session (XfsmShutdown      *shutdown);
 
+
+gboolean      xfsm_shutdown_has_update_prepared (XfsmShutdown *shutdown);
+
 #endif	/* !__XFSM_SHUTDOWN_H__ */
