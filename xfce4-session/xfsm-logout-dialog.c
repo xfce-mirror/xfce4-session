@@ -141,6 +141,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   GtkWidget      *hbox;
   GtkWidget      *button;
   gboolean        can_shutdown;
+  gboolean        has_updates;
   gboolean        save_session = FALSE;
   gboolean        can_restart;
   gboolean        can_suspend = FALSE;
@@ -244,6 +245,11 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gtk_widget_grab_focus (button);
 
   /**
+   * Check if packagekit downloaded offline updates
+   **/
+  has_updates = xfsm_shutdown_has_update_prepared (dialog->shutdown);
+
+  /**
    * Reboot
    **/
   if (!xfsm_shutdown_can_restart (dialog->shutdown, &can_restart, &error))
@@ -255,7 +261,8 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
       can_restart = FALSE;
     }
 
-  button = xfsm_logout_dialog_button (_("_Restart"), "xfsm-reboot",
+  button = xfsm_logout_dialog_button (has_updates ? _("_Restart and update") : _("_Restart"),
+                                      "xfsm-reboot",
                                       "system-reboot", NULL,
                                       XFSM_SHUTDOWN_RESTART, dialog);
 
@@ -275,7 +282,8 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
       can_shutdown = FALSE;
     }
 
-  button = xfsm_logout_dialog_button (_("Shut _Down"), "xfsm-shutdown",
+  button = xfsm_logout_dialog_button (has_updates ? _("Update and Shut _Down") : _("Shut _Down"),
+                                      "xfsm-shutdown",
                                       "system-shutdown", NULL,
                                       XFSM_SHUTDOWN_SHUTDOWN, dialog);
 
