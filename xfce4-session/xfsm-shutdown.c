@@ -627,3 +627,16 @@ xfsm_shutdown_can_save_session (XfsmShutdown *shutdown)
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
   return shutdown->kiosk_can_save_session;
 }
+
+
+
+gboolean
+xfsm_shutdown_has_update_prepared (XfsmShutdown *shutdown)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  if (shutdown->systemd != NULL)
+    return xfsm_systemd_has_update_prepared (shutdown->systemd);
+
+  return FALSE;
+}
