@@ -58,6 +58,8 @@ xfce4_session_SOURCES =							\
 	xfsm-logout-dialog.h						\
 	xfsm-manager.c							\
 	xfsm-manager.h							\
+	xfsm-packagekit.c						\
+	xfsm-packagekit.h						\
 	xfsm-properties.c						\
 	xfsm-properties.h						\
 	xfsm-shutdown-fallback.c				\
