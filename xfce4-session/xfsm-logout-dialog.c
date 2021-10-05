@@ -143,6 +143,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gboolean        can_shutdown;
   gboolean        has_updates;
   gboolean        save_session = FALSE;
+  gboolean        can_logout = FALSE;
   gboolean        can_restart;
   gboolean        can_suspend = FALSE;
   gboolean        can_hibernate = FALSE;
@@ -236,6 +237,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   /**
    * Logout
    **/
+  can_logout = xfsm_shutdown_can_logout (dialog->shutdown);
   button = xfsm_logout_dialog_button (_("_Log Out"), "xfsm-logout",
                                       "system-log-out", NULL,
                                       XFSM_SHUTDOWN_LOGOUT, dialog);
@@ -243,6 +245,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
   gtk_widget_grab_focus (button);
+  gtk_widget_set_sensitive (button, can_logout);
 
   /**
    * Check if packagekit downloaded offline updates
