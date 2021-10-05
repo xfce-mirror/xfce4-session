@@ -52,6 +52,10 @@ xfce4_session_SOURCES =							\
 	xfsm-fadeout.h							\
 	xfsm-global.c							\
 	xfsm-global.h							\
+	xfsm-inhibition.c						\
+	xfsm-inhibition.h						\
+	xfsm-inhibitor.c						\
+	xfsm-inhibitor.h						\
 	xfsm-legacy.c							\
 	xfsm-legacy.h							\
 	xfsm-logout-dialog.c						\
