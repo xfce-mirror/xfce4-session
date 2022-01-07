@@ -66,6 +66,8 @@
 #include <xfce4-session/xfsm-compat-kde.h>
 #include <xfce4-session/xfsm-consolekit.h>
 #include <xfce4-session/xfsm-fadeout.h>
+#include <xfce4-session/xfsm-inhibition.h>
+#include <xfce4-session/xfsm-inhibitor.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-legacy.h>
 #include <xfce4-session/xfsm-systemd.h>
@@ -89,6 +91,8 @@ struct _XfsmShutdown
 
   XfsmSystemd    *systemd;
   XfsmConsolekit *consolekit;
+
+  XfsmInhibitor  *inhibitions;
 
   /* kiosk settings */
   gboolean        kiosk_can_shutdown;
@@ -125,6 +129,8 @@ xfsm_shutdown_init (XfsmShutdown *shutdown)
   else
     shutdown->consolekit = xfsm_consolekit_get ();
 
+  shutdown->inhibitions = xfsm_inhibitor_get ();
+
   /* check kiosk */
   kiosk = xfce_kiosk_new ("xfce4-session");
   shutdown->kiosk_can_shutdown = xfce_kiosk_query (kiosk, "Shutdown");
@@ -144,6 +150,9 @@ xfsm_shutdown_finalize (GObject *object)
 
   if (shutdown->consolekit != NULL)
     g_object_unref (G_OBJECT (shutdown->consolekit));
+
+  if (shutdown->inhibitions != NULL)
+    g_object_unref (G_OBJECT (shutdown->inhibitions));
 
   (*G_OBJECT_CLASS (xfsm_shutdown_parent_class)->finalize) (object);
 }
@@ -409,6 +418,12 @@ xfsm_shutdown_can_restart (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
+  if (xfsm_inhibitor_has_flags (shutdown->inhibitions, XFSM_INHIBITON_FLAG_LOGOUT))
+    {
+      *can_restart = FALSE;
+      return TRUE;
+    }
+
   if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, NULL))
     {
       *can_restart = FALSE;
@@ -438,6 +453,12 @@ xfsm_shutdown_can_shutdown (XfsmShutdown  *shutdown,
                             GError       **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  if (xfsm_inhibitor_has_flags (shutdown->inhibitions, XFSM_INHIBITON_FLAG_LOGOUT))
+    {
+      *can_shutdown = FALSE;
+      return TRUE;
+    }
 
   if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, NULL))
     {
@@ -469,6 +490,12 @@ xfsm_shutdown_can_suspend (XfsmShutdown  *shutdown,
                            GError       **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  if (xfsm_inhibitor_has_flags (shutdown->inhibitions, XFSM_INHIBITON_FLAG_SUSPEND))
+    {
+      *can_suspend = FALSE;
+      return TRUE;
+    }
 
   if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, NULL))
     {
@@ -506,6 +533,12 @@ xfsm_shutdown_can_hibernate (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
+  if (xfsm_inhibitor_has_flags (shutdown->inhibitions, XFSM_INHIBITON_FLAG_SUSPEND))
+    {
+      *can_hibernate = FALSE;
+      return TRUE;
+    }
+
   if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, NULL))
     {
       *can_hibernate = FALSE;
@@ -541,6 +574,12 @@ xfsm_shutdown_can_hybrid_sleep (XfsmShutdown  *shutdown,
                                 GError       **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  if (xfsm_inhibitor_has_flags (shutdown->inhibitions, XFSM_INHIBITON_FLAG_SUSPEND))
+    {
+      *can_hybrid_sleep = FALSE;
+      return TRUE;
+    }
 
   if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, NULL))
     {
@@ -584,6 +623,10 @@ xfsm_shutdown_can_switch_user (XfsmShutdown  *shutdown,
   *can_switch_user = FALSE;
 
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+  if (xfsm_inhibitor_has_flags (shutdown->inhibitions, XFSM_INHIBITON_FLAG_SWITCH))
+    {
+      return TRUE;
+    }
 
   if (DBUS_OBJECT_PATH == NULL)
     {
@@ -626,4 +669,27 @@ xfsm_shutdown_can_save_session (XfsmShutdown *shutdown)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
   return shutdown->kiosk_can_save_session;
+}
+
+
+
+gboolean
+xfsm_shutdown_can_logout (XfsmShutdown  *shutdown)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+  return !xfsm_inhibitor_has_flags (shutdown->inhibitions,
+                                    XFSM_INHIBITON_FLAG_LOGOUT);
+}
+
+
+
+gboolean
+xfsm_shutdown_has_update_prepared (XfsmShutdown *shutdown)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  if (shutdown->systemd != NULL)
+    return xfsm_systemd_has_update_prepared (shutdown->systemd);
+
+  return FALSE;
 }
