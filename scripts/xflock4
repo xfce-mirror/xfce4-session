@@ -2,9 +2,8 @@
 #
 #  xfce4
 #
-#  Copyright (C) 1999, 2003 Olivier Fourdan (fourdan@xfce.org)
-#  Copyright (C) 2011       Guido Berhoerster (guido+xfce.org@berhoerster.name)
-#  Copyright (C) 2011       Jarno Suni (8@iki.fi)
+#  Copyright (C) 2015, 2018 Simon Steinbeiß (simon@xfce.org)
+#  Copyright (C) 2014..2021 Jarno Suni (8@iki.fi)
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,35 +19,111 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
+set -eu
+unset -v IFS
 
-# First test for the command set in the session's xfconf channel
-LOCK_CMD=$(xfconf-query -c xfce4-session -p /general/LockCommand)
+# find a free file descriptor
+FD=3; while { >&$FD; } 2>/dev/null; do FD=$((FD+1)); done
 
-# Lock by xscreensaver or gnome-screensaver, if a respective daemon is running
+# get string
+DEBUG=$(xfconf-query -c xfce4-session -p /general/LockDebugFile || :)
+[ -n "$DEBUG" ] && {
+	exec >"$DEBUG" 2>&1
+	eval "exec $FD>&1"
+	set -x
+} || eval "exec $FD>/dev/null"
+
+# Sleep time given in decimal number $1. The unit is second.
+# Try to do that even in a system in which sleep command does not
+# support non-integer time.
+real_sleep() {
+	# The default sleep might not accept non-integer argument
+	sleep "$1" || perl -e "select(undef, undef, undef, $1)" \
+	|| sleep "$(( ${1%%.*} + 1 ))" # in case perl is not installed
+	# and non-integer sleep is supported, determine time by ceiling
+	# function to get at least given amount of delay.
+} 2>&$FD
+
+# Wait a bit so that user have time to raise finger from a key if
+# the script is run in terminal.
+[ -t 0 ] && real_sleep 0.5
+
+default() {
+	printf 'Using default value %s.\n' "$1" >&2
+	printf %s "$1"
+}
+
+run_xdg_screensaver_lock() {
+	name=xdg-screensaver # try to lock by this utility
+	if cmd=$(command -v "$name"); then
+		# ensure it is a shell script
+		read -r line <"$cmd"
+		[ '#!/bin/sh' = "$line" ] \
+		|| {
+			printf 'Error: %s is not a shell script\n' "$cmd" >&2
+			return 1
+		}
+		[ -n "$DEBUG" ] && { x=x; level=3; } || { x=''; level=0; }
+		# Source $cmd in shell to get the shell trace for debugging
+		ret=0
+		env XDG_UTILS_DEBUG_LEVEL=$level sh -c$x '
+			[ -n "$1" ] || exec 2>/dev/null
+			shift; printf "#### START DEBUG INSIDE FILE %s\n" "$0" >&2
+			. "$0"
+		' "$cmd" "$x" lock </dev/null || ret=$?
+		[ -n "$x" ] \
+		&& printf '#### END DEBUG INSIDE FILE %s\n' "$cmd" >&2
+		return "$ret"
+	else
+		printf "Command '%s' not found.\n" "$name" >&2
+		return 1
+	fi
+}
+
+# Use a custom lock command, if given.
+LOCK_CMD=$(xfconf-query -c xfce4-session -p /general/LockCommand || :)
+[ -n "$LOCK_CMD" ] && {
+	# Get a boolean value to tell, if the LOCK_CMD forks or not.
+	# If it forks (i.e. the value is "true") this script can not apply
+	# display power management and the setting above is ignored except
+	# for turning display off initially.
+	LOCK_FORKS=$(xfconf-query -c xfce4-session \
+	-p /general/LockCommandForks || default false)
+	exit_code=0;
+	[ "$LOCK_FORKS" = true ] && {
+		/bin/sh -c "$LOCK_CMD" || exit_code=$?
+	} || {
+		/bin/sh -c "$LOCK_CMD" &
+		pid=$!
+		sleep 1 & # wait at most a second
+		pid_sleep=$!
+		# Test, if lock_command is running after small delay.
+		while kill -0 "$pid" 2>/dev/null; do
+			kill -0 "$pid_sleep" 2>/dev/null || {
+				# lock_command still running after the maximum delay.
+				# Suppose LOCK_CMD locked.
+				exit 0
+			}
+			real_sleep 0.1 # Take a breath
+		done
+
+		# lock_command finished; get the exit code
+		exit_code=0; wait "$pid" || exit_code=$?
+	}
+
+	[ "$exit_code" -eq 0 ] && exit 0
+	>&2 printf "'%s' exited with error %s\n" "$LOCK_CMD" "$exit_code"
+	exit 1
+}
+
 for lock_cmd in \
-    "$LOCK_CMD" \
-    "xfce4-screensaver-command --lock" \
-    "xscreensaver-command -lock" \
-    "gnome-screensaver-command --lock"
+	xfce4-screensaver \
+	xscreensaver \
+	light-locker
 do
-    if [ ! -z "$lock_cmd" ]; then
-        $lock_cmd >/dev/null 2>&1 && exit
-    fi
+	# To redirect stdin to /dev/null is needed at least for xscreensaver
+	# to not have 1 s delay when invoked on terminal.
+	${lock_cmd}-command --lock </dev/null 2>&$FD && exit
 done
 
-# else run another access locking utility, if installed
-for lock_cmd in \
-  "xlock -mode blank" \
-  "slock"
-  do
-    set -- $lock_cmd
-    if command -v -- $1 >/dev/null 2>&1; then
-        $lock_cmd >/dev/null 2>&1 &
-	# turn off display backlight:
-	xset dpms force off
-        exit
-    fi
-done
-
-# else access locking failed
-exit 1
+run_xdg_screensaver_lock
