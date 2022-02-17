@@ -4,7 +4,7 @@
 #
 #  Copyright (C) 2011 Guido Berhoerster (guido+xfce.org@berhoerster.name)
 #  Copyright (C) 2015, 2018 Simon Steinbeiß (simon@xfce.org)
-#  Copyright (C) 2011 Jarno Suni (8@iki.fi)
+#  Copyright (C) 2011, 2022 Jarno Suni (8@iki.fi)
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,34 +21,27 @@
 #  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
 
-# First test for the command set in the session's xfconf channel
-LOCK_CMD=$(xfconf-query -c xfce4-session -p /general/LockCommand)
+# Use a custom lock command, if given.
+LOCK_CMD=$(xfconf-query -c xfce4-session -p /general/LockCommand || :)
+[ -n "$LOCK_CMD" ] && {
+    exit_code=0
+    /bin/sh -c "$LOCK_CMD" && exit || {
+        exit_code=$?
+        >&2 printf "'%s' exited with status %d\n" "$LOCK_CMD" $exit_code
+        exit $exit_code
+    }
+}
 
-# Lock by xscreensaver or gnome-screensaver, if a respective daemon is running
+# Else try certain screensavers for locking.
 for lock_cmd in \
-    "$LOCK_CMD" \
-    "xfce4-screensaver-command --lock" \
-    "xscreensaver-command -lock" \
-    "gnome-screensaver-command --lock"
+    xscreensaver-command \
+    light-locker-command \
+    xfce4-screensaver-command
 do
-    if [ ! -z "$lock_cmd" ]; then
-        $lock_cmd >/dev/null 2>&1 && exit
-    fi
+    # To redirect stdin to /dev/null is needed at least for xscreensaver
+    # to not have 1 s delay when invoked on terminal.
+    ${lock_cmd} --lock </dev/null 2>/dev/null && exit
 done
 
-# else run another access locking utility, if installed
-for lock_cmd in \
-  "xlock -mode blank" \
-  "slock"
-  do
-    set -- $lock_cmd
-    if command -v -- $1 >/dev/null 2>&1; then
-        $lock_cmd >/dev/null 2>&1 &
-	# turn off display backlight:
-	xset dpms force off
-        exit
-    fi
-done
-
-# else access locking failed
+# Else access locking failed.
 exit 1
