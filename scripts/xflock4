@@ -4,7 +4,7 @@
 #
 #  Copyright (C) 2011 Guido Berhoerster (guido+xfce.org@berhoerster.name)
 #  Copyright (C) 2015, 2018 Simon Steinbeiß (simon@xfce.org)
-#  Copyright (C) 2011, 2021 Jarno Suni (8@iki.fi)
+#  Copyright (C) 2011, 2021, 2022 Jarno Suni (8@iki.fi)
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,33 +23,73 @@
 set -eu
 unset -v IFS
 
-# First test for the command set in the session's xfconf channel
-LOCK_CMD=$(xfconf-query -c xfce4-session -p /general/LockCommand)
+# Sleep time given in decimal number $1. The unit is second.
+# Try to do that even in a system in which sleep command does not
+# support non-integer time.
+real_sleep() {
+	# The default sleep might not accept non-integer argument
+	sleep -- "$1" || perl -e 'select(undef, undef, undef, $1)' \
+	|| sleep -- "$(( ${1%%.*} + 1 ))" # in case perl is not installed
+	# and non-integer sleep is not supported, determine time by ceiling
+	# function to get at least given amount of delay.
+} 2>/dev/null
 
-# Lock by xscreensaver or gnome-screensaver, if a respective daemon is running
+default() {
+	printf 'Using default value %s.\n' "$1" >&2
+	printf %s "$1"
+}
+
+valid_time_interval() {
+	printf '%s' "$1" | grep -qxE '[0-9]*(\.[0-9]+)?((e|E)-?[0-9]+)?'
+}
+
+# Use a custom lock command, if given.
+LOCK_CMD=$(xfconf-query -c xfce4-session -p /general/LockCommand || :)
+[ -n "$LOCK_CMD" ] && {
+	# Get a boolean value to tell, if the LOCK_CMD forks or not.
+	LOCK_FORKS=$(xfconf-query -c xfce4-session \
+	-p /general/LockCommandForks || default false)
+	exit_code=0;
+	[ "$LOCK_FORKS" = true ] && {
+		/bin/sh -c "$LOCK_CMD" || exit_code=$?
+	} || {
+		LOCK_WAIT=$(env LC_ALL=C xfconf-query -c xfce4-session \
+		-p /general/LockWait || default 1)
+		if ! valid_time_interval "$LOCK_WAIT"; then
+			>&2 printf "Invalid time interval '%s'\n" "$LOCK_WAIT"
+			exit 1
+		fi
+		/bin/sh -c "$LOCK_CMD" &
+		pid=$!
+		real_sleep "$LOCK_WAIT" & # wait at most this long time
+		pid_sleep=$!
+		# Test, if lock_command is running after small delay.
+		while kill -0 "$pid" 2>/dev/null; do
+			kill -0 "$pid_sleep" 2>/dev/null || {
+				exit_code=0; wait "$pid_sleep" || exit_code=$?
+				[ "$exit_code" -eq 0 ] && exit 0 # waiting succeeded
+				exit 1
+			}
+			real_sleep 0.1 # Take a breath
+		done
+
+		# lock_command finished; get the exit code
+		exit_code=0; wait "$pid" || exit_code=$?
+	}
+
+	[ "$exit_code" -eq 0 ] && exit 0
+	>&2 printf "'%s' exited with error %s\n" "$LOCK_CMD" "$exit_code"
+	exit 1
+}
+
 for lock_cmd in \
-    "$LOCK_CMD" \
-    "xfce4-screensaver-command --lock" \
-    "xscreensaver-command -lock" \
-    "gnome-screensaver-command --lock"
+	xfce4-screensaver \
+	xscreensaver \
+	light-locker
 do
-    if [ ! -z "$lock_cmd" ]; then
-        $lock_cmd >/dev/null 2>&1 && exit
-    fi
-done
-
-# else run another access locking utility, if installed
-for lock_cmd in \
-  "xlock -mode blank" \
-  "slock"
-  do
-    set -- $lock_cmd
-    if command -v -- $1 >/dev/null 2>&1; then
-        $lock_cmd >/dev/null 2>&1 &
-	# turn off display backlight:
-	xset dpms force off
-        exit
-    fi
+	# To redirect stdin to /dev/null is needed at least for xscreensaver
+	# to not have 1 s delay when invoked on terminal.
+	${lock_cmd}-command --lock </dev/null 2>/dev/null && exit
 done
 
 # else access locking failed
