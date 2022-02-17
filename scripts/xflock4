@@ -2,9 +2,9 @@
 #
 #  xfce4
 #
-#  Copyright (C) 1999, 2003 Olivier Fourdan (fourdan@xfce.org)
-#  Copyright (C) 2011       Guido Berhoerster (guido+xfce.org@berhoerster.name)
-#  Copyright (C) 2011       Jarno Suni (8@iki.fi)
+#  Copyright (C) 2011 Guido Berhoerster (guido+xfce.org@berhoerster.name)
+#  Copyright (C) 2015, 2018 Simon Steinbeiß (simon@xfce.org)
+#  Copyright (C) 2011, 2021 Jarno Suni (8@iki.fi)
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
+set -eu
+unset -v IFS
 
 # First test for the command set in the session's xfconf channel
 LOCK_CMD=$(xfconf-query -c xfce4-session -p /general/LockCommand)
