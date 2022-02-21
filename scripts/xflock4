@@ -2,9 +2,9 @@
 #
 #  xfce4
 #
-#  Copyright (C) 1999, 2003 Olivier Fourdan (fourdan@xfce.org)
-#  Copyright (C) 2011       Guido Berhoerster (guido+xfce.org@berhoerster.name)
-#  Copyright (C) 2011       Jarno Suni (8@iki.fi)
+#  Copyright (C) 2011 Guido Berhoerster (guido+xfce.org@berhoerster.name)
+#  Copyright (C) 2015, 2018 Simon Steinbeiß (simon@xfce.org)
+#  Copyright (C) 2011, 2022 Jarno Suni (8@iki.fi)
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,34 +21,42 @@
 #  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
 
-# First test for the command set in the session's xfconf channel
-LOCK_CMD=$(xfconf-query -c xfce4-session -p /general/LockCommand)
+# Find a free file descriptor.
+FD=3; while { >&$FD; } 2>/dev/null; do FD=$((FD+1)); done
 
-# Lock by xscreensaver or gnome-screensaver, if a respective daemon is running
+# Get possible debug file path and setup redirections.
+DEBUG=$(xfconf-query -c xfce4-session -p /general/LockDebugFile || :)
+[ -n "$DEBUG" ] && {
+    exec >"$DEBUG" 2>&1
+    eval "exec $FD>&1"
+    set -x
+} || eval "exec $FD>/dev/null"
+
+# Wait a bit so that user have time to raise finger from a key if
+# the script is run in terminal.
+[ -t 0 ] && sleep 1
+
+# Use a custom lock command, if given.
+LOCK_CMD=$(xfconf-query -c xfce4-session -p /general/LockCommand || :)
+[ -n "$LOCK_CMD" ] && {
+    exit_code=0
+    /bin/sh -c "$LOCK_CMD" && exit || {
+        exit_code=$?
+        >&2 printf "'%s' exited with status %d\n" "$LOCK_CMD" $exit_code
+        exit $exit_code
+    }
+}
+
+# Else try certain screensavers for locking.
 for lock_cmd in \
-    "$LOCK_CMD" \
-    "xfce4-screensaver-command --lock" \
-    "xscreensaver-command -lock" \
-    "gnome-screensaver-command --lock"
+    xfce4-screensaver \
+    xscreensaver \
+    light-locker
 do
-    if [ ! -z "$lock_cmd" ]; then
-        $lock_cmd >/dev/null 2>&1 && exit
-    fi
+    # To redirect stdin to /dev/null is needed at least for xscreensaver
+    # to not have 1 s delay when invoked on terminal.
+    ${lock_cmd}-command --lock </dev/null 2>&$FD && exit
 done
 
-# else run another access locking utility, if installed
-for lock_cmd in \
-  "xlock -mode blank" \
-  "slock"
-  do
-    set -- $lock_cmd
-    if command -v -- $1 >/dev/null 2>&1; then
-        $lock_cmd >/dev/null 2>&1 &
-	# turn off display backlight:
-	xset dpms force off
-        exit
-    fi
-done
-
-# else access locking failed
+# Else access locking failed.
 exit 1
