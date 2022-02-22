@@ -28,8 +28,14 @@
 # Use a custom lock command, if given.
 LOCK_CMD=$(xfconf-query -c xfce4-session -p /general/LockCommand || :)
 [ -n "$LOCK_CMD" ] && {
+    # Prevent unintentional recursive calling of xflock4.
+    if [ -n "${XFLOCK4+x}" ]; then
+        >&2 printf '%s\n' 'Error: recursive lock'
+        exit 1
+    fi
+
     exit_code=0
-    /bin/sh -c "$LOCK_CMD" && exit || {
+    /bin/sh -c "export XFLOCK4=; $LOCK_CMD" && exit || {
         exit_code=$?
         >&2 printf "'%s' exited with status %d\n" "$LOCK_CMD" $exit_code
         exit $exit_code
