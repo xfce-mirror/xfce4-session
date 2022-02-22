@@ -21,6 +21,13 @@
 #  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
 
+lockdir=/tmp/xflock4-lock
+if ! mkdir "$lockdir" 2>/dev/null; then
+    >&2 printf '%s\n' 'Error: xflock4 running already'
+    exit 1
+fi
+trap 'rm -rf "$lockdir"; trap - EXIT' HUP INT TERM EXIT
+
 # Find a free file descriptor.
 FD=3; while { >&$FD; } 2>/dev/null; do FD=$((FD+1)); done
 
