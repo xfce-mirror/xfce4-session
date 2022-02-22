@@ -28,6 +28,23 @@
 # Use a custom lock command, if given.
 LOCK_CMD=$(xfconf-query -c xfce4-session -p /general/LockCommand || :)
 [ -n "$LOCK_CMD" ] && {
+    # Prevent unintentional recursive calling of xflock4.
+    dirname=xflock4-lock
+    if [ -n "${XDG_RUNTIME_DIR:+x}" ]; then
+        lockdir=$XDG_RUNTIME_DIR/$dirname
+    else
+        fallback_basedir=/tmp
+        # Create user specific lock directory
+        lockdir=$fallback_basedir/${dirname}-$(id -u -r)
+        >&2 printf '%s %s %s\n' 'Warning: XDG_RUNTIME_DIR not set.' \
+        'Creating a lock directory under' "$fallback_basedir"
+    fi
+    if ! mkdir "$lockdir" 2>/dev/null; then
+        >&2 printf '%s\n' 'Error: recursive lock'
+        exit 1
+    fi
+    trap 'rm -rf "$lockdir"; trap - EXIT' HUP INT TERM EXIT
+
     exit_code=0
     /bin/sh -c "$LOCK_CMD" && exit || {
         exit_code=$?
