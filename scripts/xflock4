@@ -39,11 +39,11 @@ LOCK_CMD=$(xfconf-query -c xfce4-session -p /general/LockCommand || :)
 }
 
 for lock_cmd in \
-    "xfce4-screensaver-command --lock" \
-    "xscreensaver-command -lock" \
-    "gnome-screensaver-command --lock"
+    xscreensaver-command \
+    light-locker-command \
+    xfce4-screensaver-command
 do
-    $lock_cmd </dev/null 2>/dev/null && exit
+    $lock_cmd --lock </dev/null 2>/dev/null && exit
 done
 
 # else run another access locking utility, if installed
