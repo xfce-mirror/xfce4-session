@@ -37,7 +37,7 @@ for lock_cmd in \
     "gnome-screensaver-command --lock"
 do
     if [ ! -z "$lock_cmd" ]; then
-        $lock_cmd >/dev/null 2>&1 && exit
+        $lock_cmd </dev/null >/dev/null 2>&1 && exit
     fi
 done
 
