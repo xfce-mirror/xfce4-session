@@ -387,7 +387,7 @@ xfsm_shutdown_try_switch_user (XfsmShutdown  *shutdown,
                                   "SwitchToGreeter",
                                   g_variant_new ("()"),
                                   G_DBUS_CALL_FLAGS_NONE,
-                                  3000,
+                                  5000,
                                   NULL,
                                   error);
 
