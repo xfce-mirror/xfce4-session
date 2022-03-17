@@ -29,30 +29,19 @@
 # First test for the command set in the session's xfconf channel
 LOCK_CMD=$(xfconf-query -c xfce4-session -p /general/LockCommand)
 
-# Lock by xscreensaver or gnome-screensaver, if a respective daemon is running
-for lock_cmd in \
-    "$LOCK_CMD" \
-    "xfce4-screensaver-command --lock" \
-    "xscreensaver-command -lock" \
-    "gnome-screensaver-command --lock"
-do
-    if [ ! -z "$lock_cmd" ]; then
-        $lock_cmd >/dev/null 2>&1 && exit
-    fi
-done
+if [ -n "$LOCK_CMD" ]; then
+    /bin/sh -c "$LOCK_CMD" && exit
+    exit_code=$?
+    >&2 printf "'%s' exited with status %d\n" "$LOCK_CMD" $exit_code
+    exit $exit_code
+fi
 
-# else run another access locking utility, if installed
 for lock_cmd in \
-  "xlock -mode blank" \
-  "slock"
-  do
-    set -- $lock_cmd
-    if command -v -- $1 >/dev/null 2>&1; then
-        $lock_cmd >/dev/null 2>&1 &
-	# turn off display backlight:
-	xset dpms force off
-        exit
-    fi
+    xscreensaver-command \
+    light-locker-command \
+    xfce4-screensaver-command
+do
+    $lock_cmd --lock </dev/null 2>/dev/null && exit
 done
 
 # else access locking failed
