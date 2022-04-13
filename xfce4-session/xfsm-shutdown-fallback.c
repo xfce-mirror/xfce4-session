@@ -248,7 +248,7 @@ xfsm_shutdown_fallback_user_is_operator (void)
       struct group *gr;
 
       gr = getgrgid (groups[i]);
-      if (strncmp(gr->gr_name, "operator", 8) == 0)
+      if (gr != NULL && strncmp(gr->gr_name, "operator", 8) == 0)
         {
           is_operator = TRUE;
           break;
