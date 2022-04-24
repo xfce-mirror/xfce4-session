@@ -76,6 +76,12 @@ gboolean     xfsm_systemd_can_hybrid_sleep (XfsmSystemd *systemd,
                                             gboolean     *auth_hybrid_sleep,
                                             GError      **error);
 
+gboolean     xfsm_systemd_has_update_prepared     (XfsmSystemd *systemd);
+
+gboolean     xfsm_systemd_trigger_update_restart  (XfsmSystemd *systemd);
+
+gboolean     xfsm_systemd_trigger_update_shutdown (XfsmSystemd *systemd);
+
 G_END_DECLS
 
 #endif  /* __XFSM_SYSTEMD_H__ */
