@@ -5,7 +5,7 @@
 # 
 # Translators:
 # Xfce Bot <transifex@xfce.org>, 2019
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2022
 # 
 #, fuzzy
 msgid ""
@@ -14,13 +14,13 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-21 00:31+0200\n"
 "PO-Revision-Date: 2019-10-20 16:38+0000\n"
-"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>, 2021\n"
+"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>, 2022\n"
 "Language-Team: Portuguese (https://www.transifex.com/xfce/teams/16840/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pt\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: ../xfce.desktop.in.h:1
 msgid "Xfce Session"
@@ -307,7 +307,7 @@ msgid ""
 "On login additionally all applications that were saved on your last logout will be started.\n"
 "Cursive applications belong to another desktop environment, but you can still enable them if you want."
 msgstr ""
-"Lista de aplicações a iniciar automaticamente através de eventos específicos, como entrar, sair, encerrar, etc.\n"
+"Lista de aplicações a iniciar automaticamente através de eventos específicos, como entrar, sair, desligar, etc.\n"
 "Ao entrar, todas as aplicações em execução na última saída serão também iniciadas.\n"
 "Aplicações cursivas pertencem a outro ambiente de trabalho, mas podem também ser ativadas, se desejado."
 
@@ -355,7 +355,7 @@ msgstr "Desativar ligação às portas TCP"
 
 #: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:102
 msgid "Print version information and exit"
-msgstr "Imprimir informações de versão e sair"
+msgstr "Mostrar informação da versão e sair"
 
 #: ../xfce4-session/xfsm-chooser.c:147
 msgid "Session Manager"
@@ -612,7 +612,7 @@ msgstr "Erro recebido ao terminar sessão, o erro foi %s"
 
 #: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:2
 msgid "Log out of the Xfce Desktop"
-msgstr "Sair do Ambiente de trabalho Xfce"
+msgstr "Sair do ambiente de trabalho Xfce"
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
 #: ../settings/xfce4-session-settings.ui.h:1
@@ -689,8 +689,8 @@ msgid ""
 "saved when you log out.  Changes below will only take effect when the "
 "session is saved."
 msgstr ""
-"Estas aplicações fazem parte da sessão atual e podem ser gravadas ao sair da"
-" sessão. As mudanças abaixo só produzem efeito se guardar a sessão."
+"Estas aplicações fazem parte da sessão atual e podem ser guardadas ao sair "
+"da sessão. As alterações abaixo só produzem efeito se guardar a sessão."
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Current Sessio_n"
