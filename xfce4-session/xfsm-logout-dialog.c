@@ -418,7 +418,8 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
    * Save session
    **/
   if (xfsm_shutdown_can_save_session (dialog->shutdown)
-      && !xfconf_channel_get_bool (channel, "/general/AutoSave", FALSE))
+      && !xfconf_channel_get_bool (channel, "/general/AutoSave", FALSE)
+      && xfconf_channel_get_bool (channel, "/general/ShowSave", TRUE))
     {
       dialog->save_session = gtk_check_button_new_with_mnemonic (_("_Save session for future logins"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->save_session), save_session);
