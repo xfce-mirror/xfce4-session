@@ -144,7 +144,7 @@ struct _XfaeModel
 struct _XfaeItem
 {
   gchar       *name;
-  GdkPixbuf   *icon;
+  GIcon       *icon;
   gchar       *comment;
   gchar       *relpath;
   gboolean     hidden;
@@ -390,7 +390,7 @@ xfae_model_get_column_type (GtkTreeModel *tree_model,
       return G_TYPE_STRING;
 
     case XFAE_MODEL_COLUMN_ICON:
-      return GDK_TYPE_PIXBUF;
+      return G_TYPE_ICON;
 
     case XFAE_MODEL_COLUMN_ENABLED:
     case XFAE_MODEL_COLUMN_REMOVABLE:
@@ -513,7 +513,7 @@ xfae_model_get_value (GtkTreeModel *tree_model,
       break;
 
     case XFAE_MODEL_COLUMN_ICON:
-      g_value_init (value, GDK_TYPE_PIXBUF);
+      g_value_init (value, G_TYPE_ICON);
       g_value_set_object (value, item->icon);
       break;
 
@@ -649,7 +649,6 @@ xfae_item_new (const gchar *relpath)
   gchar        **not_show_in;
   gchar        **args;
   gint           m;
-  GtkIconTheme  *icon_theme;
   gchar         *command;
 
   rc = xfce_rc_config_open (XFCE_RESOURCE_CONFIG, relpath, TRUE);
@@ -662,8 +661,6 @@ xfae_item_new (const gchar *relpath)
       if (G_LIKELY (value != NULL
           && g_ascii_strcasecmp (value, "Application") == 0))
         {
-          icon_theme = gtk_icon_theme_get_default ();
-
           item = g_new0 (XfaeItem, 1);
           item->relpath = g_strdup (relpath);
 
@@ -674,8 +671,7 @@ xfae_item_new (const gchar *relpath)
           value = xfce_rc_read_entry (rc, "Icon", "application-x-executable");
           if (G_UNLIKELY (value != NULL))
             {
-              item->icon = gtk_icon_theme_load_icon (icon_theme, value, 16,
-                GTK_ICON_LOOKUP_GENERIC_FALLBACK | GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
+              item->icon = g_themed_icon_new_with_default_fallbacks (value);
             }
 
           value = xfce_rc_read_entry (rc, "Comment", NULL);
