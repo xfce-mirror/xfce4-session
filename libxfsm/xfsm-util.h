@@ -39,7 +39,7 @@ struct _XfsmSessionInfo
 {
   gchar     *name;      /* name of the session */
   time_t     atime;     /* last access time */
-  GdkPixbuf *preview;   /* preview icon (52x42) */
+  cairo_surface_t *preview;   /* preview icon (52x42) */
 };
 
 enum
@@ -72,7 +72,7 @@ XfconfChannel *xfsm_open_config                      (void);
 
 gchar         *xfsm_gdk_display_get_fullname         (GdkDisplay *display);
 
-GdkPixbuf     *xfsm_load_session_preview             (const gchar *name);
+cairo_surface_t *xfsm_load_session_preview           (const gchar *name);
 
 XfceRc        *settings_list_sessions_open_rc        (void);
 
