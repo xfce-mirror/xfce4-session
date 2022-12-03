@@ -537,7 +537,7 @@ xfae_model_get_value (GtkTreeModel *tree_model,
       klass = g_type_class_ref (XFSM_TYPE_RUN_HOOK);
       enum_struct =  g_enum_get_value (klass, item->run_hook);
       g_type_class_unref (klass);
-      g_value_set_static_string (value, enum_struct->value_nick);
+      g_value_set_static_string (value, _(enum_struct->value_nick));
       break;
 
     default:

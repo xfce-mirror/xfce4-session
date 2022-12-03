@@ -77,10 +77,10 @@ xfae_window_class_init (XfaeWindowClass *klass)
 
 
 static void
-run_hook_changed (GtkCellRenderer *render,
-                  const gchar     *path_str,
-                  const gchar     *new_text,
-                  gpointer         user_data)
+run_hook_changed (GtkCellRendererCombo *combo,
+                  char                 *path_str,
+                  GtkTreeIter          *combo_iter,
+                  gpointer              user_data)
 {
     GEnumClass   *klass;
     GEnumValue   *enum_struct;
@@ -89,13 +89,20 @@ run_hook_changed (GtkCellRenderer *render,
     GtkTreePath  *path = gtk_tree_path_new_from_string (path_str);
     GtkTreeIter   iter;
     GError       *error = NULL;
+    GtkTreeModel *combo_model;
+    gchar        *combo_str;
 
     if (gtk_tree_model_get_iter (model, &iter, path))
       {
+        g_object_get (combo, "model", &combo_model, NULL);
+        combo_str = gtk_tree_model_get_string_from_iter (combo_model, combo_iter);
         klass = g_type_class_ref (XFSM_TYPE_RUN_HOOK);
-        enum_struct = g_enum_get_value_by_nick (klass, new_text);
+        enum_struct = g_enum_get_value (klass, atoi (combo_str));
         g_type_class_unref (klass);
-        if (!xfae_model_set_run_hook (model, path, &iter, enum_struct->value, &error))
+        g_free (combo_str);
+
+        if (enum_struct != NULL
+            && !xfae_model_set_run_hook (model, path, &iter, enum_struct->value, &error))
           {
             xfce_dialog_show_error (NULL, error, _("Failed to set run hook"));
             g_error_free (error);
@@ -222,7 +229,7 @@ xfae_window_init (XfaeWindow *window)
                 "editable", TRUE,
                 "mode", GTK_CELL_RENDERER_MODE_EDITABLE,
                 NULL);
-  g_signal_connect (renderer, "edited", G_CALLBACK (run_hook_changed), window->treeview);
+  g_signal_connect (renderer, "changed", G_CALLBACK (run_hook_changed), window->treeview);
 
   gtk_tree_view_column_pack_start (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column, renderer,
@@ -290,7 +297,7 @@ xfae_window_create_run_hooks_combo_model (void)
       {
         gtk_list_store_append (ls, &iter);
         enum_struct = g_enum_get_value (klass, i);
-        gtk_list_store_set (ls, &iter, 0, enum_struct->value_nick, -1);
+        gtk_list_store_set (ls, &iter, 0, _(enum_struct->value_nick), -1);
       }
     g_type_class_unref (klass);
     return GTK_TREE_MODEL (ls);

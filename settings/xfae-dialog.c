@@ -147,7 +147,7 @@ xfae_dialog_init (XfaeDialog *dialog)
   for (i = 0; i < klass->n_values; ++i)
     {
       enum_struct =  g_enum_get_value (klass, i);
-      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (dialog->run_hook_combo), enum_struct->value_nick);
+      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (dialog->run_hook_combo), _(enum_struct->value_nick));
     }
   g_type_class_unref (klass);
   gtk_combo_box_set_active (GTK_COMBO_BOX (dialog->run_hook_combo), 0);
