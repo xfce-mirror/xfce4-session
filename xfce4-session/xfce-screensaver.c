@@ -63,9 +63,6 @@ static void xfce_screensaver_get_property(GObject *object,
                                           GParamSpec *pspec);
 
 
-#define XFCE_SCREENSAVER_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE ((o), XFCE_TYPE_SCREENSAVER, XfceScreenSaverPrivate))
-
 
 typedef enum
 {
@@ -99,7 +96,7 @@ struct XfceScreenSaverPrivate
 };
 
 
-G_DEFINE_TYPE (XfceScreenSaver, xfce_screensaver, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (XfceScreenSaver, xfce_screensaver, G_TYPE_OBJECT)
 
 
 static void
@@ -110,8 +107,6 @@ xfce_screensaver_class_init (XfceScreenSaverClass *klass)
     object_class->finalize = xfce_screensvaer_finalize;
     object_class->set_property = xfce_screensaver_set_property;
     object_class->get_property = xfce_screensaver_get_property;
-
-    g_type_class_add_private (klass, sizeof (XfceScreenSaverPrivate));
 
 #define XFCE_PARAM_FLAGS  (G_PARAM_READWRITE \
                          | G_PARAM_CONSTRUCT \
@@ -285,7 +280,7 @@ xfce_screensaver_init (XfceScreenSaver *saver)
 {
     GError *error = NULL;
 
-    saver->priv = XFCE_SCREENSAVER_GET_PRIVATE (saver);
+    saver->priv = xfce_screensaver_get_instance_private (saver);
 
     if ( !xfconf_init (&error) )
     {
