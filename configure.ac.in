@@ -103,6 +103,7 @@ dnl Check for required packages
 XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.15.2])
 XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [4.15.1])
 XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [3.24.0])
+XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.66.0])
 XDT_CHECK_PACKAGE([GIO], [gio-2.0], [2.66.0])
 XDT_CHECK_PACKAGE([GMODULE], [gmodule-2.0], [2.66.0])
 XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-3.0], [3.10])
@@ -111,12 +112,6 @@ XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.12.0])
 dnl Check for Polkit/PolicyKit
 XDT_CHECK_OPTIONAL_PACKAGE([POLKIT], [polkit-gobject-1], [0.102],
                            [polkit], [Polkit support])
-
-AC_DEFINE(GLIB_VERSION_MIN_REQUIRED, GLIB_VERSION_2_66, [Ignore post 2.66 deprecations])
-AC_DEFINE(GLIB_VERSION_MAX_ALLOWED, GLIB_VERSION_2_66, [Prevent post 2.66 APIs])
-
-AC_DEFINE(GDK_VERSION_MIN_REQUIRED, GDK_VERSION_3_24, [Ignore post 3.24 deprecations])
-AC_DEFINE(GDK_VERSION_MAX_ALLOWED, GDK_VERSION_3_24, [Prevent post 3.24 APIs])
 
 dnl Check for debugging support
 XDT_FEATURE_DEBUG([xfsm_debug_default])

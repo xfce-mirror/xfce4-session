@@ -128,7 +128,7 @@ init_display (XfsmManager   *manager,
               GdkDisplay    *dpy,
               gboolean       disable_tcp)
 {
-  gdk_flush ();
+  gdk_display_flush (dpy);
 
   sm_init (channel, disable_tcp, manager);
 }
