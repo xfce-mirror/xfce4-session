@@ -221,9 +221,9 @@ get_wmcommand (Window window)
   char **argv;
   int argc, i;
 
-  gdk_error_trap_push ();
+  gdk_x11_display_error_trap_push (gdk_display_get_default ());
   status = XGetCommand (gdk_x11_get_default_xdisplay (), window, &argv, &argc);
-  if (gdk_error_trap_pop ())
+  if (gdk_x11_display_error_trap_pop (gdk_display_get_default ()))
     return NULL;
 
   if (status && argv && argc > 0)
@@ -245,9 +245,9 @@ get_wmclientmachine (Window window)
   gchar *result = NULL;
   Status status;
 
-  gdk_error_trap_push ();
+  gdk_x11_display_error_trap_push (gdk_display_get_default ());
   status = XGetWMClientMachine (gdk_x11_get_default_xdisplay (), window, &tp);
-  if (gdk_error_trap_pop ())
+  if (gdk_x11_display_error_trap_pop (gdk_display_get_default ()))
     return NULL;
 
   if (status)
@@ -652,7 +652,7 @@ xfsm_legacy_shutdown (void)
   SmWindow *sm_window;
   GList *lp;
 
-  gdk_error_trap_push ();
+  gdk_x11_display_error_trap_push (gdk_display_get_default ());
 
   /* kill 'em all! */
   for (lp = window_list; lp != NULL; lp = lp->next)
@@ -666,6 +666,6 @@ xfsm_legacy_shutdown (void)
 
   gdk_flush ();
 
-  gdk_error_trap_pop_ignored ();
+  gdk_x11_display_error_trap_pop_ignored (gdk_display_get_default ());
 #endif
 }
