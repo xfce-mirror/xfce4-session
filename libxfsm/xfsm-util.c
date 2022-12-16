@@ -125,7 +125,7 @@ xfsm_place_trash_window (GtkWindow *window,
   GtkRequisition requisition;
   GdkRectangle   geometry;
 
-  gdk_screen_get_monitor_geometry (screen, monitor, &geometry);
+  gdk_monitor_get_geometry (gdk_display_get_monitor (gdk_screen_get_display (screen), monitor), &geometry);
   gtk_widget_get_preferred_size (GTK_WIDGET (window), &requisition, NULL);
 
   gtk_window_move (window, 0, geometry.height - requisition.height);

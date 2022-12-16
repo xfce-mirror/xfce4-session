@@ -664,7 +664,7 @@ xfsm_legacy_shutdown (void)
 
   sm_window_list_clear ();
 
-  gdk_flush ();
+  gdk_display_flush (gdk_display_get_default ());
 
   gdk_x11_display_error_trap_pop_ignored (gdk_display_get_default ());
 #endif
