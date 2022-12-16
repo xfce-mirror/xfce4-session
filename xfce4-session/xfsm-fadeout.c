@@ -65,7 +65,7 @@ xfsm_x11_fadeout_new_window (GdkDisplay *display,
   gboolean              composited;
   gint                  scale;
 
-  gdk_error_trap_push ();
+  gdk_x11_display_error_trap_push (display);
 
   xdisplay = gdk_x11_display_get_xdisplay (display);
   root = gdk_screen_get_root_window (screen);
@@ -136,7 +136,7 @@ xfsm_x11_fadeout_new_window (GdkDisplay *display,
     }
 
   gdk_flush ();
-  gdk_error_trap_pop_ignored ();
+  gdk_x11_display_error_trap_pop_ignored (display);
 
   return xwindow;
 }
@@ -167,10 +167,10 @@ void
 xfsm_fadeout_destroy (XfsmFadeout *fadeout)
 {
 #ifdef GDK_WINDOWING_X11
-  gdk_error_trap_push ();
+  gdk_x11_display_error_trap_push (gdk_display_get_default ());
   XDestroyWindow (fadeout->xdisplay, GPOINTER_TO_INT (fadeout->xwindow));
   gdk_flush ();
-  gdk_error_trap_pop_ignored ();
+  gdk_x11_display_error_trap_pop_ignored (gdk_display_get_default ());
 #endif
 
   g_slice_free (XfsmFadeout, fadeout);

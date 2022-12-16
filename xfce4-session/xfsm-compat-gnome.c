@@ -197,7 +197,7 @@ xfsm_compat_gnome_smproxy_startup (void)
   Display *dpy;
   Window root;
 
-  gdk_error_trap_push ();
+  gdk_x11_display_error_trap_push (gdk_display_get_default ());
 
   /* Set GNOME_SM_PROXY property, since some apps (like OOo) seem to require
    * it to behave properly. Thanks to Jasper/Francois for reporting this.
@@ -222,14 +222,14 @@ xfsm_compat_gnome_smproxy_startup (void)
 
   XSync (dpy, False);
 
-  gdk_error_trap_pop_ignored ();
+  gdk_x11_display_error_trap_pop_ignored (gdk_display_get_default ());
 }
 
 
 static void
 xfsm_compat_gnome_smproxy_shutdown (void)
 {
-  gdk_error_trap_push ();
+  gdk_x11_display_error_trap_push (gdk_display_get_default ());
 
   if (gnome_smproxy_window != None)
     {
@@ -238,7 +238,7 @@ xfsm_compat_gnome_smproxy_shutdown (void)
       gnome_smproxy_window = None;
     }
 
-  gdk_error_trap_pop_ignored ();
+  gdk_x11_display_error_trap_pop_ignored (gdk_display_get_default ());
 }
 
 
