@@ -198,7 +198,7 @@ xfae_window_init (XfaeWindow *window)
   renderer = gtk_cell_renderer_pixbuf_new ();
   gtk_tree_view_column_pack_start (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column, renderer,
-                                       "pixbuf", XFAE_MODEL_COLUMN_ICON,
+                                       "gicon", XFAE_MODEL_COLUMN_ICON,
                                        NULL);
   renderer = gtk_cell_renderer_text_new ();
   g_object_set (renderer,
