@@ -718,11 +718,11 @@ xfsm_logout_dialog_run (GtkDialog *dialog,
 
 #ifdef GDK_WINDOWING_X11
       /* force input to the dialog */
-      gdk_error_trap_push ();
+      gdk_x11_display_error_trap_push (gdk_display_get_default ());
       XSetInputFocus (gdk_x11_get_default_xdisplay (),
                       GDK_WINDOW_XID (window),
                       RevertToParent, CurrentTime);
-      gdk_error_trap_pop_ignored ();
+      gdk_x11_display_error_trap_pop_ignored (gdk_display_get_default ());
 #endif
     }
 
