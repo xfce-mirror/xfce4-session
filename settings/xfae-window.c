@@ -353,8 +353,7 @@ xfae_window_button_press_event (GtkWidget      *treeview,
           g_signal_connect_swapped (G_OBJECT (menu), "deactivate",
                                     G_CALLBACK (g_main_loop_quit), loop);
           gtk_grab_add (menu);
-          gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL,
-                          NULL, event->button, event->time);
+          gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) event);
           g_main_loop_run (loop);
           g_main_loop_unref (loop);
           gtk_grab_remove (menu);
