@@ -38,6 +38,8 @@
 
 #include <gdk/gdkx.h>
 
+#include <cairo/cairo-gobject.h>
+
 #include <libxfce4ui/libxfce4ui.h>
 
 #include <libxfsm/xfsm-util.h>
@@ -202,11 +204,12 @@ xfsm_gdk_display_get_fullname (GdkDisplay *display)
   return g_strdup (buffer);
 }
 
-GdkPixbuf *
+GIcon *
 xfsm_load_session_preview (const gchar *name)
 {
   GdkDisplay *display;
-  GdkPixbuf  *pb = NULL;
+  GIcon *icon;
+  GFile *file;
   gchar *display_name;
   gchar *filename;
   gchar *path;
@@ -219,11 +222,16 @@ xfsm_load_session_preview (const gchar *name)
   g_free (display_name);
   g_free (path);
 
-  if (filename != NULL)
-    pb = gdk_pixbuf_new_from_file (filename, NULL);
+  if (filename == NULL)
+    return NULL;
+
+  file = g_file_new_for_path (filename);
+  icon = g_file_icon_new (file);
+
+  g_object_unref (G_OBJECT (file));
   g_free (filename);
 
-  return pb;
+  return icon;
 }
 
 XfceRc *
@@ -259,7 +267,7 @@ GList *
 settings_list_sessions (XfceRc *rc)
 {
   XfsmSessionInfo *session;
-  GdkPixbuf       *preview_default = NULL;
+  GIcon           *preview_default = NULL;
   GList           *sessions = NULL;
   gchar          **groups;
   gint             n;
@@ -279,12 +287,10 @@ settings_list_sessions (XfceRc *rc)
             {
               if (G_UNLIKELY (preview_default == NULL))
                 {
-                  preview_default = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                                              "xfce4-logo", 64,
-                                                              GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
+                  preview_default = g_themed_icon_new_with_default_fallbacks ("xfce4-logo");
                 }
 
-              session->preview = GDK_PIXBUF (g_object_ref (preview_default));
+              session->preview = g_object_ref (G_OBJECT (preview_default));
             }
 
           sessions = g_list_append (sessions, session);
@@ -292,7 +298,7 @@ settings_list_sessions (XfceRc *rc)
     }
 
   if (preview_default != NULL)
-    g_object_unref (preview_default);
+    g_object_unref (G_OBJECT (preview_default));
 
   g_strfreev (groups);
 
@@ -308,7 +314,7 @@ settings_list_sessions_treeview_init (GtkTreeView *treeview)
   GtkListStore *model;
 
   model = gtk_list_store_new (N_COLUMNS,
-                              GDK_TYPE_PIXBUF,
+                              G_TYPE_ICON,
                               G_TYPE_STRING,
                               G_TYPE_STRING,
                               G_TYPE_STRING,
@@ -319,10 +325,14 @@ settings_list_sessions_treeview_init (GtkTreeView *treeview)
 
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), TRUE);
   column = gtk_tree_view_column_new ();
+  gtk_tree_view_column_set_min_width (column, 64);
   renderer = gtk_cell_renderer_pixbuf_new ();
+  g_object_set (G_OBJECT (renderer),
+                "stock-size", GTK_ICON_SIZE_DIALOG /* FIXME can we make it larger with GIcon? */,
+                NULL);
   gtk_tree_view_column_pack_start (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column, renderer,
-                                       "pixbuf", PREVIEW_COLUMN,
+                                       "gicon", PREVIEW_COLUMN,
                                        NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
