@@ -62,7 +62,7 @@
 
 
 #define BORDER   6
-#define SHOTSIZE 64
+#define SHOTSIZE 256
 
 
 

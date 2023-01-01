@@ -428,13 +428,24 @@ xfsm_manager_choose_session (XfsmManager *manager,
                              XfceRc      *rc)
 {
   XfsmSessionInfo *session;
+  GdkDisplay      *display;
+  GdkMonitor      *monitor;
   gboolean         load = FALSE;
   GList           *sessions = NULL;
   GList           *lp;
   gchar           *name;
   gint             result;
+  gint             monitor_num = 0;
+  gint             scale_factor;
 
-  sessions = settings_list_sessions (rc);
+  display = gdk_display_get_default ();
+  xfce_gdk_screen_get_active (&monitor_num);
+  monitor = gdk_display_get_monitor (display, monitor_num);
+  if (G_UNLIKELY (monitor == NULL))
+    monitor = gdk_display_get_primary_monitor (display);
+  scale_factor = gdk_monitor_get_scale_factor (monitor);
+
+  sessions = settings_list_sessions (rc, scale_factor);
 
   if (sessions != NULL)
     {
