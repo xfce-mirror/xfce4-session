@@ -36,6 +36,8 @@
 
 #include <X11/Xlib.h>
 
+#include <cairo-gobject.h>
+
 #include <gdk/gdkx.h>
 
 #include <libxfce4ui/libxfce4ui.h>
@@ -202,11 +204,13 @@ xfsm_gdk_display_get_fullname (GdkDisplay *display)
   return g_strdup (buffer);
 }
 
-GdkPixbuf *
-xfsm_load_session_preview (const gchar *name)
+cairo_surface_t *
+xfsm_load_session_preview (const gchar *name,
+                           gint         size,
+                           gint         scale_factor)
 {
-  GdkDisplay *display;
-  GdkPixbuf  *pb = NULL;
+  cairo_surface_t *icon = NULL;
+  GdkDisplay      *display;
   gchar *display_name;
   gchar *filename;
   gchar *path;
@@ -220,10 +224,17 @@ xfsm_load_session_preview (const gchar *name)
   g_free (path);
 
   if (filename != NULL)
-    pb = gdk_pixbuf_new_from_file (filename, NULL);
+    {
+      GdkPixbuf *pb = gdk_pixbuf_new_from_file_at_scale (filename, size * scale_factor, size * scale_factor, TRUE, NULL);
+      if (G_LIKELY (pb != NULL))
+        {
+          icon = gdk_cairo_surface_create_from_pixbuf (pb, scale_factor, NULL);
+          g_object_unref (pb);
+        }
+    }
   g_free (filename);
 
-  return pb;
+  return icon;
 }
 
 XfceRc *
@@ -256,10 +267,11 @@ settings_list_sessions_open_rc (void)
 }
 
 GList *
-settings_list_sessions (XfceRc *rc)
+settings_list_sessions (XfceRc *rc,
+                        gint scale_factor)
 {
   XfsmSessionInfo *session;
-  GdkPixbuf       *preview_default = NULL;
+  cairo_surface_t *preview_default = NULL;
   GList           *sessions = NULL;
   gchar          **groups;
   gint             n;
@@ -273,18 +285,26 @@ settings_list_sessions (XfceRc *rc)
           session = g_new0 (XfsmSessionInfo, 1);
           session->name = g_strdup (groups[n] + 9);
           session->atime = xfce_rc_read_int_entry (rc, "LastAccess", 0);
-          session->preview = xfsm_load_session_preview (session->name);
+          session->preview = xfsm_load_session_preview (session->name, 64, scale_factor);
 
           if (session->preview == NULL)
             {
               if (G_UNLIKELY (preview_default == NULL))
                 {
-                  preview_default = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                                              "xfce4-logo", 64,
-                                                              GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
+                  GdkPixbuf *pb = gtk_icon_theme_load_icon_for_scale (gtk_icon_theme_get_default (),
+                                                                      "xfce4-logo",
+                                                                      64,
+                                                                      scale_factor,
+                                                                      GTK_ICON_LOOKUP_GENERIC_FALLBACK | GTK_ICON_LOOKUP_FORCE_SIZE,
+                                                                      NULL);
+                  if (G_LIKELY (pb != NULL))
+                    {
+                      preview_default = gdk_cairo_surface_create_from_pixbuf (pb, scale_factor, NULL);
+                      g_object_unref (pb);
+                    }
                 }
 
-              session->preview = GDK_PIXBUF (g_object_ref (preview_default));
+              session->preview = cairo_surface_reference (preview_default);
             }
 
           sessions = g_list_append (sessions, session);
@@ -292,7 +312,7 @@ settings_list_sessions (XfceRc *rc)
     }
 
   if (preview_default != NULL)
-    g_object_unref (preview_default);
+    cairo_surface_destroy (preview_default);
 
   g_strfreev (groups);
 
@@ -308,7 +328,7 @@ settings_list_sessions_treeview_init (GtkTreeView *treeview)
   GtkListStore *model;
 
   model = gtk_list_store_new (N_COLUMNS,
-                              GDK_TYPE_PIXBUF,
+                              CAIRO_GOBJECT_TYPE_SURFACE,
                               G_TYPE_STRING,
                               G_TYPE_STRING,
                               G_TYPE_STRING,
@@ -322,7 +342,7 @@ settings_list_sessions_treeview_init (GtkTreeView *treeview)
   renderer = gtk_cell_renderer_pixbuf_new ();
   gtk_tree_view_column_pack_start (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column, renderer,
-                                       "pixbuf", PREVIEW_COLUMN,
+                                       "surface", PREVIEW_COLUMN,
                                        NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 

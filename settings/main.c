@@ -66,7 +66,7 @@ xfce4_session_settings_show_saved_sessions (GtkBuilder *builder,
         return;
 
     settings_list_sessions_treeview_init (GTK_TREE_VIEW (sessions_treeview));
-    sessions = settings_list_sessions (rc);
+    sessions = settings_list_sessions (rc, gtk_widget_get_scale_factor (sessions_treeview));
     model = gtk_tree_view_get_model (GTK_TREE_VIEW (sessions_treeview));
     settings_list_sessions_populate (model, sessions);
 }

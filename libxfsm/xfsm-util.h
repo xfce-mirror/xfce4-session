@@ -37,9 +37,9 @@ typedef struct _XfsmSessionInfo  XfsmSessionInfo;
 
 struct _XfsmSessionInfo
 {
-  gchar     *name;      /* name of the session */
-  time_t     atime;     /* last access time */
-  GdkPixbuf *preview;   /* preview icon (52x42) */
+  gchar           *name;      /* name of the session */
+  time_t           atime;     /* last access time */
+  cairo_surface_t *preview;   /* preview icon (52x42) */
 };
 
 enum
@@ -72,11 +72,14 @@ XfconfChannel *xfsm_open_config                      (void);
 
 gchar         *xfsm_gdk_display_get_fullname         (GdkDisplay *display);
 
-GdkPixbuf     *xfsm_load_session_preview             (const gchar *name);
+cairo_surface_t *xfsm_load_session_preview           (const gchar *name,
+                                                      gint         size,
+                                                      gint         scale_factor);
 
 XfceRc        *settings_list_sessions_open_rc        (void);
 
-GList         *settings_list_sessions                (XfceRc *rc);
+GList         *settings_list_sessions                (XfceRc *rc,
+                                                      gint scale_factor);
 
 void           settings_list_sessions_treeview_init  (GtkTreeView *treeview);
 

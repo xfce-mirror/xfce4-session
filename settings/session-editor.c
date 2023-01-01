@@ -164,7 +164,7 @@ session_editor_save_session(GtkWidget *btn,
     if (rc)
     {
         gtk_widget_show (gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 3));
-        sessions = settings_list_sessions (rc);
+        sessions = settings_list_sessions (rc, gtk_widget_get_scale_factor (treeview));
         model = gtk_tree_view_get_model (GTK_TREE_VIEW (treeview));
         /* If the treeview hasn't been initialized we do it now */
         if (!GTK_IS_LIST_STORE (model))
