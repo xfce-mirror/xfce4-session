@@ -60,6 +60,8 @@
 #include <xfce4-session/xfsm-chooser-icon.h>
 #include <xfce4-session/xfsm-chooser.h>
 #include <xfce4-session/xfsm-global.h>
+#include <xfce4-session/xfsm-inhibition.h>
+#include <xfce4-session/xfsm-inhibitor.h>
 #include <xfce4-session/xfsm-legacy.h>
 #include <xfce4-session/xfsm-startup.h>
 #include <xfce4-session/xfsm-marshal.h>
@@ -75,6 +77,8 @@ struct _XfsmManager
 
   XfsmShutdownType  shutdown_type;
   XfsmShutdown     *shutdown_helper;
+  XfsmInhibitor   *inhibitions;
+
   gboolean          save_session;
 
   gboolean         session_chooser;
@@ -190,6 +194,8 @@ xfsm_manager_init (XfsmManager *manager)
   manager->restart_properties = g_queue_new ();
   manager->running_clients = g_queue_new ();
   manager->failsafe_clients_pending = 0;
+
+  manager->inhibitions = xfsm_inhibitor_get ();
 }
 
 static void
@@ -203,6 +209,8 @@ xfsm_manager_finalize (GObject *obj)
     g_source_remove (manager->die_timeout_id);
 
   g_object_unref (manager->shutdown_helper);
+
+  g_object_unref (manager->inhibitions);
 
   g_queue_foreach (manager->pending_properties, (GFunc) G_CALLBACK (xfsm_properties_free), NULL);
   g_queue_free (manager->pending_properties);
@@ -2060,6 +2068,18 @@ static gboolean xfsm_manager_dbus_register_client (XfsmDbusManager *object,
 static gboolean xfsm_manager_dbus_unregister_client (XfsmDbusManager *object,
                                                      GDBusMethodInvocation *invocation,
                                                      const gchar *arg_client_id);
+static gboolean xfsm_manager_dbus_inhibit (XfsmDbusManager *object,
+                                           GDBusMethodInvocation *invocation,
+                                           const gchar *arg_app_id,
+                                           guint arg_toplevel_xid,
+                                           const gchar *arg_reason,
+                                           guint arg_flags);
+static gboolean xfsm_manager_dbus_uninhibit (XfsmDbusManager *object,
+                                             GDBusMethodInvocation *invocation,
+                                             guint arg_inhibit_cookie);
+static gboolean xfsm_manager_dbus_is_inhibited (XfsmDbusManager *object,
+                                                GDBusMethodInvocation *invocation,
+                                                guint arg_flags);
 
 
 /* eader needs the above fwd decls */
@@ -2161,6 +2181,8 @@ xfsm_manager_iface_init (XfsmDbusManagerIface *iface)
   iface->handle_get_state = xfsm_manager_dbus_get_state;
   iface->handle_hibernate = xfsm_manager_dbus_hibernate;
   iface->handle_hybrid_sleep = xfsm_manager_dbus_hybrid_sleep;
+  iface->handle_inhibit = xfsm_manager_dbus_inhibit;
+  iface->handle_is_inhibited = xfsm_manager_dbus_is_inhibited;
   iface->handle_switch_user = xfsm_manager_dbus_switch_user;
   iface->handle_list_clients = xfsm_manager_dbus_list_clients;
   iface->handle_logout = xfsm_manager_dbus_logout;
@@ -2168,6 +2190,7 @@ xfsm_manager_iface_init (XfsmDbusManagerIface *iface)
   iface->handle_shutdown = xfsm_manager_dbus_shutdown;
   iface->handle_suspend = xfsm_manager_dbus_suspend;
   iface->handle_register_client = xfsm_manager_dbus_register_client;
+  iface->handle_uninhibit = xfsm_manager_dbus_uninhibit;
   iface->handle_unregister_client = xfsm_manager_dbus_unregister_client;
 }
 
@@ -2569,6 +2592,77 @@ xfsm_manager_dbus_can_hybrid_sleep (XfsmDbusManager *object,
     can_hybrid_sleep = FALSE;
 
   xfsm_dbus_manager_complete_can_hybrid_sleep (object, invocation, can_hybrid_sleep);
+  return TRUE;
+}
+
+static gboolean
+xfsm_manager_dbus_inhibit (XfsmDbusManager *object,
+                           GDBusMethodInvocation *invocation,
+                           const gchar *arg_app_id,
+                           guint arg_toplevel_xid,
+                           const gchar *arg_reason,
+                           guint arg_flags)
+{
+  XfsmManager *manager;
+  XfsmInhibition *inhibition;
+
+  g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
+
+  manager = XFSM_MANAGER (object);
+
+  xfsm_verbose ("entering\n");
+
+  inhibition = xfsm_inhibition_new (arg_app_id,
+                                    arg_toplevel_xid,
+                                    arg_flags,
+                                    arg_reason);
+
+  xfsm_inhibitor_add (manager->inhibitions, inhibition);
+
+  xfsm_dbus_manager_complete_inhibit (object, invocation,
+                                      xfsm_inhibition_get_cookie(inhibition));
+
+  return TRUE;
+}
+
+static gboolean
+xfsm_manager_dbus_uninhibit (XfsmDbusManager *object,
+                             GDBusMethodInvocation *invocation,
+                             guint arg_inhibit_cookie)
+{
+  XfsmManager *manager;
+
+  g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
+
+  manager = XFSM_MANAGER (object);
+
+  xfsm_verbose ("entering\n");
+
+  xfsm_inhibitor_remove (manager->inhibitions, arg_inhibit_cookie);
+
+  xfsm_dbus_manager_complete_uninhibit (object, invocation);
+
+  return TRUE;
+}
+
+static gboolean
+xfsm_manager_dbus_is_inhibited (XfsmDbusManager *object,
+                                GDBusMethodInvocation *invocation,
+                                guint arg_flags)
+{
+  XfsmManager *manager;
+  gboolean is_inhibited = FALSE;
+
+  xfsm_verbose ("entering\n");
+
+  g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
+
+  manager = XFSM_MANAGER (object);
+
+  is_inhibited = xfsm_inhibitor_has_flags (manager->inhibitions, arg_flags);
+
+  xfsm_dbus_manager_complete_is_inhibited (object, invocation, is_inhibited);
+
   return TRUE;
 }
 
