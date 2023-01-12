@@ -255,7 +255,7 @@ settings_list_sessions_open_rc (void)
     {
       g_debug ("xfsm_manager_load_session: Something wrong with %s, Does it exist? Permissions issue?", session_file);
       g_free (session_file);
-      return FALSE;
+      return NULL;
     }
 
   rc = xfce_rc_simple_open (session_file, FALSE);
@@ -263,7 +263,7 @@ settings_list_sessions_open_rc (void)
   {
     g_warning ("xfsm_manager_load_session: unable to open %s", session_file);
     g_free (session_file);
-    return FALSE;
+    return NULL;
   }
   g_free (session_file);
   return rc;
