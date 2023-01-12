@@ -85,7 +85,6 @@ main(int argc,
     GError *error = NULL;
     XfconfChannel *channel;
     XfceRc *rc;
-    gboolean visible;
     gchar *active_session;
     gchar *active_session_label;
     const gchar *format;
@@ -175,6 +174,7 @@ main(int argc,
     markup = g_markup_printf_escaped (format, active_session_label, active_session);
     gtk_label_set_markup (GTK_LABEL (label_active_session), markup);
     g_free (markup);
+    g_free (active_session);
 
     delete_button = gtk_builder_get_object (builder, "btn_delete_session");
     treeview = gtk_builder_get_object (builder, "saved-sessions-list");
@@ -182,11 +182,9 @@ main(int argc,
 
     /* Check if there are saved sessions and if so, show the "Saved Sessions" tab */
     rc = settings_list_sessions_open_rc ();
-    if (rc)
-        visible = TRUE;
-    else
-        visible = FALSE;
-    xfce4_session_settings_show_saved_sessions (builder, rc, visible);
+    xfce4_session_settings_show_saved_sessions (builder, rc, rc != NULL);
+    if (rc != NULL)
+        xfce_rc_close (rc);
 
     /* bind widgets to xfconf */
     xfconf_g_property_bind(channel, "/chooser/AlwaysDisplay", G_TYPE_BOOLEAN,

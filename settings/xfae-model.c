@@ -685,6 +685,7 @@ xfae_item_new (const gchar *relpath)
         }
       else
         {
+          xfce_rc_close (rc);
           return NULL;
         }
 

@@ -254,6 +254,7 @@ settings_list_sessions_open_rc (void)
   if (!g_file_test (session_file, G_FILE_TEST_IS_REGULAR))
     {
       g_debug ("xfsm_manager_load_session: Something wrong with %s, Does it exist? Permissions issue?", session_file);
+      g_free (session_file);
       return FALSE;
     }
 
@@ -261,8 +262,10 @@ settings_list_sessions_open_rc (void)
   if (G_UNLIKELY (rc == NULL))
   {
     g_warning ("xfsm_manager_load_session: unable to open %s", session_file);
+    g_free (session_file);
     return FALSE;
   }
+  g_free (session_file);
   return rc;
 }
 

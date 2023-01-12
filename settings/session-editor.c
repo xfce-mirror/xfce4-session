@@ -359,6 +359,8 @@ session_editor_set_from_desktop_file(GtkTreeModel *model,
                        COL_ICON_NAME, gicon,
                        COL_HAS_DESKTOP_FILE, TRUE,
                        -1);
+    if (gicon != NULL)
+        g_object_unref (gicon);
 
     xfce_rc_close(rcfile);
 }
@@ -532,6 +534,7 @@ manager_client_registered(XfsmManager *proxy,
             g_free (property);
             g_variant_unref (variant_value);
     }
+    g_variant_iter_free (variant_iter);
 
     if(!name || !*name)
         name = _("(Unknown program)");
@@ -559,6 +562,8 @@ manager_client_registered(XfsmManager *proxy,
         gtk_list_store_set (GTK_LIST_STORE (model), &iter,
                             COL_ICON_NAME, gicon,
                             -1);
+        if (gicon != NULL)
+            g_object_unref (gicon);
     }
 
     path = gtk_tree_model_get_path(model, &iter);
