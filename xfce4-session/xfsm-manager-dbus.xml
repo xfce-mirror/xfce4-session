@@ -198,6 +198,58 @@
         </method>
 
         <!--
+             void org.Xfce.Session.Manager.Inhibit
+
+             @app_id: The application identifier
+             @toplevel_xid: The toplevel X window identifier
+             @reason: The reason for the inhibit
+             @flags: Flags that specify what should be inhibited
+
+             Returns:
+             @inhibit_cookie: The cookie
+
+             Proactively indicates that the calling application is performing
+             an action that should not be interrupted and sets a reason to be
+             displayed to the user when an interruption is about to take placea.
+        -->
+        <method name="Inhibit">
+            <arg type="s" name="app_id" direction="in" />
+            <arg type="u" name="toplevel_xid" direction="in" />
+            <arg type="s" name="reason" direction="in" />
+            <arg type="u" name="flags" direction="in" />
+            <arg type="u" name="inhibit_cookie" direction="out" />
+        </method>
+
+        <!--
+             void org.Xfce.Session.Manager.Uninhibit
+
+             @inhibit_cookie: The cookie
+
+             Cancel a previous call to Inhibit identified by the cookie.
+        -->
+        <method name="Uninhibit">
+            <arg type="u" name="inhibit_cookie" direction="in" />
+        </method>
+
+        <!--
+             void org.Xfce.Session.Manager.IsInhibited
+
+             @flags: Flags that spefify what should be inhibited
+
+             Returns:
+             @is_inhibited: Returns TRUE if any of the operations in the
+             bitfield flags are inhibited
+
+             Determine if operation(s) specified by the flags
+             are currently inhibited.  Flags are same as those accepted
+             by the Inhibit method.
+        -->
+        <method name="IsInhibited">
+            <arg type="u" name="flags" direction="in" />
+            <arg type="b" name="is_inhibited" direction="out" />
+        </method>
+
+        <!--
              void org.xfce.Session.Manager.StateChanged(Unsigned Int old_state,
                                                         Unsigned Int new_state)
 
