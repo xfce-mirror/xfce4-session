@@ -100,6 +100,7 @@ run_hook_changed (GtkCellRendererCombo *combo,
         enum_struct = g_enum_get_value (klass, atoi (combo_str));
         g_type_class_unref (klass);
         g_free (combo_str);
+        g_object_unref (combo_model);
 
         if (enum_struct != NULL
             && !xfae_model_set_run_hook (model, path, &iter, enum_struct->value, &error))
