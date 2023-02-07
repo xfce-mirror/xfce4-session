@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*-
  *
- * Copyright (C) 2021 Matias De lellis <mati86dl@gmail.com>
+ * Copyright (C) 2021-2022 Matias De lellis <mati86dl@gmail.com>
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -29,26 +29,15 @@
 G_BEGIN_DECLS
 
 #define XFSM_TYPE_INHIBITOR         (xfsm_inhibitor_get_type ())
-#define XFSM_INHIBITOR(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), XFSM_TYPE_INHIBITOR, XfsmInhibitor))
-#define XFSM_INHIBITOR_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), XFSM_TYPE_INHIBITOR, XfsmInhibitorClass))
-#define XFSM_IS_INHIBITOR(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFSM_TYPE_INHIBITOR))
-#define XFSM_IS_INHIBITOR_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), XFSM_TYPE_INHIBITOR))
-#define XFSM_INHIBITOR_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), XFSM_TYPE_INHIBITOR, XfsmInhibitorClass))
+G_DECLARE_FINAL_TYPE (XfsmInhibitor, xfsm_inhibitor, XFSM, INHIBITOR, GObject)
 
-typedef struct XfsmInhibitorPrivate XfsmInhibitorPrivate;
+typedef struct _XfsmInhibitorPrivate XfsmInhibitorPrivate;
 
-typedef struct
+struct _XfsmInhibitor
 {
-  GObject                      parent;
+  GObject parent;
   XfsmInhibitorPrivate *priv;
-} XfsmInhibitor;
-
-typedef struct
-{
-  GObjectClass   parent_class;
-} XfsmInhibitorClass;
-
-GType           xfsm_inhibitor_get_type                 (void);
+};
 
 gboolean        xfsm_inhibitor_add                      (XfsmInhibitor  *store,
                                                          XfsmInhibition *inhibition);
