@@ -66,8 +66,6 @@ xfce4_session_SOURCES =							\
 	xfsm-shutdown.h							\
 	xfsm-startup.c							\
 	xfsm-startup.h							\
-	xfce-screensaver.c						\
-	xfce-screensaver.h						\
 	xfsm-systemd.c							\
 	xfsm-systemd.h
 
