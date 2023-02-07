@@ -27,18 +27,11 @@
 G_BEGIN_DECLS
 
 
-#define XFSM_TYPE_INHIBITION            (xfsm_inhibition_get_type ())
-#define XFSM_INHIBITION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), XFSM_TYPE_INHIBITION, XfsmInhibition))
-#define XFSM_INHIBITION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), XFSM_TYPE_INHIBITION, XfsmInhibitionClass))
-#define XFSM_IS_INHIBITION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), XFSM_TYPE_INHIBITION))
-#define XFSM_IS_INHIBITION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), XFSM_TYPE_INHIBITION))
-#define XFSM_INHIBITION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), XFSM_TYPE_INHIBITION, XfsmInhibitionClass))
+#define XFSM_TYPE_INHIBITION (xfsm_inhibition_get_type ())
 
-typedef struct _XfsmInhibition        XfsmInhibition;
-typedef struct _XfsmInhibitionClass   XfsmInhibitionClass;
+G_DECLARE_FINAL_TYPE (XfsmInhibition, xfsm_inhibition, XFSM, INHIBITION, GObject)
 
-typedef struct XfsmInhibitionPrivate XfsmInhibitionPrivate;
-
+typedef struct _XfsmInhibitionPrivate XfsmInhibitionPrivate;
 
 /**
  * XfsmInhibitonFlag:
@@ -54,19 +47,11 @@ typedef enum {
   XFSM_INHIBITON_FLAG_IDLE    = 1 << 3
 } XfsmInhibitonFlag;
 
-
 struct _XfsmInhibition
 {
   GObject               _parent;
   XfsmInhibitionPrivate *priv;
 };
-
-struct _XfsmInhibitionClass
-{
-  GObjectClass parent_class;
-};
-
-GType            xfsm_inhibition_get_type             (void) G_GNUC_CONST;
 
 XfsmInhibition * xfsm_inhibition_new                  (const char    *app_id,
                                                        guint          toplevel_xid,

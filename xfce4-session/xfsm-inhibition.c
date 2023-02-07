@@ -24,9 +24,7 @@
 
 #include "xfsm-inhibition.h"
 
-#define XFSM_INHIBITION_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), XFSM_TYPE_INHIBITION, XfsmInhibitionPrivate))
-
-struct XfsmInhibitionPrivate
+struct _XfsmInhibitionPrivate
 {
   gchar *app_id;
   gchar *reason;
@@ -44,36 +42,26 @@ enum {
   PROP_COOKIE,
 };
 
-G_DEFINE_TYPE (XfsmInhibition, xfsm_inhibition, G_TYPE_OBJECT)
-
-static GObject *
-xfsm_inhibition_constructor (GType                  type,
-                             guint                  n_construct_properties,
-                             GObjectConstructParam *construct_properties)
-{
-  XfsmInhibition *inhibition;
-
-  inhibition = XFSM_INHIBITION (G_OBJECT_CLASS (xfsm_inhibition_parent_class)->constructor (type,
-                                                                                           n_construct_properties,
-                                                                                           construct_properties));
-
-  return G_OBJECT (inhibition);
-}
+G_DEFINE_TYPE_WITH_PRIVATE (XfsmInhibition, xfsm_inhibition, G_TYPE_OBJECT)
 
 static void
 xfsm_inhibition_init (XfsmInhibition *inhibition)
 {
-  inhibition->priv = XFSM_INHIBITION_GET_PRIVATE (inhibition);
+  inhibition->priv = xfsm_inhibition_get_instance_private (inhibition);
 }
 
 static void
 xfsm_inhibition_set_app_id (XfsmInhibition  *inhibition,
                             const gchar     *app_id)
 {
+  XfsmInhibitionPrivate *priv = NULL;
+
   g_return_if_fail (XFSM_IS_INHIBITION (inhibition));
 
-  g_free (inhibition->priv->app_id);
-  inhibition->priv->app_id = g_strdup (app_id);
+  priv = xfsm_inhibition_get_instance_private (inhibition);
+
+  g_free (priv->app_id);
+  priv->app_id = g_strdup (app_id);
 
   g_object_notify (G_OBJECT (inhibition), "app-id");
 }
@@ -82,10 +70,14 @@ static void
 xfsm_inhibition_set_reason (XfsmInhibition  *inhibition,
                             const gchar     *reason)
 {
+  XfsmInhibitionPrivate *priv = NULL;
+
   g_return_if_fail (XFSM_IS_INHIBITION (inhibition));
 
-  g_free (inhibition->priv->reason);
-  inhibition->priv->reason = g_strdup (reason);
+  priv = xfsm_inhibition_get_instance_private (inhibition);
+
+  g_free (priv->reason);
+  priv->reason = g_strdup (reason);
 
   g_object_notify (G_OBJECT (inhibition), "reason");
 }
@@ -94,11 +86,15 @@ static void
 xfsm_inhibition_set_cookie (XfsmInhibition  *inhibition,
                             guint            cookie)
 {
+  XfsmInhibitionPrivate *priv = NULL;
+
   g_return_if_fail (XFSM_IS_INHIBITION (inhibition));
 
-  if (inhibition->priv->cookie != cookie)
+  priv = xfsm_inhibition_get_instance_private (inhibition);
+
+  if (priv->cookie != cookie)
     {
-      inhibition->priv->cookie = cookie;
+      priv->cookie = cookie;
       g_object_notify (G_OBJECT (inhibition), "cookie");
     }
 }
@@ -107,11 +103,15 @@ static void
 xfsm_inhibition_set_flags (XfsmInhibition  *inhibition,
                            guint            flags)
 {
+  XfsmInhibitionPrivate *priv = NULL;
+
   g_return_if_fail (XFSM_IS_INHIBITION (inhibition));
 
-  if (inhibition->priv->flags != flags)
+  priv = xfsm_inhibition_get_instance_private (inhibition);
+
+  if (priv->flags != flags)
     {
-      inhibition->priv->flags = flags;
+      priv->flags = flags;
       g_object_notify (G_OBJECT (inhibition), "flags");
     }
 }
@@ -120,11 +120,15 @@ static void
 xfsm_inhibition_set_toplevel_xid (XfsmInhibition  *inhibition,
                                   guint            xid)
 {
+  XfsmInhibitionPrivate *priv = NULL;
+
   g_return_if_fail (XFSM_IS_INHIBITION (inhibition));
 
-  if (inhibition->priv->toplevel_xid != xid)
+  priv = xfsm_inhibition_get_instance_private (inhibition);
+
+  if (priv->toplevel_xid != xid)
     {
-      inhibition->priv->toplevel_xid = xid;
+      priv->toplevel_xid = xid;
       g_object_notify (G_OBJECT (inhibition), "toplevel-xid");
     }
 }
@@ -133,49 +137,73 @@ xfsm_inhibition_set_toplevel_xid (XfsmInhibition  *inhibition,
 const gchar *
 xfsm_inhibition_get_app_id (XfsmInhibition  *inhibition)
 {
+  XfsmInhibitionPrivate *priv = NULL;
+
   g_return_val_if_fail (XFSM_IS_INHIBITION (inhibition), NULL);
 
-  return inhibition->priv->app_id;
+  priv = xfsm_inhibition_get_instance_private (inhibition);
+
+  return priv->app_id;
 }
 
 const gchar *
 xfsm_inhibition_get_reason (XfsmInhibition  *inhibition)
 {
+  XfsmInhibitionPrivate *priv = NULL;
+
   g_return_val_if_fail (XFSM_IS_INHIBITION (inhibition), NULL);
 
-  return inhibition->priv->reason;
+  priv = xfsm_inhibition_get_instance_private (inhibition);
+
+  return priv->reason;
 }
 
 guint
 xfsm_inhibition_get_flags (XfsmInhibition  *inhibition)
 {
+  XfsmInhibitionPrivate *priv = NULL;
+
   g_return_val_if_fail (XFSM_IS_INHIBITION (inhibition), 0);
 
-  return inhibition->priv->flags;
+  priv = xfsm_inhibition_get_instance_private (inhibition);
+
+  return priv->flags;
 }
 
 guint
 xfsm_inhibition_get_toplevel_xid (XfsmInhibition  *inhibition)
 {
+  XfsmInhibitionPrivate *priv = NULL;
+
   g_return_val_if_fail (XFSM_IS_INHIBITION (inhibition), 0);
 
-  return inhibition->priv->toplevel_xid;
+  priv = xfsm_inhibition_get_instance_private (inhibition);
+
+  return priv->toplevel_xid;
 }
 
 guint
 xfsm_inhibition_get_cookie (XfsmInhibition  *inhibition)
 {
+  XfsmInhibitionPrivate *priv = NULL;
+
   g_return_val_if_fail (XFSM_IS_INHIBITION (inhibition), 0);
 
-  return inhibition->priv->cookie;
+  priv = xfsm_inhibition_get_instance_private (inhibition);
+
+  return priv->cookie;
 }
 
 guint *
 xfsm_inhibition_peek_cookie (XfsmInhibition  *inhibition)
 {
+  XfsmInhibitionPrivate *priv = NULL;
+
   g_return_val_if_fail (XFSM_IS_INHIBITION (inhibition), NULL);
 
-  return &inhibition->priv->cookie;
+  priv = xfsm_inhibition_get_instance_private (inhibition);
+
+  return &priv->cookie;
 }
 
 
@@ -218,24 +246,29 @@ xfsm_inhibition_get_property (GObject    *object,
                               GParamSpec *pspec)
 {
   XfsmInhibition *self;
+  XfsmInhibitionPrivate *priv = NULL;
+
+  g_return_if_fail (XFSM_IS_INHIBITION (object));
 
   self = XFSM_INHIBITION (object);
 
+  priv = xfsm_inhibition_get_instance_private (self);
+
   switch (prop_id) {
   case PROP_APP_ID:
-    g_value_set_string (value, self->priv->app_id);
+    g_value_set_string (value, priv->app_id);
     break;
   case PROP_REASON:
-    g_value_set_string (value, self->priv->reason);
+    g_value_set_string (value, priv->reason);
     break;
   case PROP_FLAGS:
-    g_value_set_uint (value, self->priv->flags);
+    g_value_set_uint (value, priv->flags);
     break;
   case PROP_COOKIE:
-    g_value_set_uint (value, self->priv->cookie);
+    g_value_set_uint (value, priv->cookie);
     break;
   case PROP_TOPLEVEL_XID:
-    g_value_set_uint (value, self->priv->toplevel_xid);
+    g_value_set_uint (value, priv->toplevel_xid);
     break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -246,10 +279,17 @@ xfsm_inhibition_get_property (GObject    *object,
 static void
 xfsm_inhibition_finalize (GObject *object)
 {
-  XfsmInhibition *inhibition = XFSM_INHIBITION (object);
+  XfsmInhibition *inhibition = NULL;
+  XfsmInhibitionPrivate *priv = NULL;
 
-  g_free (inhibition->priv->app_id);
-  g_free (inhibition->priv->reason);
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (XFSM_IS_INHIBITION (object));
+
+  inhibition = XFSM_INHIBITION (object);
+  priv = xfsm_inhibition_get_instance_private (inhibition);
+
+  g_free (priv->app_id);
+  g_free (priv->reason);
 
   G_OBJECT_CLASS (xfsm_inhibition_parent_class)->finalize (object);
 }
@@ -260,7 +300,6 @@ xfsm_inhibition_class_init (XfsmInhibitionClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize     = xfsm_inhibition_finalize;
-  object_class->constructor  = xfsm_inhibition_constructor;
   object_class->get_property = xfsm_inhibition_get_property;
   object_class->set_property = xfsm_inhibition_set_property;
 
@@ -305,8 +344,6 @@ xfsm_inhibition_class_init (XfsmInhibitionClass *klass)
                                                       G_MAXINT,
                                                       0,
                                                       G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (XfsmInhibitionPrivate));
 }
 
 XfsmInhibition *
