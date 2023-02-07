@@ -69,7 +69,6 @@
 #include <libxfsm/xfsm-util.h>
 #include <libxfsm/xfsm-shutdown-common.h>
 #include <xfce4-session/xfsm-shutdown-fallback.h>
-#include <xfce4-session/xfce-screensaver.h>
 
 #if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
 #define __BACKEND_TYPE_BSD__ 1
@@ -334,7 +333,7 @@ static gboolean
 lock_screen (GError **error)
 {
   XfconfChannel *channel;
-  XfceScreenSaver *saver;
+  XfceScreensaver *saver;
   gboolean       ret = TRUE;
 
   channel = xfsm_open_config ();

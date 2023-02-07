@@ -26,7 +26,6 @@
 
 #include <libxfsm/xfsm-util.h>
 #include <xfce4-session/xfsm-systemd.h>
-#include <xfce4-session/xfce-screensaver.h>
 
 
 
@@ -62,7 +61,7 @@ struct _XfsmSystemd
   PolkitAuthority *authority;
   PolkitSubject   *subject;
 #endif
-  XfceScreenSaver *screensaver;
+  XfceScreensaver *screensaver;
 };
 
 
