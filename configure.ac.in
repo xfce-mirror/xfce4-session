@@ -81,6 +81,7 @@ AC_FUNC_MALLOC
 
 dnl Check for required libraries
 AC_CHECK_LIB([m], [rint], [libm=-lm], [libm=])
+LIBM="$libm"
 AC_SUBST(LIBM)
 
 dnl Check for X11 installed
