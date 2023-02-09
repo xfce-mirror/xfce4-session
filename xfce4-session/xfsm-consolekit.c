@@ -23,7 +23,6 @@
 #include <gio/gio.h>
 
 #include <xfce4-session/xfsm-consolekit.h>
-#include <xfce4-session/xfce-screensaver.h>
 #include <libxfsm/xfsm-util.h>
 #include "xfsm-global.h"
 
@@ -49,7 +48,7 @@ struct _XfsmConsolekit
 
   GDBusProxy *proxy;
   guint name_id;
-  XfceScreenSaver *screensaver;
+  XfceScreensaver *screensaver;
 };
 
 
