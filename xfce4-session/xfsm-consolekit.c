@@ -303,7 +303,7 @@ xfsm_consolekit_try_sleep (XfsmConsolekit  *consolekit,
 
   variant = g_dbus_proxy_call_sync (consolekit->proxy,
                                     method,
-                                    g_variant_new_boolean (TRUE),
+                                    g_variant_new ("(b)", TRUE),
                                     G_DBUS_CALL_FLAGS_NONE,
                                     -1,
                                     NULL,
