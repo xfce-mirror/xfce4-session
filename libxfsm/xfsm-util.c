@@ -155,16 +155,6 @@ xfsm_strv_equal (gchar **a, gchar **b)
 }
 
 
-XfconfChannel*
-xfsm_open_config (void)
-{
-  static XfconfChannel *channel = NULL;
-
-  if (G_UNLIKELY (channel == NULL))
-    channel = xfconf_channel_get ("xfce4-session");
-  return channel;
-}
-
 gchar*
 xfsm_gdk_display_get_fullname (GdkDisplay *display)
 {

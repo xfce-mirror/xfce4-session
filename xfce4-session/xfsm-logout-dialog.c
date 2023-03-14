@@ -174,7 +174,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   g_object_unref (provider);
 
   /* load xfconf settings */
-  channel = xfsm_open_config ();
+  channel = xfconf_channel_get (SETTINGS_CHANNEL);
   if (xfsm_shutdown_can_save_session (dialog->shutdown))
     save_session = xfconf_channel_get_bool (channel, "/general/SaveOnExit", TRUE);
 
@@ -750,7 +750,7 @@ xfsm_logout_dialog (const gchar      *session_name,
   GdkPixbuf        *screenshot = NULL;
   XfsmFadeout      *fadeout = NULL;
   XfsmLogoutDialog *xfsm_dialog;
-  XfconfChannel    *channel = xfsm_open_config ();
+  XfconfChannel    *channel = xfconf_channel_get (SETTINGS_CHANNEL);
   gboolean          autosave;
   XfsmShutdown     *shutdown;
   GdkDevice        *device;

@@ -32,6 +32,7 @@
 G_BEGIN_DECLS;
 
 #define DEFAULT_SESSION_NAME "Default"
+#define SETTINGS_CHANNEL "xfce4-session"
 
 typedef struct _XfsmSessionInfo  XfsmSessionInfo;
 
@@ -67,8 +68,6 @@ void           xfsm_place_trash_window               (GtkWindow *window,
 /* XXX - move to libxfce4util? */
 gboolean       xfsm_strv_equal                       (gchar **a,
                                                       gchar **b);
-
-XfconfChannel *xfsm_open_config                      (void);
 
 gchar         *xfsm_gdk_display_get_fullname         (GdkDisplay *display);
 

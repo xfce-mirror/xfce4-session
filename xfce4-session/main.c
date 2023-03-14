@@ -171,7 +171,7 @@ bus_acquired (GDBusConnection *connection,
 
   setup_environment ();
 
-  channel = xfsm_open_config ();
+  channel = xfconf_channel_get (SETTINGS_CHANNEL);
 
   dpy = gdk_display_get_default ();
   init_display (*manager, dpy, opt_disable_tcp);
@@ -244,12 +244,10 @@ name_lost (GDBusConnection *connection,
 
   g_object_unref (shutdown_helper);
   g_object_unref (*manager);
-  g_object_unref (channel);
   g_clear_error (&error);
 
   shutdown_helper = NULL;
   *manager = NULL;
-  channel = NULL;
 
   gtk_main_quit ();
 }
@@ -353,6 +351,7 @@ main (int argc, char **argv)
     {
       xfce_dialog_show_error (NULL, error, _("Unable to contact settings server"));
       g_error_free (error);
+      return EXIT_FAILURE;
     }
 
   /* Process all pending events prior to start DBUS */
@@ -369,6 +368,7 @@ main (int argc, char **argv)
   gtk_main ();
 
   xfsm_startup_shutdown ();
+  xfconf_shutdown ();
 
   return EXIT_SUCCESS;
 }
