@@ -248,6 +248,7 @@ main(int argc,
     }
 
     g_object_unref(builder);
+    xfconf_shutdown ();
 
     return EXIT_SUCCESS;
 }

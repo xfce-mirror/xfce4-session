@@ -336,7 +336,7 @@ lock_screen (GError **error)
   XfceScreensaver *saver;
   gboolean       ret = TRUE;
 
-  channel = xfsm_open_config ();
+  channel = xfconf_channel_get (SETTINGS_CHANNEL);
   saver = xfce_screensaver_new ();
   if (xfconf_channel_get_bool (channel, "/shutdown/LockScreen", FALSE))
       ret = xfce_screensaver_lock (saver);

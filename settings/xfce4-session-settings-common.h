@@ -19,8 +19,6 @@
 #ifndef __XFCE4_SESSION_SETTINGS_COMMON_H__
 #define __XFCE4_SESSION_SETTINGS_COMMON_H__
 
-#define  SETTINGS_CHANNEL  "xfce4-session"
-
 void session_editor_init(GtkBuilder *builder);
 
 #endif

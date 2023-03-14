@@ -393,7 +393,7 @@ lock_screen (XfsmConsolekit  *consolekit,
   XfconfChannel *channel;
   gboolean       ret = TRUE;
 
-  channel = xfsm_open_config ();
+  channel = xfconf_channel_get (SETTINGS_CHANNEL);
   if (xfconf_channel_get_bool (channel, "/shutdown/LockScreen", FALSE))
       ret = xfce_screensaver_lock (consolekit->screensaver);
 
