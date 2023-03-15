@@ -1570,6 +1570,8 @@ xfsm_manager_close_connection_by_ice_conn (XfsmManager *manager,
 
       if (sms != NULL && SmsGetIceConnection (sms) == ice_conn)
         {
+          /* maybe we remove client from the queue here but as we also get out
+           * of the loop no need for extra precaution */
           xfsm_manager_close_connection (manager, client, FALSE);
           break;
         }
@@ -2070,9 +2072,10 @@ static void
 remove_clients_for_connection (XfsmManager *manager,
                                const gchar *service_name)
 {
-  GList       *lp;
+  /* we might remove elements in queue below so a copy is needed */
+  GList *list = g_list_copy (g_queue_peek_nth_link (manager->running_clients, 0));
 
-  for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
+  for (GList *lp = list;
        lp;
        lp = lp->next)
     {
@@ -2082,6 +2085,8 @@ remove_clients_for_connection (XfsmManager *manager,
           xfsm_manager_close_connection (manager, client, FALSE);
         }
     }
+
+  g_list_free (list);
 }
 
 static void
@@ -2710,6 +2715,8 @@ xfsm_manager_dbus_unregister_client (XfsmDbusManager *object,
       XfsmClient *client = XFSM_CLIENT (lp->data);
       if (g_strcmp0 (xfsm_client_get_object_path (client), arg_client_id) == 0)
         {
+          /* maybe we remove client from the queue here but as we also get out
+           * of the loop no need for extra precaution */
           xfsm_manager_close_connection (manager, client, FALSE);
           xfsm_dbus_manager_complete_unregister_client (object, invocation);
           return TRUE;
