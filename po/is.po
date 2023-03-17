@@ -1,18 +1,20 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Sveinn í Felli <sv1@fellsnet.is>, 2011,2013-2014,2017-2019
-# Sveinn í Felli <sv1@fellsnet.is>, 2011,2013
+# Xfce Bot <transifex@xfce.org>, 2023
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Xfce4-session\n"
+"Project-Id-Version: xfce4-session\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-04 12:47+0200\n"
-"PO-Revision-Date: 2021-05-04 10:47+0000\n"
-"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
-"Language-Team: Icelandic (http://www.transifex.com/xfce/xfce4-session/language/is/)\n"
+"POT-Creation-Date: 2023-02-20 12:55+0100\n"
+"PO-Revision-Date: 2023-02-20 11:55+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>, 2023\n"
+"Language-Team: Icelandic (https://www.transifex.com/xfce/teams/16840/is/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -27,11 +29,11 @@ msgstr "Xfce seta"
 msgid "Use this session to run Xfce as your desktop environment"
 msgstr "Notaðu þessa setu til að keyra Xfce sem skjáborðsumhverfi"
 
-#: ../libxfsm/xfsm-util.c:331
+#: ../libxfsm/xfsm-util.c:354
 msgid "Session"
 msgstr "Seta"
 
-#: ../libxfsm/xfsm-util.c:342
+#: ../libxfsm/xfsm-util.c:365
 msgid "Last accessed"
 msgstr "Síðast notað"
 
@@ -43,47 +45,47 @@ msgstr "Skjáhvíla"
 msgid "Launch screensaver and locker program"
 msgstr "Keyra skjáhvílu og læsingaforrit"
 
-#: ../settings/main.c:99
+#: ../settings/main.c:98
 msgid "Settings manager socket"
 msgstr "Sökkull stillingastjórnunar"
 
-#: ../settings/main.c:99
+#: ../settings/main.c:98
 msgid "SOCKET ID"
 msgstr "AUÐKENNI SÖKKULS - ID"
 
-#: ../settings/main.c:100
+#: ../settings/main.c:99
 msgid "Version information"
 msgstr "Útgáfuupplýsingar"
 
-#: ../settings/main.c:111 ../xfce4-session/main.c:324
+#: ../settings/main.c:110 ../xfce4-session/main.c:335
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Skrifaðu '%s --help' til að sjá hvernig á að nota þetta."
 
-#: ../settings/main.c:123 ../xfce4-session/main.c:334
+#: ../settings/main.c:122 ../xfce4-session/main.c:345
 #: ../xfce4-session-logout/main.c:146
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce þróunarteymið. Allur réttur áskilinn."
 
-#: ../settings/main.c:124 ../xfce4-session/main.c:335
+#: ../settings/main.c:123 ../xfce4-session/main.c:346
 #: ../xfce4-session-logout/main.c:149
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Tilkynntu villur til <%s>."
 
-#: ../settings/main.c:133 ../xfce4-session/main.c:343
+#: ../settings/main.c:132 ../xfce4-session/main.c:354
 msgid "Unable to contact settings server"
 msgstr "Gat ekki tengst við stillingaþjón"
 
-#: ../settings/main.c:153
+#: ../settings/main.c:152
 msgid "Unable to create user interface from embedded definition data"
 msgstr "Tókst ekki að útbúa notendaviðmót út frá ígræddum skilgreiningagögnum"
 
-#: ../settings/main.c:167
+#: ../settings/main.c:166
 msgid "App_lication Autostart"
 msgstr "Sjá_lfræsing forrits"
 
-#: ../settings/main.c:173
+#: ../settings/main.c:172
 msgid "Currently active session:"
 msgstr "Fyrirliggjandi virk seta:"
 
@@ -112,7 +114,7 @@ msgid "Unable to save the session"
 msgstr "Gat ekki vistað setu"
 
 #: ../settings/session-editor.c:141 ../settings/session-editor.c:314
-#: ../xfce4-session/xfsm-manager.c:1282
+#: ../xfce4-session/xfsm-manager.c:1293
 #: ../settings/xfce4-session-settings.ui.h:6
 msgid "_Close"
 msgstr "Lo_ka"
@@ -129,10 +131,12 @@ msgstr "Viltu örugglega tæma bráðabirgðamöppu setunnar?"
 msgid ""
 "The saved states of your applications will not be restored during your next "
 "login."
-msgstr "Vistuð staða forritanna þinna verður ekki endurheimt þegar þú skráir þig inn næst."
+msgstr ""
+"Vistuð staða forritanna þinna verður ekki endurheimt þegar þú skráir þig inn"
+" næst."
 
 #: ../settings/session-editor.c:202 ../settings/session-editor.c:289
-#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:683
+#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:694
 #: ../xfce4-session/xfsm-logout-dialog.c:221
 msgid "_Cancel"
 msgstr "_Hætta við"
@@ -163,7 +167,9 @@ msgstr "Slökkva á forriti"
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
-msgstr "Forritið mun tapa öllum óvistuðum breytingum og ekki endurræsast í næstu setu."
+msgstr ""
+"Forritið mun tapa öllum óvistuðum breytingum og ekki endurræsast í næstu "
+"setu."
 
 #: ../settings/session-editor.c:290 ../settings/xfce4-session-settings.ui.h:21
 msgid "_Quit Program"
@@ -173,31 +179,31 @@ msgstr "_Hætta í forriti"
 msgid "Unable to terminate program."
 msgstr "Ekki var hægt að enda keyrslu forrits."
 
-#: ../settings/session-editor.c:537
+#: ../settings/session-editor.c:540
 msgid "(Unknown program)"
 msgstr "(óþekkt forrit)"
 
-#: ../settings/session-editor.c:784
+#: ../settings/session-editor.c:789
 msgid "Priority"
 msgstr "Forgangur"
 
-#: ../settings/session-editor.c:794
+#: ../settings/session-editor.c:799
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:801 ../settings/xfae-window.c:190
+#: ../settings/session-editor.c:806 ../settings/xfae-window.c:198
 msgid "Program"
 msgstr "Forrit"
 
-#: ../settings/session-editor.c:827
+#: ../settings/session-editor.c:832
 msgid "Restart Style"
 msgstr "Stíll endurræsingar"
 
-#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:685
+#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:696
 msgid "_OK"
 msgstr "Í _lagi"
 
-#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:244
+#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:252
 msgid "Add application"
 msgstr "Bæta við forriti"
 
@@ -209,7 +215,7 @@ msgstr "Heiti:"
 msgid "Description:"
 msgstr "Lýsing:"
 
-#: ../settings/xfae-dialog.c:125 ../settings/xfae-model.c:687
+#: ../settings/xfae-dialog.c:125 ../settings/xfae-model.c:681
 msgid "Command:"
 msgstr "Skipun:"
 
@@ -229,7 +235,7 @@ msgstr "Hætta við"
 msgid "OK"
 msgstr "Í lagi"
 
-#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:266
+#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:274
 msgid "Edit application"
 msgstr "Breyta forriti"
 
@@ -265,75 +271,75 @@ msgstr "við blandaða svæfingu (hybrid)"
 msgid "on switch user"
 msgstr "þegar skipt er um notanda"
 
-#: ../settings/xfae-model.c:463 ../settings/xfae-model.c:1182
-#: ../settings/xfae-model.c:1240
+#: ../settings/xfae-model.c:463 ../settings/xfae-model.c:1177
+#: ../settings/xfae-model.c:1235
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "Mistókst að opna %s fyrir ritun"
 
-#: ../settings/xfae-model.c:820
+#: ../settings/xfae-model.c:815
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "Mistókst að aftengja %s: %s"
 
-#: ../settings/xfae-model.c:982
+#: ../settings/xfae-model.c:977
 #, c-format
 msgid "Failed to create file %s"
 msgstr "Mistókst að búa til skrá %s"
 
-#: ../settings/xfae-model.c:1006
+#: ../settings/xfae-model.c:1001
 #, c-format
 msgid "Failed to write file %s"
 msgstr "Mistókst að skrifa skrá %s"
 
-#: ../settings/xfae-model.c:1066
+#: ../settings/xfae-model.c:1061
 #, c-format
 msgid "Failed to open %s for reading"
 msgstr "Mistókst að opna %s fyrir lestur"
 
-#: ../settings/xfae-window.c:100
+#: ../settings/xfae-window.c:108
 msgid "Failed to set run hook"
 msgstr "Mistókst að setja keyrslugikk (run hook)"
 
-#: ../settings/xfae-window.c:215
+#: ../settings/xfae-window.c:223
 msgid "Trigger"
 msgstr "Vekja"
 
-#: ../settings/xfae-window.c:241 ../settings/xfae-window.c:330
+#: ../settings/xfae-window.c:249 ../settings/xfae-window.c:338
 msgid "Add"
 msgstr "Bæta við"
 
-#: ../settings/xfae-window.c:250 ../settings/xfae-window.c:336
+#: ../settings/xfae-window.c:258 ../settings/xfae-window.c:344
 msgid "Remove"
 msgstr "Fjarlægja"
 
-#: ../settings/xfae-window.c:253
+#: ../settings/xfae-window.c:261
 msgid "Remove application"
 msgstr ""
 
-#: ../settings/xfae-window.c:263
+#: ../settings/xfae-window.c:271
 msgid "Edit"
 msgstr "Breyta"
 
-#: ../settings/xfae-window.c:390
+#: ../settings/xfae-window.c:397
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Mistókst að bæta við \"%s\""
 
-#: ../settings/xfae-window.c:421 ../settings/xfae-window.c:435
+#: ../settings/xfae-window.c:428 ../settings/xfae-window.c:442
 msgid "Failed to remove item"
 msgstr "Mistókst að fjarlægja atriði"
 
-#: ../settings/xfae-window.c:464
+#: ../settings/xfae-window.c:471
 msgid "Failed to edit item"
 msgstr "Mistókst að breyta atriði"
 
-#: ../settings/xfae-window.c:484
+#: ../settings/xfae-window.c:491
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Mistókst að breyta atriði \"%s\""
 
-#: ../settings/xfae-window.c:512
+#: ../settings/xfae-window.c:519
 msgid "Failed to toggle item"
 msgstr "Tókst ekki að víxla atriði"
 
@@ -353,7 +359,9 @@ msgstr "Setustjórnun"
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
-msgstr "Veldu setuna sem þú vilt endurheimta. Þú getur einfaldlega tvísmellt á heiti setunnar til að endurheimta hana."
+msgstr ""
+"Veldu setuna sem þú vilt endurheimta. Þú getur einfaldlega tvísmellt á heiti"
+" setunnar til að endurheimta hana."
 
 #: ../xfce4-session/xfsm-chooser.c:184
 msgid "Create a new session."
@@ -393,7 +401,11 @@ msgid ""
 "This will prevent Xfce from operating correctly.\n"
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
-msgstr "Gat ekki flett upp netvistfanginu fyrir %s.\nÞetta hindrar Xfce í því að villa eðlilega.\nÞað gæti verið lausn að bæta línu með\n%s í skrána /etc/hosts á kerfinu þínu."
+msgstr ""
+"Gat ekki flett upp netvistfanginu fyrir %s.\n"
+"Þetta hindrar Xfce í því að villa eðlilega.\n"
+"Það gæti verið lausn að bæta línu með\n"
+"%s í skrána /etc/hosts á kerfinu þínu."
 
 #: ../xfce4-session/xfsm-dns.c:159
 msgid "Continue anyway"
@@ -403,78 +415,84 @@ msgstr "Halda samt áfram"
 msgid "Try again"
 msgstr "Reyna aftur"
 
-#: ../xfce4-session/xfsm-manager.c:567
+#: ../xfce4-session/xfsm-manager.c:578
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
 "running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
 "incorrectly (must include \"%s\"), or xfce4-session is installed "
 "incorrectly."
-msgstr "Tókst ekki að ákvarða heiti villuvarðrar setu.  Mögulegar ástæður: xfconfd er ekki keyrandi (D-Bus uppsetningarvandamál); umhverfisbreytan $XDG_CONFIG_DIRS er ekki rétt sett (verður að innihalda \"%s\"), eða að xfce4-session er ekki rétt uppset."
+msgstr ""
+"Tókst ekki að ákvarða heiti villuvarðrar setu.  Mögulegar ástæður: xfconfd "
+"er ekki keyrandi (D-Bus uppsetningarvandamál); umhverfisbreytan "
+"$XDG_CONFIG_DIRS er ekki rétt sett (verður að innihalda \"%s\"), eða að "
+"xfce4-session er ekki rétt uppset."
 
-#: ../xfce4-session/xfsm-manager.c:578
+#: ../xfce4-session/xfsm-manager.c:589
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr "Tiltekna villuvarða setan (\"%s\") er ekki merkt sem villuvarin (failsafe session)."
+msgstr ""
+"Tiltekna villuvarða setan (\"%s\") er ekki merkt sem villuvarin (failsafe "
+"session)."
 
-#: ../xfce4-session/xfsm-manager.c:611
+#: ../xfce4-session/xfsm-manager.c:622
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Listinn yfir forrit í villuvörðu setunni er tómur."
 
-#: ../xfce4-session/xfsm-manager.c:697
+#: ../xfce4-session/xfsm-manager.c:708
 msgid "Name for the new session"
 msgstr "Veldu heiti á nýju setuna"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:775
+#: ../xfce4-session/xfsm-manager.c:786
 msgid "Session Manager Error"
 msgstr "Villa í setustjórnun"
 
-#: ../xfce4-session/xfsm-manager.c:777
+#: ../xfce4-session/xfsm-manager.c:788
 msgid "Unable to load a failsafe session"
 msgstr "Tókst ekki að hlaða inn villuvarðri setu"
 
-#: ../xfce4-session/xfsm-manager.c:779
+#: ../xfce4-session/xfsm-manager.c:790
 msgid "_Quit"
 msgstr "_Hætta"
 
-#: ../xfce4-session/xfsm-manager.c:1272
+#: ../xfce4-session/xfsm-manager.c:1283
 msgid "Shutdown Failed"
 msgstr "Ekki tókst að slökkva"
 
-#: ../xfce4-session/xfsm-manager.c:1275
+#: ../xfce4-session/xfsm-manager.c:1286
 msgid "Failed to suspend session"
 msgstr "Mistókst að svæfa setu"
 
-#: ../xfce4-session/xfsm-manager.c:1277
+#: ../xfce4-session/xfsm-manager.c:1288
 msgid "Failed to hibernate session"
 msgstr "Mistókst að leggja setu í dvala"
 
-#: ../xfce4-session/xfsm-manager.c:1279
+#: ../xfce4-session/xfsm-manager.c:1290
 msgid "Failed to hybrid sleep session"
 msgstr "Mistókst að svæfa setu blönduðum svefni"
 
-#: ../xfce4-session/xfsm-manager.c:1280
+#: ../xfce4-session/xfsm-manager.c:1291
 msgid "Failed to switch user"
 msgstr "Mistókst að skipta um notanda"
 
-#: ../xfce4-session/xfsm-manager.c:1586
+#: ../xfce4-session/xfsm-manager.c:1597
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Get bara slökkt á biðlurum þegar verið er í aðgerðaleysisham"
 
-#: ../xfce4-session/xfsm-manager.c:2250
+#: ../xfce4-session/xfsm-manager.c:2261
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Setustýring verður að vera aðgerðalaus þegar beðið er um gátstöðu"
 
-#: ../xfce4-session/xfsm-manager.c:2320 ../xfce4-session/xfsm-manager.c:2340
+#: ../xfce4-session/xfsm-manager.c:2331 ../xfce4-session/xfsm-manager.c:2351
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Setustýring verður að vera aðgerðalaus þegar beðið er um að slökkva"
 
-#: ../xfce4-session/xfsm-manager.c:2385
+#: ../xfce4-session/xfsm-manager.c:2396
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Setustýring verður að vera aðgerðalaus þegar beðið er um endurræsingu"
 
@@ -514,17 +532,18 @@ msgstr "_Blönduð svæfing"
 msgid "Switch _User"
 msgstr "Skipta _um notanda"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:423
+#: ../xfce4-session/xfsm-logout-dialog.c:424
 msgid "_Save session for future logins"
 msgstr "_Vista setu fyrir seinni tíma innskráningar"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:451
+#: ../xfce4-session/xfsm-logout-dialog.c:452
 msgid "An error occurred"
 msgstr "Villa kom upp"
 
 #: ../xfce4-session/xfsm-shutdown.c:159
 msgid "Shutdown is blocked by the kiosk settings"
-msgstr "Lokað er fyrir það að slökkva með sjálfssalastillingum (kiosk settings)"
+msgstr ""
+"Lokað er fyrir það að slökkva með sjálfssalastillingum (kiosk settings)"
 
 #: ../xfce4-session/xfsm-shutdown.c:216
 #, c-format
@@ -696,7 +715,8 @@ msgstr "Keyra GN_OME þjónustur í ræsingu"
 
 #: ../settings/xfce4-session-settings.ui.h:28
 msgid "Start GNOME services, such as gnome-keyring"
-msgstr "Keyra GNOME þjónustur, eins og gnome-keyring (dulritunarlyklaþjónusta)"
+msgstr ""
+"Keyra GNOME þjónustur, eins og gnome-keyring (dulritunarlyklaþjónusta)"
 
 #: ../settings/xfce4-session-settings.ui.h:29
 msgid "Launch _KDE services on startup"
@@ -717,7 +737,8 @@ msgstr "Sýsla með fja_rtengd forrit"
 #: ../settings/xfce4-session-settings.ui.h:33
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
-msgstr "Sýsla með fjartengd forrit um netkerfi (þetta getur verið öryggisáhætta)"
+msgstr ""
+"Sýsla með fjartengd forrit um netkerfi (þetta getur verið öryggisáhætta)"
 
 #: ../settings/xfce4-session-settings.ui.h:34
 msgid "<b>Security</b>"
@@ -735,4 +756,6 @@ msgstr "Vista setu"
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
-msgstr "Verið er að vista setuna þína. Ef þú nennir ekki að bíða, máttu loka þessum glugga."
+msgstr ""
+"Verið er að vista setuna þína. Ef þú nennir ekki að bíða, máttu loka þessum "
+"glugga."
