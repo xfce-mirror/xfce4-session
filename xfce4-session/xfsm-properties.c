@@ -246,8 +246,9 @@ xfsm_properties_extract (XfsmProperties *properties,
 
 
 XfsmProperties *
-xfsm_properties_load (XfceRc      *rc,
-                      const gchar *prefix)
+xfsm_properties_load (GKeyFile    *file,
+                      const gchar *prefix,
+                      const gchar *group)
 {
 #define ENTRY(name) (compose(buffer, 256, prefix, (name)))
 
@@ -255,25 +256,28 @@ xfsm_properties_load (XfceRc      *rc,
   const gchar    *client_id;
   const gchar    *hostname;
   GValue         *value;
+  GError         *error = NULL;
   const gchar    *value_str;
   gchar         **value_strv;
   gint            value_int;
   gchar           buffer[256];
   gint            i;
 
-  client_id = xfce_rc_read_entry (rc, ENTRY ("ClientId"), NULL);
+  client_id = g_key_file_get_string (file, group, ENTRY ("ClientId"), &error);
   if (client_id == NULL)
     {
       g_warning ("Session data broken, stored client is missing a client id. "
-                 "Skipping client.");
+                 "Skipping client: %s", error->message);
+      g_error_free (error);
       return NULL;
     }
 
-  hostname = xfce_rc_read_entry (rc, ENTRY ("Hostname"), NULL);
+  hostname = g_key_file_get_string (file, group, ENTRY ("Hostname"), &error);
   if (hostname == NULL)
     {
       g_warning ("Session data broken, stored client is missing a hostname. "
-                 "Skipping client.");
+                 "Skipping client: %s", error->message);
+      g_error_free (error);
       return NULL;
     }
 
@@ -283,7 +287,7 @@ xfsm_properties_load (XfceRc      *rc,
 
   for (i = 0; strv_properties[i].name; ++i)
     {
-      value_strv = xfce_rc_read_list_entry (rc, ENTRY (strv_properties[i].name), NULL);
+      value_strv = g_key_file_get_string_list (file, group, ENTRY (strv_properties[i].name), NULL, NULL);
       if (value_strv)
         {
           xfsm_verbose ("-> Set strv (%s)\n", strv_properties[i].xsmp_name);
@@ -298,15 +302,19 @@ xfsm_properties_load (XfceRc      *rc,
 
   for (i = 0; str_properties[i].name; ++i)
     {
-      value_str = xfce_rc_read_entry (rc, ENTRY (str_properties[i].name), NULL);
+      value_str = g_key_file_get_string (file, group, ENTRY (str_properties[i].name), NULL);
       if (value_str)
         xfsm_properties_set_string (properties, str_properties[i].xsmp_name, value_str);
     }
 
   for (i = 0; uchar_properties[i].name; ++i)
     {
-      value_int = xfce_rc_read_int_entry (rc, ENTRY (uchar_properties[i].name),
-                                          uchar_properties[i].default_value);
+      value_int = g_key_file_get_integer (file, group, ENTRY (uchar_properties[i].name), &error);
+      if (error != NULL)
+        {
+          value_int = uchar_properties[i].default_value;
+          g_clear_error (&error);
+        }
       xfsm_properties_set_uchar (properties, uchar_properties[i].xsmp_name, value_int);
     }
 
@@ -324,8 +332,9 @@ xfsm_properties_load (XfceRc      *rc,
 
 void
 xfsm_properties_store (XfsmProperties *properties,
-                       XfceRc         *rc,
-                       const gchar    *prefix)
+                       GKeyFile       *file,
+                       const gchar    *prefix,
+                       const gchar    *group)
 {
 #define ENTRY(name) (compose(buffer, 256, prefix, (name)))
 
@@ -333,16 +342,17 @@ xfsm_properties_store (XfsmProperties *properties,
   gint    i;
   gchar   buffer[256];
 
-  xfce_rc_write_entry (rc, ENTRY ("ClientId"), properties->client_id);
-  xfce_rc_write_entry (rc, ENTRY ("Hostname"), properties->hostname);
+  g_key_file_set_string (file, group, ENTRY ("ClientId"), properties->client_id);
+  g_key_file_set_string (file, group, ENTRY ("Hostname"), properties->hostname);
 
   for (i = 0; strv_properties[i].name; ++i)
     {
       value = g_tree_lookup (properties->sm_properties, strv_properties[i].xsmp_name);
       if (value)
         {
-          xfce_rc_write_list_entry (rc, ENTRY (strv_properties[i].name),
-                                    g_value_get_boxed (value), NULL);
+          const gchar * const *strv = g_value_get_boxed (value);
+          g_key_file_set_string_list (file, group, ENTRY (strv_properties[i].name),
+                                      strv, g_strv_length ((gchar **) strv));
         }
     }
 
@@ -351,8 +361,8 @@ xfsm_properties_store (XfsmProperties *properties,
       value = g_tree_lookup (properties->sm_properties, str_properties[i].xsmp_name);
       if (value)
         {
-          xfce_rc_write_entry (rc, ENTRY (str_properties[i].name),
-                               g_value_get_string (value));
+          g_key_file_set_string (file, group, ENTRY (str_properties[i].name),
+                                 g_value_get_string (value));
         }
     }
 
@@ -361,8 +371,8 @@ xfsm_properties_store (XfsmProperties *properties,
       value = g_tree_lookup (properties->sm_properties, uchar_properties[i].xsmp_name);
       if (value)
         {
-          xfce_rc_write_int_entry (rc, ENTRY (uchar_properties[i].name),
-                                   g_value_get_uchar (value));
+          g_key_file_set_integer (file, group, ENTRY (uchar_properties[i].name),
+                                  g_value_get_uchar (value));
         }
     }
 
