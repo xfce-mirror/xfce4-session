@@ -191,6 +191,14 @@ xfsm_gdk_display_get_fullname (GdkDisplay *display)
           }
     }
 
+#ifdef HAVE_OS_CYGWIN
+  /* rename a colon (:) to a hash (#) under cygwin. windows doesn't like
+   * filenames with a colon... */
+  for (gchar *s = display_name; *s != '\0'; ++s)
+    if (*s == ':')
+      *s = '#';
+#endif
+
   return g_strdup (buffer);
 }
 
@@ -227,40 +235,53 @@ xfsm_load_session_preview (const gchar *name,
   return icon;
 }
 
-XfceRc *
-settings_list_sessions_open_rc (void)
+const gchar *
+settings_list_sessions_get_filename (void)
 {
-  XfceRc *rc;
-  gchar *display_name;
-  gchar *resource_name;
-  gchar *session_file;
+  static gchar *filename = NULL;
 
-  display_name  = xfsm_gdk_display_get_fullname (gdk_display_get_default ());
-  resource_name = g_strconcat ("sessions/xfce4-session-", display_name, NULL);
-  session_file  = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource_name, TRUE);
-  g_free (resource_name);
-  g_free (display_name);
+  if (filename == NULL)
+   {
+      gchar *display_name = xfsm_gdk_display_get_fullname (gdk_display_get_default ());
+      gchar *resource_name = g_strconcat ("sessions/xfce4-session-", display_name, NULL);
+      filename = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource_name, TRUE);
+      g_free (resource_name);
+      g_free (display_name);
+    }
 
-  if (!g_file_test (session_file, G_FILE_TEST_IS_REGULAR))
+  return filename;
+}
+
+GKeyFile *
+settings_list_sessions_open_key_file (void)
+{
+  GKeyFile *file;
+  GError *error = NULL;
+  const gchar *filename;
+
+  filename = settings_list_sessions_get_filename ();
+  if (filename == NULL)
     {
-      g_debug ("xfsm_manager_load_session: Something wrong with %s, Does it exist? Permissions issue?", session_file);
-      g_free (session_file);
+      g_warning ("Failed to access path %s", filename);
       return NULL;
     }
 
-  rc = xfce_rc_simple_open (session_file, FALSE);
-  if (G_UNLIKELY (rc == NULL))
+  file = g_key_file_new ();
+  if (G_UNLIKELY (!g_key_file_load_from_file (file, filename, G_KEY_FILE_NONE, &error)))
   {
-    g_warning ("xfsm_manager_load_session: unable to open %s", session_file);
-    g_free (session_file);
+    g_warning ("Failed to open session file %s: %s", filename, error->message);
+    g_error_free (error);
+    g_key_file_free (file);
     return NULL;
   }
-  g_free (session_file);
-  return rc;
+
+  g_key_file_set_list_separator (file, ',');
+
+  return file;
 }
 
 GList *
-settings_list_sessions (XfceRc *rc,
+settings_list_sessions (GKeyFile *file,
                         gint scale_factor)
 {
   XfsmSessionInfo *session;
@@ -269,15 +290,14 @@ settings_list_sessions (XfceRc *rc,
   gchar          **groups;
   gint             n;
 
-  groups = xfce_rc_get_groups (rc);
+  groups = g_key_file_get_groups (file, NULL);
   for (n = 0; groups[n] != NULL; ++n)
     {
       if (strncmp (groups[n], "Session: ", 9) == 0)
         {
-          xfce_rc_set_group (rc, groups[n]);
           session = g_new0 (XfsmSessionInfo, 1);
           session->name = g_strdup (groups[n] + 9);
-          session->atime = xfce_rc_read_int_entry (rc, "LastAccess", 0);
+          session->atime = g_key_file_get_integer (file, groups[n], "LastAccess", NULL);
           session->preview = xfsm_load_session_preview (session->name, 64, scale_factor);
 
           if (session->preview == NULL)
@@ -419,40 +439,30 @@ void
 settings_list_sessions_delete_session (GtkButton   *button,
                                        GtkTreeView *treeview)
 {
-  XfceRc            *rc;
-  gchar             *session_file;
-  gchar             *display_name;
-  gchar             *resource_name;
+  GKeyFile          *file;
   GtkTreeModel      *model;
   GtkTreeIter        iter;
   GtkTreeSelection  *selection;
-  GValue             value;
+  GValue             value = G_VALUE_INIT;
   gchar             *session;
 
-  display_name = xfsm_gdk_display_get_fullname (gdk_display_get_default ());
-  resource_name = g_strconcat ("sessions/xfce4-session-", display_name, NULL);
-  session_file = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource_name, TRUE);
-
-  if (!g_file_test (session_file, G_FILE_TEST_IS_REGULAR))
-    {
-      g_debug ("xfsm_manager_load_session: Something wrong with %s, Does it exist? Permissions issue?", session_file);
-      return;
-    }
-
-  /* Remove the session from session file */
-  bzero (&value, sizeof (value));
   selection = gtk_tree_view_get_selection (treeview);
   if (!gtk_tree_selection_get_selected (selection, &model, &iter))
     {
       g_warning ("xfsm_chooser_get_session: !gtk_tree_selection_get_selected");
       return;
     }
+
+  file = settings_list_sessions_open_key_file ();
+  if (file == NULL)
+    return;
+
+  /* Remove the session from session file */
   gtk_tree_model_get_value (model, &iter, NAME_COLUMN, &value);
   session = g_strdup_printf ("Session: %s", g_value_get_string (&value));
   g_value_unset (&value);
-  rc = xfce_rc_simple_open (session_file, FALSE);
-  xfce_rc_delete_group (rc, session, FALSE);
-  xfce_rc_close (rc);
+  g_key_file_remove_group (file, session, NULL);
+  g_key_file_free (file);
   g_free (session);
 
   /* Remove the session from the treeview */
