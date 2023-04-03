@@ -63,10 +63,13 @@ void            xfsm_properties_extract (XfsmProperties *properties,
                                          gint           *num_props,
                                          SmProp       ***props);
 void            xfsm_properties_store   (XfsmProperties *properties,
-                                         XfceRc         *rc,
-                                         const gchar    *prefix);
+                                         GKeyFile       *file,
+                                         const gchar    *prefix,
+                                         const gchar    *group);
 
-XfsmProperties* xfsm_properties_load (XfceRc *rc, const gchar *prefix);
+XfsmProperties* xfsm_properties_load (GKeyFile *file,
+                                      const gchar *prefix,
+                                      const gchar *group);
 
 gboolean xfsm_properties_check (const XfsmProperties *properties) G_GNUC_CONST;
 

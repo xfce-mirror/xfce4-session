@@ -496,7 +496,8 @@ xfsm_legacy_perform_session_save (void)
 
 
 void
-xfsm_legacy_store_session (XfceRc *rc)
+xfsm_legacy_store_session (GKeyFile *file,
+                           const gchar *group)
 {
 #ifdef LEGACY_SESSION_MANAGEMENT
   int count = 0;
@@ -531,25 +532,27 @@ xfsm_legacy_store_session (XfceRc *rc)
             }
 
           g_snprintf (buffer, 256, "Legacy%d_Screen", count);
-          xfce_rc_write_int_entry (rc, buffer, sm_window->screen_num);
+          g_key_file_set_integer (file, group, buffer, sm_window->screen_num);
 
           g_snprintf (buffer, 256, "Legacy%d_Command", count);
-          xfce_rc_write_list_entry (rc, buffer, sm_window->wm_command, NULL);
+          g_key_file_set_string_list (file, group, buffer, (const gchar * const *) sm_window->wm_command,
+                                      g_strv_length (sm_window->wm_command));
 
           g_snprintf (buffer, 256, "Legacy%d_ClientMachine", count);
-          xfce_rc_write_entry (rc, buffer, sm_window->wm_client_machine);
+          g_key_file_set_string (file, group, buffer, sm_window->wm_client_machine);
 
           ++count;
         }
     }
 
-  xfce_rc_write_int_entry (rc, "LegacyCount", count);
+  g_key_file_set_integer (file, group, "LegacyCount", count);
 #endif
 }
 
 
 void
-xfsm_legacy_load_session (XfceRc *rc)
+xfsm_legacy_load_session (GKeyFile *file,
+                          const gchar *group)
 {
 #ifdef LEGACY_SESSION_MANAGEMENT
   gchar buffer[256];
@@ -559,14 +562,14 @@ xfsm_legacy_load_session (XfceRc *rc)
   SmRestartApp *app;
   int screen_num;
 
-  count = xfce_rc_read_int_entry (rc, "LegacyCount", 0);
+  count = g_key_file_get_integer (file, group, "LegacyCount", NULL);
   for (i = 0; i < count; ++i)
     {
       g_snprintf (buffer, 256, "Legacy%d_Screen", i);
-      screen_num = xfce_rc_read_int_entry (rc, buffer, 0);
+      screen_num = g_key_file_get_integer (file, group, buffer, NULL);
 
       g_snprintf (buffer, 256, "Legacy%d_Command", i);
-      command = xfce_rc_read_list_entry (rc, buffer, NULL);
+      command = g_key_file_get_string_list (file, group, buffer, NULL, NULL);
       if (command == NULL)
         {
           xfsm_verbose ("legacy command == NULL\n");
