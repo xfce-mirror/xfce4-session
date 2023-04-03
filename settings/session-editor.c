@@ -124,7 +124,7 @@ session_editor_save_session(GtkWidget *btn,
     GtkWidget *pbar = g_object_get_data(G_OBJECT(dialog), "pbar");
     GtkTreeModel    *model;
     GList *sessions;
-    XfceRc *rc;
+    GKeyFile *file;
     guint pulse_id;
     guint sig_id;
     GError *error = NULL;
@@ -160,11 +160,11 @@ session_editor_save_session(GtkWidget *btn,
     /* After saving the session we ensure the clear button is sensitive */
     gtk_widget_set_sensitive (btn_clear, TRUE);
     /* Always make sure the "Saved Sessions" tab is visible  and the treeview is populated after saving a session */
-    rc = settings_list_sessions_open_rc ();
-    if (rc)
+    file = settings_list_sessions_open_key_file ();
+    if (file != NULL)
     {
         gtk_widget_show (gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 3));
-        sessions = settings_list_sessions (rc, gtk_widget_get_scale_factor (treeview));
+        sessions = settings_list_sessions (file, gtk_widget_get_scale_factor (treeview));
         model = gtk_tree_view_get_model (GTK_TREE_VIEW (treeview));
         /* If the treeview hasn't been initialized we do it now */
         if (!GTK_IS_LIST_STORE (model))
@@ -173,6 +173,7 @@ session_editor_save_session(GtkWidget *btn,
             model = gtk_tree_view_get_model (GTK_TREE_VIEW (treeview));
         }
         settings_list_sessions_populate (model, sessions);
+        g_key_file_free (file);
     }
 }
 
