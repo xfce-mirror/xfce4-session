@@ -229,8 +229,11 @@ get_wmcommand (Window window)
   if (status && argv && argc > 0)
     {
       result = g_new0 (gchar *, argc + 1);
+
+      /* escape delimiter in command tokens */
       for (i = 0; i < argc; ++i)
-        result[i] = g_strdup (argv[i]);
+        result[i] = xfce_str_replace (argv[i], SESSION_FILE_DELIMITER, "\\" SESSION_FILE_DELIMITER);
+
       XFreeStringList (argv);
     }
 
@@ -575,11 +578,22 @@ xfsm_legacy_load_session (GKeyFile *file,
           xfsm_verbose ("legacy command == NULL\n");
           continue;
         }
-      else if (xfsm_is_verbose_enabled ())
+      else
         {
-          gchar *dbg_command = g_strjoinv (" ", command);
-          xfsm_verbose ("legacy command %s\n", dbg_command);
-          g_free (dbg_command);
+          /* unescape delimiter in command tokens */
+          for (gchar **token = command; *token != NULL; token++)
+            {
+              gchar *unesc_token = xfce_str_replace (*token, "\\" SESSION_FILE_DELIMITER, SESSION_FILE_DELIMITER);
+              g_free (*token);
+              *token = unesc_token;
+            }
+
+          if (xfsm_is_verbose_enabled ())
+            {
+              gchar *dbg_command = g_strjoinv (" ", command);
+              xfsm_verbose ("legacy command %s\n", dbg_command);
+              g_free (dbg_command);
+            }
         }
 
       app = g_new0 (SmRestartApp, 1);
