@@ -33,6 +33,7 @@ G_BEGIN_DECLS;
 
 #define DEFAULT_SESSION_NAME "Default"
 #define SETTINGS_CHANNEL "xfce4-session"
+#define SESSION_FILE_DELIMITER ","
 
 typedef struct _XfsmSessionInfo  XfsmSessionInfo;
 
@@ -75,9 +76,11 @@ cairo_surface_t *xfsm_load_session_preview           (const gchar *name,
                                                       gint         size,
                                                       gint         scale_factor);
 
-XfceRc        *settings_list_sessions_open_rc        (void);
+const gchar   *settings_list_sessions_get_filename   (void);
 
-GList         *settings_list_sessions                (XfceRc *rc,
+GKeyFile      *settings_list_sessions_open_key_file  (gboolean readonly);
+
+GList         *settings_list_sessions                (GKeyFile *file,
                                                       gint scale_factor);
 
 void           settings_list_sessions_treeview_init  (GtkTreeView *treeview);
