@@ -290,6 +290,14 @@ xfsm_properties_load (GKeyFile    *file,
       value_strv = g_key_file_get_string_list (file, group, ENTRY (strv_properties[i].name), NULL, NULL);
       if (value_strv)
         {
+          /* unescape delimiter in command tokens */
+          for (gchar **p = value_strv; *p != NULL; p++)
+            {
+              gchar *q = xfce_str_replace (*p, "\\" SESSION_FILE_DELIMITER, SESSION_FILE_DELIMITER);
+              g_free (*p);
+              *p = q;
+            }
+
           xfsm_verbose ("-> Set strv (%s)\n", strv_properties[i].xsmp_name);
           /* don't use _set_strv() to avoid a realloc of the whole strv */
           value = xfsm_g_value_new (G_TYPE_STRV);
@@ -350,9 +358,16 @@ xfsm_properties_store (XfsmProperties *properties,
       value = g_tree_lookup (properties->sm_properties, strv_properties[i].xsmp_name);
       if (value)
         {
+          /* escape delimiter in command tokens */
           const gchar * const *strv = g_value_get_boxed (value);
+          guint len = g_strv_length ((gchar **) strv);
+          gchar **esc_strv = g_new0 (gchar *, len + 1);
+          for (guint j = 0; j < len; j++)
+            esc_strv[j] = xfce_str_replace (strv[j], SESSION_FILE_DELIMITER, "\\" SESSION_FILE_DELIMITER);
+
           g_key_file_set_string_list (file, group, ENTRY (strv_properties[i].name),
-                                      strv, g_strv_length ((gchar **) strv));
+                                      (const gchar * const *) esc_strv, len);
+          g_strfreev (esc_strv);
         }
     }
 
