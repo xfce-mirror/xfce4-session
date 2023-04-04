@@ -53,7 +53,7 @@ static void xfce4_session_settings_dialog_response (GtkDialog *dialog, gint resp
 
 static void
 xfce4_session_settings_show_saved_sessions (GtkBuilder *builder,
-                                            XfceRc     *rc,
+                                            GKeyFile   *file,
                                             gboolean    visible)
 {
     GtkWidget *notebook = GTK_WIDGET (gtk_builder_get_object (builder, "plug-child"));
@@ -66,7 +66,7 @@ xfce4_session_settings_show_saved_sessions (GtkBuilder *builder,
         return;
 
     settings_list_sessions_treeview_init (GTK_TREE_VIEW (sessions_treeview));
-    sessions = settings_list_sessions (rc, gtk_widget_get_scale_factor (sessions_treeview));
+    sessions = settings_list_sessions (file, gtk_widget_get_scale_factor (sessions_treeview));
     model = gtk_tree_view_get_model (GTK_TREE_VIEW (sessions_treeview));
     settings_list_sessions_populate (model, sessions);
 }
@@ -84,7 +84,7 @@ main(int argc,
     GObject *treeview;
     GError *error = NULL;
     XfconfChannel *channel;
-    XfceRc *rc;
+    GKeyFile *file;
     gchar *active_session;
     gchar *active_session_label;
     const gchar *format;
@@ -181,10 +181,10 @@ main(int argc,
     g_signal_connect (delete_button, "clicked", G_CALLBACK (settings_list_sessions_delete_session), GTK_TREE_VIEW (treeview));
 
     /* Check if there are saved sessions and if so, show the "Saved Sessions" tab */
-    rc = settings_list_sessions_open_rc ();
-    xfce4_session_settings_show_saved_sessions (builder, rc, rc != NULL);
-    if (rc != NULL)
-        xfce_rc_close (rc);
+    file = settings_list_sessions_open_key_file (TRUE);
+    xfce4_session_settings_show_saved_sessions (builder, file, file != NULL);
+    if (file != NULL)
+        g_key_file_free (file);
 
     /* bind widgets to xfconf */
     xfconf_g_property_bind(channel, "/chooser/AlwaysDisplay", G_TYPE_BOOLEAN,
