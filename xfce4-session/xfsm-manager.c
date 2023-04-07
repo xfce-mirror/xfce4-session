@@ -79,7 +79,6 @@ struct _XfsmManager
 
   gboolean         session_chooser;
   gchar           *session_name;
-  gchar           *session_file;
   gchar           *checkpoint_session_name;
 
   gboolean         start_at;
@@ -217,7 +216,6 @@ xfsm_manager_finalize (GObject *obj)
   g_queue_free (manager->running_clients);
 
   g_free (manager->session_name);
-  g_free (manager->session_file);
   g_free (manager->checkpoint_session_name);
 
   G_OBJECT_CLASS (xfsm_manager_parent_class)->finalize (obj);
@@ -280,7 +278,8 @@ xfsm_manager_startup (gpointer user_data)
 
 static void
 xfsm_manager_restore_active_workspace (XfsmManager *manager,
-                                       XfceRc      *rc)
+                                       GKeyFile    *file,
+                                       const gchar *group)
 {
   WnckWorkspace  *workspace;
   GdkDisplay     *display;
@@ -293,13 +292,13 @@ xfsm_manager_restore_active_workspace (XfsmManager *manager,
     {
       g_snprintf (buffer, 1024, "Screen%d_ActiveWorkspace", n);
       xfsm_verbose ("Attempting to restore %s\n", buffer);
-      if (!xfce_rc_has_entry (rc, buffer))
+      if (!g_key_file_has_key (file, group, buffer, NULL))
         {
           xfsm_verbose ("no entry found\n");
           continue;
         }
 
-      m = xfce_rc_read_int_entry (rc, buffer, 0);
+      m = g_key_file_get_integer (file, group, buffer, NULL);
 
       screen = wnck_screen_get (n);
       wnck_screen_force_update (screen);
@@ -425,7 +424,7 @@ xfsm_manager_handle_failed_properties (XfsmManager    *manager,
 
 static gboolean
 xfsm_manager_choose_session (XfsmManager *manager,
-                             XfceRc      *rc)
+                             GKeyFile    *file)
 {
   XfsmSessionInfo *session;
   GdkDisplay      *display;
@@ -445,7 +444,7 @@ xfsm_manager_choose_session (XfsmManager *manager,
     monitor = gdk_display_get_primary_monitor (display);
   scale_factor = gdk_monitor_get_scale_factor (monitor);
 
-  sessions = settings_list_sessions (rc, scale_factor);
+  sessions = settings_list_sessions (file, scale_factor);
 
   if (sessions != NULL)
     {
@@ -454,7 +453,7 @@ xfsm_manager_choose_session (XfsmManager *manager,
 
       if (result == XFSM_CHOOSE_LOGOUT)
         {
-          xfce_rc_close (rc);
+          g_key_file_free (file);
           exit (EXIT_SUCCESS);
         }
       else if (result == XFSM_CHOOSE_LOAD)
@@ -486,26 +485,19 @@ xfsm_manager_load_session (XfsmManager   *manager,
 {
   XfsmProperties *properties;
   gchar           buffer[1024];
-  XfceRc         *rc;
+  gchar          *group;
+  GKeyFile       *file;
   gint            count;
 
-  if (!g_file_test (manager->session_file, G_FILE_TEST_IS_REGULAR))
-    {
-      g_debug ("xfsm_manager_load_session: Something wrong with %s, Does it exist? Permissions issue?", manager->session_file);
-      return FALSE;
-    }
-
-  rc = xfce_rc_simple_open (manager->session_file, FALSE);
-  if (G_UNLIKELY (rc == NULL))
-  {
-    g_warning ("xfsm_manager_load_session: unable to open %s", manager->session_file);
+  /* open file for reading, do not create it if it does not exist */
+  file = settings_list_sessions_open_key_file (TRUE);
+  if (file == NULL)
     return FALSE;
-  }
 
-  if (manager->session_chooser && !xfsm_manager_choose_session (manager, rc))
+  if (manager->session_chooser && !xfsm_manager_choose_session (manager, file))
     {
       g_warning ("xfsm_manager_load_session: failed to choose session");
-      xfce_rc_close (rc);
+      g_key_file_free (file);
       return FALSE;
     }
 
@@ -513,18 +505,18 @@ xfsm_manager_load_session (XfsmManager   *manager,
   xfsm_verbose ("loading %s\n", buffer);
   xfconf_channel_set_string (channel, "/general/SessionName", manager->session_name);
 
-  xfce_rc_set_group (rc, buffer);
-  count = xfce_rc_read_int_entry (rc, "Count", 0);
+  count = g_key_file_get_integer (file, buffer, "Count", NULL);
   if (G_UNLIKELY (count <= 0))
     {
-      xfce_rc_close (rc);
+      g_key_file_free (file);
       return FALSE;
     }
 
+  group = g_strdup (buffer);
   while (count-- > 0)
     {
       g_snprintf (buffer, 1024, "Client%d_", count);
-      properties = xfsm_properties_load (rc, buffer);
+      properties = xfsm_properties_load (file, buffer, group);
       if (G_UNLIKELY (properties == NULL))
         {
           xfsm_verbose ("%s has no properties. Skipping\n", buffer);
@@ -544,9 +536,10 @@ xfsm_manager_load_session (XfsmManager   *manager,
   xfsm_verbose ("Finished loading clients from rc file\n");
 
   /* load legacy applications */
-  xfsm_legacy_load_session (rc);
+  xfsm_legacy_load_session (file, group);
 
-  xfce_rc_close (rc);
+  g_free (group);
+  g_key_file_free (file);
 
   return g_queue_peek_head (manager->pending_properties) != NULL;
 }
@@ -800,30 +793,9 @@ void
 xfsm_manager_load (XfsmManager   *manager,
                    XfconfChannel *channel)
 {
-  gchar *display_name;
-  gchar *resource_name;
-#ifdef HAVE_OS_CYGWIN
-  gchar *s;
-#endif
-
   manager->compat_gnome = xfconf_channel_get_bool (channel, "/compat/LaunchGNOME", FALSE);
   manager->compat_kde = xfconf_channel_get_bool (channel, "/compat/LaunchKDE", FALSE);
   manager->start_at = xfconf_channel_get_bool (channel, "/general/StartAssistiveTechnologies", FALSE);
-
-  display_name  = xfsm_gdk_display_get_fullname (gdk_display_get_default ());
-
-#ifdef HAVE_OS_CYGWIN
-  /* rename a colon (:) to a hash (#) under cygwin. windows doesn't like
-   * filenames with a colon... */
-  for (s = display_name; *s != '\0'; ++s)
-    if (*s == ':')
-      *s = '#';
-#endif
-
-  resource_name = g_strconcat ("sessions/xfce4-session-", display_name, NULL);
-  manager->session_file  = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource_name, TRUE);
-  g_free (resource_name);
-  g_free (display_name);
 
   xfsm_manager_load_settings (manager, channel);
 }
@@ -847,21 +819,23 @@ void
 xfsm_manager_signal_startup_done (XfsmManager *manager)
 {
   gchar buffer[1024];
-  XfceRc *rc;
+  GKeyFile *file;
 
   xfsm_verbose ("Manager finished startup, entering IDLE mode now\n\n");
   xfsm_manager_set_state (manager, XFSM_MANAGER_IDLE);
 
   if (!manager->failsafe_mode)
     {
-      /* restore active workspace, this has to be done after the
-       * window manager is up, so we do it last.
-       */
-      g_snprintf (buffer, 1024, "Session: %s", manager->session_name);
-      rc = xfce_rc_simple_open (manager->session_file, TRUE);
-      xfce_rc_set_group (rc, buffer);
-      xfsm_manager_restore_active_workspace (manager, rc);
-      xfce_rc_close (rc);
+      file = settings_list_sessions_open_key_file (TRUE);
+      if (file != NULL)
+        {
+          /* restore active workspace, this has to be done after the
+           * window manager is up, so we do it last.
+           */
+          g_snprintf (buffer, 1024, "Session: %s", manager->session_name);
+          xfsm_manager_restore_active_workspace (manager, file, buffer);
+          g_key_file_free (file);
+        }
 
       /* start legacy applications now */
       xfsm_legacy_startup ();
@@ -1843,43 +1817,25 @@ xfsm_manager_store_session (XfsmManager *manager)
   WnckWorkspace *workspace;
   GdkDisplay    *display;
   WnckScreen    *screen;
-  XfceRc        *rc;
+  GKeyFile      *file;
+  const gchar   *filename;
+  GError        *error = NULL;
   GList         *lp;
   gchar          prefix[64];
-  gchar         *backup;
   gchar         *group;
   gint           count = 0;
   gint           n, m;
 
   /* open file for writing, creates it if it doesn't exist */
-  rc = xfce_rc_simple_open (manager->session_file, FALSE);
-  if (G_UNLIKELY (rc == NULL))
-    {
-      fprintf (stderr,
-               "xfce4-session: Unable to open session file %s for "
-               "writing. Session data will not be stored. Please check "
-               "your installation.\n",
-               manager->session_file);
-      return;
-    }
-
-  /* backup the old session file first */
-  if (g_file_test (manager->session_file, G_FILE_TEST_IS_REGULAR))
-    {
-      backup = g_strconcat (manager->session_file, ".bak", NULL);
-      unlink (backup);
-      if (link (manager->session_file, backup))
-          g_warning ("Failed to create session file backup");
-      g_free (backup);
-    }
+  file = settings_list_sessions_open_key_file (FALSE);
+  if (G_UNLIKELY (file == NULL))
+    return;
 
   if (manager->state == XFSM_MANAGER_CHECKPOINT && manager->checkpoint_session_name != NULL)
     group = g_strconcat ("Session: ", manager->checkpoint_session_name, NULL);
   else
     group = g_strconcat ("Session: ", manager->session_name, NULL);
-  xfce_rc_delete_group (rc, group, TRUE);
-  xfce_rc_set_group (rc, group);
-  g_free (group);
+  g_key_file_remove_group (file, group, NULL);
 
   for (lp = g_queue_peek_nth_link (manager->restart_properties, 0);
        lp;
@@ -1887,7 +1843,7 @@ xfsm_manager_store_session (XfsmManager *manager)
     {
       XfsmProperties *properties = lp->data;
       g_snprintf (prefix, 64, "Client%d_", count);
-      xfsm_properties_store (properties, rc, prefix);
+      xfsm_properties_store (properties, file, prefix, group);
       ++count;
     }
 
@@ -1908,14 +1864,14 @@ xfsm_manager_store_session (XfsmManager *manager)
         continue;
 
       g_snprintf (prefix, 64, "Client%d_", count);
-      xfsm_properties_store (xfsm_client_get_properties (client), rc, prefix);
+      xfsm_properties_store (xfsm_client_get_properties (client), file, prefix, group);
       ++count;
     }
 
-  xfce_rc_write_int_entry (rc, "Count", count);
+  g_key_file_set_integer (file, group, "Count", count);
 
   /* store legacy applications state */
-  xfsm_legacy_store_session (rc);
+  xfsm_legacy_store_session (file, group);
 
   /* store current workspace numbers */
   display = gdk_display_get_default ();
@@ -1928,14 +1884,21 @@ xfsm_manager_store_session (XfsmManager *manager)
       m = wnck_workspace_get_number (workspace);
 
       g_snprintf (prefix, 64, "Screen%d_ActiveWorkspace", n);
-      xfce_rc_write_int_entry (rc, prefix, m);
+      g_key_file_set_integer (file, group, prefix, m);
     }
 
   /* remember time */
-  xfce_rc_write_int_entry (rc, "LastAccess", time (NULL));
+  g_key_file_set_integer (file, group, "LastAccess", time (NULL));
 
-  xfce_rc_close (rc);
+  filename = settings_list_sessions_get_filename ();
+  if (!g_key_file_save_to_file (file, filename, &error))
+    {
+      g_warning ("Failed to save session file %s: %s", filename, error->message);
+      g_error_free (error);
+    }
 
+  g_free (group);
+  g_key_file_free (file);
   g_free (manager->checkpoint_session_name);
   manager->checkpoint_session_name = NULL;
 }
