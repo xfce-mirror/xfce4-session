@@ -72,14 +72,14 @@ xfce4-session-settings_ui.h: xfce4-session-settings.ui
 	$(AM_V_GEN) xdt-csource --static --strip-comments --strip-content --name=xfce4_session_settings_ui $< >$@
 
 xfsm-client-dbus-client.c xfsm-client-dbus-client.h : $(top_srcdir)/xfce4-session/xfsm-client-dbus.xml Makefile.am
-	gdbus-codegen \
+	$(AM_V_GEN) $(GDBUS_CODEGEN) \
 		--c-namespace=Xfsm \
 		--interface-prefix=org.xfce.Session. \
 		--generate-c-code=xfsm-client-dbus-client \
 		$(top_srcdir)/xfce4-session/xfsm-client-dbus.xml
 
 xfsm-manager-dbus-client.c xfsm-manager-dbus-client.h : $(top_srcdir)/xfce4-session/xfsm-manager-dbus.xml Makefile.am
-	gdbus-codegen \
+	$(AM_V_GEN) $(GDBUS_CODEGEN) \
 		--c-namespace=Xfsm \
 		--interface-prefix=org.xfce.Session. \
 		--generate-c-code=xfsm-manager-dbus-client \

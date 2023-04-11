@@ -74,9 +74,6 @@ AC_CHECK_LIB([m], [rint], [libm=-lm], [libm=])
 LIBM="$libm"
 AC_SUBST(LIBM)
 
-dnl Check for X11 installed
-XDT_CHECK_LIBX11_REQUIRE()
-
 dnl Check for session management support
 XDT_CHECK_LIBSM()
 
@@ -101,7 +98,10 @@ XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.66.0])
 XDT_CHECK_PACKAGE([GIO], [gio-2.0], [2.66.0])
 XDT_CHECK_PACKAGE([GMODULE], [gmodule-2.0], [2.66.0])
 XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-3.0], [3.10])
+XDT_CHECK_PACKAGE([LIBX11], [x11], [1.6.7])
 XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.12.0])
+
+XDT_CHECK_PACKAGE_BINARY([GDBUS_CODEGEN], [gio-2.0], [gdbus_codegen], [gdbus-codegen])
 
 dnl Check for Polkit/PolicyKit
 XDT_CHECK_OPTIONAL_PACKAGE([POLKIT], [polkit-gobject-1], [0.102],
