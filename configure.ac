@@ -8,6 +8,17 @@ dnl
 dnl Version information
 XDT_VERSION_INIT([4.18.0], [git])
 
+dnl minimum required versions
+m4_define([glib_min_version], [2.66.0])
+m4_define([gtk_min_version], [3.24.0])
+m4_define([libwnck_min_version], [3.10.0])
+m4_define([x11_minimum_version], [1.6.7])
+m4_define([libxfce4util_min_version], [4.17.2])
+m4_define([libxfce4ui_min_version], [4.18.2])
+m4_define([xfconf_min_version], [4.12.0])
+
+m4_define([polkit_min_version], [0.102])
+
 dnl Initialize autoconf
 AC_COPYRIGHT([Copyright (c) 2003-2023
         The Xfce development team. All rights reserved.
@@ -91,20 +102,20 @@ AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION([0.19.8])
 
 dnl Check for required packages
-XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.17.2])
-XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [4.18.2])
-XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [3.24.0])
-XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.66.0])
-XDT_CHECK_PACKAGE([GIO], [gio-2.0], [2.66.0])
-XDT_CHECK_PACKAGE([GMODULE], [gmodule-2.0], [2.66.0])
-XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-3.0], [3.10])
-XDT_CHECK_PACKAGE([LIBX11], [x11], [1.6.7])
-XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.12.0])
+XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [gtk_min_version])
+XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_min_version])
+XDT_CHECK_PACKAGE([GIO], [gio-2.0], [glib_min_version])
+XDT_CHECK_PACKAGE([GMODULE], [gmodule-2.0], [glib_min_version])
+XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-3.0], [libwnck_min_version])
+XDT_CHECK_PACKAGE([LIBX11], [x11], [x11_minimum_version])
+XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [libxfce4util_min_version])
+XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [libxfce4ui_min_version])
+XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [xfconf_min_version])
 
 XDT_CHECK_PACKAGE_BINARY([GDBUS_CODEGEN], [gio-2.0], [gdbus_codegen], [gdbus-codegen])
 
 dnl Check for Polkit/PolicyKit
-XDT_CHECK_OPTIONAL_PACKAGE([POLKIT], [polkit-gobject-1], [0.102],
+XDT_CHECK_OPTIONAL_PACKAGE([POLKIT], [polkit-gobject-1], [polkit_min_version],
                            [polkit], [Polkit support])
 
 dnl Check for debugging support
