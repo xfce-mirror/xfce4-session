@@ -6,25 +6,27 @@ dnl Written for Xfce by Benedikt Meurer <benny@xfce.org>.
 dnl
 
 dnl Version information
-m4_define([xfsm_version_major], [4])
-m4_define([xfsm_version_minor], [18])
-m4_define([xfsm_version_micro], [0])
-m4_define([xfsm_version_nano], []) dnl leave this empty to have no nano version
-m4_define([xfsm_version_build], [@REVISION@])
-m4_define([xfsm_version_tag], [git])
-m4_define([xfsm_version], [xfsm_version_major().xfsm_version_minor().xfsm_version_micro()ifelse(xfsm_version_nano(), [], [], [.xfsm_version_nano()])ifelse(xfsm_version_tag(), [git], [xfsm_version_tag()-xfsm_version_build()], [xfsm_version_tag()])])
+XDT_VERSION_INIT([4.18.0], [git])
 
-m4_define([xfsm_debug_default], [ifelse(xfsm_version_tag(), [git], [yes], [minimum])])
-m4_define([intltool_minimum_version], [0.35])
+dnl minimum required versions
+m4_define([glib_min_version], [2.66.0])
+m4_define([gtk_min_version], [3.24.0])
+m4_define([libwnck_min_version], [3.10.0])
+m4_define([x11_minimum_version], [1.6.7])
+m4_define([libxfce4util_min_version], [4.17.2])
+m4_define([libxfce4ui_min_version], [4.18.2])
+m4_define([xfconf_min_version], [4.12.0])
+
+m4_define([polkit_min_version], [0.102])
 
 dnl Initialize autoconf
 AC_COPYRIGHT([Copyright (c) 2003-2023
         The Xfce development team. All rights reserved.
 
 Written for Xfce by Benedikt Meurer <benny@xfce.org>.])
-AC_INIT([xfce4-session], [xfsm_version], [https://gitlab.xfce.org/xfce/xfce4-session])
-AC_PREREQ([2.60])
-AC_REVISION([$Id$])
+AC_INIT([xfce4-session], [xdt_version], [https://gitlab.xfce.org/xfce/xfce4-session])
+AC_PREREQ([2.69])
+AC_REVISION([xdt_version_build])
 AC_PROG_MAKE_SET()
 
 dnl Initialize automake
@@ -56,7 +58,6 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_MKDIR_P
-IT_PROG_INTLTOOL([intltool_minimum_version], [no-xml])
 m4_ifdef([AC_PROG_SED], [AC_PROG_SED], [AC_CHECK_PROG(SED, sed, sed)])
 
 dnl check for libtool
@@ -84,9 +85,6 @@ AC_CHECK_LIB([m], [rint], [libm=-lm], [libm=])
 LIBM="$libm"
 AC_SUBST(LIBM)
 
-dnl Check for X11 installed
-XDT_CHECK_LIBX11_REQUIRE()
-
 dnl Check for session management support
 XDT_CHECK_LIBSM()
 
@@ -97,24 +95,31 @@ AC_CHECK_FUNCS([_IceTransNoListen])
 LIBS="$ac_LIBS"
 
 dnl Check for i18n support
-XDT_I18N([@LINGUAS@])
+GETTEXT_PACKAGE="$PACKAGE"
+AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [Name of default gettext domain])
+AC_SUBST([GETTEXT_PACKAGE])
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.19.8])
 
 dnl Check for required packages
-XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.17.2])
-XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [4.18.2])
-XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [3.24.0])
-XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.66.0])
-XDT_CHECK_PACKAGE([GIO], [gio-2.0], [2.66.0])
-XDT_CHECK_PACKAGE([GMODULE], [gmodule-2.0], [2.66.0])
-XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-3.0], [3.10])
-XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.12.0])
+XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [gtk_min_version])
+XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_min_version])
+XDT_CHECK_PACKAGE([GIO], [gio-2.0], [glib_min_version])
+XDT_CHECK_PACKAGE([GMODULE], [gmodule-2.0], [glib_min_version])
+XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-3.0], [libwnck_min_version])
+XDT_CHECK_PACKAGE([LIBX11], [x11], [x11_minimum_version])
+XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [libxfce4util_min_version])
+XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [libxfce4ui_min_version])
+XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [xfconf_min_version])
+
+XDT_CHECK_PACKAGE_BINARY([GDBUS_CODEGEN], [gio-2.0], [gdbus_codegen], [gdbus-codegen])
 
 dnl Check for Polkit/PolicyKit
-XDT_CHECK_OPTIONAL_PACKAGE([POLKIT], [polkit-gobject-1], [0.102],
+XDT_CHECK_OPTIONAL_PACKAGE([POLKIT], [polkit-gobject-1], [polkit_min_version],
                            [polkit], [Polkit support])
 
 dnl Check for debugging support
-XDT_FEATURE_DEBUG([xfsm_debug_default])
+XDT_FEATURE_DEBUG([xdt_debug_default])
 
 dnl Check for linker optimizations
 XDT_FEATURE_LINKER_OPTS()

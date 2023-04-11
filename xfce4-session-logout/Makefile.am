@@ -20,7 +20,9 @@ xfce4_session_logout_LDFLAGS =						\
 desktopdir = $(datadir)/applications
 desktop_in_files = xfce4-session-logout.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
-@INTLTOOL_DESKTOP_RULE@
+
+%.desktop: %.desktop.in
+	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
 EXTRA_DIST =								\
 	$(man_MANS)							\
