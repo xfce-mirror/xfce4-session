@@ -14,25 +14,17 @@ SUBDIRS =								\
 desktopdir = $(XSESSION_PREFIX)/share/xsessions
 desktop_in_files = xfce.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
-@INTLTOOL_DESKTOP_RULE@
+
+%.desktop: %.desktop.in
+	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
 distuninstallcheck_listfiles = 						\
 	find . -type f -print | grep -v ./share/icons/hicolor/icon-theme.cache
 
 EXTRA_DIST =								\
-	BUGS								\
-	README.md							\
-	intltool-extract.in						\
-	intltool-merge.in						\
-	intltool-update.in						\
-	$(config_DATA)							\
 	$(desktop_in_files)
 
 DISTCLEANFILES =							\
-	intltool-extract						\
-	intltool-merge							\
-	intltool-update							\
-	po/.intltool-merge-cache.lock			\
 	$(desktop_DATA)
 
 distclean-local:

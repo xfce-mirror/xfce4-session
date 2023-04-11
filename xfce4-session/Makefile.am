@@ -101,7 +101,8 @@ xfce4_session_LDADD =							\
 
 if HAVE_POLKIT
 
-@INTLTOOL_POLICY_RULE@
+%.policy: %.policy.in
+	$(AM_V_GEN) $(MSGFMT) --xml --template $< -d $(top_srcdir)/po -o $@
 
 polkit_policydir = $(datadir)/polkit-1/actions
 polkit_policy_DATA =					\

@@ -11,6 +11,7 @@ m4/
 .deps
 .libs
 
+ABOUT-NLS
 INSTALL
 aclocal.m4
 autom4te.cache
@@ -19,6 +20,7 @@ config.guess
 config.h
 config.h.in
 config.log
+config.rpath
 config.status
 config.sub
 configure
@@ -31,9 +33,6 @@ engines/mice/slide.h
 engines/simple/fallback.h
 engines/simple/preview.h
 install-sh
-intltool-extract.in
-intltool-merge.in
-intltool-update.in
 libtool
 libxfsm/xfce4-session-2.0.pc
 ltmain.sh
@@ -41,10 +40,19 @@ missing
 mkinstalldirs
 panel-plugin/xfsm-logout-plugin-ui.h
 panel-plugin/xfsm-logout-plugin.desktop
-po/.intltool-merge-cache*
 po/Makefile.in.in
 po/POTFILES
-po/stamp-it
+po/stamp-*
+po/Makevars.template
+po/Rules-quot
+po/boldquot.sed
+po/en@boldquot.header
+po/en@quot.header
+po/insert-header.sin
+po/quot.sed
+po/remove-potcdate.sed
+po/remove-potcdate.sin
+po/xfce4-session.pot
 scripts/startxfce4
 scripts/xinitrc
 scripts/xinitrc.in

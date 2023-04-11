@@ -15,7 +15,6 @@ m4_define([xfsm_version_tag], [git])
 m4_define([xfsm_version], [xfsm_version_major().xfsm_version_minor().xfsm_version_micro()ifelse(xfsm_version_nano(), [], [], [.xfsm_version_nano()])ifelse(xfsm_version_tag(), [git], [xfsm_version_tag()-xfsm_version_build()], [xfsm_version_tag()])])
 
 m4_define([xfsm_debug_default], [ifelse(xfsm_version_tag(), [git], [yes], [minimum])])
-m4_define([intltool_minimum_version], [0.35])
 
 dnl Initialize autoconf
 AC_COPYRIGHT([Copyright (c) 2003-2023
@@ -56,7 +55,6 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_MKDIR_P
-IT_PROG_INTLTOOL([intltool_minimum_version], [no-xml])
 m4_ifdef([AC_PROG_SED], [AC_PROG_SED], [AC_CHECK_PROG(SED, sed, sed)])
 
 dnl check for libtool
@@ -97,7 +95,11 @@ AC_CHECK_FUNCS([_IceTransNoListen])
 LIBS="$ac_LIBS"
 
 dnl Check for i18n support
-XDT_I18N([@LINGUAS@])
+GETTEXT_PACKAGE="$PACKAGE"
+AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [Name of default gettext domain])
+AC_SUBST([GETTEXT_PACKAGE])
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.19.8])
 
 dnl Check for required packages
 XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.17.2])
