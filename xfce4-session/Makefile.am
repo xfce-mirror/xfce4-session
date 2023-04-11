@@ -106,7 +106,8 @@ if HAVE_POLKIT
 polkit_policydir = $(datadir)/polkit-1/actions
 polkit_policy_DATA =					\
 	org.xfce.session.policy
-.in2.in:
+
+%.policy.in: %.policy.in.in
 	sed "s|[@]HELPER_PATH_PREFIX@|${HELPER_PATH_PREFIX}|" $< > $@
 
 endif
@@ -148,7 +149,7 @@ EXTRA_DIST =								\
 	xfsm-marshal.list						\
 	xfsm-client-dbus.xml						\
 	xfsm-manager-dbus.xml					\
-	org.xfce.session.policy.in2
+	org.xfce.session.policy.in.in
 
 DISTCLEANFILES =							\
 	$(BUILT_SOURCES)				\
