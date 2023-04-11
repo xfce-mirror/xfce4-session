@@ -6,24 +6,16 @@ dnl Written for Xfce by Benedikt Meurer <benny@xfce.org>.
 dnl
 
 dnl Version information
-m4_define([xfsm_version_major], [4])
-m4_define([xfsm_version_minor], [18])
-m4_define([xfsm_version_micro], [0])
-m4_define([xfsm_version_nano], []) dnl leave this empty to have no nano version
-m4_define([xfsm_version_build], [@REVISION@])
-m4_define([xfsm_version_tag], [git])
-m4_define([xfsm_version], [xfsm_version_major().xfsm_version_minor().xfsm_version_micro()ifelse(xfsm_version_nano(), [], [], [.xfsm_version_nano()])ifelse(xfsm_version_tag(), [git], [xfsm_version_tag()-xfsm_version_build()], [xfsm_version_tag()])])
-
-m4_define([xfsm_debug_default], [ifelse(xfsm_version_tag(), [git], [yes], [minimum])])
+XDT_VERSION_INIT([4.18.0], [git])
 
 dnl Initialize autoconf
 AC_COPYRIGHT([Copyright (c) 2003-2023
         The Xfce development team. All rights reserved.
 
 Written for Xfce by Benedikt Meurer <benny@xfce.org>.])
-AC_INIT([xfce4-session], [xfsm_version], [https://gitlab.xfce.org/xfce/xfce4-session])
-AC_PREREQ([2.60])
-AC_REVISION([$Id$])
+AC_INIT([xfce4-session], [xdt_version], [https://gitlab.xfce.org/xfce/xfce4-session])
+AC_PREREQ([2.69])
+AC_REVISION([xdt_version_build])
 AC_PROG_MAKE_SET()
 
 dnl Initialize automake
@@ -116,7 +108,7 @@ XDT_CHECK_OPTIONAL_PACKAGE([POLKIT], [polkit-gobject-1], [0.102],
                            [polkit], [Polkit support])
 
 dnl Check for debugging support
-XDT_FEATURE_DEBUG([xfsm_debug_default])
+XDT_FEATURE_DEBUG([xdt_debug_default])
 
 dnl Check for linker optimizations
 XDT_FEATURE_LINKER_OPTS()
