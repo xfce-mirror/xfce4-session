@@ -1,6 +1,6 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR Xfce
+# This file is distributed under the same license as the xfce4-session.master package.
 # 
 # Translators:
 # Marius Ghita, 2022
@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-12 00:58+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
+"POT-Creation-Date: 2023-04-12 12:49+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Marius Ghita, 2022\n"
 "Language-Team: Romanian (http://app.transifex.com/xfce/xfce4-session/language/ro/)\n"
@@ -19,356 +19,381 @@ msgstr ""
 "Language: ro\n"
 "Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
 
-#: ../libxfsm/xfsm-util.c:374
+#: xfce.desktop.in:4
+msgid "Xfce Session"
+msgstr "Sesiune Xfce"
+
+#: xfce.desktop.in:5
+msgid "Use this session to run Xfce as your desktop environment"
+msgstr "Utilizați această sesiunea pentru a inițializa mediul desktop Xfce"
+
+#: xfce.desktop.in:8
+msgid "Type=Application"
+msgstr ""
+
+#: libxfsm/xfsm-util.c:374
 msgid "Session"
 msgstr "Sesiune"
 
-#: ../libxfsm/xfsm-util.c:385
+#: libxfsm/xfsm-util.c:385
 msgid "Last accessed"
 msgstr "Ultima accesare"
 
-#: ../settings/main.c:98
+#: scripts/xscreensaver.desktop.in:4
+msgid "Screensaver"
+msgstr "Protector de ecran"
+
+#: scripts/xscreensaver.desktop.in:5
+msgid "Launch screensaver and locker program"
+msgstr "Porniți programul de protecție a ecranului"
+
+#: scripts/xscreensaver.desktop.in:6
+msgid "preferences-desktop-screensaver"
+msgstr ""
+
+#: settings/main.c:98
 msgid "Settings manager socket"
 msgstr "Socket al managerului opțiunilor"
 
-#: ../settings/main.c:98
+#: settings/main.c:98
 msgid "SOCKET ID"
 msgstr "ID SOCKET"
 
-#: ../settings/main.c:99
+#: settings/main.c:99
 msgid "Version information"
 msgstr "Detalii despre versiune"
 
-#: ../settings/main.c:110 ../xfce4-session/main.c:333
+#: settings/main.c:110 xfce4-session/main.c:333
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Încercați „%s --help” pentru detalii de utilizare."
 
-#: ../settings/main.c:122 ../xfce4-session/main.c:343
-#: ../xfce4-session-logout/main.c:146
+#: settings/main.c:122 xfce4-session/main.c:343
+#: xfce4-session-logout/main.c:146
 msgid "The Xfce development team. All rights reserved."
 msgstr "Echipa de dezvoltare Xfce. Toate drepturile sunt rezervate."
 
-#: ../settings/main.c:123 ../xfce4-session/main.c:344
-#: ../xfce4-session-logout/main.c:149
+#: settings/main.c:123 xfce4-session/main.c:344
+#: xfce4-session-logout/main.c:149
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Raportați problemele la <%s>."
 
-#: ../settings/main.c:132 ../xfce4-session/main.c:352
+#: settings/main.c:132 xfce4-session/main.c:352
 msgid "Unable to contact settings server"
 msgstr "Nu s-a putut contacta serverul opțiunilor"
 
-#: ../settings/main.c:152
+#: settings/main.c:152
 msgid "Unable to create user interface from embedded definition data"
 msgstr "Nu s-a putut crea interfața de utilizare din datele predefinite"
 
-#: ../settings/main.c:166
+#: settings/main.c:166
 msgid "App_lication Autostart"
 msgstr "_Pornire automată"
 
-#: ../settings/main.c:172
+#: settings/main.c:172
 msgid "Currently active session:"
 msgstr "Sesiunea curentă activă:"
 
-#: ../settings/session-editor.c:63
+#: settings/session-editor.c:63
 msgid "If running"
 msgstr "Dacă e pornită"
 
-#: ../settings/session-editor.c:64
+#: settings/session-editor.c:64
 msgid "Always"
 msgstr "Întotdeauna"
 
-#: ../settings/session-editor.c:65
+#: settings/session-editor.c:65
 msgid "Immediately"
 msgstr "Imediat"
 
-#: ../settings/session-editor.c:66
+#: settings/session-editor.c:66
 msgid "Never"
 msgstr "Niciodată"
 
-#: ../settings/session-editor.c:138
+#: settings/session-editor.c:138
 msgid "Session Save Error"
 msgstr "Eroare de salvare a sesiunii"
 
-#: ../settings/session-editor.c:139
+#: settings/session-editor.c:139
 msgid "Unable to save the session"
 msgstr "Nu s-a putut salva sesiunea"
 
-#: ../settings/session-editor.c:141 ../settings/session-editor.c:315
-#: ../xfce4-session/xfsm-manager.c:1267
+#: settings/session-editor.c:141 settings/session-editor.c:315
+#: xfce4-session/xfsm-manager.c:1267 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "_Închide"
 
-#: ../settings/session-editor.c:200
+#: settings/session-editor.c:200
 msgid "Clear sessions"
 msgstr "Curăță sesiunile"
 
-#: ../settings/session-editor.c:201
+#: settings/session-editor.c:201
 msgid "Are you sure you want to empty the session cache?"
 msgstr "Sigur doriți să goliți cache-ul sesiunii?"
 
-#: ../settings/session-editor.c:202
+#: settings/session-editor.c:202
 msgid ""
 "The saved states of your applications will not be restored during your next "
 "login."
 msgstr "Informațiile nesalvate de către aceste programe nu vor fi restaurate la următoarea autentificare."
 
-#: ../settings/session-editor.c:203 ../settings/session-editor.c:290
-#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:687
-#: ../xfce4-session/xfsm-logout-dialog.c:221
+#: settings/session-editor.c:203 settings/session-editor.c:290
+#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:687
+#: xfce4-session/xfsm-logout-dialog.c:221
 msgid "_Cancel"
 msgstr "_Renunță"
 
-#: ../settings/session-editor.c:204
+#: settings/session-editor.c:204
 msgid "_Proceed"
 msgstr "C_ontinuă"
 
-#: ../settings/session-editor.c:242
+#: settings/session-editor.c:242
 #, c-format
 msgid "You might need to delete some files manually in \"%s\"."
 msgstr "S-ar putea să trebuiască să ștergeți manual unele fișiere în „%s”."
 
-#: ../settings/session-editor.c:245
+#: settings/session-editor.c:245
 msgid "All Xfce cache files could not be cleared"
 msgstr "Nu s-au putut curăța toate fișierele de cache ale Xfce"
 
-#: ../settings/session-editor.c:284
+#: settings/session-editor.c:284
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Sigur doriți să închideți „%s”?"
 
-#: ../settings/session-editor.c:287 ../settings/session-editor.c:312
+#: settings/session-editor.c:287 settings/session-editor.c:312
 msgid "Terminate Program"
 msgstr "Închidere program"
 
-#: ../settings/session-editor.c:289
+#: settings/session-editor.c:289
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
 msgstr "Programul va pierde informațiile nesalvate și nu va mai fi repornit în următoarea sesiune."
 
-#: ../settings/session-editor.c:291
+#: settings/session-editor.c:291 settings/xfce4-session-settings.ui:446
 msgid "_Quit Program"
 msgstr "Î_nchide programul"
 
-#: ../settings/session-editor.c:313
+#: settings/session-editor.c:313
 msgid "Unable to terminate program."
 msgstr "Nu s-a putut închide programul."
 
-#: ../settings/session-editor.c:541
+#: settings/session-editor.c:541
 msgid "(Unknown program)"
 msgstr "(Program necunoscut)"
 
-#: ../settings/session-editor.c:790
+#: settings/session-editor.c:790
 msgid "Priority"
 msgstr "Prioritate"
 
-#: ../settings/session-editor.c:800
+#: settings/session-editor.c:800
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:807 ../settings/xfae-window.c:198
+#: settings/session-editor.c:807 settings/xfae-window.c:198
 msgid "Program"
 msgstr "Program"
 
-#: ../settings/session-editor.c:833
+#: settings/session-editor.c:833
 msgid "Restart Style"
 msgstr "Tip de repornire"
 
-#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:689
+#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:689
 msgid "_OK"
 msgstr "_OK"
 
-#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:252
+#: settings/xfae-dialog.c:82 settings/xfae-window.c:252
 msgid "Add application"
 msgstr "Adăugare a unui nou program"
 
-#: ../settings/xfae-dialog.c:96
+#: settings/xfae-dialog.c:96
 msgid "Name:"
 msgstr "Nume:"
 
-#: ../settings/xfae-dialog.c:111
+#: settings/xfae-dialog.c:111
 msgid "Description:"
 msgstr "Descriere:"
 
-#: ../settings/xfae-dialog.c:125 ../settings/xfae-model.c:681
+#: settings/xfae-dialog.c:125 settings/xfae-model.c:681
 msgid "Command:"
 msgstr "Comandă:"
 
-#: ../settings/xfae-dialog.c:138
+#: settings/xfae-dialog.c:138
 msgid "Trigger:"
 msgstr ""
 
-#: ../settings/xfae-dialog.c:209
+#: settings/xfae-dialog.c:209
 msgid "Select a command"
 msgstr "Selectați o comandă…"
 
-#: ../settings/xfae-dialog.c:212
+#: settings/xfae-dialog.c:212
 msgid "Cancel"
 msgstr "Renunță"
 
-#: ../settings/xfae-dialog.c:213
+#: settings/xfae-dialog.c:213
 msgid "OK"
 msgstr "OK"
 
-#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:274
+#: settings/xfae-dialog.c:260 settings/xfae-window.c:274
 msgid "Edit application"
 msgstr "Editare a programului selectat"
 
-#: ../settings/xfae-model.c:114
+#: settings/xfae-model.c:114
 msgid "on login"
 msgstr ""
 
-#: ../settings/xfae-model.c:115
+#: settings/xfae-model.c:115
 msgid "on logout"
 msgstr ""
 
-#: ../settings/xfae-model.c:116
+#: settings/xfae-model.c:116
 msgid "on shutdown"
 msgstr ""
 
-#: ../settings/xfae-model.c:117
+#: settings/xfae-model.c:117
 msgid "on restart"
 msgstr ""
 
-#: ../settings/xfae-model.c:118
+#: settings/xfae-model.c:118
 msgid "on suspend"
 msgstr ""
 
-#: ../settings/xfae-model.c:119
+#: settings/xfae-model.c:119
 msgid "on hibernate"
 msgstr ""
 
-#: ../settings/xfae-model.c:120
+#: settings/xfae-model.c:120
 msgid "on hybrid sleep"
 msgstr ""
 
-#: ../settings/xfae-model.c:121
+#: settings/xfae-model.c:121
 msgid "on switch user"
 msgstr ""
 
-#: ../settings/xfae-model.c:463 ../settings/xfae-model.c:1177
-#: ../settings/xfae-model.c:1235
+#: settings/xfae-model.c:463 settings/xfae-model.c:1177
+#: settings/xfae-model.c:1235
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "Nu s-a putut deschide %s pentru scriere"
 
-#: ../settings/xfae-model.c:815
+#: settings/xfae-model.c:815
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "Nu s-a putut desface legătura %s: %s"
 
-#: ../settings/xfae-model.c:977
+#: settings/xfae-model.c:977
 #, c-format
 msgid "Failed to create file %s"
 msgstr "Nu s-a putut crea fișierul %s"
 
-#: ../settings/xfae-model.c:1001
+#: settings/xfae-model.c:1001
 #, c-format
 msgid "Failed to write file %s"
 msgstr "Nu s-a putut scrie fișierul %s"
 
-#: ../settings/xfae-model.c:1061
+#: settings/xfae-model.c:1061
 #, c-format
 msgid "Failed to open %s for reading"
 msgstr "Nu s-a putut deschide %s pentru citire"
 
-#: ../settings/xfae-window.c:108
+#: settings/xfae-window.c:108
 msgid "Failed to set run hook"
 msgstr ""
 
-#: ../settings/xfae-window.c:223
+#: settings/xfae-window.c:223
 msgid "Trigger"
 msgstr ""
 
-#: ../settings/xfae-window.c:249 ../settings/xfae-window.c:338
+#: settings/xfae-window.c:249 settings/xfae-window.c:338
 msgid "Add"
 msgstr ""
 
-#: ../settings/xfae-window.c:258 ../settings/xfae-window.c:344
+#: settings/xfae-window.c:258 settings/xfae-window.c:344
 msgid "Remove"
 msgstr "Șterge"
 
-#: ../settings/xfae-window.c:261
+#: settings/xfae-window.c:261
 msgid "Remove application"
 msgstr ""
 
-#: ../settings/xfae-window.c:271
+#: settings/xfae-window.c:271
 msgid "Edit"
 msgstr "Editare"
 
-#: ../settings/xfae-window.c:397
+#: settings/xfae-window.c:397
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Nu s-a putut adăuga „%s”"
 
-#: ../settings/xfae-window.c:428 ../settings/xfae-window.c:442
+#: settings/xfae-window.c:428 settings/xfae-window.c:442
 msgid "Failed to remove item"
 msgstr "Nu s-a putut elimina elementul"
 
-#: ../settings/xfae-window.c:471
+#: settings/xfae-window.c:471
 msgid "Failed to edit item"
 msgstr "Nu s-a putut edita elementul"
 
-#: ../settings/xfae-window.c:491
+#: settings/xfae-window.c:491
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Nu s-a putut edita elementul „%s”"
 
-#: ../settings/xfae-window.c:519
+#: settings/xfae-window.c:519
 msgid "Failed to toggle item"
 msgstr "Nu s-a putut (dez)activa elementul"
 
-#: ../xfce4-session/main.c:77
+#: xfce4-session/main.c:77
 msgid "Disable binding to TCP ports"
 msgstr "Fără utilizare de porturi TCP"
 
-#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:102
+#: xfce4-session/main.c:78 xfce4-session-logout/main.c:102
 msgid "Print version information and exit"
 msgstr "Arată detalii despre versiune și ieși"
 
-#: ../xfce4-session/xfsm-chooser.c:147
+#: xfce4-session/xfsm-chooser.c:147
 msgid "Session Manager"
 msgstr "Managerul de sesiune"
 
-#: ../xfce4-session/xfsm-chooser.c:168
+#: xfce4-session/xfsm-chooser.c:168
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr "Alegeți sesiunea pe care doriți să o restaurați. Puteți face asta printr-un dublu-clic de maus."
 
-#: ../xfce4-session/xfsm-chooser.c:184
+#: xfce4-session/xfsm-chooser.c:184
 msgid "Create a new session."
 msgstr "Creează o sesiune nouă."
 
-#: ../xfce4-session/xfsm-chooser.c:191
+#: xfce4-session/xfsm-chooser.c:191
 msgid "Delete a saved session."
 msgstr "Ștergeti o sesiune salvată."
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:202
+#: xfce4-session/xfsm-chooser.c:202
+#: xfce4-session-logout/xfce4-session-logout.desktop.in:11
 msgid "Log Out"
 msgstr "Ieșire"
 
-#: ../xfce4-session/xfsm-chooser.c:204
+#: xfce4-session/xfsm-chooser.c:204
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Anulează încercarea de autentificare și revino la ecranul precedent."
 
 #. "Start" button
-#: ../xfce4-session/xfsm-chooser.c:211
+#: xfce4-session/xfsm-chooser.c:211
 msgid "Start"
 msgstr "Start"
 
-#: ../xfce4-session/xfsm-chooser.c:212
+#: xfce4-session/xfsm-chooser.c:212
 msgid "Start an existing session."
 msgstr "Porniți o sesiune existentă."
 
-#: ../xfce4-session/xfsm-dns.c:78
+#: xfce4-session/xfsm-dns.c:78
 msgid "(Unknown)"
 msgstr "(Necunoscută)"
 
-#: ../xfce4-session/xfsm-dns.c:152
+#: xfce4-session/xfsm-dns.c:152
 #, c-format
 msgid ""
 "Could not look up internet address for %s.\n"
@@ -377,15 +402,15 @@ msgid ""
 "%s to the file /etc/hosts on your system."
 msgstr "Nu s-a putut determina o adresă DNS validă pentru %s.\nAceasta va împiedica funcționarea corectă a mediului Xfce.\nProbabil că problema poate fi corectată prin adăugarea\n%s în fișierul /etc/hosts al acestui sistem."
 
-#: ../xfce4-session/xfsm-dns.c:159
+#: xfce4-session/xfsm-dns.c:159
 msgid "Continue anyway"
 msgstr "Continuă oricum"
 
-#: ../xfce4-session/xfsm-dns.c:160
+#: xfce4-session/xfsm-dns.c:160
 msgid "Try again"
 msgstr "Reîncearcă"
 
-#: ../xfce4-session/xfsm-manager.c:571
+#: xfce4-session/xfsm-manager.c:571
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -394,73 +419,72 @@ msgid ""
 "incorrectly."
 msgstr "Nu s-a putut determina numele sesiunii de rezervă. Cauze posibile: xfconfd nu e pornit (problemă de opțiuni D-Bus), variabila de mediu $XDG_CONFIG_DIRS e incorectă (trebuie să includă „%s”) ori o instalare xfce4-session incorectă."
 
-#: ../xfce4-session/xfsm-manager.c:582
+#: xfce4-session/xfsm-manager.c:582
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Sesiunea de rezervă specificată („%s”) nu este marcată ca sesiune de rezervă"
 
-#: ../xfce4-session/xfsm-manager.c:615
+#: xfce4-session/xfsm-manager.c:615
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Lista programelor din sesiunea de rezervă este goală."
 
-#: ../xfce4-session/xfsm-manager.c:701
+#: xfce4-session/xfsm-manager.c:701
 msgid "Name for the new session"
 msgstr "Nume pentru noua sesiune"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:779
+#: xfce4-session/xfsm-manager.c:779
 msgid "Session Manager Error"
 msgstr "Eroare a managerului de sesiune"
 
-#: ../xfce4-session/xfsm-manager.c:781
+#: xfce4-session/xfsm-manager.c:781
 msgid "Unable to load a failsafe session"
 msgstr "Nu s-a putut încărca sesiunea de rezervă"
 
-#: ../xfce4-session/xfsm-manager.c:783
+#: xfce4-session/xfsm-manager.c:783
 msgid "_Quit"
 msgstr "_Ieșire"
 
-#: ../xfce4-session/xfsm-manager.c:1257
+#: xfce4-session/xfsm-manager.c:1257
 msgid "Shutdown Failed"
 msgstr "Oprirea a eșuat"
 
-#: ../xfce4-session/xfsm-manager.c:1260
+#: xfce4-session/xfsm-manager.c:1260
 msgid "Failed to suspend session"
 msgstr "Nu s-a putut suspenda sesiunea"
 
-#: ../xfce4-session/xfsm-manager.c:1262
+#: xfce4-session/xfsm-manager.c:1262
 msgid "Failed to hibernate session"
 msgstr "Nu s-a putut hiberna sesiunea"
 
-#: ../xfce4-session/xfsm-manager.c:1264
+#: xfce4-session/xfsm-manager.c:1264
 msgid "Failed to hybrid sleep session"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1265
+#: xfce4-session/xfsm-manager.c:1265
 msgid "Failed to switch user"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1573
-#, c-format
+#: xfce4-session/xfsm-manager.c:1573
 msgid "Can only terminate clients when in the idle state"
 msgstr "Clienții pot fi terminați doar când sunt inactivi"
 
-#: ../xfce4-session/xfsm-manager.c:2229
+#: xfce4-session/xfsm-manager.c:2229
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Managerul de sesiune trebuie să fie inactiv când se cere un punct de control"
 
-#: ../xfce4-session/xfsm-manager.c:2299 ../xfce4-session/xfsm-manager.c:2319
+#: xfce4-session/xfsm-manager.c:2299 xfce4-session/xfsm-manager.c:2319
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Managerul de sesiune trebuie să fie inactiv când se cere oprirea"
 
-#: ../xfce4-session/xfsm-manager.c:2364
+#: xfce4-session/xfsm-manager.c:2364
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr ""
 
-#: ../xfce4-session/xfsm-logout-dialog.c:193
+#: xfce4-session/xfsm-logout-dialog.c:193
 #, c-format
 msgid "Log out %s"
 msgstr "Ieșire pentru %s"
@@ -468,100 +492,261 @@ msgstr "Ieșire pentru %s"
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:238
+#: xfce4-session/xfsm-logout-dialog.c:238
 msgid "_Log Out"
 msgstr "_Ieșire"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:258
+#: xfce4-session/xfsm-logout-dialog.c:258
 msgid "_Restart"
 msgstr "R_epornire"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:278
+#: xfce4-session/xfsm-logout-dialog.c:278
 msgid "Shut _Down"
 msgstr "_Oprire"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:302
+#: xfce4-session/xfsm-logout-dialog.c:302
 msgid "Sus_pend"
 msgstr "_Suspendare"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:336
+#: xfce4-session/xfsm-logout-dialog.c:336
 msgid "_Hibernate"
 msgstr "_Hibernare"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:367
+#: xfce4-session/xfsm-logout-dialog.c:367
 msgid "H_ybrid Sleep"
 msgstr ""
 
-#: ../xfce4-session/xfsm-logout-dialog.c:398
+#: xfce4-session/xfsm-logout-dialog.c:398
 msgid "Switch _User"
 msgstr ""
 
-#: ../xfce4-session/xfsm-logout-dialog.c:424
+#: xfce4-session/xfsm-logout-dialog.c:424
 msgid "_Save session for future logins"
 msgstr "Salvea_ză sesiunea"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:452
+#: xfce4-session/xfsm-logout-dialog.c:452
 msgid "An error occurred"
 msgstr "A intervenit o eroare"
 
-#: ../xfce4-session/xfsm-shutdown.c:159
+#: xfce4-session/xfsm-shutdown.c:159
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Oprirea este inhibată în modul de operare de tip chioșc"
 
-#: ../xfce4-session/xfsm-shutdown.c:216
+#: xfce4-session/xfsm-shutdown.c:216
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Metodă necunoscută de oprire %d"
 
-#: ../xfce4-session-logout/main.c:70
+#: xfce4-session-logout/main.c:70
 msgid "Log out without displaying the logout dialog"
 msgstr "Ieși din sesiune fără a afișa fereastra de ieșire"
 
-#: ../xfce4-session-logout/main.c:74
+#: xfce4-session-logout/main.c:74
 msgid "Halt without displaying the logout dialog"
 msgstr "Oprește calculatorul fără a afișa fereastra de ieșire"
 
-#: ../xfce4-session-logout/main.c:78
+#: xfce4-session-logout/main.c:78
 msgid "Reboot without displaying the logout dialog"
 msgstr "Repornește calculatorul fără a afișa fereastra de ieșire"
 
-#: ../xfce4-session-logout/main.c:82
+#: xfce4-session-logout/main.c:82
 msgid "Suspend without displaying the logout dialog"
 msgstr "Suspendă calculatorul fără a afișa fereastra de ieșire"
 
-#: ../xfce4-session-logout/main.c:86
+#: xfce4-session-logout/main.c:86
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Hibernează calculatorul fără a afișa fereastra de ieșire"
 
-#: ../xfce4-session-logout/main.c:90
+#: xfce4-session-logout/main.c:90
 msgid "Hybrid Sleep without displaying the logout dialog"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:94
+#: xfce4-session-logout/main.c:94
 msgid "Switch user without displaying the logout dialog"
 msgstr ""
 
-#: ../xfce4-session-logout/main.c:98
+#: xfce4-session-logout/main.c:98
 msgid "Log out quickly; don't save the session"
 msgstr "Ieși repede, nu salva sesiunea"
 
-#: ../xfce4-session-logout/main.c:121
+#: xfce4-session-logout/main.c:121
 msgid "Unknown error"
 msgstr "Eroare necunoscută"
 
-#: ../xfce4-session-logout/main.c:147
+#: xfce4-session-logout/main.c:147
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Scris de Benedikt Meurer <benny@xfce.org>"
 
-#: ../xfce4-session-logout/main.c:148
+#: xfce4-session-logout/main.c:148
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "și Brian Tarricone <kelnos@xfce.org>."
 
-#: ../xfce4-session-logout/main.c:168 ../xfce4-session-logout/main.c:279
+#: xfce4-session-logout/main.c:168 xfce4-session-logout/main.c:279
 msgid "Received error while trying to log out"
 msgstr "S-a primit o eroare la încercarea de ieșire din sesiune"
 
-#: ../xfce4-session-logout/main.c:244
+#: xfce4-session-logout/main.c:244
 #, c-format
 msgid "Received error while trying to log out, error was %s"
 msgstr ""
+
+#: xfce4-session-logout/xfce4-session-logout.desktop.in:6
+msgid "xfsm-logout"
+msgstr ""
+
+#: xfce4-session-logout/xfce4-session-logout.desktop.in:12
+msgid "Log out of the Xfce Desktop"
+msgstr "Ieșire din mediul desktop Xfce"
+
+#: settings/xfce-session-settings.desktop.in:3
+#: settings/xfce4-session-settings.ui:61
+msgid "Session and Startup"
+msgstr "Sesiuni și pornire"
+
+#: settings/xfce-session-settings.desktop.in:4
+msgid "Customize desktop startup"
+msgstr ""
+
+#: settings/xfce-session-settings.desktop.in:6
+msgid "org.xfce.session"
+msgstr ""
+
+#: settings/xfce-session-settings.desktop.in:11
+msgid ""
+"session;settings;preferences;manager;startup;login;logout;shutdown;lock "
+"screen;application;autostart;launch;services;daemon;agent;"
+msgstr ""
+
+#: settings/xfce4-session-settings.ui:51
+msgid ""
+"These applications are a part of the currently-running session,\n"
+"and can be saved now or when you log out.\n"
+"Changes below will only take effect when the session is saved."
+msgstr ""
+
+#: settings/xfce4-session-settings.ui:79
+msgid "_Help"
+msgstr "_Ajutor"
+
+#: settings/xfce4-session-settings.ui:144
+msgid "_Display chooser on login"
+msgstr "Arată selectorul _de sesiune la pornire"
+
+#: settings/xfce4-session-settings.ui:149
+msgid "Display the session chooser every time Xfce starts"
+msgstr "Arată selectorul de sesiune la fiecare intrare în Xfce"
+
+#: settings/xfce4-session-settings.ui:161
+msgid "<b>Session Chooser</b>"
+msgstr "<b>Selector de sesiune</b>"
+
+#: settings/xfce4-session-settings.ui:192
+msgid "Automatically save session on logo_ut"
+msgstr "Salvea_ză automat sesiunea la ieșire"
+
+#: settings/xfce4-session-settings.ui:197
+msgid "Always save the session when logging out"
+msgstr "Salvează întotdeauna sesiunea la ieșire"
+
+#: settings/xfce4-session-settings.ui:210
+msgid "Pro_mpt on logout"
+msgstr "C_onfirmare la ieșire"
+
+#: settings/xfce4-session-settings.ui:215
+msgid "Prompt for confirmation when logging out"
+msgstr "Cere confirmare la ieșirea din sesiune"
+
+#: settings/xfce4-session-settings.ui:235
+msgid "<b>Logout Settings</b>"
+msgstr "<b>Opțiuni pentru ieșirea din sesiune</b>"
+
+#: settings/xfce4-session-settings.ui:266
+msgid "Lock screen be_fore sleep"
+msgstr "_Blochează ecranul înainte de suspendare ori hibernare"
+
+#: settings/xfce4-session-settings.ui:271
+msgid "Run xflock4 before suspending or hibernating the system"
+msgstr "Pornește xflock4 înainte de suspendarea ori hibernarea sistemului"
+
+#: settings/xfce4-session-settings.ui:290
+msgid "<b>Shutdown</b>"
+msgstr "<b>Oprire</b>"
+
+#: settings/xfce4-session-settings.ui:307
+msgid "_General"
+msgstr "_Generale"
+
+#: settings/xfce4-session-settings.ui:331
+msgid "Save Sess_ion"
+msgstr "Salvea_ză sesiunea"
+
+#: settings/xfce4-session-settings.ui:385
+msgid "Currently active session: <b>Default</b>"
+msgstr ""
+
+#: settings/xfce4-session-settings.ui:486
+msgid "Current Sessio_n"
+msgstr ""
+
+#: settings/xfce4-session-settings.ui:537
+msgid "_Remove"
+msgstr "_Elimină"
+
+#: settings/xfce4-session-settings.ui:541
+msgid "Delete the selected session"
+msgstr ""
+
+#: settings/xfce4-session-settings.ui:565
+msgid "Clear Save_d Sessions"
+msgstr ""
+
+#: settings/xfce4-session-settings.ui:615
+msgid "Saved _Sessions"
+msgstr ""
+
+#: settings/xfce4-session-settings.ui:650
+msgid "Launch GN_OME services on startup"
+msgstr "Lansează serviciile G_NOME la pornire"
+
+#: settings/xfce4-session-settings.ui:655
+msgid "Start GNOME services, such as gnome-keyring"
+msgstr "Pornește serviciile GNOME precum gnome-keyring"
+
+#: settings/xfce4-session-settings.ui:668
+msgid "Launch _KDE services on startup"
+msgstr "Lansează serviciile _KDE la pornire"
+
+#: settings/xfce4-session-settings.ui:673
+msgid "Start KDE services, such as kdeinit"
+msgstr "Pornește serviciile KDE precum kdeinit"
+
+#: settings/xfce4-session-settings.ui:692
+msgid "<b>Compatibility</b>"
+msgstr "<b>Compatibilitate</b>"
+
+#: settings/xfce4-session-settings.ui:717
+msgid "Manage _remote applications"
+msgstr "Gestionează programe la _distanță"
+
+#: settings/xfce4-session-settings.ui:722
+msgid ""
+"Manage remote applications over the network (this may be a security risk)"
+msgstr "Gestionează programe la distanță prin rețea (posibil risc de securitate)"
+
+#: settings/xfce4-session-settings.ui:734
+msgid "<b>Security</b>"
+msgstr "<b>Securitate</b>"
+
+#: settings/xfce4-session-settings.ui:754
+msgid "Ad_vanced"
+msgstr "A_vansate"
+
+#: settings/xfce4-session-settings.ui:785
+msgid "Saving Session"
+msgstr "Se salvează sesiunea"
+
+#: settings/xfce4-session-settings.ui:861
+msgid ""
+"Your session is being saved.  If you do not wish to wait, you may close this"
+" window."
+msgstr "Vi se salvează sesiunea... Dacă nu doriți să așteptați, puteți închide această fereastră."
