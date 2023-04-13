@@ -1,24 +1,21 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Xfce
-# This file is distributed under the same license as the xfce4-session.master package.
+# This file is distributed under the same license as the xfce4-session.xfce-4-18 package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Ambrose Li <acli@ada.dhs.org>, 2004
-# Bill Chang, 2022
-# Cheng-Chia Tseng <pswo10680@gmail.com>, 2010
-# Hydonsingore Cia <hydonsingore@educities.edu.tw>, 2005
-# 黃柏諺 <s8321414@gmail.com>, 2016-2019
-# umm <umm@pchome.com.tw>, 2003
-# Walter Cheuk <wwycheuk@gmail.com>, 2013,2019
-# 黃柏諺 <s8321414@gmail.com>, 2019-2020
+# Xfce Bot <transifex@xfce.org>, 2023
+# 黃柏諺 <s8321414@gmail.com>, 2023
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Xfce4-session\n"
+"Project-Id-Version: xfce4-session.xfce-4-18\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
 "POT-Creation-Date: 2023-04-12 12:49+0200\n"
-"PO-Revision-Date: 2013-07-02 20:44+0000\n"
-"Last-Translator: Bill Chang, 2022\n"
-"Language-Team: Chinese (Taiwan) (http://app.transifex.com/xfce/xfce4-session/language/zh_TW/)\n"
+"PO-Revision-Date: 2023-02-20 11:55+0000\n"
+"Last-Translator: 黃柏諺 <s8321414@gmail.com>, 2023\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/xfce/teams/16840/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -35,7 +32,7 @@ msgstr "使用這個工作階段來執行 Xfce 作為您的桌面環境"
 
 #: xfce.desktop.in:8
 msgid "Type=Application"
-msgstr ""
+msgstr "Type=Application"
 
 #: libxfsm/xfsm-util.c:374
 msgid "Session"
@@ -55,7 +52,7 @@ msgstr "啟動螢幕保護程式與上鎖程式"
 
 #: scripts/xscreensaver.desktop.in:6
 msgid "preferences-desktop-screensaver"
-msgstr ""
+msgstr "preferences-desktop-screensaver"
 
 #: settings/main.c:98
 msgid "Settings manager socket"
@@ -406,7 +403,11 @@ msgid ""
 "This will prevent Xfce from operating correctly.\n"
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
-msgstr "無法取得 %s 的 IP 位址，\nXfce 將因而無法正常運作。\n在 /etc/hosts 加入「%s」\n可能可以改正這個問題。"
+msgstr ""
+"無法取得 %s 的 IP 位址，\n"
+"Xfce 將因而無法正常運作。\n"
+"在 /etc/hosts 加入「%s」\n"
+"可能可以改正這個問題。"
 
 #: xfce4-session/xfsm-dns.c:159
 msgid "Continue anyway"
@@ -423,7 +424,9 @@ msgid ""
 "running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
 "incorrectly (must include \"%s\"), or xfce4-session is installed "
 "incorrectly."
-msgstr "無法得知防失敗工作階段的名稱。可能原因：xfcond 並非執行中 (D-Bus 設置問題)；環境變數 $XDG_CONFIG_DIRS 的設定不正確 (一定要包含「%s」)，或是 xfce4-session 安裝不正確。"
+msgstr ""
+"無法得知防失敗工作階段的名稱。可能原因：xfcond 並非執行中 (D-Bus 設置問題)；環境變數 $XDG_CONFIG_DIRS 的設定不正確 "
+"(一定要包含「%s」)，或是 xfce4-session 安裝不正確。"
 
 #: xfce4-session/xfsm-manager.c:582
 #, c-format
@@ -598,7 +601,7 @@ msgstr "當嘗試登出時接收到錯誤，錯誤為 %s"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:6
 msgid "xfsm-logout"
-msgstr ""
+msgstr "xfsm-logout"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:12
 msgid "Log out of the Xfce Desktop"
@@ -607,7 +610,7 @@ msgstr "登出 Xfce 桌面"
 #: settings/xfce-session-settings.desktop.in:3
 #: settings/xfce4-session-settings.ui:61
 msgid "Session and Startup"
-msgstr "工作階段與初始啟動"
+msgstr "工作階段與啟動"
 
 #: settings/xfce-session-settings.desktop.in:4
 msgid "Customize desktop startup"
@@ -615,20 +618,25 @@ msgstr "自訂桌面啟動"
 
 #: settings/xfce-session-settings.desktop.in:6
 msgid "org.xfce.session"
-msgstr ""
+msgstr "org.xfce.session"
 
 #: settings/xfce-session-settings.desktop.in:11
 msgid ""
 "session;settings;preferences;manager;startup;login;logout;shutdown;lock "
 "screen;application;autostart;launch;services;daemon;agent;"
-msgstr "session;settings;preferences;manager;startup;login;logout;shutdown;lock screen;application;autostart;launch;services;daemon;agent;"
+msgstr ""
+"session;settings;preferences;manager;startup;login;logout;shutdown;lock "
+"screen;application;autostart;launch;services;daemon;agent;"
 
 #: settings/xfce4-session-settings.ui:51
 msgid ""
 "These applications are a part of the currently-running session,\n"
 "and can be saved now or when you log out.\n"
 "Changes below will only take effect when the session is saved."
-msgstr "這些應用程式是目前正在執行的工作階段的一部分，\n且可以立刻儲存或在您登出時儲存。\n以下變更將只會在工作階段儲存時生效。"
+msgstr ""
+"這些應用程式是目前正在執行的工作階段的一部分，\n"
+"且可以立刻儲存或在您登出時儲存。\n"
+"以下變更將只會在工作階段儲存時生效。"
 
 #: settings/xfce4-session-settings.ui:79
 msgid "_Help"
@@ -636,11 +644,11 @@ msgstr "說明(_H)"
 
 #: settings/xfce4-session-settings.ui:144
 msgid "_Display chooser on login"
-msgstr "在登入時顯示選擇器"
+msgstr "在登入時顯示選擇器(_D)"
 
 #: settings/xfce4-session-settings.ui:149
 msgid "Display the session chooser every time Xfce starts"
-msgstr "每次 Xfce 啟動時都顯示工作階段選擇器"
+msgstr "每次 Xfce 啟動時顯示工作階段選擇器"
 
 #: settings/xfce4-session-settings.ui:161
 msgid "<b>Session Chooser</b>"
@@ -648,7 +656,7 @@ msgstr "<b>工作階段選擇器</b>"
 
 #: settings/xfce4-session-settings.ui:192
 msgid "Automatically save session on logo_ut"
-msgstr "登出時自動儲存工作階段(_U)"
+msgstr "在登出時自動儲存工作階段(_U)"
 
 #: settings/xfce4-session-settings.ui:197
 msgid "Always save the session when logging out"
@@ -656,19 +664,19 @@ msgstr "登出時總是儲存工作階段"
 
 #: settings/xfce4-session-settings.ui:210
 msgid "Pro_mpt on logout"
-msgstr "登出時先問清楚(_M)"
+msgstr "登出時提示"
 
 #: settings/xfce4-session-settings.ui:215
 msgid "Prompt for confirmation when logging out"
-msgstr "登出時需要確認"
+msgstr "登出時顯示確認提示"
 
 #: settings/xfce4-session-settings.ui:235
 msgid "<b>Logout Settings</b>"
-msgstr "<b>登出設定值</b>"
+msgstr "<b>登出設定</b>"
 
 #: settings/xfce4-session-settings.ui:266
 msgid "Lock screen be_fore sleep"
-msgstr "在睡眠之前鎖定螢幕(_F)"
+msgstr "在睡眠前鎖定螢幕(_F)"
 
 #: settings/xfce4-session-settings.ui:271
 msgid "Run xflock4 before suspending or hibernating the system"
@@ -712,7 +720,7 @@ msgstr "已儲存的工作階段(_S)"
 
 #: settings/xfce4-session-settings.ui:650
 msgid "Launch GN_OME services on startup"
-msgstr "啟動時同時啟動 GN_OME 服務"
+msgstr "啟動時同時啟動 GNOME 服務(_O)"
 
 #: settings/xfce4-session-settings.ui:655
 msgid "Start GNOME services, such as gnome-keyring"
@@ -720,11 +728,11 @@ msgstr "啟動 GNOME 服務，如 gnome-keyring"
 
 #: settings/xfce4-session-settings.ui:668
 msgid "Launch _KDE services on startup"
-msgstr "啟動時同時啟動 _KDE 服務"
+msgstr "啟動時同時啟動 KDE 服務(_K)"
 
 #: settings/xfce4-session-settings.ui:673
 msgid "Start KDE services, such as kdeinit"
-msgstr "啟動 KDE 服務，像是 kdeinit"
+msgstr "啟動 KDE 服務，如 kdeinit"
 
 #: settings/xfce4-session-settings.ui:692
 msgid "<b>Compatibility</b>"
@@ -737,7 +745,7 @@ msgstr "管理遠端應用程式(_R)"
 #: settings/xfce4-session-settings.ui:722
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
-msgstr "透過網路管理遠端應用程式 (這可能有安全上的風險)"
+msgstr "透過網路管理遠端應用程式（這可能會是安全性問題）"
 
 #: settings/xfce4-session-settings.ui:734
 msgid "<b>Security</b>"
@@ -749,10 +757,10 @@ msgstr "進階(_V)"
 
 #: settings/xfce4-session-settings.ui:785
 msgid "Saving Session"
-msgstr "儲存工作階段"
+msgstr "正在儲存工作階段"
 
 #: settings/xfce4-session-settings.ui:861
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
-msgstr "您的工作階段正被儲存。如果您不希望等候，沒關係您可以關閉此視窗。"
+msgstr "您的工作階段已儲存。若您不想要等待，您可以關閉此視窗。"
