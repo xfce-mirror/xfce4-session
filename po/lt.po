@@ -6,13 +6,14 @@
 # Algimantas Margevičius <margevicius.algimantas@gmail.com>, 2012
 # Mantas Zapolskas <mantaz@users.sf.net>, 2004
 # Moo, 2015-2020
+# Moo, 2023
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-04-12 12:49+0200\n"
+"POT-Creation-Date: 2023-04-13 12:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
-"Last-Translator: Moo, 2015-2020\n"
+"Last-Translator: Moo, 2023\n"
 "Language-Team: Lithuanian (http://app.transifex.com/xfce/xfce4-session/language/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,7 +31,7 @@ msgstr "Naudoti šį seansą, kad Xfce būtų naudojama kaip jūsų darbastalio 
 
 #: xfce.desktop.in:8
 msgid "Type=Application"
-msgstr ""
+msgstr "Type=Application"
 
 #: libxfsm/xfsm-util.c:374
 msgid "Session"
@@ -50,7 +51,7 @@ msgstr "Paleisti ekrano užsklandą ir užrakinimo programą"
 
 #: scripts/xscreensaver.desktop.in:6
 msgid "preferences-desktop-screensaver"
-msgstr ""
+msgstr "preferences-desktop-screensaver"
 
 #: settings/main.c:98
 msgid "Settings manager socket"
@@ -121,7 +122,7 @@ msgid "Unable to save the session"
 msgstr "Seanso įrašyti nepavyko"
 
 #: settings/session-editor.c:141 settings/session-editor.c:315
-#: xfce4-session/xfsm-manager.c:1267 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1275 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "_Užverti"
 
@@ -140,8 +141,8 @@ msgid ""
 msgstr "Kitą kartą prisijungus, įrašytos programų būsenos nebus atstatytos."
 
 #: settings/session-editor.c:203 settings/session-editor.c:290
-#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:687
-#: xfce4-session/xfsm-logout-dialog.c:221
+#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:695
+#: xfce4-session/xfsm-logout-dialog.c:223
 msgid "_Cancel"
 msgstr "_Atsisakyti"
 
@@ -201,7 +202,7 @@ msgstr "Programa"
 msgid "Restart Style"
 msgstr "Paleidimo iš naujo stilius"
 
-#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:689
+#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:697
 msgid "_OK"
 msgstr "_Gerai"
 
@@ -411,7 +412,7 @@ msgstr "Vis tiek tęsti"
 msgid "Try again"
 msgstr "Bandyti dar kartą"
 
-#: xfce4-session/xfsm-manager.c:571
+#: xfce4-session/xfsm-manager.c:579
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -420,120 +421,125 @@ msgid ""
 "incorrectly."
 msgstr "Nepavyko nustatyti gedimams atsparaus seanso pavadinimo.  Galimos priežastys: xfconfd neveikia (D-Bus sąrankos klaida); aplinkos kintamasis $XDG_CONFIG_DIRS nustatytas netinkamai (turi turėti „%s“), arba xfce4-session neteisingai įdiegta."
 
-#: xfce4-session/xfsm-manager.c:582
+#: xfce4-session/xfsm-manager.c:590
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Nurodytas gedimams atsparus seansas („%s“) nėra pažymėtas kaip gedimams atsparus seansas."
 
-#: xfce4-session/xfsm-manager.c:615
+#: xfce4-session/xfsm-manager.c:623
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Gedimams atsparaus seanso programų sąrašas tuščias."
 
-#: xfce4-session/xfsm-manager.c:701
+#: xfce4-session/xfsm-manager.c:709
 msgid "Name for the new session"
 msgstr "Naujo seanso pavadinimas"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:779
+#: xfce4-session/xfsm-manager.c:787
 msgid "Session Manager Error"
 msgstr "Seansų tvarkytuvės klaida"
 
-#: xfce4-session/xfsm-manager.c:781
+#: xfce4-session/xfsm-manager.c:789
 msgid "Unable to load a failsafe session"
 msgstr "Nepavyko įkelti gedimams atsparaus seanso"
 
-#: xfce4-session/xfsm-manager.c:783
+#: xfce4-session/xfsm-manager.c:791
 msgid "_Quit"
 msgstr "_Išeiti"
 
-#: xfce4-session/xfsm-manager.c:1257
+#: xfce4-session/xfsm-manager.c:1265
 msgid "Shutdown Failed"
 msgstr "Išjungti nepavyko"
 
-#: xfce4-session/xfsm-manager.c:1260
+#: xfce4-session/xfsm-manager.c:1268
 msgid "Failed to suspend session"
 msgstr "Nepavyko pristabdyti seanso"
 
-#: xfce4-session/xfsm-manager.c:1262
+#: xfce4-session/xfsm-manager.c:1270
 msgid "Failed to hibernate session"
 msgstr "Nepavyko užmigdyti seanso"
 
-#: xfce4-session/xfsm-manager.c:1264
+#: xfce4-session/xfsm-manager.c:1272
 msgid "Failed to hybrid sleep session"
 msgstr "Nepavyko įvesti seanso į mišraus miego būseną"
 
-#: xfce4-session/xfsm-manager.c:1265
+#: xfce4-session/xfsm-manager.c:1273
 msgid "Failed to switch user"
 msgstr "Nepavyko perjungti naudotojo"
 
-#: xfce4-session/xfsm-manager.c:1573
+#: xfce4-session/xfsm-manager.c:1581
 msgid "Can only terminate clients when in the idle state"
 msgstr "Klientų darbą galima baigti tik neveiklumo būsenoje"
 
-#: xfce4-session/xfsm-manager.c:2229
+#: xfce4-session/xfsm-manager.c:2252
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Kai prašoma įrašyto kontrolinio taško, seansų tvarkytuvė turi būti neveiklumo būsenoje"
 
-#: xfce4-session/xfsm-manager.c:2299 xfce4-session/xfsm-manager.c:2319
+#: xfce4-session/xfsm-manager.c:2322 xfce4-session/xfsm-manager.c:2342
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Kai prašoma išjungti, seansų tvarkytuvė turi būti neveiklumo būsenoje"
 
-#: xfce4-session/xfsm-manager.c:2364
+#: xfce4-session/xfsm-manager.c:2387
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Kai prašoma paleisti iš naujo, seansų tvarkytuvė privalo būti neveiklumo būsenoje"
 
-#: xfce4-session/xfsm-logout-dialog.c:193
+#: xfce4-session/xfsm-logout-dialog.c:195
 #, c-format
 msgid "Log out %s"
 msgstr "Atsijungti %s"
 
-#. *
-#. * Logout
-#. *
-#: xfce4-session/xfsm-logout-dialog.c:238
+#: xfce4-session/xfsm-logout-dialog.c:241
 msgid "_Log Out"
 msgstr "_Atsijungti"
 
-#: xfce4-session/xfsm-logout-dialog.c:258
+#: xfce4-session/xfsm-logout-dialog.c:267
+msgid "_Restart and update"
+msgstr "_Paleisti iš naujo ir naujinti"
+
+#: xfce4-session/xfsm-logout-dialog.c:267
 msgid "_Restart"
 msgstr "Paleisti iš _naujo"
 
-#: xfce4-session/xfsm-logout-dialog.c:278
+#: xfce4-session/xfsm-logout-dialog.c:288
+msgid "Update and Shut _Down"
+msgstr "Atnaujinti ir _išjungti"
+
+#: xfce4-session/xfsm-logout-dialog.c:288
 msgid "Shut _Down"
 msgstr "_Išjungti"
 
-#: xfce4-session/xfsm-logout-dialog.c:302
+#: xfce4-session/xfsm-logout-dialog.c:313
 msgid "Sus_pend"
 msgstr "Pri_stabdyti"
 
-#: xfce4-session/xfsm-logout-dialog.c:336
+#: xfce4-session/xfsm-logout-dialog.c:347
 msgid "_Hibernate"
 msgstr "_Užmigdyti"
 
-#: xfce4-session/xfsm-logout-dialog.c:367
+#: xfce4-session/xfsm-logout-dialog.c:378
 msgid "H_ybrid Sleep"
 msgstr "_Mišraus miego būsena"
 
-#: xfce4-session/xfsm-logout-dialog.c:398
+#: xfce4-session/xfsm-logout-dialog.c:409
 msgid "Switch _User"
 msgstr "Perjungti na_udotoją"
 
-#: xfce4-session/xfsm-logout-dialog.c:424
+#: xfce4-session/xfsm-logout-dialog.c:435
 msgid "_Save session for future logins"
 msgstr "Į_rašyti seansą būsimiems prisijungimams"
 
-#: xfce4-session/xfsm-logout-dialog.c:452
+#: xfce4-session/xfsm-logout-dialog.c:463
 msgid "An error occurred"
 msgstr "Įvyko klaida"
 
-#: xfce4-session/xfsm-shutdown.c:159
+#: xfce4-session/xfsm-shutdown.c:168
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Išjungimas užblokuotas „kiosk“ nustatymuose"
 
-#: xfce4-session/xfsm-shutdown.c:216
+#: xfce4-session/xfsm-shutdown.c:225
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Nežinomas išjungimo būdas %d"
@@ -593,7 +599,7 @@ msgstr "Bandant atsijungti, buvo gauta klaida, kuri buvo %s"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:6
 msgid "xfsm-logout"
-msgstr ""
+msgstr "xfsm-logout"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:12
 msgid "Log out of the Xfce Desktop"
@@ -610,7 +616,7 @@ msgstr "Tinkinti darbalaukio paleidimą"
 
 #: settings/xfce-session-settings.desktop.in:6
 msgid "org.xfce.session"
-msgstr ""
+msgstr "org.xfce.session"
 
 #: settings/xfce-session-settings.desktop.in:11
 msgid ""
