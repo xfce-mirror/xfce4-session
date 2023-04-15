@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-04-12 12:49+0200\n"
+"POT-Creation-Date: 2023-04-13 12:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>, 2019-2023\n"
 "Language-Team: Portuguese (http://app.transifex.com/xfce/xfce4-session/language/pt/)\n"
@@ -52,7 +52,7 @@ msgstr "Lançar proteção de ecrã e programa de bloqueio"
 
 #: scripts/xscreensaver.desktop.in:6
 msgid "preferences-desktop-screensaver"
-msgstr ""
+msgstr "preferences-desktop-screensaver"
 
 #: settings/main.c:98
 msgid "Settings manager socket"
@@ -123,7 +123,7 @@ msgid "Unable to save the session"
 msgstr "Incapaz de guardar a sessão"
 
 #: settings/session-editor.c:141 settings/session-editor.c:315
-#: xfce4-session/xfsm-manager.c:1267 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1275 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "_Fechar"
 
@@ -142,8 +142,8 @@ msgid ""
 msgstr "O estado das aplicações não será restaurado na próxima sessão."
 
 #: settings/session-editor.c:203 settings/session-editor.c:290
-#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:687
-#: xfce4-session/xfsm-logout-dialog.c:221
+#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:695
+#: xfce4-session/xfsm-logout-dialog.c:223
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -203,7 +203,7 @@ msgstr "Programa"
 msgid "Restart Style"
 msgstr "Reiniciar estilo"
 
-#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:689
+#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:697
 msgid "_OK"
 msgstr "_OK"
 
@@ -413,7 +413,7 @@ msgstr "Continuar, ainda assim"
 msgid "Try again"
 msgstr "Tentar novamente"
 
-#: xfce4-session/xfsm-manager.c:571
+#: xfce4-session/xfsm-manager.c:579
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -422,120 +422,125 @@ msgid ""
 "incorrectly."
 msgstr "Incapaz de determinar o nome de sessão failsafe. Causas possíveis: xfconfd não está em execução (problema de configuração do D-Bus); variável de ambiente $XDG_CONFIG_DIRS incorreta (deve incluir \"%s\") ou xfce4-session mal instalado."
 
-#: xfce4-session/xfsm-manager.c:582
+#: xfce4-session/xfsm-manager.c:590
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "A sessão failsafe especificada (\"%s\") não é reconhecida como uma sessão failsafe."
 
-#: xfce4-session/xfsm-manager.c:615
+#: xfce4-session/xfsm-manager.c:623
 msgid "The list of applications in the failsafe session is empty."
 msgstr "A lista de aplicações da sessão failsafe está vazia."
 
-#: xfce4-session/xfsm-manager.c:701
+#: xfce4-session/xfsm-manager.c:709
 msgid "Name for the new session"
 msgstr "Nome da nova sessão"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:779
+#: xfce4-session/xfsm-manager.c:787
 msgid "Session Manager Error"
 msgstr "Erro do gestor de sessões"
 
-#: xfce4-session/xfsm-manager.c:781
+#: xfce4-session/xfsm-manager.c:789
 msgid "Unable to load a failsafe session"
 msgstr "Incapaz de carregar a sessão \"failsafe\""
 
-#: xfce4-session/xfsm-manager.c:783
+#: xfce4-session/xfsm-manager.c:791
 msgid "_Quit"
 msgstr "_Sair"
 
-#: xfce4-session/xfsm-manager.c:1257
+#: xfce4-session/xfsm-manager.c:1265
 msgid "Shutdown Failed"
 msgstr "Falha ao desligar"
 
-#: xfce4-session/xfsm-manager.c:1260
+#: xfce4-session/xfsm-manager.c:1268
 msgid "Failed to suspend session"
 msgstr "Falha ao suspender a sessão"
 
-#: xfce4-session/xfsm-manager.c:1262
+#: xfce4-session/xfsm-manager.c:1270
 msgid "Failed to hibernate session"
 msgstr "Falha ao hibernar a sessão"
 
-#: xfce4-session/xfsm-manager.c:1264
+#: xfce4-session/xfsm-manager.c:1272
 msgid "Failed to hybrid sleep session"
 msgstr "Falhou a suspensão híbrida da sessão"
 
-#: xfce4-session/xfsm-manager.c:1265
+#: xfce4-session/xfsm-manager.c:1273
 msgid "Failed to switch user"
 msgstr "Falha ao trocar de utilizador"
 
-#: xfce4-session/xfsm-manager.c:1573
+#: xfce4-session/xfsm-manager.c:1581
 msgid "Can only terminate clients when in the idle state"
 msgstr "Só pode terminar clientes quando em estado inativo"
 
-#: xfce4-session/xfsm-manager.c:2229
+#: xfce4-session/xfsm-manager.c:2252
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "O gestor de sessões tem de estar inativo ao solicitar um ponto de verificação"
 
-#: xfce4-session/xfsm-manager.c:2299 xfce4-session/xfsm-manager.c:2319
+#: xfce4-session/xfsm-manager.c:2322 xfce4-session/xfsm-manager.c:2342
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "O gestor de sessões tem de estar inativo ao solicitar o encerramento"
 
-#: xfce4-session/xfsm-manager.c:2364
+#: xfce4-session/xfsm-manager.c:2387
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Gestor de sessão tem de estar em modo de pausa para reiniciar"
 
-#: xfce4-session/xfsm-logout-dialog.c:193
+#: xfce4-session/xfsm-logout-dialog.c:195
 #, c-format
 msgid "Log out %s"
 msgstr "Terminar sessão de %s"
 
-#. *
-#. * Logout
-#. *
-#: xfce4-session/xfsm-logout-dialog.c:238
+#: xfce4-session/xfsm-logout-dialog.c:241
 msgid "_Log Out"
 msgstr "_Sair"
 
-#: xfce4-session/xfsm-logout-dialog.c:258
+#: xfce4-session/xfsm-logout-dialog.c:267
+msgid "_Restart and update"
+msgstr "_Reiniciar e atualizar"
+
+#: xfce4-session/xfsm-logout-dialog.c:267
 msgid "_Restart"
 msgstr "_Reiniciar"
 
-#: xfce4-session/xfsm-logout-dialog.c:278
+#: xfce4-session/xfsm-logout-dialog.c:288
+msgid "Update and Shut _Down"
+msgstr "Atualizar e _Desligar"
+
+#: xfce4-session/xfsm-logout-dialog.c:288
 msgid "Shut _Down"
 msgstr "_Desligar"
 
-#: xfce4-session/xfsm-logout-dialog.c:302
+#: xfce4-session/xfsm-logout-dialog.c:313
 msgid "Sus_pend"
 msgstr "Sus_pender"
 
-#: xfce4-session/xfsm-logout-dialog.c:336
+#: xfce4-session/xfsm-logout-dialog.c:347
 msgid "_Hibernate"
 msgstr "_Hibernar"
 
-#: xfce4-session/xfsm-logout-dialog.c:367
+#: xfce4-session/xfsm-logout-dialog.c:378
 msgid "H_ybrid Sleep"
 msgstr "S_uspensão híbrida"
 
-#: xfce4-session/xfsm-logout-dialog.c:398
+#: xfce4-session/xfsm-logout-dialog.c:409
 msgid "Switch _User"
 msgstr "Trocar de _utilizador"
 
-#: xfce4-session/xfsm-logout-dialog.c:424
+#: xfce4-session/xfsm-logout-dialog.c:435
 msgid "_Save session for future logins"
 msgstr "_Guardar sessão para futuras utilizações"
 
-#: xfce4-session/xfsm-logout-dialog.c:452
+#: xfce4-session/xfsm-logout-dialog.c:463
 msgid "An error occurred"
 msgstr "Ocorreu um erro"
 
-#: xfce4-session/xfsm-shutdown.c:159
+#: xfce4-session/xfsm-shutdown.c:168
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Encerramento está bloqueado pelas definições \"kiosk\""
 
-#: xfce4-session/xfsm-shutdown.c:216
+#: xfce4-session/xfsm-shutdown.c:225
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Método de encerramento desconhecido %d"
@@ -595,7 +600,7 @@ msgstr "Recebido erro ao terminar sessão, erro foi %s"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:6
 msgid "xfsm-logout"
-msgstr ""
+msgstr "xfsm-logout"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:12
 msgid "Log out of the Xfce Desktop"
@@ -612,7 +617,7 @@ msgstr "Personalizar arranque do ambiente de trabalho"
 
 #: settings/xfce-session-settings.desktop.in:6
 msgid "org.xfce.session"
-msgstr ""
+msgstr "org.xfce.session"
 
 #: settings/xfce-session-settings.desktop.in:11
 msgid ""
