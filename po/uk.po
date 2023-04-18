@@ -1,21 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Xfce
-# This file is distributed under the same license as the xfce4-session.xfce-4-18 package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# This file is distributed under the same license as the xfce4-session.master package.
 # 
 # Translators:
-# Xfce Bot <transifex@xfce.org>, 2023
+# Dmitry Nikitin <luckas_fb@mail.ru>, 2008
+# dsafsadf <heneral@gmail.com>, 2016
 # Gordon Freeman, 2023
-# 
-#, fuzzy
+# Yarema aka Knedlyk <yupadmin@gmail.com>, 2016-2017,2019
+# zubr139, 2016
+# f977cb811fcf66493f48eac227fd7473_b98aa5d <2419f1d8d12d92441152e78ae3e3bde0_722180>, 2021
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-session.xfce-4-18\n"
+"Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-04-12 12:49+0200\n"
-"PO-Revision-Date: 2023-02-20 11:55+0000\n"
+"POT-Creation-Date: 2023-04-13 12:47+0200\n"
+"PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Gordon Freeman, 2023\n"
-"Language-Team: Ukrainian (https://app.transifex.com/xfce/teams/16840/uk/)\n"
+"Language-Team: Ukrainian (http://app.transifex.com/xfce/xfce4-session/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -123,7 +124,7 @@ msgid "Unable to save the session"
 msgstr "Неможливо зберегти сеанс"
 
 #: settings/session-editor.c:141 settings/session-editor.c:315
-#: xfce4-session/xfsm-manager.c:1267 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1275 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "_Закрити"
 
@@ -139,13 +140,11 @@ msgstr "Ви впевнені, що бажаєте очистити кеш се�
 msgid ""
 "The saved states of your applications will not be restored during your next "
 "login."
-msgstr ""
-"Збережені стани Ваших програм не будуть відновлені у Вашому наступному "
-"сеансі."
+msgstr "Збережені стани Ваших програм не будуть відновлені у Вашому наступному сеансі."
 
 #: settings/session-editor.c:203 settings/session-editor.c:290
-#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:687
-#: xfce4-session/xfsm-logout-dialog.c:221
+#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:695
+#: xfce4-session/xfsm-logout-dialog.c:223
 msgid "_Cancel"
 msgstr "_Скасувати"
 
@@ -175,9 +174,7 @@ msgstr "Завершити програму"
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
-msgstr ""
-"Програма втратить будь які незбережені зміни і не буде запускатись в "
-"наступному Вашому сеансі."
+msgstr "Програма втратить будь які незбережені зміни і не буде запускатись в наступному Вашому сеансі."
 
 #: settings/session-editor.c:291 settings/xfce4-session-settings.ui:446
 msgid "_Quit Program"
@@ -207,7 +204,7 @@ msgstr "Програма"
 msgid "Restart Style"
 msgstr "Стиль перезавантаження"
 
-#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:689
+#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:697
 msgid "_OK"
 msgstr "_Гаразд"
 
@@ -367,9 +364,7 @@ msgstr "Менеджер сеансів"
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
-msgstr ""
-"Виберіть сеанс, який бажаєте відновити. Щоб завантажити сеанс, можете просто"
-" двічі клацнути на його назві."
+msgstr "Виберіть сеанс, який бажаєте відновити. Щоб завантажити сеанс, можете просто двічі клацнути на його назві."
 
 #: xfce4-session/xfsm-chooser.c:184
 msgid "Create a new session."
@@ -409,11 +404,7 @@ msgid ""
 "This will prevent Xfce from operating correctly.\n"
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
-msgstr ""
-"Не вдається визначити IP-адресу вузла %s.\n"
-"Через це Xfce може працювати некоректно.\n"
-"Проблему можна вирішити, якщо додати вузол %s\n"
-"у файл /etc/hosts вашої системи."
+msgstr "Не вдається визначити IP-адресу вузла %s.\nЧерез це Xfce може працювати некоректно.\nПроблему можна вирішити, якщо додати вузол %s\nу файл /etc/hosts вашої системи."
 
 #: xfce4-session/xfsm-dns.c:159
 msgid "Continue anyway"
@@ -423,138 +414,134 @@ msgstr "Продовжити"
 msgid "Try again"
 msgstr "Повторити спробу"
 
-#: xfce4-session/xfsm-manager.c:571
+#: xfce4-session/xfsm-manager.c:579
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
 "running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
 "incorrectly (must include \"%s\"), or xfce4-session is installed "
 "incorrectly."
-msgstr ""
-"Неможливо визначити назву безпечного сеансу. Можливі причини: xconfd не "
-"запущено (проблема налаштування D-Bus); неправильно встановлено змінну "
-"середовища $XDG_CONFIG_DIRS (має включати \"%s\"), або неправильно "
-"встановлено xfce4-session."
+msgstr "Неможливо визначити назву безпечного сеансу. Можливі причини: xconfd не запущено (проблема налаштування D-Bus); неправильно встановлено змінну середовища $XDG_CONFIG_DIRS (має включати \"%s\"), або неправильно встановлено xfce4-session."
 
-#: xfce4-session/xfsm-manager.c:582
+#: xfce4-session/xfsm-manager.c:590
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Вибраний безпечний сеанс (\"%s\") не позначено як безпечний сеанс."
 
-#: xfce4-session/xfsm-manager.c:615
+#: xfce4-session/xfsm-manager.c:623
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Список програм в безпечному сеансі пустий."
 
-#: xfce4-session/xfsm-manager.c:701
+#: xfce4-session/xfsm-manager.c:709
 msgid "Name for the new session"
 msgstr "Назва нового сеансу"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:779
+#: xfce4-session/xfsm-manager.c:787
 msgid "Session Manager Error"
 msgstr "Помилка менеджеру сеансів"
 
-#: xfce4-session/xfsm-manager.c:781
+#: xfce4-session/xfsm-manager.c:789
 msgid "Unable to load a failsafe session"
 msgstr "Неможливо завантажити безпечний сеанс"
 
-#: xfce4-session/xfsm-manager.c:783
+#: xfce4-session/xfsm-manager.c:791
 msgid "_Quit"
 msgstr "Ви_йти"
 
-#: xfce4-session/xfsm-manager.c:1257
+#: xfce4-session/xfsm-manager.c:1265
 msgid "Shutdown Failed"
 msgstr "Неможливо вимкнути"
 
-#: xfce4-session/xfsm-manager.c:1260
+#: xfce4-session/xfsm-manager.c:1268
 msgid "Failed to suspend session"
 msgstr "Невдача призупинення сеансу"
 
-#: xfce4-session/xfsm-manager.c:1262
+#: xfce4-session/xfsm-manager.c:1270
 msgid "Failed to hibernate session"
 msgstr "Невдача для сплячого сеансу"
 
-#: xfce4-session/xfsm-manager.c:1264
+#: xfce4-session/xfsm-manager.c:1272
 msgid "Failed to hybrid sleep session"
 msgstr "Невдача гібридної сплячки сеансу"
 
-#: xfce4-session/xfsm-manager.c:1265
+#: xfce4-session/xfsm-manager.c:1273
 msgid "Failed to switch user"
 msgstr "Неможливо перемкнути користувача"
 
-#: xfce4-session/xfsm-manager.c:1573
+#: xfce4-session/xfsm-manager.c:1581
 msgid "Can only terminate clients when in the idle state"
 msgstr "Можна тільки завершити клієнтів коли перебуваєш в стані очікування"
 
-#: xfce4-session/xfsm-manager.c:2229
+#: xfce4-session/xfsm-manager.c:2252
 msgid "Session manager must be in idle state when requesting a checkpoint"
-msgstr ""
-"Менеджер сеансу мусить бути в стані очікування коли запитується місце "
-"перевірки"
+msgstr "Менеджер сеансу мусить бути в стані очікування коли запитується місце перевірки"
 
-#: xfce4-session/xfsm-manager.c:2299 xfce4-session/xfsm-manager.c:2319
+#: xfce4-session/xfsm-manager.c:2322 xfce4-session/xfsm-manager.c:2342
 msgid "Session manager must be in idle state when requesting a shutdown"
-msgstr ""
-"Менеджер сеансу мусить бути в стані очікування коли запитується вимкнення"
+msgstr "Менеджер сеансу мусить бути в стані очікування коли запитується вимкнення"
 
-#: xfce4-session/xfsm-manager.c:2364
+#: xfce4-session/xfsm-manager.c:2387
 msgid "Session manager must be in idle state when requesting a restart"
-msgstr ""
-"Менеджер сеансу мусить бути в стані очікування, коли дається запит на "
-"перезавантаження"
+msgstr "Менеджер сеансу мусить бути в стані очікування, коли дається запит на перезавантаження"
 
-#: xfce4-session/xfsm-logout-dialog.c:193
+#: xfce4-session/xfsm-logout-dialog.c:195
 #, c-format
 msgid "Log out %s"
 msgstr "Вийти %s"
 
-#. *
-#. * Logout
-#. *
-#: xfce4-session/xfsm-logout-dialog.c:238
+#: xfce4-session/xfsm-logout-dialog.c:241
 msgid "_Log Out"
 msgstr "_Вийти"
 
-#: xfce4-session/xfsm-logout-dialog.c:258
+#: xfce4-session/xfsm-logout-dialog.c:267
+msgid "_Restart and update"
+msgstr "_Перезавантажити та оновити"
+
+#: xfce4-session/xfsm-logout-dialog.c:267
 msgid "_Restart"
 msgstr "_Перезавантажити"
 
-#: xfce4-session/xfsm-logout-dialog.c:278
+#: xfce4-session/xfsm-logout-dialog.c:288
+msgid "Update and Shut _Down"
+msgstr "Оновити та ви_мкнути"
+
+#: xfce4-session/xfsm-logout-dialog.c:288
 msgid "Shut _Down"
 msgstr "Ви_мкнути"
 
-#: xfce4-session/xfsm-logout-dialog.c:302
+#: xfce4-session/xfsm-logout-dialog.c:313
 msgid "Sus_pend"
 msgstr "_Призупинити"
 
-#: xfce4-session/xfsm-logout-dialog.c:336
+#: xfce4-session/xfsm-logout-dialog.c:347
 msgid "_Hibernate"
 msgstr "_В сплячку"
 
-#: xfce4-session/xfsm-logout-dialog.c:367
+#: xfce4-session/xfsm-logout-dialog.c:378
 msgid "H_ybrid Sleep"
 msgstr "_Гібридна сплячка"
 
-#: xfce4-session/xfsm-logout-dialog.c:398
+#: xfce4-session/xfsm-logout-dialog.c:409
 msgid "Switch _User"
 msgstr "Переключити _користувача"
 
-#: xfce4-session/xfsm-logout-dialog.c:424
+#: xfce4-session/xfsm-logout-dialog.c:435
 msgid "_Save session for future logins"
 msgstr "З_берегти сеанс"
 
-#: xfce4-session/xfsm-logout-dialog.c:452
+#: xfce4-session/xfsm-logout-dialog.c:463
 msgid "An error occurred"
 msgstr "Сталася помилка"
 
-#: xfce4-session/xfsm-shutdown.c:159
+#: xfce4-session/xfsm-shutdown.c:168
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Завершення заблоковано налаштуванням kiosk"
 
-#: xfce4-session/xfsm-shutdown.c:216
+#: xfce4-session/xfsm-shutdown.c:225
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Невідомий метод завершення %d"
@@ -585,8 +572,7 @@ msgstr "Гібридна сплячка без діалогу підтвердж
 
 #: xfce4-session-logout/main.c:94
 msgid "Switch user without displaying the logout dialog"
-msgstr ""
-"Перемикання користувача без відображення діалогового вікна входу в систему"
+msgstr "Перемикання користувача без відображення діалогового вікна входу в систему"
 
 #: xfce4-session-logout/main.c:98
 msgid "Log out quickly; don't save the session"
@@ -638,23 +624,18 @@ msgstr "org.xfce.session"
 msgid ""
 "session;settings;preferences;manager;startup;login;logout;shutdown;lock "
 "screen;application;autostart;launch;services;daemon;agent;"
-msgstr ""
-"сеанс;налаштування;властивості;керівник;завантаження;вхід;вихід;завершення;замикання"
-" екрану;програма;автостарт;запуск;сервіси;демон;аґент;"
+msgstr "сеанс;налаштування;властивості;керівник;завантаження;вхід;вихід;завершення;замикання екрану;програма;автостарт;запуск;сервіси;демон;аґент;"
 
 #: settings/xfce4-session-settings.ui:51
 msgid ""
 "These applications are a part of the currently-running session,\n"
 "and can be saved now or when you log out.\n"
 "Changes below will only take effect when the session is saved."
-msgstr ""
-"Ці програми є частиною запущеного зараз сеансу, і можуть бути\n"
-"збережені зараз або коли Ви вийдете з сеансу. Зміни внесені\n"
-"нижче матимуть ефект лише після збереження сеансу."
+msgstr "Ці програми є частиною запущеного зараз сеансу, і можуть бути\nзбережені зараз або коли Ви вийдете з сеансу. Зміни внесені\nнижче матимуть ефект лише після збереження сеансу."
 
 #: settings/xfce4-session-settings.ui:79
 msgid "_Help"
-msgstr "_Допомога"
+msgstr "_Довідка"
 
 #: settings/xfce4-session-settings.ui:144
 msgid "_Display chooser on login"
@@ -702,7 +683,7 @@ msgstr "<b>Завершити</b>"
 
 #: settings/xfce4-session-settings.ui:307
 msgid "_General"
-msgstr "_Загальне"
+msgstr "_Загальні"
 
 #: settings/xfce4-session-settings.ui:331
 msgid "Save Sess_ion"
@@ -738,9 +719,7 @@ msgstr "Запускати служби ГН_ОМА при завантажен�
 
 #: settings/xfce4-session-settings.ui:655
 msgid "Start GNOME services, such as gnome-keyring"
-msgstr ""
-"Запускати служби ГНОМА, такі як gnome-keyring та GNOME accessibility "
-"framework"
+msgstr "Запускати служби ГНОМА, такі як gnome-keyring та GNOME accessibility framework"
 
 #: settings/xfce4-session-settings.ui:668
 msgid "Launch _KDE services on startup"
@@ -761,8 +740,7 @@ msgstr "_Керувати віддаленими програмами"
 #: settings/xfce4-session-settings.ui:722
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
-msgstr ""
-"Керувати віддаленими програмами по мережі (це пов'язано з ризиком безпеки)"
+msgstr "Керувати віддаленими програмами по мережі (це пов'язано з ризиком безпеки)"
 
 #: settings/xfce4-session-settings.ui:734
 msgid "<b>Security</b>"
@@ -770,7 +748,7 @@ msgstr "<b>Безпека</b>"
 
 #: settings/xfce4-session-settings.ui:754
 msgid "Ad_vanced"
-msgstr "Д_одатково"
+msgstr "_Додаткові"
 
 #: settings/xfce4-session-settings.ui:785
 msgid "Saving Session"
@@ -780,6 +758,4 @@ msgstr "Збереження сеансу"
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
-msgstr ""
-"Ваш сеанс було збережено. Якщо Ви не бажаєте чекати, то можете закрити це "
-"вікно."
+msgstr "Ваш сеанс було збережено. Якщо Ви не бажаєте чекати, то можете закрити це вікно."
