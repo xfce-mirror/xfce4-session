@@ -1,3 +1,50 @@
+4.19.0 (2023-04-18)
+======
+- Finally, take into account inhibitions when showing the session 
+dialog.
+- Implement the inhibition methods in the dbus interface.
+- Allows update on restart or shutdown when this feature are available.
+- build: Use m4_defined min versions and cleanup
+- build: Use XDT_CHECK_PACKAGE_BINARY and replace XDT_CHECK_LIBX11
+- build: Use XDT_VERSION_INIT and get rid of configure.ac.in
+- build: Switch from intltool to gettext
+- build: Fix untranslated policykit file
+- Escape/unescape string list delimiter when saving/restoring session
+- Replace XfceRc with GKeyFile for session file parsing
+- manager: Fix GQueue memory management
+- Fix Xfconf memory management
+- Update bug report address
+- Fix suspend/hibernation bug on ConsoleKit2 (Fixes #164)
+- Update copyright year
+- Fix bus name acquisition/ownership
+- Use XfceScreensaver from Libxfce4ui
+- build: Fix previous commit
+- build: Fix autotools warnings
+- Avoid duplicating directories in the tail of $XDG_* envs
+- settings: Fix memory leak
+- libxfsm: Fix wrong return value
+- Fix memory leaks when opening xfce4-session-settings
+- Fix blurry session snapshots
+- Fix blurry icons in autostart tab when UI scale > 1
+- build: Fix GTK deprecation warnings
+- build: Fix some other GDK deprecation warnings
+- build: Fix gdk_error_trap_push/pop() deprecation warnings
+- build: Let xdt-depends.m4 macros set GLib macros
+- build: Remove GDK_VERSION_MIN_REQUIRED/MAX_ALLOWED
+- Make use of translations for run hooks (Fixes #156)
+- Translation Updates:
+  Albanian, Amharic, Arabic, Armenian (Armenia), Asturian, Azerbaijani,
+  Azerbaijani (Azerbaijan), Basque, Belarusian, Belarusian (Tarask),
+  Bengali, Bulgarian, Catalan, Chinese (China), Chinese (Hong Kong),
+  Chinese (Taiwan), Croatian, Czech, Danish, Dutch, Eastern Armenian,
+  English (Australia), English (Canada), English (United Kingdom),
+  Estonian, Finnish, French, Galician, German, Greek, Hebrew, Hindi,
+  Hungarian, Icelandic, Indonesian, Interlingue, Italian, Japanese,
+  Kazakh, Korean, Lithuanian, Malay, Norwegian Bokmål, Norwegian
+  Nynorsk, Occitan (post 1500), Persian (Iran), Polish, Portuguese,
+  Portuguese (Brazil), Romanian, Russian, Serbian, Slovak, Slovenian,
+  Spanish, Swedish, Thai, Turkish, Ukrainian, Uyghur, Vietnamese
+
 4.18.0 (2022-12-15)
 ======
 - build: Bump requirements for Xfce 4.18
