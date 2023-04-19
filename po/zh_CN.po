@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-04-12 12:49+0200\n"
+"POT-Creation-Date: 2023-04-13 12:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Cally Mal <zhouxiaobo.500@gmail.com>, 2021\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/xfce/xfce4-session/language/zh_CN/)\n"
@@ -37,7 +37,7 @@ msgstr "使用此会话将 Xfce 作为您的桌面环境运行"
 
 #: xfce.desktop.in:8
 msgid "Type=Application"
-msgstr ""
+msgstr "Type=Application"
 
 #: libxfsm/xfsm-util.c:374
 msgid "Session"
@@ -57,7 +57,7 @@ msgstr "启动屏幕保护和锁定程序"
 
 #: scripts/xscreensaver.desktop.in:6
 msgid "preferences-desktop-screensaver"
-msgstr ""
+msgstr "preferences-desktop-screensaver"
 
 #: settings/main.c:98
 msgid "Settings manager socket"
@@ -128,7 +128,7 @@ msgid "Unable to save the session"
 msgstr "未能保存此会话"
 
 #: settings/session-editor.c:141 settings/session-editor.c:315
-#: xfce4-session/xfsm-manager.c:1267 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1275 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "关闭(_C)"
 
@@ -147,8 +147,8 @@ msgid ""
 msgstr "在您下次登录时不会恢复已保存的应用程序状态。"
 
 #: settings/session-editor.c:203 settings/session-editor.c:290
-#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:687
-#: xfce4-session/xfsm-logout-dialog.c:221
+#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:695
+#: xfce4-session/xfsm-logout-dialog.c:223
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -208,7 +208,7 @@ msgstr "程序"
 msgid "Restart Style"
 msgstr "重启样式"
 
-#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:689
+#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:697
 msgid "_OK"
 msgstr "确定(&O)"
 
@@ -418,7 +418,7 @@ msgstr "仍然继续"
 msgid "Try again"
 msgstr "重试"
 
-#: xfce4-session/xfsm-manager.c:571
+#: xfce4-session/xfsm-manager.c:579
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -427,120 +427,125 @@ msgid ""
 "incorrectly."
 msgstr "未能确定安全会话名称。可能由于：xfconfd\n没有运行(D-Bus 设置问题)，未正确设置环境\n变量 $XDG_CONFIG_DIRS(必须包含 “%s”)，\n或 xfce4-session 未正确安装。"
 
-#: xfce4-session/xfsm-manager.c:582
+#: xfce4-session/xfsm-manager.c:590
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "指定的安全会话(“%s”)未标记为安全会话。"
 
-#: xfce4-session/xfsm-manager.c:615
+#: xfce4-session/xfsm-manager.c:623
 msgid "The list of applications in the failsafe session is empty."
 msgstr "安全会话中的应用程序列表是空的。"
 
-#: xfce4-session/xfsm-manager.c:701
+#: xfce4-session/xfsm-manager.c:709
 msgid "Name for the new session"
 msgstr "新会话的名称"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:779
+#: xfce4-session/xfsm-manager.c:787
 msgid "Session Manager Error"
 msgstr "会话管理器错误"
 
-#: xfce4-session/xfsm-manager.c:781
+#: xfce4-session/xfsm-manager.c:789
 msgid "Unable to load a failsafe session"
 msgstr "未能载入安全会话"
 
-#: xfce4-session/xfsm-manager.c:783
+#: xfce4-session/xfsm-manager.c:791
 msgid "_Quit"
 msgstr "退出(_Q)"
 
-#: xfce4-session/xfsm-manager.c:1257
+#: xfce4-session/xfsm-manager.c:1265
 msgid "Shutdown Failed"
 msgstr "无法关机"
 
-#: xfce4-session/xfsm-manager.c:1260
+#: xfce4-session/xfsm-manager.c:1268
 msgid "Failed to suspend session"
 msgstr "会话无法挂起"
 
-#: xfce4-session/xfsm-manager.c:1262
+#: xfce4-session/xfsm-manager.c:1270
 msgid "Failed to hibernate session"
 msgstr "会话无法休眠"
 
-#: xfce4-session/xfsm-manager.c:1264
+#: xfce4-session/xfsm-manager.c:1272
 msgid "Failed to hybrid sleep session"
 msgstr "混合睡眠会话失败"
 
-#: xfce4-session/xfsm-manager.c:1265
+#: xfce4-session/xfsm-manager.c:1273
 msgid "Failed to switch user"
 msgstr "切换用户失败"
 
-#: xfce4-session/xfsm-manager.c:1573
+#: xfce4-session/xfsm-manager.c:1581
 msgid "Can only terminate clients when in the idle state"
 msgstr "仅在空闲时才能终止客户端"
 
-#: xfce4-session/xfsm-manager.c:2229
+#: xfce4-session/xfsm-manager.c:2252
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "提请检查点时会话管理器必须处于空闲状态"
 
-#: xfce4-session/xfsm-manager.c:2299 xfce4-session/xfsm-manager.c:2319
+#: xfce4-session/xfsm-manager.c:2322 xfce4-session/xfsm-manager.c:2342
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "提请关机时会话管理器必须处于空闲状态"
 
-#: xfce4-session/xfsm-manager.c:2364
+#: xfce4-session/xfsm-manager.c:2387
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "请求关机时会话管理器必须处于空闲状态"
 
-#: xfce4-session/xfsm-logout-dialog.c:193
+#: xfce4-session/xfsm-logout-dialog.c:195
 #, c-format
 msgid "Log out %s"
 msgstr "注销 %s"
 
-#. *
-#. * Logout
-#. *
-#: xfce4-session/xfsm-logout-dialog.c:238
+#: xfce4-session/xfsm-logout-dialog.c:241
 msgid "_Log Out"
 msgstr "注销(_L)"
 
-#: xfce4-session/xfsm-logout-dialog.c:258
+#: xfce4-session/xfsm-logout-dialog.c:267
+msgid "_Restart and update"
+msgstr "重启并更新(_R)"
+
+#: xfce4-session/xfsm-logout-dialog.c:267
 msgid "_Restart"
 msgstr "重启(_R)"
 
-#: xfce4-session/xfsm-logout-dialog.c:278
+#: xfce4-session/xfsm-logout-dialog.c:288
+msgid "Update and Shut _Down"
+msgstr "更新并关机(_D)"
+
+#: xfce4-session/xfsm-logout-dialog.c:288
 msgid "Shut _Down"
 msgstr "关机(_D)"
 
-#: xfce4-session/xfsm-logout-dialog.c:302
+#: xfce4-session/xfsm-logout-dialog.c:313
 msgid "Sus_pend"
 msgstr "挂起(_P)"
 
-#: xfce4-session/xfsm-logout-dialog.c:336
+#: xfce4-session/xfsm-logout-dialog.c:347
 msgid "_Hibernate"
 msgstr "休眠(_H)"
 
-#: xfce4-session/xfsm-logout-dialog.c:367
+#: xfce4-session/xfsm-logout-dialog.c:378
 msgid "H_ybrid Sleep"
 msgstr "混合睡眠(_Y)"
 
-#: xfce4-session/xfsm-logout-dialog.c:398
+#: xfce4-session/xfsm-logout-dialog.c:409
 msgid "Switch _User"
 msgstr "切换用户(_U)"
 
-#: xfce4-session/xfsm-logout-dialog.c:424
+#: xfce4-session/xfsm-logout-dialog.c:435
 msgid "_Save session for future logins"
 msgstr "保存会话用于将来登录(_S)"
 
-#: xfce4-session/xfsm-logout-dialog.c:452
+#: xfce4-session/xfsm-logout-dialog.c:463
 msgid "An error occurred"
 msgstr "出现错误"
 
-#: xfce4-session/xfsm-shutdown.c:159
+#: xfce4-session/xfsm-shutdown.c:168
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "kiosk 设置阻止了关机"
 
-#: xfce4-session/xfsm-shutdown.c:216
+#: xfce4-session/xfsm-shutdown.c:225
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "未知关机方式 %d"
@@ -600,7 +605,7 @@ msgstr "试图注销时收到错误：%s"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:6
 msgid "xfsm-logout"
-msgstr ""
+msgstr "xfsm-logout"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:12
 msgid "Log out of the Xfce Desktop"
@@ -617,7 +622,7 @@ msgstr "自定义桌面启动"
 
 #: settings/xfce-session-settings.desktop.in:6
 msgid "org.xfce.session"
-msgstr ""
+msgstr "org.xfce.session"
 
 #: settings/xfce-session-settings.desktop.in:11
 msgid ""
