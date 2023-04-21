@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-04-12 12:49+0200\n"
+"POT-Creation-Date: 2023-04-13 12:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Luna Jernberg <bittin@cafe8bitar.se>, 2020\n"
 "Language-Team: Swedish (http://app.transifex.com/xfce/xfce4-session/language/sv/)\n"
@@ -53,7 +53,7 @@ msgstr "Starta skärmsläckare och låsprogram"
 
 #: scripts/xscreensaver.desktop.in:6
 msgid "preferences-desktop-screensaver"
-msgstr ""
+msgstr "preferences-desktop-screensaver"
 
 #: settings/main.c:98
 msgid "Settings manager socket"
@@ -124,7 +124,7 @@ msgid "Unable to save the session"
 msgstr "Det gick inte att spara sessionen"
 
 #: settings/session-editor.c:141 settings/session-editor.c:315
-#: xfce4-session/xfsm-manager.c:1267 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1275 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "_Stäng"
 
@@ -143,8 +143,8 @@ msgid ""
 msgstr "Sparade tillstånd på dina program kommer inte att återställas vid nästa inloggning."
 
 #: settings/session-editor.c:203 settings/session-editor.c:290
-#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:687
-#: xfce4-session/xfsm-logout-dialog.c:221
+#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:695
+#: xfce4-session/xfsm-logout-dialog.c:223
 msgid "_Cancel"
 msgstr "_Avbryt"
 
@@ -204,7 +204,7 @@ msgstr "Program"
 msgid "Restart Style"
 msgstr "Omstartstyp"
 
-#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:689
+#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:697
 msgid "_OK"
 msgstr "_OK"
 
@@ -414,7 +414,7 @@ msgstr "Fortsätt ändå"
 msgid "Try again"
 msgstr "Försök igen"
 
-#: xfce4-session/xfsm-manager.c:571
+#: xfce4-session/xfsm-manager.c:579
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -423,120 +423,125 @@ msgid ""
 "incorrectly."
 msgstr "Det gick inte att fastställa namn på felsäker session.  Möjliga orsaker: xfconfd körs inte (D-Bus-konfigurationsproblem); miljövariabeln $XDG_CONFIG_DIRS är felaktigt inställd (måste inkludera \"%s\") eller att xfce4-session är felaktigt installerad."
 
-#: xfce4-session/xfsm-manager.c:582
+#: xfce4-session/xfsm-manager.c:590
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Den angivna felsäkra sessionen (\"%s\") är inte markerad som en felsäker session."
 
-#: xfce4-session/xfsm-manager.c:615
+#: xfce4-session/xfsm-manager.c:623
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Listan över program i den felsäkra sessionen är tom."
 
-#: xfce4-session/xfsm-manager.c:701
+#: xfce4-session/xfsm-manager.c:709
 msgid "Name for the new session"
 msgstr "Namn på den nya sessionen"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:779
+#: xfce4-session/xfsm-manager.c:787
 msgid "Session Manager Error"
 msgstr "Fel i sessionshanterare"
 
-#: xfce4-session/xfsm-manager.c:781
+#: xfce4-session/xfsm-manager.c:789
 msgid "Unable to load a failsafe session"
 msgstr "Det gick inte att läsa in en felsäker session"
 
-#: xfce4-session/xfsm-manager.c:783
+#: xfce4-session/xfsm-manager.c:791
 msgid "_Quit"
 msgstr "A_vsluta"
 
-#: xfce4-session/xfsm-manager.c:1257
+#: xfce4-session/xfsm-manager.c:1265
 msgid "Shutdown Failed"
 msgstr "Avstängning misslyckades"
 
-#: xfce4-session/xfsm-manager.c:1260
+#: xfce4-session/xfsm-manager.c:1268
 msgid "Failed to suspend session"
 msgstr "Misslyckades med att försätta session i vänteläge"
 
-#: xfce4-session/xfsm-manager.c:1262
+#: xfce4-session/xfsm-manager.c:1270
 msgid "Failed to hibernate session"
 msgstr "Misslyckades med att försätta session i viloläge"
 
-#: xfce4-session/xfsm-manager.c:1264
+#: xfce4-session/xfsm-manager.c:1272
 msgid "Failed to hybrid sleep session"
 msgstr "Det gick inte att starta hybridsömnsession"
 
-#: xfce4-session/xfsm-manager.c:1265
+#: xfce4-session/xfsm-manager.c:1273
 msgid "Failed to switch user"
 msgstr "Misslyckades med att byta användare"
 
-#: xfce4-session/xfsm-manager.c:1573
+#: xfce4-session/xfsm-manager.c:1581
 msgid "Can only terminate clients when in the idle state"
 msgstr "Kan endast terminera klienter som befinner sig i ett overksamt tillstånd"
 
-#: xfce4-session/xfsm-manager.c:2229
+#: xfce4-session/xfsm-manager.c:2252
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Sessionshanteraren måste vara i ett overksamt läge när begäran sker"
 
-#: xfce4-session/xfsm-manager.c:2299 xfce4-session/xfsm-manager.c:2319
+#: xfce4-session/xfsm-manager.c:2322 xfce4-session/xfsm-manager.c:2342
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Sessionshanteraren måste vara i overksamt läge när en avstängning begärs"
 
-#: xfce4-session/xfsm-manager.c:2364
+#: xfce4-session/xfsm-manager.c:2387
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Sessionshanteraren måste vara í viloläge när du begär en omstart"
 
-#: xfce4-session/xfsm-logout-dialog.c:193
+#: xfce4-session/xfsm-logout-dialog.c:195
 #, c-format
 msgid "Log out %s"
 msgstr "Logga ut %s"
 
-#. *
-#. * Logout
-#. *
-#: xfce4-session/xfsm-logout-dialog.c:238
+#: xfce4-session/xfsm-logout-dialog.c:241
 msgid "_Log Out"
 msgstr "_Logga ut"
 
-#: xfce4-session/xfsm-logout-dialog.c:258
+#: xfce4-session/xfsm-logout-dialog.c:267
+msgid "_Restart and update"
+msgstr "_Starta om och uppdatera"
+
+#: xfce4-session/xfsm-logout-dialog.c:267
 msgid "_Restart"
 msgstr "Starta _om"
 
-#: xfce4-session/xfsm-logout-dialog.c:278
+#: xfce4-session/xfsm-logout-dialog.c:288
+msgid "Update and Shut _Down"
+msgstr "Uppdatera och stäng _av"
+
+#: xfce4-session/xfsm-logout-dialog.c:288
 msgid "Shut _Down"
 msgstr "Stäng a_v"
 
-#: xfce4-session/xfsm-logout-dialog.c:302
+#: xfce4-session/xfsm-logout-dialog.c:313
 msgid "Sus_pend"
 msgstr "Vän_teläge"
 
-#: xfce4-session/xfsm-logout-dialog.c:336
+#: xfce4-session/xfsm-logout-dialog.c:347
 msgid "_Hibernate"
 msgstr "V_iloläge"
 
-#: xfce4-session/xfsm-logout-dialog.c:367
+#: xfce4-session/xfsm-logout-dialog.c:378
 msgid "H_ybrid Sleep"
 msgstr "H_ybridsömn"
 
-#: xfce4-session/xfsm-logout-dialog.c:398
+#: xfce4-session/xfsm-logout-dialog.c:409
 msgid "Switch _User"
 msgstr "Byt anv_ändare"
 
-#: xfce4-session/xfsm-logout-dialog.c:424
+#: xfce4-session/xfsm-logout-dialog.c:435
 msgid "_Save session for future logins"
 msgstr "_Spara session för framtida inloggningar"
 
-#: xfce4-session/xfsm-logout-dialog.c:452
+#: xfce4-session/xfsm-logout-dialog.c:463
 msgid "An error occurred"
 msgstr "Ett fel uppstod"
 
-#: xfce4-session/xfsm-shutdown.c:159
+#: xfce4-session/xfsm-shutdown.c:168
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Avstängning blockeras av kioskinställningarna"
 
-#: xfce4-session/xfsm-shutdown.c:216
+#: xfce4-session/xfsm-shutdown.c:225
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Okänd avstängningsmetod %d"
@@ -596,7 +601,7 @@ msgstr "Mottog fel vid utloggningsförsök, felet var %s"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:6
 msgid "xfsm-logout"
-msgstr ""
+msgstr "xfsm-logout"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:12
 msgid "Log out of the Xfce Desktop"
@@ -613,7 +618,7 @@ msgstr "Anpassa skrivbordsuppstart"
 
 #: settings/xfce-session-settings.desktop.in:6
 msgid "org.xfce.session"
-msgstr ""
+msgstr "org.xfce.session"
 
 #: settings/xfce-session-settings.desktop.in:11
 msgid ""
