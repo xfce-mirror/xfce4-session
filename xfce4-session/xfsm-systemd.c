@@ -55,6 +55,8 @@ struct _XfsmSystemdClass
 struct _XfsmSystemd
 {
   GObject __parent__;
+
+  GDBusProxy *proxy;
 };
 
 
@@ -75,8 +77,57 @@ xfsm_systemd_class_init (XfsmSystemdClass *klass)
 
 
 static void
+name_appeared (GDBusConnection *connection,
+               const gchar *name,
+               const gchar *name_owner,
+               gpointer user_data)
+{
+  XfsmSystemd *systemd = user_data;
+  GError *error = NULL;
+
+  g_debug ("%s started up, owned by %s", name, name_owner);
+
+  systemd->proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
+                                                  G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START,
+                                                  NULL,
+                                                  SYSTEMD_DBUS_NAME,
+                                                  SYSTEMD_DBUS_PATH,
+                                                  SYSTEMD_DBUS_INTERFACE,
+                                                  NULL,
+                                                  &error);
+  if (error != NULL)
+    {
+      g_warning ("Failed to get a systemd proxy: %s", error->message);
+      g_error_free (error);
+    }
+}
+
+
+
+static void
+name_vanished (GDBusConnection *connection,
+               const gchar *name,
+               gpointer user_data)
+{
+  XfsmSystemd *systemd = user_data;
+
+  g_debug ("%s vanished", name);
+
+  g_clear_object (&systemd->proxy);
+}
+
+
+
+static void
 xfsm_systemd_init (XfsmSystemd *systemd)
 {
+  g_bus_watch_name (G_BUS_TYPE_SYSTEM,
+                    SYSTEMD_DBUS_NAME,
+                    G_BUS_NAME_WATCHER_FLAGS_AUTO_START,
+                    name_appeared,
+                    name_vanished,
+                    systemd,
+                    NULL);
 }
 
 
@@ -86,6 +137,8 @@ xfsm_systemd_finalize (GObject *object)
 {
   XfsmSystemd *systemd = XFSM_SYSTEMD (object);
 
+  g_clear_object (&systemd->proxy);
+
   (*G_OBJECT_CLASS (xfsm_systemd_parent_class)->finalize) (object);
 }
 
@@ -93,46 +146,43 @@ xfsm_systemd_finalize (GObject *object)
 
 static gboolean
 xfsm_systemd_can_method (XfsmSystemd  *systemd,
-                         gboolean     *can_method,
+                         gboolean     *can_method_out,
                          const gchar  *method,
                          GError      **error)
 {
-  GDBusConnection *bus;
-  GError *local_error = NULL;
-  GVariant *dbus_ret;
-  const gchar *str;
-  *can_method = FALSE;
+  GVariant *variant;
+  const gchar *can_string;
+  gboolean can_method;
 
-  bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, error);
-  if (G_UNLIKELY (bus == NULL))
-    return FALSE;
+  /* never return true if something fails */
+  if (can_method_out != NULL)
+    *can_method_out = FALSE;
 
-  dbus_ret = g_dbus_connection_call_sync (bus,
-                                          SYSTEMD_DBUS_NAME,
-                                          SYSTEMD_DBUS_PATH,
-                                          SYSTEMD_DBUS_INTERFACE,
-                                          method,
-                                          NULL,
-                                          NULL,
-                                          G_DBUS_CALL_FLAGS_NONE,
-                                          -1,
-                                          NULL,
-                                          &local_error);
-
-  if (dbus_ret != NULL)
+  if (systemd->proxy == NULL)
     {
-      g_variant_get (dbus_ret, "(&s)", &str);
-      if (!strcmp (str, "yes"))
-        *can_method = TRUE;
-    }
-
-  g_object_unref (G_OBJECT (bus));
-
-  if (local_error != NULL)
-    {
-      g_propagate_error (error, local_error);
+      g_debug ("No systemd proxy");
       return FALSE;
     }
+
+  g_debug ("Calling %s", method);
+
+  variant = g_dbus_proxy_call_sync (systemd->proxy,
+                                    method,
+                                    NULL,
+                                    G_DBUS_CALL_FLAGS_NONE,
+                                    -1,
+                                    NULL,
+                                    error);
+
+  if (variant == NULL)
+    return FALSE;
+
+  g_variant_get_child (variant, 0, "&s", &can_string);
+  can_method = g_strcmp0 (can_string, "yes") == 0;
+  g_variant_unref (variant);
+
+  if (can_method_out != NULL)
+    *can_method_out = can_method;
 
   return TRUE;
 }
@@ -144,29 +194,28 @@ xfsm_systemd_try_method (XfsmSystemd  *systemd,
                          const gchar  *method,
                          GError      **error)
 {
-  GDBusConnection *bus;
-  GError          *local_error = NULL;
+  GVariant *variant;
 
-  bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, error);
-  if (G_UNLIKELY (bus == NULL))
-    return FALSE;
-
-  g_dbus_connection_call_sync (bus,
-                               SYSTEMD_DBUS_NAME,
-                               SYSTEMD_DBUS_PATH,
-                               SYSTEMD_DBUS_INTERFACE,
-                               method,
-                               g_variant_new ("(b)", TRUE),
-                               NULL, 0, G_MAXINT, NULL,
-                               &local_error);
-
-  g_object_unref (G_OBJECT (bus));
-
-  if (local_error != NULL)
+  if (systemd->proxy == NULL)
     {
-      g_propagate_error (error, local_error);
+      g_debug ("No systemd proxy");
       return FALSE;
     }
+
+  g_debug ("Calling %s", method);
+
+  variant = g_dbus_proxy_call_sync (systemd->proxy,
+                                    method,
+                                    g_variant_new ("(b)", TRUE),
+                                    G_DBUS_CALL_FLAGS_NONE,
+                                    -1,
+                                    NULL,
+                                    error);
+
+  if (variant == NULL)
+    return FALSE;
+
+  g_variant_unref (variant);
 
   return TRUE;
 }
@@ -197,6 +246,9 @@ gboolean
 xfsm_systemd_try_restart (XfsmSystemd  *systemd,
                           GError      **error)
 {
+  g_return_val_if_fail (XFSM_IS_SYSTEMD (systemd), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
   return xfsm_systemd_try_method (systemd,
                                   SYSTEMD_REBOOT_ACTION,
                                   error);
@@ -208,6 +260,9 @@ gboolean
 xfsm_systemd_try_shutdown (XfsmSystemd  *systemd,
                            GError      **error)
 {
+  g_return_val_if_fail (XFSM_IS_SYSTEMD (systemd), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
   return xfsm_systemd_try_method (systemd,
                                   SYSTEMD_POWEROFF_ACTION,
                                   error);
@@ -219,6 +274,9 @@ gboolean
 xfsm_systemd_try_suspend (XfsmSystemd  *systemd,
                           GError      **error)
 {
+  g_return_val_if_fail (XFSM_IS_SYSTEMD (systemd), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
   return xfsm_systemd_try_method (systemd,
                                   SYSTEMD_SUSPEND_ACTION,
                                   error);
@@ -230,6 +288,9 @@ gboolean
 xfsm_systemd_try_hibernate (XfsmSystemd  *systemd,
                             GError      **error)
 {
+  g_return_val_if_fail (XFSM_IS_SYSTEMD (systemd), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
   return xfsm_systemd_try_method (systemd,
                                   SYSTEMD_HIBERNATE_ACTION,
                                   error);
@@ -241,6 +302,9 @@ gboolean
 xfsm_systemd_try_hybrid_sleep (XfsmSystemd  *systemd,
                                GError      **error)
 {
+  g_return_val_if_fail (XFSM_IS_SYSTEMD (systemd), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
   return xfsm_systemd_try_method (systemd,
                                   SYSTEMD_HYBRID_SLEEP_ACTION,
                                   error);
@@ -253,6 +317,9 @@ xfsm_systemd_can_restart (XfsmSystemd  *systemd,
                           gboolean     *can_restart,
                           GError      **error)
 {
+  g_return_val_if_fail (XFSM_IS_SYSTEMD (systemd), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
   return xfsm_systemd_can_method (systemd,
                                   can_restart,
                                   SYSTEMD_REBOOT_TEST,
@@ -266,6 +333,9 @@ xfsm_systemd_can_shutdown (XfsmSystemd  *systemd,
                            gboolean     *can_shutdown,
                            GError      **error)
 {
+  g_return_val_if_fail (XFSM_IS_SYSTEMD (systemd), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
   return xfsm_systemd_can_method (systemd,
                                   can_shutdown,
                                   SYSTEMD_POWEROFF_TEST,
@@ -280,13 +350,21 @@ xfsm_systemd_can_suspend (XfsmSystemd  *systemd,
                           gboolean     *auth_suspend,
                           GError      **error)
 {
-  gboolean ret = FALSE;
+  gboolean ret, can_method;
+
+  g_return_val_if_fail (XFSM_IS_SYSTEMD (systemd), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   ret = xfsm_systemd_can_method (systemd,
-                                 can_suspend,
+                                 &can_method,
                                  SYSTEMD_SUSPEND_TEST,
                                  error);
-  *auth_suspend = *can_suspend;
+
+  if (can_suspend != NULL)
+    *can_suspend = can_method;
+  if (auth_suspend != NULL)
+    *auth_suspend = can_method;
+
   return ret;
 }
 
@@ -298,13 +376,21 @@ xfsm_systemd_can_hibernate (XfsmSystemd  *systemd,
                             gboolean     *auth_hibernate,
                             GError      **error)
 {
-  gboolean ret = FALSE;
+  gboolean ret, can_method;
+
+  g_return_val_if_fail (XFSM_IS_SYSTEMD (systemd), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   ret = xfsm_systemd_can_method (systemd,
-                                 can_hibernate,
+                                 &can_method,
                                  SYSTEMD_HIBERNATE_TEST,
                                  error);
-  *auth_hibernate = *can_hibernate;
+
+  if (can_hibernate != NULL)
+    *can_hibernate = can_method;
+  if (auth_hibernate != NULL)
+    *auth_hibernate = can_method;
+
   return ret;
 }
 
@@ -316,12 +402,20 @@ xfsm_systemd_can_hybrid_sleep (XfsmSystemd  *systemd,
                                gboolean     *auth_hybrid_sleep,
                                GError      **error)
 {
-  gboolean ret = FALSE;
+  gboolean ret, can_method;
+
+  g_return_val_if_fail (XFSM_IS_SYSTEMD (systemd), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   ret = xfsm_systemd_can_method (systemd,
-                                 can_hybrid_sleep,
+                                 &can_method,
                                  SYSTEMD_HYBRID_SLEEP_TEST,
                                  error);
-  *auth_hybrid_sleep = *can_hybrid_sleep;
+
+  if (can_hybrid_sleep != NULL)
+    *can_hybrid_sleep = can_method;
+  if (auth_hybrid_sleep != NULL)
+    *auth_hybrid_sleep = can_method;
+
   return ret;
 }
