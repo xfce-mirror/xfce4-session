@@ -55,9 +55,6 @@
 #include <gio/gio.h>
 #include <libxfce4util/libxfce4util.h>
 #include <gtk/gtk.h>
-#ifdef HAVE_POLKIT
-#include <polkit/polkit.h>
-#endif
 
 #include <libxfsm/xfsm-util.h>
 
