@@ -33,7 +33,6 @@
 
 
 static void     xfsm_consolekit_finalize     (GObject         *object);
-static void     xfsm_consolekit_proxy_free   (XfsmConsolekit *consolekit);
 
 
 
@@ -47,7 +46,6 @@ struct _XfsmConsolekit
   GObject __parent__;
 
   GDBusProxy *proxy;
-  guint name_id;
 };
 
 
@@ -68,20 +66,15 @@ xfsm_consolekit_class_init (XfsmConsolekitClass *klass)
 
 
 static void
-name_acquired (GDBusConnection *connection,
+name_appeared (GDBusConnection *connection,
                const gchar *name,
                const gchar *name_owner,
                gpointer user_data)
 {
   XfsmConsolekit *consolekit = user_data;
+  GError *error = NULL;
 
-  xfsm_verbose ("%s started up, owned by %s\n", name, name_owner);
-
-  if (consolekit->proxy != NULL)
-  {
-    xfsm_verbose ("already have a connection to consolekit\n");
-    return;
-  }
+  g_debug ("%s started up, owned by %s", name, name_owner);
 
   consolekit->proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
                                                      G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START,
@@ -90,21 +83,26 @@ name_acquired (GDBusConnection *connection,
                                                      CK_MANAGER_PATH,
                                                      CK_MANAGER_NAME,
                                                      NULL,
-                                                     NULL);
+                                                     &error);
+  if (error != NULL)
+    {
+      g_warning ("Failed to get a ConsoleKit proxy: %s", error->message);
+      g_error_free (error);
+    }
 }
 
 
 
 static void
-name_lost (GDBusConnection *connection,
-           const gchar *name,
-           gpointer user_data)
+name_vanished (GDBusConnection *connection,
+               const gchar *name,
+               gpointer user_data)
 {
   XfsmConsolekit *consolekit = user_data;
 
-  xfsm_verbose ("ck lost\n");
+  g_debug ("%s vanished", name);
 
-  xfsm_consolekit_proxy_free (consolekit);
+  g_clear_object (&consolekit->proxy);
 }
 
 
@@ -112,22 +110,13 @@ name_lost (GDBusConnection *connection,
 static void
 xfsm_consolekit_init (XfsmConsolekit *consolekit)
 {
-  consolekit->proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
-                                                     G_DBUS_PROXY_FLAGS_NONE,
-                                                     NULL,
-                                                     CK_NAME,
-                                                     CK_MANAGER_PATH,
-                                                     CK_MANAGER_NAME,
-                                                     NULL,
-                                                     NULL);
-
-  consolekit->name_id = g_bus_watch_name (G_BUS_TYPE_SYSTEM,
-                                          CK_NAME,
-                                          G_BUS_NAME_WATCHER_FLAGS_AUTO_START,
-                                          name_acquired,
-                                          name_lost,
-                                          consolekit,
-                                          NULL);
+  g_bus_watch_name (G_BUS_TYPE_SYSTEM,
+                    CK_NAME,
+                    G_BUS_NAME_WATCHER_FLAGS_AUTO_START,
+                    name_appeared,
+                    name_vanished,
+                    consolekit,
+                    NULL);
 }
 
 
@@ -135,21 +124,11 @@ xfsm_consolekit_init (XfsmConsolekit *consolekit)
 static void
 xfsm_consolekit_finalize (GObject *object)
 {
-  xfsm_consolekit_proxy_free (XFSM_CONSOLEKIT (object));
+  XfsmConsolekit *consolekit = XFSM_CONSOLEKIT (object);
+
+  g_clear_object (&consolekit->proxy);
 
   (*G_OBJECT_CLASS (xfsm_consolekit_parent_class)->finalize) (object);
-}
-
-
-
-static void
-xfsm_consolekit_proxy_free (XfsmConsolekit *consolekit)
-{
-  if (consolekit->proxy != NULL)
-    {
-      g_object_unref (G_OBJECT (consolekit->proxy));
-      consolekit->proxy = NULL;
-    }
 }
 
 
@@ -157,25 +136,27 @@ xfsm_consolekit_proxy_free (XfsmConsolekit *consolekit)
 static gboolean
 xfsm_consolekit_can_method (XfsmConsolekit  *consolekit,
                             const gchar     *method,
-                            gboolean        *can_method,
+                            gboolean        *can_method_out,
                             GError         **error)
 {
   GVariant *variant = NULL;
-
-  g_return_val_if_fail (can_method != NULL, FALSE);
+  gboolean can_method;
 
   /* never return true if something fails */
-  *can_method = FALSE;
+  if (can_method_out != NULL)
+    *can_method_out = FALSE;
 
-  if (!consolekit->proxy)
-  {
-    xfsm_verbose ("no ck proxy\n");
-    return FALSE;
-  }
+  if (consolekit->proxy == NULL)
+    {
+      g_debug ("No ConsoleKit proxy");
+      return FALSE;
+    }
+
+  g_debug ("Calling %s", method);
 
   variant = g_dbus_proxy_call_sync (consolekit->proxy,
                                     method,
-                                    g_variant_new ("()"),
+                                    NULL,
                                     G_DBUS_CALL_FLAGS_NONE,
                                     -1,
                                     NULL,
@@ -184,9 +165,12 @@ xfsm_consolekit_can_method (XfsmConsolekit  *consolekit,
   if (variant == NULL)
     return FALSE;
 
-  g_variant_get_child (variant, 0, "b", can_method);
-
+  g_variant_get_child (variant, 0, "b", &can_method);
   g_variant_unref (variant);
+
+  if (can_method_out != NULL)
+    *can_method_out = can_method;
+
   return TRUE;
 }
 
@@ -195,28 +179,31 @@ xfsm_consolekit_can_method (XfsmConsolekit  *consolekit,
 static gboolean
 xfsm_consolekit_can_sleep (XfsmConsolekit  *consolekit,
                            const gchar     *method,
-                           gboolean        *can_method,
-                           gboolean        *auth_method,
+                           gboolean        *can_method_out,
+                           gboolean        *auth_method_out,
                            GError         **error)
 {
-  gchar *can_string;
+  const gchar *can_string;
   GVariant *variant = NULL;
-
-  g_return_val_if_fail (can_method != NULL, FALSE);
+  gboolean can_method;
 
   /* never return true if something fails */
-  *can_method = FALSE;
-  *auth_method = FALSE;
+  if (can_method_out != NULL)
+    *can_method_out = FALSE;
+  if (auth_method_out != NULL)
+    *auth_method_out = FALSE;
 
-  if (!consolekit->proxy)
-  {
-    xfsm_verbose ("no ck proxy\n");
-    return FALSE;
-  }
+  if (consolekit->proxy == NULL)
+    {
+      g_debug ("No ConsoleKit proxy");
+      return FALSE;
+    }
+
+  g_debug ("Calling %s", method);
 
   variant = g_dbus_proxy_call_sync (consolekit->proxy,
                                     method,
-                                    g_variant_new ("()"),
+                                    NULL,
                                     G_DBUS_CALL_FLAGS_NONE,
                                     -1,
                                     NULL,
@@ -225,21 +212,18 @@ xfsm_consolekit_can_sleep (XfsmConsolekit  *consolekit,
   if (variant == NULL)
     return FALSE;
 
-  g_variant_get_child (variant, 0, "s", &can_string);
+  g_variant_get_child (variant, 0, "&s", &can_string);
 
   /* If yes or challenge then we can sleep, it just might take a password */
-  if (g_strcmp0 (can_string, "yes") == 0 || g_strcmp0 (can_string, "challenge") == 0)
-    {
-      *can_method = TRUE;
-      *auth_method = TRUE;
-    }
-  else
-    {
-      *can_method = FALSE;
-      *auth_method = FALSE;
-    }
+  can_method = g_strcmp0 (can_string, "yes") == 0 || g_strcmp0 (can_string, "challenge") == 0;
 
   g_variant_unref (variant);
+
+  if (can_method_out != NULL)
+    *can_method_out = can_method;
+  if (auth_method_out != NULL)
+    *auth_method_out = can_method;
+
   return TRUE;
 }
 
@@ -252,17 +236,17 @@ xfsm_consolekit_try_method (XfsmConsolekit  *consolekit,
 {
   GVariant *variant = NULL;
 
-  if (!consolekit->proxy)
-  {
-    xfsm_verbose ("no ck proxy\n");
-    return FALSE;
-  }
+  if (consolekit->proxy == NULL)
+    {
+      g_debug ("No ConsoleKit proxy");
+      return FALSE;
+    }
 
-  xfsm_verbose ("calling %s\n", method);
+  g_debug ("Calling %s", method);
 
   variant = g_dbus_proxy_call_sync (consolekit->proxy,
                                     method,
-                                    g_variant_new ("()"),
+                                    NULL,
                                     G_DBUS_CALL_FLAGS_NONE,
                                     -1,
                                     NULL,
@@ -284,13 +268,13 @@ xfsm_consolekit_try_sleep (XfsmConsolekit  *consolekit,
 {
   GVariant *variant = NULL;
 
-  if (!consolekit->proxy)
-  {
-    xfsm_verbose ("no ck proxy\n");
-    return FALSE;
-  }
+  if (consolekit->proxy == NULL)
+    {
+      g_debug ("No ConsoleKit proxy");
+      return FALSE;
+    }
 
-  xfsm_verbose ("calling %s\n", method);
+  g_debug ("Calling %s", method);
 
   variant = g_dbus_proxy_call_sync (consolekit->proxy,
                                     method,
@@ -334,6 +318,7 @@ xfsm_consolekit_try_restart (XfsmConsolekit  *consolekit,
                              GError         **error)
 {
   g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   return xfsm_consolekit_try_method (consolekit, "Restart", error);
 }
@@ -345,6 +330,7 @@ xfsm_consolekit_try_shutdown (XfsmConsolekit  *consolekit,
                               GError         **error)
 {
   g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   return xfsm_consolekit_try_method (consolekit, "Stop", error);
 }
@@ -357,7 +343,7 @@ xfsm_consolekit_can_restart (XfsmConsolekit  *consolekit,
                              GError         **error)
 {
   g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
-
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   return xfsm_consolekit_can_method (consolekit, "CanRestart",
                                      can_restart, error);
@@ -371,6 +357,7 @@ xfsm_consolekit_can_shutdown (XfsmConsolekit  *consolekit,
                               GError         **error)
 {
   g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   return xfsm_consolekit_can_method (consolekit, "CanStop",
                                      can_shutdown, error);
@@ -383,6 +370,7 @@ xfsm_consolekit_try_suspend (XfsmConsolekit  *consolekit,
                              GError         **error)
 {
   g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   return xfsm_consolekit_try_sleep (consolekit, "Suspend", error);
 }
@@ -394,6 +382,7 @@ xfsm_consolekit_try_hibernate (XfsmConsolekit  *consolekit,
                                GError         **error)
 {
   g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   return xfsm_consolekit_try_sleep (consolekit, "Hibernate", error);
 }
@@ -405,6 +394,7 @@ xfsm_consolekit_try_hybrid_sleep (XfsmConsolekit  *consolekit,
                                   GError         **error)
 {
   g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   return xfsm_consolekit_try_sleep (consolekit, "HybridSleep", error);
 }
@@ -418,6 +408,7 @@ xfsm_consolekit_can_suspend (XfsmConsolekit  *consolekit,
                              GError         **error)
 {
   g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   return xfsm_consolekit_can_sleep (consolekit, "CanSuspend",
                                     can_suspend, auth_suspend, error);
@@ -432,6 +423,7 @@ xfsm_consolekit_can_hibernate (XfsmConsolekit  *consolekit,
                                GError         **error)
 {
   g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   return xfsm_consolekit_can_sleep (consolekit, "CanHibernate",
                                     can_hibernate, auth_hibernate, error);
@@ -446,6 +438,7 @@ xfsm_consolekit_can_hybrid_sleep (XfsmConsolekit  *consolekit,
                                   GError         **error)
 {
   g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   return xfsm_consolekit_can_sleep (consolekit, "CanHybridSleep",
                                     can_hybrid_sleep, auth_hybrid_sleep, error);
