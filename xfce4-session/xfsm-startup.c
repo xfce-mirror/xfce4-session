@@ -62,8 +62,6 @@
 #include <xfce4-session/xfsm-compat-kde.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-manager.h>
-#include <xfce4-session/xfsm-systemd.h>
-
 #include <xfce4-session/xfsm-startup.h>
 
 
