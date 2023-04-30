@@ -22,8 +22,6 @@
 #ifndef __XFSM_SYSTEMD_H__
 #define __XFSM_SYSTEMD_H__
 
-#define LOGIND_RUNNING() (access ("/run/systemd/seats/", F_OK) >= 0)
-
 typedef struct _XfsmSystemdClass XfsmSystemdClass;
 typedef struct _XfsmSystemd      XfsmSystemd;
 
