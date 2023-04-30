@@ -89,7 +89,8 @@ struct _XfsmShutdown
   XfsmSystemd    *systemd;
   XfsmConsolekit *consolekit;
 
-  XfsmInhibitor  *inhibitions;
+  XfsmInhibitor   *inhibitions;
+  XfceScreensaver *screensaver;
 
   /* kiosk settings */
   gboolean        kiosk_can_shutdown;
@@ -127,6 +128,7 @@ xfsm_shutdown_init (XfsmShutdown *shutdown)
     shutdown->consolekit = xfsm_consolekit_get ();
 
   shutdown->inhibitions = xfsm_inhibitor_get ();
+  shutdown->screensaver = xfce_screensaver_new ();
 
   /* check kiosk */
   kiosk = xfce_kiosk_new ("xfce4-session");
@@ -150,6 +152,8 @@ xfsm_shutdown_finalize (GObject *object)
 
   if (shutdown->inhibitions != NULL)
     g_object_unref (G_OBJECT (shutdown->inhibitions));
+
+  g_object_unref (G_OBJECT (shutdown->screensaver));
 
   (*G_OBJECT_CLASS (xfsm_shutdown_parent_class)->finalize) (object);
 }
@@ -301,11 +305,29 @@ try_sleep_method (gpointer  object,
 
 
 
+static gboolean
+lock_screen (XfsmShutdown *shutdown)
+{
+  XfconfChannel *channel;
+  gboolean ret = TRUE;
+
+  channel = xfconf_channel_get (SETTINGS_CHANNEL);
+  if (xfconf_channel_get_bool (channel, "/shutdown/LockScreen", FALSE))
+    ret = xfce_screensaver_lock (shutdown->screensaver);
+
+  return ret;
+}
+
+
+
 gboolean
 xfsm_shutdown_try_suspend (XfsmShutdown  *shutdown,
                            GError       **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  if (!lock_screen (shutdown))
+    return FALSE;
 
   /* Try each way to suspend - it will handle NULL.
    */
@@ -327,6 +349,9 @@ xfsm_shutdown_try_hibernate (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
+  if (!lock_screen (shutdown))
+    return FALSE;
+
   /* Try each way to hibernate - it will handle NULL.
    */
 
@@ -346,6 +371,9 @@ xfsm_shutdown_try_hybrid_sleep (XfsmShutdown  *shutdown,
                                 GError       **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  if (!lock_screen (shutdown))
+    return FALSE;
 
   /* Try each way to hybrid-sleep - it will handle NULL.
    */
