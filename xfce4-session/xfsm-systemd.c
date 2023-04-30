@@ -20,9 +20,6 @@
 #include <config.h>
 
 #include <gio/gio.h>
-#ifdef HAVE_POLKIT
-#include <polkit/polkit.h>
-#endif
 
 #include <libxfsm/xfsm-util.h>
 #include <xfce4-session/xfsm-error.h>
@@ -59,10 +56,7 @@ struct _XfsmSystemdClass
 struct _XfsmSystemd
 {
   GObject __parent__;
-#ifdef HAVE_POLKIT
-  PolkitAuthority *authority;
-  PolkitSubject   *subject;
-#endif
+
   XfsmPackagekit  *packagekit;
   XfceScreensaver *screensaver;
 };
@@ -87,10 +81,6 @@ xfsm_systemd_class_init (XfsmSystemdClass *klass)
 static void
 xfsm_systemd_init (XfsmSystemd *systemd)
 {
-#ifdef HAVE_POLKIT
-  systemd->authority = polkit_authority_get_sync (NULL, NULL);
-  systemd->subject = polkit_unix_process_new_for_owner (getpid(), 0, -1);
-#endif
   systemd->packagekit = xfsm_packagekit_get ();
   systemd->screensaver = xfce_screensaver_new ();
 }
@@ -102,10 +92,6 @@ xfsm_systemd_finalize (GObject *object)
 {
   XfsmSystemd *systemd = XFSM_SYSTEMD (object);
 
-#ifdef HAVE_POLKIT
-  g_object_unref (G_OBJECT (systemd->authority));
-  g_object_unref (G_OBJECT (systemd->subject));
-#endif
   g_object_unref (G_OBJECT (systemd->packagekit));
   g_object_unref (G_OBJECT (systemd->screensaver));
 
