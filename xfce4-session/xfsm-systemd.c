@@ -58,7 +58,6 @@ struct _XfsmSystemd
   GObject __parent__;
 
   XfsmPackagekit  *packagekit;
-  XfceScreensaver *screensaver;
 };
 
 
@@ -82,7 +81,6 @@ static void
 xfsm_systemd_init (XfsmSystemd *systemd)
 {
   systemd->packagekit = xfsm_packagekit_get ();
-  systemd->screensaver = xfce_screensaver_new ();
 }
 
 
@@ -93,25 +91,8 @@ xfsm_systemd_finalize (GObject *object)
   XfsmSystemd *systemd = XFSM_SYSTEMD (object);
 
   g_object_unref (G_OBJECT (systemd->packagekit));
-  g_object_unref (G_OBJECT (systemd->screensaver));
 
   (*G_OBJECT_CLASS (xfsm_systemd_parent_class)->finalize) (object);
-}
-
-
-
-static gboolean
-xfsm_systemd_lock_screen (XfsmSystemd  *systemd,
-                          GError **error)
-{
-  XfconfChannel *channel;
-  gboolean       ret = TRUE;
-
-  channel = xfconf_channel_get (SETTINGS_CHANNEL);
-  if (xfconf_channel_get_bool (channel, "/shutdown/LockScreen", FALSE))
-      ret = xfce_screensaver_lock (systemd->screensaver);
-
-  return ret;
 }
 
 
@@ -256,9 +237,6 @@ gboolean
 xfsm_systemd_try_suspend (XfsmSystemd  *systemd,
                           GError      **error)
 {
-  if (!xfsm_systemd_lock_screen (systemd, error))
-    return FALSE;
-
   return xfsm_systemd_try_method (systemd,
                                   SYSTEMD_SUSPEND_ACTION,
                                   error);
@@ -270,9 +248,6 @@ gboolean
 xfsm_systemd_try_hibernate (XfsmSystemd  *systemd,
                             GError      **error)
 {
-  if (!xfsm_systemd_lock_screen (systemd, error))
-    return FALSE;
-
   return xfsm_systemd_try_method (systemd,
                                   SYSTEMD_HIBERNATE_ACTION,
                                   error);
@@ -284,9 +259,6 @@ gboolean
 xfsm_systemd_try_hybrid_sleep (XfsmSystemd  *systemd,
                                GError      **error)
 {
-  if (!xfsm_systemd_lock_screen (systemd, error))
-    return FALSE;
-
   return xfsm_systemd_try_method (systemd,
                                   SYSTEMD_HYBRID_SLEEP_ACTION,
                                   error);

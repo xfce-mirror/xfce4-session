@@ -48,7 +48,6 @@ struct _XfsmConsolekit
 
   GDBusProxy *proxy;
   guint name_id;
-  XfceScreensaver *screensaver;
 };
 
 
@@ -129,8 +128,6 @@ xfsm_consolekit_init (XfsmConsolekit *consolekit)
                                           name_lost,
                                           consolekit,
                                           NULL);
-
-  consolekit->screensaver = xfce_screensaver_new ();
 }
 
 
@@ -152,12 +149,6 @@ xfsm_consolekit_proxy_free (XfsmConsolekit *consolekit)
     {
       g_object_unref (G_OBJECT (consolekit->proxy));
       consolekit->proxy = NULL;
-    }
-
-  if (consolekit->screensaver != NULL)
-    {
-      g_object_unref (G_OBJECT (consolekit->screensaver));
-      consolekit->screensaver = NULL;
     }
 }
 
@@ -386,41 +377,12 @@ xfsm_consolekit_can_shutdown (XfsmConsolekit  *consolekit,
 }
 
 
-static gboolean
-lock_screen (XfsmConsolekit  *consolekit,
-             GError **error)
-{
-  XfconfChannel *channel;
-  gboolean       ret = TRUE;
-
-  channel = xfconf_channel_get (SETTINGS_CHANNEL);
-  if (xfconf_channel_get_bool (channel, "/shutdown/LockScreen", FALSE))
-      ret = xfce_screensaver_lock (consolekit->screensaver);
-
-  return ret;
-}
 
 gboolean
 xfsm_consolekit_try_suspend (XfsmConsolekit  *consolekit,
                              GError         **error)
 {
-  gboolean can_suspend, auth_suspend;
-
   g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
-
-  /* Check if consolekit can suspend before we call lock screen. */
-  if (xfsm_consolekit_can_suspend (consolekit, &can_suspend, &auth_suspend, NULL))
-    {
-      if (!can_suspend)
-        return FALSE;
-    }
-  else
-    {
-      return FALSE;
-    }
-
-  if (!lock_screen (consolekit, error))
-    return FALSE;
 
   return xfsm_consolekit_try_sleep (consolekit, "Suspend", error);
 }
@@ -431,23 +393,7 @@ gboolean
 xfsm_consolekit_try_hibernate (XfsmConsolekit  *consolekit,
                                GError         **error)
 {
-  gboolean can_hibernate, auth_hibernate;
-
   g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
-
-  /* Check if consolekit can hibernate before we call lock screen. */
-  if (xfsm_consolekit_can_hibernate (consolekit, &can_hibernate, &auth_hibernate, NULL))
-    {
-      if (!can_hibernate)
-        return FALSE;
-    }
-  else
-    {
-      return FALSE;
-    }
-
-  if (!lock_screen (consolekit, error))
-    return FALSE;
 
   return xfsm_consolekit_try_sleep (consolekit, "Hibernate", error);
 }
@@ -458,23 +404,7 @@ gboolean
 xfsm_consolekit_try_hybrid_sleep (XfsmConsolekit  *consolekit,
                                   GError         **error)
 {
-  gboolean can_hybrid_sleep, auth_hybrid_sleep;
-
   g_return_val_if_fail (XFSM_IS_CONSOLEKIT (consolekit), FALSE);
-
-  /* Check if consolekit can hybrid sleep before we call lock screen. */
-  if (xfsm_consolekit_can_hybrid_sleep (consolekit, &can_hybrid_sleep, &auth_hybrid_sleep, NULL))
-    {
-      if (!can_hybrid_sleep)
-        return FALSE;
-    }
-  else
-    {
-      return FALSE;
-    }
-
-  if (!lock_screen (consolekit, error))
-    return FALSE;
 
   return xfsm_consolekit_try_sleep (consolekit, "HybridSleep", error);
 }
