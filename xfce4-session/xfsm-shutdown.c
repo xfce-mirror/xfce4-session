@@ -69,6 +69,7 @@
 #include <xfce4-session/xfsm-legacy.h>
 #include <xfce4-session/xfsm-systemd.h>
 #include <xfce4-session/xfsm-shutdown-fallback.h>
+#include <xfce4-session/xfsm-packagekit.h>
 
 
 
@@ -91,6 +92,7 @@ struct _XfsmShutdown
 
   XfsmInhibitor   *inhibitions;
   XfceScreensaver *screensaver;
+  XfsmPackagekit  *packagekit;
 
   /* kiosk settings */
   gboolean        kiosk_can_shutdown;
@@ -129,6 +131,7 @@ xfsm_shutdown_init (XfsmShutdown *shutdown)
 
   shutdown->inhibitions = xfsm_inhibitor_get ();
   shutdown->screensaver = xfce_screensaver_new ();
+  shutdown->packagekit = xfsm_packagekit_get ();
 
   /* check kiosk */
   kiosk = xfce_kiosk_new ("xfce4-session");
@@ -154,6 +157,7 @@ xfsm_shutdown_finalize (GObject *object)
     g_object_unref (G_OBJECT (shutdown->inhibitions));
 
   g_object_unref (G_OBJECT (shutdown->screensaver));
+  g_object_unref (G_OBJECT (shutdown->packagekit));
 
   (*G_OBJECT_CLASS (xfsm_shutdown_parent_class)->finalize) (object);
 }
@@ -244,6 +248,13 @@ xfsm_shutdown_try_restart (XfsmShutdown  *shutdown,
 
   if (shutdown->systemd != NULL)
     {
+      gboolean has_updates = FALSE;
+      if (xfsm_packagekit_has_update_prepared (shutdown->packagekit, &has_updates, NULL)
+          && has_updates)
+        {
+          xfsm_packagekit_try_trigger_restart (shutdown->packagekit, NULL);
+        }
+
       if (xfsm_systemd_try_restart (shutdown->systemd, NULL))
         {
           return TRUE;
@@ -273,6 +284,20 @@ xfsm_shutdown_try_shutdown (XfsmShutdown  *shutdown,
 
   if (shutdown->systemd != NULL)
     {
+      gboolean has_updates = FALSE;
+      if (xfsm_packagekit_has_update_prepared (shutdown->packagekit, &has_updates, NULL)
+          && has_updates
+          && xfsm_packagekit_try_trigger_shutdown (shutdown->packagekit, NULL))
+        {
+          // To actually trigger the offline update, we need to
+          // reboot to do the upgrade. When the upgrade is complete,
+          // the computer will shut down automatically.
+          if (xfsm_systemd_try_restart (shutdown->systemd, NULL))
+            {
+              return TRUE;
+            }
+        }
+
       if (xfsm_systemd_try_shutdown (shutdown->systemd, NULL))
         {
           return TRUE;
@@ -711,10 +736,19 @@ xfsm_shutdown_can_logout (XfsmShutdown  *shutdown)
 gboolean
 xfsm_shutdown_has_update_prepared (XfsmShutdown *shutdown)
 {
+  gboolean  has_updates = FALSE;
+  GError   *error = NULL;
+
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
-  if (shutdown->systemd != NULL)
-    return xfsm_systemd_has_update_prepared (shutdown->systemd);
+  if (shutdown->systemd == NULL)
+    return FALSE;
 
-  return FALSE;
+  if (!xfsm_packagekit_has_update_prepared (shutdown->packagekit, &has_updates, &error))
+    {
+      g_warning ("Querying PackageKit updates failed: %s", error->message);
+      g_error_free (error);
+    }
+
+  return has_updates;
 }
