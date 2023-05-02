@@ -257,8 +257,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
    **/
   if (!xfsm_shutdown_can_restart (dialog->shutdown, &can_restart, &error))
     {
-      g_printerr ("%s: Querying CanRestart failed, %s\n\n",
-                  PACKAGE_NAME, ERROR_MSG (error));
+      g_warning ("Querying CanRestart failed: %s", ERROR_MSG (error));
       g_clear_error (&error);
 
       can_restart = FALSE;
@@ -278,8 +277,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
    **/
   if (!xfsm_shutdown_can_shutdown (dialog->shutdown, &can_shutdown, &error))
     {
-      g_printerr ("%s: Querying CanShutdown failed. %s\n\n",
-                  PACKAGE_NAME, ERROR_MSG (error));
+      g_warning ("Querying CanShutdown failed: %s", ERROR_MSG (error));
       g_clear_error (&error);
 
       can_shutdown = FALSE;
@@ -323,8 +321,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
         }
       else
         {
-          g_printerr ("%s: Querying suspend failed: %s\n\n",
-                      PACKAGE_NAME, ERROR_MSG (error));
+          g_warning ("Querying suspend failed: %s", ERROR_MSG (error));
           g_clear_error (&error);
 
           /* don't try hibernate again */
@@ -357,8 +354,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
         }
       else
         {
-          g_printerr ("%s: Querying hibernate failed: %s\n\n",
-                      PACKAGE_NAME, ERROR_MSG (error));
+          g_warning ("Querying hibernate failed: %s", ERROR_MSG (error));
           g_clear_error (&error);
         }
     }
@@ -388,8 +384,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
         }
       else
         {
-          g_printerr ("%s: Querying hybrid-sleep failed: %s\n\n",
-                      PACKAGE_NAME, ERROR_MSG (error));
+          g_warning ("Querying hybrid-sleep failed: %s", ERROR_MSG (error));
           g_clear_error (&error);
         }
     }
@@ -419,8 +414,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
         }
       else
         {
-          g_printerr ("%s: Querying switch user failed: %s\n\n",
-                      PACKAGE_NAME, ERROR_MSG (error));
+          g_warning ("Querying switch user failed: %s", ERROR_MSG (error));
           g_clear_error (&error);
         }
     }

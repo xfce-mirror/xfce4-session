@@ -261,7 +261,7 @@ xfae_model_set_sort_func (GtkTreeSortable        *sortable,
                           gpointer                data,
                           GDestroyNotify          destroy)
 {
-  g_printerr ("xfae_model_set_sort_func not supported\n");
+  g_warning ("xfae_model_set_sort_func not supported");
   return;
 }
 
@@ -273,7 +273,7 @@ xfae_model_set_default_sort_func (GtkTreeSortable        *sortable,
                                   gpointer                data,
                                   GDestroyNotify          destroy)
 {
-  g_printerr ("xfae_model_set_default_sort_func not supported\n");
+  g_warning ("xfae_model_set_default_sort_func not supported");
   return;
 }
 

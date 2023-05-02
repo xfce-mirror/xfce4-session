@@ -398,8 +398,7 @@ xfsm_systemd_has_update_prepared (XfsmSystemd *systemd)
 
   if (!xfsm_packagekit_has_update_prepared (systemd->packagekit, &has_updates, &error))
     {
-      g_printerr ("%s: Querying Pacakegekit Updates failed. %s\n\n",
-                  PACKAGE_NAME, ERROR_MSG (error));
+      g_warning ("Querying Pacakegekit Updates failed: %s", ERROR_MSG (error));
       g_clear_error (&error);
     }
 
