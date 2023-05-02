@@ -134,8 +134,7 @@ gnome_keyring_daemon_startup (void)
 
   if (error != NULL)
     {
-      g_printerr ("Failed to run gnome-keyring-daemon: %s\n",
-                  error->message);
+      g_warning ("Failed to run gnome-keyring-daemon: %s", error->message);
       g_error_free (error);
     }
   else
@@ -170,8 +169,7 @@ gnome_keyring_daemon_startup (void)
       else
         {
           /* daemon failed for some reason */
-          g_printerr ("gnome-keyring-daemon failed to start correctly, "
-                      "exit code: %d\n", WEXITSTATUS (status));
+          g_warning ("gnome-keyring-daemon failed to start correctly, exit code: %d", WEXITSTATUS (status));
         }
 
       g_free (sout);

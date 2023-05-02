@@ -117,8 +117,7 @@ xfce_session_logout_notify_error (const gchar *message,
     }
   else
     {
-      g_printerr (PACKAGE_NAME ": %s (%s).\n", message,
-                  error != NULL ? error->message : _("Unknown error"));
+      g_warning ("%s (%s)", message, error != NULL ? error->message : _("Unknown error"));
     }
 }
 

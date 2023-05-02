@@ -245,8 +245,7 @@ xfsm_startup_init (XfconfChannel *channel)
     {
       gpg_agent_path = g_find_program_in_path ("gpg-agent");
       if (gpg_agent_path == NULL)
-        g_printerr ("xfce4-session: %s\n",
-                    "No GPG agent found");
+        g_warning ("No GPG agent found");
     }
 
   if (xfconf_channel_get_bool (channel, "/startup/ssh-agent/enabled", TRUE))
@@ -258,16 +257,14 @@ xfsm_startup_init (XfconfChannel *channel)
         {
           ssh_agent_path = g_find_program_in_path ("ssh-agent");
           if (ssh_agent_path == NULL)
-            g_printerr ("xfce4-session: %s\n",
-                        "No SSH authentication agent found");
+            g_warning ("No SSH authentication agent found");
         }
       else if (g_strcmp0 (ssh_agent, "gpg-agent") == 0)
         {
           if (gpg_agent_path != NULL)
              gpgagent_ssh_enabled = TRUE;
            else
-               g_printerr ("xfce4-session: %s\n", "gpg-agent is configured as SSH agent, "
-                          "but gpg-agent is disabled or not found");
+               g_warning ("gpg-agent is configured as SSH agent, but gpg-agent is disabled or not found");
         }
       else
         {

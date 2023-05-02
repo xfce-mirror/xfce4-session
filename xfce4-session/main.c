@@ -96,7 +96,7 @@ setup_environment (void)
   sm = g_getenv ("SESSION_MANAGER");
   if (sm != NULL && strlen (sm) > 0)
     {
-      g_printerr ("%s: Another session manager is already running\n", PACKAGE_NAME);
+      g_warning ("Another session manager is already running");
       exit (EXIT_FAILURE);
     }
 
@@ -266,7 +266,7 @@ xfsm_dbus_init (XfsmManager **manager)
 
   if (name_id == 0)
     {
-      g_printerr ("%s: Another session manager is already running\n", PACKAGE_NAME);
+      g_warning ("Another session manager is already running");
       exit (EXIT_FAILURE);
     }
 }
