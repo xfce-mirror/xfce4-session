@@ -129,7 +129,7 @@ xfsm_packagekit_get_bool_property (XfsmPackagekit  *packagekit,
   if (local_error == NULL)
     return TRUE;
 
-  if (g_error_matches (local_error, G_DBUS_ERROR, G_DBUS_ERROR_NAME_HAS_NO_OWNER))
+  if (g_error_matches (local_error, G_DBUS_ERROR, G_DBUS_ERROR_SERVICE_UNKNOWN))
     {
       *bool_property = FALSE;
       g_error_free (local_error);
