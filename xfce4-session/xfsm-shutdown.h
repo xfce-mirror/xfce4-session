@@ -22,6 +22,8 @@
 #ifndef __XFSM_SHUTDOWN_H__
 #define __XFSM_SHUTDOWN_H__
 
+#define LOGIND_RUNNING() (access ("/run/systemd/seats/", F_OK) >= 0)
+
 typedef struct _XfsmShutdownClass XfsmShutdownClass;
 typedef struct _XfsmShutdown      XfsmShutdown;
 
