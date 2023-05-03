@@ -240,7 +240,7 @@ main (int argc, char **argv)
     {
       if (err != NULL)
         {
-          g_print (_("Received error while trying to log out, error was %s"), err->message);
+          g_warning ("Received error while trying to log out: %s", err->message);
         }
       g_clear_error (&err);
 
