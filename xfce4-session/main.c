@@ -329,9 +329,9 @@ main (int argc, char **argv)
 
   if (!gtk_init_with_args (&argc, &argv, NULL, option_entries, GETTEXT_PACKAGE, &error))
     {
-      g_print ("%s: %s.\n", G_LOG_DOMAIN, error->message);
-      g_print (_("Type '%s --help' for usage."), G_LOG_DOMAIN);
-      g_print ("\n");
+      g_printerr ("%s: %s.\n", G_LOG_DOMAIN, error->message);
+      g_printerr (_("Type '%s --help' for usage."), G_LOG_DOMAIN);
+      g_printerr ("\n");
       g_error_free (error);
       return EXIT_FAILURE;
     }

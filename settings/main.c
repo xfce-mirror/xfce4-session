@@ -106,12 +106,12 @@ main(int argc,
                             GETTEXT_PACKAGE, &error))
     {
         if(G_LIKELY(error)) {
-            g_print("%s: %s.\n", G_LOG_DOMAIN, error->message);
-            g_print(_("Type '%s --help' for usage."), G_LOG_DOMAIN);
-            g_print("\n");
+            g_printerr("%s: %s.\n", G_LOG_DOMAIN, error->message);
+            g_printerr(_("Type '%s --help' for usage."), G_LOG_DOMAIN);
+            g_printerr("\n");
             g_error_free (error);
         } else
-            g_error("Unable to open display.");
+            g_critical("Unable to open display.");
 
         return EXIT_FAILURE;
     }

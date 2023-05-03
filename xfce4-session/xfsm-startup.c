@@ -234,9 +234,8 @@ xfsm_startup_init (XfconfChannel *channel)
 
       if (gnome_keyring_found)
         {
-          g_print ("xfce4-session: %s\n",
-                   "GNOME compatibility is enabled and gnome-keyring-daemon is "
-                   "found on the system. Skipping gpg/ssh-agent startup.");
+          g_message ("GNOME compatibility is enabled and gnome-keyring-daemon is "
+                     "found on the system. Skipping gpg/ssh-agent startup.");
           return;
         }
     }
