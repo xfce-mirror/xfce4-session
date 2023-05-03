@@ -88,7 +88,7 @@ session_editor_ensure_dbus(void)
                                                              &error);
 
     if (manager_dbus_proxy == NULL) {
-        g_error ("error connecting to org.xfce.SessionManager, reason was: %s", error->message);
+        g_critical ("error connecting to org.xfce.SessionManager, reason was: %s", error->message);
         g_clear_error(&error);
         return FALSE;
     }
@@ -302,7 +302,7 @@ session_editor_quit_client(GtkWidget *btn,
             g_variant_builder_add (&properties, "{sv}", SmRestartStyleHint, variant);
 
             if(!xfsm_client_call_set_sm_properties_sync(proxy, g_variant_builder_end (&properties), NULL, &error)) {
-                g_error("error setting 'SmRestartStyleHint', error: %s", error->message);
+                g_critical("error setting 'SmRestartStyleHint', error: %s", error->message);
                 g_clear_error(&error);
             }
         }
@@ -644,7 +644,7 @@ priority_changed(GtkCellRenderer *render,
             g_variant_builder_add (&properties, "{sv}", GsmPriority, variant);
 
             if(!xfsm_client_call_set_sm_properties_sync(proxy, g_variant_builder_end (&properties), NULL, &error)) {
-                g_error("error setting 'GsmPriority', error: %s", error->message);
+                g_critical("error setting 'GsmPriority', error: %s", error->message);
                 g_clear_error(&error);
             }
 
@@ -700,7 +700,7 @@ restart_style_hint_changed(GtkCellRenderer *render,
             g_variant_builder_add (&properties, "{sv}", SmRestartStyleHint, variant);
 
             if(!xfsm_client_call_set_sm_properties_sync(proxy, g_variant_builder_end (&properties), NULL, &error)) {
-                g_error("error setting 'SmRestartStyleHint', error: %s", error->message);
+                g_critical("error setting 'SmRestartStyleHint', error: %s", error->message);
                 g_clear_error(&error);
             }
 
