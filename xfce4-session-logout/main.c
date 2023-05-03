@@ -52,18 +52,6 @@ gboolean opt_switch_user = FALSE;
 gboolean opt_fast = FALSE;
 gboolean opt_version = FALSE;
 
-enum
-{
-  XFSM_SHUTDOWN_ASK = 0,
-  XFSM_SHUTDOWN_LOGOUT,
-  XFSM_SHUTDOWN_HALT,
-  XFSM_SHUTDOWN_REBOOT,
-  XFSM_SHUTDOWN_SUSPEND,
-  XFSM_SHUTDOWN_HIBERNATE,
-  XFSM_SHUTDOWN_HYBRID_SLEEP,
-  XFSM_SHUTDOWN_SWITCH_USER
-};
-
 static GOptionEntry option_entries[] =
 {
   { "logout", 'l', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_logout,
@@ -131,7 +119,6 @@ main (int argc, char **argv)
   gboolean         have_display;
   gboolean         show_dialog;
   GVariant        *result = NULL;
-  guint            shutdown_type;
   gboolean         allow_save;
 
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
@@ -233,42 +220,6 @@ main (int argc, char **argv)
                                        NULL,
                                        &err);
     }
-
-  /* fallback for the old 4.8 API dbus, so users can logout if
-   * they upgraded their system, see bug #8630 */
-  if (!result)
-    {
-      if (err != NULL)
-        {
-          g_warning ("Received error while trying to log out: %s", err->message);
-        }
-      g_clear_error (&err);
-
-      if (opt_logout)
-        shutdown_type = XFSM_SHUTDOWN_LOGOUT;
-      else if (opt_halt)
-        shutdown_type = XFSM_SHUTDOWN_HALT;
-      else if (opt_reboot)
-        shutdown_type = XFSM_SHUTDOWN_REBOOT;
-      else if (opt_suspend)
-        shutdown_type = XFSM_SHUTDOWN_SUSPEND;
-      else if (opt_hibernate)
-        shutdown_type = XFSM_SHUTDOWN_HIBERNATE;
-      else if (opt_hybrid_sleep)
-        shutdown_type = XFSM_SHUTDOWN_HYBRID_SLEEP;
-      else if (opt_switch_user)
-        shutdown_type = XFSM_SHUTDOWN_SWITCH_USER;
-      else
-        shutdown_type = XFSM_SHUTDOWN_ASK;
-
-      result = g_dbus_proxy_call_sync (proxy, "Shutdown",
-                                       g_variant_new("(yb)",shutdown_type, allow_save),
-                                       G_DBUS_CALL_FLAGS_NONE,
-                                       -1,
-                                       NULL,
-                                       &err);
-    }
-
 
   if (proxy != NULL)
     g_object_unref (proxy);
