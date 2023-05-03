@@ -250,7 +250,7 @@ xfsm_launch_desktop_files_on_shutdown (gboolean         start_at_spi,
       return xfsm_launch_desktop_files_on_run_hook (start_at_spi, XFSM_RUN_HOOK_SWITCH_USER);
 
     default:
-      g_error ("Failed to convert shutdown type '%d' to run hook name.", shutdown_type);
+      g_critical ("Failed to convert shutdown type '%d' to run hook name.", shutdown_type);
       return FALSE;
     }
 }
