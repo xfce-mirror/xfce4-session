@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-04-12 12:49+0200\n"
+"POT-Creation-Date: 2023-05-04 00:46+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Triyan W. Nugroho <triyan.wn@gmail.com>, 2020-2021\n"
 "Language-Team: Indonesian (http://app.transifex.com/xfce/xfce4-session/language/id/)\n"
@@ -69,12 +69,12 @@ msgid "Type '%s --help' for usage."
 msgstr "Ketik '%s --help' untuk penggunaan."
 
 #: settings/main.c:122 xfce4-session/main.c:343
-#: xfce4-session-logout/main.c:146
+#: xfce4-session-logout/main.c:132
 msgid "The Xfce development team. All rights reserved."
 msgstr "Tim pengembang Xfce. Hak cipta dilindungi undang-undang."
 
 #: settings/main.c:123 xfce4-session/main.c:344
-#: xfce4-session-logout/main.c:149
+#: xfce4-session-logout/main.c:135
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Silakan laporkan kutu ke <%s>."
@@ -120,7 +120,7 @@ msgid "Unable to save the session"
 msgstr "Tak dapat menyimpan sesi"
 
 #: settings/session-editor.c:141 settings/session-editor.c:315
-#: xfce4-session/xfsm-manager.c:1267 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1275 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "_Tutup"
 
@@ -139,8 +139,8 @@ msgid ""
 msgstr "Kondisi penyimpanan aplikasi anda tak akan dijalankan ulang saat anda masuk berikutnya."
 
 #: settings/session-editor.c:203 settings/session-editor.c:290
-#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:687
-#: xfce4-session/xfsm-logout-dialog.c:221
+#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:695
+#: xfce4-session/xfsm-logout-dialog.c:223
 msgid "_Cancel"
 msgstr "_Batal"
 
@@ -200,7 +200,7 @@ msgstr "Program"
 msgid "Restart Style"
 msgstr "Gaya Mulai Ulang"
 
-#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:689
+#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:697
 msgid "_OK"
 msgstr "_OK"
 
@@ -348,7 +348,7 @@ msgstr "Gagal mengubah item"
 msgid "Disable binding to TCP ports"
 msgstr "Nonaktifkan pengikatan ke pangkalan TCP"
 
-#: xfce4-session/main.c:78 xfce4-session-logout/main.c:102
+#: xfce4-session/main.c:78 xfce4-session-logout/main.c:90
 msgid "Print version information and exit"
 msgstr "Cetak informasi versi dan keluar"
 
@@ -410,7 +410,7 @@ msgstr "Tetap lanjutkan"
 msgid "Try again"
 msgstr "Coba lagi"
 
-#: xfce4-session/xfsm-manager.c:571
+#: xfce4-session/xfsm-manager.c:579
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -419,176 +419,176 @@ msgid ""
 "incorrectly."
 msgstr "Tak dapat menentukan nama sesi darurat.  Kemungkinan penyebab: xfconfd tak berjalan (masalah pengaturan D-BUS); variabel lingkungan $XDG_CONFIG_DIRS tak benar diatur (harus menyertakan \"%s\"), atau xfce4-session tak diinstal secara benar."
 
-#: xfce4-session/xfsm-manager.c:582
+#: xfce4-session/xfsm-manager.c:590
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Sesi darurat yang ditentukan (\"%s\") tidak ditandai sebagai sesi darurat."
 
-#: xfce4-session/xfsm-manager.c:615
+#: xfce4-session/xfsm-manager.c:623
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Senarai aplikasi di sesi darurat kosong."
 
-#: xfce4-session/xfsm-manager.c:701
+#: xfce4-session/xfsm-manager.c:709
 msgid "Name for the new session"
 msgstr "Beri nama sesi baru"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:779
+#: xfce4-session/xfsm-manager.c:787
 msgid "Session Manager Error"
 msgstr "Galat Manajer Sesi"
 
-#: xfce4-session/xfsm-manager.c:781
+#: xfce4-session/xfsm-manager.c:789
 msgid "Unable to load a failsafe session"
 msgstr "Tak dapat memuat sesi darurat"
 
-#: xfce4-session/xfsm-manager.c:783
+#: xfce4-session/xfsm-manager.c:791
 msgid "_Quit"
 msgstr "_Keluar"
 
-#: xfce4-session/xfsm-manager.c:1257
+#: xfce4-session/xfsm-manager.c:1265
 msgid "Shutdown Failed"
 msgstr "Matikan Gagal"
 
-#: xfce4-session/xfsm-manager.c:1260
+#: xfce4-session/xfsm-manager.c:1268
 msgid "Failed to suspend session"
 msgstr "Gagal menyuspensi sesi"
 
-#: xfce4-session/xfsm-manager.c:1262
+#: xfce4-session/xfsm-manager.c:1270
 msgid "Failed to hibernate session"
 msgstr "Gagal menghibernasi sesi"
 
-#: xfce4-session/xfsm-manager.c:1264
+#: xfce4-session/xfsm-manager.c:1272
 msgid "Failed to hybrid sleep session"
 msgstr "Gagal melakukan sesi tidur hybrid"
 
-#: xfce4-session/xfsm-manager.c:1265
+#: xfce4-session/xfsm-manager.c:1273
 msgid "Failed to switch user"
 msgstr "Gagal untuk beralih pengguna"
 
-#: xfce4-session/xfsm-manager.c:1573
+#: xfce4-session/xfsm-manager.c:1581
 msgid "Can only terminate clients when in the idle state"
 msgstr "Hanya dapat mematikan klien ketika dalam kondisi tak aktif"
 
-#: xfce4-session/xfsm-manager.c:2229
+#: xfce4-session/xfsm-manager.c:2252
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Manajer sesi harus dalam kondisi tak aktif ketika meminta titik pemeriksaan"
 
-#: xfce4-session/xfsm-manager.c:2299 xfce4-session/xfsm-manager.c:2319
+#: xfce4-session/xfsm-manager.c:2322 xfce4-session/xfsm-manager.c:2342
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Manajer sesi harus dalam kondisi tak aktif ketika meminta matikan komputer"
 
-#: xfce4-session/xfsm-manager.c:2364
+#: xfce4-session/xfsm-manager.c:2387
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Manajer sesi harus dalam keadaan menganggur ketika meminta mulai ulang"
 
-#: xfce4-session/xfsm-logout-dialog.c:193
+#: xfce4-session/xfsm-logout-dialog.c:195
 #, c-format
 msgid "Log out %s"
 msgstr "Keluar %s"
 
-#. *
-#. * Logout
-#. *
-#: xfce4-session/xfsm-logout-dialog.c:238
+#: xfce4-session/xfsm-logout-dialog.c:241
 msgid "_Log Out"
 msgstr "_Log Keluar"
 
-#: xfce4-session/xfsm-logout-dialog.c:258
+#: xfce4-session/xfsm-logout-dialog.c:266
+msgid "_Restart and update"
+msgstr ""
+
+#: xfce4-session/xfsm-logout-dialog.c:266
 msgid "_Restart"
 msgstr "_Mulai Ulang"
 
-#: xfce4-session/xfsm-logout-dialog.c:278
+#: xfce4-session/xfsm-logout-dialog.c:286
+msgid "Update and Shut _Down"
+msgstr ""
+
+#: xfce4-session/xfsm-logout-dialog.c:286
 msgid "Shut _Down"
 msgstr "_Matikan"
 
-#: xfce4-session/xfsm-logout-dialog.c:302
+#: xfce4-session/xfsm-logout-dialog.c:311
 msgid "Sus_pend"
 msgstr "_Suspensi"
 
-#: xfce4-session/xfsm-logout-dialog.c:336
+#: xfce4-session/xfsm-logout-dialog.c:344
 msgid "_Hibernate"
 msgstr "_Hibernasi"
 
-#: xfce4-session/xfsm-logout-dialog.c:367
+#: xfce4-session/xfsm-logout-dialog.c:374
 msgid "H_ybrid Sleep"
 msgstr "Tidur Hib_rid"
 
-#: xfce4-session/xfsm-logout-dialog.c:398
+#: xfce4-session/xfsm-logout-dialog.c:404
 msgid "Switch _User"
 msgstr "_Ganti Pengguna"
 
-#: xfce4-session/xfsm-logout-dialog.c:424
+#: xfce4-session/xfsm-logout-dialog.c:429
 msgid "_Save session for future logins"
 msgstr "_Simpan sesi untuk log masuk yang akan datang"
 
-#: xfce4-session/xfsm-logout-dialog.c:452
+#: xfce4-session/xfsm-logout-dialog.c:457
 msgid "An error occurred"
 msgstr "Galat terjadi"
 
-#: xfce4-session/xfsm-shutdown.c:159
+#: xfce4-session/xfsm-shutdown.c:168
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Matikan diblok oleh pengaturan kiosk"
 
-#: xfce4-session/xfsm-shutdown.c:216
+#: xfce4-session/xfsm-shutdown.c:225
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Metode matikan tidak dikenal %d"
 
-#: xfce4-session-logout/main.c:70
+#: xfce4-session-logout/main.c:58
 msgid "Log out without displaying the logout dialog"
 msgstr "Keluar tanpa menampilkan dialog keluar"
 
-#: xfce4-session-logout/main.c:74
+#: xfce4-session-logout/main.c:62
 msgid "Halt without displaying the logout dialog"
 msgstr "Matikan tanpa menampilkan dialog keluar"
 
-#: xfce4-session-logout/main.c:78
+#: xfce4-session-logout/main.c:66
 msgid "Reboot without displaying the logout dialog"
 msgstr "Hidupkan ulang tanpa menampilkan dialog keluar"
 
-#: xfce4-session-logout/main.c:82
+#: xfce4-session-logout/main.c:70
 msgid "Suspend without displaying the logout dialog"
 msgstr "Suspensi tanpa menampilkan dialog keluar"
 
-#: xfce4-session-logout/main.c:86
+#: xfce4-session-logout/main.c:74
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Hibernasi tanpa menampilkan dialog keluar"
 
-#: xfce4-session-logout/main.c:90
+#: xfce4-session-logout/main.c:78
 msgid "Hybrid Sleep without displaying the logout dialog"
 msgstr "Tidur Hybrid tanpa menampilkan dialog log keluar"
 
-#: xfce4-session-logout/main.c:94
+#: xfce4-session-logout/main.c:82
 msgid "Switch user without displaying the logout dialog"
 msgstr "Beralih pengguna tanpa menampilkan dialog log keluar"
 
-#: xfce4-session-logout/main.c:98
+#: xfce4-session-logout/main.c:86
 msgid "Log out quickly; don't save the session"
 msgstr "Keluar secara cepat; jangan simpan sesi"
 
-#: xfce4-session-logout/main.c:121
+#: xfce4-session-logout/main.c:108
 msgid "Unknown error"
 msgstr "Galat tak diketahui"
 
-#: xfce4-session-logout/main.c:147
+#: xfce4-session-logout/main.c:133
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Ditulis oleh Benedikt Meurer <benny@xfce.org>"
 
-#: xfce4-session-logout/main.c:148
+#: xfce4-session-logout/main.c:134
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "dan Brian Tarricone <kelnos@xfce.org>."
 
-#: xfce4-session-logout/main.c:168 xfce4-session-logout/main.c:279
+#: xfce4-session-logout/main.c:154 xfce4-session-logout/main.c:229
 msgid "Received error while trying to log out"
 msgstr "Menerima galat ketika mencoba log keluar"
-
-#: xfce4-session-logout/main.c:244
-#, c-format
-msgid "Received error while trying to log out, error was %s"
-msgstr "Menerima galat ketika mencoba untuk log keluar, galatnya adalah %s"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:6
 msgid "xfsm-logout"
