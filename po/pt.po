@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-04-13 12:47+0200\n"
+"POT-Creation-Date: 2023-05-04 00:46+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>, 2019-2023\n"
 "Language-Team: Portuguese (http://app.transifex.com/xfce/xfce4-session/language/pt/)\n"
@@ -72,12 +72,12 @@ msgid "Type '%s --help' for usage."
 msgstr "Digite '%s --help' para informações de utilização."
 
 #: settings/main.c:122 xfce4-session/main.c:343
-#: xfce4-session-logout/main.c:146
+#: xfce4-session-logout/main.c:132
 msgid "The Xfce development team. All rights reserved."
 msgstr "A equipa de desenvolvimento do Xfce. Todos os direitos reservados."
 
 #: settings/main.c:123 xfce4-session/main.c:344
-#: xfce4-session-logout/main.c:149
+#: xfce4-session-logout/main.c:135
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Por favor, comunique os erros em <%s>."
@@ -351,7 +351,7 @@ msgstr "Falha ao trocar de item"
 msgid "Disable binding to TCP ports"
 msgstr "Desativar ligação às portas TCP"
 
-#: xfce4-session/main.c:78 xfce4-session-logout/main.c:102
+#: xfce4-session/main.c:78 xfce4-session-logout/main.c:90
 msgid "Print version information and exit"
 msgstr "Mostra a informação da versão e sai"
 
@@ -496,43 +496,43 @@ msgstr "Terminar sessão de %s"
 msgid "_Log Out"
 msgstr "_Sair"
 
-#: xfce4-session/xfsm-logout-dialog.c:267
+#: xfce4-session/xfsm-logout-dialog.c:266
 msgid "_Restart and update"
 msgstr "_Reiniciar e atualizar"
 
-#: xfce4-session/xfsm-logout-dialog.c:267
+#: xfce4-session/xfsm-logout-dialog.c:266
 msgid "_Restart"
 msgstr "_Reiniciar"
 
-#: xfce4-session/xfsm-logout-dialog.c:288
+#: xfce4-session/xfsm-logout-dialog.c:286
 msgid "Update and Shut _Down"
 msgstr "Atualizar e _Desligar"
 
-#: xfce4-session/xfsm-logout-dialog.c:288
+#: xfce4-session/xfsm-logout-dialog.c:286
 msgid "Shut _Down"
 msgstr "_Desligar"
 
-#: xfce4-session/xfsm-logout-dialog.c:313
+#: xfce4-session/xfsm-logout-dialog.c:311
 msgid "Sus_pend"
 msgstr "Sus_pender"
 
-#: xfce4-session/xfsm-logout-dialog.c:347
+#: xfce4-session/xfsm-logout-dialog.c:344
 msgid "_Hibernate"
 msgstr "_Hibernar"
 
-#: xfce4-session/xfsm-logout-dialog.c:378
+#: xfce4-session/xfsm-logout-dialog.c:374
 msgid "H_ybrid Sleep"
 msgstr "S_uspensão híbrida"
 
-#: xfce4-session/xfsm-logout-dialog.c:409
+#: xfce4-session/xfsm-logout-dialog.c:404
 msgid "Switch _User"
 msgstr "Trocar de _utilizador"
 
-#: xfce4-session/xfsm-logout-dialog.c:435
+#: xfce4-session/xfsm-logout-dialog.c:429
 msgid "_Save session for future logins"
 msgstr "_Guardar sessão para futuras utilizações"
 
-#: xfce4-session/xfsm-logout-dialog.c:463
+#: xfce4-session/xfsm-logout-dialog.c:457
 msgid "An error occurred"
 msgstr "Ocorreu um erro"
 
@@ -545,58 +545,53 @@ msgstr "Encerramento está bloqueado pelas definições \"kiosk\""
 msgid "Unknown shutdown method %d"
 msgstr "Método de encerramento desconhecido %d"
 
-#: xfce4-session-logout/main.c:70
+#: xfce4-session-logout/main.c:58
 msgid "Log out without displaying the logout dialog"
 msgstr "Sair sem mostrar a caixa de diálogo de saída"
 
-#: xfce4-session-logout/main.c:74
+#: xfce4-session-logout/main.c:62
 msgid "Halt without displaying the logout dialog"
 msgstr "Parar sem mostrar a caixa de diálogo de saída"
 
-#: xfce4-session-logout/main.c:78
+#: xfce4-session-logout/main.c:66
 msgid "Reboot without displaying the logout dialog"
 msgstr "Reiniciar sem mostrar a caixa de diálogo de saída"
 
-#: xfce4-session-logout/main.c:82
+#: xfce4-session-logout/main.c:70
 msgid "Suspend without displaying the logout dialog"
 msgstr "Suspender sem mostrar a caixa de diálogo de saída"
 
-#: xfce4-session-logout/main.c:86
+#: xfce4-session-logout/main.c:74
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Hibernar sem mostrar a caixa de diálogo de saída"
 
-#: xfce4-session-logout/main.c:90
+#: xfce4-session-logout/main.c:78
 msgid "Hybrid Sleep without displaying the logout dialog"
 msgstr "Suspensão híbrida sem mostrar o diálogo de saída"
 
-#: xfce4-session-logout/main.c:94
+#: xfce4-session-logout/main.c:82
 msgid "Switch user without displaying the logout dialog"
 msgstr "Trocar de utilizador sem mostrar a caixa de diálogo de saída"
 
-#: xfce4-session-logout/main.c:98
+#: xfce4-session-logout/main.c:86
 msgid "Log out quickly; don't save the session"
 msgstr "Sair rapidamente. Não guardar a sessão"
 
-#: xfce4-session-logout/main.c:121
+#: xfce4-session-logout/main.c:108
 msgid "Unknown error"
 msgstr "Erro desconhecido"
 
-#: xfce4-session-logout/main.c:147
+#: xfce4-session-logout/main.c:133
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Escrito por Benedikt Meurer <benny@xfce.org>"
 
-#: xfce4-session-logout/main.c:148
+#: xfce4-session-logout/main.c:134
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "e Brian Tarricone <kelnos@xfce.org>."
 
-#: xfce4-session-logout/main.c:168 xfce4-session-logout/main.c:279
+#: xfce4-session-logout/main.c:154 xfce4-session-logout/main.c:229
 msgid "Received error while trying to log out"
 msgstr "Recebido erro ao tentar sair da sessão"
-
-#: xfce4-session-logout/main.c:244
-#, c-format
-msgid "Received error while trying to log out, error was %s"
-msgstr "Recebido erro ao terminar sessão, erro foi %s"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:6
 msgid "xfsm-logout"
