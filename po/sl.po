@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-04-12 12:49+0200\n"
+"POT-Creation-Date: 2023-05-04 00:46+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Arnold Marko <arnold.marko@gmail.com>, 2019-2021\n"
 "Language-Team: Slovenian (http://app.transifex.com/xfce/xfce4-session/language/sl/)\n"
@@ -71,12 +71,12 @@ msgid "Type '%s --help' for usage."
 msgstr "Za navodila o uporabi zaženite ukaz \"%s --help\"."
 
 #: settings/main.c:122 xfce4-session/main.c:343
-#: xfce4-session-logout/main.c:146
+#: xfce4-session-logout/main.c:132
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce razvojna ekipa. Vse pravice pridržane."
 
 #: settings/main.c:123 xfce4-session/main.c:344
-#: xfce4-session-logout/main.c:149
+#: xfce4-session-logout/main.c:135
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Prosim, poročajte napake na <%s>."
@@ -122,7 +122,7 @@ msgid "Unable to save the session"
 msgstr "Seje ni bilo mogoče shraniti"
 
 #: settings/session-editor.c:141 settings/session-editor.c:315
-#: xfce4-session/xfsm-manager.c:1267 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1275 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "_Zapri"
 
@@ -141,8 +141,8 @@ msgid ""
 msgstr "Shranjena stanja programov ob vaši naslednji prijavi ne bodo obnovljena."
 
 #: settings/session-editor.c:203 settings/session-editor.c:290
-#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:687
-#: xfce4-session/xfsm-logout-dialog.c:221
+#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:695
+#: xfce4-session/xfsm-logout-dialog.c:223
 msgid "_Cancel"
 msgstr "_Prekliči"
 
@@ -202,7 +202,7 @@ msgstr "Program"
 msgid "Restart Style"
 msgstr "Vrsta zagona"
 
-#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:689
+#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:697
 msgid "_OK"
 msgstr "_V redu"
 
@@ -350,7 +350,7 @@ msgstr "Napaka pri preklapljanju predmeta"
 msgid "Disable binding to TCP ports"
 msgstr "Onemogoči vezavo na TCP vrata"
 
-#: xfce4-session/main.c:78 xfce4-session-logout/main.c:102
+#: xfce4-session/main.c:78 xfce4-session-logout/main.c:90
 msgid "Print version information and exit"
 msgstr "Izpiši podatke o različici in končaj"
 
@@ -412,7 +412,7 @@ msgstr "Vseeno nadaljuj"
 msgid "Try again"
 msgstr "Poskusite ponovno"
 
-#: xfce4-session/xfsm-manager.c:571
+#: xfce4-session/xfsm-manager.c:579
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -421,176 +421,176 @@ msgid ""
 "incorrectly."
 msgstr "Ni bilo mogoče določiti imena zasilne seje. Možni razlogi: xfconfd ni zagnan (napaka v namestitvi D-Bus); okoljska spremenljivka $XDG_CONFIG_DIRS je nastavljena na napačno vrednost (mora vključevati \"%s\"), ali pa je paket xfce4-session napačno nameščen."
 
-#: xfce4-session/xfsm-manager.c:582
+#: xfce4-session/xfsm-manager.c:590
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Navedena zasilna seja (\"%s\") ni označena kot zasilna seja."
 
-#: xfce4-session/xfsm-manager.c:615
+#: xfce4-session/xfsm-manager.c:623
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Seznam programov v zasilni seji je prazen."
 
-#: xfce4-session/xfsm-manager.c:701
+#: xfce4-session/xfsm-manager.c:709
 msgid "Name for the new session"
 msgstr "Ime nove seje"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:779
+#: xfce4-session/xfsm-manager.c:787
 msgid "Session Manager Error"
 msgstr "Napaka upravljalnika seje"
 
-#: xfce4-session/xfsm-manager.c:781
+#: xfce4-session/xfsm-manager.c:789
 msgid "Unable to load a failsafe session"
 msgstr "Ni bilo mogoče naložiti zasilne seje"
 
-#: xfce4-session/xfsm-manager.c:783
+#: xfce4-session/xfsm-manager.c:791
 msgid "_Quit"
 msgstr "_Končaj"
 
-#: xfce4-session/xfsm-manager.c:1257
+#: xfce4-session/xfsm-manager.c:1265
 msgid "Shutdown Failed"
 msgstr "Izklapljanje ni uspelo"
 
-#: xfce4-session/xfsm-manager.c:1260
+#: xfce4-session/xfsm-manager.c:1268
 msgid "Failed to suspend session"
 msgstr "Ni bilo mogoče preiti v stanje pripravljenosti"
 
-#: xfce4-session/xfsm-manager.c:1262
+#: xfce4-session/xfsm-manager.c:1270
 msgid "Failed to hibernate session"
 msgstr "Ni bilo mogoče preiti v mirovanje"
 
-#: xfce4-session/xfsm-manager.c:1264
+#: xfce4-session/xfsm-manager.c:1272
 msgid "Failed to hybrid sleep session"
 msgstr "Neuspelo hibridno spanje za sejo"
 
-#: xfce4-session/xfsm-manager.c:1265
+#: xfce4-session/xfsm-manager.c:1273
 msgid "Failed to switch user"
 msgstr "Napaka pri zamenjavi uporabnika"
 
-#: xfce4-session/xfsm-manager.c:1573
+#: xfce4-session/xfsm-manager.c:1581
 msgid "Can only terminate clients when in the idle state"
 msgstr "Samo v nedejavnem načinu je mogoče uničiti odjemalce"
 
-#: xfce4-session/xfsm-manager.c:2229
+#: xfce4-session/xfsm-manager.c:2252
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Upravljalnik seje mora biti nedejaven, ko zahteva nadzorno točko"
 
-#: xfce4-session/xfsm-manager.c:2299 xfce4-session/xfsm-manager.c:2319
+#: xfce4-session/xfsm-manager.c:2322 xfce4-session/xfsm-manager.c:2342
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Upravljalnik seje mora biti nedejaven, ko zahteva zaustavitev sistema"
 
-#: xfce4-session/xfsm-manager.c:2364
+#: xfce4-session/xfsm-manager.c:2387
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Upravljalnik seje mora biti nedejaven, ko zahteva ponovni zagon sistema"
 
-#: xfce4-session/xfsm-logout-dialog.c:193
+#: xfce4-session/xfsm-logout-dialog.c:195
 #, c-format
 msgid "Log out %s"
 msgstr "Odjavi %s"
 
-#. *
-#. * Logout
-#. *
-#: xfce4-session/xfsm-logout-dialog.c:238
+#: xfce4-session/xfsm-logout-dialog.c:241
 msgid "_Log Out"
 msgstr "_Odjava"
 
-#: xfce4-session/xfsm-logout-dialog.c:258
+#: xfce4-session/xfsm-logout-dialog.c:266
+msgid "_Restart and update"
+msgstr ""
+
+#: xfce4-session/xfsm-logout-dialog.c:266
 msgid "_Restart"
 msgstr "_Ponovni zagon"
 
-#: xfce4-session/xfsm-logout-dialog.c:278
+#: xfce4-session/xfsm-logout-dialog.c:286
+msgid "Update and Shut _Down"
+msgstr ""
+
+#: xfce4-session/xfsm-logout-dialog.c:286
 msgid "Shut _Down"
 msgstr "Izkl_op sistema"
 
-#: xfce4-session/xfsm-logout-dialog.c:302
+#: xfce4-session/xfsm-logout-dialog.c:311
 msgid "Sus_pend"
 msgstr "V _pripravljenost"
 
-#: xfce4-session/xfsm-logout-dialog.c:336
+#: xfce4-session/xfsm-logout-dialog.c:344
 msgid "_Hibernate"
 msgstr "V _mirovanje"
 
-#: xfce4-session/xfsm-logout-dialog.c:367
+#: xfce4-session/xfsm-logout-dialog.c:374
 msgid "H_ybrid Sleep"
 msgstr "H_ibridno spanje"
 
-#: xfce4-session/xfsm-logout-dialog.c:398
+#: xfce4-session/xfsm-logout-dialog.c:404
 msgid "Switch _User"
 msgstr "Zamenjaj _uporabnika"
 
-#: xfce4-session/xfsm-logout-dialog.c:424
+#: xfce4-session/xfsm-logout-dialog.c:429
 msgid "_Save session for future logins"
 msgstr "_Shrani sejo za prihodnje prijave"
 
-#: xfce4-session/xfsm-logout-dialog.c:452
+#: xfce4-session/xfsm-logout-dialog.c:457
 msgid "An error occurred"
 msgstr "Prišlo je do napake"
 
-#: xfce4-session/xfsm-shutdown.c:159
+#: xfce4-session/xfsm-shutdown.c:168
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Izklop sistema je blokiran v kiosk nastavitvah"
 
-#: xfce4-session/xfsm-shutdown.c:216
+#: xfce4-session/xfsm-shutdown.c:225
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Neznana metoda izklopa %d"
 
-#: xfce4-session-logout/main.c:70
+#: xfce4-session-logout/main.c:58
 msgid "Log out without displaying the logout dialog"
 msgstr "Odjava brez odjavnega okna"
 
-#: xfce4-session-logout/main.c:74
+#: xfce4-session-logout/main.c:62
 msgid "Halt without displaying the logout dialog"
 msgstr "Zaustavi brez odjavnega okna"
 
-#: xfce4-session-logout/main.c:78
+#: xfce4-session-logout/main.c:66
 msgid "Reboot without displaying the logout dialog"
 msgstr "Ponovno zaženi brez odjavnega okna"
 
-#: xfce4-session-logout/main.c:82
+#: xfce4-session-logout/main.c:70
 msgid "Suspend without displaying the logout dialog"
 msgstr "V stanje pripravljenosti brez odjavnega okna"
 
-#: xfce4-session-logout/main.c:86
+#: xfce4-session-logout/main.c:74
 msgid "Hibernate without displaying the logout dialog"
 msgstr "V mirovanje brez odjavnega okna"
 
-#: xfce4-session-logout/main.c:90
+#: xfce4-session-logout/main.c:78
 msgid "Hybrid Sleep without displaying the logout dialog"
 msgstr "Hibridno spanje, brez prikaza odjavnega dialoga"
 
-#: xfce4-session-logout/main.c:94
+#: xfce4-session-logout/main.c:82
 msgid "Switch user without displaying the logout dialog"
 msgstr "Zamenjaj uporabnika brez odjavnega okna"
 
-#: xfce4-session-logout/main.c:98
+#: xfce4-session-logout/main.c:86
 msgid "Log out quickly; don't save the session"
 msgstr "Hitra odjava; brez shranjevanja seje"
 
-#: xfce4-session-logout/main.c:121
+#: xfce4-session-logout/main.c:108
 msgid "Unknown error"
 msgstr "Neznana napaka"
 
-#: xfce4-session-logout/main.c:147
+#: xfce4-session-logout/main.c:133
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Napisal Benedikt Meurer <benny@xfce.org>"
 
-#: xfce4-session-logout/main.c:148
+#: xfce4-session-logout/main.c:134
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "in Brian Tarricone <kelnos@xfce.org>."
 
-#: xfce4-session-logout/main.c:168 xfce4-session-logout/main.c:279
+#: xfce4-session-logout/main.c:154 xfce4-session-logout/main.c:229
 msgid "Received error while trying to log out"
 msgstr "Med odjavljanjem je prišlo do napake"
-
-#: xfce4-session-logout/main.c:244
-#, c-format
-msgid "Received error while trying to log out, error was %s"
-msgstr "Ob poskusu odjave, je bila prejeta napaka %s"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:6
 msgid "xfsm-logout"
