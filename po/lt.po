@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-04-13 12:47+0200\n"
+"POT-Creation-Date: 2023-05-04 00:46+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Moo, 2023\n"
 "Language-Team: Lithuanian (http://app.transifex.com/xfce/xfce4-session/language/lt/)\n"
@@ -71,12 +71,12 @@ msgid "Type '%s --help' for usage."
 msgstr "Rašykite „%s --help“, informacijai apie naudojimą."
 
 #: settings/main.c:122 xfce4-session/main.c:343
-#: xfce4-session-logout/main.c:146
+#: xfce4-session-logout/main.c:132
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce kūrėjų komanda. Visos teisės saugomos."
 
 #: settings/main.c:123 xfce4-session/main.c:344
-#: xfce4-session-logout/main.c:149
+#: xfce4-session-logout/main.c:135
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Prašome apie klaidas pranešti <%s>."
@@ -350,7 +350,7 @@ msgstr "Nepavyko perjungti elemento"
 msgid "Disable binding to TCP ports"
 msgstr "Išjungti susiejimą su TCP prievadais"
 
-#: xfce4-session/main.c:78 xfce4-session-logout/main.c:102
+#: xfce4-session/main.c:78 xfce4-session-logout/main.c:90
 msgid "Print version information and exit"
 msgstr "Rodyti versijos informaciją ir išeiti"
 
@@ -495,43 +495,43 @@ msgstr "Atsijungti %s"
 msgid "_Log Out"
 msgstr "_Atsijungti"
 
-#: xfce4-session/xfsm-logout-dialog.c:267
+#: xfce4-session/xfsm-logout-dialog.c:266
 msgid "_Restart and update"
 msgstr "_Paleisti iš naujo ir naujinti"
 
-#: xfce4-session/xfsm-logout-dialog.c:267
+#: xfce4-session/xfsm-logout-dialog.c:266
 msgid "_Restart"
 msgstr "Paleisti iš _naujo"
 
-#: xfce4-session/xfsm-logout-dialog.c:288
+#: xfce4-session/xfsm-logout-dialog.c:286
 msgid "Update and Shut _Down"
 msgstr "Atnaujinti ir _išjungti"
 
-#: xfce4-session/xfsm-logout-dialog.c:288
+#: xfce4-session/xfsm-logout-dialog.c:286
 msgid "Shut _Down"
 msgstr "_Išjungti"
 
-#: xfce4-session/xfsm-logout-dialog.c:313
+#: xfce4-session/xfsm-logout-dialog.c:311
 msgid "Sus_pend"
 msgstr "Pri_stabdyti"
 
-#: xfce4-session/xfsm-logout-dialog.c:347
+#: xfce4-session/xfsm-logout-dialog.c:344
 msgid "_Hibernate"
 msgstr "_Užmigdyti"
 
-#: xfce4-session/xfsm-logout-dialog.c:378
+#: xfce4-session/xfsm-logout-dialog.c:374
 msgid "H_ybrid Sleep"
 msgstr "_Mišraus miego būsena"
 
-#: xfce4-session/xfsm-logout-dialog.c:409
+#: xfce4-session/xfsm-logout-dialog.c:404
 msgid "Switch _User"
 msgstr "Perjungti na_udotoją"
 
-#: xfce4-session/xfsm-logout-dialog.c:435
+#: xfce4-session/xfsm-logout-dialog.c:429
 msgid "_Save session for future logins"
 msgstr "Į_rašyti seansą būsimiems prisijungimams"
 
-#: xfce4-session/xfsm-logout-dialog.c:463
+#: xfce4-session/xfsm-logout-dialog.c:457
 msgid "An error occurred"
 msgstr "Įvyko klaida"
 
@@ -544,58 +544,53 @@ msgstr "Išjungimas užblokuotas „kiosk“ nustatymuose"
 msgid "Unknown shutdown method %d"
 msgstr "Nežinomas išjungimo būdas %d"
 
-#: xfce4-session-logout/main.c:70
+#: xfce4-session-logout/main.c:58
 msgid "Log out without displaying the logout dialog"
 msgstr "Atsijungti, nerodant atsijungimo dialogo"
 
-#: xfce4-session-logout/main.c:74
+#: xfce4-session-logout/main.c:62
 msgid "Halt without displaying the logout dialog"
 msgstr "Išjungti, nerodant atsijungimo dialogo"
 
-#: xfce4-session-logout/main.c:78
+#: xfce4-session-logout/main.c:66
 msgid "Reboot without displaying the logout dialog"
 msgstr "Paleisti iš naujo, nerodant atsijungimo dialogo"
 
-#: xfce4-session-logout/main.c:82
+#: xfce4-session-logout/main.c:70
 msgid "Suspend without displaying the logout dialog"
 msgstr "Pristabdyti, nerodant atsijungimo dialogo"
 
-#: xfce4-session-logout/main.c:86
+#: xfce4-session-logout/main.c:74
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Užmigdyti, nerodant atsijungimo dialogo"
 
-#: xfce4-session-logout/main.c:90
+#: xfce4-session-logout/main.c:78
 msgid "Hybrid Sleep without displaying the logout dialog"
 msgstr "Pereiti į mišraus miego būseną, nerodant atsijungimo dialogo"
 
-#: xfce4-session-logout/main.c:94
+#: xfce4-session-logout/main.c:82
 msgid "Switch user without displaying the logout dialog"
 msgstr "Perjungti naudotoją, nerodant atsijungimo dialogo"
 
-#: xfce4-session-logout/main.c:98
+#: xfce4-session-logout/main.c:86
 msgid "Log out quickly; don't save the session"
 msgstr "Greitai atsijungti; neįrašyti seanso"
 
-#: xfce4-session-logout/main.c:121
+#: xfce4-session-logout/main.c:108
 msgid "Unknown error"
 msgstr "Nežinoma klaida"
 
-#: xfce4-session-logout/main.c:147
+#: xfce4-session-logout/main.c:133
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Sukūrė Benedikt Meurer <benny@xfce.org>"
 
-#: xfce4-session-logout/main.c:148
+#: xfce4-session-logout/main.c:134
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "ir Brian Tarricone <kelnos@xfce.org>."
 
-#: xfce4-session-logout/main.c:168 xfce4-session-logout/main.c:279
+#: xfce4-session-logout/main.c:154 xfce4-session-logout/main.c:229
 msgid "Received error while trying to log out"
 msgstr "Bandant atsijungti, gauta klaida"
-
-#: xfce4-session-logout/main.c:244
-#, c-format
-msgid "Received error while trying to log out, error was %s"
-msgstr "Bandant atsijungti, buvo gauta klaida, kuri buvo %s"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:6
 msgid "xfsm-logout"
