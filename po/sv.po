@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-04-13 12:47+0200\n"
+"POT-Creation-Date: 2023-05-04 00:46+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Luna Jernberg <bittin@cafe8bitar.se>, 2020\n"
 "Language-Team: Swedish (http://app.transifex.com/xfce/xfce4-session/language/sv/)\n"
@@ -73,12 +73,12 @@ msgid "Type '%s --help' for usage."
 msgstr "Ange \"%s --help\" för användningsinformation."
 
 #: settings/main.c:122 xfce4-session/main.c:343
-#: xfce4-session-logout/main.c:146
+#: xfce4-session-logout/main.c:132
 msgid "The Xfce development team. All rights reserved."
 msgstr "The Xfce development team. Alla rättigheter är reserverade."
 
 #: settings/main.c:123 xfce4-session/main.c:344
-#: xfce4-session-logout/main.c:149
+#: xfce4-session-logout/main.c:135
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Rapportera fel till <%s>.\nSkicka synpunkter på översättningen till\n<tp-sv@listor.tp-sv.se>."
@@ -352,7 +352,7 @@ msgstr "Misslyckades med att växla objektet"
 msgid "Disable binding to TCP ports"
 msgstr "Inaktivera bindning till TCP-portar"
 
-#: xfce4-session/main.c:78 xfce4-session-logout/main.c:102
+#: xfce4-session/main.c:78 xfce4-session-logout/main.c:90
 msgid "Print version information and exit"
 msgstr "Visa versionsinformation och avsluta"
 
@@ -497,43 +497,43 @@ msgstr "Logga ut %s"
 msgid "_Log Out"
 msgstr "_Logga ut"
 
-#: xfce4-session/xfsm-logout-dialog.c:267
+#: xfce4-session/xfsm-logout-dialog.c:266
 msgid "_Restart and update"
 msgstr "_Starta om och uppdatera"
 
-#: xfce4-session/xfsm-logout-dialog.c:267
+#: xfce4-session/xfsm-logout-dialog.c:266
 msgid "_Restart"
 msgstr "Starta _om"
 
-#: xfce4-session/xfsm-logout-dialog.c:288
+#: xfce4-session/xfsm-logout-dialog.c:286
 msgid "Update and Shut _Down"
 msgstr "Uppdatera och stäng _av"
 
-#: xfce4-session/xfsm-logout-dialog.c:288
+#: xfce4-session/xfsm-logout-dialog.c:286
 msgid "Shut _Down"
 msgstr "Stäng a_v"
 
-#: xfce4-session/xfsm-logout-dialog.c:313
+#: xfce4-session/xfsm-logout-dialog.c:311
 msgid "Sus_pend"
 msgstr "Vän_teläge"
 
-#: xfce4-session/xfsm-logout-dialog.c:347
+#: xfce4-session/xfsm-logout-dialog.c:344
 msgid "_Hibernate"
 msgstr "V_iloläge"
 
-#: xfce4-session/xfsm-logout-dialog.c:378
+#: xfce4-session/xfsm-logout-dialog.c:374
 msgid "H_ybrid Sleep"
 msgstr "H_ybridsömn"
 
-#: xfce4-session/xfsm-logout-dialog.c:409
+#: xfce4-session/xfsm-logout-dialog.c:404
 msgid "Switch _User"
 msgstr "Byt anv_ändare"
 
-#: xfce4-session/xfsm-logout-dialog.c:435
+#: xfce4-session/xfsm-logout-dialog.c:429
 msgid "_Save session for future logins"
 msgstr "_Spara session för framtida inloggningar"
 
-#: xfce4-session/xfsm-logout-dialog.c:463
+#: xfce4-session/xfsm-logout-dialog.c:457
 msgid "An error occurred"
 msgstr "Ett fel uppstod"
 
@@ -546,58 +546,53 @@ msgstr "Avstängning blockeras av kioskinställningarna"
 msgid "Unknown shutdown method %d"
 msgstr "Okänd avstängningsmetod %d"
 
-#: xfce4-session-logout/main.c:70
+#: xfce4-session-logout/main.c:58
 msgid "Log out without displaying the logout dialog"
 msgstr "Logga ut utan att visa utloggningsdialogen"
 
-#: xfce4-session-logout/main.c:74
+#: xfce4-session-logout/main.c:62
 msgid "Halt without displaying the logout dialog"
 msgstr "Stoppa utan att visa utloggningsdialogen"
 
-#: xfce4-session-logout/main.c:78
+#: xfce4-session-logout/main.c:66
 msgid "Reboot without displaying the logout dialog"
 msgstr "Starta om utan att visa utloggningsdialogen"
 
-#: xfce4-session-logout/main.c:82
+#: xfce4-session-logout/main.c:70
 msgid "Suspend without displaying the logout dialog"
 msgstr "Försätt i vänteläge utan att visa utloggningsdialogen"
 
-#: xfce4-session-logout/main.c:86
+#: xfce4-session-logout/main.c:74
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Försätt i viloläge utan att visa utloggningsdialogen"
 
-#: xfce4-session-logout/main.c:90
+#: xfce4-session-logout/main.c:78
 msgid "Hybrid Sleep without displaying the logout dialog"
 msgstr "Hybridsömn utan att visa utloggningsdialogen"
 
-#: xfce4-session-logout/main.c:94
+#: xfce4-session-logout/main.c:82
 msgid "Switch user without displaying the logout dialog"
 msgstr "Byt användare utan att vissa utloggningsdialogen"
 
-#: xfce4-session-logout/main.c:98
+#: xfce4-session-logout/main.c:86
 msgid "Log out quickly; don't save the session"
 msgstr "Logga ut snabbt utan att spara sessionen"
 
-#: xfce4-session-logout/main.c:121
+#: xfce4-session-logout/main.c:108
 msgid "Unknown error"
 msgstr "Okänt fel"
 
-#: xfce4-session-logout/main.c:147
+#: xfce4-session-logout/main.c:133
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Skrivet av Benedikt Meurer <benny@xfce.org>"
 
-#: xfce4-session-logout/main.c:148
+#: xfce4-session-logout/main.c:134
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "och Brian Tarricone <kelnos@xfce.org>."
 
-#: xfce4-session-logout/main.c:168 xfce4-session-logout/main.c:279
+#: xfce4-session-logout/main.c:154 xfce4-session-logout/main.c:229
 msgid "Received error while trying to log out"
 msgstr "Tog emot ett fel vid försök att logga ut"
-
-#: xfce4-session-logout/main.c:244
-#, c-format
-msgid "Received error while trying to log out, error was %s"
-msgstr "Mottog fel vid utloggningsförsök, felet var %s"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:6
 msgid "xfsm-logout"
