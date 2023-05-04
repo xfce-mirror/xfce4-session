@@ -55,23 +55,19 @@
 #include <gio/gio.h>
 #include <libxfce4util/libxfce4util.h>
 #include <gtk/gtk.h>
-#ifdef HAVE_POLKIT
-#include <polkit/polkit.h>
-#endif
 
 #include <libxfsm/xfsm-util.h>
 
 #include <xfce4-session/xfsm-shutdown.h>
 #include <xfce4-session/xfsm-compat-gnome.h>
 #include <xfce4-session/xfsm-compat-kde.h>
-#include <xfce4-session/xfsm-consolekit.h>
 #include <xfce4-session/xfsm-fadeout.h>
 #include <xfce4-session/xfsm-inhibition.h>
 #include <xfce4-session/xfsm-inhibitor.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-legacy.h>
-#include <xfce4-session/xfsm-systemd.h>
 #include <xfce4-session/xfsm-shutdown-fallback.h>
+#include <xfce4-session/xfsm-packagekit.h>
 
 
 
@@ -89,10 +85,12 @@ struct _XfsmShutdown
 {
   GObject __parent__;
 
-  XfsmSystemd    *systemd;
-  XfsmConsolekit *consolekit;
+  XfceSystemd    *systemd;
+  XfceConsolekit *consolekit;
 
-  XfsmInhibitor  *inhibitions;
+  XfsmInhibitor   *inhibitions;
+  XfceScreensaver *screensaver;
+  XfsmPackagekit  *packagekit;
 
   /* kiosk settings */
   gboolean        kiosk_can_shutdown;
@@ -125,11 +123,13 @@ xfsm_shutdown_init (XfsmShutdown *shutdown)
   shutdown->systemd = NULL;
 
   if (LOGIND_RUNNING())
-    shutdown->systemd = xfsm_systemd_get ();
+    shutdown->systemd = xfce_systemd_get ();
   else
-    shutdown->consolekit = xfsm_consolekit_get ();
+    shutdown->consolekit = xfce_consolekit_get ();
 
   shutdown->inhibitions = xfsm_inhibitor_get ();
+  shutdown->screensaver = xfce_screensaver_new ();
+  shutdown->packagekit = xfsm_packagekit_get ();
 
   /* check kiosk */
   kiosk = xfce_kiosk_new ("xfce4-session");
@@ -153,6 +153,9 @@ xfsm_shutdown_finalize (GObject *object)
 
   if (shutdown->inhibitions != NULL)
     g_object_unref (G_OBJECT (shutdown->inhibitions));
+
+  g_object_unref (G_OBJECT (shutdown->screensaver));
+  g_object_unref (G_OBJECT (shutdown->packagekit));
 
   (*G_OBJECT_CLASS (xfsm_shutdown_parent_class)->finalize) (object);
 }
@@ -243,14 +246,21 @@ xfsm_shutdown_try_restart (XfsmShutdown  *shutdown,
 
   if (shutdown->systemd != NULL)
     {
-      if (xfsm_systemd_try_restart (shutdown->systemd, NULL))
+      gboolean has_updates = FALSE;
+      if (xfsm_packagekit_has_update_prepared (shutdown->packagekit, &has_updates, NULL)
+          && has_updates)
+        {
+          xfsm_packagekit_try_trigger_restart (shutdown->packagekit, NULL);
+        }
+
+      if (xfce_systemd_try_restart (shutdown->systemd, NULL))
         {
           return TRUE;
         }
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfsm_consolekit_try_restart (shutdown->consolekit, error))
+      if (xfce_consolekit_try_restart (shutdown->consolekit, error))
         {
           return TRUE;
         }
@@ -272,14 +282,28 @@ xfsm_shutdown_try_shutdown (XfsmShutdown  *shutdown,
 
   if (shutdown->systemd != NULL)
     {
-      if (xfsm_systemd_try_shutdown (shutdown->systemd, NULL))
+      gboolean has_updates = FALSE;
+      if (xfsm_packagekit_has_update_prepared (shutdown->packagekit, &has_updates, NULL)
+          && has_updates
+          && xfsm_packagekit_try_trigger_shutdown (shutdown->packagekit, NULL))
+        {
+          // To actually trigger the offline update, we need to
+          // reboot to do the upgrade. When the upgrade is complete,
+          // the computer will shut down automatically.
+          if (xfce_systemd_try_restart (shutdown->systemd, NULL))
+            {
+              return TRUE;
+            }
+        }
+
+      if (xfce_systemd_try_shutdown (shutdown->systemd, NULL))
         {
           return TRUE;
         }
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfsm_consolekit_try_shutdown (shutdown->consolekit, NULL))
+      if (xfce_consolekit_try_shutdown (shutdown->consolekit, NULL))
         {
           return TRUE;
         }
@@ -304,19 +328,37 @@ try_sleep_method (gpointer  object,
 
 
 
+static gboolean
+lock_screen (XfsmShutdown *shutdown)
+{
+  XfconfChannel *channel;
+  gboolean ret = TRUE;
+
+  channel = xfconf_channel_get (SETTINGS_CHANNEL);
+  if (xfconf_channel_get_bool (channel, "/shutdown/LockScreen", FALSE))
+    ret = xfce_screensaver_lock (shutdown->screensaver);
+
+  return ret;
+}
+
+
+
 gboolean
 xfsm_shutdown_try_suspend (XfsmShutdown  *shutdown,
                            GError       **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
+  if (!lock_screen (shutdown))
+    return FALSE;
+
   /* Try each way to suspend - it will handle NULL.
    */
 
-  if (try_sleep_method (shutdown->systemd, (SleepFunc)xfsm_systemd_try_suspend))
+  if (try_sleep_method (shutdown->systemd, (SleepFunc)xfce_systemd_try_suspend))
     return TRUE;
 
-  if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfsm_consolekit_try_suspend))
+  if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfce_consolekit_try_suspend))
     return TRUE;
 
   return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_SUSPEND, error);
@@ -330,13 +372,16 @@ xfsm_shutdown_try_hibernate (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
+  if (!lock_screen (shutdown))
+    return FALSE;
+
   /* Try each way to hibernate - it will handle NULL.
    */
 
-  if (try_sleep_method (shutdown->systemd, (SleepFunc)xfsm_systemd_try_hibernate))
+  if (try_sleep_method (shutdown->systemd, (SleepFunc)xfce_systemd_try_hibernate))
     return TRUE;
 
-  if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfsm_consolekit_try_hibernate))
+  if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfce_consolekit_try_hibernate))
     return TRUE;
 
   return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_HIBERNATE, error);
@@ -350,13 +395,16 @@ xfsm_shutdown_try_hybrid_sleep (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
+  if (!lock_screen (shutdown))
+    return FALSE;
+
   /* Try each way to hybrid-sleep - it will handle NULL.
    */
 
-  if (try_sleep_method (shutdown->systemd, (SleepFunc)xfsm_systemd_try_hybrid_sleep))
+  if (try_sleep_method (shutdown->systemd, (SleepFunc)xfce_systemd_try_hybrid_sleep))
     return TRUE;
 
-  if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfsm_consolekit_try_hybrid_sleep))
+  if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfce_consolekit_try_hybrid_sleep))
     return TRUE;
 
   return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_HYBRID_SLEEP, error);
@@ -432,12 +480,12 @@ xfsm_shutdown_can_restart (XfsmShutdown  *shutdown,
 
   if (shutdown->systemd != NULL)
     {
-      if (xfsm_systemd_can_restart (shutdown->systemd, can_restart, error))
+      if (xfce_systemd_can_restart (shutdown->systemd, can_restart, error))
         return TRUE;
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfsm_consolekit_can_restart (shutdown->consolekit, can_restart, error))
+      if (xfce_consolekit_can_restart (shutdown->consolekit, can_restart, error))
         return TRUE;
     }
 
@@ -468,12 +516,12 @@ xfsm_shutdown_can_shutdown (XfsmShutdown  *shutdown,
 
   if (shutdown->systemd != NULL)
     {
-      if (xfsm_systemd_can_shutdown (shutdown->systemd, can_shutdown, error))
+      if (xfce_systemd_can_shutdown (shutdown->systemd, can_shutdown, error))
         return TRUE;
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfsm_consolekit_can_shutdown (shutdown->consolekit, can_shutdown, error))
+      if (xfce_consolekit_can_shutdown (shutdown->consolekit, can_shutdown, error))
         return TRUE;
     }
 
@@ -505,14 +553,14 @@ xfsm_shutdown_can_suspend (XfsmShutdown  *shutdown,
 
   if (shutdown->systemd != NULL)
     {
-      if (xfsm_systemd_can_suspend (shutdown->systemd, can_suspend, auth_suspend, NULL))
+      if (xfce_systemd_can_suspend (shutdown->systemd, can_suspend, auth_suspend, NULL))
         {
           return TRUE;
         }
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfsm_consolekit_can_suspend (shutdown->consolekit, can_suspend, auth_suspend, NULL))
+      if (xfce_consolekit_can_suspend (shutdown->consolekit, can_suspend, auth_suspend, NULL))
         {
           return TRUE;
         }
@@ -547,14 +595,14 @@ xfsm_shutdown_can_hibernate (XfsmShutdown  *shutdown,
 
   if (shutdown->systemd != NULL)
     {
-      if (xfsm_systemd_can_hibernate (shutdown->systemd, can_hibernate, auth_hibernate, NULL))
+      if (xfce_systemd_can_hibernate (shutdown->systemd, can_hibernate, auth_hibernate, NULL))
         {
           return TRUE;
         }
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfsm_consolekit_can_hibernate (shutdown->consolekit, can_hibernate, auth_hibernate, NULL))
+      if (xfce_consolekit_can_hibernate (shutdown->consolekit, can_hibernate, auth_hibernate, NULL))
         {
           return TRUE;
         }
@@ -589,14 +637,14 @@ xfsm_shutdown_can_hybrid_sleep (XfsmShutdown  *shutdown,
 
   if (shutdown->systemd != NULL)
     {
-      if (xfsm_systemd_can_hybrid_sleep (shutdown->systemd, can_hybrid_sleep, auth_hybrid_sleep, NULL))
+      if (xfce_systemd_can_hybrid_sleep (shutdown->systemd, can_hybrid_sleep, auth_hybrid_sleep, NULL))
         {
           return TRUE;
         }
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfsm_consolekit_can_hybrid_sleep (shutdown->consolekit, can_hybrid_sleep, auth_hybrid_sleep, NULL))
+      if (xfce_consolekit_can_hybrid_sleep (shutdown->consolekit, can_hybrid_sleep, auth_hybrid_sleep, NULL))
         {
           return TRUE;
         }
@@ -686,10 +734,19 @@ xfsm_shutdown_can_logout (XfsmShutdown  *shutdown)
 gboolean
 xfsm_shutdown_has_update_prepared (XfsmShutdown *shutdown)
 {
+  gboolean  has_updates = FALSE;
+  GError   *error = NULL;
+
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
-  if (shutdown->systemd != NULL)
-    return xfsm_systemd_has_update_prepared (shutdown->systemd);
+  if (shutdown->systemd == NULL)
+    return FALSE;
 
-  return FALSE;
+  if (!xfsm_packagekit_has_update_prepared (shutdown->packagekit, &has_updates, &error))
+    {
+      g_warning ("Querying PackageKit updates failed: %s", error->message);
+      g_error_free (error);
+    }
+
+  return has_updates;
 }
