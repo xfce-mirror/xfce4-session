@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-04-13 12:47+0200\n"
+"POT-Creation-Date: 2023-05-04 00:46+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Gordon Freeman, 2023\n"
 "Language-Team: Ukrainian (http://app.transifex.com/xfce/xfce4-session/language/uk/)\n"
@@ -73,12 +73,12 @@ msgid "Type '%s --help' for usage."
 msgstr "Наберіть '%s --help' для використання."
 
 #: settings/main.c:122 xfce4-session/main.c:343
-#: xfce4-session-logout/main.c:146
+#: xfce4-session-logout/main.c:132
 msgid "The Xfce development team. All rights reserved."
 msgstr "Група розробників Xfce. Усі права застережено."
 
 #: settings/main.c:123 xfce4-session/main.c:344
-#: xfce4-session-logout/main.c:149
+#: xfce4-session-logout/main.c:135
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Будь ласка повідомляйте про помилки для <%s>."
@@ -352,7 +352,7 @@ msgstr "Не вдається перемкнути елемент"
 msgid "Disable binding to TCP ports"
 msgstr "Заборонити з'єднання на порти TCP"
 
-#: xfce4-session/main.c:78 xfce4-session-logout/main.c:102
+#: xfce4-session/main.c:78 xfce4-session-logout/main.c:90
 msgid "Print version information and exit"
 msgstr "Надрукувати інформацію про версію і вийти"
 
@@ -497,43 +497,43 @@ msgstr "Вийти %s"
 msgid "_Log Out"
 msgstr "_Вийти"
 
-#: xfce4-session/xfsm-logout-dialog.c:267
+#: xfce4-session/xfsm-logout-dialog.c:266
 msgid "_Restart and update"
 msgstr "_Перезавантажити та оновити"
 
-#: xfce4-session/xfsm-logout-dialog.c:267
+#: xfce4-session/xfsm-logout-dialog.c:266
 msgid "_Restart"
 msgstr "_Перезавантажити"
 
-#: xfce4-session/xfsm-logout-dialog.c:288
+#: xfce4-session/xfsm-logout-dialog.c:286
 msgid "Update and Shut _Down"
 msgstr "Оновити та ви_мкнути"
 
-#: xfce4-session/xfsm-logout-dialog.c:288
+#: xfce4-session/xfsm-logout-dialog.c:286
 msgid "Shut _Down"
 msgstr "Ви_мкнути"
 
-#: xfce4-session/xfsm-logout-dialog.c:313
+#: xfce4-session/xfsm-logout-dialog.c:311
 msgid "Sus_pend"
 msgstr "_Призупинити"
 
-#: xfce4-session/xfsm-logout-dialog.c:347
+#: xfce4-session/xfsm-logout-dialog.c:344
 msgid "_Hibernate"
 msgstr "_В сплячку"
 
-#: xfce4-session/xfsm-logout-dialog.c:378
+#: xfce4-session/xfsm-logout-dialog.c:374
 msgid "H_ybrid Sleep"
 msgstr "_Гібридна сплячка"
 
-#: xfce4-session/xfsm-logout-dialog.c:409
+#: xfce4-session/xfsm-logout-dialog.c:404
 msgid "Switch _User"
 msgstr "Переключити _користувача"
 
-#: xfce4-session/xfsm-logout-dialog.c:435
+#: xfce4-session/xfsm-logout-dialog.c:429
 msgid "_Save session for future logins"
 msgstr "З_берегти сеанс"
 
-#: xfce4-session/xfsm-logout-dialog.c:463
+#: xfce4-session/xfsm-logout-dialog.c:457
 msgid "An error occurred"
 msgstr "Сталася помилка"
 
@@ -546,58 +546,53 @@ msgstr "Завершення заблоковано налаштуванням k
 msgid "Unknown shutdown method %d"
 msgstr "Невідомий метод завершення %d"
 
-#: xfce4-session-logout/main.c:70
+#: xfce4-session-logout/main.c:58
 msgid "Log out without displaying the logout dialog"
 msgstr "Завершити сеанс без діалогу підтвердження виходу"
 
-#: xfce4-session-logout/main.c:74
+#: xfce4-session-logout/main.c:62
 msgid "Halt without displaying the logout dialog"
 msgstr "Вимкнути комп'ютер без діалогу підтвердження виходу"
 
-#: xfce4-session-logout/main.c:78
+#: xfce4-session-logout/main.c:66
 msgid "Reboot without displaying the logout dialog"
 msgstr "Перезавантажити без діалогу підтвердження виходу"
 
-#: xfce4-session-logout/main.c:82
+#: xfce4-session-logout/main.c:70
 msgid "Suspend without displaying the logout dialog"
 msgstr "Призупинити комп'ютер без діалогу підтвердження виходу"
 
-#: xfce4-session-logout/main.c:86
+#: xfce4-session-logout/main.c:74
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Приспати без діалогу підтвердження виходу"
 
-#: xfce4-session-logout/main.c:90
+#: xfce4-session-logout/main.c:78
 msgid "Hybrid Sleep without displaying the logout dialog"
 msgstr "Гібридна сплячка без діалогу підтвердження виходу"
 
-#: xfce4-session-logout/main.c:94
+#: xfce4-session-logout/main.c:82
 msgid "Switch user without displaying the logout dialog"
 msgstr "Перемикання користувача без відображення діалогового вікна входу в систему"
 
-#: xfce4-session-logout/main.c:98
+#: xfce4-session-logout/main.c:86
 msgid "Log out quickly; don't save the session"
 msgstr "Вийти якнайшвидше; дані сеансу не зберігати"
 
-#: xfce4-session-logout/main.c:121
+#: xfce4-session-logout/main.c:108
 msgid "Unknown error"
 msgstr "Невідома помилка"
 
-#: xfce4-session-logout/main.c:147
+#: xfce4-session-logout/main.c:133
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Написано Benedikt Meurer <benny@xfce.org>."
 
-#: xfce4-session-logout/main.c:148
+#: xfce4-session-logout/main.c:134
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "і Brian Tarricone <kelnos@xfce.org>."
 
-#: xfce4-session-logout/main.c:168 xfce4-session-logout/main.c:279
+#: xfce4-session-logout/main.c:154 xfce4-session-logout/main.c:229
 msgid "Received error while trying to log out"
 msgstr "Отримано помилку під час спроби вийти з сеансу"
-
-#: xfce4-session-logout/main.c:244
-#, c-format
-msgid "Received error while trying to log out, error was %s"
-msgstr "Отримано помилку під час спроби виходу з сеансу, помилка була %s"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:6
 msgid "xfsm-logout"
