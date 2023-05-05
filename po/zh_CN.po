@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-04 00:46+0200\n"
+"POT-Creation-Date: 2023-05-05 10:51+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Cally Mal <zhouxiaobo.500@gmail.com>, 2021\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/xfce/xfce4-session/language/zh_CN/)\n"
@@ -35,10 +35,6 @@ msgstr "Xfce 会话"
 msgid "Use this session to run Xfce as your desktop environment"
 msgstr "使用此会话将 Xfce 作为您的桌面环境运行"
 
-#: xfce.desktop.in:8
-msgid "Type=Application"
-msgstr "Type=Application"
-
 #: libxfsm/xfsm-util.c:374
 msgid "Session"
 msgstr "会话"
@@ -54,10 +50,6 @@ msgstr "屏幕保护"
 #: scripts/xscreensaver.desktop.in:5
 msgid "Launch screensaver and locker program"
 msgstr "启动屏幕保护和锁定程序"
-
-#: scripts/xscreensaver.desktop.in:6
-msgid "preferences-desktop-screensaver"
-msgstr "preferences-desktop-screensaver"
 
 #: settings/main.c:98
 msgid "Settings manager socket"
@@ -598,13 +590,22 @@ msgstr "和 Brian Tarricone <kelnos@xfce.org>。"
 msgid "Received error while trying to log out"
 msgstr "试图注销时收到错误"
 
-#: xfce4-session-logout/xfce4-session-logout.desktop.in:6
-msgid "xfsm-logout"
-msgstr "xfsm-logout"
-
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:12
 msgid "Log out of the Xfce Desktop"
 msgstr "从 Xfce 桌面注销"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to suspend or hibernate their system.
+#: xfce4-session/org.xfce.session.policy.in.in:23
+msgid "Shutdown, restart, suspend, or hibernate the system"
+msgstr ""
+
+#: xfce4-session/org.xfce.session.policy.in.in:24
+msgid ""
+"Authentication is required to shutdown, restart, suspend, or hibernate the "
+"system."
+msgstr ""
 
 #: settings/xfce-session-settings.desktop.in:3
 #: settings/xfce4-session-settings.ui:61
@@ -614,10 +615,6 @@ msgstr "会话和启动"
 #: settings/xfce-session-settings.desktop.in:4
 msgid "Customize desktop startup"
 msgstr "自定义桌面启动"
-
-#: settings/xfce-session-settings.desktop.in:6
-msgid "org.xfce.session"
-msgstr "org.xfce.session"
 
 #: settings/xfce-session-settings.desktop.in:11
 msgid ""
