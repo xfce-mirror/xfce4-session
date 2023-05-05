@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-04 00:46+0200\n"
+"POT-Creation-Date: 2023-05-05 10:51+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>, 2019-2023\n"
 "Language-Team: Portuguese (http://app.transifex.com/xfce/xfce4-session/language/pt/)\n"
@@ -30,10 +30,6 @@ msgstr "Sessão Xfce"
 msgid "Use this session to run Xfce as your desktop environment"
 msgstr "Utilizar esta sessão para executar o Xfce como ambiente de trabalho"
 
-#: xfce.desktop.in:8
-msgid "Type=Application"
-msgstr "Tipo=Aplicação"
-
 #: libxfsm/xfsm-util.c:374
 msgid "Session"
 msgstr "Sessão"
@@ -49,10 +45,6 @@ msgstr "Proteção de ecrã"
 #: scripts/xscreensaver.desktop.in:5
 msgid "Launch screensaver and locker program"
 msgstr "Lançar proteção de ecrã e programa de bloqueio"
-
-#: scripts/xscreensaver.desktop.in:6
-msgid "preferences-desktop-screensaver"
-msgstr "preferences-desktop-screensaver"
 
 #: settings/main.c:98
 msgid "Settings manager socket"
@@ -593,13 +585,22 @@ msgstr "e Brian Tarricone <kelnos@xfce.org>."
 msgid "Received error while trying to log out"
 msgstr "Recebido erro ao tentar sair da sessão"
 
-#: xfce4-session-logout/xfce4-session-logout.desktop.in:6
-msgid "xfsm-logout"
-msgstr "xfsm-logout"
-
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:12
 msgid "Log out of the Xfce Desktop"
 msgstr "Sair do Xfce"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to suspend or hibernate their system.
+#: xfce4-session/org.xfce.session.policy.in.in:23
+msgid "Shutdown, restart, suspend, or hibernate the system"
+msgstr ""
+
+#: xfce4-session/org.xfce.session.policy.in.in:24
+msgid ""
+"Authentication is required to shutdown, restart, suspend, or hibernate the "
+"system."
+msgstr ""
 
 #: settings/xfce-session-settings.desktop.in:3
 #: settings/xfce4-session-settings.ui:61
@@ -609,10 +610,6 @@ msgstr "Sessão e arranque"
 #: settings/xfce-session-settings.desktop.in:4
 msgid "Customize desktop startup"
 msgstr "Personalizar arranque do ambiente de trabalho"
-
-#: settings/xfce-session-settings.desktop.in:6
-msgid "org.xfce.session"
-msgstr "org.xfce.session"
 
 #: settings/xfce-session-settings.desktop.in:11
 msgid ""
