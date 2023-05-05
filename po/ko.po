@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-04 00:46+0200\n"
+"POT-Creation-Date: 2023-05-05 10:51+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>, 2011-2013,2016,2019-2021\n"
 "Language-Team: Korean (http://app.transifex.com/xfce/xfce4-session/language/ko/)\n"
@@ -28,10 +28,6 @@ msgstr "Xfce 세션"
 msgid "Use this session to run Xfce as your desktop environment"
 msgstr "데스크톱 환경으로서 Xfce를 실행하기 위해 이 세션을 사용합니다"
 
-#: xfce.desktop.in:8
-msgid "Type=Application"
-msgstr "Type=Application"
-
 #: libxfsm/xfsm-util.c:374
 msgid "Session"
 msgstr "세션"
@@ -47,10 +43,6 @@ msgstr "화면 보호기"
 #: scripts/xscreensaver.desktop.in:5
 msgid "Launch screensaver and locker program"
 msgstr "화면 보호기 및 잠금 프로그램 실행하기"
-
-#: scripts/xscreensaver.desktop.in:6
-msgid "preferences-desktop-screensaver"
-msgstr "preferences-desktop-screensaver"
 
 #: settings/main.c:98
 msgid "Settings manager socket"
@@ -591,13 +583,22 @@ msgstr "Brian Tarricone <kelnos@xfce.org>이 작성했습니다."
 msgid "Received error while trying to log out"
 msgstr "로그아웃을 시도하는 동안 오류를 수신했습니다"
 
-#: xfce4-session-logout/xfce4-session-logout.desktop.in:6
-msgid "xfsm-logout"
-msgstr "xfsm-logout"
-
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:12
 msgid "Log out of the Xfce Desktop"
 msgstr "Xfce 데스크톱의 로그아웃"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to suspend or hibernate their system.
+#: xfce4-session/org.xfce.session.policy.in.in:23
+msgid "Shutdown, restart, suspend, or hibernate the system"
+msgstr ""
+
+#: xfce4-session/org.xfce.session.policy.in.in:24
+msgid ""
+"Authentication is required to shutdown, restart, suspend, or hibernate the "
+"system."
+msgstr ""
 
 #: settings/xfce-session-settings.desktop.in:3
 #: settings/xfce4-session-settings.ui:61
@@ -607,10 +608,6 @@ msgstr "세션 및 시동"
 #: settings/xfce-session-settings.desktop.in:4
 msgid "Customize desktop startup"
 msgstr "데스크톱 시작 개별 설정"
-
-#: settings/xfce-session-settings.desktop.in:6
-msgid "org.xfce.session"
-msgstr "org.xfce.session"
 
 #: settings/xfce-session-settings.desktop.in:11
 msgid ""
