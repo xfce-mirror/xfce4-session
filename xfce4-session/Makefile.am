@@ -42,8 +42,6 @@ xfce4_session_SOURCES =							\
 	xfsm-compat-gnome.h						\
 	xfsm-compat-kde.c						\
 	xfsm-compat-kde.h						\
-	xfsm-consolekit.c						\
-	xfsm-consolekit.h						\
 	xfsm-dns.c							\
 	xfsm-dns.h							\
 	xfsm-error.c							\
@@ -71,20 +69,19 @@ xfce4_session_SOURCES =							\
 	xfsm-shutdown.c							\
 	xfsm-shutdown.h							\
 	xfsm-startup.c							\
-	xfsm-startup.h							\
-	xfsm-systemd.c							\
-	xfsm-systemd.h
+	xfsm-startup.h
 
 
 xfce4_session_CFLAGS =							\
 	$(LIBSM_CFLAGS)							\
 	$(LIBX11_CFLAGS)						\
 	$(LIBXFCE4UI_CFLAGS)						\
+	$(LIBXFCE4UTIL_CFLAGS)						\
+	$(GMODULE_CFLAGS)						\
 	$(GIO_CFLAGS)							\
 	$(LIBWNCK_CFLAGS)						\
 	$(POLKIT_CFLAGS)						\
 	$(XFCONF_CFLAGS)						\
-	$(GMODULE_CFLAGS)						\
 	$(PLATFORM_CFLAGS)
 
 xfce4_session_LDFLAGS =							\
@@ -98,6 +95,7 @@ xfce4_session_LDADD =							\
 	$(LIBX11_LDFLAGS)						\
 	$(LIBX11_LIBS)							\
 	$(LIBXFCE4UI_LIBS)						\
+	$(LIBXFCE4UTIL_LIBS)						\
 	$(GMODULE_LIBS)							\
 	$(GIO_LIBS)								\
 	$(LIBWNCK_LIBS)							\
