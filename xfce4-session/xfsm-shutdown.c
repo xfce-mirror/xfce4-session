@@ -253,14 +253,14 @@ xfsm_shutdown_try_restart (XfsmShutdown  *shutdown,
           xfsm_packagekit_try_trigger_restart (shutdown->packagekit, NULL);
         }
 
-      if (xfce_systemd_try_restart (shutdown->systemd, NULL))
+      if (xfce_systemd_reboot (shutdown->systemd, NULL))
         {
           return TRUE;
         }
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfce_consolekit_try_restart (shutdown->consolekit, error))
+      if (xfce_consolekit_reboot (shutdown->consolekit, error))
         {
           return TRUE;
         }
@@ -290,20 +290,20 @@ xfsm_shutdown_try_shutdown (XfsmShutdown  *shutdown,
           // To actually trigger the offline update, we need to
           // reboot to do the upgrade. When the upgrade is complete,
           // the computer will shut down automatically.
-          if (xfce_systemd_try_restart (shutdown->systemd, NULL))
+          if (xfce_systemd_reboot (shutdown->systemd, NULL))
             {
               return TRUE;
             }
         }
 
-      if (xfce_systemd_try_shutdown (shutdown->systemd, NULL))
+      if (xfce_systemd_power_off (shutdown->systemd, NULL))
         {
           return TRUE;
         }
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfce_consolekit_try_shutdown (shutdown->consolekit, NULL))
+      if (xfce_consolekit_power_off (shutdown->consolekit, NULL))
         {
           return TRUE;
         }
@@ -355,10 +355,10 @@ xfsm_shutdown_try_suspend (XfsmShutdown  *shutdown,
   /* Try each way to suspend - it will handle NULL.
    */
 
-  if (try_sleep_method (shutdown->systemd, (SleepFunc)xfce_systemd_try_suspend))
+  if (try_sleep_method (shutdown->systemd, (SleepFunc)xfce_systemd_suspend))
     return TRUE;
 
-  if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfce_consolekit_try_suspend))
+  if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfce_consolekit_suspend))
     return TRUE;
 
   return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_SUSPEND, error);
@@ -378,10 +378,10 @@ xfsm_shutdown_try_hibernate (XfsmShutdown  *shutdown,
   /* Try each way to hibernate - it will handle NULL.
    */
 
-  if (try_sleep_method (shutdown->systemd, (SleepFunc)xfce_systemd_try_hibernate))
+  if (try_sleep_method (shutdown->systemd, (SleepFunc)xfce_systemd_hibernate))
     return TRUE;
 
-  if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfce_consolekit_try_hibernate))
+  if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfce_consolekit_hibernate))
     return TRUE;
 
   return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_HIBERNATE, error);
@@ -401,10 +401,10 @@ xfsm_shutdown_try_hybrid_sleep (XfsmShutdown  *shutdown,
   /* Try each way to hybrid-sleep - it will handle NULL.
    */
 
-  if (try_sleep_method (shutdown->systemd, (SleepFunc)xfce_systemd_try_hybrid_sleep))
+  if (try_sleep_method (shutdown->systemd, (SleepFunc)xfce_systemd_hybrid_sleep))
     return TRUE;
 
-  if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfce_consolekit_try_hybrid_sleep))
+  if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfce_consolekit_hybrid_sleep))
     return TRUE;
 
   return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_HYBRID_SLEEP, error);
@@ -480,12 +480,12 @@ xfsm_shutdown_can_restart (XfsmShutdown  *shutdown,
 
   if (shutdown->systemd != NULL)
     {
-      if (xfce_systemd_can_restart (shutdown->systemd, can_restart, error))
+      if (xfce_systemd_can_reboot (shutdown->systemd, can_restart, NULL, error))
         return TRUE;
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfce_consolekit_can_restart (shutdown->consolekit, can_restart, error))
+      if (xfce_consolekit_can_reboot (shutdown->consolekit, can_restart, NULL, error))
         return TRUE;
     }
 
@@ -516,12 +516,12 @@ xfsm_shutdown_can_shutdown (XfsmShutdown  *shutdown,
 
   if (shutdown->systemd != NULL)
     {
-      if (xfce_systemd_can_shutdown (shutdown->systemd, can_shutdown, error))
+      if (xfce_systemd_can_power_off (shutdown->systemd, can_shutdown, NULL, error))
         return TRUE;
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfce_consolekit_can_shutdown (shutdown->consolekit, can_shutdown, error))
+      if (xfce_consolekit_can_power_off (shutdown->consolekit, can_shutdown, NULL, error))
         return TRUE;
     }
 
