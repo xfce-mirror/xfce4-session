@@ -13,7 +13,7 @@ m4_define([glib_min_version], [2.66.0])
 m4_define([gtk_min_version], [3.24.0])
 m4_define([libwnck_min_version], [3.10.0])
 m4_define([x11_minimum_version], [1.6.7])
-m4_define([libxfce4util_min_version], [4.19.1])
+m4_define([libxfce4util_min_version], [4.19.2])
 m4_define([libxfce4ui_min_version], [4.18.2])
 m4_define([xfconf_min_version], [4.12.0])
 
