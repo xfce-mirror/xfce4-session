@@ -462,6 +462,7 @@ xfsm_shutdown_try_switch_user (XfsmShutdown  *shutdown,
 gboolean
 xfsm_shutdown_can_restart (XfsmShutdown  *shutdown,
                            gboolean      *can_restart,
+                           gboolean      *auth_restart,
                            GError       **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
@@ -480,16 +481,19 @@ xfsm_shutdown_can_restart (XfsmShutdown  *shutdown,
 
   if (shutdown->systemd != NULL)
     {
-      if (xfce_systemd_can_reboot (shutdown->systemd, can_restart, NULL, error))
+      if (xfce_systemd_can_reboot (shutdown->systemd, can_restart, auth_restart, error))
         return TRUE;
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfce_consolekit_can_reboot (shutdown->consolekit, can_restart, NULL, error))
+      if (xfce_consolekit_can_reboot (shutdown->consolekit, can_restart, auth_restart, error))
         return TRUE;
     }
 
   *can_restart = xfsm_shutdown_fallback_auth_restart ();
+  if (auth_restart != NULL)
+    *auth_restart = *can_restart;
+
   return TRUE;
 }
 
@@ -498,6 +502,7 @@ xfsm_shutdown_can_restart (XfsmShutdown  *shutdown,
 gboolean
 xfsm_shutdown_can_shutdown (XfsmShutdown  *shutdown,
                             gboolean      *can_shutdown,
+                            gboolean      *auth_shutdown,
                             GError       **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
@@ -516,16 +521,19 @@ xfsm_shutdown_can_shutdown (XfsmShutdown  *shutdown,
 
   if (shutdown->systemd != NULL)
     {
-      if (xfce_systemd_can_power_off (shutdown->systemd, can_shutdown, NULL, error))
+      if (xfce_systemd_can_power_off (shutdown->systemd, can_shutdown, auth_shutdown, error))
         return TRUE;
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfce_consolekit_can_power_off (shutdown->consolekit, can_shutdown, NULL, error))
+      if (xfce_consolekit_can_power_off (shutdown->consolekit, can_shutdown, auth_shutdown, error))
         return TRUE;
     }
 
   *can_shutdown = xfsm_shutdown_fallback_auth_shutdown ();
+  if (auth_shutdown != NULL)
+    *auth_shutdown = *can_shutdown;
+
   return TRUE;
 }
 
