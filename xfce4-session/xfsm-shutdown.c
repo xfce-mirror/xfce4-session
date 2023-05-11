@@ -260,7 +260,7 @@ xfsm_shutdown_try_restart (XfsmShutdown  *shutdown,
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfce_consolekit_reboot (shutdown->consolekit, TRUE, error))
+      if (xfce_consolekit_reboot (shutdown->consolekit, TRUE, NULL))
         {
           return TRUE;
         }
