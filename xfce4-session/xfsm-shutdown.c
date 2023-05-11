@@ -238,7 +238,7 @@ xfsm_shutdown_try_restart (XfsmShutdown  *shutdown,
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfsm_consolekit_try_restart (shutdown->consolekit, error))
+      if (xfsm_consolekit_try_restart (shutdown->consolekit, NULL))
         {
           return TRUE;
         }
