@@ -90,10 +90,12 @@ gboolean      xfsm_shutdown_try_switch_user  (XfsmShutdown      *shutdown,
 
 gboolean      xfsm_shutdown_can_restart      (XfsmShutdown      *shutdown,
                                               gboolean          *can_restart,
+                                              gboolean          *auth_restart,
                                               GError           **error);
 
 gboolean      xfsm_shutdown_can_shutdown     (XfsmShutdown      *shutdown,
                                               gboolean          *can_shutdown,
+                                              gboolean          *auth_shutdown,
                                               GError           **error);
 
 gboolean      xfsm_shutdown_can_suspend      (XfsmShutdown      *shutdown,
