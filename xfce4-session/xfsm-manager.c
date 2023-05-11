@@ -2359,7 +2359,7 @@ xfsm_manager_dbus_can_shutdown (XfsmDbusManager *object,
 
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
 
-  xfsm_shutdown_can_shutdown (XFSM_MANAGER (object)->shutdown_helper, &can_shutdown, &error);
+  xfsm_shutdown_can_shutdown (XFSM_MANAGER (object)->shutdown_helper, &can_shutdown, NULL, &error);
 
   if (error)
     {
@@ -2404,7 +2404,7 @@ xfsm_manager_dbus_can_restart (XfsmDbusManager *object,
 
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
 
-  xfsm_shutdown_can_restart (XFSM_MANAGER (object)->shutdown_helper, &can_restart, &error);
+  xfsm_shutdown_can_restart (XFSM_MANAGER (object)->shutdown_helper, &can_restart, NULL, &error);
 
   if (error)
     {
