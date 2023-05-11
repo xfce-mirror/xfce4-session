@@ -149,6 +149,8 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gboolean        can_hibernate = FALSE;
   gboolean        can_hybrid_sleep = FALSE;
   gboolean        can_switch_user = FALSE;
+  gboolean        auth_shutdown = FALSE;
+  gboolean        auth_restart = FALSE;
   gboolean        auth_suspend = FALSE;
   gboolean        auth_hibernate = FALSE;
   gboolean        auth_hybrid_sleep = FALSE;
@@ -255,7 +257,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   /**
    * Reboot
    **/
-  if (!xfsm_shutdown_can_restart (dialog->shutdown, &can_restart, &error))
+  if (!xfsm_shutdown_can_restart (dialog->shutdown, &can_restart, &auth_restart, &error))
     {
       g_warning ("Querying CanRestart failed: %s", ERROR_MSG (error));
       g_clear_error (&error);
@@ -269,13 +271,13 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
                                       XFSM_SHUTDOWN_RESTART, dialog);
 
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_set_sensitive (button, can_restart);
+  gtk_widget_set_sensitive (button, can_restart && auth_restart);
   gtk_widget_show (button);
 
   /**
    * Shutdown
    **/
-  if (!xfsm_shutdown_can_shutdown (dialog->shutdown, &can_shutdown, &error))
+  if (!xfsm_shutdown_can_shutdown (dialog->shutdown, &can_shutdown, &auth_shutdown, &error))
     {
       g_warning ("Querying CanShutdown failed: %s", ERROR_MSG (error));
       g_clear_error (&error);
@@ -289,7 +291,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
                                       XFSM_SHUTDOWN_SHUTDOWN, dialog);
 
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_set_sensitive (button, can_shutdown);
+  gtk_widget_set_sensitive (button, can_shutdown && auth_shutdown);
   gtk_widget_show (button);
 
   /* new row for suspend/hibernate/hybrid sleep */
