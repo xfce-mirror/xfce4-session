@@ -329,33 +329,6 @@ xfsm_shutdown_fallback_check_auth_polkit (const gchar *action_id)
 
 
 
-static gboolean
-lock_screen (GError **error)
-{
-  XfconfChannel *channel;
-  XfceScreensaver *saver;
-  gboolean       ret = TRUE;
-
-  channel = xfconf_channel_get (SETTINGS_CHANNEL);
-  saver = xfce_screensaver_new ();
-  if (xfconf_channel_get_bool (channel, "/shutdown/LockScreen", FALSE))
-      ret = xfce_screensaver_lock (saver);
-
-  if (ret)
-    {
-      /* sleep 2 seconds so locking has time to startup */
-      g_usleep (G_USEC_PER_SEC * 2);
-    }
-  else
-    g_set_error (error, 1, 0, "Failed to lock the screen.");
-
-  g_object_unref (G_OBJECT (saver));
-
-  return ret;
-}
-
-
-
 /**
  * xfsm_shutdown_fallback_try_action:
  * @type:  The @XfsmShutdownType action to perform (shutdown, suspend, etc).
@@ -392,23 +365,14 @@ xfsm_shutdown_fallback_try_action (XfsmShutdownType   type,
     case XFSM_SHUTDOWN_SUSPEND:
       xfsm_helper_action = "suspend";
       cmd = UP_BACKEND_SUSPEND_COMMAND;
-      /* On suspend we try to lock the screen */
-      if (!lock_screen (error))
-        return FALSE;
       break;
     case XFSM_SHUTDOWN_HIBERNATE:
       xfsm_helper_action = "hibernate";
       cmd = UP_BACKEND_HIBERNATE_COMMAND;
-      /* On hibernate we try to lock the screen */
-      if (!lock_screen (error))
-        return FALSE;
       break;
     case XFSM_SHUTDOWN_HYBRID_SLEEP:
       xfsm_helper_action = "hybrid-sleep";
       cmd = UP_BACKEND_HIBERNATE_COMMAND;
-      /* On hybrid sleep we try to lock the screen */
-      if (!lock_screen (error))
-        return FALSE;
       break;
     default:
       g_set_error (error, 1, 0, "Unknown shutdown type %d", type);

@@ -329,7 +329,8 @@ try_sleep_method (gpointer  object,
 
 
 static gboolean
-lock_screen (XfsmShutdown *shutdown)
+lock_screen (XfsmShutdown *shutdown,
+             GError **error)
 {
   XfconfChannel *channel;
   gboolean ret = TRUE;
@@ -337,6 +338,9 @@ lock_screen (XfsmShutdown *shutdown)
   channel = xfconf_channel_get (SETTINGS_CHANNEL);
   if (xfconf_channel_get_bool (channel, "/shutdown/LockScreen", FALSE))
     ret = xfce_screensaver_lock (shutdown->screensaver);
+
+  if (!ret)
+    g_set_error (error, 1, 0, "Failed to lock the screen.");
 
   return ret;
 }
@@ -349,7 +353,7 @@ xfsm_shutdown_try_suspend (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
-  if (!lock_screen (shutdown))
+  if (!lock_screen (shutdown, error))
     return FALSE;
 
   /* Try each way to suspend - it will handle NULL.
@@ -372,7 +376,7 @@ xfsm_shutdown_try_hibernate (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
-  if (!lock_screen (shutdown))
+  if (!lock_screen (shutdown, error))
     return FALSE;
 
   /* Try each way to hibernate - it will handle NULL.
@@ -395,7 +399,7 @@ xfsm_shutdown_try_hybrid_sleep (XfsmShutdown  *shutdown,
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
-  if (!lock_screen (shutdown))
+  if (!lock_screen (shutdown, error))
     return FALSE;
 
   /* Try each way to hybrid-sleep - it will handle NULL.
