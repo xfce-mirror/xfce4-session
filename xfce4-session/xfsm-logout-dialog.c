@@ -805,7 +805,7 @@ xfsm_logout_dialog (const gchar      *session_name,
 
           if (grab_count++ >= 40)
             {
-              g_critical ("Failed to grab the keyboard for logout window");
+              g_warning ("Failed to grab the keyboard for logout window");
               break;
             }
 
