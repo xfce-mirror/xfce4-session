@@ -27,6 +27,8 @@
 [ -t 0 ] && sleep 1
 
 # First test for the command set in the session's xfconf channel
+# Do not try anything else it that fails: if changed, this behavior should be kept
+# in sync with XfceScreensaver (libxfce4ui)
 LOCK_CMD=$(xfconf-query -c xfce4-session -p /general/LockCommand)
 
 if [ -n "$LOCK_CMD" ]; then
@@ -36,10 +38,14 @@ if [ -n "$LOCK_CMD" ]; then
     exit $exit_code
 fi
 
+# Try our screensaver first
+xfce4-screensaver-command --lock </dev/null 2>/dev/null && exit
+
+# This list should be kept in sync with XfceScreensaver (libxfce4ui)
+xdg-screensaver lock </dev/null 2>/dev/null && exit
 for lock_cmd in \
     xscreensaver-command \
-    light-locker-command \
-    xfce4-screensaver-command
+    light-locker-command
 do
     $lock_cmd --lock </dev/null 2>/dev/null && exit
 done
