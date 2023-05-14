@@ -2045,6 +2045,8 @@ static gboolean xfsm_manager_dbus_uninhibit (XfsmDbusManager *object,
 static gboolean xfsm_manager_dbus_is_inhibited (XfsmDbusManager *object,
                                                 GDBusMethodInvocation *invocation,
                                                 XfsmInhibitonFlag arg_flags);
+static gboolean xfsm_manager_dbus_lock (XfsmDbusManager *object,
+                                        GDBusMethodInvocation *invocation);
 
 
 /* eader needs the above fwd decls */
@@ -2151,6 +2153,7 @@ xfsm_manager_iface_init (XfsmDbusManagerIface *iface)
   iface->handle_hybrid_sleep = xfsm_manager_dbus_hybrid_sleep;
   iface->handle_inhibit = xfsm_manager_dbus_inhibit;
   iface->handle_is_inhibited = xfsm_manager_dbus_is_inhibited;
+  iface->handle_lock = xfsm_manager_dbus_lock;
   iface->handle_switch_user = xfsm_manager_dbus_switch_user;
   iface->handle_list_clients = xfsm_manager_dbus_list_clients;
   iface->handle_logout = xfsm_manager_dbus_logout;
@@ -2584,6 +2587,24 @@ xfsm_manager_dbus_is_inhibited (XfsmDbusManager *object,
   is_inhibited = xfsm_inhibitor_has_flags (manager->inhibitions, arg_flags);
 
   xfsm_dbus_manager_complete_is_inhibited (object, invocation, is_inhibited);
+
+  return TRUE;
+}
+
+static gboolean
+xfsm_manager_dbus_lock (XfsmDbusManager *object,
+                        GDBusMethodInvocation *invocation)
+{
+  XfceScreensaver *saver;
+  gboolean locked;
+
+  xfsm_verbose ("entering\n");
+
+  saver = xfce_screensaver_new ();
+  locked = xfce_screensaver_lock (saver);
+  g_object_unref (saver);
+
+  xfsm_dbus_manager_complete_lock (object, invocation, locked);
 
   return TRUE;
 }

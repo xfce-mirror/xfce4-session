@@ -250,6 +250,19 @@
         </method>
 
         <!--
+             void org.xfce.Session.Manager.Lock
+
+             Returns:
+             @locked: Whether the call succeeded
+
+             Try to lock the session in various ways, depending on the configured
+             screensavers.
+        -->
+        <method name="Lock">
+            <arg type="b" name="locked" direction="out" />
+        </method>
+
+        <!--
              void org.xfce.Session.Manager.StateChanged(Unsigned Int old_state,
                                                         Unsigned Int new_state)
 
