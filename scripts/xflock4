@@ -22,6 +22,26 @@
 #  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
 
+print_help() {
+  echo 'Usage: xflock4 [OPTION]'
+  echo 'Try to lock the session in various ways, depending on the configured'
+  echo 'screensavers. In particular, first try to execute the command set in the Xfconf'
+  echo 'property /general/LockCommand of the xfce4-session channel.'
+  echo
+  echo '  -h, --help    display this help and exit'
+}
+
+case $1 in
+  -h|--help)
+    print_help
+    exit 0
+    ;;
+  ?*)
+    print_help >&2
+    exit 1
+    ;;
+esac
+
 # Wait a bit so that user have time to raise finger from a key if
 # the script is run in terminal.
 [ -t 0 ] && sleep 1
