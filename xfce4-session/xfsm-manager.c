@@ -2399,15 +2399,13 @@ static gboolean
 xfsm_manager_dbus_suspend (XfsmDbusManager *object,
                            GDBusMethodInvocation *invocation)
 {
-  GError *error = NULL;
-
   xfsm_verbose ("entering\n");
 
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
-  if (xfsm_shutdown_try_suspend (XFSM_MANAGER (object)->shutdown_helper, &error) == FALSE)
+  if (!xfsm_manager_save_yourself_dbus (XFSM_MANAGER (object), XFSM_SHUTDOWN_SUSPEND, FALSE))
     {
-      throw_error (invocation, XFSM_ERROR_BAD_STATE, "%s", error->message);
-      g_clear_error (&error);
+      throw_error (invocation, XFSM_ERROR_BAD_STATE,
+                   _("Session manager must be in idle state when requesting a sleep"));
       return TRUE;
     }
 
@@ -2448,15 +2446,13 @@ static gboolean
 xfsm_manager_dbus_hibernate (XfsmDbusManager *object,
                              GDBusMethodInvocation *invocation)
 {
-  GError *error = NULL;
-
   xfsm_verbose ("entering\n");
 
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
-  if (xfsm_shutdown_try_hibernate (XFSM_MANAGER (object)->shutdown_helper, &error) == FALSE)
+  if (!xfsm_manager_save_yourself_dbus (XFSM_MANAGER (object), XFSM_SHUTDOWN_HIBERNATE, FALSE))
     {
-      throw_error (invocation, XFSM_ERROR_BAD_STATE, "%s", error->message);
-      g_clear_error (&error);
+      throw_error (invocation, XFSM_ERROR_BAD_STATE,
+                   _("Session manager must be in idle state when requesting a sleep"));
       return TRUE;
     }
 
@@ -2496,15 +2492,13 @@ static gboolean
 xfsm_manager_dbus_hybrid_sleep (XfsmDbusManager *object,
                                 GDBusMethodInvocation *invocation)
 {
-  GError *error = NULL;
-
   xfsm_verbose ("entering\n");
 
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
-  if (xfsm_shutdown_try_hybrid_sleep (XFSM_MANAGER (object)->shutdown_helper, &error) == FALSE)
+  if (!xfsm_manager_save_yourself_dbus (XFSM_MANAGER (object), XFSM_SHUTDOWN_HYBRID_SLEEP, FALSE))
     {
-      throw_error (invocation, XFSM_ERROR_BAD_STATE, "%s", error->message);
-      g_clear_error (&error);
+      throw_error (invocation, XFSM_ERROR_BAD_STATE,
+                   _("Session manager must be in idle state when requesting a sleep"));
       return TRUE;
     }
 
@@ -2544,15 +2538,13 @@ static gboolean
 xfsm_manager_dbus_switch_user (XfsmDbusManager *object,
                                GDBusMethodInvocation *invocation)
 {
-  GError *error = NULL;
-
   xfsm_verbose ("entering\n");
 
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
-  if (xfsm_shutdown_try_switch_user (XFSM_MANAGER (object)->shutdown_helper, &error) == FALSE)
+  if (!xfsm_manager_save_yourself_dbus (XFSM_MANAGER (object), XFSM_SHUTDOWN_SWITCH_USER, FALSE))
     {
-      throw_error (invocation, XFSM_ERROR_BAD_STATE, "%s", error->message);
-      g_clear_error (&error);
+      throw_error (invocation, XFSM_ERROR_BAD_STATE,
+                   _("Session manager must be in idle state when requesting a user switch"));
       return TRUE;
     }
 
