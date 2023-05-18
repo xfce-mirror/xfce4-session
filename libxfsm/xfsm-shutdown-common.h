@@ -70,4 +70,9 @@
 #define UP_BACKEND_HIBERNATE_COMMAND "/usr/sbin/ZZZ"
 #endif
 
+#ifdef BACKEND_TYPE_SOLARIS
+#define UP_BACKEND_SUSPEND_COMMAND "/usr/bin/sys-suspend"
+#define UP_BACKEND_HIBERNATE_COMMAND "/usr/bin/false"
+#endif
+
 #endif /* __XFSM_SHUTDOWN_COMMON_H_ */

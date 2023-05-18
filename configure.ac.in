@@ -152,7 +152,7 @@ fi
 dnl Compile time default choice of backend
 AC_ARG_WITH([backend],
 	    AS_HELP_STRING([--with-backend=<option>],
-			   [Default backend to use linux, freebsd, openbsd]))
+			   [Default backend to use linux, freebsd, openbsd, solaris]))
 # default to a sane option
 AC_CANONICAL_HOST
 if test x$with_backend = x; then
@@ -160,7 +160,8 @@ if test x$with_backend = x; then
 		[*-linux*],   [with_backend=linux],
 		[*-*freebsd*], [with_backend=freebsd],
 		[*-*dragonfly*], [with_backend=freebsd],
-		[*-openbsd*], [with_backend=openbsd])
+		[*-openbsd*], [with_backend=openbsd],
+		[*-solaris*], [with_backend=solaris])
 fi
 AC_DEFINE_UNQUOTED(BACKEND, "$with_backend", [backend])
 AC_SUBST(BACKEND, "$with_backend")
@@ -173,6 +174,9 @@ if test x$with_backend = xfreebsd; then
 fi
 if test x$with_backend = xopenbsd; then
     AC_DEFINE(BACKEND_TYPE_OPENBSD, 1, [OpenBSD suspend/hibernate backend])
+fi
+if test x$with_backend = xsolaris; then
+    AC_DEFINE(BACKEND_TYPE_SOLARIS, 1, [Solaris suspend/hibernate backend])
 fi
 
 AC_CONFIG_FILES([

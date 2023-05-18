@@ -457,6 +457,9 @@ xfsm_shutdown_fallback_can_suspend (void)
 #ifdef BACKEND_TYPE_OPENBSD
   return TRUE;
 #endif
+#ifdef BACKEND_TYPE_SOLARIS
+  return TRUE;
+#endif
 
   return FALSE;
 }
@@ -480,6 +483,9 @@ xfsm_shutdown_fallback_can_hibernate (void)
 #ifdef BACKEND_TYPE_OPENBSD
   return TRUE;
 #endif
+#ifdef BACKEND_TYPE_SOLARIS
+  return FALSE;
+#endif
 
   return FALSE;
 }
@@ -501,6 +507,9 @@ xfsm_shutdown_fallback_can_hybrid_sleep (void)
   return linux_supports_sleep_state ("hibernate");
 #endif
 #ifdef BACKEND_TYPE_OPENBSD
+  return FALSE;
+#endif
+#ifdef BACKEND_TYPE_SOLARIS
   return FALSE;
 #endif
 
