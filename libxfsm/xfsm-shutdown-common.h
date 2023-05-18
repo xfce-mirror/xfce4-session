@@ -75,4 +75,12 @@
 #define UP_BACKEND_HIBERNATE_COMMAND "/usr/bin/false"
 #endif
 
+#ifndef UP_BACKEND_SUSPEND_COMMAND
+#define UP_BACKEND_SUSPEND_COMMAND "/usr/bin/false"
+#endif
+
+#ifndef UP_BACKEND_HIBERNATE_COMMAND
+#define UP_BACKEND_HIBERNATE_COMMAND "/usr/bin/false"
+#endif
+
 #endif /* __XFSM_SHUTDOWN_COMMON_H_ */
