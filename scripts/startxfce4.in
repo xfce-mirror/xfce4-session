@@ -98,7 +98,7 @@ then
   prog=xinit
 
   if test ! "x$XDG_VTNR" = "x"; then
-    SERVERRC="vt$XDG_VTNR $SERVERRC"
+    SERVERRC="$SERVERRC vt$XDG_VTNR"
   fi
 else
   echo "$0: X server already running on display $DISPLAY"
