@@ -659,13 +659,13 @@ xfsm_logout_dialog_screenshot_save (GdkPixbuf   *screenshot,
       path = g_strconcat ("sessions/thumbs-", display_name, "/", session_name, ".png", NULL);
       filename = xfce_resource_save_location (XFCE_RESOURCE_CACHE, path, TRUE);
       g_free (display_name);
-      g_free (path);
 
       if (!filename)
         {
           g_warning ("Unable to save screenshot, "
                      "error calling xfce_resource_save_location with %s, "
                      "check your permissions", path);
+          g_free (path);
           return;
         }
 
@@ -675,6 +675,7 @@ xfsm_logout_dialog_screenshot_save (GdkPixbuf   *screenshot,
           g_error_free (error);
         }
 
+      g_free (path);
       g_free (filename);
       g_object_unref (G_OBJECT (scaled));
     }
