@@ -166,13 +166,7 @@ sm_new_client (SmsConn        sms_conn,
     {
       xfsm_verbose ("NEW CLIENT failed: %s\n", error);
 
-#ifdef HAVE_STRDUP
-      *failure_reason = strdup (error);
-#else
-      *failure_reason = (char *) malloc (strlen (error) + 1);
-      if (*failure_reason != NULL)
-        strcpy (*failure_reason, error);
-#endif
+      *failure_reason = g_strdup (error);
 
       return False;
     }
@@ -377,7 +371,7 @@ sm_set_properties (SmsConn   sms_conn,
 
   while (num_props-- > 0)
     SmFreeProperty (props[num_props]);
-  free (props);
+  g_free (props);
 }
 
 
@@ -426,6 +420,6 @@ sm_get_properties (SmsConn   sms_conn,
     {
       while (num_props-- > 0)
         SmFreeProperty (props[num_props]);
-      free (props);
+      g_free (props);
     }
 }
