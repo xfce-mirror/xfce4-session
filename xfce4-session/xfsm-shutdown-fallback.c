@@ -220,13 +220,7 @@ xfsm_shutdown_fallback_user_is_operator (void)
       return FALSE;
     }
 
-  groups = malloc(sizeof(gid_t) * max_grp);
-  if (groups == NULL)
-    {
-      fprintf (stderr, "malloc(sizeof(gid_t) * max_grp) failed");
-      return FALSE;
-    }
-
+  groups = g_new (gid_t, max_grp);
   pw = getpwuid (getuid());
 
   ret = getgrouplist (pw->pw_name, pw->pw_gid, groups, &max_grp);
@@ -236,7 +230,7 @@ xfsm_shutdown_fallback_user_is_operator (void)
       fprintf (stderr,
                "Failed to get user group list, user belongs to more than %u groups?\n",
                max_grp);
-      free(groups);
+      g_free (groups);
       goto out;
     }
 
@@ -253,7 +247,7 @@ xfsm_shutdown_fallback_user_is_operator (void)
           break;
         }
     }
-  free(groups);
+  g_free (groups);
 out:
   return is_operator;
 }

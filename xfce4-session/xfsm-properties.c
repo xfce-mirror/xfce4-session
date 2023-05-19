@@ -88,21 +88,6 @@ static const struct
 };
 
 
-#ifndef HAVE_STRDUP
-static char*
-strdup (const char *s)
-{
-  char *t;
-
-  t = (char *) malloc (strlen (s) + 1);
-  if (t != NULL)
-    strcpy (t, s);
-
-  return t;
-}
-#endif
-
-
 static gchar*
 compose (gchar       *buffer,
          gsize        length,
@@ -122,20 +107,20 @@ strv_to_property (const gchar *name,
   SmProp *prop;
   gint    argc;
 
-  prop       = (SmProp *) malloc (sizeof (*prop));
-  prop->name = strdup (name);
-  prop->type = strdup (SmLISTofARRAY8);
+  prop       = g_new (SmProp, 1);
+  prop->name = g_strdup (name);
+  prop->type = g_strdup (SmLISTofARRAY8);
 
   for (argc = 0; argv[argc] != NULL; ++argc)
     ;
 
   prop->num_vals = argc;
-  prop->vals     = (SmPropValue *) malloc (argc * sizeof (SmPropValue));
+  prop->vals     = g_new (SmPropValue, argc);
 
   while (argc-- > 0)
     {
       prop->vals[argc].length = strlen (argv[argc]) + 1;
-      prop->vals[argc].value  = strdup (argv[argc]);
+      prop->vals[argc].value  = g_strdup (argv[argc]);
     }
 
   return prop;
@@ -148,13 +133,13 @@ str_to_property (const gchar *name,
 {
   SmProp *prop;
 
-  prop                 = (SmProp *) malloc (sizeof (*prop));
-  prop->name           = strdup (name);
-  prop->type           = strdup (SmARRAY8);
+  prop                 = g_new (SmProp, 1);
+  prop->name           = g_strdup (name);
+  prop->type           = g_strdup (SmARRAY8);
   prop->num_vals       = 1;
-  prop->vals           = (SmPropValue *) malloc (sizeof (SmPropValue));
+  prop->vals           = g_new (SmPropValue, 1);
   prop->vals[0].length = strlen (value) + 1;
-  prop->vals[0].value  = strdup (value);
+  prop->vals[0].value  = g_strdup (value);
 
   return prop;
 }
@@ -167,14 +152,14 @@ int_to_property (const gchar *name,
   SmProp *prop;
   gint8  *p;
 
-  p    = (gint8 *) malloc (1);
+  p    = g_new (gint8, 1);
   p[0] = (gint8) value;
 
-  prop                 = (SmProp *) malloc (sizeof (*prop));
-  prop->name           = strdup (name);
-  prop->type           = strdup (SmCARD8);
+  prop                 = g_new (SmProp, 1);
+  prop->name           = g_strdup (name);
+  prop->type           = g_strdup (SmCARD8);
   prop->num_vals       = 1;
-  prop->vals           = (SmPropValue *) malloc (sizeof (SmPropValue));
+  prop->vals           = g_new (SmPropValue, 1);
   prop->vals[0].length = 1;
   prop->vals[0].value  = p;
 
@@ -235,7 +220,7 @@ xfsm_properties_extract (XfsmProperties *properties,
   g_return_if_fail (num_props != NULL);
   g_return_if_fail (props != NULL);
 
-  *props = pp = (SmProp **) malloc (sizeof (SmProp *) * g_tree_nnodes (properties->sm_properties));
+  *props = pp = g_new (SmProp *, g_tree_nnodes (properties->sm_properties));
 
   g_tree_foreach (properties->sm_properties,
                   xfsm_properties_extract_foreach,

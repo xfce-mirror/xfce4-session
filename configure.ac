@@ -69,7 +69,7 @@ AC_CHECK_HEADERS([errno.h fcntl.h \
                   netdb.h signal.h stdarg.h sys/resource.h \
                   sys/socket.h sys/time.h sys/wait.h sys/utsname.h time.h \
                   unistd.h math.h sys/types.h])
-AC_CHECK_FUNCS([getaddrinfo gethostbyname gethostname setsid strdup])
+AC_CHECK_FUNCS([getaddrinfo gethostbyname gethostname setsid])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_INLINE

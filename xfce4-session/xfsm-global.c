@@ -141,7 +141,7 @@ xfsm_generate_client_id (SmsConn sms_conn)
       if (sms_id != NULL)
         {
           id = g_strdup (sms_id);
-          free (sms_id);
+          g_free (sms_id);
         }
     }
 
