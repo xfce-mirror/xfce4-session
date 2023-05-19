@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-04 00:46+0200\n"
+"POT-Creation-Date: 2023-05-19 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Panwar108 <caspian7pena@gmail.com>, 2019-2020\n"
 "Language-Team: Hindi (http://app.transifex.com/xfce/xfce4-session/language/hi/)\n"
@@ -26,10 +26,6 @@ msgstr "एक्सएफसीई सत्र"
 msgid "Use this session to run Xfce as your desktop environment"
 msgstr "इस सत्र द्वारा एक्सएफसीई डेस्कटॉप वातावरण उपयोग करें"
 
-#: xfce.desktop.in:8
-msgid "Type=Application"
-msgstr ""
-
 #: libxfsm/xfsm-util.c:374
 msgid "Session"
 msgstr "सत्र"
@@ -45,10 +41,6 @@ msgstr "स्क्रीनसेवर"
 #: scripts/xscreensaver.desktop.in:5
 msgid "Launch screensaver and locker program"
 msgstr "स्क्रीनसेवर व लॉक प्रोग्राम आरंभ करें"
-
-#: scripts/xscreensaver.desktop.in:6
-msgid "preferences-desktop-screensaver"
-msgstr ""
 
 #: settings/main.c:98
 msgid "Settings manager socket"
@@ -139,7 +131,7 @@ msgstr "आगामी लॉगिन उपरांत संचित अ�
 
 #: settings/session-editor.c:203 settings/session-editor.c:290
 #: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:695
-#: xfce4-session/xfsm-logout-dialog.c:223
+#: xfce4-session/xfsm-logout-dialog.c:225
 msgid "_Cancel"
 msgstr "रद्द करें (_C)"
 
@@ -171,7 +163,7 @@ msgid ""
 "your next session."
 msgstr "अनुप्रयोग हेतु असंचित स्थिति व आगामी सत्र में पुनः आरंभ निरस्त होगा।"
 
-#: settings/session-editor.c:291 settings/xfce4-session-settings.ui:446
+#: settings/session-editor.c:291 settings/xfce4-session-settings.ui:445
 msgid "_Quit Program"
 msgstr "प्रोग्राम बंद करें (_Q)"
 
@@ -483,60 +475,69 @@ msgstr "सिस्टम बंद अनुरोध हेतु सत्�
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "सिस्टम पुनः आरंभ अनुरोध हेतु सत्र प्रबंधक का अकर्मण्य स्थिति में होना आवश्यक है"
 
-#: xfce4-session/xfsm-logout-dialog.c:195
+#: xfce4-session/xfsm-manager.c:2431 xfce4-session/xfsm-manager.c:2478
+#: xfce4-session/xfsm-manager.c:2524
+msgid "Session manager must be in idle state when requesting a sleep"
+msgstr ""
+
+#: xfce4-session/xfsm-manager.c:2641
+msgid "Session manager must be in idle state when requesting a user switch"
+msgstr ""
+
+#: xfce4-session/xfsm-logout-dialog.c:197
 #, c-format
 msgid "Log out %s"
 msgstr "लॉगआउट %s"
 
-#: xfce4-session/xfsm-logout-dialog.c:241
+#: xfce4-session/xfsm-logout-dialog.c:243
 msgid "_Log Out"
 msgstr "लॉगआउट (_L)"
 
-#: xfce4-session/xfsm-logout-dialog.c:266
+#: xfce4-session/xfsm-logout-dialog.c:268
 msgid "_Restart and update"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:266
+#: xfce4-session/xfsm-logout-dialog.c:268
 msgid "_Restart"
 msgstr "पुनः आरंभ (_R)"
 
-#: xfce4-session/xfsm-logout-dialog.c:286
+#: xfce4-session/xfsm-logout-dialog.c:288
 msgid "Update and Shut _Down"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:286
+#: xfce4-session/xfsm-logout-dialog.c:288
 msgid "Shut _Down"
 msgstr "बंद करें (_D)"
 
-#: xfce4-session/xfsm-logout-dialog.c:311
+#: xfce4-session/xfsm-logout-dialog.c:313
 msgid "Sus_pend"
 msgstr "सुप्त (_p)"
 
-#: xfce4-session/xfsm-logout-dialog.c:344
+#: xfce4-session/xfsm-logout-dialog.c:346
 msgid "_Hibernate"
 msgstr "स्थगित (_H)"
 
-#: xfce4-session/xfsm-logout-dialog.c:374
+#: xfce4-session/xfsm-logout-dialog.c:376
 msgid "H_ybrid Sleep"
 msgstr "समग्र सुप्त (_y)"
 
-#: xfce4-session/xfsm-logout-dialog.c:404
+#: xfce4-session/xfsm-logout-dialog.c:406
 msgid "Switch _User"
 msgstr "उपयोक्ता बदलें (_U)"
 
-#: xfce4-session/xfsm-logout-dialog.c:429
+#: xfce4-session/xfsm-logout-dialog.c:431
 msgid "_Save session for future logins"
 msgstr "भावी लॉगिन हेतु सत्र संचित करें (_S)"
 
-#: xfce4-session/xfsm-logout-dialog.c:457
+#: xfce4-session/xfsm-logout-dialog.c:459
 msgid "An error occurred"
 msgstr "एक त्रुटि हुई"
 
-#: xfce4-session/xfsm-shutdown.c:168
+#: xfce4-session/xfsm-shutdown.c:171
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "कीओस्क सेटिंग्स द्वारा सिस्टम बंद करना अवरुद्ध"
 
-#: xfce4-session/xfsm-shutdown.c:225
+#: xfce4-session/xfsm-shutdown.c:228
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "बंद करने हेतु अज्ञात विधि %d"
@@ -589,13 +590,22 @@ msgstr "एवं Brian Tarricone <kelnos@xfce.org>."
 msgid "Received error while trying to log out"
 msgstr "लॉगआउट प्रयास करते समय त्रुटि"
 
-#: xfce4-session-logout/xfce4-session-logout.desktop.in:6
-msgid "xfsm-logout"
-msgstr ""
-
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:12
 msgid "Log out of the Xfce Desktop"
 msgstr "Xfce डेस्कटॉप से लॉगआउट करें"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to suspend or hibernate their system.
+#: xfce4-session/org.xfce.session.policy.in.in:23
+msgid "Shutdown, restart, suspend, or hibernate the system"
+msgstr ""
+
+#: xfce4-session/org.xfce.session.policy.in.in:24
+msgid ""
+"Authentication is required to shutdown, restart, suspend, or hibernate the "
+"system."
+msgstr ""
 
 #: settings/xfce-session-settings.desktop.in:3
 #: settings/xfce4-session-settings.ui:61
@@ -605,10 +615,6 @@ msgstr "सत्र व आरंभ"
 #: settings/xfce-session-settings.desktop.in:4
 msgid "Customize desktop startup"
 msgstr "डेस्कटॉप आरंभ अनुकूलन"
-
-#: settings/xfce-session-settings.desktop.in:6
-msgid "org.xfce.session"
-msgstr ""
 
 #: settings/xfce-session-settings.desktop.in:11
 msgid ""
@@ -663,88 +669,84 @@ msgstr "<b>लॉगआउट सेटिंग्स</b>"
 msgid "Lock screen be_fore sleep"
 msgstr "सुप्त पूर्व स्क्रीन लॉक करें"
 
-#: settings/xfce4-session-settings.ui:271
-msgid "Run xflock4 before suspending or hibernating the system"
-msgstr "सिस्टम सुप्त या स्थगित करने पूर्व xflock4 निष्पादित करें"
-
-#: settings/xfce4-session-settings.ui:290
+#: settings/xfce4-session-settings.ui:289
 msgid "<b>Shutdown</b>"
 msgstr "<b>सिस्टम बंद</b>"
 
-#: settings/xfce4-session-settings.ui:307
+#: settings/xfce4-session-settings.ui:306
 msgid "_General"
 msgstr "सामान्य (_G)"
 
-#: settings/xfce4-session-settings.ui:331
+#: settings/xfce4-session-settings.ui:330
 msgid "Save Sess_ion"
 msgstr "सत्र संचित करें (_i)"
 
-#: settings/xfce4-session-settings.ui:385
+#: settings/xfce4-session-settings.ui:384
 msgid "Currently active session: <b>Default</b>"
 msgstr "वर्तमान में सक्रिय सत्र : <b>डिफ़ॉल्ट</b>"
 
-#: settings/xfce4-session-settings.ui:486
+#: settings/xfce4-session-settings.ui:485
 msgid "Current Sessio_n"
 msgstr "वर्तमान सत्र (_n)"
 
-#: settings/xfce4-session-settings.ui:537
+#: settings/xfce4-session-settings.ui:536
 msgid "_Remove"
 msgstr "हटाएँ (_R)"
 
-#: settings/xfce4-session-settings.ui:541
+#: settings/xfce4-session-settings.ui:540
 msgid "Delete the selected session"
 msgstr "चयनित सत्र को हटाएँ"
 
-#: settings/xfce4-session-settings.ui:565
+#: settings/xfce4-session-settings.ui:564
 msgid "Clear Save_d Sessions"
 msgstr "संचित सत्र रिक्त करें"
 
-#: settings/xfce4-session-settings.ui:615
+#: settings/xfce4-session-settings.ui:614
 msgid "Saved _Sessions"
 msgstr "संचित सत्र (_S)"
 
-#: settings/xfce4-session-settings.ui:650
+#: settings/xfce4-session-settings.ui:649
 msgid "Launch GN_OME services on startup"
 msgstr "आरंभ पर गनोम सेवाएँ चालू करें (_O)"
 
-#: settings/xfce4-session-settings.ui:655
+#: settings/xfce4-session-settings.ui:654
 msgid "Start GNOME services, such as gnome-keyring"
 msgstr "gnome-keyring जैसी गनोम सेवाएँ चालू करें"
 
-#: settings/xfce4-session-settings.ui:668
+#: settings/xfce4-session-settings.ui:667
 msgid "Launch _KDE services on startup"
 msgstr "आरंभ पर केडीई सेवाएँ चालू करें (_K)"
 
-#: settings/xfce4-session-settings.ui:673
+#: settings/xfce4-session-settings.ui:672
 msgid "Start KDE services, such as kdeinit"
 msgstr "kdeinit जैसी केडीई सेवाएँ चालू करें"
 
-#: settings/xfce4-session-settings.ui:692
+#: settings/xfce4-session-settings.ui:691
 msgid "<b>Compatibility</b>"
 msgstr "<b>संगतता</b>"
 
-#: settings/xfce4-session-settings.ui:717
+#: settings/xfce4-session-settings.ui:716
 msgid "Manage _remote applications"
 msgstr "दूरस्थ अनुप्रयोग प्रबंधन (_r)"
 
-#: settings/xfce4-session-settings.ui:722
+#: settings/xfce4-session-settings.ui:721
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
 msgstr "नेटवर्क द्वारा दूरस्थ अनुप्रयोग प्रबंधन (इससे सुरक्षा संबंधी समस्या संभव है)"
 
-#: settings/xfce4-session-settings.ui:734
+#: settings/xfce4-session-settings.ui:733
 msgid "<b>Security</b>"
 msgstr "<b>सुरक्षा</b>"
 
-#: settings/xfce4-session-settings.ui:754
+#: settings/xfce4-session-settings.ui:753
 msgid "Ad_vanced"
 msgstr "विस्तृत (_v)"
 
-#: settings/xfce4-session-settings.ui:785
+#: settings/xfce4-session-settings.ui:784
 msgid "Saving Session"
 msgstr "सत्र संचित हो रहा है"
 
-#: settings/xfce4-session-settings.ui:861
+#: settings/xfce4-session-settings.ui:860
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
