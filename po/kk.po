@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-04 00:46+0200\n"
+"POT-Creation-Date: 2023-05-19 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>, 2009,2016-2017,2019-2020\n"
 "Language-Team: Kazakh (http://app.transifex.com/xfce/xfce4-session/language/kk/)\n"
@@ -26,10 +26,6 @@ msgstr "Xfce сессиясы"
 msgid "Use this session to run Xfce as your desktop environment"
 msgstr "Бұл сессияны негізгі жұмыс үстел ортасы ретінде Xfce-ні қолдану үшін қолданыңыз"
 
-#: xfce.desktop.in:8
-msgid "Type=Application"
-msgstr ""
-
 #: libxfsm/xfsm-util.c:374
 msgid "Session"
 msgstr "Сессия"
@@ -45,10 +41,6 @@ msgstr "Экран қорғауышы"
 #: scripts/xscreensaver.desktop.in:5
 msgid "Launch screensaver and locker program"
 msgstr "Экран қорғауыш және блоктау бағдарламасын жөнелту"
-
-#: scripts/xscreensaver.desktop.in:6
-msgid "preferences-desktop-screensaver"
-msgstr ""
 
 #: settings/main.c:98
 msgid "Settings manager socket"
@@ -139,7 +131,7 @@ msgstr "Қолданбаларыңыздың сақталған күйлері �
 
 #: settings/session-editor.c:203 settings/session-editor.c:290
 #: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:695
-#: xfce4-session/xfsm-logout-dialog.c:223
+#: xfce4-session/xfsm-logout-dialog.c:225
 msgid "_Cancel"
 msgstr "Ба_с тарту"
 
@@ -171,7 +163,7 @@ msgid ""
 "your next session."
 msgstr "Қолданба сақталмаған мәліметтерді барлығын жоғалтады және келесі сессияңызда қайта қосылмайды"
 
-#: settings/session-editor.c:291 settings/xfce4-session-settings.ui:446
+#: settings/session-editor.c:291 settings/xfce4-session-settings.ui:445
 msgid "_Quit Program"
 msgstr "Б_ағдарламаны жабу"
 
@@ -483,60 +475,69 @@ msgstr "Сөндіруді сұрау кезінде сессиялар басқ
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Қайта іске қосуды сұрау кезінде сессиялар басқарушысы белсенді емес болуы керек"
 
-#: xfce4-session/xfsm-logout-dialog.c:195
+#: xfce4-session/xfsm-manager.c:2431 xfce4-session/xfsm-manager.c:2478
+#: xfce4-session/xfsm-manager.c:2524
+msgid "Session manager must be in idle state when requesting a sleep"
+msgstr ""
+
+#: xfce4-session/xfsm-manager.c:2641
+msgid "Session manager must be in idle state when requesting a user switch"
+msgstr ""
+
+#: xfce4-session/xfsm-logout-dialog.c:197
 #, c-format
 msgid "Log out %s"
 msgstr "Жүйеден шығу, %s"
 
-#: xfce4-session/xfsm-logout-dialog.c:241
+#: xfce4-session/xfsm-logout-dialog.c:243
 msgid "_Log Out"
 msgstr "_Шығу"
 
-#: xfce4-session/xfsm-logout-dialog.c:266
+#: xfce4-session/xfsm-logout-dialog.c:268
 msgid "_Restart and update"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:266
+#: xfce4-session/xfsm-logout-dialog.c:268
 msgid "_Restart"
 msgstr "Қа_йта қосу"
 
-#: xfce4-session/xfsm-logout-dialog.c:286
+#: xfce4-session/xfsm-logout-dialog.c:288
 msgid "Update and Shut _Down"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:286
+#: xfce4-session/xfsm-logout-dialog.c:288
 msgid "Shut _Down"
 msgstr "Сөн_діру"
 
-#: xfce4-session/xfsm-logout-dialog.c:311
+#: xfce4-session/xfsm-logout-dialog.c:313
 msgid "Sus_pend"
 msgstr "Ұйықт_ату"
 
-#: xfce4-session/xfsm-logout-dialog.c:344
+#: xfce4-session/xfsm-logout-dialog.c:346
 msgid "_Hibernate"
 msgstr "Г_ибернация"
 
-#: xfce4-session/xfsm-logout-dialog.c:374
+#: xfce4-session/xfsm-logout-dialog.c:376
 msgid "H_ybrid Sleep"
 msgstr "Г_ибридті ұйықтату"
 
-#: xfce4-session/xfsm-logout-dialog.c:404
+#: xfce4-session/xfsm-logout-dialog.c:406
 msgid "Switch _User"
 msgstr "Пай_даланушыны ауыстыру"
 
-#: xfce4-session/xfsm-logout-dialog.c:429
+#: xfce4-session/xfsm-logout-dialog.c:431
 msgid "_Save session for future logins"
 msgstr "_Келесі кіру үшін сессияны сақтау"
 
-#: xfce4-session/xfsm-logout-dialog.c:457
+#: xfce4-session/xfsm-logout-dialog.c:459
 msgid "An error occurred"
 msgstr "Қате орын алды"
 
-#: xfce4-session/xfsm-shutdown.c:168
+#: xfce4-session/xfsm-shutdown.c:171
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Сөндіру әрекеті киоск баптауларымен блокталған"
 
-#: xfce4-session/xfsm-shutdown.c:225
+#: xfce4-session/xfsm-shutdown.c:228
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Белгісіз сөндіру тәсілі %d"
@@ -589,13 +590,22 @@ msgstr "және Brian Tarricone <kelnos@xfce.org>."
 msgid "Received error while trying to log out"
 msgstr "Жүйеден шығу кезінде қате кетті"
 
-#: xfce4-session-logout/xfce4-session-logout.desktop.in:6
-msgid "xfsm-logout"
-msgstr ""
-
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:12
 msgid "Log out of the Xfce Desktop"
 msgstr "Xfce жұмыс ортасынан шығу"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to suspend or hibernate their system.
+#: xfce4-session/org.xfce.session.policy.in.in:23
+msgid "Shutdown, restart, suspend, or hibernate the system"
+msgstr ""
+
+#: xfce4-session/org.xfce.session.policy.in.in:24
+msgid ""
+"Authentication is required to shutdown, restart, suspend, or hibernate the "
+"system."
+msgstr ""
 
 #: settings/xfce-session-settings.desktop.in:3
 #: settings/xfce4-session-settings.ui:61
@@ -605,10 +615,6 @@ msgstr "Сессия мен қосылу"
 #: settings/xfce-session-settings.desktop.in:4
 msgid "Customize desktop startup"
 msgstr "Жұмыс үстелінің қосылуын баптау"
-
-#: settings/xfce-session-settings.desktop.in:6
-msgid "org.xfce.session"
-msgstr ""
 
 #: settings/xfce-session-settings.desktop.in:11
 msgid ""
@@ -663,88 +669,84 @@ msgstr "<b>Сессияны аяқтау баптаулары</b>"
 msgid "Lock screen be_fore sleep"
 msgstr "Ұ_йықтату алдында экранды блоктау"
 
-#: settings/xfce4-session-settings.ui:271
-msgid "Run xflock4 before suspending or hibernating the system"
-msgstr "Жүйені ұйықтату не гибернация алдында xflock4 жөнелту"
-
-#: settings/xfce4-session-settings.ui:290
+#: settings/xfce4-session-settings.ui:289
 msgid "<b>Shutdown</b>"
 msgstr "<b>Сөндіру</b>"
 
-#: settings/xfce4-session-settings.ui:307
+#: settings/xfce4-session-settings.ui:306
 msgid "_General"
 msgstr "Жал_пы"
 
-#: settings/xfce4-session-settings.ui:331
+#: settings/xfce4-session-settings.ui:330
 msgid "Save Sess_ion"
 msgstr "Сессия_ны сақтау"
 
-#: settings/xfce4-session-settings.ui:385
+#: settings/xfce4-session-settings.ui:384
 msgid "Currently active session: <b>Default</b>"
 msgstr "Ағымдағы уақытта белсенді сессия: <b>Бастапқы</b>"
 
-#: settings/xfce4-session-settings.ui:486
+#: settings/xfce4-session-settings.ui:485
 msgid "Current Sessio_n"
 msgstr "Ағымдағы сесси_я"
 
-#: settings/xfce4-session-settings.ui:537
+#: settings/xfce4-session-settings.ui:536
 msgid "_Remove"
 msgstr "Өші_ру"
 
-#: settings/xfce4-session-settings.ui:541
+#: settings/xfce4-session-settings.ui:540
 msgid "Delete the selected session"
 msgstr "Таңдалған сессияны өшіру"
 
-#: settings/xfce4-session-settings.ui:565
+#: settings/xfce4-session-settings.ui:564
 msgid "Clear Save_d Sessions"
 msgstr "Сақталған сессияларды та_зарту"
 
-#: settings/xfce4-session-settings.ui:615
+#: settings/xfce4-session-settings.ui:614
 msgid "Saved _Sessions"
 msgstr "Сақталған _сессиялар"
 
-#: settings/xfce4-session-settings.ui:650
+#: settings/xfce4-session-settings.ui:649
 msgid "Launch GN_OME services on startup"
 msgstr "Қосылғанда, GNOME қы_зметтерін орындау"
 
-#: settings/xfce4-session-settings.ui:655
+#: settings/xfce4-session-settings.ui:654
 msgid "Start GNOME services, such as gnome-keyring"
 msgstr "GNOME қызметтерін орындайды, gnome-keyring пен GNOME қолжетерлілік фреймворк сияқты"
 
-#: settings/xfce4-session-settings.ui:668
+#: settings/xfce4-session-settings.ui:667
 msgid "Launch _KDE services on startup"
 msgstr "Қосылғанда, KDE қыз_меттерін орындау"
 
-#: settings/xfce4-session-settings.ui:673
+#: settings/xfce4-session-settings.ui:672
 msgid "Start KDE services, such as kdeinit"
 msgstr "KDE қызметтерін іске қосу, kdeinit сияқты"
 
-#: settings/xfce4-session-settings.ui:692
+#: settings/xfce4-session-settings.ui:691
 msgid "<b>Compatibility</b>"
 msgstr "<b>Үйлесімділік</b>"
 
-#: settings/xfce4-session-settings.ui:717
+#: settings/xfce4-session-settings.ui:716
 msgid "Manage _remote applications"
 msgstr "Қа_шықтағы қолданбаларды басқару"
 
-#: settings/xfce4-session-settings.ui:722
+#: settings/xfce4-session-settings.ui:721
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
 msgstr "Қашықтағы қолданбаларды желі арқылы басқару (қауіпсіз емес болуы мүмкін)"
 
-#: settings/xfce4-session-settings.ui:734
+#: settings/xfce4-session-settings.ui:733
 msgid "<b>Security</b>"
 msgstr "<b>Қауіпсіздік</b>"
 
-#: settings/xfce4-session-settings.ui:754
+#: settings/xfce4-session-settings.ui:753
 msgid "Ad_vanced"
 msgstr "К_еңейтілген"
 
-#: settings/xfce4-session-settings.ui:785
+#: settings/xfce4-session-settings.ui:784
 msgid "Saving Session"
 msgstr "Сессияны сақтау"
 
-#: settings/xfce4-session-settings.ui:861
+#: settings/xfce4-session-settings.ui:860
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
