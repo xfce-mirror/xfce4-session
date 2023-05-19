@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-05 10:51+0200\n"
+"POT-Creation-Date: 2023-05-19 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>, 2011-2013,2016,2019-2021,2023\n"
 "Language-Team: Korean (http://app.transifex.com/xfce/xfce4-session/language/ko/)\n"
@@ -133,7 +133,7 @@ msgstr "다음 로그인을 진행하는 동안 프로그램의 저장한 상태
 
 #: settings/session-editor.c:203 settings/session-editor.c:290
 #: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:695
-#: xfce4-session/xfsm-logout-dialog.c:223
+#: xfce4-session/xfsm-logout-dialog.c:225
 msgid "_Cancel"
 msgstr "취소(_C)"
 
@@ -165,7 +165,7 @@ msgid ""
 "your next session."
 msgstr "프로그램은 저장하지 않은 상태를 잃을 것이며 다음 세션에서 다시 시작 하지 않습니다."
 
-#: settings/session-editor.c:291 settings/xfce4-session-settings.ui:446
+#: settings/session-editor.c:291 settings/xfce4-session-settings.ui:445
 msgid "_Quit Program"
 msgstr "프로그램 종료(_Q)"
 
@@ -477,60 +477,69 @@ msgstr "세션 관리자는 종료를 요청할 때 대기 상태에 있어야 �
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "세션 관리자는 다시 시작할 때 대기 상태에 있어야 합니다"
 
-#: xfce4-session/xfsm-logout-dialog.c:195
+#: xfce4-session/xfsm-manager.c:2431 xfce4-session/xfsm-manager.c:2478
+#: xfce4-session/xfsm-manager.c:2524
+msgid "Session manager must be in idle state when requesting a sleep"
+msgstr ""
+
+#: xfce4-session/xfsm-manager.c:2641
+msgid "Session manager must be in idle state when requesting a user switch"
+msgstr ""
+
+#: xfce4-session/xfsm-logout-dialog.c:197
 #, c-format
 msgid "Log out %s"
 msgstr "%s 로그아웃"
 
-#: xfce4-session/xfsm-logout-dialog.c:241
+#: xfce4-session/xfsm-logout-dialog.c:243
 msgid "_Log Out"
 msgstr "로그아웃(_L)"
 
-#: xfce4-session/xfsm-logout-dialog.c:266
+#: xfce4-session/xfsm-logout-dialog.c:268
 msgid "_Restart and update"
 msgstr "다시 시작하고 업데이트(_R)"
 
-#: xfce4-session/xfsm-logout-dialog.c:266
+#: xfce4-session/xfsm-logout-dialog.c:268
 msgid "_Restart"
 msgstr "다시 시작(_R)"
 
-#: xfce4-session/xfsm-logout-dialog.c:286
+#: xfce4-session/xfsm-logout-dialog.c:288
 msgid "Update and Shut _Down"
 msgstr "업데이트 후 컴퓨터 끄기(_D)"
 
-#: xfce4-session/xfsm-logout-dialog.c:286
+#: xfce4-session/xfsm-logout-dialog.c:288
 msgid "Shut _Down"
 msgstr "시스템 종료(_D)"
 
-#: xfce4-session/xfsm-logout-dialog.c:311
+#: xfce4-session/xfsm-logout-dialog.c:313
 msgid "Sus_pend"
 msgstr "대기(_P)"
 
-#: xfce4-session/xfsm-logout-dialog.c:344
+#: xfce4-session/xfsm-logout-dialog.c:346
 msgid "_Hibernate"
 msgstr "최대 절전(_H)"
 
-#: xfce4-session/xfsm-logout-dialog.c:374
+#: xfce4-session/xfsm-logout-dialog.c:376
 msgid "H_ybrid Sleep"
 msgstr "하이브리드 방식 대기(_Y)"
 
-#: xfce4-session/xfsm-logout-dialog.c:404
+#: xfce4-session/xfsm-logout-dialog.c:406
 msgid "Switch _User"
 msgstr "사용자 전환(_U)"
 
-#: xfce4-session/xfsm-logout-dialog.c:429
+#: xfce4-session/xfsm-logout-dialog.c:431
 msgid "_Save session for future logins"
 msgstr "다음 로그인에 대비하여 세션 저장(_S)"
 
-#: xfce4-session/xfsm-logout-dialog.c:457
+#: xfce4-session/xfsm-logout-dialog.c:459
 msgid "An error occurred"
 msgstr "오류가 발생했습니다"
 
-#: xfce4-session/xfsm-shutdown.c:168
+#: xfce4-session/xfsm-shutdown.c:171
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "키오스크 설정이 종료를 멈추었습니다"
 
-#: xfce4-session/xfsm-shutdown.c:225
+#: xfce4-session/xfsm-shutdown.c:228
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "알 수 없는 종료 방식 %d"
@@ -662,88 +671,84 @@ msgstr "<b>로그아웃 설정</b>"
 msgid "Lock screen be_fore sleep"
 msgstr "일시중지 전 화면 잠그기(_F)"
 
-#: settings/xfce4-session-settings.ui:271
-msgid "Run xflock4 before suspending or hibernating the system"
-msgstr "시스템을 대기 또는 최대 절전하기 전에 xflock4 실행하기"
-
-#: settings/xfce4-session-settings.ui:290
+#: settings/xfce4-session-settings.ui:289
 msgid "<b>Shutdown</b>"
 msgstr "<b>종료</b>"
 
-#: settings/xfce4-session-settings.ui:307
+#: settings/xfce4-session-settings.ui:306
 msgid "_General"
 msgstr "일반(_G)"
 
-#: settings/xfce4-session-settings.ui:331
+#: settings/xfce4-session-settings.ui:330
 msgid "Save Sess_ion"
 msgstr "세션 저장(_I)"
 
-#: settings/xfce4-session-settings.ui:385
+#: settings/xfce4-session-settings.ui:384
 msgid "Currently active session: <b>Default</b>"
 msgstr "현재 활성 세션: <b>기본</b>"
 
-#: settings/xfce4-session-settings.ui:486
+#: settings/xfce4-session-settings.ui:485
 msgid "Current Sessio_n"
 msgstr "현재 세션(_N)"
 
-#: settings/xfce4-session-settings.ui:537
+#: settings/xfce4-session-settings.ui:536
 msgid "_Remove"
 msgstr "제거(_R)"
 
-#: settings/xfce4-session-settings.ui:541
+#: settings/xfce4-session-settings.ui:540
 msgid "Delete the selected session"
 msgstr "선택한 세션 삭제"
 
-#: settings/xfce4-session-settings.ui:565
+#: settings/xfce4-session-settings.ui:564
 msgid "Clear Save_d Sessions"
 msgstr "저장한 세션 지우기(_D)"
 
-#: settings/xfce4-session-settings.ui:615
+#: settings/xfce4-session-settings.ui:614
 msgid "Saved _Sessions"
 msgstr "저장한 세션(_S)"
 
-#: settings/xfce4-session-settings.ui:650
+#: settings/xfce4-session-settings.ui:649
 msgid "Launch GN_OME services on startup"
 msgstr "시동시 그놈 서비스를 시작합니다(_O)"
 
-#: settings/xfce4-session-settings.ui:655
+#: settings/xfce4-session-settings.ui:654
 msgid "Start GNOME services, such as gnome-keyring"
 msgstr "그놈 키 모음과 같은 그놈 서비스를 시작합니다"
 
-#: settings/xfce4-session-settings.ui:668
+#: settings/xfce4-session-settings.ui:667
 msgid "Launch _KDE services on startup"
 msgstr "시동시 KDE 서비스를 시작합니다(_K)"
 
-#: settings/xfce4-session-settings.ui:673
+#: settings/xfce4-session-settings.ui:672
 msgid "Start KDE services, such as kdeinit"
 msgstr "kdeinit과 같은 KDE 서비스를 시작합니다"
 
-#: settings/xfce4-session-settings.ui:692
+#: settings/xfce4-session-settings.ui:691
 msgid "<b>Compatibility</b>"
 msgstr "<b>호환성</b>"
 
-#: settings/xfce4-session-settings.ui:717
+#: settings/xfce4-session-settings.ui:716
 msgid "Manage _remote applications"
 msgstr "원격 프로그램 관리(_R)"
 
-#: settings/xfce4-session-settings.ui:722
+#: settings/xfce4-session-settings.ui:721
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
 msgstr "네트워크를 통한 원격 관리(보안 문제를 일으킬 수도 있습니다)"
 
-#: settings/xfce4-session-settings.ui:734
+#: settings/xfce4-session-settings.ui:733
 msgid "<b>Security</b>"
 msgstr "<b>보안</b>"
 
-#: settings/xfce4-session-settings.ui:754
+#: settings/xfce4-session-settings.ui:753
 msgid "Ad_vanced"
 msgstr "고급(_V)"
 
-#: settings/xfce4-session-settings.ui:785
+#: settings/xfce4-session-settings.ui:784
 msgid "Saving Session"
 msgstr "세션 저장 중"
 
-#: settings/xfce4-session-settings.ui:861
+#: settings/xfce4-session-settings.ui:860
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
