@@ -485,12 +485,12 @@ xfsm_shutdown_can_restart (XfsmShutdown  *shutdown,
 
   if (shutdown->systemd != NULL)
     {
-      if (xfce_systemd_can_reboot (shutdown->systemd, can_restart, auth_restart, error))
+      if (xfce_systemd_can_reboot (shutdown->systemd, can_restart, auth_restart, NULL))
         return TRUE;
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfce_consolekit_can_reboot (shutdown->consolekit, can_restart, auth_restart, error))
+      if (xfce_consolekit_can_reboot (shutdown->consolekit, can_restart, auth_restart, NULL))
         return TRUE;
     }
 
@@ -525,12 +525,12 @@ xfsm_shutdown_can_shutdown (XfsmShutdown  *shutdown,
 
   if (shutdown->systemd != NULL)
     {
-      if (xfce_systemd_can_power_off (shutdown->systemd, can_shutdown, auth_shutdown, error))
+      if (xfce_systemd_can_power_off (shutdown->systemd, can_shutdown, auth_shutdown, NULL))
         return TRUE;
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfce_consolekit_can_power_off (shutdown->consolekit, can_shutdown, auth_shutdown, error))
+      if (xfce_consolekit_can_power_off (shutdown->consolekit, can_shutdown, auth_shutdown, NULL))
         return TRUE;
     }
 
