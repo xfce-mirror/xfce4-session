@@ -414,12 +414,12 @@ xfsm_shutdown_can_restart (XfsmShutdown  *shutdown,
 
   if (shutdown->systemd != NULL)
     {
-      if (xfsm_systemd_can_restart (shutdown->systemd, can_restart, error))
+      if (xfsm_systemd_can_restart (shutdown->systemd, can_restart, NULL))
         return TRUE;
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfsm_consolekit_can_restart (shutdown->consolekit, can_restart, error))
+      if (xfsm_consolekit_can_restart (shutdown->consolekit, can_restart, NULL))
         return TRUE;
     }
 
@@ -444,12 +444,12 @@ xfsm_shutdown_can_shutdown (XfsmShutdown  *shutdown,
 
   if (shutdown->systemd != NULL)
     {
-      if (xfsm_systemd_can_shutdown (shutdown->systemd, can_shutdown, error))
+      if (xfsm_systemd_can_shutdown (shutdown->systemd, can_shutdown, NULL))
         return TRUE;
     }
   else if (shutdown->consolekit != NULL)
     {
-      if (xfsm_consolekit_can_shutdown (shutdown->consolekit, can_shutdown, error))
+      if (xfsm_consolekit_can_shutdown (shutdown->consolekit, can_shutdown, NULL))
         return TRUE;
     }
 
