@@ -88,30 +88,25 @@ gboolean      xfsm_shutdown_try_hybrid_sleep (XfsmShutdown      *shutdown,
 gboolean      xfsm_shutdown_try_switch_user  (XfsmShutdown      *shutdown,
                                               GError           **error);
 
-gboolean      xfsm_shutdown_can_restart      (XfsmShutdown      *shutdown,
+void          xfsm_shutdown_can_restart      (XfsmShutdown      *shutdown,
                                               gboolean          *can_restart,
-                                              gboolean          *auth_restart,
-                                              GError           **error);
+                                              gboolean          *auth_restart);
 
-gboolean      xfsm_shutdown_can_shutdown     (XfsmShutdown      *shutdown,
+void          xfsm_shutdown_can_shutdown     (XfsmShutdown      *shutdown,
                                               gboolean          *can_shutdown,
-                                              gboolean          *auth_shutdown,
-                                              GError           **error);
+                                              gboolean          *auth_shutdown);
 
-gboolean      xfsm_shutdown_can_suspend      (XfsmShutdown      *shutdown,
+void          xfsm_shutdown_can_suspend      (XfsmShutdown      *shutdown,
                                               gboolean          *can_suspend,
-                                              gboolean          *auth_suspend,
-                                              GError           **error);
+                                              gboolean          *auth_suspend);
 
-gboolean      xfsm_shutdown_can_hibernate    (XfsmShutdown      *shutdown,
+void          xfsm_shutdown_can_hibernate    (XfsmShutdown      *shutdown,
                                               gboolean          *can_hibernate,
-                                              gboolean          *auth_hibernate,
-                                              GError           **error);
+                                              gboolean          *auth_hibernate);
 
-gboolean      xfsm_shutdown_can_hybrid_sleep (XfsmShutdown      *shutdown,
+void          xfsm_shutdown_can_hybrid_sleep (XfsmShutdown      *shutdown,
                                               gboolean          *can_hybrid_sleep,
-                                              gboolean          *auth_hybrid_sleep,
-                                              GError           **error);
+                                              gboolean          *auth_hybrid_sleep);
 
 gboolean      xfsm_shutdown_can_switch_user  (XfsmShutdown      *shutdown,
                                               gboolean          *can_switch_user,
