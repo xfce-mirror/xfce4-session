@@ -10,7 +10,6 @@ AM_CPPFLAGS =								\
 	-DXFSM_SHUTDOWN_HELPER_CMD=\"$(HELPER_PATH_PREFIX)/xfce4/session/xfsm-shutdown-helper\" \
 	-DDBUS_API_SUBJECT_TO_CHANGE					\
 	-DWNCK_I_KNOW_THIS_IS_UNSTABLE					\
-	-DUPOWER_ENABLE_DEPRECATED 						\
 	$(PLATFORM_CPPFLAGS)
 
 man_MANS = xfce4-session.1

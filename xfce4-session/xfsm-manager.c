@@ -2353,22 +2353,14 @@ xfsm_manager_dbus_can_shutdown (XfsmDbusManager *object,
                                 GDBusMethodInvocation *invocation)
 {
   gboolean can_shutdown = FALSE;
-  GError *error = NULL;
 
   xfsm_verbose ("entering\n");
 
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
 
-  xfsm_shutdown_can_shutdown (XFSM_MANAGER (object)->shutdown_helper, &can_shutdown, NULL, &error);
-
-  if (error)
-    {
-      throw_error (invocation, XFSM_ERROR_BAD_STATE, "%s", error->message);
-      g_clear_error(&error);
-      return TRUE;
-    }
-
+  xfsm_shutdown_can_shutdown (XFSM_MANAGER (object)->shutdown_helper, &can_shutdown, NULL);
   xfsm_dbus_manager_complete_can_shutdown (object, invocation, can_shutdown);
+
   return TRUE;
 }
 
@@ -2398,22 +2390,14 @@ xfsm_manager_dbus_can_restart (XfsmDbusManager *object,
                                GDBusMethodInvocation *invocation)
 {
   gboolean can_restart = FALSE;
-  GError *error = NULL;
 
   xfsm_verbose ("entering\n");
 
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
 
-  xfsm_shutdown_can_restart (XFSM_MANAGER (object)->shutdown_helper, &can_restart, NULL, &error);
-
-  if (error)
-    {
-      throw_error (invocation, XFSM_ERROR_BAD_STATE, "%s", error->message);
-      g_clear_error(&error);
-      return TRUE;
-    }
-
+  xfsm_shutdown_can_restart (XFSM_MANAGER (object)->shutdown_helper, &can_restart, NULL);
   xfsm_dbus_manager_complete_can_restart (object, invocation, can_restart);
+
   return TRUE;
 }
 
@@ -2443,25 +2427,17 @@ xfsm_manager_dbus_can_suspend (XfsmDbusManager *object,
 {
   gboolean auth_suspend = FALSE;
   gboolean can_suspend = FALSE;
-  GError *error = NULL;
 
   xfsm_verbose ("entering\n");
 
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
 
-  xfsm_shutdown_can_suspend (XFSM_MANAGER (object)->shutdown_helper, &can_suspend, &auth_suspend, &error);
-
-  if (error)
-    {
-      throw_error (invocation, XFSM_ERROR_BAD_STATE, "%s", error->message);
-      g_clear_error(&error);
-      return TRUE;
-    }
-
+  xfsm_shutdown_can_suspend (XFSM_MANAGER (object)->shutdown_helper, &can_suspend, &auth_suspend);
   if (!auth_suspend)
     can_suspend = FALSE;
 
   xfsm_dbus_manager_complete_can_suspend (object, invocation, can_suspend);
+
   return TRUE;
 }
 
@@ -2489,25 +2465,17 @@ xfsm_manager_dbus_can_hibernate (XfsmDbusManager *object,
 {
   gboolean auth_hibernate = FALSE;
   gboolean can_hibernate = FALSE;
-  GError *error = NULL;
 
   xfsm_verbose ("entering\n");
 
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
 
-  xfsm_shutdown_can_hibernate (XFSM_MANAGER (object)->shutdown_helper, &can_hibernate, &auth_hibernate, &error);
-
-  if (error)
-    {
-      throw_error (invocation, XFSM_ERROR_BAD_STATE, "%s", error->message);
-      g_clear_error(&error);
-      return TRUE;
-    }
-
+  xfsm_shutdown_can_hibernate (XFSM_MANAGER (object)->shutdown_helper, &can_hibernate, &auth_hibernate);
   if (!auth_hibernate)
     can_hibernate = FALSE;
 
   xfsm_dbus_manager_complete_can_hibernate (object, invocation, can_hibernate);
+
   return TRUE;
 }
 
@@ -2535,25 +2503,17 @@ xfsm_manager_dbus_can_hybrid_sleep (XfsmDbusManager *object,
 {
   gboolean auth_hybrid_sleep = FALSE;
   gboolean can_hybrid_sleep = FALSE;
-  GError *error = NULL;
 
   xfsm_verbose ("entering\n");
 
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
 
-  xfsm_shutdown_can_hybrid_sleep (XFSM_MANAGER (object)->shutdown_helper, &can_hybrid_sleep, &auth_hybrid_sleep, &error);
-
-  if (error)
-    {
-      throw_error (invocation, XFSM_ERROR_BAD_STATE, "%s", error->message);
-      g_clear_error(&error);
-      return TRUE;
-    }
-
+  xfsm_shutdown_can_hybrid_sleep (XFSM_MANAGER (object)->shutdown_helper, &can_hybrid_sleep, &auth_hybrid_sleep);
   if (!auth_hybrid_sleep)
     can_hybrid_sleep = FALSE;
 
   xfsm_dbus_manager_complete_can_hybrid_sleep (object, invocation, can_hybrid_sleep);
+
   return TRUE;
 }
 

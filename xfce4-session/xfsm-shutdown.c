@@ -463,208 +463,196 @@ xfsm_shutdown_try_switch_user (XfsmShutdown  *shutdown,
 }
 
 
-gboolean
+void
 xfsm_shutdown_can_restart (XfsmShutdown  *shutdown,
                            gboolean      *can_restart,
-                           gboolean      *auth_restart,
-                           GError       **error)
+                           gboolean      *auth_restart)
 {
-  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+  g_return_if_fail (XFSM_IS_SHUTDOWN (shutdown));
 
   if (xfsm_inhibitor_has_flags (shutdown->inhibitions, XFSM_INHIBITON_FLAG_LOGOUT))
     {
       *can_restart = FALSE;
-      return TRUE;
+      return;
     }
 
   if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, NULL))
     {
       *can_restart = FALSE;
-      return TRUE;
+      return;
     }
 
   if (shutdown->systemd != NULL)
     {
       if (xfce_systemd_can_reboot (shutdown->systemd, can_restart, auth_restart, NULL))
-        return TRUE;
+        return;
     }
   else if (shutdown->consolekit != NULL)
     {
       if (xfce_consolekit_can_reboot (shutdown->consolekit, can_restart, auth_restart, NULL))
-        return TRUE;
+        return;
     }
 
   *can_restart = xfsm_shutdown_fallback_auth_restart ();
   if (auth_restart != NULL)
     *auth_restart = *can_restart;
-
-  return TRUE;
 }
 
 
 
-gboolean
+void
 xfsm_shutdown_can_shutdown (XfsmShutdown  *shutdown,
                             gboolean      *can_shutdown,
-                            gboolean      *auth_shutdown,
-                            GError       **error)
+                            gboolean      *auth_shutdown)
 {
-  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+  g_return_if_fail (XFSM_IS_SHUTDOWN (shutdown));
 
   if (xfsm_inhibitor_has_flags (shutdown->inhibitions, XFSM_INHIBITON_FLAG_LOGOUT))
     {
       *can_shutdown = FALSE;
-      return TRUE;
+      return;
     }
 
   if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, NULL))
     {
       *can_shutdown = FALSE;
-      return TRUE;
+      return;
     }
 
   if (shutdown->systemd != NULL)
     {
       if (xfce_systemd_can_power_off (shutdown->systemd, can_shutdown, auth_shutdown, NULL))
-        return TRUE;
+        return;
     }
   else if (shutdown->consolekit != NULL)
     {
       if (xfce_consolekit_can_power_off (shutdown->consolekit, can_shutdown, auth_shutdown, NULL))
-        return TRUE;
+        return;
     }
 
   *can_shutdown = xfsm_shutdown_fallback_auth_shutdown ();
   if (auth_shutdown != NULL)
     *auth_shutdown = *can_shutdown;
-
-  return TRUE;
 }
 
 
 
-gboolean
+void
 xfsm_shutdown_can_suspend (XfsmShutdown  *shutdown,
                            gboolean      *can_suspend,
-                           gboolean      *auth_suspend,
-                           GError       **error)
+                           gboolean      *auth_suspend)
 {
-  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+  g_return_if_fail (XFSM_IS_SHUTDOWN (shutdown));
 
   if (xfsm_inhibitor_has_flags (shutdown->inhibitions, XFSM_INHIBITON_FLAG_SUSPEND))
     {
       *can_suspend = FALSE;
-      return TRUE;
+      return;
     }
 
   if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, NULL))
     {
       *can_suspend = FALSE;
-      return TRUE;
+      return;
     }
 
   if (shutdown->systemd != NULL)
     {
       if (xfce_systemd_can_suspend (shutdown->systemd, can_suspend, auth_suspend, NULL))
         {
-          return TRUE;
+          return;
         }
     }
   else if (shutdown->consolekit != NULL)
     {
       if (xfce_consolekit_can_suspend (shutdown->consolekit, can_suspend, auth_suspend, NULL))
         {
-          return TRUE;
+          return;
         }
     }
 
   *can_suspend = xfsm_shutdown_fallback_can_suspend ();
   *auth_suspend = xfsm_shutdown_fallback_auth_suspend ();
-  return TRUE;
 }
 
 
 
-gboolean
+void
 xfsm_shutdown_can_hibernate (XfsmShutdown  *shutdown,
                              gboolean      *can_hibernate,
-                             gboolean      *auth_hibernate,
-                             GError       **error)
+                             gboolean      *auth_hibernate)
 {
-  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+  g_return_if_fail (XFSM_IS_SHUTDOWN (shutdown));
 
   if (xfsm_inhibitor_has_flags (shutdown->inhibitions, XFSM_INHIBITON_FLAG_SUSPEND))
     {
       *can_hibernate = FALSE;
-      return TRUE;
+      return;
     }
 
   if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, NULL))
     {
       *can_hibernate = FALSE;
-      return TRUE;
+      return;
     }
 
   if (shutdown->systemd != NULL)
     {
       if (xfce_systemd_can_hibernate (shutdown->systemd, can_hibernate, auth_hibernate, NULL))
         {
-          return TRUE;
+          return;
         }
     }
   else if (shutdown->consolekit != NULL)
     {
       if (xfce_consolekit_can_hibernate (shutdown->consolekit, can_hibernate, auth_hibernate, NULL))
         {
-          return TRUE;
+          return;
         }
     }
 
   *can_hibernate = xfsm_shutdown_fallback_can_hibernate ();
   *auth_hibernate = xfsm_shutdown_fallback_auth_hibernate ();
-  return TRUE;
 }
 
 
 
-gboolean
+void
 xfsm_shutdown_can_hybrid_sleep (XfsmShutdown  *shutdown,
                                 gboolean      *can_hybrid_sleep,
-                                gboolean      *auth_hybrid_sleep,
-                                GError       **error)
+                                gboolean      *auth_hybrid_sleep)
 {
-  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+  g_return_if_fail (XFSM_IS_SHUTDOWN (shutdown));
 
   if (xfsm_inhibitor_has_flags (shutdown->inhibitions, XFSM_INHIBITON_FLAG_SUSPEND))
     {
       *can_hybrid_sleep = FALSE;
-      return TRUE;
+      return;
     }
 
   if (!xfsm_shutdown_kiosk_can_shutdown (shutdown, NULL))
     {
       *can_hybrid_sleep = FALSE;
-      return TRUE;
+      return;
     }
 
   if (shutdown->systemd != NULL)
     {
       if (xfce_systemd_can_hybrid_sleep (shutdown->systemd, can_hybrid_sleep, auth_hybrid_sleep, NULL))
         {
-          return TRUE;
+          return;
         }
     }
   else if (shutdown->consolekit != NULL)
     {
       if (xfce_consolekit_can_hybrid_sleep (shutdown->consolekit, can_hybrid_sleep, auth_hybrid_sleep, NULL))
         {
-          return TRUE;
+          return;
         }
     }
 
   *can_hybrid_sleep = xfsm_shutdown_fallback_can_hybrid_sleep ();
   *auth_hybrid_sleep = xfsm_shutdown_fallback_auth_hybrid_sleep ();
-  return TRUE;
 }
 
 
