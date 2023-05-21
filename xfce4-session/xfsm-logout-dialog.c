@@ -140,11 +140,11 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   GtkWidget      *main_vbox;
   GtkWidget      *hbox;
   GtkWidget      *button;
-  gboolean        can_shutdown;
+  gboolean        can_shutdown = FALSE;
   gboolean        has_updates;
   gboolean        save_session = FALSE;
   gboolean        can_logout = FALSE;
-  gboolean        can_restart;
+  gboolean        can_restart = FALSE;
   gboolean        can_suspend = FALSE;
   gboolean        can_hibernate = FALSE;
   gboolean        can_hybrid_sleep = FALSE;
@@ -158,7 +158,6 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   XfconfChannel  *channel;
   GtkWidget      *image;
   GtkWidget      *separator;
-  gboolean        upower_not_found = FALSE;
   GtkCssProvider *provider;
 
   dialog->type_clicked = XFSM_SHUTDOWN_LOGOUT;
@@ -257,13 +256,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   /**
    * Reboot
    **/
-  if (!xfsm_shutdown_can_restart (dialog->shutdown, &can_restart, &auth_restart, &error))
-    {
-      g_warning ("Querying CanRestart failed: %s", ERROR_MSG (error));
-      g_clear_error (&error);
-
-      can_restart = FALSE;
-    }
+  xfsm_shutdown_can_restart (dialog->shutdown, &can_restart, &auth_restart);
 
   button = xfsm_logout_dialog_button (has_updates ? _("_Restart and update") : _("_Restart"),
                                       "xfsm-reboot",
@@ -277,13 +270,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   /**
    * Shutdown
    **/
-  if (!xfsm_shutdown_can_shutdown (dialog->shutdown, &can_shutdown, &auth_shutdown, &error))
-    {
-      g_warning ("Querying CanShutdown failed: %s", ERROR_MSG (error));
-      g_clear_error (&error);
-
-      can_shutdown = FALSE;
-    }
+  xfsm_shutdown_can_shutdown (dialog->shutdown, &can_shutdown, &auth_shutdown);
 
   button = xfsm_logout_dialog_button (has_updates ? _("Update and Shut _Down") : _("Shut _Down"),
                                       "xfsm-shutdown",
@@ -301,93 +288,61 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
 
   /**
    * Suspend
-   *
-   * Hide the button if UPower is not installed or system cannot suspend
    **/
   if (xfconf_channel_get_bool (channel, "/shutdown/ShowSuspend", TRUE))
     {
-      if (xfsm_shutdown_can_suspend (dialog->shutdown, &can_suspend, &auth_suspend, &error))
+      xfsm_shutdown_can_suspend (dialog->shutdown, &can_suspend, &auth_suspend);
+      if (can_suspend)
         {
-          if (can_suspend)
-            {
-              button = xfsm_logout_dialog_button (_("Sus_pend"), "xfsm-suspend",
-                                                  "system-suspend", NULL,
-                                                  XFSM_SHUTDOWN_SUSPEND, dialog);
+          button = xfsm_logout_dialog_button (_("Sus_pend"), "xfsm-suspend",
+                                              "system-suspend", NULL,
+                                              XFSM_SHUTDOWN_SUSPEND, dialog);
 
-              gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-              gtk_widget_set_sensitive (button, auth_suspend);
-              gtk_widget_show (button);
+          gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+          gtk_widget_set_sensitive (button, auth_suspend);
+          gtk_widget_show (button);
 
-              gtk_widget_show (hbox);
-            }
-        }
-      else
-        {
-          g_warning ("Querying suspend failed: %s", ERROR_MSG (error));
-          g_clear_error (&error);
-
-          /* don't try hibernate again */
-          upower_not_found = TRUE;
+          gtk_widget_show (hbox);
         }
     }
 
   /**
    * Hibernate
-   *
-   * Hide the button if UPower is not installed or system cannot suspend
    **/
-  if (!upower_not_found
-      && xfconf_channel_get_bool (channel, "/shutdown/ShowHibernate", TRUE))
+  if (xfconf_channel_get_bool (channel, "/shutdown/ShowHibernate", TRUE))
     {
-      if (xfsm_shutdown_can_hibernate (dialog->shutdown, &can_hibernate, &auth_hibernate, &error))
+      xfsm_shutdown_can_hibernate (dialog->shutdown, &can_hibernate, &auth_hibernate);
+      if (can_hibernate)
         {
-          if (can_hibernate)
-            {
-              button = xfsm_logout_dialog_button (_("_Hibernate"), "xfsm-hibernate",
-                                                  "system-hibernate", NULL,
-                                                  XFSM_SHUTDOWN_HIBERNATE, dialog);
+          button = xfsm_logout_dialog_button (_("_Hibernate"), "xfsm-hibernate",
+                                              "system-hibernate", NULL,
+                                              XFSM_SHUTDOWN_HIBERNATE, dialog);
 
-              gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-              gtk_widget_set_sensitive (button, auth_hibernate);
-              gtk_widget_show (button);
+          gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+          gtk_widget_set_sensitive (button, auth_hibernate);
+          gtk_widget_show (button);
 
-              gtk_widget_show (hbox);
-            }
-        }
-      else
-        {
-          g_warning ("Querying hibernate failed: %s", ERROR_MSG (error));
-          g_clear_error (&error);
+          gtk_widget_show (hbox);
         }
     }
 
   /**
    * Hybrid Sleep
-   *
-   * Hide the button if UPower is not installed or system cannot suspend
    **/
-  if (!upower_not_found
-      && xfconf_channel_get_bool (channel, "/shutdown/ShowHybridSleep", TRUE))
+  if (xfconf_channel_get_bool (channel, "/shutdown/ShowHybridSleep", TRUE))
     {
-      if (xfsm_shutdown_can_hybrid_sleep (dialog->shutdown, &can_hybrid_sleep, &auth_hybrid_sleep, &error))
+      xfsm_shutdown_can_hybrid_sleep (dialog->shutdown, &can_hybrid_sleep, &auth_hybrid_sleep);
+      if (can_hybrid_sleep)
         {
-          if (can_hybrid_sleep)
-            {
-              button = xfsm_logout_dialog_button (_("H_ybrid Sleep"), "xfsm-hibernate",
-                                                  "system-hibernate", "system-suspend-hibernate",
-                                                  XFSM_SHUTDOWN_HYBRID_SLEEP, dialog);
+          button = xfsm_logout_dialog_button (_("H_ybrid Sleep"), "xfsm-hibernate",
+                                              "system-hibernate", "system-suspend-hibernate",
+                                              XFSM_SHUTDOWN_HYBRID_SLEEP, dialog);
 
-              gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-              gtk_widget_set_sensitive (button, auth_hybrid_sleep);
-              gtk_widget_show (button);
+          gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+          gtk_widget_set_sensitive (button, auth_hybrid_sleep);
+          gtk_widget_show (button);
 
-              gtk_widget_show (hbox);
-            }
-        }
-      else
-        {
-          g_warning ("Querying hybrid-sleep failed: %s", ERROR_MSG (error));
-          g_clear_error (&error);
+          gtk_widget_show (hbox);
         }
     }
 
