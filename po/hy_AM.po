@@ -1,6 +1,6 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Xfce
-# This file is distributed under the same license as the xfce4-session.xfce-4-18 package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
@@ -9,9 +9,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-session.xfce-4-18\n"
-"Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-29 11:56+0200\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-29 15:50+0200\n"
 "PO-Revision-Date: 2023-02-20 11:55+0000\n"
 "Last-Translator: Xfce Bot <transifex@xfce.org>, 2023\n"
 "Language-Team: Armenian (Armenia) (https://app.transifex.com/xfce/teams/16840/hy_AM/)\n"
@@ -21,138 +21,147 @@ msgstr ""
 "Language: hy_AM\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: xfce.desktop.in:4
+#: ../xfce.desktop.in.h:1
 msgid "Xfce Session"
 msgstr "Xfce նիստ"
 
-#: xfce.desktop.in:5
+#: ../xfce.desktop.in.h:2
 msgid "Use this session to run Xfce as your desktop environment"
 msgstr "Գործածէք այս նիստը, գործարկելու համար Xfce աշխատասեղանի միջավայրը"
 
-#: libxfsm/xfsm-util.c:374
+#: ../libxfsm/xfsm-util.c:374
 msgid "Session"
 msgstr "Նիստ"
 
-#: libxfsm/xfsm-util.c:385
+#: ../libxfsm/xfsm-util.c:385
 msgid "Last accessed"
 msgstr "Վերջին գործածում"
 
-#: settings/main.c:98
+#: ../scripts/xscreensaver.desktop.in.h:1
+msgid "Screensaver"
+msgstr "Էկրանապահ"
+
+#: ../scripts/xscreensaver.desktop.in.h:2
+msgid "Launch screensaver and locker program"
+msgstr "Միացնել մեկնարկի վահանակը եւ կողպման ծրագիրը"
+
+#: ../settings/main.c:98
 msgid "Settings manager socket"
 msgstr "Կարգաւորումների կառավարչի բնիկ"
 
-#: settings/main.c:98
+#: ../settings/main.c:98
 msgid "SOCKET ID"
 msgstr "ԲՆԻԿԻ ID"
 
-#: settings/main.c:99
+#: ../settings/main.c:99
 msgid "Version information"
 msgstr "Տարբերակի վերաբերեալ տեղեկոյթ"
 
-#: settings/main.c:110 xfce4-session/main.c:333
+#: ../settings/main.c:110 ../xfce4-session/main.c:333
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Մուտքագրէք «%s --help» աջակցութեան համար։"
 
-#: settings/main.c:122 xfce4-session/main.c:343
-#: xfce4-session-logout/main.c:132
+#: ../settings/main.c:122 ../xfce4-session/main.c:343
+#: ../xfce4-session-logout/main.c:132
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce-ի մշակման խումբ։ Բոլոր իրաւունքները պաշտպանուած են։"
 
-#: settings/main.c:123 xfce4-session/main.c:344
-#: xfce4-session-logout/main.c:135
+#: ../settings/main.c:123 ../xfce4-session/main.c:344
+#: ../xfce4-session-logout/main.c:135
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Սխալի դէպքում կարող էք դիմել <%s> հասցէով։"
 
-#: settings/main.c:132 xfce4-session/main.c:352
+#: ../settings/main.c:132 ../xfce4-session/main.c:352
 msgid "Unable to contact settings server"
 msgstr "Չյաջողուեց միանալ կարգաւորումների սպասարկչին"
 
-#: settings/main.c:152
+#: ../settings/main.c:152
 msgid "Unable to create user interface from embedded definition data"
 msgstr "Չյաջողուեց ստեղծել աւգտատիրոջ միջերես, ներկառուցուած տուեալներից։"
 
-#: settings/main.c:166
+#: ../settings/main.c:166
 msgid "App_lication Autostart"
 msgstr "Ինքնագործարկուող _ծրագրեր"
 
-#: settings/main.c:172
+#: ../settings/main.c:172
 msgid "Currently active session:"
 msgstr "Ներկայումս գործուն նիստ․"
 
-#: settings/session-editor.c:63
+#: ../settings/session-editor.c:63
 msgid "If running"
 msgstr "Եթե գործուն է"
 
-#: settings/session-editor.c:64
+#: ../settings/session-editor.c:64
 msgid "Always"
 msgstr "Միշտ"
 
-#: settings/session-editor.c:65
+#: ../settings/session-editor.c:65
 msgid "Immediately"
 msgstr "Անմիջապէս"
 
-#: settings/session-editor.c:66
+#: ../settings/session-editor.c:66
 msgid "Never"
 msgstr "Երբեք"
 
-#: settings/session-editor.c:138
+#: ../settings/session-editor.c:138
 msgid "Session Save Error"
 msgstr "Նիստի պահման սխալ"
 
-#: settings/session-editor.c:139
+#: ../settings/session-editor.c:139
 msgid "Unable to save the session"
 msgstr "Չյաջողուեց պահել նիստը"
 
-#: settings/session-editor.c:141 settings/session-editor.c:315
-#: xfce4-session/xfsm-manager.c:1275 settings/xfce4-session-settings.ui:95
+#: ../settings/session-editor.c:141 ../settings/session-editor.c:315
+#: ../xfce4-session/xfsm-manager.c:1267
+#: ../settings/xfce4-session-settings.ui.h:6
 msgid "_Close"
 msgstr "_Փակել"
 
-#: settings/session-editor.c:200
+#: ../settings/session-editor.c:200
 msgid "Clear sessions"
 msgstr "Մաքրել նիստերը"
 
-#: settings/session-editor.c:201
+#: ../settings/session-editor.c:201
 msgid "Are you sure you want to empty the session cache?"
 msgstr "Մաքրե՞լ նիստի շտեմը։"
 
-#: settings/session-editor.c:202
+#: ../settings/session-editor.c:202
 msgid ""
 "The saved states of your applications will not be restored during your next "
 "login."
 msgstr "Ծրագրերի պահուած վիճակը չի վերականգուի յաջորդ միացմանը։"
 
-#: settings/session-editor.c:203 settings/session-editor.c:290
-#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:695
-#: xfce4-session/xfsm-logout-dialog.c:224
+#: ../settings/session-editor.c:203 ../settings/session-editor.c:290
+#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:687
+#: ../xfce4-session/xfsm-logout-dialog.c:221
 msgid "_Cancel"
 msgstr "_Չեղարկել"
 
-#: settings/session-editor.c:204
+#: ../settings/session-editor.c:204
 msgid "_Proceed"
 msgstr "_Շարունակել"
 
-#: settings/session-editor.c:242
+#: ../settings/session-editor.c:242
 #, c-format
 msgid "You might need to delete some files manually in \"%s\"."
 msgstr "Անհրաժեշտ կը լինի ձեռքով ջնջել մի քանի նիշ \"%s\"֊ում։"
 
-#: settings/session-editor.c:245
+#: ../settings/session-editor.c:245
 msgid "All Xfce cache files could not be cleared"
 msgstr "Չյաջողուեց մաքրել Xfce-ի ամբողջ շտեմը"
 
-#: settings/session-editor.c:284
+#: ../settings/session-editor.c:284
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Կանգնեցնե՞լ «%s»֊ը։"
 
-#: settings/session-editor.c:287 settings/session-editor.c:312
+#: ../settings/session-editor.c:287 ../settings/session-editor.c:312
 msgid "Terminate Program"
 msgstr "Կանգնեցնե՞լ ծրագիրը"
 
-#: settings/session-editor.c:289
+#: ../settings/session-editor.c:289
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
@@ -160,191 +169,191 @@ msgstr ""
 "Ծրագիրը կը կորցնի ցանկացած չպահուած վիճակ եւ չի վերագործարկուի յաջորդ նիստի "
 "ժամանակ։"
 
-#: settings/session-editor.c:291 settings/xfce4-session-settings.ui:445
+#: ../settings/session-editor.c:291 ../settings/xfce4-session-settings.ui.h:20
 msgid "_Quit Program"
 msgstr "_Դուրս գալ ծրագրից"
 
-#: settings/session-editor.c:313
+#: ../settings/session-editor.c:313
 msgid "Unable to terminate program."
 msgstr "Չյաջողուեց կանգնեցնել ծրագիրը"
 
-#: settings/session-editor.c:541
+#: ../settings/session-editor.c:541
 msgid "(Unknown program)"
 msgstr "(Անյայտ ծրագիր)"
 
-#: settings/session-editor.c:790
+#: ../settings/session-editor.c:790
 msgid "Priority"
 msgstr "Առաջնահերթութիւն"
 
-#: settings/session-editor.c:800
+#: ../settings/session-editor.c:800
 msgid "PID"
 msgstr "ԳՆՀ"
 
-#: settings/session-editor.c:807 settings/xfae-window.c:198
+#: ../settings/session-editor.c:807 ../settings/xfae-window.c:198
 msgid "Program"
 msgstr "Ծրագիր"
 
-#: settings/session-editor.c:833
+#: ../settings/session-editor.c:833
 msgid "Restart Style"
 msgstr "Վերագործարկման ձեւ"
 
-#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:697
+#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:689
 msgid "_OK"
 msgstr "_Բարի"
 
-#: settings/xfae-dialog.c:82 settings/xfae-window.c:252
+#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:252
 msgid "Add application"
 msgstr "Աւելացնել ծրագիր"
 
-#: settings/xfae-dialog.c:96
+#: ../settings/xfae-dialog.c:96
 msgid "Name:"
 msgstr "Անուն․"
 
-#: settings/xfae-dialog.c:111
+#: ../settings/xfae-dialog.c:111
 msgid "Description:"
 msgstr "Նկարագրութիւն․"
 
-#: settings/xfae-dialog.c:125 settings/xfae-model.c:681
+#: ../settings/xfae-dialog.c:125 ../settings/xfae-model.c:681
 msgid "Command:"
 msgstr "Հրաման․"
 
-#: settings/xfae-dialog.c:138
+#: ../settings/xfae-dialog.c:138
 msgid "Trigger:"
 msgstr "Ձգան․"
 
-#: settings/xfae-dialog.c:209
+#: ../settings/xfae-dialog.c:209
 msgid "Select a command"
 msgstr "Ընտրել հրաման"
 
-#: settings/xfae-dialog.c:212
+#: ../settings/xfae-dialog.c:212
 msgid "Cancel"
 msgstr "Փակել"
 
-#: settings/xfae-dialog.c:213
+#: ../settings/xfae-dialog.c:213
 msgid "OK"
 msgstr "OK"
 
-#: settings/xfae-dialog.c:260 settings/xfae-window.c:274
+#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:274
 msgid "Edit application"
 msgstr "Խմբագրել ծրագիրը"
 
-#: settings/xfae-model.c:114
+#: ../settings/xfae-model.c:114
 msgid "on login"
 msgstr "մուտքի ժամանակ"
 
-#: settings/xfae-model.c:115
+#: ../settings/xfae-model.c:115
 msgid "on logout"
 msgstr "դուրս գալուց"
 
-#: settings/xfae-model.c:116
+#: ../settings/xfae-model.c:116
 msgid "on shutdown"
 msgstr "անջատման ժամանակ"
 
-#: settings/xfae-model.c:117
+#: ../settings/xfae-model.c:117
 msgid "on restart"
 msgstr "վերագործարկման ժամանակ"
 
-#: settings/xfae-model.c:118
+#: ../settings/xfae-model.c:118
 msgid "on suspend"
 msgstr "նիրհման ժամանակ"
 
-#: settings/xfae-model.c:119
+#: ../settings/xfae-model.c:119
 msgid "on hibernate"
 msgstr "քնի ժամանակ"
 
-#: settings/xfae-model.c:120
+#: ../settings/xfae-model.c:120
 msgid "on hybrid sleep"
 msgstr "համակցուած քնի ժամանակ"
 
-#: settings/xfae-model.c:121
+#: ../settings/xfae-model.c:121
 msgid "on switch user"
 msgstr "աւգտատիրոջ փոփոխման ժամանակ"
 
-#: settings/xfae-model.c:463 settings/xfae-model.c:1177
-#: settings/xfae-model.c:1235
+#: ../settings/xfae-model.c:463 ../settings/xfae-model.c:1177
+#: ../settings/xfae-model.c:1235
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "Չյաջողուեց բացել %s նիշը գրառման համար"
 
-#: settings/xfae-model.c:815
+#: ../settings/xfae-model.c:815
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "Չյաջողուեց ապայղել %s․ %s֊ը"
 
-#: settings/xfae-model.c:977
+#: ../settings/xfae-model.c:977
 #, c-format
 msgid "Failed to create file %s"
 msgstr "Չյաջողուեց ստեղծել %s նիշը"
 
-#: settings/xfae-model.c:1001
+#: ../settings/xfae-model.c:1001
 #, c-format
 msgid "Failed to write file %s"
 msgstr "Չյաջողուեց գրառել %s նիշը"
 
-#: settings/xfae-model.c:1061
+#: ../settings/xfae-model.c:1061
 #, c-format
 msgid "Failed to open %s for reading"
 msgstr "Չյաջողուեց բացել %s նիշը ընթերցման համար"
 
-#: settings/xfae-window.c:108
+#: ../settings/xfae-window.c:108
 msgid "Failed to set run hook"
 msgstr "Չյաջողուեց սահմանել բեռնման կեռիկը"
 
-#: settings/xfae-window.c:223
+#: ../settings/xfae-window.c:223
 msgid "Trigger"
 msgstr "Շնիկ"
 
-#: settings/xfae-window.c:249 settings/xfae-window.c:338
+#: ../settings/xfae-window.c:249 ../settings/xfae-window.c:338
 msgid "Add"
 msgstr "Աւելացնել"
 
-#: settings/xfae-window.c:258 settings/xfae-window.c:344
+#: ../settings/xfae-window.c:258 ../settings/xfae-window.c:344
 msgid "Remove"
 msgstr "Հեռացնել"
 
-#: settings/xfae-window.c:261
+#: ../settings/xfae-window.c:261
 msgid "Remove application"
 msgstr "Ջնջել ծրագիրը"
 
-#: settings/xfae-window.c:271
+#: ../settings/xfae-window.c:271
 msgid "Edit"
 msgstr "Խմբագրել"
 
-#: settings/xfae-window.c:397
+#: ../settings/xfae-window.c:397
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Չյաջողուեց յաւելել «%s»֊ը"
 
-#: settings/xfae-window.c:428 settings/xfae-window.c:442
+#: ../settings/xfae-window.c:428 ../settings/xfae-window.c:442
 msgid "Failed to remove item"
 msgstr "Չյաջողուեց հեռացնել տարրը"
 
-#: settings/xfae-window.c:471
+#: ../settings/xfae-window.c:471
 msgid "Failed to edit item"
 msgstr "Չյաջողուեց խմբագրել տարրը"
 
-#: settings/xfae-window.c:491
+#: ../settings/xfae-window.c:491
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Չյաջողուեց խմբագրել «%s» տարրը"
 
-#: settings/xfae-window.c:519
+#: ../settings/xfae-window.c:519
 msgid "Failed to toggle item"
 msgstr "Չյաջողուեց անջատել տարրը"
 
-#: xfce4-session/main.c:77
+#: ../xfce4-session/main.c:77
 msgid "Disable binding to TCP ports"
 msgstr "Անջատել կապակցումը TCP բնիկների հետ"
 
-#: xfce4-session/main.c:78 xfce4-session-logout/main.c:90
+#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:90
 msgid "Print version information and exit"
 msgstr "Տպել տարբերակի վերաբերեալ տեղեկոյթը եւ դուրս գալ"
 
-#: xfce4-session/xfsm-chooser.c:147
+#: ../xfce4-session/xfsm-chooser.c:147
 msgid "Session Manager"
 msgstr "Նիստի կառավարիչ"
 
-#: xfce4-session/xfsm-chooser.c:168
+#: ../xfce4-session/xfsm-chooser.c:168
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
@@ -352,38 +361,38 @@ msgstr ""
 "Ընտրէք նիստը, որը ցանկանում էք վերականգնել։ Կարող էք երկկատացնել նիստի "
 "անուան վրայ, այն վերականգնելու համար։"
 
-#: xfce4-session/xfsm-chooser.c:184
+#: ../xfce4-session/xfsm-chooser.c:184
 msgid "Create a new session."
 msgstr "Ստեղծել նոր նիստ։"
 
-#: xfce4-session/xfsm-chooser.c:191
+#: ../xfce4-session/xfsm-chooser.c:191
 msgid "Delete a saved session."
 msgstr "Ջնջել պահուած նիստ։"
 
 #. "Logout" button
-#: xfce4-session/xfsm-chooser.c:202
-#: xfce4-session-logout/xfce4-session-logout.desktop.in:11
+#: ../xfce4-session/xfsm-chooser.c:202
+#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
 msgid "Log Out"
 msgstr "Աւարտել նիստը"
 
-#: xfce4-session/xfsm-chooser.c:204
+#: ../xfce4-session/xfsm-chooser.c:204
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Չեղարկել դուրս գալու փորձն ու վերադառնալ մուտքի դաշտ։"
 
 #. "Start" button
-#: xfce4-session/xfsm-chooser.c:211
+#: ../xfce4-session/xfsm-chooser.c:211
 msgid "Start"
 msgstr "Գործարկել"
 
-#: xfce4-session/xfsm-chooser.c:212
+#: ../xfce4-session/xfsm-chooser.c:212
 msgid "Start an existing session."
 msgstr "Միացնել գոյութիւն ունեցող նիստը։"
 
-#: xfce4-session/xfsm-dns.c:78
+#: ../xfce4-session/xfsm-dns.c:78
 msgid "(Unknown)"
 msgstr "(Անյայտ)"
 
-#: xfce4-session/xfsm-dns.c:152
+#: ../xfce4-session/xfsm-dns.c:152
 #, c-format
 msgid ""
 "Could not look up internet address for %s.\n"
@@ -396,15 +405,15 @@ msgstr ""
 "Հնարաւոր է շտկել խնդիրը,\n"
 "ձեր համակարգում /etc/hosts նիշին %s աւելացնելու դէպքում։"
 
-#: xfce4-session/xfsm-dns.c:159
+#: ../xfce4-session/xfsm-dns.c:159
 msgid "Continue anyway"
 msgstr "Շարունակել"
 
-#: xfce4-session/xfsm-dns.c:160
+#: ../xfce4-session/xfsm-dns.c:160
 msgid "Try again"
 msgstr "Կրկին փորձել"
 
-#: xfce4-session/xfsm-manager.c:579
+#: ../xfce4-session/xfsm-manager.c:571
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -417,220 +426,216 @@ msgstr ""
 "փոփոխականը ճիշը չէ տեղակայուած («%s»֊ը պարտադիր է) կամ էլ՝ xfce4-session֊ը "
 "սխալ է տեղակայուած։"
 
-#: xfce4-session/xfsm-manager.c:590
+#: ../xfce4-session/xfsm-manager.c:582
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Անվտանգ սահմանուած («%s») նիստը, չի նշուում որպէս անվտանգ։"
 
-#: xfce4-session/xfsm-manager.c:623
+#: ../xfce4-session/xfsm-manager.c:615
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Ծրագրերի ցուցակը անվտանգ նիստում՝ դատարկ է։"
 
-#: xfce4-session/xfsm-manager.c:709
+#: ../xfce4-session/xfsm-manager.c:701
 msgid "Name for the new session"
 msgstr "Ընտրել նոր նիստի անունը․"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:787
+#: ../xfce4-session/xfsm-manager.c:779
 msgid "Session Manager Error"
 msgstr "Նիստի կառավարչի սխալ"
 
-#: xfce4-session/xfsm-manager.c:789
+#: ../xfce4-session/xfsm-manager.c:781
 msgid "Unable to load a failsafe session"
 msgstr "Չյաջողուեց բեռնել անվտանգ նիստ"
 
-#: xfce4-session/xfsm-manager.c:791
+#: ../xfce4-session/xfsm-manager.c:783
 msgid "_Quit"
 msgstr "_Դուրս գալ"
 
-#: xfce4-session/xfsm-manager.c:1265
+#: ../xfce4-session/xfsm-manager.c:1257
 msgid "Shutdown Failed"
 msgstr "Անջատման ձախողում"
 
-#: xfce4-session/xfsm-manager.c:1268
+#: ../xfce4-session/xfsm-manager.c:1260
 msgid "Failed to suspend session"
 msgstr "Նիստի նիրհման ձախողում"
 
-#: xfce4-session/xfsm-manager.c:1270
+#: ../xfce4-session/xfsm-manager.c:1262
 msgid "Failed to hibernate session"
 msgstr "Նիստի քնի ձախողում"
 
-#: xfce4-session/xfsm-manager.c:1272
+#: ../xfce4-session/xfsm-manager.c:1264
 msgid "Failed to hybrid sleep session"
 msgstr "Նիստի համակցուած քնի ձախողում"
 
-#: xfce4-session/xfsm-manager.c:1273
+#: ../xfce4-session/xfsm-manager.c:1265
 msgid "Failed to switch user"
 msgstr "Աւգտատիրոջ փոփոխման ձախողում"
 
-#: xfce4-session/xfsm-manager.c:1581
+#: ../xfce4-session/xfsm-manager.c:1573
+#, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Հնարաւոր է կասեցնել սպասառուները, միայն անգործուն վիճակում"
 
-#: xfce4-session/xfsm-manager.c:2255
+#: ../xfce4-session/xfsm-manager.c:2229
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Նիստի կառավարիչը պէտք է չգործի, ստուգակէտի հարցման ժամանակ"
 
-#: xfce4-session/xfsm-manager.c:2325 xfce4-session/xfsm-manager.c:2345
+#: ../xfce4-session/xfsm-manager.c:2299 ../xfce4-session/xfsm-manager.c:2319
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Նիստի կառավարիչը պէտք չգործի, անջատման հրամանի հարցման ժամանակ"
 
-#: xfce4-session/xfsm-manager.c:2382
+#: ../xfce4-session/xfsm-manager.c:2364
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Նիստի կառավարիչը պէտք չգործի, վերագործարկման հրամանի հարցման ժամանակ"
 
-#: xfce4-session/xfsm-manager.c:2418 xfce4-session/xfsm-manager.c:2457
-#: xfce4-session/xfsm-manager.c:2495
+#: ../xfce4-session/xfsm-manager.c:2408 ../xfce4-session/xfsm-manager.c:2455
+#: ../xfce4-session/xfsm-manager.c:2501
 msgid "Session manager must be in idle state when requesting a sleep"
 msgstr ""
 
-#: xfce4-session/xfsm-manager.c:2622
+#: ../xfce4-session/xfsm-manager.c:2547
 msgid "Session manager must be in idle state when requesting a user switch"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:196
+#: ../xfce4-session/xfsm-logout-dialog.c:193
 #, c-format
 msgid "Log out %s"
 msgstr "Դուրս գալ %s֊ից"
 
-#: xfce4-session/xfsm-logout-dialog.c:242
+#. *
+#. * Logout
+#. *
+#: ../xfce4-session/xfsm-logout-dialog.c:238
 msgid "_Log Out"
 msgstr "_Աւարտել նիստը"
 
-#: xfce4-session/xfsm-logout-dialog.c:261
-msgid "_Restart and update"
-msgstr ""
-
-#: xfce4-session/xfsm-logout-dialog.c:261
+#: ../xfce4-session/xfsm-logout-dialog.c:257
 msgid "_Restart"
 msgstr "_Վերագործարկել"
 
-#: xfce4-session/xfsm-logout-dialog.c:275
-msgid "Update and Shut _Down"
-msgstr ""
-
-#: xfce4-session/xfsm-logout-dialog.c:275
+#: ../xfce4-session/xfsm-logout-dialog.c:276
 msgid "Shut _Down"
 msgstr "Ան_ջատել"
 
-#: xfce4-session/xfsm-logout-dialog.c:297
+#: ../xfce4-session/xfsm-logout-dialog.c:300
 msgid "Sus_pend"
 msgstr "Նիր_հել"
 
-#: xfce4-session/xfsm-logout-dialog.c:317
+#: ../xfce4-session/xfsm-logout-dialog.c:333
 msgid "_Hibernate"
 msgstr "_Քնել"
 
-#: xfce4-session/xfsm-logout-dialog.c:337
+#: ../xfce4-session/xfsm-logout-dialog.c:363
 msgid "H_ybrid Sleep"
 msgstr "Հ_ամակցուած քուն"
 
-#: xfce4-session/xfsm-logout-dialog.c:361
+#: ../xfce4-session/xfsm-logout-dialog.c:393
 msgid "Switch _User"
 msgstr "Փոխել _Աւգտատիրոջը"
 
-#: xfce4-session/xfsm-logout-dialog.c:386
+#: ../xfce4-session/xfsm-logout-dialog.c:418
 msgid "_Save session for future logins"
 msgstr "_Պահել նիստը, յետագայ մուտքերի համար"
 
-#: xfce4-session/xfsm-logout-dialog.c:414
+#: ../xfce4-session/xfsm-logout-dialog.c:446
 msgid "An error occurred"
 msgstr "Սխալ"
 
-#: xfce4-session/xfsm-shutdown.c:171
+#: ../xfce4-session/xfsm-shutdown.c:156
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Անջատումը արգելափակուած է կարգաւորումներից"
 
-#: xfce4-session/xfsm-shutdown.c:228
+#: ../xfce4-session/xfsm-shutdown.c:213
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Անջատման %d անյայտ եղանակ"
 
-#: xfce4-session-logout/main.c:58
+#: ../xfce4-session-logout/main.c:58
 msgid "Log out without displaying the logout dialog"
 msgstr "Դուրս գալ, առանց անջատման երկխաւսութեան ցուցադրման"
 
-#: xfce4-session-logout/main.c:62
+#: ../xfce4-session-logout/main.c:62
 msgid "Halt without displaying the logout dialog"
 msgstr "Դադարեցնել, առանց անջատման երկխաւսութեան ցուցադրման "
 
-#: xfce4-session-logout/main.c:66
+#: ../xfce4-session-logout/main.c:66
 msgid "Reboot without displaying the logout dialog"
 msgstr "Վերագործորկել համակարգիչը, առանց անջատման երկխաւսութեան ցուցադրման"
 
-#: xfce4-session-logout/main.c:70
+#: ../xfce4-session-logout/main.c:70
 msgid "Suspend without displaying the logout dialog"
 msgstr "Նիրհել, առանց անջատման երկխաւսութեան ցուցադրման"
 
-#: xfce4-session-logout/main.c:74
+#: ../xfce4-session-logout/main.c:74
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Քուն, առանց անջատման երկխաւսութեան ցուցադրման"
 
-#: xfce4-session-logout/main.c:78
+#: ../xfce4-session-logout/main.c:78
 msgid "Hybrid Sleep without displaying the logout dialog"
 msgstr "Համակցուած քուն, առանց անջատման երկխաւսութեան ցուցադրման"
 
-#: xfce4-session-logout/main.c:82
+#: ../xfce4-session-logout/main.c:82
 msgid "Switch user without displaying the logout dialog"
 msgstr "Փոխել աւգտատիրոջը, առանց անջատման երկխաւսութեան ցուցադրման"
 
-#: xfce4-session-logout/main.c:86
+#: ../xfce4-session-logout/main.c:86
 msgid "Log out quickly; don't save the session"
 msgstr "Դուրս գալ արագաւրէն, առանց նիստի պահման"
 
-#: xfce4-session-logout/main.c:108
+#: ../xfce4-session-logout/main.c:108
 msgid "Unknown error"
 msgstr "Անյայտ սխալ"
 
-#: xfce4-session-logout/main.c:133
+#: ../xfce4-session-logout/main.c:133
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Հեղինակներ․ Բենեդիկտ Միւրեր <benny@xfce.org>"
 
-#: xfce4-session-logout/main.c:134
+#: ../xfce4-session-logout/main.c:134
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "եւ Բրայան Տարրիկոնէ <kelnos@xfce.org>."
 
-#: xfce4-session-logout/main.c:154 xfce4-session-logout/main.c:229
+#: ../xfce4-session-logout/main.c:154 ../xfce4-session-logout/main.c:229
 msgid "Received error while trying to log out"
 msgstr "Սխալ՝ անջատման փորձի ժամանակ"
 
-#: xfce4-session-logout/xfce4-session-logout.desktop.in:12
+#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:2
 msgid "Log out of the Xfce Desktop"
 msgstr "Դուրս գալ Xfce֊ի աշխատասեղանից"
 
 #. SECURITY:
 #. - A normal active user on the local machine does not need permission
 #. to suspend or hibernate their system.
-#: xfce4-session/org.xfce.session.policy.in.in:23
+#: ../xfce4-session/org.xfce.session.policy.in.in.h:5
 msgid "Shutdown, restart, suspend, or hibernate the system"
 msgstr ""
 
-#: xfce4-session/org.xfce.session.policy.in.in:24
+#: ../xfce4-session/org.xfce.session.policy.in.in.h:6
 msgid ""
 "Authentication is required to shutdown, restart, suspend, or hibernate the "
 "system."
 msgstr ""
 
-#: settings/xfce-session-settings.desktop.in:3
-#: settings/xfce4-session-settings.ui:61
+#: ../settings/xfce-session-settings.desktop.in.h:1
+#: ../settings/xfce4-session-settings.ui.h:4
 msgid "Session and Startup"
 msgstr "Նիստ եւ մեկնարկ"
 
-#: settings/xfce-session-settings.desktop.in:4
+#: ../settings/xfce-session-settings.desktop.in.h:2
 msgid "Customize desktop startup"
 msgstr "Յարմարեցնել աշխատասեղանի մեկնարկումը"
 
-#: settings/xfce-session-settings.desktop.in:11
+#: ../settings/xfce-session-settings.desktop.in.h:3
 msgid ""
 "session;settings;preferences;manager;startup;login;logout;shutdown;lock "
 "screen;application;autostart;launch;services;daemon;agent;"
 msgstr ""
 "նստաշրջան;կարգաւորումներ;նախընտրանքներ;կառավարիչ;գործարկում;մուտք;ելք;անջատում;կողպում;ծրագիր;ինքնամիացում;գործարկում;ծառայութիւններ;դեմոն;կատարող"
 
-#: settings/xfce4-session-settings.ui:51
+#: ../settings/xfce4-session-settings.ui.h:1
 msgid ""
 "These applications are a part of the currently-running session,\n"
 "and can be saved now or when you log out.\n"
@@ -639,124 +644,124 @@ msgstr ""
 "Այս ծրագրերը մաս են գործող նիստի եւ կարող են պահուել հիմայ կամ երբ դուք "
 "դուրս գաք։ Նշուած փոփոխութիւնները կը մտնեն ուժի մէջ եւբ նիստը պահպանուի։"
 
-#: settings/xfce4-session-settings.ui:79
+#: ../settings/xfce4-session-settings.ui.h:5
 msgid "_Help"
 msgstr "_Աջակցութիւն"
 
-#: settings/xfce4-session-settings.ui:144
+#: ../settings/xfce4-session-settings.ui.h:7
 msgid "_Display chooser on login"
 msgstr "_Ցուցադրել ընտրիչը, մուտքի ժամանակ"
 
-#: settings/xfce4-session-settings.ui:149
+#: ../settings/xfce4-session-settings.ui.h:8
 msgid "Display the session chooser every time Xfce starts"
 msgstr "Ցուցադրել նիստի ընտրիչն Xfce֊ի ամեն գործարկման ժամանակ"
 
-#: settings/xfce4-session-settings.ui:161
+#: ../settings/xfce4-session-settings.ui.h:9
 msgid "<b>Session Chooser</b>"
 msgstr "<b>Նիստի ընտրիչ</b>"
 
-#: settings/xfce4-session-settings.ui:192
+#: ../settings/xfce4-session-settings.ui.h:10
 msgid "Automatically save session on logo_ut"
 msgstr "Ինքաշխատաւրէն պահել նիստը, դուրս գալ_ուց"
 
-#: settings/xfce4-session-settings.ui:197
+#: ../settings/xfce4-session-settings.ui.h:11
 msgid "Always save the session when logging out"
 msgstr "Միշտ պահել նիստը դուրս գալուց"
 
-#: settings/xfce4-session-settings.ui:210
+#: ../settings/xfce4-session-settings.ui.h:12
 msgid "Pro_mpt on logout"
 msgstr "Հու_շել, դուրս գալուց առաջ"
 
-#: settings/xfce4-session-settings.ui:215
+#: ../settings/xfce4-session-settings.ui.h:13
 msgid "Prompt for confirmation when logging out"
 msgstr "Դուրս գալուց՝ հուշել հաստատման մասին"
 
-#: settings/xfce4-session-settings.ui:235
+#: ../settings/xfce4-session-settings.ui.h:14
 msgid "<b>Logout Settings</b>"
 msgstr "<b>Դուրս գալու կարգաւորումներ</b>"
 
-#: settings/xfce4-session-settings.ui:266
+#: ../settings/xfce4-session-settings.ui.h:15
 msgid "Lock screen be_fore sleep"
 msgstr "Կողպել ցուցադրիչը, _մինչ հանգիստը"
 
-#: settings/xfce4-session-settings.ui:289
+#: ../settings/xfce4-session-settings.ui.h:16
 msgid "<b>Shutdown</b>"
 msgstr "<b>Անջատել</b>"
 
-#: settings/xfce4-session-settings.ui:306
+#: ../settings/xfce4-session-settings.ui.h:17
 msgid "_General"
 msgstr "_Ընդհանուր"
 
-#: settings/xfce4-session-settings.ui:330
+#: ../settings/xfce4-session-settings.ui.h:18
 msgid "Save Sess_ion"
 msgstr "Պահել նիս_տը"
 
-#: settings/xfce4-session-settings.ui:384
+#: ../settings/xfce4-session-settings.ui.h:19
 msgid "Currently active session: <b>Default</b>"
 msgstr "Ներկայումս գործուն նիստ․ <b>Լռելեայն</b>"
 
-#: settings/xfce4-session-settings.ui:485
+#: ../settings/xfce4-session-settings.ui.h:21
 msgid "Current Sessio_n"
 msgstr "Ներկայումս  նիս_տ"
 
-#: settings/xfce4-session-settings.ui:536
+#: ../settings/xfce4-session-settings.ui.h:22
 msgid "_Remove"
 msgstr "_Հեռացնել"
 
-#: settings/xfce4-session-settings.ui:540
+#: ../settings/xfce4-session-settings.ui.h:23
 msgid "Delete the selected session"
 msgstr "Ջնջել ընտրուած նիստը"
 
-#: settings/xfce4-session-settings.ui:564
+#: ../settings/xfce4-session-settings.ui.h:24
 msgid "Clear Save_d Sessions"
 msgstr "Մաքրել պահու_ած նիստերը"
 
-#: settings/xfce4-session-settings.ui:614
+#: ../settings/xfce4-session-settings.ui.h:25
 msgid "Saved _Sessions"
 msgstr "Պահուած _նիստեր"
 
-#: settings/xfce4-session-settings.ui:649
+#: ../settings/xfce4-session-settings.ui.h:26
 msgid "Launch GN_OME services on startup"
 msgstr "Գործարկել _GNOME ծառայութիւնները միացման ժամանակ"
 
-#: settings/xfce4-session-settings.ui:654
+#: ../settings/xfce4-session-settings.ui.h:27
 msgid "Start GNOME services, such as gnome-keyring"
 msgstr "Գործարկել GNOME ծառայութիւնները, աւրինակ՝ gnome-keyring-ը։"
 
-#: settings/xfce4-session-settings.ui:667
+#: ../settings/xfce4-session-settings.ui.h:28
 msgid "Launch _KDE services on startup"
 msgstr "Գործարկել _KDE ծառայութիւնները միացման ժամանակ"
 
-#: settings/xfce4-session-settings.ui:672
+#: ../settings/xfce4-session-settings.ui.h:29
 msgid "Start KDE services, such as kdeinit"
 msgstr "Գործարկել KDE ծառայութիւններն, աւրինակ՝ kdeinit֊ը"
 
-#: settings/xfce4-session-settings.ui:691
+#: ../settings/xfce4-session-settings.ui.h:30
 msgid "<b>Compatibility</b>"
 msgstr "<b>Համատեղելիութիւն</b>"
 
-#: settings/xfce4-session-settings.ui:716
+#: ../settings/xfce4-session-settings.ui.h:31
 msgid "Manage _remote applications"
 msgstr "Ծրագերի _հեռակայ կառավարում"
 
-#: settings/xfce4-session-settings.ui:721
+#: ../settings/xfce4-session-settings.ui.h:32
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
 msgstr "Կառավարել հեռակայ ծրագրերը ցանցով (վտանգաւոր է)"
 
-#: settings/xfce4-session-settings.ui:733
+#: ../settings/xfce4-session-settings.ui.h:33
 msgid "<b>Security</b>"
 msgstr "<b>Պաշտպանութիւն</b>"
 
-#: settings/xfce4-session-settings.ui:753
+#: ../settings/xfce4-session-settings.ui.h:34
 msgid "Ad_vanced"
 msgstr "_Յառաջացած"
 
-#: settings/xfce4-session-settings.ui:784
+#: ../settings/xfce4-session-settings.ui.h:35
 msgid "Saving Session"
 msgstr "Պահել նիստը"
 
-#: settings/xfce4-session-settings.ui:860
+#: ../settings/xfce4-session-settings.ui.h:36
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
