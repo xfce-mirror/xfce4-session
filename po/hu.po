@@ -1,6 +1,6 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Xfce
-# This file is distributed under the same license as the xfce4-session.xfce-4-18 package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
@@ -10,9 +10,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-session.xfce-4-18\n"
-"Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-29 11:56+0200\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-29 15:50+0200\n"
 "PO-Revision-Date: 2023-02-20 11:55+0000\n"
 "Last-Translator: Xfce Bot <transifex@xfce.org>, 2023\n"
 "Language-Team: Hungarian (https://app.transifex.com/xfce/teams/16840/hu/)\n"
@@ -22,106 +22,115 @@ msgstr ""
 "Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: xfce.desktop.in:4
+#: ../xfce.desktop.in.h:1
 msgid "Xfce Session"
 msgstr "Xfce munkamenet"
 
-#: xfce.desktop.in:5
+#: ../xfce.desktop.in.h:2
 msgid "Use this session to run Xfce as your desktop environment"
 msgstr ""
 "Használja ezt a munkamenetet az Xfce futtatásához asztali környezetként"
 
-#: libxfsm/xfsm-util.c:374
+#: ../libxfsm/xfsm-util.c:374
 msgid "Session"
 msgstr "Munkamenet"
 
-#: libxfsm/xfsm-util.c:385
+#: ../libxfsm/xfsm-util.c:385
 msgid "Last accessed"
 msgstr "Legutóbbi hozzáférés"
 
-#: settings/main.c:98
+#: ../scripts/xscreensaver.desktop.in.h:1
+msgid "Screensaver"
+msgstr "Képernyővédő"
+
+#: ../scripts/xscreensaver.desktop.in.h:2
+msgid "Launch screensaver and locker program"
+msgstr "Képernyővédő és -zároló program indítása"
+
+#: ../settings/main.c:98
 msgid "Settings manager socket"
 msgstr "Beállításkezelő foglalat"
 
-#: settings/main.c:98
+#: ../settings/main.c:98
 msgid "SOCKET ID"
 msgstr "FOGLALATAZONOSÍTÓ"
 
-#: settings/main.c:99
+#: ../settings/main.c:99
 msgid "Version information"
 msgstr "Verzióinformációk"
 
-#: settings/main.c:110 xfce4-session/main.c:333
+#: ../settings/main.c:110 ../xfce4-session/main.c:333
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Segítségért adja ki az „%s --help” parancsot."
 
-#: settings/main.c:122 xfce4-session/main.c:343
-#: xfce4-session-logout/main.c:132
+#: ../settings/main.c:122 ../xfce4-session/main.c:343
+#: ../xfce4-session-logout/main.c:132
 msgid "The Xfce development team. All rights reserved."
 msgstr "Az Xfce fejlesztőcsapata. Minden jog fenntartva."
 
-#: settings/main.c:123 xfce4-session/main.c:344
-#: xfce4-session-logout/main.c:135
+#: ../settings/main.c:123 ../xfce4-session/main.c:344
+#: ../xfce4-session-logout/main.c:135
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "A hibákat ide jelentse: <%s>."
 
-#: settings/main.c:132 xfce4-session/main.c:352
+#: ../settings/main.c:132 ../xfce4-session/main.c:352
 msgid "Unable to contact settings server"
 msgstr "Nem érhető el a beállításkiszolgáló"
 
-#: settings/main.c:152
+#: ../settings/main.c:152
 msgid "Unable to create user interface from embedded definition data"
 msgstr ""
 "Nem hozható létre felhasználói felület a beágyazott definícióadatokból"
 
-#: settings/main.c:166
+#: ../settings/main.c:166
 msgid "App_lication Autostart"
 msgstr "Aut_omatikusan induló alkalmazások"
 
-#: settings/main.c:172
+#: ../settings/main.c:172
 msgid "Currently active session:"
 msgstr "Jelenleg aktív munkamenet:"
 
-#: settings/session-editor.c:63
+#: ../settings/session-editor.c:63
 msgid "If running"
 msgstr "Ha fut"
 
-#: settings/session-editor.c:64
+#: ../settings/session-editor.c:64
 msgid "Always"
 msgstr "Mindig"
 
-#: settings/session-editor.c:65
+#: ../settings/session-editor.c:65
 msgid "Immediately"
 msgstr "Azonnal"
 
-#: settings/session-editor.c:66
+#: ../settings/session-editor.c:66
 msgid "Never"
 msgstr "Soha"
 
-#: settings/session-editor.c:138
+#: ../settings/session-editor.c:138
 msgid "Session Save Error"
 msgstr "Munkamenet-mentési hiba"
 
-#: settings/session-editor.c:139
+#: ../settings/session-editor.c:139
 msgid "Unable to save the session"
 msgstr "A munkamenet nem menthető"
 
-#: settings/session-editor.c:141 settings/session-editor.c:315
-#: xfce4-session/xfsm-manager.c:1275 settings/xfce4-session-settings.ui:95
+#: ../settings/session-editor.c:141 ../settings/session-editor.c:315
+#: ../xfce4-session/xfsm-manager.c:1267
+#: ../settings/xfce4-session-settings.ui.h:6
 msgid "_Close"
 msgstr "_Bezárás"
 
-#: settings/session-editor.c:200
+#: ../settings/session-editor.c:200
 msgid "Clear sessions"
 msgstr "Munkamenetek törlése"
 
-#: settings/session-editor.c:201
+#: ../settings/session-editor.c:201
 msgid "Are you sure you want to empty the session cache?"
 msgstr "Biztos, hogy ki akarja üríteni a munkamenet gyorsítótárát?"
 
-#: settings/session-editor.c:202
+#: ../settings/session-editor.c:202
 msgid ""
 "The saved states of your applications will not be restored during your next "
 "login."
@@ -129,35 +138,35 @@ msgstr ""
 "Az alkalmazások mentett állapotai nem lesznek visszaállítva a következő "
 "bejelentkezéskor."
 
-#: settings/session-editor.c:203 settings/session-editor.c:290
-#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:695
-#: xfce4-session/xfsm-logout-dialog.c:224
+#: ../settings/session-editor.c:203 ../settings/session-editor.c:290
+#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:687
+#: ../xfce4-session/xfsm-logout-dialog.c:221
 msgid "_Cancel"
 msgstr "_Mégse"
 
-#: settings/session-editor.c:204
+#: ../settings/session-editor.c:204
 msgid "_Proceed"
 msgstr "_Folytatás"
 
-#: settings/session-editor.c:242
+#: ../settings/session-editor.c:242
 #, c-format
 msgid "You might need to delete some files manually in \"%s\"."
 msgstr "Szükség lehet néhány fájl saját kezű törlésére itt: „%s”."
 
-#: settings/session-editor.c:245
+#: ../settings/session-editor.c:245
 msgid "All Xfce cache files could not be cleared"
 msgstr "Nem törölhető minden Xfce gyorsítótárfájl"
 
-#: settings/session-editor.c:284
+#: ../settings/session-editor.c:284
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Biztos, hogy meg akarja szakítani a következőt: „%s”?"
 
-#: settings/session-editor.c:287 settings/session-editor.c:312
+#: ../settings/session-editor.c:287 ../settings/session-editor.c:312
 msgid "Terminate Program"
 msgstr "Program megszakítása"
 
-#: settings/session-editor.c:289
+#: ../settings/session-editor.c:289
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
@@ -165,191 +174,191 @@ msgstr ""
 "Az alkalmazás elveszti a mentetlen beállításait és nem indul el a következő "
 "munkamenetben."
 
-#: settings/session-editor.c:291 settings/xfce4-session-settings.ui:445
+#: ../settings/session-editor.c:291 ../settings/xfce4-session-settings.ui.h:20
 msgid "_Quit Program"
 msgstr "_Kilépés a programból"
 
-#: settings/session-editor.c:313
+#: ../settings/session-editor.c:313
 msgid "Unable to terminate program."
 msgstr "A program nem szakítható meg."
 
-#: settings/session-editor.c:541
+#: ../settings/session-editor.c:541
 msgid "(Unknown program)"
 msgstr "(Ismeretlen program)"
 
-#: settings/session-editor.c:790
+#: ../settings/session-editor.c:790
 msgid "Priority"
 msgstr "Prioritás"
 
-#: settings/session-editor.c:800
+#: ../settings/session-editor.c:800
 msgid "PID"
 msgstr "PID"
 
-#: settings/session-editor.c:807 settings/xfae-window.c:198
+#: ../settings/session-editor.c:807 ../settings/xfae-window.c:198
 msgid "Program"
 msgstr "Program"
 
-#: settings/session-editor.c:833
+#: ../settings/session-editor.c:833
 msgid "Restart Style"
 msgstr "Újraindítás stílusa"
 
-#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:697
+#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:689
 msgid "_OK"
 msgstr "_OK"
 
-#: settings/xfae-dialog.c:82 settings/xfae-window.c:252
+#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:252
 msgid "Add application"
 msgstr "Alkalmazás hozzáadása"
 
-#: settings/xfae-dialog.c:96
+#: ../settings/xfae-dialog.c:96
 msgid "Name:"
 msgstr "Név:"
 
-#: settings/xfae-dialog.c:111
+#: ../settings/xfae-dialog.c:111
 msgid "Description:"
 msgstr "Leírás:"
 
-#: settings/xfae-dialog.c:125 settings/xfae-model.c:681
+#: ../settings/xfae-dialog.c:125 ../settings/xfae-model.c:681
 msgid "Command:"
 msgstr "Parancs:"
 
-#: settings/xfae-dialog.c:138
+#: ../settings/xfae-dialog.c:138
 msgid "Trigger:"
 msgstr "Indítás:"
 
-#: settings/xfae-dialog.c:209
+#: ../settings/xfae-dialog.c:209
 msgid "Select a command"
 msgstr "Válasszon parancsot"
 
-#: settings/xfae-dialog.c:212
+#: ../settings/xfae-dialog.c:212
 msgid "Cancel"
 msgstr "Mégse"
 
-#: settings/xfae-dialog.c:213
+#: ../settings/xfae-dialog.c:213
 msgid "OK"
 msgstr "OK"
 
-#: settings/xfae-dialog.c:260 settings/xfae-window.c:274
+#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:274
 msgid "Edit application"
 msgstr "Alkalmazás szerkesztése"
 
-#: settings/xfae-model.c:114
+#: ../settings/xfae-model.c:114
 msgid "on login"
 msgstr "bejelentkezéskor"
 
-#: settings/xfae-model.c:115
+#: ../settings/xfae-model.c:115
 msgid "on logout"
 msgstr "kijelentkezéskor"
 
-#: settings/xfae-model.c:116
+#: ../settings/xfae-model.c:116
 msgid "on shutdown"
 msgstr "leállításkor"
 
-#: settings/xfae-model.c:117
+#: ../settings/xfae-model.c:117
 msgid "on restart"
 msgstr "újraindításkor"
 
-#: settings/xfae-model.c:118
+#: ../settings/xfae-model.c:118
 msgid "on suspend"
 msgstr "felfüggesztéskor"
 
-#: settings/xfae-model.c:119
+#: ../settings/xfae-model.c:119
 msgid "on hibernate"
 msgstr "hibernáláskor"
 
-#: settings/xfae-model.c:120
+#: ../settings/xfae-model.c:120
 msgid "on hybrid sleep"
 msgstr "hibrid alváskor"
 
-#: settings/xfae-model.c:121
+#: ../settings/xfae-model.c:121
 msgid "on switch user"
 msgstr "felhasználóváltáskor"
 
-#: settings/xfae-model.c:463 settings/xfae-model.c:1177
-#: settings/xfae-model.c:1235
+#: ../settings/xfae-model.c:463 ../settings/xfae-model.c:1177
+#: ../settings/xfae-model.c:1235
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "%s megnyitása írásra meghiúsult"
 
-#: settings/xfae-model.c:815
+#: ../settings/xfae-model.c:815
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "%s törlése meghiúsult: %s"
 
-#: settings/xfae-model.c:977
+#: ../settings/xfae-model.c:977
 #, c-format
 msgid "Failed to create file %s"
 msgstr "A fájl (%s) létrehozása meghiúsult"
 
-#: settings/xfae-model.c:1001
+#: ../settings/xfae-model.c:1001
 #, c-format
 msgid "Failed to write file %s"
 msgstr "A fájl (%s) írása meghiúsult"
 
-#: settings/xfae-model.c:1061
+#: ../settings/xfae-model.c:1061
 #, c-format
 msgid "Failed to open %s for reading"
 msgstr "%s megnyitása olvasásra meghiúsult"
 
-#: settings/xfae-window.c:108
+#: ../settings/xfae-window.c:108
 msgid "Failed to set run hook"
 msgstr "A futtatás időzítésének beállítása meghiúsult"
 
-#: settings/xfae-window.c:223
+#: ../settings/xfae-window.c:223
 msgid "Trigger"
 msgstr "Indítás"
 
-#: settings/xfae-window.c:249 settings/xfae-window.c:338
+#: ../settings/xfae-window.c:249 ../settings/xfae-window.c:338
 msgid "Add"
 msgstr "Hozzáadás"
 
-#: settings/xfae-window.c:258 settings/xfae-window.c:344
+#: ../settings/xfae-window.c:258 ../settings/xfae-window.c:344
 msgid "Remove"
 msgstr "Eltávolítás"
 
-#: settings/xfae-window.c:261
+#: ../settings/xfae-window.c:261
 msgid "Remove application"
 msgstr "Alkalmazás eltávolítása"
 
-#: settings/xfae-window.c:271
+#: ../settings/xfae-window.c:271
 msgid "Edit"
 msgstr "Szerkesztés"
 
-#: settings/xfae-window.c:397
+#: ../settings/xfae-window.c:397
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "„%s” hozzáadása meghiúsult"
 
-#: settings/xfae-window.c:428 settings/xfae-window.c:442
+#: ../settings/xfae-window.c:428 ../settings/xfae-window.c:442
 msgid "Failed to remove item"
 msgstr "Az elem eltávolítása meghiúsult"
 
-#: settings/xfae-window.c:471
+#: ../settings/xfae-window.c:471
 msgid "Failed to edit item"
 msgstr "Az elem szerkesztése meghiúsult"
 
-#: settings/xfae-window.c:491
+#: ../settings/xfae-window.c:491
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Az elem („%s”) írása meghiúsult"
 
-#: settings/xfae-window.c:519
+#: ../settings/xfae-window.c:519
 msgid "Failed to toggle item"
 msgstr "Az elem átváltása meghiúsult"
 
-#: xfce4-session/main.c:77
+#: ../xfce4-session/main.c:77
 msgid "Disable binding to TCP ports"
 msgstr "A TCP-portokhoz kapcsolódás letiltása"
 
-#: xfce4-session/main.c:78 xfce4-session-logout/main.c:90
+#: ../xfce4-session/main.c:78 ../xfce4-session-logout/main.c:90
 msgid "Print version information and exit"
 msgstr "Verzióinformációk kiírása és kilépés"
 
-#: xfce4-session/xfsm-chooser.c:147
+#: ../xfce4-session/xfsm-chooser.c:147
 msgid "Session Manager"
 msgstr "Munkamenet-kezelő"
 
-#: xfce4-session/xfsm-chooser.c:168
+#: ../xfce4-session/xfsm-chooser.c:168
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
@@ -357,40 +366,40 @@ msgstr ""
 "Válassza ki a visszaállítandó munkamenetet. Kattintson duplán a munkamenet "
 "nevére a visszaállításához."
 
-#: xfce4-session/xfsm-chooser.c:184
+#: ../xfce4-session/xfsm-chooser.c:184
 msgid "Create a new session."
 msgstr "Új munkamenet létrehozása."
 
-#: xfce4-session/xfsm-chooser.c:191
+#: ../xfce4-session/xfsm-chooser.c:191
 msgid "Delete a saved session."
 msgstr "Egy mentett munkamenet törlése."
 
 #. "Logout" button
-#: xfce4-session/xfsm-chooser.c:202
-#: xfce4-session-logout/xfce4-session-logout.desktop.in:11
+#: ../xfce4-session/xfsm-chooser.c:202
+#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
 msgid "Log Out"
 msgstr "Kijelentkezés"
 
-#: xfce4-session/xfsm-chooser.c:204
+#: ../xfce4-session/xfsm-chooser.c:204
 msgid "Cancel the login attempt and return to the login screen."
 msgstr ""
 "A bejelentkezési kísérlet megszakítása és visszatérés a bejelentkezési "
 "képernyőre."
 
 #. "Start" button
-#: xfce4-session/xfsm-chooser.c:211
+#: ../xfce4-session/xfsm-chooser.c:211
 msgid "Start"
 msgstr "Indítás"
 
-#: xfce4-session/xfsm-chooser.c:212
+#: ../xfce4-session/xfsm-chooser.c:212
 msgid "Start an existing session."
 msgstr "Egy létező munkamenet indítása."
 
-#: xfce4-session/xfsm-dns.c:78
+#: ../xfce4-session/xfsm-dns.c:78
 msgid "(Unknown)"
 msgstr "(Ismeretlen)"
 
-#: xfce4-session/xfsm-dns.c:152
+#: ../xfce4-session/xfsm-dns.c:152
 #, c-format
 msgid ""
 "Could not look up internet address for %s.\n"
@@ -403,15 +412,15 @@ msgstr ""
 "A hiba lehet, hogy javítható a(z) %s\n"
 "felvételével a rendszer /etc/hosts fájljába."
 
-#: xfce4-session/xfsm-dns.c:159
+#: ../xfce4-session/xfsm-dns.c:159
 msgid "Continue anyway"
 msgstr "Folytatás mindenképp"
 
-#: xfce4-session/xfsm-dns.c:160
+#: ../xfce4-session/xfsm-dns.c:160
 msgid "Try again"
 msgstr "Próbálja újra"
 
-#: xfce4-session/xfsm-manager.c:579
+#: ../xfce4-session/xfsm-manager.c:571
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -424,7 +433,7 @@ msgstr ""
 "változó hibásan van beállítva (tartalmaznia kell ezt: „%s”), vagy az "
 "xfce4-session hibásan van telepítve."
 
-#: xfce4-session/xfsm-manager.c:590
+#: ../xfce4-session/xfsm-manager.c:582
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
@@ -432,214 +441,210 @@ msgstr ""
 "A megadott csökkentett munkamenet („%s”) nincs megjelölve csökkentett "
 "munkamenetként."
 
-#: xfce4-session/xfsm-manager.c:623
+#: ../xfce4-session/xfsm-manager.c:615
 msgid "The list of applications in the failsafe session is empty."
 msgstr "A csökkentett munkamenet alkalmazásainak listája üres."
 
-#: xfce4-session/xfsm-manager.c:709
+#: ../xfce4-session/xfsm-manager.c:701
 msgid "Name for the new session"
 msgstr "Az új munkamenet neve"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:787
+#: ../xfce4-session/xfsm-manager.c:779
 msgid "Session Manager Error"
 msgstr "Munkamenet-kezelési hiba"
 
-#: xfce4-session/xfsm-manager.c:789
+#: ../xfce4-session/xfsm-manager.c:781
 msgid "Unable to load a failsafe session"
 msgstr "Nem tölthető be a csökkentett munkamenet"
 
-#: xfce4-session/xfsm-manager.c:791
+#: ../xfce4-session/xfsm-manager.c:783
 msgid "_Quit"
 msgstr "_Kilépés"
 
-#: xfce4-session/xfsm-manager.c:1265
+#: ../xfce4-session/xfsm-manager.c:1257
 msgid "Shutdown Failed"
 msgstr "A leállítás meghiúsult"
 
-#: xfce4-session/xfsm-manager.c:1268
+#: ../xfce4-session/xfsm-manager.c:1260
 msgid "Failed to suspend session"
 msgstr "A munkamenet nem függeszthető fel"
 
-#: xfce4-session/xfsm-manager.c:1270
+#: ../xfce4-session/xfsm-manager.c:1262
 msgid "Failed to hibernate session"
 msgstr "A munkamenet nem hibernálható"
 
-#: xfce4-session/xfsm-manager.c:1272
+#: ../xfce4-session/xfsm-manager.c:1264
 msgid "Failed to hybrid sleep session"
 msgstr "A munkamenet hibrid alvása meghiúsult"
 
-#: xfce4-session/xfsm-manager.c:1273
+#: ../xfce4-session/xfsm-manager.c:1265
 msgid "Failed to switch user"
 msgstr "A felhasználóváltás meghiúsult"
 
-#: xfce4-session/xfsm-manager.c:1581
+#: ../xfce4-session/xfsm-manager.c:1573
+#, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Csak üresjáratban lévő kliensek futása szakítható meg"
 
-#: xfce4-session/xfsm-manager.c:2255
+#: ../xfce4-session/xfsm-manager.c:2229
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
 "A munkamenet-kezelőnek üresjáratban kell lennie ellenőrzőpont kérésekor"
 
-#: xfce4-session/xfsm-manager.c:2325 xfce4-session/xfsm-manager.c:2345
+#: ../xfce4-session/xfsm-manager.c:2299 ../xfce4-session/xfsm-manager.c:2319
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "A munkamenet-kezelőnek üresjáratban kell lennie leállítás kérésekor"
 
-#: xfce4-session/xfsm-manager.c:2382
+#: ../xfce4-session/xfsm-manager.c:2364
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "A munkamenet-kezelőnek üresjáratban kell lennie újraindítás kérésekor"
 
-#: xfce4-session/xfsm-manager.c:2418 xfce4-session/xfsm-manager.c:2457
-#: xfce4-session/xfsm-manager.c:2495
+#: ../xfce4-session/xfsm-manager.c:2408 ../xfce4-session/xfsm-manager.c:2455
+#: ../xfce4-session/xfsm-manager.c:2501
 msgid "Session manager must be in idle state when requesting a sleep"
 msgstr ""
 
-#: xfce4-session/xfsm-manager.c:2622
+#: ../xfce4-session/xfsm-manager.c:2547
 msgid "Session manager must be in idle state when requesting a user switch"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:196
+#: ../xfce4-session/xfsm-logout-dialog.c:193
 #, c-format
 msgid "Log out %s"
 msgstr "%s kijelentkeztetése"
 
-#: xfce4-session/xfsm-logout-dialog.c:242
+#. *
+#. * Logout
+#. *
+#: ../xfce4-session/xfsm-logout-dialog.c:238
 msgid "_Log Out"
 msgstr "_Kijelentkezés"
 
-#: xfce4-session/xfsm-logout-dialog.c:261
-msgid "_Restart and update"
-msgstr ""
-
-#: xfce4-session/xfsm-logout-dialog.c:261
+#: ../xfce4-session/xfsm-logout-dialog.c:257
 msgid "_Restart"
 msgstr "Ú_jraindítás"
 
-#: xfce4-session/xfsm-logout-dialog.c:275
-msgid "Update and Shut _Down"
-msgstr ""
-
-#: xfce4-session/xfsm-logout-dialog.c:275
+#: ../xfce4-session/xfsm-logout-dialog.c:276
 msgid "Shut _Down"
 msgstr "_Leállítás"
 
-#: xfce4-session/xfsm-logout-dialog.c:297
+#: ../xfce4-session/xfsm-logout-dialog.c:300
 msgid "Sus_pend"
 msgstr "_Felfüggesztés"
 
-#: xfce4-session/xfsm-logout-dialog.c:317
+#: ../xfce4-session/xfsm-logout-dialog.c:333
 msgid "_Hibernate"
 msgstr "_Hibernálás"
 
-#: xfce4-session/xfsm-logout-dialog.c:337
+#: ../xfce4-session/xfsm-logout-dialog.c:363
 msgid "H_ybrid Sleep"
 msgstr "_Hibrid alvás"
 
-#: xfce4-session/xfsm-logout-dialog.c:361
+#: ../xfce4-session/xfsm-logout-dialog.c:393
 msgid "Switch _User"
 msgstr "_Felhasználóváltás"
 
-#: xfce4-session/xfsm-logout-dialog.c:386
+#: ../xfce4-session/xfsm-logout-dialog.c:418
 msgid "_Save session for future logins"
 msgstr "_Munkamenet mentése jövőbeli bejelentkezésekhez"
 
-#: xfce4-session/xfsm-logout-dialog.c:414
+#: ../xfce4-session/xfsm-logout-dialog.c:446
 msgid "An error occurred"
 msgstr "Hiba történt"
 
-#: xfce4-session/xfsm-shutdown.c:171
+#: ../xfce4-session/xfsm-shutdown.c:156
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "A leállítást a kioszk beállításai nem engedélyezik"
 
-#: xfce4-session/xfsm-shutdown.c:228
+#: ../xfce4-session/xfsm-shutdown.c:213
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Ismeretlen leállítási mód: %d"
 
-#: xfce4-session-logout/main.c:58
+#: ../xfce4-session-logout/main.c:58
 msgid "Log out without displaying the logout dialog"
 msgstr "Kijelentkezés a kijelentkezési ablak megjelenítése nélkül"
 
-#: xfce4-session-logout/main.c:62
+#: ../xfce4-session-logout/main.c:62
 msgid "Halt without displaying the logout dialog"
 msgstr "Leállítás a kijelentkezési ablak megjelenítése nélkül"
 
-#: xfce4-session-logout/main.c:66
+#: ../xfce4-session-logout/main.c:66
 msgid "Reboot without displaying the logout dialog"
 msgstr "Újraindítás a kijelentkezési ablak megjelenítése nélkül"
 
-#: xfce4-session-logout/main.c:70
+#: ../xfce4-session-logout/main.c:70
 msgid "Suspend without displaying the logout dialog"
 msgstr "Felfüggesztés a kijelentkezési ablak megjelenítése nélkül"
 
-#: xfce4-session-logout/main.c:74
+#: ../xfce4-session-logout/main.c:74
 msgid "Hibernate without displaying the logout dialog"
 msgstr "Hibernálás a kijelentkezési ablak megjelenítése nélkül"
 
-#: xfce4-session-logout/main.c:78
+#: ../xfce4-session-logout/main.c:78
 msgid "Hybrid Sleep without displaying the logout dialog"
 msgstr "Hibrid alvás a kijelentkezési ablak megjelenítése nélkül"
 
-#: xfce4-session-logout/main.c:82
+#: ../xfce4-session-logout/main.c:82
 msgid "Switch user without displaying the logout dialog"
 msgstr "Felhasználóváltás a kijelentkezési ablak megjelenítése nélkül"
 
-#: xfce4-session-logout/main.c:86
+#: ../xfce4-session-logout/main.c:86
 msgid "Log out quickly; don't save the session"
 msgstr "Kijelentkezés gyorsan, ne mentse a munkamenetet"
 
-#: xfce4-session-logout/main.c:108
+#: ../xfce4-session-logout/main.c:108
 msgid "Unknown error"
 msgstr "Ismeretlen hiba"
 
-#: xfce4-session-logout/main.c:133
+#: ../xfce4-session-logout/main.c:133
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "Írta: Benedikt Meurer <benny@xfce.org>"
 
-#: xfce4-session-logout/main.c:134
+#: ../xfce4-session-logout/main.c:134
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "és Brian Tarricone <kelnos@xfce.org>."
 
-#: xfce4-session-logout/main.c:154 xfce4-session-logout/main.c:229
+#: ../xfce4-session-logout/main.c:154 ../xfce4-session-logout/main.c:229
 msgid "Received error while trying to log out"
 msgstr "Hiba történt a kijelentkezésre tett kísérlet során"
 
-#: xfce4-session-logout/xfce4-session-logout.desktop.in:12
+#: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:2
 msgid "Log out of the Xfce Desktop"
 msgstr "Kijelentkezés az Xfce asztali környezetből"
 
 #. SECURITY:
 #. - A normal active user on the local machine does not need permission
 #. to suspend or hibernate their system.
-#: xfce4-session/org.xfce.session.policy.in.in:23
+#: ../xfce4-session/org.xfce.session.policy.in.in.h:5
 msgid "Shutdown, restart, suspend, or hibernate the system"
 msgstr ""
 
-#: xfce4-session/org.xfce.session.policy.in.in:24
+#: ../xfce4-session/org.xfce.session.policy.in.in.h:6
 msgid ""
 "Authentication is required to shutdown, restart, suspend, or hibernate the "
 "system."
 msgstr ""
 
-#: settings/xfce-session-settings.desktop.in:3
-#: settings/xfce4-session-settings.ui:61
+#: ../settings/xfce-session-settings.desktop.in.h:1
+#: ../settings/xfce4-session-settings.ui.h:4
 msgid "Session and Startup"
 msgstr "Munkamenet és indítás"
 
-#: settings/xfce-session-settings.desktop.in:4
+#: ../settings/xfce-session-settings.desktop.in.h:2
 msgid "Customize desktop startup"
 msgstr "Az asztali környezet indításának személyre szabása"
 
-#: settings/xfce-session-settings.desktop.in:11
+#: ../settings/xfce-session-settings.desktop.in.h:3
 msgid ""
 "session;settings;preferences;manager;startup;login;logout;shutdown;lock "
 "screen;application;autostart;launch;services;daemon;agent;"
 msgstr ""
 
-#: settings/xfce4-session-settings.ui:51
+#: ../settings/xfce4-session-settings.ui.h:1
 msgid ""
 "These applications are a part of the currently-running session,\n"
 "and can be saved now or when you log out.\n"
@@ -649,125 +654,125 @@ msgstr ""
 "és elmenthetők most vagy kijelentkezéskor.\n"
 "Az alábbi módosítások csak a munkamenet mentése esetén lépnek életbe."
 
-#: settings/xfce4-session-settings.ui:79
+#: ../settings/xfce4-session-settings.ui.h:5
 msgid "_Help"
 msgstr "_Súgó"
 
-#: settings/xfce4-session-settings.ui:144
+#: ../settings/xfce4-session-settings.ui.h:7
 msgid "_Display chooser on login"
 msgstr "_Választó megjelenítése bejelentkezéskor"
 
-#: settings/xfce4-session-settings.ui:149
+#: ../settings/xfce4-session-settings.ui.h:8
 msgid "Display the session chooser every time Xfce starts"
 msgstr "A munkamenet-választó megjelenítése az Xfce minden indulásakor"
 
-#: settings/xfce4-session-settings.ui:161
+#: ../settings/xfce4-session-settings.ui.h:9
 msgid "<b>Session Chooser</b>"
 msgstr "<b>Munkamenet-választó</b>"
 
-#: settings/xfce4-session-settings.ui:192
+#: ../settings/xfce4-session-settings.ui.h:10
 msgid "Automatically save session on logo_ut"
 msgstr "_Munkamenet automatikus mentése kijelentkezéskor"
 
-#: settings/xfce4-session-settings.ui:197
+#: ../settings/xfce4-session-settings.ui.h:11
 msgid "Always save the session when logging out"
 msgstr "Munkamenet mentése minden kijelentkezéskor"
 
-#: settings/xfce4-session-settings.ui:210
+#: ../settings/xfce4-session-settings.ui.h:12
 msgid "Pro_mpt on logout"
 msgstr "Ké_rdés kijelentkezéskor"
 
-#: settings/xfce4-session-settings.ui:215
+#: ../settings/xfce4-session-settings.ui.h:13
 msgid "Prompt for confirmation when logging out"
 msgstr "Megerősítés kérése kijelentkezéskor"
 
-#: settings/xfce4-session-settings.ui:235
+#: ../settings/xfce4-session-settings.ui.h:14
 msgid "<b>Logout Settings</b>"
 msgstr "<b>Kijelentkezés beállításai</b>"
 
-#: settings/xfce4-session-settings.ui:266
+#: ../settings/xfce4-session-settings.ui.h:15
 msgid "Lock screen be_fore sleep"
 msgstr "Képernyő _zárolása alvás előtt"
 
-#: settings/xfce4-session-settings.ui:289
+#: ../settings/xfce4-session-settings.ui.h:16
 msgid "<b>Shutdown</b>"
 msgstr "<b>Leállítás</b>"
 
-#: settings/xfce4-session-settings.ui:306
+#: ../settings/xfce4-session-settings.ui.h:17
 msgid "_General"
 msgstr "Általán_os"
 
-#: settings/xfce4-session-settings.ui:330
+#: ../settings/xfce4-session-settings.ui.h:18
 msgid "Save Sess_ion"
 msgstr "_Munkamenet mentése"
 
-#: settings/xfce4-session-settings.ui:384
+#: ../settings/xfce4-session-settings.ui.h:19
 msgid "Currently active session: <b>Default</b>"
 msgstr "Jelenleg aktív munkamenet: <b>Alapértelmezett</b>"
 
-#: settings/xfce4-session-settings.ui:485
+#: ../settings/xfce4-session-settings.ui.h:21
 msgid "Current Sessio_n"
 msgstr "Jelenlegi mu_nkamenet:"
 
-#: settings/xfce4-session-settings.ui:536
+#: ../settings/xfce4-session-settings.ui.h:22
 msgid "_Remove"
 msgstr "_Eltávolítás"
 
-#: settings/xfce4-session-settings.ui:540
+#: ../settings/xfce4-session-settings.ui.h:23
 msgid "Delete the selected session"
 msgstr "A kijelölt munkamenet törlése"
 
-#: settings/xfce4-session-settings.ui:564
+#: ../settings/xfce4-session-settings.ui.h:24
 msgid "Clear Save_d Sessions"
 msgstr "Mentett munkamenetek _törlése"
 
-#: settings/xfce4-session-settings.ui:614
+#: ../settings/xfce4-session-settings.ui.h:25
 msgid "Saved _Sessions"
 msgstr "_Mentett munkamenetek"
 
-#: settings/xfce4-session-settings.ui:649
+#: ../settings/xfce4-session-settings.ui.h:26
 msgid "Launch GN_OME services on startup"
 msgstr "_GNOME szolgáltatások indítása belépéskor"
 
-#: settings/xfce4-session-settings.ui:654
+#: ../settings/xfce4-session-settings.ui.h:27
 msgid "Start GNOME services, such as gnome-keyring"
 msgstr "GNOME szolgáltatások, például a gnome-keyring indítása"
 
-#: settings/xfce4-session-settings.ui:667
+#: ../settings/xfce4-session-settings.ui.h:28
 msgid "Launch _KDE services on startup"
 msgstr "_KDE szolgáltatások indítása belépéskor"
 
-#: settings/xfce4-session-settings.ui:672
+#: ../settings/xfce4-session-settings.ui.h:29
 msgid "Start KDE services, such as kdeinit"
 msgstr "KDE szolgáltatások, például a kdeinit indítása"
 
-#: settings/xfce4-session-settings.ui:691
+#: ../settings/xfce4-session-settings.ui.h:30
 msgid "<b>Compatibility</b>"
 msgstr "<b>Kompatibilitás</b>"
 
-#: settings/xfce4-session-settings.ui:716
+#: ../settings/xfce4-session-settings.ui.h:31
 msgid "Manage _remote applications"
 msgstr "_Távoli alkalmazások kezelése"
 
-#: settings/xfce4-session-settings.ui:721
+#: ../settings/xfce4-session-settings.ui.h:32
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
 msgstr ""
 "Távoli alkalmazások kezelése hálózaton (ez biztonsági kockázatot jelenthet)"
 
-#: settings/xfce4-session-settings.ui:733
+#: ../settings/xfce4-session-settings.ui.h:33
 msgid "<b>Security</b>"
 msgstr "<b>Biztonság</b>"
 
-#: settings/xfce4-session-settings.ui:753
+#: ../settings/xfce4-session-settings.ui.h:34
 msgid "Ad_vanced"
 msgstr "Spe_ciális"
 
-#: settings/xfce4-session-settings.ui:784
+#: ../settings/xfce4-session-settings.ui.h:35
 msgid "Saving Session"
 msgstr "Munkamenet mentése"
 
-#: settings/xfce4-session-settings.ui:860
+#: ../settings/xfce4-session-settings.ui.h:36
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
