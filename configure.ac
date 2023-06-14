@@ -194,6 +194,9 @@ icons/24x24-actions/Makefile
 icons/32x32/Makefile
 icons/48x48-actions/Makefile
 icons/48x48/Makefile
+icons/64x64/Makefile
+icons/96x96/Makefile
+icons/96x96-actions/Makefile
 icons/128x128/Makefile
 icons/scalable/Makefile
 libxfsm/Makefile
