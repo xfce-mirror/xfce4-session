@@ -33,6 +33,7 @@ fi
 # or empty, a default equal to $HOME/.config should be used.
 if test "x$XDG_CONFIG_HOME" = "x" ; then
   XDG_CONFIG_HOME=$HOME/.config
+  export XDG_CONFIG_HOME
 fi
 [ -d "$XDG_CONFIG_HOME" ] || mkdir "$XDG_CONFIG_HOME"
 
@@ -41,6 +42,7 @@ fi
 # set or empty, a default equal to $HOME/.cache should be used.
 if test "x$XDG_CACHE_HOME" = "x" ; then
   XDG_CACHE_HOME=$HOME/.cache
+  export XDG_CACHE_HOME
 fi
 [ -d "$XDG_CACHE_HOME" ] || mkdir "$XDG_CACHE_HOME"
 
