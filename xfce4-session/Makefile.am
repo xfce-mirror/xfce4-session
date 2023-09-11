@@ -102,6 +102,9 @@ xfce4_session_LDADD =							\
 	$(XFCONF_LIBS)							\
 	$(LIBM)
 
+xdg_desktop_portaldir = $(datadir)/xdg-desktop-portal
+xdg_desktop_portal_DATA = xfce-portals.conf
+
 if HAVE_POLKIT
 
 %.policy: %.policy.in
@@ -149,6 +152,7 @@ endif
 
 EXTRA_DIST =								\
 	$(man_MANS)							\
+	$(xdg_desktop_portal_DATA)							\
 	xfsm-chooser-icon.png						\
 	xfsm-marshal.list						\
 	xfsm-client-dbus.xml						\
