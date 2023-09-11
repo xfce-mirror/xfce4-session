@@ -99,6 +99,9 @@ xfce4_session_LDADD =							\
 	$(XFCONF_LIBS)							\
 	$(LIBM)
 
+xdg_desktop_portaldir = $(datadir)/xdg-desktop-portal
+dist_xdg_desktop_portal_DATA = xfce-portals.conf
+
 if HAVE_POLKIT
 
 @INTLTOOL_POLICY_RULE@
