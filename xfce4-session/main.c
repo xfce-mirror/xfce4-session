@@ -326,6 +326,7 @@ main (int argc, char **argv)
 
   /* install required signal handlers */
   signal (SIGPIPE, SIG_IGN);
+  signal (SIGCHLD, SIG_IGN);
 
   if (!gtk_init_with_args (&argc, &argv, NULL, option_entries, GETTEXT_PACKAGE, &error))
     {
