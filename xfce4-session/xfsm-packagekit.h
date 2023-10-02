@@ -22,6 +22,8 @@
 #ifndef __XFSM_PACKAGEKIT_H__
 #define __XFSM_PACKAGEKIT_H__
 
+G_BEGIN_DECLS
+
 #define XFSM_TYPE_PACKAGEKIT (xfsm_packagekit_get_type ())
 G_DECLARE_FINAL_TYPE (XfsmPackagekit, xfsm_packagekit, XFSM, PACKAGEKIT, GObject)
 

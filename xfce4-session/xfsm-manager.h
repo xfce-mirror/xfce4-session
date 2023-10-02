@@ -163,4 +163,6 @@ gboolean xfsm_manager_get_compat_startup (XfsmManager          *manager,
 
 gboolean xfsm_manager_get_start_at (XfsmManager *manager);
 
+G_END_DECLS
+
 #endif /* !__XFSM_MANAGER_H__ */
