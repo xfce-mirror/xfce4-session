@@ -407,11 +407,12 @@ xfsm_launch_desktop_files_on_run_hook (gboolean    start_at_spi,
 
           /* try to launch the command */
           xfsm_verbose ("Autostart: running command \"%s\"\n", exec);
-          if (!xfce_spawn_command_line_on_screen (gdk_screen_get_default (),
-                                                  exec,
-                                                  terminal,
-                                                  startup_notify,
-                                                  &error))
+          if (!xfce_spawn_command_line (gdk_screen_get_default (),
+                                        exec,
+                                        terminal,
+                                        startup_notify,
+                                        TRUE,
+                                        &error))
             {
               g_warning ("Unable to launch \"%s\" (specified by %s): %s", exec, files[n], error->message);
               xfsm_verbose ("Unable to launch \"%s\" (specified by %s): %s\n", exec, files[n], error->message);
