@@ -34,14 +34,7 @@
 #include <string.h>
 #endif
 
-#include <X11/Xlib.h>
-
 #include <cairo-gobject.h>
-
-#include <gdk/gdkx.h>
-
-#include <libxfce4ui/libxfce4ui.h>
-
 #include <libxfsm/xfsm-util.h>
 
 
