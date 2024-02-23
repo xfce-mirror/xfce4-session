@@ -43,12 +43,8 @@
 
 #include <gio/gio.h>
 
-#include <X11/ICE/ICElib.h>
-#include <X11/SM/SMlib.h>
-
 #include <gdk-pixbuf/gdk-pixdata.h>
 #include <gtk/gtk.h>
-#include <gdk/gdkx.h>
 #include <libwnck/libwnck.h>
 
 #include <libxfce4ui/libxfce4ui.h>
@@ -296,7 +292,7 @@ xfsm_manager_restore_active_workspace (XfsmManager *manager,
   gint            n, m;
 
   display = gdk_display_get_default ();
-  for (n = 0; n < XScreenCount (gdk_x11_display_get_xdisplay (display)); ++n)
+  for (n = 0; n < gdk_display_get_n_screens (display); ++n)
     {
       g_snprintf (buffer, 1024, "Screen%d_ActiveWorkspace", n);
       xfsm_verbose ("Attempting to restore %s\n", buffer);
@@ -979,7 +975,7 @@ xfsm_manager_register_client (XfsmManager *manager,
       if (sms_conn != NULL)
         {
           /* new sms client */
-          gchar *client_id = xfsm_generate_client_id (sms_conn);
+          gchar *client_id = xfsm_client_generate_id (sms_conn);
 
           properties = xfsm_properties_new (client_id, SmsClientHostName (sms_conn));
           xfsm_client_set_initial_properties (client, properties);
@@ -1883,7 +1879,7 @@ xfsm_manager_store_session (XfsmManager *manager)
 
   /* store current workspace numbers */
   display = gdk_display_get_default ();
-  for (n = 0; n < XScreenCount (gdk_x11_display_get_xdisplay (display)); ++n)
+  for (n = 0; n < gdk_display_get_n_screens (display); ++n)
     {
       screen = wnck_screen_get (n);
       wnck_screen_force_update (screen);

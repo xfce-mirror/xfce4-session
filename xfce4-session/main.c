@@ -361,7 +361,7 @@ main (int argc, char **argv)
   /* fake a client id for the manager, so the legacy management does not
    * recognize us to be a session client.
    */
-  gdk_x11_set_sm_client_id (xfsm_generate_client_id (NULL));
+  gdk_x11_set_sm_client_id (xfsm_client_generate_id (NULL));
 
   xfsm_dbus_init (&manager);
 

@@ -139,10 +139,6 @@ gboolean xfsm_manager_terminate_client (XfsmManager *manager,
 
 void xfsm_manager_perform_shutdown (XfsmManager *manager);
 
-gboolean xfsm_manager_run_command (XfsmManager          *manager,
-                                   const XfsmProperties *properties,
-                                   const gchar          *command);
-
 void xfsm_manager_store_session (XfsmManager *manager);
 
 void xfsm_manager_complete_saveyourself (XfsmManager *manager);

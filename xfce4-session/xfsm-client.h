@@ -53,6 +53,8 @@ typedef enum
 
 GType xfsm_client_get_type (void) G_GNUC_CONST;
 
+gchar *xfsm_client_generate_id (SmsConn sms_conn) G_GNUC_PURE;
+
 XfsmClient *xfsm_client_new (struct _XfsmManager *manager,
                              SmsConn              sms_conn,
                              GDBusConnection     *connection);
