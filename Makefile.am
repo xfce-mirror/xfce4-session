@@ -11,6 +11,8 @@ SUBDIRS =								\
 	xfce4-session-logout						\
 	xfsm-shutdown-helper
 
+if ENABLE_X11
+
 desktopdir = $(XSESSION_PREFIX)/share/xsessions
 desktop_in_files = xfce.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
@@ -18,14 +20,16 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 %.desktop: %.desktop.in
 	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
-distuninstallcheck_listfiles = 						\
-	find . -type f -print | grep -v ./share/icons/hicolor/icon-theme.cache
-
 EXTRA_DIST =								\
 	$(desktop_in_files)
 
 DISTCLEANFILES =							\
 	$(desktop_DATA)
+
+endif
+
+distuninstallcheck_listfiles = 						\
+	find . -type f -print | grep -v ./share/icons/hicolor/icon-theme.cache
 
 distclean-local:
 	rm -rf *.cache *~

@@ -52,10 +52,11 @@
 #include <errno.h>
 #endif
 
+#ifdef ENABLE_X11
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
-
 #include <gdk/gdkx.h>
+#endif
 
 #include <libxfce4util/libxfce4util.h>
 
@@ -67,7 +68,9 @@
 static gboolean gnome_compat_started = FALSE;
 static int keyring_lifetime_pipe[2];
 static pid_t gnome_keyring_daemon_pid = 0;
+#ifdef ENABLE_X11
 static Window gnome_smproxy_window = None;
+#endif
 
 static void
 child_setup (gpointer user_data)
@@ -188,6 +191,7 @@ gnome_keyring_daemon_shutdown (void)
 
 
 
+#ifdef ENABLE_X11
 static void
 xfsm_compat_gnome_smproxy_startup (void)
 {
@@ -238,6 +242,7 @@ xfsm_compat_gnome_smproxy_shutdown (void)
 
   gdk_x11_display_error_trap_pop_ignored (gdk_display_get_default ());
 }
+#endif
 
 
 void
@@ -246,7 +251,10 @@ xfsm_compat_gnome_startup (void)
   if (G_UNLIKELY (gnome_compat_started))
     return;
 
-  xfsm_compat_gnome_smproxy_startup ();
+#ifdef ENABLE_X11
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    xfsm_compat_gnome_smproxy_startup ();
+#endif
 
   /* fire up the keyring daemon */
   gnome_keyring_daemon_startup ();
@@ -264,7 +272,10 @@ xfsm_compat_gnome_shutdown (void)
   /* shutdown the keyring daemon */
   gnome_keyring_daemon_shutdown ();
 
-  xfsm_compat_gnome_smproxy_shutdown ();
+#ifdef ENABLE_X11
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    xfsm_compat_gnome_smproxy_shutdown ();
+#endif
 
   gnome_compat_started = FALSE;
 }

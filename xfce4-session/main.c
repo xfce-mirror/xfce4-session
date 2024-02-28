@@ -50,16 +50,18 @@
 
 #include <xfconf/xfconf.h>
 
-#include <gdk/gdkx.h>
 #include <gtk/gtk.h>
+#ifdef ENABLE_X11
+#include <gdk/gdkx.h>
+#include <xfce4-session/ice-layer.h>
+#include <xfce4-session/sm-layer.h>
+#endif
 
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
 
 #include <libxfsm/xfsm-util.h>
 
-#include <xfce4-session/ice-layer.h>
-#include <xfce4-session/sm-layer.h>
 #include <xfce4-session/xfsm-dns.h>
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-manager.h>
@@ -104,8 +106,11 @@ setup_environment (void)
   if (g_getenv ("XFSM_VERBOSE") != NULL)
     xfsm_enable_verbose ();
 
-  /* pass correct DISPLAY to children, in case of --display in argv */
-  g_setenv ("DISPLAY", gdk_display_get_name (gdk_display_get_default ()), TRUE);
+  if (WINDOWING_IS_X11 ())
+    {
+      /* pass correct DISPLAY to children, in case of --display in argv */
+      g_setenv ("DISPLAY", gdk_display_get_name (gdk_display_get_default ()), TRUE);
+    }
 
   /* check access to $ICEAUTHORITY or $HOME/.ICEauthority if unset */
   if (g_getenv ("ICEAUTHORITY"))
@@ -123,15 +128,15 @@ setup_environment (void)
   close (fd);
 }
 
+#ifdef ENABLE_X11
 static void
 init_display (XfsmManager   *manager,
-              GdkDisplay    *dpy,
               gboolean       disable_tcp)
 {
-  gdk_display_flush (dpy);
-
+  gdk_display_flush (gdk_display_get_default ());
   sm_init (channel, disable_tcp, manager);
 }
+#endif
 
 
 
@@ -153,7 +158,6 @@ bus_acquired (GDBusConnection *connection,
               gpointer user_data)
 {
   XfsmManager **manager = user_data;
-  GdkDisplay *dpy;
 
   xfsm_verbose ("bus_acquired %s\n", name);
 
@@ -173,8 +177,11 @@ bus_acquired (GDBusConnection *connection,
 
   channel = xfconf_channel_get (SETTINGS_CHANNEL);
 
-  dpy = gdk_display_get_default ();
-  init_display (*manager, dpy, opt_disable_tcp);
+#ifdef ENABLE_X11
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
+      init_display (*manager, opt_disable_tcp);
+  }
+#endif
 
   if (!opt_disable_tcp && xfconf_channel_get_bool (channel, "/security/EnableTcp", FALSE))
     {
@@ -232,7 +239,11 @@ name_lost (GDBusConnection *connection,
   /* take over the ref before we release the manager */
   shutdown_helper = xfsm_shutdown_get ();
 
-  ice_cleanup ();
+#ifdef ENABLE_X11
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
+      ice_cleanup ();
+  }
+#endif
 
   if (shutdown_type == XFSM_SHUTDOWN_SHUTDOWN
       || shutdown_type == XFSM_SHUTDOWN_RESTART)
@@ -358,10 +369,14 @@ main (int argc, char **argv)
   while (gtk_events_pending ())
     gtk_main_iteration ();
 
-  /* fake a client id for the manager, so the legacy management does not
-   * recognize us to be a session client.
-   */
-  gdk_x11_set_sm_client_id (xfsm_client_generate_id (NULL));
+#ifdef ENABLE_X11
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
+      /* fake a client id for the manager, so the legacy management does not
+       * recognize us to be a session client.
+       */
+      gdk_x11_set_sm_client_id (xfsm_client_generate_id (NULL));
+  }
+#endif
 
   xfsm_dbus_init (&manager);
 

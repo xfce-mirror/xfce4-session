@@ -137,6 +137,7 @@ get_state (XfsmClientState state)
   return client_state[state];
 }
 
+#ifdef ENABLE_X11
 static void
 xfsm_properties_discard_command_changed (XfsmProperties *properties,
                                          gchar         **old_discard)
@@ -198,6 +199,7 @@ xfsm_client_signal_prop_change (XfsmClient *client,
       g_variant_unref (variant);
     }
 }
+#endif
 
 
 
@@ -206,18 +208,19 @@ xfsm_client_generate_id (SmsConn sms_conn)
 {
   static char *addr = NULL;
   static int   sequence = 0;
-  char        *sms_id;
   char        *id = NULL;
 
+#ifdef ENABLE_X11
   if (sms_conn != NULL)
     {
-      sms_id = SmsGenerateClientID (sms_conn);
+      char *sms_id = SmsGenerateClientID (sms_conn);
       if (sms_id != NULL)
         {
           id = g_strdup (sms_id);
           g_free (sms_id);
         }
     }
+#endif
 
   if (id == NULL)
     {
@@ -380,6 +383,7 @@ xfsm_client_steal_properties (XfsmClient *client)
 }
 
 
+#ifdef ENABLE_X11
 void
 xfsm_client_merge_properties (XfsmClient *client,
                               SmProp    **props,
@@ -418,6 +422,7 @@ xfsm_client_merge_properties (XfsmClient *client,
       g_strfreev (old_discard);
     }
 }
+#endif
 
 
 void

@@ -22,7 +22,36 @@
 #ifndef __XFSM_PROPERTIES_H__
 #define __XFSM_PROPERTIES_H__
 
+#ifdef ENABLE_X11
 #include <X11/SM/SMlib.h>
+#else
+#define SmInteractStyleNone 0
+#define SmInteractStyleErrors 1
+#define SmInteractStyleAny  2
+
+#define SmSaveGlobal  0
+#define SmSaveLocal 1
+#define SmSaveBoth  2
+
+#define SmRestartIfRunning  0
+#define SmRestartAnyway   1
+#define SmRestartImmediately  2
+#define SmRestartNever    3
+
+#define SmCloneCommand    "CloneCommand"
+#define SmCurrentDirectory  "CurrentDirectory"
+#define SmDiscardCommand  "DiscardCommand"
+#define SmEnvironment   "Environment"
+#define SmProcessID   "ProcessID"
+#define SmProgram   "Program"
+#define SmRestartCommand  "RestartCommand"
+#define SmResignCommand   "ResignCommand"
+#define SmRestartStyleHint  "RestartStyleHint"
+#define SmShutdownCommand "ShutdownCommand"
+#define SmUserID    "UserID"
+
+typedef gpointer SmsConn;
+#endif
 
 #include <libxfce4util/libxfce4util.h>
 
@@ -59,9 +88,11 @@ XfsmProperties *xfsm_properties_new (const gchar *client_id,
                                      const gchar *hostname) G_GNUC_PURE;
 void            xfsm_properties_free    (XfsmProperties *properties);
 
+#ifdef ENABLE_X11
 void            xfsm_properties_extract (XfsmProperties *properties,
                                          gint           *num_props,
                                          SmProp       ***props);
+#endif
 void            xfsm_properties_store   (XfsmProperties *properties,
                                          GKeyFile       *file,
                                          const gchar    *prefix,
@@ -97,8 +128,10 @@ void xfsm_properties_set_uchar (XfsmProperties *properties,
 gboolean xfsm_properties_set (XfsmProperties *properties,
                               const gchar *property_name,
                               const GValue *property_value);
+#ifdef ENABLE_X11
 gboolean xfsm_properties_set_from_smprop (XfsmProperties *properties,
                                           const SmProp *sm_prop);
+#endif
 
 gboolean xfsm_properties_remove (XfsmProperties *properties,
                                  const gchar *property_name);
