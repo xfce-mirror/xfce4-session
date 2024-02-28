@@ -45,12 +45,15 @@
 
 #include <gdk-pixbuf/gdk-pixdata.h>
 #include <gtk/gtk.h>
-#include <libwnck/libwnck.h>
 
+#include <libxfce4windowing/libxfce4windowing.h>
 #include <libxfce4ui/libxfce4ui.h>
 
 #include <libxfsm/xfsm-util.h>
 
+#ifdef ENABLE_LEGACY_SESSION_MANAGEMENT
+#include <xfce4-session/xfsm-legacy.h>
+#endif
 #include <xfce4-session/xfsm-manager-dbus.h>
 #include <xfce4-session/xfsm-manager.h>
 #include <xfce4-session/xfsm-chooser-icon.h>
@@ -58,7 +61,6 @@
 #include <xfce4-session/xfsm-global.h>
 #include <xfce4-session/xfsm-inhibition.h>
 #include <xfce4-session/xfsm-inhibitor.h>
-#include <xfce4-session/xfsm-legacy.h>
 #include <xfce4-session/xfsm-startup.h>
 #include <xfce4-session/xfsm-marshal.h>
 #include <xfce4-session/xfsm-error.h>
@@ -98,6 +100,7 @@ struct _XfsmManager
   guint            name_owner_id;
 
   GDBusConnection *connection;
+  XfwScreen       *xfw_screen;
 };
 
 typedef struct _XfsmManagerClass
@@ -191,6 +194,7 @@ xfsm_manager_init (XfsmManager *manager)
   manager->failsafe_clients_pending = 0;
 
   manager->inhibitions = xfsm_inhibitor_get ();
+  manager->xfw_screen = xfw_screen_get_default ();
 }
 
 static void
@@ -221,6 +225,7 @@ xfsm_manager_finalize (GObject *obj)
 
   g_free (manager->session_name);
   g_free (manager->checkpoint_session_name);
+  g_object_unref (manager->xfw_screen);
 
   G_OBJECT_CLASS (xfsm_manager_parent_class)->finalize (obj);
 }
@@ -285,14 +290,13 @@ xfsm_manager_restore_active_workspace (XfsmManager *manager,
                                        GKeyFile    *file,
                                        const gchar *group)
 {
-  WnckWorkspace  *workspace;
-  GdkDisplay     *display;
-  WnckScreen     *screen;
+  XfwWorkspaceManager *wp_manager;
+  XfwWorkspace   *workspace;
   gchar           buffer[1024];
-  gint            n, m;
+  guint           n = 0, m;
 
-  display = gdk_display_get_default ();
-  for (n = 0; n < gdk_display_get_n_screens (display); ++n)
+  wp_manager = xfw_screen_get_workspace_manager (manager->xfw_screen);
+  for (GList *lp = xfw_workspace_manager_list_workspace_groups (wp_manager); lp != NULL; lp = lp->next, n++)
     {
       g_snprintf (buffer, 1024, "Screen%d_ActiveWorkspace", n);
       xfsm_verbose ("Attempting to restore %s\n", buffer);
@@ -304,13 +308,10 @@ xfsm_manager_restore_active_workspace (XfsmManager *manager,
 
       m = g_key_file_get_integer (file, group, buffer, NULL);
 
-      screen = wnck_screen_get (n);
-      wnck_screen_force_update (screen);
-
-      if (wnck_screen_get_workspace_count (screen) > m)
+      if (xfw_workspace_group_get_workspace_count (lp->data) > m)
         {
-          workspace = wnck_screen_get_workspace (screen, m);
-          wnck_workspace_activate (workspace, GDK_CURRENT_TIME);
+          workspace = g_list_nth_data (xfw_workspace_group_list_workspaces (lp->data), m);
+          xfw_workspace_activate (workspace, GDK_CURRENT_TIME);
         }
     }
 }
@@ -539,8 +540,13 @@ xfsm_manager_load_session (XfsmManager   *manager,
 
   xfsm_verbose ("Finished loading clients from rc file\n");
 
-  /* load legacy applications */
-  xfsm_legacy_load_session (file, group);
+#ifdef ENABLE_LEGACY_SESSION_MANAGEMENT
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    {
+      /* load legacy applications */
+      xfsm_legacy_load_session (file, group);
+    }
+#endif
 
   g_free (group);
   g_key_file_free (file);
@@ -810,8 +816,13 @@ xfsm_manager_restart (XfsmManager *manager)
 {
   g_assert (manager->session_name != NULL);
 
-  /* setup legacy application handling */
-  xfsm_legacy_init ();
+#ifdef ENABLE_LEGACY_SESSION_MANAGEMENT
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    {
+      /* setup legacy application handling */
+      xfsm_legacy_init ();
+    }
+#endif
 
   g_idle_add (xfsm_manager_startup, manager);
 
@@ -841,8 +852,13 @@ xfsm_manager_signal_startup_done (XfsmManager *manager)
           g_key_file_free (file);
         }
 
-      /* start legacy applications now */
-      xfsm_legacy_startup ();
+#ifdef ENABLE_LEGACY_SESSION_MANAGEMENT
+      if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+        {
+          /* start legacy applications now */
+          xfsm_legacy_startup ();
+        }
+#endif
     }
 }
 
@@ -974,6 +990,7 @@ xfsm_manager_register_client (XfsmManager *manager,
         xfsm_verbose ("Plus, we're obviously running in failsafe mode.\n");
       if (sms_conn != NULL)
         {
+#ifdef ENABLE_X11
           /* new sms client */
           gchar *client_id = xfsm_client_generate_id (sms_conn);
 
@@ -981,6 +998,7 @@ xfsm_manager_register_client (XfsmManager *manager,
           xfsm_client_set_initial_properties (client, properties);
 
           g_free (client_id);
+#endif
         }
     }
 
@@ -1017,7 +1035,9 @@ xfsm_manager_register_client (XfsmManager *manager,
 
   if (sms_conn != NULL)
     {
+#ifdef ENABLE_X11
       SmsRegisterClientReply (sms_conn, (char *) xfsm_client_get_id (client));
+#endif
     }
 
   xfsm_dbus_manager_emit_client_registered (XFSM_DBUS_MANAGER (manager), xfsm_client_get_object_path (client));
@@ -1026,9 +1046,11 @@ xfsm_manager_register_client (XfsmManager *manager,
     {
       if (sms_conn != NULL)
         {
+#ifdef ENABLE_X11
           SmsSaveYourself (sms_conn, SmSaveLocal, False, SmInteractStyleNone, False);
           xfsm_client_set_state (client, XFSM_CLIENT_SAVINGLOCAL);
           xfsm_manager_start_client_save_timeout (manager, client);
+#endif
         }
     }
 
@@ -1063,7 +1085,9 @@ xfsm_manager_start_interact (XfsmManager *manager,
   /* notify client of interact */
   if (sms != NULL)
     {
+#ifdef ENABLE_X11
       SmsInteract (sms);
+#endif
     }
   xfsm_client_set_state (client, XFSM_CLIENT_INTERACTING);
 
@@ -1175,7 +1199,9 @@ xfsm_manager_interact_done (XfsmManager *manager,
           xfsm_client_set_state (client, XFSM_CLIENT_SAVING);
           if (sms != NULL)
             {
+#ifdef ENABLE_X11
               SmsShutdownCancelled (sms);
+#endif
             }
           else
             {
@@ -1295,9 +1321,14 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
                           ? XFSM_MANAGER_SHUTDOWN
                           : XFSM_MANAGER_CHECKPOINT);
 
-  /* handle legacy applications first! */
-  if (manager->save_session)
-      xfsm_legacy_perform_session_save ();
+#ifdef ENABLE_LEGACY_SESSION_MANAGEMENT
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    {
+      /* handle legacy applications first! */
+      if (manager->save_session)
+          xfsm_legacy_perform_session_save ();
+    }
+#endif
 
   for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
        lp;
@@ -1318,7 +1349,9 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
           SmsConn sms = xfsm_client_get_sms_connection (client);
           if (sms != NULL)
             {
+#ifdef ENABLE_X11
               SmsSaveYourself (sms, save_type, shutdown, interact_style, fast);
+#endif
             }
         }
 
@@ -1367,7 +1400,9 @@ xfsm_manager_save_yourself (XfsmManager *manager,
        */
       if (sms != NULL)
         {
+#ifdef ENABLE_X11
           SmsSaveYourself (sms, save_type, FALSE, interact_style, fast);
+#endif
         }
       xfsm_client_set_state (client, XFSM_CLIENT_SAVINGLOCAL);
       xfsm_manager_start_client_save_timeout (manager, client);
@@ -1388,7 +1423,9 @@ xfsm_manager_save_yourself_phase2 (XfsmManager *manager,
       SmsConn sms = xfsm_client_get_sms_connection (client);
       if (sms != NULL)
         {
+#ifdef ENABLE_X11
           SmsSaveYourselfPhase2 (sms);
+#endif
         }
       xfsm_client_set_state (client, XFSM_CLIENT_SAVINGLOCAL);
       xfsm_manager_start_client_save_timeout (manager, client);
@@ -1435,7 +1472,9 @@ xfsm_manager_save_yourself_done (XfsmManager *manager,
       xfsm_client_set_state (client, XFSM_CLIENT_IDLE);
       if (sms != NULL)
         {
+#ifdef ENABLE_X11
           SmsSaveComplete (sms);
+#endif
         }
     }
   else if (manager->state != XFSM_MANAGER_CHECKPOINT && manager->state != XFSM_MANAGER_SHUTDOWN)
@@ -1458,7 +1497,6 @@ xfsm_manager_close_connection (XfsmManager *manager,
                                XfsmClient  *client,
                                gboolean     cleanup)
 {
-  IceConn ice_conn;
   GList *lp;
 
   xfsm_client_set_state (client, XFSM_CLIENT_DISCONNECTED);
@@ -1469,10 +1507,12 @@ xfsm_manager_close_connection (XfsmManager *manager,
       SmsConn sms_conn = xfsm_client_get_sms_connection (client);
       if (sms_conn != NULL)
         {
-          ice_conn = SmsGetIceConnection (sms_conn);
+#ifdef ENABLE_X11
+          IceConn ice_conn = SmsGetIceConnection (sms_conn);
           SmsCleanUp (sms_conn);
           IceSetShutdownNegotiation (ice_conn, False);
           IceCloseConnection (ice_conn);
+#endif
         }
       else
         {
@@ -1533,6 +1573,7 @@ xfsm_manager_close_connection (XfsmManager *manager,
 }
 
 
+#ifdef ENABLE_X11
 void
 xfsm_manager_close_connection_by_ice_conn (XfsmManager *manager,
                                            IceConn      ice_conn)
@@ -1559,6 +1600,7 @@ xfsm_manager_close_connection_by_ice_conn (XfsmManager *manager,
   IceSetShutdownNegotiation (ice_conn, False);
   IceCloseConnection (ice_conn);
 }
+#endif
 
 
 gboolean
@@ -1581,7 +1623,9 @@ xfsm_manager_terminate_client (XfsmManager *manager,
 
   if (sms != NULL)
     {
+#ifdef ENABLE_X11
       SmsDie (sms);
+#endif
     }
   else
     {
@@ -1619,7 +1663,9 @@ xfsm_manager_perform_shutdown (XfsmManager *manager)
       SmsConn sms = xfsm_client_get_sms_connection (client);
       if (sms != NULL)
         {
+#ifdef ENABLE_X11
           SmsDie (sms);
+#endif
         }
       else
         {
@@ -1709,7 +1755,9 @@ xfsm_manager_maybe_enter_phase2 (XfsmManager *manager)
 
           if (sms != NULL)
             {
+#ifdef ENABLE_X11
               SmsSaveYourselfPhase2 (sms);
+#endif
             }
 
           xfsm_client_set_state (client, XFSM_CLIENT_SAVING);
@@ -1755,7 +1803,9 @@ xfsm_manager_complete_saveyourself (XfsmManager *manager)
           xfsm_client_set_state (client, XFSM_CLIENT_IDLE);
           if (sms != NULL)
             {
+#ifdef ENABLE_X11
               SmsSaveComplete (sms);
+#endif
             }
         }
     }
@@ -1818,9 +1868,8 @@ xfsm_manager_cancel_client_save_timeout (XfsmManager *manager,
 void
 xfsm_manager_store_session (XfsmManager *manager)
 {
-  WnckWorkspace *workspace;
-  GdkDisplay    *display;
-  WnckScreen    *screen;
+  XfwWorkspaceManager *wp_manager;
+  XfwWorkspace  *workspace;
   GKeyFile      *file;
   const gchar   *filename;
   GError        *error = NULL;
@@ -1828,7 +1877,7 @@ xfsm_manager_store_session (XfsmManager *manager)
   gchar          prefix[64];
   gchar         *group;
   gint           count = 0;
-  gint           n, m;
+  gint           n = 0, m;
 
   /* open file for writing, creates it if it doesn't exist */
   file = settings_list_sessions_open_key_file (FALSE);
@@ -1874,18 +1923,20 @@ xfsm_manager_store_session (XfsmManager *manager)
 
   g_key_file_set_integer (file, group, "Count", count);
 
-  /* store legacy applications state */
-  xfsm_legacy_store_session (file, group);
+#ifdef ENABLE_LEGACY_SESSION_MANAGEMENT
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    {
+      /* store legacy applications state */
+      xfsm_legacy_store_session (file, group);
+    }
+#endif
 
   /* store current workspace numbers */
-  display = gdk_display_get_default ();
-  for (n = 0; n < gdk_display_get_n_screens (display); ++n)
+  wp_manager = xfw_screen_get_workspace_manager (manager->xfw_screen);
+  for (lp = xfw_workspace_manager_list_workspace_groups (wp_manager); lp != NULL; lp = lp->next, n++)
     {
-      screen = wnck_screen_get (n);
-      wnck_screen_force_update (screen);
-
-      workspace = wnck_screen_get_active_workspace (screen);
-      m = wnck_workspace_get_number (workspace);
+      workspace = xfw_workspace_group_get_active_workspace (lp->data);
+      m = g_list_index (xfw_workspace_group_list_workspaces (lp->data), workspace);
 
       g_snprintf (prefix, 64, "Screen%d_ActiveWorkspace", n);
       g_key_file_set_integer (file, group, prefix, m);

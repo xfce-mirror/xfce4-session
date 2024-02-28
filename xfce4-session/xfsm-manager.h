@@ -126,8 +126,10 @@ void xfsm_manager_close_connection (XfsmManager *manager,
                                     XfsmClient  *client,
                                     gboolean     cleanup);
 
+#ifdef ENABLE_X11
 void xfsm_manager_close_connection_by_ice_conn (XfsmManager *manager,
                                                 IceConn ice_conn);
+#endif
 
 gboolean xfsm_manager_check_clients_saving (XfsmManager *manager);
 

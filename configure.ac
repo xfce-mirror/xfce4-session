@@ -11,11 +11,15 @@ XDT_VERSION_INIT([4.19.1], [git])
 dnl minimum required versions
 m4_define([glib_min_version], [2.66.0])
 m4_define([gtk_min_version], [3.24.0])
-m4_define([libwnck_min_version], [3.10.0])
-m4_define([x11_minimum_version], [1.6.7])
 m4_define([libxfce4util_min_version], [4.19.2])
 m4_define([libxfce4ui_min_version], [4.18.4])
 m4_define([xfconf_min_version], [4.12.0])
+m4_define([libxfce4windowing_min_version], [4.19.2])
+
+m4_define([libx11_min_version], [1.6.7])
+m4_define([libwnck_min_version], [3.10.0])
+m4_define([libice_min_version], [1.0.10])
+m4_define([libsm_min_version], [1.2.3])
 
 m4_define([polkit_min_version], [0.102])
 
@@ -85,15 +89,6 @@ AC_CHECK_LIB([m], [rint], [libm=-lm], [libm=])
 LIBM="$libm"
 AC_SUBST(LIBM)
 
-dnl Check for session management support
-XDT_CHECK_LIBSM()
-
-dnl Check for _IceTransNoListen
-ac_LIBS="$LIBS"
-LIBS="$LIBS $LIBSM_LDFLAGS $LIBSM_LIBS"
-AC_CHECK_FUNCS([_IceTransNoListen])
-LIBS="$ac_LIBS"
-
 dnl Check for i18n support
 GETTEXT_PACKAGE="$PACKAGE"
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [Name of default gettext domain])
@@ -106,11 +101,70 @@ XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [gtk_min_version])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_min_version])
 XDT_CHECK_PACKAGE([GIO], [gio-2.0], [glib_min_version])
 XDT_CHECK_PACKAGE([GMODULE], [gmodule-2.0], [glib_min_version])
-XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-3.0], [libwnck_min_version])
-XDT_CHECK_PACKAGE([LIBX11], [x11], [x11_minimum_version])
 XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [libxfce4util_min_version])
 XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [libxfce4ui_min_version])
 XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [xfconf_min_version])
+XDT_CHECK_PACKAGE([LIBXFCE4WINDOWING], [libxfce4windowing-0], [libxfce4windowing_min_version])
+
+XDT_CHECK_OPTIONAL_FEATURE([X11],
+                           [x11],
+                           [
+                             XDT_FEATURE_DEPENDENCY([GDK_X11], [gdk-x11-3.0], [gtk_min_version])
+                             XDT_FEATURE_DEPENDENCY([LIBX11], [x11], [libx11_min_version])
+                             XDT_FEATURE_DEPENDENCY([LIBWNCK], [libwnck-3.0], [libwnck_min_version])
+                             XDT_FEATURE_DEPENDENCY([LIBICE], [ice], [libice_min_version])
+                             XDT_FEATURE_DEPENDENCY([LIBSM], [sm], [libsm_min_version])
+                           ],
+                           [the X11 windowing system])
+XDT_CHECK_OPTIONAL_FEATURE([WAYLAND],
+                           [wayland],
+                           [
+                             XDT_FEATURE_DEPENDENCY([GDK_WAYLAND], [gdk-wayland-3.0], [gtk_min_version])
+                           ],
+                           [the Wayland windowing system])
+if test x"$ENABLE_X11" != x"yes" -a x"$ENABLE_WAYLAND" != x"yes"; then
+  AC_MSG_ERROR([Either both X11 and Wayland support was disabled, or required dependencies are missing. One of the two must be enabled.])
+fi
+
+if test x"$ENABLE_X11" = x"yes"; then
+  dnl Check for _IceTransNoListen
+  ac_LIBS="$LIBS"
+  LIBS="$LIBS $LIBSM_LDFLAGS $LIBSM_LIBS"
+  AC_CHECK_FUNCS([_IceTransNoListen])
+  LIBS="$ac_LIBS"
+
+  dnl Check for iceauth
+  AC_PATH_PROG([ICEAUTH], [iceauth])
+  if test x"$ICEAUTH" != x""; then
+    AC_DEFINE_UNQUOTED([ICEAUTH_CMD], ["$ICEAUTH"], [path to iceauth])
+  else
+    AC_MSG_ERROR([iceauth missing, please check your X11 installation])
+  fi
+
+  dnl Find a location for the session desktop file
+  AC_MSG_CHECKING([what xsession-prefix to use])
+  AC_ARG_WITH([xsession-prefix],
+    AS_HELP_STRING([--with-xsession-prefix=XSESSION_PREFIX], [What should be the prefix for the xsession .desktop file?]),
+    [], [with_xsession_prefix="/usr"])
+  XSESSION_PREFIX=$with_xsession_prefix
+  AC_SUBST([XSESSION_PREFIX])
+  AC_MSG_RESULT([$with_xsession_prefix])
+
+  dnl Check for legacy session management
+  AC_ARG_ENABLE([legacy-sm],
+    AS_HELP_STRING([--enable-legacy-sm], [Enable X11R5 session management])
+    AS_HELP_STRING([--disable-legacy-sm], [Disable X11R5 session management]),
+    [], [enable_legacy_sm=yes])
+  AC_MSG_CHECKING([whether to enable X11R5 session management])
+  if test x"$enable_legacy_sm" != x"yes"; then
+    enable_legacy_sm=no
+    AC_MSG_RESULT([no])
+  else
+    AC_DEFINE([ENABLE_LEGACY_SESSION_MANAGEMENT], [1], [Define for X11R5 sm compat])
+    AC_MSG_RESULT([yes])
+  fi
+fi
+AM_CONDITIONAL([ENABLE_LEGACY_SESSION_MANAGEMENT], [test x"$enable_legacy_sm" = x"yes"])
 
 XDT_CHECK_PACKAGE_BINARY([GDBUS_CODEGEN], [gio-2.0], [gdbus_codegen], [gdbus-codegen])
 
@@ -123,36 +177,6 @@ XDT_FEATURE_DEBUG([xdt_debug_default])
 
 dnl Check for linker optimizations
 XDT_FEATURE_LINKER_OPTS()
-
-dnl Check for iceauth
-AC_PATH_PROG([ICEAUTH], [iceauth])
-if test x"$ICEAUTH" != x""; then
-  AC_DEFINE_UNQUOTED([ICEAUTH_CMD], ["$ICEAUTH"], [path to iceauth])
-else
-  AC_MSG_ERROR([iceauth missing, please check your X11 installation])
-fi
-
-dnl Find a location for the session desktop file
-AC_MSG_CHECKING([what xsession-prefix to use])
-AC_ARG_WITH([xsession-prefix],
-            AS_HELP_STRING([--with-xsession-prefix=XSESSION_PREFIX], [What should be the prefix for the xsession .desktop file?]),
-  [], [with_xsession_prefix="/usr"])
-XSESSION_PREFIX=$with_xsession_prefix
-AC_SUBST([XSESSION_PREFIX])
-AC_MSG_RESULT([$with_xsession_prefix])
-
-dnl Check for legacy session management
-AC_ARG_ENABLE([legacy-sm],
-AS_HELP_STRING([--enable-legacy-sm], [Enable X11R5 session management])
-AS_HELP_STRING([--disable-legacy-sm], [Disable X11R5 session management]),
-  [], [enable_legacy_sm=yes])
-AC_MSG_CHECKING([whether to enable X11R5 session management])
-if test x"$enable_legacy_sm" != x"yes"; then
-  AC_MSG_RESULT([no])
-else
-  AC_DEFINE([LEGACY_SESSION_MANAGEMENT], [1], [Define for X11R5 sm compat])
-  AC_MSG_RESULT([yes])
-fi
 
 dnl Compile time default choice of backend
 AC_ARG_WITH([backend],
@@ -217,16 +241,12 @@ echo
 echo "Build Configuration:"
 echo
 echo " * Debugging support:              $enable_debug"
-if test x"$POLKIT_FOUND" = x"yes"; then
-echo " * Polkit/PolicyKit support:       yes"
-else
-echo " * Polkit/PolicyKit support:       no"
+echo " * X11 Support:                    ${ENABLE_X11:-no}"
+if test x"$ENABLE_X11" = x"yes"; then
+echo "   * Legacy session management:    $enable_legacy_sm"
 fi
-if test x"$enable_legacy_sm" = x"yes"; then
-echo " * Legacy session management:      yes"
-else
-echo " * Legacy session management:      no"
-fi
+echo " * Wayland Support:                ${ENABLE_WAYLAND:-no}"
+echo " * Polkit/PolicyKit support:       ${POLKIT_FOUND:-no}"
 echo " * Backend:                        ${with_backend}"
 
 echo

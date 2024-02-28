@@ -53,7 +53,9 @@
 #endif
 
 #include <glib/gstdio.h>
+#ifdef ENABLE_X11
 #include <gdk/gdkx.h>
+#endif
 #include <libxfce4ui/libxfce4ui.h>
 
 #include <libxfsm/xfsm-util.h>
@@ -442,6 +444,7 @@ xfsm_startup_at_set_gtk_modules (void)
 }
 
 
+#ifdef ENABLE_X11
 static gboolean
 xfsm_startup_at_spi_ior_set (void)
 {
@@ -468,12 +471,13 @@ xfsm_startup_at_spi_ior_set (void)
 
   return TRUE;
 }
+#endif
 
 
 static void
 xfsm_startup_at (XfsmManager *manager)
 {
-  gint n, i;
+  gint n;
 
   /* start at-spi-dbus-bus and/or at-spi-registryd */
   n = xfsm_launch_desktop_files_on_login (TRUE);
@@ -482,15 +486,20 @@ xfsm_startup_at (XfsmManager *manager)
     {
       xfsm_startup_at_set_gtk_modules ();
 
-      /* wait for 2 seconds until the at-spi registered, not very nice
-       * but required to properly start an accessible desktop */
-      for (i = 0; i < 10; i++)
+#ifdef ENABLE_X11
+      if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
         {
-          if (xfsm_startup_at_spi_ior_set ())
-            break;
-          xfsm_verbose ("Waiting for at-spi to register...\n");
-          g_usleep (G_USEC_PER_SEC / 5);
+          /* wait for 2 seconds until the at-spi registered, not very nice
+           * but required to properly start an accessible desktop */
+          for (gint i = 0; i < 10; i++)
+            {
+              if (xfsm_startup_at_spi_ior_set ())
+                break;
+              xfsm_verbose ("Waiting for at-spi to register...\n");
+              g_usleep (G_USEC_PER_SEC / 5);
+            }
         }
+#endif
     }
   else
     {
