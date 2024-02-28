@@ -11,6 +11,9 @@ SUBDIRS =								\
 	xfce4-session-logout						\
 	xfsm-shutdown-helper
 
+EXTRA_DIST =
+DISTCLEANFILES =
+
 if ENABLE_X11
 
 desktopdir = $(XSESSION_PREFIX)/share/xsessions
@@ -20,11 +23,31 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 %.desktop: %.desktop.in
 	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
-EXTRA_DIST =								\
+EXTRA_DIST +=								\
 	$(desktop_in_files)
 
-DISTCLEANFILES =							\
+DISTCLEANFILES +=							\
 	$(desktop_DATA)
+
+endif
+
+if ENABLE_WAYLAND
+
+# do not rename xfce-wayland.desktop to xfce.desktop when installing:
+# some DM like LightDM (+ GTK greeter) do not support "duplicate" entries
+# i.e. the same basename in /usr/share/xsessions and /usr/share/wayland-sessions
+desktop_waylanddir = $(WAYLAND_SESSION_PREFIX)/share/wayland-sessions
+desktop_wayland_in_files = xfce-wayland.desktop.in
+desktop_wayland_DATA = $(desktop_wayland_in_files:.desktop.in=.desktop)
+
+%.desktop: %.desktop.in
+	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
+
+EXTRA_DIST +=								\
+	$(desktop_wayland_in_files)
+
+DISTCLEANFILES +=							\
+	$(desktop_wayland_DATA)
 
 endif
 

@@ -34,6 +34,11 @@ then
       echo "  --help                   Show help options"
       echo "  --with-ck-launch         Start xfce4-session inside a"
       echo "                           ConsoleKit session"
+      echo "  --wayland                Start xfce4-session inside a Wayland compositor."
+      echo "                           The remaining optional arguments are interpreted as"
+      echo "                           a command line to run a Wayland compositor replacing"
+      echo "                           the default one. 'xfce4-session' will be passed to it"
+      echo "                           as an argument."
       echo
 
       exit 0
@@ -42,18 +47,33 @@ then
       # try to launch xfce4-session with ck-launch-session in xinitrc
       XFCE4_SESSION_WITH_CK="1"
       export XFCE4_SESSION_WITH_CK
+    elif test "x$OPT" = "x--wayland"
+    then
+      XFCE4_SESSION_COMPOSITOR="1"
+      export XFCE4_SESSION_COMPOSITOR
     else
       # append
       OPTS="$OPTS $OPT"
     fi
   done
 
-  if test "x${OPTS#*--}" = "x${OPTS}"
+  if test "x$XFCE4_SESSION_COMPOSITOR" = "x"
   then
-    CLIENTRC=${OPTS}
+    if test "x${OPTS#*--}" = "x${OPTS}"
+    then
+      CLIENTRC=${OPTS}
+    else
+      SERVERRC=${OPTS#*-- }
+      CLIENTRC=${OPTS%--*}
+    fi
   else
-    SERVERRC=${OPTS#*-- }
-    CLIENTRC=${OPTS%--*}
+    default_compositor="labwc"
+    if test "x$OPTS" = "x" && ! command -v "$default_compositor" >/dev/null 2>&1
+    then
+      echo "$0: Please either install $default_compositor or specify another compositor as argument"
+      exit 1
+    fi
+    XFCE4_SESSION_COMPOSITOR=${OPTS:-labwc --startup}
   fi
 fi
 
@@ -92,16 +112,21 @@ then
 fi
 export XDG_CONFIG_DIRS
 
-if test "x$DISPLAY" = "x"
+if test "x$XFCE4_SESSION_COMPOSITOR" = "x"
 then
-  echo "$0: Starting X server"
-  prog=xinit
+  if test "x$DISPLAY" = "x"
+  then
+    echo "$0: Starting X server"
+    prog=xinit
 
-  if test ! "x$XDG_VTNR" = "x"; then
-    SERVERRC="$SERVERRC vt$XDG_VTNR"
+    if test ! "x$XDG_VTNR" = "x"; then
+      SERVERRC="$SERVERRC vt$XDG_VTNR"
+    fi
+  else
+    echo "$0: X server already running on display $DISPLAY"
+    prog=/bin/sh
   fi
 else
-  echo "$0: X server already running on display $DISPLAY"
   prog=/bin/sh
 fi
 
@@ -125,4 +150,3 @@ elif [ -f $HOME/.xfce4/xinitrc ]; then
 else
   exec $prog @_sysconfdir_@/xdg/xfce4/xinitrc $CLIENTRC $SERVERRC
 fi
-
