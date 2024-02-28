@@ -166,6 +166,17 @@ if test x"$ENABLE_X11" = x"yes"; then
 fi
 AM_CONDITIONAL([ENABLE_LEGACY_SESSION_MANAGEMENT], [test x"$enable_legacy_sm" = x"yes"])
 
+if test x"$ENABLE_WAYLAND" = x"yes"; then
+  dnl Find a location for the session desktop file
+  AC_MSG_CHECKING([what wayland-session-prefix to use])
+  AC_ARG_WITH([wayland-session-prefix],
+    AS_HELP_STRING([--with-wayland-session-prefix=WAYLAND_SESSION_PREFIX], [What should be the prefix for the wayland session .desktop file?]),
+    [], [with_wayland_session_prefix="/usr"])
+  WAYLAND_SESSION_PREFIX=$with_wayland_session_prefix
+  AC_SUBST([WAYLAND_SESSION_PREFIX])
+  AC_MSG_RESULT([$with_wayland_session_prefix])
+fi
+
 XDT_CHECK_PACKAGE_BINARY([GDBUS_CODEGEN], [gio-2.0], [gdbus_codegen], [gdbus-codegen])
 
 dnl Check for Polkit/PolicyKit
