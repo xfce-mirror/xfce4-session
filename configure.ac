@@ -21,6 +21,8 @@ m4_define([libwnck_min_version], [3.10.0])
 m4_define([libice_min_version], [1.0.10])
 m4_define([libsm_min_version], [1.2.3])
 
+m4_define([gtk_layer_shell_min_version], [0.7.0])
+
 m4_define([polkit_min_version], [0.102])
 
 dnl Initialize autoconf
@@ -175,7 +177,11 @@ if test x"$ENABLE_WAYLAND" = x"yes"; then
   WAYLAND_SESSION_PREFIX=$with_wayland_session_prefix
   AC_SUBST([WAYLAND_SESSION_PREFIX])
   AC_MSG_RESULT([$with_wayland_session_prefix])
+else
+  dnl Do not check for optional Wayland packages if Wayland is disabled
+  enable_gtk_layer_shell=no
 fi
+XDT_CHECK_OPTIONAL_PACKAGE([GTK_LAYER_SHELL], [gtk-layer-shell-0], [gtk_layer_shell_min_version], [gtk-layer-shell], [Gtk Layer Shell support])
 
 XDT_CHECK_PACKAGE_BINARY([GDBUS_CODEGEN], [gio-2.0], [gdbus_codegen], [gdbus-codegen])
 
