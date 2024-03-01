@@ -252,6 +252,16 @@ name_lost (GDBusConnection *connection,
       if (!succeed)
         g_warning ("Failed to shutdown/restart: %s", ERROR_MSG (error));
     }
+  else if (shutdown_type == XFSM_SHUTDOWN_LOGOUT && WINDOWING_IS_WAYLAND ())
+    {
+      gchar *cmd = xfconf_channel_get_string (channel, "/general/WaylandLogoutCommand", NULL);
+      if (cmd == NULL)
+        cmd = g_strdup ("loginctl terminate-session ''");
+
+      if (!g_spawn_command_line_async (cmd, &error))
+        g_warning ("Failed to run logout command: %s", error->message);
+      g_free (cmd);
+    }
 
   g_object_unref (shutdown_helper);
   g_object_unref (*manager);
