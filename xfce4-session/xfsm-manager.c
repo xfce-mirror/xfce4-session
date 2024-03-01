@@ -583,6 +583,20 @@ xfsm_manager_load_failsafe (XfsmManager   *manager,
       return FALSE;
     }
 
+  if (WINDOWING_IS_WAYLAND ())
+    {
+      /* use the Wayland variant if it exists */
+      gchar *wl_failsafe_name = g_strconcat (failsafe_name, "Wayland", NULL);
+      g_snprintf (propbuf, sizeof (propbuf), "/sessions/%s/IsFailsafe", wl_failsafe_name);
+      if (xfconf_channel_get_bool (channel, propbuf, FALSE))
+        {
+          g_free (failsafe_name);
+          failsafe_name = wl_failsafe_name;
+        }
+      else
+        g_free (wl_failsafe_name);
+    }
+
   g_snprintf (propbuf, sizeof (propbuf), "/sessions/%s/IsFailsafe",
               failsafe_name);
   if (!xfconf_channel_get_bool (channel, propbuf, FALSE))
@@ -619,6 +633,7 @@ xfsm_manager_load_failsafe (XfsmManager   *manager,
     }
   g_queue_sort (manager->pending_properties, (GCompareDataFunc) G_CALLBACK (xfsm_properties_compare), NULL);
 
+  g_free (failsafe_name);
   if (g_queue_peek_head (manager->pending_properties) == NULL)
     {
       if (error)
