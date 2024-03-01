@@ -38,10 +38,11 @@ G_BEGIN_DECLS
 #define XFSM_MANAGER(obj)     (G_TYPE_CHECK_INSTANCE_CAST((obj), XFSM_TYPE_MANAGER, XfsmManager))
 #define XFSM_IS_MANAGER(obj)  (G_TYPE_CHECK_INSTANCE_TYPE((obj), XFSM_TYPE_MANAGER))
 
-#define DIE_TIMEOUT            (     7 * 1000)
-#define SAVE_TIMEOUT           (    60 * 1000)
-#define STARTUP_TIMEOUT        (     8 * 1000)
-#define RESTART_RESET_TIMEOUT  (5 * 60 * 1000)
+#define DIE_TIMEOUT             (     7 * 1000)
+#define SAVE_TIMEOUT            (    60 * 1000)
+#define STARTUP_TIMEOUT         (     8 * 1000)
+#define STARTUP_TIMEOUT_WAYLAND (     8 * 1000)
+#define RESTART_RESET_TIMEOUT   (5 * 60 * 1000)
 #define XFSM_CHOOSE_LOGOUT  0
 #define XFSM_CHOOSE_LOAD    1
 #define XFSM_CHOOSE_NEW     2
