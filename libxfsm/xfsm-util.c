@@ -160,6 +160,9 @@ xfsm_gdk_display_get_fullname (GdkDisplay *display)
   g_return_val_if_fail (GDK_IS_DISPLAY (display), NULL);
 
   name = gdk_display_get_name (display);
+  if (WINDOWING_IS_WAYLAND ())
+    return g_strdup (name);
+
   if (*name == ':')
     {
       hostname = xfce_gethostname ();
