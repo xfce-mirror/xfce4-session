@@ -1373,6 +1373,9 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
       xfsm_client_set_state (client, XFSM_CLIENT_SAVING);
       xfsm_manager_start_client_save_timeout (manager, client);
     }
+
+  if (shutdown && WINDOWING_IS_WAYLAND ())
+    g_signal_emit (G_OBJECT (manager), manager_signals[MANAGER_QUIT], 0);
 }
 
 
