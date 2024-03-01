@@ -45,6 +45,9 @@
 
 #include <libxfce4util/libxfce4util.h>
 #include <gtk/gtk.h>
+#ifdef HAVE_GTK_LAYER_SHELL
+#include <gtk-layer-shell/gtk-layer-shell.h>
+#endif
 
 #include <libxfsm/xfsm-util.h>
 
@@ -159,6 +162,15 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   GtkWidget      *image;
   GtkWidget      *separator;
   GtkCssProvider *provider;
+
+#ifdef HAVE_GTK_LAYER_SHELL
+  if (gtk_layer_is_supported ())
+    {
+      gtk_layer_init_for_window (GTK_WINDOW (dialog));
+      gtk_layer_set_keyboard_mode (GTK_WINDOW (dialog), GTK_LAYER_SHELL_KEYBOARD_MODE_EXCLUSIVE);
+      gtk_layer_set_layer (GTK_WINDOW (dialog), GTK_LAYER_SHELL_LAYER_OVERLAY);
+    }
+#endif
 
   dialog->type_clicked = XFSM_SHUTDOWN_LOGOUT;
   dialog->shutdown = xfsm_shutdown_get ();

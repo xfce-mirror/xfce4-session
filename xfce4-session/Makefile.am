@@ -69,6 +69,7 @@ xfce4_session_CFLAGS =							\
 	$(POLKIT_CFLAGS)						\
 	$(XFCONF_CFLAGS)						\
 	$(LIBXFCE4WINDOWING_CFLAGS)						\
+	$(GTK_LAYER_SHELL_CFLAGS)						\
 	$(PLATFORM_CFLAGS)
 
 xfce4_session_LDFLAGS =							\
@@ -84,6 +85,7 @@ xfce4_session_LDADD =							\
 	$(POLKIT_LIBS)							\
 	$(XFCONF_LIBS)							\
 	$(LIBXFCE4WINDOWING_LIBS)							\
+	$(GTK_LAYER_SHELL_LIBS)							\
 	$(LIBM)
 
 if ENABLE_X11
