@@ -79,8 +79,6 @@
 #include <libxfsm/xfsm-util.h>
 
 
-#ifdef LEGACY_SESSION_MANAGEMENT
-
 #define WM_SAVE_YOURSELF_TIMEOUT  4000
 
 enum
@@ -291,13 +289,10 @@ get_clientleader (Window window)
   return result;
 }
 
-#endif
-
 
 void
 xfsm_legacy_perform_session_save (void)
 {
-#ifdef LEGACY_SESSION_MANAGEMENT
   XErrorHandler old_handler;
   WnckScreen *screen;
   GList *windows;
@@ -494,7 +489,6 @@ xfsm_legacy_perform_session_save (void)
             sm_window->type = SM_ERROR;
         }
     }
-#endif
 }
 
 
@@ -502,7 +496,6 @@ void
 xfsm_legacy_store_session (GKeyFile *file,
                            const gchar *group)
 {
-#ifdef LEGACY_SESSION_MANAGEMENT
   int count = 0;
   SmWindow *sm_window;
   GList *lp;
@@ -549,7 +542,6 @@ xfsm_legacy_store_session (GKeyFile *file,
     }
 
   g_key_file_set_integer (file, group, "LegacyCount", count);
-#endif
 }
 
 
@@ -557,7 +549,6 @@ void
 xfsm_legacy_load_session (GKeyFile *file,
                           const gchar *group)
 {
-#ifdef LEGACY_SESSION_MANAGEMENT
   gchar buffer[256];
   int count;
   int i;
@@ -602,14 +593,12 @@ xfsm_legacy_load_session (GKeyFile *file,
 
       restart_apps = g_list_append (restart_apps, app);
     }
-#endif
 }
 
 
 void
 xfsm_legacy_init (void)
 {
-#ifdef LEGACY_SESSION_MANAGEMENT
   Atom dt_save_mode;
   Atom dt_restore_mode;
   Display *dpy;
@@ -636,14 +625,12 @@ xfsm_legacy_init (void)
       XChangeProperty (dpy, root, dt_restore_mode, XA_STRING, 8,
                        PropModeReplace, (unsigned char *)"xfce4", sizeof ("xfce4"));
     }
-#endif
 }
 
 
 void
 xfsm_legacy_startup (void)
 {
-#ifdef LEGACY_SESSION_MANAGEMENT
   GdkScreen *screen;
   GList *lp;
 
@@ -658,14 +645,12 @@ xfsm_legacy_startup (void)
 
   g_list_free (restart_apps);
   restart_apps = NULL;
-#endif
 }
 
 
 void
 xfsm_legacy_shutdown (void)
 {
-#ifdef LEGACY_SESSION_MANAGEMENT
   SmWindow *sm_window;
   GList *lp;
 
@@ -684,5 +669,4 @@ xfsm_legacy_shutdown (void)
   gdk_display_flush (gdk_display_get_default ());
 
   gdk_x11_display_error_trap_pop_ignored (gdk_display_get_default ());
-#endif
 }
