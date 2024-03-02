@@ -9,7 +9,6 @@ libxfsm_la_SOURCES =                    \
 	xfsm-shutdown-common.h
 
 libxfsm_la_CFLAGS =							\
-	$(LIBX11_CFLAGS)						\
 	$(LIBXFCE4UI_CFLAGS)                    \
 	$(LIBXFCE4UTIL_CFLAGS)                  \
 	$(XFCONF_CFLAGS)
@@ -20,7 +19,6 @@ libxfsm_la_LDFLAGS =						\
 endif
 
 libxfsm_la_LIBADD =							\
-	$(LIBX11_LIBS)							\
 	$(LIBXFCE4UI_LIBS)						\
 	$(LIBXFCE4UTIL_LIBS)                    \
 	$(XFCONF_LIBS)

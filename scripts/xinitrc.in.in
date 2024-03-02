@@ -52,33 +52,36 @@ if command -v xdg-user-dirs-update >/dev/null 2>&1; then
     xdg-user-dirs-update
 fi
 
-# For now, start with an empty list
-XRESOURCES=""
+if test "x$XFCE4_SESSION_COMPOSITOR" = "x"
+then
+  # For now, start with an empty list
+  XRESOURCES=""
 
-# Has to go prior to merging Xft.xrdb, as its the "Defaults" file
-test -r "@_sysconfdir_@/xdg/xfce4/Xft.xrdb" && XRESOURCES="$XRESOURCES @_sysconfdir_@/xdg/xfce4/Xft.xrdb"
-test -r $HOME/.Xdefaults && XRESOURCES="$XRESOURCES $HOME/.Xdefaults"
+  # Has to go prior to merging Xft.xrdb, as its the "Defaults" file
+  test -r "@_sysconfdir_@/xdg/xfce4/Xft.xrdb" && XRESOURCES="$XRESOURCES @_sysconfdir_@/xdg/xfce4/Xft.xrdb"
+  test -r $HOME/.Xdefaults && XRESOURCES="$XRESOURCES $HOME/.Xdefaults"
 
-BASEDIR=$XDG_CONFIG_HOME/xfce4
-if test -r "$BASEDIR/Xft.xrdb"; then
-  XRESOURCES="$XRESOURCES $BASEDIR/Xft.xrdb"
-elif test -r "$XFCE4HOME/Xft.xrdb"; then
-  mkdir -p "$BASEDIR"
-  cp "$XFCE4HOME/Xft.xrdb" "$BASEDIR"/
-  XRESOURCES="$XRESOURCES $BASEDIR/Xft.xrdb"
+  BASEDIR=$XDG_CONFIG_HOME/xfce4
+  if test -r "$BASEDIR/Xft.xrdb"; then
+    XRESOURCES="$XRESOURCES $BASEDIR/Xft.xrdb"
+  elif test -r "$XFCE4HOME/Xft.xrdb"; then
+    mkdir -p "$BASEDIR"
+    cp "$XFCE4HOME/Xft.xrdb" "$BASEDIR"/
+    XRESOURCES="$XRESOURCES $BASEDIR/Xft.xrdb"
+  fi
+
+  # merge in X cursor settings
+  test -r "$BASEDIR/Xcursor.xrdb" && XRESOURCES="$XRESOURCES $BASEDIR/Xcursor.xrdb"
+
+  # ~/.Xresources contains overrides to the above
+  test -r "$HOME/.Xresources" && XRESOURCES="$XRESOURCES $HOME/.Xresources"
+
+  # load all X resources (adds /dev/null to avoid an empty list that would hang the process)
+  cat /dev/null $XRESOURCES | xrdb -merge -
+
+  # load local modmap
+  test -r $HOME/.Xmodmap && xmodmap $HOME/.Xmodmap
 fi
-
-# merge in X cursor settings
-test -r "$BASEDIR/Xcursor.xrdb" && XRESOURCES="$XRESOURCES $BASEDIR/Xcursor.xrdb"
-
-# ~/.Xresources contains overrides to the above
-test -r "$HOME/.Xresources" && XRESOURCES="$XRESOURCES $HOME/.Xresources"
-
-# load all X resources (adds /dev/null to avoid an empty list that would hang the process)
-cat /dev/null $XRESOURCES | xrdb -merge -
-
-# load local modmap
-test -r $HOME/.Xmodmap && xmodmap $HOME/.Xmodmap
 
 # ensure both the DBus session bus and systemd user session (if running) has
 # all the env vars it needs to properly populate the environment of child
@@ -124,7 +127,7 @@ if test "x$XFCE4_SESSION_WITH_CK" = "x1"; then
   fi
 else
   # start xfce4-session normally
-  exec xfce4-session
+  exec $XFCE4_SESSION_COMPOSITOR xfce4-session
 fi
 
 # if we got here, then exec failed

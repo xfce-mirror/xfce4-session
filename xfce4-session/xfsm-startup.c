@@ -53,7 +53,9 @@
 #endif
 
 #include <glib/gstdio.h>
+#ifdef ENABLE_X11
 #include <gdk/gdkx.h>
+#endif
 #include <libxfce4ui/libxfce4ui.h>
 
 #include <libxfsm/xfsm-util.h>
@@ -442,6 +444,7 @@ xfsm_startup_at_set_gtk_modules (void)
 }
 
 
+#ifdef ENABLE_X11
 static gboolean
 xfsm_startup_at_spi_ior_set (void)
 {
@@ -468,12 +471,13 @@ xfsm_startup_at_spi_ior_set (void)
 
   return TRUE;
 }
+#endif
 
 
 static void
 xfsm_startup_at (XfsmManager *manager)
 {
-  gint n, i;
+  gint n;
 
   /* start at-spi-dbus-bus and/or at-spi-registryd */
   n = xfsm_launch_desktop_files_on_login (TRUE);
@@ -482,15 +486,20 @@ xfsm_startup_at (XfsmManager *manager)
     {
       xfsm_startup_at_set_gtk_modules ();
 
-      /* wait for 2 seconds until the at-spi registered, not very nice
-       * but required to properly start an accessible desktop */
-      for (i = 0; i < 10; i++)
+#ifdef ENABLE_X11
+      if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
         {
-          if (xfsm_startup_at_spi_ior_set ())
-            break;
-          xfsm_verbose ("Waiting for at-spi to register...\n");
-          g_usleep (G_USEC_PER_SEC / 5);
+          /* wait for 2 seconds until the at-spi registered, not very nice
+           * but required to properly start an accessible desktop */
+          for (gint i = 0; i < 10; i++)
+            {
+              if (xfsm_startup_at_spi_ior_set ())
+                break;
+              xfsm_verbose ("Waiting for at-spi to register...\n");
+              g_usleep (G_USEC_PER_SEC / 5);
+            }
         }
+#endif
     }
   else
     {
@@ -582,7 +591,7 @@ xfsm_startup_start_properties (XfsmProperties *properties,
   startup_timeout_data->manager = g_object_ref (manager);
   startup_timeout_data->properties = properties;
   properties->startup_timeout_id = g_timeout_add_full (G_PRIORITY_DEFAULT,
-                                                       STARTUP_TIMEOUT,
+                                                       WINDOWING_IS_X11 () ? STARTUP_TIMEOUT : STARTUP_TIMEOUT_WAYLAND,
                                                        xfsm_startup_timeout,
                                                        startup_timeout_data,
                                                        (GDestroyNotify) xfsm_startup_data_free);
@@ -709,8 +718,11 @@ xfsm_startup_timeout (gpointer data)
 {
   XfsmStartupData *stdata = data;
 
-  xfsm_verbose ("Client Id = %s failed to register in time\n",
-                stdata->properties->client_id);
+  if (WINDOWING_IS_X11 ())
+    xfsm_verbose ("Client Id = %s failed to register in time\n", stdata->properties->client_id);
+  else
+    /* no XfsmClient on Wayland, so just let handle_failed_startup() act as a cleanup func below */
+    xfsm_verbose ("Client pid = %d seems to have started correctly\n", stdata->properties->pid);
 
   stdata->properties->startup_timeout_id = 0;
   xfsm_startup_handle_failed_startup (stdata->properties, stdata->manager);
@@ -724,8 +736,6 @@ xfsm_startup_handle_failed_startup (XfsmProperties *properties,
                                     XfsmManager    *manager)
 {
   GQueue *starting_properties = xfsm_manager_get_queue (manager, XFSM_MANAGER_QUEUE_STARTING_PROPS);
-
-  xfsm_verbose ("Client Id = %s failed to start\n", properties->client_id);
 
   /* if our timer hasn't run out yet, kill it */
   if (properties->startup_timeout_id > 0)
