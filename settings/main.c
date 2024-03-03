@@ -182,9 +182,16 @@ main(int argc,
     treeview = gtk_builder_get_object (builder, "saved-sessions-list");
     g_signal_connect (delete_button, "clicked", G_CALLBACK (settings_list_sessions_delete_session), GTK_TREE_VIEW (treeview));
 
+    if (!WINDOWING_IS_X11 ()) {
+        gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (builder, "frame1")));
+        gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (builder, "chk_session_autosave")));
+        gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (builder, "vbox8")));
+        gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (builder, "frame4")));
+    }
+
     /* Check if there are saved sessions and if so, show the "Saved Sessions" tab */
     file = settings_list_sessions_open_key_file (TRUE);
-    xfce4_session_settings_show_saved_sessions (builder, file, file != NULL);
+    xfce4_session_settings_show_saved_sessions (builder, file, file != NULL && WINDOWING_IS_X11 ());
     if (file != NULL)
         g_key_file_free (file);
 
