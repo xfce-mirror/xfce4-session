@@ -25,6 +25,18 @@
 #include <xfconf/xfconf.h>
 
 #include <gtk/gtk.h>
+#ifdef ENABLE_X11
+#include <gdk/gdkx.h>
+#define WINDOWING_IS_X11() GDK_IS_X11_DISPLAY (gdk_display_get_default ())
+#else
+#define WINDOWING_IS_X11() FALSE
+#endif
+#ifdef ENABLE_WAYLAND
+#include <gdk/gdkwayland.h>
+#define WINDOWING_IS_WAYLAND() GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ())
+#else
+#define WINDOWING_IS_WAYLAND() FALSE
+#endif
 
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
