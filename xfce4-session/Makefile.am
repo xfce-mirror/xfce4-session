@@ -9,7 +9,6 @@ AM_CPPFLAGS =								\
 	-DSYSCONFDIR=\"$(sysconfdir)\"					\
 	-DXFSM_SHUTDOWN_HELPER_CMD=\"$(HELPER_PATH_PREFIX)/xfce4/session/xfsm-shutdown-helper\" \
 	-DDBUS_API_SUBJECT_TO_CHANGE					\
-	-DWNCK_I_KNOW_THIS_IS_UNSTABLE					\
 	$(PLATFORM_CPPFLAGS)
 
 man_MANS = xfce4-session.1
@@ -27,11 +26,7 @@ xfce4_session_built_sources =						\
 
 xfce4_session_SOURCES =							\
 	$(xfce4_session_built_sources)					\
-	ice-layer.c							\
-	ice-layer.h							\
 	main.c								\
-	sm-layer.c							\
-	sm-layer.h							\
 	xfsm-chooser.c							\
 	xfsm-chooser.h							\
 	xfsm-client.c							\
@@ -45,16 +40,12 @@ xfce4_session_SOURCES =							\
 	xfsm-dns.h							\
 	xfsm-error.c							\
 	xfsm-error.h							\
-	xfsm-fadeout.c							\
-	xfsm-fadeout.h							\
 	xfsm-global.c							\
 	xfsm-global.h							\
 	xfsm-inhibition.c						\
 	xfsm-inhibition.h						\
 	xfsm-inhibitor.c						\
 	xfsm-inhibitor.h						\
-	xfsm-legacy.c							\
-	xfsm-legacy.h							\
 	xfsm-logout-dialog.c						\
 	xfsm-logout-dialog.h						\
 	xfsm-manager.c							\
@@ -70,17 +61,15 @@ xfce4_session_SOURCES =							\
 	xfsm-startup.c							\
 	xfsm-startup.h
 
-
 xfce4_session_CFLAGS =							\
-	$(LIBSM_CFLAGS)							\
-	$(LIBX11_CFLAGS)						\
 	$(LIBXFCE4UI_CFLAGS)						\
 	$(LIBXFCE4UTIL_CFLAGS)						\
 	$(GMODULE_CFLAGS)						\
 	$(GIO_CFLAGS)							\
-	$(LIBWNCK_CFLAGS)						\
 	$(POLKIT_CFLAGS)						\
 	$(XFCONF_CFLAGS)						\
+	$(LIBXFCE4WINDOWING_CFLAGS)						\
+	$(GTK_LAYER_SHELL_CFLAGS)						\
 	$(PLATFORM_CFLAGS)
 
 xfce4_session_LDFLAGS =							\
@@ -89,18 +78,45 @@ xfce4_session_LDFLAGS =							\
 
 xfce4_session_LDADD =							\
 	$(top_builddir)/libxfsm/libxfsm.la				\
-	$(LIBSM_LDFLAGS)						\
-	$(LIBSM_LIBS)							\
-	$(LIBX11_LDFLAGS)						\
-	$(LIBX11_LIBS)							\
 	$(LIBXFCE4UI_LIBS)						\
 	$(LIBXFCE4UTIL_LIBS)						\
 	$(GMODULE_LIBS)							\
 	$(GIO_LIBS)								\
-	$(LIBWNCK_LIBS)							\
 	$(POLKIT_LIBS)							\
 	$(XFCONF_LIBS)							\
+	$(LIBXFCE4WINDOWING_LIBS)							\
+	$(GTK_LAYER_SHELL_LIBS)							\
 	$(LIBM)
+
+if ENABLE_X11
+xfce4_session_SOURCES += \
+	ice-layer.c \
+	ice-layer.h \
+	sm-layer.c \
+	sm-layer.h \
+	xfsm-fadeout.c \
+	xfsm-fadeout.h
+
+if ENABLE_LEGACY_SESSION_MANAGEMENT
+xfce4_session_SOURCES += \
+	xfsm-legacy.c \
+	xfsm-legacy.h
+endif
+
+xfce4_session_CFLAGS +=\
+	-DWNCK_I_KNOW_THIS_IS_UNSTABLE \
+	$(LIBX11_CFLAGS) \
+	$(LIBWNCK_CFLAGS) \
+	$(LIBICE_CFLAGS) \
+	$(LIBSM_CFLAGS) \
+	$(PLATFORM_CFLAGS)
+
+xfce4_session_LDADD += \
+	$(LIBX11_LIBS) \
+	$(LIBWNCK_LIBS) \
+	$(LIBICE_LIBS) \
+	$(LIBSM_LIBS)
+endif
 
 xdg_desktop_portaldir = $(datadir)/xdg-desktop-portal
 dist_xdg_desktop_portal_DATA = xfce-portals.conf

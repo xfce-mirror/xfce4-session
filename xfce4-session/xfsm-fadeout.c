@@ -26,26 +26,21 @@
 #include <gtk/gtk.h>
 #include <xfce4-session/xfsm-fadeout.h>
 
-#ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <cairo-xlib.h>
-#endif
 
 
 
 struct _XfsmFadeout
 {
-#ifdef GDK_WINDOWING_X11
   Display *xdisplay;
   Window  *xwindow;
-#endif
 };
 
 
 
-#ifdef GDK_WINDOWING_X11
 static Window
 xfsm_x11_fadeout_new_window (GdkDisplay *display,
                              GdkScreen *screen)
@@ -140,7 +135,6 @@ xfsm_x11_fadeout_new_window (GdkDisplay *display,
 
   return xwindow;
 }
-#endif
 
 
 
@@ -152,11 +146,9 @@ xfsm_fadeout_new (GdkDisplay *display)
 
   fadeout = g_slice_new0 (XfsmFadeout);
 
-#ifdef GDK_WINDOWING_X11
   fadeout->xdisplay = gdk_x11_display_get_xdisplay (display);
   screen = gdk_display_get_default_screen (display);
   fadeout->xwindow = GINT_TO_POINTER (xfsm_x11_fadeout_new_window (display, screen));
-#endif
 
   return fadeout;
 }
@@ -166,12 +158,10 @@ xfsm_fadeout_new (GdkDisplay *display)
 void
 xfsm_fadeout_destroy (XfsmFadeout *fadeout)
 {
-#ifdef GDK_WINDOWING_X11
   gdk_x11_display_error_trap_push (gdk_display_get_default ());
   XDestroyWindow (fadeout->xdisplay, GPOINTER_TO_INT (fadeout->xwindow));
   gdk_display_flush (gdk_display_get_default ());
   gdk_x11_display_error_trap_pop_ignored (gdk_display_get_default ());
-#endif
 
   g_slice_free (XfsmFadeout, fadeout);
 }

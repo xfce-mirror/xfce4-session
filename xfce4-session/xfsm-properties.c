@@ -40,6 +40,7 @@
 #include <xfce4-session/xfsm-properties.h>
 
 
+#ifdef ENABLE_X11
 /* local prototypes */
 static SmProp* strv_to_property (const gchar  *name,
                                  gchar       **argv)  G_GNUC_PURE;
@@ -47,6 +48,7 @@ static SmProp* str_to_property  (const gchar  *name,
                                  const gchar  *value) G_GNUC_PURE;
 static SmProp* int_to_property  (const gchar  *name,
                                  gint          value) G_GNUC_PURE;
+#endif
 
 /* these three structs hold lists of properties that we save in
  * and load from the session file */
@@ -100,6 +102,7 @@ compose (gchar       *buffer,
 }
 
 
+#ifdef ENABLE_X11
 static SmProp*
 strv_to_property (const gchar *name,
                   gchar      **argv)
@@ -165,6 +168,7 @@ int_to_property (const gchar *name,
 
   return prop;
 }
+#endif
 
 
 XfsmProperties*
@@ -187,6 +191,7 @@ xfsm_properties_new (const gchar *client_id,
 }
 
 
+#ifdef ENABLE_X11
 static gboolean
 xfsm_properties_extract_foreach (gpointer key,
                                  gpointer value,
@@ -228,6 +233,7 @@ xfsm_properties_extract (XfsmProperties *properties,
 
   *num_props = pp - *props;
 }
+#endif
 
 
 XfsmProperties *
@@ -615,6 +621,7 @@ xfsm_properties_set (XfsmProperties *properties,
   return TRUE;
 }
 
+#ifdef ENABLE_X11
 gboolean
 xfsm_properties_set_from_smprop (XfsmProperties *properties,
                                  const SmProp *sm_prop)
@@ -678,6 +685,7 @@ xfsm_properties_set_from_smprop (XfsmProperties *properties,
 
   return TRUE;
 }
+#endif
 
 
 gboolean
