@@ -45,6 +45,9 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+#ifdef HAVE_SYS_WAIT_H
+#include <sys/wait.h>
+#endif
 
 #include <gio/gio.h>
 
@@ -313,6 +316,21 @@ xfsm_dbus_require_session (gint argc, gchar **argv)
   return FALSE;
 }
 
+static gboolean
+wait_idle (gpointer data)
+{
+  GPid pid = GPOINTER_TO_INT (data);
+  wait (&pid);
+  return FALSE;
+}
+
+static void
+sigchld_handler (GPid pid)
+{
+  /* let any glib signal handlers (GChildWatchFunc) run first */
+  g_idle_add (wait_idle, GINT_TO_POINTER (pid));
+}
+
 int
 main (int argc, char **argv)
 {
@@ -326,6 +344,7 @@ main (int argc, char **argv)
 
   /* install required signal handlers */
   signal (SIGPIPE, SIG_IGN);
+  signal (SIGCHLD, sigchld_handler);
 
   if (!gtk_init_with_args (&argc, &argv, NULL, option_entries, GETTEXT_PACKAGE, &error))
     {
