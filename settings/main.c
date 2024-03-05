@@ -27,8 +27,10 @@
 #include <xfconf/xfconf.h>
 
 #include <gtk/gtk.h>
+#ifdef ENABLE_X11
 #include <gtk/gtkx.h>
 #include <gdk/gdkx.h>
+#endif
 
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
@@ -90,7 +92,7 @@ main(int argc,
     const gchar *format;
     gchar *markup;
 
-    Window opt_socket_id = 0;
+    gulong opt_socket_id = 0;
     gboolean opt_version = FALSE;
 
     GOptionEntry option_entries[] =
@@ -180,9 +182,16 @@ main(int argc,
     treeview = gtk_builder_get_object (builder, "saved-sessions-list");
     g_signal_connect (delete_button, "clicked", G_CALLBACK (settings_list_sessions_delete_session), GTK_TREE_VIEW (treeview));
 
+    if (!WINDOWING_IS_X11 ()) {
+        gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (builder, "frame1")));
+        gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (builder, "chk_session_autosave")));
+        gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (builder, "vbox8")));
+        gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (builder, "frame4")));
+    }
+
     /* Check if there are saved sessions and if so, show the "Saved Sessions" tab */
     file = settings_list_sessions_open_key_file (TRUE);
-    xfce4_session_settings_show_saved_sessions (builder, file, file != NULL);
+    xfce4_session_settings_show_saved_sessions (builder, file, file != NULL && WINDOWING_IS_X11 ());
     if (file != NULL)
         g_key_file_free (file);
 
@@ -209,7 +218,7 @@ main(int argc,
                            gtk_builder_get_object(builder, "chk_lock_screen"),
                            "active");
 
-    if(G_UNLIKELY(opt_socket_id == 0)) {
+    if (opt_socket_id == 0 || !WINDOWING_IS_X11 ()) {
         GtkWidget *dialog = GTK_WIDGET(gtk_builder_get_object(builder, "xfce4_session_settings_dialog"));
 
         g_signal_connect(dialog, "response", G_CALLBACK(xfce4_session_settings_dialog_response), NULL);
@@ -217,11 +226,16 @@ main(int argc,
 
         gtk_widget_show(dialog);
 
-        /* To prevent the settings dialog to be saved in the session */
-        gdk_x11_set_sm_client_id ("FAKE ID");
+#ifdef ENABLE_X11
+        if (WINDOWING_IS_X11 ()) {
+            /* To prevent the settings dialog to be saved in the session */
+            gdk_x11_set_sm_client_id ("FAKE ID");
+        }
+#endif
 
         gtk_main();
     } else {
+#ifdef ENABLE_X11
         GtkWidget *plug;
         GtkWidget *plug_child;
         GtkWidget *parent;
@@ -245,6 +259,7 @@ main(int argc,
         gdk_notify_startup_complete();
 
         gtk_main();
+#endif
     }
 
     g_object_unref(builder);

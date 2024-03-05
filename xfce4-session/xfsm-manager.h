@@ -38,10 +38,11 @@ G_BEGIN_DECLS
 #define XFSM_MANAGER(obj)     (G_TYPE_CHECK_INSTANCE_CAST((obj), XFSM_TYPE_MANAGER, XfsmManager))
 #define XFSM_IS_MANAGER(obj)  (G_TYPE_CHECK_INSTANCE_TYPE((obj), XFSM_TYPE_MANAGER))
 
-#define DIE_TIMEOUT            (     7 * 1000)
-#define SAVE_TIMEOUT           (    60 * 1000)
-#define STARTUP_TIMEOUT        (     8 * 1000)
-#define RESTART_RESET_TIMEOUT  (5 * 60 * 1000)
+#define DIE_TIMEOUT             (     7 * 1000)
+#define SAVE_TIMEOUT            (    60 * 1000)
+#define STARTUP_TIMEOUT         (     8 * 1000)
+#define STARTUP_TIMEOUT_WAYLAND (     8 * 1000)
+#define RESTART_RESET_TIMEOUT   (5 * 60 * 1000)
 #define XFSM_CHOOSE_LOGOUT  0
 #define XFSM_CHOOSE_LOAD    1
 #define XFSM_CHOOSE_NEW     2
@@ -126,8 +127,10 @@ void xfsm_manager_close_connection (XfsmManager *manager,
                                     XfsmClient  *client,
                                     gboolean     cleanup);
 
+#ifdef ENABLE_X11
 void xfsm_manager_close_connection_by_ice_conn (XfsmManager *manager,
                                                 IceConn ice_conn);
+#endif
 
 gboolean xfsm_manager_check_clients_saving (XfsmManager *manager);
 
@@ -138,10 +141,6 @@ gboolean xfsm_manager_terminate_client (XfsmManager *manager,
                                         GError     **error);
 
 void xfsm_manager_perform_shutdown (XfsmManager *manager);
-
-gboolean xfsm_manager_run_command (XfsmManager          *manager,
-                                   const XfsmProperties *properties,
-                                   const gchar          *command);
 
 void xfsm_manager_store_session (XfsmManager *manager);
 
