@@ -127,46 +127,6 @@ xfsm_verbose_real (const char *func,
 }
 
 
-gchar *
-xfsm_generate_client_id (SmsConn sms_conn)
-{
-  static char *addr = NULL;
-  static int   sequence = 0;
-  char        *sms_id;
-  char        *id = NULL;
-
-  if (sms_conn != NULL)
-    {
-      sms_id = SmsGenerateClientID (sms_conn);
-      if (sms_id != NULL)
-        {
-          id = g_strdup (sms_id);
-          g_free (sms_id);
-        }
-    }
-
-  if (id == NULL)
-    {
-      if (addr == NULL)
-        {
-          /*
-           * Faking our IP address, the 0 below is "unknown"
-           * address format (1 would be IP, 2 would be DEC-NET
-           * format). Stolen from KDE :-)
-           */
-          addr = g_strdup_printf ("0%.8x", g_random_int ());
-        }
-
-      id = (char *) g_malloc (50);
-      g_snprintf (id, 50, "1%s%.13ld%.10d%.4d", addr,
-                  (long) time (NULL), (int) getpid (), sequence);
-      sequence = (sequence + 1) % 10000;
-    }
-
-  return id;
-}
-
-
 GValue *
 xfsm_g_value_new (GType gtype)
 {

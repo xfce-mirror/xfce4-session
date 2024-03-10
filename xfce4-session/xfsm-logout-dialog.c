@@ -45,6 +45,9 @@
 
 #include <libxfce4util/libxfce4util.h>
 #include <gtk/gtk.h>
+#ifdef HAVE_GTK_LAYER_SHELL
+#include <gtk-layer-shell/gtk-layer-shell.h>
+#endif
 
 #include <libxfsm/xfsm-util.h>
 
@@ -54,7 +57,7 @@
 #include <xfce4-session/xfsm-legacy.h>
 #include <xfce4-session/xfsm-error.h>
 
-#ifdef GDK_WINDOWING_X11
+#ifdef ENABLE_X11
 #include <X11/Xlib.h>
 #include <gdk/gdkx.h>
 #endif
@@ -159,6 +162,15 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   GtkWidget      *image;
   GtkWidget      *separator;
   GtkCssProvider *provider;
+
+#ifdef HAVE_GTK_LAYER_SHELL
+  if (gtk_layer_is_supported ())
+    {
+      gtk_layer_init_for_window (GTK_WINDOW (dialog));
+      gtk_layer_set_keyboard_mode (GTK_WINDOW (dialog), GTK_LAYER_SHELL_KEYBOARD_MODE_EXCLUSIVE);
+      gtk_layer_set_layer (GTK_WINDOW (dialog), GTK_LAYER_SHELL_LAYER_OVERLAY);
+    }
+#endif
 
   dialog->type_clicked = XFSM_SHUTDOWN_LOGOUT;
   dialog->shutdown = xfsm_shutdown_get ();
@@ -381,7 +393,8 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
    **/
   if (xfsm_shutdown_can_save_session (dialog->shutdown)
       && !xfconf_channel_get_bool (channel, "/general/AutoSave", FALSE)
-      && xfconf_channel_get_bool (channel, "/general/ShowSave", TRUE))
+      && xfconf_channel_get_bool (channel, "/general/ShowSave", TRUE)
+      && WINDOWING_IS_X11 ())
     {
       dialog->save_session = gtk_check_button_new_with_mnemonic (_("_Save session for future logins"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->save_session), save_session);
@@ -679,13 +692,16 @@ xfsm_logout_dialog_run (GtkDialog *dialog,
           g_critical ("Failed to grab the keyboard for logout window");
         }
 
-#ifdef GDK_WINDOWING_X11
-      /* force input to the dialog */
-      gdk_x11_display_error_trap_push (gdk_display_get_default ());
-      XSetInputFocus (gdk_x11_get_default_xdisplay (),
-                      GDK_WINDOW_XID (window),
-                      RevertToParent, CurrentTime);
-      gdk_x11_display_error_trap_pop_ignored (gdk_display_get_default ());
+#ifdef ENABLE_X11
+      if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+        {
+          /* force input to the dialog */
+          gdk_x11_display_error_trap_push (gdk_display_get_default ());
+          XSetInputFocus (gdk_x11_get_default_xdisplay (),
+                          GDK_WINDOW_XID (window),
+                          RevertToParent, CurrentTime);
+          gdk_x11_display_error_trap_pop_ignored (gdk_display_get_default ());
+        }
 #endif
     }
 
@@ -711,7 +727,9 @@ xfsm_logout_dialog (const gchar      *session_name,
   GdkScreen        *screen;
   gint              monitor;
   GdkPixbuf        *screenshot = NULL;
+#ifdef ENABLE_X11
   XfsmFadeout      *fadeout = NULL;
+#endif
   XfsmLogoutDialog *xfsm_dialog;
   XfconfChannel    *channel = xfconf_channel_get (SETTINGS_CHANNEL);
   gboolean          autosave;
@@ -785,8 +803,13 @@ xfsm_logout_dialog (const gchar      *session_name,
       if (xfconf_channel_get_bool (channel, "/general/ShowScreenshots", TRUE))
         screenshot = xfsm_logout_dialog_screenshot_new (screen);
 
-      /* display fadeout */
-      fadeout = xfsm_fadeout_new (gdk_screen_get_display (screen));
+#ifdef ENABLE_X11
+      if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+        {
+          /* display fadeout */
+          fadeout = xfsm_fadeout_new (gdk_screen_get_display (screen));
+        }
+#endif
 
       dialog = g_object_new (XFSM_TYPE_LOGOUT_DIALOG,
                              "type", GTK_WINDOW_POPUP,
@@ -831,8 +854,13 @@ xfsm_logout_dialog (const gchar      *session_name,
       *return_type = xfsm_dialog->type_clicked;
     }
 
-  if (fadeout != NULL)
-    xfsm_fadeout_destroy (fadeout);
+#ifdef ENABLE_X11
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    {
+      if (fadeout != NULL)
+        xfsm_fadeout_destroy (fadeout);
+    }
+#endif
 
   gtk_widget_destroy (dialog);
 

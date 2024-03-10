@@ -23,8 +23,6 @@
 #define __XFSM_GLOBAL_H__
 
 #include <glib.h>
-#include <gdk/gdkx.h>
-#include <X11/SM/SMlib.h>
 
 #include <xfce4-session/xfsm-shutdown.h> /* XfsmShutdownType */
 
@@ -56,8 +54,6 @@ void xfsm_verbose_real (const char *func,
                         int line,
                         const char *format,
                         ...) G_GNUC_PRINTF (4, 5);
-
-gchar *xfsm_generate_client_id (SmsConn sms_conn) G_GNUC_PURE;
 
 GValue *xfsm_g_value_new (GType gtype);
 void    xfsm_g_value_free (GValue *value);
