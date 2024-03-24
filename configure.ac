@@ -102,6 +102,7 @@ dnl Check for required packages
 XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [gtk_min_version])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_min_version])
 XDT_CHECK_PACKAGE([GIO], [gio-2.0], [glib_min_version])
+XDT_CHECK_PACKAGE([GIO_UNIX], [gio-unix-2.0], [glib_min_version])
 XDT_CHECK_PACKAGE([GMODULE], [gmodule-2.0], [glib_min_version])
 XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [libxfce4util_min_version])
 XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [libxfce4ui_min_version])
