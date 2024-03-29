@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-04-12 12:49+0200\n"
+"POT-Creation-Date: 2024-03-29 12:48+0100\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Israt Jahan <israt@ankur.org.bd>, 2010\n"
 "Language-Team: Bengali (http://app.transifex.com/xfce/xfce4-session/language/bn/)\n"
@@ -23,75 +23,63 @@ msgstr ""
 msgid "Xfce Session"
 msgstr ""
 
-#: xfce.desktop.in:5
+#: xfce.desktop.in:5 xfce-wayland.desktop.in:5
 msgid "Use this session to run Xfce as your desktop environment"
 msgstr ""
 
-#: xfce.desktop.in:8
-msgid "Type=Application"
+#: xfce-wayland.desktop.in:4
+msgid "Xfce Session (Wayland)"
 msgstr ""
 
-#: libxfsm/xfsm-util.c:374
+#: libxfsm/xfsm-util.c:370
 msgid "Session"
 msgstr ""
 
-#: libxfsm/xfsm-util.c:385
+#: libxfsm/xfsm-util.c:381
 msgid "Last accessed"
 msgstr ""
 
-#: scripts/xscreensaver.desktop.in:4
-msgid "Screensaver"
-msgstr ""
-
-#: scripts/xscreensaver.desktop.in:5
-msgid "Launch screensaver and locker program"
-msgstr ""
-
-#: scripts/xscreensaver.desktop.in:6
-msgid "preferences-desktop-screensaver"
-msgstr ""
-
-#: settings/main.c:98
+#: settings/main.c:100
 msgid "Settings manager socket"
 msgstr "সেটিংস ব্যবস্থাপক সকেট"
 
-#: settings/main.c:98
+#: settings/main.c:100
 msgid "SOCKET ID"
 msgstr "SOCKET ID"
 
-#: settings/main.c:99
+#: settings/main.c:101
 msgid "Version information"
 msgstr "সংস্করণ তথ্যাবলী"
 
-#: settings/main.c:110 xfce4-session/main.c:333
+#: settings/main.c:112 xfce4-session/main.c:354
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "ব্যবহারের জন্য '%s --সহায়তা' টাইপ করুন।"
 
-#: settings/main.c:122 xfce4-session/main.c:343
-#: xfce4-session-logout/main.c:146
+#: settings/main.c:124 xfce4-session/main.c:364
+#: xfce4-session-logout/main.c:132
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce ডেভেলপমেন্ট টিম। সকল অধিকার সংরক্ষিত।"
 
-#: settings/main.c:123 xfce4-session/main.c:344
-#: xfce4-session-logout/main.c:149
+#: settings/main.c:125 xfce4-session/main.c:365
+#: xfce4-session-logout/main.c:135
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "অনুগ্রহ করে বাগসমূহ <%s>-এ রিপোর্ট করুন।"
 
-#: settings/main.c:132 xfce4-session/main.c:352
+#: settings/main.c:134 xfce4-session/main.c:373
 msgid "Unable to contact settings server"
 msgstr "সেটিংস সার্ভারের সাথে যোগাযোগ করতে ব্যর্থ"
 
-#: settings/main.c:152
+#: settings/main.c:154
 msgid "Unable to create user interface from embedded definition data"
 msgstr "সন্নিবেশিত সংজ্ঞার উপাত্ত থেকে ব্যবহারকারী ইন্টারফেস তৈরি করতে ব্যর্থ"
 
-#: settings/main.c:166
+#: settings/main.c:168
 msgid "App_lication Autostart"
 msgstr ""
 
-#: settings/main.c:172
+#: settings/main.c:174
 msgid "Currently active session:"
 msgstr ""
 
@@ -120,7 +108,7 @@ msgid "Unable to save the session"
 msgstr "সেশন সংরক্ষণ করতে ব্যর্থ"
 
 #: settings/session-editor.c:141 settings/session-editor.c:315
-#: xfce4-session/xfsm-manager.c:1267 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1312 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "বন্ধ (_C)"
 
@@ -139,8 +127,8 @@ msgid ""
 msgstr ""
 
 #: settings/session-editor.c:203 settings/session-editor.c:290
-#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:687
-#: xfce4-session/xfsm-logout-dialog.c:221
+#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:712
+#: xfce4-session/xfsm-logout-dialog.c:227
 msgid "_Cancel"
 msgstr "বাতিল (_C)"
 
@@ -172,7 +160,7 @@ msgid ""
 "your next session."
 msgstr "অ্যাপ্লিকেশনটি যেকোন অসংরক্ষিত অবস্থা হারাবে এবং পরবর্তী সেশনে পুনরায় আরম্ভ হতে পারবে না।"
 
-#: settings/session-editor.c:291 settings/xfce4-session-settings.ui:446
+#: settings/session-editor.c:291 settings/xfce4-session-settings.ui:445
 msgid "_Quit Program"
 msgstr "প্রোগ্রাম থেকে প্রস্থান (_Q)"
 
@@ -200,7 +188,7 @@ msgstr "প্রোগ্রাম"
 msgid "Restart Style"
 msgstr "শৈলী পুনরায় শুরু করুন"
 
-#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:689
+#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:714
 msgid "_OK"
 msgstr ""
 
@@ -344,11 +332,11 @@ msgstr "\"%s\" আইটেম সম্পাদনা করতে ব্য�
 msgid "Failed to toggle item"
 msgstr "আইটেম টগল করতে ব্যর্থ"
 
-#: xfce4-session/main.c:77
+#: xfce4-session/main.c:79
 msgid "Disable binding to TCP ports"
 msgstr "TCP পোর্টের বাইন্ডিং নিষ্ক্রিয়"
 
-#: xfce4-session/main.c:78 xfce4-session-logout/main.c:102
+#: xfce4-session/main.c:80 xfce4-session-logout/main.c:90
 msgid "Print version information and exit"
 msgstr "সংস্করণ তথ্যাবলী মুদ্রণ করে প্রস্থান"
 
@@ -410,7 +398,7 @@ msgstr "যেকোনভাবেই হোক চালিয়ে যান"
 msgid "Try again"
 msgstr "পুনরায় চেষ্টা করুন"
 
-#: xfce4-session/xfsm-manager.c:571
+#: xfce4-session/xfsm-manager.c:581
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -419,85 +407,99 @@ msgid ""
 "incorrectly."
 msgstr "ফেইলসেইফ সেশনের নাম নির্ধারণ করতে ব্যর্থ।  সম্ভাব্য কারণসমূহ: xfconfd সচল নেই (D-Bus সেটআপ সমস্যা); এনভায়রনমেন্ট চলক $XDG_CONFIG_DIRS ভুলভাবে নির্ধারণ করা হয়েছে (\"%s\" অবশ্যই অন্তর্ভুক্ত থাকতে হবে), অথবা xfce4-সেশন সঠিকভাবে ইনস্টল করা হয়নি।"
 
-#: xfce4-session/xfsm-manager.c:582
+#: xfce4-session/xfsm-manager.c:606
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "উল্লিখিত ফেইলসেইফ সেশন (\"%s\") ফেইলসেইফ সেশন হিসেবে চিহ্নিত করা নেই।"
 
-#: xfce4-session/xfsm-manager.c:615
+#: xfce4-session/xfsm-manager.c:640
 msgid "The list of applications in the failsafe session is empty."
 msgstr "ফেইলসেইফ সেশনে অ্যাপ্লিকেশনসমূহের তালিকাটি ফাঁকা।"
 
-#: xfce4-session/xfsm-manager.c:701
+#: xfce4-session/xfsm-manager.c:726
 msgid "Name for the new session"
 msgstr ""
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:779
+#: xfce4-session/xfsm-manager.c:804
 msgid "Session Manager Error"
 msgstr "সেশন ব্যবস্থাপক ত্রুটি "
 
-#: xfce4-session/xfsm-manager.c:781
+#: xfce4-session/xfsm-manager.c:806
 msgid "Unable to load a failsafe session"
 msgstr "ফেইলসেইফ সেশন লোড করতে ব্যর্থ"
 
-#: xfce4-session/xfsm-manager.c:783
+#: xfce4-session/xfsm-manager.c:808
 msgid "_Quit"
 msgstr "প্রস্থান (_Q)"
 
-#: xfce4-session/xfsm-manager.c:1257
+#: xfce4-session/xfsm-manager.c:1302
 msgid "Shutdown Failed"
 msgstr "বন্ধ ব্যর্থ"
 
-#: xfce4-session/xfsm-manager.c:1260
+#: xfce4-session/xfsm-manager.c:1305
 msgid "Failed to suspend session"
 msgstr "সেশন বাতিল করতে ব্যর্থ"
 
-#: xfce4-session/xfsm-manager.c:1262
+#: xfce4-session/xfsm-manager.c:1307
 msgid "Failed to hibernate session"
 msgstr "সেশন হাইবারনেট করতে ব্যর্থ"
 
-#: xfce4-session/xfsm-manager.c:1264
+#: xfce4-session/xfsm-manager.c:1309
 msgid "Failed to hybrid sleep session"
 msgstr ""
 
-#: xfce4-session/xfsm-manager.c:1265
+#: xfce4-session/xfsm-manager.c:1310
 msgid "Failed to switch user"
 msgstr ""
 
-#: xfce4-session/xfsm-manager.c:1573
+#: xfce4-session/xfsm-manager.c:1637
 msgid "Can only terminate clients when in the idle state"
 msgstr "শুধুমাত্র নিষ্ক্রিয় অবস্থায় ক্লায়েন্টদের বাতিল করতে পারে"
 
-#: xfce4-session/xfsm-manager.c:2229
+#: xfce4-session/xfsm-manager.c:2320
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "চেকপয়েন্ট অনুরোধ করার সময় সেশন ব্যবস্থাপককে অবশ্যই নিষ্ক্রিয় অবস্থায় থাকতে হবে"
 
-#: xfce4-session/xfsm-manager.c:2299 xfce4-session/xfsm-manager.c:2319
+#: xfce4-session/xfsm-manager.c:2390 xfce4-session/xfsm-manager.c:2410
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "বন্ধ অনুরোধ করার সময় সেশন ব্যবস্থাপককে অবশ্যই নিষ্ক্রিয় অবস্থায় থাকতে হবে"
 
-#: xfce4-session/xfsm-manager.c:2364
+#: xfce4-session/xfsm-manager.c:2447
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:193
+#: xfce4-session/xfsm-manager.c:2483 xfce4-session/xfsm-manager.c:2522
+#: xfce4-session/xfsm-manager.c:2560
+msgid "Session manager must be in idle state when requesting a sleep"
+msgstr ""
+
+#: xfce4-session/xfsm-manager.c:2687
+msgid "Session manager must be in idle state when requesting a user switch"
+msgstr ""
+
+#: xfce4-session/xfsm-logout-dialog.c:199
 #, c-format
 msgid "Log out %s"
 msgstr ""
 
-#. *
-#. * Logout
-#. *
-#: xfce4-session/xfsm-logout-dialog.c:238
+#: xfce4-session/xfsm-logout-dialog.c:245
 msgid "_Log Out"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:258
+#: xfce4-session/xfsm-logout-dialog.c:264
+msgid "_Restart and update"
+msgstr ""
+
+#: xfce4-session/xfsm-logout-dialog.c:264
 msgid "_Restart"
+msgstr ""
+
+#: xfce4-session/xfsm-logout-dialog.c:278
+msgid "Update and Shut _Down"
 msgstr ""
 
 #: xfce4-session/xfsm-logout-dialog.c:278
@@ -508,94 +510,94 @@ msgstr ""
 msgid "Sus_pend"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:336
+#: xfce4-session/xfsm-logout-dialog.c:322
 msgid "_Hibernate"
 msgstr "হাইবারনেট (_H)"
 
-#: xfce4-session/xfsm-logout-dialog.c:367
+#: xfce4-session/xfsm-logout-dialog.c:342
 msgid "H_ybrid Sleep"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:398
+#: xfce4-session/xfsm-logout-dialog.c:366
 msgid "Switch _User"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:424
-msgid "_Save session for future logins"
-msgstr "ভবিষ্যত লগইনের জন্য সেশন সংরক্ষণ (_S)"
-
-#: xfce4-session/xfsm-logout-dialog.c:452
+#: xfce4-session/xfsm-logout-dialog.c:406
 msgid "An error occurred"
 msgstr ""
 
-#: xfce4-session/xfsm-shutdown.c:159
+#: xfce4-session/xfsm-shutdown.c:171
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr ""
 
-#: xfce4-session/xfsm-shutdown.c:216
+#: xfce4-session/xfsm-shutdown.c:228
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr ""
 
-#: xfce4-session-logout/main.c:70
+#: xfce4-session-logout/main.c:58
 msgid "Log out without displaying the logout dialog"
 msgstr "লগআউট ডায়ালগ না দেখিয়েই লগআউট"
 
-#: xfce4-session-logout/main.c:74
+#: xfce4-session-logout/main.c:62
 msgid "Halt without displaying the logout dialog"
 msgstr "লগআউট ডায়ালগ না দেখিয়েই হল্ট"
 
-#: xfce4-session-logout/main.c:78
+#: xfce4-session-logout/main.c:66
 msgid "Reboot without displaying the logout dialog"
 msgstr "লগআউট ডায়ালগ না দেখিয়েই রিবুট"
 
-#: xfce4-session-logout/main.c:82
+#: xfce4-session-logout/main.c:70
 msgid "Suspend without displaying the logout dialog"
 msgstr "লগআউট ডায়ালগ না দেখিয়েই সাসপেন্ড"
 
-#: xfce4-session-logout/main.c:86
+#: xfce4-session-logout/main.c:74
 msgid "Hibernate without displaying the logout dialog"
 msgstr "লগআউট ডায়ালগ না দেখিয়েই হাইবারনেট"
 
-#: xfce4-session-logout/main.c:90
+#: xfce4-session-logout/main.c:78
 msgid "Hybrid Sleep without displaying the logout dialog"
 msgstr ""
 
-#: xfce4-session-logout/main.c:94
+#: xfce4-session-logout/main.c:82
 msgid "Switch user without displaying the logout dialog"
 msgstr ""
 
-#: xfce4-session-logout/main.c:98
+#: xfce4-session-logout/main.c:86
 msgid "Log out quickly; don't save the session"
 msgstr "দ্রুত লগআউট করুন; সেশন সংরক্ষণ করা যাবে না"
 
-#: xfce4-session-logout/main.c:121
+#: xfce4-session-logout/main.c:108
 msgid "Unknown error"
 msgstr "অজানা ত্রুটি "
 
-#: xfce4-session-logout/main.c:147
+#: xfce4-session-logout/main.c:133
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr ""
 
-#: xfce4-session-logout/main.c:148
+#: xfce4-session-logout/main.c:134
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr ""
 
-#: xfce4-session-logout/main.c:168 xfce4-session-logout/main.c:279
+#: xfce4-session-logout/main.c:154 xfce4-session-logout/main.c:229
 msgid "Received error while trying to log out"
 msgstr "লগআউটের চেষ্টা করার সময় ত্রুটি গৃহীত হয়েছে"
 
-#: xfce4-session-logout/main.c:244
-#, c-format
-msgid "Received error while trying to log out, error was %s"
-msgstr ""
-
-#: xfce4-session-logout/xfce4-session-logout.desktop.in:6
-msgid "xfsm-logout"
-msgstr ""
-
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:12
 msgid "Log out of the Xfce Desktop"
+msgstr ""
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to suspend or hibernate their system.
+#: xfce4-session/org.xfce.session.policy.in.in:23
+msgid "Shutdown, restart, suspend, or hibernate the system"
+msgstr ""
+
+#: xfce4-session/org.xfce.session.policy.in.in:24
+msgid ""
+"Authentication is required to shutdown, restart, suspend, or hibernate the "
+"system."
 msgstr ""
 
 #: settings/xfce-session-settings.desktop.in:3
@@ -605,10 +607,6 @@ msgstr "সেশন এবং আরম্ভ"
 
 #: settings/xfce-session-settings.desktop.in:4
 msgid "Customize desktop startup"
-msgstr ""
-
-#: settings/xfce-session-settings.desktop.in:6
-msgid "org.xfce.session"
 msgstr ""
 
 #: settings/xfce-session-settings.desktop.in:11
@@ -664,88 +662,84 @@ msgstr "<b>লগআউট সেটিংসমূহ</b>"
 msgid "Lock screen be_fore sleep"
 msgstr ""
 
-#: settings/xfce4-session-settings.ui:271
-msgid "Run xflock4 before suspending or hibernating the system"
-msgstr ""
-
-#: settings/xfce4-session-settings.ui:290
+#: settings/xfce4-session-settings.ui:289
 msgid "<b>Shutdown</b>"
 msgstr ""
 
-#: settings/xfce4-session-settings.ui:307
+#: settings/xfce4-session-settings.ui:306
 msgid "_General"
 msgstr "সাধারণ (_G)"
 
-#: settings/xfce4-session-settings.ui:331
+#: settings/xfce4-session-settings.ui:330
 msgid "Save Sess_ion"
 msgstr ""
 
-#: settings/xfce4-session-settings.ui:385
+#: settings/xfce4-session-settings.ui:384
 msgid "Currently active session: <b>Default</b>"
 msgstr ""
 
-#: settings/xfce4-session-settings.ui:486
+#: settings/xfce4-session-settings.ui:485
 msgid "Current Sessio_n"
 msgstr ""
 
-#: settings/xfce4-session-settings.ui:537
+#: settings/xfce4-session-settings.ui:536
 msgid "_Remove"
 msgstr ""
 
-#: settings/xfce4-session-settings.ui:541
+#: settings/xfce4-session-settings.ui:540
 msgid "Delete the selected session"
 msgstr ""
 
-#: settings/xfce4-session-settings.ui:565
+#: settings/xfce4-session-settings.ui:564
 msgid "Clear Save_d Sessions"
 msgstr ""
 
-#: settings/xfce4-session-settings.ui:615
+#: settings/xfce4-session-settings.ui:614
 msgid "Saved _Sessions"
 msgstr ""
 
-#: settings/xfce4-session-settings.ui:650
+#: settings/xfce4-session-settings.ui:649
 msgid "Launch GN_OME services on startup"
 msgstr "আরম্ভের সময় জিনোম সার্ভিসসমূহ চালু করা হবে (_O)"
 
-#: settings/xfce4-session-settings.ui:655
+#: settings/xfce4-session-settings.ui:654
 msgid "Start GNOME services, such as gnome-keyring"
 msgstr ""
 
-#: settings/xfce4-session-settings.ui:668
+#: settings/xfce4-session-settings.ui:667
 msgid "Launch _KDE services on startup"
 msgstr "আরম্ভের সময় KDE সার্ভিসসমূহ চালু করা হবে (_K)"
 
-#: settings/xfce4-session-settings.ui:673
+#: settings/xfce4-session-settings.ui:672
 msgid "Start KDE services, such as kdeinit"
 msgstr ""
 
-#: settings/xfce4-session-settings.ui:692
+#: settings/xfce4-session-settings.ui:691
 msgid "<b>Compatibility</b>"
 msgstr "<b>সুসংগতি</b>"
 
-#: settings/xfce4-session-settings.ui:717
+#: settings/xfce4-session-settings.ui:716
 msgid "Manage _remote applications"
 msgstr "দূরবর্তী অ্যাপ্লিকেশন পরিচালনা (_r)"
 
-#: settings/xfce4-session-settings.ui:722
+#: settings/xfce4-session-settings.ui:721
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
 msgstr "নেটওয়ার্কের মাধ্যমে দূরবর্তী অ্যাপ্লিকেশনসমূহ পরিচালনা (এটা হয়ত নিরাপত্তার জন্য হুমকি হতে পারে)"
 
-#: settings/xfce4-session-settings.ui:734
+#: settings/xfce4-session-settings.ui:733
 msgid "<b>Security</b>"
 msgstr "<b>নিরাপত্তা</b>"
 
-#: settings/xfce4-session-settings.ui:754
+#: settings/xfce4-session-settings.ui:753
 msgid "Ad_vanced"
 msgstr "উন্নত (_v)"
 
-#: settings/xfce4-session-settings.ui:785
+#: settings/xfce4-session-settings.ui:784
 msgid "Saving Session"
 msgstr "সেশন সংরক্ষণ করা হচ্ছে"
 
-#: settings/xfce4-session-settings.ui:861
+#: settings/xfce4-session-settings.ui:860
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
