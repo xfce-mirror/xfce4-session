@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-23 00:47+0200\n"
+"POT-Creation-Date: 2024-03-29 12:48+0100\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>, 2011,2013-2014,2017-2019\n"
 "Language-Team: Icelandic (http://app.transifex.com/xfce/xfce4-session/language/is/)\n"
@@ -23,59 +23,63 @@ msgstr ""
 msgid "Xfce Session"
 msgstr "Xfce seta"
 
-#: xfce.desktop.in:5
+#: xfce.desktop.in:5 xfce-wayland.desktop.in:5
 msgid "Use this session to run Xfce as your desktop environment"
 msgstr "Notaðu þessa setu til að keyra Xfce sem skjáborðsumhverfi"
 
-#: libxfsm/xfsm-util.c:374
+#: xfce-wayland.desktop.in:4
+msgid "Xfce Session (Wayland)"
+msgstr ""
+
+#: libxfsm/xfsm-util.c:370
 msgid "Session"
 msgstr "Seta"
 
-#: libxfsm/xfsm-util.c:385
+#: libxfsm/xfsm-util.c:381
 msgid "Last accessed"
 msgstr "Síðast notað"
 
-#: settings/main.c:98
+#: settings/main.c:100
 msgid "Settings manager socket"
 msgstr "Sökkull stillingastjórnunar"
 
-#: settings/main.c:98
+#: settings/main.c:100
 msgid "SOCKET ID"
 msgstr "AUÐKENNI SÖKKULS - ID"
 
-#: settings/main.c:99
+#: settings/main.c:101
 msgid "Version information"
 msgstr "Útgáfuupplýsingar"
 
-#: settings/main.c:110 xfce4-session/main.c:333
+#: settings/main.c:112 xfce4-session/main.c:354
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Skrifaðu '%s --help' til að sjá hvernig á að nota þetta."
 
-#: settings/main.c:122 xfce4-session/main.c:343
+#: settings/main.c:124 xfce4-session/main.c:364
 #: xfce4-session-logout/main.c:132
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce þróunarteymið. Allur réttur áskilinn."
 
-#: settings/main.c:123 xfce4-session/main.c:344
+#: settings/main.c:125 xfce4-session/main.c:365
 #: xfce4-session-logout/main.c:135
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Tilkynntu villur til <%s>."
 
-#: settings/main.c:132 xfce4-session/main.c:352
+#: settings/main.c:134 xfce4-session/main.c:373
 msgid "Unable to contact settings server"
 msgstr "Gat ekki tengst við stillingaþjón"
 
-#: settings/main.c:152
+#: settings/main.c:154
 msgid "Unable to create user interface from embedded definition data"
 msgstr "Tókst ekki að útbúa notendaviðmót út frá ígræddum skilgreiningagögnum"
 
-#: settings/main.c:166
+#: settings/main.c:168
 msgid "App_lication Autostart"
 msgstr "Sjá_lfræsing forrits"
 
-#: settings/main.c:172
+#: settings/main.c:174
 msgid "Currently active session:"
 msgstr "Fyrirliggjandi virk seta:"
 
@@ -104,7 +108,7 @@ msgid "Unable to save the session"
 msgstr "Gat ekki vistað setu"
 
 #: settings/session-editor.c:141 settings/session-editor.c:315
-#: xfce4-session/xfsm-manager.c:1275 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1312 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "Lo_ka"
 
@@ -123,8 +127,8 @@ msgid ""
 msgstr "Vistuð staða forritanna þinna verður ekki endurheimt þegar þú skráir þig inn næst."
 
 #: settings/session-editor.c:203 settings/session-editor.c:290
-#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:695
-#: xfce4-session/xfsm-logout-dialog.c:224
+#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:712
+#: xfce4-session/xfsm-logout-dialog.c:227
 msgid "_Cancel"
 msgstr "_Hætta við"
 
@@ -184,7 +188,7 @@ msgstr "Forrit"
 msgid "Restart Style"
 msgstr "Stíll endurræsingar"
 
-#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:697
+#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:714
 msgid "_OK"
 msgstr "Í _lagi"
 
@@ -328,11 +332,11 @@ msgstr "Mistókst að breyta atriði \"%s\""
 msgid "Failed to toggle item"
 msgstr "Tókst ekki að víxla atriði"
 
-#: xfce4-session/main.c:77
+#: xfce4-session/main.c:79
 msgid "Disable binding to TCP ports"
 msgstr "Gera óvirkar bindingar við TCP-gáttir"
 
-#: xfce4-session/main.c:78 xfce4-session-logout/main.c:90
+#: xfce4-session/main.c:80 xfce4-session-logout/main.c:90
 msgid "Print version information and exit"
 msgstr "Prenta upplýsingar um útgáfu og hætta"
 
@@ -394,7 +398,7 @@ msgstr "Halda samt áfram"
 msgid "Try again"
 msgstr "Reyna aftur"
 
-#: xfce4-session/xfsm-manager.c:579
+#: xfce4-session/xfsm-manager.c:581
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -403,126 +407,122 @@ msgid ""
 "incorrectly."
 msgstr "Tókst ekki að ákvarða heiti villuvarðrar setu.  Mögulegar ástæður: xfconfd er ekki keyrandi (D-Bus uppsetningarvandamál); umhverfisbreytan $XDG_CONFIG_DIRS er ekki rétt sett (verður að innihalda \"%s\"), eða að xfce4-session er ekki rétt uppset."
 
-#: xfce4-session/xfsm-manager.c:590
+#: xfce4-session/xfsm-manager.c:606
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Tiltekna villuvarða setan (\"%s\") er ekki merkt sem villuvarin (failsafe session)."
 
-#: xfce4-session/xfsm-manager.c:623
+#: xfce4-session/xfsm-manager.c:640
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Listinn yfir forrit í villuvörðu setunni er tómur."
 
-#: xfce4-session/xfsm-manager.c:709
+#: xfce4-session/xfsm-manager.c:726
 msgid "Name for the new session"
 msgstr "Veldu heiti á nýju setuna"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:787
+#: xfce4-session/xfsm-manager.c:804
 msgid "Session Manager Error"
 msgstr "Villa í setustjórnun"
 
-#: xfce4-session/xfsm-manager.c:789
+#: xfce4-session/xfsm-manager.c:806
 msgid "Unable to load a failsafe session"
 msgstr "Tókst ekki að hlaða inn villuvarðri setu"
 
-#: xfce4-session/xfsm-manager.c:791
+#: xfce4-session/xfsm-manager.c:808
 msgid "_Quit"
 msgstr "_Hætta"
 
-#: xfce4-session/xfsm-manager.c:1265
+#: xfce4-session/xfsm-manager.c:1302
 msgid "Shutdown Failed"
 msgstr "Ekki tókst að slökkva"
 
-#: xfce4-session/xfsm-manager.c:1268
+#: xfce4-session/xfsm-manager.c:1305
 msgid "Failed to suspend session"
 msgstr "Mistókst að svæfa setu"
 
-#: xfce4-session/xfsm-manager.c:1270
+#: xfce4-session/xfsm-manager.c:1307
 msgid "Failed to hibernate session"
 msgstr "Mistókst að leggja setu í dvala"
 
-#: xfce4-session/xfsm-manager.c:1272
+#: xfce4-session/xfsm-manager.c:1309
 msgid "Failed to hybrid sleep session"
 msgstr "Mistókst að svæfa setu blönduðum svefni"
 
-#: xfce4-session/xfsm-manager.c:1273
+#: xfce4-session/xfsm-manager.c:1310
 msgid "Failed to switch user"
 msgstr "Mistókst að skipta um notanda"
 
-#: xfce4-session/xfsm-manager.c:1581
+#: xfce4-session/xfsm-manager.c:1637
 msgid "Can only terminate clients when in the idle state"
 msgstr "Get bara slökkt á biðlurum þegar verið er í aðgerðaleysisham"
 
-#: xfce4-session/xfsm-manager.c:2255
+#: xfce4-session/xfsm-manager.c:2320
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Setustýring verður að vera aðgerðalaus þegar beðið er um gátstöðu"
 
-#: xfce4-session/xfsm-manager.c:2325 xfce4-session/xfsm-manager.c:2345
+#: xfce4-session/xfsm-manager.c:2390 xfce4-session/xfsm-manager.c:2410
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Setustýring verður að vera aðgerðalaus þegar beðið er um að slökkva"
 
-#: xfce4-session/xfsm-manager.c:2382
+#: xfce4-session/xfsm-manager.c:2447
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Setustýring verður að vera aðgerðalaus þegar beðið er um endurræsingu"
 
-#: xfce4-session/xfsm-manager.c:2418 xfce4-session/xfsm-manager.c:2457
-#: xfce4-session/xfsm-manager.c:2495
+#: xfce4-session/xfsm-manager.c:2483 xfce4-session/xfsm-manager.c:2522
+#: xfce4-session/xfsm-manager.c:2560
 msgid "Session manager must be in idle state when requesting a sleep"
 msgstr ""
 
-#: xfce4-session/xfsm-manager.c:2622
+#: xfce4-session/xfsm-manager.c:2687
 msgid "Session manager must be in idle state when requesting a user switch"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:196
+#: xfce4-session/xfsm-logout-dialog.c:199
 #, c-format
 msgid "Log out %s"
 msgstr "Skrá út %s"
 
-#: xfce4-session/xfsm-logout-dialog.c:242
+#: xfce4-session/xfsm-logout-dialog.c:245
 msgid "_Log Out"
 msgstr "S_krá út"
 
-#: xfce4-session/xfsm-logout-dialog.c:261
+#: xfce4-session/xfsm-logout-dialog.c:264
 msgid "_Restart and update"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:261
+#: xfce4-session/xfsm-logout-dialog.c:264
 msgid "_Restart"
 msgstr "Endu_rræsa"
 
-#: xfce4-session/xfsm-logout-dialog.c:275
+#: xfce4-session/xfsm-logout-dialog.c:278
 msgid "Update and Shut _Down"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:275
+#: xfce4-session/xfsm-logout-dialog.c:278
 msgid "Shut _Down"
 msgstr "_Slökkva"
 
-#: xfce4-session/xfsm-logout-dialog.c:297
+#: xfce4-session/xfsm-logout-dialog.c:302
 msgid "Sus_pend"
 msgstr "Setja í _bið"
 
-#: xfce4-session/xfsm-logout-dialog.c:317
+#: xfce4-session/xfsm-logout-dialog.c:322
 msgid "_Hibernate"
 msgstr "Le_ggja í dvala"
 
-#: xfce4-session/xfsm-logout-dialog.c:337
+#: xfce4-session/xfsm-logout-dialog.c:342
 msgid "H_ybrid Sleep"
 msgstr "_Blönduð svæfing"
 
-#: xfce4-session/xfsm-logout-dialog.c:361
+#: xfce4-session/xfsm-logout-dialog.c:366
 msgid "Switch _User"
 msgstr "Skipta _um notanda"
 
-#: xfce4-session/xfsm-logout-dialog.c:386
-msgid "_Save session for future logins"
-msgstr "_Vista setu fyrir seinni tíma innskráningar"
-
-#: xfce4-session/xfsm-logout-dialog.c:414
+#: xfce4-session/xfsm-logout-dialog.c:406
 msgid "An error occurred"
 msgstr "Villa kom upp"
 
