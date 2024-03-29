@@ -697,7 +697,6 @@ xfsm_logout_dialog_run (GtkDialog *dialog,
 gboolean
 xfsm_logout_dialog (const gchar      *session_name,
                     XfsmShutdownType *return_type,
-                    gboolean         *return_save_session,
                     gboolean          accessibility)
 {
   gint              result;
@@ -711,18 +710,11 @@ xfsm_logout_dialog (const gchar      *session_name,
 #endif
   XfsmLogoutDialog *xfsm_dialog;
   XfconfChannel    *channel = xfconf_channel_get (SETTINGS_CHANNEL);
-  XfsmShutdown     *shutdown;
   GdkDevice        *device;
   GdkSeat          *seat;
   gint              grab_count = 0;
 
   g_return_val_if_fail (return_type != NULL, FALSE);
-  g_return_val_if_fail (return_save_session != NULL, FALSE);
-
-  shutdown = xfsm_shutdown_get ();
-  *return_save_session = xfsm_shutdown_can_save_session (shutdown)
-                         && xfconf_channel_get_bool (channel, "/general/SaveOnExit", FALSE);
-  g_object_unref (shutdown);
 
   /* check if we need to bother the user */
   if (!xfconf_channel_get_bool (channel, "/general/PromptOnLogout", TRUE))

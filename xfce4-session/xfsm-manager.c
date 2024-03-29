@@ -1256,9 +1256,12 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
                                    XfsmShutdownType shutdown_type,
                                    gboolean         allow_shutdown_save)
 {
-  gboolean  shutdown_save = allow_shutdown_save;
-  GList    *lp;
-  GError   *error = NULL;
+  XfsmShutdown *xfsm_shutdown = xfsm_shutdown_get ();
+  XfconfChannel *channel = xfconf_channel_get (SETTINGS_CHANNEL);
+  gboolean shutdown_save = allow_shutdown_save
+                           && xfsm_shutdown_can_save_session (xfsm_shutdown)
+                           && xfconf_channel_get_bool (channel, "/general/SaveOnExit", FALSE);
+  g_object_unref (xfsm_shutdown);
 
   xfsm_verbose ("entering\n");
 
@@ -1270,14 +1273,10 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
            * prompting then ask the user what to do */
           if (!xfsm_logout_dialog (manager->session_name,
                                    &manager->shutdown_type,
-                                   &shutdown_save,
                                    manager->start_at))
             {
               return;
             }
-
-          /* |allow_shutdown_save| is ignored if we prompt the user.  i think
-           * this is the right thing to do. */
         }
 
       /* update shutdown type if we didn't prompt the user */
@@ -1294,6 +1293,7 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
           || manager->shutdown_type == XFSM_SHUTDOWN_HYBRID_SLEEP
           || manager->shutdown_type == XFSM_SHUTDOWN_SWITCH_USER)
         {
+          GError *error = NULL;
           if (!xfsm_shutdown_try_type (manager->shutdown_helper,
                                        manager->shutdown_type,
                                        &error))
@@ -1345,7 +1345,7 @@ xfsm_manager_save_yourself_global (XfsmManager     *manager,
     }
 #endif
 
-  for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
+  for (GList *lp = g_queue_peek_nth_link (manager->running_clients, 0);
        lp;
        lp = lp->next)
     {
