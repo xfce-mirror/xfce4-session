@@ -98,9 +98,6 @@ struct _XfsmLogoutDialog
   /* set when a button is clicked */
   XfsmShutdownType  type_clicked;
 
-  /* save session checkbox */
-  GtkWidget        *save_session;
-
   /* mode widgets */
   GtkWidget        *box[N_MODES];
 
@@ -145,7 +142,6 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   GtkWidget      *button;
   gboolean        can_shutdown = FALSE;
   gboolean        has_updates;
-  gboolean        save_session = FALSE;
   gboolean        can_logout = FALSE;
   gboolean        can_restart = FALSE;
   gboolean        can_suspend = FALSE;
@@ -187,11 +183,6 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
                                   GTK_STYLE_PROVIDER (provider),
                                   GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
   g_object_unref (provider);
-
-  /* load xfconf settings */
-  channel = xfconf_channel_get (SETTINGS_CHANNEL);
-  if (xfsm_shutdown_can_save_session (dialog->shutdown))
-    save_session = xfconf_channel_get_bool (channel, "/general/SaveOnExit", TRUE);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, BORDER);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), main_vbox, TRUE, TRUE, 0);
@@ -298,6 +289,8 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (button_vbox), hbox, FALSE, TRUE, 0);
 
+  channel = xfconf_channel_get (SETTINGS_CHANNEL);
+
   /**
    * Suspend
    **/
@@ -386,20 +379,6 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
           g_warning ("Querying switch user failed: %s", ERROR_MSG (error));
           g_clear_error (&error);
         }
-    }
-
-  /**
-   * Save session
-   **/
-  if (xfsm_shutdown_can_save_session (dialog->shutdown)
-      && !xfconf_channel_get_bool (channel, "/general/AutoSave", FALSE)
-      && xfconf_channel_get_bool (channel, "/general/ShowSave", TRUE)
-      && WINDOWING_IS_X11 ())
-    {
-      dialog->save_session = gtk_check_button_new_with_mnemonic (_("_Save session for future logins"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->save_session), save_session);
-      gtk_box_pack_start (GTK_BOX (vbox), dialog->save_session, FALSE, TRUE, BORDER);
-      gtk_widget_show (dialog->save_session);
     }
 
   attrs = pango_attr_list_new ();
@@ -732,7 +711,6 @@ xfsm_logout_dialog (const gchar      *session_name,
 #endif
   XfsmLogoutDialog *xfsm_dialog;
   XfconfChannel    *channel = xfconf_channel_get (SETTINGS_CHANNEL);
-  gboolean          autosave;
   XfsmShutdown     *shutdown;
   GdkDevice        *device;
   GdkSeat          *seat;
@@ -742,18 +720,14 @@ xfsm_logout_dialog (const gchar      *session_name,
   g_return_val_if_fail (return_save_session != NULL, FALSE);
 
   shutdown = xfsm_shutdown_get ();
-  if (xfsm_shutdown_can_save_session (shutdown))
-    autosave = xfconf_channel_get_bool (channel, "/general/AutoSave", FALSE);
-  else
-    autosave = FALSE;
+  *return_save_session = xfsm_shutdown_can_save_session (shutdown)
+                         && xfconf_channel_get_bool (channel, "/general/SaveOnExit", FALSE);
   g_object_unref (shutdown);
 
   /* check if we need to bother the user */
   if (!xfconf_channel_get_bool (channel, "/general/PromptOnLogout", TRUE))
     {
       *return_type = XFSM_SHUTDOWN_LOGOUT;
-      *return_save_session = autosave;
-
       return TRUE;
     }
 
@@ -840,20 +814,6 @@ xfsm_logout_dialog (const gchar      *session_name,
 
   gtk_widget_hide (dialog);
 
-  if (result == GTK_RESPONSE_OK)
-    {
-      /* store autosave state */
-      if (autosave)
-        *return_save_session = TRUE;
-      else if (xfsm_dialog->save_session != NULL)
-        *return_save_session = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (xfsm_dialog->save_session));
-      else
-        *return_save_session = FALSE;
-
-      /* return the clicked action */
-      *return_type = xfsm_dialog->type_clicked;
-    }
-
 #ifdef ENABLE_X11
   if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
     {
@@ -864,11 +824,13 @@ xfsm_logout_dialog (const gchar      *session_name,
 
   gtk_widget_destroy (dialog);
 
-  /* store channel settings if everything worked fine */
   if (result == GTK_RESPONSE_OK)
     {
+      /* return the clicked action */
+      *return_type = xfsm_dialog->type_clicked;
+
+      /* store channel settings if everything worked fine */
       xfconf_channel_set_string (channel, "/general/SessionName", session_name);
-      xfconf_channel_set_bool (channel, "/general/SaveOnExit", *return_save_session);
     }
 
   /* save the screenshot */

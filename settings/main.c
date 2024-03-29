@@ -199,7 +199,7 @@ main(int argc,
     xfconf_g_property_bind(channel, "/chooser/AlwaysDisplay", G_TYPE_BOOLEAN,
                            gtk_builder_get_object(builder, "chk_display_chooser"),
                            "active");
-    xfconf_g_property_bind(channel, "/general/AutoSave", G_TYPE_BOOLEAN,
+    xfconf_g_property_bind(channel, "/general/SaveOnExit", G_TYPE_BOOLEAN,
                            gtk_builder_get_object(builder, "chk_session_autosave"),
                            "active");
     xfconf_g_property_bind(channel, "/general/PromptOnLogout", G_TYPE_BOOLEAN,
