@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-23 00:47+0200\n"
+"POT-Creation-Date: 2024-03-29 12:48+0100\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Persian (Iran) (http://app.transifex.com/xfce/xfce4-session/language/fa_IR/)\n"
@@ -21,59 +21,63 @@ msgstr ""
 msgid "Xfce Session"
 msgstr "نشست Xfce"
 
-#: xfce.desktop.in:5
+#: xfce.desktop.in:5 xfce-wayland.desktop.in:5
 msgid "Use this session to run Xfce as your desktop environment"
 msgstr "از این نشست برای اجرای Xfce به عنوان محیط میزکارتان استفاده کنید"
 
-#: libxfsm/xfsm-util.c:374
+#: xfce-wayland.desktop.in:4
+msgid "Xfce Session (Wayland)"
+msgstr ""
+
+#: libxfsm/xfsm-util.c:370
 msgid "Session"
 msgstr "نشست"
 
-#: libxfsm/xfsm-util.c:385
+#: libxfsm/xfsm-util.c:381
 msgid "Last accessed"
 msgstr "آخرین دسترسی"
 
-#: settings/main.c:98
+#: settings/main.c:100
 msgid "Settings manager socket"
 msgstr "رابط مدیر تنظیمات"
 
-#: settings/main.c:98
+#: settings/main.c:100
 msgid "SOCKET ID"
 msgstr "شناسهٔ رابط"
 
-#: settings/main.c:99
+#: settings/main.c:101
 msgid "Version information"
 msgstr "اطلاعات نگارش"
 
-#: settings/main.c:110 xfce4-session/main.c:333
+#: settings/main.c:112 xfce4-session/main.c:354
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "برای استفاده «‎%s --help» را تایپ کنید."
 
-#: settings/main.c:122 xfce4-session/main.c:343
+#: settings/main.c:124 xfce4-session/main.c:364
 #: xfce4-session-logout/main.c:132
 msgid "The Xfce development team. All rights reserved."
 msgstr "تیم توسعهٔ Xfce. تمامی حقوق محفوظ است."
 
-#: settings/main.c:123 xfce4-session/main.c:344
+#: settings/main.c:125 xfce4-session/main.c:365
 #: xfce4-session-logout/main.c:135
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "لطفاً خطاها را در <%s> گزارش کنید."
 
-#: settings/main.c:132 xfce4-session/main.c:352
+#: settings/main.c:134 xfce4-session/main.c:373
 msgid "Unable to contact settings server"
 msgstr "ناتوان در برقراری ارتباط با کارساز تنظیمات"
 
-#: settings/main.c:152
+#: settings/main.c:154
 msgid "Unable to create user interface from embedded definition data"
 msgstr "ناتوان در ایجاد رابط کاربری از دادهٔ تعریف جاسازی شده"
 
-#: settings/main.c:166
+#: settings/main.c:168
 msgid "App_lication Autostart"
 msgstr "_شروع خودکار برنامه"
 
-#: settings/main.c:172
+#: settings/main.c:174
 msgid "Currently active session:"
 msgstr "نشست فعال کنونی:"
 
@@ -102,7 +106,7 @@ msgid "Unable to save the session"
 msgstr "ناتوان در ذخیرهٔ نشست"
 
 #: settings/session-editor.c:141 settings/session-editor.c:315
-#: xfce4-session/xfsm-manager.c:1275 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1312 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "_بستن"
 
@@ -121,8 +125,8 @@ msgid ""
 msgstr "وضعیت‌های ذخیره شدهٔ برنامه‌هایتان تا ورود بعدی بازیابی نخواهند شد."
 
 #: settings/session-editor.c:203 settings/session-editor.c:290
-#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:695
-#: xfce4-session/xfsm-logout-dialog.c:224
+#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:712
+#: xfce4-session/xfsm-logout-dialog.c:227
 msgid "_Cancel"
 msgstr "_لغو"
 
@@ -182,7 +186,7 @@ msgstr "برنامه"
 msgid "Restart Style"
 msgstr "سبک راه‌اندازی دوباره"
 
-#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:697
+#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:714
 msgid "_OK"
 msgstr "_تأیید"
 
@@ -326,11 +330,11 @@ msgstr "شکست در ویرایش مورد «‎%s»"
 msgid "Failed to toggle item"
 msgstr "شکست در تعویض مورد"
 
-#: xfce4-session/main.c:77
+#: xfce4-session/main.c:79
 msgid "Disable binding to TCP ports"
 msgstr "غیرفعال‌سازی اتصال به درگاه‌های TCP"
 
-#: xfce4-session/main.c:78 xfce4-session-logout/main.c:90
+#: xfce4-session/main.c:80 xfce4-session-logout/main.c:90
 msgid "Print version information and exit"
 msgstr "چاپ اطلاعات نگارش و خروج"
 
@@ -392,7 +396,7 @@ msgstr "ادامه در هر حال"
 msgid "Try again"
 msgstr "تلاش دوباره"
 
-#: xfce4-session/xfsm-manager.c:579
+#: xfce4-session/xfsm-manager.c:581
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -401,126 +405,122 @@ msgid ""
 "incorrectly."
 msgstr "ناتوان در تعیین نام نشست مقاوم‌به‌شکست. علت‌های ممکن: xfconfd در حال اجرا نیست (مشکل برپاساز D-Bus)؛ متغیر محیطی ‎$XDG_CONFIG_DIRS نادرست تنظیم شده (باید شامل «‎%s» باشد)، یا xfce4-session به درستی نصب نشده."
 
-#: xfce4-session/xfsm-manager.c:590
+#: xfce4-session/xfsm-manager.c:606
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "نشست مقاوم‌به‌شکست مشخص شدهٔ («‎%s») به عنوان نشست مقاوم‌به‌شکست علامت نخورده است."
 
-#: xfce4-session/xfsm-manager.c:623
+#: xfce4-session/xfsm-manager.c:640
 msgid "The list of applications in the failsafe session is empty."
 msgstr "سیاههٔ برنامه‌ها در نشست مقاوم‌به‌شکست خالی است."
 
-#: xfce4-session/xfsm-manager.c:709
+#: xfce4-session/xfsm-manager.c:726
 msgid "Name for the new session"
 msgstr "نام برای نشست جدید"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:787
+#: xfce4-session/xfsm-manager.c:804
 msgid "Session Manager Error"
 msgstr "خطای مدیر نشست"
 
-#: xfce4-session/xfsm-manager.c:789
+#: xfce4-session/xfsm-manager.c:806
 msgid "Unable to load a failsafe session"
 msgstr "ناتوان در بار کردن یک نشست مقاوم‌به‌شکست"
 
-#: xfce4-session/xfsm-manager.c:791
+#: xfce4-session/xfsm-manager.c:808
 msgid "_Quit"
 msgstr "_خروج"
 
-#: xfce4-session/xfsm-manager.c:1265
+#: xfce4-session/xfsm-manager.c:1302
 msgid "Shutdown Failed"
 msgstr "خاموش کردن شکست خورد"
 
-#: xfce4-session/xfsm-manager.c:1268
+#: xfce4-session/xfsm-manager.c:1305
 msgid "Failed to suspend session"
 msgstr "شکست در تعلیق نشست"
 
-#: xfce4-session/xfsm-manager.c:1270
+#: xfce4-session/xfsm-manager.c:1307
 msgid "Failed to hibernate session"
 msgstr "شکست در خواب زمستانی نشست"
 
-#: xfce4-session/xfsm-manager.c:1272
+#: xfce4-session/xfsm-manager.c:1309
 msgid "Failed to hybrid sleep session"
 msgstr "شکست در خواب ترکیبی نشست"
 
-#: xfce4-session/xfsm-manager.c:1273
+#: xfce4-session/xfsm-manager.c:1310
 msgid "Failed to switch user"
 msgstr "شکست در تعویض کاربر"
 
-#: xfce4-session/xfsm-manager.c:1581
+#: xfce4-session/xfsm-manager.c:1637
 msgid "Can only terminate clients when in the idle state"
 msgstr "کارخواه‌ها را فقط هنگامی که در وضعیت بی‌کار هستند، می‌توان خاتمه داد"
 
-#: xfce4-session/xfsm-manager.c:2255
+#: xfce4-session/xfsm-manager.c:2320
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "هنگام درخواست یک ایست بازرسی، مدیر نشست باید در وضعیت بی‌کار باشد"
 
-#: xfce4-session/xfsm-manager.c:2325 xfce4-session/xfsm-manager.c:2345
+#: xfce4-session/xfsm-manager.c:2390 xfce4-session/xfsm-manager.c:2410
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "هنگام درخواست خاموش کردن، مدیر نشست باید در وضعیت بی‌کار باشد"
 
-#: xfce4-session/xfsm-manager.c:2382
+#: xfce4-session/xfsm-manager.c:2447
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "هنگام درخواست راه‌اندازی دوباره، مدیر نشست باید در وضعیت بی‌کار باشد"
 
-#: xfce4-session/xfsm-manager.c:2418 xfce4-session/xfsm-manager.c:2457
-#: xfce4-session/xfsm-manager.c:2495
+#: xfce4-session/xfsm-manager.c:2483 xfce4-session/xfsm-manager.c:2522
+#: xfce4-session/xfsm-manager.c:2560
 msgid "Session manager must be in idle state when requesting a sleep"
 msgstr ""
 
-#: xfce4-session/xfsm-manager.c:2622
+#: xfce4-session/xfsm-manager.c:2687
 msgid "Session manager must be in idle state when requesting a user switch"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:196
+#: xfce4-session/xfsm-logout-dialog.c:199
 #, c-format
 msgid "Log out %s"
 msgstr "خروج از ‎%s"
 
-#: xfce4-session/xfsm-logout-dialog.c:242
+#: xfce4-session/xfsm-logout-dialog.c:245
 msgid "_Log Out"
 msgstr "_خروج"
 
-#: xfce4-session/xfsm-logout-dialog.c:261
+#: xfce4-session/xfsm-logout-dialog.c:264
 msgid "_Restart and update"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:261
+#: xfce4-session/xfsm-logout-dialog.c:264
 msgid "_Restart"
 msgstr "_راه‌اندازی دوباره"
 
-#: xfce4-session/xfsm-logout-dialog.c:275
+#: xfce4-session/xfsm-logout-dialog.c:278
 msgid "Update and Shut _Down"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:275
+#: xfce4-session/xfsm-logout-dialog.c:278
 msgid "Shut _Down"
 msgstr "خا_موش کردن"
 
-#: xfce4-session/xfsm-logout-dialog.c:297
+#: xfce4-session/xfsm-logout-dialog.c:302
 msgid "Sus_pend"
 msgstr "_تعلیق"
 
-#: xfce4-session/xfsm-logout-dialog.c:317
+#: xfce4-session/xfsm-logout-dialog.c:322
 msgid "_Hibernate"
 msgstr "خواب _زمستانی"
 
-#: xfce4-session/xfsm-logout-dialog.c:337
+#: xfce4-session/xfsm-logout-dialog.c:342
 msgid "H_ybrid Sleep"
 msgstr "خوا_ب ترکیبی"
 
-#: xfce4-session/xfsm-logout-dialog.c:361
+#: xfce4-session/xfsm-logout-dialog.c:366
 msgid "Switch _User"
 msgstr "تعویض _کاربر"
 
-#: xfce4-session/xfsm-logout-dialog.c:386
-msgid "_Save session for future logins"
-msgstr "_ذخیرهٔ نشست برای ورودهای آینده"
-
-#: xfce4-session/xfsm-logout-dialog.c:414
+#: xfce4-session/xfsm-logout-dialog.c:406
 msgid "An error occurred"
 msgstr "خطایی رخ داد"
 
