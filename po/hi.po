@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-23 00:47+0200\n"
+"POT-Creation-Date: 2024-03-29 12:48+0100\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Panwar108 <caspian7pena@gmail.com>, 2019-2020\n"
 "Language-Team: Hindi (http://app.transifex.com/xfce/xfce4-session/language/hi/)\n"
@@ -22,59 +22,63 @@ msgstr ""
 msgid "Xfce Session"
 msgstr "एक्सएफसीई सत्र"
 
-#: xfce.desktop.in:5
+#: xfce.desktop.in:5 xfce-wayland.desktop.in:5
 msgid "Use this session to run Xfce as your desktop environment"
 msgstr "इस सत्र द्वारा एक्सएफसीई डेस्कटॉप वातावरण उपयोग करें"
 
-#: libxfsm/xfsm-util.c:374
+#: xfce-wayland.desktop.in:4
+msgid "Xfce Session (Wayland)"
+msgstr ""
+
+#: libxfsm/xfsm-util.c:370
 msgid "Session"
 msgstr "सत्र"
 
-#: libxfsm/xfsm-util.c:385
+#: libxfsm/xfsm-util.c:381
 msgid "Last accessed"
 msgstr "अंतिम बार प्रयुक्त"
 
-#: settings/main.c:98
+#: settings/main.c:100
 msgid "Settings manager socket"
 msgstr "सेटिंग्स प्रबंधक सॉकेट"
 
-#: settings/main.c:98
+#: settings/main.c:100
 msgid "SOCKET ID"
 msgstr "सॉकेट आईडी"
 
-#: settings/main.c:99
+#: settings/main.c:101
 msgid "Version information"
 msgstr "संस्करण सूचना"
 
-#: settings/main.c:110 xfce4-session/main.c:333
+#: settings/main.c:112 xfce4-session/main.c:354
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "उपयोग निर्देश हेतु \"%s --help\" टाइप करें।"
 
-#: settings/main.c:122 xfce4-session/main.c:343
+#: settings/main.c:124 xfce4-session/main.c:364
 #: xfce4-session-logout/main.c:132
 msgid "The Xfce development team. All rights reserved."
 msgstr "एक्सएफसीई विकासकर्ता टीम। सर्वाधिकार सुरक्षित।"
 
-#: settings/main.c:123 xfce4-session/main.c:344
+#: settings/main.c:125 xfce4-session/main.c:365
 #: xfce4-session-logout/main.c:135
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "समस्याएँ आदि <%s> पर दर्ज करें।"
 
-#: settings/main.c:132 xfce4-session/main.c:352
+#: settings/main.c:134 xfce4-session/main.c:373
 msgid "Unable to contact settings server"
 msgstr "सेटिंग्स सर्वर से संचार विफल"
 
-#: settings/main.c:152
+#: settings/main.c:154
 msgid "Unable to create user interface from embedded definition data"
 msgstr "संलग्न परिभाषा डेटा उपयोग कर उपयोक्ता अंतरफलक बनाना विफल"
 
-#: settings/main.c:166
+#: settings/main.c:168
 msgid "App_lication Autostart"
 msgstr "अनुप्रयोग स्वतः आरंभ (_l)"
 
-#: settings/main.c:172
+#: settings/main.c:174
 msgid "Currently active session:"
 msgstr "वर्तमान में सक्रिय सत्र :"
 
@@ -103,7 +107,7 @@ msgid "Unable to save the session"
 msgstr "सत्र संचय विफल"
 
 #: settings/session-editor.c:141 settings/session-editor.c:315
-#: xfce4-session/xfsm-manager.c:1275 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1312 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "बंद करें (_C)"
 
@@ -122,8 +126,8 @@ msgid ""
 msgstr "आगामी लॉगिन उपरांत संचित अनुप्रयोग स्थिति पुनः स्थापित नहीं होंगी।"
 
 #: settings/session-editor.c:203 settings/session-editor.c:290
-#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:695
-#: xfce4-session/xfsm-logout-dialog.c:224
+#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:712
+#: xfce4-session/xfsm-logout-dialog.c:227
 msgid "_Cancel"
 msgstr "रद्द करें (_C)"
 
@@ -183,7 +187,7 @@ msgstr "प्रोग्राम"
 msgid "Restart Style"
 msgstr "शैली पुनः आरंभ"
 
-#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:697
+#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:714
 msgid "_OK"
 msgstr "ठीक है (_O)"
 
@@ -327,11 +331,11 @@ msgstr "\"%s\" वस्तु संपादन विफल"
 msgid "Failed to toggle item"
 msgstr "वस्तु चालू/बंद विफल"
 
-#: xfce4-session/main.c:77
+#: xfce4-session/main.c:79
 msgid "Disable binding to TCP ports"
 msgstr "टीसीपी पोर्ट हेतु संबंध निष्क्रिय करें"
 
-#: xfce4-session/main.c:78 xfce4-session-logout/main.c:90
+#: xfce4-session/main.c:80 xfce4-session-logout/main.c:90
 msgid "Print version information and exit"
 msgstr "संस्करण सूचना दिखाएँ व बंद करें"
 
@@ -393,7 +397,7 @@ msgstr "फिर भी जारी रखें"
 msgid "Try again"
 msgstr "पुनः प्रयास करें"
 
-#: xfce4-session/xfsm-manager.c:579
+#: xfce4-session/xfsm-manager.c:581
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -402,126 +406,122 @@ msgid ""
 "incorrectly."
 msgstr "बैकअप सत्र नाम प्राप्ति विफल। संभव कारण : xfconfd कार्यरत नहीं है (D-Bus सेटअप समस्या); वातावरण मान $XDG_CONFIG_DIRS अनुचित है (\"%s\" सम्मिलित होना आवश्यक), या xfce4-session अनुचित रूप से इंस्टॉल है ।"
 
-#: xfce4-session/xfsm-manager.c:590
+#: xfce4-session/xfsm-manager.c:606
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "निर्दिष्ट बैकअप सत्र नाम (\"%s\") बैकअप सत्र के रूप में चिन्हित नहीं है।"
 
-#: xfce4-session/xfsm-manager.c:623
+#: xfce4-session/xfsm-manager.c:640
 msgid "The list of applications in the failsafe session is empty."
 msgstr "बैकअप सत्र हेतु अनुप्रयोग सूची रिक्त है।"
 
-#: xfce4-session/xfsm-manager.c:709
+#: xfce4-session/xfsm-manager.c:726
 msgid "Name for the new session"
 msgstr "नए सत्र हेतु नाम"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:787
+#: xfce4-session/xfsm-manager.c:804
 msgid "Session Manager Error"
 msgstr "सत्र प्रबंधक त्रुटि"
 
-#: xfce4-session/xfsm-manager.c:789
+#: xfce4-session/xfsm-manager.c:806
 msgid "Unable to load a failsafe session"
 msgstr "बैकअप सत्र लोड करना विफल"
 
-#: xfce4-session/xfsm-manager.c:791
+#: xfce4-session/xfsm-manager.c:808
 msgid "_Quit"
 msgstr "बंद करें (_Q)"
 
-#: xfce4-session/xfsm-manager.c:1265
+#: xfce4-session/xfsm-manager.c:1302
 msgid "Shutdown Failed"
 msgstr "बंद करना विफल"
 
-#: xfce4-session/xfsm-manager.c:1268
+#: xfce4-session/xfsm-manager.c:1305
 msgid "Failed to suspend session"
 msgstr "सत्र सुप्त करना विफल"
 
-#: xfce4-session/xfsm-manager.c:1270
+#: xfce4-session/xfsm-manager.c:1307
 msgid "Failed to hibernate session"
 msgstr "सत्र स्थगित करना विफल"
 
-#: xfce4-session/xfsm-manager.c:1272
+#: xfce4-session/xfsm-manager.c:1309
 msgid "Failed to hybrid sleep session"
 msgstr "सत्र समग्र सुप्त करना विफल"
 
-#: xfce4-session/xfsm-manager.c:1273
+#: xfce4-session/xfsm-manager.c:1310
 msgid "Failed to switch user"
 msgstr "उपयोक्ता परिवर्तन विफल"
 
-#: xfce4-session/xfsm-manager.c:1581
+#: xfce4-session/xfsm-manager.c:1637
 msgid "Can only terminate clients when in the idle state"
 msgstr "केवल अकर्मण्य स्थिति में ही साधन निरस्त करना संभव है"
 
-#: xfce4-session/xfsm-manager.c:2255
+#: xfce4-session/xfsm-manager.c:2320
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "जाँच बिंदु अनुरोध हेतु सत्र प्रबंधक का अकर्मण्य स्थिति में होना आवश्यक है"
 
-#: xfce4-session/xfsm-manager.c:2325 xfce4-session/xfsm-manager.c:2345
+#: xfce4-session/xfsm-manager.c:2390 xfce4-session/xfsm-manager.c:2410
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "सिस्टम बंद अनुरोध हेतु सत्र प्रबंधक का अकर्मण्य स्थिति में होना आवश्यक है"
 
-#: xfce4-session/xfsm-manager.c:2382
+#: xfce4-session/xfsm-manager.c:2447
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "सिस्टम पुनः आरंभ अनुरोध हेतु सत्र प्रबंधक का अकर्मण्य स्थिति में होना आवश्यक है"
 
-#: xfce4-session/xfsm-manager.c:2418 xfce4-session/xfsm-manager.c:2457
-#: xfce4-session/xfsm-manager.c:2495
+#: xfce4-session/xfsm-manager.c:2483 xfce4-session/xfsm-manager.c:2522
+#: xfce4-session/xfsm-manager.c:2560
 msgid "Session manager must be in idle state when requesting a sleep"
 msgstr ""
 
-#: xfce4-session/xfsm-manager.c:2622
+#: xfce4-session/xfsm-manager.c:2687
 msgid "Session manager must be in idle state when requesting a user switch"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:196
+#: xfce4-session/xfsm-logout-dialog.c:199
 #, c-format
 msgid "Log out %s"
 msgstr "लॉगआउट %s"
 
-#: xfce4-session/xfsm-logout-dialog.c:242
+#: xfce4-session/xfsm-logout-dialog.c:245
 msgid "_Log Out"
 msgstr "लॉगआउट (_L)"
 
-#: xfce4-session/xfsm-logout-dialog.c:261
+#: xfce4-session/xfsm-logout-dialog.c:264
 msgid "_Restart and update"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:261
+#: xfce4-session/xfsm-logout-dialog.c:264
 msgid "_Restart"
 msgstr "पुनः आरंभ (_R)"
 
-#: xfce4-session/xfsm-logout-dialog.c:275
+#: xfce4-session/xfsm-logout-dialog.c:278
 msgid "Update and Shut _Down"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:275
+#: xfce4-session/xfsm-logout-dialog.c:278
 msgid "Shut _Down"
 msgstr "बंद करें (_D)"
 
-#: xfce4-session/xfsm-logout-dialog.c:297
+#: xfce4-session/xfsm-logout-dialog.c:302
 msgid "Sus_pend"
 msgstr "सुप्त (_p)"
 
-#: xfce4-session/xfsm-logout-dialog.c:317
+#: xfce4-session/xfsm-logout-dialog.c:322
 msgid "_Hibernate"
 msgstr "स्थगित (_H)"
 
-#: xfce4-session/xfsm-logout-dialog.c:337
+#: xfce4-session/xfsm-logout-dialog.c:342
 msgid "H_ybrid Sleep"
 msgstr "समग्र सुप्त (_y)"
 
-#: xfce4-session/xfsm-logout-dialog.c:361
+#: xfce4-session/xfsm-logout-dialog.c:366
 msgid "Switch _User"
 msgstr "उपयोक्ता बदलें (_U)"
 
-#: xfce4-session/xfsm-logout-dialog.c:386
-msgid "_Save session for future logins"
-msgstr "भावी लॉगिन हेतु सत्र संचित करें (_S)"
-
-#: xfce4-session/xfsm-logout-dialog.c:414
+#: xfce4-session/xfsm-logout-dialog.c:406
 msgid "An error occurred"
 msgstr "एक त्रुटि हुई"
 
