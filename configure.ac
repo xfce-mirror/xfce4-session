@@ -1,5 +1,5 @@
 dnl
-dnl Copyright (c) 2003-2023
+dnl Copyright (c) 2003-2024
 dnl         The Xfce development team. All rights reserved.
 dnl
 dnl Written for Xfce by Benedikt Meurer <benny@xfce.org>.
@@ -26,7 +26,7 @@ m4_define([gtk_layer_shell_min_version], [0.7.0])
 m4_define([polkit_min_version], [0.102])
 
 dnl Initialize autoconf
-AC_COPYRIGHT([Copyright (c) 2003-2023
+AC_COPYRIGHT([Copyright (c) 2003-2024
         The Xfce development team. All rights reserved.
 
 Written for Xfce by Benedikt Meurer <benny@xfce.org>.])
