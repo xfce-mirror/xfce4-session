@@ -132,7 +132,7 @@ fi
 if test x"$ENABLE_X11" = x"yes"; then
   dnl Check for _IceTransNoListen
   ac_LIBS="$LIBS"
-  LIBS="$LIBS $LIBSM_LDFLAGS $LIBSM_LIBS"
+  LIBS="$LIBS $LIBICE_LIBS"
   AC_CHECK_FUNCS([_IceTransNoListen])
   LIBS="$ac_LIBS"
 
