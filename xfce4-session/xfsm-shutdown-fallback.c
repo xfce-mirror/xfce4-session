@@ -341,7 +341,6 @@ xfsm_shutdown_fallback_try_action (XfsmShutdownType   type,
   const gchar *xfsm_helper_action;
   const gchar *cmd __attribute__((unused));
   gboolean ret = FALSE;
-  gint exit_status = 0;
 #ifdef HAVE_POLKIT
   gchar *command = NULL;
 #endif
@@ -377,7 +376,7 @@ xfsm_shutdown_fallback_try_action (XfsmShutdownType   type,
   /* Make sure we can use native shutdown commands */
   if (xfsm_shutdown_fallback_bsd_check_auth (type))
     {
-      return g_spawn_command_line_sync (cmd, NULL, NULL, &exit_status, error);
+      return g_spawn_command_line_sync (cmd, NULL, NULL, NULL, error);
     }
 #endif
 
@@ -385,7 +384,7 @@ xfsm_shutdown_fallback_try_action (XfsmShutdownType   type,
 #ifdef HAVE_POLKIT
   command = g_strdup_printf ("pkexec " XFSM_SHUTDOWN_HELPER_CMD " --%s", xfsm_helper_action);
 
-  ret = g_spawn_command_line_sync (command, NULL, NULL, &exit_status, error);
+  ret = g_spawn_command_line_sync (command, NULL, NULL, NULL, error);
 
   g_free (command);
 #endif
