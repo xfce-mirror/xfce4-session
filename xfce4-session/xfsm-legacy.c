@@ -284,7 +284,7 @@ get_clientleader (Window window)
   if (status  == Success)
     {
       if (data != NULL && nitems > 0)
-          result = *((Window *) data);
+          result = *((Window *) (gpointer) data);
       XFree(data);
     }
 
