@@ -246,7 +246,6 @@ xfsm_properties_load (GKeyFile    *file,
   XfsmProperties *properties;
   const gchar    *client_id;
   const gchar    *hostname;
-  GValue         *value;
   GError         *error = NULL;
   const gchar    *value_str;
   gchar         **value_strv;
@@ -289,13 +288,8 @@ xfsm_properties_load (GKeyFile    *file,
               *str = unesc_str;
             }
 
-          xfsm_verbose ("-> Set strv (%s)\n", strv_properties[i].xsmp_name);
-          /* don't use _set_strv() to avoid a realloc of the whole strv */
-          value = xfsm_g_value_new (G_TYPE_STRV);
-          g_value_take_boxed (value, value_strv);
-          g_tree_replace (properties->sm_properties,
-                          g_strdup (strv_properties[i].xsmp_name),
-                          value);
+          xfsm_properties_set_strv (properties, strv_properties[i].xsmp_name, value_strv);
+          g_strfreev (value_strv);
         }
     }
 
@@ -626,7 +620,6 @@ gboolean
 xfsm_properties_set_from_smprop (XfsmProperties *properties,
                                  const SmProp *sm_prop)
 {
-  GValue *value;
   gchar **value_strv;
   guchar  value_uchar;
   gint    n;
@@ -643,27 +636,8 @@ xfsm_properties_set_from_smprop (XfsmProperties *properties,
       for (n = 0; n < sm_prop->num_vals; ++n)
         value_strv[n] = g_strdup ((const gchar *) sm_prop->vals[n].value);
 
-      xfsm_verbose ("-> Set strv (%s)\n", sm_prop->name);
-
-      /* don't use _set_strv() to avoid a realloc of the whole strv */
-      value = g_tree_lookup (properties->sm_properties, sm_prop->name);
-      if (value)
-        {
-          if (!G_VALUE_HOLDS (value, G_TYPE_STRV))
-            {
-              g_value_unset (value);
-              g_value_init (value, G_TYPE_STRV);
-            }
-          g_value_take_boxed (value, value_strv);
-        }
-      else
-        {
-          value = xfsm_g_value_new (G_TYPE_STRV);
-          g_value_take_boxed (value, value_strv);
-          g_tree_replace (properties->sm_properties,
-                          g_strdup (sm_prop->name),
-                          value);
-        }
+      xfsm_properties_set_strv (properties, sm_prop->name, value_strv);
+      g_strfreev (value_strv);
     }
   else if (!strcmp (sm_prop->type, SmARRAY8))
     {
