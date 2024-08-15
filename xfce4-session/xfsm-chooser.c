@@ -134,6 +134,7 @@ xfsm_chooser_init (XfsmChooser *chooser)
   GtkWidget *label;
   GtkWidget *dbox;
   gchar title[256];
+  GtkCssProvider *provider;
 
   dbox = gtk_dialog_get_content_area(GTK_DIALOG (chooser));
 
@@ -149,6 +150,16 @@ xfsm_chooser_init (XfsmChooser *chooser)
   gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
   gtk_widget_set_margin_bottom (label, 12);
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
+
+  /* Use Adwaita's keycap style to get a meaningful look out of the box */
+  gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (chooser)), "keycap");
+  gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (chooser)), "xfsm-chooser-dialog");
+  provider = gtk_css_provider_new ();
+  gtk_css_provider_load_from_data (provider, ".xfsm-chooser-dialog { font-size: initial; }", -1, NULL);
+  gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (chooser)),
+                                  GTK_STYLE_PROVIDER (provider),
+                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+  g_object_unref (provider);
 
   /* scrolled window */
   swin = gtk_scrolled_window_new (NULL, NULL);
