@@ -468,7 +468,7 @@ xfsm_manager_choose_session (XfsmManager *manager,
       for (lp = sessions; lp != NULL; lp = lp->next)
         {
           session = (XfsmSessionInfo *) lp->data;
-          g_object_unref (session->preview);
+          cairo_surface_destroy (session->preview);
           g_free (session);
         }
 
