@@ -46,7 +46,7 @@
 #include <libxfce4util/libxfce4util.h>
 #include <gtk/gtk.h>
 #ifdef HAVE_GTK_LAYER_SHELL
-#include <gtk-layer-shell/gtk-layer-shell.h>
+#include <gtk-layer-shell.h>
 #endif
 
 #include <libxfsm/xfsm-util.h>
