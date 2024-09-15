@@ -21,7 +21,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_STDARG_H
@@ -46,19 +46,18 @@
 #include <errno.h>
 #endif
 
-#include <glib/gprintf.h>
 #include <gio/gio.h>
-
-#include <libxfce4util/libxfce4util.h>
+#include <glib/gprintf.h>
 #include <libxfce4ui/libxfce4ui.h>
+#include <libxfce4util/libxfce4util.h>
 
-#include <xfce4-session/xfsm-global.h>
+#include "libxfsm/xfsm-util.h"
 
-#include <libxfsm/xfsm-util.h>
+#include "xfsm-global.h"
 
 
 /* global variables */
-gboolean          verbose = FALSE;
+gboolean verbose = FALSE;
 
 
 void
@@ -85,8 +84,8 @@ xfsm_verbose_real (const char *func,
                    ...)
 {
   static FILE *fp = NULL;
-  gchar       *logfile;
-  va_list      valist;
+  gchar *logfile;
+  va_list valist;
 
   if (G_UNLIKELY (fp == NULL))
     {
@@ -110,7 +109,7 @@ xfsm_verbose_real (const char *func,
         {
           fp = fopen (logfile, "w");
           g_free (logfile);
-          fprintf(fp, "log file opened\n");
+          fprintf (fp, "log file opened\n");
         }
     }
 
@@ -151,8 +150,8 @@ static gboolean
 xfsm_check_valid_exec (const gchar *exec)
 {
   gboolean result = TRUE;
-  gchar   *tmp;
-  gchar   *p;
+  gchar *tmp;
+  gchar *p;
 
   if (*exec == '/')
     {
@@ -183,7 +182,7 @@ xfsm_check_valid_exec (const gchar *exec)
 }
 
 gint
-xfsm_launch_desktop_files_on_shutdown (gboolean         start_at_spi,
+xfsm_launch_desktop_files_on_shutdown (gboolean start_at_spi,
                                        XfsmShutdownType shutdown_type)
 {
   switch (shutdown_type)
@@ -226,26 +225,26 @@ xfsm_launch_desktop_files_on_login (gboolean start_at_spi)
 
 
 gint
-xfsm_launch_desktop_files_on_run_hook (gboolean    start_at_spi,
+xfsm_launch_desktop_files_on_run_hook (gboolean start_at_spi,
                                        XfsmRunHook run_hook)
 {
   const gchar *try_exec;
   const gchar *type;
-  XfsmRunHook  run_hook_from_file;
-  gchar       *exec;
-  gboolean     startup_notify;
-  gboolean     terminal;
-  gboolean     skip;
-  GError      *error = NULL;
-  XfceRc      *rc;
-  gchar      **files;
-  gchar      **only_show_in;
-  gchar      **not_show_in;
-  gint         started = 0;
-  gint         n, m;
-  gchar       *filename;
+  XfsmRunHook run_hook_from_file;
+  gchar *exec;
+  gboolean startup_notify;
+  gboolean terminal;
+  gboolean skip;
+  GError *error = NULL;
+  XfceRc *rc;
+  gchar **files;
+  gchar **only_show_in;
+  gchar **not_show_in;
+  gint started = 0;
+  gint n, m;
+  gchar *filename;
   const gchar *pattern;
-  gchar       *uri;
+  gchar *uri;
 
   /* pattern for only at-spi desktop files or everything */
   if (start_at_spi)
@@ -272,7 +271,7 @@ xfsm_launch_desktop_files_on_run_hook (gboolean    start_at_spi,
 
       if (G_LIKELY (!skip))
         {
-          xfsm_verbose("hidden set\n");
+          xfsm_verbose ("hidden set\n");
 
           if (xfce_rc_read_bool_entry (rc, "X-XFCE-Autostart-Override", FALSE))
             {

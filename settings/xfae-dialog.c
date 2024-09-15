@@ -20,15 +20,17 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
-
-#include "xfae-dialog.h"
 
 #include <libxfce4ui/libxfce4ui.h>
 
-static void xfae_dialog_update (XfaeDialog *dialog);
-static void xfae_dialog_browse (XfaeDialog *dialog);
+#include "xfae-dialog.h"
+
+static void
+xfae_dialog_update (XfaeDialog *dialog);
+static void
+xfae_dialog_browse (XfaeDialog *dialog);
 
 
 
@@ -63,20 +65,18 @@ xfae_dialog_class_init (XfaeDialogClass *klass)
 static void
 xfae_dialog_init (XfaeDialog *dialog)
 {
-  GtkWidget  *content_area;
-  GtkWidget  *grid;
-  GtkWidget  *label;
-  GtkWidget  *hbox;
-  GtkWidget  *button;
-  GtkWidget  *image;
+  GtkWidget *content_area;
+  GtkWidget *grid;
+  GtkWidget *label;
+  GtkWidget *hbox;
+  GtkWidget *button;
+  GtkWidget *image;
   GEnumClass *klass;
   GEnumValue *enum_struct;
-  guint       i;
+  guint i;
 
-  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          _("_Cancel"), GTK_RESPONSE_CANCEL,
-                          _("_OK"), GTK_RESPONSE_OK,
-                          NULL);
+  gtk_dialog_add_buttons (
+    GTK_DIALOG (dialog), _("_Cancel"), GTK_RESPONSE_CANCEL, _("_OK"), GTK_RESPONSE_OK, NULL);
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
   gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_OK, FALSE);
   gtk_window_set_title (GTK_WINDOW (dialog), _("Add application"));
@@ -85,9 +85,9 @@ xfae_dialog_init (XfaeDialog *dialog)
   gtk_container_set_border_width (GTK_CONTAINER (content_area), 6);
 
   grid = g_object_new (GTK_TYPE_GRID,
-                        "row-spacing", 6,
-                        "column-spacing", 12,
-                        NULL);
+                       "row-spacing", 6,
+                       "column-spacing", 12,
+                       NULL);
   gtk_container_add (GTK_CONTAINER (content_area), grid);
   gtk_container_set_border_width (GTK_CONTAINER (grid), 6);
   gtk_widget_show (grid);
@@ -101,7 +101,7 @@ xfae_dialog_init (XfaeDialog *dialog)
 
   dialog->name_entry = g_object_new (GTK_TYPE_ENTRY,
                                      "activates-default", TRUE,
-                                      "hexpand", TRUE,
+                                     "hexpand", TRUE,
                                      NULL);
 
   gtk_grid_attach (GTK_GRID (grid), dialog->name_entry, 1, 0, 1, 1);
@@ -146,7 +146,7 @@ xfae_dialog_init (XfaeDialog *dialog)
   klass = g_type_class_ref (XFSM_TYPE_RUN_HOOK);
   for (i = 0; i < klass->n_values; ++i)
     {
-      enum_struct =  g_enum_get_value (klass, i);
+      enum_struct = g_enum_get_value (klass, i);
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (dialog->run_hook_combo), _(enum_struct->value_nick));
     }
   g_type_class_unref (klass);
@@ -203,14 +203,12 @@ static void
 xfae_dialog_browse (XfaeDialog *dialog)
 {
   const gchar *command;
-  GtkWidget   *chooser;
-  gchar       *filename;
+  GtkWidget *chooser;
+  gchar *filename;
 
-  chooser = gtk_file_chooser_dialog_new (_("Select a command"),
-                                         GTK_WINDOW (dialog),
-                                         GTK_FILE_CHOOSER_ACTION_OPEN,
-                                         _("Cancel"), GTK_RESPONSE_CANCEL,
-                                         _("OK"), GTK_RESPONSE_ACCEPT,
+  chooser = gtk_file_chooser_dialog_new (_("Select a command"), GTK_WINDOW (dialog),
+                                         GTK_FILE_CHOOSER_ACTION_OPEN, _("Cancel"),
+                                         GTK_RESPONSE_CANCEL, _("OK"), GTK_RESPONSE_ACCEPT,
                                          NULL);
 
   gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (chooser), TRUE);
@@ -241,18 +239,18 @@ xfae_dialog_browse (XfaeDialog *dialog)
  *
  * Return value: the newly allocated #XfaeDialog.
  **/
-GtkWidget*
+GtkWidget *
 xfae_dialog_new (const gchar *name,
                  const gchar *descr,
                  const gchar *command,
-                 XfsmRunHook  run_hook)
+                 XfsmRunHook run_hook)
 {
   XfaeDialog *dialog = g_object_new (XFAE_TYPE_DIALOG, NULL);
 
   if (name)
     gtk_entry_set_text (GTK_ENTRY (dialog->name_entry), name);
   if (descr)
-    gtk_entry_set_text (GTK_ENTRY (dialog->descr_entry), descr );
+    gtk_entry_set_text (GTK_ENTRY (dialog->descr_entry), descr);
   if (command)
     gtk_entry_set_text (GTK_ENTRY (dialog->command_entry), command);
   gtk_combo_box_set_active (GTK_COMBO_BOX (dialog->run_hook_combo), run_hook);
@@ -275,11 +273,11 @@ xfae_dialog_new (const gchar *name,
  * from the @dialog.
  **/
 void
-xfae_dialog_get (XfaeDialog   *dialog,
-                 gchar       **name,
-                 gchar       **descr,
-                 gchar       **command,
-                 XfsmRunHook  *run_hook)
+xfae_dialog_get (XfaeDialog *dialog,
+                 gchar **name,
+                 gchar **descr,
+                 gchar **command,
+                 XfsmRunHook *run_hook)
 {
   g_return_if_fail (XFAE_IS_DIALOG (dialog));
   g_return_if_fail (name != NULL);

@@ -19,13 +19,16 @@
  * MA 02110-1301 USA.
  */
 
+#ifdef HAVE_CONFIG_H
 #include "config.h"
+#endif
 
 #include <glib.h>
 
 #include "xfsm-inhibitor.h"
 
-static void xfsm_inhibitor_finalize (GObject *object);
+static void
+xfsm_inhibitor_finalize (GObject *object);
 
 struct _XfsmInhibitor
 {
@@ -57,7 +60,7 @@ g_hash_func_inhibition_cookie_cmp (gpointer key,
 
 
 gboolean
-xfsm_inhibitor_add (XfsmInhibitor  *store,
+xfsm_inhibitor_add (XfsmInhibitor *store,
                     XfsmInhibition *inhibition)
 {
   g_return_val_if_fail (XFSM_IS_INHIBITOR (store), FALSE);
@@ -73,7 +76,7 @@ xfsm_inhibitor_add (XfsmInhibitor  *store,
 
 gboolean
 xfsm_inhibitor_remove (XfsmInhibitor *store,
-                       guint          cookie)
+                       guint cookie)
 {
   XfsmInhibition *inhibition;
 
@@ -100,8 +103,8 @@ xfsm_inhibitor_is_empty (XfsmInhibitor *store)
 }
 
 gboolean
-xfsm_inhibitor_has_flags (XfsmInhibitor     *store,
-                          XfsmInhibitonFlag  flags)
+xfsm_inhibitor_has_flags (XfsmInhibitor *store,
+                          XfsmInhibitonFlag flags)
 {
   XfsmInhibition *inhibition;
 
@@ -126,9 +129,9 @@ static void
 xfsm_inhibitor_init (XfsmInhibitor *store)
 {
   store->inhibitions = g_hash_table_new_full (g_int_hash,
-                                                    g_int_equal,
-                                                    NULL,
-                                                    (GDestroyNotify) g_object_unref);
+                                              g_int_equal,
+                                              NULL,
+                                              (GDestroyNotify) g_object_unref);
 }
 
 static void

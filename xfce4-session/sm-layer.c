@@ -20,94 +20,106 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
-#include <stdio.h>
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
 
 #include <X11/ICE/ICElib.h>
 #include <X11/SM/SMlib.h>
-
 #include <libxfce4util/libxfce4util.h>
+#include <stdio.h>
 
-#include <xfce4-session/ice-layer.h>
-#include <xfce4-session/sm-layer.h>
-#include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-manager.h>
+#include "ice-layer.h"
+#include "sm-layer.h"
+#include "xfsm-global.h"
 
-#define XFSM_CLIENT_MANAGER(c)  (XFSM_MANAGER (g_object_get_data (G_OBJECT (c), "--xfsm-manager")))
+#define XFSM_CLIENT_MANAGER(c) (XFSM_MANAGER (g_object_get_data (G_OBJECT (c), "--xfsm-manager")))
 
 #ifdef HAVE__ICETRANSNOLISTEN
-extern void _IceTransNoListen (char *protocol);
+extern void
+_IceTransNoListen (char *protocol);
 #endif
 
 /* local prototypes */
-static Status sm_new_client                 (SmsConn         sms_conn,
-                                             SmPointer       manager_data,
-                                             unsigned long  *mask,
-                                             SmsCallbacks   *callbacks,
-                                             char          **failure_reason);
-static Status sm_register_client            (SmsConn         sms_conn,
-                                             SmPointer       client_data,
-                                             char           *previous_id);
-static void   sm_interact_request           (SmsConn         sms_conn,
-                                             SmPointer       client_data,
-                                             int             dialog_type);
-static void   sm_interact_done              (SmsConn         sms_conn,
-                                             SmPointer       client_data,
-                                             Bool            cancel_shutdown);
-static void   sm_save_yourself_request      (SmsConn         sms_conn,
-                                             SmPointer       client_data,
-                                             int             save_type,
-                                             Bool            shutdown,
-                                             int             interact_style,
-                                             Bool            fast,
-                                             Bool            global);
-static void   sm_save_yourself_phase2_request(SmsConn         sms_conn,
-                                             SmPointer       client_data);
-static void   sm_save_yourself_done         (SmsConn         sms_conn,
-                                             SmPointer       client_data,
-                                             Bool            success);
-static void   sm_close_connection           (SmsConn         sms_conn,
-                                             SmPointer       client_data,
-                                             int             num_reasons,
-                                             char          **reasons);
-static void   sm_set_properties             (SmsConn         sms_conn,
-                                             SmPointer       client_data,
-                                             int             num_props,
-                                             SmProp        **props);
-static void   sm_delete_properties          (SmsConn         sms_conn,
-                                             SmPointer       client_data,
-                                             int             num_props,
-                                             char          **prop_names);
-static void   sm_get_properties             (SmsConn         sms_conn,
-                                             SmPointer       client_data);
+static Status
+sm_new_client (SmsConn sms_conn,
+               SmPointer manager_data,
+               unsigned long *mask,
+               SmsCallbacks *callbacks,
+               char **failure_reason);
+static Status
+sm_register_client (SmsConn sms_conn,
+                    SmPointer client_data,
+                    char *previous_id);
+static void
+sm_interact_request (SmsConn sms_conn,
+                     SmPointer client_data,
+                     int dialog_type);
+static void
+sm_interact_done (SmsConn sms_conn,
+                  SmPointer client_data,
+                  Bool cancel_shutdown);
+static void
+sm_save_yourself_request (SmsConn sms_conn,
+                          SmPointer client_data,
+                          int save_type,
+                          Bool shutdown,
+                          int interact_style,
+                          Bool fast,
+                          Bool global);
+static void
+sm_save_yourself_phase2_request (SmsConn sms_conn,
+                                 SmPointer client_data);
+static void
+sm_save_yourself_done (SmsConn sms_conn,
+                       SmPointer client_data,
+                       Bool success);
+static void
+sm_close_connection (SmsConn sms_conn,
+                     SmPointer client_data,
+                     int num_reasons,
+                     char **reasons);
+static void
+sm_set_properties (SmsConn sms_conn,
+                   SmPointer client_data,
+                   int num_props,
+                   SmProp **props);
+static void
+sm_delete_properties (SmsConn sms_conn,
+                      SmPointer client_data,
+                      int num_props,
+                      char **prop_names);
+static void
+sm_get_properties (SmsConn sms_conn,
+                   SmPointer client_data);
 
 
-#define SET_CALLBACK(_callbacks, _callback, _client)          \
-G_STMT_START{                                                 \
-  _callbacks->_callback.callback     = sm_##_callback;        \
-  _callbacks->_callback.manager_data = (SmPointer) _client;   \
-}G_STMT_END
+#define SET_CALLBACK(_callbacks, _callback, _client) \
+  G_STMT_START \
+  { \
+    _callbacks->_callback.callback = sm_##_callback; \
+    _callbacks->_callback.manager_data = (SmPointer) _client; \
+  } \
+  G_STMT_END
 
 
-static int           num_listeners;
+static int num_listeners;
 static IceListenObj *listen_objs;
 
 
 void
 sm_init (XfconfChannel *channel,
-         gboolean       disable_tcp,
-         XfsmManager   *manager)
+         gboolean disable_tcp,
+         XfsmManager *manager)
 {
   char *network_idlist;
-  char  error[2048];
+  char error[2048];
 
   if (disable_tcp || !xfconf_channel_get_bool (channel, "/security/EnableTcp", FALSE))
     {
@@ -148,15 +160,15 @@ sm_init (XfconfChannel *channel,
 
 
 static Status
-sm_new_client (SmsConn        sms_conn,
-               SmPointer      manager_data,
+sm_new_client (SmsConn sms_conn,
+               SmPointer manager_data,
                unsigned long *mask,
-               SmsCallbacks  *callbacks,
-               char         **failure_reason)
+               SmsCallbacks *callbacks,
+               char **failure_reason)
 {
   XfsmManager *manager = XFSM_MANAGER (manager_data);
-  XfsmClient  *client;
-  gchar       *error = NULL;
+  XfsmClient *client;
+  gchar *error = NULL;
 
   xfsm_verbose ("ICE connection fd = %d, received NEW CLIENT\n\n",
                 IceConnectionNumber (SmsGetIceConnection (sms_conn)));
@@ -183,10 +195,10 @@ sm_new_client (SmsConn        sms_conn,
   SET_CALLBACK (callbacks, get_properties, client);
 
   *mask = SmsRegisterClientProcMask | SmsInteractRequestProcMask
-    | SmsInteractDoneProcMask | SmsSaveYourselfRequestProcMask
-    | SmsSaveYourselfP2RequestProcMask | SmsSaveYourselfDoneProcMask
-    | SmsCloseConnectionProcMask | SmsSetPropertiesProcMask
-    | SmsDeletePropertiesProcMask | SmsGetPropertiesProcMask;
+          | SmsInteractDoneProcMask | SmsSaveYourselfRequestProcMask
+          | SmsSaveYourselfP2RequestProcMask | SmsSaveYourselfDoneProcMask
+          | SmsCloseConnectionProcMask | SmsSetPropertiesProcMask
+          | SmsDeletePropertiesProcMask | SmsGetPropertiesProcMask;
 
   g_object_set_data (G_OBJECT (client), "--xfsm-manager", manager);
 
@@ -195,12 +207,12 @@ sm_new_client (SmsConn        sms_conn,
 
 
 static Status
-sm_register_client (SmsConn   sms_conn,
+sm_register_client (SmsConn sms_conn,
                     SmPointer client_data,
-                    char     *previous_id)
+                    char *previous_id)
 {
   XfsmClient *client = (XfsmClient *) client_data;
-  Status      result;
+  Status result;
 
   xfsm_verbose ("ICE connection fd = %d, received REGISTER CLIENT [Previous Id = %s]\n\n",
                 IceConnectionNumber (SmsGetIceConnection (sms_conn)),
@@ -216,9 +228,9 @@ sm_register_client (SmsConn   sms_conn,
 
 
 static void
-sm_interact_request (SmsConn   sms_conn,
+sm_interact_request (SmsConn sms_conn,
                      SmPointer client_data,
-                     int       dialog_type)
+                     int dialog_type)
 {
   XfsmClient *client = (XfsmClient *) client_data;
 
@@ -230,9 +242,9 @@ sm_interact_request (SmsConn   sms_conn,
 
 
 static void
-sm_interact_done (SmsConn   sms_conn,
+sm_interact_done (SmsConn sms_conn,
                   SmPointer client_data,
-                  Bool      cancel_shutdown)
+                  Bool cancel_shutdown)
 {
   XfsmClient *client = (XfsmClient *) client_data;
 
@@ -244,13 +256,13 @@ sm_interact_done (SmsConn   sms_conn,
 
 
 static void
-sm_save_yourself_request (SmsConn   sms_conn,
+sm_save_yourself_request (SmsConn sms_conn,
                           SmPointer client_data,
-                          int       save_type,
-                          Bool      shutdown,
-                          int       interact_style,
-                          Bool      fast,
-                          Bool      global)
+                          int save_type,
+                          Bool shutdown,
+                          int interact_style,
+                          Bool fast,
+                          Bool global)
 {
   XfsmClient *client = (XfsmClient *) client_data;
 
@@ -260,11 +272,11 @@ sm_save_yourself_request (SmsConn   sms_conn,
                     xfsm_client_get_id (client));
       xfsm_verbose ("   Save type:      %s\n",
                     save_type == SmSaveLocal ? "Local"
-                    : (save_type == SmSaveGlobal ? "Global" : "Both"));
+                                             : (save_type == SmSaveGlobal ? "Global" : "Both"));
       xfsm_verbose ("   Shutdown:       %s\n", shutdown ? "True" : "False");
       xfsm_verbose ("   Interact Style: %s\n",
                     interact_style == SmInteractStyleNone ? "None"
-                    : (interact_style == SmInteractStyleErrors ? "Errors" : "Any"));
+                                                          : (interact_style == SmInteractStyleErrors ? "Errors" : "Any"));
       xfsm_verbose ("   Fast:           %s\n", fast ? "True" : "False");
       xfsm_verbose ("   Global:         %s\n", global ? "True" : "False");
       xfsm_verbose ("\n");
@@ -275,7 +287,7 @@ sm_save_yourself_request (SmsConn   sms_conn,
 
 
 static void
-sm_save_yourself_phase2_request (SmsConn   sms_conn,
+sm_save_yourself_phase2_request (SmsConn sms_conn,
                                  SmPointer client_data)
 {
   XfsmClient *client = (XfsmClient *) client_data;
@@ -288,9 +300,9 @@ sm_save_yourself_phase2_request (SmsConn   sms_conn,
 
 
 static void
-sm_save_yourself_done (SmsConn   sms_conn,
+sm_save_yourself_done (SmsConn sms_conn,
                        SmPointer client_data,
-                       Bool      success)
+                       Bool success)
 {
   XfsmClient *client = (XfsmClient *) client_data;
 
@@ -302,13 +314,13 @@ sm_save_yourself_done (SmsConn   sms_conn,
 
 
 static void
-sm_close_connection (SmsConn   sms_conn,
+sm_close_connection (SmsConn sms_conn,
                      SmPointer client_data,
-                     int       num_reasons,
-                     char    **reasons)
+                     int num_reasons,
+                     char **reasons)
 {
   XfsmClient *client = (XfsmClient *) client_data;
-  gint        n;
+  gint n;
 
   if (G_UNLIKELY (verbose))
     {
@@ -327,14 +339,14 @@ sm_close_connection (SmsConn   sms_conn,
 
 
 static void
-sm_set_properties (SmsConn   sms_conn,
+sm_set_properties (SmsConn sms_conn,
                    SmPointer client_data,
-                   int       num_props,
-                   SmProp  **props)
+                   int num_props,
+                   SmProp **props)
 {
   XfsmClient *client = (XfsmClient *) client_data;
-  int         n;
-  int         i;
+  int n;
+  int i;
 
   if (G_UNLIKELY (verbose))
     {
@@ -359,7 +371,7 @@ sm_set_properties (SmsConn   sms_conn,
               for (i = 0; i < props[n]->num_vals; ++i)
                 {
                   xfsm_verbose ("          %s%s\n", (const gchar *) props[n]->vals[i].value,
-                                (i == props[n]->num_vals - 1) ? ""  : ",");
+                                (i == props[n]->num_vals - 1) ? "" : ",");
                 }
             }
           xfsm_verbose ("\n");
@@ -376,13 +388,13 @@ sm_set_properties (SmsConn   sms_conn,
 
 
 static void
-sm_delete_properties (SmsConn   sms_conn,
+sm_delete_properties (SmsConn sms_conn,
                       SmPointer client_data,
-                      int       num_props,
-                      char    **prop_names)
+                      int num_props,
+                      char **prop_names)
 {
   XfsmClient *client = (XfsmClient *) client_data;
-  int         n;
+  int n;
 
   if (G_UNLIKELY (verbose))
     {
@@ -402,13 +414,13 @@ sm_delete_properties (SmsConn   sms_conn,
 
 
 static void
-sm_get_properties (SmsConn   sms_conn,
+sm_get_properties (SmsConn sms_conn,
                    SmPointer client_data)
 {
-  XfsmClient     *client     = (XfsmClient *) client_data;
+  XfsmClient *client = (XfsmClient *) client_data;
   XfsmProperties *properties = xfsm_client_get_properties (client);
-  SmProp        **props      = NULL;
-  gint            num_props  = 0;
+  SmProp **props = NULL;
+  gint num_props = 0;
 
   xfsm_verbose ("Client Id = %s, received GET PROPERTIES\n\n", properties->client_id);
 

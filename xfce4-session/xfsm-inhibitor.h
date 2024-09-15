@@ -31,18 +31,23 @@ G_BEGIN_DECLS
 #define XFSM_TYPE_INHIBITOR (xfsm_inhibitor_get_type ())
 G_DECLARE_FINAL_TYPE (XfsmInhibitor, xfsm_inhibitor, XFSM, INHIBITOR, GObject)
 
-gboolean          xfsm_inhibitor_add                      (XfsmInhibitor        *store,
-                                                           XfsmInhibition       *inhibition);
+gboolean
+xfsm_inhibitor_add (XfsmInhibitor *store,
+                    XfsmInhibition *inhibition);
 
-gboolean          xfsm_inhibitor_remove                   (XfsmInhibitor        *store,
-                                                           guint                 cookie);
+gboolean
+xfsm_inhibitor_remove (XfsmInhibitor *store,
+                       guint cookie);
 
-gboolean          xfsm_inhibitor_is_empty                 (XfsmInhibitor        *store);
+gboolean
+xfsm_inhibitor_is_empty (XfsmInhibitor *store);
 
-gboolean          xfsm_inhibitor_has_flags                (XfsmInhibitor        *store,
-                                                           XfsmInhibitonFlag     flags);
+gboolean
+xfsm_inhibitor_has_flags (XfsmInhibitor *store,
+                          XfsmInhibitonFlag flags);
 
-XfsmInhibitor    *xfsm_inhibitor_get                      (void);
+XfsmInhibitor *
+xfsm_inhibitor_get (void);
 
 G_END_DECLS
 

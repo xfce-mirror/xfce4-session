@@ -17,18 +17,17 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <xfce4-session/xfsm-error.h>
+#include "xfsm-error.h"
 
 #define XFSM_DBUS_NAME "org.xfce.SessionManager"
 
-static const GDBusErrorEntry xfsm_error_entries[] =
-{
-        { XFSM_ERROR_BAD_STATE,   XFSM_DBUS_NAME ".Error.Failed" },
-        { XFSM_ERROR_BAD_VALUE,   XFSM_DBUS_NAME ".Error.General" },
-        { XFSM_ERROR_UNSUPPORTED, XFSM_DBUS_NAME ".Error.Unsupported" },
+static const GDBusErrorEntry xfsm_error_entries[] = {
+  { XFSM_ERROR_BAD_STATE, XFSM_DBUS_NAME ".Error.Failed" },
+  { XFSM_ERROR_BAD_VALUE, XFSM_DBUS_NAME ".Error.General" },
+  { XFSM_ERROR_UNSUPPORTED, XFSM_DBUS_NAME ".Error.Unsupported" },
 };
 
 GQuark
@@ -66,18 +65,18 @@ xfsm_error_get_type (void)
 
 void
 throw_error (GDBusMethodInvocation *context,
-             gint                   error_code,
-             const gchar           *format,
+             gint error_code,
+             const gchar *format,
              ...)
 {
-        va_list args;
-        gchar *message;
+  va_list args;
+  gchar *message;
 
-        va_start (args, format);
-        message = g_strdup_vprintf (format, args);
-        va_end (args);
+  va_start (args, format);
+  message = g_strdup_vprintf (format, args);
+  va_end (args);
 
-        g_dbus_method_invocation_return_error (context, XFSM_ERROR, error_code, "%s", message);
+  g_dbus_method_invocation_return_error (context, XFSM_ERROR, error_code, "%s", message);
 
-        g_free (message);
+  g_free (message);
 }

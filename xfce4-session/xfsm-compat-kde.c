@@ -20,7 +20,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_SYS_TYPES_H
@@ -44,10 +44,9 @@
 #endif
 
 #include <gtk/gtk.h>
-
 #include <libxfce4util/libxfce4util.h>
 
-#include <xfce4-session/xfsm-compat-kde.h>
+#include "xfsm-compat-kde.h"
 
 
 static gboolean kde_compat_started = FALSE;
@@ -68,8 +67,7 @@ run_timeout (gpointer user_data)
     }
   else if (result == -1)
     {
-      g_warning ("Failed to wait for process %d: %s",
-                 (int)pid, g_strerror (errno));
+      g_warning ("Failed to wait for process %d: %s", (int) pid, g_strerror (errno));
       gtk_main_quit ();
     }
 
@@ -83,11 +81,12 @@ run (const gchar *command)
   gchar buffer[2048];
   GError *error = NULL;
   gchar **argv;
-  gint    argc;
-  pid_t   pid;
+  gint argc;
+  pid_t pid;
 
-  g_snprintf (buffer, 2048, "env DYLD_FORCE_FLAT_NAMESPACE= LD_BIND_NOW=true "
-              "SESSION_MANAGER= %s", command);
+  g_snprintf (buffer, 2048,
+              "env DYLD_FORCE_FLAT_NAMESPACE= LD_BIND_NOW=true SESSION_MANAGER= %s",
+              command);
 
   if (!g_shell_parse_argv (buffer, &argc, &argv, &error))
     {
@@ -125,16 +124,16 @@ xfsm_compat_kde_startup (void)
   run ("kdeinit4");
 
   /* tell klauncher about the session manager */
-  g_snprintf (command, 256, "qdbus org.kde.klauncher /KLauncher setLaunchEnv "
-                            "SESSION_MANAGER \"%s\"",
-                            g_getenv ("SESSION_MANAGER"));
+  g_snprintf (command, 256,
+              "qdbus org.kde.klauncher /KLauncher setLaunchEnv SESSION_MANAGER \"%s\"",
+              g_getenv ("SESSION_MANAGER"));
   run (command);
 
   /* tell kde if we are running multi-head */
   if (gdk_display_get_n_screens (gdk_display_get_default ()) > 1)
     {
-      g_snprintf (command, 256, "qdbus org.kde.klauncher /KLauncher setLaunchEnv "
-                                "KDE_MULTIHEAD \"true\"");
+      g_snprintf (command, 256,
+                  "qdbus org.kde.klauncher /KLauncher setLaunchEnv KDE_MULTIHEAD \"true\"");
       run (command);
     }
 

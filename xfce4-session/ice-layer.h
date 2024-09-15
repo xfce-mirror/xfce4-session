@@ -23,15 +23,17 @@
 #define __XFSM_ICE_LAYER_H__
 
 #include <X11/ICE/ICElib.h>
-
 #include <glib.h>
 
-#include <xfce4-session/xfsm-manager.h>
+#include "xfsm-manager.h"
 
-Bool     ice_auth_proc       (char         *hostname);
-gboolean ice_setup_listeners (int           num_listeners,
-                              IceListenObj *listen_objs,
-                              XfsmManager  *manager);
-void     ice_cleanup         (void);
+Bool
+ice_auth_proc (char *hostname);
+gboolean
+ice_setup_listeners (int num_listeners,
+                     IceListenObj *listen_objs,
+                     XfsmManager *manager);
+void
+ice_cleanup (void);
 
-#endif	/* !__XFSM_ICE_LAYER_H__ */
+#endif /* !__XFSM_ICE_LAYER_H__ */

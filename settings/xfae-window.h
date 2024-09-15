@@ -28,18 +28,20 @@
 G_BEGIN_DECLS;
 
 typedef struct _XfaeWindowClass XfaeWindowClass;
-typedef struct _XfaeWindow      XfaeWindow;
+typedef struct _XfaeWindow XfaeWindow;
 
-#define XFAE_TYPE_WINDOW            (xfae_window_get_type ())
-#define XFAE_WINDOW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), XFAE_TYPE_WINDOW, XfaeWindow))
-#define XFAE_WINDOW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), XFAE_TYPE_WINDOW, XfaeWindow))
-#define XFAE_IS_WINDOW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), XFAE_TYPE_WINDOW))
+#define XFAE_TYPE_WINDOW (xfae_window_get_type ())
+#define XFAE_WINDOW(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XFAE_TYPE_WINDOW, XfaeWindow))
+#define XFAE_WINDOW_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), XFAE_TYPE_WINDOW, XfaeWindow))
+#define XFAE_IS_WINDOW(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), XFAE_TYPE_WINDOW))
 #define XFAE_IS_WINDOW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), XFAE_TYPE_WINDOW))
-#define XFAE_WINDOW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), XFAE_TYPE_WINDOW, XfaeWindowClass))
+#define XFAE_WINDOW_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), XFAE_TYPE_WINDOW, XfaeWindowClass))
 
-GType      xfae_window_get_type          (void) G_GNUC_CONST;
+GType
+xfae_window_get_type (void) G_GNUC_CONST;
 
-GtkWidget *xfae_window_new               (void) G_GNUC_MALLOC;
+GtkWidget *
+xfae_window_new (void) G_GNUC_MALLOC;
 
 G_END_DECLS;
 

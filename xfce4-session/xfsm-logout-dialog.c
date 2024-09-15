@@ -23,7 +23,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_SYS_WAIT_H
@@ -43,39 +43,42 @@
 #include <math.h>
 #endif
 
-#include <libxfce4util/libxfce4util.h>
-#include <gtk/gtk.h>
-#ifdef HAVE_GTK_LAYER_SHELL
-#include <gtk-layer-shell.h>
-#endif
-
-#include <libxfsm/xfsm-util.h>
-
-#include <xfce4-session/xfsm-logout-dialog.h>
-#include <xfce4-session/xfsm-fadeout.h>
-#include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-legacy.h>
-#include <xfce4-session/xfsm-error.h>
-
 #ifdef ENABLE_X11
 #include <X11/Xlib.h>
 #include <gdk/gdkx.h>
 #endif
 
+#ifdef HAVE_GTK_LAYER_SHELL
+#include <gtk-layer-shell.h>
+#endif
+
+#include <gtk/gtk.h>
+#include <libxfce4util/libxfce4util.h>
+
+#include "libxfsm/xfsm-util.h"
+
+#include "xfsm-error.h"
+#include "xfsm-fadeout.h"
+#include "xfsm-global.h"
+#include "xfsm-legacy.h"
+#include "xfsm-logout-dialog.h"
 
 
-#define BORDER   6
+
+#define BORDER 6
 #define SHOTSIZE 256
 
 
 
-static void       xfsm_logout_dialog_finalize (GObject          *object);
-static GtkWidget *xfsm_logout_dialog_button   (const gchar      *title,
-                                               const gchar      *icon_name,
-                                               const gchar      *icon_name_fallback,
-                                               const gchar      *icon_name_fallback2,
-                                               XfsmShutdownType  type,
-                                               XfsmLogoutDialog *dialog);
+static void
+xfsm_logout_dialog_finalize (GObject *object);
+static GtkWidget *
+xfsm_logout_dialog_button (const gchar *title,
+                           const gchar *icon_name,
+                           const gchar *icon_name_fallback,
+                           const gchar *icon_name_fallback2,
+                           XfsmShutdownType type,
+                           XfsmLogoutDialog *dialog);
 
 
 
@@ -96,19 +99,19 @@ struct _XfsmLogoutDialog
   GtkDialog __parent__;
 
   /* set when a button is clicked */
-  XfsmShutdownType  type_clicked;
+  XfsmShutdownType type_clicked;
 
   /* mode widgets */
-  GtkWidget        *box[N_MODES];
+  GtkWidget *box[N_MODES];
 
   /* dialog buttons */
-  GtkWidget        *button_cancel;
+  GtkWidget *button_cancel;
 
   /* error label */
-  GtkWidget        *error_label;
+  GtkWidget *error_label;
 
   /* pm instance */
-  XfsmShutdown     *shutdown;
+  XfsmShutdown *shutdown;
 };
 
 
@@ -131,32 +134,32 @@ xfsm_logout_dialog_class_init (XfsmLogoutDialogClass *klass)
 static void
 xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
 {
-  const gchar    *username;
-  GtkWidget      *label;
-  gchar          *label_str;
-  PangoAttrList  *attrs;
-  GtkWidget      *vbox;
-  GtkWidget      *button_vbox;
-  GtkWidget      *main_vbox;
-  GtkWidget      *hbox;
-  GtkWidget      *button;
-  gboolean        can_shutdown = FALSE;
-  gboolean        has_updates;
-  gboolean        can_logout = FALSE;
-  gboolean        can_restart = FALSE;
-  gboolean        can_suspend = FALSE;
-  gboolean        can_hibernate = FALSE;
-  gboolean        can_hybrid_sleep = FALSE;
-  gboolean        can_switch_user = FALSE;
-  gboolean        auth_shutdown = FALSE;
-  gboolean        auth_restart = FALSE;
-  gboolean        auth_suspend = FALSE;
-  gboolean        auth_hibernate = FALSE;
-  gboolean        auth_hybrid_sleep = FALSE;
-  GError         *error = NULL;
-  XfconfChannel  *channel;
-  GtkWidget      *image;
-  GtkWidget      *separator;
+  const gchar *username;
+  GtkWidget *label;
+  gchar *label_str;
+  PangoAttrList *attrs;
+  GtkWidget *vbox;
+  GtkWidget *button_vbox;
+  GtkWidget *main_vbox;
+  GtkWidget *hbox;
+  GtkWidget *button;
+  gboolean can_shutdown = FALSE;
+  gboolean has_updates;
+  gboolean can_logout = FALSE;
+  gboolean can_restart = FALSE;
+  gboolean can_suspend = FALSE;
+  gboolean can_hibernate = FALSE;
+  gboolean can_hybrid_sleep = FALSE;
+  gboolean can_switch_user = FALSE;
+  gboolean auth_shutdown = FALSE;
+  gboolean auth_restart = FALSE;
+  gboolean auth_suspend = FALSE;
+  gboolean auth_hibernate = FALSE;
+  gboolean auth_hybrid_sleep = FALSE;
+  GError *error = NULL;
+  XfconfChannel *channel;
+  GtkWidget *image;
+  GtkWidget *separator;
   GtkCssProvider *provider;
 
 #ifdef HAVE_GTK_LAYER_SHELL
@@ -429,7 +432,7 @@ xfsm_logout_dialog_finalize (GObject *object)
 
 static void
 xfsm_logout_dialog_set_mode (XfsmLogoutDialog *dialog,
-                             gint              mode)
+                             gint mode)
 {
   gint i;
 
@@ -442,7 +445,7 @@ xfsm_logout_dialog_set_mode (XfsmLogoutDialog *dialog,
 
 
 static void
-xfsm_logout_dialog_button_clicked (GtkWidget        *button,
+xfsm_logout_dialog_button_clicked (GtkWidget *button,
                                    XfsmLogoutDialog *dialog)
 {
   gint *val;
@@ -457,18 +460,18 @@ xfsm_logout_dialog_button_clicked (GtkWidget        *button,
 
 
 static GtkWidget *
-xfsm_logout_dialog_button (const gchar      *title,
-                           const gchar      *icon_name,
-                           const gchar      *icon_name_fallback,
-                           const gchar      *icon_name_fallback2,
-                           XfsmShutdownType  type,
+xfsm_logout_dialog_button (const gchar *title,
+                           const gchar *icon_name,
+                           const gchar *icon_name_fallback,
+                           const gchar *icon_name_fallback2,
+                           XfsmShutdownType type,
                            XfsmLogoutDialog *dialog)
 {
-  GtkWidget    *button;
-  GtkWidget    *vbox;
-  GtkWidget    *image;
-  GtkWidget    *label;
-  gint         *val;
+  GtkWidget *button;
+  GtkWidget *vbox;
+  GtkWidget *image;
+  GtkWidget *label;
+  gint *val;
   GtkIconTheme *icon_theme;
 
   g_return_val_if_fail (XFSM_IS_LOGOUT_DIALOG (dialog), NULL);
@@ -479,7 +482,7 @@ xfsm_logout_dialog_button (const gchar      *title,
   button = gtk_button_new ();
   g_object_set_data_full (G_OBJECT (button), "shutdown-type", val, g_free);
   g_signal_connect (G_OBJECT (button), "clicked",
-      G_CALLBACK (xfsm_logout_dialog_button_clicked), dialog);
+                    G_CALLBACK (xfsm_logout_dialog_button_clicked), dialog);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, BORDER);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), BORDER);
@@ -490,11 +493,11 @@ xfsm_logout_dialog_button (const gchar      *title,
 
   image = gtk_image_new ();
   if (gtk_icon_theme_has_icon (icon_theme, icon_name))
-      gtk_image_set_from_icon_name (GTK_IMAGE (image), icon_name, GTK_ICON_SIZE_DIALOG);
+    gtk_image_set_from_icon_name (GTK_IMAGE (image), icon_name, GTK_ICON_SIZE_DIALOG);
   else if (gtk_icon_theme_has_icon (icon_theme, icon_name_fallback))
-      gtk_image_set_from_icon_name (GTK_IMAGE (image), icon_name_fallback, GTK_ICON_SIZE_DIALOG);
+    gtk_image_set_from_icon_name (GTK_IMAGE (image), icon_name_fallback, GTK_ICON_SIZE_DIALOG);
   else if (gtk_icon_theme_has_icon (icon_theme, icon_name_fallback2))
-      gtk_image_set_from_icon_name (GTK_IMAGE (image), icon_name_fallback2, GTK_ICON_SIZE_DIALOG);
+    gtk_image_set_from_icon_name (GTK_IMAGE (image), icon_name_fallback2, GTK_ICON_SIZE_DIALOG);
 
   gtk_image_set_pixel_size (GTK_IMAGE (image), 48);
   gtk_box_pack_start (GTK_BOX (vbox), image, FALSE, FALSE, 0);
@@ -512,10 +515,10 @@ xfsm_logout_dialog_button (const gchar      *title,
 static GdkPixbuf *
 xfsm_logout_dialog_screenshot_new (GdkScreen *screen)
 {
-  GdkRectangle  rect, screen_rect;
-  GdkWindow    *window;
-  GdkPixbuf    *screenshot;
-  gint          x, y;
+  GdkRectangle rect, screen_rect;
+  GdkWindow *window;
+  GdkPixbuf *screenshot;
+  gint x, y;
 
   g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
 
@@ -537,7 +540,7 @@ xfsm_logout_dialog_screenshot_new (GdkScreen *screen)
   if (!gdk_rectangle_intersect (&rect, &screen_rect, &rect))
     return NULL;
 
-  screenshot = gdk_pixbuf_get_from_window  (window, 0, 0, rect.width, rect.height);
+  screenshot = gdk_pixbuf_get_from_window (window, 0, 0, rect.width, rect.height);
 
   gdk_display_beep (gdk_screen_get_display (screen));
 
@@ -548,32 +551,32 @@ xfsm_logout_dialog_screenshot_new (GdkScreen *screen)
 
 static GdkPixbuf *
 exo_gdk_pixbuf_scale_ratio (GdkPixbuf *source,
-                            gint       dest_size)
+                            gint dest_size)
 {
   gdouble wratio;
   gdouble hratio;
-  gint    source_width;
-  gint    source_height;
-  gint    dest_width;
-  gint    dest_height;
+  gint source_width;
+  gint source_height;
+  gint dest_width;
+  gint dest_height;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (source), NULL);
   g_return_val_if_fail (dest_size > 0, NULL);
 
-  source_width  = gdk_pixbuf_get_width  (source);
+  source_width = gdk_pixbuf_get_width (source);
   source_height = gdk_pixbuf_get_height (source);
 
-  wratio = (gdouble) source_width  / (gdouble) dest_size;
+  wratio = (gdouble) source_width / (gdouble) dest_size;
   hratio = (gdouble) source_height / (gdouble) dest_size;
 
   if (hratio > wratio)
     {
-      dest_width  = rint (source_width / hratio);
+      dest_width = rint (source_width / hratio);
       dest_height = dest_size;
     }
   else
     {
-      dest_width  = dest_size;
+      dest_width = dest_size;
       dest_height = rint (source_height / wratio);
     }
 
@@ -584,16 +587,16 @@ exo_gdk_pixbuf_scale_ratio (GdkPixbuf *source,
 
 
 static void
-xfsm_logout_dialog_screenshot_save (GdkPixbuf   *screenshot,
-                                    GdkScreen   *screen,
+xfsm_logout_dialog_screenshot_save (GdkPixbuf *screenshot,
+                                    GdkScreen *screen,
                                     const gchar *session_name)
 {
-  GdkPixbuf  *scaled;
-  gchar      *path;
-  gchar      *display_name;
+  GdkPixbuf *scaled;
+  gchar *path;
+  gchar *display_name;
   GdkDisplay *dpy;
-  GError     *error = NULL;
-  gchar      *filename;
+  GError *error = NULL;
+  gchar *filename;
 
   g_return_if_fail (GDK_IS_PIXBUF (screenshot));
   g_return_if_fail (GDK_IS_SCREEN (screen));
@@ -611,7 +614,8 @@ xfsm_logout_dialog_screenshot_save (GdkPixbuf   *screenshot,
         {
           g_warning ("Unable to save screenshot, "
                      "error calling xfce_resource_save_location with %s, "
-                     "check your permissions", path);
+                     "check your permissions",
+                     path);
           g_free (path);
           return;
         }
@@ -631,9 +635,9 @@ xfsm_logout_dialog_screenshot_save (GdkPixbuf   *screenshot,
 
 
 static void
-xfsm_logout_dialog_grab_callback (GdkSeat   *seat,
+xfsm_logout_dialog_grab_callback (GdkSeat *seat,
                                   GdkWindow *window,
-                                  gpointer   user_data)
+                                  gpointer user_data)
 {
   /* ensure window is mapped to avoid unsuccessful grabs */
   if (!gdk_window_is_visible (window))
@@ -644,12 +648,12 @@ xfsm_logout_dialog_grab_callback (GdkSeat   *seat,
 
 static gint
 xfsm_logout_dialog_run (GtkDialog *dialog,
-                        gboolean   grab_input)
+                        gboolean grab_input)
 {
   GdkWindow *window;
-  gint       ret;
+  gint ret;
   GdkDevice *device;
-  GdkSeat   *seat;
+  GdkSeat *seat;
 
   if (grab_input)
     {
@@ -658,15 +662,15 @@ xfsm_logout_dialog_run (GtkDialog *dialog,
       window = gtk_widget_get_window (GTK_WIDGET (dialog));
 
       device = gtk_get_current_event_device ();
-      seat = device != NULL
-             ? gdk_device_get_seat (device)
-             : gdk_display_get_default_seat (gtk_widget_get_display (GTK_WIDGET (dialog)));
+      seat = device != NULL ? gdk_device_get_seat (device)
+                            : gdk_display_get_default_seat (gtk_widget_get_display (GTK_WIDGET (dialog)));
 
       if (gdk_seat_grab (seat, window,
                          GDK_SEAT_CAPABILITY_KEYBOARD,
                          FALSE, NULL, NULL,
                          xfsm_logout_dialog_grab_callback,
-                         NULL) != GDK_GRAB_SUCCESS)
+                         NULL)
+          != GDK_GRAB_SUCCESS)
         {
           g_critical ("Failed to grab the keyboard for logout window");
         }
@@ -695,24 +699,24 @@ xfsm_logout_dialog_run (GtkDialog *dialog,
 
 
 gboolean
-xfsm_logout_dialog (const gchar      *session_name,
+xfsm_logout_dialog (const gchar *session_name,
                     XfsmShutdownType *return_type,
-                    gboolean          accessibility)
+                    gboolean accessibility)
 {
-  gint              result;
-  GtkWidget        *hidden;
-  GtkWidget        *dialog;
-  GdkScreen        *screen;
-  gint              monitor;
-  GdkPixbuf        *screenshot = NULL;
+  gint result;
+  GtkWidget *hidden;
+  GtkWidget *dialog;
+  GdkScreen *screen;
+  gint monitor;
+  GdkPixbuf *screenshot = NULL;
 #ifdef ENABLE_X11
-  XfsmFadeout      *fadeout = NULL;
+  XfsmFadeout *fadeout = NULL;
 #endif
   XfsmLogoutDialog *xfsm_dialog;
-  XfconfChannel    *channel = xfconf_channel_get (SETTINGS_CHANNEL);
-  GdkDevice        *device;
-  GdkSeat          *seat;
-  gint              grab_count = 0;
+  XfconfChannel *channel = xfconf_channel_get (SETTINGS_CHANNEL);
+  GdkDevice *device;
+  GdkSeat *seat;
+  gint grab_count = 0;
 
   g_return_val_if_fail (return_type != NULL, FALSE);
 
@@ -742,15 +746,15 @@ xfsm_logout_dialog (const gchar      *session_name,
       for (;;)
         {
           device = gtk_get_current_event_device ();
-          seat = device != NULL
-                 ? gdk_device_get_seat (device)
-                 : gdk_display_get_default_seat (gtk_widget_get_display (hidden));
+          seat = device != NULL ? gdk_device_get_seat (device)
+                                : gdk_display_get_default_seat (gtk_widget_get_display (hidden));
 
           if (gdk_seat_grab (seat, gtk_widget_get_window (hidden),
                              GDK_SEAT_CAPABILITY_KEYBOARD,
                              FALSE, NULL, NULL,
                              xfsm_logout_dialog_grab_callback,
-                             NULL) == GDK_GRAB_SUCCESS)
+                             NULL)
+              == GDK_GRAB_SUCCESS)
             {
               gdk_seat_ungrab (seat);
               break;

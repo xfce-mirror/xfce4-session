@@ -21,13 +21,12 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_MEMORY_H
 #include <memory.h>
 #endif
-#include <stdio.h>
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
@@ -36,10 +35,10 @@
 #endif
 
 #include <gio/gio.h>
-
 #include <gtk/gtk.h>
 #include <libxfce4ui/libxfce4ui.h>
 #include <libxfce4util/libxfce4util.h>
+#include <stdio.h>
 
 
 gboolean opt_logout = FALSE;
@@ -52,52 +51,42 @@ gboolean opt_switch_user = FALSE;
 gboolean opt_fast = FALSE;
 gboolean opt_version = FALSE;
 
-static GOptionEntry option_entries[] =
-{
+static GOptionEntry option_entries[] = {
   { "logout", 'l', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_logout,
-    N_("Log out without displaying the logout dialog"),
-    NULL
-  },
+    N_ ("Log out without displaying the logout dialog"),
+    NULL },
   { "halt", 'h', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_halt,
-    N_("Halt without displaying the logout dialog"),
-    NULL
-  },
+    N_ ("Halt without displaying the logout dialog"),
+    NULL },
   { "reboot", 'r', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_reboot,
-    N_("Reboot without displaying the logout dialog"),
-    NULL
-  },
+    N_ ("Reboot without displaying the logout dialog"),
+    NULL },
   { "suspend", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_suspend,
-    N_("Suspend without displaying the logout dialog"),
-    NULL
-  },
+    N_ ("Suspend without displaying the logout dialog"),
+    NULL },
   { "hibernate", 'i', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_hibernate,
-    N_("Hibernate without displaying the logout dialog"),
-    NULL
-  },
+    N_ ("Hibernate without displaying the logout dialog"),
+    NULL },
   { "hybrid-sleep", 'b', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_hybrid_sleep,
-    N_("Hybrid Sleep without displaying the logout dialog"),
-    NULL
-  },
+    N_ ("Hybrid Sleep without displaying the logout dialog"),
+    NULL },
   { "switch-user", 'u', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_switch_user,
-    N_("Switch user without displaying the logout dialog"),
-    NULL
-  },
+    N_ ("Switch user without displaying the logout dialog"),
+    NULL },
   { "fast", 'f', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_fast,
-    N_("Log out quickly; don't save the session"),
-    NULL
-  },
+    N_ ("Log out quickly; don't save the session"),
+    NULL },
   { "version", 'V', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &opt_version,
-    N_("Print version information and exit"),
-    NULL
-  },
+    N_ ("Print version information and exit"),
+    NULL },
   { NULL }
 };
 
 
 static void
 xfce_session_logout_notify_error (const gchar *message,
-                                  GError      *error,
-                                  gboolean     have_display)
+                                  GError *error,
+                                  gboolean have_display)
 {
   if (G_LIKELY (have_display))
     {
@@ -114,12 +103,12 @@ xfce_session_logout_notify_error (const gchar *message,
 int
 main (int argc, char **argv)
 {
-  GDBusProxy      *proxy = NULL;
-  GError          *err = NULL;
-  gboolean         have_display;
-  gboolean         show_dialog;
-  GVariant        *result = NULL;
-  gboolean         allow_save;
+  GDBusProxy *proxy = NULL;
+  GError *err = NULL;
+  gboolean have_display;
+  gboolean show_dialog;
+  GVariant *result = NULL;
+  gboolean allow_save;
 
   xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
@@ -177,7 +166,7 @@ main (int argc, char **argv)
   else if (opt_suspend)
     {
       result = g_dbus_proxy_call_sync (proxy, "Suspend",
-                                       g_variant_new("()"),
+                                       g_variant_new ("()"),
                                        G_DBUS_CALL_FLAGS_NONE,
                                        -1,
                                        NULL,
@@ -186,7 +175,7 @@ main (int argc, char **argv)
   else if (opt_hibernate)
     {
       result = g_dbus_proxy_call_sync (proxy, "Hibernate",
-                                       g_variant_new("()"),
+                                       g_variant_new ("()"),
                                        G_DBUS_CALL_FLAGS_NONE,
                                        -1,
                                        NULL,
@@ -195,7 +184,7 @@ main (int argc, char **argv)
   else if (opt_hybrid_sleep)
     {
       result = g_dbus_proxy_call_sync (proxy, "HybridSleep",
-                                       g_variant_new("()"),
+                                       g_variant_new ("()"),
                                        G_DBUS_CALL_FLAGS_NONE,
                                        -1,
                                        NULL,
@@ -204,7 +193,7 @@ main (int argc, char **argv)
   else if (opt_switch_user)
     {
       result = g_dbus_proxy_call_sync (proxy, "SwitchUser",
-                                       g_variant_new("()"),
+                                       g_variant_new ("()"),
                                        G_DBUS_CALL_FLAGS_NONE,
                                        -1,
                                        NULL,
@@ -214,7 +203,7 @@ main (int argc, char **argv)
     {
       show_dialog = !opt_logout;
       result = g_dbus_proxy_call_sync (proxy, "Logout",
-                                       g_variant_new("(bb)",show_dialog, allow_save),
+                                       g_variant_new ("(bb)", show_dialog, allow_save),
                                        G_DBUS_CALL_FLAGS_NONE,
                                        -1,
                                        NULL,

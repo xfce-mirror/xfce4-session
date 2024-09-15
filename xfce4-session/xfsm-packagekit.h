@@ -27,18 +27,22 @@ G_BEGIN_DECLS
 #define XFSM_TYPE_PACKAGEKIT (xfsm_packagekit_get_type ())
 G_DECLARE_FINAL_TYPE (XfsmPackagekit, xfsm_packagekit, XFSM, PACKAGEKIT, GObject)
 
-XfsmPackagekit *xfsm_packagekit_get                  (void);
+XfsmPackagekit *
+xfsm_packagekit_get (void);
 
-gboolean        xfsm_packagekit_has_update_prepared  (XfsmPackagekit  *packagekit,
-                                                      gboolean        *update_prepared,
-                                                      GError         **error);
+gboolean
+xfsm_packagekit_has_update_prepared (XfsmPackagekit *packagekit,
+                                     gboolean *update_prepared,
+                                     GError **error);
 
-gboolean        xfsm_packagekit_try_trigger_shutdown (XfsmPackagekit  *packagekit,
-                                                      GError         **error);
+gboolean
+xfsm_packagekit_try_trigger_shutdown (XfsmPackagekit *packagekit,
+                                      GError **error);
 
-gboolean        xfsm_packagekit_try_trigger_restart  (XfsmPackagekit  *packagekit,
-                                                      GError         **error);
+gboolean
+xfsm_packagekit_try_trigger_restart (XfsmPackagekit *packagekit,
+                                     GError **error);
 
 G_END_DECLS
 
-#endif  /* __XFSM_PACKAGEKIT_H__ */
+#endif /* __XFSM_PACKAGEKIT_H__ */

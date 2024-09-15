@@ -23,19 +23,28 @@
 #ifndef __XFSM_SHUTDOWN_FALLBACK_H__
 #define __XFSM_SHUTDOWN_FALLBACK_H__
 
-#include <xfce4-session/xfsm-shutdown.h>
+#include "xfsm-shutdown.h"
 
-gboolean xfsm_shutdown_fallback_auth_shutdown     (void);
-gboolean xfsm_shutdown_fallback_auth_restart      (void);
-gboolean xfsm_shutdown_fallback_auth_suspend      (void);
-gboolean xfsm_shutdown_fallback_auth_hibernate    (void);
-gboolean xfsm_shutdown_fallback_auth_hybrid_sleep (void);
+gboolean
+xfsm_shutdown_fallback_auth_shutdown (void);
+gboolean
+xfsm_shutdown_fallback_auth_restart (void);
+gboolean
+xfsm_shutdown_fallback_auth_suspend (void);
+gboolean
+xfsm_shutdown_fallback_auth_hibernate (void);
+gboolean
+xfsm_shutdown_fallback_auth_hybrid_sleep (void);
 
-gboolean xfsm_shutdown_fallback_can_suspend       (void);
-gboolean xfsm_shutdown_fallback_can_hibernate     (void);
-gboolean xfsm_shutdown_fallback_can_hybrid_sleep  (void);
+gboolean
+xfsm_shutdown_fallback_can_suspend (void);
+gboolean
+xfsm_shutdown_fallback_can_hibernate (void);
+gboolean
+xfsm_shutdown_fallback_can_hybrid_sleep (void);
 
-gboolean xfsm_shutdown_fallback_try_action     (XfsmShutdownType   type,
-                                                GError           **error);
+gboolean
+xfsm_shutdown_fallback_try_action (XfsmShutdownType type,
+                                   GError **error);
 
-#endif	/* !__XFSM_SHUTDOWN_FALLBACK_H__ */
+#endif /* !__XFSM_SHUTDOWN_FALLBACK_H__ */

@@ -23,15 +23,21 @@
 #ifndef __XFSM_STARTUP_H__
 #define __XFSM_STARTUP_H__
 
-#include <xfconf/xfconf.h>
 #include <libxfce4util/libxfce4util.h>
+#include <xfconf/xfconf.h>
 
-void xfsm_startup_init (XfconfChannel *channel);
-void xfsm_startup_shutdown (void);
-void xfsm_startup_foreign (XfsmManager *manager);
-void xfsm_startup_begin (XfsmManager *manager);
-void xfsm_startup_session_continue (XfsmManager *manager);
-gboolean xfsm_startup_start_properties (XfsmProperties *properties,
-                                        XfsmManager    *manager);
+void
+xfsm_startup_init (XfconfChannel *channel);
+void
+xfsm_startup_shutdown (void);
+void
+xfsm_startup_foreign (XfsmManager *manager);
+void
+xfsm_startup_begin (XfsmManager *manager);
+void
+xfsm_startup_session_continue (XfsmManager *manager);
+gboolean
+xfsm_startup_start_properties (XfsmProperties *properties,
+                               XfsmManager *manager);
 
 #endif /* !__XFSM_STARTUP_H__ */

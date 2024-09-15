@@ -27,14 +27,14 @@
 G_BEGIN_DECLS;
 
 typedef struct _XfaeModelClass XfaeModelClass;
-typedef struct _XfaeModel      XfaeModel;
+typedef struct _XfaeModel XfaeModel;
 
-#define XFAE_TYPE_MODEL             (xfae_model_get_type ())
-#define XFAE_MODEL(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), XFAE_TYPE_MODEL, XfaeModel))
-#define XFAE_MODEL_CLASS(klass)     (G_TYPE_CHECK_CLASS_CAST ((klass), XFAE_TYPE_MODEL, XfaeModelClass))
-#define XFAE_IS_MODEL(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), XFAE_TYPE_MODEL))
-#define XFAE_IS_MODEL_CLASS(klass)  (G_TYPE_CHECK_CLASS_TYPE ((klass), XFAE_TYPE_MODEL))
-#define XFAE_MODEL_GET_CLASS(obj)   (G_TYPE_INSTANCE_GET_CLASS ((obj), XFAE_TYPE_MODEL, XfaeModelClass))
+#define XFAE_TYPE_MODEL (xfae_model_get_type ())
+#define XFAE_MODEL(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XFAE_TYPE_MODEL, XfaeModel))
+#define XFAE_MODEL_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), XFAE_TYPE_MODEL, XfaeModelClass))
+#define XFAE_IS_MODEL(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), XFAE_TYPE_MODEL))
+#define XFAE_IS_MODEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), XFAE_TYPE_MODEL))
+#define XFAE_MODEL_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), XFAE_TYPE_MODEL, XfaeModelClass))
 
 #define XFSM_TYPE_RUN_HOOK (xfsm_run_hook_get_type ())
 
@@ -54,7 +54,8 @@ typedef enum
   XFSM_RUN_HOOK_SWITCH_USER,
 } XfsmRunHook;
 
-GType xfsm_run_hook_get_type (void) G_GNUC_CONST;
+GType
+xfsm_run_hook_get_type (void) G_GNUC_CONST;
 
 /**
  * XfaeModelColumn:
@@ -73,46 +74,54 @@ typedef enum
   XFAE_MODEL_N_COLUMNS,
 } XfaeModelColumn;
 
-GType         xfae_model_get_type (void) G_GNUC_CONST;
+GType
+xfae_model_get_type (void) G_GNUC_CONST;
 
-GtkTreeModel *xfae_model_new      (void);
+GtkTreeModel *
+xfae_model_new (void);
 
-gboolean      xfae_model_add      (XfaeModel    *model,
-                                   const gchar  *name,
-                                   const gchar  *description,
-                                   const gchar  *command,
-                                   XfsmRunHook   run_hook,
-                                   GError      **error);
+gboolean
+xfae_model_add (XfaeModel *model,
+                const gchar *name,
+                const gchar *description,
+                const gchar *command,
+                XfsmRunHook run_hook,
+                GError **error);
 
-gboolean      xfae_model_get      (XfaeModel    *model,
-                                   GtkTreeIter  *iter,
-                                   gchar       **name,
-                                   gchar       **description,
-                                   gchar       **command,
-                                   XfsmRunHook  *run_hook,
-                                   GError      **error);
+gboolean
+xfae_model_get (XfaeModel *model,
+                GtkTreeIter *iter,
+                gchar **name,
+                gchar **description,
+                gchar **command,
+                XfsmRunHook *run_hook,
+                GError **error);
 
-gboolean      xfae_model_remove   (XfaeModel    *model,
-                                   GtkTreeIter  *iter,
-                                   GError      **error);
+gboolean
+xfae_model_remove (XfaeModel *model,
+                   GtkTreeIter *iter,
+                   GError **error);
 
-gboolean      xfae_model_edit     (XfaeModel    *model,
-                                   GtkTreeIter  *iter,
-                                   const gchar  *name,
-                                   const gchar  *description,
-                                   const gchar  *command,
-                                   XfsmRunHook   run_hook,
-                                   GError      **error);
+gboolean
+xfae_model_edit (XfaeModel *model,
+                 GtkTreeIter *iter,
+                 const gchar *name,
+                 const gchar *description,
+                 const gchar *command,
+                 XfsmRunHook run_hook,
+                 GError **error);
 
-gboolean      xfae_model_toggle   (XfaeModel    *model,
-                                   GtkTreeIter  *iter,
-                                   GError      **error);
+gboolean
+xfae_model_toggle (XfaeModel *model,
+                   GtkTreeIter *iter,
+                   GError **error);
 
-gboolean xfae_model_set_run_hook  (GtkTreeModel *tree_model,
-                                   GtkTreePath  *path,
-                                   GtkTreeIter  *iter,
-                                   XfsmRunHook   run_hook,
-                                   GError      **error);
+gboolean
+xfae_model_set_run_hook (GtkTreeModel *tree_model,
+                         GtkTreePath *path,
+                         GtkTreeIter *iter,
+                         XfsmRunHook run_hook,
+                         GError **error);
 
 G_END_DECLS;
 

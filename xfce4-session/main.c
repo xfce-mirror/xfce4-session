@@ -21,7 +21,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_ERRNO_H
@@ -47,52 +47,51 @@
 #endif
 
 #include <gio/gio.h>
-
+#include <gtk/gtk.h>
+#include <libxfce4ui/libxfce4ui.h>
+#include <libxfce4util/libxfce4util.h>
 #include <xfconf/xfconf.h>
 
-#include <gtk/gtk.h>
 #ifdef ENABLE_X11
 #include <gdk/gdkx.h>
-#include <xfce4-session/ice-layer.h>
-#include <xfce4-session/sm-layer.h>
+
+#include "ice-layer.h"
+#include "sm-layer.h"
 #endif
 
-#include <libxfce4util/libxfce4util.h>
-#include <libxfce4ui/libxfce4ui.h>
+#include "libxfsm/xfsm-util.h"
 
-#include <libxfsm/xfsm-util.h>
-
-#include <xfce4-session/xfsm-dns.h>
-#include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-manager.h>
-#include <xfce4-session/xfsm-shutdown.h>
-#include <xfce4-session/xfsm-startup.h>
-#include <xfce4-session/xfsm-error.h>
+#include "xfsm-dns.h"
+#include "xfsm-error.h"
+#include "xfsm-global.h"
+#include "xfsm-manager.h"
+#include "xfsm-shutdown.h"
+#include "xfsm-startup.h"
 
 static gboolean opt_disable_tcp = FALSE;
 static gboolean opt_version = FALSE;
 static XfconfChannel *channel = NULL;
 static guint name_id = 0;
 
-static GOptionEntry option_entries[] =
-{
-  { "disable-tcp", '\0', 0, G_OPTION_ARG_NONE, &opt_disable_tcp, N_("Disable binding to TCP ports"), NULL },
-  { "version", 'V', 0, G_OPTION_ARG_NONE, &opt_version, N_("Print version information and exit"), NULL },
+static GOptionEntry option_entries[] = {
+  { "disable-tcp", '\0', 0, G_OPTION_ARG_NONE, &opt_disable_tcp, N_ ("Disable binding to TCP ports"), NULL },
+  { "version", 'V', 0, G_OPTION_ARG_NONE, &opt_version, N_ ("Print version information and exit"), NULL },
   { NULL }
 };
 
 
-static void name_lost (GDBusConnection *connection,
-                       const gchar *name,
-                       gpointer user_data);
+static void
+name_lost (GDBusConnection *connection,
+           const gchar *name,
+           gpointer user_data);
 
 
 static void
 setup_environment (void)
 {
   const gchar *sm;
-  gchar       *authfile;
-  int          fd;
+  gchar *authfile;
+  int fd;
 
   /* check that no other session manager is running */
   sm = g_getenv ("SESSION_MANAGER");
@@ -130,8 +129,8 @@ setup_environment (void)
 
 #ifdef ENABLE_X11
 static void
-init_display (XfsmManager   *manager,
-              gboolean       disable_tcp)
+init_display (XfsmManager *manager,
+              gboolean disable_tcp)
 {
   gdk_display_flush (gdk_display_get_default ());
   sm_init (channel, disable_tcp, manager);
@@ -163,29 +162,31 @@ bus_acquired (GDBusConnection *connection,
 
   *manager = xfsm_manager_new (connection);
 
-  if (*manager == NULL) {
-          g_critical ("Could not create XfsmManager");
-          return;
-  }
+  if (*manager == NULL)
+    {
+      g_critical ("Could not create XfsmManager");
+      return;
+    }
 
-  g_signal_connect(G_OBJECT(*manager),
-                   "manager-quit",
-                   G_CALLBACK(manager_quit_cb),
-                   connection);
+  g_signal_connect (G_OBJECT (*manager),
+                    "manager-quit",
+                    G_CALLBACK (manager_quit_cb),
+                    connection);
 
   setup_environment ();
 
   channel = xfconf_channel_get (SETTINGS_CHANNEL);
 
 #ifdef ENABLE_X11
-  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    {
       init_display (*manager, opt_disable_tcp);
-  }
+    }
 #endif
 
   if (!opt_disable_tcp && xfconf_channel_get_bool (channel, "/security/EnableTcp", FALSE))
     {
-      /* verify that the DNS settings are ok */      
+      /* verify that the DNS settings are ok */
       xfsm_dns_check ();
     }
 
@@ -212,11 +213,11 @@ name_lost (GDBusConnection *connection,
            const gchar *name,
            gpointer user_data)
 {
-  XfsmManager      **manager = user_data;
-  GError           *error = NULL;
-  XfsmShutdownType  shutdown_type;
-  XfsmShutdown     *shutdown_helper;
-  gboolean          succeed = TRUE;
+  XfsmManager **manager = user_data;
+  GError *error = NULL;
+  XfsmShutdownType shutdown_type;
+  XfsmShutdown *shutdown_helper;
+  gboolean succeed = TRUE;
 
   xfsm_verbose ("name_lost\n");
 
@@ -240,9 +241,10 @@ name_lost (GDBusConnection *connection,
   shutdown_helper = xfsm_shutdown_get ();
 
 #ifdef ENABLE_X11
-  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    {
       ice_cleanup ();
-  }
+    }
 #endif
 
   if (shutdown_type == XFSM_SHUTDOWN_SHUTDOWN
@@ -298,9 +300,9 @@ static gboolean
 xfsm_dbus_require_session (gint argc, gchar **argv)
 {
   gchar **new_argv;
-  gchar  *path;
-  gint    i;
-  guint   m = 0;
+  gchar *path;
+  gint i;
+  guint m = 0;
 
   if (g_getenv ("DBUS_SESSION_BUS_ADDRESS") != NULL)
     return TRUE;
@@ -337,8 +339,8 @@ xfsm_dbus_require_session (gint argc, gchar **argv)
 int
 main (int argc, char **argv)
 {
-  XfsmManager      *manager = NULL;
-  GError           *error = NULL;
+  XfsmManager *manager = NULL;
+  GError *error = NULL;
 
   if (!xfsm_dbus_require_session (argc, argv))
     return EXIT_SUCCESS;
@@ -380,12 +382,13 @@ main (int argc, char **argv)
     gtk_main_iteration ();
 
 #ifdef ENABLE_X11
-  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ())) {
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    {
       /* fake a client id for the manager, so the legacy management does not
        * recognize us to be a session client.
        */
       gdk_x11_set_sm_client_id (xfsm_client_generate_id (NULL));
-  }
+    }
 #endif
 
   xfsm_dbus_init (&manager);

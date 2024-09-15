@@ -24,7 +24,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_MEMORY_H
@@ -35,22 +35,23 @@
 #endif
 
 #include <cairo-gobject.h>
-#include <libxfsm/xfsm-util.h>
+
+#include "xfsm-util.h"
 
 
 gboolean
-xfsm_start_application (gchar      **command,
-                        gchar      **environment,
-                        GdkScreen   *screen,
+xfsm_start_application (gchar **command,
+                        gchar **environment,
+                        GdkScreen *screen,
                         const gchar *current_directory,
                         const gchar *client_machine,
                         const gchar *user_id)
 {
   gboolean result;
-  gchar   *screen_name;
-  gchar  **argv;
-  gint     argc;
-  gint     size;
+  gchar *screen_name;
+  gchar **argv;
+  gint argc;
+  gint size;
 
   g_return_val_if_fail (command != NULL && *command != NULL, FALSE);
 
@@ -115,10 +116,10 @@ xfsm_start_application (gchar      **command,
 void
 xfsm_place_trash_window (GtkWindow *window,
                          GdkScreen *screen,
-                         gint       monitor)
+                         gint monitor)
 {
   GtkRequisition requisition;
-  GdkRectangle   geometry;
+  GdkRectangle geometry;
 
   gdk_monitor_get_geometry (gdk_display_get_monitor (gdk_screen_get_display (screen), monitor), &geometry);
   gtk_widget_get_preferred_size (GTK_WIDGET (window), &requisition, NULL);
@@ -148,14 +149,14 @@ xfsm_strv_equal (gchar **a, gchar **b)
 }
 
 
-gchar*
+gchar *
 xfsm_gdk_display_get_fullname (GdkDisplay *display)
 {
   const gchar *name;
   const gchar *np;
-  gchar       *hostname;
-  gchar        buffer[256];
-  gchar       *bp;
+  gchar *hostname;
+  gchar buffer[256];
+  gchar *bp;
 
   g_return_val_if_fail (GDK_IS_DISPLAY (display), NULL);
 
@@ -171,7 +172,7 @@ xfsm_gdk_display_get_fullname (GdkDisplay *display)
 
       bp = buffer + strlen (buffer);
 
-      for (np = name; *np != '\0' && *np != '.' && bp < buffer + 255; )
+      for (np = name; *np != '\0' && *np != '.' && bp < buffer + 255;)
         *bp++ = *np++;
       *bp = '\0';
     }
@@ -200,11 +201,11 @@ xfsm_gdk_display_get_fullname (GdkDisplay *display)
 
 cairo_surface_t *
 xfsm_load_session_preview (const gchar *name,
-                           gint         size,
-                           gint         scale_factor)
+                           gint size,
+                           gint scale_factor)
 {
   cairo_surface_t *icon = NULL;
-  GdkDisplay      *display;
+  GdkDisplay *display;
   gchar *display_name;
   gchar *filename;
   gchar *path;
@@ -237,7 +238,7 @@ settings_list_sessions_get_filename (void)
   static gchar *filename = NULL;
 
   if (filename == NULL)
-   {
+    {
       gchar *display_name = xfsm_gdk_display_get_fullname (gdk_display_get_default ());
       gchar *resource_name = g_strconcat ("sessions/xfce4-session-", display_name, NULL);
       filename = xfce_resource_save_location (XFCE_RESOURCE_CACHE, resource_name, TRUE);
@@ -292,9 +293,9 @@ settings_list_sessions (GKeyFile *file,
 {
   XfsmSessionInfo *session;
   cairo_surface_t *preview_default = NULL;
-  GList           *sessions = NULL;
-  gchar          **groups;
-  gint             n;
+  GList *sessions = NULL;
+  gchar **groups;
+  gint n;
 
   groups = g_key_file_get_groups (file, NULL);
   for (n = 0; groups[n] != NULL; ++n)
@@ -408,13 +409,13 @@ sort_sessions_on_atime (GList *sessions)
 
 void
 settings_list_sessions_populate (GtkTreeModel *model,
-                                 GList        *sessions)
+                                 GList *sessions)
 {
   XfsmSessionInfo *session;
-  GtkTreeIter      iter;
-  gchar           *accessed;
-  gchar           *title;
-  GList           *lp;
+  GtkTreeIter iter;
+  gchar *accessed;
+  gchar *title;
+  GList *lp;
 
   sessions = sort_sessions_on_atime (sessions);
 
@@ -442,15 +443,15 @@ settings_list_sessions_populate (GtkTreeModel *model,
 }
 
 void
-settings_list_sessions_delete_session (GtkButton   *button,
+settings_list_sessions_delete_session (GtkButton *button,
                                        GtkTreeView *treeview)
 {
-  GKeyFile          *file;
-  GtkTreeModel      *model;
-  GtkTreeIter        iter;
-  GtkTreeSelection  *selection;
-  GValue             value = G_VALUE_INIT;
-  gchar             *session;
+  GKeyFile *file;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  GtkTreeSelection *selection;
+  GValue value = G_VALUE_INIT;
+  gchar *session;
 
   selection = gtk_tree_view_get_selection (treeview);
   if (!gtk_tree_selection_get_selected (selection, &model, &iter))

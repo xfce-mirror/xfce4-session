@@ -25,9 +25,15 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
+#define __BACKEND_TYPE_BSD__ 1
+#ifdef HAVE_SYS_SYSCTL_H
+#include <sys/sysctl.h>
+#endif
+#endif
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
 #endif
@@ -54,35 +60,27 @@
 #include <signal.h>
 #endif
 
-#include <gio/gio.h>
-#include <libxfce4util/libxfce4util.h>
-#include <gtk/gtk.h>
-#include <glib/gstdio.h>
-
 #ifdef HAVE_POLKIT
 #include <polkit/polkit.h>
 #endif
 
-#include <pwd.h>
+#include <gio/gio.h>
+#include <glib/gstdio.h>
 #include <grp.h>
+#include <gtk/gtk.h>
+#include <libxfce4util/libxfce4util.h>
+#include <pwd.h>
 
-#include <libxfsm/xfsm-util.h>
-#include <libxfsm/xfsm-shutdown-common.h>
-#include <xfce4-session/xfsm-shutdown-fallback.h>
+#include "libxfsm/xfsm-shutdown-common.h"
+#include "libxfsm/xfsm-util.h"
 
-#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
-#define __BACKEND_TYPE_BSD__ 1
-#ifdef HAVE_SYS_SYSCTL_H
-#include <sys/sysctl.h>
-#endif
-#endif
+#include "xfsm-shutdown-fallback.h"
 
-#define POLKIT_AUTH_SHUTDOWN_XFSM     "org.xfce.session.xfsm-shutdown-helper"
-#define POLKIT_AUTH_RESTART_XFSM      "org.xfce.session.xfsm-shutdown-helper"
-#define POLKIT_AUTH_SUSPEND_XFSM      "org.xfce.session.xfsm-shutdown-helper"
-#define POLKIT_AUTH_HIBERNATE_XFSM    "org.xfce.session.xfsm-shutdown-helper"
+#define POLKIT_AUTH_SHUTDOWN_XFSM "org.xfce.session.xfsm-shutdown-helper"
+#define POLKIT_AUTH_RESTART_XFSM "org.xfce.session.xfsm-shutdown-helper"
+#define POLKIT_AUTH_SUSPEND_XFSM "org.xfce.session.xfsm-shutdown-helper"
+#define POLKIT_AUTH_HIBERNATE_XFSM "org.xfce.session.xfsm-shutdown-helper"
 #define POLKIT_AUTH_HYBRID_SLEEP_XFSM "org.xfce.session.xfsm-shutdown-helper"
-
 
 
 
@@ -90,32 +88,34 @@
 static gchar *
 get_string_sysctl (GError **err, const gchar *format, ...)
 {
-        va_list args;
-        gchar *name;
-        size_t value_len;
-        gchar *str = NULL;
+  va_list args;
+  gchar *name;
+  size_t value_len;
+  gchar *str = NULL;
 
-        g_return_val_if_fail(format != NULL, FALSE);
+  g_return_val_if_fail (format != NULL, FALSE);
 
-        va_start (args, format);
-        name = g_strdup_vprintf (format, args);
-        va_end (args);
+  va_start (args, format);
+  name = g_strdup_vprintf (format, args);
+  va_end (args);
 
-        if (sysctlbyname (name, NULL, &value_len, NULL, 0) == 0) {
-                str = g_new (char, value_len + 1);
-                if (sysctlbyname (name, str, &value_len, NULL, 0) == 0)
-                        str[value_len] = 0;
-                else {
-                        g_free (str);
-                        str = NULL;
-                }
+  if (sysctlbyname (name, NULL, &value_len, NULL, 0) == 0)
+    {
+      str = g_new (char, value_len + 1);
+      if (sysctlbyname (name, str, &value_len, NULL, 0) == 0)
+        str[value_len] = 0;
+      else
+        {
+          g_free (str);
+          str = NULL;
         }
+    }
 
-        if (!str)
-                g_set_error (err, 0, 0, "%s", g_strerror(errno));
+  if (!str)
+    g_set_error (err, 0, 0, "%s", g_strerror (errno));
 
-        g_free(name);
-        return str;
+  g_free (name);
+  return str;
 }
 
 
@@ -129,14 +129,14 @@ freebsd_supports_sleep_state (const gchar *state)
 #if defined(__FreeBSD__)
   gboolean status;
   gint v;
-  size_t value_len = sizeof(int);
+  size_t value_len = sizeof (int);
 #endif
 
   sleep_states = get_string_sysctl (NULL, "hw.acpi.supported_sleep_state");
   if (sleep_states != NULL)
     {
       if (strstr (sleep_states, state) != NULL)
-          ret = TRUE;
+        ret = TRUE;
     }
 
 #if defined(__FreeBSD__)
@@ -144,20 +144,20 @@ freebsd_supports_sleep_state (const gchar *state)
    * If S4 will ever be implemented on FreeBSD, we can disable S4bios
    * check below, using #if __FreeBSD_version >= XXXXXX.
    **/
-  if (g_strcmp0(state, "S4") == 0)
-  {
-    status = sysctlbyname ("hw.acpi.s4bios", &v, &value_len, NULL, 0) == 0;
-    if (G_UNLIKELY(!status))
+  if (g_strcmp0 (state, "S4") == 0)
     {
-      g_warning ("sysctl failed on 'hw.acpi.s4bios'");
+      status = sysctlbyname ("hw.acpi.s4bios", &v, &value_len, NULL, 0) == 0;
+      if (G_UNLIKELY (!status))
+        {
+          g_warning ("sysctl failed on 'hw.acpi.s4bios'");
+        }
+      else
+        {
+          /* No S4Bios support */
+          if (v == 0)
+            ret = FALSE;
+        }
     }
-    else
-    {
-      /* No S4Bios support */
-      if (v == 0)
-        ret = FALSE;
-    }
-  }
 #endif /* __FreeBSD__ */
 
   g_free (sleep_states);
@@ -187,7 +187,7 @@ linux_supports_sleep_state (const gchar *state)
       g_error_free (error);
       goto out;
     }
-  ret = (WIFEXITED(exit_status) && (WEXITSTATUS(exit_status) == EXIT_SUCCESS));
+  ret = (WIFEXITED (exit_status) && (WEXITSTATUS (exit_status) == EXIT_SUCCESS));
 
 out:
   g_free (command);
@@ -203,7 +203,7 @@ static gboolean
 xfsm_shutdown_fallback_user_is_operator (void)
 {
   struct passwd *pw;
-  int max_grp = sysconf(_SC_NGROUPS_MAX);
+  int max_grp = sysconf (_SC_NGROUPS_MAX);
   gid_t *groups;
   int i = 0;
   int ret;
@@ -221,7 +221,7 @@ xfsm_shutdown_fallback_user_is_operator (void)
     }
 
   groups = g_new (gid_t, max_grp);
-  pw = getpwuid (getuid());
+  pw = getpwuid (getuid ());
 
   ret = getgrouplist (pw->pw_name, pw->pw_gid, groups, &max_grp);
 
@@ -241,7 +241,7 @@ xfsm_shutdown_fallback_user_is_operator (void)
       struct group *gr;
 
       gr = getgrgid (groups[i]);
-      if (gr != NULL && strncmp(gr->gr_name, "operator", 8) == 0)
+      if (gr != NULL && strncmp (gr->gr_name, "operator", 8) == 0)
         {
           is_operator = TRUE;
           break;
@@ -272,7 +272,7 @@ xfsm_shutdown_fallback_bsd_check_auth (XfsmShutdownType shutdown_type)
     case XFSM_SHUTDOWN_HYBRID_SLEEP:
       /* Check rw access on '/var/run/apmdev' on OpenBSD and to /dev/acpi'
        * for the other BSDs */
-      auth_result = g_access(BSD_SLEEP_ACCESS_NODE, R_OK|W_OK) == 0;
+      auth_result = g_access (BSD_SLEEP_ACCESS_NODE, R_OK | W_OK) == 0;
       break;
     default:
       g_warning ("Unexpected shutdow id '%d'\n", shutdown_type);
@@ -313,9 +313,9 @@ xfsm_shutdown_fallback_check_auth_polkit (const gchar *action_id)
           g_object_unref (polkit_result);
         }
 
-        g_object_unref (polkit);
-        g_object_unref (bus);
-      }
+      g_object_unref (polkit);
+      g_object_unref (bus);
+    }
 #endif /* HAVE_POLKIT */
 
   return auth_result;
@@ -335,18 +335,18 @@ xfsm_shutdown_fallback_check_auth_polkit (const gchar *action_id)
  *               call to the helper command.
  **/
 gboolean
-xfsm_shutdown_fallback_try_action (XfsmShutdownType   type,
-                                   GError           **error)
+xfsm_shutdown_fallback_try_action (XfsmShutdownType type,
+                                   GError **error)
 {
   const gchar *xfsm_helper_action;
-  const gchar *cmd __attribute__((unused));
+  const gchar *cmd __attribute__ ((unused));
   gboolean ret = FALSE;
 #ifdef HAVE_POLKIT
   gchar *command = NULL;
 #endif
 
   switch (type)
-  {
+    {
     case XFSM_SHUTDOWN_SHUTDOWN:
       xfsm_helper_action = "shutdown";
       cmd = POWEROFF_CMD;
@@ -370,7 +370,7 @@ xfsm_shutdown_fallback_try_action (XfsmShutdownType   type,
     default:
       g_set_error (error, 1, 0, "Unknown shutdown type %d", type);
       return FALSE;
-  }
+    }
 
 #ifdef __BACKEND_TYPE_BSD__
   /* Make sure we can use native shutdown commands */
@@ -380,7 +380,7 @@ xfsm_shutdown_fallback_try_action (XfsmShutdownType   type,
     }
 #endif
 
-  /* xfsm-shutdown-helper requires polkit to run */
+    /* xfsm-shutdown-helper requires polkit to run */
 #ifdef HAVE_POLKIT
   command = g_strdup_printf ("pkexec " XFSM_SHUTDOWN_HELPER_CMD " --%s", xfsm_helper_action);
 

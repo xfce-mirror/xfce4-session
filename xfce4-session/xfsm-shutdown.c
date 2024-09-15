@@ -23,7 +23,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_SYS_TYPES_H
@@ -53,25 +53,26 @@
 #endif
 
 #include <gio/gio.h>
-#include <libxfce4util/libxfce4util.h>
 #include <gtk/gtk.h>
+#include <libxfce4util/libxfce4util.h>
 
-#include <libxfsm/xfsm-util.h>
+#include "libxfsm/xfsm-util.h"
 
-#include <xfce4-session/xfsm-shutdown.h>
-#include <xfce4-session/xfsm-compat-gnome.h>
-#include <xfce4-session/xfsm-compat-kde.h>
-#include <xfce4-session/xfsm-fadeout.h>
-#include <xfce4-session/xfsm-inhibition.h>
-#include <xfce4-session/xfsm-inhibitor.h>
-#include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-legacy.h>
-#include <xfce4-session/xfsm-shutdown-fallback.h>
-#include <xfce4-session/xfsm-packagekit.h>
+#include "xfsm-compat-gnome.h"
+#include "xfsm-compat-kde.h"
+#include "xfsm-fadeout.h"
+#include "xfsm-global.h"
+#include "xfsm-inhibition.h"
+#include "xfsm-inhibitor.h"
+#include "xfsm-legacy.h"
+#include "xfsm-packagekit.h"
+#include "xfsm-shutdown-fallback.h"
+#include "xfsm-shutdown.h"
 
 
 
-static void xfsm_shutdown_finalize  (GObject      *object);
+static void
+xfsm_shutdown_finalize (GObject *object);
 
 
 
@@ -85,16 +86,16 @@ struct _XfsmShutdown
 {
   GObject __parent__;
 
-  XfceSystemd    *systemd;
+  XfceSystemd *systemd;
   XfceConsolekit *consolekit;
 
-  XfsmInhibitor   *inhibitions;
+  XfsmInhibitor *inhibitions;
   XfceScreensaver *screensaver;
-  XfsmPackagekit  *packagekit;
+  XfsmPackagekit *packagekit;
 
   /* kiosk settings */
-  gboolean        kiosk_can_shutdown;
-  gboolean        kiosk_can_save_session;
+  gboolean kiosk_can_shutdown;
+  gboolean kiosk_can_save_session;
 };
 
 
@@ -122,7 +123,7 @@ xfsm_shutdown_init (XfsmShutdown *shutdown)
   shutdown->consolekit = NULL;
   shutdown->systemd = NULL;
 
-  if (LOGIND_RUNNING())
+  if (LOGIND_RUNNING ())
     shutdown->systemd = xfce_systemd_get ();
   else
     shutdown->consolekit = xfce_consolekit_get ();
@@ -163,8 +164,8 @@ xfsm_shutdown_finalize (GObject *object)
 
 
 static gboolean
-xfsm_shutdown_kiosk_can_shutdown (XfsmShutdown  *shutdown,
-                                  GError       **error)
+xfsm_shutdown_kiosk_can_shutdown (XfsmShutdown *shutdown,
+                                  GError **error)
 {
   if (!shutdown->kiosk_can_shutdown)
     {
@@ -198,9 +199,9 @@ xfsm_shutdown_get (void)
 
 
 gboolean
-xfsm_shutdown_try_type (XfsmShutdown      *shutdown,
-                        XfsmShutdownType   type,
-                        GError           **error)
+xfsm_shutdown_try_type (XfsmShutdown *shutdown,
+                        XfsmShutdownType type,
+                        GError **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
@@ -234,10 +235,9 @@ xfsm_shutdown_try_type (XfsmShutdown      *shutdown,
 
 
 
-
 gboolean
-xfsm_shutdown_try_restart (XfsmShutdown  *shutdown,
-                           GError       **error)
+xfsm_shutdown_try_restart (XfsmShutdown *shutdown,
+                           GError **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
@@ -272,8 +272,8 @@ xfsm_shutdown_try_restart (XfsmShutdown  *shutdown,
 
 
 gboolean
-xfsm_shutdown_try_shutdown (XfsmShutdown  *shutdown,
-                            GError       **error)
+xfsm_shutdown_try_shutdown (XfsmShutdown *shutdown,
+                            GError **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
@@ -317,7 +317,7 @@ xfsm_shutdown_try_shutdown (XfsmShutdown  *shutdown,
 typedef gboolean (*SleepFunc) (gpointer object, gboolean polkit_interactive, GError **error);
 
 static gboolean
-try_sleep_method (gpointer  object,
+try_sleep_method (gpointer object,
                   SleepFunc func)
 {
   if (object == NULL)
@@ -348,8 +348,8 @@ lock_screen (XfsmShutdown *shutdown,
 
 
 gboolean
-xfsm_shutdown_try_suspend (XfsmShutdown  *shutdown,
-                           GError       **error)
+xfsm_shutdown_try_suspend (XfsmShutdown *shutdown,
+                           GError **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
@@ -359,10 +359,10 @@ xfsm_shutdown_try_suspend (XfsmShutdown  *shutdown,
   /* Try each way to suspend - it will handle NULL.
    */
 
-  if (try_sleep_method (shutdown->systemd, (SleepFunc)xfce_systemd_suspend))
+  if (try_sleep_method (shutdown->systemd, (SleepFunc) xfce_systemd_suspend))
     return TRUE;
 
-  if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfce_consolekit_suspend))
+  if (try_sleep_method (shutdown->consolekit, (SleepFunc) xfce_consolekit_suspend))
     return TRUE;
 
   return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_SUSPEND, error);
@@ -371,8 +371,8 @@ xfsm_shutdown_try_suspend (XfsmShutdown  *shutdown,
 
 
 gboolean
-xfsm_shutdown_try_hibernate (XfsmShutdown  *shutdown,
-                             GError       **error)
+xfsm_shutdown_try_hibernate (XfsmShutdown *shutdown,
+                             GError **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
@@ -382,10 +382,10 @@ xfsm_shutdown_try_hibernate (XfsmShutdown  *shutdown,
   /* Try each way to hibernate - it will handle NULL.
    */
 
-  if (try_sleep_method (shutdown->systemd, (SleepFunc)xfce_systemd_hibernate))
+  if (try_sleep_method (shutdown->systemd, (SleepFunc) xfce_systemd_hibernate))
     return TRUE;
 
-  if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfce_consolekit_hibernate))
+  if (try_sleep_method (shutdown->consolekit, (SleepFunc) xfce_consolekit_hibernate))
     return TRUE;
 
   return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_HIBERNATE, error);
@@ -394,8 +394,8 @@ xfsm_shutdown_try_hibernate (XfsmShutdown  *shutdown,
 
 
 gboolean
-xfsm_shutdown_try_hybrid_sleep (XfsmShutdown  *shutdown,
-                                GError       **error)
+xfsm_shutdown_try_hybrid_sleep (XfsmShutdown *shutdown,
+                                GError **error)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 
@@ -405,21 +405,21 @@ xfsm_shutdown_try_hybrid_sleep (XfsmShutdown  *shutdown,
   /* Try each way to hybrid-sleep - it will handle NULL.
    */
 
-  if (try_sleep_method (shutdown->systemd, (SleepFunc)xfce_systemd_hybrid_sleep))
+  if (try_sleep_method (shutdown->systemd, (SleepFunc) xfce_systemd_hybrid_sleep))
     return TRUE;
 
-  if (try_sleep_method (shutdown->consolekit, (SleepFunc)xfce_consolekit_hybrid_sleep))
+  if (try_sleep_method (shutdown->consolekit, (SleepFunc) xfce_consolekit_hybrid_sleep))
     return TRUE;
 
   return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_HYBRID_SLEEP, error);
 }
 
 gboolean
-xfsm_shutdown_try_switch_user (XfsmShutdown  *shutdown,
-                               GError       **error)
+xfsm_shutdown_try_switch_user (XfsmShutdown *shutdown,
+                               GError **error)
 {
-  GDBusProxy  *display_proxy;
-  GVariant    *unused = NULL;
+  GDBusProxy *display_proxy;
+  GVariant *unused = NULL;
   const gchar *DBUS_NAME = "org.freedesktop.DisplayManager";
   const gchar *DBUS_INTERFACE = "org.freedesktop.DisplayManager.Seat";
   const gchar *DBUS_OBJECT_PATH = g_getenv ("XDG_SEAT_PATH");
@@ -445,12 +445,12 @@ xfsm_shutdown_try_switch_user (XfsmShutdown  *shutdown,
 
   xfsm_verbose ("calling SwitchToGreeter\n");
   unused = g_dbus_proxy_call_sync (display_proxy,
-                                  "SwitchToGreeter",
-                                  g_variant_new ("()"),
-                                  G_DBUS_CALL_FLAGS_NONE,
-                                  5000,
-                                  NULL,
-                                  error);
+                                   "SwitchToGreeter",
+                                   g_variant_new ("()"),
+                                   G_DBUS_CALL_FLAGS_NONE,
+                                   5000,
+                                   NULL,
+                                   error);
 
   if (unused != NULL)
     {
@@ -464,9 +464,9 @@ xfsm_shutdown_try_switch_user (XfsmShutdown  *shutdown,
 
 
 void
-xfsm_shutdown_can_restart (XfsmShutdown  *shutdown,
-                           gboolean      *can_restart,
-                           gboolean      *auth_restart)
+xfsm_shutdown_can_restart (XfsmShutdown *shutdown,
+                           gboolean *can_restart,
+                           gboolean *auth_restart)
 {
   g_return_if_fail (XFSM_IS_SHUTDOWN (shutdown));
 
@@ -501,9 +501,9 @@ xfsm_shutdown_can_restart (XfsmShutdown  *shutdown,
 
 
 void
-xfsm_shutdown_can_shutdown (XfsmShutdown  *shutdown,
-                            gboolean      *can_shutdown,
-                            gboolean      *auth_shutdown)
+xfsm_shutdown_can_shutdown (XfsmShutdown *shutdown,
+                            gboolean *can_shutdown,
+                            gboolean *auth_shutdown)
 {
   g_return_if_fail (XFSM_IS_SHUTDOWN (shutdown));
 
@@ -538,9 +538,9 @@ xfsm_shutdown_can_shutdown (XfsmShutdown  *shutdown,
 
 
 void
-xfsm_shutdown_can_suspend (XfsmShutdown  *shutdown,
-                           gboolean      *can_suspend,
-                           gboolean      *auth_suspend)
+xfsm_shutdown_can_suspend (XfsmShutdown *shutdown,
+                           gboolean *can_suspend,
+                           gboolean *auth_suspend)
 {
   g_return_if_fail (XFSM_IS_SHUTDOWN (shutdown));
 
@@ -578,9 +578,9 @@ xfsm_shutdown_can_suspend (XfsmShutdown  *shutdown,
 
 
 void
-xfsm_shutdown_can_hibernate (XfsmShutdown  *shutdown,
-                             gboolean      *can_hibernate,
-                             gboolean      *auth_hibernate)
+xfsm_shutdown_can_hibernate (XfsmShutdown *shutdown,
+                             gboolean *can_hibernate,
+                             gboolean *auth_hibernate)
 {
   g_return_if_fail (XFSM_IS_SHUTDOWN (shutdown));
 
@@ -618,9 +618,9 @@ xfsm_shutdown_can_hibernate (XfsmShutdown  *shutdown,
 
 
 void
-xfsm_shutdown_can_hybrid_sleep (XfsmShutdown  *shutdown,
-                                gboolean      *can_hybrid_sleep,
-                                gboolean      *auth_hybrid_sleep)
+xfsm_shutdown_can_hybrid_sleep (XfsmShutdown *shutdown,
+                                gboolean *can_hybrid_sleep,
+                                gboolean *auth_hybrid_sleep)
 {
   g_return_if_fail (XFSM_IS_SHUTDOWN (shutdown));
 
@@ -658,12 +658,12 @@ xfsm_shutdown_can_hybrid_sleep (XfsmShutdown  *shutdown,
 
 
 gboolean
-xfsm_shutdown_can_switch_user (XfsmShutdown  *shutdown,
-                               gboolean      *can_switch_user,
-                               GError       **error)
+xfsm_shutdown_can_switch_user (XfsmShutdown *shutdown,
+                               gboolean *can_switch_user,
+                               GError **error)
 {
-  GDBusProxy  *display_proxy;
-  gchar       *owner = NULL;
+  GDBusProxy *display_proxy;
+  gchar *owner = NULL;
   const gchar *DBUS_NAME = "org.freedesktop.DisplayManager";
   const gchar *DBUS_INTERFACE = "org.freedesktop.DisplayManager.Seat";
   const gchar *DBUS_OBJECT_PATH = g_getenv ("XDG_SEAT_PATH");
@@ -699,12 +699,12 @@ xfsm_shutdown_can_switch_user (XfsmShutdown  *shutdown,
   /* is there anyone actually providing a service? */
   owner = g_dbus_proxy_get_name_owner (display_proxy);
   if (owner != NULL)
-  {
-    g_object_unref (display_proxy);
-    g_free (owner);
-    *can_switch_user = TRUE;
-    return TRUE;
-  }
+    {
+      g_object_unref (display_proxy);
+      g_free (owner);
+      *can_switch_user = TRUE;
+      return TRUE;
+    }
 
   xfsm_verbose ("no owner NULL\n");
   return TRUE;
@@ -722,7 +722,7 @@ xfsm_shutdown_can_save_session (XfsmShutdown *shutdown)
 
 
 gboolean
-xfsm_shutdown_can_logout (XfsmShutdown  *shutdown)
+xfsm_shutdown_can_logout (XfsmShutdown *shutdown)
 {
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
   return !xfsm_inhibitor_has_flags (shutdown->inhibitions,
@@ -734,8 +734,8 @@ xfsm_shutdown_can_logout (XfsmShutdown  *shutdown)
 gboolean
 xfsm_shutdown_has_update_prepared (XfsmShutdown *shutdown)
 {
-  gboolean  has_updates = FALSE;
-  GError   *error = NULL;
+  gboolean has_updates = FALSE;
+  GError *error = NULL;
 
   g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
 

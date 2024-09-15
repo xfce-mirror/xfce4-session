@@ -24,7 +24,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_SYS_WAIT_H
@@ -37,7 +37,6 @@
 #ifdef HAVE_SIGNAL_H
 #include <signal.h>
 #endif
-#include <stdio.h>
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
@@ -48,15 +47,16 @@
 #include <unistd.h>
 #endif
 
+#include <glib.h>
+#include <stdio.h>
+
 #include "libxfsm/xfsm-shutdown-common.h"
 
-#include <glib.h>
-
 /* XXX */
-#define EXIT_CODE_SUCCESS           0
-#define EXIT_CODE_FAILED            1
+#define EXIT_CODE_SUCCESS 0
+#define EXIT_CODE_FAILED 1
 #define EXIT_CODE_ARGUMENTS_INVALID 3
-#define EXIT_CODE_INVALID_USER      4
+#define EXIT_CODE_INVALID_USER 4
 
 
 static gboolean
@@ -76,7 +76,7 @@ run (const gchar *command)
   setsid ();
 #endif
 
-#if defined (HAVE_SIGPROCMASK)
+#if defined(HAVE_SIGPROCMASK)
   sigemptyset (&sigset);
   sigaddset (&sigset, SIGHUP);
   sigaddset (&sigset, SIGINT);
@@ -90,8 +90,7 @@ run (const gchar *command)
       envp = g_new0 (gchar *, 1);
 
       result = g_spawn_sync (NULL, argv, envp,
-                             G_SPAWN_SEARCH_PATH | G_SPAWN_STDOUT_TO_DEV_NULL |
-                             G_SPAWN_STDERR_TO_DEV_NULL,
+                             G_SPAWN_SEARCH_PATH | G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL,
                              NULL, NULL, NULL, NULL, &status, &err);
 
       g_strfreev (envp);
@@ -122,9 +121,9 @@ main (int argc, char **argv)
   gboolean hibernate = FALSE;
 
   const GOptionEntry options[] = {
-    { "shutdown",  '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &shutdown, "Shutdown the system", NULL },
-    { "restart",   '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &restart, "Restart the system", NULL },
-    { "suspend",   '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &suspend, "Suspend the system", NULL },
+    { "shutdown", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &shutdown, "Shutdown the system", NULL },
+    { "restart", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &restart, "Restart the system", NULL },
+    { "suspend", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &suspend, "Suspend the system", NULL },
     { "hibernate", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &hibernate, "Hibernate the system", NULL },
     { NULL }
   };
@@ -160,53 +159,51 @@ main (int argc, char **argv)
     }
 
   /* run the command */
-  if(shutdown)
+  if (shutdown)
     {
       if (run (POWEROFF_CMD))
-          {
-            return EXIT_CODE_SUCCESS;
-          }
-        else
-          {
-            return EXIT_CODE_FAILED;
-          }
+        {
+          return EXIT_CODE_SUCCESS;
+        }
+      else
+        {
+          return EXIT_CODE_FAILED;
+        }
     }
-  else if(restart)
+  else if (restart)
     {
       if (run (REBOOT_CMD))
-          {
-            return EXIT_CODE_SUCCESS;
-          }
-        else
-          {
-            return EXIT_CODE_FAILED;
-          }
+        {
+          return EXIT_CODE_SUCCESS;
+        }
+      else
+        {
+          return EXIT_CODE_FAILED;
+        }
     }
-  else if(suspend)
+  else if (suspend)
     {
       if (run (UP_BACKEND_SUSPEND_COMMAND))
-          {
-            return EXIT_CODE_SUCCESS;
-          }
-        else
-          {
-            return EXIT_CODE_FAILED;
-          }
+        {
+          return EXIT_CODE_SUCCESS;
+        }
+      else
+        {
+          return EXIT_CODE_FAILED;
+        }
     }
-  else if(hibernate)
+  else if (hibernate)
     {
       if (run (UP_BACKEND_HIBERNATE_COMMAND))
-          {
-            return EXIT_CODE_SUCCESS;
-          }
-        else
-          {
-            return EXIT_CODE_FAILED;
-          }
+        {
+          return EXIT_CODE_SUCCESS;
+        }
+      else
+        {
+          return EXIT_CODE_FAILED;
+        }
     }
 
   /* how did we get here? */
   return EXIT_CODE_FAILED;
 }
-
-

@@ -21,7 +21,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_SYS_STAT_H
@@ -45,12 +45,10 @@
 #include <X11/ICE/ICElib.h>
 #include <X11/ICE/ICEutil.h>
 #include <X11/SM/SMlib.h>
-
 #include <libxfce4util/libxfce4util.h>
 
-#include <xfce4-session/ice-layer.h>
-#include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-manager.h>
+#include "ice-layer.h"
+#include "xfsm-global.h"
 
 typedef struct
 {
@@ -60,18 +58,22 @@ typedef struct
 
 
 /* prototypes */
-static void ice_error_handler         (IceConn);
-static gboolean ice_process_messages  (GIOChannel  *channel,
-                                       GIOCondition condition,
-                                       gpointer     user_data);
-static gboolean ice_connection_accept (GIOChannel  *channel,
-                                       GIOCondition condition,
-                                       gpointer     watch_data);
-static FILE *ice_tmpfile              (char **name);
-static void ice_auth_add              (FILE *,
-                                       FILE *,
-                                       char *,
-                                       IceListenObj);
+static void ice_error_handler (IceConn);
+static gboolean
+ice_process_messages (GIOChannel *channel,
+                      GIOCondition condition,
+                      gpointer user_data);
+static gboolean
+ice_connection_accept (GIOChannel *channel,
+                       GIOCondition condition,
+                       gpointer watch_data);
+static FILE *
+ice_tmpfile (char **name);
+static void
+ice_auth_add (FILE *,
+              FILE *,
+              char *,
+              IceListenObj);
 
 static char *auth_cleanup_file;
 
@@ -101,12 +103,12 @@ ice_error_handler (IceConn ice_conn)
 
 
 static gboolean
-ice_process_messages (GIOChannel  *channel,
+ice_process_messages (GIOChannel *channel,
                       GIOCondition condition,
-                      gpointer     user_data)
+                      gpointer user_data)
 {
   IceProcessMessagesStatus status;
-  XfsmIceConnData         *icdata = user_data;
+  XfsmIceConnData *icdata = user_data;
 
   status = IceProcessMessages (icdata->ice_conn, NULL, NULL);
 
@@ -125,20 +127,20 @@ ice_process_messages (GIOChannel  *channel,
 
 
 static void
-ice_connection_watch (IceConn     ice_conn,
-                      IcePointer  client_data,
-                      Bool        opening,
+ice_connection_watch (IceConn ice_conn,
+                      IcePointer client_data,
+                      Bool opening,
                       IcePointer *watch_data)
 {
   XfsmManager *manager = XFSM_MANAGER (client_data);
-  GIOChannel  *channel;
-  guint        watchid;
-  gint         fd;
-  gint         ret;
+  GIOChannel *channel;
+  guint watchid;
+  gint fd;
+  gint ret;
 
   if (opening)
     {
-      XfsmIceConnData *icdata = g_new(XfsmIceConnData, 1);
+      XfsmIceConnData *icdata = g_new (XfsmIceConnData, 1);
       icdata->manager = manager;
       icdata->ice_conn = ice_conn;
 
@@ -171,14 +173,14 @@ ice_connection_watch (IceConn     ice_conn,
 
 
 static gboolean
-ice_connection_accept (GIOChannel  *channel,
+ice_connection_accept (GIOChannel *channel,
                        GIOCondition condition,
-                       gpointer     watch_data)
+                       gpointer watch_data)
 {
   IceConnectStatus cstatus;
-  IceAcceptStatus  astatus;
-  IceListenObj     ice_listener = (IceListenObj) watch_data;
-  IceConn          ice_conn;
+  IceAcceptStatus astatus;
+  IceListenObj ice_listener = (IceListenObj) watch_data;
+  IceConn ice_conn;
 
   ice_conn = IceAcceptConnection (ice_listener, &astatus);
 
@@ -216,17 +218,17 @@ ice_connection_accept (GIOChannel  *channel,
 }
 
 
-static FILE*
+static FILE *
 ice_tmpfile (char **name)
 {
   GError *error = NULL;
-  mode_t  mode;
-  FILE   *fp = NULL;
-  int     fd;
+  mode_t mode;
+  FILE *fp = NULL;
+  int fd;
 
   mode = umask (0077);
 
-  fd = g_file_open_tmp(".xfsm-ICE-XXXXXX", name, &error);
+  fd = g_file_open_tmp (".xfsm-ICE-XXXXXX", name, &error);
   if (fd < 0)
     {
       g_warning ("Unable to open temporary file: %s", error->message);
@@ -258,9 +260,9 @@ fprintfhex (FILE *fp, int len, char *cp)
 
 
 static void
-ice_auth_add (FILE        *setup_fp,
-              FILE        *cleanup_fp,
-              char        *protocol,
+ice_auth_add (FILE *setup_fp,
+              FILE *cleanup_fp,
+              char *protocol,
               IceListenObj ice_listener)
 {
   IceAuthDataEntry entry;
@@ -291,27 +293,27 @@ ice_auth_add (FILE        *setup_fp,
 
 
 gboolean
-ice_setup_listeners (int           num_listeners,
+ice_setup_listeners (int num_listeners,
                      IceListenObj *listen_objs,
-                     XfsmManager  *manager)
+                     XfsmManager *manager)
 {
   GIOChannel *channel;
-  char       *auth_setup_file;
-  gchar      *command;
-  FILE       *cleanup_fp;
-  FILE       *setup_fp;
-  int         fd;
-  int         n;
-  int         ret;
+  char *auth_setup_file;
+  gchar *command;
+  FILE *cleanup_fp;
+  FILE *setup_fp;
+  int fd;
+  int n;
+  int ret;
 
   IceSetIOErrorHandler (ice_error_handler);
   IceAddConnectionWatch (ice_connection_watch, manager);
 
-  cleanup_fp = ice_tmpfile(&auth_cleanup_file);
+  cleanup_fp = ice_tmpfile (&auth_cleanup_file);
   if (cleanup_fp == NULL)
     return FALSE;
 
-  setup_fp = ice_tmpfile(&auth_setup_file);
+  setup_fp = ice_tmpfile (&auth_setup_file);
   if (setup_fp == NULL)
     {
       fclose (cleanup_fp);
@@ -380,5 +382,3 @@ ice_cleanup (void)
   g_free (auth_cleanup_file);
   auth_cleanup_file = NULL;
 }
-
-

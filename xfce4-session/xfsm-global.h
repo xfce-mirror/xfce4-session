@@ -24,22 +24,24 @@
 
 #include <glib.h>
 
-#include <xfce4-session/xfsm-shutdown.h> /* XfsmShutdownType */
-
 #include "settings/xfae-model.h" /* XfsmRunHook */
+
+#include "xfsm-shutdown.h" /* XfsmShutdownType */
 
 
 #define DEFAULT_SESSION_NAME "Default"
 
-extern gboolean          verbose;
+extern gboolean verbose;
 
 #if defined(G_HAVE_ISO_VARARGS)
 
-#define xfsm_verbose(...)\
-G_STMT_START{ \
-  if (G_UNLIKELY (verbose)) \
-    xfsm_verbose_real (__func__, __FILE__, __LINE__, __VA_ARGS__); \
-}G_STMT_END
+#define xfsm_verbose(...) \
+  G_STMT_START \
+  { \
+    if (G_UNLIKELY (verbose)) \
+      xfsm_verbose_real (__func__, __FILE__, __LINE__, __VA_ARGS__); \
+  } \
+  G_STMT_END
 
 #else
 
@@ -47,21 +49,29 @@ G_STMT_START{ \
 
 #endif
 
-void xfsm_enable_verbose (void);
-gboolean xfsm_is_verbose_enabled (void);
-void xfsm_verbose_real (const char *func,
-                        const char *file,
-                        int line,
-                        const char *format,
-                        ...) G_GNUC_PRINTF (4, 5);
+void
+xfsm_enable_verbose (void);
+gboolean
+xfsm_is_verbose_enabled (void);
+void
+xfsm_verbose_real (const char *func,
+                   const char *file,
+                   int line,
+                   const char *format,
+                   ...) G_GNUC_PRINTF (4, 5);
 
-GValue *xfsm_g_value_new (GType gtype);
-void    xfsm_g_value_free (GValue *value);
+GValue *
+xfsm_g_value_new (GType gtype);
+void
+xfsm_g_value_free (GValue *value);
 
-gint    xfsm_launch_desktop_files_on_login    (gboolean         start_at_spi);
-gint    xfsm_launch_desktop_files_on_shutdown (gboolean         start_at_spi,
-                                               XfsmShutdownType shutdown_type);
-gint    xfsm_launch_desktop_files_on_run_hook (gboolean         start_at_spi,
-                                               XfsmRunHook      run_hook);
+gint
+xfsm_launch_desktop_files_on_login (gboolean start_at_spi);
+gint
+xfsm_launch_desktop_files_on_shutdown (gboolean start_at_spi,
+                                       XfsmShutdownType shutdown_type);
+gint
+xfsm_launch_desktop_files_on_run_hook (gboolean start_at_spi,
+                                       XfsmRunHook run_hook);
 
 #endif /* !__XFSM_GLOBAL_H__ */

@@ -36,24 +36,32 @@ G_DECLARE_FINAL_TYPE (XfsmInhibition, xfsm_inhibition, XFSM, INHIBITION, GObject
  * @XFSM_INHIBITON_FLAG_SUSPEND: Inhibit suspending the session or computer
  * @XFSM_INHIBITON_FLAG_IDLE: Inhibit the session being marked as idle (and possibly locked)
  */
-typedef enum {
-  XFSM_INHIBITON_FLAG_LOGOUT  = 1 << 0,
-  XFSM_INHIBITON_FLAG_SWITCH  = 1 << 1,
+typedef enum
+{
+  XFSM_INHIBITON_FLAG_LOGOUT = 1 << 0,
+  XFSM_INHIBITON_FLAG_SWITCH = 1 << 1,
   XFSM_INHIBITON_FLAG_SUSPEND = 1 << 2,
-  XFSM_INHIBITON_FLAG_IDLE    = 1 << 3
+  XFSM_INHIBITON_FLAG_IDLE = 1 << 3
 } XfsmInhibitonFlag;
 
-XfsmInhibition        *xfsm_inhibition_new                  (const char           *app_id,
-                                                             guint                 toplevel_xid,
-                                                             XfsmInhibitonFlag     flags,
-                                                             const char           *reason);
+XfsmInhibition *
+xfsm_inhibition_new (const char *app_id,
+                     guint toplevel_xid,
+                     XfsmInhibitonFlag flags,
+                     const char *reason);
 
-const char            *xfsm_inhibition_get_app_id           (XfsmInhibition       *inhibition);
-const char            *xfsm_inhibition_get_reason           (XfsmInhibition       *inhibition);
-guint                  xfsm_inhibition_get_cookie           (XfsmInhibition       *inhibition);
-XfsmInhibitonFlag      xfsm_inhibition_get_flags            (XfsmInhibition       *inhibition);
-guint                  xfsm_inhibition_get_toplevel_xid     (XfsmInhibition       *inhibition);
-guint                 *xfsm_inhibition_peek_cookie          (XfsmInhibition       *inhibition);
+const char *
+xfsm_inhibition_get_app_id (XfsmInhibition *inhibition);
+const char *
+xfsm_inhibition_get_reason (XfsmInhibition *inhibition);
+guint
+xfsm_inhibition_get_cookie (XfsmInhibition *inhibition);
+XfsmInhibitonFlag
+xfsm_inhibition_get_flags (XfsmInhibition *inhibition);
+guint
+xfsm_inhibition_get_toplevel_xid (XfsmInhibition *inhibition);
+guint *
+xfsm_inhibition_peek_cookie (XfsmInhibition *inhibition);
 
 G_END_DECLS
 

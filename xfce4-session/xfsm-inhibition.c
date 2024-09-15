@@ -19,8 +19,9 @@
  * MA 02110-1301 USA.
  */
 
+#ifdef HAVE_CONFIG_H
 #include "config.h"
-
+#endif
 
 #include "xfsm-inhibition.h"
 
@@ -30,12 +31,13 @@ struct _XfsmInhibition
 
   gchar *app_id;
   gchar *reason;
-  guint  flags;
-  guint  toplevel_xid;
-  guint  cookie;
+  guint flags;
+  guint toplevel_xid;
+  guint cookie;
 };
 
-enum {
+enum
+{
   PROP_0,
   PROP_REASON,
   PROP_APP_ID,
@@ -53,7 +55,7 @@ xfsm_inhibition_init (XfsmInhibition *inhibition)
 
 static void
 xfsm_inhibition_set_app_id (XfsmInhibition *inhibition,
-                            const gchar    *app_id)
+                            const gchar *app_id)
 {
   g_return_if_fail (XFSM_IS_INHIBITION (inhibition));
 
@@ -65,7 +67,7 @@ xfsm_inhibition_set_app_id (XfsmInhibition *inhibition,
 
 static void
 xfsm_inhibition_set_reason (XfsmInhibition *inhibition,
-                            const gchar    *reason)
+                            const gchar *reason)
 {
   g_return_if_fail (XFSM_IS_INHIBITION (inhibition));
 
@@ -77,7 +79,7 @@ xfsm_inhibition_set_reason (XfsmInhibition *inhibition,
 
 static void
 xfsm_inhibition_set_cookie (XfsmInhibition *inhibition,
-                            guint           cookie)
+                            guint cookie)
 {
   g_return_if_fail (XFSM_IS_INHIBITION (inhibition));
 
@@ -89,8 +91,8 @@ xfsm_inhibition_set_cookie (XfsmInhibition *inhibition,
 }
 
 static void
-xfsm_inhibition_set_flags (XfsmInhibition    *inhibition,
-                           XfsmInhibitonFlag  flags)
+xfsm_inhibition_set_flags (XfsmInhibition *inhibition,
+                           XfsmInhibitonFlag flags)
 {
   g_return_if_fail (XFSM_IS_INHIBITION (inhibition));
 
@@ -103,7 +105,7 @@ xfsm_inhibition_set_flags (XfsmInhibition    *inhibition,
 
 static void
 xfsm_inhibition_set_toplevel_xid (XfsmInhibition *inhibition,
-                                  guint           xid)
+                                  guint xid)
 {
   g_return_if_fail (XFSM_IS_INHIBITION (inhibition));
 
@@ -165,43 +167,9 @@ xfsm_inhibition_peek_cookie (XfsmInhibition *inhibition)
 
 
 static void
-xfsm_inhibition_set_property (GObject      *object,
-                              guint         prop_id,
+xfsm_inhibition_set_property (GObject *object,
+                              guint prop_id,
                               const GValue *value,
-                              GParamSpec   *pspec)
-{
-  XfsmInhibition *self;
-
-  g_return_if_fail (XFSM_IS_INHIBITION (object));
-
-  self = XFSM_INHIBITION (object);
-
-  switch (prop_id) {
-  case PROP_APP_ID:
-    xfsm_inhibition_set_app_id (self, g_value_get_string (value));
-    break;
-  case PROP_REASON:
-    xfsm_inhibition_set_reason (self, g_value_get_string (value));
-    break;
-  case PROP_FLAGS:
-    xfsm_inhibition_set_flags (self, g_value_get_uint (value));
-    break;
-  case PROP_COOKIE:
-    xfsm_inhibition_set_cookie (self, g_value_get_uint (value));
-    break;
-  case PROP_TOPLEVEL_XID:
-    xfsm_inhibition_set_toplevel_xid (self, g_value_get_uint (value));
-    break;
-  default:
-    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-    break;
-  }
-}
-
-static void
-xfsm_inhibition_get_property (GObject    *object,
-                              guint       prop_id,
-                              GValue     *value,
                               GParamSpec *pspec)
 {
   XfsmInhibition *self;
@@ -210,26 +178,62 @@ xfsm_inhibition_get_property (GObject    *object,
 
   self = XFSM_INHIBITION (object);
 
-  switch (prop_id) {
-  case PROP_APP_ID:
-    g_value_set_string (value, self->app_id);
-    break;
-  case PROP_REASON:
-    g_value_set_string (value, self->reason);
-    break;
-  case PROP_FLAGS:
-    g_value_set_uint (value, self->flags);
-    break;
-  case PROP_COOKIE:
-    g_value_set_uint (value, self->cookie);
-    break;
-  case PROP_TOPLEVEL_XID:
-    g_value_set_uint (value, self->toplevel_xid);
-    break;
-  default:
-    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-    break;
-  }
+  switch (prop_id)
+    {
+    case PROP_APP_ID:
+      xfsm_inhibition_set_app_id (self, g_value_get_string (value));
+      break;
+    case PROP_REASON:
+      xfsm_inhibition_set_reason (self, g_value_get_string (value));
+      break;
+    case PROP_FLAGS:
+      xfsm_inhibition_set_flags (self, g_value_get_uint (value));
+      break;
+    case PROP_COOKIE:
+      xfsm_inhibition_set_cookie (self, g_value_get_uint (value));
+      break;
+    case PROP_TOPLEVEL_XID:
+      xfsm_inhibition_set_toplevel_xid (self, g_value_get_uint (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      break;
+    }
+}
+
+static void
+xfsm_inhibition_get_property (GObject *object,
+                              guint prop_id,
+                              GValue *value,
+                              GParamSpec *pspec)
+{
+  XfsmInhibition *self;
+
+  g_return_if_fail (XFSM_IS_INHIBITION (object));
+
+  self = XFSM_INHIBITION (object);
+
+  switch (prop_id)
+    {
+    case PROP_APP_ID:
+      g_value_set_string (value, self->app_id);
+      break;
+    case PROP_REASON:
+      g_value_set_string (value, self->reason);
+      break;
+    case PROP_FLAGS:
+      g_value_set_uint (value, self->flags);
+      break;
+    case PROP_COOKIE:
+      g_value_set_uint (value, self->cookie);
+      break;
+    case PROP_TOPLEVEL_XID:
+      g_value_set_uint (value, self->toplevel_xid);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -252,7 +256,7 @@ xfsm_inhibition_class_init (XfsmInhibitionClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize     = xfsm_inhibition_finalize;
+  object_class->finalize = xfsm_inhibition_finalize;
   object_class->get_property = xfsm_inhibition_get_property;
   object_class->set_property = xfsm_inhibition_set_property;
 
@@ -300,10 +304,10 @@ xfsm_inhibition_class_init (XfsmInhibitionClass *klass)
 }
 
 XfsmInhibition *
-xfsm_inhibition_new (const char        *app_id,
-                     guint              toplevel_xid,
-                     XfsmInhibitonFlag  flags,
-                     const char        *reason)
+xfsm_inhibition_new (const char *app_id,
+                     guint toplevel_xid,
+                     XfsmInhibitonFlag flags,
+                     const char *reason)
 {
   return g_object_new (XFSM_TYPE_INHIBITION,
                        "app-id", app_id,

@@ -22,7 +22,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_SYS_TYPES_H
@@ -60,7 +60,7 @@
 
 #include <libxfce4util/libxfce4util.h>
 
-#include <xfce4-session/xfsm-compat-gnome.h>
+#include "xfsm-compat-gnome.h"
 
 #define GNOME_KEYRING_DAEMON "gnome-keyring-daemon"
 
@@ -103,16 +103,16 @@ child_setup (gpointer user_data)
 static void
 gnome_keyring_daemon_startup (void)
 {
-  GError      *error = NULL;
-  gchar       *sout;
-  gchar      **lines;
-  gsize        lineno;
-  gint         status;
-  glong        pid;
-  gchar       *end;
-  gchar       *argv[3];
-  gchar       *p;
-  gchar       *name;
+  GError *error = NULL;
+  gchar *sout;
+  gchar **lines;
+  gsize lineno;
+  gint status;
+  glong pid;
+  gchar *end;
+  gchar *argv[3];
+  gchar *p;
+  gchar *name;
   const gchar *value;
 
   /* Pipe to slave keyring lifetime to */
@@ -150,7 +150,7 @@ gnome_keyring_daemon_startup (void)
             {
               p = strchr (lines[lineno], '=');
               if (p == NULL)
-               continue;
+                continue;
 
               name = g_strndup (lines[lineno], p - lines[lineno]);
               value = p + 1;

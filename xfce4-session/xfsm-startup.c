@@ -21,7 +21,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_ERRNO_H
@@ -52,37 +52,43 @@
 #include <signal.h>
 #endif
 
-#include <glib/gstdio.h>
 #ifdef ENABLE_X11
 #include <gdk/gdkx.h>
 #endif
+
+#include <glib/gstdio.h>
 #include <libxfce4ui/libxfce4ui.h>
 
-#include <libxfsm/xfsm-util.h>
+#include "libxfsm/xfsm-util.h"
 
-#include <xfce4-session/xfsm-compat-gnome.h>
-#include <xfce4-session/xfsm-compat-kde.h>
-#include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-manager.h>
-#include <xfce4-session/xfsm-startup.h>
+#include "xfsm-compat-gnome.h"
+#include "xfsm-compat-kde.h"
+#include "xfsm-global.h"
+#include "xfsm-manager.h"
+#include "xfsm-startup.h"
 
 
 typedef struct
 {
-  XfsmManager    *manager;
+  XfsmManager *manager;
   XfsmProperties *properties;
 } XfsmStartupData;
 
-static gboolean xfsm_startup_session_next_prio_group (XfsmManager *manager);
+static gboolean
+xfsm_startup_session_next_prio_group (XfsmManager *manager);
 
-static void     xfsm_startup_data_free               (XfsmStartupData *sdata);
-static void     xfsm_startup_child_watch             (GPid         pid,
-                                                      gint         status,
-                                                      gpointer     user_data);
-static gboolean xfsm_startup_timeout                 (gpointer     data);
+static void
+xfsm_startup_data_free (XfsmStartupData *sdata);
+static void
+xfsm_startup_child_watch (GPid pid,
+                          gint status,
+                          gpointer user_data);
+static gboolean
+xfsm_startup_timeout (gpointer data);
 
-static void     xfsm_startup_handle_failed_startup   (XfsmProperties *properties,
-                                                      XfsmManager    *manager);
+static void
+xfsm_startup_handle_failed_startup (XfsmProperties *properties,
+                                    XfsmManager *manager);
 
 
 static pid_t running_sshagent = -1;
@@ -94,8 +100,8 @@ static gboolean gpgagent_ssh_enabled = FALSE;
 static pid_t
 xfsm_gpg_agent_pid (const gchar *gpg_agent_info)
 {
-  pid_t        pid = -1;
-  gchar      **fields;
+  pid_t pid = -1;
+  gchar **fields;
 
   if (gpg_agent_info == NULL || *gpg_agent_info == '\0')
     return -1;
@@ -129,13 +135,13 @@ xfsm_startup_init_agent (const gchar *cmd,
                          const gchar *agent,
                          gboolean want_pid)
 {
-  gchar     *cmdoutput = NULL;
-  GError    *error = NULL;
-  gchar    **lines;
-  guint      i;
-  gchar     *p, *t;
-  gchar     *variable, *value;
-  pid_t      pid = -1;
+  gchar *cmdoutput = NULL;
+  GError *error = NULL;
+  gchar **lines;
+  guint i;
+  gchar *p, *t;
+  gchar *variable, *value;
+  pid_t pid = -1;
 
   if (g_spawn_command_line_sync (cmd, &cmdoutput, NULL, NULL, &error))
     {
@@ -195,37 +201,36 @@ xfsm_startup_init_agent (const gchar *cmd,
 }
 
 
-static void xfsm_gpg_agent_shutdown(gboolean quiet)
+static void
+xfsm_gpg_agent_shutdown (gboolean quiet)
 {
-      GError      *error = NULL;
+  GError *error = NULL;
 
-      g_spawn_command_line_sync ("gpgconf --kill gpg-agent",
-                                 NULL, NULL, NULL, &error);
-      if (error)
-        {
-          if (!quiet)
-            g_warning ("failed to kill gpg-agent via gpgconf, error was %s",
-                       error->message);
-          g_error_free (error);
-        }
+  g_spawn_command_line_sync ("gpgconf --kill gpg-agent", NULL, NULL, NULL, &error);
+  if (error)
+    {
+      if (!quiet)
+        g_warning ("failed to kill gpg-agent via gpgconf, error was %s", error->message);
+      g_error_free (error);
+    }
 }
 
 
 void
 xfsm_startup_init (XfconfChannel *channel)
 {
-  gchar       *ssh_agent;
-  gchar       *ssh_agent_path = NULL;
-  gchar       *gpg_agent_path = NULL;
-  gchar       *cmd;
-  gchar       *cmdoutput = NULL;
-  GError      *error = NULL;
-  pid_t        agentpid;
-  gboolean     gnome_keyring_found;
+  gchar *ssh_agent;
+  gchar *ssh_agent_path = NULL;
+  gchar *gpg_agent_path = NULL;
+  gchar *cmd;
+  gchar *cmdoutput = NULL;
+  GError *error = NULL;
+  pid_t agentpid;
+  gboolean gnome_keyring_found;
 
-      /* if GNOME compatibility is enabled and gnome-keyring-daemon
-       * is found, skip the gpg/ssh agent startup and wait for
-       * gnome-keyring, which is probably what the user wants */
+  /* if GNOME compatibility is enabled and gnome-keyring-daemon
+   * is found, skip the gpg/ssh agent startup and wait for
+   * gnome-keyring, which is probably what the user wants */
   if (xfconf_channel_get_bool (channel, "/compat/LaunchGNOME", FALSE))
     {
       cmd = g_find_program_in_path ("gnome-keyring-daemon");
@@ -261,9 +266,9 @@ xfsm_startup_init (XfconfChannel *channel)
       else if (g_strcmp0 (ssh_agent, "gpg-agent") == 0)
         {
           if (gpg_agent_path != NULL)
-             gpgagent_ssh_enabled = TRUE;
-           else
-               g_warning ("gpg-agent is configured as SSH agent, but gpg-agent is disabled or not found");
+            gpgagent_ssh_enabled = TRUE;
+          else
+            g_warning ("gpg-agent is configured as SSH agent, but gpg-agent is disabled or not found");
         }
       else
         {
@@ -299,7 +304,7 @@ xfsm_startup_init (XfconfChannel *channel)
           g_free (cmd);
 
           /* update dbus environment */
-          if (LOGIND_RUNNING())
+          if (LOGIND_RUNNING ())
             {
               cmd = g_strdup_printf ("%s", "dbus-update-activation-environment --systemd SSH_AUTH_SOCK");
             }
@@ -325,29 +330,27 @@ xfsm_startup_init (XfconfChannel *channel)
   if (G_LIKELY (gpg_agent_path != NULL))
     {
       xfsm_gpg_agent_shutdown (TRUE);
-        {
-          gboolean want_pid;
-          gchar *cmd_tmp;
-          gchar *envfile;
+      {
+        gboolean want_pid;
+        gchar *cmd_tmp;
+        gchar *envfile;
 
-          g_unsetenv ("GPG_AGENT_INFO");
+        g_unsetenv ("GPG_AGENT_INFO");
 
-          envfile = xfce_resource_save_location (XFCE_RESOURCE_CACHE, "gpg-agent-info", FALSE);
+        envfile = xfce_resource_save_location (XFCE_RESOURCE_CACHE, "gpg-agent-info", FALSE);
 
-          cmd_tmp = g_strdup_printf ("%s --sh --daemon%s", gpg_agent_path,
-                                     gpgagent_ssh_enabled ?
-                                     " --enable-ssh-support" : "");
+        cmd_tmp = g_strdup_printf ("%s --sh --daemon%s", gpg_agent_path,
+                                   gpgagent_ssh_enabled ? " --enable-ssh-support" : "");
 
-          cmd = cmd_tmp;
-          want_pid = FALSE;
+        cmd = cmd_tmp;
+        want_pid = FALSE;
 
-          /* keep this around for shutdown */
-          running_gpgagent = xfsm_startup_init_agent (cmd, "gpg-agent",
-                                                      want_pid);
+        /* keep this around for shutdown */
+        running_gpgagent = xfsm_startup_init_agent (cmd, "gpg-agent", want_pid);
 
-          g_free (cmd);
-          g_free (envfile);
-        }
+        g_free (cmd);
+        g_free (envfile);
+      }
 
       g_free (gpg_agent_path);
     }
@@ -362,9 +365,9 @@ xfsm_startup_shutdown (void)
     {
       if (kill (running_sshagent, SIGTERM) == 0)
         {
-         /* make sure the env values are unset */
-         g_unsetenv ("SSH_AGENT_PID");
-         g_unsetenv ("SSH_AUTH_SOCK");
+          /* make sure the env values are unset */
+          g_unsetenv ("SSH_AGENT_PID");
+          g_unsetenv ("SSH_AUTH_SOCK");
         }
       else
         {
@@ -391,10 +394,10 @@ xfsm_startup_autostart (XfsmManager *manager)
 void
 xfsm_startup_foreign (XfsmManager *manager)
 {
-  if (xfsm_manager_get_compat_startup(manager, XFSM_MANAGER_COMPAT_KDE))
+  if (xfsm_manager_get_compat_startup (manager, XFSM_MANAGER_COMPAT_KDE))
     xfsm_compat_kde_startup ();
 
-  if (xfsm_manager_get_compat_startup(manager, XFSM_MANAGER_COMPAT_GNOME))
+  if (xfsm_manager_get_compat_startup (manager, XFSM_MANAGER_COMPAT_GNOME))
     xfsm_compat_gnome_startup ();
 }
 
@@ -403,12 +406,12 @@ xfsm_startup_foreign (XfsmManager *manager)
 static void
 xfsm_startup_at_set_gtk_modules (void)
 {
-  const gchar  *old;
-  gchar       **modules;
-  guint         i;
-  gboolean      found_gail = FALSE;
-  gboolean      found_atk_bridge = FALSE;
-  GString      *new;
+  const gchar *old;
+  gchar **modules;
+  guint i;
+  gboolean found_gail = FALSE;
+  gboolean found_atk_bridge = FALSE;
+  GString *new;
 
   old = g_getenv ("GTK_MODULES");
   if (old != NULL && *old != '\0')
@@ -448,13 +451,13 @@ xfsm_startup_at_set_gtk_modules (void)
 static gboolean
 xfsm_startup_at_spi_ior_set (void)
 {
-  Atom        AT_SPI_IOR;
+  Atom AT_SPI_IOR;
   GdkDisplay *display;
-  Atom        actual_type;
-  gint        actual_format;
-  guchar    *data = NULL;
-  gulong     nitems;
-  gulong     leftover;
+  Atom actual_type;
+  gint actual_format;
+  guchar *data = NULL;
+  gulong nitems;
+  gulong leftover;
 
   display = gdk_display_get_default ();
   AT_SPI_IOR = XInternAtom (GDK_DISPLAY_XDISPLAY (display), "AT_SPI_IOR", False);
@@ -524,17 +527,17 @@ xfsm_startup_begin (XfsmManager *manager)
 
 gboolean
 xfsm_startup_start_properties (XfsmProperties *properties,
-                               XfsmManager    *manager)
+                               XfsmManager *manager)
 {
   XfsmStartupData *child_watch_data;
   XfsmStartupData *startup_timeout_data;
-  gchar          **restart_command;
-  gchar          **argv;
-  gint             argc;
-  gint             n;
-  const gchar     *current_directory;
-  GPid             pid;
-  GError          *error = NULL;
+  gchar **restart_command;
+  gchar **argv;
+  gint argc;
+  gint n;
+  const gchar *current_directory;
+  GPid pid;
+  GError *error = NULL;
 
   /* release any possible old resources related to a previous startup */
   xfsm_properties_set_default_child_watch (properties);
@@ -581,9 +584,9 @@ xfsm_startup_start_properties (XfsmProperties *properties,
   child_watch_data->manager = g_object_ref (manager);
   child_watch_data->properties = properties;
   child_watch_data->properties->child_watch_id =
-      g_child_watch_add_full (G_PRIORITY_LOW, properties->pid,
-                              xfsm_startup_child_watch, child_watch_data,
-                              (GDestroyNotify) xfsm_startup_data_free);
+    g_child_watch_add_full (G_PRIORITY_LOW, properties->pid,
+                            xfsm_startup_child_watch, child_watch_data,
+                            (GDestroyNotify) xfsm_startup_data_free);
 
   /* set a timeout -- client must register in a a certain amount of time
    * or it's assumed to be broken/have issues. */
@@ -603,7 +606,7 @@ xfsm_startup_start_properties (XfsmProperties *properties,
 void
 xfsm_startup_session_continue (XfsmManager *manager)
 {
-  GQueue  *pending_properties = xfsm_manager_get_queue (manager, XFSM_MANAGER_QUEUE_PENDING_PROPS);
+  GQueue *pending_properties = xfsm_manager_get_queue (manager, XFSM_MANAGER_QUEUE_PENDING_PROPS);
   gboolean client_started = FALSE;
 
   /* try to start some clients.  if we fail to start anything in the current
@@ -629,11 +632,11 @@ xfsm_startup_session_continue (XfsmManager *manager)
 static gboolean
 xfsm_startup_session_next_prio_group (XfsmManager *manager)
 {
-  GQueue         *pending_properties = xfsm_manager_get_queue (manager, XFSM_MANAGER_QUEUE_PENDING_PROPS);
-  GQueue         *starting_properties = xfsm_manager_get_queue (manager, XFSM_MANAGER_QUEUE_STARTING_PROPS);
+  GQueue *pending_properties = xfsm_manager_get_queue (manager, XFSM_MANAGER_QUEUE_PENDING_PROPS);
+  GQueue *starting_properties = xfsm_manager_get_queue (manager, XFSM_MANAGER_QUEUE_STARTING_PROPS);
   XfsmProperties *properties;
-  gint            cur_prio_group;
-  gboolean        client_started = FALSE;
+  gint cur_prio_group;
+  gboolean client_started = FALSE;
 
   properties = (XfsmProperties *) g_queue_peek_head (pending_properties);
   if (properties == NULL)
@@ -684,15 +687,15 @@ xfsm_startup_data_free (XfsmStartupData *sdata)
 
 
 static void
-xfsm_startup_child_watch (GPid     pid,
-                          gint     status,
+xfsm_startup_child_watch (GPid pid,
+                          gint status,
                           gpointer user_data)
 {
   XfsmStartupData *cwdata = user_data;
-  GQueue          *starting_properties;
+  GQueue *starting_properties;
 
   xfsm_verbose ("Client Id = %s, PID %d exited with status %d\n",
-                cwdata->properties->client_id, (gint)pid, status);
+                cwdata->properties->client_id, (gint) pid, status);
 
   cwdata->properties->child_watch_id = 0;
   cwdata->properties->pid = -1;
@@ -733,7 +736,7 @@ xfsm_startup_timeout (gpointer data)
 
 static void
 xfsm_startup_handle_failed_startup (XfsmProperties *properties,
-                                    XfsmManager    *manager)
+                                    XfsmManager *manager)
 {
   GQueue *starting_properties = xfsm_manager_get_queue (manager, XFSM_MANAGER_QUEUE_STARTING_PROPS);
 
@@ -750,7 +753,7 @@ xfsm_startup_handle_failed_startup (XfsmProperties *properties,
    * it failed, and let it do its thing. */
   g_queue_remove (starting_properties, properties);
   if (xfsm_manager_handle_failed_properties (manager, properties) == FALSE)
-      xfsm_properties_free (properties);
+    xfsm_properties_free (properties);
 
   if (g_queue_peek_head (starting_properties) == NULL
       && xfsm_manager_get_state (manager) == XFSM_MANAGER_STARTUP)
