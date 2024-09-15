@@ -35,7 +35,7 @@
 struct _XfsmFadeout
 {
   Display *xdisplay;
-  Window  *xwindow;
+  Window *xwindow;
 };
 
 
@@ -44,20 +44,20 @@ static Window
 xfsm_x11_fadeout_new_window (GdkDisplay *display,
                              GdkScreen *screen)
 {
-  XSetWindowAttributes  attr;
-  Display              *xdisplay;
-  Window                xwindow;
-  GdkWindow            *root;
-  GdkCursor            *cursor;
-  cairo_t              *cr;
-  gint                  width;
-  gint                  height;
-  GdkPixbuf            *root_pixbuf;
-  cairo_surface_t      *surface;
-  gulong                mask = 0;
-  gulong                opacity;
-  gboolean              composited;
-  gint                  scale;
+  XSetWindowAttributes attr;
+  Display *xdisplay;
+  Window xwindow;
+  GdkWindow *root;
+  GdkCursor *cursor;
+  cairo_t *cr;
+  gint width;
+  gint height;
+  GdkPixbuf *root_pixbuf;
+  cairo_surface_t *surface;
+  gulong mask = 0;
+  gulong opacity;
+  gboolean composited;
+  gint scale;
 
   gdk_x11_display_error_trap_push (display);
 
@@ -103,7 +103,7 @@ xfsm_x11_fadeout_new_window (GdkDisplay *display,
       opacity = 0.5 * 0xffffffff;
       XChangeProperty (xdisplay, xwindow,
                        gdk_x11_get_xatom_by_name_for_display (display, "_NET_WM_WINDOW_OPACITY"),
-                       XA_CARDINAL, 32, PropModeReplace, (guchar *)&opacity, 1);
+                       XA_CARDINAL, 32, PropModeReplace, (guchar *) &opacity, 1);
     }
 
   XMapWindow (xdisplay, xwindow);
@@ -137,11 +137,11 @@ xfsm_x11_fadeout_new_window (GdkDisplay *display,
 
 
 
-XfsmFadeout*
+XfsmFadeout *
 xfsm_fadeout_new (GdkDisplay *display)
 {
-  XfsmFadeout     *fadeout;
-  GdkScreen       *screen;
+  XfsmFadeout *fadeout;
+  GdkScreen *screen;
 
   fadeout = g_slice_new0 (XfsmFadeout);
 

@@ -58,7 +58,7 @@
 #include "xfsm-global.h"
 
 
-static gchar*
+static gchar *
 queryhostname (gchar *buffer, gsize length, gboolean readable)
 {
 #ifdef HAVE_GETHOSTNAME
@@ -86,9 +86,9 @@ check_for_dns (void)
 {
 #ifdef HAVE_GETADDRINFO
   struct addrinfo *result = NULL;
-  struct addrinfo  hints;
+  struct addrinfo hints;
 #endif
-  char   buffer[256];
+  char buffer[256];
   gchar *hostname;
 
   hostname = queryhostname (buffer, 256, FALSE);
@@ -134,8 +134,8 @@ void
 xfsm_dns_check (void)
 {
   GtkWidget *msgbox = NULL;
-  gchar      hostname[256];
-  gint       response;
+  gchar hostname[256];
+  gint response;
 
   while (!check_for_dns ())
     {
@@ -154,9 +154,8 @@ xfsm_dns_check (void)
                                              "%s to the file /etc/hosts on your system."),
                                            hostname, hostname);
 
-          gtk_dialog_add_buttons (GTK_DIALOG (msgbox),
-                                  _("Continue anyway"), RESPONSE_LOG_IN,
-                                  _("Try again"), RESPONSE_TRY_AGAIN,
+          gtk_dialog_add_buttons (GTK_DIALOG (msgbox), _("Continue anyway"),
+                                  RESPONSE_LOG_IN, _("Try again"), RESPONSE_TRY_AGAIN,
                                   NULL);
 
           gtk_window_set_screen (GTK_WINDOW (msgbox), screen);

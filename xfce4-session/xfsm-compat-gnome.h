@@ -24,7 +24,9 @@
 #ifndef __XFSM_COMPAT_GNOME_H__
 #define __XFSM_COMPAT_GNOME_H__
 
-void xfsm_compat_gnome_startup (void);
-void xfsm_compat_gnome_shutdown (void);
+void
+xfsm_compat_gnome_startup (void);
+void
+xfsm_compat_gnome_shutdown (void);
 
 #endif /* !__XFSM_COMPAT_GNOME_H__ */

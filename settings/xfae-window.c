@@ -31,21 +31,27 @@
 #include "xfae-dialog.h"
 #include "xfae-window.h"
 
-static void          xfae_window_add                          (XfaeWindow       *window);
-static void          xfae_window_remove                       (XfaeWindow       *window);
-static void          xfae_window_edit                         (XfaeWindow       *window);
-static gboolean      xfae_window_button_press_event           (GtkWidget        *treeview,
-                                                               GdkEventButton   *event,
-                                                               XfaeWindow       *window);
-static void          xfae_window_item_toggled                 (XfaeWindow       *window,
-                                                               gchar            *path_string);
-static void          xfae_window_selection_changed            (GtkTreeSelection *selection,
-                                                               GtkWidget        *remove_button);
-static void          xfae_window_correct_treeview_column_size (GtkWidget        *treeview,
-                                                               gpointer          user_data);
-static GtkTreeModel* xfae_window_create_run_hooks_combo_model (void);
-
-
+static void
+xfae_window_add (XfaeWindow *window);
+static void
+xfae_window_remove (XfaeWindow *window);
+static void
+xfae_window_edit (XfaeWindow *window);
+static gboolean
+xfae_window_button_press_event (GtkWidget *treeview,
+                                GdkEventButton *event,
+                                XfaeWindow *window);
+static void
+xfae_window_item_toggled (XfaeWindow *window,
+                          gchar *path_string);
+static void
+xfae_window_selection_changed (GtkTreeSelection *selection,
+                               GtkWidget *remove_button);
+static void
+xfae_window_correct_treeview_column_size (GtkWidget *treeview,
+                                          gpointer user_data);
+static GtkTreeModel *
+xfae_window_create_run_hooks_combo_model (void);
 
 
 
@@ -56,11 +62,11 @@ struct _XfaeWindowClass
 
 struct _XfaeWindow
 {
-  GtkBox            __parent__;
+  GtkBox __parent__;
 
   GtkTreeSelection *selection;
 
-  GtkWidget        *treeview;
+  GtkWidget *treeview;
 };
 
 
@@ -78,47 +84,47 @@ xfae_window_class_init (XfaeWindowClass *klass)
 
 static void
 run_hook_changed (GtkCellRendererCombo *combo,
-                  char                 *path_str,
-                  GtkTreeIter          *combo_iter,
-                  gpointer              user_data)
+                  char *path_str,
+                  GtkTreeIter *combo_iter,
+                  gpointer user_data)
 {
-    GEnumClass   *klass;
-    GEnumValue   *enum_struct;
-    GtkTreeView  *treeview = user_data;
-    GtkTreeModel *model = gtk_tree_view_get_model (treeview);
-    GtkTreePath  *path = gtk_tree_path_new_from_string (path_str);
-    GtkTreeIter   iter;
-    GError       *error = NULL;
-    GtkTreeModel *combo_model;
-    gchar        *combo_str;
+  GEnumClass *klass;
+  GEnumValue *enum_struct;
+  GtkTreeView *treeview = user_data;
+  GtkTreeModel *model = gtk_tree_view_get_model (treeview);
+  GtkTreePath *path = gtk_tree_path_new_from_string (path_str);
+  GtkTreeIter iter;
+  GError *error = NULL;
+  GtkTreeModel *combo_model;
+  gchar *combo_str;
 
-    if (gtk_tree_model_get_iter (model, &iter, path))
-      {
-        g_object_get (combo, "model", &combo_model, NULL);
-        combo_str = gtk_tree_model_get_string_from_iter (combo_model, combo_iter);
-        klass = g_type_class_ref (XFSM_TYPE_RUN_HOOK);
-        enum_struct = g_enum_get_value (klass, atoi (combo_str));
-        g_type_class_unref (klass);
-        g_free (combo_str);
-        g_object_unref (combo_model);
+  if (gtk_tree_model_get_iter (model, &iter, path))
+    {
+      g_object_get (combo, "model", &combo_model, NULL);
+      combo_str = gtk_tree_model_get_string_from_iter (combo_model, combo_iter);
+      klass = g_type_class_ref (XFSM_TYPE_RUN_HOOK);
+      enum_struct = g_enum_get_value (klass, atoi (combo_str));
+      g_type_class_unref (klass);
+      g_free (combo_str);
+      g_object_unref (combo_model);
 
-        if (enum_struct != NULL
-            && !xfae_model_set_run_hook (model, path, &iter, enum_struct->value, &error))
-          {
-            xfce_dialog_show_error (NULL, error, _("Failed to set run hook"));
-            g_error_free (error);
-          }
-      }
-    gtk_tree_path_free (path);
+      if (enum_struct != NULL
+          && !xfae_model_set_run_hook (model, path, &iter, enum_struct->value, &error))
+        {
+          xfce_dialog_show_error (NULL, error, _("Failed to set run hook"));
+          g_error_free (error);
+        }
+    }
+  gtk_tree_path_free (path);
 }
 
 
 
 static void
 xfae_window_correct_treeview_column_size (GtkWidget *treeview,
-                                          gpointer   user_data)
+                                          gpointer user_data)
 {
-    gtk_tree_view_columns_autosize (GTK_TREE_VIEW (treeview));
+  gtk_tree_view_columns_autosize (GTK_TREE_VIEW (treeview));
 }
 
 
@@ -127,13 +133,13 @@ static void
 xfae_window_init (XfaeWindow *window)
 {
   GtkTreeViewColumn *column;
-  GtkCellRenderer   *renderer;
-  GtkTreeModel      *model;
-  GtkWidget         *vbox;
-  GtkWidget         *img;
-  GtkWidget         *swin;
-  GtkWidget         *bbox;
-  GtkWidget         *button;
+  GtkCellRenderer *renderer;
+  GtkTreeModel *model;
+  GtkWidget *vbox;
+  GtkWidget *img;
+  GtkWidget *swin;
+  GtkWidget *bbox;
+  GtkWidget *button;
 
   vbox = GTK_WIDGET (window);
   gtk_orientable_set_orientation (GTK_ORIENTABLE (vbox),
@@ -160,7 +166,7 @@ xfae_window_init (XfaeWindow *window)
                     G_CALLBACK (xfae_window_button_press_event), window);
   // fix buggy sizing behavior of gtk
   g_signal_connect (G_OBJECT (window->treeview), "realize",
-                    G_CALLBACK(xfae_window_correct_treeview_column_size), NULL);
+                    G_CALLBACK (xfae_window_correct_treeview_column_size), NULL);
 
   gtk_container_add (GTK_CONTAINER (swin), window->treeview);
   gtk_widget_show (window->treeview);
@@ -187,7 +193,7 @@ xfae_window_init (XfaeWindow *window)
                                        "active", XFAE_MODEL_COLUMN_ENABLED,
                                        NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
-  gtk_tree_view_column_set_sort_column_id(column, XFAE_MODEL_COLUMN_ENABLED);
+  gtk_tree_view_column_set_sort_column_id (column, XFAE_MODEL_COLUMN_ENABLED);
 
   // Column "Program"
   column = g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
@@ -210,7 +216,7 @@ xfae_window_init (XfaeWindow *window)
                                        "markup", XFAE_MODEL_COLUMN_NAME,
                                        NULL);
 
-  gtk_tree_view_column_set_sort_column_id(column, XFAE_MODEL_COLUMN_NAME);
+  gtk_tree_view_column_set_sort_column_id (column, XFAE_MODEL_COLUMN_NAME);
 
   gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
 
@@ -237,7 +243,7 @@ xfae_window_init (XfaeWindow *window)
                                        "text", XFAE_MODEL_RUN_HOOK,
                                        NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (window->treeview), column);
-  gtk_tree_view_column_set_sort_column_id(column, XFAE_MODEL_RUN_HOOK);
+  gtk_tree_view_column_set_sort_column_id (column, XFAE_MODEL_RUN_HOOK);
 
   g_object_unref (model);
 
@@ -287,38 +293,38 @@ xfae_window_init (XfaeWindow *window)
 static GtkTreeModel *
 xfae_window_create_run_hooks_combo_model (void)
 {
-    GtkListStore *ls = gtk_list_store_new (1, G_TYPE_STRING);
-    GEnumClass   *klass;
-    GEnumValue   *enum_struct;
-    GtkTreeIter   iter;
-    guint i;
+  GtkListStore *ls = gtk_list_store_new (1, G_TYPE_STRING);
+  GEnumClass *klass;
+  GEnumValue *enum_struct;
+  GtkTreeIter iter;
+  guint i;
 
-    klass = g_type_class_ref (XFSM_TYPE_RUN_HOOK);
-    for (i = 0; i < klass->n_values; ++i)
-      {
-        gtk_list_store_append (ls, &iter);
-        enum_struct = g_enum_get_value (klass, i);
-        gtk_list_store_set (ls, &iter, 0, _(enum_struct->value_nick), -1);
-      }
-    g_type_class_unref (klass);
-    return GTK_TREE_MODEL (ls);
+  klass = g_type_class_ref (XFSM_TYPE_RUN_HOOK);
+  for (i = 0; i < klass->n_values; ++i)
+    {
+      gtk_list_store_append (ls, &iter);
+      enum_struct = g_enum_get_value (klass, i);
+      gtk_list_store_set (ls, &iter, 0, _(enum_struct->value_nick), -1);
+    }
+  g_type_class_unref (klass);
+  return GTK_TREE_MODEL (ls);
 }
 
 
 
 static gboolean
-xfae_window_button_press_event (GtkWidget      *treeview,
+xfae_window_button_press_event (GtkWidget *treeview,
                                 GdkEventButton *event,
-                                XfaeWindow     *window)
+                                XfaeWindow *window)
 {
   GtkTreeSelection *selection;
-  GtkTreeModel     *model;
-  GtkTreePath      *path;
-  GtkTreeIter       iter;
-  GMainLoop        *loop;
-  GtkWidget        *menu;
-  GtkWidget        *item;
-  gboolean          removable = FALSE;
+  GtkTreeModel *model;
+  GtkTreePath *path;
+  GtkTreeIter iter;
+  GMainLoop *loop;
+  GtkWidget *menu;
+  GtkWidget *item;
+  gboolean removable = FALSE;
 
   if (event->button == 3 && event->type == GDK_BUTTON_PRESS)
     {
@@ -374,13 +380,13 @@ static void
 xfae_window_add (XfaeWindow *window)
 {
   GtkTreeModel *model;
-  GtkWidget    *parent;
-  GtkWidget    *dialog;
-  GError       *error = NULL;
-  gchar        *name;
-  gchar        *descr;
-  gchar        *command;
-  XfsmRunHook   run_hook;
+  GtkWidget *parent;
+  GtkWidget *dialog;
+  GError *error = NULL;
+  gchar *name;
+  gchar *descr;
+  gchar *command;
+  XfsmRunHook run_hook;
 
   dialog = xfae_dialog_new (NULL, NULL, NULL, XFSM_RUN_HOOK_LOGIN);
   parent = gtk_widget_get_toplevel (GTK_WIDGET (window));
@@ -411,12 +417,12 @@ static void
 xfae_window_remove (XfaeWindow *window)
 {
   GtkTreeSelection *selection;
-  GtkTreeModel     *model;
-  GtkTreeIter       iter;
-  GError           *error = NULL;
-  GtkWidget        *parent;
-  gchar            *name;
-  gboolean          remove_item;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  GError *error = NULL;
+  GtkWidget *parent;
+  gchar *name;
+  gboolean remove_item;
 
   parent = gtk_widget_get_toplevel (GTK_WIDGET (window));
 
@@ -429,12 +435,7 @@ xfae_window_remove (XfaeWindow *window)
           g_error_free (error);
           return;
         }
-        remove_item = TRUE;
-/*      remove_item = xfce_dialog_confirm (GTK_WINDOW (parent), GTK_STOCK_REMOVE, NULL,
-                                         _("This will permanently remove the application "
-                                           "from the list of automatically started applications"),
-                                         _("Are you sure you want to remove \"%s\""), name);
-*/
+      remove_item = TRUE;
       g_free (name);
 
       if (remove_item && !xfae_model_remove (XFAE_MODEL (model), &iter, &error))
@@ -451,15 +452,15 @@ static void
 xfae_window_edit (XfaeWindow *window)
 {
   GtkTreeSelection *selection;
-  GtkTreeModel     *model;
-  GtkTreeIter       iter;
-  GError           *error = NULL;
-  gchar            *name;
-  gchar            *descr;
-  gchar            *command;
-  XfsmRunHook       run_hook;
-  GtkWidget        *parent;
-  GtkWidget        *dialog;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  GError *error = NULL;
+  gchar *name;
+  gchar *descr;
+  gchar *command;
+  XfsmRunHook run_hook;
+  GtkWidget *parent;
+  GtkWidget *dialog;
 
   parent = gtk_widget_get_toplevel (GTK_WIDGET (window));
 
@@ -482,9 +483,9 @@ xfae_window_edit (XfaeWindow *window)
 
       if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
         {
-	  gtk_widget_hide (dialog);
+          gtk_widget_hide (dialog);
 
-	  xfae_dialog_get (XFAE_DIALOG (dialog), &name, &descr, &command, &run_hook);
+          xfae_dialog_get (XFAE_DIALOG (dialog), &name, &descr, &command, &run_hook);
 
           if (!xfae_model_edit (XFAE_MODEL (model), &iter, name, descr, command, run_hook, &error))
             {
@@ -503,12 +504,12 @@ xfae_window_edit (XfaeWindow *window)
 
 static void
 xfae_window_item_toggled (XfaeWindow *window,
-                          gchar      *path_string)
+                          gchar *path_string)
 {
   GtkTreeModel *model;
-  GtkTreePath  *path;
-  GtkTreeIter   iter;
-  GError       *error = NULL;
+  GtkTreePath *path;
+  GtkTreeIter iter;
+  GError *error = NULL;
 
   model = gtk_tree_view_get_model (GTK_TREE_VIEW (window->treeview));
   path = gtk_tree_path_new_from_string (path_string);
@@ -527,11 +528,11 @@ xfae_window_item_toggled (XfaeWindow *window,
 
 static void
 xfae_window_selection_changed (GtkTreeSelection *selection,
-                               GtkWidget        *remove_button)
+                               GtkWidget *remove_button)
 {
   GtkTreeModel *model;
-  GtkTreeIter   iter;
-  gboolean      removable = FALSE;
+  GtkTreeIter iter;
+  gboolean removable = FALSE;
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     gtk_tree_model_get (model, &iter, XFAE_MODEL_COLUMN_REMOVABLE, &removable, -1);
@@ -548,7 +549,7 @@ xfae_window_selection_changed (GtkTreeSelection *selection,
  *
  * Return value: the newly allocated #XfaeWindow instance.
  **/
-GtkWidget*
+GtkWidget *
 xfae_window_new (void)
 {
   return g_object_new (XFAE_TYPE_WINDOW, NULL);

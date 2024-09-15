@@ -22,7 +22,7 @@
 #ifndef __XFSM_DNS_H__
 #define __XFSM_DNS_H__
 
-void xfsm_dns_check (void);
+void
+xfsm_dns_check (void);
 
 #endif /* !__XFSM_DNS_H__ */
-

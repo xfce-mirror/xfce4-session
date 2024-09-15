@@ -27,13 +27,13 @@
 
 G_BEGIN_DECLS;
 
-#define XFSM_TYPE_CHOOSER xfsm_chooser_get_type()
-#define XFSM_CHOOSER(obj) G_TYPE_CHECK_INSTANCE_CAST(obj, XFSM_TYPE_CHOOSER, XfsmChooser)
-#define XFSM_CHOOSER_CLASS(klass) G_TYPE_CHECK_CLASS_CAST(klass, XFSM_TYPE_CHOOSER, XfsmChooserClass)
-#define XFSM_IS_CHOOSER(obj) G_TYPE_CHECK_INSTANCE_TYPE(obj, XFSM_TYPE_CHOOSER)
+#define XFSM_TYPE_CHOOSER xfsm_chooser_get_type ()
+#define XFSM_CHOOSER(obj) G_TYPE_CHECK_INSTANCE_CAST (obj, XFSM_TYPE_CHOOSER, XfsmChooser)
+#define XFSM_CHOOSER_CLASS(klass) G_TYPE_CHECK_CLASS_CAST (klass, XFSM_TYPE_CHOOSER, XfsmChooserClass)
+#define XFSM_IS_CHOOSER(obj) G_TYPE_CHECK_INSTANCE_TYPE (obj, XFSM_TYPE_CHOOSER)
 
-#define XFSM_RESPONSE_LOAD  1
-#define XFSM_RESPONSE_NEW   2
+#define XFSM_RESPONSE_LOAD 1
+#define XFSM_RESPONSE_NEW 2
 
 typedef struct _XfsmChooser XfsmChooser;
 typedef struct _XfsmChooserClass XfsmChooserClass;
@@ -50,13 +50,16 @@ struct _XfsmChooser
   GtkWidget *tree;
 };
 
-GType xfsm_chooser_get_type (void) G_GNUC_CONST;
+GType
+xfsm_chooser_get_type (void) G_GNUC_CONST;
 
-void xfsm_chooser_set_sessions (XfsmChooser *chooser,
-                                GList       *sessions,
-                                const gchar *default_session);
+void
+xfsm_chooser_set_sessions (XfsmChooser *chooser,
+                           GList *sessions,
+                           const gchar *default_session);
 
-gchar *xfsm_chooser_get_session (const XfsmChooser *chooser);
+gchar *
+xfsm_chooser_get_session (const XfsmChooser *chooser);
 
 G_END_DECLS;
 

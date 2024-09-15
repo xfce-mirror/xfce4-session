@@ -77,7 +77,7 @@
 #include "xfsm-legacy.h"
 
 
-#define WM_SAVE_YOURSELF_TIMEOUT  4000
+#define WM_SAVE_YOURSELF_TIMEOUT 4000
 
 enum
 {
@@ -90,13 +90,13 @@ enum
 typedef struct _SmWindow SmWindow;
 struct _SmWindow
 {
-  gint    type;
+  gint type;
   gchar **wm_command;
-  gchar  *wm_client_machine;
-  gchar  *wm_class1;
-  gchar  *wm_class2;
-  Window  wid;
-  gint    screen_num;
+  gchar *wm_client_machine;
+  gchar *wm_class1;
+  gchar *wm_class2;
+  Window wid;
+  gint screen_num;
 };
 #define SM_WINDOW(window) ((SmWindow *) (window))
 
@@ -113,15 +113,18 @@ static GList *window_list = NULL;
 
 
 /* X Atoms */
-static Atom _XA_WM_PROTOCOLS     = None;
+static Atom _XA_WM_PROTOCOLS = None;
 static Atom _XA_WM_SAVE_YOURSELF = None;
 static Atom _XA_WM_CLIENT_LEADER = None;
-static Atom _XA_SM_CLIENT_ID     = None;
+static Atom _XA_SM_CLIENT_ID = None;
 
 
-static SmWindow*
-sm_window_new (Window wid, gint screen_num, gint type,
-               gchar *wm_class1, gchar *wm_class2)
+static SmWindow *
+sm_window_new (Window wid,
+               gint screen_num,
+               gint type,
+               gchar *wm_class1,
+               gchar *wm_class2)
 {
   SmWindow *smw;
 
@@ -209,7 +212,7 @@ has_xsmp_support (Window window)
 }
 
 
-static gchar**
+static gchar **
 get_wmcommand (Window window)
 {
   gchar **result = NULL;
@@ -237,7 +240,7 @@ get_wmcommand (Window window)
 }
 
 
-static gchar*
+static gchar *
 get_wmclientmachine (Window window)
 {
   XTextProperty tp;
@@ -277,11 +280,11 @@ get_clientleader (Window window)
   status = XGetWindowProperty (gdk_x11_get_default_xdisplay (), window, _XA_WM_CLIENT_LEADER,
                                0, 10000, FALSE, XA_WINDOW, &type, &format,
                                &nitems, &extra, &data);
-  if (status  == Success)
+  if (status == Success)
     {
       if (data != NULL && nitems > 0)
-          result = *((Window *) (gpointer) data);
-      XFree(data);
+        result = *((Window *) (gpointer) data);
+      XFree (data);
     }
 
   return result;
@@ -421,8 +424,8 @@ xfsm_legacy_perform_session_save (void)
       if (XPending (display))
         {
           XNextEvent (display, &ev);
-          if (ev.type == UnmapNotify || (ev.type == PropertyNotify
-                && ev.xproperty.atom == XA_WM_COMMAND))
+          if (ev.type == UnmapNotify
+              || (ev.type == PropertyNotify && ev.xproperty.atom == XA_WM_COMMAND))
             {
               for (lp = window_list; lp != NULL; lp = lp->next)
                 {
@@ -445,7 +448,7 @@ xfsm_legacy_perform_session_save (void)
           int fd;
           int ret;
 
-          msecs = (int)(g_timer_elapsed (timer, NULL) * 1000);
+          msecs = (int) (g_timer_elapsed (timer, NULL) * 1000);
           if (msecs >= WM_SAVE_YOURSELF_TIMEOUT)
             break;
 
@@ -506,9 +509,9 @@ xfsm_legacy_store_session (GKeyFile *file,
         {
           /* xmms is b0rked, surprise, surprise */
           if ((sm_window->wm_class1 != NULL
-                && strcmp (sm_window->wm_class1, "xmms") == 0)
+               && strcmp (sm_window->wm_class1, "xmms") == 0)
               || (sm_window->wm_class2 != NULL
-                && strcmp (sm_window->wm_class2, "xmms") == 0))
+                  && strcmp (sm_window->wm_class2, "xmms") == 0))
             continue;
 
           if (sm_window->wm_command == NULL
@@ -529,7 +532,7 @@ xfsm_legacy_store_session (GKeyFile *file,
           g_key_file_set_integer (file, group, buffer, sm_window->screen_num);
 
           g_snprintf (buffer, 256, "Legacy%d_Command", count);
-          g_key_file_set_string_list (file, group, buffer, (const gchar * const *) sm_window->wm_command,
+          g_key_file_set_string_list (file, group, buffer, (const gchar *const *) sm_window->wm_command,
                                       g_strv_length (sm_window->wm_command));
 
           g_snprintf (buffer, 256, "Legacy%d_ClientMachine", count);
@@ -619,9 +622,9 @@ xfsm_legacy_init (void)
     {
       root = RootWindow (dpy, n);
       XChangeProperty (dpy, root, dt_save_mode, XA_STRING, 8,
-                       PropModeReplace, (unsigned char *)"xfce4", sizeof ("xfce4"));
+                       PropModeReplace, (unsigned char *) "xfce4", sizeof ("xfce4"));
       XChangeProperty (dpy, root, dt_restore_mode, XA_STRING, 8,
-                       PropModeReplace, (unsigned char *)"xfce4", sizeof ("xfce4"));
+                       PropModeReplace, (unsigned char *) "xfce4", sizeof ("xfce4"));
     }
 }
 

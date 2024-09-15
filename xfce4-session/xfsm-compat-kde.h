@@ -23,7 +23,9 @@
 #define __XFSM_COMPAT_KDE_H__
 
 
-void xfsm_compat_kde_startup (void);
-void xfsm_compat_kde_shutdown (void);
+void
+xfsm_compat_kde_startup (void);
+void
+xfsm_compat_kde_shutdown (void);
 
 #endif /* !__XFSM_COMPAT_KDE_H__ */

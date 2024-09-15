@@ -42,12 +42,15 @@
 
 #ifdef ENABLE_X11
 /* local prototypes */
-static SmProp* strv_to_property (const gchar  *name,
-                                 gchar       **argv)  G_GNUC_PURE;
-static SmProp* str_to_property  (const gchar  *name,
-                                 const gchar  *value) G_GNUC_PURE;
-static SmProp* int_to_property  (const gchar  *name,
-                                 gint          value) G_GNUC_PURE;
+static SmProp *
+strv_to_property (const gchar *name,
+                  gchar **argv) G_GNUC_PURE;
+static SmProp *
+str_to_property (const gchar *name,
+                 const gchar *value) G_GNUC_PURE;
+static SmProp *
+int_to_property (const gchar *name,
+                 gint value) G_GNUC_PURE;
 #endif
 
 /* these three structs hold lists of properties that we save in
@@ -90,9 +93,9 @@ static const struct
 };
 
 
-static gchar*
-compose (gchar       *buffer,
-         gsize        length,
+static gchar *
+compose (gchar *buffer,
+         gsize length,
          const gchar *prefix,
          const gchar *suffix)
 {
@@ -103,14 +106,14 @@ compose (gchar       *buffer,
 
 
 #ifdef ENABLE_X11
-static SmProp*
+static SmProp *
 strv_to_property (const gchar *name,
-                  gchar      **argv)
+                  gchar **argv)
 {
   SmProp *prop;
-  gint    argc;
+  gint argc;
 
-  prop       = g_new (SmProp, 1);
+  prop = g_new (SmProp, 1);
   prop->name = g_strdup (name);
   prop->type = g_strdup (SmLISTofARRAY8);
 
@@ -118,60 +121,60 @@ strv_to_property (const gchar *name,
     ;
 
   prop->num_vals = argc;
-  prop->vals     = g_new (SmPropValue, argc);
+  prop->vals = g_new (SmPropValue, argc);
 
   while (argc-- > 0)
     {
       prop->vals[argc].length = strlen (argv[argc]) + 1;
-      prop->vals[argc].value  = g_strdup (argv[argc]);
+      prop->vals[argc].value = g_strdup (argv[argc]);
     }
 
   return prop;
 }
 
 
-static SmProp*
+static SmProp *
 str_to_property (const gchar *name,
                  const gchar *value)
 {
   SmProp *prop;
 
-  prop                 = g_new (SmProp, 1);
-  prop->name           = g_strdup (name);
-  prop->type           = g_strdup (SmARRAY8);
-  prop->num_vals       = 1;
-  prop->vals           = g_new (SmPropValue, 1);
+  prop = g_new (SmProp, 1);
+  prop->name = g_strdup (name);
+  prop->type = g_strdup (SmARRAY8);
+  prop->num_vals = 1;
+  prop->vals = g_new (SmPropValue, 1);
   prop->vals[0].length = strlen (value) + 1;
-  prop->vals[0].value  = g_strdup (value);
+  prop->vals[0].value = g_strdup (value);
 
   return prop;
 }
 
 
-static SmProp*
+static SmProp *
 int_to_property (const gchar *name,
-                 gint         value)
+                 gint value)
 {
   SmProp *prop;
-  gint8  *p;
+  gint8 *p;
 
-  p    = g_new (gint8, 1);
+  p = g_new (gint8, 1);
   p[0] = (gint8) value;
 
-  prop                 = g_new (SmProp, 1);
-  prop->name           = g_strdup (name);
-  prop->type           = g_strdup (SmCARD8);
-  prop->num_vals       = 1;
-  prop->vals           = g_new (SmPropValue, 1);
+  prop = g_new (SmProp, 1);
+  prop->name = g_strdup (name);
+  prop->type = g_strdup (SmCARD8);
+  prop->num_vals = 1;
+  prop->vals = g_new (SmPropValue, 1);
   prop->vals[0].length = 1;
-  prop->vals[0].value  = p;
+  prop->vals[0].value = p;
 
   return prop;
 }
 #endif
 
 
-XfsmProperties*
+XfsmProperties *
 xfsm_properties_new (const gchar *client_id,
                      const gchar *hostname)
 {
@@ -179,8 +182,8 @@ xfsm_properties_new (const gchar *client_id,
 
   properties = g_slice_new0 (XfsmProperties);
   properties->client_id = g_strdup (client_id);
-  properties->hostname  = g_strdup (hostname);
-  properties->pid       = -1;
+  properties->hostname = g_strdup (hostname);
+  properties->pid = -1;
 
   properties->sm_properties = g_tree_new_full ((GCompareDataFunc) G_CALLBACK (strcmp),
                                                NULL,
@@ -197,9 +200,9 @@ xfsm_properties_extract_foreach (gpointer key,
                                  gpointer value,
                                  gpointer data)
 {
-  const gchar  *prop_name = key;
+  const gchar *prop_name = key;
   const GValue *prop_value = value;
-  SmProp     ***pp = data;
+  SmProp ***pp = data;
 
   if (G_VALUE_HOLDS (prop_value, G_TYPE_STRV))
     **pp++ = strv_to_property (prop_name, g_value_get_boxed (prop_value));
@@ -207,18 +210,19 @@ xfsm_properties_extract_foreach (gpointer key,
     **pp++ = str_to_property (prop_name, g_value_get_string (prop_value));
   else if (G_VALUE_HOLDS_UCHAR (prop_value))
     **pp++ = int_to_property (prop_name, g_value_get_uchar (prop_value));
-  else {
-    g_warning ("Unhandled property \"%s\" with type \"%s\"", prop_name,
-               g_type_name (G_VALUE_TYPE (prop_value)));
-  }
+  else
+    {
+      g_warning ("Unhandled property \"%s\" with type \"%s\"", prop_name,
+                 g_type_name (G_VALUE_TYPE (prop_value)));
+    }
 
   return FALSE;
 }
 
 void
 xfsm_properties_extract (XfsmProperties *properties,
-                         gint           *num_props,
-                         SmProp       ***props)
+                         gint *num_props,
+                         SmProp ***props)
 {
   SmProp **pp;
 
@@ -237,27 +241,28 @@ xfsm_properties_extract (XfsmProperties *properties,
 
 
 XfsmProperties *
-xfsm_properties_load (GKeyFile    *file,
+xfsm_properties_load (GKeyFile *file,
                       const gchar *prefix,
                       const gchar *group)
 {
-#define ENTRY(name) (compose(buffer, 256, prefix, (name)))
+#define ENTRY(name) (compose (buffer, 256, prefix, (name)))
 
   XfsmProperties *properties;
-  const gchar    *client_id;
-  const gchar    *hostname;
-  GError         *error = NULL;
-  const gchar    *value_str;
-  gchar         **value_strv;
-  gint            value_int;
-  gchar           buffer[256];
-  gint            i;
+  const gchar *client_id;
+  const gchar *hostname;
+  GError *error = NULL;
+  const gchar *value_str;
+  gchar **value_strv;
+  gint value_int;
+  gchar buffer[256];
+  gint i;
 
   client_id = g_key_file_get_string (file, group, ENTRY ("ClientId"), &error);
   if (client_id == NULL)
     {
       g_warning ("Session data broken, stored client is missing a client id. "
-                 "Skipping client: %s", error->message);
+                 "Skipping client: %s",
+                 error->message);
       g_error_free (error);
       return NULL;
     }
@@ -266,7 +271,8 @@ xfsm_properties_load (GKeyFile    *file,
   if (hostname == NULL)
     {
       g_warning ("Session data broken, stored client is missing a hostname. "
-                 "Skipping client: %s", error->message);
+                 "Skipping client: %s",
+                 error->message);
       g_error_free (error);
       return NULL;
     }
@@ -325,15 +331,15 @@ xfsm_properties_load (GKeyFile    *file,
 
 void
 xfsm_properties_store (XfsmProperties *properties,
-                       GKeyFile       *file,
-                       const gchar    *prefix,
-                       const gchar    *group)
+                       GKeyFile *file,
+                       const gchar *prefix,
+                       const gchar *group)
 {
-#define ENTRY(name) (compose(buffer, 256, prefix, (name)))
+#define ENTRY(name) (compose (buffer, 256, prefix, (name)))
 
   GValue *value;
-  gint    i;
-  gchar   buffer[256];
+  gint i;
+  gchar buffer[256];
 
   g_key_file_set_string (file, group, ENTRY ("ClientId"), properties->client_id);
   g_key_file_set_string (file, group, ENTRY ("Hostname"), properties->hostname);
@@ -344,14 +350,14 @@ xfsm_properties_store (XfsmProperties *properties,
       if (value)
         {
           /* escape delimiter in list entries */
-          const gchar * const *strv = g_value_get_boxed (value);
+          const gchar *const *strv = g_value_get_boxed (value);
           guint len = g_strv_length ((gchar **) strv);
           gchar **esc_strv = g_new0 (gchar *, len + 1);
           for (guint j = 0; j < len; j++)
             esc_strv[j] = xfce_str_replace (strv[j], SESSION_FILE_DELIMITER, "\\" SESSION_FILE_DELIMITER);
 
           g_key_file_set_string_list (file, group, ENTRY (strv_properties[i].name),
-                                      (const gchar * const *) esc_strv, len);
+                                      (const gchar *const *) esc_strv, len);
           g_strfreev (esc_strv);
         }
     }
@@ -413,9 +419,9 @@ xfsm_properties_check (const XfsmProperties *properties)
   g_return_val_if_fail (properties != NULL, FALSE);
 
   return properties->client_id != NULL
-    && properties->hostname != NULL
-    && g_tree_lookup (properties->sm_properties, SmProgram) != NULL
-    && g_tree_lookup (properties->sm_properties, SmRestartCommand) != NULL;
+         && properties->hostname != NULL
+         && g_tree_lookup (properties->sm_properties, SmProgram) != NULL
+         && g_tree_lookup (properties->sm_properties, SmRestartCommand) != NULL;
 }
 
 
@@ -621,8 +627,8 @@ xfsm_properties_set_from_smprop (XfsmProperties *properties,
                                  const SmProp *sm_prop)
 {
   gchar **value_strv;
-  guchar  value_uchar;
-  gint    n;
+  guchar value_uchar;
+  gint n;
 
   g_return_val_if_fail (properties != NULL, FALSE);
   g_return_val_if_fail (sm_prop != NULL, FALSE);
@@ -648,7 +654,7 @@ xfsm_properties_set_from_smprop (XfsmProperties *properties,
     }
   else if (!strcmp (sm_prop->type, SmCARD8))
     {
-      value_uchar = *(guchar *)(sm_prop->vals[0].value);
+      value_uchar = *(guchar *) (sm_prop->vals[0].value);
       xfsm_properties_set_uchar (properties, sm_prop->name, value_uchar);
     }
   else

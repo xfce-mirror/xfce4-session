@@ -27,22 +27,23 @@
 
 
 
-#define PACKAGEKIT_DBUS_NAME                 "org.freedesktop.PackageKit"
-#define PACKAGEKIT_DBUS_PATH                 "/org/freedesktop/PackageKit"
-#define PACKAGEKIT_OFFLINE_DBUS_INTERFACE    "org.freedesktop.PackageKit.Offline"
+#define PACKAGEKIT_DBUS_NAME "org.freedesktop.PackageKit"
+#define PACKAGEKIT_DBUS_PATH "/org/freedesktop/PackageKit"
+#define PACKAGEKIT_OFFLINE_DBUS_INTERFACE "org.freedesktop.PackageKit.Offline"
 
-#define DBUS_PROPERTIES_INTERFACE            "org.freedesktop.DBus.Properties"
+#define DBUS_PROPERTIES_INTERFACE "org.freedesktop.DBus.Properties"
 
-#define PACKAGEKIT_GET_PROPERTY_METHOD       "Get"
-#define PACKAGEKIT_UPDATE_PREPARED_PROPERTY  "UpdatePrepared"
+#define PACKAGEKIT_GET_PROPERTY_METHOD "Get"
+#define PACKAGEKIT_UPDATE_PREPARED_PROPERTY "UpdatePrepared"
 
-#define PACKAGEKIT_TRIGGER_ACTION_METHOD     "Trigger"
-#define PACKAGEKIT_TRIGGER_ACTION_RESTART    "reboot"
-#define PACKAGEKIT_TRIGGER_ACTION_SHUTDOWN   "power-off"
+#define PACKAGEKIT_TRIGGER_ACTION_METHOD "Trigger"
+#define PACKAGEKIT_TRIGGER_ACTION_RESTART "reboot"
+#define PACKAGEKIT_TRIGGER_ACTION_SHUTDOWN "power-off"
 
 
 
-static void     xfsm_packagekit_finalize     (GObject         *object);
+static void
+xfsm_packagekit_finalize (GObject *object);
 
 
 
@@ -84,10 +85,10 @@ xfsm_packagekit_finalize (GObject *object)
 
 
 static gboolean
-xfsm_packagekit_get_bool_property (XfsmPackagekit  *packagekit,
-                                   gboolean        *bool_property,
-                                   const gchar     *property_name,
-                                   GError         **error)
+xfsm_packagekit_get_bool_property (XfsmPackagekit *packagekit,
+                                   gboolean *bool_property,
+                                   const gchar *property_name,
+                                   GError **error)
 {
   GDBusConnection *bus;
   GError *local_error = NULL;
@@ -144,12 +145,12 @@ xfsm_packagekit_get_bool_property (XfsmPackagekit  *packagekit,
 
 
 static gboolean
-xfsm_packagekit_trigger_update_action (XfsmPackagekit  *packagekit,
-                                       const gchar     *action,
-                                       GError         **error)
+xfsm_packagekit_trigger_update_action (XfsmPackagekit *packagekit,
+                                       const gchar *action,
+                                       GError **error)
 {
   GDBusConnection *bus;
-  GError          *local_error = NULL;
+  GError *local_error = NULL;
 
   g_return_val_if_fail (XFSM_IS_PACKAGEKIT (packagekit), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
@@ -204,9 +205,9 @@ xfsm_packagekit_get (void)
 
 
 gboolean
-xfsm_packagekit_has_update_prepared (XfsmPackagekit  *packagekit,
-                                     gboolean        *update_prepared,
-                                     GError         **error)
+xfsm_packagekit_has_update_prepared (XfsmPackagekit *packagekit,
+                                     gboolean *update_prepared,
+                                     GError **error)
 {
   return xfsm_packagekit_get_bool_property (packagekit,
                                             update_prepared,
@@ -217,8 +218,8 @@ xfsm_packagekit_has_update_prepared (XfsmPackagekit  *packagekit,
 
 
 gboolean
-xfsm_packagekit_try_trigger_shutdown (XfsmPackagekit  *packagekit,
-                                      GError         **error)
+xfsm_packagekit_try_trigger_shutdown (XfsmPackagekit *packagekit,
+                                      GError **error)
 {
   return xfsm_packagekit_trigger_update_action (packagekit,
                                                 PACKAGEKIT_TRIGGER_ACTION_SHUTDOWN,
@@ -228,8 +229,8 @@ xfsm_packagekit_try_trigger_shutdown (XfsmPackagekit  *packagekit,
 
 
 gboolean
-xfsm_packagekit_try_trigger_restart (XfsmPackagekit  *packagekit,
-                                     GError         **error)
+xfsm_packagekit_try_trigger_restart (XfsmPackagekit *packagekit,
+                                     GError **error)
 {
   return xfsm_packagekit_trigger_update_action (packagekit,
                                                 PACKAGEKIT_TRIGGER_ACTION_RESTART,

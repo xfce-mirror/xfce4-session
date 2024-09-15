@@ -27,8 +27,9 @@
 
 #include "xfsm-manager.h"
 
-void sm_init (XfconfChannel *channel,
-              gboolean       disable_tcp,
-              XfsmManager   *manager);
+void
+sm_init (XfconfChannel *channel,
+         gboolean disable_tcp,
+         XfsmManager *manager);
 
 #endif /* !__SM_LAYER_H__ */

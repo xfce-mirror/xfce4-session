@@ -19,6 +19,7 @@
 #ifndef __XFCE4_SESSION_SETTINGS_COMMON_H__
 #define __XFCE4_SESSION_SETTINGS_COMMON_H__
 
-void session_editor_init(GtkBuilder *builder);
+void
+session_editor_init (GtkBuilder *builder);
 
 #endif

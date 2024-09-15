@@ -26,13 +26,19 @@
 #include <libxfce4util/libxfce4util.h>
 
 
-void xfsm_legacy_perform_session_save (void);
-void xfsm_legacy_store_session (GKeyFile *file,
-                                const gchar *group);
-void xfsm_legacy_load_session (GKeyFile *file,
-                               const gchar *group);
-void xfsm_legacy_init (void);
-void xfsm_legacy_startup (void);
-void xfsm_legacy_shutdown (void);
+void
+xfsm_legacy_perform_session_save (void);
+void
+xfsm_legacy_store_session (GKeyFile *file,
+                           const gchar *group);
+void
+xfsm_legacy_load_session (GKeyFile *file,
+                          const gchar *group);
+void
+xfsm_legacy_init (void);
+void
+xfsm_legacy_startup (void);
+void
+xfsm_legacy_shutdown (void);
 
 #endif /* !__XFSM_LEGACY_H__ */

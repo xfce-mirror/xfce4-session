@@ -43,12 +43,14 @@
 #define BORDER 6
 
 
-static void xfsm_chooser_row_activated (GtkTreeView       *treeview,
-                                        GtkTreePath       *path,
-                                        GtkTreeViewColumn *column,
-                                        XfsmChooser       *chooser);
-static void xfsm_chooser_realized      (GtkWidget         *widget,
-                                        XfsmChooser       *chooser);
+static void
+xfsm_chooser_row_activated (GtkTreeView *treeview,
+                            GtkTreePath *path,
+                            GtkTreeViewColumn *column,
+                            XfsmChooser *chooser);
+static void
+xfsm_chooser_realized (GtkWidget *widget,
+                       XfsmChooser *chooser);
 
 
 
@@ -58,10 +60,10 @@ G_DEFINE_TYPE (XfsmChooser, xfsm_chooser, GTK_TYPE_DIALOG)
 
 void
 xfsm_chooser_set_sessions (XfsmChooser *chooser,
-                           GList       *sessions,
+                           GList *sessions,
                            const gchar *default_session)
 {
-  GtkTreeModel    *model;
+  GtkTreeModel *model;
 
   model = gtk_tree_view_get_model (GTK_TREE_VIEW (chooser->tree));
 
@@ -93,14 +95,14 @@ xfsm_chooser_start_session (GtkButton *button,
 }
 
 
-gchar*
+gchar *
 xfsm_chooser_get_session (const XfsmChooser *chooser)
 {
   GtkTreeSelection *selection;
-  GtkTreeModel     *model;
-  GtkTreeIter       iter;
-  GValue            value;
-  gchar            *name;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  GValue value;
+  gchar *name;
 
   bzero (&value, sizeof (value));
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (chooser->tree));
@@ -135,7 +137,7 @@ xfsm_chooser_init (XfsmChooser *chooser)
   gchar title[256];
   GtkCssProvider *provider;
 
-  dbox = gtk_dialog_get_content_area(GTK_DIALOG (chooser));
+  dbox = gtk_dialog_get_content_area (GTK_DIALOG (chooser));
 
   g_signal_connect_after (G_OBJECT (chooser), "realize",
                           G_CALLBACK (xfsm_chooser_realized), chooser);
@@ -231,22 +233,22 @@ xfsm_chooser_init (XfsmChooser *chooser)
 
 
 static void
-xfsm_chooser_row_activated (GtkTreeView       *treeview,
-                            GtkTreePath       *path,
+xfsm_chooser_row_activated (GtkTreeView *treeview,
+                            GtkTreePath *path,
                             GtkTreeViewColumn *column,
-                            XfsmChooser       *chooser)
+                            XfsmChooser *chooser)
 {
   gtk_dialog_response (GTK_DIALOG (chooser), XFSM_RESPONSE_LOAD);
 }
 
 
 static void
-xfsm_chooser_realized (GtkWidget   *widget,
+xfsm_chooser_realized (GtkWidget *widget,
                        XfsmChooser *chooser)
 {
   GdkCursor *cursor;
 
   cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget), GDK_LEFT_PTR);
-  gdk_window_set_cursor (gtk_widget_get_window(widget), cursor);
+  gdk_window_set_cursor (gtk_widget_get_window (widget), cursor);
   g_object_unref (cursor);
 }

@@ -40,23 +40,23 @@
 #include "xfsm-manager.h"
 #include "xfsm-marshal.h"
 
-#define XFSM_CLIENT_OBJECT_PATH_PREFIX  "/org/xfce/SessionClients/"
+#define XFSM_CLIENT_OBJECT_PATH_PREFIX "/org/xfce/SessionClients/"
 
 struct _XfsmClient
 {
   XfsmDbusClientSkeleton parent;
 
-  XfsmManager     *manager;
+  XfsmManager *manager;
 
-  gchar           *id;
-  gchar           *app_id;
-  gchar           *object_path;
-  gchar           *service_name;
-  guint            quit_timeout;
+  gchar *id;
+  gchar *app_id;
+  gchar *object_path;
+  gchar *service_name;
+  guint quit_timeout;
 
-  XfsmClientState  state;
-  XfsmProperties  *properties;
-  SmsConn          sms_conn;
+  XfsmClientState state;
+  XfsmProperties *properties;
+  SmsConn sms_conn;
   GDBusConnection *connection;
 };
 
@@ -67,12 +67,17 @@ typedef struct _XfsmClientClass
 
 
 
-static void xfsm_client_finalize (GObject *obj);
+static void
+xfsm_client_finalize (GObject *obj);
 
-static void    xfsm_client_dbus_class_init (XfsmClientClass *klass);
-static void    xfsm_client_dbus_init (XfsmClient *client);
-static void    xfsm_client_iface_init (XfsmDbusClientIface *iface);
-static void    xfsm_client_dbus_cleanup (XfsmClient *client);
+static void
+xfsm_client_dbus_class_init (XfsmClientClass *klass);
+static void
+xfsm_client_dbus_init (XfsmClient *client);
+static void
+xfsm_client_iface_init (XfsmDbusClientIface *iface);
+static void
+xfsm_client_dbus_cleanup (XfsmClient *client);
 
 
 G_DEFINE_TYPE_WITH_CODE (XfsmClient, xfsm_client, XFSM_DBUS_TYPE_CLIENT_SKELETON, G_IMPLEMENT_INTERFACE (XFSM_DBUS_TYPE_CLIENT, xfsm_client_iface_init));
@@ -92,7 +97,6 @@ xfsm_client_class_init (XfsmClientClass *klass)
 static void
 xfsm_client_init (XfsmClient *client)
 {
-
 }
 
 static void
@@ -118,21 +122,19 @@ xfsm_client_finalize (GObject *obj)
 
 
 
-
-static const gchar*
+static const gchar *
 get_state (XfsmClientState state)
 {
-  static const gchar *client_state[XFSM_CLIENT_STATE_COUNT] =
-    {
-      "XFSM_CLIENT_IDLE",
-      "XFSM_CLIENT_INTERACTING",
-      "XFSM_CLIENT_SAVEDONE",
-      "XFSM_CLIENT_SAVING",
-      "XFSM_CLIENT_SAVINGLOCAL",
-      "XFSM_CLIENT_WAITFORINTERACT",
-      "XFSM_CLIENT_WAITFORPHASE2",
-      "XFSM_CLIENT_DISCONNECTED"
-    };
+  static const gchar *client_state[XFSM_CLIENT_STATE_COUNT] = {
+    "XFSM_CLIENT_IDLE",
+    "XFSM_CLIENT_INTERACTING",
+    "XFSM_CLIENT_SAVEDONE",
+    "XFSM_CLIENT_SAVING",
+    "XFSM_CLIENT_SAVINGLOCAL",
+    "XFSM_CLIENT_WAITFORINTERACT",
+    "XFSM_CLIENT_WAITFORPHASE2",
+    "XFSM_CLIENT_DISCONNECTED"
+  };
 
   return client_state[state];
 }
@@ -140,7 +142,7 @@ get_state (XfsmClientState state)
 #ifdef ENABLE_X11
 static void
 xfsm_properties_discard_command_changed (XfsmProperties *properties,
-                                         gchar         **old_discard)
+                                         gchar **old_discard)
 {
   gchar **new_discard;
 
@@ -154,9 +156,9 @@ xfsm_properties_discard_command_changed (XfsmProperties *properties,
       xfsm_verbose ("Client Id = %s, running old discard command.\n\n",
                     properties->client_id);
 
-      g_spawn_sync (xfsm_properties_get_string(properties, SmCurrentDirectory),
+      g_spawn_sync (xfsm_properties_get_string (properties, SmCurrentDirectory),
                     old_discard,
-                    xfsm_properties_get_strv(properties, SmEnvironment),
+                    xfsm_properties_get_strv (properties, SmEnvironment),
                     G_SPAWN_SEARCH_PATH,
                     NULL, NULL,
                     NULL, NULL,
@@ -169,8 +171,8 @@ static void
 xfsm_client_signal_prop_change (XfsmClient *client,
                                 const gchar *name)
 {
-  const GValue   *value;
-  GVariant       *variant = NULL;
+  const GValue *value;
+  GVariant *variant = NULL;
   XfsmProperties *properties = client->properties;
 
   value = xfsm_properties_get (properties, name);
@@ -179,23 +181,22 @@ xfsm_client_signal_prop_change (XfsmClient *client,
       /* convert the gvalue to gvariant because gdbus requires it */
       if (G_VALUE_HOLDS_STRING (value))
         {
-          variant = g_dbus_gvalue_to_gvariant(value, G_VARIANT_TYPE_STRING);
+          variant = g_dbus_gvalue_to_gvariant (value, G_VARIANT_TYPE_STRING);
         }
       else if (G_VALUE_HOLDS_UCHAR (value))
         {
-          variant = g_dbus_gvalue_to_gvariant(value, G_VARIANT_TYPE ("y"));
+          variant = g_dbus_gvalue_to_gvariant (value, G_VARIANT_TYPE ("y"));
         }
       else if (G_VALUE_HOLDS (value, G_TYPE_STRV))
         {
-          variant = g_dbus_gvalue_to_gvariant(value, G_VARIANT_TYPE_STRING_ARRAY);
+          variant = g_dbus_gvalue_to_gvariant (value, G_VARIANT_TYPE_STRING_ARRAY);
         }
       else
         {
           g_warning ("xfsm_client.c:xfsm_client_signal_prop_change: Value type not supported");
-	  return;
+          return;
         }
 
-//      xfsm_dbus_client_emit_sm_property_changed (XFSM_DBUS_CLIENT (client), name, variant);
       g_variant_unref (variant);
     }
 }
@@ -207,8 +208,8 @@ gchar *
 xfsm_client_generate_id (SmsConn sms_conn)
 {
   static char *addr = NULL;
-  static int   sequence = 0;
-  char        *id = NULL;
+  static int sequence = 0;
+  char *id = NULL;
 
 #ifdef ENABLE_X11
   if (sms_conn != NULL)
@@ -244,9 +245,9 @@ xfsm_client_generate_id (SmsConn sms_conn)
 }
 
 
-XfsmClient*
+XfsmClient *
 xfsm_client_new (XfsmManager *manager,
-                 SmsConn      sms_conn,
+                 SmsConn sms_conn,
                  GDBusConnection *connection)
 {
   XfsmClient *client;
@@ -263,7 +264,7 @@ xfsm_client_new (XfsmManager *manager,
 
 
 void
-xfsm_client_set_initial_properties (XfsmClient     *client,
+xfsm_client_set_initial_properties (XfsmClient *client,
                                     XfsmProperties *properties)
 {
   g_return_if_fail (XFSM_IS_CLIENT (client));
@@ -295,7 +296,7 @@ xfsm_client_get_state (XfsmClient *client)
 
 
 
-static const gchar*
+static const gchar *
 get_client_id (XfsmClient *client)
 {
   const gchar *client_id;
@@ -311,7 +312,7 @@ get_client_id (XfsmClient *client)
 
 
 void
-xfsm_client_set_state (XfsmClient     *client,
+xfsm_client_set_state (XfsmClient *client,
                        XfsmClientState state)
 {
   g_return_if_fail (XFSM_IS_CLIENT (client));
@@ -322,7 +323,7 @@ xfsm_client_set_state (XfsmClient     *client,
       client->state = state;
       xfsm_dbus_client_emit_state_changed (XFSM_DBUS_CLIENT (client), old_state, state);
 
-      xfsm_verbose ("%s client state was %s and now is %s\n", get_client_id (client), get_state(old_state), get_state(state));
+      xfsm_verbose ("%s client state was %s and now is %s\n", get_client_id (client), get_state (old_state), get_state (state));
 
       /* During a save, we need to ask the client if it's ok to shutdown */
       if (state == XFSM_CLIENT_SAVING && xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWN)
@@ -331,7 +332,7 @@ xfsm_client_set_state (XfsmClient     *client,
         }
       else if (state == XFSM_CLIENT_SAVING && xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWNPHASE2)
         {
-          xfsm_dbus_client_emit_end_session(XFSM_DBUS_CLIENT (client), 1);
+          xfsm_dbus_client_emit_end_session (XFSM_DBUS_CLIENT (client), 1);
         }
     }
 }
@@ -374,7 +375,7 @@ xfsm_client_steal_properties (XfsmClient *client)
 {
   XfsmProperties *properties;
 
-  g_return_val_if_fail(XFSM_IS_CLIENT (client), NULL);
+  g_return_val_if_fail (XFSM_IS_CLIENT (client), NULL);
 
   properties = client->properties;
   client->properties = NULL;
@@ -386,12 +387,12 @@ xfsm_client_steal_properties (XfsmClient *client)
 #ifdef ENABLE_X11
 void
 xfsm_client_merge_properties (XfsmClient *client,
-                              SmProp    **props,
-                              gint        num_props)
+                              SmProp **props,
+                              gint num_props)
 {
   XfsmProperties *properties;
-  SmProp         *prop;
-  gint            n;
+  SmProp *prop;
+  gint n;
 
   g_return_if_fail (XFSM_IS_CLIENT (client));
   g_return_if_fail (client->properties != NULL);
@@ -427,11 +428,11 @@ xfsm_client_merge_properties (XfsmClient *client,
 
 void
 xfsm_client_delete_properties (XfsmClient *client,
-                               gchar     **prop_names,
-                               gint        num_props)
+                               gchar **prop_names,
+                               gint num_props)
 {
   XfsmProperties *properties;
-  gint            n;
+  gint n;
 
   g_return_if_fail (XFSM_IS_CLIENT (client));
   g_return_if_fail (client->properties != NULL);
@@ -457,7 +458,6 @@ xfsm_client_get_object_path (XfsmClient *client)
 
 
 
-
 void
 xfsm_client_set_service_name (XfsmClient *client,
                               const gchar *service_name)
@@ -467,7 +467,7 @@ xfsm_client_set_service_name (XfsmClient *client,
 }
 
 
-const gchar*
+const gchar *
 xfsm_client_get_service_name (XfsmClient *client)
 {
   return client->service_name;
@@ -479,19 +479,19 @@ static void
 xfsm_client_save_restart_command (XfsmClient *client)
 {
   XfsmProperties *properties = client->properties;
-  gchar          *input;
-  gchar          *output = NULL;
-  gint            exit_status;
-  GError         *error = NULL;
+  gchar *input;
+  gchar *output = NULL;
+  gint exit_status;
+  GError *error = NULL;
 
   input = g_strdup_printf ("ps -p %u -o args=", properties->pid);
 
-  if(g_spawn_command_line_sync (input, &output, NULL, &exit_status, &error))
+  if (g_spawn_command_line_sync (input, &output, NULL, &exit_status, &error))
     {
-      gchar **strv = g_new0(gchar*, 2);
+      gchar **strv = g_new0 (gchar *, 2);
 
       /* remove the newline at the end of the string */
-      output[strcspn(output, "\n")] = 0;
+      output[strcspn (output, "\n")] = 0;
 
       strv[0] = output;
       strv[1] = NULL;
@@ -513,17 +513,17 @@ static void
 xfsm_client_save_program_name (XfsmClient *client)
 {
   XfsmProperties *properties = client->properties;
-  gchar          *input;
-  gchar          *output = NULL;
-  gint            exit_status;
-  GError         *error = NULL;
+  gchar *input;
+  gchar *output = NULL;
+  gint exit_status;
+  GError *error = NULL;
 
   input = g_strdup_printf ("ps -p %u -o comm=", properties->pid);
 
-  if(g_spawn_command_line_sync (input, &output, NULL, &exit_status, &error))
+  if (g_spawn_command_line_sync (input, &output, NULL, &exit_status, &error))
     {
       /* remove the newline at the end of the string */
-      output[strcspn(output, "\n")] = 0;
+      output[strcspn (output, "\n")] = 0;
 
       xfsm_verbose ("%s program name %s\n", input, output);
       xfsm_properties_set_string (properties, "Program", output);
@@ -541,10 +541,10 @@ xfsm_client_save_program_name (XfsmClient *client)
 static void
 xfsm_client_save_desktop_file (XfsmClient *client)
 {
-  XfsmProperties  *properties   = client->properties;
-  GDesktopAppInfo *app_info     = NULL;
-  const gchar     *app_id       = client->app_id;
-  gchar           *desktop_file = NULL;
+  XfsmProperties *properties = client->properties;
+  GDesktopAppInfo *app_info = NULL;
+  const gchar *app_id = client->app_id;
+  gchar *desktop_file = NULL;
 
   if (app_id == NULL)
     return;
@@ -553,37 +553,37 @@ xfsm_client_save_desktop_file (XfsmClient *client)
    * may match the application id. I.e. org.gnome.Devhelp.desktop matches
    * the GApplication org.gnome.Devhelp
    */
-  desktop_file = g_strdup_printf("%s.desktop", app_id);
+  desktop_file = g_strdup_printf ("%s.desktop", app_id);
   xfsm_verbose ("looking for desktop file %s\n", desktop_file);
   app_info = g_desktop_app_info_new (desktop_file);
 
   if (app_info == NULL || g_desktop_app_info_get_filename (app_info) == NULL)
-  {
-    gchar *begin;
-    g_free (desktop_file);
-    desktop_file = NULL;
+    {
+      gchar *begin;
+      g_free (desktop_file);
+      desktop_file = NULL;
 
-    /* Find the last '.' and try to load that. This is because the app_id is
-     * in the funky org.xfce.parole format and the desktop file may just be
-     * parole.desktop */
-    begin = g_strrstr (app_id, ".");
+      /* Find the last '.' and try to load that. This is because the app_id is
+       * in the funky org.xfce.parole format and the desktop file may just be
+       * parole.desktop */
+      begin = g_strrstr (app_id, ".");
 
-    /* maybe it doesn't have dots in the name? */
-    if (begin == NULL || begin++ == NULL)
-      return;
-
-    desktop_file = g_strdup_printf ("%s.desktop", begin);
-    xfsm_verbose ("looking for desktop file %s\n", desktop_file);
-    app_info = g_desktop_app_info_new (desktop_file);
-
-    if (app_info == NULL || g_desktop_app_info_get_filename (app_info) == NULL)
-      {
-        /* Failed to get a desktop file, maybe it doesn't have one */
-        xfsm_verbose ("failed to get a desktop file for the client\n");
-        g_free (desktop_file);
+      /* maybe it doesn't have dots in the name? */
+      if (begin == NULL || begin++ == NULL)
         return;
-      }
-  }
+
+      desktop_file = g_strdup_printf ("%s.desktop", begin);
+      xfsm_verbose ("looking for desktop file %s\n", desktop_file);
+      app_info = g_desktop_app_info_new (desktop_file);
+
+      if (app_info == NULL || g_desktop_app_info_get_filename (app_info) == NULL)
+        {
+          /* Failed to get a desktop file, maybe it doesn't have one */
+          xfsm_verbose ("failed to get a desktop file for the client\n");
+          g_free (desktop_file);
+          return;
+        }
+    }
 
   /* if we got here we found a .desktop file, save it */
   xfsm_properties_set_string (properties, GsmDesktopFile, g_desktop_app_info_get_filename (app_info));
@@ -593,13 +593,12 @@ xfsm_client_save_desktop_file (XfsmClient *client)
 
 
 
-
 void
 xfsm_client_set_pid (XfsmClient *client,
-                     pid_t       pid)
+                     pid_t pid)
 {
   XfsmProperties *properties;
-  gchar          *pid_str;
+  gchar *pid_str;
 
   g_return_if_fail (XFSM_IS_CLIENT (client));
   g_return_if_fail (client->properties != NULL);
@@ -626,7 +625,7 @@ xfsm_client_set_pid (XfsmClient *client,
 
 
 void
-xfsm_client_set_app_id (XfsmClient  *client,
+xfsm_client_set_app_id (XfsmClient *client,
                         const gchar *app_id)
 {
   client->app_id = g_strdup (app_id);
@@ -640,7 +639,7 @@ xfsm_client_set_app_id (XfsmClient  *client,
 static gboolean
 kill_hung_client (gpointer user_data)
 {
-  XfsmClient  *client = XFSM_CLIENT (user_data);
+  XfsmClient *client = XFSM_CLIENT (user_data);
 
   client->quit_timeout = 0;
 
@@ -682,13 +681,13 @@ xfsm_client_end_session (XfsmClient *client)
 }
 
 
-void xfsm_client_cancel_shutdown (XfsmClient *client)
+void
+xfsm_client_cancel_shutdown (XfsmClient *client)
 {
   xfsm_verbose ("emitting cancel session signal for client %s\n", get_client_id (client));
 
   /* Cancel the client shutdown */
   xfsm_dbus_client_emit_cancel_end_session (XFSM_DBUS_CLIENT (client));
-
 }
 
 
@@ -697,27 +696,35 @@ void xfsm_client_cancel_shutdown (XfsmClient *client)
  * dbus server impl
  */
 
-static gboolean xfsm_client_dbus_get_id (XfsmDbusClient *object,
-                                         GDBusMethodInvocation *invocation);
-static gboolean xfsm_client_dbus_get_state (XfsmDbusClient *object,
-                                            GDBusMethodInvocation *invocation);
-static gboolean xfsm_client_dbus_get_all_sm_properties (XfsmDbusClient *object,
-                                                        GDBusMethodInvocation *invocation);
-static gboolean xfsm_client_dbus_get_sm_properties (XfsmDbusClient *object,
-                                                    GDBusMethodInvocation *invocation,
-                                                    const gchar *const *arg_names);
-static gboolean xfsm_client_dbus_set_sm_properties (XfsmDbusClient *object,
-                                                    GDBusMethodInvocation *invocation,
-                                                    GVariant *arg_properties);
-static gboolean xfsm_client_dbus_delete_sm_properties (XfsmDbusClient *object,
-                                                       GDBusMethodInvocation *invocation,
-                                                       const gchar *const *arg_names);
-static gboolean xfsm_client_dbus_terminate (XfsmDbusClient *object,
-                                            GDBusMethodInvocation *invocation);
-static gboolean xfsm_client_dbus_end_session_response (XfsmDbusClient *object,
-                                                       GDBusMethodInvocation *invocation,
-                                                       gboolean arg_is_ok,
-                                                       const gchar *arg_reason);
+static gboolean
+xfsm_client_dbus_get_id (XfsmDbusClient *object,
+                         GDBusMethodInvocation *invocation);
+static gboolean
+xfsm_client_dbus_get_state (XfsmDbusClient *object,
+                            GDBusMethodInvocation *invocation);
+static gboolean
+xfsm_client_dbus_get_all_sm_properties (XfsmDbusClient *object,
+                                        GDBusMethodInvocation *invocation);
+static gboolean
+xfsm_client_dbus_get_sm_properties (XfsmDbusClient *object,
+                                    GDBusMethodInvocation *invocation,
+                                    const gchar *const *arg_names);
+static gboolean
+xfsm_client_dbus_set_sm_properties (XfsmDbusClient *object,
+                                    GDBusMethodInvocation *invocation,
+                                    GVariant *arg_properties);
+static gboolean
+xfsm_client_dbus_delete_sm_properties (XfsmDbusClient *object,
+                                       GDBusMethodInvocation *invocation,
+                                       const gchar *const *arg_names);
+static gboolean
+xfsm_client_dbus_terminate (XfsmDbusClient *object,
+                            GDBusMethodInvocation *invocation);
+static gboolean
+xfsm_client_dbus_end_session_response (XfsmDbusClient *object,
+                                       GDBusMethodInvocation *invocation,
+                                       gboolean arg_is_ok,
+                                       const gchar *arg_reason);
 
 
 
@@ -732,7 +739,7 @@ xfsm_client_dbus_init (XfsmClient *client)
 {
   GError *error = NULL;
 
-  if (G_UNLIKELY(!client->connection))
+  if (G_UNLIKELY (!client->connection))
     {
       g_critical ("Unable to contact D-Bus session bus: %s", error ? error->message : "Unknown error");
       return;
@@ -743,13 +750,15 @@ xfsm_client_dbus_init (XfsmClient *client)
   if (!g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (XFSM_DBUS_CLIENT (client)),
                                          client->connection,
                                          client->object_path,
-                                         &error)) {
-    if (error != NULL) {
-            g_critical ("error exporting interface: %s", error->message);
-            g_clear_error (&error);
-            return;
+                                         &error))
+    {
+      if (error != NULL)
+        {
+          g_critical ("error exporting interface: %s", error->message);
+          g_clear_error (&error);
+          return;
+        }
     }
-  }
 
   xfsm_verbose ("exported on %s\n", g_dbus_interface_skeleton_get_object_path (G_DBUS_INTERFACE_SKELETON (XFSM_DBUS_CLIENT (client))));
 }
@@ -757,14 +766,14 @@ xfsm_client_dbus_init (XfsmClient *client)
 static void
 xfsm_client_iface_init (XfsmDbusClientIface *iface)
 {
-        iface->handle_delete_sm_properties = xfsm_client_dbus_delete_sm_properties;
-        iface->handle_get_all_sm_properties = xfsm_client_dbus_get_all_sm_properties;
-        iface->handle_get_id = xfsm_client_dbus_get_id;
-        iface->handle_get_sm_properties = xfsm_client_dbus_get_sm_properties;
-        iface->handle_get_state = xfsm_client_dbus_get_state;
-        iface->handle_set_sm_properties = xfsm_client_dbus_set_sm_properties;
-        iface->handle_terminate = xfsm_client_dbus_terminate;
-        iface->handle_end_session_response = xfsm_client_dbus_end_session_response;
+  iface->handle_delete_sm_properties = xfsm_client_dbus_delete_sm_properties;
+  iface->handle_get_all_sm_properties = xfsm_client_dbus_get_all_sm_properties;
+  iface->handle_get_id = xfsm_client_dbus_get_id;
+  iface->handle_get_sm_properties = xfsm_client_dbus_get_sm_properties;
+  iface->handle_get_state = xfsm_client_dbus_get_state;
+  iface->handle_set_sm_properties = xfsm_client_dbus_set_sm_properties;
+  iface->handle_terminate = xfsm_client_dbus_terminate;
+  iface->handle_end_session_response = xfsm_client_dbus_end_session_response;
 }
 
 static void
@@ -782,7 +791,7 @@ static gboolean
 xfsm_client_dbus_get_id (XfsmDbusClient *object,
                          GDBusMethodInvocation *invocation)
 {
-  xfsm_dbus_client_complete_get_id (object, invocation, XFSM_CLIENT(object)->id);
+  xfsm_dbus_client_complete_get_id (object, invocation, XFSM_CLIENT (object)->id);
   return TRUE;
 }
 
@@ -791,14 +800,14 @@ static gboolean
 xfsm_client_dbus_get_state (XfsmDbusClient *object,
                             GDBusMethodInvocation *invocation)
 {
-  xfsm_dbus_client_complete_get_state (object, invocation, XFSM_CLIENT(object)->state);
+  xfsm_dbus_client_complete_get_state (object, invocation, XFSM_CLIENT (object)->state);
   return TRUE;
 }
 
 
 static void
 builder_add_value (GVariantBuilder *builder,
-                   const gchar  *name,
+                   const gchar *name,
                    const GValue *value)
 {
   if (name == NULL)
@@ -809,15 +818,15 @@ builder_add_value (GVariantBuilder *builder,
 
   if (G_VALUE_HOLDS_STRING (value))
     {
-      g_variant_builder_add (builder, "{sv}", name, g_dbus_gvalue_to_gvariant(value, G_VARIANT_TYPE_STRING));
+      g_variant_builder_add (builder, "{sv}", name, g_dbus_gvalue_to_gvariant (value, G_VARIANT_TYPE_STRING));
     }
   else if (G_VALUE_HOLDS_UCHAR (value))
     {
-      g_variant_builder_add (builder, "{sv}", name, g_dbus_gvalue_to_gvariant(value, G_VARIANT_TYPE ("y")));
+      g_variant_builder_add (builder, "{sv}", name, g_dbus_gvalue_to_gvariant (value, G_VARIANT_TYPE ("y")));
     }
   else if (G_VALUE_HOLDS (value, G_TYPE_STRV))
     {
-      g_variant_builder_add (builder, "{sv}", name, g_dbus_gvalue_to_gvariant(value, G_VARIANT_TYPE_STRING_ARRAY));
+      g_variant_builder_add (builder, "{sv}", name, g_dbus_gvalue_to_gvariant (value, G_VARIANT_TYPE_STRING_ARRAY));
     }
   else
     {
@@ -831,7 +840,7 @@ xfsm_client_properties_tree_foreach (gpointer key,
                                      gpointer value,
                                      gpointer data)
 {
-  gchar  *prop_name = key;
+  gchar *prop_name = key;
   GValue *prop_value = value;
   GVariantBuilder *out_properties = data;
 
@@ -843,7 +852,7 @@ static gboolean
 xfsm_client_dbus_get_all_sm_properties (XfsmDbusClient *object,
                                         GDBusMethodInvocation *invocation)
 {
-  XfsmProperties *properties = XFSM_CLIENT(object)->properties;
+  XfsmProperties *properties = XFSM_CLIENT (object)->properties;
   GVariantBuilder out_properties;
 
   if (G_UNLIKELY (properties == NULL))
@@ -868,9 +877,9 @@ xfsm_client_dbus_get_sm_properties (XfsmDbusClient *object,
                                     GDBusMethodInvocation *invocation,
                                     const gchar *const *arg_names)
 {
-  XfsmProperties *properties = XFSM_CLIENT(object)->properties;
+  XfsmProperties *properties = XFSM_CLIENT (object)->properties;
   GVariantBuilder out_properties;
-  gint            i;
+  gint i;
 
   if (G_UNLIKELY (properties == NULL))
     {
@@ -898,10 +907,10 @@ xfsm_client_dbus_set_sm_properties (XfsmDbusClient *object,
                                     GDBusMethodInvocation *invocation,
                                     GVariant *arg_properties)
 {
-  XfsmProperties *properties = XFSM_CLIENT(object)->properties;
-  GVariantIter   *iter;
-  gchar          *prop_name;
-  GVariant       *variant;
+  XfsmProperties *properties = XFSM_CLIENT (object)->properties;
+  GVariantIter *iter;
+  gchar *prop_name;
+  GVariant *variant;
 
   if (G_UNLIKELY (properties == NULL))
     {
@@ -931,8 +940,8 @@ xfsm_client_dbus_delete_sm_properties (XfsmDbusClient *object,
                                        GDBusMethodInvocation *invocation,
                                        const gchar *const *arg_names)
 {
-  XfsmProperties *properties = XFSM_CLIENT(object)->properties;
-  gchar **names = g_strdupv((gchar**)arg_names);
+  XfsmProperties *properties = XFSM_CLIENT (object)->properties;
+  gchar **names = g_strdupv ((gchar **) arg_names);
 
   if (G_UNLIKELY (properties == NULL))
     {
@@ -940,7 +949,7 @@ xfsm_client_dbus_delete_sm_properties (XfsmDbusClient *object,
       return TRUE;
     }
 
-  xfsm_client_delete_properties (XFSM_CLIENT(object), names, g_strv_length (names));
+  xfsm_client_delete_properties (XFSM_CLIENT (object), names, g_strv_length (names));
 
   g_strfreev (names);
   xfsm_dbus_client_complete_delete_sm_properties (object, invocation);
@@ -954,7 +963,7 @@ xfsm_client_dbus_terminate (XfsmDbusClient *object,
 {
   GError *error = NULL;
 
-  xfsm_manager_terminate_client (XFSM_CLIENT(object)->manager, XFSM_CLIENT(object), &error);
+  xfsm_manager_terminate_client (XFSM_CLIENT (object)->manager, XFSM_CLIENT (object), &error);
   if (error != NULL)
     {
       throw_error (invocation, XFSM_ERROR_BAD_STATE, "Unable to terminate client, error was: %s", error->message);
@@ -976,9 +985,8 @@ xfsm_client_dbus_end_session_response (XfsmDbusClient *object,
 
   xfsm_verbose ("got response for client %s, manager state is %s\n",
                 get_client_id (client),
-                xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWN ? "XFSM_MANAGER_SHUTDOWN" :
-                xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWNPHASE2 ? "XFSM_MANAGER_SHUTDOWNPHASE2" :
-                "Invalid time to respond");
+                xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWN ? "XFSM_MANAGER_SHUTDOWN" : xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWNPHASE2 ? "XFSM_MANAGER_SHUTDOWNPHASE2"
+                                                                                                                                                                                      : "Invalid time to respond");
 
   if (xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWN)
     {
@@ -995,6 +1003,6 @@ xfsm_client_dbus_end_session_response (XfsmDbusClient *object,
       return TRUE;
     }
 
-  xfsm_dbus_client_complete_end_session_response (object,  invocation);
+  xfsm_dbus_client_complete_end_session_response (object, invocation);
   return TRUE;
 }

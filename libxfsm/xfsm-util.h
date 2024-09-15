@@ -46,13 +46,13 @@ G_BEGIN_DECLS;
 #define SETTINGS_CHANNEL "xfce4-session"
 #define SESSION_FILE_DELIMITER ","
 
-typedef struct _XfsmSessionInfo  XfsmSessionInfo;
+typedef struct _XfsmSessionInfo XfsmSessionInfo;
 
 struct _XfsmSessionInfo
 {
-  gchar           *name;      /* name of the session */
-  time_t           atime;     /* last access time */
-  cairo_surface_t *preview;   /* preview icon (52x42) */
+  gchar *name; /* name of the session */
+  time_t atime; /* last access time */
+  cairo_surface_t *preview; /* preview icon (52x42) */
 };
 
 enum
@@ -66,41 +66,52 @@ enum
 };
 
 
-gboolean       xfsm_start_application                (gchar      **command,
-                                                      gchar      **environment,
-                                                      GdkScreen   *screen,
-                                                      const gchar *current_directory,
-                                                      const gchar *client_machine,
-                                                      const gchar *user_id);
+gboolean
+xfsm_start_application (gchar **command,
+                        gchar **environment,
+                        GdkScreen *screen,
+                        const gchar *current_directory,
+                        const gchar *client_machine,
+                        const gchar *user_id);
 
-void           xfsm_place_trash_window               (GtkWindow *window,
-                                                      GdkScreen *screen,
-                                                      gint       monitor);
+void
+xfsm_place_trash_window (GtkWindow *window,
+                         GdkScreen *screen,
+                         gint monitor);
 
 /* XXX - move to libxfce4util? */
-gboolean       xfsm_strv_equal                       (gchar **a,
-                                                      gchar **b);
+gboolean
+xfsm_strv_equal (gchar **a,
+                 gchar **b);
 
-gchar         *xfsm_gdk_display_get_fullname         (GdkDisplay *display);
+gchar *
+xfsm_gdk_display_get_fullname (GdkDisplay *display);
 
-cairo_surface_t *xfsm_load_session_preview           (const gchar *name,
-                                                      gint         size,
-                                                      gint         scale_factor);
+cairo_surface_t *
+xfsm_load_session_preview (const gchar *name,
+                           gint size,
+                           gint scale_factor);
 
-const gchar   *settings_list_sessions_get_filename   (void);
+const gchar *
+settings_list_sessions_get_filename (void);
 
-GKeyFile      *settings_list_sessions_open_key_file  (gboolean readonly);
+GKeyFile *
+settings_list_sessions_open_key_file (gboolean readonly);
 
-GList         *settings_list_sessions                (GKeyFile *file,
-                                                      gint scale_factor);
+GList *
+settings_list_sessions (GKeyFile *file,
+                        gint scale_factor);
 
-void           settings_list_sessions_treeview_init  (GtkTreeView *treeview);
+void
+settings_list_sessions_treeview_init (GtkTreeView *treeview);
 
-void           settings_list_sessions_populate       (GtkTreeModel *model,
-                                                      GList       *sessions);
+void
+settings_list_sessions_populate (GtkTreeModel *model,
+                                 GList *sessions);
 
-void           settings_list_sessions_delete_session (GtkButton *button,
-                                                      GtkTreeView *treeview);
+void
+settings_list_sessions_delete_session (GtkButton *button,
+                                       GtkTreeView *treeview);
 
 G_END_DECLS;
 

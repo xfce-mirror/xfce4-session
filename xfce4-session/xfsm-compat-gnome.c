@@ -103,16 +103,16 @@ child_setup (gpointer user_data)
 static void
 gnome_keyring_daemon_startup (void)
 {
-  GError      *error = NULL;
-  gchar       *sout;
-  gchar      **lines;
-  gsize        lineno;
-  gint         status;
-  glong        pid;
-  gchar       *end;
-  gchar       *argv[3];
-  gchar       *p;
-  gchar       *name;
+  GError *error = NULL;
+  gchar *sout;
+  gchar **lines;
+  gsize lineno;
+  gint status;
+  glong pid;
+  gchar *end;
+  gchar *argv[3];
+  gchar *p;
+  gchar *name;
   const gchar *value;
 
   /* Pipe to slave keyring lifetime to */
@@ -150,7 +150,7 @@ gnome_keyring_daemon_startup (void)
             {
               p = strchr (lines[lineno], '=');
               if (p == NULL)
-               continue;
+                continue;
 
               name = g_strndup (lines[lineno], p - lines[lineno]);
               value = p + 1;
