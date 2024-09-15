@@ -22,10 +22,10 @@
 #ifndef __SM_LAYER_H__
 #define __SM_LAYER_H__
 
-#include <xfconf/xfconf.h>
 #include <libxfce4util/libxfce4util.h>
+#include <xfconf/xfconf.h>
 
-#include <xfce4-session/xfsm-manager.h>
+#include "xfsm-manager.h"
 
 void sm_init (XfconfChannel *channel,
               gboolean       disable_tcp,

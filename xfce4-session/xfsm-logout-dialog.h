@@ -22,7 +22,7 @@
 #ifndef __XFSM_LOGOUT_DIALOG_H__
 #define __XFSM_LOGOUT_DIALOG_H__
 
-#include <xfce4-session/xfsm-shutdown.h>
+#include "xfsm-shutdown.h"
 
 typedef struct _XfsmLogoutDialogClass XfsmLogoutDialogClass;
 typedef struct _XfsmLogoutDialog      XfsmLogoutDialog;

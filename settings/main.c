@@ -17,25 +17,24 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
 
-#include <xfconf/xfconf.h>
-
-#include <gtk/gtk.h>
 #ifdef ENABLE_X11
-#include <gtk/gtkx.h>
 #include <gdk/gdkx.h>
+#include <gtk/gtkx.h>
 #endif
 
-#include <libxfce4util/libxfce4util.h>
+#include <gtk/gtk.h>
 #include <libxfce4ui/libxfce4ui.h>
+#include <libxfce4util/libxfce4util.h>
+#include <xfconf/xfconf.h>
 
-#include <libxfsm/xfsm-util.h>
+#include "libxfsm/xfsm-util.h"
 
 #include "xfae-window.h"
 #include "xfce4-session-settings-common.h"

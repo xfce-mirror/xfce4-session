@@ -23,7 +23,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_SYS_TYPES_H
@@ -53,21 +53,21 @@
 #endif
 
 #include <gio/gio.h>
-#include <libxfce4util/libxfce4util.h>
 #include <gtk/gtk.h>
+#include <libxfce4util/libxfce4util.h>
 
-#include <libxfsm/xfsm-util.h>
+#include "libxfsm/xfsm-util.h"
 
-#include <xfce4-session/xfsm-shutdown.h>
-#include <xfce4-session/xfsm-compat-gnome.h>
-#include <xfce4-session/xfsm-compat-kde.h>
-#include <xfce4-session/xfsm-fadeout.h>
-#include <xfce4-session/xfsm-inhibition.h>
-#include <xfce4-session/xfsm-inhibitor.h>
-#include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-legacy.h>
-#include <xfce4-session/xfsm-shutdown-fallback.h>
-#include <xfce4-session/xfsm-packagekit.h>
+#include "xfsm-compat-gnome.h"
+#include "xfsm-compat-kde.h"
+#include "xfsm-fadeout.h"
+#include "xfsm-global.h"
+#include "xfsm-inhibition.h"
+#include "xfsm-inhibitor.h"
+#include "xfsm-legacy.h"
+#include "xfsm-packagekit.h"
+#include "xfsm-shutdown-fallback.h"
+#include "xfsm-shutdown.h"
 
 
 

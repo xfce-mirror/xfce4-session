@@ -22,7 +22,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_SYS_TYPES_H
@@ -60,7 +60,7 @@
 
 #include <libxfce4util/libxfce4util.h>
 
-#include <xfce4-session/xfsm-compat-gnome.h>
+#include "xfsm-compat-gnome.h"
 
 #define GNOME_KEYRING_DAEMON "gnome-keyring-daemon"
 

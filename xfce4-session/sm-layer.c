@@ -20,26 +20,24 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
-#include <stdio.h>
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
 
 #include <X11/ICE/ICElib.h>
 #include <X11/SM/SMlib.h>
-
 #include <libxfce4util/libxfce4util.h>
+#include <stdio.h>
 
-#include <xfce4-session/ice-layer.h>
-#include <xfce4-session/sm-layer.h>
-#include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-manager.h>
+#include "ice-layer.h"
+#include "sm-layer.h"
+#include "xfsm-global.h"
 
 #define XFSM_CLIENT_MANAGER(c)  (XFSM_MANAGER (g_object_get_data (G_OBJECT (c), "--xfsm-manager")))
 

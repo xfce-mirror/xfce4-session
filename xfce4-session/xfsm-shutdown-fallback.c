@@ -25,9 +25,15 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
+#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
+#define __BACKEND_TYPE_BSD__ 1
+#ifdef HAVE_SYS_SYSCTL_H
+#include <sys/sysctl.h>
+#endif
+#endif
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
 #endif
@@ -54,28 +60,21 @@
 #include <signal.h>
 #endif
 
-#include <gio/gio.h>
-#include <libxfce4util/libxfce4util.h>
-#include <gtk/gtk.h>
-#include <glib/gstdio.h>
-
 #ifdef HAVE_POLKIT
 #include <polkit/polkit.h>
 #endif
 
-#include <pwd.h>
+#include <gio/gio.h>
+#include <glib/gstdio.h>
 #include <grp.h>
+#include <gtk/gtk.h>
+#include <libxfce4util/libxfce4util.h>
+#include <pwd.h>
 
-#include <libxfsm/xfsm-util.h>
-#include <libxfsm/xfsm-shutdown-common.h>
-#include <xfce4-session/xfsm-shutdown-fallback.h>
+#include "libxfsm/xfsm-shutdown-common.h"
+#include "libxfsm/xfsm-util.h"
 
-#if defined(__DragonFly__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
-#define __BACKEND_TYPE_BSD__ 1
-#ifdef HAVE_SYS_SYSCTL_H
-#include <sys/sysctl.h>
-#endif
-#endif
+#include "xfsm-shutdown-fallback.h"
 
 #define POLKIT_AUTH_SHUTDOWN_XFSM     "org.xfce.session.xfsm-shutdown-helper"
 #define POLKIT_AUTH_RESTART_XFSM      "org.xfce.session.xfsm-shutdown-helper"

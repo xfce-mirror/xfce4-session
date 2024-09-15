@@ -24,7 +24,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_MEMORY_H
@@ -35,7 +35,8 @@
 #endif
 
 #include <cairo-gobject.h>
-#include <libxfsm/xfsm-util.h>
+
+#include "xfsm-util.h"
 
 
 gboolean

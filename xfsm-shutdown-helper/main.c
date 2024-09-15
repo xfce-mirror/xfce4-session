@@ -24,7 +24,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_SYS_WAIT_H
@@ -37,7 +37,6 @@
 #ifdef HAVE_SIGNAL_H
 #include <signal.h>
 #endif
-#include <stdio.h>
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
@@ -48,9 +47,10 @@
 #include <unistd.h>
 #endif
 
-#include "libxfsm/xfsm-shutdown-common.h"
-
 #include <glib.h>
+#include <stdio.h>
+
+#include "libxfsm/xfsm-shutdown-common.h"
 
 /* XXX */
 #define EXIT_CODE_SUCCESS           0
@@ -208,5 +208,3 @@ main (int argc, char **argv)
   /* how did we get here? */
   return EXIT_CODE_FAILED;
 }
-
-

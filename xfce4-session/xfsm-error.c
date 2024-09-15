@@ -17,10 +17,10 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <xfce4-session/xfsm-error.h>
+#include "xfsm-error.h"
 
 #define XFSM_DBUS_NAME "org.xfce.SessionManager"
 

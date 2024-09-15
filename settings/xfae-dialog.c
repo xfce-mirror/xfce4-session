@@ -20,12 +20,12 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include "xfae-dialog.h"
-
 #include <libxfce4ui/libxfce4ui.h>
+
+#include "xfae-dialog.h"
 
 static void xfae_dialog_update (XfaeDialog *dialog);
 static void xfae_dialog_browse (XfaeDialog *dialog);

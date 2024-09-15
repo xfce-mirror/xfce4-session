@@ -21,24 +21,24 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
 
-#include <gio/gio.h>
 #include <gio/gdesktopappinfo.h>
+#include <gio/gio.h>
 
-#include <libxfsm/xfsm-util.h>
+#include "libxfsm/xfsm-util.h"
 
-#include <xfce4-session/xfsm-client.h>
-#include <xfce4-session/xfsm-manager.h>
-#include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-marshal.h>
-#include <xfce4-session/xfsm-error.h>
-#include <xfce4-session/xfsm-client-dbus.h>
+#include "xfsm-client-dbus.h"
+#include "xfsm-client.h"
+#include "xfsm-error.h"
+#include "xfsm-global.h"
+#include "xfsm-manager.h"
+#include "xfsm-marshal.h"
 
 #define XFSM_CLIENT_OBJECT_PATH_PREFIX  "/org/xfce/SessionClients/"
 

@@ -24,9 +24,9 @@
 
 #include <glib.h>
 
-#include <xfce4-session/xfsm-shutdown.h> /* XfsmShutdownType */
-
 #include "settings/xfae-model.h" /* XfsmRunHook */
+
+#include "xfsm-shutdown.h" /* XfsmShutdownType */
 
 
 #define DEFAULT_SESSION_NAME "Default"

@@ -24,13 +24,12 @@
 #define __XFSM_MANAGER_H__
 
 #include <glib-object.h>
-
-#include <xfconf/xfconf.h>
 #include <libxfce4util/libxfce4util.h>
+#include <xfconf/xfconf.h>
 
-#include <xfce4-session/xfsm-client.h>
-#include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-shutdown.h>
+#include "xfsm-client.h"
+#include "xfsm-global.h"
+#include "xfsm-shutdown.h"
 
 G_BEGIN_DECLS
 

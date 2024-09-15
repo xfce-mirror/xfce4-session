@@ -22,9 +22,6 @@
 #ifndef __XFSM_UTIL_H__
 #define __XFSM_UTIL_H__
 
-#include <xfconf/xfconf.h>
-
-#include <gtk/gtk.h>
 #ifdef ENABLE_X11
 #include <gdk/gdkx.h>
 #define WINDOWING_IS_X11() GDK_IS_X11_DISPLAY (gdk_display_get_default ())
@@ -38,8 +35,10 @@
 #define WINDOWING_IS_WAYLAND() FALSE
 #endif
 
-#include <libxfce4util/libxfce4util.h>
+#include <gtk/gtk.h>
 #include <libxfce4ui/libxfce4ui.h>
+#include <libxfce4util/libxfce4util.h>
+#include <xfconf/xfconf.h>
 
 G_BEGIN_DECLS;
 

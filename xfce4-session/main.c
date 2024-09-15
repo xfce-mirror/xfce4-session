@@ -21,7 +21,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_ERRNO_H
@@ -47,27 +47,26 @@
 #endif
 
 #include <gio/gio.h>
-
+#include <gtk/gtk.h>
+#include <libxfce4ui/libxfce4ui.h>
+#include <libxfce4util/libxfce4util.h>
 #include <xfconf/xfconf.h>
 
-#include <gtk/gtk.h>
 #ifdef ENABLE_X11
 #include <gdk/gdkx.h>
-#include <xfce4-session/ice-layer.h>
-#include <xfce4-session/sm-layer.h>
+
+#include "ice-layer.h"
+#include "sm-layer.h"
 #endif
 
-#include <libxfce4util/libxfce4util.h>
-#include <libxfce4ui/libxfce4ui.h>
+#include "libxfsm/xfsm-util.h"
 
-#include <libxfsm/xfsm-util.h>
-
-#include <xfce4-session/xfsm-dns.h>
-#include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-manager.h>
-#include <xfce4-session/xfsm-shutdown.h>
-#include <xfce4-session/xfsm-startup.h>
-#include <xfce4-session/xfsm-error.h>
+#include "xfsm-dns.h"
+#include "xfsm-error.h"
+#include "xfsm-global.h"
+#include "xfsm-manager.h"
+#include "xfsm-shutdown.h"
+#include "xfsm-startup.h"
 
 static gboolean opt_disable_tcp = FALSE;
 static gboolean opt_version = FALSE;

@@ -22,10 +22,10 @@
 #ifndef __XFSM_CLIENT_H__
 #define __XFSM_CLIENT_H__
 
-#include <glib-object.h>
 #include <gio/gio.h>
+#include <glib-object.h>
 
-#include <xfce4-session/xfsm-properties.h>
+#include "xfsm-properties.h"
 
 G_BEGIN_DECLS
 

@@ -22,7 +22,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_MEMORY_H
@@ -41,30 +41,27 @@
 #include <unistd.h>
 #endif
 
-#include <gio/gio.h>
-
 #include <gdk-pixbuf/gdk-pixdata.h>
+#include <gio/gio.h>
 #include <gtk/gtk.h>
-
-#include <libxfce4windowing/libxfce4windowing.h>
 #include <libxfce4ui/libxfce4ui.h>
+#include <libxfce4windowing/libxfce4windowing.h>
 
-#include <libxfsm/xfsm-util.h>
+#include "libxfsm/xfsm-util.h"
 
 #ifdef ENABLE_LEGACY_SESSION_MANAGEMENT
-#include <xfce4-session/xfsm-legacy.h>
+#include "xfsm-legacy.h"
 #endif
-#include <xfce4-session/xfsm-manager-dbus.h>
-#include <xfce4-session/xfsm-manager.h>
-#include <xfce4-session/xfsm-chooser-icon.h>
-#include <xfce4-session/xfsm-chooser.h>
-#include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-inhibition.h>
-#include <xfce4-session/xfsm-inhibitor.h>
-#include <xfce4-session/xfsm-startup.h>
-#include <xfce4-session/xfsm-marshal.h>
-#include <xfce4-session/xfsm-error.h>
-#include <xfce4-session/xfsm-logout-dialog.h>
+#include "xfsm-chooser-icon.h"
+#include "xfsm-chooser.h"
+#include "xfsm-error.h"
+#include "xfsm-inhibition.h"
+#include "xfsm-inhibitor.h"
+#include "xfsm-logout-dialog.h"
+#include "xfsm-manager-dbus.h"
+#include "xfsm-manager.h"
+#include "xfsm-marshal.h"
+#include "xfsm-startup.h"
 
 
 struct _XfsmManager
@@ -2115,7 +2112,7 @@ static gboolean xfsm_manager_dbus_lock (XfsmDbusManager *object,
 
 
 /* eader needs the above fwd decls */
-#include <xfce4-session/xfsm-manager-dbus.h>
+#include "xfsm-manager-dbus.h"
 
 
 static void

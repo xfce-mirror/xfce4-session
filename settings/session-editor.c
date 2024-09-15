@@ -16,7 +16,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_STDLIB_H
@@ -24,19 +24,16 @@
 #endif
 
 #include <X11/SM/SMlib.h>
-
-#include <gtk/gtk.h>
-#include <glib/gstdio.h>
-
 #include <gio/gio.h>
-
-#include <libxfce4util/libxfce4util.h>
+#include <glib/gstdio.h>
+#include <gtk/gtk.h>
 #include <libxfce4ui/libxfce4ui.h>
+#include <libxfce4util/libxfce4util.h>
 
-#include <libxfsm/xfsm-util.h>
+#include "libxfsm/xfsm-util.h"
 
-#include "xfce4-session-settings-common.h"
 #include "xfce4-session-marshal.h"
+#include "xfce4-session-settings-common.h"
 #include "xfsm-client-dbus-client.h"
 #include "xfsm-manager-dbus-client.h"
 

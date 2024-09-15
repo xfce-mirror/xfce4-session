@@ -21,15 +21,15 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include "xfae-window.h"
-#include "xfae-dialog.h"
-#include "xfae-model.h"
-
-#include <xfce4-session/xfsm-global.h>
 #include <libxfce4ui/libxfce4ui.h>
+
+#include "xfce4-session/xfsm-global.h"
+
+#include "xfae-dialog.h"
+#include "xfae-window.h"
 
 static void          xfae_window_add                          (XfaeWindow       *window);
 static void          xfae_window_remove                       (XfaeWindow       *window);

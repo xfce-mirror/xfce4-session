@@ -23,7 +23,7 @@
 #ifndef __XFSM_SHUTDOWN_FALLBACK_H__
 #define __XFSM_SHUTDOWN_FALLBACK_H__
 
-#include <xfce4-session/xfsm-shutdown.h>
+#include "xfsm-shutdown.h"
 
 gboolean xfsm_shutdown_fallback_auth_shutdown     (void);
 gboolean xfsm_shutdown_fallback_auth_restart      (void);

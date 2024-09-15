@@ -21,7 +21,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_SYS_STAT_H
@@ -45,12 +45,10 @@
 #include <X11/ICE/ICElib.h>
 #include <X11/ICE/ICEutil.h>
 #include <X11/SM/SMlib.h>
-
 #include <libxfce4util/libxfce4util.h>
 
-#include <xfce4-session/ice-layer.h>
-#include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-manager.h>
+#include "ice-layer.h"
+#include "xfsm-global.h"
 
 typedef struct
 {
@@ -380,5 +378,3 @@ ice_cleanup (void)
   g_free (auth_cleanup_file);
   auth_cleanup_file = NULL;
 }
-
-

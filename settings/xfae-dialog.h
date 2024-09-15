@@ -23,6 +23,7 @@
 #define __XFAE_DIALOG_H__
 
 #include <gtk/gtk.h>
+
 #include "xfae-model.h" /* Type XfsmRunHook */
 
 G_BEGIN_DECLS;

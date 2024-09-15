@@ -20,7 +20,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_ERRNO_H
@@ -30,9 +30,9 @@
 #include <unistd.h>
 #endif
 
-#include "xfae-model.h"
-
 #include <libxfce4ui/libxfce4ui.h>
+
+#include "xfae-model.h"
 
 typedef struct _XfaeItem XfaeItem;
 
@@ -1271,7 +1271,3 @@ xfae_model_toggle (XfaeModel   *model,
 
   return TRUE;
 }
-
-
-
-

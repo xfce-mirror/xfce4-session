@@ -21,7 +21,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_STDARG_H
@@ -46,15 +46,14 @@
 #include <errno.h>
 #endif
 
-#include <glib/gprintf.h>
 #include <gio/gio.h>
-
-#include <libxfce4util/libxfce4util.h>
+#include <glib/gprintf.h>
 #include <libxfce4ui/libxfce4ui.h>
+#include <libxfce4util/libxfce4util.h>
 
-#include <xfce4-session/xfsm-global.h>
+#include "libxfsm/xfsm-util.h"
 
-#include <libxfsm/xfsm-util.h>
+#include "xfsm-global.h"
 
 
 /* global variables */

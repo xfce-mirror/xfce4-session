@@ -21,13 +21,12 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_MEMORY_H
 #include <memory.h>
 #endif
-#include <stdio.h>
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
@@ -36,10 +35,10 @@
 #endif
 
 #include <gio/gio.h>
-
 #include <gtk/gtk.h>
 #include <libxfce4ui/libxfce4ui.h>
 #include <libxfce4util/libxfce4util.h>
+#include <stdio.h>
 
 
 gboolean opt_logout = FALSE;

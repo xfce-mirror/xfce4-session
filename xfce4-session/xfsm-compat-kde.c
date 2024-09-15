@@ -20,7 +20,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_SYS_TYPES_H
@@ -44,10 +44,9 @@
 #endif
 
 #include <gtk/gtk.h>
-
 #include <libxfce4util/libxfce4util.h>
 
-#include <xfce4-session/xfsm-compat-kde.h>
+#include "xfsm-compat-kde.h"
 
 
 static gboolean kde_compat_started = FALSE;

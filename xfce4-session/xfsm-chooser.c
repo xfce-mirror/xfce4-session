@@ -20,7 +20,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_MEMORY_H
@@ -33,12 +33,11 @@
 #include <time.h>
 #endif
 
-#include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
-
+#include <libxfce4util/libxfce4util.h>
 #include <libxfsm/xfsm-util.h>
 
-#include <xfce4-session/xfsm-chooser.h>
+#include "xfsm-chooser.h"
 
 
 #define BORDER 6

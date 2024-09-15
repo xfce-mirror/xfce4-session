@@ -23,7 +23,6 @@
 #define __XFSM_LEGACY_H__
 
 #include <gdk/gdk.h>
-
 #include <libxfce4util/libxfce4util.h>
 
 

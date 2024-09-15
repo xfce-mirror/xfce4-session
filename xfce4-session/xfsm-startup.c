@@ -21,7 +21,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_ERRNO_H
@@ -52,19 +52,20 @@
 #include <signal.h>
 #endif
 
-#include <glib/gstdio.h>
 #ifdef ENABLE_X11
 #include <gdk/gdkx.h>
 #endif
+
+#include <glib/gstdio.h>
 #include <libxfce4ui/libxfce4ui.h>
 
-#include <libxfsm/xfsm-util.h>
+#include "libxfsm/xfsm-util.h"
 
-#include <xfce4-session/xfsm-compat-gnome.h>
-#include <xfce4-session/xfsm-compat-kde.h>
-#include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-manager.h>
-#include <xfce4-session/xfsm-startup.h>
+#include "xfsm-compat-gnome.h"
+#include "xfsm-compat-kde.h"
+#include "xfsm-global.h"
+#include "xfsm-manager.h"
+#include "xfsm-startup.h"
 
 
 typedef struct

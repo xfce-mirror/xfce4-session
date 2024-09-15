@@ -21,7 +21,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_MEMORY_H
@@ -34,10 +34,10 @@
 #include <stdlib.h>
 #endif
 
-#include <libxfsm/xfsm-util.h>
+#include "libxfsm/xfsm-util.h"
 
-#include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-properties.h>
+#include "xfsm-global.h"
+#include "xfsm-properties.h"
 
 
 #ifdef ENABLE_X11

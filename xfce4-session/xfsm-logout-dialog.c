@@ -23,7 +23,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_SYS_WAIT_H
@@ -43,24 +43,25 @@
 #include <math.h>
 #endif
 
-#include <libxfce4util/libxfce4util.h>
-#include <gtk/gtk.h>
-#ifdef HAVE_GTK_LAYER_SHELL
-#include <gtk-layer-shell.h>
-#endif
-
-#include <libxfsm/xfsm-util.h>
-
-#include <xfce4-session/xfsm-logout-dialog.h>
-#include <xfce4-session/xfsm-fadeout.h>
-#include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-legacy.h>
-#include <xfce4-session/xfsm-error.h>
-
 #ifdef ENABLE_X11
 #include <X11/Xlib.h>
 #include <gdk/gdkx.h>
 #endif
+
+#ifdef HAVE_GTK_LAYER_SHELL
+#include <gtk-layer-shell.h>
+#endif
+
+#include <gtk/gtk.h>
+#include <libxfce4util/libxfce4util.h>
+
+#include "libxfsm/xfsm-util.h"
+
+#include "xfsm-error.h"
+#include "xfsm-fadeout.h"
+#include "xfsm-global.h"
+#include "xfsm-legacy.h"
+#include "xfsm-logout-dialog.h"
 
 
 

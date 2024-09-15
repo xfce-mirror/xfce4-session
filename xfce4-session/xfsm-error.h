@@ -18,8 +18,8 @@
 #ifndef __XFSM_ERRORS_H__
 #define __XFSM_ERRORS_H__
 
-#include <glib-object.h>
 #include <gio/gio.h>
+#include <glib-object.h>
 
 #define XFSM_TYPE_ERROR  (xfsm_error_get_type ())
 #define XFSM_ERROR       (xfsm_error_get_quark ())

@@ -17,13 +17,13 @@
  * MA 02110-1301 USA.
  */
 
-#include <config.h>
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #include <gio/gio.h>
 
-
-
-#include <xfce4-session/xfsm-packagekit.h>
+#include "xfsm-packagekit.h"
 
 
 

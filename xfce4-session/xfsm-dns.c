@@ -23,7 +23,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_SYS_TYPES_H
@@ -50,13 +50,12 @@
 #endif
 
 #include <gtk/gtk.h>
-
 #include <libxfce4ui/libxfce4ui.h>
 
-#include <libxfsm/xfsm-util.h>
+#include "libxfsm/xfsm-util.h"
 
-#include <xfce4-session/xfsm-dns.h>
-#include <xfce4-session/xfsm-global.h>
+#include "xfsm-dns.h"
+#include "xfsm-global.h"
 
 
 static gchar*

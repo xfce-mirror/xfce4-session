@@ -44,7 +44,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef HAVE_SYS_TYPES_H
@@ -67,16 +67,14 @@
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
-
 #include <gdk/gdkx.h>
-
+#include <libwnck/libwnck.h>
 #include <libxfce4ui/libxfce4ui.h>
 
-#include <libwnck/libwnck.h>
+#include "libxfsm/xfsm-util.h"
 
-#include <xfce4-session/xfsm-global.h>
-#include <xfce4-session/xfsm-legacy.h>
-#include <libxfsm/xfsm-util.h>
+#include "xfsm-global.h"
+#include "xfsm-legacy.h"
 
 
 #define WM_SAVE_YOURSELF_TIMEOUT  4000

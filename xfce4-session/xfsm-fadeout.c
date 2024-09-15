@@ -20,17 +20,16 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <gtk/gtk.h>
-#include <xfce4-session/xfsm-fadeout.h>
-
-#include <gdk/gdkx.h>
-#include <X11/Xlib.h>
 #include <X11/Xatom.h>
+#include <X11/Xlib.h>
 #include <cairo-xlib.h>
+#include <gdk/gdkx.h>
+#include <gtk/gtk.h>
 
+#include "xfsm-fadeout.h"
 
 
 struct _XfsmFadeout
