@@ -818,8 +818,6 @@ xfsm_logout_dialog (const gchar *session_name,
     }
 #endif
 
-  gtk_widget_destroy (dialog);
-
   if (result == GTK_RESPONSE_OK)
     {
       /* return the clicked action */
@@ -828,6 +826,8 @@ xfsm_logout_dialog (const gchar *session_name,
       /* store channel settings if everything worked fine */
       xfconf_channel_set_string (channel, "/general/SessionName", session_name);
     }
+
+  gtk_widget_destroy (dialog);
 
   /* save the screenshot */
   if (screenshot != NULL)
