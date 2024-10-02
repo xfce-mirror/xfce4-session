@@ -9,7 +9,7 @@ dnl Version information
 XDT_VERSION_INIT([4.19.2], [git])
 
 dnl minimum required versions
-m4_define([glib_min_version], [2.66.0])
+m4_define([glib_min_version], [2.72.0])
 m4_define([gtk_min_version], [3.24.0])
 m4_define([libxfce4util_min_version], [4.19.2])
 m4_define([libxfce4ui_min_version], [4.18.4])
