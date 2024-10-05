@@ -2185,6 +2185,10 @@ on_name_owner_notify (GDBusConnection *connection,
     {
       remove_clients_for_connection (manager, old_service_name);
     }
+
+  g_free (new_service_name);
+  g_free (old_service_name);
+  g_free (service_name);
 }
 
 static void
