@@ -2179,7 +2179,7 @@ on_name_owner_notify (GDBusConnection *connection,
     *old_service_name,
     *new_service_name;
 
-  g_variant_get (parameters, "(sss)", &service_name, &old_service_name, &new_service_name);
+  g_variant_get (parameters, "(&s&s&s)", &service_name, &old_service_name, &new_service_name);
 
   if (strlen (new_service_name) == 0)
     {
