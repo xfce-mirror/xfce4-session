@@ -643,6 +643,7 @@ xfsm_manager_load_failsafe (XfsmManager *manager,
       xfsm_properties_set_strv (properties, SmRestartCommand, g_strdupv (command));
       xfsm_properties_set_uchar (properties, GsmPriority, priority);
       g_queue_push_tail (manager->pending_properties, properties);
+      g_strfreev (command);
     }
   g_queue_sort (manager->pending_properties, (GCompareDataFunc) G_CALLBACK (xfsm_properties_compare), NULL);
 
