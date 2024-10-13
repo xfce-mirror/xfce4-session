@@ -269,8 +269,12 @@ settings_list_sessions_open_key_file (gboolean readonly)
       /* session file does not exist: allowed */
       if (g_error_matches (error, G_FILE_ERROR, G_FILE_ERROR_NOENT))
         {
+          g_error_free (error);
           if (readonly)
-            return NULL;
+            {
+              g_key_file_free (file);
+              return NULL;
+            }
         }
       else
         {
