@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-03-29 12:48+0100\n"
+"POT-Creation-Date: 2024-10-15 00:48+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: 玉堂白鹤 <yjwork@qq.com>, 2016-2020,2023-2024\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/xfce/xfce4-session/language/zh_CN/)\n"
@@ -35,90 +35,104 @@ msgstr "Xfce 会话"
 msgid "Use this session to run Xfce as your desktop environment"
 msgstr "使用此会话将 Xfce 作为您的桌面环境运行"
 
+#: xfce.desktop.in:10
+msgid "xfce;session;desktop;environment;window manager;gui;"
+msgstr "xfce;session;desktop;environment;window manager;gui;会话;桌面;环境;窗口管理;"
+
 #: xfce-wayland.desktop.in:4
 msgid "Xfce Session (Wayland)"
 msgstr "Xfce 会话 (Wayland)"
 
-#: libxfsm/xfsm-util.c:370
+#: xfce-wayland.desktop.in:10
+msgid "xfce;wayland;desktop;environment;session;"
+msgstr "xfce;wayland;desktop;environment;session;桌面;环境;会话;"
+
+#: libxfsm/xfsm-util.c:375
 msgid "Session"
 msgstr "会话"
 
-#: libxfsm/xfsm-util.c:381
+#: libxfsm/xfsm-util.c:386
 msgid "Last accessed"
 msgstr "最后访问"
 
-#: settings/main.c:100
+#: settings/main.c:103
 msgid "Settings manager socket"
 msgstr "设置管理器套接字"
 
-#: settings/main.c:100
+#: settings/main.c:103
 msgid "SOCKET ID"
 msgstr "套接字 ID"
 
-#: settings/main.c:101
+#: settings/main.c:104
 msgid "Version information"
 msgstr "版本信息"
 
-#: settings/main.c:112 xfce4-session/main.c:354
+#: settings/main.c:116 xfce4-session/main.c:356
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "输入 ‘%s --help’ 获取用法。"
 
-#: settings/main.c:124 xfce4-session/main.c:364
-#: xfce4-session-logout/main.c:132
+#: settings/main.c:130 xfce4-session/main.c:366
+#: xfce4-session-logout/main.c:121
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce 开发团队。保留所有权利。"
 
-#: settings/main.c:125 xfce4-session/main.c:365
-#: xfce4-session-logout/main.c:135
+#: settings/main.c:131 xfce4-session/main.c:367
+#: xfce4-session-logout/main.c:124
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "请向 <%s> 报告缺陷。"
 
-#: settings/main.c:134 xfce4-session/main.c:373
+#: settings/main.c:139 xfce4-session/main.c:375
 msgid "Unable to contact settings server"
 msgstr "未能与设置服务器联系"
 
-#: settings/main.c:154
+#: settings/main.c:160
 msgid "Unable to create user interface from embedded definition data"
 msgstr "未能从内嵌的定义数据创建用户界面"
 
-#: settings/main.c:168
+#: settings/main.c:174
 msgid "App_lication Autostart"
 msgstr "应用程序自启动(_L)"
 
-#: settings/main.c:174
+#: settings/main.c:180
 msgid "Currently active session:"
 msgstr "当前活动会话："
 
-#: settings/session-editor.c:63
+#: settings/session-editor.c:60
 msgid "If running"
 msgstr "如果正在运行"
 
-#: settings/session-editor.c:64
+#: settings/session-editor.c:61
 msgid "Always"
 msgstr "总是"
 
-#: settings/session-editor.c:65
+#: settings/session-editor.c:62
 msgid "Immediately"
 msgstr "立即"
 
-#: settings/session-editor.c:66
+#: settings/session-editor.c:63
 msgid "Never"
 msgstr "从不"
 
-#: settings/session-editor.c:138
+#: settings/session-editor.c:137
 msgid "Session Save Error"
 msgstr "会话保存出错"
 
-#: settings/session-editor.c:139
+#: settings/session-editor.c:137
 msgid "Unable to save the session"
 msgstr "未能保存此会话"
 
-#: settings/session-editor.c:141 settings/session-editor.c:315
-#: xfce4-session/xfsm-manager.c:1312 settings/xfce4-session-settings.ui:95
+#: settings/session-editor.c:139 settings/session-editor.c:322
+#: xfce4-session/xfsm-manager.c:1322 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "关闭(_C)"
+
+#: settings/session-editor.c:195
+msgid ""
+"The saved states of your applications will not be restored during your next "
+"login."
+msgstr "在您下次登录时不会恢复已保存的应用程序状态。"
 
 #: settings/session-editor.c:200
 msgid "Clear sessions"
@@ -128,79 +142,73 @@ msgstr "清除会话"
 msgid "Are you sure you want to empty the session cache?"
 msgstr "您确定要清空此会话缓存吗？"
 
-#: settings/session-editor.c:202
-msgid ""
-"The saved states of your applications will not be restored during your next "
-"login."
-msgstr "在您下次登录时不会恢复已保存的应用程序状态。"
-
-#: settings/session-editor.c:203 settings/session-editor.c:290
-#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:712
-#: xfce4-session/xfsm-logout-dialog.c:227
+#: settings/session-editor.c:202 settings/session-editor.c:294
+#: settings/xfae-dialog.c:79 xfce4-session/xfsm-manager.c:725
+#: xfce4-session/xfsm-logout-dialog.c:230
 msgid "_Cancel"
 msgstr "取消(_C)"
 
-#: settings/session-editor.c:204
+#: settings/session-editor.c:202
 msgid "_Proceed"
 msgstr "继续(_P)"
 
-#: settings/session-editor.c:242
+#: settings/session-editor.c:246
 #, c-format
 msgid "You might need to delete some files manually in \"%s\"."
 msgstr "您可能需要在 “%s” 中手动删除一些文件。"
 
-#: settings/session-editor.c:245
+#: settings/session-editor.c:249
 msgid "All Xfce cache files could not be cleared"
 msgstr "所有 Xfce 缓存文件都未能清除"
 
-#: settings/session-editor.c:284
+#: settings/session-editor.c:290
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "您确定要终止 “%s” 吗？"
 
-#: settings/session-editor.c:287 settings/session-editor.c:312
-msgid "Terminate Program"
-msgstr "终止程序"
-
-#: settings/session-editor.c:289
+#: settings/session-editor.c:291
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
 msgstr "此应用程序会丢失任何未保存的状态且在您下次登录时不会重启。"
 
-#: settings/session-editor.c:291 settings/xfce4-session-settings.ui:445
+#: settings/session-editor.c:293 settings/session-editor.c:320
+msgid "Terminate Program"
+msgstr "终止程序"
+
+#: settings/session-editor.c:295 settings/xfce4-session-settings.ui:445
 msgid "_Quit Program"
 msgstr "退出程序(_Q)"
 
-#: settings/session-editor.c:313
+#: settings/session-editor.c:320
 msgid "Unable to terminate program."
 msgstr "未能终止程序。"
 
-#: settings/session-editor.c:541
+#: settings/session-editor.c:560
 msgid "(Unknown program)"
 msgstr "(未知程序)"
 
-#: settings/session-editor.c:790
+#: settings/session-editor.c:818
 msgid "Priority"
 msgstr "优先级"
 
-#: settings/session-editor.c:800
+#: settings/session-editor.c:828
 msgid "PID"
 msgstr "PID"
 
-#: settings/session-editor.c:807 settings/xfae-window.c:198
+#: settings/session-editor.c:835 settings/xfae-window.c:204
 msgid "Program"
 msgstr "程序"
 
-#: settings/session-editor.c:833
+#: settings/session-editor.c:861
 msgid "Restart Style"
 msgstr "重启样式"
 
-#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:714
+#: settings/xfae-dialog.c:79 xfce4-session/xfsm-manager.c:726
 msgid "_OK"
 msgstr "确定(&O)"
 
-#: settings/xfae-dialog.c:82 settings/xfae-window.c:252
+#: settings/xfae-dialog.c:82 settings/xfae-window.c:258
 msgid "Add application"
 msgstr "添加应用程序"
 
@@ -212,7 +220,7 @@ msgstr "名称："
 msgid "Description:"
 msgstr "描述："
 
-#: settings/xfae-dialog.c:125 settings/xfae-model.c:681
+#: settings/xfae-dialog.c:125 settings/xfae-model.c:707
 msgid "Command:"
 msgstr "命令："
 
@@ -224,172 +232,172 @@ msgstr "触发器："
 msgid "Select a command"
 msgstr "选择命令"
 
-#: settings/xfae-dialog.c:212
+#: settings/xfae-dialog.c:210
 msgid "Cancel"
 msgstr "取消"
 
-#: settings/xfae-dialog.c:213
+#: settings/xfae-dialog.c:211
 msgid "OK"
 msgstr "确定"
 
-#: settings/xfae-dialog.c:260 settings/xfae-window.c:274
+#: settings/xfae-dialog.c:258 settings/xfae-window.c:280
 msgid "Edit application"
 msgstr "编辑应用程序"
 
-#: settings/xfae-model.c:114
+#: settings/xfae-model.c:142
 msgid "on login"
 msgstr "登录时"
 
-#: settings/xfae-model.c:115
+#: settings/xfae-model.c:143
 msgid "on logout"
 msgstr "注销时"
 
-#: settings/xfae-model.c:116
+#: settings/xfae-model.c:144
 msgid "on shutdown"
 msgstr "关机时"
 
-#: settings/xfae-model.c:117
+#: settings/xfae-model.c:145
 msgid "on restart"
 msgstr "重启时"
 
-#: settings/xfae-model.c:118
+#: settings/xfae-model.c:146
 msgid "on suspend"
 msgstr "挂起时"
 
-#: settings/xfae-model.c:119
+#: settings/xfae-model.c:147
 msgid "on hibernate"
 msgstr "休眠时"
 
-#: settings/xfae-model.c:120
+#: settings/xfae-model.c:148
 msgid "on hybrid sleep"
 msgstr "混合睡眠时"
 
-#: settings/xfae-model.c:121
+#: settings/xfae-model.c:149
 msgid "on switch user"
 msgstr "切换用户时"
 
-#: settings/xfae-model.c:463 settings/xfae-model.c:1177
-#: settings/xfae-model.c:1235
+#: settings/xfae-model.c:489 settings/xfae-model.c:1202
+#: settings/xfae-model.c:1259
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "无法打开 %s 来写入"
 
-#: settings/xfae-model.c:815
+#: settings/xfae-model.c:841
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "无法断开链接 %s：%s"
 
-#: settings/xfae-model.c:977
+#: settings/xfae-model.c:1002
 #, c-format
 msgid "Failed to create file %s"
 msgstr "无法创建文件 %s"
 
-#: settings/xfae-model.c:1001
+#: settings/xfae-model.c:1026
 #, c-format
 msgid "Failed to write file %s"
 msgstr "无法写入文件 %s"
 
-#: settings/xfae-model.c:1061
+#: settings/xfae-model.c:1086
 #, c-format
 msgid "Failed to open %s for reading"
 msgstr "无法打开 %s 来读取"
 
-#: settings/xfae-window.c:108
+#: settings/xfae-window.c:114
 msgid "Failed to set run hook"
 msgstr "无法设置运行挂钩"
 
-#: settings/xfae-window.c:223
+#: settings/xfae-window.c:229
 msgid "Trigger"
 msgstr "触发器"
 
-#: settings/xfae-window.c:249 settings/xfae-window.c:338
+#: settings/xfae-window.c:255 settings/xfae-window.c:344
 msgid "Add"
 msgstr "添加"
 
-#: settings/xfae-window.c:258 settings/xfae-window.c:344
+#: settings/xfae-window.c:264 settings/xfae-window.c:350
 msgid "Remove"
 msgstr "移除"
 
-#: settings/xfae-window.c:261
+#: settings/xfae-window.c:267
 msgid "Remove application"
 msgstr "移除应用程序"
 
-#: settings/xfae-window.c:271
+#: settings/xfae-window.c:277
 msgid "Edit"
 msgstr "编辑"
 
-#: settings/xfae-window.c:397
+#: settings/xfae-window.c:403
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "无法添加 “%s”"
 
-#: settings/xfae-window.c:428 settings/xfae-window.c:442
+#: settings/xfae-window.c:434 settings/xfae-window.c:443
 msgid "Failed to remove item"
 msgstr "无法移除项目"
 
-#: settings/xfae-window.c:471
+#: settings/xfae-window.c:472
 msgid "Failed to edit item"
 msgstr "无法编辑项目"
 
-#: settings/xfae-window.c:491
+#: settings/xfae-window.c:492
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "无法编辑项目 “%s”"
 
-#: settings/xfae-window.c:519
+#: settings/xfae-window.c:520
 msgid "Failed to toggle item"
 msgstr "无法切换项目"
 
-#: xfce4-session/main.c:79
+#: xfce4-session/main.c:77
 msgid "Disable binding to TCP ports"
 msgstr "禁用与 TCP 端口绑定"
 
-#: xfce4-session/main.c:80 xfce4-session-logout/main.c:90
+#: xfce4-session/main.c:78 xfce4-session-logout/main.c:80
 msgid "Print version information and exit"
 msgstr "列印版本信息后退出"
 
-#: xfce4-session/xfsm-chooser.c:147
+#: xfce4-session/xfsm-chooser.c:149
 msgid "Session Manager"
 msgstr "会话管理器"
 
-#: xfce4-session/xfsm-chooser.c:168
+#: xfce4-session/xfsm-chooser.c:180
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr "选择您要恢复的会话。您只需双击会话名称即可恢复它。"
 
-#: xfce4-session/xfsm-chooser.c:184
+#: xfce4-session/xfsm-chooser.c:196
 msgid "Create a new session."
 msgstr "创建新会话。"
 
-#: xfce4-session/xfsm-chooser.c:191
+#: xfce4-session/xfsm-chooser.c:203
 msgid "Delete a saved session."
 msgstr "删除已保存的会话。"
 
 #. "Logout" button
-#: xfce4-session/xfsm-chooser.c:202
-#: xfce4-session-logout/xfce4-session-logout.desktop.in:11
+#: xfce4-session/xfsm-chooser.c:214
+#: xfce4-session-logout/xfce4-session-logout.desktop.in:12
 msgid "Log Out"
 msgstr "注销"
 
-#: xfce4-session/xfsm-chooser.c:204
+#: xfce4-session/xfsm-chooser.c:216
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "取消此登录提示并返回至登录屏幕。"
 
 #. "Start" button
-#: xfce4-session/xfsm-chooser.c:211
+#: xfce4-session/xfsm-chooser.c:223
 msgid "Start"
 msgstr "启动"
 
-#: xfce4-session/xfsm-chooser.c:212
+#: xfce4-session/xfsm-chooser.c:224
 msgid "Start an existing session."
 msgstr "启动现有会话。"
 
-#: xfce4-session/xfsm-dns.c:78
+#: xfce4-session/xfsm-dns.c:77
 msgid "(Unknown)"
 msgstr "(未知)"
 
-#: xfce4-session/xfsm-dns.c:152
+#: xfce4-session/xfsm-dns.c:151
 #, c-format
 msgid ""
 "Could not look up internet address for %s.\n"
@@ -398,15 +406,15 @@ msgid ""
 "%s to the file /etc/hosts on your system."
 msgstr "未能查找 %s 的互联网地址。这会阻止 Xfce\n的正常操作。在您系统上的 /etc/hosts 中\n添加 %s 可能会更正此问题。"
 
-#: xfce4-session/xfsm-dns.c:159
+#: xfce4-session/xfsm-dns.c:157
 msgid "Continue anyway"
 msgstr "仍然继续"
 
-#: xfce4-session/xfsm-dns.c:160
+#: xfce4-session/xfsm-dns.c:158
 msgid "Try again"
 msgstr "重试"
 
-#: xfce4-session/xfsm-manager.c:581
+#: xfce4-session/xfsm-manager.c:594
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -415,183 +423,187 @@ msgid ""
 "incorrectly."
 msgstr "未能确定安全会话名称。可能由于：xfconfd\n没有运行(D-Bus 设置问题)，未正确设置环境\n变量 $XDG_CONFIG_DIRS(必须包含 “%s”)，\n或 xfce4-session 未正确安装。"
 
-#: xfce4-session/xfsm-manager.c:606
+#: xfce4-session/xfsm-manager.c:619
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "指定的安全会话(“%s”)未标记为安全会话。"
 
-#: xfce4-session/xfsm-manager.c:640
+#: xfce4-session/xfsm-manager.c:654
 msgid "The list of applications in the failsafe session is empty."
 msgstr "安全会话中的应用程序列表是空的。"
 
-#: xfce4-session/xfsm-manager.c:726
+#: xfce4-session/xfsm-manager.c:738
 msgid "Name for the new session"
 msgstr "新会话的名称"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:804
+#: xfce4-session/xfsm-manager.c:815
 msgid "Session Manager Error"
 msgstr "会话管理器错误"
 
-#: xfce4-session/xfsm-manager.c:806
+#: xfce4-session/xfsm-manager.c:816
 msgid "Unable to load a failsafe session"
 msgstr "未能载入安全会话"
 
-#: xfce4-session/xfsm-manager.c:808
+#: xfce4-session/xfsm-manager.c:818
 msgid "_Quit"
 msgstr "退出(_Q)"
 
-#: xfce4-session/xfsm-manager.c:1302
+#: xfce4-session/xfsm-manager.c:1312
 msgid "Shutdown Failed"
 msgstr "无法关机"
 
-#: xfce4-session/xfsm-manager.c:1305
+#: xfce4-session/xfsm-manager.c:1315
 msgid "Failed to suspend session"
 msgstr "会话无法挂起"
 
-#: xfce4-session/xfsm-manager.c:1307
+#: xfce4-session/xfsm-manager.c:1317
 msgid "Failed to hibernate session"
 msgstr "会话无法休眠"
 
-#: xfce4-session/xfsm-manager.c:1309
+#: xfce4-session/xfsm-manager.c:1319
 msgid "Failed to hybrid sleep session"
 msgstr "混合睡眠会话失败"
 
-#: xfce4-session/xfsm-manager.c:1310
+#: xfce4-session/xfsm-manager.c:1320
 msgid "Failed to switch user"
 msgstr "切换用户失败"
 
-#: xfce4-session/xfsm-manager.c:1637
+#: xfce4-session/xfsm-manager.c:1642
 msgid "Can only terminate clients when in the idle state"
 msgstr "仅在空闲时才能终止客户端"
 
-#: xfce4-session/xfsm-manager.c:2320
+#: xfce4-session/xfsm-manager.c:2350
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "提请检查点时会话管理器必须处于空闲状态"
 
-#: xfce4-session/xfsm-manager.c:2390 xfce4-session/xfsm-manager.c:2410
+#: xfce4-session/xfsm-manager.c:2420 xfce4-session/xfsm-manager.c:2440
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "提请关机时会话管理器必须处于空闲状态"
 
-#: xfce4-session/xfsm-manager.c:2447
+#: xfce4-session/xfsm-manager.c:2477
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "请求关机时会话管理器必须处于空闲状态"
 
-#: xfce4-session/xfsm-manager.c:2483 xfce4-session/xfsm-manager.c:2522
-#: xfce4-session/xfsm-manager.c:2560
+#: xfce4-session/xfsm-manager.c:2513 xfce4-session/xfsm-manager.c:2552
+#: xfce4-session/xfsm-manager.c:2590
 msgid "Session manager must be in idle state when requesting a sleep"
 msgstr "请求休眠时会话管理器必须处于空闲状态"
 
-#: xfce4-session/xfsm-manager.c:2687
+#: xfce4-session/xfsm-manager.c:2717
 msgid "Session manager must be in idle state when requesting a user switch"
 msgstr "请求切换用户时会话管理器必须处于空闲状态"
 
-#: xfce4-session/xfsm-logout-dialog.c:199
+#: xfce4-session/xfsm-logout-dialog.c:202
 #, c-format
 msgid "Log out %s"
 msgstr "注销 %s"
 
-#: xfce4-session/xfsm-logout-dialog.c:245
+#: xfce4-session/xfsm-logout-dialog.c:248
 msgid "_Log Out"
 msgstr "注销(_L)"
 
-#: xfce4-session/xfsm-logout-dialog.c:264
+#: xfce4-session/xfsm-logout-dialog.c:267
 msgid "_Restart and update"
 msgstr "重启并更新(_R)"
 
-#: xfce4-session/xfsm-logout-dialog.c:264
+#: xfce4-session/xfsm-logout-dialog.c:267
 msgid "_Restart"
 msgstr "重启(_R)"
 
-#: xfce4-session/xfsm-logout-dialog.c:278
+#: xfce4-session/xfsm-logout-dialog.c:281
 msgid "Update and Shut _Down"
 msgstr "更新并关机(_D)"
 
-#: xfce4-session/xfsm-logout-dialog.c:278
+#: xfce4-session/xfsm-logout-dialog.c:281
 msgid "Shut _Down"
 msgstr "关机(_D)"
 
-#: xfce4-session/xfsm-logout-dialog.c:302
+#: xfce4-session/xfsm-logout-dialog.c:305
 msgid "Sus_pend"
 msgstr "挂起(_P)"
 
-#: xfce4-session/xfsm-logout-dialog.c:322
+#: xfce4-session/xfsm-logout-dialog.c:325
 msgid "_Hibernate"
 msgstr "休眠(_H)"
 
-#: xfce4-session/xfsm-logout-dialog.c:342
+#: xfce4-session/xfsm-logout-dialog.c:345
 msgid "H_ybrid Sleep"
 msgstr "混合睡眠(_Y)"
 
-#: xfce4-session/xfsm-logout-dialog.c:366
+#: xfce4-session/xfsm-logout-dialog.c:369
 msgid "Switch _User"
 msgstr "切换用户(_U)"
 
-#: xfce4-session/xfsm-logout-dialog.c:406
+#: xfce4-session/xfsm-logout-dialog.c:409
 msgid "An error occurred"
 msgstr "出现错误"
 
-#: xfce4-session/xfsm-shutdown.c:171
+#: xfce4-session/xfsm-shutdown.c:172
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "kiosk 设置阻止了关机"
 
-#: xfce4-session/xfsm-shutdown.c:228
+#: xfce4-session/xfsm-shutdown.c:229
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "未知关机方式 %d"
 
-#: xfce4-session-logout/main.c:58
+#: xfce4-session-logout/main.c:56
 msgid "Log out without displaying the logout dialog"
 msgstr "注销时不显示注销对话框"
 
-#: xfce4-session-logout/main.c:62
+#: xfce4-session-logout/main.c:59
 msgid "Halt without displaying the logout dialog"
 msgstr "断开时不显示注销对话框"
 
-#: xfce4-session-logout/main.c:66
+#: xfce4-session-logout/main.c:62
 msgid "Reboot without displaying the logout dialog"
 msgstr "重启时不显示注销对话框"
 
-#: xfce4-session-logout/main.c:70
+#: xfce4-session-logout/main.c:65
 msgid "Suspend without displaying the logout dialog"
 msgstr "挂起时不显示注销对话框"
 
-#: xfce4-session-logout/main.c:74
+#: xfce4-session-logout/main.c:68
 msgid "Hibernate without displaying the logout dialog"
 msgstr "休眠时不显示注销对话框"
 
-#: xfce4-session-logout/main.c:78
+#: xfce4-session-logout/main.c:71
 msgid "Hybrid Sleep without displaying the logout dialog"
 msgstr "混合睡眠时不显示注销对话框"
 
-#: xfce4-session-logout/main.c:82
+#: xfce4-session-logout/main.c:74
 msgid "Switch user without displaying the logout dialog"
 msgstr "切换用户时不显示注销对话框"
 
-#: xfce4-session-logout/main.c:86
+#: xfce4-session-logout/main.c:77
 msgid "Log out quickly; don't save the session"
 msgstr "快速注销；不保存会话"
 
-#: xfce4-session-logout/main.c:108
+#: xfce4-session-logout/main.c:97
 msgid "Unknown error"
 msgstr "未知错误"
 
-#: xfce4-session-logout/main.c:133
+#: xfce4-session-logout/main.c:122
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "编写者为 Benedikt Meurer <benny@xfce.org> "
 
-#: xfce4-session-logout/main.c:134
+#: xfce4-session-logout/main.c:123
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "和 Brian Tarricone <kelnos@xfce.org>。"
 
-#: xfce4-session-logout/main.c:154 xfce4-session-logout/main.c:229
+#: xfce4-session-logout/main.c:143 xfce4-session-logout/main.c:218
 msgid "Received error while trying to log out"
 msgstr "试图注销时收到错误"
 
-#: xfce4-session-logout/xfce4-session-logout.desktop.in:12
+#: xfce4-session-logout/xfce4-session-logout.desktop.in:10
+msgid "logout;exit;quit;shutdown;"
+msgstr "logout;exit;quit;shutdown;注销;退出;关机;"
+
+#: xfce4-session-logout/xfce4-session-logout.desktop.in:13
 msgid "Log out of the Xfce Desktop"
 msgstr "从 Xfce 桌面注销"
 
