@@ -248,10 +248,10 @@ xfsm_properties_load (GKeyFile *file,
 #define ENTRY(name) (compose (buffer, 256, prefix, (name)))
 
   XfsmProperties *properties;
-  const gchar *client_id;
-  const gchar *hostname;
+  gchar *client_id;
+  gchar *hostname;
   GError *error = NULL;
-  const gchar *value_str;
+  gchar *value_str;
   gchar **value_strv;
   gint value_int;
   gchar buffer[256];
@@ -274,12 +274,15 @@ xfsm_properties_load (GKeyFile *file,
                  "Skipping client: %s",
                  error->message);
       g_error_free (error);
+      g_free (client_id);
       return NULL;
     }
 
   xfsm_verbose ("Loading properties for client %s\n", client_id);
 
   properties = xfsm_properties_new (client_id, hostname);
+  g_free (hostname);
+  g_free (client_id);
 
   for (i = 0; strv_properties[i].name; ++i)
     {
@@ -303,7 +306,10 @@ xfsm_properties_load (GKeyFile *file,
     {
       value_str = g_key_file_get_string (file, group, ENTRY (str_properties[i].name), NULL);
       if (value_str)
-        xfsm_properties_set_string (properties, str_properties[i].xsmp_name, value_str);
+        {
+          xfsm_properties_set_string (properties, str_properties[i].xsmp_name, value_str);
+          g_free (value_str);
+        }
     }
 
   for (i = 0; uchar_properties[i].name; ++i)
