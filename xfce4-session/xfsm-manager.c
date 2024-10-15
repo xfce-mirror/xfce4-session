@@ -585,8 +585,6 @@ xfsm_manager_load_failsafe (XfsmManager *manager,
   gint count;
   gint i;
 
-  hostname = xfce_gethostname ();
-
   failsafe_name = xfconf_channel_get_string (channel, "/general/FailsafeSessionName", NULL);
   if (G_UNLIKELY (!failsafe_name))
     {
@@ -623,6 +621,8 @@ xfsm_manager_load_failsafe (XfsmManager *manager,
       return FALSE;
     }
 
+  hostname = xfce_gethostname ();
+
   g_snprintf (propbuf, sizeof (propbuf), "/sessions/%s/Count", failsafe_name);
   count = xfconf_channel_get_int (channel, propbuf, 0);
 
@@ -640,7 +640,7 @@ xfsm_manager_load_failsafe (XfsmManager *manager,
       priority = xfconf_channel_get_int (channel, priority_entry, 50);
 
       xfsm_properties_set_string (properties, SmProgram, command[0]);
-      xfsm_properties_set_strv (properties, SmRestartCommand, g_strdupv (command));
+      xfsm_properties_set_strv (properties, SmRestartCommand, command);
       xfsm_properties_set_uchar (properties, GsmPriority, priority);
       g_queue_push_tail (manager->pending_properties, properties);
       g_strfreev (command);
@@ -648,6 +648,8 @@ xfsm_manager_load_failsafe (XfsmManager *manager,
   g_queue_sort (manager->pending_properties, (GCompareDataFunc) G_CALLBACK (xfsm_properties_compare), NULL);
 
   g_free (failsafe_name);
+  g_free (hostname);
+
   if (g_queue_peek_head (manager->pending_properties) == NULL)
     {
       if (error)
