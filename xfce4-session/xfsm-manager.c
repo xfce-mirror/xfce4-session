@@ -1021,7 +1021,10 @@ xfsm_manager_register_client (XfsmManager *manager,
           /* new sms client */
           gchar *client_id = xfsm_client_generate_id (sms_conn);
 
-          properties = xfsm_properties_new (client_id, SmsClientHostName (sms_conn));
+          char *hostname = SmsClientHostName (sms_conn);
+          properties = xfsm_properties_new (client_id, hostname);
+          free (hostname);
+
           xfsm_client_set_initial_properties (client, properties);
 
           g_free (client_id);
