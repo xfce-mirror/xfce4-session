@@ -241,7 +241,11 @@ xfsm_shutdown_fallback_user_is_operator (void)
       struct group *gr;
 
       gr = getgrgid (groups[i]);
+#ifdef __OpenBSD__
+      if (gr != NULL && strncmp (gr->gr_name, "_shutdown", 9) == 0)
+#else
       if (gr != NULL && strncmp (gr->gr_name, "operator", 8) == 0)
+#endif
         {
           is_operator = TRUE;
           break;
