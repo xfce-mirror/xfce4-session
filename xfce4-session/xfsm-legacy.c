@@ -309,7 +309,6 @@ xfsm_legacy_perform_session_save (void)
   gchar *wmclass1;
   gchar *wmclass2;
   Window root, window;
-  XEvent ev;
   int awaiting_replies = 0;
   GTimer *timer;
 
@@ -400,9 +399,9 @@ xfsm_legacy_perform_session_save (void)
       sm_window = SM_WINDOW (lp->data);
       if (sm_window->type == SM_WMSAVEYOURSELF)
         {
-          ++awaiting_replies;
+          XEvent ev = { 0 };
 
-          bzero (&ev, sizeof (ev));
+          ++awaiting_replies;
 
           ev.xclient.type = ClientMessage;
           ev.xclient.window = sm_window->wid;
@@ -423,6 +422,8 @@ xfsm_legacy_perform_session_save (void)
     {
       if (XPending (display))
         {
+          XEvent ev = { 0 };
+
           XNextEvent (display, &ev);
           if (ev.type == UnmapNotify
               || (ev.type == PropertyNotify && ev.xproperty.atom == XA_WM_COMMAND))

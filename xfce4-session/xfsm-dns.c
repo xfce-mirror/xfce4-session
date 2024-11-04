@@ -86,7 +86,7 @@ check_for_dns (void)
 {
 #ifdef HAVE_GETADDRINFO
   struct addrinfo *result = NULL;
-  struct addrinfo hints;
+  struct addrinfo hints = { 0 };
 #endif
   char buffer[256];
   gchar *hostname;
@@ -96,7 +96,6 @@ check_for_dns (void)
     return FALSE;
 
 #ifdef HAVE_GETADDRINFO
-  bzero (&hints, sizeof (hints));
   hints.ai_socktype = SOCK_STREAM;
   hints.ai_flags = AI_CANONNAME;
 

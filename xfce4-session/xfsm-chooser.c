@@ -101,10 +101,9 @@ xfsm_chooser_get_session (const XfsmChooser *chooser)
   GtkTreeSelection *selection;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  GValue value;
+  GValue value = G_VALUE_INIT;
   gchar *name;
 
-  bzero (&value, sizeof (value));
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (chooser->tree));
   if (!gtk_tree_selection_get_selected (selection, &model, &iter))
     {
