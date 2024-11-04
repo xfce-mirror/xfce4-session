@@ -126,6 +126,8 @@ if test "x$XFCE4_SESSION_WITH_CK" = "x1"; then
     exit 1
   fi
 else
+  # workaround https://github.com/canonical/lightdm/issues/63
+  sleep 1
   # start xfce4-session normally
   exec $XFCE4_SESSION_COMPOSITOR xfce4-session
 fi
