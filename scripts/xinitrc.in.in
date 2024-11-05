@@ -126,6 +126,23 @@ if test "x$XFCE4_SESSION_WITH_CK" = "x1"; then
     exit 1
   fi
 else
+  # workaround https://github.com/canonical/lightdm/issues/63
+  if [ -n "$XDG_VTNR" ] && [ -f "/sys/devices/virtual/tty/tty0/active" ]; then
+    VT_TEST_CNT=1
+    while true; do
+      CURRENT_VT=`cat /sys/devices/virtual/tty/tty0/active`
+      if [ "$CURRENT_VT" = "tty$XDG_VTNR" ]; then
+        break
+      fi
+      VT_TEST_CNT=`expr $VT_TEST_CNT + 1`
+      if [ "$VT_TEST_CNT" -gt 100 ]; then
+        echo "VT $XDG_VTNR is expected but the switch did not happen in the last second, continuing anyway."
+        break
+      fi
+      sleep 0.01
+    done
+  fi
+
   # start xfce4-session normally
   exec $XFCE4_SESSION_COMPOSITOR xfce4-session
 fi
