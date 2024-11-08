@@ -333,7 +333,7 @@ sm_close_connection (SmsConn sms_conn,
 
   xfsm_manager_close_connection (XFSM_CLIENT_MANAGER (client), client, TRUE);
 
-  if (num_reasons > 0)
+  if (reasons != NULL)
     SmFreeReasons (num_reasons, reasons);
 }
 
