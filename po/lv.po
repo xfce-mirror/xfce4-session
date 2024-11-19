@@ -1,18 +1,20 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Rihards Priedītis <rprieditis@gmail.com>, 2009
-# Rihards Prieditis <RPrieditis@gmail.com>, 2009
+# Xfce Bot <transifex@xfce.org>, 2021
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Xfce4-session\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-29 00:30+0200\n"
-"PO-Revision-Date: 2019-04-28 22:30+0000\n"
-"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
-"Language-Team: Latvian (http://www.transifex.com/xfce/xfce4-session/language/lv/)\n"
+"POT-Creation-Date: 2023-05-30 00:49+0200\n"
+"PO-Revision-Date: 2020-12-28 17:30+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>, 2021\n"
+"Language-Team: Latvian (https://app.transifex.com/xfce/teams/16840/lv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -27,6 +29,14 @@ msgstr ""
 msgid "Use this session to run Xfce as your desktop environment"
 msgstr ""
 
+#: ../libxfsm/xfsm-util.c:331
+msgid "Session"
+msgstr ""
+
+#: ../libxfsm/xfsm-util.c:342
+msgid "Last accessed"
+msgstr ""
+
 #: ../scripts/xscreensaver.desktop.in.h:1
 msgid "Screensaver"
 msgstr ""
@@ -35,291 +45,299 @@ msgstr ""
 msgid "Launch screensaver and locker program"
 msgstr ""
 
-#: ../settings/main.c:68
+#: ../settings/main.c:99
 msgid "Settings manager socket"
 msgstr "Uzstādījumu pārvaldnieka sokets"
 
-#: ../settings/main.c:68
+#: ../settings/main.c:99
 msgid "SOCKET ID"
 msgstr "SOKETA ID"
 
-#: ../settings/main.c:69
+#: ../settings/main.c:100
 msgid "Version information"
 msgstr "Versijas informācija"
 
-#: ../settings/main.c:80 ../xfce4-session/main.c:333
+#: ../settings/main.c:111 ../xfce4-session/main.c:324
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Ievadiet \"%s --help\", lai iegūtu lietošanas informāciju"
 
-#: ../settings/main.c:92 ../xfce4-session/main.c:343
+#: ../settings/main.c:123 ../xfce4-session/main.c:334
 #: ../xfce4-session-logout/main.c:146
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce izstrādes komanda. Visas tiesības paturētas."
 
-#: ../settings/main.c:93 ../xfce4-session/main.c:344
+#: ../settings/main.c:124 ../xfce4-session/main.c:335
 #: ../xfce4-session-logout/main.c:149
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Lūdzu ziņojiet par kļūdām uz <%s>."
 
-#: ../settings/main.c:102 ../xfce4-session/main.c:352
+#: ../settings/main.c:133 ../xfce4-session/main.c:343
 msgid "Unable to contact settings server"
 msgstr "Nevar savienoties ar uzstādījuma serveri"
 
-#: ../settings/main.c:121
+#: ../settings/main.c:153
 msgid "Unable to create user interface from embedded definition data"
 msgstr "Nevar izveidot lietotāja interfeisu no iegultajiem definīcijas datiem"
 
-#: ../settings/main.c:132
+#: ../settings/main.c:167
 msgid "App_lication Autostart"
 msgstr ""
 
-#: ../settings/session-editor.c:61
+#: ../settings/main.c:173
+msgid "Currently active session:"
+msgstr ""
+
+#: ../settings/session-editor.c:63
 msgid "If running"
 msgstr "Ja skrien"
 
-#: ../settings/session-editor.c:62
+#: ../settings/session-editor.c:64
 msgid "Always"
 msgstr "Vienmēr"
 
-#: ../settings/session-editor.c:63
+#: ../settings/session-editor.c:65
 msgid "Immediately"
 msgstr "Nekavējoties"
 
-#: ../settings/session-editor.c:64
+#: ../settings/session-editor.c:66
 msgid "Never"
 msgstr "Nekad"
 
-#: ../settings/session-editor.c:129
+#: ../settings/session-editor.c:138
 msgid "Session Save Error"
 msgstr "Sesijas saglabāšanas kļūda"
 
-#: ../settings/session-editor.c:130
+#: ../settings/session-editor.c:139
 msgid "Unable to save the session"
 msgstr "Neizdevās saglabāt sesiju"
 
-#: ../settings/session-editor.c:132 ../settings/session-editor.c:289
-#: ../xfce4-session/xfsm-manager.c:1292
+#: ../settings/session-editor.c:141 ../settings/session-editor.c:314
+#: ../xfce4-session/xfsm-manager.c:1282
+#: ../settings/xfce4-session-settings.ui.h:6
 msgid "_Close"
 msgstr "_Aizvērt"
 
-#: ../settings/session-editor.c:170
+#: ../settings/session-editor.c:199
 msgid "Clear sessions"
 msgstr ""
 
-#: ../settings/session-editor.c:171
+#: ../settings/session-editor.c:200
 msgid "Are you sure you want to empty the session cache?"
 msgstr ""
 
-#: ../settings/session-editor.c:172
+#: ../settings/session-editor.c:201
 msgid ""
 "The saved states of your applications will not be restored during your next "
 "login."
 msgstr ""
 
-#: ../settings/session-editor.c:173 ../settings/session-editor.c:257
-#: ../xfce4-session/xfsm-manager.c:710
-#: ../xfce4-session/xfsm-logout-dialog.c:212
+#: ../settings/session-editor.c:202 ../settings/session-editor.c:289
+#: ../settings/xfae-dialog.c:77 ../xfce4-session/xfsm-manager.c:683
+#: ../xfce4-session/xfsm-logout-dialog.c:221
 msgid "_Cancel"
 msgstr "A_tcelt"
 
-#: ../settings/session-editor.c:174
+#: ../settings/session-editor.c:203
 msgid "_Proceed"
 msgstr ""
 
-#: ../settings/session-editor.c:212
+#: ../settings/session-editor.c:241
 #, c-format
 msgid "You might need to delete some files manually in \"%s\"."
 msgstr ""
 
-#: ../settings/session-editor.c:215
+#: ../settings/session-editor.c:244
 msgid "All Xfce cache files could not be cleared"
 msgstr ""
 
-#: ../settings/session-editor.c:251
+#: ../settings/session-editor.c:283
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "Esat drošs, ka vēlaties terminēt \"%s\"?"
 
-#: ../settings/session-editor.c:254 ../settings/session-editor.c:286
+#: ../settings/session-editor.c:286 ../settings/session-editor.c:311
 msgid "Terminate Program"
 msgstr "Terminēt programmu"
 
-#: ../settings/session-editor.c:256
+#: ../settings/session-editor.c:288
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
-msgstr "Lietotne pazaudēs visus nesaglabātos stāvokļus un netiks atsākti nākamajā sesijā."
+msgstr ""
+"Lietotne pazaudēs visus nesaglabātos stāvokļus un netiks atsākti nākamajā "
+"sesijā."
 
-#: ../settings/session-editor.c:258 ../settings/xfce4-session-settings.ui.h:14
+#: ../settings/session-editor.c:290 ../settings/xfce4-session-settings.ui.h:21
 msgid "_Quit Program"
 msgstr "_Iziet no programmas"
 
-#: ../settings/session-editor.c:287
+#: ../settings/session-editor.c:312
 msgid "Unable to terminate program."
 msgstr "Nevar terminēt programmu."
 
-#: ../settings/session-editor.c:509
+#: ../settings/session-editor.c:537
 msgid "(Unknown program)"
 msgstr "(Nezināma programma)"
 
-#: ../settings/session-editor.c:733
+#: ../settings/session-editor.c:784
 msgid "Priority"
 msgstr "Prioritāte"
 
-#: ../settings/session-editor.c:741
+#: ../settings/session-editor.c:794
 msgid "PID"
 msgstr "PID"
 
-#: ../settings/session-editor.c:747 ../settings/xfae-window.c:219
+#: ../settings/session-editor.c:801 ../settings/xfae-window.c:190
 msgid "Program"
 msgstr "Programma"
 
-#: ../settings/session-editor.c:772
+#: ../settings/session-editor.c:827
 msgid "Restart Style"
 msgstr "Pārstartēšanas stils"
 
-#: ../settings/xfae-dialog.c:77 ../settings/xfae-dialog.c:210
-msgid "Cancel"
-msgstr "Atcelt"
+#: ../settings/xfae-dialog.c:78 ../xfce4-session/xfsm-manager.c:685
+msgid "_OK"
+msgstr "_Labi"
 
-#: ../settings/xfae-dialog.c:78 ../settings/xfae-dialog.c:211
-msgid "OK"
-msgstr ""
-
-#: ../settings/xfae-dialog.c:82
+#: ../settings/xfae-dialog.c:82 ../settings/xfae-window.c:244
 msgid "Add application"
 msgstr "Pievienot lietotni"
 
-#: ../settings/xfae-dialog.c:94
+#: ../settings/xfae-dialog.c:96
 msgid "Name:"
 msgstr "Nosaukums:"
 
-#: ../settings/xfae-dialog.c:109
+#: ../settings/xfae-dialog.c:111
 msgid "Description:"
 msgstr "Apraksts:"
 
-#: ../settings/xfae-dialog.c:123 ../settings/xfae-model.c:548
+#: ../settings/xfae-dialog.c:125 ../settings/xfae-model.c:687
 msgid "Command:"
 msgstr "Komanda:"
 
-#: ../settings/xfae-dialog.c:136
+#: ../settings/xfae-dialog.c:138
 msgid "Trigger:"
 msgstr ""
 
-#: ../settings/xfae-dialog.c:207
+#: ../settings/xfae-dialog.c:209
 msgid "Select a command"
 msgstr "Atlasiet komandu"
 
-#: ../settings/xfae-dialog.c:258
+#: ../settings/xfae-dialog.c:212
+msgid "Cancel"
+msgstr "Atcelt"
+
+#: ../settings/xfae-dialog.c:213
+msgid "OK"
+msgstr ""
+
+#: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:266
 msgid "Edit application"
 msgstr ""
 
-#: ../settings/xfae-model.c:87
+#: ../settings/xfae-model.c:114
 msgid "on login"
 msgstr ""
 
-#: ../settings/xfae-model.c:88
+#: ../settings/xfae-model.c:115
 msgid "on logout"
 msgstr ""
 
-#: ../settings/xfae-model.c:89
+#: ../settings/xfae-model.c:116
 msgid "on shutdown"
 msgstr ""
 
-#: ../settings/xfae-model.c:90
+#: ../settings/xfae-model.c:117
 msgid "on restart"
 msgstr ""
 
-#: ../settings/xfae-model.c:91
+#: ../settings/xfae-model.c:118
 msgid "on suspend"
 msgstr ""
 
-#: ../settings/xfae-model.c:92
+#: ../settings/xfae-model.c:119
 msgid "on hibernate"
 msgstr ""
 
-#: ../settings/xfae-model.c:93
+#: ../settings/xfae-model.c:120
 msgid "on hybrid sleep"
 msgstr ""
 
-#: ../settings/xfae-model.c:94
+#: ../settings/xfae-model.c:121
 msgid "on switch user"
 msgstr ""
 
-#: ../settings/xfae-model.c:304 ../settings/xfae-model.c:970
-#: ../settings/xfae-model.c:1028
+#: ../settings/xfae-model.c:463 ../settings/xfae-model.c:1182
+#: ../settings/xfae-model.c:1240
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "Neizdevās atvērt %s rakstīšanai"
 
-#: ../settings/xfae-model.c:681
+#: ../settings/xfae-model.c:820
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "Neizdevās atsaitēt %s: %s"
 
-#: ../settings/xfae-model.c:772
+#: ../settings/xfae-model.c:982
 #, c-format
 msgid "Failed to create file %s"
 msgstr "Neizdevās izveidot failu %s"
 
-#: ../settings/xfae-model.c:796
+#: ../settings/xfae-model.c:1006
 #, c-format
 msgid "Failed to write file %s"
 msgstr "Neizdevās rakstīt failu %s"
 
-#: ../settings/xfae-model.c:856
+#: ../settings/xfae-model.c:1066
 #, c-format
 msgid "Failed to open %s for reading"
 msgstr ""
 
-#: ../settings/xfae-window.c:98
+#: ../settings/xfae-window.c:100
 msgid "Failed to set run hook"
 msgstr ""
 
-#: ../settings/xfae-window.c:139
-msgid ""
-"List of applications that will be started automatically on specific events like login, logout, shutdown, etc.\n"
-"On login additionally all applications that were saved on your last logout will be started.\n"
-"Cursive applications belong to another desktop environment, but you can still enable them if you want."
-msgstr ""
-
-#: ../settings/xfae-window.c:197
+#: ../settings/xfae-window.c:215
 msgid "Trigger"
 msgstr ""
 
-#: ../settings/xfae-window.c:238 ../settings/xfae-window.c:324
+#: ../settings/xfae-window.c:241 ../settings/xfae-window.c:330
 msgid "Add"
 msgstr ""
 
-#: ../settings/xfae-window.c:246 ../settings/xfae-window.c:330
+#: ../settings/xfae-window.c:250 ../settings/xfae-window.c:336
 msgid "Remove"
 msgstr ""
 
-#: ../settings/xfae-window.c:258
+#: ../settings/xfae-window.c:253
+msgid "Remove application"
+msgstr ""
+
+#: ../settings/xfae-window.c:263
 msgid "Edit"
 msgstr ""
 
-#: ../settings/xfae-window.c:384
+#: ../settings/xfae-window.c:390
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr ""
 
-#: ../settings/xfae-window.c:415 ../settings/xfae-window.c:429
+#: ../settings/xfae-window.c:421 ../settings/xfae-window.c:435
 msgid "Failed to remove item"
 msgstr ""
 
-#: ../settings/xfae-window.c:458
+#: ../settings/xfae-window.c:464
 msgid "Failed to edit item"
 msgstr ""
 
-#: ../settings/xfae-window.c:478
+#: ../settings/xfae-window.c:484
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr ""
 
-#: ../settings/xfae-window.c:506
+#: ../settings/xfae-window.c:512
 msgid "Failed to toggle item"
 msgstr ""
 
@@ -331,49 +349,42 @@ msgstr ""
 msgid "Print version information and exit"
 msgstr "Izdrukāt versijas informāciju un iziet"
 
-#: ../xfce4-session/xfsm-chooser.c:89
-#, c-format
-msgid "Last accessed: %s"
-msgstr "Pēdējā piekļuve: %s"
-
-#: ../xfce4-session/xfsm-chooser.c:225
+#: ../xfce4-session/xfsm-chooser.c:147
 msgid "Session Manager"
 msgstr ""
 
-#: ../xfce4-session/xfsm-chooser.c:251
+#: ../xfce4-session/xfsm-chooser.c:168
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
-msgstr "Izvēlaties sesiju, kuru vēlaties atjaunot. Jūs varat vienkārši veikt dubultklikšķi uz sesijas nosaukuma, lai to atjaunotu."
+msgstr ""
+"Izvēlaties sesiju, kuru vēlaties atjaunot. Jūs varat vienkārši veikt "
+"dubultklikšķi uz sesijas nosaukuma, lai to atjaunotu."
 
-#. "New" button
-#. xfce_gtk_button_new_mixed ("document-new", _("Create New Session"));
-#: ../xfce4-session/xfsm-chooser.c:283
+#: ../xfce4-session/xfsm-chooser.c:184
 msgid "Create a new session."
 msgstr "Izveidot jaunu sesiju."
 
-#. "Delete" button
-#. xfce_gtk_button_new_mixed ("document-new", _("Delete Session"));
-#: ../xfce4-session/xfsm-chooser.c:290
+#: ../xfce4-session/xfsm-chooser.c:191
 msgid "Delete a saved session."
 msgstr ""
 
 #. "Logout" button
-#: ../xfce4-session/xfsm-chooser.c:301
+#: ../xfce4-session/xfsm-chooser.c:202
 #: ../xfce4-session-logout/xfce4-session-logout.desktop.in.h:1
 msgid "Log Out"
 msgstr "Atteikties"
 
-#: ../xfce4-session/xfsm-chooser.c:303
+#: ../xfce4-session/xfsm-chooser.c:204
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "Atcelt pieteikšanās mēģinājumu un atgriezties pieteikšanās ekrānā."
 
 #. "Start" button
-#: ../xfce4-session/xfsm-chooser.c:310
+#: ../xfce4-session/xfsm-chooser.c:211
 msgid "Start"
 msgstr ""
 
-#: ../xfce4-session/xfsm-chooser.c:311
+#: ../xfce4-session/xfsm-chooser.c:212
 msgid "Start an existing session."
 msgstr ""
 
@@ -388,7 +399,11 @@ msgid ""
 "This will prevent Xfce from operating correctly.\n"
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
-msgstr "Nevarēja atrast interneta adresi %s.\nTas neļauj Xfce darboties korekti.\nIespējams problēmu var labot pievienojot\n%s rindiņu /etc/hosts failam, jūsu sistēmā."
+msgstr ""
+"Nevarēja atrast interneta adresi %s.\n"
+"Tas neļauj Xfce darboties korekti.\n"
+"Iespējams problēmu var labot pievienojot\n"
+"%s rindiņu /etc/hosts failam, jūsu sistēmā."
 
 #: ../xfce4-session/xfsm-dns.c:159
 msgid "Continue anyway"
@@ -398,101 +413,88 @@ msgstr "Turpināt vienalga"
 msgid "Try again"
 msgstr "Mēģināt atkal"
 
-#: ../xfce4-session/xfsm-global.c:339
-#, c-format
-msgid ""
-"The location and the format of the autostart directory has changed.\n"
-"The new location is\n"
-"\n"
-"  %s\n"
-"\n"
-"where you can place .desktop files to, that describe the applications\n"
-"to start when you login to your Xfce desktop. The files in your old\n"
-"autostart directory have been successfully migrated to the new\n"
-"location.\n"
-"You should delete this directory now.\n"
-msgstr "Atrašanās vieta un formāts automātiskās palaišanas direktorijai ir mainījies.\nJaunā atrašanās vieta ir\n\n  %s\n\nTur jūs varat likt .desktop failus, kuri apraksta lietotnes,\nlai sāktu viņas pie pieteikšanās Xfce darbvirsmas vidē. Faili jūsu vecajā\nautomātiskās palaišanās mapē ir veiksmīgi migrēti uz jauno\natrašanās vietu.\nJums šī mape tagad būtu jāizdzēš.\n"
-
-#: ../xfce4-session/xfsm-manager.c:599
+#: ../xfce4-session/xfsm-manager.c:567
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
 "running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
 "incorrectly (must include \"%s\"), or xfce4-session is installed "
 "incorrectly."
-msgstr "Nevar noteikt drošo sesijas nosaukumu. Iespējamie iemesli: xfconfd nav palaists (D-Bus uzstādījumu problēma); vides mainīgais $XDG_CONFIG_DIRS ir nepareizi uzstādīts (jābūt \"%s\"), vai xfce4-session nav pareizi instalēts."
+msgstr ""
+"Nevar noteikt drošo sesijas nosaukumu. Iespējamie iemesli: xfconfd nav "
+"palaists (D-Bus uzstādījumu problēma); vides mainīgais $XDG_CONFIG_DIRS ir "
+"nepareizi uzstādīts (jābūt \"%s\"), vai xfce4-session nav pareizi instalēts."
 
-#: ../xfce4-session/xfsm-manager.c:610
+#: ../xfce4-session/xfsm-manager.c:578
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Norādītā drošā sesija (\"%s\") nav atzīmēta, kā drošā sesija."
 
-#: ../xfce4-session/xfsm-manager.c:640
+#: ../xfce4-session/xfsm-manager.c:611
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Lietotņu saraksts drošajā sesija ir tukšs."
 
-#: ../xfce4-session/xfsm-manager.c:712
-msgid "_OK"
-msgstr "_Labi"
-
-#: ../xfce4-session/xfsm-manager.c:722
+#: ../xfce4-session/xfsm-manager.c:697
 msgid "Name for the new session"
 msgstr ""
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: ../xfce4-session/xfsm-manager.c:799
+#: ../xfce4-session/xfsm-manager.c:775
 msgid "Session Manager Error"
 msgstr "Sesijas pārvaldnieka kļūda"
 
-#: ../xfce4-session/xfsm-manager.c:801
+#: ../xfce4-session/xfsm-manager.c:777
 msgid "Unable to load a failsafe session"
 msgstr "Nevar ielādēt drošo sesiju"
 
-#: ../xfce4-session/xfsm-manager.c:803
+#: ../xfce4-session/xfsm-manager.c:779
 msgid "_Quit"
 msgstr "_Iziet"
 
-#: ../xfce4-session/xfsm-manager.c:1282
+#: ../xfce4-session/xfsm-manager.c:1272
 msgid "Shutdown Failed"
 msgstr "Izslēgšana neizdevās"
 
-#: ../xfce4-session/xfsm-manager.c:1285
+#: ../xfce4-session/xfsm-manager.c:1275
 msgid "Failed to suspend session"
 msgstr "Neizdevās iemidzināt sesiju"
 
-#: ../xfce4-session/xfsm-manager.c:1287
+#: ../xfce4-session/xfsm-manager.c:1277
 msgid "Failed to hibernate session"
 msgstr "Neizdevās hibernēt sesiju"
 
-#: ../xfce4-session/xfsm-manager.c:1289
+#: ../xfce4-session/xfsm-manager.c:1279
 msgid "Failed to hybrid sleep session"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1290
+#: ../xfce4-session/xfsm-manager.c:1280
 msgid "Failed to switch user"
 msgstr ""
 
-#: ../xfce4-session/xfsm-manager.c:1596
+#: ../xfce4-session/xfsm-manager.c:1586
 #, c-format
 msgid "Can only terminate clients when in the idle state"
 msgstr "Var tikai terminēt klientus, kad atrodas dīkstāvē"
 
-#: ../xfce4-session/xfsm-manager.c:2253
+#: ../xfce4-session/xfsm-manager.c:2250
 msgid "Session manager must be in idle state when requesting a checkpoint"
-msgstr "Sesiju pārvaldniekam jāatrodas dīkstāvē, kad notiek pārbaudes punkta pieprasīšana"
+msgstr ""
+"Sesiju pārvaldniekam jāatrodas dīkstāvē, kad notiek pārbaudes punkta "
+"pieprasīšana"
 
-#: ../xfce4-session/xfsm-manager.c:2323 ../xfce4-session/xfsm-manager.c:2343
+#: ../xfce4-session/xfsm-manager.c:2320 ../xfce4-session/xfsm-manager.c:2340
 msgid "Session manager must be in idle state when requesting a shutdown"
-msgstr "Sesiju pārvaldniekam jāatrodas dīkstāvē, kad notiek izslēgšanas pieprasīšana"
+msgstr ""
+"Sesiju pārvaldniekam jāatrodas dīkstāvē, kad notiek izslēgšanas pieprasīšana"
 
-#: ../xfce4-session/xfsm-manager.c:2388
+#: ../xfce4-session/xfsm-manager.c:2385
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr ""
 
-#: ../xfce4-session/xfsm-logout-dialog.c:184
+#: ../xfce4-session/xfsm-logout-dialog.c:193
 #, c-format
 msgid "Log out %s"
 msgstr ""
@@ -500,47 +502,47 @@ msgstr ""
 #. *
 #. * Logout
 #. *
-#: ../xfce4-session/xfsm-logout-dialog.c:229
+#: ../xfce4-session/xfsm-logout-dialog.c:238
 msgid "_Log Out"
 msgstr ""
 
-#: ../xfce4-session/xfsm-logout-dialog.c:249
+#: ../xfce4-session/xfsm-logout-dialog.c:258
 msgid "_Restart"
 msgstr ""
 
-#: ../xfce4-session/xfsm-logout-dialog.c:269
+#: ../xfce4-session/xfsm-logout-dialog.c:278
 msgid "Shut _Down"
 msgstr ""
 
-#: ../xfce4-session/xfsm-logout-dialog.c:293
+#: ../xfce4-session/xfsm-logout-dialog.c:302
 msgid "Sus_pend"
 msgstr ""
 
-#: ../xfce4-session/xfsm-logout-dialog.c:327
+#: ../xfce4-session/xfsm-logout-dialog.c:336
 msgid "_Hibernate"
 msgstr "_Hibernēt"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:358
+#: ../xfce4-session/xfsm-logout-dialog.c:367
 msgid "H_ybrid Sleep"
 msgstr ""
 
-#: ../xfce4-session/xfsm-logout-dialog.c:389
+#: ../xfce4-session/xfsm-logout-dialog.c:398
 msgid "Switch _User"
 msgstr ""
 
-#: ../xfce4-session/xfsm-logout-dialog.c:414
+#: ../xfce4-session/xfsm-logout-dialog.c:423
 msgid "_Save session for future logins"
 msgstr "_Saglabāt sesiju nākamajām pieteikšanās reizēm"
 
-#: ../xfce4-session/xfsm-logout-dialog.c:442
+#: ../xfce4-session/xfsm-logout-dialog.c:451
 msgid "An error occurred"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown.c:162
+#: ../xfce4-session/xfsm-shutdown.c:159
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr ""
 
-#: ../xfce4-session/xfsm-shutdown.c:219
+#: ../xfce4-session/xfsm-shutdown.c:216
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr ""
@@ -603,7 +605,7 @@ msgid "Log out of the Xfce Desktop"
 msgstr ""
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
-#: ../settings/xfce4-session-settings.ui.h:1
+#: ../settings/xfce4-session-settings.ui.h:4
 msgid "Session and Startup"
 msgstr "Sesijas uz palaišanās"
 
@@ -611,116 +613,143 @@ msgstr "Sesijas uz palaišanās"
 msgid "Customize desktop startup"
 msgstr ""
 
-#: ../settings/xfce4-session-settings.ui.h:2
+#: ../settings/xfce-session-settings.desktop.in.h:3
+msgid ""
+"session;settings;preferences;manager;startup;login;logout;shutdown;lock "
+"screen;application;autostart;launch;services;daemon;agent;"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.ui.h:1
+msgid ""
+"These applications are a part of the currently-running session,\n"
+"and can be saved now or when you log out.\n"
+"Changes below will only take effect when the session is saved."
+msgstr ""
+
+#: ../settings/xfce4-session-settings.ui.h:5
+msgid "_Help"
+msgstr "_Palīdzība"
+
+#: ../settings/xfce4-session-settings.ui.h:7
 msgid "_Display chooser on login"
 msgstr "_Attēlot izvēlētāju pie pieteikšanās"
 
-#: ../settings/xfce4-session-settings.ui.h:3
+#: ../settings/xfce4-session-settings.ui.h:8
 msgid "Display the session chooser every time Xfce starts"
 msgstr "Attēlo sesijas izvēlētāju katru reizi, kad palaižas Xfce"
 
-#: ../settings/xfce4-session-settings.ui.h:4
+#: ../settings/xfce4-session-settings.ui.h:9
 msgid "<b>Session Chooser</b>"
 msgstr "<b>Sesijas izvēlētājs</b>"
 
-#: ../settings/xfce4-session-settings.ui.h:5
+#: ../settings/xfce4-session-settings.ui.h:10
 msgid "Automatically save session on logo_ut"
 msgstr ""
 
-#: ../settings/xfce4-session-settings.ui.h:6
+#: ../settings/xfce4-session-settings.ui.h:11
 msgid "Always save the session when logging out"
 msgstr "Vienmēr saglabāt sesiju, kad atsakās"
 
-#: ../settings/xfce4-session-settings.ui.h:7
+#: ../settings/xfce4-session-settings.ui.h:12
 msgid "Pro_mpt on logout"
 msgstr ""
 
-#: ../settings/xfce4-session-settings.ui.h:8
+#: ../settings/xfce4-session-settings.ui.h:13
 msgid "Prompt for confirmation when logging out"
 msgstr "Jautā apstiprinājumu uz atteikšanos"
 
-#: ../settings/xfce4-session-settings.ui.h:9
+#: ../settings/xfce4-session-settings.ui.h:14
 msgid "<b>Logout Settings</b>"
 msgstr "<b>Atteikšanās uzstādījumi</b>"
 
-#: ../settings/xfce4-session-settings.ui.h:10
-msgid "_General"
-msgstr "_Vsipārēji"
-
-#: ../settings/xfce4-session-settings.ui.h:11
-msgid ""
-"These applications are a part of the currently-running session, and can be "
-"saved when you log out.  Changes below will only take effect when the "
-"session is saved."
-msgstr "Šīs lietotnes pagaidām ir daļa no pašreiz skrejošās sesijas un tiks saglabātas pie atteikšanās. Izmaiņas zemāk stāsies spēkā, pēc sesijas saglabāšanas."
-
-#: ../settings/xfce4-session-settings.ui.h:12
-msgid "Save Sess_ion"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.ui.h:13
-msgid "Clear Save_d Sessions"
-msgstr ""
-
 #: ../settings/xfce4-session-settings.ui.h:15
-msgid "Sessio_n"
+msgid "Lock screen be_fore sleep"
 msgstr ""
 
 #: ../settings/xfce4-session-settings.ui.h:16
-msgid "Launch GN_OME services on startup"
-msgstr "Izsaukt GN_OME pakalpojumus uz palaišanos"
+msgid "Run xflock4 before suspending or hibernating the system"
+msgstr ""
 
 #: ../settings/xfce4-session-settings.ui.h:17
-msgid "Start GNOME services, such as gnome-keyring"
+msgid "<b>Shutdown</b>"
 msgstr ""
 
 #: ../settings/xfce4-session-settings.ui.h:18
-msgid "Launch _KDE services on startup"
-msgstr "Izsaukt _KDE pakalpojumus uz palaišanos"
+msgid "_General"
+msgstr "_Vsipārēji"
 
 #: ../settings/xfce4-session-settings.ui.h:19
-msgid "Start KDE services, such as kdeinit"
+msgid "Save Sess_ion"
 msgstr ""
 
 #: ../settings/xfce4-session-settings.ui.h:20
+msgid "Currently active session: <b>Default</b>"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.ui.h:22
+msgid "Current Sessio_n"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.ui.h:23
+msgid "_Remove"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.ui.h:24
+msgid "Delete the selected session"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.ui.h:25
+msgid "Clear Save_d Sessions"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.ui.h:26
+msgid "Saved _Sessions"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.ui.h:27
+msgid "Launch GN_OME services on startup"
+msgstr "Izsaukt GN_OME pakalpojumus uz palaišanos"
+
+#: ../settings/xfce4-session-settings.ui.h:28
+msgid "Start GNOME services, such as gnome-keyring"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.ui.h:29
+msgid "Launch _KDE services on startup"
+msgstr "Izsaukt _KDE pakalpojumus uz palaišanos"
+
+#: ../settings/xfce4-session-settings.ui.h:30
+msgid "Start KDE services, such as kdeinit"
+msgstr ""
+
+#: ../settings/xfce4-session-settings.ui.h:31
 msgid "<b>Compatibility</b>"
 msgstr "<b>Saderība</b>"
 
-#: ../settings/xfce4-session-settings.ui.h:21
+#: ../settings/xfce4-session-settings.ui.h:32
 msgid "Manage _remote applications"
 msgstr "Pā_rvaldīt attālās lietotnes"
 
-#: ../settings/xfce4-session-settings.ui.h:22
+#: ../settings/xfce4-session-settings.ui.h:33
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
 msgstr "Pārvaldīt attālās lietotnes caur tīklu (tas var būt drošības risks)"
 
-#: ../settings/xfce4-session-settings.ui.h:23
+#: ../settings/xfce4-session-settings.ui.h:34
 msgid "<b>Security</b>"
 msgstr "<b>Drošība</b>"
 
-#: ../settings/xfce4-session-settings.ui.h:24
-msgid "Lock screen be_fore sleep"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.ui.h:25
-msgid "Run xflock4 before suspending or hibernating the system"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.ui.h:26
-msgid "<b>Shutdown</b>"
-msgstr ""
-
-#: ../settings/xfce4-session-settings.ui.h:27
+#: ../settings/xfce4-session-settings.ui.h:35
 msgid "Ad_vanced"
 msgstr "_Paplašināti"
 
-#: ../settings/xfce4-session-settings.ui.h:28
+#: ../settings/xfce4-session-settings.ui.h:36
 msgid "Saving Session"
 msgstr "Sesijas saglabāšana"
 
-#: ../settings/xfce4-session-settings.ui.h:29
+#: ../settings/xfce4-session-settings.ui.h:37
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
-msgstr "Jūsu sesija tiek saglabāta. Ja nevēlaties gaidīt, jūs varat aizvērt šo logu."
+msgstr ""
+"Jūsu sesija tiek saglabāta. Ja nevēlaties gaidīt, jūs varat aizvērt šo logu."
