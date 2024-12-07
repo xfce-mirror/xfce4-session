@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-03-29 12:48+0100\n"
+"POT-Creation-Date: 2024-10-15 00:48+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Elishai Eliyahu <elishai@mailfence.com>, 2020,2023-2024\n"
 "Language-Team: Hebrew (http://app.transifex.com/xfce/xfce4-session/language/he/)\n"
@@ -33,90 +33,104 @@ msgstr "סשן Xfce"
 msgid "Use this session to run Xfce as your desktop environment"
 msgstr "השתמש בסשן זה כדי להריץ את Xfce בתור סביבת העבודה שלך"
 
+#: xfce.desktop.in:10
+msgid "xfce;session;desktop;environment;window manager;gui;"
+msgstr "xfce;session;desktop;environment;window manager;gui;"
+
 #: xfce-wayland.desktop.in:4
 msgid "Xfce Session (Wayland)"
 msgstr "Xfce סשן (Wayland)"
 
-#: libxfsm/xfsm-util.c:370
+#: xfce-wayland.desktop.in:10
+msgid "xfce;wayland;desktop;environment;session;"
+msgstr "xfce;wayland;desktop;environment;session;"
+
+#: libxfsm/xfsm-util.c:375
 msgid "Session"
 msgstr "סשן"
 
-#: libxfsm/xfsm-util.c:381
+#: libxfsm/xfsm-util.c:386
 msgid "Last accessed"
 msgstr "גישה אחרונה"
 
-#: settings/main.c:100
+#: settings/main.c:103
 msgid "Settings manager socket"
 msgstr "שקע מנהל הגדרות"
 
-#: settings/main.c:100
+#: settings/main.c:103
 msgid "SOCKET ID"
 msgstr "זהות שקע"
 
-#: settings/main.c:101
+#: settings/main.c:104
 msgid "Version information"
 msgstr "מידע גרסה"
 
-#: settings/main.c:112 xfce4-session/main.c:354
+#: settings/main.c:116 xfce4-session/main.c:356
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "הקלד '%s --help' לשימוש."
 
-#: settings/main.c:124 xfce4-session/main.c:364
-#: xfce4-session-logout/main.c:132
+#: settings/main.c:130 xfce4-session/main.c:366
+#: xfce4-session-logout/main.c:121
 msgid "The Xfce development team. All rights reserved."
 msgstr "קבוצת הפיתוח של Xfce. כל הזכויות שמורות."
 
-#: settings/main.c:125 xfce4-session/main.c:365
-#: xfce4-session-logout/main.c:135
+#: settings/main.c:131 xfce4-session/main.c:367
+#: xfce4-session-logout/main.c:124
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "אנא דווח באגים ל <%s>. "
 
-#: settings/main.c:134 xfce4-session/main.c:373
+#: settings/main.c:139 xfce4-session/main.c:375
 msgid "Unable to contact settings server"
 msgstr "לא יכול ליצור קשר עם שרת הגדרות"
 
-#: settings/main.c:154
+#: settings/main.c:160
 msgid "Unable to create user interface from embedded definition data"
 msgstr "לא יכול ליצור ממשק משתמש ממידע הגדרה משובץ"
 
-#: settings/main.c:168
+#: settings/main.c:174
 msgid "App_lication Autostart"
 msgstr "הפעלת ישום _אוטומטית"
 
-#: settings/main.c:174
+#: settings/main.c:180
 msgid "Currently active session:"
 msgstr "סשן פעיל נוכחי:"
 
-#: settings/session-editor.c:63
+#: settings/session-editor.c:60
 msgid "If running"
 msgstr "אם מורץ"
 
-#: settings/session-editor.c:64
+#: settings/session-editor.c:61
 msgid "Always"
 msgstr "תמיד"
 
-#: settings/session-editor.c:65
+#: settings/session-editor.c:62
 msgid "Immediately"
 msgstr "מיידית"
 
-#: settings/session-editor.c:66
+#: settings/session-editor.c:63
 msgid "Never"
 msgstr "אף פעם"
 
-#: settings/session-editor.c:138
+#: settings/session-editor.c:137
 msgid "Session Save Error"
 msgstr "שגיאת שמירת סשן"
 
-#: settings/session-editor.c:139
+#: settings/session-editor.c:137
 msgid "Unable to save the session"
 msgstr "לא יכול לשמור את הסשן"
 
-#: settings/session-editor.c:141 settings/session-editor.c:315
-#: xfce4-session/xfsm-manager.c:1312 settings/xfce4-session-settings.ui:95
+#: settings/session-editor.c:139 settings/session-editor.c:322
+#: xfce4-session/xfsm-manager.c:1322 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "_סגור"
+
+#: settings/session-editor.c:195
+msgid ""
+"The saved states of your applications will not be restored during your next "
+"login."
+msgstr "המצבים השמורים של היישומים שלך לא ישוחזרו במהלך הכניסה הבאה שלך."
 
 #: settings/session-editor.c:200
 msgid "Clear sessions"
@@ -126,79 +140,73 @@ msgstr "נקה סשנים"
 msgid "Are you sure you want to empty the session cache?"
 msgstr "האם אתה בטוח כי ברצונך לטהר מטמון סשן?"
 
-#: settings/session-editor.c:202
-msgid ""
-"The saved states of your applications will not be restored during your next "
-"login."
-msgstr "המצבים השמורים של היישומים שלך לא ישוחזרו במהלך הכניסה הבאה שלך."
-
-#: settings/session-editor.c:203 settings/session-editor.c:290
-#: settings/xfae-dialog.c:77 xfce4-session/xfsm-manager.c:712
-#: xfce4-session/xfsm-logout-dialog.c:227
+#: settings/session-editor.c:202 settings/session-editor.c:294
+#: settings/xfae-dialog.c:79 xfce4-session/xfsm-manager.c:725
+#: xfce4-session/xfsm-logout-dialog.c:230
 msgid "_Cancel"
 msgstr "_ביטול"
 
-#: settings/session-editor.c:204
+#: settings/session-editor.c:202
 msgid "_Proceed"
 msgstr "_המשך"
 
-#: settings/session-editor.c:242
+#: settings/session-editor.c:246
 #, c-format
 msgid "You might need to delete some files manually in \"%s\"."
 msgstr "ייתכן כי יהיה עליך למחוק ידנית קבצים מסוימים בתוך \"%s\"."
 
-#: settings/session-editor.c:245
+#: settings/session-editor.c:249
 msgid "All Xfce cache files could not be cleared"
 msgstr "לא היתה אפשרות לנקות את כל קבצי מטמון Xfce"
 
-#: settings/session-editor.c:284
+#: settings/session-editor.c:290
 #, c-format
 msgid "Are you sure you want to terminate \"%s\"?"
 msgstr "האם אתה בטוח כי ברצונך להפסיק את \"%s\"?"
 
-#: settings/session-editor.c:287 settings/session-editor.c:312
-msgid "Terminate Program"
-msgstr "סיים תוכנית"
-
-#: settings/session-editor.c:289
+#: settings/session-editor.c:291
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
 msgstr "היישום יאבד כל מצב לא שמור ויפעל מחדש בסשן הבא שלך."
 
-#: settings/session-editor.c:291 settings/xfce4-session-settings.ui:445
+#: settings/session-editor.c:293 settings/session-editor.c:320
+msgid "Terminate Program"
+msgstr "סיים תוכנית"
+
+#: settings/session-editor.c:295 settings/xfce4-session-settings.ui:445
 msgid "_Quit Program"
 msgstr "_צא מתוכנית"
 
-#: settings/session-editor.c:313
+#: settings/session-editor.c:320
 msgid "Unable to terminate program."
 msgstr "לא מסוגל לסיים תוכנית."
 
-#: settings/session-editor.c:541
+#: settings/session-editor.c:560
 msgid "(Unknown program)"
 msgstr "(תוכנית לא ידועה)"
 
-#: settings/session-editor.c:790
+#: settings/session-editor.c:818
 msgid "Priority"
 msgstr "עדיפות"
 
-#: settings/session-editor.c:800
+#: settings/session-editor.c:828
 msgid "PID"
 msgstr "PID"
 
-#: settings/session-editor.c:807 settings/xfae-window.c:198
+#: settings/session-editor.c:835 settings/xfae-window.c:204
 msgid "Program"
 msgstr "תוכנית"
 
-#: settings/session-editor.c:833
+#: settings/session-editor.c:861
 msgid "Restart Style"
 msgstr "הפעל מחדש סגנון"
 
-#: settings/xfae-dialog.c:78 xfce4-session/xfsm-manager.c:714
+#: settings/xfae-dialog.c:79 xfce4-session/xfsm-manager.c:726
 msgid "_OK"
 msgstr "_אישור"
 
-#: settings/xfae-dialog.c:82 settings/xfae-window.c:252
+#: settings/xfae-dialog.c:82 settings/xfae-window.c:258
 msgid "Add application"
 msgstr "הוספת יישום"
 
@@ -210,7 +218,7 @@ msgstr "שם:"
 msgid "Description:"
 msgstr "תיאור:"
 
-#: settings/xfae-dialog.c:125 settings/xfae-model.c:681
+#: settings/xfae-dialog.c:125 settings/xfae-model.c:707
 msgid "Command:"
 msgstr "פקודה:"
 
@@ -222,172 +230,172 @@ msgstr "טריגר:"
 msgid "Select a command"
 msgstr "בחירת פקודה"
 
-#: settings/xfae-dialog.c:212
+#: settings/xfae-dialog.c:210
 msgid "Cancel"
 msgstr "ביטול"
 
-#: settings/xfae-dialog.c:213
+#: settings/xfae-dialog.c:211
 msgid "OK"
 msgstr "אישור"
 
-#: settings/xfae-dialog.c:260 settings/xfae-window.c:274
+#: settings/xfae-dialog.c:258 settings/xfae-window.c:280
 msgid "Edit application"
 msgstr "עריכת יישום"
 
-#: settings/xfae-model.c:114
+#: settings/xfae-model.c:142
 msgid "on login"
 msgstr "בכניסה"
 
-#: settings/xfae-model.c:115
+#: settings/xfae-model.c:143
 msgid "on logout"
 msgstr "בהתנתקות"
 
-#: settings/xfae-model.c:116
+#: settings/xfae-model.c:144
 msgid "on shutdown"
 msgstr "בכיבוי"
 
-#: settings/xfae-model.c:117
+#: settings/xfae-model.c:145
 msgid "on restart"
 msgstr "באתחול"
 
-#: settings/xfae-model.c:118
+#: settings/xfae-model.c:146
 msgid "on suspend"
 msgstr "בהשהיה"
 
-#: settings/xfae-model.c:119
+#: settings/xfae-model.c:147
 msgid "on hibernate"
 msgstr "במצב שינה"
 
-#: settings/xfae-model.c:120
+#: settings/xfae-model.c:148
 msgid "on hybrid sleep"
 msgstr "במצב שינה היברידית"
 
-#: settings/xfae-model.c:121
+#: settings/xfae-model.c:149
 msgid "on switch user"
 msgstr "בהחלפת משתמש"
 
-#: settings/xfae-model.c:463 settings/xfae-model.c:1177
-#: settings/xfae-model.c:1235
+#: settings/xfae-model.c:489 settings/xfae-model.c:1202
+#: settings/xfae-model.c:1259
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "נכשל לפתוח את %s לכתיבה"
 
-#: settings/xfae-model.c:815
+#: settings/xfae-model.c:841
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "נכשל להסיר קישור %s: %s"
 
-#: settings/xfae-model.c:977
+#: settings/xfae-model.c:1002
 #, c-format
 msgid "Failed to create file %s"
 msgstr "נכשל ליצור קובץ %s"
 
-#: settings/xfae-model.c:1001
+#: settings/xfae-model.c:1026
 #, c-format
 msgid "Failed to write file %s"
 msgstr "נכשל לכתוב קובץ %s"
 
-#: settings/xfae-model.c:1061
+#: settings/xfae-model.c:1086
 #, c-format
 msgid "Failed to open %s for reading"
 msgstr "נכשל לפתוח את %s לקריאה"
 
-#: settings/xfae-window.c:108
+#: settings/xfae-window.c:114
 msgid "Failed to set run hook"
 msgstr "נכשלה קביעת הרצת hook"
 
-#: settings/xfae-window.c:223
+#: settings/xfae-window.c:229
 msgid "Trigger"
 msgstr "טריגר"
 
-#: settings/xfae-window.c:249 settings/xfae-window.c:338
+#: settings/xfae-window.c:255 settings/xfae-window.c:344
 msgid "Add"
 msgstr "הוסף"
 
-#: settings/xfae-window.c:258 settings/xfae-window.c:344
+#: settings/xfae-window.c:264 settings/xfae-window.c:350
 msgid "Remove"
 msgstr "הסר"
 
-#: settings/xfae-window.c:261
+#: settings/xfae-window.c:267
 msgid "Remove application"
 msgstr "הסר יישום"
 
-#: settings/xfae-window.c:271
+#: settings/xfae-window.c:277
 msgid "Edit"
 msgstr "ערוך"
 
-#: settings/xfae-window.c:397
+#: settings/xfae-window.c:403
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "נכשל להוסיף את \"%s\""
 
-#: settings/xfae-window.c:428 settings/xfae-window.c:442
+#: settings/xfae-window.c:434 settings/xfae-window.c:443
 msgid "Failed to remove item"
 msgstr "נכשל להסיר פריט"
 
-#: settings/xfae-window.c:471
+#: settings/xfae-window.c:472
 msgid "Failed to edit item"
 msgstr "נכשל לערוך פריט"
 
-#: settings/xfae-window.c:491
+#: settings/xfae-window.c:492
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "נכשל לערוך פריט \"%s\""
 
-#: settings/xfae-window.c:519
+#: settings/xfae-window.c:520
 msgid "Failed to toggle item"
 msgstr "נכשל להחליף פריט"
 
-#: xfce4-session/main.c:79
+#: xfce4-session/main.c:77
 msgid "Disable binding to TCP ports"
 msgstr "בטל קישור לשערי TCP "
 
-#: xfce4-session/main.c:80 xfce4-session-logout/main.c:90
+#: xfce4-session/main.c:78 xfce4-session-logout/main.c:80
 msgid "Print version information and exit"
 msgstr "הדפס מידע גירסה וצא"
 
-#: xfce4-session/xfsm-chooser.c:147
+#: xfce4-session/xfsm-chooser.c:149
 msgid "Session Manager"
 msgstr "מנהל הפעלה"
 
-#: xfce4-session/xfsm-chooser.c:168
+#: xfce4-session/xfsm-chooser.c:180
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
 msgstr "בחר את הסשן אשר ברצונך לשחזר. אתה יכול לבצע קליק כפול על שם הסשן כדי לשחזר אותו."
 
-#: xfce4-session/xfsm-chooser.c:184
+#: xfce4-session/xfsm-chooser.c:196
 msgid "Create a new session."
 msgstr "צור סשן חדש."
 
-#: xfce4-session/xfsm-chooser.c:191
+#: xfce4-session/xfsm-chooser.c:203
 msgid "Delete a saved session."
 msgstr "מחק סשן שמור."
 
 #. "Logout" button
-#: xfce4-session/xfsm-chooser.c:202
-#: xfce4-session-logout/xfce4-session-logout.desktop.in:11
+#: xfce4-session/xfsm-chooser.c:214
+#: xfce4-session-logout/xfce4-session-logout.desktop.in:12
 msgid "Log Out"
 msgstr "יציאה"
 
-#: xfce4-session/xfsm-chooser.c:204
+#: xfce4-session/xfsm-chooser.c:216
 msgid "Cancel the login attempt and return to the login screen."
 msgstr "בטל את ניסיון ההתחברות וחזור למסך הכניסה."
 
 #. "Start" button
-#: xfce4-session/xfsm-chooser.c:211
+#: xfce4-session/xfsm-chooser.c:223
 msgid "Start"
 msgstr "התחלה"
 
-#: xfce4-session/xfsm-chooser.c:212
+#: xfce4-session/xfsm-chooser.c:224
 msgid "Start an existing session."
 msgstr "התחל סשן קיים."
 
-#: xfce4-session/xfsm-dns.c:78
+#: xfce4-session/xfsm-dns.c:77
 msgid "(Unknown)"
 msgstr "(לא ידוע)"
 
-#: xfce4-session/xfsm-dns.c:152
+#: xfce4-session/xfsm-dns.c:151
 #, c-format
 msgid ""
 "Could not look up internet address for %s.\n"
@@ -396,15 +404,15 @@ msgid ""
 "%s to the file /etc/hosts on your system."
 msgstr " אין אפשרות לבדוק כתובת אינטרנט בשביל %s.\nזה ימנע מ-Xfce לפעול בצורה נכונה.\nאולי אפשר לתקן את הבעיה ע\"י הוספה\n%s לקובץ etc/hosts/ במערכת שלך."
 
-#: xfce4-session/xfsm-dns.c:159
+#: xfce4-session/xfsm-dns.c:157
 msgid "Continue anyway"
 msgstr "המשך בכל זאת"
 
-#: xfce4-session/xfsm-dns.c:160
+#: xfce4-session/xfsm-dns.c:158
 msgid "Try again"
 msgstr "נסה שוב"
 
-#: xfce4-session/xfsm-manager.c:581
+#: xfce4-session/xfsm-manager.c:594
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -413,183 +421,187 @@ msgid ""
 "incorrectly."
 msgstr "לא מסוגל לקבוע שם סשן failsafe.  גורמים אפשריים: xfconfd אינו מורץ (בעיית הבניית D-Bus); משתנה סביבה XDG_CONFIG_DIRS$ מוגדר באופן שגוי (חייב להכיל \"%s\"), או xfce4-session אינו מותקן כראוי."
 
-#: xfce4-session/xfsm-manager.c:606
+#: xfce4-session/xfsm-manager.c:619
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "סשן failsafe שצוין (\"%s\") אינו מסומן בתור סשן failsafe."
 
-#: xfce4-session/xfsm-manager.c:640
+#: xfce4-session/xfsm-manager.c:654
 msgid "The list of applications in the failsafe session is empty."
 msgstr "הרשימה של יישומים בתוך סשן failsafe ריקה."
 
-#: xfce4-session/xfsm-manager.c:726
+#: xfce4-session/xfsm-manager.c:738
 msgid "Name for the new session"
 msgstr "שם עבור הסשן החדש"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:804
+#: xfce4-session/xfsm-manager.c:815
 msgid "Session Manager Error"
 msgstr "שגיאת מנהל סשן"
 
-#: xfce4-session/xfsm-manager.c:806
+#: xfce4-session/xfsm-manager.c:816
 msgid "Unable to load a failsafe session"
 msgstr "לא מסוגל להעלות סשן failsafe"
 
-#: xfce4-session/xfsm-manager.c:808
+#: xfce4-session/xfsm-manager.c:818
 msgid "_Quit"
 msgstr "_צא"
 
-#: xfce4-session/xfsm-manager.c:1302
+#: xfce4-session/xfsm-manager.c:1312
 msgid "Shutdown Failed"
 msgstr "כיבוי נכשל"
 
-#: xfce4-session/xfsm-manager.c:1305
+#: xfce4-session/xfsm-manager.c:1315
 msgid "Failed to suspend session"
 msgstr "נכשל להשהות סשן"
 
-#: xfce4-session/xfsm-manager.c:1307
+#: xfce4-session/xfsm-manager.c:1317
 msgid "Failed to hibernate session"
 msgstr "נכשל להרדים סשן"
 
-#: xfce4-session/xfsm-manager.c:1309
+#: xfce4-session/xfsm-manager.c:1319
 msgid "Failed to hybrid sleep session"
 msgstr "נכשלה הרדמה היברידית של הסשן"
 
-#: xfce4-session/xfsm-manager.c:1310
+#: xfce4-session/xfsm-manager.c:1320
 msgid "Failed to switch user"
 msgstr "נכשלה החלפת המשתמש"
 
-#: xfce4-session/xfsm-manager.c:1637
+#: xfce4-session/xfsm-manager.c:1642
 msgid "Can only terminate clients when in the idle state"
 msgstr "יכול לסיים לקוחות רק כאשר במצב עצל"
 
-#: xfce4-session/xfsm-manager.c:2320
+#: xfce4-session/xfsm-manager.c:2350
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "על מנהל סשן להיות במצב עצל כאשר מבקשים נקודת ביקורת"
 
-#: xfce4-session/xfsm-manager.c:2390 xfce4-session/xfsm-manager.c:2410
+#: xfce4-session/xfsm-manager.c:2420 xfce4-session/xfsm-manager.c:2440
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "על מנהל סשן להיות במצב עצל כאשר מבקשים כיבוי"
 
-#: xfce4-session/xfsm-manager.c:2447
+#: xfce4-session/xfsm-manager.c:2477
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "על מנהל סשן להיות במצב עצל כאשר מבקשים הפעלה מחדש"
 
-#: xfce4-session/xfsm-manager.c:2483 xfce4-session/xfsm-manager.c:2522
-#: xfce4-session/xfsm-manager.c:2560
+#: xfce4-session/xfsm-manager.c:2513 xfce4-session/xfsm-manager.c:2552
+#: xfce4-session/xfsm-manager.c:2590
 msgid "Session manager must be in idle state when requesting a sleep"
 msgstr "על מנהל סשן להיות במצב עצל כאשר מבקשים שינה"
 
-#: xfce4-session/xfsm-manager.c:2687
+#: xfce4-session/xfsm-manager.c:2717
 msgid "Session manager must be in idle state when requesting a user switch"
 msgstr "על מנהל סשן להיות במצב עצל כאשר מבקשים החלפת משתמש"
 
-#: xfce4-session/xfsm-logout-dialog.c:199
+#: xfce4-session/xfsm-logout-dialog.c:202
 #, c-format
 msgid "Log out %s"
 msgstr "יציאה מתוך %s"
 
-#: xfce4-session/xfsm-logout-dialog.c:245
+#: xfce4-session/xfsm-logout-dialog.c:248
 msgid "_Log Out"
 msgstr "הת_נתק"
 
-#: xfce4-session/xfsm-logout-dialog.c:264
+#: xfce4-session/xfsm-logout-dialog.c:267
 msgid "_Restart and update"
 msgstr "_הפעל מחדש ועדכן"
 
-#: xfce4-session/xfsm-logout-dialog.c:264
+#: xfce4-session/xfsm-logout-dialog.c:267
 msgid "_Restart"
 msgstr "ה_פעל מחדש"
 
-#: xfce4-session/xfsm-logout-dialog.c:278
+#: xfce4-session/xfsm-logout-dialog.c:281
 msgid "Update and Shut _Down"
 msgstr "עדכן ו_כבה"
 
-#: xfce4-session/xfsm-logout-dialog.c:278
+#: xfce4-session/xfsm-logout-dialog.c:281
 msgid "Shut _Down"
 msgstr "_כבה"
 
-#: xfce4-session/xfsm-logout-dialog.c:302
+#: xfce4-session/xfsm-logout-dialog.c:305
 msgid "Sus_pend"
 msgstr "ה_שהה"
 
-#: xfce4-session/xfsm-logout-dialog.c:322
+#: xfce4-session/xfsm-logout-dialog.c:325
 msgid "_Hibernate"
 msgstr "ה_רדם"
 
-#: xfce4-session/xfsm-logout-dialog.c:342
+#: xfce4-session/xfsm-logout-dialog.c:345
 msgid "H_ybrid Sleep"
 msgstr "שינה ה_יברידית"
 
-#: xfce4-session/xfsm-logout-dialog.c:366
+#: xfce4-session/xfsm-logout-dialog.c:369
 msgid "Switch _User"
 msgstr "החלף _משתמש"
 
-#: xfce4-session/xfsm-logout-dialog.c:406
+#: xfce4-session/xfsm-logout-dialog.c:409
 msgid "An error occurred"
 msgstr "אירעה שגיאה"
 
-#: xfce4-session/xfsm-shutdown.c:171
+#: xfce4-session/xfsm-shutdown.c:172
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "כיבוי חסום על ידי הגדרות קיוסק"
 
-#: xfce4-session/xfsm-shutdown.c:228
+#: xfce4-session/xfsm-shutdown.c:229
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "שיטת כיבוי לא מוכרת %d"
 
-#: xfce4-session-logout/main.c:58
+#: xfce4-session-logout/main.c:56
 msgid "Log out without displaying the logout dialog"
 msgstr "התנתק מבלי להציג חלון התנתקות"
 
-#: xfce4-session-logout/main.c:62
+#: xfce4-session-logout/main.c:59
 msgid "Halt without displaying the logout dialog"
 msgstr "הפסק מבלי להציג חלון התנתקות"
 
-#: xfce4-session-logout/main.c:66
+#: xfce4-session-logout/main.c:62
 msgid "Reboot without displaying the logout dialog"
 msgstr "הפעל מחדש מבלי להציג חלון התנתקות"
 
-#: xfce4-session-logout/main.c:70
+#: xfce4-session-logout/main.c:65
 msgid "Suspend without displaying the logout dialog"
 msgstr "השהה מבלי להציג חלון התנתקות"
 
-#: xfce4-session-logout/main.c:74
+#: xfce4-session-logout/main.c:68
 msgid "Hibernate without displaying the logout dialog"
 msgstr "הרדם מבלי להציג חלון התנתקות"
 
-#: xfce4-session-logout/main.c:78
+#: xfce4-session-logout/main.c:71
 msgid "Hybrid Sleep without displaying the logout dialog"
 msgstr "שינה היברידית מבלי להציג את דו שיח יציאה"
 
-#: xfce4-session-logout/main.c:82
+#: xfce4-session-logout/main.c:74
 msgid "Switch user without displaying the logout dialog"
 msgstr "החלף משתמש מבלי להציג את דו־שיח ניתוק "
 
-#: xfce4-session-logout/main.c:86
+#: xfce4-session-logout/main.c:77
 msgid "Log out quickly; don't save the session"
 msgstr "התנתק במהירות; אל תשמור את הסשן"
 
-#: xfce4-session-logout/main.c:108
+#: xfce4-session-logout/main.c:97
 msgid "Unknown error"
 msgstr "שגיאה לא מוכרת"
 
-#: xfce4-session-logout/main.c:133
+#: xfce4-session-logout/main.c:122
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
 msgstr "נכתב ע\"י Benedikt Meurer <benny@xfce.org>."
 
-#: xfce4-session-logout/main.c:134
+#: xfce4-session-logout/main.c:123
 msgid "and Brian Tarricone <kelnos@xfce.org>."
 msgstr "ו- Brian Tarricone <kelnos@xfce.org>."
 
-#: xfce4-session-logout/main.c:154 xfce4-session-logout/main.c:229
+#: xfce4-session-logout/main.c:143 xfce4-session-logout/main.c:218
 msgid "Received error while trying to log out"
 msgstr "התקבלה שגיאה במהלך ניסיון התנתקות"
 
-#: xfce4-session-logout/xfce4-session-logout.desktop.in:12
+#: xfce4-session-logout/xfce4-session-logout.desktop.in:10
+msgid "logout;exit;quit;shutdown;"
+msgstr "logout;exit;quit;shutdown;"
+
+#: xfce4-session-logout/xfce4-session-logout.desktop.in:13
 msgid "Log out of the Xfce Desktop"
 msgstr "התנתק מתוך שולחן עבודה Xfce"
 
