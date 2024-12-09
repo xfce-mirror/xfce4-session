@@ -6,16 +6,17 @@
 # Translators:
 # Xfce Bot <transifex@xfce.org>, 2021
 # Marius Ghita, 2022
+# Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, 2024
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-04 12:47+0200\n"
+"POT-Creation-Date: 2023-05-30 00:49+0200\n"
 "PO-Revision-Date: 2020-12-28 17:30+0000\n"
-"Last-Translator: Marius Ghita, 2022\n"
-"Language-Team: Romanian (https://www.transifex.com/xfce/teams/16840/ro/)\n"
+"Last-Translator: Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, 2024\n"
+"Language-Team: Romanian (https://app.transifex.com/xfce/teams/16840/ro/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -222,7 +223,7 @@ msgstr "Comandă:"
 
 #: ../settings/xfae-dialog.c:138
 msgid "Trigger:"
-msgstr ""
+msgstr "Lansator:"
 
 #: ../settings/xfae-dialog.c:209
 msgid "Select a command"
@@ -242,35 +243,35 @@ msgstr "Editare a programului selectat"
 
 #: ../settings/xfae-model.c:114
 msgid "on login"
-msgstr ""
+msgstr "la autentificare"
 
 #: ../settings/xfae-model.c:115
 msgid "on logout"
-msgstr ""
+msgstr "la ieșirea din sesiune"
 
 #: ../settings/xfae-model.c:116
 msgid "on shutdown"
-msgstr ""
+msgstr "la oprire"
 
 #: ../settings/xfae-model.c:117
 msgid "on restart"
-msgstr ""
+msgstr "la repornire"
 
 #: ../settings/xfae-model.c:118
 msgid "on suspend"
-msgstr ""
+msgstr "la suspendare"
 
 #: ../settings/xfae-model.c:119
 msgid "on hibernate"
-msgstr ""
+msgstr "la hibernare"
 
 #: ../settings/xfae-model.c:120
 msgid "on hybrid sleep"
-msgstr ""
+msgstr "la hibernarea hibridă"
 
 #: ../settings/xfae-model.c:121
 msgid "on switch user"
-msgstr ""
+msgstr "la schimbarea utilizatorului"
 
 #: ../settings/xfae-model.c:463 ../settings/xfae-model.c:1182
 #: ../settings/xfae-model.c:1240
@@ -300,15 +301,15 @@ msgstr "Nu s-a putut deschide %s pentru citire"
 
 #: ../settings/xfae-window.c:100
 msgid "Failed to set run hook"
-msgstr ""
+msgstr "Nu s-a reușit configurarea cârligului de rulare"
 
 #: ../settings/xfae-window.c:215
 msgid "Trigger"
-msgstr ""
+msgstr "Lansator"
 
 #: ../settings/xfae-window.c:241 ../settings/xfae-window.c:330
 msgid "Add"
-msgstr ""
+msgstr "Adaugă"
 
 #: ../settings/xfae-window.c:250 ../settings/xfae-window.c:336
 msgid "Remove"
@@ -316,7 +317,7 @@ msgstr "Șterge"
 
 #: ../settings/xfae-window.c:253
 msgid "Remove application"
-msgstr ""
+msgstr "Elimină aplicația"
 
 #: ../settings/xfae-window.c:263
 msgid "Edit"
@@ -473,11 +474,11 @@ msgstr "Nu s-a putut hiberna sesiunea"
 
 #: ../xfce4-session/xfsm-manager.c:1279
 msgid "Failed to hybrid sleep session"
-msgstr ""
+msgstr "Hibernarea hibridă a sesiunii a eșuat"
 
 #: ../xfce4-session/xfsm-manager.c:1280
 msgid "Failed to switch user"
-msgstr ""
+msgstr "Schimbarea utilizatorului a eșuat"
 
 #: ../xfce4-session/xfsm-manager.c:1586
 #, c-format
@@ -496,6 +497,7 @@ msgstr "Managerul de sesiune trebuie să fie inactiv când se cere oprirea"
 #: ../xfce4-session/xfsm-manager.c:2385
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr ""
+"Administratorul de sesiune trebuie să fie inactiv când se cere repornirea"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:193
 #, c-format
@@ -527,11 +529,11 @@ msgstr "_Hibernare"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:367
 msgid "H_ybrid Sleep"
-msgstr ""
+msgstr "_Hibernare hibridă"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:398
 msgid "Switch _User"
-msgstr ""
+msgstr "Schimbare _utilizator"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:423
 msgid "_Save session for future logins"
@@ -573,10 +575,11 @@ msgstr "Hibernează calculatorul fără a afișa fereastra de ieșire"
 #: ../xfce4-session-logout/main.c:90
 msgid "Hybrid Sleep without displaying the logout dialog"
 msgstr ""
+"Hibernează în mod hibrid calculatorul fără a afișa fereastra de ieșire"
 
 #: ../xfce4-session-logout/main.c:94
 msgid "Switch user without displaying the logout dialog"
-msgstr ""
+msgstr "Schimă utilizatorul fără a afișa fereastra de ieșire"
 
 #: ../xfce4-session-logout/main.c:98
 msgid "Log out quickly; don't save the session"
@@ -614,13 +617,16 @@ msgstr "Sesiuni și pornire"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
 msgid "Customize desktop startup"
-msgstr ""
+msgstr "Personalizați pornirea mediului grafic de birou"
 
 #: ../settings/xfce-session-settings.desktop.in.h:3
 msgid ""
 "session;settings;preferences;manager;startup;login;logout;shutdown;lock "
 "screen;application;autostart;launch;services;daemon;agent;"
 msgstr ""
+"sesiune; configurări; preferințe; manager; pornire; autentificare; ieșire; "
+"oprire; ecran de blocare; aplicație; pornire automată; lansare; servicii; "
+"demon; agent;"
 
 #: ../settings/xfce4-session-settings.ui.h:1
 msgid ""
@@ -628,6 +634,10 @@ msgid ""
 "and can be saved now or when you log out.\n"
 "Changes below will only take effect when the session is saved."
 msgstr ""
+"Aceste aplicații fac parte din sesiunea care rulează în prezent\n"
+"și pot fi salvate acum sau când ieșiți.\n"
+"Modificările de mai jos vor intra în vigoare numai atunci când\n"
+"sesiunea este salvată."
 
 #: ../settings/xfce4-session-settings.ui.h:5
 msgid "_Help"
@@ -687,11 +697,11 @@ msgstr "Salvea_ză sesiunea"
 
 #: ../settings/xfce4-session-settings.ui.h:20
 msgid "Currently active session: <b>Default</b>"
-msgstr ""
+msgstr "Sesiunea activă în prezent: <b>Sesiunea implicită</b>"
 
 #: ../settings/xfce4-session-settings.ui.h:22
 msgid "Current Sessio_n"
-msgstr ""
+msgstr "Sesiun_ea curentă"
 
 #: ../settings/xfce4-session-settings.ui.h:23
 msgid "_Remove"
@@ -699,15 +709,15 @@ msgstr "_Elimină"
 
 #: ../settings/xfce4-session-settings.ui.h:24
 msgid "Delete the selected session"
-msgstr ""
+msgstr "Șterge sesiunea selectată"
 
 #: ../settings/xfce4-session-settings.ui.h:25
 msgid "Clear Save_d Sessions"
-msgstr ""
+msgstr "Șt_erge sesiunile salvate"
 
 #: ../settings/xfce4-session-settings.ui.h:26
 msgid "Saved _Sessions"
-msgstr ""
+msgstr "_Sesiuni salvate"
 
 #: ../settings/xfce4-session-settings.ui.h:27
 msgid "Launch GN_OME services on startup"
