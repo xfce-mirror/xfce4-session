@@ -104,7 +104,7 @@ then
     # Also: Xfce will use its own config directory and config file
     # to avoid conflict with current labwc setup and avoid launching 
     # anything from ~/.config/labwc/autostart
-    XFCE4_SESSION_COMPOSITOR=dbus-run-session -- ${OPTS:-labwc --config-dir ${HOME}/.config/xfce4/labwc --config ${HOME}/.config/xfce4/labwc/rc.xml --startup}
+    XFCE4_SESSION_COMPOSITOR=${OPTS:-dbus-run-session -- /usr/bin/labwc --config-dir ${HOME}/.config/xfce4/labwc --config ${HOME}/.config/xfce4/labwc/rc.xml --startup}
   fi
 fi
 
