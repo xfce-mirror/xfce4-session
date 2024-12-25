@@ -100,6 +100,16 @@ then
     if [ ! -f "${HOME}/.config/xfce4/labwc/environment" ]; then
        cp -p @_datadir_@/xfce4/labwc/labwc-environment "${HOME}/.config/xfce4/labwc/environment"
     fi
+    # Set labwc keymap to match system-wide keymap only in absence of
+    # a user-created 'lock' file, just in case user doesn't want any
+    # modification of the environment and rc.xml files.
+    if [ ! -e "${HOME}/.config/xfce4/labwc/lock" ]; then
+       LABWC_KEYMAP="$(grep KEYMAP /etc/vconsole.conf |sed -e "s|'||g" -e "s|\"||g" | cut -d = -f2)"
+       export LABWC_KEYMAP
+       sed -i \
+         -e "s|XKB_DEFAULT_LAYOUT=.*|XKB_DEFAULT_LAYOUT=${LABWC_KEYMAP}|g" \
+         "${HOME}/.config/xfce4/labwc/environment"
+    fi
     # Use dbus-run-session to make sure session starts as D-Bus session
     # Also: Xfce will use its own config directory and config file
     # to avoid conflict with current labwc setup and avoid launching 
