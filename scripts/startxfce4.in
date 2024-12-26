@@ -89,7 +89,7 @@ then
       exit 1
     fi
     # Create specific labwc directory for Xfce
-    if [ ! -d "${HOME}/.config/xfce4/labwc" ]; then
+    if [ ! -d "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc" ]; then
        mkdir -p "${HOME}/.config/xfce4/labwc"
     fi
     # Copy specific labwc configuration file for Xfce
