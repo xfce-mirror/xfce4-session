@@ -72,11 +72,14 @@ then
       XDG_SESSION_TYPE="wayland"
       export XDG_SESSION_TYPE
       # Make sure all toolkits use their Wayland backend
-      GDK_BACKEND="wayland"
+      # For Gtk applications also the gdk backend as a safe fallback
+      GDK_BACKEND="wayland,gdk"
       export GDK_BACKEND
       QT_QPA_PLATFORM="wayland"
       export QT_QPA_PLATFORM
-      CLUTTER_BACKEND="wayland"
+      # In many OS the wayland backend for clutter does not work, so
+      # use the safe "gdk" backend instead
+      CLUTTER_BACKEND="gdk"
       export CLUTTER_BACKEND
       SDL_VIDEODRIVER="wayland"
       export SDL_VIDEODRIVER
