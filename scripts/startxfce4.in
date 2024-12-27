@@ -51,6 +51,22 @@ then
     then
       XFCE4_SESSION_COMPOSITOR="1"
       export XFCE4_SESSION_COMPOSITOR
+      # Set the XDG_RUNTIME_DIR if we can not get it in systems
+      # without systemd
+      if [ -z "${XDG_RUNTIME_DIR}" ]; then
+        if [ -d "/run/user" ]; then
+          XDG_RUNTIME_DIR="/run/user/$(id -ru)"
+          export XDG_RUNTIME_DIR
+        else
+          if [ -d "/var/run/user" ]; then
+            XDG_RUNTIME_DIR="/var/run/user/$(id -ru)"
+            export XDG_RUNTIME_DIR
+          else
+            XDG_RUNTIME_DIR="/tmp/${USER}-runtime"
+            export XDG_RUNTIME_DIR
+          fi
+        fi
+      fi
       # freedesktop specifications mandate that the definition
       # of XDG_SESSION_TYPE should be respected
       XDG_SESSION_TYPE="wayland"
