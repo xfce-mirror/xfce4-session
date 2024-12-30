@@ -32,11 +32,11 @@ msgstr "Sử dụng phiên chạy này để dùng Xfce như môi trường làm
 
 #: ../libxfsm/xfsm-util.c:331
 msgid "Session"
-msgstr ""
+msgstr "Phiên chạy"
 
 #: ../libxfsm/xfsm-util.c:342
 msgid "Last accessed"
-msgstr ""
+msgstr "Truy cập lần trước"
 
 #: ../scripts/xscreensaver.desktop.in.h:1
 msgid "Screensaver"
@@ -80,7 +80,7 @@ msgstr "Không thể liên lạc với máy chủ cài đặt"
 
 #: ../settings/main.c:153
 msgid "Unable to create user interface from embedded definition data"
-msgstr ""
+msgstr "Không thể tạo giao diện người dùng từ dữ liệu định nghĩa nhúng"
 
 #: ../settings/main.c:167
 msgid "App_lication Autostart"
@@ -88,7 +88,7 @@ msgstr "Tự khởi chạy ứng dụng"
 
 #: ../settings/main.c:173
 msgid "Currently active session:"
-msgstr ""
+msgstr "Phiên chạy hiện hành:"
 
 #: ../settings/session-editor.c:63
 msgid "If running"
@@ -424,6 +424,9 @@ msgid ""
 "incorrectly (must include \"%s\"), or xfce4-session is installed "
 "incorrectly."
 msgstr ""
+"Không thể xác định tên phiên làm việc dự phòng.  Các lý do có thể: xfconfd "
+"chưa chạy (vấn đề về D-Bus setup); biến môi trường $XDG_CONFIG_DIRS bị đặt "
+"sai (phải chứa \"%s\"), hoặc xfce4-session bị cài đặt sai cách."
 
 #: ../xfce4-session/xfsm-manager.c:578
 #, c-format
@@ -484,6 +487,8 @@ msgstr "Chỉ có thể buộc kết thúc các client khi trong trạng thái i
 #: ../xfce4-session/xfsm-manager.c:2250
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr ""
+"Trình quản lý phiên làm việc phải ở trong trạng thái chờ khi yêu cầu một "
+"điểm lưu"
 
 #: ../xfce4-session/xfsm-manager.c:2320 ../xfce4-session/xfsm-manager.c:2340
 msgid "Session manager must be in idle state when requesting a shutdown"
