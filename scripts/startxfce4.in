@@ -124,25 +124,25 @@ then
     fi
     # Create specific labwc directory for Xfce
     if [ ! -d "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc" ]; then
-       mkdir -p "${HOME}/.config/xfce4/labwc"
+       mkdir -p "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc"
     fi
     # Copy specific labwc configuration file for Xfce
-    if [ ! -f "${HOME}/.config/xfce4/labwc/rc.xml" ]; then
+    if [ ! -f "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/rc.xml" ]; then
        cp -p @_datadir_@/xfce4/labwc/labwc-rc.xml "${HOME}/.config/xfce4/labwc/rc.xml"
     fi
     # Copy specific labwc environment file for Xfce
-    if [ ! -f "${HOME}/.config/xfce4/labwc/environment" ]; then
+    if [ ! -f "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/environment" ]; then
        cp -p @_datadir_@/xfce4/labwc/labwc-environment "${HOME}/.config/xfce4/labwc/environment"
     fi
     # Set labwc keymap to match system-wide keymap only in absence of
     # a user-created 'lock' file, just in case user doesn't want any
     # modification of the environment and rc.xml files.
-    if [ ! -e "${HOME}/.config/xfce4/labwc/lock" ]; then
+    if [ ! -e "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/lock" ]; then
        LABWC_KEYMAP=$(awk -F '=' -v q1=\' -v q2=\" '$1 == "KEYMAP" {gsub ("[" q1 q2 "]", "", $2); print $2}' /etc/vconsole.conf)
        export LABWC_KEYMAP
        sed -i \
          -e "s|XKB_DEFAULT_LAYOUT=.*|XKB_DEFAULT_LAYOUT=${LABWC_KEYMAP}|g" \
-         "${HOME}/.config/xfce4/labwc/environment"
+         "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/environment"
     fi
     # Use dbus-run-session to make sure session starts as D-Bus session
     # Also: Xfce will use its own config directory and config file
