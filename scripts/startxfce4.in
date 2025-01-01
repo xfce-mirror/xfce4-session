@@ -117,6 +117,11 @@ then
       echo "$0: Please either install $default_compositor or specify another compositor as argument"
       exit 1
     fi
+    # check if XDG_CONFIG_HOME is set
+    if [ -z "${XDG_CONFIG_HOME}" ]; then
+       XDG_CONFIG_HOME="${HOME}/.config"
+       export XDG_CONFIG_HOME
+    fi
     # Create specific labwc directory for Xfce
     if [ ! -d "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc" ]; then
        mkdir -p "${HOME}/.config/xfce4/labwc"
