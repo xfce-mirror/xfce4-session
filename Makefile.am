@@ -4,6 +4,7 @@ SUBDIRS =								\
 	libxfsm								\
 	doc								\
 	icons								\
+	labwc								\
 	po								\
 	settings							\
 	scripts								\

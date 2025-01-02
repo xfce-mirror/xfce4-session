@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!--
+  This is a very simple config file with many options missing. For a
+  complete set of options with comments, see Labwc docs/rc.xml.all
+-->
+<labwc_config>
+
+  <theme>
+    <name>Adwaita</name>
+    <cornerRadius>8</cornerRadius>
+    <font name="sans" size="10"/>
+  </theme>
+
+  <desktops number="4" />
+
+  <keyboard>
+    <default/>
+    <!-- Use a different terminal emulator -->
+    <keybind key="W-Return">
+      <action name="Execute" command="xfce4-terminal"/>
+    </keybind>
+    <!--
+      Remove a previously defined keybind
+      A shorter alternative is <keybind key="W-F4" />
+    -->
+    <keybind key="W-F4">
+      <action name="None"/>
+    </keybind>
+
+    <numlock>on</numlock>
+
+    <!--
+       Suggested Xfce key bindings.
+    -->
+    <keybind key="XF86_AudioLowerVolume">
+      <action name="Execute" command="amixer -D pulse sset Master 5%-" />
+    </keybind>
+    <keybind key="XF86_AudioRaiseVolume">
+      <action name="Execute" command="amixer -D pulse sset Master 5%+" />
+    </keybind>
+    <keybind key="XF86_AudioMute">
+      <action name="Execute" command="amixer -D pulse sset Master toggle" />
+    </keybind>
+    <keybind key="W-q">
+      <action name="Close" />
+    </keybind>
+    <keybind key="A-Tab">
+      <action name="NextWindow" />
+    </keybind>
+    <keybind key="W-Tab">
+      <action name="ToggleMaximize" />
+    </keybind>
+    <keybind key="W-1">
+      <action name="GoToDesktop" to="1" />
+    </keybind>
+    <keybind key="W-2">
+      <action name="GoToDesktop" to="2" />
+    </keybind>
+    <keybind key="W-3">
+      <action name="GoToDesktop" to="3" />
+    </keybind>
+    <keybind key="W-4">
+      <action name="GoToDesktop" to="4" />
+    </keybind>
+  </keyboard>
+
+</labwc_config>

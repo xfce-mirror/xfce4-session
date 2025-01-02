@@ -241,6 +241,7 @@ icons/96x96/Makefile
 icons/96x96-actions/Makefile
 icons/128x128/Makefile
 icons/scalable/Makefile
+labwc/Makefile
 libxfsm/Makefile
 po/Makefile.in
 settings/Makefile
