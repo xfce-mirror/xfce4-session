@@ -69,7 +69,7 @@ then
       fi
       if [ ! -e "${XDG_RUNTIME_DIR}" ]; then
          echo "XDG_RUNTIME_DIR is invalid or does not exist!"
-         exit 1
+         mkdir -p "${XDG_RUNTIME_DIR}"
       fi
       # freedesktop specifications mandate that the definition
       # of XDG_SESSION_TYPE should be respected
