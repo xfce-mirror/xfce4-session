@@ -51,6 +51,58 @@ then
     then
       XFCE4_SESSION_COMPOSITOR="1"
       export XFCE4_SESSION_COMPOSITOR
+      # Set the XDG_RUNTIME_DIR if we can not get it in systems
+      # without systemd
+      if [ -z "${XDG_RUNTIME_DIR}" ]; then
+        if [ -d "/run/user" ]; then
+          XDG_RUNTIME_DIR="/run/user/$(id -ru)"
+          export XDG_RUNTIME_DIR
+        else
+          if [ -d "/var/run/user" ]; then
+            XDG_RUNTIME_DIR="/var/run/user/$(id -ru)"
+            export XDG_RUNTIME_DIR
+          else
+            XDG_RUNTIME_DIR="/tmp/${USER}-runtime"
+            export XDG_RUNTIME_DIR
+          fi
+        fi
+      fi
+      if [ ! -e "${XDG_RUNTIME_DIR}" ]; then
+         echo "XDG_RUNTIME_DIR is invalid or does not exist!"
+         echo "Creating XDG_RUNTIME_DIR..."
+         mkdir -p -m 0700 "${XDG_RUNTIME_DIR}" || {
+           echo "Unable to create runtime directory ${XDG_RUNTIME_DIR}!"
+           exit 1
+         }
+      fi
+      # freedesktop specifications mandate that the definition
+      # of XDG_SESSION_TYPE should be respected
+      XDG_SESSION_TYPE="wayland"
+      export XDG_SESSION_TYPE
+      # Make sure all toolkits use their Wayland backend
+      #
+      # For Gtk applications also the x11 backend as a safe fallback
+      if [ -z "${GDK_BACKEND}" ]; then
+        GDK_BACKEND="wayland,x11"
+        export GDK_BACKEND
+      fi
+      if [ -z "${QT_QPA_PLATFORM}" ]; then
+        QT_QPA_PLATFORM="wayland"
+        export QT_QPA_PLATFORM
+      fi
+      # In many OS the wayland backend for clutter does not work, so
+      # use the safe "gdk" backend instead
+      if [ -z "${CLUTTER_BACKEND}" ]; then
+        CLUTTER_BACKEND="gdk"
+        export CLUTTER_BACKEND
+      fi
+      if [ -z "${SDL_VIDEODRIVER}" ]; then
+        SDL_VIDEODRIVER="wayland"
+        export SDL_VIDEODRIVER
+      fi
+      # This is default for current firefox/thunderbird
+      MOZ_ENABLE_WAYLAND="1"
+      export MOZ_ENABLE_WAYLAND
     else
       # append
       OPTS="$OPTS $OPT"
@@ -73,7 +125,33 @@ then
       echo "$0: Please either install $default_compositor or specify another compositor as argument"
       exit 1
     fi
-    XFCE4_SESSION_COMPOSITOR=${OPTS:-labwc --startup}
+    # Create specific labwc directory for Xfce
+    if [ ! -d "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc" ]; then
+       mkdir -p "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc"
+    fi
+    # Copy specific labwc configuration file for Xfce
+    if [ ! -f "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/rc.xml" ]; then
+       cp -p @_datadir_@/xfce4/labwc/labwc-rc.xml "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/rc.xml"
+    fi
+    # Copy specific labwc environment file for Xfce
+    if [ ! -f "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/environment" ]; then
+       cp -p @_datadir_@/xfce4/labwc/labwc-environment "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/environment"
+    fi
+    # Set labwc keymap to match system-wide keymap only in absence of
+    # a user-created 'lock' file, just in case user doesn't want any
+    # modification of the environment and rc.xml files.
+    if [ ! -e "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/lock" ]; then
+       LABWC_KEYMAP=$(awk -F '=' -v q1=\' -v q2=\" '$1 == "KEYMAP" {gsub ("[" q1 q2 "]", "", $2); print $2}' /etc/vconsole.conf)
+       export LABWC_KEYMAP
+       sed -i \
+         -e "s|XKB_DEFAULT_LAYOUT=.*|XKB_DEFAULT_LAYOUT=${LABWC_KEYMAP}|g" \
+         "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/environment"
+    fi
+    # Use dbus-run-session to make sure session starts as D-Bus session
+    # Also: Xfce will use its own config directory and config file
+    # to avoid conflict with current labwc setup and avoid launching 
+    # anything from ~/.config/labwc/autostart
+    XFCE4_SESSION_COMPOSITOR="dbus-run-session -- ${OPTS:-labwc --config-dir ${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc --config ${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/rc.xml --startup}"
   fi
 fi
 
