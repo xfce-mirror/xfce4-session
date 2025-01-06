@@ -69,7 +69,8 @@ then
       fi
       if [ ! -e "${XDG_RUNTIME_DIR}" ]; then
          echo "XDG_RUNTIME_DIR is invalid or does not exist!"
-         mkdir -p "${XDG_RUNTIME_DIR}"
+         echo "Creating XDG_RUNTIME_DIR..."
+         mkdir -p "${XDG_RUNTIME_DIR}" || echo "Unable to create runtime directory ${XDG_RUNTIME_DIR}!"
       fi
       # freedesktop specifications mandate that the definition
       # of XDG_SESSION_TYPE should be respected
