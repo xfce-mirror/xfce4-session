@@ -137,8 +137,6 @@ polkit_policy_DATA =					\
 
 endif
 
-if MAINTAINER_MODE
-
 xfsm-chooser-icon.h: $(srcdir)/xfsm-chooser-icon.png
 	$(AM_V_GEN) gdk-pixbuf-csource --static --raw --stream --name=xfsm_chooser_icon_data $< > $@
 
@@ -165,8 +163,6 @@ xfsm-manager-dbus.c xfsm-manager-dbus.h : $(srcdir)/xfsm-manager-dbus.xml Makefi
 
 BUILT_SOURCES =								\
 	$(xfce4_session_built_sources)
-
-endif
 
 EXTRA_DIST =								\
 	$(man_MANS)							\
