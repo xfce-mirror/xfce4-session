@@ -48,8 +48,6 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
 
-if MAINTAINER_MODE
-
 BUILT_SOURCES = \
 	xfce4-session-marshal.c \
 	xfce4-session-marshal.h \
@@ -85,13 +83,15 @@ xfsm-manager-dbus-client.c xfsm-manager-dbus-client.h : $(top_srcdir)/xfce4-sess
 		--generate-c-code=xfsm-manager-dbus-client \
 		$(top_srcdir)/xfce4-session/xfsm-manager-dbus.xml
 
-endif
-
 
 EXTRA_DIST = \
 	$(desktop_in_files) \
 	xfce4-session.xml \
-	xfce4-session-settings.ui
+	xfce4-session-settings.ui \
+	xfce4-session-marshal.list \
+	$(top_srcdir)/xfce4-session/xfsm-client-dbus.xml \
+	$(top_srcdir)/xfce4-session/xfsm-manager-dbus.xml \
+	$(NULL)
 
 DISTCLEANFILES = \
 	$(desktop_DATA)
