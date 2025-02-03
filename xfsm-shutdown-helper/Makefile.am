@@ -8,7 +8,11 @@ xfsm_shutdown_helper_SOURCES =						\
 xfsm_shutdown_helper_CFLAGS =						\
 	-I$(top_srcdir)							\
 	-I$(top_srcdir)/libxfsm                 \
-	$(LIBXFCE4UTIL_CFLAGS)
+	$(LIBXFCE4UTIL_CFLAGS) \
+	$(GTK_CFLAGS) \
+	$(NULL)
 
 xfsm_shutdown_helper_LDFLAGS =						\
-	$(LIBXFCE4UTIL_LIBS)
+	$(LIBXFCE4UTIL_LIBS) \
+	$(GTK_LIBS) \
+	$(NULL)

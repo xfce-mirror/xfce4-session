@@ -11,11 +11,16 @@ xfce4_session_logout_CFLAGS =						\
 	-I$(top_srcdir)							\
 	$(GIO_CFLAGS)							\
 	$(LIBXFCE4UI_CFLAGS)						\
+	$(LIBXFCE4UTIL_CFLAGS)						\
+	$(GTK_CFLAGS) \
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"
 
 xfce4_session_logout_LDFLAGS =						\
 	$(GIO_LIBS)							\
-	$(LIBXFCE4UI_LIBS)
+	$(LIBXFCE4UI_LIBS) \
+	$(LIBXFCE4UTIL_LIBS) \
+	$(GTK_LIBS) \
+	$(NULL)
 
 desktopdir = $(datadir)/applications
 desktop_in_files = xfce4-session-logout.desktop.in

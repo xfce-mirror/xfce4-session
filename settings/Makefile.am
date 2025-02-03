@@ -27,7 +27,9 @@ xfce4_session_settings_CFLAGS = \
 	$(LIBXFCE4UI_CFLAGS) \
 	$(XFCONF_CFLAGS) \
 	$(GIO_CFLAGS) \
-	$(GMODULE_CFLAGS)
+	$(GMODULE_CFLAGS) \
+	$(GTK_CFLAGS) \
+	$(NULL)
 
 xfce4_session_settings_LDADD = \
 	$(top_builddir)/libxfsm/libxfsm.la \
@@ -35,7 +37,9 @@ xfce4_session_settings_LDADD = \
 	$(LIBXFCE4UI_LIBS) \
 	$(XFCONF_LIBS) \
 	$(GIO_LIBS) \
-	$(GMODULE_LIBS)
+	$(GMODULE_LIBS) \
+	$(GTK_LIBS) \
+	$(NULL)
 
 settingsdir = $(sysconfdir)/xdg/xfce4/xfconf/xfce-perchannel-xml
 settings_DATA = xfce4-session.xml
