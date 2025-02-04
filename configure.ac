@@ -65,6 +65,10 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_MKDIR_P
 m4_ifdef([AC_PROG_SED], [AC_PROG_SED], [AC_CHECK_PROG(SED, sed, sed)])
+AC_PATH_PROG([XDT_CSOURCE], [xdt-csource])
+if test x"$XDT_CSOURCE" = x""; then
+  AC_MSG_ERROR([Could not find xdt-csource in PATH, please install xfce4-dev-tools])
+fi
 
 dnl check for libtool
 LT_PREREQ([2.2.6])
