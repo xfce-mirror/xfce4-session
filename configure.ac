@@ -78,7 +78,7 @@ dnl check for standard header files
 AC_CHECK_HEADERS([errno.h fcntl.h \
                   netdb.h signal.h stdarg.h sys/resource.h \
                   sys/socket.h sys/time.h sys/wait.h sys/utsname.h time.h \
-                  unistd.h math.h sys/types.h])
+                  unistd.h math.h sys/types.h sys/stat.h sys/sysctl.h memory.h stdlib.h stdio.h string.h])
 AC_CHECK_FUNCS([getaddrinfo gethostbyname gethostname setsid sigprocmask])
 
 # Checks for typedefs, structures, and compiler characteristics.
