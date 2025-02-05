@@ -24,6 +24,9 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+#ifdef HAVE_XFCE_REVISION_H
+#include "xfce-revision.h"
+#endif
 
 #ifdef HAVE_MEMORY_H
 #include <memory.h>
@@ -2286,7 +2289,7 @@ static gboolean
 xfsm_manager_dbus_get_info (XfsmDbusManager *object,
                             GDBusMethodInvocation *invocation)
 {
-  xfsm_dbus_manager_complete_get_info (object, invocation, PACKAGE, VERSION, "Xfce");
+  xfsm_dbus_manager_complete_get_info (object, invocation, PACKAGE, VERSION_FULL, "Xfce");
   return TRUE;
 }
 
