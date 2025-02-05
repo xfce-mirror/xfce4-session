@@ -170,7 +170,9 @@ EXTRA_DIST =								\
 	xfsm-marshal.list						\
 	xfsm-client-dbus.xml						\
 	xfsm-manager-dbus.xml					\
-	org.xfce.session.policy.in.in
+	org.xfce.session.policy.in.in \
+	meson.build \
+	$(NULL)
 
 DISTCLEANFILES =							\
 	$(BUILT_SOURCES)				\
