@@ -16,3 +16,7 @@ xfsm_shutdown_helper_LDFLAGS =						\
 	$(LIBXFCE4UTIL_LIBS) \
 	$(GTK_LIBS) \
 	$(NULL)
+
+EXTRA_DIST = \
+	meson.build \
+	$(NULL)
