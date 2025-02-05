@@ -26,7 +26,9 @@ EXTRA_DIST = \
 	startxfce4.in \
 	xinitrc.in \
 	Xft.xrdb \
-	xflock4
+	xflock4 \
+	meson.build \
+	$(NULL)
 
 DISTCLEANFILES = \
 	startxfce4 \
