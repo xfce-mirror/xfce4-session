@@ -22,3 +22,7 @@ libxfsm_la_LIBADD =							\
 	$(LIBXFCE4UI_LIBS)						\
 	$(LIBXFCE4UTIL_LIBS)                    \
 	$(XFCONF_LIBS)
+
+EXTRA_DIST = \
+	meson.build \
+	$(NULL)
