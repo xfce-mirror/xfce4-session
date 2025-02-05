@@ -31,7 +31,9 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 EXTRA_DIST =								\
 	$(man_MANS)							\
-	$(desktop_in_files)
+	$(desktop_in_files) \
+	meson.build \
+	$(NULL)
 
 DISTCLEANFILES = 							\
 	$(desktop_DATA)
