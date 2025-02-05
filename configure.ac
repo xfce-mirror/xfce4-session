@@ -250,7 +250,6 @@ libxfsm/Makefile
 po/Makefile.in
 settings/Makefile
 scripts/Makefile
-scripts/xinitrc.in
 xfce4-session/Makefile
 xfce4-session-logout/Makefile
 xfsm-shutdown-helper/Makefile

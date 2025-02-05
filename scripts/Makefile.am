@@ -5,8 +5,6 @@ bin_SCRIPTS= \
 # cannot be set from configure, because ${prefix} is not expanded
 edit = $(SED) \
 	-e "s,@_datadir_\@,$(datadir),g" \
-	-e "s,@_libdir_\@,$(libdir),g" \
-	-e "s,@_docdir_\@,$$(dirname $(docdir)),g" \
 	-e "s,@_sysconfdir_\@,$(sysconfdir),g"
 
 startxfce4: Makefile $(srcdir)/startxfce4.in
@@ -14,9 +12,9 @@ startxfce4: Makefile $(srcdir)/startxfce4.in
 	$(edit) $(srcdir)/startxfce4.in >startxfce4.tmp
 	mv startxfce4.tmp startxfce4
 
-xinitrc: Makefile xinitrc.in
+xinitrc: Makefile $(srcdir)/xinitrc.in
 	rm -f xinitrc xinitrc.tmp
-	$(edit) xinitrc.in >xinitrc.tmp
+	$(edit) $(srcdir)/xinitrc.in >xinitrc.tmp
 	mv xinitrc.tmp xinitrc
 
 conffilesdir=@sysconfdir@/xdg/xfce4
