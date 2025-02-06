@@ -34,6 +34,7 @@ AC_INIT([xfce4-session], [xdt_version], [https://gitlab.xfce.org/xfce/xfce4-sess
 AC_PREREQ([2.69])
 AC_REVISION([xdt_version_build])
 AC_PROG_MAKE_SET()
+AC_DEFINE([VERSION_FULL], [PACKAGE_VERSION], [Alias for VERSION and PACKAGE_VERSION for meson compatibility])
 
 dnl Initialize automake
 AM_INIT_AUTOMAKE([1.11 dist-bzip2 tar-ustar no-dist-gzip foreign])
@@ -78,8 +79,8 @@ dnl check for standard header files
 AC_CHECK_HEADERS([errno.h fcntl.h \
                   netdb.h signal.h stdarg.h sys/resource.h \
                   sys/socket.h sys/time.h sys/wait.h sys/utsname.h time.h \
-                  unistd.h math.h sys/types.h])
-AC_CHECK_FUNCS([getaddrinfo gethostbyname gethostname setsid])
+                  unistd.h math.h sys/types.h sys/stat.h sys/sysctl.h memory.h stdlib.h stdio.h string.h])
+AC_CHECK_FUNCS([getaddrinfo gethostbyname gethostname setsid sigprocmask])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_INLINE
@@ -250,7 +251,6 @@ libxfsm/Makefile
 po/Makefile.in
 settings/Makefile
 scripts/Makefile
-scripts/xinitrc.in
 xfce4-session/Makefile
 xfce4-session-logout/Makefile
 xfsm-shutdown-helper/Makefile

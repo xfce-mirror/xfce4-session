@@ -95,6 +95,7 @@ EXTRA_DIST = \
 	xfce4-session-marshal.list \
 	$(top_srcdir)/xfce4-session/xfsm-client-dbus.xml \
 	$(top_srcdir)/xfce4-session/xfsm-manager-dbus.xml \
+	meson.build \
 	$(NULL)
 
 DISTCLEANFILES = \

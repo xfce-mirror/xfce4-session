@@ -1,0 +1,62 @@
+option(
+  'x11',
+  type: 'feature',
+  value: 'auto',
+  description: 'Support for the X11 windowing system',
+)
+
+option(
+  'xsession-prefix',
+  type: 'string',
+  value: '',
+  description: 'What should be the prefix for the xsession .desktop file? (default: /usr)',
+)
+
+option(
+  'legacy-session-management',
+  type: 'boolean',
+  value: true,
+  description: 'Enable X11R5 session management',
+)
+
+option(
+  'wayland',
+  type: 'feature',
+  value: 'auto',
+  description: 'Support for the Wayland windowing system',
+)
+
+option(
+  'wayland-session-prefix',
+  type: 'string',
+  value: '',
+  description: 'What should be the prefix for the wayland-session .desktop file? (default: /usr)',
+)
+
+option(
+  'gtk-layer-shell',
+  type: 'feature',
+  value: 'auto',
+  description: 'Gtk Layer Shell support (Wayland only)',
+)
+
+option(
+  'polkit',
+  type: 'feature',
+  value: 'auto',
+  description: 'Polkit support',
+)
+
+option(
+  'helper-path-prefix',
+  type: 'string',
+  value: '',
+  description: 'Path prefix under which helper executables will be installed (default: $libdir)',
+)
+
+option(
+  'host-os',
+  type: 'string',
+  value: '',
+  description: 'Host operating system to use: linux, freebsd, openbsd or solaris (default: autodetected build os)',
+)

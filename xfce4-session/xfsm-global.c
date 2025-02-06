@@ -34,7 +34,7 @@
 #include <stdlib.h>
 #endif
 
-#ifdef HAVE_SYS_TYPE_SH
+#ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
 #endif
 

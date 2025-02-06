@@ -17,7 +17,12 @@ desktop_wayland_in_files = xfce-wayland.desktop.in
 DISTCLEANFILES =
 EXTRA_DIST = \
 	$(desktop_in_files) \
-	$(desktop_wayland_in_files)
+	$(desktop_wayland_in_files) \
+	meson.build \
+	meson_options.txt \
+	po/meson.build \
+	xfce-revision.h.in \
+	$(NULL)
 
 if ENABLE_X11
 

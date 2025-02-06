@@ -22,6 +22,9 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+#ifdef HAVE_XFCE_REVISION_H
+#include "xfce-revision.h"
+#endif
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
@@ -134,7 +137,7 @@ sm_init (XfconfChannel *channel,
 #endif
     }
 
-  if (!SmsInitialize (PACKAGE, VERSION, sm_new_client, manager, ice_auth_proc,
+  if (!SmsInitialize (PACKAGE, VERSION_FULL, sm_new_client, manager, ice_auth_proc,
                       2048, error))
     {
       fprintf (stderr, "xfce4-session: Unable to register XSM protocol: %s\n", error);
