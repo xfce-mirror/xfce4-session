@@ -129,7 +129,7 @@ if host_os == ''
 endif
 if host_os == 'linux'
   feature_cflags += '-DBACKEND_TYPE_LINUX=1'
-elif host_os == 'freebsd'
+elif host_os in ['freebsd', 'dragonfly']
   feature_cflags += '-DBACKEND_TYPE_FREEBSD=1'
 elif host_os == 'openbsd'
   feature_cflags += '-DBACKEND_TYPE_OPENBSD=1'
