@@ -48,7 +48,6 @@ xfconf = dependency('libxfconf-0', version: dependency_versions['xfconf'])
 
 xdt_csource = find_program('xdt-csource', required: true)
 gdk_pixbuf_csource = find_program(gdk_pixbuf.get_variable(pkgconfig: 'gdk_pixbuf_csource'), required: true)
-gzip = find_program('gzip', required: true)
 
 # Feature: 'x11'
 x11_deps = []
