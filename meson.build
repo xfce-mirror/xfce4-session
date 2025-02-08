@@ -112,6 +112,9 @@ if not enable_x11 and not enable_wayland
 endif
 
 polkit = dependency('polkit-gobject-1', version: dependency_versions['polkit'], required: get_option('polkit'))
+if polkit.found()
+  feature_cflags += '-DHAVE_POLKIT=1'
+endif
 
 helper_path_prefix = get_option('helper-path-prefix')
 if helper_path_prefix == ''
