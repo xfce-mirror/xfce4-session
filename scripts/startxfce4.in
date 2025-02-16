@@ -141,7 +141,13 @@ then
     # a user-created 'lock' file, just in case user doesn't want any
     # modification of the environment and rc.xml files.
     if [ ! -e "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/lock" ]; then
-       LABWC_KEYMAP=$(awk -F '=' -v q1=\' -v q2=\" '$1 == "KEYMAP" {gsub ("[" q1 q2 "]", "", $2); print $2}' /etc/vconsole.conf)
+       LABWC_KEYMAP=$(awk -F '=' -v q1=\' -v q2=\" '
+         $1 == "KEYMAP" {
+           gsub ("[" q1 q2 "]", "", $2)
+           sub ("-", "(", $2) && sub ("$", ")", $2)
+           print $2
+         }
+       ' /etc/vconsole.conf)
        export LABWC_KEYMAP
        sed -i \
          -e "s|XKB_DEFAULT_LAYOUT=.*|XKB_DEFAULT_LAYOUT=${LABWC_KEYMAP}|g" \
