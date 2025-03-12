@@ -46,8 +46,14 @@ esac
 # the script is run in terminal.
 [ -t 0 ] && sleep 1
 
-ret=$(gdbus call --session \
-                 --dest org.xfce.SessionManager \
-                 --object-path /org/xfce/SessionManager \
-                 --method org.xfce.Session.Manager.Lock)
-[ "$ret" = '(true,)' ]
+# echo is used to strip blanks
+# $((2**31 - 1)) is MAXINT, which disables timeout: see
+# https://dbus.freedesktop.org/doc/api/html/group__DBusPendingCall.html
+ret=$(echo $(dbus-send --session \
+                       --dest=org.xfce.SessionManager \
+                       --print-reply=literal \
+                       --reply-timeout=$((2**31 - 1)) \
+                       --type=method_call \
+                       /org/xfce/SessionManager \
+                       org.xfce.Session.Manager.Lock))
+[ "$ret" = 'boolean true' ]
