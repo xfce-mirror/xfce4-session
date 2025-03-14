@@ -53,6 +53,7 @@
 #endif
 
 #include <gtk/gtk.h>
+#include <libxfce4ui/libxfce4ui.h>
 #include <libxfce4util/libxfce4util.h>
 
 #include "libxfsm/xfsm-util.h"
@@ -549,43 +550,6 @@ xfsm_logout_dialog_screenshot_new (GdkScreen *screen)
 
 
 
-static GdkPixbuf *
-exo_gdk_pixbuf_scale_ratio (GdkPixbuf *source,
-                            gint dest_size)
-{
-  gdouble wratio;
-  gdouble hratio;
-  gint source_width;
-  gint source_height;
-  gint dest_width;
-  gint dest_height;
-
-  g_return_val_if_fail (GDK_IS_PIXBUF (source), NULL);
-  g_return_val_if_fail (dest_size > 0, NULL);
-
-  source_width = gdk_pixbuf_get_width (source);
-  source_height = gdk_pixbuf_get_height (source);
-
-  wratio = (gdouble) source_width / (gdouble) dest_size;
-  hratio = (gdouble) source_height / (gdouble) dest_size;
-
-  if (hratio > wratio)
-    {
-      dest_width = rint (source_width / hratio);
-      dest_height = dest_size;
-    }
-  else
-    {
-      dest_width = dest_size;
-      dest_height = rint (source_height / wratio);
-    }
-
-  return gdk_pixbuf_scale_simple (source, MAX (dest_width, 1),
-                                  MAX (dest_height, 1), GDK_INTERP_BILINEAR);
-}
-
-
-
 static void
 xfsm_logout_dialog_screenshot_save (GdkPixbuf *screenshot,
                                     GdkScreen *screen,
@@ -601,7 +565,7 @@ xfsm_logout_dialog_screenshot_save (GdkPixbuf *screenshot,
   g_return_if_fail (GDK_IS_PIXBUF (screenshot));
   g_return_if_fail (GDK_IS_SCREEN (screen));
 
-  scaled = exo_gdk_pixbuf_scale_ratio (screenshot, SHOTSIZE);
+  scaled = xfce_gdk_pixbuf_scale_ratio (screenshot, SHOTSIZE);
   if (G_LIKELY (scaled != NULL))
     {
       dpy = gdk_screen_get_display (screen);
