@@ -33,11 +33,9 @@ settings_sources += gnome.gdbus_codegen(
   install_header: false,
 )
 
-settings_sources += custom_target(
-  'xfce4-session-settings_ui.h',
-  input: 'xfce4-session-settings.ui',
-  output: 'xfce4-session-settings_ui.h',
-  command: [xdt_csource, '--static', '--strip-comments', '--strip-content', '--name=xfce4_session_settings_ui', '--output=@OUTPUT@', '@INPUT@'],
+settings_sources += gnome.compile_resources(
+  'xfce4-session-resources',
+  'xfce4-session.gresource.xml',
 )
 
 executable(
