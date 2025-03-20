@@ -104,6 +104,7 @@ executable(
   dependencies: [
     gio,
     gio_unix,
+    gtk,
     gmodule,
     libxfce4ui,
     libxfce4util,
