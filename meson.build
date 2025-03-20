@@ -46,7 +46,6 @@ libxfce4util = dependency('libxfce4util-1.0', version: dependency_versions['libx
 libxfce4windowing = dependency('libxfce4windowing-0', version: dependency_versions['libxfce4windowing'])
 xfconf = dependency('libxfconf-0', version: dependency_versions['xfce4'])
 
-xdt_csource = find_program('xdt-csource', required: true)
 gdk_pixbuf_csource = find_program(gdk_pixbuf.get_variable(pkgconfig: 'gdk_pixbuf_csource'), required: true)
 
 # Feature: 'x11'
