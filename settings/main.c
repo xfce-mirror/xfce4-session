@@ -38,7 +38,6 @@
 
 #include "xfae-window.h"
 #include "xfce4-session-settings-common.h"
-#include "xfce4-session-settings_ui.h"
 
 
 static void
@@ -148,10 +147,7 @@ main (int argc,
     return EXIT_FAILURE;
 
   builder = gtk_builder_new ();
-  gtk_builder_add_from_string (builder,
-                               xfce4_session_settings_ui,
-                               xfce4_session_settings_ui_length,
-                               &error);
+  gtk_builder_add_from_resource (builder, "/org/xfce/session/xfce4-session-settings.ui", &error);
 
   if (!builder)
     {
