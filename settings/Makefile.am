@@ -11,8 +11,8 @@ xfce4_session_settings_SOURCES = \
 	xfae-window.h \
 	xfce4-session-marshal.c \
 	xfce4-session-marshal.h \
+	xfce4-session-resources.c \
 	xfce4-session-settings-common.h \
-	xfce4-session-settings_ui.h \
 	xfsm-client-dbus-client.h \
 	xfsm-client-dbus-client.c \
 	xfsm-manager-dbus-client.h \
@@ -55,7 +55,7 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 BUILT_SOURCES = \
 	xfce4-session-marshal.c \
 	xfce4-session-marshal.h \
-	xfce4-session-settings_ui.h \
+	xfce4-session-resources.c \
 	xfsm-client-dbus-client.h \
 	xfsm-client-dbus-client.c \
 	xfsm-manager-dbus-client.h \
@@ -70,8 +70,10 @@ xfce4-session-marshal.c: $(top_srcdir)/settings/xfce4-session-marshal.list Makef
 	$(AM_V_GEN) echo '#include "xfce4-session-marshal.h"' > $@
 	glib-genmarshal --prefix=xfce4_session_marshal $(top_srcdir)/settings/xfce4-session-marshal.list --body >> xfce4-session-marshal.c
 
-xfce4-session-settings_ui.h: xfce4-session-settings.ui
-	$(AM_V_GEN) xdt-csource --static --strip-comments --strip-content --name=xfce4_session_settings_ui $< >$@
+xfce4_session_resources_deps = $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies --sourcedir $(srcdir) $(srcdir)/xfce4-session.gresource.xml)
+
+xfce4-session-resources.c: $(srcdir)/xfce4-session.gresource.xml $(xfce4_session_resources_deps) Makefile
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate-source $<
 
 xfsm-client-dbus-client.c xfsm-client-dbus-client.h : $(top_srcdir)/xfce4-session/xfsm-client-dbus.xml Makefile.am
 	$(AM_V_GEN) $(GDBUS_CODEGEN) \
@@ -91,8 +93,9 @@ xfsm-manager-dbus-client.c xfsm-manager-dbus-client.h : $(top_srcdir)/xfce4-sess
 EXTRA_DIST = \
 	$(desktop_in_files) \
 	xfce4-session.xml \
-	xfce4-session-settings.ui \
+	xfce4-session-gresource.xml \
 	xfce4-session-marshal.list \
+	xfce4-session-resources.c \
 	$(top_srcdir)/xfce4-session/xfsm-client-dbus.xml \
 	$(top_srcdir)/xfce4-session/xfsm-manager-dbus.xml \
 	meson.build \
