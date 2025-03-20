@@ -11,9 +11,9 @@ XDT_VERSION_INIT([4.20.0], [git])
 dnl minimum required versions
 m4_define([glib_min_version], [2.72.0])
 m4_define([gtk_min_version], [3.24.0])
+m4_define([xfce4_min_version], [4.18.0])
 m4_define([libxfce4util_min_version], [4.19.2])
 m4_define([libxfce4ui_min_version], [4.18.4])
-m4_define([xfconf_min_version], [4.12.0])
 m4_define([libxfce4windowing_min_version], [4.19.2])
 
 m4_define([libx11_min_version], [1.6.7])
@@ -110,7 +110,7 @@ XDT_CHECK_PACKAGE([GIO_UNIX], [gio-unix-2.0], [glib_min_version])
 XDT_CHECK_PACKAGE([GMODULE], [gmodule-2.0], [glib_min_version])
 XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [libxfce4util_min_version])
 XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [libxfce4ui_min_version])
-XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [xfconf_min_version])
+XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [xfce4_min_version])
 XDT_CHECK_PACKAGE([LIBXFCE4WINDOWING], [libxfce4windowing-0], [libxfce4windowing_min_version])
 
 XDT_CHECK_OPTIONAL_FEATURE([X11],
