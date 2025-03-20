@@ -20,10 +20,10 @@ dependency_versions = {
   'glib': '>= 2.72.0',
   'gdk-pixbuf': '>= 2.42.8',
   'gtk': '>= 3.24.0',
+  'xfce4': '>= 4.18.0',
   'libxfce4ui': '>= 4.21.0',
   'libxfce4util': '>= 4.19.2',
   'libxfce4windowing': '>= 4.19.2',
-  'xfconf': '>= 4.12.0',
 
   'libice': '>= 1.0.10',
   'libsm': '>= 1.2.3',
@@ -44,7 +44,7 @@ gtk = dependency('gtk+-3.0', version: dependency_versions['gtk'])
 libxfce4ui = dependency('libxfce4ui-2', version: dependency_versions['libxfce4ui'])
 libxfce4util = dependency('libxfce4util-1.0', version: dependency_versions['libxfce4util'])
 libxfce4windowing = dependency('libxfce4windowing-0', version: dependency_versions['libxfce4windowing'])
-xfconf = dependency('libxfconf-0', version: dependency_versions['xfconf'])
+xfconf = dependency('libxfconf-0', version: dependency_versions['xfce4'])
 
 xdt_csource = find_program('xdt-csource', required: true)
 gdk_pixbuf_csource = find_program(gdk_pixbuf.get_variable(pkgconfig: 'gdk_pixbuf_csource'), required: true)
