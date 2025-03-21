@@ -365,7 +365,7 @@ main (int argc, char **argv)
   if (opt_version)
     {
       g_print ("%s %s (Xfce %s)\n\n", G_LOG_DOMAIN, VERSION_FULL, xfce_version_string ());
-      g_print ("%s\n", "Copyright (c) 2003-2024");
+      g_print ("%s\n", "Copyright (c) 2003-" COPYRIGHT_YEAR);
       g_print ("\t%s\n\n", _("The Xfce development team. All rights reserved."));
       g_print (_("Please report bugs to <%s>."), PACKAGE_BUGREPORT);
       g_print ("\n");
