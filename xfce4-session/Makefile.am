@@ -67,6 +67,7 @@ xfce4_session_CFLAGS =							\
 	$(GMODULE_CFLAGS)						\
 	$(GIO_CFLAGS)							\
 	$(GIO_UNIX_CFLAGS)						\
+	$(GTK_CFLAGS)							\
 	$(POLKIT_CFLAGS)						\
 	$(XFCONF_CFLAGS)						\
 	$(LIBXFCE4WINDOWING_CFLAGS)						\
@@ -84,6 +85,7 @@ xfce4_session_LDADD =							\
 	$(GMODULE_LIBS)							\
 	$(GIO_LIBS)								\
 	$(GIO_UNIX_LIBS)						\
+	$(GTK_LIBS)								\
 	$(POLKIT_LIBS)							\
 	$(XFCONF_LIBS)							\
 	$(LIBXFCE4WINDOWING_LIBS)							\
