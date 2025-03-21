@@ -7,6 +7,7 @@ dnl
 
 dnl Version information
 XDT_VERSION_INIT([4.20.0], [git])
+m4_define([copyright_year], [2025])
 
 dnl minimum required versions
 m4_define([glib_min_version], [2.72.0])
@@ -26,7 +27,7 @@ m4_define([gtk_layer_shell_min_version], [0.7.0])
 m4_define([polkit_min_version], [0.102])
 
 dnl Initialize autoconf
-AC_COPYRIGHT([Copyright (c) 2003-2024
+AC_COPYRIGHT([Copyright (c) 2003-copyright_year()
         The Xfce development team. All rights reserved.
 
 Written for Xfce by Benedikt Meurer <benny@xfce.org>.])
@@ -34,6 +35,9 @@ AC_INIT([xfce4-session], [xdt_version], [https://gitlab.xfce.org/xfce/xfce4-sess
 AC_PREREQ([2.69])
 AC_REVISION([xdt_version_build])
 AC_PROG_MAKE_SET()
+COPYRIGHT_YEAR=copyright_year()
+AC_DEFINE_UNQUOTED([COPYRIGHT_YEAR], ["$COPYRIGHT_YEAR"], [Copyright year])
+AC_SUBST([COPYRIGHT_YEAR])
 
 dnl Initialize automake
 AM_INIT_AUTOMAKE([1.11 dist-bzip2 tar-ustar no-dist-gzip foreign])
