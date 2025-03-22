@@ -119,10 +119,15 @@ then
     fi
   else
     default_compositor="labwc"
-    if test "x$OPTS" = "x" && ! command -v "$default_compositor" >/dev/null 2>&1
-    then
-      echo "$0: Please either install $default_compositor or specify another compositor as argument"
-      exit 1
+    if test "x$OPTS" = "x"; then
+      if ! command -v "$default_compositor" >/dev/null 2>&1; then
+        echo "$0: Please either install $default_compositor or specify another compositor as argument"
+        exit 1
+      else
+        # See if we can use the --session option of labwc (available since 0.7.2)
+        startup_option="--session"
+        "$default_compositor" --help | grep -q -- "$startup_option" || startup_option="--startup"
+      fi
     fi
     # Create specific labwc directory for Xfce
     if [ ! -d "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc" ]; then
@@ -156,7 +161,7 @@ then
     # Also: Xfce will use its own config directory and config file
     # to avoid conflict with current labwc setup and avoid launching 
     # anything from ~/.config/labwc/autostart
-    XFCE4_SESSION_COMPOSITOR="dbus-run-session -- ${OPTS:-labwc --config-dir ${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc --config ${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/rc.xml --startup xfce4-session}"
+    XFCE4_SESSION_COMPOSITOR="dbus-run-session -- ${OPTS:-labwc --config-dir ${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc --config ${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/rc.xml $startup_option xfce4-session}"
   fi
 fi
 
