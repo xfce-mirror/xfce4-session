@@ -258,9 +258,16 @@ name_lost (GDBusConnection *connection,
     {
       gchar *cmd = xfconf_channel_get_string (channel, "/general/WaylandLogoutCommand", NULL);
       if (cmd == NULL)
-        cmd = g_strdup ("loginctl terminate-session ''");
+        {
+          /* if labwc --session is used, just let xfce4-session terminate to exit labwc gracefully */
+          const gchar *compositor_cmd = g_getenv ("XFCE4_SESSION_COMPOSITOR");
+          if (compositor_cmd == NULL
+              || g_strstr_len (compositor_cmd, -1, "labwc") == NULL
+              || g_strstr_len (compositor_cmd, -1, "--session") == NULL)
+            cmd = g_strdup ("loginctl terminate-session ''");
+        }
 
-      if (!g_spawn_command_line_async (cmd, &error))
+      if (cmd != NULL && !g_spawn_command_line_async (cmd, &error))
         g_warning ("Failed to run logout command: %s", error->message);
       g_free (cmd);
     }
