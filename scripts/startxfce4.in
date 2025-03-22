@@ -37,8 +37,7 @@ then
       echo "  --wayland                Start xfce4-session inside a Wayland compositor."
       echo "                           The remaining optional arguments are interpreted as"
       echo "                           a command line to run a Wayland compositor replacing"
-      echo "                           the default one. 'xfce4-session' will be passed to it"
-      echo "                           as an argument."
+      echo "                           the default one."
       echo
 
       exit 0
@@ -157,7 +156,7 @@ then
     # Also: Xfce will use its own config directory and config file
     # to avoid conflict with current labwc setup and avoid launching 
     # anything from ~/.config/labwc/autostart
-    XFCE4_SESSION_COMPOSITOR="dbus-run-session -- ${OPTS:-labwc --config-dir ${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc --config ${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/rc.xml --startup}"
+    XFCE4_SESSION_COMPOSITOR="dbus-run-session -- ${OPTS:-labwc --config-dir ${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc --config ${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/rc.xml --startup xfce4-session}"
   fi
 fi
 

@@ -144,7 +144,7 @@ else
   fi
 
   # start xfce4-session normally
-  exec $XFCE4_SESSION_COMPOSITOR xfce4-session
+  exec ${XFCE4_SESSION_COMPOSITOR:-xfce4-session}
 fi
 
 # if we got here, then exec failed
