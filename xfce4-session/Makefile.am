@@ -149,14 +149,14 @@ xfsm-marshal.c: $(srcdir)/xfsm-marshal.list Makefile
 	$(AM_V_GEN) echo "#include <xfce4-session/xfsm-marshal.h>" > $@ \
 	&& glib-genmarshal --prefix=xfsm_marshal --body $< >> $@
 
-xfsm-client-dbus.c xfsm-client-dbus.h : $(srcdir)/xfsm-client-dbus.xml Makefile.am
+xfsm-client-dbus.c xfsm-client-dbus.h : $(srcdir)/xfsm-client-dbus.xml Makefile
 	$(AM_V_GEN) $(GDBUS_CODEGEN) \
 		--c-namespace=XfsmDbus \
 		--interface-prefix=org.xfce.Session. \
 		--generate-c-code=xfsm-client-dbus \
 		$(srcdir)/xfsm-client-dbus.xml
 
-xfsm-manager-dbus.c xfsm-manager-dbus.h : $(srcdir)/xfsm-manager-dbus.xml Makefile.am
+xfsm-manager-dbus.c xfsm-manager-dbus.h : $(srcdir)/xfsm-manager-dbus.xml Makefile
 	$(AM_V_GEN) $(GDBUS_CODEGEN) \
 		--c-namespace=XfsmDbus \
 		--interface-prefix=org.xfce.Session. \

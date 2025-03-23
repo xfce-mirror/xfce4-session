@@ -75,14 +75,14 @@ xfce4_session_resources_deps = $(shell $(GLIB_COMPILE_RESOURCES) --generate-depe
 xfce4-session-resources.c: $(srcdir)/xfce4-session.gresource.xml $(xfce4_session_resources_deps) Makefile
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate-source $<
 
-xfsm-client-dbus-client.c xfsm-client-dbus-client.h : $(top_srcdir)/xfce4-session/xfsm-client-dbus.xml Makefile.am
+xfsm-client-dbus-client.c xfsm-client-dbus-client.h : $(top_srcdir)/xfce4-session/xfsm-client-dbus.xml Makefile
 	$(AM_V_GEN) $(GDBUS_CODEGEN) \
 		--c-namespace=Xfsm \
 		--interface-prefix=org.xfce.Session. \
 		--generate-c-code=xfsm-client-dbus-client \
 		$(top_srcdir)/xfce4-session/xfsm-client-dbus.xml
 
-xfsm-manager-dbus-client.c xfsm-manager-dbus-client.h : $(top_srcdir)/xfce4-session/xfsm-manager-dbus.xml Makefile.am
+xfsm-manager-dbus-client.c xfsm-manager-dbus-client.h : $(top_srcdir)/xfce4-session/xfsm-manager-dbus.xml Makefile
 	$(AM_V_GEN) $(GDBUS_CODEGEN) \
 		--c-namespace=Xfsm \
 		--interface-prefix=org.xfce.Session. \
