@@ -157,11 +157,14 @@ then
          -e "s|XKB_DEFAULT_LAYOUT=.*|XKB_DEFAULT_LAYOUT=${LABWC_KEYMAP}|g" \
          "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/environment"
     fi
-    # Use dbus-run-session to make sure session starts as D-Bus session
-    # Also: Xfce will use its own config directory and config file
-    # to avoid conflict with current labwc setup and avoid launching 
-    # anything from ~/.config/labwc/autostart
-    XFCE4_SESSION_COMPOSITOR="dbus-run-session -- ${OPTS:-labwc --config-dir ${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc --config ${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/rc.xml $startup_option xfce4-session}"
+    # Xfce will use its own config directory and config file to avoid
+    # conflict with current labwc setup and avoid launching anything
+    # from ~/.config/labwc/autostart
+    XFCE4_SESSION_COMPOSITOR="${OPTS:-labwc --config-dir ${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc --config ${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/rc.xml $startup_option xfce4-session}"
+    # Start a D-Bus session if there isn't one already.
+    if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
+      XFCE4_SESSION_COMPOSITOR="dbus-run-session -- ${XFCE4_SESSION_COMPOSITOR}"
+    fi
   fi
 fi
 
