@@ -149,13 +149,35 @@ then
          $1 == "KEYMAP" {
            gsub ("[" q1 q2 "]", "", $2)
            sub ("-", "(", $2) && sub ("$", ")", $2)
-           print $2
+           keymap = $2
+         }
+         $1 == "XKBLAYOUT" {
+           gsub ("[" q1 q2 "]", "", $2)
+           layout = $2
+         }
+         $1 == "XKBVARIANT" {
+           gsub ("[" q1 q2 "]", "", $2)
+           variant = $2
+         }
+         END {
+           if (keymap != "") {
+             print keymap
+           } else if (layout != "") {
+             if (variant != "") {
+               print layout "(" variant ")"
+             } else {
+               print layout
+             }
+           }
          }
        ' /etc/vconsole.conf)
-       export LABWC_KEYMAP
-       sed -i \
-         -e "s|XKB_DEFAULT_LAYOUT=.*|XKB_DEFAULT_LAYOUT=${LABWC_KEYMAP}|g" \
-         "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/environment"
+       if [ -n "$LABWC_KEYMAP" ]; then
+         sed -i \
+           -e "s|XKB_DEFAULT_LAYOUT=.*|XKB_DEFAULT_LAYOUT=${LABWC_KEYMAP}|g" \
+           "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/environment"
+       else
+         echo "Keyboard layout detection failed"
+       fi
     fi
     # Xfce will use its own config directory and config file to avoid
     # conflict with current labwc setup and avoid launching anything
