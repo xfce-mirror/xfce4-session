@@ -20,10 +20,6 @@
  * MA 02110-1301 USA.
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #ifdef HAVE_STDARG_H
 #include <stdarg.h>
 #endif

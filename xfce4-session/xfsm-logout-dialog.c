@@ -22,10 +22,6 @@
  * was written by Owen Taylor <otaylor@redhat.com>.
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
 #endif
