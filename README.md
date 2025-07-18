@@ -30,17 +30,17 @@ See [NEWS](https://gitlab.xfce.org/xfce/xfce4-session/-/blob/master/NEWS) for de
 From source: 
 
     % cd xfce4-session
-    % ./autogen.sh
-    % make
-    % make install
+    % meson setup build
+    % meson compile -C build
+    % meson install -C build
 
 From release tarball:
 
-    % tar xf xfce4-session-<version>.tar.bz2
+    % tar xf xfce4-session-<version>.tar.xz
     % cd xfce4-session-<version>
-    % ./configure
-    % make
-    % make install
+    % meson setup build
+    % meson compile -C build
+    % meson install -C build
 
 ### Reporting Bugs
 
