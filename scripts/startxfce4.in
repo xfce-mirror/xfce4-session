@@ -95,10 +95,6 @@ then
         CLUTTER_BACKEND="gdk"
         export CLUTTER_BACKEND
       fi
-      if [ -z "${SDL_VIDEODRIVER}" ]; then
-        SDL_VIDEODRIVER="wayland"
-        export SDL_VIDEODRIVER
-      fi
       # This is default for current firefox/thunderbird
       MOZ_ENABLE_WAYLAND="1"
       export MOZ_ENABLE_WAYLAND
