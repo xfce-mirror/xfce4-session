@@ -37,13 +37,13 @@
        Suggested Xfce key bindings.
     -->
     <keybind key="XF86_AudioLowerVolume">
-      <action name="Execute" command="amixer -D pulse sset Master 5%-" />
+      <action name="Execute" command="amixer sset Master 5%-" />
     </keybind>
     <keybind key="XF86_AudioRaiseVolume">
-      <action name="Execute" command="amixer -D pulse sset Master 5%+" />
+      <action name="Execute" command="amixer sset Master 5%+" />
     </keybind>
     <keybind key="XF86_AudioMute">
-      <action name="Execute" command="amixer -D pulse sset Master toggle" />
+      <action name="Execute" command="amixer sset Master toggle" />
     </keybind>
     <keybind key="W-q">
       <action name="Close" />
