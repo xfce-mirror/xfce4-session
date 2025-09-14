@@ -95,6 +95,7 @@ struct _XfsmManager
 
   guint die_timeout_id;
   guint name_owner_id;
+  guint save_idle_id;
 
   GDBusConnection *connection;
   XfwScreen *xfw_screen;
@@ -214,6 +215,8 @@ xfsm_manager_finalize (GObject *obj)
 
   if (manager->die_timeout_id != 0)
     g_source_remove (manager->die_timeout_id);
+  if (manager->save_idle_id != 0)
+    g_source_remove (manager->save_idle_id);
 
   g_object_unref (manager->shutdown_helper);
 
@@ -2335,6 +2338,9 @@ xfsm_manager_dbus_checkpoint_idled (gpointer data)
 {
   XfsmManager *manager = XFSM_MANAGER (data);
 
+  /* do this first, 'manager' can be released below */
+  manager->save_idle_id = 0;
+
   xfsm_manager_save_yourself_global (manager, SmSaveBoth, FALSE,
                                      SmInteractStyleNone, FALSE,
                                      XFSM_SHUTDOWN_ASK, TRUE);
@@ -2350,7 +2356,7 @@ xfsm_manager_dbus_checkpoint (XfsmDbusManager *object,
 {
   XfsmManager *manager = XFSM_MANAGER (object);
 
-  if (manager->state != XFSM_MANAGER_IDLE)
+  if (manager->state != XFSM_MANAGER_IDLE || manager->save_idle_id != 0)
     {
       throw_error (invocation, XFSM_ERROR_BAD_STATE, _("Session manager must be in idle state when requesting a checkpoint"));
       return TRUE;
@@ -2363,7 +2369,7 @@ xfsm_manager_dbus_checkpoint (XfsmDbusManager *object,
     manager->checkpoint_session_name = NULL;
 
   /* idle so the dbus call returns in the client */
-  g_idle_add (xfsm_manager_dbus_checkpoint_idled, manager);
+  manager->save_idle_id = g_idle_add (xfsm_manager_dbus_checkpoint_idled, manager);
 
   xfsm_dbus_manager_complete_checkpoint (object, invocation);
   return TRUE;
@@ -2374,6 +2380,9 @@ static gboolean
 xfsm_manager_dbus_shutdown_idled (gpointer data)
 {
   ShutdownIdleData *idata = data;
+
+  /* do this first, 'manager' can be released below */
+  idata->manager->save_idle_id = 0;
 
   xfsm_manager_save_yourself_global (idata->manager, SmSaveBoth, TRUE,
                                      SmInteractStyleAny, FALSE,
@@ -2390,7 +2399,7 @@ xfsm_manager_save_yourself_dbus (XfsmManager *manager,
 {
   ShutdownIdleData *idata;
 
-  if (manager->state != XFSM_MANAGER_IDLE)
+  if (manager->state != XFSM_MANAGER_IDLE || manager->save_idle_id != 0)
     {
       return FALSE;
     }
@@ -2399,8 +2408,8 @@ xfsm_manager_save_yourself_dbus (XfsmManager *manager,
   idata->manager = manager;
   idata->type = type;
   idata->allow_save = allow_save;
-  g_idle_add_full (G_PRIORITY_DEFAULT, xfsm_manager_dbus_shutdown_idled,
-                   idata, (GDestroyNotify) g_free);
+  manager->save_idle_id = g_idle_add_full (G_PRIORITY_DEFAULT, xfsm_manager_dbus_shutdown_idled,
+                                           idata, (GDestroyNotify) g_free);
 
   return TRUE;
 }
