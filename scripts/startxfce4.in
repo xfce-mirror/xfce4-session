@@ -156,14 +156,14 @@ then
            variant = $2
          }
          END {
-           if (keymap != "") {
-             print keymap
-           } else if (layout != "") {
+           if (layout != "") {
              if (variant != "") {
                print layout "(" variant ")"
              } else {
                print layout
              }
+           } else if (keymap != "") {
+             print keymap
            }
          }
        ' /etc/vconsole.conf)
