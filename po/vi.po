@@ -6,6 +6,7 @@
 # Translators:
 # Xfce Bot <transifex@xfce.org>, 2023
 # Cas Pascal <casboi86@gmail.com>, 2024
+# Loc Huynh, 2025
 # 
 #, fuzzy
 msgid ""
@@ -14,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-29 15:50+0200\n"
 "PO-Revision-Date: 2023-02-20 11:55+0000\n"
-"Last-Translator: Cas Pascal <casboi86@gmail.com>, 2024\n"
+"Last-Translator: Loc Huynh, 2025\n"
 "Language-Team: Vietnamese (https://app.transifex.com/xfce/teams/16840/vi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -234,7 +235,7 @@ msgstr "Hủy bỏ"
 
 #: ../settings/xfae-dialog.c:213
 msgid "OK"
-msgstr ""
+msgstr "ĐỒNG Ý"
 
 #: ../settings/xfae-dialog.c:260 ../settings/xfae-window.c:274
 msgid "Edit application"
@@ -493,19 +494,24 @@ msgstr ""
 #: ../xfce4-session/xfsm-manager.c:2299 ../xfce4-session/xfsm-manager.c:2319
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr ""
+"Trình quản lý phiên phải ở trạng thái không hoạt động khi yêu cầu tắt máy"
 
 #: ../xfce4-session/xfsm-manager.c:2364
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr ""
+"Trình quản lý phiên phải ở trạng thái không hoạt động khi yêu cầu khởi động "
+"lại"
 
 #: ../xfce4-session/xfsm-manager.c:2408 ../xfce4-session/xfsm-manager.c:2455
 #: ../xfce4-session/xfsm-manager.c:2501
 msgid "Session manager must be in idle state when requesting a sleep"
-msgstr ""
+msgstr "Trình quản lý phiên phải ở trạng thái không hoạt động khi yêu cầu ngủ"
 
 #: ../xfce4-session/xfsm-manager.c:2547
 msgid "Session manager must be in idle state when requesting a user switch"
 msgstr ""
+"Trình quản lý phiên phải ở trạng thái không hoạt động khi yêu cầu chuyển đổi"
+" người dùng"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:193
 #, c-format
@@ -537,11 +543,11 @@ msgstr "_Ngủ đông"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:363
 msgid "H_ybrid Sleep"
-msgstr ""
+msgstr "_Giấc ngủ lai"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:393
 msgid "Switch _User"
-msgstr ""
+msgstr "Ch_uyển đổi người dùng"
 
 #: ../xfce4-session/xfsm-logout-dialog.c:418
 msgid "_Save session for future logins"
@@ -582,11 +588,11 @@ msgstr "Ngủ đông mà không hiện hôp thoại"
 
 #: ../xfce4-session-logout/main.c:78
 msgid "Hybrid Sleep without displaying the logout dialog"
-msgstr ""
+msgstr "Ngủ kết hợp mà không hiển thị hộp thoại đăng xuất"
 
 #: ../xfce4-session-logout/main.c:82
 msgid "Switch user without displaying the logout dialog"
-msgstr ""
+msgstr "Chuyển đổi người dùng mà không hiển thị hộp thoại đăng xuất"
 
 #: ../xfce4-session-logout/main.c:86
 msgid "Log out quickly; don't save the session"
@@ -617,13 +623,14 @@ msgstr "Đăng xuất khỏi màn hình Xfce"
 #. to suspend or hibernate their system.
 #: ../xfce4-session/org.xfce.session.policy.in.in.h:5
 msgid "Shutdown, restart, suspend, or hibernate the system"
-msgstr ""
+msgstr "Tắt máy, khởi động lại, tạm dừng hoặc ngủ đông hệ thống"
 
 #: ../xfce4-session/org.xfce.session.policy.in.in.h:6
 msgid ""
 "Authentication is required to shutdown, restart, suspend, or hibernate the "
 "system."
 msgstr ""
+"Cần phải có xác thực để tắt, khởi động lại, tạm dừng hoặc ngủ đông hệ thống."
 
 #: ../settings/xfce-session-settings.desktop.in.h:1
 #: ../settings/xfce4-session-settings.ui.h:4
@@ -632,13 +639,15 @@ msgstr "Phiên chạy và khởi động"
 
 #: ../settings/xfce-session-settings.desktop.in.h:2
 msgid "Customize desktop startup"
-msgstr ""
+msgstr "Tùy chỉnh khởi động máy tính để bàn"
 
 #: ../settings/xfce-session-settings.desktop.in.h:3
 msgid ""
 "session;settings;preferences;manager;startup;login;logout;shutdown;lock "
 "screen;application;autostart;launch;services;daemon;agent;"
 msgstr ""
+"phiên;cài đặt;tùy chỉnh;người quản lý;khởi động;đăng nhập;đăng xuất;tắt "
+"máy;màn hình khóa;ứng dụng;tự động khởi động;khởi chạy;dịch vụ;daemon;agent;"
 
 #: ../settings/xfce4-session-settings.ui.h:1
 msgid ""
@@ -646,6 +655,9 @@ msgid ""
 "and can be saved now or when you log out.\n"
 "Changes below will only take effect when the session is saved."
 msgstr ""
+"Các ứng dụng này là một phần của phiên hiện đang chạy,\n"
+"và có thể được lưu ngay bây giờ hoặc khi bạn đăng xuất.\n"
+"Những thay đổi bên dưới sẽ chỉ có hiệu lực khi phiên được lưu."
 
 #: ../settings/xfce4-session-settings.ui.h:5
 msgid "_Help"
@@ -653,43 +665,43 @@ msgstr "Trợ giúp "
 
 #: ../settings/xfce4-session-settings.ui.h:7
 msgid "_Display chooser on login"
-msgstr ""
+msgstr "_Trình chọn hiển thị khi đăng nhập"
 
 #: ../settings/xfce4-session-settings.ui.h:8
 msgid "Display the session chooser every time Xfce starts"
-msgstr ""
+msgstr "Màn hình trình chọn phiên mỗi khi Xfce khởi động"
 
 #: ../settings/xfce4-session-settings.ui.h:9
 msgid "<b>Session Chooser</b>"
-msgstr ""
+msgstr "<b>Bộ chọn phiên</b>"
 
 #: ../settings/xfce4-session-settings.ui.h:10
 msgid "Automatically save session on logo_ut"
-msgstr ""
+msgstr "Tự động lư_u phiên khi đăng xuất"
 
 #: ../settings/xfce4-session-settings.ui.h:11
 msgid "Always save the session when logging out"
-msgstr ""
+msgstr "Luôn lưu phiên khi đăng xuất"
 
 #: ../settings/xfce4-session-settings.ui.h:12
 msgid "Pro_mpt on logout"
-msgstr ""
+msgstr "_Nhắc khi đăng xuất"
 
 #: ../settings/xfce4-session-settings.ui.h:13
 msgid "Prompt for confirmation when logging out"
-msgstr ""
+msgstr "Nhắc xác nhận khi đăng xuất"
 
 #: ../settings/xfce4-session-settings.ui.h:14
 msgid "<b>Logout Settings</b>"
-msgstr ""
+msgstr "<b>Cài đặt đăng xuất</b>"
 
 #: ../settings/xfce4-session-settings.ui.h:15
 msgid "Lock screen be_fore sleep"
-msgstr ""
+msgstr "_Khóa màn hình trước khi ngủ"
 
 #: ../settings/xfce4-session-settings.ui.h:16
 msgid "<b>Shutdown</b>"
-msgstr ""
+msgstr "<b>Tắt máy</b>"
 
 #: ../settings/xfce4-session-settings.ui.h:17
 msgid "_General"
@@ -697,15 +709,15 @@ msgstr "_Tổng quát"
 
 #: ../settings/xfce4-session-settings.ui.h:18
 msgid "Save Sess_ion"
-msgstr ""
+msgstr "Lưu ph_iên"
 
 #: ../settings/xfce4-session-settings.ui.h:19
 msgid "Currently active session: <b>Default</b>"
-msgstr ""
+msgstr "Phiên hiện đang hoạt động: <b>Mặc định</b>"
 
 #: ../settings/xfce4-session-settings.ui.h:21
 msgid "Current Sessio_n"
-msgstr ""
+msgstr "Phiê_n hiện tại"
 
 #: ../settings/xfce4-session-settings.ui.h:22
 msgid "_Remove"
@@ -713,48 +725,49 @@ msgstr "_Gỡ bỏ "
 
 #: ../settings/xfce4-session-settings.ui.h:23
 msgid "Delete the selected session"
-msgstr ""
+msgstr "Xóa phiên đã chọn"
 
 #: ../settings/xfce4-session-settings.ui.h:24
 msgid "Clear Save_d Sessions"
-msgstr ""
+msgstr "_Xóa các phiên đã lưu"
 
 #: ../settings/xfce4-session-settings.ui.h:25
 msgid "Saved _Sessions"
-msgstr ""
+msgstr "_Phiên đã lưu"
 
 #: ../settings/xfce4-session-settings.ui.h:26
 msgid "Launch GN_OME services on startup"
-msgstr ""
+msgstr "Khởi chạy dịch vụ Gn_ome khi khởi động"
 
 #: ../settings/xfce4-session-settings.ui.h:27
 msgid "Start GNOME services, such as gnome-keyring"
-msgstr ""
+msgstr "Khởi động các dịch vụ Gnome, chẳng hạn như khóa gnome"
 
 #: ../settings/xfce4-session-settings.ui.h:28
 msgid "Launch _KDE services on startup"
-msgstr ""
+msgstr "_Khởi chạy dịch vụ KDE khi khởi động"
 
 #: ../settings/xfce4-session-settings.ui.h:29
 msgid "Start KDE services, such as kdeinit"
-msgstr ""
+msgstr "Bắt đầu dịch vụ KDE, chẳng hạn như kdeinit"
 
 #: ../settings/xfce4-session-settings.ui.h:30
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>Khả năng tương thích</b>"
 
 #: ../settings/xfce4-session-settings.ui.h:31
 msgid "Manage _remote applications"
-msgstr ""
+msgstr "_Quản lý ứng dụng từ xa"
 
 #: ../settings/xfce4-session-settings.ui.h:32
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
 msgstr ""
+"Quản lý các ứng dụng từ xa qua mạng (điều này có thể gây ra rủi ro bảo mật)"
 
 #: ../settings/xfce4-session-settings.ui.h:33
 msgid "<b>Security</b>"
-msgstr ""
+msgstr "<b>Bảo mật</b>"
 
 #: ../settings/xfce4-session-settings.ui.h:34
 msgid "Ad_vanced"
@@ -762,7 +775,7 @@ msgstr "_Nâng cao"
 
 #: ../settings/xfce4-session-settings.ui.h:35
 msgid "Saving Session"
-msgstr ""
+msgstr "Phiên lưu"
 
 #: ../settings/xfce4-session-settings.ui.h:36
 msgid ""
