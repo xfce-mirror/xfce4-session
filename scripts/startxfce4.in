@@ -140,7 +140,9 @@ then
     # Set labwc keymap to match system-wide keymap only in absence of
     # a user-created 'lock' file, just in case user doesn't want any
     # modification of the environment and rc.xml files.
-    if [ ! -e "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/lock" ] && [ -e /etc/vconsole.conf ]; then
+    if [ ! -e "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/lock" ]; then
+      # Linux
+      if [ -e /etc/vconsole.conf ]; then 
        LABWC_KEYMAP=$(awk -F '=' -v q1=\' -v q2=\" '
          $1 == "KEYMAP" {
            gsub ("[" q1 q2 "]", "", $2)
@@ -167,13 +169,17 @@ then
            }
          }
        ' /etc/vconsole.conf)
-       if [ -n "$LABWC_KEYMAP" ]; then
+      # OpenBSD
+      elif [ -e /etc/kbdtype ]; then
+        LABWC_KEYMAP=$(sed -n -E '/^([^[:blank:].]{2})(\..*|$)/{s//\1/p; q}' /etc/kbdtype)
+      fi
+      if [ -n "$LABWC_KEYMAP" ]; then
          sed -i \
            -e "s|XKB_DEFAULT_LAYOUT=.*|XKB_DEFAULT_LAYOUT=${LABWC_KEYMAP}|g" \
            "${XDG_CONFIG_HOME:-${HOME}/.config}/xfce4/labwc/environment"
-       else
+      else
          echo "Keyboard layout detection failed"
-       fi
+      fi
     fi
     # Xfce will use its own config directory and config file to avoid
     # conflict with current labwc setup and avoid launching anything
