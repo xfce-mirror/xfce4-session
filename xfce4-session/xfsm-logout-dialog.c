@@ -687,6 +687,12 @@ xfsm_logout_dialog (const gchar *session_name,
       return TRUE;
     }
 
+  /* do not create multiple dialogs */
+  static gboolean showing_dialog = FALSE;
+  if (showing_dialog)
+    return FALSE;
+  showing_dialog = TRUE;
+
   /* decide on which screen we should show the dialog */
   screen = xfce_gdk_screen_get_active (&monitor);
   if (G_UNLIKELY (screen == NULL))
@@ -797,5 +803,6 @@ xfsm_logout_dialog (const gchar *session_name,
       g_object_unref (G_OBJECT (screenshot));
     }
 
+  showing_dialog = FALSE;
   return (result == GTK_RESPONSE_OK);
 }
