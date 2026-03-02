@@ -6,7 +6,7 @@ dnl Written for Xfce by Benedikt Meurer <benny@xfce.org>.
 dnl
 
 dnl Version information
-XDT_VERSION_INIT([4.20.4])
+XDT_VERSION_INIT([4.20.4], [git])
 m4_define([copyright_year], [2026])
 
 dnl minimum required versions
