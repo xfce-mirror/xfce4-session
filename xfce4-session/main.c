@@ -287,8 +287,12 @@ name_lost (GDBusConnection *connection,
 static void
 xfsm_dbus_init (XfsmManager **manager)
 {
+  const gchar *bus_name = g_getenv ("XFCE4_SESSION_DBUS_BUS_NAME");
+  if (xfce_str_is_empty (bus_name))
+    bus_name = "org.xfce.SessionManager";
+
   name_id = g_bus_own_name (G_BUS_TYPE_SESSION,
-                            "org.xfce.SessionManager",
+                            bus_name,
                             G_BUS_NAME_OWNER_FLAGS_NONE,
                             bus_acquired, name_acquired, name_lost,
                             manager,
