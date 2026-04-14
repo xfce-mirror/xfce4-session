@@ -8,6 +8,7 @@
 # Emanuele Petriglia <inbox@emanuelepetriglia.com>, 2018-2019
 # Emanuele Petriglia <inbox@emanuelepetriglia.com>, 2019-2020,2023-2024
 # Luca Marrocco <buildup@libero.it>, 2003
+# underpass <underpass_bugzilla@outlook.it>, 2026
 # Vincenzo Reale <vinx.reale@gmail.com>, 2020,2024
 msgid ""
 msgstr ""
@@ -15,7 +16,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
 "POT-Creation-Date: 2025-07-18 10:58+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
-"Last-Translator: Emanuele Petriglia <inbox@emanuelepetriglia.com>, 2019-2020,2023-2024\n"
+"Last-Translator: underpass <underpass_bugzilla@outlook.it>, 2026\n"
 "Language-Team: Italian (http://app.transifex.com/xfce/xfce4-session/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,7 +50,7 @@ msgstr "Sessione"
 
 #: libxfsm/xfsm-util.c:382
 msgid "Last accessed"
-msgstr "Acceduto per ultimo"
+msgstr "Ultimo accesso"
 
 #: settings/main.c:102
 msgid "Settings manager socket"
@@ -57,7 +58,7 @@ msgstr "Socket del gestore delle impostazioni"
 
 #: settings/main.c:102
 msgid "SOCKET ID"
-msgstr "SOCKET ID"
+msgstr "ID SOCKET"
 
 #: settings/main.c:103
 msgid "Version information"
@@ -93,7 +94,7 @@ msgstr "_Avvio automatico"
 
 #: settings/main.c:176
 msgid "Currently active session:"
-msgstr "Sessioni attive attualmente:"
+msgstr "Sessione attualmente attiva:"
 
 #: settings/session-editor.c:56
 msgid "If running"
@@ -155,7 +156,7 @@ msgstr "Potrebbe essere necessario eliminare manualmente alcuni file in \"%s\"."
 
 #: settings/session-editor.c:245
 msgid "All Xfce cache files could not be cleared"
-msgstr "Tutti i file della cache di Xfce non sono stati rimossi"
+msgstr "Non tutti i file della cache di Xfce sono stati rimossi"
 
 #: settings/session-editor.c:286
 #, c-format
@@ -202,7 +203,7 @@ msgstr "Stile di riavvio"
 
 #: settings/xfae-dialog.c:75 xfce4-session/xfsm-manager.c:728
 msgid "_OK"
-msgstr "_Ok"
+msgstr "_OK"
 
 #: settings/xfae-dialog.c:78 settings/xfae-window.c:254
 msgid "Add application"
@@ -234,7 +235,7 @@ msgstr "Annulla"
 
 #: settings/xfae-dialog.c:207
 msgid "OK"
-msgstr "Ok"
+msgstr "OK"
 
 #: settings/xfae-dialog.c:254 settings/xfae-window.c:276
 msgid "Edit application"
@@ -342,11 +343,11 @@ msgstr "Impossibile modificare l'elemento \"%s\""
 
 #: settings/xfae-window.c:516
 msgid "Failed to toggle item"
-msgstr "Impossibile scambiare l'elemento"
+msgstr "Impossibile attivare/disattivare l'elemento"
 
 #: xfce4-session/main.c:77
 msgid "Disable binding to TCP ports"
-msgstr "Disabilita il collegamento alle porte TCP"
+msgstr "Disattiva il collegamento alle porte TCP"
 
 #: xfce4-session/main.c:78 xfce4-session-logout/main.c:80
 msgid "Print version information and exit"
@@ -423,7 +424,7 @@ msgstr "Impossibile determinare il nome della sessione di ripristino. Possibili 
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr "La sessione di ripristino specificata (\"%s\") non è identificata come sessione di ripristino."
+msgstr "La sessione di ripristino specificata (\"%s\") non è contrassegnata come sessione di ripristino."
 
 #: xfce4-session/xfsm-manager.c:656
 msgid "The list of applications in the failsafe session is empty."
@@ -454,7 +455,7 @@ msgstr "Spegnimento non riuscito"
 
 #: xfce4-session/xfsm-manager.c:1320
 msgid "Failed to suspend session"
-msgstr "Sospensione della sessione non riuscito"
+msgstr "Sospensione della sessione non riuscita"
 
 #: xfce4-session/xfsm-manager.c:1322
 msgid "Failed to hibernate session"
@@ -478,7 +479,7 @@ msgstr "Il gestore di sessione deve essere inattivo alla richiesta di un punto d
 
 #: xfce4-session/xfsm-manager.c:2425 xfce4-session/xfsm-manager.c:2445
 msgid "Session manager must be in idle state when requesting a shutdown"
-msgstr "Il gestore di sessione deve essere inattivo alla richiesta dello spegnimento"
+msgstr "Il gestore di sessione deve essere inattivo alla richiesta di spegnimento"
 
 #: xfce4-session/xfsm-manager.c:2482
 msgid "Session manager must be in idle state when requesting a restart"
@@ -512,7 +513,7 @@ msgstr "_Riavvia"
 
 #: xfce4-session/xfsm-logout-dialog.c:278
 msgid "Update and Shut _Down"
-msgstr "Aggiorna e ri_avvia"
+msgstr "Aggiorna e spe_gni"
 
 #: xfce4-session/xfsm-logout-dialog.c:278
 msgid "Shut _Down"
@@ -636,7 +637,7 @@ msgid ""
 "These applications are a part of the currently-running session,\n"
 "and can be saved now or when you log out.\n"
 "Changes below will only take effect when the session is saved."
-msgstr "Le seguenti applicazioni fanno parte della sessione attualmente in \nesecuzione e possono essere salvate in questo momento oppure\nquando si esce. I cambiamenti effettuati qui sotto avranno effetto\nsolo quando la sessione viene salvata."
+msgstr "Le applicazioni qui elencate fanno parte della sessione attualmente \nin esecuzione e possono essere salvate adesso oppure all'uscita\nLe modifiche effettuate di seguito avranno effetto solo quando\nla sessione viene salvata."
 
 #: settings/xfce4-session-settings.ui:79
 msgid "_Help"
@@ -652,7 +653,7 @@ msgstr "Mostra il selettore di sessione ogni volta che Xfce viene avviato"
 
 #: settings/xfce4-session-settings.ui:161
 msgid "<b>Session Chooser</b>"
-msgstr "<b>Selettore della sessione</b>"
+msgstr "<b>Selettore di sessione</b>"
 
 #: settings/xfce4-session-settings.ui:192
 msgid "Automatically save session on logo_ut"
@@ -668,11 +669,11 @@ msgstr "Chiedi all'us_cita"
 
 #: settings/xfce4-session-settings.ui:215
 msgid "Prompt for confirmation when logging out"
-msgstr "Chiedi per la conferma all'uscita"
+msgstr "Chiedi conferma all'uscita"
 
 #: settings/xfce4-session-settings.ui:235
 msgid "<b>Logout Settings</b>"
-msgstr "<b>Impostazioni dell'uscita</b>"
+msgstr "<b>Impostazioni di uscita</b>"
 
 #: settings/xfce4-session-settings.ui:266
 msgid "Lock screen be_fore sleep"
@@ -749,7 +750,7 @@ msgstr "<b>Sicurezza</b>"
 
 #: settings/xfce4-session-settings.ui:753
 msgid "Ad_vanced"
-msgstr "A_vanzato"
+msgstr "A_vanzate"
 
 #: settings/xfce4-session-settings.ui:784
 msgid "Saving Session"
@@ -759,4 +760,4 @@ msgstr "Salvataggio della sessione in corso..."
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
-msgstr "La sessione sta per essere salvata. Se vuoi attendere, chiudi questa finestra."
+msgstr "La sessione sta per essere salvata. Se non si desidera attendere, chiudere questa finestra."
