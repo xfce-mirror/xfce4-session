@@ -60,15 +60,6 @@ XfsmShutdown *
 xfsm_shutdown_get (void);
 
 gboolean
-xfsm_shutdown_password_require (XfsmShutdown *shutdown,
-                                XfsmShutdownType type);
-
-XfsmPassState
-xfsm_shutdown_password_send (XfsmShutdown *shutdown,
-                             XfsmShutdownType type,
-                             const gchar *password);
-
-gboolean
 xfsm_shutdown_try_type (XfsmShutdown *shutdown,
                         XfsmShutdownType type,
                         GError **error);
