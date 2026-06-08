@@ -367,8 +367,7 @@ xfsm_client_steal_properties (XfsmClient *client)
 
   g_return_val_if_fail (XFSM_IS_CLIENT (client), NULL);
 
-  properties = client->properties;
-  client->properties = NULL;
+  properties = g_steal_pointer (&client->properties);
 
   return properties;
 }
