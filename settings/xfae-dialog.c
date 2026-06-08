@@ -42,7 +42,7 @@ struct _XfaeDialog
 
 
 
-G_DEFINE_TYPE (XfaeDialog, xfae_dialog, GTK_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (XfaeDialog, xfae_dialog, GTK_TYPE_DIALOG)
 
 
 

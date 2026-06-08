@@ -50,7 +50,7 @@ struct _XfsmPackagekit
 
 
 
-G_DEFINE_TYPE (XfsmPackagekit, xfsm_packagekit, G_TYPE_OBJECT)
+G_DEFINE_FINAL_TYPE (XfsmPackagekit, xfsm_packagekit, G_TYPE_OBJECT)
 
 
 

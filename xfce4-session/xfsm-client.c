@@ -70,7 +70,7 @@ static void
 xfsm_client_dbus_cleanup (XfsmClient *client);
 
 
-G_DEFINE_TYPE_WITH_CODE (XfsmClient, xfsm_client, XFSM_DBUS_TYPE_CLIENT_SKELETON, G_IMPLEMENT_INTERFACE (XFSM_DBUS_TYPE_CLIENT, xfsm_client_iface_init));
+G_DEFINE_FINAL_TYPE_WITH_CODE (XfsmClient, xfsm_client, XFSM_DBUS_TYPE_CLIENT_SKELETON, G_IMPLEMENT_INTERFACE (XFSM_DBUS_TYPE_CLIENT, xfsm_client_iface_init));
 
 
 static void

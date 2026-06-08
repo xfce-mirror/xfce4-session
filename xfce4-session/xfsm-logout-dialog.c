@@ -107,7 +107,7 @@ struct _XfsmLogoutDialog
 
 
 
-G_DEFINE_TYPE (XfsmLogoutDialog, xfsm_logout_dialog, GTK_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (XfsmLogoutDialog, xfsm_logout_dialog, GTK_TYPE_DIALOG)
 
 
 

@@ -90,7 +90,7 @@ struct _XfsmShutdown
 
 
 
-G_DEFINE_TYPE (XfsmShutdown, xfsm_shutdown, G_TYPE_OBJECT)
+G_DEFINE_FINAL_TYPE (XfsmShutdown, xfsm_shutdown, G_TYPE_OBJECT)
 
 
 

@@ -62,7 +62,7 @@ struct _XfaeWindow
 
 
 
-G_DEFINE_TYPE (XfaeWindow, xfae_window, GTK_TYPE_BOX);
+G_DEFINE_FINAL_TYPE (XfaeWindow, xfae_window, GTK_TYPE_BOX);
 
 
 

@@ -42,7 +42,7 @@ enum
   PROP_COOKIE,
 };
 
-G_DEFINE_TYPE (XfsmInhibition, xfsm_inhibition, G_TYPE_OBJECT)
+G_DEFINE_FINAL_TYPE (XfsmInhibition, xfsm_inhibition, G_TYPE_OBJECT)
 
 static void
 xfsm_inhibition_init (XfsmInhibition *inhibition)
