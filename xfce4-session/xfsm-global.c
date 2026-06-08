@@ -105,7 +105,8 @@ xfsm_verbose_real (const char *func,
         {
           fp = fopen (logfile, "w");
           g_free (logfile);
-          fprintf (fp, "log file opened\n");
+          if (fp != NULL)
+            fprintf (fp, "log file opened\n");
         }
     }
 
