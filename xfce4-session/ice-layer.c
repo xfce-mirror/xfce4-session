@@ -244,7 +244,7 @@ ice_tmpfile (char **name)
 static void
 fprintfhex (FILE *fp, int len, char *cp)
 {
-  static char hexchars[] = "0123456789abcdef";
+  static const char hexchars[] = "0123456789abcdef";
 
   for (; len > 0; len--, cp++)
     {
