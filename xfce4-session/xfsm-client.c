@@ -492,6 +492,7 @@ xfsm_client_save_restart_command (XfsmClient *client)
   else
     {
       xfsm_verbose ("Failed to get the process command line using the command %s, error was %s\n", input, error->message);
+      g_error_free (error);
     }
 
   g_free (input);
@@ -521,6 +522,7 @@ xfsm_client_save_program_name (XfsmClient *client)
   else
     {
       xfsm_verbose ("Failed to get the process command line using the command %s, error was %s\n", input, error->message);
+      g_error_free (error);
     }
 
   g_free (input);
