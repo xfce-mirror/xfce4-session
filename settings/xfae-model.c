@@ -766,10 +766,7 @@ xfae_item_new (const gchar *relpath)
 
       /* check if we should skip the item */
       if (G_UNLIKELY (skip))
-        {
-          xfae_item_free (item);
-          item = NULL;
-        }
+        g_clear_pointer (&item, xfae_item_free);
     }
 
   return item;

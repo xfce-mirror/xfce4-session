@@ -283,8 +283,7 @@ xfsm_startup_init (XfconfChannel *channel)
           g_message ("SSH authentication agent is already running");
 
           gpgagent_ssh_enabled = FALSE;
-          g_free (ssh_agent_path);
-          ssh_agent_path = NULL;
+          g_clear_pointer (&ssh_agent_path, g_free);
         }
       else
         {
@@ -737,11 +736,7 @@ xfsm_startup_handle_failed_startup (XfsmProperties *properties,
   GQueue *starting_properties = xfsm_manager_get_queue (manager, XFSM_MANAGER_QUEUE_STARTING_PROPS);
 
   /* if our timer hasn't run out yet, kill it */
-  if (properties->startup_timeout_id > 0)
-    {
-      g_source_remove (properties->startup_timeout_id);
-      properties->startup_timeout_id = 0;
-    }
+  g_clear_handle_id (&properties->startup_timeout_id, g_source_remove);
 
   xfsm_properties_set_default_child_watch (properties);
 

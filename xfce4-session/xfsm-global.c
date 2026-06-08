@@ -371,8 +371,7 @@ xfsm_launch_desktop_files_on_run_hook (gboolean start_at_spi,
             {
               g_warning ("Unable to launch \"%s\" (specified by %s): %s", exec, files[n], error->message);
               xfsm_verbose ("Unable to launch \"%s\" (specified by %s): %s\n", exec, files[n], error->message);
-              g_error_free (error);
-              error = NULL;
+              g_clear_error (&error);
             }
           else
             {

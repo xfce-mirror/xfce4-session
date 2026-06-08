@@ -375,6 +375,5 @@ ice_cleanup (void)
 
   /* remove the cleanup file, no longer needed */
   unlink (auth_cleanup_file);
-  g_free (auth_cleanup_file);
-  auth_cleanup_file = NULL;
+  g_clear_pointer (&auth_cleanup_file, g_free);
 }

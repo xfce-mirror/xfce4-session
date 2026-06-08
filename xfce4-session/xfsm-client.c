@@ -556,8 +556,7 @@ xfsm_client_save_desktop_file (XfsmClient *client)
   if (app_info == NULL || g_desktop_app_info_get_filename (app_info) == NULL)
     {
       gchar *begin;
-      g_free (desktop_file);
-      desktop_file = NULL;
+      g_clear_pointer (&desktop_file, g_free);
 
       /* Find the last '.' and try to load that. This is because the app_id is
        * in the funky org.xfce.parole format and the desktop file may just be
@@ -775,11 +774,7 @@ xfsm_client_iface_init (XfsmDbusClientIface *iface)
 static void
 xfsm_client_dbus_cleanup (XfsmClient *client)
 {
-  if (G_LIKELY (client->connection))
-    {
-      g_object_unref (client->connection);
-      client->connection = NULL;
-    }
+  g_clear_object (&client->connection);
 }
 
 

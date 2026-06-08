@@ -686,11 +686,7 @@ xfsm_properties_remove (XfsmProperties *properties,
 void
 xfsm_properties_set_default_child_watch (XfsmProperties *properties)
 {
-  if (properties->child_watch_id > 0)
-    {
-      g_source_remove (properties->child_watch_id);
-      properties->child_watch_id = 0;
-    }
+  g_clear_handle_id (&properties->child_watch_id, g_source_remove);
 
   if (properties->pid != -1)
     {

@@ -343,13 +343,7 @@ xfsm_manager_handle_failed_properties (XfsmManager *manager,
   /* Handle apps that failed to start, or died randomly, here */
 
   xfsm_properties_set_default_child_watch (properties);
-
-  if (properties->restart_attempts_reset_id > 0)
-    {
-      g_source_remove (properties->restart_attempts_reset_id);
-      properties->restart_attempts_reset_id = 0;
-    }
-
+  g_clear_handle_id (&properties->restart_attempts_reset_id, g_source_remove);
   restart_style_hint = xfsm_properties_get_uchar (properties,
                                                   SmRestartStyleHint,
                                                   SmRestartIfRunning);
@@ -962,11 +956,7 @@ xfsm_manager_handle_old_client_reregister (XfsmManager *manager,
                                            XfsmProperties *properties)
 {
   /* cancel startup timer */
-  if (properties->startup_timeout_id > 0)
-    {
-      g_source_remove (properties->startup_timeout_id);
-      properties->startup_timeout_id = 0;
-    }
+  g_clear_handle_id (&properties->startup_timeout_id, g_source_remove);
 
   /* cancel the old child watch, and replace it with one that
    * doesn't really do anything but reap the child */
@@ -1563,11 +1553,7 @@ xfsm_manager_close_connection (XfsmManager *manager,
         }
 
       /* all clients finished the DIE phase in time */
-      if (manager->die_timeout_id)
-        {
-          g_source_remove (manager->die_timeout_id);
-          manager->die_timeout_id = 0;
-        }
+      g_clear_handle_id (&manager->die_timeout_id, g_source_remove);
       g_signal_emit (G_OBJECT (manager), manager_signals[MANAGER_QUIT], 0);
     }
   else if (manager->state == XFSM_MANAGER_SHUTDOWN || manager->state == XFSM_MANAGER_CHECKPOINT)
@@ -1985,8 +1971,7 @@ xfsm_manager_store_session (XfsmManager *manager)
 
   g_free (group);
   g_key_file_free (file);
-  g_free (manager->checkpoint_session_name);
-  manager->checkpoint_session_name = NULL;
+  g_clear_pointer (&manager->checkpoint_session_name, g_free);
 }
 
 
@@ -2277,11 +2262,7 @@ xfsm_manager_dbus_cleanup (XfsmManager *manager)
       manager->name_owner_id = 0;
     }
 
-  if (G_LIKELY (manager->connection))
-    {
-      g_object_unref (manager->connection);
-      manager->connection = NULL;
-    }
+  g_clear_object (&manager->connection);
 }
 
 
