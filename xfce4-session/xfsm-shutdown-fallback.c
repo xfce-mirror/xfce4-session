@@ -221,7 +221,7 @@ xfsm_shutdown_fallback_user_is_operator (void)
   if (ret < 0)
     {
       fprintf (stderr,
-               "Failed to get user group list, user belongs to more than %u groups?\n",
+               "Failed to get user group list, user belongs to more than %d groups?\n",
                max_grp);
       g_free (groups);
       goto out;
