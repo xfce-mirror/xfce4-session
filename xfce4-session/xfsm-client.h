@@ -34,7 +34,7 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (XfsmClient, xfsm_client, XFSM, CLIENT, XfsmDbusClientSkeleton)
 
 /* fwd decl */
-struct _XfsmManager;
+typedef struct _XfsmManager XfsmManager;
 
 typedef enum
 {
@@ -53,7 +53,7 @@ gchar *
 xfsm_client_generate_id (SmsConn sms_conn) G_GNUC_PURE;
 
 XfsmClient *
-xfsm_client_new (struct _XfsmManager *manager,
+xfsm_client_new (XfsmManager *manager,
                  SmsConn sms_conn,
                  GDBusConnection *connection);
 
