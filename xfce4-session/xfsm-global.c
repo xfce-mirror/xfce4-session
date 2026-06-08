@@ -145,7 +145,7 @@ xfsm_g_value_free (GValue *value)
 static gboolean
 xfsm_check_valid_exec (const gchar *exec)
 {
-  gboolean result = TRUE;
+  gboolean result;
   gchar *tmp;
   gchar *p;
 
