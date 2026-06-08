@@ -98,9 +98,6 @@ struct _XfsmLogoutDialog
   /* dialog buttons */
   GtkWidget *button_cancel;
 
-  /* error label */
-  GtkWidget *error_label;
-
   /* pm instance */
   XfsmShutdown *shutdown;
 };
