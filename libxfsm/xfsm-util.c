@@ -255,7 +255,7 @@ settings_list_sessions_open_key_file (gboolean readonly)
   filename = settings_list_sessions_get_filename ();
   if (filename == NULL)
     {
-      g_warning ("Failed to access path %s", filename);
+      g_warning ("Failed to get session list filename");
       return NULL;
     }
 

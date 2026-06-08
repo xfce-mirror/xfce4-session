@@ -283,8 +283,7 @@ xfsm_startup_init (XfconfChannel *channel)
           g_message ("SSH authentication agent is already running");
 
           gpgagent_ssh_enabled = FALSE;
-          g_free (ssh_agent_path);
-          ssh_agent_path = NULL;
+          g_clear_pointer (&ssh_agent_path, g_free);
         }
       else
         {
@@ -609,10 +608,10 @@ xfsm_startup_session_continue (XfsmManager *manager)
    * priority group, move right to the next one.  if we *did* start something,
    * the failed/registered handlers will take care of moving us on to the
    * next priority group */
-  while (client_started == FALSE && g_queue_peek_head (pending_properties) != NULL)
+  while (!client_started && g_queue_peek_head (pending_properties) != NULL)
     client_started = xfsm_startup_session_next_prio_group (manager);
 
-  if (G_UNLIKELY (client_started == FALSE && g_queue_peek_head (pending_properties) == NULL))
+  if (G_UNLIKELY (!client_started && g_queue_peek_head (pending_properties) == NULL))
     {
       /* we failed to start anything, and we don't have anything else,
        * to start, so just move on to the autostart items and signal
@@ -665,7 +664,7 @@ xfsm_startup_session_next_prio_group (XfsmManager *manager)
       else
         {
           /* if starting the app failed, let the manager handle it */
-          if (xfsm_manager_handle_failed_properties (manager, properties) == FALSE)
+          if (!xfsm_manager_handle_failed_properties (manager, properties))
             xfsm_properties_free (properties);
         }
     }
@@ -737,18 +736,14 @@ xfsm_startup_handle_failed_startup (XfsmProperties *properties,
   GQueue *starting_properties = xfsm_manager_get_queue (manager, XFSM_MANAGER_QUEUE_STARTING_PROPS);
 
   /* if our timer hasn't run out yet, kill it */
-  if (properties->startup_timeout_id > 0)
-    {
-      g_source_remove (properties->startup_timeout_id);
-      properties->startup_timeout_id = 0;
-    }
+  g_clear_handle_id (&properties->startup_timeout_id, g_source_remove);
 
   xfsm_properties_set_default_child_watch (properties);
 
   /* not starting anymore, so remove it from the list.  tell the manager
    * it failed, and let it do its thing. */
   g_queue_remove (starting_properties, properties);
-  if (xfsm_manager_handle_failed_properties (manager, properties) == FALSE)
+  if (!xfsm_manager_handle_failed_properties (manager, properties))
     xfsm_properties_free (properties);
 
   if (g_queue_peek_head (starting_properties) == NULL

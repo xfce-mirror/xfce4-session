@@ -140,7 +140,7 @@ session_editor_save_session (GtkWidget *btn,
       return;
     }
 
-  sig_id = g_signal_connect (manager_dbus_proxy, "state_changed",
+  sig_id = g_signal_connect (manager_dbus_proxy, "state-changed",
                              G_CALLBACK (manager_state_changed_saving),
                              dialog);
   pulse_id = g_timeout_add (250, pulse_session_save_dialog, pbar);
@@ -398,7 +398,7 @@ client_sm_property_changed (XfsmClient *proxy,
                       COL_HAS_DESKTOP_FILE, &has_desktop_file,
                       -1);
 
-  if (!strcmp (name, SmProgram) && G_VALUE_HOLDS_STRING (value))
+  if (strcmp (name, SmProgram) == 0 && G_VALUE_HOLDS_STRING (value))
     {
       if (!has_desktop_file)
         {
@@ -407,7 +407,7 @@ client_sm_property_changed (XfsmClient *proxy,
                               -1);
         }
     }
-  else if (!strcmp (name, SmRestartStyleHint) && G_VALUE_HOLDS_UCHAR (value))
+  else if (strcmp (name, SmRestartStyleHint) == 0 && G_VALUE_HOLDS_UCHAR (value))
     {
       guchar hint = g_value_get_uchar (value);
 
@@ -419,19 +419,19 @@ client_sm_property_changed (XfsmClient *proxy,
                           COL_RESTART_STYLE_STR, _(restart_styles[hint]),
                           -1);
     }
-  else if (!strcmp (name, GsmPriority) && G_VALUE_HOLDS_UCHAR (value))
+  else if (strcmp (name, GsmPriority) == 0 && G_VALUE_HOLDS_UCHAR (value))
     {
       gtk_list_store_set (GTK_LIST_STORE (model), &iter,
                           COL_PRIORITY, g_value_get_uchar (value),
                           -1);
     }
-  else if (!strcmp (name, SmProcessID) && G_VALUE_HOLDS_STRING (value))
+  else if (strcmp (name, SmProcessID) == 0 && G_VALUE_HOLDS_STRING (value))
     {
       gtk_list_store_set (GTK_LIST_STORE (model), &iter,
                           COL_PID, g_value_get_string (value),
                           -1);
     }
-  else if (!strcmp (name, GsmDesktopFile) && G_VALUE_HOLDS_STRING (value))
+  else if (strcmp (name, GsmDesktopFile) == 0 && G_VALUE_HOLDS_STRING (value))
     {
       session_editor_set_from_desktop_file (model, &iter, g_value_get_string (value));
     }
@@ -588,12 +588,12 @@ manager_client_registered (XfsmManager *proxy,
                           (GDestroyNotify) gtk_tree_row_reference_free);
   gtk_tree_path_free (path);
 
-  g_signal_connect (client_proxy, "sm_property_changed",
+  g_signal_connect (client_proxy, "sm-property-changed",
                     G_CALLBACK (client_sm_property_changed),
                     treeview);
 
   /* proxy will live as long as the client does */
-  g_signal_connect (client_proxy, "state_changed",
+  g_signal_connect (client_proxy, "state-changed",
                     G_CALLBACK (client_state_changed), treeview);
 
   g_variant_unref (variant);
@@ -880,7 +880,7 @@ session_editor_populate_treeview (GtkTreeView *treeview)
                                         GTK_SORT_ASCENDING);
   g_object_unref (ls);
 
-  g_signal_connect (manager_dbus_proxy, "client_registered",
+  g_signal_connect (manager_dbus_proxy, "client-registered",
                     G_CALLBACK (manager_client_registered),
                     treeview);
 

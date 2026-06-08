@@ -29,7 +29,6 @@
 
 #include "libxfsm/xfsm-util.h"
 
-#include "xfsm-client-dbus.h"
 #include "xfsm-client.h"
 #include "xfsm-error.h"
 #include "xfsm-global.h"
@@ -56,11 +55,6 @@ struct _XfsmClient
   GDBusConnection *connection;
 };
 
-typedef struct _XfsmClientClass
-{
-  XfsmDbusClientSkeletonClass parent;
-} XfsmClientClass;
-
 
 
 static void
@@ -76,7 +70,7 @@ static void
 xfsm_client_dbus_cleanup (XfsmClient *client);
 
 
-G_DEFINE_TYPE_WITH_CODE (XfsmClient, xfsm_client, XFSM_DBUS_TYPE_CLIENT_SKELETON, G_IMPLEMENT_INTERFACE (XFSM_DBUS_TYPE_CLIENT, xfsm_client_iface_init));
+G_DEFINE_FINAL_TYPE_WITH_CODE (XfsmClient, xfsm_client, XFSM_DBUS_TYPE_CLIENT_SKELETON, G_IMPLEMENT_INTERFACE (XFSM_DBUS_TYPE_CLIENT, xfsm_client_iface_init));
 
 
 static void
@@ -209,14 +203,7 @@ xfsm_client_generate_id (SmsConn sms_conn)
 
 #ifdef ENABLE_X11
   if (sms_conn != NULL)
-    {
-      char *sms_id = SmsGenerateClientID (sms_conn);
-      if (sms_id != NULL)
-        {
-          id = g_strdup (sms_id);
-          g_free (sms_id);
-        }
-    }
+    id = SmsGenerateClientID (sms_conn);
 #endif
 
   if (id == NULL)
@@ -373,8 +360,7 @@ xfsm_client_steal_properties (XfsmClient *client)
 
   g_return_val_if_fail (XFSM_IS_CLIENT (client), NULL);
 
-  properties = client->properties;
-  client->properties = NULL;
+  properties = g_steal_pointer (&client->properties);
 
   return properties;
 }
@@ -401,7 +387,7 @@ xfsm_client_merge_properties (XfsmClient *client,
 
       prop = props[n];
 
-      if (!strcmp (prop->name, SmDiscardCommand))
+      if (strcmp (prop->name, SmDiscardCommand) == 0)
         {
           old_discard = xfsm_properties_get_strv (properties, SmDiscardCommand);
           if (old_discard)
@@ -498,6 +484,7 @@ xfsm_client_save_restart_command (XfsmClient *client)
   else
     {
       xfsm_verbose ("Failed to get the process command line using the command %s, error was %s\n", input, error->message);
+      g_error_free (error);
     }
 
   g_free (input);
@@ -527,6 +514,7 @@ xfsm_client_save_program_name (XfsmClient *client)
   else
     {
       xfsm_verbose ("Failed to get the process command line using the command %s, error was %s\n", input, error->message);
+      g_error_free (error);
     }
 
   g_free (input);
@@ -556,8 +544,7 @@ xfsm_client_save_desktop_file (XfsmClient *client)
   if (app_info == NULL || g_desktop_app_info_get_filename (app_info) == NULL)
     {
       gchar *begin;
-      g_free (desktop_file);
-      desktop_file = NULL;
+      g_clear_pointer (&desktop_file, g_free);
 
       /* Find the last '.' and try to load that. This is because the app_id is
        * in the funky org.xfce.parole format and the desktop file may just be
@@ -565,7 +552,7 @@ xfsm_client_save_desktop_file (XfsmClient *client)
       begin = g_strrstr (app_id, ".");
 
       /* maybe it doesn't have dots in the name? */
-      if (begin == NULL || begin++ == NULL)
+      if (begin == NULL || ++begin == NULL)
         return;
 
       desktop_file = g_strdup_printf ("%s.desktop", begin);
@@ -737,7 +724,7 @@ xfsm_client_dbus_init (XfsmClient *client)
 
   if (G_UNLIKELY (!client->connection))
     {
-      g_critical ("Unable to contact D-Bus session bus: %s", error ? error->message : "Unknown error");
+      g_critical ("Unable to contact D-Bus session bus: Unknown error");
       return;
     }
 
@@ -775,11 +762,7 @@ xfsm_client_iface_init (XfsmDbusClientIface *iface)
 static void
 xfsm_client_dbus_cleanup (XfsmClient *client)
 {
-  if (G_LIKELY (client->connection))
-    {
-      g_object_unref (client->connection);
-      client->connection = NULL;
-    }
+  g_clear_object (&client->connection);
 }
 
 
@@ -937,7 +920,6 @@ xfsm_client_dbus_delete_sm_properties (XfsmDbusClient *object,
                                        const gchar *const *arg_names)
 {
   XfsmProperties *properties = XFSM_CLIENT (object)->properties;
-  gchar **names = g_strdupv ((gchar **) arg_names);
 
   if (G_UNLIKELY (properties == NULL))
     {
@@ -945,9 +927,10 @@ xfsm_client_dbus_delete_sm_properties (XfsmDbusClient *object,
       return TRUE;
     }
 
+  gchar **names = g_strdupv ((gchar **) arg_names);
   xfsm_client_delete_properties (XFSM_CLIENT (object), names, g_strv_length (names));
-
   g_strfreev (names);
+
   xfsm_dbus_client_complete_delete_sm_properties (object, invocation);
   return TRUE;
 }

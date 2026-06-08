@@ -150,11 +150,6 @@ xfsm_run_hook_get_type (void)
   return type;
 }
 
-struct _XfaeModelClass
-{
-  GObjectClass __parent__;
-};
-
 struct _XfaeModel
 {
   GObject __parent__;
@@ -181,13 +176,13 @@ struct _XfaeItem
 
 
 
-G_DEFINE_TYPE_WITH_CODE (XfaeModel,
-                         xfae_model,
-                         G_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GTK_TYPE_TREE_MODEL,
-                                                xfae_model_tree_model_init);
-                         G_IMPLEMENT_INTERFACE (GTK_TYPE_TREE_SORTABLE,
-                                                xfae_model_tree_sortable_init));
+G_DEFINE_FINAL_TYPE_WITH_CODE (XfaeModel,
+                               xfae_model,
+                               G_TYPE_OBJECT,
+                               G_IMPLEMENT_INTERFACE (GTK_TYPE_TREE_MODEL,
+                                                      xfae_model_tree_model_init);
+                               G_IMPLEMENT_INTERFACE (GTK_TYPE_TREE_SORTABLE,
+                                                      xfae_model_tree_sortable_init));
 
 
 
@@ -766,10 +761,7 @@ xfae_item_new (const gchar *relpath)
 
       /* check if we should skip the item */
       if (G_UNLIKELY (skip))
-        {
-          xfae_item_free (item);
-          item = NULL;
-        }
+        g_clear_pointer (&item, xfae_item_free);
     }
 
   return item;

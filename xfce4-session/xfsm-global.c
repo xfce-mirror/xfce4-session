@@ -105,7 +105,8 @@ xfsm_verbose_real (const char *func,
         {
           fp = fopen (logfile, "w");
           g_free (logfile);
-          fprintf (fp, "log file opened\n");
+          if (fp != NULL)
+            fprintf (fp, "log file opened\n");
         }
     }
 
@@ -145,7 +146,7 @@ xfsm_g_value_free (GValue *value)
 static gboolean
 xfsm_check_valid_exec (const gchar *exec)
 {
-  gboolean result = TRUE;
+  gboolean result;
   gchar *tmp;
   gchar *p;
 
@@ -371,8 +372,7 @@ xfsm_launch_desktop_files_on_run_hook (gboolean start_at_spi,
             {
               g_warning ("Unable to launch \"%s\" (specified by %s): %s", exec, files[n], error->message);
               xfsm_verbose ("Unable to launch \"%s\" (specified by %s): %s\n", exec, files[n], error->message);
-              g_error_free (error);
-              error = NULL;
+              g_clear_error (&error);
             }
           else
             {

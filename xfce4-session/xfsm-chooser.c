@@ -50,7 +50,7 @@ xfsm_chooser_realized (GtkWidget *widget,
 
 
 
-G_DEFINE_TYPE (XfsmChooser, xfsm_chooser, GTK_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (XfsmChooser, xfsm_chooser, GTK_TYPE_DIALOG)
 
 
 

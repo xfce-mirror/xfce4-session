@@ -217,7 +217,6 @@ name_lost (GDBusConnection *connection,
   GError *error = NULL;
   XfsmShutdownType shutdown_type;
   XfsmShutdown *shutdown_helper;
-  gboolean succeed = TRUE;
 
   xfsm_verbose ("name_lost\n");
 
@@ -250,9 +249,11 @@ name_lost (GDBusConnection *connection,
   if (shutdown_type == XFSM_SHUTDOWN_SHUTDOWN
       || shutdown_type == XFSM_SHUTDOWN_RESTART)
     {
-      succeed = xfsm_shutdown_try_type (shutdown_helper, shutdown_type, &error);
-      if (!succeed)
-        g_warning ("Failed to shutdown/restart: %s", ERROR_MSG (error));
+      if (!xfsm_shutdown_try_type (shutdown_helper, shutdown_type, &error))
+        {
+          g_warning ("Failed to shutdown/restart: %s", ERROR_MSG (error));
+          g_clear_error (&error);
+        }
     }
   else if (shutdown_type == XFSM_SHUTDOWN_LOGOUT && WINDOWING_IS_WAYLAND ())
     {

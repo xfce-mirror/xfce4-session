@@ -22,17 +22,12 @@
 #ifndef __XFSM_SHUTDOWN_H__
 #define __XFSM_SHUTDOWN_H__
 
+#include <glib-object.h>
+
 #define LOGIND_RUNNING() (access ("/run/systemd/seats/", F_OK) >= 0)
 
-typedef struct _XfsmShutdownClass XfsmShutdownClass;
-typedef struct _XfsmShutdown XfsmShutdown;
-
 #define XFSM_TYPE_SHUTDOWN (xfsm_shutdown_get_type ())
-#define XFSM_SHUTDOWN(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XFSM_TYPE_SHUTDOWN, XfsmShutdown))
-#define XFSM_SHUTDOWN_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), XFSM_TYPE_SHUTDOWN, XfsmShutdownClass))
-#define XFSM_IS_SHUTDOWN(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), XFSM_TYPE_SHUTDOWN))
-#define XFSM_IS_SHUTDOWN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), XFSM_TYPE_SHUTDOWN))
-#define XFSM_SHUTDOWN_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), XFSM_TYPE_SHUTDOWN, XfsmShutdownClass))
+G_DECLARE_FINAL_TYPE (XfsmShutdown, xfsm_shutdown, XFSM, SHUTDOWN, GObject)
 
 typedef enum
 {
@@ -53,20 +48,8 @@ typedef enum
   PASSWORD_FAILED
 } XfsmPassState;
 
-GType
-xfsm_shutdown_get_type (void) G_GNUC_CONST;
-
 XfsmShutdown *
 xfsm_shutdown_get (void);
-
-gboolean
-xfsm_shutdown_password_require (XfsmShutdown *shutdown,
-                                XfsmShutdownType type);
-
-XfsmPassState
-xfsm_shutdown_password_send (XfsmShutdown *shutdown,
-                             XfsmShutdownType type,
-                             const gchar *password);
 
 gboolean
 xfsm_shutdown_try_type (XfsmShutdown *shutdown,

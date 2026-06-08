@@ -33,7 +33,7 @@ struct _XfsmInhibitor
   GHashTable *inhibitions;
 };
 
-G_DEFINE_TYPE (XfsmInhibitor, xfsm_inhibitor, G_TYPE_OBJECT)
+G_DEFINE_FINAL_TYPE (XfsmInhibitor, xfsm_inhibitor, G_TYPE_OBJECT)
 
 static gboolean
 g_hash_func_inhibition_has_flag (gpointer key,

@@ -101,10 +101,7 @@ get_string_sysctl (GError **err, const gchar *format, ...)
       if (sysctlbyname (name, str, &value_len, NULL, 0) == 0)
         str[value_len] = 0;
       else
-        {
-          g_free (str);
-          str = NULL;
-        }
+        g_clear_pointer (&str, g_free);
     }
 
   if (!str)
@@ -207,7 +204,7 @@ xfsm_shutdown_fallback_user_is_operator (void)
   static gboolean once = FALSE;
 
   /* Only check once */
-  if (once == TRUE)
+  if (once)
     goto out;
 
   if (max_grp == -1)
@@ -224,7 +221,7 @@ xfsm_shutdown_fallback_user_is_operator (void)
   if (ret < 0)
     {
       fprintf (stderr,
-               "Failed to get user group list, user belongs to more than %u groups?\n",
+               "Failed to get user group list, user belongs to more than %d groups?\n",
                max_grp);
       g_free (groups);
       goto out;

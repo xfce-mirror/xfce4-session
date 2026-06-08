@@ -24,17 +24,10 @@
 
 #include <gtk/gtk.h>
 
-G_BEGIN_DECLS;
-
-typedef struct _XfaeModelClass XfaeModelClass;
-typedef struct _XfaeModel XfaeModel;
+G_BEGIN_DECLS
 
 #define XFAE_TYPE_MODEL (xfae_model_get_type ())
-#define XFAE_MODEL(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XFAE_TYPE_MODEL, XfaeModel))
-#define XFAE_MODEL_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), XFAE_TYPE_MODEL, XfaeModelClass))
-#define XFAE_IS_MODEL(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), XFAE_TYPE_MODEL))
-#define XFAE_IS_MODEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), XFAE_TYPE_MODEL))
-#define XFAE_MODEL_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), XFAE_TYPE_MODEL, XfaeModelClass))
+G_DECLARE_FINAL_TYPE (XfaeModel, xfae_model, XFAE, MODEL, GObject)
 
 #define XFSM_TYPE_RUN_HOOK (xfsm_run_hook_get_type ())
 
@@ -73,9 +66,6 @@ typedef enum
   XFAE_MODEL_RUN_HOOK,
   XFAE_MODEL_N_COLUMNS,
 } XfaeModelColumn;
-
-GType
-xfae_model_get_type (void) G_GNUC_CONST;
 
 GtkTreeModel *
 xfae_model_new (void);
@@ -123,6 +113,6 @@ xfae_model_set_run_hook (GtkTreeModel *tree_model,
                          XfsmRunHook run_hook,
                          GError **error);
 
-G_END_DECLS;
+G_END_DECLS
 
 #endif /* !__XFAE_MODEL_H__ */

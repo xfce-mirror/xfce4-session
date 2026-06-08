@@ -25,24 +25,14 @@
 
 #include "xfae-model.h"
 
-G_BEGIN_DECLS;
-
-typedef struct _XfaeWindowClass XfaeWindowClass;
-typedef struct _XfaeWindow XfaeWindow;
+G_BEGIN_DECLS
 
 #define XFAE_TYPE_WINDOW (xfae_window_get_type ())
-#define XFAE_WINDOW(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XFAE_TYPE_WINDOW, XfaeWindow))
-#define XFAE_WINDOW_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), XFAE_TYPE_WINDOW, XfaeWindow))
-#define XFAE_IS_WINDOW(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), XFAE_TYPE_WINDOW))
-#define XFAE_IS_WINDOW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), XFAE_TYPE_WINDOW))
-#define XFAE_WINDOW_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), XFAE_TYPE_WINDOW, XfaeWindowClass))
-
-GType
-xfae_window_get_type (void) G_GNUC_CONST;
+G_DECLARE_FINAL_TYPE (XfaeWindow, xfae_window, XFAE, WINDOW, GtkBox)
 
 GtkWidget *
 xfae_window_new (void) G_GNUC_MALLOC;
 
-G_END_DECLS;
+G_END_DECLS
 
 #endif /* !__XFAE_WINDOW_H__ */

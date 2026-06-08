@@ -244,7 +244,7 @@ ice_tmpfile (char **name)
 static void
 fprintfhex (FILE *fp, int len, char *cp)
 {
-  static char hexchars[] = "0123456789abcdef";
+  static const char hexchars[] = "0123456789abcdef";
 
   for (; len > 0; len--, cp++)
     {
@@ -375,6 +375,5 @@ ice_cleanup (void)
 
   /* remove the cleanup file, no longer needed */
   unlink (auth_cleanup_file);
-  g_free (auth_cleanup_file);
-  auth_cleanup_file = NULL;
+  g_clear_pointer (&auth_cleanup_file, g_free);
 }

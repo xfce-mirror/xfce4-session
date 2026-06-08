@@ -155,13 +155,7 @@ sm_window_free (SmWindow *window)
 static void
 sm_window_list_clear (void)
 {
-  GList *lp;
-
-  for (lp = window_list; lp != NULL; lp = lp->next)
-    sm_window_free (SM_WINDOW (lp->data));
-
-  g_list_free (window_list);
-  window_list = NULL;
+  g_clear_list (&window_list, (GDestroyNotify) sm_window_free);
 }
 
 
@@ -641,8 +635,7 @@ xfsm_legacy_startup (void)
       g_free (lp->data);
     }
 
-  g_list_free (restart_apps);
-  restart_apps = NULL;
+  g_clear_list (&restart_apps, NULL);
 }
 
 

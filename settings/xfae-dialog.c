@@ -30,11 +30,6 @@ xfae_dialog_browse (XfaeDialog *dialog);
 
 
 
-struct _XfaeDialogClass
-{
-  GtkDialogClass __parent__;
-};
-
 struct _XfaeDialog
 {
   GtkDialog __parent__;
@@ -47,7 +42,7 @@ struct _XfaeDialog
 
 
 
-G_DEFINE_TYPE (XfaeDialog, xfae_dialog, GTK_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (XfaeDialog, xfae_dialog, GTK_TYPE_DIALOG)
 
 
 

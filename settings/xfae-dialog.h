@@ -26,20 +26,10 @@
 
 #include "xfae-model.h" /* Type XfsmRunHook */
 
-G_BEGIN_DECLS;
-
-typedef struct _XfaeDialogClass XfaeDialogClass;
-typedef struct _XfaeDialog XfaeDialog;
+G_BEGIN_DECLS
 
 #define XFAE_TYPE_DIALOG (xfae_dialog_get_type ())
-#define XFAE_DIALOG(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XFAE_TYPE_DIALOG, XfaeDialog))
-#define XFAE_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), XFAE_TYPE_DIALOG, XfaeDialogClass))
-#define XFAE_IS_DIALOG(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), XFAE_TYPE_DIALOG))
-#define XFAE_IS_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), XFAE_TYPE_DIALOG))
-#define XFAE_DIALOG_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), XFAE_TYPE_DIALOG, XfaeDialogClass))
-
-GType
-xfae_dialog_get_type (void) G_GNUC_CONST;
+G_DECLARE_FINAL_TYPE (XfaeDialog, xfae_dialog, XFAE, DIALOG, GtkDialog)
 
 GtkWidget *
 xfae_dialog_new (const gchar *name,
@@ -54,6 +44,6 @@ xfae_dialog_get (XfaeDialog *dialog,
                  gchar **command,
                  XfsmRunHook *trigger);
 
-G_END_DECLS;
+G_END_DECLS
 
 #endif /* !__XFAE_DIALOG_H__ */

@@ -48,7 +48,6 @@
 #include <gtk-layer-shell.h>
 #endif
 
-#include <gtk/gtk.h>
 #include <libxfce4ui/libxfce4ui.h>
 #include <libxfce4util/libxfce4util.h>
 
@@ -86,11 +85,6 @@ enum
   N_MODES
 };
 
-struct _XfsmLogoutDialogClass
-{
-  GtkDialogClass __parent__;
-};
-
 struct _XfsmLogoutDialog
 {
   GtkDialog __parent__;
@@ -104,16 +98,13 @@ struct _XfsmLogoutDialog
   /* dialog buttons */
   GtkWidget *button_cancel;
 
-  /* error label */
-  GtkWidget *error_label;
-
   /* pm instance */
   XfsmShutdown *shutdown;
 };
 
 
 
-G_DEFINE_TYPE (XfsmLogoutDialog, xfsm_logout_dialog, GTK_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (XfsmLogoutDialog, xfsm_logout_dialog, GTK_TYPE_DIALOG)
 
 
 

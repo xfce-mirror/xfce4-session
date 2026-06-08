@@ -42,7 +42,7 @@ enum
   PROP_COOKIE,
 };
 
-G_DEFINE_TYPE (XfsmInhibition, xfsm_inhibition, G_TYPE_OBJECT)
+G_DEFINE_FINAL_TYPE (XfsmInhibition, xfsm_inhibition, G_TYPE_OBJECT)
 
 static void
 xfsm_inhibition_init (XfsmInhibition *inhibition)
@@ -262,14 +262,14 @@ xfsm_inhibition_class_init (XfsmInhibitionClass *klass)
                                                         "app-id",
                                                         "app-id",
                                                         NULL,
-                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
   g_object_class_install_property (object_class,
                                    PROP_REASON,
                                    g_param_spec_string ("reason",
                                                         "reason",
                                                         "reason",
                                                         NULL,
-                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
   g_object_class_install_property (object_class,
                                    PROP_FLAGS,
                                    g_param_spec_uint ("flags",
@@ -278,7 +278,7 @@ xfsm_inhibition_class_init (XfsmInhibitionClass *klass)
                                                       0,
                                                       G_MAXINT,
                                                       0,
-                                                      G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                      G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
   g_object_class_install_property (object_class,
                                    PROP_TOPLEVEL_XID,
                                    g_param_spec_uint ("toplevel-xid",
@@ -287,7 +287,7 @@ xfsm_inhibition_class_init (XfsmInhibitionClass *klass)
                                                       0,
                                                       G_MAXINT,
                                                       0,
-                                                      G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                      G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
   g_object_class_install_property (object_class,
                                    PROP_COOKIE,
                                    g_param_spec_uint ("cookie",
@@ -296,7 +296,7 @@ xfsm_inhibition_class_init (XfsmInhibitionClass *klass)
                                                       0,
                                                       G_MAXINT,
                                                       0,
-                                                      G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                      G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
 }
 
 XfsmInhibition *
