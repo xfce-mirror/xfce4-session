@@ -314,7 +314,7 @@ xfsm_manager_restore_active_workspace (XfsmManager *manager,
   wp_manager = xfw_screen_get_workspace_manager (manager->xfw_screen);
   for (GList *lp = xfw_workspace_manager_list_workspace_groups (wp_manager); lp != NULL; lp = lp->next, n++)
     {
-      g_snprintf (buffer, 1024, "Screen%d_ActiveWorkspace", n);
+      g_snprintf (buffer, 1024, "Screen%u_ActiveWorkspace", n);
       xfsm_verbose ("Attempting to restore %s\n", buffer);
       if (!g_key_file_has_key (file, group, buffer, NULL))
         {
