@@ -140,7 +140,7 @@ session_editor_save_session (GtkWidget *btn,
       return;
     }
 
-  sig_id = g_signal_connect (manager_dbus_proxy, "state_changed",
+  sig_id = g_signal_connect (manager_dbus_proxy, "state-changed",
                              G_CALLBACK (manager_state_changed_saving),
                              dialog);
   pulse_id = g_timeout_add (250, pulse_session_save_dialog, pbar);
@@ -588,12 +588,12 @@ manager_client_registered (XfsmManager *proxy,
                           (GDestroyNotify) gtk_tree_row_reference_free);
   gtk_tree_path_free (path);
 
-  g_signal_connect (client_proxy, "sm_property_changed",
+  g_signal_connect (client_proxy, "sm-property-changed",
                     G_CALLBACK (client_sm_property_changed),
                     treeview);
 
   /* proxy will live as long as the client does */
-  g_signal_connect (client_proxy, "state_changed",
+  g_signal_connect (client_proxy, "state-changed",
                     G_CALLBACK (client_state_changed), treeview);
 
   g_variant_unref (variant);
@@ -880,7 +880,7 @@ session_editor_populate_treeview (GtkTreeView *treeview)
                                         GTK_SORT_ASCENDING);
   g_object_unref (ls);
 
-  g_signal_connect (manager_dbus_proxy, "client_registered",
+  g_signal_connect (manager_dbus_proxy, "client-registered",
                     G_CALLBACK (manager_client_registered),
                     treeview);
 
