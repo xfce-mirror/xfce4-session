@@ -33,9 +33,12 @@
 
 G_BEGIN_DECLS
 
+typedef struct _XfsmManager XfsmManager;
+
 #define XFSM_TYPE_MANAGER (xfsm_manager_get_type ())
 #define XFSM_MANAGER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XFSM_TYPE_MANAGER, XfsmManager))
 #define XFSM_IS_MANAGER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), XFSM_TYPE_MANAGER))
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (XfsmManager, g_object_unref)
 
 #define DIE_TIMEOUT (7 * 1000)
 #define SAVE_TIMEOUT (60 * 1000)
@@ -68,8 +71,6 @@ typedef enum
   XFSM_MANAGER_COMPAT_GNOME = 0,
   XFSM_MANAGER_COMPAT_KDE,
 } XfsmManagerCompatType;
-
-typedef struct _XfsmManager XfsmManager;
 
 GType
 xfsm_manager_get_type (void) G_GNUC_CONST;

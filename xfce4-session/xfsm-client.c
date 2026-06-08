@@ -29,7 +29,6 @@
 
 #include "libxfsm/xfsm-util.h"
 
-#include "xfsm-client-dbus.h"
 #include "xfsm-client.h"
 #include "xfsm-error.h"
 #include "xfsm-global.h"
@@ -55,11 +54,6 @@ struct _XfsmClient
   SmsConn sms_conn;
   GDBusConnection *connection;
 };
-
-typedef struct _XfsmClientClass
-{
-  XfsmDbusClientSkeletonClass parent;
-} XfsmClientClass;
 
 
 

@@ -51,11 +51,6 @@ xfae_window_create_run_hooks_combo_model (void);
 
 
 
-struct _XfaeWindowClass
-{
-  GtkBoxClass __parent__;
-};
-
 struct _XfaeWindow
 {
   GtkBox __parent__;

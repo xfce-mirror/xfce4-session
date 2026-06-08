@@ -150,11 +150,6 @@ xfsm_run_hook_get_type (void)
   return type;
 }
 
-struct _XfaeModelClass
-{
-  GObjectClass __parent__;
-};
-
 struct _XfaeModel
 {
   GObject __parent__;

@@ -72,12 +72,6 @@ xfsm_shutdown_finalize (GObject *object);
 
 
 
-struct _XfsmShutdownClass
-{
-  GObjectClass __parent__;
-};
-
-
 struct _XfsmShutdown
 {
   GObject __parent__;

@@ -25,18 +25,16 @@
 #include <gio/gio.h>
 #include <glib-object.h>
 
+#include "xfsm-client-dbus.h"
 #include "xfsm-properties.h"
 
 G_BEGIN_DECLS
 
 #define XFSM_TYPE_CLIENT (xfsm_client_get_type ())
-#define XFSM_CLIENT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XFSM_TYPE_CLIENT, XfsmClient))
-#define XFSM_IS_CLIENT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), XFSM_TYPE_CLIENT))
+G_DECLARE_FINAL_TYPE (XfsmClient, xfsm_client, XFSM, CLIENT, XfsmDbusClientSkeleton)
 
 /* fwd decl */
 struct _XfsmManager;
-
-typedef struct _XfsmClient XfsmClient;
 
 typedef enum
 {
@@ -50,9 +48,6 @@ typedef enum
   XFSM_CLIENT_DISCONNECTED,
   XFSM_CLIENT_STATE_COUNT
 } XfsmClientState;
-
-GType
-xfsm_client_get_type (void) G_GNUC_CONST;
 
 gchar *
 xfsm_client_generate_id (SmsConn sms_conn) G_GNUC_PURE;

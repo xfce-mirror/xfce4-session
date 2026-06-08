@@ -22,20 +22,12 @@
 #ifndef __XFSM_LOGOUT_DIALOG_H__
 #define __XFSM_LOGOUT_DIALOG_H__
 
+#include <gtk/gtk.h>
+
 #include "xfsm-shutdown.h"
 
-typedef struct _XfsmLogoutDialogClass XfsmLogoutDialogClass;
-typedef struct _XfsmLogoutDialog XfsmLogoutDialog;
-
 #define XFSM_TYPE_LOGOUT_DIALOG (xfsm_logout_dialog_get_type ())
-#define XFSM_LOGOUT_DIALOG(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XFSM_TYPE_LOGOUT_DIALOG, XfsmLogoutDialog))
-#define XFSM_LOGOUT_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), XFSM_TYPE_LOGOUT_DIALOG, XfsmLogoutDialogClass))
-#define XFSM_IS_LOGOUT_DIALOG(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), XFSM_TYPE_LOGOUT_DIALOG))
-#define XFSM_IS_LOGOUT_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), XFSM_TYPE_LOGOUT_DIALOG))
-#define XFSM_LOGOUT_DIALOG_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), XFSM_TYPE_LOGOUT_DIALOG, XfsmLogoutDialogClass))
-
-GType
-xfsm_logout_dialog_get_type (void) G_GNUC_CONST;
+G_DECLARE_FINAL_TYPE (XfsmLogoutDialog, xfsm_logout_dialog, XFSM, LOGOUT_DIALOG, GtkDialog)
 
 gboolean
 xfsm_logout_dialog (const gchar *session_name,
