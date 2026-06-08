@@ -927,7 +927,6 @@ xfsm_client_dbus_delete_sm_properties (XfsmDbusClient *object,
                                        const gchar *const *arg_names)
 {
   XfsmProperties *properties = XFSM_CLIENT (object)->properties;
-  gchar **names = g_strdupv ((gchar **) arg_names);
 
   if (G_UNLIKELY (properties == NULL))
     {
@@ -935,9 +934,10 @@ xfsm_client_dbus_delete_sm_properties (XfsmDbusClient *object,
       return TRUE;
     }
 
+  gchar **names = g_strdupv ((gchar **) arg_names);
   xfsm_client_delete_properties (XFSM_CLIENT (object), names, g_strv_length (names));
-
   g_strfreev (names);
+
   xfsm_dbus_client_complete_delete_sm_properties (object, invocation);
   return TRUE;
 }
