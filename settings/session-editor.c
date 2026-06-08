@@ -398,7 +398,7 @@ client_sm_property_changed (XfsmClient *proxy,
                       COL_HAS_DESKTOP_FILE, &has_desktop_file,
                       -1);
 
-  if (!strcmp (name, SmProgram) && G_VALUE_HOLDS_STRING (value))
+  if (strcmp (name, SmProgram) == 0 && G_VALUE_HOLDS_STRING (value))
     {
       if (!has_desktop_file)
         {
@@ -407,7 +407,7 @@ client_sm_property_changed (XfsmClient *proxy,
                               -1);
         }
     }
-  else if (!strcmp (name, SmRestartStyleHint) && G_VALUE_HOLDS_UCHAR (value))
+  else if (strcmp (name, SmRestartStyleHint) == 0 && G_VALUE_HOLDS_UCHAR (value))
     {
       guchar hint = g_value_get_uchar (value);
 
@@ -419,19 +419,19 @@ client_sm_property_changed (XfsmClient *proxy,
                           COL_RESTART_STYLE_STR, _(restart_styles[hint]),
                           -1);
     }
-  else if (!strcmp (name, GsmPriority) && G_VALUE_HOLDS_UCHAR (value))
+  else if (strcmp (name, GsmPriority) == 0 && G_VALUE_HOLDS_UCHAR (value))
     {
       gtk_list_store_set (GTK_LIST_STORE (model), &iter,
                           COL_PRIORITY, g_value_get_uchar (value),
                           -1);
     }
-  else if (!strcmp (name, SmProcessID) && G_VALUE_HOLDS_STRING (value))
+  else if (strcmp (name, SmProcessID) == 0 && G_VALUE_HOLDS_STRING (value))
     {
       gtk_list_store_set (GTK_LIST_STORE (model), &iter,
                           COL_PID, g_value_get_string (value),
                           -1);
     }
-  else if (!strcmp (name, GsmDesktopFile) && G_VALUE_HOLDS_STRING (value))
+  else if (strcmp (name, GsmDesktopFile) == 0 && G_VALUE_HOLDS_STRING (value))
     {
       session_editor_set_from_desktop_file (model, &iter, g_value_get_string (value));
     }

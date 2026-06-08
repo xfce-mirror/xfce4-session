@@ -635,7 +635,7 @@ xfsm_properties_set_from_smprop (XfsmProperties *properties,
   g_return_val_if_fail (properties != NULL, FALSE);
   g_return_val_if_fail (sm_prop != NULL, FALSE);
 
-  if (!strcmp (sm_prop->type, SmLISTofARRAY8))
+  if (strcmp (sm_prop->type, SmLISTofARRAY8) == 0)
     {
       if (G_UNLIKELY (!sm_prop->num_vals || !sm_prop->vals))
         return FALSE;
@@ -647,14 +647,14 @@ xfsm_properties_set_from_smprop (XfsmProperties *properties,
       xfsm_properties_set_strv (properties, sm_prop->name, value_strv);
       g_strfreev (value_strv);
     }
-  else if (!strcmp (sm_prop->type, SmARRAY8))
+  else if (strcmp (sm_prop->type, SmARRAY8) == 0)
     {
       if (G_UNLIKELY (!sm_prop->vals[0].value))
         return FALSE;
 
       xfsm_properties_set_string (properties, sm_prop->name, sm_prop->vals[0].value);
     }
-  else if (!strcmp (sm_prop->type, SmCARD8))
+  else if (strcmp (sm_prop->type, SmCARD8) == 0)
     {
       value_uchar = *(guchar *) (sm_prop->vals[0].value);
       xfsm_properties_set_uchar (properties, sm_prop->name, value_uchar);

@@ -395,7 +395,7 @@ xfsm_client_merge_properties (XfsmClient *client,
 
       prop = props[n];
 
-      if (!strcmp (prop->name, SmDiscardCommand))
+      if (strcmp (prop->name, SmDiscardCommand) == 0)
         {
           old_discard = xfsm_properties_get_strv (properties, SmDiscardCommand);
           if (old_discard)
