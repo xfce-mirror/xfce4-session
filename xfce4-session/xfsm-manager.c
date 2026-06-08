@@ -1589,7 +1589,7 @@ xfsm_manager_close_connection (XfsmManager *manager,
         {
           if (xfsm_properties_check (properties))
             {
-              if (xfsm_manager_handle_failed_properties (manager, properties) == FALSE)
+              if (!xfsm_manager_handle_failed_properties (manager, properties))
                 xfsm_properties_free (properties);
             }
           else
@@ -2428,7 +2428,7 @@ xfsm_manager_dbus_logout (XfsmDbusManager *object,
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
 
   type = arg_show_dialog ? XFSM_SHUTDOWN_ASK : XFSM_SHUTDOWN_LOGOUT;
-  if (xfsm_manager_save_yourself_dbus (XFSM_MANAGER (object), type, arg_allow_save) == FALSE)
+  if (!xfsm_manager_save_yourself_dbus (XFSM_MANAGER (object), type, arg_allow_save))
     {
       throw_error (invocation, XFSM_ERROR_BAD_STATE,
                    _("Session manager must be in idle state when requesting a shutdown"));
@@ -2448,7 +2448,7 @@ xfsm_manager_dbus_shutdown (XfsmDbusManager *object,
   xfsm_verbose ("entering\n");
 
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
-  if (xfsm_manager_save_yourself_dbus (XFSM_MANAGER (object), XFSM_SHUTDOWN_SHUTDOWN, arg_allow_save) == FALSE)
+  if (!xfsm_manager_save_yourself_dbus (XFSM_MANAGER (object), XFSM_SHUTDOWN_SHUTDOWN, arg_allow_save))
     {
       throw_error (invocation, XFSM_ERROR_BAD_STATE,
                    _("Session manager must be in idle state when requesting a shutdown"));
@@ -2485,7 +2485,7 @@ xfsm_manager_dbus_restart (XfsmDbusManager *object,
   xfsm_verbose ("entering\n");
 
   g_return_val_if_fail (XFSM_IS_MANAGER (object), FALSE);
-  if (xfsm_manager_save_yourself_dbus (XFSM_MANAGER (object), XFSM_SHUTDOWN_RESTART, arg_allow_save) == FALSE)
+  if (!xfsm_manager_save_yourself_dbus (XFSM_MANAGER (object), XFSM_SHUTDOWN_RESTART, arg_allow_save))
     {
       throw_error (invocation, XFSM_ERROR_BAD_STATE,
                    _("Session manager must be in idle state when requesting a restart"));

@@ -67,7 +67,7 @@ xfce4_session_settings_show_saved_sessions (GtkBuilder *builder,
   GList *sessions;
 
   gtk_widget_set_visible (gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 3), visible);
-  if (visible == FALSE)
+  if (!visible)
     return;
 
   settings_list_sessions_treeview_init (GTK_TREE_VIEW (sessions_treeview));

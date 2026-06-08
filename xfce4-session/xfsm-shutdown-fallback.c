@@ -207,7 +207,7 @@ xfsm_shutdown_fallback_user_is_operator (void)
   static gboolean once = FALSE;
 
   /* Only check once */
-  if (once == TRUE)
+  if (once)
     goto out;
 
   if (max_grp == -1)
