@@ -413,7 +413,6 @@ xfae_window_remove (XfaeWindow *window)
   GError *error = NULL;
   GtkWidget *parent;
   gchar *name;
-  gboolean remove_item;
 
   parent = gtk_widget_get_toplevel (GTK_WIDGET (window));
 
@@ -426,10 +425,9 @@ xfae_window_remove (XfaeWindow *window)
           g_error_free (error);
           return;
         }
-      remove_item = TRUE;
       g_free (name);
 
-      if (remove_item && !xfae_model_remove (XFAE_MODEL (model), &iter, &error))
+      if (!xfae_model_remove (XFAE_MODEL (model), &iter, &error))
         {
           xfce_dialog_show_error (GTK_WINDOW (parent), error, _("Failed to remove item"));
           g_error_free (error);

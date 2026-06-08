@@ -203,14 +203,7 @@ xfsm_client_generate_id (SmsConn sms_conn)
 
 #ifdef ENABLE_X11
   if (sms_conn != NULL)
-    {
-      char *sms_id = SmsGenerateClientID (sms_conn);
-      if (sms_id != NULL)
-        {
-          id = g_strdup (sms_id);
-          g_free (sms_id);
-        }
-    }
+    id = SmsGenerateClientID (sms_conn);
 #endif
 
   if (id == NULL)
@@ -559,7 +552,7 @@ xfsm_client_save_desktop_file (XfsmClient *client)
       begin = g_strrstr (app_id, ".");
 
       /* maybe it doesn't have dots in the name? */
-      if (begin == NULL || begin++ == NULL)
+      if (begin == NULL || ++begin == NULL)
         return;
 
       desktop_file = g_strdup_printf ("%s.desktop", begin);
@@ -731,7 +724,7 @@ xfsm_client_dbus_init (XfsmClient *client)
 
   if (G_UNLIKELY (!client->connection))
     {
-      g_critical ("Unable to contact D-Bus session bus: %s", error ? error->message : "Unknown error");
+      g_critical ("Unable to contact D-Bus session bus: Unknown error");
       return;
     }
 
