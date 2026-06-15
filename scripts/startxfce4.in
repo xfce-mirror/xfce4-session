@@ -50,30 +50,6 @@ then
     then
       XFCE4_SESSION_COMPOSITOR="1"
       export XFCE4_SESSION_COMPOSITOR
-      # Set the XDG_RUNTIME_DIR if we can not get it in systems
-      # without systemd
-      if [ -z "${XDG_RUNTIME_DIR}" ]; then
-        if [ -d "/run/user" ]; then
-          XDG_RUNTIME_DIR="/run/user/$(id -ru)"
-          export XDG_RUNTIME_DIR
-        else
-          if [ -d "/var/run/user" ]; then
-            XDG_RUNTIME_DIR="/var/run/user/$(id -ru)"
-            export XDG_RUNTIME_DIR
-          else
-            XDG_RUNTIME_DIR="/tmp/${USER}-runtime"
-            export XDG_RUNTIME_DIR
-          fi
-        fi
-      fi
-      if [ ! -e "${XDG_RUNTIME_DIR}" ]; then
-         echo "XDG_RUNTIME_DIR is invalid or does not exist!"
-         echo "Creating XDG_RUNTIME_DIR..."
-         mkdir -p -m 0700 "${XDG_RUNTIME_DIR}" || {
-           echo "Unable to create runtime directory ${XDG_RUNTIME_DIR}!"
-           exit 1
-         }
-      fi
       # freedesktop specifications mandate that the definition
       # of XDG_SESSION_TYPE should be respected
       XDG_SESSION_TYPE="wayland"
@@ -226,6 +202,30 @@ then
   XDG_CONFIG_DIRS="$XDG_CONFIG_DIRS:@_sysconfdir_@/xdg"
 fi
 export XDG_CONFIG_DIRS
+
+# Set XDG_RUNTIME_DIR for systems where the display manager does not provide
+# it (e.g. LightDM autologin bypasses /etc/X11/Xsession). Applies to both
+# X11 and Wayland sessions.
+if [ -z "${XDG_RUNTIME_DIR}" ]; then
+  if [ -d "/run/user" ]; then
+    XDG_RUNTIME_DIR="/run/user/$(id -ru)"
+    export XDG_RUNTIME_DIR
+  elif [ -d "/var/run/user" ]; then
+    XDG_RUNTIME_DIR="/var/run/user/$(id -ru)"
+    export XDG_RUNTIME_DIR
+  else
+    XDG_RUNTIME_DIR="/tmp/${USER}-runtime"
+    export XDG_RUNTIME_DIR
+  fi
+fi
+if [ ! -e "${XDG_RUNTIME_DIR}" ]; then
+  echo "XDG_RUNTIME_DIR is invalid or does not exist!"
+  echo "Creating XDG_RUNTIME_DIR..."
+  mkdir -p -m 0700 "${XDG_RUNTIME_DIR}" || {
+    echo "Unable to create runtime directory ${XDG_RUNTIME_DIR}!"
+    exit 1
+  }
+fi
 
 if test "x$XFCE4_SESSION_COMPOSITOR" = "x"
 then
