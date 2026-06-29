@@ -81,6 +81,9 @@ then
 
   # load local modmap
   test -r $HOME/.Xmodmap && xmodmap $HOME/.Xmodmap
+
+  # we are not in a wayland session
+  IS_WAYLAND_SESSION=0
 fi
 
 # ensure both the DBus session bus and systemd user session (if running) has
@@ -143,8 +146,31 @@ else
     done
   fi
 
-  # start xfce4-session normally
-  exec ${XFCE4_SESSION_COMPOSITOR:-xfce4-session}
+  # Check if using systemd, else run normally
+  if [ -e "/run/systemd/seats" ]; then
+    # Remove any trace of DISPLAY
+    # Compositors think they are running in X11 otherwise 
+    if [ IS_WAYLAND_SESSION ]; then
+      env_arg="-u DISPLAY"
+    fi
+
+    # dump environment to file so we can pass it to systemd unit
+    env "$env_arg" env > /run/user/$UID/XfceSessionEnv
+
+    # generate systemd unit dinamically
+    exec systemd-run --user -G --wait \
+	    --unit=xfce4-session.service \
+	    --description="Xfce4 Session" \
+	    --property=ExecStopPost='/usr/bin/systemctl stop --user graphical-session.target' \
+	    --property=EnvironmentFile=/run/user/$UID/XfceSessionEnv \
+	    --property=BindsTo=graphical-session.target \
+	    --property=After=graphical-session-pre.target \
+	    --property=Wants=graphical-session-pre.target \
+	    ${XFCE4_SESSION_COMPOSITOR:-xfce4-session}
+  else
+    # start xfce4-session normally
+    exec ${XFCE4_SESSION_COMPOSITOR:-xfce4-session}
+  fi
 fi
 
 # if we got here, then exec failed
