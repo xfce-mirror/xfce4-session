@@ -64,8 +64,8 @@ executable(
 )
 
 i18n.merge_file(
-  input: 'xfce-session-settings.desktop.in',
-  output: 'xfce-session-settings.desktop',
+  input: 'xfce4-session-settings.desktop.in',
+  output: 'xfce4-session-settings.desktop',
   po_dir: '..' / 'po',
   type: 'desktop',
   install: true,
