@@ -38,7 +38,7 @@ typedef struct _XfaeWindow XfaeWindow;
 #define XFAE_WINDOW_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), XFAE_TYPE_WINDOW, XfaeWindowClass))
 
 GType
-xfae_window_get_type (void) G_GNUC_CONST;
+xfae_window_get_type (void);
 
 GtkWidget *
 xfae_window_new (void) G_GNUC_MALLOC;

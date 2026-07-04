@@ -55,7 +55,7 @@ typedef enum
 } XfsmRunHook;
 
 GType
-xfsm_run_hook_get_type (void) G_GNUC_CONST;
+xfsm_run_hook_get_type (void);
 
 /**
  * XfaeModelColumn:
@@ -75,7 +75,7 @@ typedef enum
 } XfaeModelColumn;
 
 GType
-xfae_model_get_type (void) G_GNUC_CONST;
+xfae_model_get_type (void);
 
 GtkTreeModel *
 xfae_model_new (void);

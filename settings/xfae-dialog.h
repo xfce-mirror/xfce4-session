@@ -39,7 +39,7 @@ typedef struct _XfaeDialog XfaeDialog;
 #define XFAE_DIALOG_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), XFAE_TYPE_DIALOG, XfaeDialogClass))
 
 GType
-xfae_dialog_get_type (void) G_GNUC_CONST;
+xfae_dialog_get_type (void);
 
 GtkWidget *
 xfae_dialog_new (const gchar *name,

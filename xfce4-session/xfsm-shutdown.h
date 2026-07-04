@@ -54,7 +54,7 @@ typedef enum
 } XfsmPassState;
 
 GType
-xfsm_shutdown_get_type (void) G_GNUC_CONST;
+xfsm_shutdown_get_type (void);
 
 XfsmShutdown *
 xfsm_shutdown_get (void);

@@ -36,9 +36,9 @@ typedef enum
 } XfsmError;
 
 GType
-xfsm_error_get_type (void) G_GNUC_CONST;
+xfsm_error_get_type (void);
 GQuark
-xfsm_error_get_quark (void) G_GNUC_CONST;
+xfsm_error_get_quark (void);
 
 void
 throw_error (GDBusMethodInvocation *context,

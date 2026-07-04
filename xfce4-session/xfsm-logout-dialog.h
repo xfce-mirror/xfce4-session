@@ -35,7 +35,7 @@ typedef struct _XfsmLogoutDialog XfsmLogoutDialog;
 #define XFSM_LOGOUT_DIALOG_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), XFSM_TYPE_LOGOUT_DIALOG, XfsmLogoutDialogClass))
 
 GType
-xfsm_logout_dialog_get_type (void) G_GNUC_CONST;
+xfsm_logout_dialog_get_type (void);
 
 gboolean
 xfsm_logout_dialog (const gchar *session_name,

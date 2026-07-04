@@ -51,7 +51,7 @@ struct _XfsmChooser
 };
 
 GType
-xfsm_chooser_get_type (void) G_GNUC_CONST;
+xfsm_chooser_get_type (void);
 
 void
 xfsm_chooser_set_sessions (XfsmChooser *chooser,
