@@ -73,7 +73,7 @@ typedef enum
 } XfsmManagerCompatType;
 
 GType
-xfsm_manager_get_type (void) G_GNUC_CONST;
+xfsm_manager_get_type (void);
 
 XfsmManager *
 xfsm_manager_new (GDBusConnection *connection);

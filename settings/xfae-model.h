@@ -48,7 +48,7 @@ typedef enum
 } XfsmRunHook;
 
 GType
-xfsm_run_hook_get_type (void) G_GNUC_CONST;
+xfsm_run_hook_get_type (void);
 
 /**
  * XfaeModelColumn:

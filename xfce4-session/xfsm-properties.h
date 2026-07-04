@@ -108,7 +108,7 @@ xfsm_properties_load (GKeyFile *file,
                       const gchar *group);
 
 gboolean
-xfsm_properties_check (const XfsmProperties *properties) G_GNUC_CONST;
+xfsm_properties_check (const XfsmProperties *properties);
 
 const gchar *
 xfsm_properties_get_string (XfsmProperties *properties,
@@ -157,7 +157,7 @@ xfsm_properties_set_default_child_watch (XfsmProperties *properties);
 
 gint
 xfsm_properties_compare (const XfsmProperties *a,
-                         const XfsmProperties *b) G_GNUC_CONST;
+                         const XfsmProperties *b);
 
 gint
 xfsm_properties_compare_id (const XfsmProperties *properties,
