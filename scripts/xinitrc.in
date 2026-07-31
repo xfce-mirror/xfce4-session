@@ -155,8 +155,8 @@ else
   fi
 
   # Check if using systemd, else run normally
-  if [ -e "/run/systemd/seats" ]; then
-    # generate systemd unit dinamically
+  if command -v systemctl >/dev/null 2>&1 && systemctl --user list-jobs >/dev/null 2>&1; then
+    # generate systemd unit
     exec systemd-run --user -G --wait \
 	    --unit=xfce4-session.service \
 	    --description="Xfce4 Session" \
@@ -169,7 +169,7 @@ else
 	    xfce4-session
   else
     # start xfce4-session normally
-    exec xfce4-session
+    exec $SHELL -c "xfce4-session || kill $WMC_PID"
   fi
 fi
 
