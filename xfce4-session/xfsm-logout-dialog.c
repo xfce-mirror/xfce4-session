@@ -623,7 +623,7 @@ xfsm_logout_dialog_run (GtkDialog *dialog,
                          NULL)
           != GDK_GRAB_SUCCESS)
         {
-          g_critical ("Failed to grab the keyboard for logout window");
+          g_warning ("Failed to grab the keyboard for logout window");
         }
 
 #ifdef ENABLE_X11
