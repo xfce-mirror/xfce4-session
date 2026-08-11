@@ -476,8 +476,7 @@ xfsm_manager_choose_session (XfsmManager *manager,
           load = TRUE;
         }
 
-      if (manager->session_name != NULL)
-        g_free (manager->session_name);
+      g_free (manager->session_name);
       manager->session_name = name;
 
       for (lp = sessions; lp != NULL; lp = lp->next)

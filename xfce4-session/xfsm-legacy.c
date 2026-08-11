@@ -140,14 +140,10 @@ sm_window_free (SmWindow *window)
 {
   g_return_if_fail (window != NULL);
 
-  if (window->wm_command != NULL)
-    g_strfreev (window->wm_command);
-  if (window->wm_client_machine != NULL)
-    g_free (window->wm_client_machine);
-  if (window->wm_class1)
-    g_free (window->wm_class1);
-  if (window->wm_class2)
-    g_free (window->wm_class2);
+  g_strfreev (window->wm_command);
+  g_free (window->wm_client_machine);
+  g_free (window->wm_class1);
+  g_free (window->wm_class2);
   g_free (window);
 }
 
