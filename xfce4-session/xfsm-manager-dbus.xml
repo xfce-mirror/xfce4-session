@@ -187,6 +187,27 @@
         </method>
 
         <!--
+            ObjectPath org.xfce.Session.Manager.AttachClient(String client_startup_id)
+
+            @client_startup_id: Client startup identifier.
+
+            Allows a client that has been registered with the session manager
+            through other means (such as through the ManagerDelegate) to learn
+            its client object path.
+
+            This also allows the session manager to record the dbus unique name
+            associated with the client, so clients should call this even if they
+            do not intend to use the object path.
+
+            Returns:
+            @client_id: The object path of the newly registered client
+        -->
+        <method name="AttachClient">
+            <arg direction="in" name="client_startup_id" type="s" />
+            <arg direction="out" name="client_id" type="o"/>
+        </method>
+
+        <!--
              void org.Xfce.Session.Manager.UnregisterClient
 
              @client_id: The object path of the previously registered client
@@ -296,5 +317,59 @@
              cancelled.
         -->
         <signal name="ShutdownCancelled"/>
+    </interface>
+
+    <interface name="org.xfce.Session.ManagerDelegate">
+        <annotation name="org.freedesktop.DBus.GLib.CSymbol"
+                    value="xfsm_manager_proxy_dbus"/>
+        <annotation name="org.freedesktop.DBus.GLib.ClientCSymbol"
+                    value="xfsm_manager_proxy_dbus_client"/>
+
+        <!--
+            (String, ObjectPath) org.xfce.Session.ManagerDelegate.RegisterClient(String client_startup_id,
+                                                                                 Unsigned Int pid,
+                                                                                 String reason)
+
+            @client_id: Client's session ID.
+            @pid: Client's process ID.
+            @reason: Reason for registration ("launch", "recover", or "session_restore").
+
+            Registers a new client with the session manager.
+
+            Returns:
+            @status: Status of the registration ("created", "restored", or "replaced").
+            @client_id: Path of the newly-registered client object.
+        -->
+        <method name="RegisterClient">
+            <arg direction="in" name="client_startup_id" type="s"/>
+            <arg direction="in" name="pid" type="u"/>
+            <arg direction="in" name="reason" type="s"/>
+            <arg direction="out" name="status" type="s"/>
+            <arg direction="out" name="client_id" type="o"/>
+        </method>
+
+        <!--
+            void org.xfce.Session.ManagerDelegate.RemoveClient(String client_id)
+
+            @client_id: Client's object path.
+
+            Removes the client from the session entirely.
+        -->
+        <method name="RemoveClient">
+            <arg direction="in" name="client_id" type="o"/>
+        </method>
+
+        <!--
+            void org.xfce.Session.ManagerDelegate.ClientDisconnected(ObjectPath client_id)
+
+            @client_id: Client's object path.
+
+            Notifies the session manager that the client has disconnected from
+            the display server. The session manager should generally not remove
+            session data relating to this client.
+        -->
+        <method name="ClientDisconnected">
+            <arg direction="in" name="client_id" type="o"/>
+        </method>
     </interface>
 </node>
