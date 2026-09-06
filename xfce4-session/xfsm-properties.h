@@ -79,6 +79,7 @@ struct _XfsmProperties
   gchar *service_name;
 
   GTree *sm_properties;
+  GQueue *toplevels; // XfsmToplevel*
 };
 
 
@@ -163,5 +164,24 @@ xfsm_properties_compare (const XfsmProperties *a,
 gint
 xfsm_properties_compare_id (const XfsmProperties *properties,
                             const gchar *client_id);
+
+gboolean
+xfsm_properties_toplevel_add (XfsmProperties *properties,
+                              const gchar *id);
+gboolean
+xfsm_properties_toplevel_remove (XfsmProperties *properties,
+                                 const gchar *id);
+gboolean
+xfsm_properties_toplevel_rename (XfsmProperties *properties,
+                                 const gchar *id,
+                                 const gchar *new_id,
+                                 GError **error);
+gboolean
+xfsm_properties_toplevel_set_wm_properties (XfsmProperties *properties,
+                                            const gchar *id,
+                                            GVariant *wm_properties);
+GVariant *
+xfsm_properties_toplevel_get_wm_properties (XfsmProperties *properties,
+                                            const gchar *id);
 
 #endif /* !__XFSM_PROPERTIES_H__ */
