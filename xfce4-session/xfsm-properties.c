@@ -36,11 +36,21 @@
 #include "xfsm-global.h"
 #include "xfsm-properties.h"
 
+#define WM_PROPERTY_MAX_LEN 1024
+
 typedef struct
 {
   gchar *toplevel_id;
   GTree *wm_properties; // gchar* -> GVariant*
 } XfsmToplevel;
+
+typedef struct
+{
+  GKeyFile *file;
+  const gchar *group;
+  const gchar *client_prefix;
+  gint toplevel_index;
+} WriteToplevelWmPropertyData;
 
 static XfsmToplevel *
 xfsm_toplevel_new (const gchar *toplevel_id);
@@ -339,9 +349,106 @@ xfsm_properties_load (GKeyFile *file,
       return NULL;
     }
 
+  gint toplevel_count = g_key_file_get_integer (file, group, ENTRY ("ToplevelCount"), &error);
+  if (error != NULL || toplevel_count <= 0)
+    g_clear_error (&error);
+  else
+    {
+      for (i = 0; i < toplevel_count; ++i)
+        {
+          gchar *toplevel_prefix = g_strdup_printf ("%sToplevel%d_", prefix, i);
+          compose (buffer, sizeof (buffer), toplevel_prefix, "Name");
+          g_free (toplevel_prefix);
+
+          value_str = g_key_file_get_string (file, group, buffer, NULL);
+          if (value_str != NULL)
+            {
+              gboolean added = xfsm_properties_toplevel_add (properties, value_str);
+              g_free (value_str);
+              if (!added)
+                {
+                  g_message ("Toplevel %d for client %s has duplicate name; dropping this and all following toplevels", i, prefix);
+                  break;
+                }
+            }
+          else
+            {
+              g_message ("Toplevel %d for client %s is missing a name; dropping this and all following toplevels", i, prefix);
+              break;
+            }
+        }
+
+      gchar **keys = g_key_file_get_keys (file, group, NULL, NULL);
+      if (keys != NULL)
+        {
+          gchar *toplevel_prefix = g_strdup_printf ("%sToplevel", prefix);
+          gsize toplevel_prefix_len = strlen (toplevel_prefix);
+
+          for (gchar **keyp = keys; *keyp != NULL; ++keyp)
+            {
+              gchar *key = *keyp;
+
+              if (g_str_has_prefix (key, toplevel_prefix))
+                {
+                  gchar *startn = key + toplevel_prefix_len;
+                  gchar *endp = NULL;
+                  guint64 index = g_ascii_strtoull (startn, &endp, 10);
+                  if (index > G_MAXINT || endp == NULL || *endp != '_' || !g_str_has_prefix (endp, "_Wm_"))
+                    continue;
+
+                  XfsmToplevel *toplevel = g_queue_peek_nth (properties->toplevels, index);
+                  if (toplevel == NULL)
+                    continue;
+
+                  value_str = g_key_file_get_string (file, group, key, NULL);
+                  if (value_str == NULL)
+                    continue;
+
+                  GVariant *prop_value = g_variant_parse (NULL, value_str, NULL, NULL, &error);
+                  g_free (value_str);
+                  if (prop_value == NULL)
+                    {
+                      g_message ("Value for key %s is invalid: %s", key, error->message);
+                      g_clear_error (&error);
+                      continue;
+                    }
+
+                  g_tree_insert (toplevel->wm_properties, g_strdup (endp + 4), prop_value);
+                }
+            }
+
+          g_strfreev (keys);
+          g_free (toplevel_prefix);
+        }
+    }
+
   return properties;
 
 #undef ENTRY
+}
+
+
+static gboolean
+write_toplevel_wm_property (gpointer key,
+                            gpointer value,
+                            gpointer data)
+{
+  const gchar *prop_name = key;
+  GVariant *prop_value = value;
+  WriteToplevelWmPropertyData *wtwp_data = data;
+
+  gchar *value_str = g_variant_print (prop_value, TRUE);
+  if (value_str != NULL && strlen (value_str) <= WM_PROPERTY_MAX_LEN)
+    {
+      gchar *key_str = g_strdup_printf ("%sToplevel%d_Wm_%s", wtwp_data->client_prefix, wtwp_data->toplevel_index, prop_name);
+      g_key_file_set_string (wtwp_data->file, wtwp_data->group, key_str, value_str);
+      g_free (key_str);
+    }
+  else
+    g_message ("Invalid or too-long property string for '%s'", prop_name);
+  g_free (value_str);
+
+  return FALSE;
 }
 
 
@@ -397,6 +504,28 @@ xfsm_properties_store (XfsmProperties *properties,
                                   g_value_get_uchar (value));
         }
     }
+
+  i = 0;
+  for (GList *lp = g_queue_peek_nth_link (properties->toplevels, 0);
+       lp != NULL;
+       lp = lp->next, ++i)
+    {
+      XfsmToplevel *toplevel = lp->data;
+
+      gchar *name_prop = g_strdup_printf ("%sToplevel%d_Name", prefix, i);
+      g_key_file_set_string (file, group, name_prop, toplevel->toplevel_id);
+      g_free (name_prop);
+
+      WriteToplevelWmPropertyData wtwp_data = {
+        .file = file,
+        .group = group,
+        .client_prefix = prefix,
+        .toplevel_index = i,
+      };
+      g_tree_foreach (toplevel->wm_properties, write_toplevel_wm_property, &wtwp_data);
+    }
+
+  g_key_file_set_integer (file, group, ENTRY ("ToplevelCount"), properties->toplevels->length);
 
 #undef ENTRY
 }
