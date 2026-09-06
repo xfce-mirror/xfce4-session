@@ -21,6 +21,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include "xfsm-client.h"
 #ifdef HAVE_XFCE_REVISION_H
 #include "xfce-revision.h"
 #endif
@@ -67,6 +68,7 @@
 struct _XfsmManager
 {
   XfsmDbusManagerSkeleton parent;
+  XfsmDbusManagerDelegate *delegate;
 
   XfsmManagerState state;
 
@@ -981,6 +983,14 @@ xfsm_manager_register_client (XfsmManager *manager,
 {
   XfsmProperties *properties = NULL;
   SmsConn sms_conn;
+  XfsmSessionStatus status = XFSM_SESSION_STATUS_RESTORED;
+  XfsmStartReason reason;
+
+  // FIXME: This probably actually isn't accurate.
+  if (manager->state == XFSM_MANAGER_STARTUP)
+    reason = XFSM_START_REASON_SESSION_RESTORE;
+  else
+    reason = XFSM_START_REASON_RECOVER;
 
   sms_conn = xfsm_client_get_sms_connection (client);
 
@@ -1007,6 +1017,10 @@ xfsm_manager_register_client (XfsmManager *manager,
       xfsm_verbose ("No previous_id found.\n");
       if (manager->failsafe_mode)
         xfsm_verbose ("Plus, we're obviously running in failsafe mode.\n");
+
+      reason = XFSM_START_REASON_LAUNCH;
+      status = XFSM_SESSION_STATUS_CREATED;
+
       if (sms_conn != NULL)
         {
 #ifdef ENABLE_X11
@@ -1040,6 +1054,9 @@ xfsm_manager_register_client (XfsmManager *manager,
         }
       else
         {
+          reason = XFSM_START_REASON_LAUNCH;
+          status = XFSM_SESSION_STATUS_CREATED;
+
           /* new dbus client */
           gchar *hostname = xfce_gethostname ();
 
@@ -1052,6 +1069,8 @@ xfsm_manager_register_client (XfsmManager *manager,
   else
     xfsm_verbose ("No dbus_client_id found.\n");
 
+  xfsm_client_set_start_reason (client, reason);
+  xfsm_client_set_session_status (client, status);
 
   g_queue_push_tail (manager->running_clients, client);
 
@@ -1354,6 +1373,10 @@ xfsm_manager_save_yourself_global (XfsmManager *manager,
        lp = lp->next)
     {
       XfsmClient *client = lp->data;
+
+      if (!xfsm_client_is_xfsm_aware (client))
+        continue;
+
       XfsmProperties *properties = xfsm_client_get_properties (client);
       const gchar *program;
 
@@ -2110,6 +2133,10 @@ xfsm_manager_dbus_register_client (XfsmDbusManager *object,
                                    const gchar *arg_app_id,
                                    const gchar *arg_client_startup_id);
 static gboolean
+xfsm_manager_dbus_attach_client (XfsmDbusManager *object,
+                                 GDBusMethodInvocation *invocation,
+                                 const gchar *arg_client_startup_id);
+static gboolean
 xfsm_manager_dbus_unregister_client (XfsmDbusManager *object,
                                      GDBusMethodInvocation *invocation,
                                      const gchar *arg_client_id);
@@ -2135,6 +2162,25 @@ xfsm_manager_dbus_lock (XfsmDbusManager *object,
 
 /* eader needs the above fwd decls */
 #include "xfsm-manager-dbus.h"
+
+
+static gboolean
+xfsm_manager_delegate_dbus_register_client (XfsmDbusManagerDelegate *object,
+                                            GDBusMethodInvocation *invocation,
+                                            const gchar *arg_client_startup_id,
+                                            guint arg_pid,
+                                            const gchar *arg_reason,
+                                            XfsmManager *manager);
+static gboolean
+xfsm_manager_delegate_dbus_remove_client (XfsmDbusManagerDelegate *object,
+                                          GDBusMethodInvocation *invocation,
+                                          const gchar *arg_client_id,
+                                          XfsmManager *manager);
+static gboolean
+xfsm_manager_delegate_dbus_client_disconnected (XfsmDbusManagerDelegate *object,
+                                                GDBusMethodInvocation *invocation,
+                                                const gchar *arg_client_id,
+                                                XfsmManager *manager);
 
 
 static void
@@ -2210,6 +2256,24 @@ xfsm_manager_dbus_init (XfsmManager *manager, GDBusConnection *connection)
         }
     }
 
+  manager->delegate = xfsm_dbus_manager_delegate_skeleton_new ();
+  if (!g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (manager->delegate),
+                                         manager->connection,
+                                         "/org/xfce/SessionManager",
+                                         &error))
+    {
+      if (error != NULL)
+        {
+          g_critical ("error exporting interface: %s", error->message);
+          g_clear_error (&error);
+          return;
+        }
+    }
+
+  g_signal_connect (manager->delegate, "handle-register-client", G_CALLBACK (xfsm_manager_delegate_dbus_register_client), manager);
+  g_signal_connect (manager->delegate, "handle-remove-client", G_CALLBACK (xfsm_manager_delegate_dbus_remove_client), manager);
+  g_signal_connect (manager->delegate, "handle-client-disconnected", G_CALLBACK (xfsm_manager_delegate_dbus_client_disconnected), manager);
+
   g_debug ("exported on %s", g_dbus_interface_skeleton_get_object_path (G_DBUS_INTERFACE_SKELETON (XFSM_DBUS_MANAGER (manager))));
 
   manager->name_owner_id = g_dbus_connection_signal_subscribe (manager->connection,
@@ -2248,6 +2312,7 @@ xfsm_manager_iface_init (XfsmDbusManagerIface *iface)
   iface->handle_shutdown = xfsm_manager_dbus_shutdown;
   iface->handle_suspend = xfsm_manager_dbus_suspend;
   iface->handle_register_client = xfsm_manager_dbus_register_client;
+  iface->handle_attach_client = xfsm_manager_dbus_attach_client;
   iface->handle_uninhibit = xfsm_manager_dbus_uninhibit;
   iface->handle_unregister_client = xfsm_manager_dbus_unregister_client;
 }
@@ -2260,6 +2325,9 @@ xfsm_manager_dbus_cleanup (XfsmManager *manager)
       g_dbus_connection_signal_unsubscribe (manager->connection, manager->name_owner_id);
       manager->name_owner_id = 0;
     }
+
+  g_dbus_interface_skeleton_unexport_from_connection (G_DBUS_INTERFACE_SKELETON (manager->delegate), manager->connection);
+  g_clear_object (&manager->delegate);
 
   g_clear_object (&manager->connection);
 }
@@ -2806,7 +2874,7 @@ xfsm_manager_dbus_register_client (XfsmDbusManager *object,
       pid = 0;
     }
 
-  xfsm_client_set_pid (client, pid);
+  xfsm_client_set_pid (client, pid, XFSM_CLIENT_SET_PID_FLAGS_UPDATE_RESTART_COMMAND | XFSM_CLIENT_SET_PID_FLAGS_UPDATE_PROGRAM_NAME);
 
   /* we use the dbus service name to track clients so we know when they exit
    * or crash */
@@ -2820,17 +2888,47 @@ xfsm_manager_dbus_register_client (XfsmDbusManager *object,
 
 
 static gboolean
-xfsm_manager_dbus_unregister_client (XfsmDbusManager *object,
-                                     GDBusMethodInvocation *invocation,
-                                     const gchar *arg_client_id)
+xfsm_manager_dbus_attach_client (XfsmDbusManager *object,
+                                 GDBusMethodInvocation *invocation,
+                                 const gchar *arg_client_startup_id)
 {
-  XfsmManager *manager;
-  GList *lp;
+  XfsmManager *manager = XFSM_MANAGER (object);
 
-  manager = XFSM_MANAGER (object);
+  for (GList *lp = g_queue_peek_nth_link (manager->running_clients, 0);
+       lp != NULL;
+       lp = lp->next)
+    {
+      XfsmClient *client = XFSM_CLIENT (lp->data);
+      if (g_strcmp0 (xfsm_client_get_id (client), arg_client_startup_id) == 0)
+        {
+          pid_t pid = 0;
+          if (get_caller_info (manager, g_dbus_method_invocation_get_sender (invocation), &pid)
+              && xfsm_client_get_pid (client) != pid)
+            {
+              // ManagerDelegate.RegisterClient() will have included the PID,
+              // but if there is a Wayland protocol proxy or some other
+              // intermediary at play, it could be incorrect.
+              xfsm_client_set_pid (client, pid, XFSM_CLIENT_SET_PID_FLAGS_UPDATE_PROGRAM_NAME);
+            }
+
+          xfsm_client_set_service_name (client, g_dbus_method_invocation_get_sender (invocation));
+
+          xfsm_dbus_manager_complete_attach_client (object, invocation, xfsm_client_get_object_path (client));
+          return TRUE;
+        }
+    }
+
+  throw_error (invocation, XFSM_ERROR_BAD_VALUE, "Client with startup id of '%s' was not found", arg_client_startup_id);
+  return TRUE;
+}
 
 
-  for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
+
+static gboolean
+do_unregister_client (XfsmManager *manager,
+                      const gchar *arg_client_id)
+{
+  for (GList *lp = g_queue_peek_nth_link (manager->running_clients, 0);
        lp;
        lp = lp->next)
     {
@@ -2840,12 +2938,171 @@ xfsm_manager_dbus_unregister_client (XfsmDbusManager *object,
           /* maybe we remove client from the queue here but as we also get out
            * of the loop no need for extra precaution */
           xfsm_manager_close_connection (manager, client, FALSE);
-          xfsm_dbus_manager_complete_unregister_client (object, invocation);
           return TRUE;
         }
     }
 
+  return FALSE;
+}
+
+
+
+static gboolean
+xfsm_manager_dbus_unregister_client (XfsmDbusManager *object,
+                                     GDBusMethodInvocation *invocation,
+                                     const gchar *arg_client_id)
+{
+  if (do_unregister_client (XFSM_MANAGER (object), arg_client_id))
+    xfsm_dbus_manager_complete_unregister_client (object, invocation);
+  else
+    throw_error (invocation, XFSM_ERROR_BAD_VALUE, "Client with id of '%s' was not found", arg_client_id);
+
+  return TRUE;
+}
+
+
+
+static XfsmStartReason
+parse_reason (const gchar *reason)
+{
+  if (g_strcmp0 (reason, "recover") == 0)
+    return XFSM_START_REASON_RECOVER;
+  else if (g_strcmp0 (reason, "session_restore") == 0)
+    return XFSM_START_REASON_SESSION_RESTORE;
+  else
+    return XFSM_START_REASON_LAUNCH;
+}
+
+
+
+static const gchar *
+reason_to_string (XfsmStartReason reason)
+{
+  switch (reason)
+    {
+    case XFSM_START_REASON_RECOVER:
+      return "recover";
+    case XFSM_START_REASON_SESSION_RESTORE:
+      return "session_restore";
+    default:
+      return "launch";
+    }
+}
+
+
+
+static const gchar *
+session_status_to_string (XfsmSessionStatus status)
+{
+  switch (status)
+    {
+    case XFSM_SESSION_STATUS_RESTORED:
+      return "restored";
+    case XFSM_SESSION_STATUS_REPLACED:
+      return "replaced";
+    default:
+      return "created";
+    }
+}
+
+
+
+static gboolean
+xfsm_manager_delegate_dbus_register_client (XfsmDbusManagerDelegate *object,
+                                            GDBusMethodInvocation *invocation,
+                                            const gchar *arg_client_startup_id,
+                                            guint arg_pid,
+                                            const gchar *arg_reason,
+                                            XfsmManager *manager)
+{
+  XfsmProperties *old_properties = NULL;
+
+  for (GList *lp = g_queue_peek_nth_link (manager->running_clients, 0);
+       lp;
+       lp = lp->next)
+    {
+      XfsmClient *old_client = XFSM_CLIENT (lp->data);
+      if (g_strcmp0 (xfsm_client_get_id (old_client), arg_client_startup_id) == 0)
+        {
+          old_properties = xfsm_client_steal_properties (old_client);
+
+          g_queue_delete_link (manager->running_clients, lp);
+          g_object_unref (old_client);
+
+          break;
+        }
+    }
+
+  XfsmClient *client = xfsm_client_new (manager, NULL, manager->connection);
+
+  if (old_properties == NULL)
+    {
+      xfsm_manager_register_client (manager, client, arg_client_startup_id, NULL);
+
+      XfsmStartReason our_reason = xfsm_client_get_start_reason (client);
+      if (our_reason != XFSM_START_REASON_RECOVER && our_reason != XFSM_START_REASON_SESSION_RESTORE)
+        xfsm_client_set_start_reason (client, parse_reason (arg_reason));
+    }
+  else
+    {
+      xfsm_manager_handle_old_client_reregister (manager, client, old_properties);
+      g_queue_push_tail (manager->running_clients, client);
+
+      xfsm_client_set_start_reason (client, parse_reason (arg_reason));
+      xfsm_client_set_session_status (client, XFSM_SESSION_STATUS_REPLACED);
+
+      xfsm_dbus_manager_emit_client_registered (XFSM_DBUS_MANAGER (manager), xfsm_client_get_object_path (client));
+    }
+
+  xfsm_client_set_pid (client, arg_pid, XFSM_CLIENT_SET_PID_FLAGS_UPDATE_PROGRAM_NAME);
+
+  xfsm_dbus_manager_delegate_complete_register_client (object,
+                                                       invocation,
+                                                       xfsm_client_get_object_path (client),
+                                                       reason_to_string (xfsm_client_get_start_reason (client)),
+                                                       session_status_to_string (xfsm_client_get_session_status (client)));
+  return TRUE;
+}
+
+
+
+static gboolean
+xfsm_manager_delegate_dbus_remove_client (XfsmDbusManagerDelegate *object,
+                                          GDBusMethodInvocation *invocation,
+                                          const gchar *arg_client_id,
+                                          XfsmManager *manager)
+{
+  for (GList *lp = g_queue_peek_nth_link (manager->running_clients, 0);
+       lp;
+       lp = lp->next)
+    {
+      XfsmClient *client = XFSM_CLIENT (lp->data);
+      if (g_strcmp0 (xfsm_client_get_object_path (client), arg_client_id) == 0)
+        {
+          g_queue_delete_link (manager->running_clients, lp);
+          g_object_unref (client);
+
+          xfsm_dbus_manager_delegate_complete_remove_client (object, invocation);
+          return TRUE;
+        }
+    }
 
   throw_error (invocation, XFSM_ERROR_BAD_VALUE, "Client with id of '%s' was not found", arg_client_id);
+  return TRUE;
+}
+
+
+
+static gboolean
+xfsm_manager_delegate_dbus_client_disconnected (XfsmDbusManagerDelegate *object,
+                                                GDBusMethodInvocation *invocation,
+                                                const gchar *arg_client_id,
+                                                XfsmManager *manager)
+{
+  if (do_unregister_client (manager, arg_client_id))
+    xfsm_dbus_manager_delegate_complete_client_disconnected (object, invocation);
+  else
+    throw_error (invocation, XFSM_ERROR_BAD_VALUE, "Client with id of '%s' was not found", arg_client_id);
+
   return TRUE;
 }
