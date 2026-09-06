@@ -32,8 +32,20 @@
 
 #include "libxfsm/xfsm-util.h"
 
+#include "xfsm-error.h"
 #include "xfsm-global.h"
 #include "xfsm-properties.h"
+
+typedef struct
+{
+  gchar *toplevel_id;
+  GHashTable *wm_properties; // gchar* -> GVariant*
+} XfsmToplevel;
+
+static XfsmToplevel *
+xfsm_toplevel_new (const gchar *toplevel_id);
+static void
+xfsm_toplevel_free (XfsmToplevel *toplevel);
 
 
 #ifdef ENABLE_X11
@@ -185,6 +197,8 @@ xfsm_properties_new (const gchar *client_id,
                                                NULL,
                                                (GDestroyNotify) g_free,
                                                (GDestroyNotify) xfsm_g_value_free);
+
+  properties->toplevels = g_queue_new ();
 
   return properties;
 }
@@ -714,7 +728,159 @@ xfsm_properties_free (XfsmProperties *properties)
   g_free (properties->client_id);
   g_free (properties->hostname);
 
+  g_queue_free_full (properties->toplevels, (GDestroyNotify) xfsm_toplevel_free);
   g_tree_destroy (properties->sm_properties);
 
   g_slice_free (XfsmProperties, properties);
+}
+
+
+static XfsmToplevel *
+find_toplevel (XfsmProperties *properties,
+               const gchar *toplevel_id)
+{
+  for (GList *lp = g_queue_peek_nth_link (properties->toplevels, 0);
+       lp != NULL;
+       lp = lp->next)
+    {
+      XfsmToplevel *toplevel = lp->data;
+      if (g_strcmp0 (toplevel->toplevel_id, toplevel_id) == 0)
+        return toplevel;
+    }
+
+  return NULL;
+}
+
+
+
+gboolean
+xfsm_properties_toplevel_add (XfsmProperties *properties,
+                              const gchar *id)
+{
+  if (find_toplevel (properties, id) == NULL)
+    {
+      XfsmToplevel *toplevel = xfsm_toplevel_new (id);
+      g_queue_push_tail (properties->toplevels, toplevel);
+      return TRUE;
+    }
+  else
+    return FALSE;
+}
+
+
+gboolean
+xfsm_properties_toplevel_remove (XfsmProperties *properties,
+                                 const gchar *id)
+{
+  for (GList *lp = g_queue_peek_nth_link (properties->toplevels, 0);
+       lp != NULL;
+       lp = lp->next)
+    {
+      XfsmToplevel *toplevel = lp->data;
+      if (g_strcmp0 (toplevel->toplevel_id, id) == 0)
+        {
+          g_queue_delete_link (properties->toplevels, lp);
+          xfsm_toplevel_free (toplevel);
+          return TRUE;
+        }
+    }
+
+  return FALSE;
+}
+
+
+gboolean
+xfsm_properties_toplevel_rename (XfsmProperties *properties,
+                                 const gchar *id,
+                                 const gchar *new_id,
+                                 GError **error)
+{
+  XfsmToplevel *toplevel = find_toplevel (properties, id);
+  if (toplevel == NULL)
+    {
+      g_set_error (error, XFSM_ERROR, XFSM_ERROR_BAD_VALUE, "Toplevel with id '%s' not found", id);
+      return FALSE;
+    }
+  else if (find_toplevel (properties, new_id) != NULL)
+    {
+      g_set_error (error, XFSM_ERROR, XFSM_ERROR_BAD_VALUE, "Toplevel with id '%s' already exists", new_id);
+      return FALSE;
+    }
+  else
+    {
+      g_free (toplevel->toplevel_id);
+      toplevel->toplevel_id = g_strdup (new_id);
+      return TRUE;
+    }
+}
+
+
+gboolean
+xfsm_properties_toplevel_set_wm_properties (XfsmProperties *properties,
+                                            const gchar *id,
+                                            GVariant *wm_properties)
+{
+  XfsmToplevel *toplevel = find_toplevel (properties, id);
+  if (toplevel != NULL)
+    {
+      g_hash_table_remove_all (toplevel->wm_properties);
+
+      GVariantIter iter;
+      g_variant_iter_init (&iter, wm_properties);
+
+      gchar *prop_name = NULL;
+      GVariant *prop_value = NULL;
+      while (g_variant_iter_next (&iter, "{sv}", &prop_name, &prop_value))
+        {
+          g_hash_table_insert (toplevel->wm_properties, prop_name, prop_value);
+        }
+
+      return TRUE;
+    }
+  else
+    return FALSE;
+}
+
+GVariant *
+xfsm_properties_toplevel_get_wm_properties (XfsmProperties *properties,
+                                            const gchar *id)
+{
+  XfsmToplevel *toplevel = find_toplevel (properties, id);
+  if (toplevel != NULL)
+    {
+      GVariantBuilder *builder = g_variant_builder_new (G_VARIANT_TYPE_VARDICT);
+      GHashTableIter iter;
+      g_hash_table_iter_init (&iter, toplevel->wm_properties);
+
+      const gchar *prop_name = NULL;
+      GVariant *prop_value = NULL;
+      while (g_hash_table_iter_next (&iter, (gpointer) &prop_name, (gpointer) &prop_value))
+        g_variant_builder_add (builder, "{sv}", prop_name, prop_value);
+
+      GVariant *wm_properties = g_variant_builder_end (builder);
+      g_variant_ref_sink (wm_properties);
+      g_variant_builder_unref (builder);
+      return wm_properties;
+    }
+  else
+    return NULL;
+}
+
+
+static XfsmToplevel *
+xfsm_toplevel_new (const gchar *toplevel_id)
+{
+  XfsmToplevel *toplevel = g_new0 (XfsmToplevel, 1);
+  toplevel->toplevel_id = g_strdup (toplevel_id);
+  toplevel->wm_properties = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, (GDestroyNotify) g_variant_unref);
+  return toplevel;
+}
+
+
+static void
+xfsm_toplevel_free (XfsmToplevel *toplevel)
+{
+  g_free (toplevel->toplevel_id);
+  g_hash_table_destroy (toplevel->wm_properties);
+  g_free (toplevel);
 }
