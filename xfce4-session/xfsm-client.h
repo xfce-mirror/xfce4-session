@@ -49,6 +49,20 @@ typedef enum
   XFSM_CLIENT_STATE_COUNT
 } XfsmClientState;
 
+typedef enum
+{
+  XFSM_START_REASON_LAUNCH = 0,
+  XFSM_START_REASON_RECOVER,
+  XFSM_START_REASON_SESSION_RESTORE,
+} XfsmStartReason;
+
+typedef enum
+{
+  XFSM_SESSION_STATUS_CREATED = 0,
+  XFSM_SESSION_STATUS_RESTORED,
+  XFSM_SESSION_STATUS_REPLACED,
+} XfsmSessionStatus;
+
 gchar *
 xfsm_client_generate_id (SmsConn sms_conn) G_GNUC_PURE;
 
@@ -107,6 +121,18 @@ xfsm_client_set_service_name (XfsmClient *client,
                               const gchar *service_name);
 const gchar *
 xfsm_client_get_service_name (XfsmClient *client);
+
+void
+xfsm_client_set_start_reason (XfsmClient *client,
+                              XfsmStartReason reason);
+XfsmStartReason
+xfsm_client_get_start_reason (XfsmClient *client);
+
+void
+xfsm_client_set_session_status (XfsmClient *client,
+                                XfsmSessionStatus status);
+XfsmSessionStatus
+xfsm_client_get_session_status (XfsmClient *client);
 
 void
 xfsm_client_terminate (XfsmClient *client);

@@ -47,6 +47,8 @@ struct _XfsmClient
   gchar *app_id;
   gchar *object_path;
   gchar *service_name;
+  XfsmStartReason reason;
+  XfsmSessionStatus status;
   guint quit_timeout;
 
   XfsmClientState state;
@@ -87,6 +89,8 @@ xfsm_client_class_init (XfsmClientClass *klass)
 static void
 xfsm_client_init (XfsmClient *client)
 {
+  client->reason = XFSM_START_REASON_LAUNCH;
+  client->status = XFSM_SESSION_STATUS_CREATED;
 }
 
 static void
@@ -453,6 +457,40 @@ const gchar *
 xfsm_client_get_service_name (XfsmClient *client)
 {
   return client->service_name;
+}
+
+
+
+void
+xfsm_client_set_start_reason (XfsmClient *client,
+                              XfsmStartReason reason)
+{
+  client->reason = reason;
+}
+
+
+
+XfsmStartReason
+xfsm_client_get_start_reason (XfsmClient *client)
+{
+  return client->reason;
+}
+
+
+
+void
+xfsm_client_set_session_status (XfsmClient *client,
+                                XfsmSessionStatus status)
+{
+  client->status = status;
+}
+
+
+
+XfsmSessionStatus
+xfsm_client_get_session_status (XfsmClient *client)
+{
+  return client->status;
 }
 
 
