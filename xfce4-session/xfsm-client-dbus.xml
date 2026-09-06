@@ -227,4 +227,98 @@
         <signal name="Stop">
         </signal>
     </interface>
+
+    <interface name="org.xfce.Session.ClientDelegate">
+        <annotation name="org.freedesktop.DBus.GLib.CSymbol"
+                    value="xfsm_client_proxy_dbus"/>
+        <annotation name="org.freedesktop.DBus.GLib.ClientCSymbol"
+                    value="xfsm_client_proxy_dbus_client"/>
+
+        <!--
+            void org.xfce.Session.ClientDelegate.SetAppId(String app_id)
+
+            @app_id: The client's app ID.
+
+            Assigns an application ID to the client, which allows the session
+            manager to look up user-readable information about the client.
+        -->
+        <method name="SetAppId">
+            <arg direction="in" name="app_id" type="s"/>
+        </method>
+
+        <!--
+            void org.xfce.Session.ClientDelegate.RegisterToplevel(String toplevel_id)
+
+            @toplevel_id: The toplevel's opaque ID.
+
+            Instructs the session manager to create a new state object for a new
+            toplevel window.
+        -->
+        <method name="RegisterToplevel">
+            <arg direction="in" name="toplevel_id" type="s"/>
+        </method>
+
+        <!--
+            void org.xfce.Session.ClientDelegate.ReplaceToplevelWmProperties(String toplevel_id,
+                                                                             Dict wm_properties)
+
+            @toplevel_id: The toplevel's opaque ID.
+            @wm_properties: A variant dict of WM properties.
+
+            Allows setting arbitrary window-management-related properties on the
+            toplevel.
+
+            This method replaces all WM properties set on the toplevel, so the
+            caller should send all properties, even if some have not changed.
+        -->
+        <method name="ReplaceToplevelWmProperties">
+            <annotation name="org.freedesktop.DBus.Method.NoReply" value="true"/>
+            <arg direction="in" name="toplevel_id" type="s"/>
+            <arg direction="in" name="wm_properties" type="a{sv}"/>
+        </method>
+
+        <!--
+            Dict org.xfce.Session.ClientDelegate.RestoreToplevel(String toplevel_id)
+
+            @toplevel_id: The toplevel's opaque ID.
+
+            Attempts to restore the toplevel identified by @toplevel_id. If
+            @toplevel_id does not refer to a known toplevel, this works like
+            RegisterToplevel, and an empty properties dict is returned.
+
+            Returns:
+            @properties: A variant dict containing the toplevels WM properties.
+        -->
+        <method name="RestoreToplevel">
+            <arg direction="in" name="toplevel_id" type="s"/>
+            <arg direction="out" name="wm_properties" type="a{sv}"/>
+        </method>
+
+        <!--
+            void org.xfce.Session.ClientDelegate.RemoveToplevel(String toplevel_id)
+
+            @toplevel_id: The toplevel's opaque ID.
+
+            Instructs the session manager to drop any state associated with this
+            toplevel.
+        -->
+        <method name="RemoveToplevel">
+            <arg direction="in" name="toplevel_id" type="s"/>
+        </method>
+
+        <!--
+            void org.xfce.Session.ClientDelegate.RenameToplevel(String toplevel_id,
+                                                                String new_toplevel_id)
+
+            @toplevel_id: The toplevel's opaque ID.
+            @new_toplevel_id: A new toplevel ID.
+
+            Instructs the session manager to rename the existing toplevel to
+            @new_toplevel_id.
+        -->
+        <method name="RenameToplevel">
+            <arg direction="in" name="toplevel_id" type="s"/>
+            <arg direction="in" name="new_toplevel_id" type="s"/>
+        </method>
+    </interface>
 </node>
