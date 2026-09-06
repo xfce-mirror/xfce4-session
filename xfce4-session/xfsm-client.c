@@ -47,6 +47,8 @@ struct _XfsmClient
   gchar *app_id;
   gchar *object_path;
   gchar *service_name;
+  XfsmStartReason reason;
+  XfsmSessionStatus status;
   guint quit_timeout;
 
   XfsmClientState state;
@@ -87,6 +89,8 @@ xfsm_client_class_init (XfsmClientClass *klass)
 static void
 xfsm_client_init (XfsmClient *client)
 {
+  client->reason = XFSM_START_REASON_LAUNCH;
+  client->status = XFSM_SESSION_STATUS_CREATED;
 }
 
 static void
@@ -457,6 +461,40 @@ xfsm_client_get_service_name (XfsmClient *client)
 
 
 
+void
+xfsm_client_set_start_reason (XfsmClient *client,
+                              XfsmStartReason reason)
+{
+  client->reason = reason;
+}
+
+
+
+XfsmStartReason
+xfsm_client_get_start_reason (XfsmClient *client)
+{
+  return client->reason;
+}
+
+
+
+void
+xfsm_client_set_session_status (XfsmClient *client,
+                                XfsmSessionStatus status)
+{
+  client->status = status;
+}
+
+
+
+XfsmSessionStatus
+xfsm_client_get_session_status (XfsmClient *client)
+{
+  return client->status;
+}
+
+
+
 static void
 xfsm_client_save_restart_command (XfsmClient *client)
 {
@@ -576,9 +614,19 @@ xfsm_client_save_desktop_file (XfsmClient *client)
 
 
 
+pid_t
+xfsm_client_get_pid (XfsmClient *client)
+{
+  g_return_val_if_fail (XFSM_IS_CLIENT (client), -1);
+  return client->properties != NULL ? client->properties->pid : -1;
+}
+
+
+
 void
 xfsm_client_set_pid (XfsmClient *client,
-                     pid_t pid)
+                     pid_t pid,
+                     XfsmClientSetPidFlags flags)
 {
   XfsmProperties *properties;
   gchar *pid_str;
@@ -597,11 +645,17 @@ xfsm_client_set_pid (XfsmClient *client,
   /* store the string as well (so we can export it over dbus */
   xfsm_properties_set_string (properties, "ProcessID", pid_str);
 
-  /* save the command line for the process so we can restart it if needed */
-  xfsm_client_save_restart_command (client);
+  if ((flags & XFSM_CLIENT_SET_PID_FLAGS_UPDATE_RESTART_COMMAND) != 0)
+    {
+      /* save the command line for the process so we can restart it if needed */
+      xfsm_client_save_restart_command (client);
+    }
 
-  /* save the program name */
-  xfsm_client_save_program_name (client);
+  if ((flags & XFSM_CLIENT_SET_PID_FLAGS_UPDATE_PROGRAM_NAME) != 0)
+    {
+      /* save the program name */
+      xfsm_client_save_program_name (client);
+    }
 
   g_free (pid_str);
 }

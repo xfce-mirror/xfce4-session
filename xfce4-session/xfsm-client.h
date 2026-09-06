@@ -49,6 +49,27 @@ typedef enum
   XFSM_CLIENT_STATE_COUNT
 } XfsmClientState;
 
+typedef enum
+{
+  XFSM_START_REASON_LAUNCH = 0,
+  XFSM_START_REASON_RECOVER,
+  XFSM_START_REASON_SESSION_RESTORE,
+} XfsmStartReason;
+
+typedef enum
+{
+  XFSM_SESSION_STATUS_CREATED = 0,
+  XFSM_SESSION_STATUS_RESTORED,
+  XFSM_SESSION_STATUS_REPLACED,
+} XfsmSessionStatus;
+
+typedef enum
+{
+  XFSM_CLIENT_SET_PID_FLAGS_NONE = 0,
+  XFSM_CLIENT_SET_PID_FLAGS_UPDATE_RESTART_COMMAND = (1 << 0),
+  XFSM_CLIENT_SET_PID_FLAGS_UPDATE_PROGRAM_NAME = (1 << 1),
+} XfsmClientSetPidFlags;
+
 gchar *
 xfsm_client_generate_id (SmsConn sms_conn) G_GNUC_PURE;
 
@@ -94,9 +115,12 @@ xfsm_client_delete_properties (XfsmClient *client,
 const gchar *
 xfsm_client_get_object_path (XfsmClient *client);
 
+pid_t
+xfsm_client_get_pid (XfsmClient *client);
 void
 xfsm_client_set_pid (XfsmClient *client,
-                     pid_t pid);
+                     pid_t pid,
+                     XfsmClientSetPidFlags flags);
 
 void
 xfsm_client_set_app_id (XfsmClient *client,
@@ -107,6 +131,18 @@ xfsm_client_set_service_name (XfsmClient *client,
                               const gchar *service_name);
 const gchar *
 xfsm_client_get_service_name (XfsmClient *client);
+
+void
+xfsm_client_set_start_reason (XfsmClient *client,
+                              XfsmStartReason reason);
+XfsmStartReason
+xfsm_client_get_start_reason (XfsmClient *client);
+
+void
+xfsm_client_set_session_status (XfsmClient *client,
+                                XfsmSessionStatus status);
+XfsmSessionStatus
+xfsm_client_get_session_status (XfsmClient *client);
 
 void
 xfsm_client_terminate (XfsmClient *client);
