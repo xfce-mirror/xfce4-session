@@ -762,6 +762,7 @@ xfsm_client_iface_init (XfsmDbusClientIface *iface)
 static void
 xfsm_client_dbus_cleanup (XfsmClient *client)
 {
+  g_dbus_interface_skeleton_unexport_from_connection (G_DBUS_INTERFACE_SKELETON (client), client->connection);
   g_clear_object (&client->connection);
 }
 
