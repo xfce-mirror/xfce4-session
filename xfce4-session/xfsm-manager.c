@@ -90,6 +90,7 @@ struct _XfsmManager
 
   GQueue *starting_properties;
   GQueue *pending_properties;
+  GQueue *carried_properties;
   GQueue *restart_properties;
   GQueue *running_clients;
 
@@ -200,6 +201,7 @@ xfsm_manager_init (XfsmManager *manager)
   manager->save_session = TRUE;
 
   manager->pending_properties = g_queue_new ();
+  manager->carried_properties = g_queue_new ();
   manager->starting_properties = g_queue_new ();
   manager->restart_properties = g_queue_new ();
   manager->running_clients = g_queue_new ();
@@ -227,6 +229,9 @@ xfsm_manager_finalize (GObject *obj)
 
   g_queue_foreach (manager->pending_properties, (GFunc) G_CALLBACK (xfsm_properties_free), NULL);
   g_queue_free (manager->pending_properties);
+
+  g_queue_foreach (manager->carried_properties, (GFunc) G_CALLBACK (xfsm_properties_free), NULL);
+  g_queue_free (manager->carried_properties);
 
   g_queue_foreach (manager->starting_properties, (GFunc) G_CALLBACK (xfsm_properties_free), NULL);
   g_queue_free (manager->starting_properties);
@@ -539,15 +544,11 @@ xfsm_manager_load_session (XfsmManager *manager,
           xfsm_verbose ("%s has no properties. Skipping\n", buffer);
           continue;
         }
-      if (xfsm_properties_check (properties))
-        {
-          g_queue_push_tail (manager->pending_properties, properties);
-        }
-      else
-        {
-          xfsm_verbose ("%s has invalid properties. Skipping\n", buffer);
-          xfsm_properties_free (properties);
-        }
+
+      g_queue_push_tail (xfsm_properties_can_autorun (properties)
+                           ? manager->pending_properties
+                           : manager->carried_properties,
+                         properties);
     }
 
   xfsm_verbose ("Finished loading clients from rc file\n");
@@ -563,7 +564,8 @@ xfsm_manager_load_session (XfsmManager *manager,
   g_free (group);
   g_key_file_free (file);
 
-  return g_queue_peek_head (manager->pending_properties) != NULL;
+  return g_queue_peek_head (manager->pending_properties) != NULL
+         || g_queue_peek_head (manager->carried_properties) != NULL;
 }
 
 
@@ -627,12 +629,15 @@ xfsm_manager_load_failsafe (XfsmManager *manager,
 
   for (i = 0; i < count; ++i)
     {
-      properties = xfsm_properties_new (client_id, hostname);
       g_snprintf (command_entry, sizeof (command_entry),
                   "/sessions/%s/Client%d_Command", failsafe_name, i);
       command = xfconf_channel_get_string_list (channel, command_entry);
       if (G_UNLIKELY (command == NULL))
         continue;
+
+      client_id = xfsm_client_generate_id (NULL);
+      properties = xfsm_properties_new (client_id, hostname);
+      g_free (client_id);
 
       g_snprintf (priority_entry, sizeof (priority_entry),
                   "/sessions/%s/Client%d_Priority", failsafe_name, i);
@@ -936,20 +941,30 @@ xfsm_manager_get_pending_properties (XfsmManager *manager,
     {
       properties = XFSM_PROPERTIES (lp->data);
       g_queue_delete_link (manager->starting_properties, lp);
-    }
-  else
-    {
-      lp = g_queue_find_custom (manager->pending_properties,
-                                previous_id,
-                                (GCompareFunc) xfsm_properties_compare_id);
-      if (lp != NULL)
-        {
-          properties = XFSM_PROPERTIES (lp->data);
-          g_queue_delete_link (manager->pending_properties, lp);
-        }
+      return properties;
     }
 
-  return properties;
+  lp = g_queue_find_custom (manager->pending_properties,
+                            previous_id,
+                            (GCompareFunc) xfsm_properties_compare_id);
+  if (lp != NULL)
+    {
+      properties = XFSM_PROPERTIES (lp->data);
+      g_queue_delete_link (manager->pending_properties, lp);
+      return properties;
+    }
+
+  lp = g_queue_find_custom (manager->carried_properties,
+                            previous_id,
+                            (GCompareFunc) xfsm_properties_compare_id);
+  if (lp != NULL)
+    {
+      properties = XFSM_PROPERTIES (lp->data);
+      g_queue_delete_link (manager->carried_properties, lp);
+      return properties;
+    }
+
+  return NULL;
 }
 
 static void
@@ -1108,7 +1123,7 @@ xfsm_manager_register_client (XfsmManager *manager,
       if (manager->failsafe_mode)
         {
           if (--manager->failsafe_clients_pending == 0)
-            g_queue_clear (manager->starting_properties);
+            g_queue_clear_full (manager->starting_properties, (GDestroyNotify) xfsm_properties_free);
         }
       if (g_queue_peek_head (manager->starting_properties) == NULL)
         xfsm_startup_session_continue (manager);
@@ -1585,6 +1600,13 @@ xfsm_manager_close_connection (XfsmManager *manager,
                     "   Session manager will show NO MERCY\n\n",
                     xfsm_client_get_id (client));
 
+      if (!xfsm_client_is_xfsm_aware (client))
+        {
+          XfsmProperties *properties = xfsm_client_steal_properties (client);
+          if (properties != NULL)
+            g_queue_push_tail (manager->carried_properties, properties);
+        }
+
       /* stupid client disconnected in CheckPoint state, prepare to be nuked! */
       g_queue_remove (manager->running_clients, client);
       g_object_unref (client);
@@ -1596,13 +1618,15 @@ xfsm_manager_close_connection (XfsmManager *manager,
 
       if (properties != NULL)
         {
-          if (xfsm_properties_check (properties))
+          if (xfsm_client_is_xfsm_aware (client))
             {
               if (!xfsm_manager_handle_failed_properties (manager, properties))
                 xfsm_properties_free (properties);
             }
           else
-            xfsm_properties_free (properties);
+            {
+              g_queue_push_tail (manager->carried_properties, properties);
+            }
         }
 
       /* regardless of the restart style hint, the current instance of
@@ -1946,18 +1970,32 @@ xfsm_manager_store_session (XfsmManager *manager)
     {
       XfsmClient *client = lp->data;
       XfsmProperties *properties = xfsm_client_get_properties (client);
-      gint restart_style_hint;
 
-      if (properties == NULL || !xfsm_properties_check (xfsm_client_get_properties (client)))
+      if (properties == NULL)
         continue;
-      restart_style_hint = xfsm_properties_get_uchar (properties,
-                                                      SmRestartStyleHint,
-                                                      SmRestartIfRunning);
-      if (restart_style_hint == SmRestartNever)
-        continue;
+
+      if (xfsm_client_is_xfsm_aware (client))
+        {
+          gint restart_style_hint = xfsm_properties_get_uchar (properties,
+                                                               SmRestartStyleHint,
+                                                               SmRestartIfRunning);
+          if (restart_style_hint == SmRestartNever)
+            continue;
+        }
 
       g_snprintf (prefix, 64, "Client%d_", count);
       xfsm_properties_store (xfsm_client_get_properties (client), file, prefix, group);
+      ++count;
+    }
+
+  for (lp = g_queue_peek_nth_link (manager->carried_properties, 0);
+       lp;
+       lp = lp->next)
+    {
+      XfsmProperties *properties = lp->data;
+
+      g_snprintf (prefix, 64, "Client%d_", count);
+      xfsm_properties_store (properties, file, prefix, group);
       ++count;
     }
 
