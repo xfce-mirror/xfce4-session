@@ -1161,8 +1161,13 @@ xfsm_client_delegate_dbus_set_app_id (XfsmDbusClientDelegate *object,
                                       const gchar *arg_app_id,
                                       XfsmClient *client)
 {
-  xfsm_client_set_app_id (client, arg_app_id);
-  xfsm_dbus_client_delegate_complete_set_app_id (object, invocation);
+  if (!xfsm_delegate_is_authorized (invocation))
+    throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Permission denied");
+  else
+    {
+      xfsm_client_set_app_id (client, arg_app_id);
+      xfsm_dbus_client_delegate_complete_set_app_id (object, invocation);
+    }
   return TRUE;
 }
 
@@ -1176,7 +1181,9 @@ xfsm_client_delegate_dbus_register_toplevel (XfsmDbusClientDelegate *object,
 {
   g_return_val_if_fail (client->properties != NULL, FALSE);
 
-  if (xfsm_properties_toplevel_add (client->properties, arg_toplevel_id))
+  if (!xfsm_delegate_is_authorized (invocation))
+    throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Permission denied");
+  else if (xfsm_properties_toplevel_add (client->properties, arg_toplevel_id))
     xfsm_dbus_client_delegate_complete_register_toplevel (object, invocation);
   else
     throw_error (invocation, XFSM_ERROR_BAD_VALUE, "Toplevel with id '%s' already exists", arg_toplevel_id);
@@ -1195,7 +1202,9 @@ xfsm_client_delegate_dbus_replace_toplevel_wm_properties (XfsmDbusClientDelegate
 {
   g_return_val_if_fail (client->properties != NULL, FALSE);
 
-  if (xfsm_properties_toplevel_set_wm_properties (client->properties, arg_toplevel_id, arg_wm_properties))
+  if (!xfsm_delegate_is_authorized (invocation))
+    throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Permission denied");
+  else if (xfsm_properties_toplevel_set_wm_properties (client->properties, arg_toplevel_id, arg_wm_properties))
     xfsm_dbus_client_delegate_complete_replace_toplevel_wm_properties (object, invocation);
   else
     throw_error (invocation, XFSM_ERROR_BAD_VALUE, "Toplevel with id '%s' not found", arg_toplevel_id);
@@ -1212,6 +1221,12 @@ xfsm_client_delegate_dbus_restore_toplevel (XfsmDbusClientDelegate *object,
                                             XfsmClient *client)
 {
   g_return_val_if_fail (client->properties != NULL, FALSE);
+
+  if (!xfsm_delegate_is_authorized (invocation))
+    {
+      throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Permission denied");
+      return TRUE;
+    }
 
   GVariant *wm_properties = xfsm_properties_toplevel_get_wm_properties (client->properties, arg_toplevel_id);
   if (wm_properties == NULL)
@@ -1236,8 +1251,13 @@ xfsm_client_delegate_dbus_remove_toplevel (XfsmDbusClientDelegate *object,
 {
   g_return_val_if_fail (client->properties != NULL, FALSE);
 
-  xfsm_properties_toplevel_remove (client->properties, arg_toplevel_id);
-  xfsm_dbus_client_delegate_complete_remove_toplevel (object, invocation);
+  if (!xfsm_delegate_is_authorized (invocation))
+    throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Permission denied");
+  else
+    {
+      xfsm_properties_toplevel_remove (client->properties, arg_toplevel_id);
+      xfsm_dbus_client_delegate_complete_remove_toplevel (object, invocation);
+    }
 
   return TRUE;
 }
@@ -1253,11 +1273,16 @@ xfsm_client_delegate_dbus_rename_toplevel (XfsmDbusClientDelegate *object,
 {
   g_return_val_if_fail (client->properties != NULL, FALSE);
 
-  GError *error = NULL;
-  if (!xfsm_properties_toplevel_rename (client->properties, arg_toplevel_id, arg_new_toplevel_id, &error))
-    g_dbus_method_invocation_take_error (invocation, error);
+  if (!xfsm_delegate_is_authorized (invocation))
+    throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Permission denied");
   else
-    xfsm_dbus_client_delegate_complete_rename_toplevel (object, invocation);
+    {
+      GError *error = NULL;
+      if (!xfsm_properties_toplevel_rename (client->properties, arg_toplevel_id, arg_new_toplevel_id, &error))
+        g_dbus_method_invocation_take_error (invocation, error);
+      else
+        xfsm_dbus_client_delegate_complete_rename_toplevel (object, invocation);
+    }
 
   return TRUE;
 }

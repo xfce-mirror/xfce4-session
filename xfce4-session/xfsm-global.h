@@ -74,4 +74,10 @@ gint
 xfsm_launch_desktop_files_on_run_hook (gboolean start_at_spi,
                                        XfsmRunHook run_hook);
 
+gboolean
+xfsm_dbus_get_caller_info (GDBusMethodInvocation *invocation,
+                           pid_t *calling_pid);
+gboolean
+xfsm_delegate_is_authorized (GDBusMethodInvocation *invocation);
+
 #endif /* !__XFSM_GLOBAL_H__ */
