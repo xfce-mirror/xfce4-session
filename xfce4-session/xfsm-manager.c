@@ -55,6 +55,7 @@
 #include "xfsm-chooser-icon.h"
 #include "xfsm-chooser.h"
 #include "xfsm-error.h"
+#include "xfsm-global.h"
 #include "xfsm-inhibition.h"
 #include "xfsm-inhibitor.h"
 #include "xfsm-logout-dialog.h"
@@ -2785,57 +2786,6 @@ xfsm_manager_dbus_switch_user (XfsmDbusManager *object,
 
 
 
-/* adapted from ConsoleKit2 whch was adapted from PolicyKit */
-static gboolean
-get_caller_info (XfsmManager *manager,
-                 const char *sender,
-                 pid_t *calling_pid)
-{
-  gboolean res = FALSE;
-  GVariant *value = NULL;
-  GError *error = NULL;
-
-  if (sender == NULL)
-    {
-      xfsm_verbose ("sender == NULL");
-      goto out;
-    }
-
-  if (manager->connection == NULL)
-    {
-      xfsm_verbose ("manager->connection == NULL");
-      goto out;
-    }
-
-  value = g_dbus_connection_call_sync (manager->connection,
-                                       "org.freedesktop.DBus",
-                                       "/org/freedesktop/DBus",
-                                       "org.freedesktop.DBus",
-                                       "GetConnectionUnixProcessID",
-                                       g_variant_new ("(s)", sender),
-                                       G_VARIANT_TYPE ("(u)"),
-                                       G_DBUS_CALL_FLAGS_NONE,
-                                       -1,
-                                       NULL,
-                                       &error);
-
-  if (value == NULL)
-    {
-      xfsm_verbose ("GetConnectionUnixProcessID() failed: %s", error->message);
-      g_error_free (error);
-      goto out;
-    }
-  g_variant_get (value, "(u)", calling_pid);
-  g_variant_unref (value);
-
-  res = TRUE;
-
-out:
-  return res;
-}
-
-
-
 static gboolean
 xfsm_manager_dbus_register_client (XfsmDbusManager *object,
                                    GDBusMethodInvocation *invocation,
@@ -2868,7 +2818,7 @@ xfsm_manager_dbus_register_client (XfsmDbusManager *object,
   xfsm_client_set_app_id (client, arg_app_id);
 
   /* attempt to get the caller'd pid */
-  if (!get_caller_info (manager, g_dbus_method_invocation_get_sender (invocation), &pid))
+  if (!xfsm_dbus_get_caller_info (invocation, &pid))
     {
       pid = 0;
     }
@@ -2901,7 +2851,7 @@ xfsm_manager_dbus_attach_client (XfsmDbusManager *object,
       if (g_strcmp0 (xfsm_client_get_id (client), arg_client_startup_id) == 0)
         {
           pid_t pid = 0;
-          if (get_caller_info (manager, g_dbus_method_invocation_get_sender (invocation), &pid)
+          if (!xfsm_dbus_get_caller_info (invocation, &pid)
               && xfsm_client_get_pid (client) != pid)
             {
               // ManagerDelegate.RegisterClient() will have included the PID,
@@ -2973,6 +2923,12 @@ xfsm_manager_delegate_dbus_register_client (XfsmDbusManagerDelegate *object,
                                             const gchar *arg_reason,
                                             XfsmManager *manager)
 {
+  if (!xfsm_delegate_is_authorized (invocation))
+    {
+      throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Permission denied");
+      return TRUE;
+    }
+
   XfsmProperties *old_properties = NULL;
 
   for (GList *lp = g_queue_peek_nth_link (manager->running_clients, 0);
@@ -3030,6 +2986,12 @@ xfsm_manager_delegate_dbus_remove_client (XfsmDbusManagerDelegate *object,
                                           const gchar *arg_client_id,
                                           XfsmManager *manager)
 {
+  if (!xfsm_delegate_is_authorized (invocation))
+    {
+      throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Permission denied");
+      return TRUE;
+    }
+
   for (GList *lp = g_queue_peek_nth_link (manager->running_clients, 0);
        lp;
        lp = lp->next)
@@ -3057,6 +3019,12 @@ xfsm_manager_delegate_dbus_client_disconnected (XfsmDbusManagerDelegate *object,
                                                 const gchar *arg_client_id,
                                                 XfsmManager *manager)
 {
+  if (!xfsm_delegate_is_authorized (invocation))
+    {
+      throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Permission denied");
+      return TRUE;
+    }
+
   if (do_unregister_client (manager, arg_client_id))
     xfsm_dbus_manager_delegate_complete_client_disconnected (object, invocation);
   else
