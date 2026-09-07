@@ -504,43 +504,30 @@ xfsm_client_is_xfsm_aware (XfsmClient *client)
 
 
 
-static void
-xfsm_client_save_restart_command (XfsmClient *client)
+static gchar *
+xfsm_client_get_prgname_from_proc (XfsmClient *client)
 {
-  XfsmProperties *properties = client->properties;
-  gchar *input;
-  gchar *output = NULL;
-  gint exit_status;
-  GError *error = NULL;
+  gchar *proc_path = g_strdup_printf ("/proc/%u/exe", client->properties->pid);
+  GFile *proc_file = g_file_new_for_path (proc_path);
+  g_free (proc_path);
 
-  input = g_strdup_printf ("ps -p %u -o args=", properties->pid);
+  gchar *real_path = g_file_read_link (proc_path, NULL);
+  g_object_unref (proc_file);
 
-  if (g_spawn_command_line_sync (input, &output, NULL, &exit_status, &error))
+  if (real_path != NULL)
     {
-      gchar **strv = g_new0 (gchar *, 2);
-
-      /* remove the newline at the end of the string */
-      output[strcspn (output, "\n")] = 0;
-
-      strv[0] = output;
-      strv[1] = NULL;
-
-      xfsm_verbose ("%s restart command %s\n", input, output);
-      xfsm_properties_set_strv (properties, "RestartCommand", strv);
+      gchar *prgname = g_path_get_basename (real_path);
+      g_free (real_path);
+      return prgname;
     }
   else
-    {
-      xfsm_verbose ("Failed to get the process command line using the command %s, error was %s\n", input, error->message);
-      g_error_free (error);
-    }
-
-  g_free (input);
+    return NULL;
 }
 
 
 
-static void
-xfsm_client_save_program_name (XfsmClient *client)
+static gchar *
+xfsm_client_get_prgname_from_ps (XfsmClient *client)
 {
   XfsmProperties *properties = client->properties;
   gchar *input;
@@ -554,9 +541,6 @@ xfsm_client_save_program_name (XfsmClient *client)
     {
       /* remove the newline at the end of the string */
       output[strcspn (output, "\n")] = 0;
-
-      xfsm_verbose ("%s program name %s\n", input, output);
-      xfsm_properties_set_string (properties, "Program", output);
     }
   else
     {
@@ -565,6 +549,26 @@ xfsm_client_save_program_name (XfsmClient *client)
     }
 
   g_free (input);
+
+  return output;
+}
+
+
+static void
+xfsm_client_save_program_name (XfsmClient *client)
+{
+  XfsmProperties *properties = client->properties;
+
+  gchar *prgname = xfsm_client_get_prgname_from_proc (client);
+  if (prgname == NULL)
+    prgname = xfsm_client_get_prgname_from_ps (client);
+
+  if (prgname != NULL)
+    {
+      xfsm_verbose ("program name %s\n", prgname);
+      xfsm_properties_set_string (properties, "Program", prgname);
+      g_free (prgname);
+    }
 }
 
 
@@ -634,8 +638,7 @@ xfsm_client_get_pid (XfsmClient *client)
 
 void
 xfsm_client_set_pid (XfsmClient *client,
-                     pid_t pid,
-                     XfsmClientSetPidFlags flags)
+                     pid_t pid)
 {
   XfsmProperties *properties;
   gchar *pid_str;
@@ -654,17 +657,8 @@ xfsm_client_set_pid (XfsmClient *client,
   /* store the string as well (so we can export it over dbus */
   xfsm_properties_set_string (properties, "ProcessID", pid_str);
 
-  if ((flags & XFSM_CLIENT_SET_PID_FLAGS_UPDATE_RESTART_COMMAND) != 0)
-    {
-      /* save the command line for the process so we can restart it if needed */
-      xfsm_client_save_restart_command (client);
-    }
-
-  if ((flags & XFSM_CLIENT_SET_PID_FLAGS_UPDATE_PROGRAM_NAME) != 0)
-    {
-      /* save the program name */
-      xfsm_client_save_program_name (client);
-    }
+  /* save the program name */
+  xfsm_client_save_program_name (client);
 
   g_free (pid_str);
 }
