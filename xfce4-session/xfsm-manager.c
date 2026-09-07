@@ -45,6 +45,7 @@
 #include <gio/gio.h>
 #include <gtk/gtk.h>
 #include <libxfce4ui/libxfce4ui.h>
+#include <libxfce4util/libxfce4util.h>
 #include <libxfce4windowing/libxfce4windowing.h>
 
 #include "libxfsm/xfsm-util.h"
@@ -2799,7 +2800,7 @@ xfsm_manager_dbus_register_client (XfsmDbusManager *object,
 
   manager = XFSM_MANAGER (object);
 
-  if (arg_client_startup_id != NULL || (g_strcmp0 (arg_client_startup_id, "") == 0))
+  if (!xfce_str_is_empty (arg_client_startup_id))
     {
       client_id = g_strdup_printf ("%s%s", arg_app_id, arg_client_startup_id);
     }
