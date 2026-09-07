@@ -343,12 +343,6 @@ xfsm_properties_load (GKeyFile *file,
       xfsm_properties_set_uchar (properties, uchar_properties[i].xsmp_name, value_int);
     }
 
-  if (!xfsm_properties_check (properties))
-    {
-      xfsm_properties_free (properties);
-      return NULL;
-    }
-
   gint toplevel_count = g_key_file_get_integer (file, group, ENTRY ("ToplevelCount"), &error);
   if (error != NULL || toplevel_count <= 0)
     g_clear_error (&error);
@@ -554,24 +548,37 @@ gint
 xfsm_properties_compare_id (const XfsmProperties *properties,
                             const gchar *client_id)
 {
-  return strcmp (properties->client_id, client_id);
+  return g_strcmp0 (properties->client_id, client_id);
 }
 
 
 gboolean
-xfsm_properties_check (const XfsmProperties *properties)
+xfsm_properties_are_useful (const XfsmProperties *properties)
 {
   g_return_val_if_fail (properties != NULL, FALSE);
 
-  return properties->client_id != NULL
-         && properties->hostname != NULL
-         && g_tree_lookup (properties->sm_properties, SmProgram) != NULL
+  // If there is no RestartCommand and no stored toplevel information, there is
+  // really nothing worth saving in these properties, as we can't start the
+  // application on our own, and there's no window state that an application
+  // might find important.
+  return g_tree_lookup (properties->sm_properties, SmRestartCommand) != NULL
+      || properties->toplevels->length > 0;
+}
+
+
+gboolean
+xfsm_properties_can_autorun (const XfsmProperties *properties)
+{
+  g_return_val_if_fail (properties != NULL, FALSE);
+
+  gint restart_style = xfsm_properties_get_uchar (properties, SmRestartStyleHint, SmRestartIfRunning);
+  return restart_style != SmRestartNever
          && g_tree_lookup (properties->sm_properties, SmRestartCommand) != NULL;
 }
 
 
 const gchar *
-xfsm_properties_get_string (XfsmProperties *properties,
+xfsm_properties_get_string (const XfsmProperties *properties,
                             const gchar *property_name)
 {
   GValue *value;
@@ -589,7 +596,7 @@ xfsm_properties_get_string (XfsmProperties *properties,
 
 
 gchar **
-xfsm_properties_get_strv (XfsmProperties *properties,
+xfsm_properties_get_strv (const XfsmProperties *properties,
                           const gchar *property_name)
 {
   GValue *value;
@@ -607,7 +614,7 @@ xfsm_properties_get_strv (XfsmProperties *properties,
 
 
 guchar
-xfsm_properties_get_uchar (XfsmProperties *properties,
+xfsm_properties_get_uchar (const XfsmProperties *properties,
                            const gchar *property_name,
                            guchar default_value)
 {
@@ -626,7 +633,7 @@ xfsm_properties_get_uchar (XfsmProperties *properties,
 
 
 const GValue *
-xfsm_properties_get (XfsmProperties *properties,
+xfsm_properties_get (const XfsmProperties *properties,
                      const gchar *property_name)
 {
   g_return_val_if_fail (properties != NULL, NULL);
