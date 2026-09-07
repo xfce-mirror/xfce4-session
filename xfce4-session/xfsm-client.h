@@ -63,13 +63,6 @@ typedef enum
   XFSM_SESSION_STATUS_REPLACED,
 } XfsmSessionStatus;
 
-typedef enum
-{
-  XFSM_CLIENT_SET_PID_FLAGS_NONE = 0,
-  XFSM_CLIENT_SET_PID_FLAGS_UPDATE_RESTART_COMMAND = (1 << 0),
-  XFSM_CLIENT_SET_PID_FLAGS_UPDATE_PROGRAM_NAME = (1 << 1),
-} XfsmClientSetPidFlags;
-
 gchar *
 xfsm_client_generate_id (SmsConn sms_conn) G_GNUC_PURE;
 
@@ -119,8 +112,7 @@ pid_t
 xfsm_client_get_pid (XfsmClient *client);
 void
 xfsm_client_set_pid (XfsmClient *client,
-                     pid_t pid,
-                     XfsmClientSetPidFlags flags);
+                     pid_t pid);
 
 void
 xfsm_client_set_app_id (XfsmClient *client,
