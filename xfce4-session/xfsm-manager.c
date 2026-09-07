@@ -2132,6 +2132,10 @@ xfsm_manager_dbus_register_client (XfsmDbusManager *object,
                                    const gchar *arg_app_id,
                                    const gchar *arg_client_startup_id);
 static gboolean
+xfsm_manager_dbus_attach_client (XfsmDbusManager *object,
+                                 GDBusMethodInvocation *invocation,
+                                 const gchar *arg_client_startup_id);
+static gboolean
 xfsm_manager_dbus_unregister_client (XfsmDbusManager *object,
                                      GDBusMethodInvocation *invocation,
                                      const gchar *arg_client_id);
@@ -2307,6 +2311,7 @@ xfsm_manager_iface_init (XfsmDbusManagerIface *iface)
   iface->handle_shutdown = xfsm_manager_dbus_shutdown;
   iface->handle_suspend = xfsm_manager_dbus_suspend;
   iface->handle_register_client = xfsm_manager_dbus_register_client;
+  iface->handle_attach_client = xfsm_manager_dbus_attach_client;
   iface->handle_uninhibit = xfsm_manager_dbus_uninhibit;
   iface->handle_unregister_client = xfsm_manager_dbus_unregister_client;
 }
@@ -2876,6 +2881,47 @@ xfsm_manager_dbus_register_client (XfsmDbusManager *object,
 
   xfsm_dbus_manager_complete_register_client (object, invocation, xfsm_client_get_object_path (client));
   g_free (client_id);
+  return TRUE;
+}
+
+
+
+static gboolean
+xfsm_manager_dbus_attach_client (XfsmDbusManager *object,
+                                 GDBusMethodInvocation *invocation,
+                                 const gchar *arg_client_startup_id)
+{
+  XfsmManager *manager = XFSM_MANAGER (object);
+
+  for (GList *lp = g_queue_peek_nth_link (manager->running_clients, 0);
+       lp != NULL;
+       lp = lp->next)
+    {
+      XfsmClient *client = XFSM_CLIENT (lp->data);
+      if (g_strcmp0 (xfsm_client_get_id (client), arg_client_startup_id) == 0)
+        {
+          pid_t pid = 0;
+          if (get_caller_info (manager, g_dbus_method_invocation_get_sender (invocation), &pid)
+              && xfsm_client_get_pid (client) != pid)
+            {
+              // ManagerDelegate.RegisterClient() will have included the PID,
+              // but if there is a Wayland protocol proxy or some other
+              // intermediary at play, it could be incorrect.
+              xfsm_client_set_pid (client, pid, XFSM_CLIENT_SET_PID_FLAGS_UPDATE_PROGRAM_NAME);
+            }
+
+          xfsm_client_set_service_name (client, g_dbus_method_invocation_get_sender (invocation));
+
+          xfsm_dbus_manager_complete_attach_client (
+            object,
+            invocation,
+            xfsm_client_get_object_path (client),
+            xfsm_start_reason_to_string (xfsm_client_get_start_reason (client)));
+          return TRUE;
+        }
+    }
+
+  throw_error (invocation, XFSM_ERROR_BAD_VALUE, "Client with startup id of '%s' was not found", arg_client_startup_id);
   return TRUE;
 }
 
