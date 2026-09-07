@@ -72,6 +72,7 @@ struct _XfsmProperties
 
   GPid pid;
   guint child_watch_id;
+  gboolean owns_child;
 
   gchar *client_id;
   gchar *hostname;
