@@ -23,6 +23,7 @@
 static const GDBusErrorEntry xfsm_error_entries[] = {
   { XFSM_ERROR_BAD_STATE, XFSM_DBUS_NAME ".Error.Failed" },
   { XFSM_ERROR_BAD_VALUE, XFSM_DBUS_NAME ".Error.General" },
+  { XFSM_ERROR_UNAUTHORIZED, XFSM_DBUS_NAME ".Error.Unauthorized" },
   { XFSM_ERROR_UNSUPPORTED, XFSM_DBUS_NAME ".Error.Unsupported" },
 };
 
@@ -49,6 +50,7 @@ xfsm_error_get_type (void)
       static const GEnumValue values[] = {
         { XFSM_ERROR_BAD_STATE, "XFSM_ERROR_BAD_STATE", "BadState" },
         { XFSM_ERROR_BAD_VALUE, "XFSM_ERROR_BAD_VALUE", "BadValue" },
+        { XFSM_ERROR_UNAUTHORIZED, "XFSM_ERROR_UNAUTHORIZED", "Unauthorized" },
         { XFSM_ERROR_UNSUPPORTED, "XFSM_ERROR_UNSUPPORTED", "Unsupported" },
         { 0, NULL, NULL },
       };
