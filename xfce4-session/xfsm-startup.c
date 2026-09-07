@@ -573,6 +573,7 @@ xfsm_startup_start_properties (XfsmProperties *properties,
   g_strfreev (argv);
 
   properties->pid = pid;
+  properties->owns_child = TRUE;
 
   /* set a watch to make sure the child doesn't quit before registering */
   child_watch_data = g_new0 (XfsmStartupData, 1);
@@ -694,6 +695,7 @@ xfsm_startup_child_watch (GPid pid,
 
   cwdata->properties->child_watch_id = 0;
   cwdata->properties->pid = -1;
+  cwdata->properties->owns_child = FALSE;
 
   starting_properties = xfsm_manager_get_queue (cwdata->manager, XFSM_MANAGER_QUEUE_STARTING_PROPS);
   if (g_queue_find (starting_properties, cwdata->properties) != NULL)
