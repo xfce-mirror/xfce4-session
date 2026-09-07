@@ -187,6 +187,34 @@
         </method>
 
         <!--
+            (ObjectPath, String) org.xfce.Session.Manager.AttachClient(String client_startup_id)
+
+            @client_startup_id: Client startup identifier.
+
+            Allows a client that has been registered with the session manager
+            through other means (such as through the ManagerDelegate) to learn
+            its client object path.
+
+            This also allows the session manager to record the dbus unique name
+            associated with the client, so clients should call this even if they
+            do not intend to use the object path.
+
+            If the client calls this method, it is expected to respond
+            appropriately to any signals sent on the org.xfce.Session.Client
+            interface.
+
+            Returns:
+            @client_id: The object path of the newly registered client
+            @reason: The SM's view of the reason for registration; the SM may
+                     override the client's understanding if it has more information.
+        -->
+        <method name="AttachClient">
+            <arg direction="in" name="client_startup_id" type="s" />
+            <arg direction="out" name="client_id" type="o"/>
+            <arg direction="out" name="reason" type="s"/>
+        </method>
+
+        <!--
              void org.Xfce.Session.Manager.UnregisterClient
 
              @client_id: The object path of the previously registered client
