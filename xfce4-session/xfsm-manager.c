@@ -2862,7 +2862,7 @@ xfsm_manager_dbus_register_client (XfsmDbusManager *object,
       pid = 0;
     }
 
-  xfsm_client_set_pid (client, pid, XFSM_CLIENT_SET_PID_FLAGS_UPDATE_RESTART_COMMAND | XFSM_CLIENT_SET_PID_FLAGS_UPDATE_PROGRAM_NAME);
+  xfsm_client_set_pid (client, pid);
 
   /* we use the dbus service name to track clients so we know when they exit
    * or crash */
@@ -2896,7 +2896,7 @@ xfsm_manager_dbus_attach_client (XfsmDbusManager *object,
               // ManagerDelegate.RegisterClient() will have included the PID,
               // but if there is a Wayland protocol proxy or some other
               // intermediary at play, it could be incorrect.
-              xfsm_client_set_pid (client, pid, XFSM_CLIENT_SET_PID_FLAGS_UPDATE_PROGRAM_NAME);
+              xfsm_client_set_pid (client, pid);
             }
 
           xfsm_client_set_service_name (client, g_dbus_method_invocation_get_sender (invocation));
@@ -3007,7 +3007,7 @@ xfsm_manager_delegate_dbus_register_client (XfsmDbusManagerDelegate *object,
       xfsm_dbus_manager_emit_client_registered (XFSM_DBUS_MANAGER (manager), xfsm_client_get_object_path (client));
     }
 
-  xfsm_client_set_pid (client, arg_pid, XFSM_CLIENT_SET_PID_FLAGS_UPDATE_PROGRAM_NAME);
+  xfsm_client_set_pid (client, arg_pid);
 
   xfsm_dbus_manager_delegate_complete_register_client (object,
                                                        invocation,
