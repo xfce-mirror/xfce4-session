@@ -688,14 +688,14 @@ xfsm_properties_set_default_child_watch (XfsmProperties *properties)
 {
   g_clear_handle_id (&properties->child_watch_id, g_source_remove);
 
-  if (properties->pid != -1)
+  if (properties->pid != -1 && properties->owns_child)
     {
       /* if the PID is still open, we need to close it,
        * or it will become a zombie when it quits */
       g_child_watch_add (properties->pid,
                          (GChildWatchFunc) G_CALLBACK (g_spawn_close_pid),
                          NULL);
-      properties->pid = -1;
+      properties->owns_child = FALSE;
     }
 }
 
