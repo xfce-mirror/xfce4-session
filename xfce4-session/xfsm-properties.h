@@ -110,21 +110,21 @@ xfsm_properties_load (GKeyFile *file,
                       const gchar *group);
 
 gboolean
-xfsm_properties_check (const XfsmProperties *properties);
+xfsm_properties_can_autorun (const XfsmProperties *properties);
 
 const gchar *
-xfsm_properties_get_string (XfsmProperties *properties,
+xfsm_properties_get_string (const XfsmProperties *properties,
                             const gchar *property_name);
 gchar **
-xfsm_properties_get_strv (XfsmProperties *properties,
+xfsm_properties_get_strv (const XfsmProperties *properties,
                           const gchar *property_name);
 guchar
-xfsm_properties_get_uchar (XfsmProperties *properties,
+xfsm_properties_get_uchar (const XfsmProperties *properties,
                            const gchar *property_name,
                            guchar default_value);
 
 const GValue *
-xfsm_properties_get (XfsmProperties *properties,
+xfsm_properties_get (const XfsmProperties *properties,
                      const gchar *property_name);
 
 void
