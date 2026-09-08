@@ -49,6 +49,7 @@ struct _XfsmClient
   gchar *app_id;
   gchar *object_path;
   gchar *service_name;
+  gboolean is_delegate_registration;
   XfsmStartReason reason;
   XfsmSessionStatus status;
 
@@ -233,7 +234,8 @@ xfsm_client_generate_id (SmsConn sms_conn)
 XfsmClient *
 xfsm_client_new (XfsmManager *manager,
                  SmsConn sms_conn,
-                 GDBusConnection *connection)
+                 GDBusConnection *connection,
+                 gboolean is_delegate_registration)
 {
   XfsmClient *client;
 
@@ -242,6 +244,7 @@ xfsm_client_new (XfsmManager *manager,
   client->manager = manager;
   client->sms_conn = sms_conn;
   client->connection = g_object_ref (connection);
+  client->is_delegate_registration = is_delegate_registration;
   client->state = XFSM_CLIENT_IDLE;
 
   return client;
@@ -348,6 +351,14 @@ xfsm_client_get_sms_connection (XfsmClient *client)
 {
   g_return_val_if_fail (XFSM_IS_CLIENT (client), NULL);
   return client->sms_conn;
+}
+
+
+gboolean
+xfsm_client_is_delegate_registration (XfsmClient *client)
+{
+  g_return_val_if_fail (XFSM_IS_CLIENT (client), FALSE);
+  return client->is_delegate_registration;
 }
 
 
@@ -1136,7 +1147,9 @@ xfsm_client_dbus_end_session_response (XfsmDbusClient *object,
     }
   else if (xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWNPHASE2)
     {
-      xfsm_manager_close_connection (client->manager, client, TRUE);
+      xfsm_manager_close_connection (client->manager,
+                                     client,
+                                     XFSM_CLOSE_FLAGS_DO_CLEANUP | XFSM_CLOSE_FLAGS_CLIENT_GONE);
     }
   else
     {
