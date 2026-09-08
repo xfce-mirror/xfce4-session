@@ -30,12 +30,15 @@
 #include <stdlib.h>
 #endif
 
+#include <time.h>
+
 #include "libxfsm/xfsm-util.h"
 
 #include "xfsm-error.h"
 #include "xfsm-global.h"
 #include "xfsm-properties.h"
 
+#define PROPERTIES_MAX_AGE (9 * 30 * 24 * 60 * 60) /* ~9 months */
 #define WM_PROPERTY_MAX_LEN 1024
 
 typedef struct
@@ -194,13 +197,15 @@ int_to_property (const gchar *name,
 
 XfsmProperties *
 xfsm_properties_new (const gchar *client_id,
-                     const gchar *hostname)
+                     const gchar *hostname,
+                     time_t last_seen)
 {
   XfsmProperties *properties;
 
   properties = g_slice_new0 (XfsmProperties);
   properties->client_id = g_strdup (client_id);
   properties->hostname = g_strdup (hostname);
+  properties->last_seen = last_seen;
   properties->pid = -1;
 
   properties->sm_properties = g_tree_new_full ((GCompareDataFunc) G_CALLBACK (strcmp),
@@ -274,6 +279,7 @@ xfsm_properties_load (GKeyFile *file,
   gchar *value_str;
   gchar **value_strv;
   gint value_int;
+  time_t last_seen;
   gchar buffer[256];
   gint i;
 
@@ -298,9 +304,16 @@ xfsm_properties_load (GKeyFile *file,
       return NULL;
     }
 
+  last_seen = g_key_file_get_int64 (file, group, ENTRY ("LastSeen"), &error);
+  if (error != NULL || last_seen <= 0)
+    {
+      g_clear_error (&error);
+      last_seen = time (NULL);
+    }
+
   xfsm_verbose ("Loading properties for client %s\n", client_id);
 
-  properties = xfsm_properties_new (client_id, hostname);
+  properties = xfsm_properties_new (client_id, hostname, last_seen);
   g_free (hostname);
   g_free (client_id);
 
@@ -352,9 +365,9 @@ xfsm_properties_load (GKeyFile *file,
         {
           gchar *toplevel_prefix = g_strdup_printf ("%sToplevel%d_", prefix, i);
           compose (buffer, sizeof (buffer), toplevel_prefix, "Name");
+          value_str = g_key_file_get_string (file, group, buffer, NULL);
           g_free (toplevel_prefix);
 
-          value_str = g_key_file_get_string (file, group, buffer, NULL);
           if (value_str != NULL)
             {
               gboolean added = xfsm_properties_toplevel_add (properties, value_str);
@@ -416,6 +429,10 @@ xfsm_properties_load (GKeyFile *file,
         }
     }
 
+  // All the loading gunk above will reset last_seen to the current time, so
+  // re-reset it to what was in the file.
+  properties->last_seen = last_seen;
+
   return properties;
 
 #undef ENTRY
@@ -446,7 +463,7 @@ write_toplevel_wm_property (gpointer key,
 }
 
 
-void
+gboolean
 xfsm_properties_store (XfsmProperties *properties,
                        GKeyFile *file,
                        const gchar *prefix,
@@ -454,12 +471,17 @@ xfsm_properties_store (XfsmProperties *properties,
 {
 #define ENTRY(name) (compose (buffer, 256, prefix, (name)))
 
+  time_t now = time (NULL);
+  if (now - properties->last_seen > PROPERTIES_MAX_AGE)
+    return FALSE;
+
   GValue *value;
   gint i;
   gchar buffer[256];
 
   g_key_file_set_string (file, group, ENTRY ("ClientId"), properties->client_id);
   g_key_file_set_string (file, group, ENTRY ("Hostname"), properties->hostname);
+  g_key_file_set_int64 (file, group, ENTRY ("LastSeen"), properties->last_seen);
 
   for (i = 0; strv_properties[i].name; ++i)
     {
@@ -521,7 +543,15 @@ xfsm_properties_store (XfsmProperties *properties,
 
   g_key_file_set_integer (file, group, ENTRY ("ToplevelCount"), properties->toplevels->length);
 
+  return TRUE;
 #undef ENTRY
+}
+
+
+void
+xfsm_properties_touch (XfsmProperties *properties)
+{
+  properties->last_seen = time (NULL);
 }
 
 
@@ -660,6 +690,8 @@ xfsm_properties_set_string (XfsmProperties *properties,
                       g_strdup (property_name),
                       value);
     }
+
+  xfsm_properties_touch (properties);
 }
 
 
@@ -694,6 +726,8 @@ xfsm_properties_set_strv (XfsmProperties *properties,
                       g_strdup (property_name),
                       value);
     }
+
+  xfsm_properties_touch (properties);
 }
 
 void
@@ -726,6 +760,8 @@ xfsm_properties_set_uchar (XfsmProperties *properties,
                       g_strdup (property_name),
                       value);
     }
+
+  xfsm_properties_touch (properties);
 }
 
 
@@ -755,6 +791,8 @@ xfsm_properties_set (XfsmProperties *properties,
   g_value_copy (property_value, new_value);
 
   g_tree_replace (properties->sm_properties, g_strdup (property_name), new_value);
+
+  xfsm_properties_touch (properties);
 
   return TRUE;
 }
@@ -814,6 +852,8 @@ xfsm_properties_remove (XfsmProperties *properties,
   g_return_val_if_fail (property_name != NULL, FALSE);
 
   xfsm_verbose ("-> Removing (%s)\n", property_name);
+
+  xfsm_properties_touch (properties);
 
   return g_tree_remove (properties->sm_properties, property_name);
 }
@@ -878,6 +918,8 @@ gboolean
 xfsm_properties_toplevel_add (XfsmProperties *properties,
                               const gchar *id)
 {
+  xfsm_properties_touch (properties);
+
   if (find_toplevel (properties, id) == NULL)
     {
       XfsmToplevel *toplevel = xfsm_toplevel_new (id);
@@ -893,6 +935,8 @@ gboolean
 xfsm_properties_toplevel_remove (XfsmProperties *properties,
                                  const gchar *id)
 {
+  xfsm_properties_touch (properties);
+
   for (GList *lp = g_queue_peek_nth_link (properties->toplevels, 0);
        lp != NULL;
        lp = lp->next)
@@ -916,6 +960,8 @@ xfsm_properties_toplevel_rename (XfsmProperties *properties,
                                  const gchar *new_id,
                                  GError **error)
 {
+  xfsm_properties_touch (properties);
+
   XfsmToplevel *toplevel = find_toplevel (properties, id);
   if (toplevel == NULL)
     {
@@ -961,6 +1007,8 @@ xfsm_properties_toplevel_set_wm_properties (XfsmProperties *properties,
                                             const gchar *id,
                                             GVariant *wm_properties)
 {
+  xfsm_properties_touch (properties);
+
   XfsmToplevel *toplevel = find_toplevel (properties, id);
   if (toplevel != NULL)
     {
@@ -1009,6 +1057,8 @@ GVariant *
 xfsm_properties_toplevel_get_wm_properties (XfsmProperties *properties,
                                             const gchar *id)
 {
+  xfsm_properties_touch (properties);
+
   XfsmToplevel *toplevel = find_toplevel (properties, id);
   if (toplevel != NULL)
     {

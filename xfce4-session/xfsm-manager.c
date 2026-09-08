@@ -636,7 +636,7 @@ xfsm_manager_load_failsafe (XfsmManager *manager,
         continue;
 
       client_id = xfsm_client_generate_id (NULL);
-      properties = xfsm_properties_new (client_id, hostname);
+      properties = xfsm_properties_new (client_id, hostname, time (NULL));
       g_free (client_id);
 
       g_snprintf (priority_entry, sizeof (priority_entry),
@@ -980,6 +980,7 @@ xfsm_manager_handle_old_client_reregister (XfsmManager *manager,
   xfsm_properties_set_default_child_watch (properties);
 
   xfsm_client_set_initial_properties (client, properties);
+  xfsm_properties_touch (properties);
 
   /* if we've been restarted, we'll want to reset the restart
    * attempts counter if the client stays alive for a while */
@@ -1044,7 +1045,7 @@ xfsm_manager_register_client (XfsmManager *manager,
           gchar *client_id = xfsm_client_generate_id (sms_conn);
 
           char *hostname = SmsClientHostName (sms_conn);
-          properties = xfsm_properties_new (client_id, hostname);
+          properties = xfsm_properties_new (client_id, hostname, time (NULL));
           free (hostname);
 
           xfsm_client_set_initial_properties (client, properties);
@@ -1076,7 +1077,7 @@ xfsm_manager_register_client (XfsmManager *manager,
           /* new dbus client */
           gchar *hostname = xfce_gethostname ();
 
-          properties = xfsm_properties_new (dbus_client_id, hostname);
+          properties = xfsm_properties_new (dbus_client_id, hostname, time (NULL));
           xfsm_client_set_initial_properties (client, properties);
 
           g_free (hostname);
@@ -1959,9 +1960,10 @@ xfsm_manager_store_session (XfsmManager *manager)
        lp = lp->next)
     {
       XfsmProperties *properties = lp->data;
+      xfsm_properties_touch (properties);
       g_snprintf (prefix, 64, "Client%d_", count);
-      xfsm_properties_store (properties, file, prefix, group);
-      ++count;
+      if (xfsm_properties_store (properties, file, prefix, group))
+        ++count;
     }
 
   for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
@@ -1983,9 +1985,10 @@ xfsm_manager_store_session (XfsmManager *manager)
             continue;
         }
 
+      xfsm_properties_touch (properties);
       g_snprintf (prefix, 64, "Client%d_", count);
-      xfsm_properties_store (xfsm_client_get_properties (client), file, prefix, group);
-      ++count;
+      if (xfsm_properties_store (xfsm_client_get_properties (client), file, prefix, group))
+        ++count;
     }
 
   for (lp = g_queue_peek_nth_link (manager->carried_properties, 0);
@@ -1995,8 +1998,8 @@ xfsm_manager_store_session (XfsmManager *manager)
       XfsmProperties *properties = lp->data;
 
       g_snprintf (prefix, 64, "Client%d_", count);
-      xfsm_properties_store (properties, file, prefix, group);
-      ++count;
+      if (xfsm_properties_store (properties, file, prefix, group))
+        ++count;
     }
 
   g_key_file_set_integer (file, group, "Count", count);
