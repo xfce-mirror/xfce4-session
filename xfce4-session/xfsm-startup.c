@@ -665,7 +665,7 @@ xfsm_startup_session_next_prio_group (XfsmManager *manager)
       else
         {
           /* if starting the app failed, let the manager handle it */
-          if (!xfsm_manager_handle_failed_properties (manager, properties))
+          if (!xfsm_manager_handle_failed_properties (manager, properties, FALSE))
             xfsm_properties_free (properties);
         }
     }
@@ -741,7 +741,7 @@ xfsm_startup_handle_failed_startup (XfsmProperties *properties,
   /* not starting anymore, so remove it from the list.  tell the manager
    * it failed, and let it do its thing. */
   g_queue_remove (starting_properties, properties);
-  if (!xfsm_manager_handle_failed_properties (manager, properties))
+  if (!xfsm_manager_handle_failed_properties (manager, properties, FALSE))
     xfsm_properties_free (properties);
 
   if (g_queue_peek_head (starting_properties) == NULL
