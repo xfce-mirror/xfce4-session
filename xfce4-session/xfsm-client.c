@@ -1143,10 +1143,12 @@ xfsm_client_dbus_end_session_response (XfsmDbusClient *object,
 
   if (xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWN)
     {
+      xfsm_dbus_client_complete_end_session_response (object, invocation);
       xfsm_manager_save_yourself_done (client->manager, client, arg_is_ok);
     }
   else if (xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWNPHASE2)
     {
+      xfsm_dbus_client_complete_end_session_response (object, invocation);
       xfsm_manager_close_connection (client->manager,
                                      client,
                                      XFSM_CLOSE_FLAGS_DO_CLEANUP | XFSM_CLOSE_FLAGS_CLIENT_GONE);
@@ -1158,7 +1160,6 @@ xfsm_client_dbus_end_session_response (XfsmDbusClient *object,
       return TRUE;
     }
 
-  xfsm_dbus_client_complete_end_session_response (object, invocation);
   return TRUE;
 }
 
