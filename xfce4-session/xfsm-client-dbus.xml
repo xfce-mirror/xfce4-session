@@ -101,6 +101,20 @@
         </method>
 
         <!--
+            void org.xfce.Session.Client.StateSaved(Boolean success)
+
+            @success: Whether or not the state was successfully saved. Clients
+            should also return `true` here if they declined to save state or
+            didn't have any state to save.
+
+            Informs the session manager that it has saved state (or has declined
+            to save state) in response to a RequestSaveState signal.
+        -->
+        <method name="StateSaved">
+            <arg direction="in" name="success" type="b"/>
+        </method>
+
+        <!--
              void org.xfce.Session.Client.Terminate()
 
              Instructs the client to exit.  Whether or not the client
@@ -177,6 +191,16 @@
         <signal name="SmPropertyDeleted">
             <arg name="name" type="s"/>
         </signal>
+
+        <!--
+            void org.xfce.Session.Client.RequestSaveState()
+
+            Emitted when the session manager wants the client to save its state.
+
+            The client must respond with a StateSaved method call after saving,
+            even if it declines to save state or doesn't have any state to save.
+        -->
+        <signal name="RequestSaveState"/>
 
         <!--
              void org.xfce.Session.Client.QueryEndSession(Unsigned Int flags)
