@@ -898,6 +898,7 @@ xfsm_manager_signal_startup_done (XfsmManager *manager)
 XfsmClient *
 xfsm_manager_new_client (XfsmManager *manager,
                          SmsConn sms_conn,
+                         gboolean is_delegate_registration,
                          gchar **error)
 {
   XfsmClient *client = NULL;
@@ -910,7 +911,7 @@ xfsm_manager_new_client (XfsmManager *manager,
       return NULL;
     }
 
-  client = xfsm_client_new (manager, sms_conn, manager->connection);
+  client = xfsm_client_new (manager, sms_conn, manager->connection, is_delegate_registration);
   return client;
 }
 
@@ -1167,7 +1168,7 @@ xfsm_manager_interact (XfsmManager *manager,
       xfsm_verbose ("Client Id = %s, requested INTERACT, but client is not in SAVING mode\n"
                     "   Client will be disconnected now.\n\n",
                     xfsm_client_get_id (client));
-      xfsm_manager_close_connection (manager, client, TRUE);
+      xfsm_manager_close_connection (manager, client, XFSM_CLOSE_FLAGS_DO_CLEANUP);
     }
   else if (G_UNLIKELY (manager->state != XFSM_MANAGER_CHECKPOINT)
            && G_UNLIKELY (manager->state != XFSM_MANAGER_SHUTDOWN))
@@ -1175,7 +1176,7 @@ xfsm_manager_interact (XfsmManager *manager,
       xfsm_verbose ("Client Id = %s, requested INTERACT, but manager is not in CheckPoint/Shutdown mode\n"
                     "   Client will be disconnected now.\n\n",
                     xfsm_client_get_id (client));
-      xfsm_manager_close_connection (manager, client, TRUE);
+      xfsm_manager_close_connection (manager, client, XFSM_CLOSE_FLAGS_DO_CLEANUP);
     }
   else
     {
@@ -1210,7 +1211,7 @@ xfsm_manager_interact_done (XfsmManager *manager,
       xfsm_verbose ("Client Id = %s, send INTERACT DONE, but client is not in INTERACTING state\n"
                     "   Client will be disconnected now.\n\n",
                     xfsm_client_get_id (client));
-      xfsm_manager_close_connection (manager, client, TRUE);
+      xfsm_manager_close_connection (manager, client, XFSM_CLOSE_FLAGS_DO_CLEANUP);
       return;
     }
   else if (G_UNLIKELY (manager->state != XFSM_MANAGER_CHECKPOINT)
@@ -1219,7 +1220,7 @@ xfsm_manager_interact_done (XfsmManager *manager,
       xfsm_verbose ("Client Id = %s, send INTERACT DONE, but manager is not in CheckPoint/Shutdown state\n"
                     "   Client will be disconnected now.\n\n",
                     xfsm_client_get_id (client));
-      xfsm_manager_close_connection (manager, client, TRUE);
+      xfsm_manager_close_connection (manager, client, XFSM_CLOSE_FLAGS_DO_CLEANUP);
       return;
     }
 
@@ -1442,7 +1443,7 @@ xfsm_manager_save_yourself (XfsmManager *manager,
       xfsm_verbose ("Client Id = %s, requested SAVE YOURSELF, but client is not in IDLE mode.\n"
                     "   Client will be nuked now.\n\n",
                     xfsm_client_get_id (client));
-      xfsm_manager_close_connection (manager, client, TRUE);
+      xfsm_manager_close_connection (manager, client, XFSM_CLOSE_FLAGS_DO_CLEANUP);
       return;
     }
   else if (G_UNLIKELY (manager->state != XFSM_MANAGER_IDLE))
@@ -1450,7 +1451,7 @@ xfsm_manager_save_yourself (XfsmManager *manager,
       xfsm_verbose ("Client Id = %s, requested SAVE YOURSELF, but manager is not in IDLE mode.\n"
                     "   Client will be nuked now.\n\n",
                     xfsm_client_get_id (client));
-      xfsm_manager_close_connection (manager, client, TRUE);
+      xfsm_manager_close_connection (manager, client, XFSM_CLOSE_FLAGS_DO_CLEANUP);
       return;
     }
 
@@ -1522,7 +1523,7 @@ xfsm_manager_save_yourself_done (XfsmManager *manager,
                     "in save mode. Prepare to be nuked!\n",
                     xfsm_client_get_id (client));
 
-      xfsm_manager_close_connection (manager, client, TRUE);
+      xfsm_manager_close_connection (manager, client, XFSM_CLOSE_FLAGS_DO_CLEANUP);
     }
 
   /* remove client save timeout, as client responded in time */
@@ -1545,7 +1546,7 @@ xfsm_manager_save_yourself_done (XfsmManager *manager,
       xfsm_verbose ("Client Id = %s, send SAVE YOURSELF DONE, but manager is not in CheckPoint/Shutdown mode.\n"
                     "   Client will be nuked now.\n\n",
                     xfsm_client_get_id (client));
-      xfsm_manager_close_connection (manager, client, TRUE);
+      xfsm_manager_close_connection (manager, client, XFSM_CLOSE_FLAGS_DO_CLEANUP);
     }
   else
     {
@@ -1558,14 +1559,17 @@ xfsm_manager_save_yourself_done (XfsmManager *manager,
 void
 xfsm_manager_close_connection (XfsmManager *manager,
                                XfsmClient *client,
-                               gboolean cleanup)
+                               XfsmCloseFlags flags)
 {
   GList *lp;
 
   xfsm_client_set_state (client, XFSM_CLIENT_DISCONNECTED);
   xfsm_manager_cancel_client_save_timeout (manager, client);
 
-  if (cleanup)
+  gboolean cleanup = (flags & XFSM_CLOSE_FLAGS_DO_CLEANUP) != 0;
+  gboolean client_gone = (flags & XFSM_CLOSE_FLAGS_CLIENT_GONE) != 0;
+
+  if (cleanup && (!xfsm_client_is_delegate_registration (client) || manager->state == XFSM_MANAGER_SHUTDOWNPHASE2))
     {
       SmsConn sms_conn = xfsm_client_get_sms_connection (client);
       if (sms_conn != NULL)
@@ -1600,43 +1604,54 @@ xfsm_manager_close_connection (XfsmManager *manager,
     }
   else if (manager->state == XFSM_MANAGER_SHUTDOWN || manager->state == XFSM_MANAGER_CHECKPOINT)
     {
-      xfsm_verbose ("Client Id = %s, closed connection in checkpoint state\n"
-                    "   Session manager will show NO MERCY\n\n",
-                    xfsm_client_get_id (client));
-
-      if (!xfsm_client_is_xfsm_aware (client))
+      if (client_gone || !xfsm_client_is_delegate_registration (client))
         {
-          XfsmProperties *properties = xfsm_client_steal_properties (client);
-          if (properties != NULL)
-            g_queue_push_tail (manager->carried_properties, properties);
-        }
+          xfsm_verbose ("Client Id = %s, closed connection in checkpoint state\n"
+                        "   Session manager will show NO MERCY\n\n",
+                        xfsm_client_get_id (client));
 
-      /* stupid client disconnected in CheckPoint state, prepare to be nuked! */
-      g_queue_remove (manager->running_clients, client);
-      g_object_unref (client);
+          if (!xfsm_client_is_xfsm_aware (client))
+            {
+              XfsmProperties *properties = xfsm_client_steal_properties (client);
+              if (properties != NULL)
+                g_queue_push_tail (manager->carried_properties, properties);
+            }
+
+          /* stupid client disconnected in CheckPoint state, prepare to be nuked! */
+          g_queue_remove (manager->running_clients, client);
+          g_object_unref (client);
+        }
+      else
+        xfsm_client_set_state (client, XFSM_CLIENT_IDLE);
+
       xfsm_manager_complete_saveyourself (manager);
     }
   else
     {
-      XfsmProperties *properties = xfsm_client_steal_properties (client);
-
-      if (properties != NULL)
+      if (client_gone || !xfsm_client_is_delegate_registration (client))
         {
-          if (xfsm_client_is_xfsm_aware (client))
-            {
-              if (!xfsm_manager_handle_failed_properties (manager, properties))
-                xfsm_properties_free (properties);
-            }
-          else
-            {
-              g_queue_push_tail (manager->carried_properties, properties);
-            }
-        }
+          XfsmProperties *properties = xfsm_client_steal_properties (client);
 
-      /* regardless of the restart style hint, the current instance of
-       * the client is gone, so remove it from the client list and free it. */
-      g_queue_remove (manager->running_clients, client);
-      g_object_unref (client);
+          if (properties != NULL)
+            {
+              if (xfsm_client_is_xfsm_aware (client))
+                {
+                  if (!xfsm_manager_handle_failed_properties (manager, properties))
+                    xfsm_properties_free (properties);
+                }
+              else
+                {
+                  g_queue_push_tail (manager->carried_properties, properties);
+                }
+            }
+
+          /* regardless of the restart style hint, the current instance of
+           * the client is gone, so remove it from the client list and free it. */
+          g_queue_remove (manager->running_clients, client);
+          g_object_unref (client);
+        }
+      else
+        xfsm_client_set_state (client, XFSM_CLIENT_IDLE);
     }
 }
 
@@ -1659,7 +1674,7 @@ xfsm_manager_close_connection_by_ice_conn (XfsmManager *manager,
         {
           /* maybe we remove client from the queue here but as we also get out
            * of the loop no need for extra precaution */
-          xfsm_manager_close_connection (manager, client, FALSE);
+          xfsm_manager_close_connection (manager, client, XFSM_CLOSE_FLAGS_CLIENT_GONE);
           break;
         }
     }
@@ -1910,7 +1925,7 @@ xfsm_manager_save_timeout (gpointer user_data)
   /* returning FALSE below will free the data */
   g_object_steal_data (G_OBJECT (stdata->client), "--save-timeout-id");
 
-  xfsm_manager_close_connection (stdata->manager, stdata->client, TRUE);
+  xfsm_manager_close_connection (stdata->manager, stdata->client, XFSM_CLOSE_FLAGS_DO_CLEANUP);
 
   return FALSE;
 }
@@ -2255,7 +2270,9 @@ remove_clients_for_connection (XfsmManager *manager,
       XfsmClient *client = XFSM_CLIENT (lp->data);
       if (g_strcmp0 (xfsm_client_get_service_name (client), service_name) == 0)
         {
-          xfsm_manager_close_connection (manager, client, FALSE);
+          if (xfsm_client_is_delegate_registration (client))
+            xfsm_client_set_service_name (client, NULL);
+          xfsm_manager_close_connection (manager, client, XFSM_CLOSE_FLAGS_NONE);
         }
     }
 
@@ -2867,7 +2884,7 @@ xfsm_manager_dbus_register_client (XfsmDbusManager *object,
     }
 
   /* create a new dbus-based client */
-  client = xfsm_client_new (manager, NULL, manager->connection);
+  client = xfsm_client_new (manager, NULL, manager->connection, FALSE);
 
   /* register it so that it exports the dbus name */
   xfsm_manager_register_client (manager, client, client_id, NULL);
@@ -2948,7 +2965,7 @@ do_unregister_client (XfsmManager *manager,
         {
           /* maybe we remove client from the queue here but as we also get out
            * of the loop no need for extra precaution */
-          xfsm_manager_close_connection (manager, client, FALSE);
+          xfsm_manager_close_connection (manager, client, XFSM_CLOSE_FLAGS_CLIENT_GONE);
           return TRUE;
         }
     }
@@ -3005,7 +3022,7 @@ xfsm_manager_delegate_dbus_register_client (XfsmDbusManagerDelegate *object,
         }
     }
 
-  XfsmClient *client = xfsm_client_new (manager, NULL, manager->connection);
+  XfsmClient *client = xfsm_client_new (manager, NULL, manager->connection, TRUE);
 
   if (old_properties == NULL)
     {
