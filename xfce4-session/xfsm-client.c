@@ -26,6 +26,7 @@
 
 #include <gio/gdesktopappinfo.h>
 #include <gio/gio.h>
+#include <time.h>
 
 #include "libxfsm/xfsm-util.h"
 
