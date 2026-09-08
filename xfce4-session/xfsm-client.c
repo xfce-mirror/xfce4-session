@@ -51,7 +51,6 @@ struct _XfsmClient
   gchar *service_name;
   XfsmStartReason reason;
   XfsmSessionStatus status;
-  guint quit_timeout;
 
   XfsmClientState state;
   XfsmProperties *properties;
@@ -104,9 +103,6 @@ xfsm_client_finalize (GObject *obj)
 
   if (client->properties != NULL)
     xfsm_properties_free (client->properties);
-
-  if (client->quit_timeout != 0)
-    g_source_remove (client->quit_timeout);
 
   g_free (client->id);
   g_free (client->app_id);
@@ -686,27 +682,6 @@ xfsm_client_set_app_id (XfsmClient *client,
 
 
 
-static gboolean
-kill_hung_client (gpointer user_data)
-{
-  XfsmClient *client = XFSM_CLIENT (user_data);
-
-  client->quit_timeout = 0;
-
-  if (!client->properties)
-    return FALSE;
-
-  if (client->properties->pid < 2)
-    return FALSE;
-
-  xfsm_verbose ("killing unresponsive client %s\n", get_client_id (client));
-  kill (client->properties->pid, SIGKILL);
-
-  return FALSE;
-}
-
-
-
 void
 xfsm_client_terminate (XfsmClient *client)
 {
@@ -714,9 +689,6 @@ xfsm_client_terminate (XfsmClient *client)
 
   /* Ask the client to shutdown gracefully */
   xfsm_dbus_client_emit_stop (XFSM_DBUS_CLIENT (client));
-
-  /* add a timeout so we can forcefully stop the client */
-  client->quit_timeout = g_timeout_add_seconds (15, kill_hung_client, client);
 }
 
 
