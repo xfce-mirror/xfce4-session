@@ -69,7 +69,8 @@ xfsm_client_generate_id (SmsConn sms_conn) G_GNUC_PURE;
 XfsmClient *
 xfsm_client_new (XfsmManager *manager,
                  SmsConn sms_conn,
-                 GDBusConnection *connection);
+                 GDBusConnection *connection,
+                 gboolean is_delegate_registration);
 
 void
 xfsm_client_set_initial_properties (XfsmClient *client,
@@ -88,6 +89,9 @@ xfsm_client_get_app_id (XfsmClient *client);
 
 SmsConn
 xfsm_client_get_sms_connection (XfsmClient *client);
+
+gboolean
+xfsm_client_is_delegate_registration (XfsmClient *client);
 
 XfsmProperties *
 xfsm_client_get_properties (XfsmClient *client);
