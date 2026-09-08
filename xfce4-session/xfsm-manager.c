@@ -1529,6 +1529,7 @@ xfsm_manager_save_yourself_done (XfsmManager *manager,
                     xfsm_client_get_id (client));
 
       xfsm_manager_close_connection (manager, client, XFSM_CLOSE_FLAGS_DO_CLEANUP);
+      return;
     }
 
   /* remove client save timeout, as client responded in time */
