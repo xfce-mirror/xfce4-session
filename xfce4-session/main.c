@@ -132,7 +132,8 @@ static void
 init_display (XfsmManager *manager,
               gboolean disable_tcp)
 {
-  gdk_display_flush (gdk_display_get_default ());
+  if (WINDOWING_IS_X11 ())
+    gdk_display_flush (gdk_display_get_default ());
   sm_init (channel, disable_tcp, manager);
 }
 #endif
@@ -178,7 +179,7 @@ bus_acquired (GDBusConnection *connection,
   channel = xfconf_channel_get (SETTINGS_CHANNEL);
 
 #ifdef ENABLE_X11
-  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()) || g_getenv ("DISPLAY") != NULL)
     {
       init_display (*manager, opt_disable_tcp);
     }
