@@ -21,6 +21,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include "xfsm-client.h"
 #ifdef HAVE_XFCE_REVISION_H
 #include "xfce-revision.h"
 #endif
@@ -1418,8 +1419,10 @@ xfsm_manager_save_yourself_global (XfsmManager *manager,
       xfsm_manager_start_client_save_timeout (manager, client);
     }
 
-  if (shutdown && WINDOWING_IS_WAYLAND ())
-    g_signal_emit (G_OBJECT (manager), manager_signals[MANAGER_QUIT], 0);
+  // If there are no connected clients, or they are all non-xfsm-aware,
+  // shutdown will hang without an explicit call here.  This function bails if
+  // any clients are saving, so there's no harm in calling it now.
+  xfsm_manager_complete_saveyourself (manager);
 }
 
 
@@ -1720,21 +1723,29 @@ xfsm_manager_perform_shutdown (XfsmManager *manager)
 
   /* send SmDie message to all clients */
   xfsm_manager_set_state (manager, XFSM_MANAGER_SHUTDOWNPHASE2);
+
+  gboolean sent_die = FALSE;
   for (lp = g_queue_peek_nth_link (manager->running_clients, 0);
        lp;
        lp = lp->next)
     {
       XfsmClient *client = lp->data;
-      SmsConn sms = xfsm_client_get_sms_connection (client);
-      if (sms != NULL)
+
+      if (xfsm_client_is_xfsm_aware (client))
         {
+          SmsConn sms = xfsm_client_get_sms_connection (client);
+          if (sms != NULL)
+            {
 #ifdef ENABLE_X11
-          SmsDie (sms);
+              SmsDie (sms);
 #endif
-        }
-      else
-        {
-          xfsm_client_end_session (client);
+            }
+          else
+            {
+              xfsm_client_end_session (client);
+            }
+
+          sent_die = TRUE;
         }
     }
 
@@ -1768,10 +1779,15 @@ xfsm_manager_perform_shutdown (XfsmManager *manager)
         }
     }
 
-  /* give all clients the chance to close the connection */
-  manager->die_timeout_id = g_timeout_add (DIE_TIMEOUT,
-                                           manager_quit_signal,
-                                           manager);
+  if (sent_die)
+    {
+      /* give all clients the chance to close the connection */
+      manager->die_timeout_id = g_timeout_add (DIE_TIMEOUT,
+                                               manager_quit_signal,
+                                               manager);
+    }
+  else
+    manager_quit_signal (manager);
 }
 
 
