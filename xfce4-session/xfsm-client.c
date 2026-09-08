@@ -314,8 +314,12 @@ xfsm_client_set_state (XfsmClient *client,
 
       xfsm_verbose ("%s client state was %s and now is %s\n", get_client_id (client), get_state (old_state), get_state (state));
 
+      if (state == XFSM_CLIENT_SAVING && xfsm_manager_get_state (client->manager) == XFSM_MANAGER_CHECKPOINT)
+        {
+          xfsm_dbus_client_emit_request_save_state (XFSM_DBUS_CLIENT (client));
+        }
       /* During a save, we need to ask the client if it's ok to shutdown */
-      if (state == XFSM_CLIENT_SAVING && xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWN)
+      else if (state == XFSM_CLIENT_SAVING && xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWN)
         {
           xfsm_dbus_client_emit_query_end_session (XFSM_DBUS_CLIENT (client), 1);
         }
@@ -809,6 +813,10 @@ xfsm_client_dbus_delete_sm_properties (XfsmDbusClient *object,
                                        GDBusMethodInvocation *invocation,
                                        const gchar *const *arg_names);
 static gboolean
+xfsm_client_dbus_state_saved (XfsmDbusClient *object,
+                              GDBusMethodInvocation *invocation,
+                              gboolean success);
+static gboolean
 xfsm_client_dbus_terminate (XfsmDbusClient *object,
                             GDBusMethodInvocation *invocation);
 static gboolean
@@ -917,6 +925,7 @@ xfsm_client_iface_init (XfsmDbusClientIface *iface)
   iface->handle_get_sm_properties = xfsm_client_dbus_get_sm_properties;
   iface->handle_get_state = xfsm_client_dbus_get_state;
   iface->handle_set_sm_properties = xfsm_client_dbus_set_sm_properties;
+  iface->handle_state_saved = xfsm_client_dbus_state_saved;
   iface->handle_terminate = xfsm_client_dbus_terminate;
   iface->handle_end_session_response = xfsm_client_dbus_end_session_response;
 }
@@ -1100,6 +1109,20 @@ xfsm_client_dbus_delete_sm_properties (XfsmDbusClient *object,
   g_strfreev (names);
 
   xfsm_dbus_client_complete_delete_sm_properties (object, invocation);
+  return TRUE;
+}
+
+
+static gboolean
+xfsm_client_dbus_state_saved (XfsmDbusClient *object,
+                              GDBusMethodInvocation *invocation,
+                              gboolean success)
+{
+  XfsmClient *client = XFSM_CLIENT (object);
+
+  xfsm_manager_save_yourself_done (client->manager, client, success);
+
+  xfsm_dbus_client_complete_state_saved (object, invocation);
   return TRUE;
 }
 
