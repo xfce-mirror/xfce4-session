@@ -1,0 +1,87 @@
+/*
+ * Copyright (c) 2007 The Xfce Development Team
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Library General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301 USA
+ */
+
+#if !defined(_LIBXFCE4SESSION_CLIENT_INSIDE_LIBXFCE4SESSION_CLIENT_H) && !defined(LIBXFCE4SESSION_CLIENT_COMPILATION)
+#error "Only <libxfce4session-client/libxfce4session-client.h> can be included directly, this file may disappear or change contents."
+#endif
+
+#ifndef __LIBXFCE4SESSION_CLIENT_CONFIG_H__
+#define __LIBXFCE4SESSION_CLIENT_CONFIG_H__
+
+#include <glib-object.h>
+
+G_BEGIN_DECLS
+
+/**
+ * LIBXFCE4SESSION_CLIENT_MAJOR_VERSION:
+ *
+ * A macro that evaluates to the major version of libxfce4session-client, in a format
+ * that can be used by the C pre-processor.
+ *
+ */
+#define LIBXFCE4SESSION_CLIENT_MAJOR_VERSION (@LIBXFCE4SESSION_CLIENT_VERSION_MAJOR@)
+
+/**
+ * LIBXFCE4SESSION_CLIENT_MINOR_VERSION:
+ *
+ * A macro that evaluates to the minor version of libxfce4session-client, in a format
+ * that can be used by the C pre-processor.
+ *
+ */
+#define LIBXFCE4SESSION_CLIENT_MINOR_VERSION (@LIBXFCE4SESSION_CLIENT_VERSION_MINOR@)
+
+/**
+ * LIBXFCE4SESSION_CLIENT_MICRO_VERSION:
+ *
+ * A macro that evaluates to the micro version of libxfce4session-client, in a format
+ * that can be used by the C pre-processor.
+ *
+ */
+#define LIBXFCE4SESSION_CLIENT_MICRO_VERSION (@LIBXFCE4SESSION_CLIENT_VERSION_MICRO@)
+
+/**
+ * LIBXFCE4SESSION_CLIENT_CHECK_VERSION:
+ * @major : The major version of the library, i.e. @LIBXFCE4SESSION_CLIENT_VERSION_MAJOR@
+ * @minor : The minor version of the library, i.e. @LIBXFCE4SESSION_CLIENT_VERSION_MINOR@
+ * @micro : The micro release of the library, i.e. @LIBXFCE4SESSION_CLIENT_VERSION_MICRO@
+ *
+ * A macro to compare libxfce4session-client versions to determine if a particular
+ * function is available.
+ *
+ */
+#define LIBXFCE4SESSION_CLIENT_CHECK_VERSION(major, minor, micro) \
+  (LIBXFCE4SESSION_CLIENT_MAJOR_VERSION > (major) \
+   || (LIBXFCE4SESSION_CLIENT_MAJOR_VERSION == (major) \
+       && LIBXFCE4SESSION_CLIENT_MINOR_VERSION > (minor)) \
+   || (LIBXFCE4SESSION_CLIENT_MAJOR_VERSION == (major) \
+       && LIBXFCE4SESSION_CLIENT_MINOR_VERSION == (minor) \
+       && LIBXFCE4SESSION_CLIENT_MICRO_VERSION >= (micro)))
+
+extern const guint libxfce4session_client_major_version;
+extern const guint libxfce4session_client_minor_version;
+extern const guint libxfce4session_client_micro_version;
+
+const gchar *
+libxfce4session_client_check_version (guint required_major,
+                                      guint required_minor,
+                                      guint required_micro);
+
+G_END_DECLS
+
+#endif /* !__LIBXFCE4SESSION_CLIENT_CONFIG_H__ */

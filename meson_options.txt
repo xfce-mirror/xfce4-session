@@ -60,3 +60,32 @@ option(
   value: '',
   description: 'Host operating system to use: linux, freebsd, openbsd or solaris (default: autodetected build os)',
 )
+
+option(
+  'gtk-doc',
+  type: 'boolean',
+  value: false,
+  description: 'Build gtk-doc HTML',
+)
+
+option(
+  'introspection',
+  type: 'boolean',
+  value: true,
+  description: 'Build gobject-introspection files',
+)
+
+option(
+  'vala',
+  type: 'feature',
+  value: 'auto',
+  description: 'Build Vala language bindings',
+)
+
+option(
+  'visibility',
+  type: 'boolean',
+  value: true,
+  description: 'Build with GNU symbol visibility',
+)
+
