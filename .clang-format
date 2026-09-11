@@ -28,6 +28,10 @@ KeepEmptyLinesAtTheStartOfBlocks: false
 MaxEmptyLinesToKeep: 3
 SpaceAfterCStyleCast: true
 WhitespaceSensitiveMacros:
+  # Avoid breaking formatting in the code parameter
+  - G_DEFINE_TYPE_WITH_CODE
+  - G_DEFINE_FINAL_TYPE_WITH_CODE
+  - G_DEFINE_ABSTRACT_TYPE_WITH_CODE
   # Buggy workaround to add exceptions to 'SpaceBeforeParens: Always' (see below)
   - _
 # Workaround to avoid some alignment bugs when adding a macro to WhitespaceSensitiveMacros,
