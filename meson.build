@@ -3,7 +3,7 @@ project(
   'c',
 version : '4.21.1-dev',
   license : 'GPL-2.0-or-later',
-  meson_version : '>= 0.55.0',
+  meson_version : '>= 0.56.0',
   default_options : ['c_std=gnu11', 'buildtype=debugoptimized', 'warning_level=2']
 )
 
@@ -32,8 +32,11 @@ dependency_versions = {
   'libx11': '>= 1.6.7',
 
   'gtk-layer-shell': '>= 0.7.0',
+  'wayland': '>= 1.23',
 
   'polkit': '>= 0.102',
+
+  'gir': '>= 1.72.0',
 }
 
 glib = dependency('glib-2.0', version: dependency_versions['glib'])
@@ -47,21 +50,27 @@ libxfce4util = dependency('libxfce4util-1.0', version: dependency_versions['libx
 libxfce4windowing = dependency('libxfce4windowing-0', version: dependency_versions['libxfce4windowing'])
 xfconf = dependency('libxfconf-0', version: dependency_versions['xfce4'])
 
+xdt_gen_visibility = find_program('xdt-gen-visibility', required: true)
 gdk_pixbuf_csource = find_program(gdk_pixbuf.get_variable(pkgconfig: 'gdk_pixbuf_csource'), required: true)
+sed = find_program('sed', required: true)
 
 # Feature: 'x11'
 x11_deps = []
 x11_deps += dependency('gdk-x11-3.0', version: dependency_versions['gtk'], required: get_option('x11'))
+gdk_x11 = x11_deps[-1]
 x11_deps += dependency('ice', version: dependency_versions['libice'], required: get_option('x11'))
 libice = x11_deps[-1]
 x11_deps += dependency('sm', version: dependency_versions['libsm'], required: get_option('x11'))
+libsm = x11_deps[-1]
 x11_deps += dependency('libwnck-3.0', version: dependency_versions['libwnck'], required: get_option('x11'))
 x11_deps += dependency('x11', version: dependency_versions['libx11'], required: get_option('x11'))
 
 # Feature: 'wayland'
 wayland_deps = []
 wayland_deps += dependency('gdk-wayland-3.0', version: dependency_versions['gtk'], required: get_option('wayland'))
-
+wayland_deps += dependency('wayland-client', version: dependency_versions['wayland'], required: get_option('wayland'))
+wl_protocols = dependency('wayland-protocols', version: dependency_versions['wayland'], required: get_option('wayland'))
+wayland_scanner = dependency('wayland-scanner', version: dependency_versions['wayland'], required: get_option('wayland'), native: true)
 feature_cflags = []
 
 enable_x11 = not get_option('x11').disabled()
@@ -87,7 +96,9 @@ if enable_x11
   endif
 endif
 
-enable_wayland = not get_option('wayland').disabled()
+enable_wayland = not get_option('wayland').disabled() \
+    and wl_protocols.found() \
+    and wayland_scanner.found()
 foreach dep : wayland_deps
   enable_wayland = enable_wayland and dep.found()
 endforeach
@@ -103,6 +114,13 @@ if enable_wayland
   if gtk_layer_shell.found()
     feature_cflags += '-DHAVE_GTK_LAYER_SHELL=1'
   endif
+
+  wayland_scanner_path = wayland_scanner.get_variable(pkgconfig: 'wayland_scanner')
+  wayland_scanner_bin = find_program(wayland_scanner_path, required: true)
+
+  if cc.has_function_attribute('constructor')
+    feature_cflags += '-DHAVE_FUNC_ATTRIBUTE_CONSTRUCTOR=1'
+  endif
 else
   gtk_layer_shell = dependency('', required: false)
 endif
@@ -114,6 +132,40 @@ endif
 polkit = dependency('polkit-gobject-1', version: dependency_versions['polkit'], required: get_option('polkit'))
 if polkit.found()
   feature_cflags += '-DHAVE_POLKIT=1'
+endif
+
+gir = dependency('gobject-introspection-1.0', version: dependency_versions['gir'], required: get_option('introspection'))
+
+vapigen = find_program('vapigen', required: get_option('vala'))
+if get_option('vala').enabled()
+  assert(get_option('introspection'), 'Building Vala bindings requires building GObject introspection data')
+endif
+generate_vala = not get_option('vala').disabled() and vapigen.found()
+
+gnu_symbol_visibility = 'default'
+if get_option('visibility')
+  gnu_symbol_visibility = 'hidden'
+  feature_cflags += '-DENABLE_SYMBOL_VISIBILITY=1'
+endif
+
+need_libintl = false
+has_bind_textdomain_codeset = cc.has_function('bind_textdomain_codeset')
+if not has_bind_textdomain_codeset
+  libintl = cc.find_library('intl', required: false)
+  if libintl.found()
+    has_bind_textdomain_codeset = cc.has_function(
+      'bind_textdomain_codeset',
+      dependencies: [
+        libintl,
+      ],
+    )
+    if has_bind_textdomain_codeset
+      need_libintl = true
+    endif
+  endif
+endif
+if has_bind_textdomain_codeset
+  feature_cflags += '-DHAVE_BIND_TEXTDOMAIN_CODESET=1'
 endif
 
 helper_path_prefix = get_option('helper-path-prefix')
@@ -304,3 +356,5 @@ subdir('settings')
 subdir('xfce4-session')
 subdir('xfce4-session-logout')
 subdir('xfsm-shutdown-helper')
+subdir('libxfce4session-client')
+subdir('docs'/ 'reference')

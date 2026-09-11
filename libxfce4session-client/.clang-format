@@ -1,0 +1,19 @@
+---
+BasedOnStyle: InheritParentConfig
+
+IncludeCategories:
+  - Regex: '<.*>'
+    Priority: -2
+    CaseSensitive: true
+  - Regex: '".*/.*"'
+    Priority: -1
+    CaseSensitive: true
+  - Regex: '"libxfce4session-client-visibility\.h"'
+    Priority: 0
+    SortPriority: 2
+    CaseSensitive: true
+  - Regex: '"[^/]*"'
+    Priority: 0
+    SortPriority: 1
+    CaseSensitive: true
+...
