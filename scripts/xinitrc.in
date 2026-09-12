@@ -92,6 +92,8 @@ if command -v dbus-update-activation-environment >/dev/null 2>&1; then
   fi
 
   dbus-update-activation-environment $systemd_arg \
+    DISPLAY \
+    XAUTHORITY \
     DESKTOP_SESSION \
     XAUTHLOCALHOSTNAME=$XAUTHLOCALHOSTNAME \
     XDG_CACHE_HOME \
