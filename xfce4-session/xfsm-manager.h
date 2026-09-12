@@ -43,7 +43,6 @@ G_DEFINE_AUTOPTR_CLEANUP_FUNC (XfsmManager, g_object_unref)
 #define DIE_TIMEOUT (7 * 1000)
 #define SAVE_TIMEOUT (60 * 1000)
 #define STARTUP_TIMEOUT (8 * 1000)
-#define STARTUP_TIMEOUT_WAYLAND (8 * 1000)
 #define RESTART_RESET_TIMEOUT (5 * 60 * 1000)
 #define XFSM_CHOOSE_LOGOUT 0
 #define XFSM_CHOOSE_LOAD 1
@@ -72,6 +71,13 @@ typedef enum
   XFSM_MANAGER_COMPAT_KDE,
 } XfsmManagerCompatType;
 
+typedef enum
+{
+  XFSM_CLOSE_FLAGS_NONE = 0,
+  XFSM_CLOSE_FLAGS_DO_CLEANUP = (1 << 0),
+  XFSM_CLOSE_FLAGS_CLIENT_GONE = (1 << 1),
+} XfsmCloseFlags;
+
 GType
 xfsm_manager_get_type (void);
 
@@ -97,6 +103,7 @@ xfsm_manager_handle_failed_properties (XfsmManager *manager,
 XfsmClient *
 xfsm_manager_new_client (XfsmManager *manager,
                          SmsConn sms_conn,
+                         gboolean is_delegate_registration,
                          gchar **error);
 
 gboolean
@@ -140,7 +147,7 @@ xfsm_manager_save_yourself_done (XfsmManager *manager,
 void
 xfsm_manager_close_connection (XfsmManager *manager,
                                XfsmClient *client,
-                               gboolean cleanup);
+                               XfsmCloseFlags flags);
 
 #ifdef ENABLE_X11
 void

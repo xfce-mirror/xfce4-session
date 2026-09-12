@@ -573,6 +573,7 @@ xfsm_startup_start_properties (XfsmProperties *properties,
   g_strfreev (argv);
 
   properties->pid = pid;
+  properties->owns_child = TRUE;
 
   /* set a watch to make sure the child doesn't quit before registering */
   child_watch_data = g_new0 (XfsmStartupData, 1);
@@ -589,7 +590,7 @@ xfsm_startup_start_properties (XfsmProperties *properties,
   startup_timeout_data->manager = g_object_ref (manager);
   startup_timeout_data->properties = properties;
   properties->startup_timeout_id = g_timeout_add_full (G_PRIORITY_DEFAULT,
-                                                       WINDOWING_IS_X11 () ? STARTUP_TIMEOUT : STARTUP_TIMEOUT_WAYLAND,
+                                                       STARTUP_TIMEOUT,
                                                        xfsm_startup_timeout,
                                                        startup_timeout_data,
                                                        (GDestroyNotify) xfsm_startup_data_free);
@@ -694,6 +695,7 @@ xfsm_startup_child_watch (GPid pid,
 
   cwdata->properties->child_watch_id = 0;
   cwdata->properties->pid = -1;
+  cwdata->properties->owns_child = FALSE;
 
   starting_properties = xfsm_manager_get_queue (cwdata->manager, XFSM_MANAGER_QUEUE_STARTING_PROPS);
   if (g_queue_find (starting_properties, cwdata->properties) != NULL)
@@ -716,11 +718,7 @@ xfsm_startup_timeout (gpointer data)
 {
   XfsmStartupData *stdata = data;
 
-  if (WINDOWING_IS_X11 ())
-    xfsm_verbose ("Client Id = %s failed to register in time\n", stdata->properties->client_id);
-  else
-    /* no XfsmClient on Wayland, so just let handle_failed_startup() act as a cleanup func below */
-    xfsm_verbose ("Client pid = %d seems to have started correctly\n", stdata->properties->pid);
+  xfsm_verbose ("Client Id = %s failed to register in time\n", stdata->properties->client_id);
 
   stdata->properties->startup_timeout_id = 0;
   xfsm_startup_handle_failed_startup (stdata->properties, stdata->manager);

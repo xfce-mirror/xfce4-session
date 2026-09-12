@@ -54,6 +54,7 @@ typedef gpointer SmsConn;
 #endif
 
 #include <libxfce4util/libxfce4util.h>
+#include <time.h>
 
 /* GNOME compatibility */
 #define GsmPriority "_GSM_Priority"
@@ -72,12 +73,16 @@ struct _XfsmProperties
 
   GPid pid;
   guint child_watch_id;
+  gboolean owns_child;
 
   gchar *client_id;
   gchar *hostname;
   gchar *service_name;
 
   GTree *sm_properties;
+  GQueue *toplevels; // XfsmToplevel*
+
+  time_t last_seen;
 };
 
 
@@ -86,7 +91,8 @@ struct _XfsmProperties
 
 XfsmProperties *
 xfsm_properties_new (const gchar *client_id,
-                     const gchar *hostname) G_GNUC_PURE;
+                     const gchar *hostname,
+                     time_t last_seen);
 void
 xfsm_properties_free (XfsmProperties *properties);
 
@@ -96,7 +102,7 @@ xfsm_properties_extract (XfsmProperties *properties,
                          gint *num_props,
                          SmProp ***props);
 #endif
-void
+gboolean
 xfsm_properties_store (XfsmProperties *properties,
                        GKeyFile *file,
                        const gchar *prefix,
@@ -107,22 +113,25 @@ xfsm_properties_load (GKeyFile *file,
                       const gchar *prefix,
                       const gchar *group);
 
+void
+xfsm_properties_touch (XfsmProperties *properties);
+
 gboolean
-xfsm_properties_check (const XfsmProperties *properties);
+xfsm_properties_can_autorun (const XfsmProperties *properties);
 
 const gchar *
-xfsm_properties_get_string (XfsmProperties *properties,
+xfsm_properties_get_string (const XfsmProperties *properties,
                             const gchar *property_name);
 gchar **
-xfsm_properties_get_strv (XfsmProperties *properties,
+xfsm_properties_get_strv (const XfsmProperties *properties,
                           const gchar *property_name);
 guchar
-xfsm_properties_get_uchar (XfsmProperties *properties,
+xfsm_properties_get_uchar (const XfsmProperties *properties,
                            const gchar *property_name,
                            guchar default_value);
 
 const GValue *
-xfsm_properties_get (XfsmProperties *properties,
+xfsm_properties_get (const XfsmProperties *properties,
                      const gchar *property_name);
 
 void
@@ -162,5 +171,24 @@ xfsm_properties_compare (const XfsmProperties *a,
 gint
 xfsm_properties_compare_id (const XfsmProperties *properties,
                             const gchar *client_id);
+
+gboolean
+xfsm_properties_toplevel_add (XfsmProperties *properties,
+                              const gchar *id);
+gboolean
+xfsm_properties_toplevel_remove (XfsmProperties *properties,
+                                 const gchar *id);
+gboolean
+xfsm_properties_toplevel_rename (XfsmProperties *properties,
+                                 const gchar *id,
+                                 const gchar *new_id,
+                                 GError **error);
+gboolean
+xfsm_properties_toplevel_set_wm_properties (XfsmProperties *properties,
+                                            const gchar *id,
+                                            GVariant *wm_properties);
+GVariant *
+xfsm_properties_toplevel_get_wm_properties (XfsmProperties *properties,
+                                            const gchar *id);
 
 #endif /* !__XFSM_PROPERTIES_H__ */

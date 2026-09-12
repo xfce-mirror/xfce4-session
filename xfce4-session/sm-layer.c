@@ -173,7 +173,7 @@ sm_new_client (SmsConn sms_conn,
   xfsm_verbose ("ICE connection fd = %d, received NEW CLIENT\n\n",
                 IceConnectionNumber (SmsGetIceConnection (sms_conn)));
 
-  client = xfsm_manager_new_client (manager, sms_conn, &error);
+  client = xfsm_manager_new_client (manager, sms_conn, FALSE, &error);
   if (client == NULL)
     {
       xfsm_verbose ("NEW CLIENT failed: %s\n", error);
@@ -331,7 +331,9 @@ sm_close_connection (SmsConn sms_conn,
       xfsm_verbose ("\n");
     }
 
-  xfsm_manager_close_connection (XFSM_CLIENT_MANAGER (client), client, TRUE);
+  xfsm_manager_close_connection (XFSM_CLIENT_MANAGER (client),
+                                 client,
+                                 XFSM_CLOSE_FLAGS_DO_CLEANUP | XFSM_CLOSE_FLAGS_CLIENT_GONE);
 
   if (reasons != NULL)
     SmFreeReasons (num_reasons, reasons);
