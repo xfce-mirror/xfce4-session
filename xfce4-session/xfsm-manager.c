@@ -3004,6 +3004,11 @@ xfsm_manager_delegate_dbus_register_client (XfsmDbusManagerDelegate *object,
       throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Permission denied");
       return TRUE;
     }
+  else if (xfce_str_is_empty (arg_client_startup_id))
+    {
+      throw_error (invocation, XFSM_ERROR_BAD_VALUE, "client_startup_id may not be empty");
+      return TRUE;
+    }
 
   XfsmProperties *old_properties = NULL;
 
