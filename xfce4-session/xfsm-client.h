@@ -64,7 +64,7 @@ typedef enum
 } XfsmSessionStatus;
 
 gchar *
-xfsm_client_generate_id (SmsConn sms_conn) G_GNUC_PURE;
+xfsm_client_generate_id (SmsConn sms_conn);
 
 XfsmClient *
 xfsm_client_new (XfsmManager *manager,

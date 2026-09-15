@@ -65,13 +65,13 @@ xfsm_toplevel_free (XfsmToplevel *toplevel);
 /* local prototypes */
 static SmProp *
 strv_to_property (const gchar *name,
-                  gchar **argv) G_GNUC_PURE;
+                  gchar **argv);
 static SmProp *
 str_to_property (const gchar *name,
-                 const gchar *value) G_GNUC_PURE;
+                 const gchar *value);
 static SmProp *
 int_to_property (const gchar *name,
-                 gint value) G_GNUC_PURE;
+                 gint value);
 #endif
 
 /* these three structs hold lists of properties that we save in
