@@ -60,6 +60,9 @@ xfsm_toplevel_new (const gchar *toplevel_id);
 static void
 xfsm_toplevel_free (XfsmToplevel *toplevel);
 
+static XfsmToplevel *
+find_toplevel (XfsmProperties *properties,
+               const gchar *toplevel_id);
 
 #ifdef ENABLE_X11
 /* local prototypes */
@@ -281,7 +284,6 @@ xfsm_properties_load (GKeyFile *file,
   gint value_int;
   time_t last_seen;
   gchar buffer[256];
-  gint i;
 
   client_id = g_key_file_get_string (file, group, ENTRY ("ClientId"), &error);
   if (client_id == NULL)
@@ -317,7 +319,7 @@ xfsm_properties_load (GKeyFile *file,
   g_free (hostname);
   g_free (client_id);
 
-  for (i = 0; strv_properties[i].name; ++i)
+  for (gint i = 0; strv_properties[i].name; ++i)
     {
       value_strv = g_key_file_get_string_list (file, group, ENTRY (strv_properties[i].name), NULL, NULL);
       if (value_strv)
@@ -335,7 +337,7 @@ xfsm_properties_load (GKeyFile *file,
         }
     }
 
-  for (i = 0; str_properties[i].name; ++i)
+  for (gint i = 0; str_properties[i].name; ++i)
     {
       value_str = g_key_file_get_string (file, group, ENTRY (str_properties[i].name), NULL);
       if (value_str)
@@ -345,7 +347,7 @@ xfsm_properties_load (GKeyFile *file,
         }
     }
 
-  for (i = 0; uchar_properties[i].name; ++i)
+  for (gint i = 0; uchar_properties[i].name; ++i)
     {
       value_int = g_key_file_get_integer (file, group, ENTRY (uchar_properties[i].name), &error);
       if (error != NULL)
@@ -361,33 +363,22 @@ xfsm_properties_load (GKeyFile *file,
     g_clear_error (&error);
   else
     {
-      for (i = 0; i < toplevel_count; ++i)
-        {
-          gchar *toplevel_prefix = g_strdup_printf ("%sToplevel%d_", prefix, i);
-          compose (buffer, sizeof (buffer), toplevel_prefix, "Name");
-          value_str = g_key_file_get_string (file, group, buffer, NULL);
-          g_free (toplevel_prefix);
-
-          if (value_str != NULL)
-            {
-              gboolean added = xfsm_properties_toplevel_add (properties, value_str);
-              g_free (value_str);
-              if (!added)
-                {
-                  g_message ("Toplevel %d for client %s has duplicate name; dropping this and all following toplevels", i, prefix);
-                  break;
-                }
-            }
-          else
-            {
-              g_message ("Toplevel %d for client %s is missing a name; dropping this and all following toplevels", i, prefix);
-              break;
-            }
-        }
-
       gchar **keys = g_key_file_get_keys (file, group, NULL, NULL);
-      if (keys != NULL)
+      if (keys != NULL && toplevel_count > (gint) g_strv_length (keys))
         {
+          g_message ("Toplevel count for client %s seems impossibly large for key count; dropping toplevels", prefix);
+          g_strfreev (keys);
+        }
+      else if (keys != NULL)
+        {
+          typedef struct {
+            gchar *id;
+            GTree *wm_properties;
+          } ToplevelRecord;
+
+          GPtrArray *toplevel_records = g_ptr_array_new_with_free_func (g_free);
+          g_ptr_array_set_size (toplevel_records, toplevel_count);
+
           gchar *toplevel_prefix = g_strdup_printf ("%sToplevel", prefix);
           gsize toplevel_prefix_len = strlen (toplevel_prefix);
 
@@ -400,32 +391,81 @@ xfsm_properties_load (GKeyFile *file,
                   gchar *startn = key + toplevel_prefix_len;
                   gchar *endp = NULL;
                   guint64 index = g_ascii_strtoull (startn, &endp, 10);
-                  if (index > G_MAXINT || endp == NULL || *endp != '_' || !g_str_has_prefix (endp, "_Wm_"))
-                    continue;
-
-                  XfsmToplevel *toplevel = g_queue_peek_nth (properties->toplevels, index);
-                  if (toplevel == NULL)
+                  if (index > G_MAXINT || index >= (guint64) toplevel_count || endp == NULL || *endp != '_')
                     continue;
 
                   value_str = g_key_file_get_string (file, group, key, NULL);
                   if (value_str == NULL)
                     continue;
 
-                  GVariant *prop_value = g_variant_parse (NULL, value_str, NULL, NULL, &error);
-                  g_free (value_str);
-                  if (prop_value == NULL)
+                  ToplevelRecord *record = g_ptr_array_index (toplevel_records, index);
+                  if (record == NULL)
                     {
-                      g_message ("Value for key %s is invalid: %s", key, error->message);
-                      g_clear_error (&error);
-                      continue;
+                      record = g_new0(ToplevelRecord, 1);
+                      record->wm_properties = g_tree_new_full ((GCompareDataFunc) G_CALLBACK (strcmp),
+                                                               NULL,
+                                                               g_free,
+                                                               (GDestroyNotify) g_variant_unref);
+                      ((ToplevelRecord **) toplevel_records->pdata)[index] = record;
                     }
 
-                  g_tree_insert (toplevel->wm_properties, g_strdup (endp + 4), prop_value);
+                  if (g_strcmp0 (endp, "_Name") == 0)
+                    {
+                      g_free (record->id);
+                      record->id = value_str;
+                    }
+                  else if (g_str_has_prefix (endp, "_Wm_"))
+                    {
+                      GVariant *prop_value = g_variant_parse (NULL, value_str, NULL, NULL, &error);
+                      g_free (value_str);
+
+                      if (prop_value == NULL)
+                        {
+                          g_message ("Value for key %s is invalid: %s", key, error->message);
+                          g_clear_error (&error);
+                        }
+                      else
+                        {
+                          g_tree_insert (record->wm_properties, g_strdup (endp + 4), prop_value);
+                        }
+                    }
+                  else
+                    {
+                      g_free (value_str);
+                    }
+                }
+            }
+
+          for (guint i = 0; i < toplevel_records->len; ++i)
+            {
+              ToplevelRecord *record = g_ptr_array_index (toplevel_records, i);
+              if (record == NULL)
+                continue;
+
+              if (xfce_str_is_empty (record->id))
+                {
+                  g_message ("Toplevel %d for client %s is missing a name; dropping", i, prefix);
+                  g_clear_pointer (&record->id, g_free);
+                  g_clear_pointer (&record->wm_properties, g_tree_destroy);
+                }
+              else if (find_toplevel (properties, record->id) != NULL)
+                {
+                  g_message ("Toplevel %d for client %s has duplicate name '%s'; dropping", i, prefix, record->id);
+                  g_clear_pointer (&record->id, g_free);
+                  g_clear_pointer (&record->wm_properties, g_tree_destroy);
+                }
+              else
+                {
+                  XfsmToplevel *toplevel = g_new0 (XfsmToplevel, 1);
+                  toplevel->toplevel_id = record->id;
+                  toplevel->wm_properties = record->wm_properties;
+                  g_queue_push_tail (properties->toplevels, toplevel);
                 }
             }
 
           g_strfreev (keys);
           g_free (toplevel_prefix);
+          g_ptr_array_unref (toplevel_records);
         }
     }
 
