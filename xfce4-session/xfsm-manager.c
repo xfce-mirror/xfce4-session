@@ -2961,9 +2961,12 @@ xfsm_manager_dbus_attach_client (XfsmDbusManager *object,
 
 
 static gboolean
-do_unregister_client (XfsmManager *manager,
-                      const gchar *arg_client_id)
+xfsm_manager_dbus_unregister_client (XfsmDbusManager *object,
+                                     GDBusMethodInvocation *invocation,
+                                     const gchar *arg_client_id)
 {
+  XfsmManager *manager = XFSM_MANAGER (object);
+
   for (GList *lp = g_queue_peek_nth_link (manager->running_clients, 0);
        lp;
        lp = lp->next)
@@ -2971,28 +2974,21 @@ do_unregister_client (XfsmManager *manager,
       XfsmClient *client = XFSM_CLIENT (lp->data);
       if (g_strcmp0 (xfsm_client_get_object_path (client), arg_client_id) == 0)
         {
-          /* maybe we remove client from the queue here but as we also get out
-           * of the loop no need for extra precaution */
-          xfsm_manager_close_connection (manager, client, XFSM_CLOSE_FLAGS_CLIENT_GONE);
+          if (xfsm_client_is_delegate_registration (client))
+            throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Client with id of '%s' is owned by the manager delegate", arg_client_id);
+          else
+            {
+              /* maybe we remove client from the queue here but as we also get out
+               * of the loop no need for extra precaution */
+              xfsm_manager_close_connection (manager, client, XFSM_CLOSE_FLAGS_CLIENT_GONE);
+              xfsm_dbus_manager_complete_unregister_client (object, invocation);
+            }
+
           return TRUE;
         }
     }
 
-  return FALSE;
-}
-
-
-
-static gboolean
-xfsm_manager_dbus_unregister_client (XfsmDbusManager *object,
-                                     GDBusMethodInvocation *invocation,
-                                     const gchar *arg_client_id)
-{
-  if (do_unregister_client (XFSM_MANAGER (object), arg_client_id))
-    xfsm_dbus_manager_complete_unregister_client (object, invocation);
-  else
-    throw_error (invocation, XFSM_ERROR_BAD_VALUE, "Client with id of '%s' was not found", arg_client_id);
-
+  throw_error (invocation, XFSM_ERROR_BAD_VALUE, "Client with id of '%s' was not found", arg_client_id);
   return TRUE;
 }
 
@@ -3087,10 +3083,15 @@ xfsm_manager_delegate_dbus_remove_client (XfsmDbusManagerDelegate *object,
       XfsmClient *client = XFSM_CLIENT (lp->data);
       if (g_strcmp0 (xfsm_client_get_object_path (client), arg_client_id) == 0)
         {
-          g_queue_delete_link (manager->running_clients, lp);
-          g_object_unref (client);
+          if (!xfsm_client_is_delegate_registration (client))
+            throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Client with id of '%s' is not owned by the manager delegate", arg_client_id);
+          else
+            {
+              g_queue_delete_link (manager->running_clients, lp);
+              g_object_unref (client);
+              xfsm_dbus_manager_delegate_complete_remove_client (object, invocation);
+            }
 
-          xfsm_dbus_manager_delegate_complete_remove_client (object, invocation);
           return TRUE;
         }
     }
@@ -3113,10 +3114,25 @@ xfsm_manager_delegate_dbus_client_disconnected (XfsmDbusManagerDelegate *object,
       return TRUE;
     }
 
-  if (do_unregister_client (manager, arg_client_id))
-    xfsm_dbus_manager_delegate_complete_client_disconnected (object, invocation);
-  else
-    throw_error (invocation, XFSM_ERROR_BAD_VALUE, "Client with id of '%s' was not found", arg_client_id);
+  for (GList *lp = g_queue_peek_nth_link (manager->running_clients, 0);
+       lp;
+       lp = lp->next)
+    {
+      XfsmClient *client = XFSM_CLIENT (lp->data);
+      if (g_strcmp0 (xfsm_client_get_object_path (client), arg_client_id) == 0)
+        {
+          if (!xfsm_client_is_delegate_registration (client))
+            throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Client with id of '%s' is not owned by the manager delegate", arg_client_id);
+          else
+            {
+              xfsm_manager_close_connection (manager, client, XFSM_CLOSE_FLAGS_CLIENT_GONE);
+              xfsm_dbus_manager_delegate_complete_client_disconnected (object, invocation);
+            }
 
+          return TRUE;
+        }
+    }
+
+  throw_error (invocation, XFSM_ERROR_BAD_VALUE, "Client with id of '%s' was not found", arg_client_id);
   return TRUE;
 }
