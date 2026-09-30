@@ -259,6 +259,10 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
    **/
   has_updates = xfsm_shutdown_has_update_prepared (dialog->shutdown);
 
+  channel = xfconf_channel_get (SETTINGS_CHANNEL);
+
+  gchar *focus = xfconf_channel_get_string (channel, "/general/LogoutDialogDefault", NULL);
+
   /**
    * Reboot
    **/
@@ -272,6 +276,9 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_set_sensitive (button, can_restart && auth_restart);
   gtk_widget_show (button);
+  if (!g_ascii_strncasecmp(focus, "restart", 7)) {
+      gtk_widget_grab_focus (button);
+  }
 
   /**
    * Shutdown
@@ -286,13 +293,14 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_set_sensitive (button, can_shutdown && auth_shutdown);
   gtk_widget_show (button);
+  if (!g_ascii_strncasecmp(focus, "shutdown", 8)) {
+      gtk_widget_grab_focus (button);
+  }
 
   /* new row for suspend/hibernate/hybrid sleep */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, BORDER);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (button_vbox), hbox, FALSE, TRUE, 0);
-
-  channel = xfconf_channel_get (SETTINGS_CHANNEL);
 
   /**
    * Suspend
@@ -309,6 +317,9 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
           gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
           gtk_widget_set_sensitive (button, auth_suspend);
           gtk_widget_show (button);
+          if (!g_ascii_strncasecmp(focus, "suspend", 7)) {
+              gtk_widget_grab_focus (button);
+          }
 
           gtk_widget_show (hbox);
         }
@@ -329,6 +340,9 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
           gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
           gtk_widget_set_sensitive (button, auth_hibernate);
           gtk_widget_show (button);
+          if (!g_ascii_strncasecmp(focus, "hibernate", 9)) {
+              gtk_widget_grab_focus (button);
+          }
 
           gtk_widget_show (hbox);
         }
@@ -349,6 +363,9 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
           gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
           gtk_widget_set_sensitive (button, auth_hybrid_sleep);
           gtk_widget_show (button);
+          if (!g_ascii_strncasecmp(focus, "hybrid", 6)) {
+              gtk_widget_grab_focus (button);
+          }
 
           gtk_widget_show (hbox);
         }
@@ -373,6 +390,9 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
               gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
               gtk_widget_set_sensitive (button, can_switch_user);
               gtk_widget_show (button);
+              if (!g_ascii_strncasecmp(focus, "switch", 6)) {
+                  gtk_widget_grab_focus (button);
+              }
 
               gtk_widget_show (hbox);
             }
