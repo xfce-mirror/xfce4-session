@@ -261,7 +261,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
 
   channel = xfconf_channel_get (SETTINGS_CHANNEL);
 
-  gchar *focus = xfconf_channel_get_string (channel, "/general/LogoutDialogDefault", NULL);
+  gchar *focus = xfconf_channel_get_string (channel, "/general/LogoutDialogDefaultAction", LOGOUT_DIALOG_ACTION_LOGOUT);
 
   /**
    * Reboot
@@ -276,7 +276,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_set_sensitive (button, can_restart && auth_restart);
   gtk_widget_show (button);
-  if (!g_ascii_strncasecmp(focus, "restart", 7)) {
+  if (!g_strcmp0(focus, LOGOUT_DIALOG_ACTION_RESTART)) {
       gtk_widget_grab_focus (button);
   }
 
@@ -293,7 +293,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_set_sensitive (button, can_shutdown && auth_shutdown);
   gtk_widget_show (button);
-  if (!g_ascii_strncasecmp(focus, "shutdown", 8)) {
+  if (!g_strcmp0(focus, LOGOUT_DIALOG_ACTION_SHUTDOWN)) {
       gtk_widget_grab_focus (button);
   }
 
@@ -317,7 +317,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
           gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
           gtk_widget_set_sensitive (button, auth_suspend);
           gtk_widget_show (button);
-          if (!g_ascii_strncasecmp(focus, "suspend", 7)) {
+          if (!g_strcmp0(focus, LOGOUT_DIALOG_ACTION_SUSPEND)) {
               gtk_widget_grab_focus (button);
           }
 
@@ -340,7 +340,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
           gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
           gtk_widget_set_sensitive (button, auth_hibernate);
           gtk_widget_show (button);
-          if (!g_ascii_strncasecmp(focus, "hibernate", 9)) {
+          if (!g_strcmp0(focus, LOGOUT_DIALOG_ACTION_HIBERNATE)) {
               gtk_widget_grab_focus (button);
           }
 
@@ -363,7 +363,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
           gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
           gtk_widget_set_sensitive (button, auth_hybrid_sleep);
           gtk_widget_show (button);
-          if (!g_ascii_strncasecmp(focus, "hybrid", 6)) {
+          if (!g_strcmp0(focus, LOGOUT_DIALOG_ACTION_HYBRID)) {
               gtk_widget_grab_focus (button);
           }
 
@@ -390,7 +390,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
               gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
               gtk_widget_set_sensitive (button, can_switch_user);
               gtk_widget_show (button);
-              if (!g_ascii_strncasecmp(focus, "switch", 6)) {
+              if (!g_strcmp0(focus, LOGOUT_DIALOG_ACTION_SWITCH_USER)) {
                   gtk_widget_grab_focus (button);
               }
 
@@ -407,6 +407,7 @@ xfsm_logout_dialog_init (XfsmLogoutDialog *dialog)
   attrs = pango_attr_list_new ();
   pango_attr_list_insert (attrs, pango_attr_weight_new (PANGO_WEIGHT_BOLD));
 
+  g_free(focus);
 
   /**
    * Start mode MODE_SHOW_ERROR
