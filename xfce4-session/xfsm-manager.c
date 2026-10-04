@@ -341,13 +341,40 @@ xfsm_manager_restore_active_workspace (XfsmManager *manager,
 }
 
 
+static void
+xfsm_run_discard_command (XfsmProperties *properties)
+{
+  gchar **discard_command = xfsm_properties_get_strv (properties, SmDiscardCommand);
+  if (discard_command != NULL && g_strv_length (discard_command) > 0)
+    {
+      xfsm_verbose ("Client Id = %s: running discard command %s:%d.\n\n",
+                    properties->client_id, *discard_command,
+                    g_strv_length (discard_command));
+
+      GError *error = NULL;
+      if (!g_spawn_async (xfsm_properties_get_string (properties, SmCurrentDirectory),
+                          discard_command,
+                          xfsm_properties_get_strv (properties, SmEnvironment),
+                          G_SPAWN_SEARCH_PATH,
+                          NULL,
+                          NULL,
+                          NULL,
+                          &error))
+        {
+          g_message ("Failed to run discard command \"%s\": %s",
+                     *discard_command, error->message);
+          g_error_free (error);
+        }
+    }
+}
+
+
 gboolean
 xfsm_manager_handle_failed_properties (XfsmManager *manager,
                                        XfsmProperties *properties,
                                        gboolean carry_ok)
 {
   gint restart_style_hint;
-  GError *error = NULL;
 
   /* Handle apps that failed to start, or died randomly, here */
 
@@ -397,8 +424,6 @@ xfsm_manager_handle_failed_properties (XfsmManager *manager,
     }
   else
     {
-      gchar **discard_command;
-
       /* We get here if a SmRestartNever or SmRestartIfRunning client
        * has exited.  SmRestartNever clients shouldn't have discard
        * commands, but it can't hurt to run it if it has one for some
@@ -406,43 +431,24 @@ xfsm_manager_handle_failed_properties (XfsmManager *manager,
       xfsm_verbose ("Client Id %s exited, removing from session.\n",
                     properties->client_id);
 
-      discard_command = xfsm_properties_get_strv (properties, SmDiscardCommand);
-      if (discard_command != NULL && g_strv_length (discard_command) > 0)
-        {
-          /* Run the SmDiscardCommand after the client exited in any state,
-           * but only if we don't expect the client to be restarted,
-           * whether immediately or in the next session.
-           *
-           * NB: This used to also have the condition that the manager is
-           * in the IDLE state, but this was removed because I can't see
-           * why you'd treat a client that fails during startup any
-           * differently, and this fixes a potential properties leak.
-           *
-           * Unfortunately the spec isn't clear about the usage of the
-           * discard command. Have to check ksmserver/gnome-session, and
-           * come up with consistent behaviour.
-           *
-           * But for now, this work-around fixes the problem of the
-           * ever-growing number of xfwm4 session files when restarting
-           * xfwm4 within a session.
-           */
-          xfsm_verbose ("Client Id = %s: running discard command %s:%d.\n\n",
-                        properties->client_id, *discard_command,
-                        g_strv_length (discard_command));
-
-          if (!g_spawn_sync (xfsm_properties_get_string (properties, SmCurrentDirectory),
-                             discard_command,
-                             xfsm_properties_get_strv (properties, SmEnvironment),
-                             G_SPAWN_SEARCH_PATH,
-                             NULL, NULL,
-                             NULL, NULL,
-                             NULL, &error))
-            {
-              g_warning ("Failed to running discard command \"%s\": %s",
-                         *discard_command, error->message);
-              g_error_free (error);
-            }
-        }
+      /* Run the SmDiscardCommand after the client exited in any state,
+       * but only if we don't expect the client to be restarted,
+       * whether immediately or in the next session.
+       *
+       * NB: This used to also have the condition that the manager is
+       * in the IDLE state, but this was removed because I can't see
+       * why you'd treat a client that fails during startup any
+       * differently, and this fixes a potential properties leak.
+       *
+       * Unfortunately the spec isn't clear about the usage of the
+       * discard command. Have to check ksmserver/gnome-session, and
+       * come up with consistent behaviour.
+       *
+       * But for now, this work-around fixes the problem of the
+       * ever-growing number of xfwm4 session files when restarting
+       * xfwm4 within a session.
+       */
+      xfsm_run_discard_command (properties);
 
       return FALSE;
     }
@@ -3092,6 +3098,12 @@ xfsm_manager_delegate_dbus_remove_client (XfsmDbusManagerDelegate *object,
             throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Client with id of '%s' is not owned by the manager delegate", arg_client_id);
           else
             {
+              XfsmProperties *properties = xfsm_client_get_properties (client);
+              if (properties != NULL)
+                {
+                  xfsm_run_discard_command (properties);
+                }
+
               g_queue_delete_link (manager->running_clients, lp);
               g_object_unref (client);
               xfsm_dbus_manager_delegate_complete_remove_client (object, invocation);
