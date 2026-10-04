@@ -1538,14 +1538,12 @@ xfsm_manager_save_yourself_done (XfsmManager *manager,
       return;
     }
 
-  /* remove client save timeout, as client responded in time */
-  xfsm_manager_cancel_client_save_timeout (manager, client);
-
   if (xfsm_client_get_state (client) == XFSM_CLIENT_SAVINGLOCAL)
     {
       SmsConn sms = xfsm_client_get_sms_connection (client);
       /* client completed local SaveYourself */
       xfsm_client_set_state (client, XFSM_CLIENT_IDLE);
+      xfsm_manager_cancel_client_save_timeout (manager, client);
       if (sms != NULL)
         {
 #ifdef ENABLE_X11
@@ -1562,8 +1560,29 @@ xfsm_manager_save_yourself_done (XfsmManager *manager,
     }
   else
     {
-      xfsm_client_set_state (client, XFSM_CLIENT_SAVEDONE);
-      xfsm_manager_complete_saveyourself (manager);
+      /* D-Bus clients (delegate-registered or not) complete a
+       * shutdown-with-save in two rounds:
+       *   1. QueryEndSession ack (when the client can veto shutdown)
+       *   2. StateSaved ack (when the client has finished saving)
+       * We end up here for both of these, so we have to distinguish which,
+       * based on the dbus_save_requested flag.
+       */
+      if (manager->state == XFSM_MANAGER_SHUTDOWN
+          && manager->save_session
+          && xfsm_client_is_xfsm_aware (client)
+          && xfsm_client_get_sms_connection (client) == NULL
+          && !xfsm_client_get_dbus_save_requested (client))
+        {
+          xfsm_client_set_dbus_save_requested (client, TRUE);
+          xfsm_dbus_client_emit_request_save_state (XFSM_DBUS_CLIENT (client));
+        }
+      else
+        {
+          xfsm_client_set_dbus_save_requested (client, FALSE);
+          xfsm_client_set_state (client, XFSM_CLIENT_SAVEDONE);
+          xfsm_manager_cancel_client_save_timeout (manager, client);
+          xfsm_manager_complete_saveyourself (manager);
+        }
     }
 }
 
