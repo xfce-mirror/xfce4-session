@@ -46,6 +46,14 @@ G_BEGIN_DECLS;
 #define SETTINGS_CHANNEL "xfce4-session"
 #define SESSION_FILE_DELIMITER ","
 
+#define LOGOUT_DIALOG_ACTION_LOGOUT "logout"
+#define LOGOUT_DIALOG_ACTION_RESTART "restart"
+#define LOGOUT_DIALOG_ACTION_SHUTDOWN "shutdown"
+#define LOGOUT_DIALOG_ACTION_SUSPEND "suspend"
+#define LOGOUT_DIALOG_ACTION_HIBERNATE "hibernate"
+#define LOGOUT_DIALOG_ACTION_HYBRID_SLEEP "hybrid-sleep"
+#define LOGOUT_DIALOG_ACTION_SWITCH_USER "switch-user"
+
 typedef struct _XfsmSessionInfo XfsmSessionInfo;
 
 struct _XfsmSessionInfo
