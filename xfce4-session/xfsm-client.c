@@ -50,6 +50,7 @@ struct _XfsmClient
   gchar *object_path;
   gchar *service_name;
   gboolean is_delegate_registration;
+  gboolean dbus_save_requested;
   XfsmStartReason reason;
   XfsmSessionStatus status;
 
@@ -359,6 +360,21 @@ xfsm_client_is_delegate_registration (XfsmClient *client)
 {
   g_return_val_if_fail (XFSM_IS_CLIENT (client), FALSE);
   return client->is_delegate_registration;
+}
+
+gboolean
+xfsm_client_get_dbus_save_requested (XfsmClient *client)
+{
+  g_return_val_if_fail (XFSM_IS_CLIENT (client), FALSE);
+  return client->dbus_save_requested;
+}
+
+void
+xfsm_client_set_dbus_save_requested (XfsmClient *client,
+                                     gboolean requested)
+{
+  g_return_if_fail (XFSM_IS_CLIENT (client));
+  client->dbus_save_requested = requested;
 }
 
 
