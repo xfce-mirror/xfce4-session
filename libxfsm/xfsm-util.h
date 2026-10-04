@@ -51,8 +51,8 @@ G_BEGIN_DECLS;
 #define LOGOUT_DIALOG_ACTION_SHUTDOWN "shutdown"
 #define LOGOUT_DIALOG_ACTION_SUSPEND "suspend"
 #define LOGOUT_DIALOG_ACTION_HIBERNATE "hibernate"
-#define LOGOUT_DIALOG_ACTION_HYBRID "hybrid"
-#define LOGOUT_DIALOG_ACTION_SWITCH_USER "switch"
+#define LOGOUT_DIALOG_ACTION_HYBRID_SLEEP "hybrid-sleep"
+#define LOGOUT_DIALOG_ACTION_SWITCH_USER "switch-user"
 
 typedef struct _XfsmSessionInfo XfsmSessionInfo;
 
