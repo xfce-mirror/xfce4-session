@@ -93,6 +93,12 @@ xfsm_client_get_sms_connection (XfsmClient *client);
 gboolean
 xfsm_client_is_delegate_registration (XfsmClient *client);
 
+gboolean
+xfsm_client_get_dbus_save_requested (XfsmClient *client);
+void
+xfsm_client_set_dbus_save_requested (XfsmClient *client,
+                                     gboolean requested);
+
 XfsmProperties *
 xfsm_client_get_properties (XfsmClient *client);
 XfsmProperties *
