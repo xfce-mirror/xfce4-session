@@ -701,10 +701,17 @@ void
 xfsm_client_set_app_id (XfsmClient *client,
                         const gchar *app_id)
 {
-  client->app_id = g_strdup (app_id);
+  if (client->app_id == NULL)
+    {
+      client->app_id = g_strdup (app_id);
 
-  /* save the desktop file */
-  xfsm_client_save_desktop_file (client);
+      const gchar *desktop_file = xfsm_properties_get_string (client->properties, GsmDesktopFile);
+      if (desktop_file == NULL || !g_file_test (desktop_file, G_FILE_TEST_IS_REGULAR | G_FILE_TEST_IS_SYMLINK))
+        {
+          /* save the desktop file */
+          xfsm_client_save_desktop_file (client);
+        }
+    }
 }
 
 
