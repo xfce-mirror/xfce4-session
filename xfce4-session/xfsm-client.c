@@ -701,10 +701,13 @@ void
 xfsm_client_set_app_id (XfsmClient *client,
                         const gchar *app_id)
 {
-  client->app_id = g_strdup (app_id);
+  if (client->app_id == NULL)
+    {
+      client->app_id = g_strdup (app_id);
 
-  /* save the desktop file */
-  xfsm_client_save_desktop_file (client);
+      /* save the desktop file */
+      xfsm_client_save_desktop_file (client);
+    }
 }
 
 
