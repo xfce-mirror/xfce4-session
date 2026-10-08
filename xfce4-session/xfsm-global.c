@@ -388,3 +388,60 @@ xfsm_launch_desktop_files_on_run_hook (gboolean start_at_spi,
 
   return started;
 }
+
+
+
+/* adapted from ConsoleKit2 whch was adapted from PolicyKit */
+gboolean
+xfsm_dbus_get_caller_info (GDBusMethodInvocation *invocation,
+                           pid_t *calling_pid)
+{
+  g_return_val_if_fail (invocation != NULL, FALSE);
+
+  const gchar *sender = g_dbus_method_invocation_get_sender (invocation);
+  if (sender == NULL)
+    {
+      xfsm_verbose ("sender == NULL");
+      return FALSE;
+    }
+
+  GError *error = NULL;
+  GVariant *value = g_dbus_connection_call_sync (g_dbus_method_invocation_get_connection (invocation),
+                                                 "org.freedesktop.DBus",
+                                                 "/org/freedesktop/DBus",
+                                                 "org.freedesktop.DBus",
+                                                 "GetConnectionUnixProcessID",
+                                                 g_variant_new ("(s)", sender),
+                                                 G_VARIANT_TYPE ("(u)"),
+                                                 G_DBUS_CALL_FLAGS_NONE,
+                                                 -1,
+                                                 NULL,
+                                                 &error);
+
+  if (value == NULL)
+    {
+      xfsm_verbose ("GetConnectionUnixProcessID() failed: %s", error->message);
+      g_error_free (error);
+      return FALSE;
+    }
+  else
+    {
+      g_variant_get (value, "(u)", calling_pid);
+      g_variant_unref (value);
+      return TRUE;
+    }
+}
+
+
+
+gboolean
+xfsm_delegate_is_authorized (GDBusMethodInvocation *invocation)
+{
+  g_return_val_if_fail (invocation != NULL, FALSE);
+
+  pid_t pid = -1;
+  if (!xfsm_dbus_get_caller_info (invocation, &pid))
+    return FALSE;
+  else
+    return pid > 0 && pid == getppid ();
+}
