@@ -1,3 +1,73 @@
+4.21.2 (2026-10-08)
+======
+- Add new libxfce4session-client library
+- Only set client's app ID once
+- Make save on shutdown work for dbus clients
+- Run discard command on delegate RemoveClient path
+- Don't drop all following toplevels if one of them is bad
+- Remove G_GNUC_PURE annotations
+- Validate ownership of client registration on unregister/remove
+- Require client_startup_id to be valid for 
+ManagerDelegate.RegisterClient
+- Fix two possible use-after-frees on XfsmClient
+- Don't drop delegate clients unless we get ClientDisconnected
+- Enable all settings UI for Wayland
+- Remove some unnecessary Wayland-specific code
+- Don't forcibly kill dbus clients if they don't save in time
+- Handle checkpoint/shutdown properly on Wayland
+- Make checkpointing work for dbus clients
+- Start ICE listener on Wayland if DISPLAY is set
+- Evict clients that haven't been seen in ~9 months
+- Don't ever synthesize RestartCommand
+- Carry properties around for non-xfsm-aware clients
+- Fix bug in client-id-is-empty check in dbus RegisterClient
+- Only allow parent process to use ManagerDelegate/ClientDelegate
+- Add the Manager.AttachClient dbus method
+- Load and store toplevels & properties from/to session state file
+- Wire up ClientDelegate dbus methods
+- Wire up ManagerDelegate dbus methods
+- Add defns for the new ManagerDelegate and ClientDelegate interfaces
+- Unexport clients from dbus when they are closed
+- xinitrc: Add DISPLAY and XAUTHORITY to env update
+- gobject-linter: Fix unnecessary_null_check
+- logout-dialog: Adjust warning level when grab fails
+- Remove G_GNUC_CONST
+- Rename settings dialog .desktop file
+- startxfce4: move XDG_RUNTIME_DIR setup out of --wayland-only block
+- cppcheck: Fix nullPointerRedundantCheck
+- cppcheck: Fix constVariable
+- cppcheck: Fix assertWithSideEffect
+- cppcheck: Fix unreadVariable
+- cppcheck: Fix knownConditionTrueFalse
+- cppcheck: Fix nullPointerOutOfResources
+- cppcheck: Fix redundantInitialization
+- cppcheck: Fix unusedStructMember
+- cppcheck: Fix invalidPrintfArgType_sint
+- cppcheck: Fix memleak
+- cppcheck: Fix invalidPrintfArgType_uint
+- cppcheck: Fix unusedAllocatedMemory
+- cppcheck: Fix mismatchAllocDealloc
+- cppcheck: Fix unknownMacro
+- gobject-linter: Fix signal_canonical_name
+- gobject-linter: Fix inconsistent_function_signature
+- gobject-linter: Fix use_g_steal_pointer
+- gobject-linter: Fix g_error_leak
+- gobject-linter: Fix g_param_spec_static_strings
+- gobject-linter: Fix strcmp_explicit_comparison
+- gobject-linter: Fix matching_declare_define
+- gobject-linter: Fix missing_autoptr_cleanup
+- gobject-linter: Fix missing_implementation
+- gobject-linter: Fix use_clear_functions
+- Do not compare gboolean to TRUE or FALSE
+- I18n: Update po/LINGUAS list
+- Accept a DBus bus name to own in the XFCE4_SESSION_DBUS_BUS_NAME env
+  var
+- logout-dialog: Do not create multiple dialogs
+- startxfce4: Add support for OpenBSD to kbd layout detection on wayland
+- portals: Add gnome-keyring as Secret provider
+- Translation Updates:
+  Czech, Hungarian, Italian, Lao, Slovenian
+
 4.21.1 (2025-12-29)
 ======
 - build: Rename POTFILES.in to POTFILES
