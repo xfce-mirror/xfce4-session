@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2025-07-18 10:58+0200\n"
+"POT-Creation-Date: 2026-10-09 00:55+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: umm <umm@pchome.com.tw>, 2003\n"
 "Language-Team: Chinese (Hong Kong) (http://app.transifex.com/xfce/xfce4-session/language/zh_HK/)\n"
@@ -41,6 +41,61 @@ msgstr ""
 msgid "xfce;wayland;desktop;environment;session;"
 msgstr ""
 
+#: libxfce4session-client/xfce-session-client-dbus.c:530
+msgid "(unknown)"
+msgstr "(不詳)"
+
+#: libxfce4session-client/xfce-session-client-dbus.c:533
+#, c-format
+msgid "Application '%s' cancelled logout"
+msgstr ""
+
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:260
+msgid ""
+"Your compositor does not support the xdg-session-management-v1 protocol"
+msgstr ""
+
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:307
+msgid "Compositor failed to respond to registration attempt in time"
+msgstr ""
+
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:328
+msgid "Another application took over the session during registration"
+msgstr ""
+
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:338
+msgid "Compositor did not respond with a client ID"
+msgstr ""
+
+#: libxfce4session-client/xfce-session-client-xsmp.c:748
+#, c-format
+msgid "Failed to connect to the session manager: %s"
+msgstr "未能連接工作階段管理員：%s"
+
+#: libxfce4session-client/xfce-session-client-xsmp.c:757
+msgid "Session manager did not return a valid client id"
+msgstr "工作階段管理員沒有傳回有效的用戶端 ID"
+
+#: libxfce4session-client/xfce-session-client.c:1031
+msgid "Session management client ID"
+msgstr "工作階段管理程式用戶端 ID"
+
+#: libxfce4session-client/xfce-session-client.c:1031
+msgid "ID"
+msgstr "ID"
+
+#: libxfce4session-client/xfce-session-client.c:1032
+msgid "Disable session management"
+msgstr "停用工作階段管理"
+
+#: libxfce4session-client/xfce-session-client.c:1048
+msgid "Session management options"
+msgstr "工作階段管理選項"
+
+#: libxfce4session-client/xfce-session-client.c:1048
+msgid "Show session management options"
+msgstr "顯示工作階段管理選項"
+
 #: libxfsm/xfsm-util.c:371
 msgid "Session"
 msgstr ""
@@ -61,23 +116,23 @@ msgstr "SOCKET ID"
 msgid "Version information"
 msgstr "版本資訊"
 
-#: settings/main.c:115 xfce4-session/main.c:363
+#: settings/main.c:115 xfce4-session/main.c:369
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "請輸入 '%s --help' 以瞭解用法。"
 
-#: settings/main.c:129 xfce4-session/main.c:373
+#: settings/main.c:129 xfce4-session/main.c:379
 #: xfce4-session-logout/main.c:121
 msgid "The Xfce development team. All rights reserved."
 msgstr "Xfce 開發團隊。保留所有權利。"
 
-#: settings/main.c:130 xfce4-session/main.c:374
+#: settings/main.c:130 xfce4-session/main.c:380
 #: xfce4-session-logout/main.c:124
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "請回報錯誤至 <%s>。"
 
-#: settings/main.c:138 xfce4-session/main.c:382
+#: settings/main.c:138 xfce4-session/main.c:388
 msgid "Unable to contact settings server"
 msgstr "無法聯絡設定伺服器"
 
@@ -118,7 +173,7 @@ msgid "Unable to save the session"
 msgstr "無法儲存工作階段"
 
 #: settings/session-editor.c:135 settings/session-editor.c:318
-#: xfce4-session/xfsm-manager.c:1327 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1368 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "關閉(_C)"
 
@@ -137,8 +192,8 @@ msgid "Are you sure you want to empty the session cache?"
 msgstr "確定要清空工作階段快取？"
 
 #: settings/session-editor.c:198 settings/session-editor.c:290
-#: settings/xfae-dialog.c:75 xfce4-session/xfsm-manager.c:727
-#: xfce4-session/xfsm-logout-dialog.c:227
+#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:743
+#: xfce4-session/xfsm-logout-dialog.c:218
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -190,7 +245,7 @@ msgstr "優先權"
 msgid "PID"
 msgstr "PID"
 
-#: settings/session-editor.c:831 settings/xfae-window.c:200
+#: settings/session-editor.c:831 settings/xfae-window.c:195
 msgid "Program"
 msgstr "程式"
 
@@ -198,43 +253,43 @@ msgstr "程式"
 msgid "Restart Style"
 msgstr "重新啟動樣式"
 
-#: settings/xfae-dialog.c:75 xfce4-session/xfsm-manager.c:728
+#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:744
 msgid "_OK"
 msgstr "好(_O)"
 
-#: settings/xfae-dialog.c:78 settings/xfae-window.c:254
+#: settings/xfae-dialog.c:73 settings/xfae-window.c:249
 msgid "Add application"
 msgstr "加入應用程式"
 
-#: settings/xfae-dialog.c:92
+#: settings/xfae-dialog.c:87
 msgid "Name:"
 msgstr "名稱："
 
-#: settings/xfae-dialog.c:107
+#: settings/xfae-dialog.c:102
 msgid "Description:"
 msgstr "說明："
 
-#: settings/xfae-dialog.c:121 settings/xfae-model.c:703
+#: settings/xfae-dialog.c:116 settings/xfae-model.c:698
 msgid "Command:"
 msgstr "指令"
 
-#: settings/xfae-dialog.c:134
+#: settings/xfae-dialog.c:129
 msgid "Trigger:"
 msgstr ""
 
-#: settings/xfae-dialog.c:205
+#: settings/xfae-dialog.c:200
 msgid "Select a command"
 msgstr "選擇指令"
 
-#: settings/xfae-dialog.c:206
+#: settings/xfae-dialog.c:201
 msgid "Cancel"
 msgstr "取消"
 
-#: settings/xfae-dialog.c:207
+#: settings/xfae-dialog.c:202
 msgid "OK"
 msgstr ""
 
-#: settings/xfae-dialog.c:254 settings/xfae-window.c:276
+#: settings/xfae-dialog.c:249 settings/xfae-window.c:271
 msgid "Edit application"
 msgstr "編輯應用程式"
 
@@ -270,75 +325,75 @@ msgstr ""
 msgid "on switch user"
 msgstr ""
 
-#: settings/xfae-model.c:485 settings/xfae-model.c:1198
-#: settings/xfae-model.c:1255
+#: settings/xfae-model.c:480 settings/xfae-model.c:1190
+#: settings/xfae-model.c:1247
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "未能開啟 %s 以寫入"
 
-#: settings/xfae-model.c:837
+#: settings/xfae-model.c:829
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "未能取消 %s 的連結：%s"
 
-#: settings/xfae-model.c:998
+#: settings/xfae-model.c:990
 #, c-format
 msgid "Failed to create file %s"
 msgstr "未能建立檔案 %s"
 
-#: settings/xfae-model.c:1022
+#: settings/xfae-model.c:1014
 #, c-format
 msgid "Failed to write file %s"
 msgstr "未能寫入檔案 %s"
 
-#: settings/xfae-model.c:1082
+#: settings/xfae-model.c:1074
 #, c-format
 msgid "Failed to open %s for reading"
 msgstr "未能開啟 %s 以讀取"
 
-#: settings/xfae-window.c:110
+#: settings/xfae-window.c:105
 msgid "Failed to set run hook"
 msgstr ""
 
-#: settings/xfae-window.c:225
+#: settings/xfae-window.c:220
 msgid "Trigger"
 msgstr ""
 
-#: settings/xfae-window.c:251 settings/xfae-window.c:340
+#: settings/xfae-window.c:246 settings/xfae-window.c:335
 msgid "Add"
 msgstr ""
 
-#: settings/xfae-window.c:260 settings/xfae-window.c:346
+#: settings/xfae-window.c:255 settings/xfae-window.c:341
 msgid "Remove"
 msgstr "移除"
 
-#: settings/xfae-window.c:263
+#: settings/xfae-window.c:258
 msgid "Remove application"
 msgstr ""
 
-#: settings/xfae-window.c:273
+#: settings/xfae-window.c:268
 msgid "Edit"
 msgstr ""
 
-#: settings/xfae-window.c:399
+#: settings/xfae-window.c:394
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "未能加入「%s」"
 
-#: settings/xfae-window.c:430 settings/xfae-window.c:439
+#: settings/xfae-window.c:424 settings/xfae-window.c:432
 msgid "Failed to remove item"
 msgstr "未能移除項目"
 
-#: settings/xfae-window.c:468
+#: settings/xfae-window.c:461
 msgid "Failed to edit item"
 msgstr "未能編輯項目"
 
-#: settings/xfae-window.c:488
+#: settings/xfae-window.c:481
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "未能編輯項目「%s」"
 
-#: settings/xfae-window.c:516
+#: settings/xfae-window.c:509
 msgid "Failed to toggle item"
 msgstr "未能切換項目"
 
@@ -408,7 +463,7 @@ msgstr "無論如何都要繼續"
 msgid "Try again"
 msgstr "重試"
 
-#: xfce4-session/xfsm-manager.c:592
+#: xfce4-session/xfsm-manager.c:605
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -417,130 +472,130 @@ msgid ""
 "incorrectly."
 msgstr "無法得知防失敗工作階段的名稱。可能原因：並未執行 xfcond (D-Bus 設置問題)；環境變量 $XDG_CONFIG_DIRS 的設定不正確 (一定要包括「%s」)，或是 xfce4-session 安裝不正確。"
 
-#: xfce4-session/xfsm-manager.c:617
+#: xfce4-session/xfsm-manager.c:630
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "指定的防失敗工作階段 (「%s」) 並未標記為防失敗工作階段。"
 
-#: xfce4-session/xfsm-manager.c:656
+#: xfce4-session/xfsm-manager.c:672
 msgid "The list of applications in the failsafe session is empty."
 msgstr "防失敗工作階段的應用程式清單是空的。"
 
-#: xfce4-session/xfsm-manager.c:740
+#: xfce4-session/xfsm-manager.c:756
 msgid "Name for the new session"
 msgstr ""
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:817
+#: xfce4-session/xfsm-manager.c:833
 msgid "Session Manager Error"
 msgstr "工作階段管理員出錯"
 
-#: xfce4-session/xfsm-manager.c:818
+#: xfce4-session/xfsm-manager.c:834
 msgid "Unable to load a failsafe session"
 msgstr "無法載入防失敗工作階段"
 
-#: xfce4-session/xfsm-manager.c:820
+#: xfce4-session/xfsm-manager.c:836
 msgid "_Quit"
 msgstr "結束(_Q)"
 
-#: xfce4-session/xfsm-manager.c:1317
+#: xfce4-session/xfsm-manager.c:1358
 msgid "Shutdown Failed"
 msgstr "未能關機"
 
-#: xfce4-session/xfsm-manager.c:1320
+#: xfce4-session/xfsm-manager.c:1361
 msgid "Failed to suspend session"
 msgstr "未能暫停工作階段"
 
-#: xfce4-session/xfsm-manager.c:1322
+#: xfce4-session/xfsm-manager.c:1363
 msgid "Failed to hibernate session"
 msgstr "未能休眠工作階段"
 
-#: xfce4-session/xfsm-manager.c:1324
+#: xfce4-session/xfsm-manager.c:1365
 msgid "Failed to hybrid sleep session"
 msgstr ""
 
-#: xfce4-session/xfsm-manager.c:1325
+#: xfce4-session/xfsm-manager.c:1366
 msgid "Failed to switch user"
 msgstr ""
 
-#: xfce4-session/xfsm-manager.c:1647
+#: xfce4-session/xfsm-manager.c:1734
 msgid "Can only terminate clients when in the idle state"
 msgstr "只能終止在閒置狀態的客戶端"
 
-#: xfce4-session/xfsm-manager.c:2355
+#: xfce4-session/xfsm-manager.c:2522
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "當請求檢查點時，工作階段管理員一定要處於閒置狀態"
 
-#: xfce4-session/xfsm-manager.c:2425 xfce4-session/xfsm-manager.c:2445
+#: xfce4-session/xfsm-manager.c:2595 xfce4-session/xfsm-manager.c:2615
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "當請求關機時，工作階段管理員一定要處於閒置狀態"
 
-#: xfce4-session/xfsm-manager.c:2482
+#: xfce4-session/xfsm-manager.c:2652
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr ""
 
-#: xfce4-session/xfsm-manager.c:2518 xfce4-session/xfsm-manager.c:2557
-#: xfce4-session/xfsm-manager.c:2595
+#: xfce4-session/xfsm-manager.c:2688 xfce4-session/xfsm-manager.c:2727
+#: xfce4-session/xfsm-manager.c:2765
 msgid "Session manager must be in idle state when requesting a sleep"
 msgstr ""
 
-#: xfce4-session/xfsm-manager.c:2722
+#: xfce4-session/xfsm-manager.c:2892
 msgid "Session manager must be in idle state when requesting a user switch"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:199
+#: xfce4-session/xfsm-logout-dialog.c:190
 #, c-format
 msgid "Log out %s"
 msgstr "登出 %s"
 
-#: xfce4-session/xfsm-logout-dialog.c:245
+#: xfce4-session/xfsm-logout-dialog.c:236
 msgid "_Log Out"
 msgstr "登出(_L)"
 
-#: xfce4-session/xfsm-logout-dialog.c:264
+#: xfce4-session/xfsm-logout-dialog.c:259
 msgid "_Restart and update"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:264
+#: xfce4-session/xfsm-logout-dialog.c:259
 msgid "_Restart"
 msgstr "重新啟動(_R)"
 
-#: xfce4-session/xfsm-logout-dialog.c:278
+#: xfce4-session/xfsm-logout-dialog.c:275
 msgid "Update and Shut _Down"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:278
+#: xfce4-session/xfsm-logout-dialog.c:275
 msgid "Shut _Down"
 msgstr "關機(_D)"
 
-#: xfce4-session/xfsm-logout-dialog.c:302
+#: xfce4-session/xfsm-logout-dialog.c:299
 msgid "Sus_pend"
 msgstr "暫停(_P)"
 
-#: xfce4-session/xfsm-logout-dialog.c:322
+#: xfce4-session/xfsm-logout-dialog.c:321
 msgid "_Hibernate"
 msgstr "休眠(_H)"
 
-#: xfce4-session/xfsm-logout-dialog.c:342
+#: xfce4-session/xfsm-logout-dialog.c:343
 msgid "H_ybrid Sleep"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:366
+#: xfce4-session/xfsm-logout-dialog.c:369
 msgid "Switch _User"
 msgstr ""
 
-#: xfce4-session/xfsm-logout-dialog.c:406
+#: xfce4-session/xfsm-logout-dialog.c:412
 msgid "An error occurred"
 msgstr "遭遇錯誤"
 
-#: xfce4-session/xfsm-shutdown.c:168
+#: xfce4-session/xfsm-shutdown.c:162
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "關機被 kiosk 設定阻擋"
 
-#: xfce4-session/xfsm-shutdown.c:225
+#: xfce4-session/xfsm-shutdown.c:219
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "未知關機方法 %d"
@@ -614,16 +669,16 @@ msgid ""
 "system."
 msgstr ""
 
-#: settings/xfce-session-settings.desktop.in:3
+#: settings/xfce4-session-settings.desktop.in:3
 #: settings/xfce4-session-settings.ui:61
 msgid "Session and Startup"
 msgstr "工作階段與啟動"
 
-#: settings/xfce-session-settings.desktop.in:4
+#: settings/xfce4-session-settings.desktop.in:4
 msgid "Customize desktop startup"
 msgstr ""
 
-#: settings/xfce-session-settings.desktop.in:11
+#: settings/xfce4-session-settings.desktop.in:11
 msgid ""
 "session;settings;preferences;manager;startup;login;logout;shutdown;lock "
 "screen;application;autostart;launch;services;daemon;agent;"
