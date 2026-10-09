@@ -4,7 +4,7 @@
 # 
 # Translators:
 # marcin mikołajczak <me@mkljczk.pl>, 2016
-# Marek Adamski, 2023-2025
+# Marek Adamski, 2023-2026
 # Marek Adamski, 2020
 # Marek Adamski, 2020
 # Marek Adamski, 2017-2021
@@ -18,9 +18,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2025-07-18 10:58+0200\n"
+"POT-Creation-Date: 2026-10-09 00:55+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
-"Last-Translator: Marek Adamski, 2023-2025\n"
+"Last-Translator: Marek Adamski, 2023-2026\n"
 "Language-Team: Polish (http://app.transifex.com/xfce/xfce4-session/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -48,6 +48,61 @@ msgstr "Sesja Xfce (Wayland)"
 msgid "xfce;wayland;desktop;environment;session;"
 msgstr "xfce;wayland;pulpit;środowisko;sesja;"
 
+#: libxfce4session-client/xfce-session-client-dbus.c:530
+msgid "(unknown)"
+msgstr "(nieznany)"
+
+#: libxfce4session-client/xfce-session-client-dbus.c:533
+#, c-format
+msgid "Application '%s' cancelled logout"
+msgstr "Program „%s” anulował wylogowanie"
+
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:260
+msgid ""
+"Your compositor does not support the xdg-session-management-v1 protocol"
+msgstr "Ten menedżer składania nie obsługuje protokołu xdg-session-management-v1"
+
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:307
+msgid "Compositor failed to respond to registration attempt in time"
+msgstr "Menedżer składania nie odpowiedział na próbę rejestracji w wyznaczonym czasie"
+
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:328
+msgid "Another application took over the session during registration"
+msgstr "Inny program przejął sesję podczas rejestracji"
+
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:338
+msgid "Compositor did not respond with a client ID"
+msgstr "Menedżer składania nie odpowiedział, podając identyfikator klienta"
+
+#: libxfce4session-client/xfce-session-client-xsmp.c:748
+#, c-format
+msgid "Failed to connect to the session manager: %s"
+msgstr "Nie udało się połączyć z menedżerem sesji: %s"
+
+#: libxfce4session-client/xfce-session-client-xsmp.c:757
+msgid "Session manager did not return a valid client id"
+msgstr "Menedżer sesji nie zwrócił poprawnego identyfikatora klienta"
+
+#: libxfce4session-client/xfce-session-client.c:1031
+msgid "Session management client ID"
+msgstr "Identyfikator klienta zarządzania sesją"
+
+#: libxfce4session-client/xfce-session-client.c:1031
+msgid "ID"
+msgstr "Identyfikator"
+
+#: libxfce4session-client/xfce-session-client.c:1032
+msgid "Disable session management"
+msgstr "Wyłącz zarządzanie sesją"
+
+#: libxfce4session-client/xfce-session-client.c:1048
+msgid "Session management options"
+msgstr "Opcje zarządzania sesją"
+
+#: libxfce4session-client/xfce-session-client.c:1048
+msgid "Show session management options"
+msgstr "Pokaż opcje zarządzania sesją"
+
 #: libxfsm/xfsm-util.c:371
 msgid "Session"
 msgstr "Sesja"
@@ -68,23 +123,23 @@ msgstr "ID GNIAZDA"
 msgid "Version information"
 msgstr "Wyświetla informacje o wersji"
 
-#: settings/main.c:115 xfce4-session/main.c:363
+#: settings/main.c:115 xfce4-session/main.c:369
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Proszę wprowadzić „%s --help”, aby wypisać komunikat pomocy."
 
-#: settings/main.c:129 xfce4-session/main.c:373
+#: settings/main.c:129 xfce4-session/main.c:379
 #: xfce4-session-logout/main.c:121
 msgid "The Xfce development team. All rights reserved."
 msgstr "Zespół twórców środowiska Xfce. Wszystkie prawa zastrzeżone."
 
-#: settings/main.c:130 xfce4-session/main.c:374
+#: settings/main.c:130 xfce4-session/main.c:380
 #: xfce4-session-logout/main.c:124
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Proszę zgłaszać błędy na adres <%s>."
 
-#: settings/main.c:138 xfce4-session/main.c:382
+#: settings/main.c:138 xfce4-session/main.c:388
 msgid "Unable to contact settings server"
 msgstr "Nie można połączyć z serwerem ustawień"
 
@@ -125,7 +180,7 @@ msgid "Unable to save the session"
 msgstr "Nie można zapisać sesji"
 
 #: settings/session-editor.c:135 settings/session-editor.c:318
-#: xfce4-session/xfsm-manager.c:1327 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1368 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "Za_mknij"
 
@@ -144,8 +199,8 @@ msgid "Are you sure you want to empty the session cache?"
 msgstr "Wyczyścić pamięć podręczną sesji?"
 
 #: settings/session-editor.c:198 settings/session-editor.c:290
-#: settings/xfae-dialog.c:75 xfce4-session/xfsm-manager.c:727
-#: xfce4-session/xfsm-logout-dialog.c:227
+#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:743
+#: xfce4-session/xfsm-logout-dialog.c:218
 msgid "_Cancel"
 msgstr "_Anuluj"
 
@@ -197,7 +252,7 @@ msgstr "Priorytet"
 msgid "PID"
 msgstr "Identyfikator"
 
-#: settings/session-editor.c:831 settings/xfae-window.c:200
+#: settings/session-editor.c:831 settings/xfae-window.c:195
 msgid "Program"
 msgstr "Program"
 
@@ -205,43 +260,43 @@ msgstr "Program"
 msgid "Restart Style"
 msgstr "Sposób ponownego uruchamiania"
 
-#: settings/xfae-dialog.c:75 xfce4-session/xfsm-manager.c:728
+#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:744
 msgid "_OK"
 msgstr "_OK"
 
-#: settings/xfae-dialog.c:78 settings/xfae-window.c:254
+#: settings/xfae-dialog.c:73 settings/xfae-window.c:249
 msgid "Add application"
 msgstr "Dodawanie programu"
 
-#: settings/xfae-dialog.c:92
+#: settings/xfae-dialog.c:87
 msgid "Name:"
 msgstr "Nazwa:"
 
-#: settings/xfae-dialog.c:107
+#: settings/xfae-dialog.c:102
 msgid "Description:"
 msgstr "Opis:"
 
-#: settings/xfae-dialog.c:121 settings/xfae-model.c:703
+#: settings/xfae-dialog.c:116 settings/xfae-model.c:698
 msgid "Command:"
 msgstr "Polecenie:"
 
-#: settings/xfae-dialog.c:134
+#: settings/xfae-dialog.c:129
 msgid "Trigger:"
 msgstr "Wyzwalacz:"
 
-#: settings/xfae-dialog.c:205
+#: settings/xfae-dialog.c:200
 msgid "Select a command"
 msgstr "Wybór pliku"
 
-#: settings/xfae-dialog.c:206
+#: settings/xfae-dialog.c:201
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: settings/xfae-dialog.c:207
+#: settings/xfae-dialog.c:202
 msgid "OK"
 msgstr "OK"
 
-#: settings/xfae-dialog.c:254 settings/xfae-window.c:276
+#: settings/xfae-dialog.c:249 settings/xfae-window.c:271
 msgid "Edit application"
 msgstr "Edytowanie elementu"
 
@@ -277,75 +332,75 @@ msgstr "przy usypianiu hybrydowym"
 msgid "on switch user"
 msgstr "przy przełączaniu użytkownika"
 
-#: settings/xfae-model.c:485 settings/xfae-model.c:1198
-#: settings/xfae-model.c:1255
+#: settings/xfae-model.c:480 settings/xfae-model.c:1190
+#: settings/xfae-model.c:1247
 #, c-format
 msgid "Failed to open %s for writing"
 msgstr "Nie udało się otworzyć pliku „%s” do zapisu"
 
-#: settings/xfae-model.c:837
+#: settings/xfae-model.c:829
 #, c-format
 msgid "Failed to unlink %s: %s"
 msgstr "Nie udało się usunąć „%s”: %s"
 
-#: settings/xfae-model.c:998
+#: settings/xfae-model.c:990
 #, c-format
 msgid "Failed to create file %s"
 msgstr "Nie udało się utworzyć pliku „%s”"
 
-#: settings/xfae-model.c:1022
+#: settings/xfae-model.c:1014
 #, c-format
 msgid "Failed to write file %s"
 msgstr "Nie udało się zapisać pliku „%s”"
 
-#: settings/xfae-model.c:1082
+#: settings/xfae-model.c:1074
 #, c-format
 msgid "Failed to open %s for reading"
 msgstr "Nie udało się otworzyć pliku „%s” do odczytu"
 
-#: settings/xfae-window.c:110
+#: settings/xfae-window.c:105
 msgid "Failed to set run hook"
 msgstr "Nie udało się ustawić zaczepu"
 
-#: settings/xfae-window.c:225
+#: settings/xfae-window.c:220
 msgid "Trigger"
 msgstr "Wyzwalacz"
 
-#: settings/xfae-window.c:251 settings/xfae-window.c:340
+#: settings/xfae-window.c:246 settings/xfae-window.c:335
 msgid "Add"
 msgstr "Dodaj"
 
-#: settings/xfae-window.c:260 settings/xfae-window.c:346
+#: settings/xfae-window.c:255 settings/xfae-window.c:341
 msgid "Remove"
 msgstr "Usuń"
 
-#: settings/xfae-window.c:263
+#: settings/xfae-window.c:258
 msgid "Remove application"
 msgstr "Usuwanie programu"
 
-#: settings/xfae-window.c:273
+#: settings/xfae-window.c:268
 msgid "Edit"
 msgstr "Edycja"
 
-#: settings/xfae-window.c:399
+#: settings/xfae-window.c:394
 #, c-format
 msgid "Failed adding \"%s\""
 msgstr "Nie udało się dodać „%s”"
 
-#: settings/xfae-window.c:430 settings/xfae-window.c:439
+#: settings/xfae-window.c:424 settings/xfae-window.c:432
 msgid "Failed to remove item"
 msgstr "Nie udało się usunąć elementu"
 
-#: settings/xfae-window.c:468
+#: settings/xfae-window.c:461
 msgid "Failed to edit item"
 msgstr "Nie udało się edytować elementu"
 
-#: settings/xfae-window.c:488
+#: settings/xfae-window.c:481
 #, c-format
 msgid "Failed to edit item \"%s\""
 msgstr "Nie udało się edytować elementu „%s”"
 
-#: settings/xfae-window.c:516
+#: settings/xfae-window.c:509
 msgid "Failed to toggle item"
 msgstr "Nie udało się przełączyć elementu"
 
@@ -415,7 +470,7 @@ msgstr "Kontynuuj"
 msgid "Try again"
 msgstr "Spróbuj ponownie"
 
-#: xfce4-session/xfsm-manager.c:592
+#: xfce4-session/xfsm-manager.c:605
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -424,130 +479,130 @@ msgid ""
 "incorrectly."
 msgstr "Nie można określić nazwy sesji awaryjnej. Prawdopodobne przyczyny: program xfconfd nie jest uruchomiony (problem z konfiguracją D-Bus), zmienna środowiskowa $XDG_CONFIG_DIRS jest ustawiona nieprawidłowo (musi zawierać „%s”) lub program xfce4-session nie został poprawnie zainstalowany."
 
-#: xfce4-session/xfsm-manager.c:617
+#: xfce4-session/xfsm-manager.c:630
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Określona sesja „%s” nie jest oznaczona jako awaryjna."
 
-#: xfce4-session/xfsm-manager.c:656
+#: xfce4-session/xfsm-manager.c:672
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Lista programów sesji awaryjnej jest pusta."
 
-#: xfce4-session/xfsm-manager.c:740
+#: xfce4-session/xfsm-manager.c:756
 msgid "Name for the new session"
 msgstr "Nazwa nowej sesji"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:817
+#: xfce4-session/xfsm-manager.c:833
 msgid "Session Manager Error"
 msgstr "Błąd menedżera sesji"
 
-#: xfce4-session/xfsm-manager.c:818
+#: xfce4-session/xfsm-manager.c:834
 msgid "Unable to load a failsafe session"
 msgstr "Nie można wczytać sesji awaryjnej"
 
-#: xfce4-session/xfsm-manager.c:820
+#: xfce4-session/xfsm-manager.c:836
 msgid "_Quit"
 msgstr "Za_kończ"
 
-#: xfce4-session/xfsm-manager.c:1317
+#: xfce4-session/xfsm-manager.c:1358
 msgid "Shutdown Failed"
 msgstr "Nie udało się wyłączyć komputera"
 
-#: xfce4-session/xfsm-manager.c:1320
+#: xfce4-session/xfsm-manager.c:1361
 msgid "Failed to suspend session"
 msgstr "Nie udało się wstrzymać sesji"
 
-#: xfce4-session/xfsm-manager.c:1322
+#: xfce4-session/xfsm-manager.c:1363
 msgid "Failed to hibernate session"
 msgstr "Nie udało się zahibernować sesji"
 
-#: xfce4-session/xfsm-manager.c:1324
+#: xfce4-session/xfsm-manager.c:1365
 msgid "Failed to hybrid sleep session"
 msgstr "Nie udało się uśpić hybrydowo sesji"
 
-#: xfce4-session/xfsm-manager.c:1325
+#: xfce4-session/xfsm-manager.c:1366
 msgid "Failed to switch user"
 msgstr "Nie udało się przełączyć użytkownika"
 
-#: xfce4-session/xfsm-manager.c:1647
+#: xfce4-session/xfsm-manager.c:1734
 msgid "Can only terminate clients when in the idle state"
 msgstr "Można jedynie zakończyć programy w stanie bezczynności"
 
-#: xfce4-session/xfsm-manager.c:2355
+#: xfce4-session/xfsm-manager.c:2522
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Menedżer sesji musi być w stanie bezczynności podczas żądania utworzenia punktu kontrolnego"
 
-#: xfce4-session/xfsm-manager.c:2425 xfce4-session/xfsm-manager.c:2445
+#: xfce4-session/xfsm-manager.c:2595 xfce4-session/xfsm-manager.c:2615
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Menedżer sesji musi być w stanie bezczynności podczas żądania wyłączenia"
 
-#: xfce4-session/xfsm-manager.c:2482
+#: xfce4-session/xfsm-manager.c:2652
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Menedżer sesji musi być w stanie bezczynności podczas żądania ponownego uruchomienia"
 
-#: xfce4-session/xfsm-manager.c:2518 xfce4-session/xfsm-manager.c:2557
-#: xfce4-session/xfsm-manager.c:2595
+#: xfce4-session/xfsm-manager.c:2688 xfce4-session/xfsm-manager.c:2727
+#: xfce4-session/xfsm-manager.c:2765
 msgid "Session manager must be in idle state when requesting a sleep"
 msgstr "Menedżer sesji musi być w stanie bezczynności podczas żądania uśpienia"
 
-#: xfce4-session/xfsm-manager.c:2722
+#: xfce4-session/xfsm-manager.c:2892
 msgid "Session manager must be in idle state when requesting a user switch"
 msgstr "Menedżer sesji musi być w stanie bezczynności podczas żądania przełączenia użytkownika"
 
-#: xfce4-session/xfsm-logout-dialog.c:199
+#: xfce4-session/xfsm-logout-dialog.c:190
 #, c-format
 msgid "Log out %s"
 msgstr "Kończenie sesji użytkownika %s"
 
-#: xfce4-session/xfsm-logout-dialog.c:245
+#: xfce4-session/xfsm-logout-dialog.c:236
 msgid "_Log Out"
 msgstr "Wy_loguj"
 
-#: xfce4-session/xfsm-logout-dialog.c:264
+#: xfce4-session/xfsm-logout-dialog.c:259
 msgid "_Restart and update"
 msgstr "_Uruchom ponownie i zaktualizuj"
 
-#: xfce4-session/xfsm-logout-dialog.c:264
+#: xfce4-session/xfsm-logout-dialog.c:259
 msgid "_Restart"
 msgstr "_Uruchom ponownie"
 
-#: xfce4-session/xfsm-logout-dialog.c:278
+#: xfce4-session/xfsm-logout-dialog.c:275
 msgid "Update and Shut _Down"
 msgstr "Zaktualizuj i _wyłącz"
 
-#: xfce4-session/xfsm-logout-dialog.c:278
+#: xfce4-session/xfsm-logout-dialog.c:275
 msgid "Shut _Down"
 msgstr "_Wyłącz"
 
-#: xfce4-session/xfsm-logout-dialog.c:302
+#: xfce4-session/xfsm-logout-dialog.c:299
 msgid "Sus_pend"
 msgstr "W_strzymaj"
 
-#: xfce4-session/xfsm-logout-dialog.c:322
+#: xfce4-session/xfsm-logout-dialog.c:321
 msgid "_Hibernate"
 msgstr "Za_hibernuj"
 
-#: xfce4-session/xfsm-logout-dialog.c:342
+#: xfce4-session/xfsm-logout-dialog.c:343
 msgid "H_ybrid Sleep"
 msgstr "Uśpij h_ybrydowo"
 
-#: xfce4-session/xfsm-logout-dialog.c:366
+#: xfce4-session/xfsm-logout-dialog.c:369
 msgid "Switch _User"
 msgstr "_Przełącz użytkownika"
 
-#: xfce4-session/xfsm-logout-dialog.c:406
+#: xfce4-session/xfsm-logout-dialog.c:412
 msgid "An error occurred"
 msgstr "Wystąpił błąd"
 
-#: xfce4-session/xfsm-shutdown.c:168
+#: xfce4-session/xfsm-shutdown.c:162
 msgid "Shutdown is blocked by the kiosk settings"
 msgstr "Wyłączanie jest zablokowane przez ustawienia kiosku"
 
-#: xfce4-session/xfsm-shutdown.c:225
+#: xfce4-session/xfsm-shutdown.c:219
 #, c-format
 msgid "Unknown shutdown method %d"
 msgstr "Nieznana metoda wyłączenia %d"
@@ -621,16 +676,16 @@ msgid ""
 "system."
 msgstr "Uwierzytelnianie jest wymagane do wyłączenia, ponownego uruchomienia, wstrzymania lub hibernowania systemu."
 
-#: settings/xfce-session-settings.desktop.in:3
+#: settings/xfce4-session-settings.desktop.in:3
 #: settings/xfce4-session-settings.ui:61
 msgid "Session and Startup"
 msgstr "Sesja i uruchamianie"
 
-#: settings/xfce-session-settings.desktop.in:4
+#: settings/xfce4-session-settings.desktop.in:4
 msgid "Customize desktop startup"
 msgstr "Konfiguruje ustawienia środowiska graficznego"
 
-#: settings/xfce-session-settings.desktop.in:11
+#: settings/xfce4-session-settings.desktop.in:11
 msgid ""
 "session;settings;preferences;manager;startup;login;logout;shutdown;lock "
 "screen;application;autostart;launch;services;daemon;agent;"
