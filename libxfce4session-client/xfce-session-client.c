@@ -770,40 +770,56 @@ xfce_session_client_parse_argv (gint argc,
   if (argc == 0 || argv == NULL)
     return;
 
+  gchar *argv0 = NULL;
+  if (argc > 0 && !g_path_is_absolute (argv[0]) && strchr (argv[0], G_DIR_SEPARATOR) != NULL)
+    {
+      // The command binary itself is a relative path (and not a bare name that
+      // could be resolved through PATH), so we need to prepend the current
+      // working directory.  Otherwise the SM will not be able to launch it.
+      argv0 = g_strconcat (g_get_current_dir (), G_DIR_SEPARATOR_S, argv[0], NULL);
+    }
+
   GStrvBuilder *clone_builder = g_strv_builder_new ();
 
   for (gint i = 0; i < argc; ++i)
     {
-      gint n_args;
-      const gchar *arg_client_id = command_peek_client_id ((const gchar *const *) argv, i, &n_args);
-
-      if (n_args > 0)
+      if (i == 0 && argv0 != NULL)
         {
-          if (arg_client_id != NULL && client_id != NULL)
-            *client_id = g_strdup (arg_client_id);
-          i += n_args - 1;
+          g_strv_builder_add (clone_builder, argv0);
         }
-#ifdef ENABLE_X11
-      else if (display_is_x11 && (g_strcmp0 (argv[i], DPY_ARG) == 0 || g_str_has_prefix (argv[i], DPY_ARG "=")))
-        {
-          got_x11_display = TRUE;
-          if (argv[i][strlen (DPY_ARG)] != '=')
-            i++;
-        }
-#endif
       else
         {
-          if (strcmp (argv[i], "--sm-client-disable") == 0)
-            startup_options.sm_disable = TRUE;
+          gint n_args;
+          const gchar *arg_client_id = command_peek_client_id ((const gchar *const *) argv, i, &n_args);
 
-          g_strv_builder_add (clone_builder, argv[i]);
+          if (n_args > 0)
+            {
+              if (arg_client_id != NULL && client_id != NULL)
+                *client_id = g_strdup (arg_client_id);
+              i += n_args - 1;
+            }
+#ifdef ENABLE_X11
+          else if (display_is_x11 && (g_strcmp0 (argv[i], DPY_ARG) == 0 || g_str_has_prefix (argv[i], DPY_ARG "=")))
+            {
+              got_x11_display = TRUE;
+              if (argv[i][strlen (DPY_ARG)] != '=')
+                i++;
+            }
+#endif
+          else
+            {
+              if (strcmp (argv[i], "--sm-client-disable") == 0)
+                startup_options.sm_disable = TRUE;
+
+              g_strv_builder_add (clone_builder, argv[i]);
+            }
         }
     }
 
   GStrvBuilder *restart_builder = g_strv_builder_new ();
   for (gint i = 0; i < argc; ++i)
     {
-      g_strv_builder_add (restart_builder, argv[i]);
+      g_strv_builder_add (restart_builder, i == 0 && argv0 != NULL ? argv0 : argv[i]);
     }
 
 #ifdef ENABLE_X11
@@ -830,6 +846,7 @@ xfce_session_client_parse_argv (gint argc,
 
   g_strv_builder_unref (restart_builder);
   g_strv_builder_unref (clone_builder);
+  g_free (argv0);
 }
 
 void
