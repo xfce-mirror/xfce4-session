@@ -40,6 +40,7 @@ typedef struct _XfceSessionClientDBusPrivate
 
   gboolean sent_quit_requested;
   gboolean shutdown_cancelled;
+  gboolean unregister_on_disconnect;
 } XfceSessionClientDBusPrivate;
 
 typedef enum
@@ -75,6 +76,9 @@ xfce_session_client_dbus_set_current_directory (XfceSessionClient *session_clien
                                                 const gchar *current_directory);
 static void
 xfce_session_client_dbus_sync_commands (XfceSessionClient *session_client);
+
+static void
+xfce_session_client_dbus_do_teardown (XfceSessionClientDBus *dsession_client);
 
 static void
 dbussm_request_save_state (XfceSessionClientDBus *dsession_client,
@@ -129,7 +133,7 @@ xfce_session_client_dbus_finalize (GObject *obj)
 {
   XfceSessionClientDBus *dsession_client = XFCE_SESSION_CLIENT_DBUS (obj);
 
-  _xfce_session_client_dbus_do_teardown (dsession_client);
+  xfce_session_client_dbus_do_teardown (dsession_client);
 
   G_OBJECT_CLASS (xfce_session_client_dbus_parent_class)->finalize (obj);
 }
@@ -163,6 +167,7 @@ xfce_session_client_dbus_register (XfceSessionClientDBus *dsession_client,
                                                               NULL,
                                                               error);
 
+  priv->unregister_on_disconnect = ret;
   g_free (app_id);
   return ret;
 }
@@ -182,7 +187,7 @@ xfce_session_client_dbus_disconnect (XfceSessionClient *session_client)
   XfceSessionClientDBus *dsession_client = XFCE_SESSION_CLIENT_DBUS (session_client);
   XfceSessionClientDBusPrivate *priv = GET_PRIV (dsession_client);
 
-  if (priv->manager_proxy != NULL && priv->client_object_path != NULL)
+  if (priv->manager_proxy != NULL && priv->client_object_path != NULL && priv->unregister_on_disconnect)
     {
       GError *error = NULL;
       if (!xfsm_dbus_manager_call_unregister_client_sync (priv->manager_proxy,
@@ -195,7 +200,7 @@ xfce_session_client_dbus_disconnect (XfceSessionClient *session_client)
         }
     }
 
-  _xfce_session_client_dbus_do_teardown (dsession_client);
+  xfce_session_client_dbus_do_teardown (dsession_client);
 }
 
 static void
@@ -472,6 +477,22 @@ xfce_session_client_dbus_sync_commands (XfceSessionClient *session_client)
 }
 
 static void
+xfce_session_client_dbus_do_teardown (XfceSessionClientDBus *dsession_client)
+{
+  XfceSessionClientDBusPrivate *priv = GET_PRIV (dsession_client);
+
+  priv->unregister_on_disconnect = FALSE;
+  g_clear_pointer (&priv->client_object_path, g_free);
+  g_clear_object (&priv->client_proxy);
+  g_clear_object (&priv->manager_proxy);
+  if (priv->connection != NULL)
+    {
+      g_signal_handlers_disconnect_by_data (priv->connection, dsession_client);
+      g_clear_object (&priv->connection);
+    }
+}
+
+static void
 dbussm_request_save_state (XfceSessionClientDBus *dsession_client,
                            XfsmDbusClient *client_proxy)
 {
@@ -694,7 +715,7 @@ dbus_connection_closed (GDBusConnection *connection,
                         GError *error,
                         XfceSessionClient *session_client)
 {
-  _xfce_session_client_dbus_do_teardown (XFCE_SESSION_CLIENT_DBUS (session_client));
+  xfce_session_client_dbus_do_teardown (XFCE_SESSION_CLIENT_DBUS (session_client));
   if ((remote_peer_vanished || error != NULL) && !xfce_session_client_is_connected (session_client))
     {
       _xfce_session_client_start_auto_reconnect (session_client);
@@ -712,11 +733,11 @@ dbus_sm_name_owner_changed (GDBusProxy *proxy,
       // Only tear down the DBus connections, not everything.  The
       // XfceSessionClientWlXdg backend is a subclass, and it might survive the
       // DBus server going away.
-      _xfce_session_client_dbus_do_teardown (XFCE_SESSION_CLIENT_DBUS (session_client));
+      xfce_session_client_dbus_do_teardown (XFCE_SESSION_CLIENT_DBUS (session_client));
 
       // If is_connected() returns TRUE, then we're actually
-      // XfceSessionClientWlXdg, and we should not tear things down and emit
-      // the disconnected signal.
+      // XfceSessionClientWlXdg with an active xdg_session_v1, and we should
+      // not tear things down and try to reconnect.
       if (!xfce_session_client_is_connected (session_client))
         {
           _xfce_session_client_start_auto_reconnect (session_client);
@@ -740,7 +761,7 @@ _xfce_session_client_dbus_do_connect (XfceSessionClientDBus *dsession_client,
       priv->connection = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, error);
       if (priv->connection == NULL)
         {
-          _xfce_session_client_dbus_do_teardown (dsession_client);
+          xfce_session_client_dbus_do_teardown (dsession_client);
           _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
           return FALSE;
         }
@@ -758,7 +779,7 @@ _xfce_session_client_dbus_do_connect (XfceSessionClientDBus *dsession_client,
                                                               error);
       if (priv->manager_proxy == NULL)
         {
-          _xfce_session_client_dbus_do_teardown (dsession_client);
+          xfce_session_client_dbus_do_teardown (dsession_client);
           _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
           return FALSE;
         }
@@ -770,7 +791,7 @@ _xfce_session_client_dbus_do_connect (XfceSessionClientDBus *dsession_client,
     {
       if (!register_func (dsession_client, error))
         {
-          _xfce_session_client_dbus_do_teardown (dsession_client);
+          xfce_session_client_dbus_do_teardown (dsession_client);
           _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
           return FALSE;
         }
@@ -788,7 +809,7 @@ _xfce_session_client_dbus_do_connect (XfceSessionClientDBus *dsession_client,
                                                             error);
       if (priv->client_proxy == NULL)
         {
-          _xfce_session_client_dbus_do_teardown (dsession_client);
+          xfce_session_client_dbus_do_teardown (dsession_client);
           _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
           return FALSE;
         }
@@ -801,7 +822,7 @@ _xfce_session_client_dbus_do_connect (XfceSessionClientDBus *dsession_client,
                                               NULL,
                                               error))
         {
-          _xfce_session_client_dbus_do_teardown (dsession_client);
+          xfce_session_client_dbus_do_teardown (dsession_client);
           _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
           return FALSE;
         }
@@ -840,19 +861,4 @@ _xfce_session_client_dbus_set_client_object_path (XfceSessionClientDBus *dsessio
   XfceSessionClientDBusPrivate *priv = GET_PRIV (dsession_client);
   g_free (priv->client_object_path);
   priv->client_object_path = g_strdup (object_path);
-}
-
-void
-_xfce_session_client_dbus_do_teardown (XfceSessionClientDBus *dsession_client)
-{
-  XfceSessionClientDBusPrivate *priv = GET_PRIV (dsession_client);
-
-  g_clear_pointer (&priv->client_object_path, g_free);
-  g_clear_object (&priv->client_proxy);
-  g_clear_object (&priv->manager_proxy);
-  if (priv->connection != NULL)
-    {
-      g_signal_handlers_disconnect_by_data (priv->connection, dsession_client);
-      g_clear_object (&priv->connection);
-    }
 }
