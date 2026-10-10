@@ -178,7 +178,12 @@
              Returns:
              @client_id: The object path of the newly registered client
 
-             Register the caller as a Session Management client.
+             Register the caller as a Session Management client. If
+             @client_startup_id is the empty string, the session manager will use
+             @app_id as the client's startup ID.
+
+             If the client ID ends up colliding with an existing client's ID, a
+             new one will be generated.
         -->
         <method name="RegisterClient">
             <arg direction="in" name="app_id" type="s" />

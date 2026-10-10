@@ -2916,6 +2916,19 @@ xfsm_manager_dbus_register_client (XfsmDbusManager *object,
                 ? g_strdup (arg_client_startup_id)
                 : g_strdup (arg_app_id);
 
+  for (GList *lp = g_queue_peek_head (manager->running_clients); lp != NULL; lp = lp->next)
+    {
+      XfsmClient *other_client = XFSM_CLIENT (lp->data);
+      if (g_strcmp0 (xfsm_client_get_id (other_client), client_id) == 0)
+        {
+          /* a running client already has claimed this ID, so generate a
+           * new random ID */
+          g_free (client_id);
+          client_id = xfsm_client_generate_id (NULL);
+          break;
+        }
+    }
+
   /* create a new dbus-based client */
   client = xfsm_client_new (manager, NULL, manager->connection, FALSE);
 
