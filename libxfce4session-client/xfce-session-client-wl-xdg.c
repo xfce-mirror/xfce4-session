@@ -377,7 +377,7 @@ xfce_session_client_wl_xdg_connect (XfceSessionClient *session_client,
                 }
 
 #ifdef HAVE_GDK_WAYLAND_WINDOW_XDG_TOPLEVEL_REALIZE
-              GdkWindow *gdk_window = gtk_widget_get_window (GTK_WIDGET (window));
+              GdkWindow *gdk_window = gtk_widget_get_window (GTK_WIDGET (toplevel->window));
               struct xdg_toplevel *xdg_toplevel = gdk_window != NULL ? gdk_wayland_window_get_xdg_toplevel (gdk_window) : NULL;
 #else
               struct xdg_toplevel *xdg_toplevel = surfaces_get_xdg_toplevel_for_window (toplevel->window);
@@ -618,7 +618,7 @@ xfce_session_client_wl_xdg_register_window (XfceSessionClientWlXdg *wxsession_cl
 #ifdef HAVE_GDK_WAYLAND_WINDOW_XDG_TOPLEVEL_REALIZE
   if (gtk_widget_get_window (GTK_WIDGET (window)) != NULL)
     {
-      window_realized (window);
+      window_realized (GTK_WIDGET (window));
     }
   g_signal_connect (window, "realize", G_CALLBACK (window_realized), NULL);
 #endif
