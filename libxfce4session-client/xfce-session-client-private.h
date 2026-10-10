@@ -118,6 +118,9 @@ guint
 _xfce_session_client_class_quit_signal_id (void);
 
 void
+_xfce_session_client_disconnect_internal (XfceSessionClient *session_client);
+
+void
 _xfce_session_client_set_client_id (XfceSessionClient *session_client,
                                     const gchar *client_id);
 

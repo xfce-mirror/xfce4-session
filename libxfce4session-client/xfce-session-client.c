@@ -1318,6 +1318,21 @@ xfce_session_client_connect (XfceSessionClient *session_client,
   return XFCE_SESSION_CLIENT_GET_CLASS (session_client)->connect (session_client, error);
 }
 
+void
+_xfce_session_client_disconnect_internal (XfceSessionClient *session_client)
+{
+  XFCE_SESSION_CLIENT_GET_CLASS (session_client)->disconnect (session_client);
+
+#ifdef ENABLE_X11
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    {
+      gdk_x11_set_sm_client_id (NULL);
+    }
+#endif
+
+  _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
+}
+
 /**
  * xfce_session_client_disconnect:
  * @session_client: An #XfceSessionClient
@@ -1343,16 +1358,7 @@ xfce_session_client_disconnect (XfceSessionClient *session_client)
   g_clear_handle_id (&priv->auto_reconnect_id, g_source_remove);
   priv->disconnect_requested = TRUE;
 
-  XFCE_SESSION_CLIENT_GET_CLASS (session_client)->disconnect (session_client);
-
-#ifdef ENABLE_X11
-  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-    {
-      gdk_x11_set_sm_client_id (NULL);
-    }
-#endif
-
-  _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
+  _xfce_session_client_disconnect_internal (session_client);
 }
 
 /**

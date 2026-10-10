@@ -750,7 +750,7 @@ registry_global_remove (void *data,
 
   if (name == wxsession_client->xdg_manager_name)
     {
-      xfce_session_client_disconnect (XFCE_SESSION_CLIENT (wxsession_client));
+      _xfce_session_client_disconnect_internal (XFCE_SESSION_CLIENT (wxsession_client));
       g_clear_pointer (&wxsession_client->xdg_manager, xdg_session_manager_v1_destroy);
       wxsession_client->xdg_manager_name = 0;
 
