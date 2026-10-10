@@ -2912,14 +2912,9 @@ xfsm_manager_dbus_register_client (XfsmDbusManager *object,
 
   manager = XFSM_MANAGER (object);
 
-  if (!xfce_str_is_empty (arg_client_startup_id))
-    {
-      client_id = g_strdup_printf ("%s%s", arg_app_id, arg_client_startup_id);
-    }
-  else
-    {
-      client_id = g_strdup (arg_app_id);
-    }
+  client_id = !xfce_str_is_empty (arg_client_startup_id)
+                ? g_strdup (arg_client_startup_id)
+                : g_strdup (arg_app_id);
 
   /* create a new dbus-based client */
   client = xfsm_client_new (manager, NULL, manager->connection, FALSE);
