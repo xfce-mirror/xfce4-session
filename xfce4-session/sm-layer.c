@@ -154,7 +154,7 @@ sm_init (XfconfChannel *channel,
   ice_setup_listeners (num_listeners, listen_objs, manager);
 
   network_idlist = IceComposeNetworkIdList (num_listeners, listen_objs);
-  g_setenv ("SESSION_MANAGER", network_idlist, TRUE);
+  xfsm_manager_set_env_var (manager, "SESSION_MANAGER", network_idlist);
   free (network_idlist);
 }
 

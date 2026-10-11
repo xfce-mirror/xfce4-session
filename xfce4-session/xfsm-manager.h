@@ -88,6 +88,11 @@ void
 xfsm_manager_load (XfsmManager *manager,
                    XfconfChannel *channel);
 
+void
+xfsm_manager_set_env_var (XfsmManager *manager,
+                          const char *name,
+                          const char *value);
+
 gboolean
 xfsm_manager_restart (XfsmManager *manager);
 
