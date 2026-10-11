@@ -35,6 +35,22 @@
         </method>
 
         <!--
+             Dict<String, String> org.xfce.session.Manager.GetEnvironment()
+
+             Retrieves a list of environment variables that applications in the
+             session may need to have set in their environment. Can be used by a
+             launcher (that is not already a subprocess of xfce4-session) to set
+             the environment properly for applilcations it spawns.
+
+             Returns:
+
+             @env_vars: A string-string dict of environment variables.
+        -->
+        <method name="GetEnvironment">
+            <arg direction="out" name="env_vars" type="a{ss}"/>
+        </method>
+
+        <!--
              ObjectPath[] org.xfce.Session.Manager.ListClients()
 
              Retrieves a list of session clients from the session
