@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2026-10-09 00:55+0200\n"
+"POT-Creation-Date: 2026-10-17 12:57+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Priit Jõerüüt <transifex@joeruut.com>, 2020,2023-2024,2026\n"
 "Language-Team: Estonian (http://app.transifex.com/xfce/xfce4-session/language/et/)\n"
@@ -40,29 +40,30 @@ msgstr "Xfce Sessioon (Wayland)"
 msgid "xfce;wayland;desktop;environment;session;"
 msgstr "xfce;wayland;töölaud;töölaua;keskkond;sessioon;"
 
-#: libxfce4session-client/xfce-session-client-dbus.c:530
+#: libxfce4session-client/xfce-session-client-dbus.c:551
 msgid "(unknown)"
 msgstr "(teadmata)"
 
-#: libxfce4session-client/xfce-session-client-dbus.c:533
+#: libxfce4session-client/xfce-session-client-dbus.c:554
 #, c-format
 msgid "Application '%s' cancelled logout"
 msgstr "„%s“ rakendus katkestas väljalogimise"
 
 #: libxfce4session-client/xfce-session-client-wl-xdg.c:260
 msgid ""
-"Your compositor does not support the xdg-session-management-v1 protocol"
-msgstr "Sinu kasutatav komposiitor ei tundu toetavat xdg-session-management-v1 protokolli"
+"Your compositor does not support the xdg-session-management-v1 protocol; "
+"attempting to fall back to the DBus interface"
+msgstr "Sinu süsteemis kasutatav komposiitor ei tundu toetavat xdg-session-management-v1 protokolli - proovin selle asemel kasutada DBus-i liidestust"
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:307
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:315
 msgid "Compositor failed to respond to registration attempt in time"
 msgstr "Komposiitor ei suutnud etteantud aja jooksul registreerimispäringule vastata"
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:328
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:336
 msgid "Another application took over the session during registration"
 msgstr "Muu rakendus võttis registreerimise ajal sessiooni üle"
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:338
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:346
 msgid "Compositor did not respond with a client ID"
 msgstr "Komposiitori vastuses polnud klienditunnust"
 
@@ -75,23 +76,23 @@ msgstr "Ei õnnestunud ühendust saada sessioonihalduriga: %s"
 msgid "Session manager did not return a valid client id"
 msgstr "Sessioonihaldur ei leidnud kehtivat klienditunnust"
 
-#: libxfce4session-client/xfce-session-client.c:1031
+#: libxfce4session-client/xfce-session-client.c:1048
 msgid "Session management client ID"
 msgstr "Klienditunnus sessioonihalduses"
 
-#: libxfce4session-client/xfce-session-client.c:1031
+#: libxfce4session-client/xfce-session-client.c:1048
 msgid "ID"
 msgstr "Tunnus"
 
-#: libxfce4session-client/xfce-session-client.c:1032
+#: libxfce4session-client/xfce-session-client.c:1049
 msgid "Disable session management"
 msgstr "Lülita sessioonihaldus välja"
 
-#: libxfce4session-client/xfce-session-client.c:1048
+#: libxfce4session-client/xfce-session-client.c:1065
 msgid "Session management options"
 msgstr "Sessioonihalduse valikud"
 
-#: libxfce4session-client/xfce-session-client.c:1048
+#: libxfce4session-client/xfce-session-client.c:1065
 msgid "Show session management options"
 msgstr "Näita sessioonihalduse valikuid"
 
@@ -172,7 +173,7 @@ msgid "Unable to save the session"
 msgstr "Sessiooni salvestamine ei õnnestunud"
 
 #: settings/session-editor.c:135 settings/session-editor.c:318
-#: xfce4-session/xfsm-manager.c:1368 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1387 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "_Sulge"
 
@@ -191,7 +192,7 @@ msgid "Are you sure you want to empty the session cache?"
 msgstr "Kas oled kindel, et soovid tühjendada salvestatud sessioonide puhvri?"
 
 #: settings/session-editor.c:198 settings/session-editor.c:290
-#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:743
+#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:748
 #: xfce4-session/xfsm-logout-dialog.c:218
 msgid "_Cancel"
 msgstr "_Loobu"
@@ -252,7 +253,7 @@ msgstr "Rakendus:"
 msgid "Restart Style"
 msgstr "Taaskäivitamise viis"
 
-#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:744
+#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:749
 msgid "_OK"
 msgstr "_OK"
 
@@ -462,7 +463,7 @@ msgstr "Jätka ikkagi"
 msgid "Try again"
 msgstr "Proovi uuesti"
 
-#: xfce4-session/xfsm-manager.c:605
+#: xfce4-session/xfsm-manager.c:610
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -471,77 +472,77 @@ msgid ""
 "incorrectly."
 msgstr "Ei õnnestunud tuvastada tõrkekindla sessiooni nime. Võimalikud põhjused on: xfconfd ei tööta (viga D-Bus'i seadistamisel); keskkonnamuutuja $XDG_CONFIG_DIRS pole defineeritud korrektselt (peab sisaldama „%s“) või xfce4-session on paigaldatud vigaselt."
 
-#: xfce4-session/xfsm-manager.c:630
+#: xfce4-session/xfsm-manager.c:635
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Valitud tõrkekindel sessioon („%s“) ei ole märgitud tõrkekindlaks sessiooniks."
 
-#: xfce4-session/xfsm-manager.c:672
+#: xfce4-session/xfsm-manager.c:677
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Tõrkekindla sessiooni rakenduste loend on tühi"
 
-#: xfce4-session/xfsm-manager.c:756
+#: xfce4-session/xfsm-manager.c:761
 msgid "Name for the new session"
 msgstr "Uue sessiooni nimi"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:833
+#: xfce4-session/xfsm-manager.c:838
 msgid "Session Manager Error"
 msgstr "Sessioonihalduri viga"
 
-#: xfce4-session/xfsm-manager.c:834
+#: xfce4-session/xfsm-manager.c:839
 msgid "Unable to load a failsafe session"
 msgstr "Tõrkekindla sessiooni laadimine ei õnnestunud"
 
-#: xfce4-session/xfsm-manager.c:836
+#: xfce4-session/xfsm-manager.c:841
 msgid "_Quit"
 msgstr "Vä_lja"
 
-#: xfce4-session/xfsm-manager.c:1358
+#: xfce4-session/xfsm-manager.c:1377
 msgid "Shutdown Failed"
 msgstr "Väljalülitamine ei õnnestunud"
 
-#: xfce4-session/xfsm-manager.c:1361
+#: xfce4-session/xfsm-manager.c:1380
 msgid "Failed to suspend session"
 msgstr "Sessiooni uinakusse jätmine ei õnnestunud"
 
-#: xfce4-session/xfsm-manager.c:1363
+#: xfce4-session/xfsm-manager.c:1382
 msgid "Failed to hibernate session"
 msgstr "Sessiooni talletamine kettale ehk talveunne jäämine ei õnenstunud"
 
-#: xfce4-session/xfsm-manager.c:1365
+#: xfce4-session/xfsm-manager.c:1384
 msgid "Failed to hybrid sleep session"
 msgstr "Hübriidunne jäämine ei õnnestunud"
 
-#: xfce4-session/xfsm-manager.c:1366
+#: xfce4-session/xfsm-manager.c:1385
 msgid "Failed to switch user"
 msgstr "Kasutaja vahetamine ei õnnestunud"
 
-#: xfce4-session/xfsm-manager.c:1734
+#: xfce4-session/xfsm-manager.c:1753
 msgid "Can only terminate clients when in the idle state"
 msgstr "Klientide töö saan lõpetada vaid siis kui nad  on jõudeolekus"
 
-#: xfce4-session/xfsm-manager.c:2522
+#: xfce4-session/xfsm-manager.c:2570
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Kontrollpunkti loomiseks peab sessioonihaldur olema jõudeolekus"
 
-#: xfce4-session/xfsm-manager.c:2595 xfce4-session/xfsm-manager.c:2615
+#: xfce4-session/xfsm-manager.c:2643 xfce4-session/xfsm-manager.c:2663
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Väljalülitamise jaoks peab sessioonihaldur olema jõudeolekus"
 
-#: xfce4-session/xfsm-manager.c:2652
+#: xfce4-session/xfsm-manager.c:2700
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Taaskäivituse jaoks peab sessioonihaldur olema jõudeolekus"
 
-#: xfce4-session/xfsm-manager.c:2688 xfce4-session/xfsm-manager.c:2727
-#: xfce4-session/xfsm-manager.c:2765
+#: xfce4-session/xfsm-manager.c:2736 xfce4-session/xfsm-manager.c:2775
+#: xfce4-session/xfsm-manager.c:2813
 msgid "Session manager must be in idle state when requesting a sleep"
 msgstr "Uinakusse jätmiseks jaoks peab sessioonihaldur olema jõudeolekus"
 
-#: xfce4-session/xfsm-manager.c:2892
+#: xfce4-session/xfsm-manager.c:2940
 msgid "Session manager must be in idle state when requesting a user switch"
 msgstr "Kasutaja vahetamiseks peab sessioonihaldur olema jõudeolekus"
 
