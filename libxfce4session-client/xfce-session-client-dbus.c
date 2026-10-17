@@ -21,7 +21,6 @@
 #include <gio/gio.h>
 #include <libxfce4util/libxfce4util.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 
 #include "xfce-session-client-dbus.h"
@@ -37,10 +36,11 @@ typedef struct _XfceSessionClientDBusPrivate
   XfsmDbusManager *manager_proxy;
   gchar *client_object_path;
   XfsmDbusClient *client_proxy;
+  XfsmDbusClient2 *client2_proxy;
 
+  gboolean sm_lacks_client2;
   gboolean sent_quit_requested;
   gboolean shutdown_cancelled;
-  gboolean unregister_on_disconnect;
 } XfceSessionClientDBusPrivate;
 
 typedef enum
@@ -81,8 +81,18 @@ static void
 xfce_session_client_dbus_do_teardown (XfceSessionClientDBus *dsession_client);
 
 static void
+dbus_connection_closed (GDBusConnection *connection,
+                        gboolean remote_peer_vanished,
+                        GError *error,
+                        XfceSessionClient *session_client);
+static void
+dbus_sm_name_owner_changed (GDBusProxy *proxy,
+                            GParamSpec *pspec,
+                            XfceSessionClient *session_client);
+
+static void
 dbussm_request_save_state (XfceSessionClientDBus *dsession_client,
-                           XfsmDbusClient *client_proxy);
+                           XfsmDbusClient2 *client2_proxy);
 static void
 dbussm_query_end_session (XfceSessionClientDBus *dsession_client,
                           guint32 end_session_mode,
@@ -93,6 +103,9 @@ dbussm_end_session (XfceSessionClientDBus *dsession_client,
                     XfsmDbusClient *client_proxy);
 static void
 dbussm_cancel_end_session (XfceSessionClientDBus *dsession_client);
+static void
+dbussm_replaced (XfceSessionClientDBus *dsession_client,
+                 XfsmDbusClient2 *client2_proxy);
 static void
 dbussm_stop (XfceSessionClientDBus *dsession_client);
 
@@ -140,45 +153,199 @@ xfce_session_client_dbus_finalize (GObject *obj)
 
 
 static gboolean
-xfce_session_client_dbus_register (XfceSessionClientDBus *dsession_client,
-                                   GError **error)
-{
-  XfceSessionClientDBusPrivate *priv = GET_PRIV (dsession_client);
-
-  gchar *app_id;
-  const gchar *desktop_file = _xfce_session_client_peek_desktop_file (XFCE_SESSION_CLIENT (dsession_client));
-  if (desktop_file != NULL)
-    {
-      app_id = g_path_get_basename (desktop_file);
-      gchar *ext = g_strrstr (app_id, ".desktop");
-      if (ext != NULL)
-        *ext = '\0';
-    }
-  else
-    {
-      app_id = g_strdup ("");
-    }
-
-  const gchar *client_id = xfce_session_client_get_client_id (XFCE_SESSION_CLIENT (dsession_client));
-  gboolean ret = xfsm_dbus_manager_call_register_client_sync (priv->manager_proxy,
-                                                              app_id,
-                                                              client_id != NULL ? client_id : "",
-                                                              &priv->client_object_path,
-                                                              NULL,
-                                                              error);
-
-  priv->unregister_on_disconnect = ret;
-  g_free (app_id);
-  return ret;
-}
-
-
-static gboolean
 xfce_session_client_dbus_connect (XfceSessionClient *session_client,
                                   GError **error)
 {
   XfceSessionClientDBus *dsession_client = XFCE_SESSION_CLIENT_DBUS (session_client);
-  return _xfce_session_client_dbus_do_connect (dsession_client, xfce_session_client_dbus_register, error);
+  XfceSessionClientDBusPrivate *priv = GET_PRIV (dsession_client);
+
+  _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_REGISTERING);
+
+  if (priv->connection == NULL)
+    {
+      priv->connection = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, error);
+      if (priv->connection == NULL)
+        {
+          xfce_session_client_dbus_do_teardown (dsession_client);
+          _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
+          return FALSE;
+        }
+
+      g_signal_connect (priv->connection, "closed", G_CALLBACK (dbus_connection_closed), session_client);
+    }
+
+  if (priv->manager_proxy == NULL)
+    {
+      priv->manager_proxy = xfsm_dbus_manager_proxy_new_sync (priv->connection,
+                                                              G_DBUS_PROXY_FLAGS_NONE,
+                                                              "org.xfce.SessionManager",
+                                                              "/org/xfce/SessionManager",
+                                                              NULL,
+                                                              error);
+      if (priv->manager_proxy == NULL)
+        {
+          xfce_session_client_dbus_do_teardown (dsession_client);
+          _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
+          return FALSE;
+        }
+
+      g_signal_connect (priv->manager_proxy, "notify::g-name-owner", G_CALLBACK (dbus_sm_name_owner_changed), session_client);
+    }
+
+  if (priv->client_object_path == NULL)
+    {
+      const gchar *client_id = xfce_session_client_get_client_id (XFCE_SESSION_CLIENT (dsession_client));
+      gchar *actual_client_id = NULL;
+      gboolean is_resumed = FALSE;
+
+      priv->sm_lacks_client2 = FALSE;
+
+      GError *error1 = NULL;
+      gboolean ret = xfsm_dbus_manager_call_register_client2_sync (priv->manager_proxy,
+                                                                   client_id != NULL ? client_id : "",
+                                                                   &actual_client_id,
+                                                                   &priv->client_object_path,
+                                                                   &is_resumed,
+                                                                   NULL,
+                                                                   &error1);
+      if (ret)
+        {
+          _xfce_session_client_set_client_id (session_client, actual_client_id);
+          _xfce_session_client_set_is_resumed (session_client, is_resumed);
+          g_free (actual_client_id);
+        }
+      else
+        {
+          if (g_error_matches (error1, G_DBUS_ERROR, G_DBUS_ERROR_UNKNOWN_METHOD))
+            {
+              g_clear_error (&error1);
+              g_debug ("RegisterClient2() not supported; falling back to RegisterClient()");
+
+              gchar *app_id;
+              const gchar *desktop_file = _xfce_session_client_peek_desktop_file (XFCE_SESSION_CLIENT (dsession_client));
+              if (desktop_file != NULL)
+                {
+                  app_id = g_path_get_basename (desktop_file);
+                  gchar *ext = g_strrstr (app_id, ".desktop");
+                  if (ext != NULL)
+                    *ext = '\0';
+                }
+              else
+                {
+                  app_id = g_strdup ("");
+                }
+
+              gchar *register_client_id;
+              if (xfce_str_is_empty (app_id) && xfce_str_is_empty (client_id))
+                {
+                  register_client_id = g_uuid_string_random ();
+                }
+              else
+                {
+                  register_client_id = g_strdup (client_id);
+                }
+
+              ret = xfsm_dbus_manager_call_register_client_sync (priv->manager_proxy,
+                                                                 app_id,
+                                                                 register_client_id,
+                                                                 &priv->client_object_path,
+                                                                 NULL,
+                                                                 error);
+              priv->sm_lacks_client2 = TRUE;
+
+              g_free (register_client_id);
+              g_free (app_id);
+            }
+          else if (error != NULL)
+            {
+              g_propagate_error (error, error1);
+            }
+          else
+            {
+              g_clear_error (&error1);
+            }
+        }
+
+      if (!ret)
+        {
+          xfce_session_client_dbus_do_teardown (dsession_client);
+          _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
+          return FALSE;
+        }
+
+      g_clear_object (&priv->client_proxy);
+      g_clear_object (&priv->client2_proxy);
+    }
+
+  if (priv->client_proxy == NULL)
+    {
+      priv->client_proxy = xfsm_dbus_client_proxy_new_sync (priv->connection,
+                                                            G_DBUS_PROXY_FLAGS_NONE,
+                                                            "org.xfce.SessionManager",
+                                                            priv->client_object_path,
+                                                            NULL,
+                                                            error);
+      if (priv->client_proxy == NULL)
+        {
+          xfce_session_client_dbus_do_teardown (dsession_client);
+          _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
+          return FALSE;
+        }
+
+      if (priv->sm_lacks_client2)
+        {
+          gchar *actual_client_id = NULL;
+          if (xfsm_dbus_client_call_get_id_sync (priv->client_proxy,
+                                                 &actual_client_id,
+                                                 NULL,
+                                                 error))
+            {
+              if (g_strcmp0 (xfce_session_client_get_client_id (session_client), actual_client_id) == 0)
+                {
+                  _xfce_session_client_set_is_resumed (session_client, TRUE);
+                }
+              _xfce_session_client_set_client_id (session_client, actual_client_id);
+              g_free (actual_client_id);
+            }
+          else
+            {
+              xfce_session_client_dbus_do_teardown (dsession_client);
+              _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
+              return FALSE;
+            }
+        }
+
+      g_signal_connect (priv->client_proxy, "notify::g-name-owner", G_CALLBACK (dbus_sm_name_owner_changed), session_client);
+      g_signal_connect_swapped (priv->client_proxy, "query-end-session", G_CALLBACK (dbussm_query_end_session), dsession_client);
+      g_signal_connect_swapped (priv->client_proxy, "end-session", G_CALLBACK (dbussm_end_session), dsession_client);
+      g_signal_connect_swapped (priv->client_proxy, "cancel-end-session", G_CALLBACK (dbussm_cancel_end_session), dsession_client);
+      g_signal_connect_swapped (priv->client_proxy, "stop", G_CALLBACK (dbussm_stop), dsession_client);
+    }
+
+  if (priv->client2_proxy == NULL && !priv->sm_lacks_client2)
+    {
+      priv->client2_proxy = xfsm_dbus_client2_proxy_new_sync (priv->connection,
+                                                              G_DBUS_PROXY_FLAGS_NONE,
+                                                              "org.xfce.SessionManager",
+                                                              priv->client_object_path,
+                                                              NULL,
+                                                              error);
+      if (priv->client2_proxy == NULL)
+        {
+          xfce_session_client_dbus_do_teardown (dsession_client);
+          _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
+          return FALSE;
+        }
+
+      g_signal_connect (priv->client2_proxy, "notify::g-name-owner", G_CALLBACK (dbus_sm_name_owner_changed), session_client);
+      g_signal_connect_swapped (priv->client2_proxy, "request-save-state", G_CALLBACK (dbussm_request_save_state), dsession_client);
+      g_signal_connect_swapped (priv->client2_proxy, "replaced", G_CALLBACK (dbussm_replaced), dsession_client);
+    }
+
+  xfce_session_client_dbus_set_initial_properties (dsession_client);
+  _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_IDLE);
+
+  return TRUE;
 }
 
 static void
@@ -187,7 +354,7 @@ xfce_session_client_dbus_disconnect (XfceSessionClient *session_client)
   XfceSessionClientDBus *dsession_client = XFCE_SESSION_CLIENT_DBUS (session_client);
   XfceSessionClientDBusPrivate *priv = GET_PRIV (dsession_client);
 
-  if (priv->manager_proxy != NULL && priv->client_object_path != NULL && priv->unregister_on_disconnect)
+  if (priv->manager_proxy != NULL && priv->client_object_path != NULL)
     {
       GError *error = NULL;
       if (!xfsm_dbus_manager_call_unregister_client_sync (priv->manager_proxy,
@@ -195,7 +362,12 @@ xfce_session_client_dbus_disconnect (XfceSessionClient *session_client)
                                                           NULL,
                                                           &error))
         {
-          g_message ("Failed to unregister client from session manager: %s", error->message);
+          // Ignore "client ID not found" errors, since if we were replaced,
+          // our object path is gone.
+          if (g_strcmp0 (g_dbus_error_get_remote_error (error), "org.xfce.SessionManager.Error.General") != 0)
+            {
+              g_message ("Failed to unregister client from session manager: %s", error->message);
+            }
           g_error_free (error);
         }
     }
@@ -481,8 +653,9 @@ xfce_session_client_dbus_do_teardown (XfceSessionClientDBus *dsession_client)
 {
   XfceSessionClientDBusPrivate *priv = GET_PRIV (dsession_client);
 
-  priv->unregister_on_disconnect = FALSE;
+  priv->sm_lacks_client2 = FALSE;
   g_clear_pointer (&priv->client_object_path, g_free);
+  g_clear_object (&priv->client2_proxy);
   g_clear_object (&priv->client_proxy);
   g_clear_object (&priv->manager_proxy);
   if (priv->connection != NULL)
@@ -494,13 +667,13 @@ xfce_session_client_dbus_do_teardown (XfceSessionClientDBus *dsession_client)
 
 static void
 dbussm_request_save_state (XfceSessionClientDBus *dsession_client,
-                           XfsmDbusClient *client_proxy)
+                           XfsmDbusClient2 *client2_proxy)
 {
   _xfce_session_client_set_state (XFCE_SESSION_CLIENT (dsession_client), XFCE_SESSION_CLIENT_STATE_SAVING_PHASE_1);
   g_signal_emit_by_name (dsession_client, "save-state");
 
   GError *error = NULL;
-  if (!xfsm_dbus_client_call_state_saved_sync (client_proxy, TRUE, NULL, &error))
+  if (!xfsm_dbus_client2_call_state_saved_sync (client2_proxy, TRUE, NULL, &error))
     {
       g_message ("Failed to inform session manager of completed save: %s", error->message);
       g_error_free (error);
@@ -610,6 +783,28 @@ dbussm_cancel_end_session (XfceSessionClientDBus *dsession_client)
     {
       g_signal_emit_by_name (dsession_client, "quit-cancelled");
       priv->sent_quit_requested = FALSE;
+    }
+}
+
+static void
+dbussm_replaced (XfceSessionClientDBus *dsession_client,
+                 XfsmDbusClient2 *client2_proxy)
+{
+  XfceSessionClient *session_client = XFCE_SESSION_CLIENT (dsession_client);
+
+  xfce_session_client_disconnect (session_client);
+
+  if (_xfce_session_client_replaced_should_reconnect (session_client))
+    {
+      _xfce_session_client_set_client_id (session_client, NULL);
+
+      GError *error = NULL;
+      if (!xfce_session_client_connect (session_client, &error))
+        {
+          g_message ("Failed to reconnect to session manager after session replaced: %s", error->message);
+          g_error_free (error);
+          _xfce_session_client_start_auto_reconnect (session_client);
+        }
     }
 }
 
@@ -744,108 +939,6 @@ dbus_sm_name_owner_changed (GDBusProxy *proxy,
           _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
         }
     }
-}
-
-gboolean
-_xfce_session_client_dbus_do_connect (XfceSessionClientDBus *dsession_client,
-                                      XfceSessionClientDBusRegisterFunc register_func,
-                                      GError **error)
-{
-  XfceSessionClientDBusPrivate *priv = GET_PRIV (dsession_client);
-  XfceSessionClient *session_client = XFCE_SESSION_CLIENT (dsession_client);
-
-  _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_REGISTERING);
-
-  if (priv->connection == NULL)
-    {
-      priv->connection = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, error);
-      if (priv->connection == NULL)
-        {
-          xfce_session_client_dbus_do_teardown (dsession_client);
-          _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
-          return FALSE;
-        }
-
-      g_signal_connect (priv->connection, "closed", G_CALLBACK (dbus_connection_closed), session_client);
-    }
-
-  if (priv->manager_proxy == NULL)
-    {
-      priv->manager_proxy = xfsm_dbus_manager_proxy_new_sync (priv->connection,
-                                                              G_DBUS_PROXY_FLAGS_NONE,
-                                                              "org.xfce.SessionManager",
-                                                              "/org/xfce/SessionManager",
-                                                              NULL,
-                                                              error);
-      if (priv->manager_proxy == NULL)
-        {
-          xfce_session_client_dbus_do_teardown (dsession_client);
-          _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
-          return FALSE;
-        }
-
-      g_signal_connect (priv->manager_proxy, "notify::g-name-owner", G_CALLBACK (dbus_sm_name_owner_changed), session_client);
-    }
-
-  if (priv->client_object_path == NULL)
-    {
-      if (!register_func (dsession_client, error))
-        {
-          xfce_session_client_dbus_do_teardown (dsession_client);
-          _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
-          return FALSE;
-        }
-
-      g_clear_object (&priv->client_proxy);
-    }
-
-  if (priv->client_proxy == NULL)
-    {
-      priv->client_proxy = xfsm_dbus_client_proxy_new_sync (priv->connection,
-                                                            G_DBUS_PROXY_FLAGS_NONE,
-                                                            "org.xfce.SessionManager",
-                                                            priv->client_object_path,
-                                                            NULL,
-                                                            error);
-      if (priv->client_proxy == NULL)
-        {
-          xfce_session_client_dbus_do_teardown (dsession_client);
-          _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
-          return FALSE;
-        }
-
-      g_signal_connect (priv->client_proxy, "notify::g-name-owner", G_CALLBACK (dbus_sm_name_owner_changed), session_client);
-
-      gchar *final_client_id = NULL;
-      if (!xfsm_dbus_client_call_get_id_sync (priv->client_proxy,
-                                              &final_client_id,
-                                              NULL,
-                                              error))
-        {
-          xfce_session_client_dbus_do_teardown (dsession_client);
-          _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
-          return FALSE;
-        }
-
-      const gchar *client_id = xfce_session_client_get_client_id (session_client);
-      gboolean is_resumed = client_id != NULL && g_strcmp0 (client_id, final_client_id) == 0;
-
-      _xfce_session_client_set_client_id (session_client, final_client_id);
-      _xfce_session_client_set_is_resumed (session_client, is_resumed);
-      g_free (final_client_id);
-
-      xfce_session_client_dbus_set_initial_properties (dsession_client);
-
-      g_signal_connect_swapped (priv->client_proxy, "request-save-state", G_CALLBACK (dbussm_request_save_state), dsession_client);
-      g_signal_connect_swapped (priv->client_proxy, "query-end-session", G_CALLBACK (dbussm_query_end_session), dsession_client);
-      g_signal_connect_swapped (priv->client_proxy, "end-session", G_CALLBACK (dbussm_end_session), dsession_client);
-      g_signal_connect_swapped (priv->client_proxy, "cancel-end-session", G_CALLBACK (dbussm_cancel_end_session), dsession_client);
-      g_signal_connect_swapped (priv->client_proxy, "stop", G_CALLBACK (dbussm_stop), dsession_client);
-
-      _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_IDLE);
-    }
-
-  return TRUE;
 }
 
 XfsmDbusManager *

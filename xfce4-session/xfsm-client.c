@@ -34,14 +34,13 @@
 #include "xfsm-error.h"
 #include "xfsm-global.h"
 #include "xfsm-manager.h"
-#include "xfsm-marshal.h"
 
 #define XFSM_CLIENT_OBJECT_PATH_PREFIX "/org/xfce/SessionClients/"
 
 struct _XfsmClient
 {
   XfsmDbusClientSkeleton parent;
-  XfsmDbusClientDelegate *delegate;
+  XfsmDbusClient2 *client2;
 
   XfsmManager *manager;
 
@@ -49,10 +48,7 @@ struct _XfsmClient
   gchar *app_id;
   gchar *object_path;
   gchar *service_name;
-  gboolean is_delegate_registration;
   gboolean dbus_save_requested;
-  XfsmStartReason reason;
-  XfsmSessionStatus status;
 
   XfsmClientState state;
   XfsmProperties *properties;
@@ -78,6 +74,9 @@ xfsm_client_dbus_cleanup (XfsmClient *client);
 G_DEFINE_FINAL_TYPE_WITH_CODE (XfsmClient, xfsm_client, XFSM_DBUS_TYPE_CLIENT_SKELETON, G_IMPLEMENT_INTERFACE (XFSM_DBUS_TYPE_CLIENT, xfsm_client_iface_init));
 
 
+static gint object_path_next_serial = 0;
+
+
 static void
 xfsm_client_class_init (XfsmClientClass *klass)
 {
@@ -92,8 +91,6 @@ xfsm_client_class_init (XfsmClientClass *klass)
 static void
 xfsm_client_init (XfsmClient *client)
 {
-  client->reason = XFSM_START_REASON_LAUNCH;
-  client->status = XFSM_SESSION_STATUS_CREATED;
 }
 
 static void
@@ -236,7 +233,7 @@ XfsmClient *
 xfsm_client_new (XfsmManager *manager,
                  SmsConn sms_conn,
                  GDBusConnection *connection,
-                 gboolean is_delegate_registration)
+                 gboolean is_client2)
 {
   XfsmClient *client;
 
@@ -245,7 +242,7 @@ xfsm_client_new (XfsmManager *manager,
   client->manager = manager;
   client->sms_conn = sms_conn;
   client->connection = g_object_ref (connection);
-  client->is_delegate_registration = is_delegate_registration;
+  client->client2 = is_client2 ? xfsm_dbus_client2_skeleton_new () : NULL;
   client->state = XFSM_CLIENT_IDLE;
 
   return client;
@@ -266,8 +263,13 @@ xfsm_client_set_initial_properties (XfsmClient *client,
   client->id = g_strdup (properties->client_id);
 
   g_free (client->object_path);
-  client->object_path = g_strconcat (XFSM_CLIENT_OBJECT_PATH_PREFIX,
-                                     client->id, NULL);
+
+  gint serial = g_atomic_int_add (&object_path_next_serial, 1);
+
+  client->object_path = g_strdup_printf ("%s%s_%d",
+                                         XFSM_CLIENT_OBJECT_PATH_PREFIX,
+                                         client->id,
+                                         serial);
   g_strcanon (client->object_path + strlen (XFSM_CLIENT_OBJECT_PATH_PREFIX),
               "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_",
               '_');
@@ -316,7 +318,10 @@ xfsm_client_set_state (XfsmClient *client,
 
       if (state == XFSM_CLIENT_SAVING && xfsm_manager_get_state (client->manager) == XFSM_MANAGER_CHECKPOINT)
         {
-          xfsm_dbus_client_emit_request_save_state (XFSM_DBUS_CLIENT (client));
+          if (client->client2 != NULL)
+            {
+              xfsm_dbus_client2_emit_request_save_state (client->client2);
+            }
         }
       /* During a save, we need to ask the client if it's ok to shutdown */
       else if (state == XFSM_CLIENT_SAVING && xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWN)
@@ -354,12 +359,11 @@ xfsm_client_get_sms_connection (XfsmClient *client)
   return client->sms_conn;
 }
 
-
 gboolean
-xfsm_client_is_delegate_registration (XfsmClient *client)
+xfsm_client_can_save_state (XfsmClient *client)
 {
   g_return_val_if_fail (XFSM_IS_CLIENT (client), FALSE);
-  return client->is_delegate_registration;
+  return client->sms_conn != NULL || client->client2 != NULL;
 }
 
 gboolean
@@ -486,48 +490,6 @@ const gchar *
 xfsm_client_get_service_name (XfsmClient *client)
 {
   return client->service_name;
-}
-
-
-
-void
-xfsm_client_set_start_reason (XfsmClient *client,
-                              XfsmStartReason reason)
-{
-  client->reason = reason;
-}
-
-
-
-XfsmStartReason
-xfsm_client_get_start_reason (XfsmClient *client)
-{
-  return client->reason;
-}
-
-
-
-void
-xfsm_client_set_session_status (XfsmClient *client,
-                                XfsmSessionStatus status)
-{
-  client->status = status;
-}
-
-
-
-XfsmSessionStatus
-xfsm_client_get_session_status (XfsmClient *client)
-{
-  return client->status;
-}
-
-
-
-gboolean
-xfsm_client_is_xfsm_aware (XfsmClient *client)
-{
-  return client->sms_conn != NULL || client->service_name != NULL;
 }
 
 
@@ -717,6 +679,31 @@ xfsm_client_set_app_id (XfsmClient *client,
 
 
 void
+xfsm_client_send_replaced (XfsmClient *client)
+{
+  if (client->client2 != NULL)
+    {
+      xfsm_verbose ("emitting replaced signal for client %s\n", get_client_id (client));
+      xfsm_dbus_client2_emit_replaced (client->client2);
+    }
+  else
+    {
+      xfsm_verbose ("client %s was replaced but we have no way of informing it", get_client_id (client));
+    }
+}
+
+
+
+void
+xfsm_client_send_save_state (XfsmClient *client)
+{
+  g_return_if_fail (XFSM_DBUS_IS_CLIENT2 (client->client2));
+  xfsm_dbus_client2_emit_request_save_state (client->client2);
+}
+
+
+
+void
 xfsm_client_terminate (XfsmClient *client)
 {
   xfsm_verbose ("emitting stop signal for client %s\n", get_client_id (client));
@@ -748,51 +735,6 @@ xfsm_client_cancel_shutdown (XfsmClient *client)
 
 
 
-XfsmStartReason
-xfsm_start_reason_parse (const gchar *reason)
-{
-  if (g_strcmp0 (reason, "recover") == 0)
-    return XFSM_START_REASON_RECOVER;
-  else if (g_strcmp0 (reason, "session_restore") == 0)
-    return XFSM_START_REASON_SESSION_RESTORE;
-  else
-    return XFSM_START_REASON_LAUNCH;
-}
-
-
-
-const gchar *
-xfsm_start_reason_to_string (XfsmStartReason reason)
-{
-  switch (reason)
-    {
-    case XFSM_START_REASON_RECOVER:
-      return "recover";
-    case XFSM_START_REASON_SESSION_RESTORE:
-      return "session_restore";
-    default:
-      return "launch";
-    }
-}
-
-
-
-const gchar *
-xfsm_session_status_to_string (XfsmSessionStatus status)
-{
-  switch (status)
-    {
-    case XFSM_SESSION_STATUS_RESTORED:
-      return "restored";
-    case XFSM_SESSION_STATUS_REPLACED:
-      return "replaced";
-    default:
-      return "created";
-    }
-}
-
-
-
 /*
  * dbus server impl
  */
@@ -819,10 +761,6 @@ xfsm_client_dbus_delete_sm_properties (XfsmDbusClient *object,
                                        GDBusMethodInvocation *invocation,
                                        const gchar *const *arg_names);
 static gboolean
-xfsm_client_dbus_state_saved (XfsmDbusClient *object,
-                              GDBusMethodInvocation *invocation,
-                              gboolean success);
-static gboolean
 xfsm_client_dbus_terminate (XfsmDbusClient *object,
                             GDBusMethodInvocation *invocation);
 static gboolean
@@ -832,38 +770,10 @@ xfsm_client_dbus_end_session_response (XfsmDbusClient *object,
                                        const gchar *arg_reason);
 
 static gboolean
-xfsm_client_delegate_dbus_set_app_id (XfsmDbusClientDelegate *object,
-                                      GDBusMethodInvocation *invocation,
-                                      const gchar *arg_app_id,
-                                      XfsmClient *client);
-static gboolean
-xfsm_client_delegate_dbus_register_toplevel (XfsmDbusClientDelegate *object,
-                                             GDBusMethodInvocation *invocation,
-                                             const gchar *arg_toplevel_id,
-                                             XfsmClient *client);
-static gboolean
-xfsm_client_delegate_dbus_replace_toplevel_wm_properties (XfsmDbusClientDelegate *object,
-                                                          GDBusMethodInvocation *invocation,
-                                                          const gchar *arg_toplevel_id,
-                                                          GVariant *arg_wm_properties,
-                                                          XfsmClient *client);
-static gboolean
-xfsm_client_delegate_dbus_restore_toplevel (XfsmDbusClientDelegate *object,
-                                            GDBusMethodInvocation *invocation,
-                                            const gchar *arg_toplevel_id,
-                                            XfsmClient *client);
-static gboolean
-xfsm_client_delegate_dbus_remove_toplevel (XfsmDbusClientDelegate *object,
-                                           GDBusMethodInvocation *invocation,
-                                           const gchar *arg_toplevel_id,
-                                           XfsmClient *client);
-static gboolean
-xfsm_client_delegate_dbus_rename_toplevel (XfsmDbusClientDelegate *object,
-                                           GDBusMethodInvocation *invocation,
-                                           const gchar *arg_toplevel_id,
-                                           const gchar *arg_new_toplevel_id,
-                                           XfsmClient *client);
-
+xfsm_client2_dbus_state_saved (XfsmDbusClient2 *object,
+                               GDBusMethodInvocation *invocation,
+                               gboolean success,
+                               XfsmClient *client);
 
 
 static void
@@ -898,26 +808,23 @@ xfsm_client_dbus_init (XfsmClient *client)
         }
     }
 
-  client->delegate = xfsm_dbus_client_delegate_skeleton_new ();
-  if (!g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (client->delegate),
-                                         client->connection,
-                                         client->object_path,
-                                         &error))
+  if (client->client2 != NULL)
     {
-      if (error != NULL)
+      if (!g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (client->client2),
+                                             client->connection,
+                                             client->object_path,
+                                             &error))
         {
-          g_critical ("error exporting interface: %s", error->message);
-          g_clear_error (&error);
-          return;
+          if (error != NULL)
+            {
+              g_critical ("error exporting interface: %s", error->message);
+              g_clear_error (&error);
+              return;
+            }
         }
-    }
 
-  g_signal_connect (client->delegate, "handle-set-app-id", G_CALLBACK (xfsm_client_delegate_dbus_set_app_id), client);
-  g_signal_connect (client->delegate, "handle-register-toplevel", G_CALLBACK (xfsm_client_delegate_dbus_register_toplevel), client);
-  g_signal_connect (client->delegate, "handle-replace-toplevel-wm-properties", G_CALLBACK (xfsm_client_delegate_dbus_replace_toplevel_wm_properties), client);
-  g_signal_connect (client->delegate, "handle-restore-toplevel", G_CALLBACK (xfsm_client_delegate_dbus_restore_toplevel), client);
-  g_signal_connect (client->delegate, "handle-remove-toplevel", G_CALLBACK (xfsm_client_delegate_dbus_remove_toplevel), client);
-  g_signal_connect (client->delegate, "handle-rename-toplevel", G_CALLBACK (xfsm_client_delegate_dbus_rename_toplevel), client);
+      g_signal_connect (client->client2, "handle-state-saved", G_CALLBACK (xfsm_client2_dbus_state_saved), client);
+    }
 
   xfsm_verbose ("exported on %s\n", g_dbus_interface_skeleton_get_object_path (G_DBUS_INTERFACE_SKELETON (XFSM_DBUS_CLIENT (client))));
 }
@@ -931,7 +838,6 @@ xfsm_client_iface_init (XfsmDbusClientIface *iface)
   iface->handle_get_sm_properties = xfsm_client_dbus_get_sm_properties;
   iface->handle_get_state = xfsm_client_dbus_get_state;
   iface->handle_set_sm_properties = xfsm_client_dbus_set_sm_properties;
-  iface->handle_state_saved = xfsm_client_dbus_state_saved;
   iface->handle_terminate = xfsm_client_dbus_terminate;
   iface->handle_end_session_response = xfsm_client_dbus_end_session_response;
 }
@@ -939,10 +845,10 @@ xfsm_client_iface_init (XfsmDbusClientIface *iface)
 static void
 xfsm_client_dbus_cleanup (XfsmClient *client)
 {
-  if (client->delegate != NULL)
+  if (client->client2 != NULL)
     {
-      g_dbus_interface_skeleton_unexport_from_connection (G_DBUS_INTERFACE_SKELETON (client->delegate), client->connection);
-      g_clear_object (&client->delegate);
+      g_dbus_interface_skeleton_unexport_from_connection (G_DBUS_INTERFACE_SKELETON (client->client2), client->connection);
+      g_clear_object (&client->client2);
     }
   g_dbus_interface_skeleton_unexport_from_connection (G_DBUS_INTERFACE_SKELETON (client), client->connection);
   g_clear_object (&client->connection);
@@ -1120,20 +1026,6 @@ xfsm_client_dbus_delete_sm_properties (XfsmDbusClient *object,
 
 
 static gboolean
-xfsm_client_dbus_state_saved (XfsmDbusClient *object,
-                              GDBusMethodInvocation *invocation,
-                              gboolean success)
-{
-  XfsmClient *client = XFSM_CLIENT (object);
-
-  xfsm_dbus_client_complete_state_saved (object, invocation);
-  xfsm_manager_save_yourself_done (client->manager, client, success);
-
-  return TRUE;
-}
-
-
-static gboolean
 xfsm_client_dbus_terminate (XfsmDbusClient *object,
                             GDBusMethodInvocation *invocation)
 {
@@ -1172,9 +1064,7 @@ xfsm_client_dbus_end_session_response (XfsmDbusClient *object,
   else if (xfsm_manager_get_state (client->manager) == XFSM_MANAGER_SHUTDOWNPHASE2)
     {
       xfsm_dbus_client_complete_end_session_response (object, invocation);
-      xfsm_manager_close_connection (client->manager,
-                                     client,
-                                     XFSM_CLOSE_FLAGS_DO_CLEANUP | XFSM_CLOSE_FLAGS_CLIENT_GONE);
+      xfsm_manager_close_connection (client->manager, client, XFSM_CLOSE_FLAGS_FORCE_DISCONNECT);
     }
   else
     {
@@ -1188,133 +1078,13 @@ xfsm_client_dbus_end_session_response (XfsmDbusClient *object,
 
 
 static gboolean
-xfsm_client_delegate_dbus_set_app_id (XfsmDbusClientDelegate *object,
-                                      GDBusMethodInvocation *invocation,
-                                      const gchar *arg_app_id,
-                                      XfsmClient *client)
+xfsm_client2_dbus_state_saved (XfsmDbusClient2 *object,
+                               GDBusMethodInvocation *invocation,
+                               gboolean success,
+                               XfsmClient *client)
 {
-  if (!xfsm_delegate_is_authorized (invocation))
-    throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Permission denied");
-  else
-    {
-      xfsm_client_set_app_id (client, arg_app_id);
-      xfsm_dbus_client_delegate_complete_set_app_id (object, invocation);
-    }
-  return TRUE;
-}
-
-
-
-static gboolean
-xfsm_client_delegate_dbus_register_toplevel (XfsmDbusClientDelegate *object,
-                                             GDBusMethodInvocation *invocation,
-                                             const gchar *arg_toplevel_id,
-                                             XfsmClient *client)
-{
-  g_return_val_if_fail (client->properties != NULL, FALSE);
-
-  if (!xfsm_delegate_is_authorized (invocation))
-    throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Permission denied");
-  else if (xfsm_properties_toplevel_add (client->properties, arg_toplevel_id))
-    xfsm_dbus_client_delegate_complete_register_toplevel (object, invocation);
-  else
-    throw_error (invocation, XFSM_ERROR_NAME_CONFLICT, "Toplevel with id '%s' already exists", arg_toplevel_id);
-
-  return TRUE;
-}
-
-
-
-static gboolean
-xfsm_client_delegate_dbus_replace_toplevel_wm_properties (XfsmDbusClientDelegate *object,
-                                                          GDBusMethodInvocation *invocation,
-                                                          const gchar *arg_toplevel_id,
-                                                          GVariant *arg_wm_properties,
-                                                          XfsmClient *client)
-{
-  g_return_val_if_fail (client->properties != NULL, FALSE);
-
-  if (!xfsm_delegate_is_authorized (invocation))
-    throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Permission denied");
-  else if (xfsm_properties_toplevel_set_wm_properties (client->properties, arg_toplevel_id, arg_wm_properties))
-    xfsm_dbus_client_delegate_complete_replace_toplevel_wm_properties (object, invocation);
-  else
-    throw_error (invocation, XFSM_ERROR_BAD_VALUE, "Toplevel with id '%s' not found", arg_toplevel_id);
-
-  return TRUE;
-}
-
-
-
-static gboolean
-xfsm_client_delegate_dbus_restore_toplevel (XfsmDbusClientDelegate *object,
-                                            GDBusMethodInvocation *invocation,
-                                            const gchar *arg_toplevel_id,
-                                            XfsmClient *client)
-{
-  g_return_val_if_fail (client->properties != NULL, FALSE);
-
-  if (!xfsm_delegate_is_authorized (invocation))
-    {
-      throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Permission denied");
-      return TRUE;
-    }
-
-  GVariant *wm_properties = xfsm_properties_toplevel_get_wm_properties (client->properties, arg_toplevel_id);
-  if (wm_properties == NULL)
-    {
-      xfsm_properties_toplevel_add (client->properties, arg_toplevel_id);
-      wm_properties = xfsm_properties_toplevel_get_wm_properties (client->properties, arg_toplevel_id);
-    }
-
-  xfsm_dbus_client_delegate_complete_restore_toplevel (object, invocation, wm_properties);
-
-  g_variant_unref (wm_properties);
-  return TRUE;
-}
-
-
-
-static gboolean
-xfsm_client_delegate_dbus_remove_toplevel (XfsmDbusClientDelegate *object,
-                                           GDBusMethodInvocation *invocation,
-                                           const gchar *arg_toplevel_id,
-                                           XfsmClient *client)
-{
-  g_return_val_if_fail (client->properties != NULL, FALSE);
-
-  if (!xfsm_delegate_is_authorized (invocation))
-    throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Permission denied");
-  else
-    {
-      xfsm_properties_toplevel_remove (client->properties, arg_toplevel_id);
-      xfsm_dbus_client_delegate_complete_remove_toplevel (object, invocation);
-    }
-
-  return TRUE;
-}
-
-
-
-static gboolean
-xfsm_client_delegate_dbus_rename_toplevel (XfsmDbusClientDelegate *object,
-                                           GDBusMethodInvocation *invocation,
-                                           const gchar *arg_toplevel_id,
-                                           const gchar *arg_new_toplevel_id,
-                                           XfsmClient *client)
-{
-  g_return_val_if_fail (client->properties != NULL, FALSE);
-
-  if (!xfsm_delegate_is_authorized (invocation))
-    throw_error (invocation, XFSM_ERROR_UNAUTHORIZED, "Permission denied");
-  else
-    {
-      GError *error = NULL;
-      if (!xfsm_properties_toplevel_rename (client->properties, arg_toplevel_id, arg_new_toplevel_id, &error))
-        g_dbus_method_invocation_take_error (invocation, error);
-      else
-        xfsm_dbus_client_delegate_complete_rename_toplevel (object, invocation);
-    }
+  xfsm_dbus_client2_complete_state_saved (object, invocation);
+  xfsm_manager_save_yourself_done (client->manager, client, success);
 
   return TRUE;
 }
