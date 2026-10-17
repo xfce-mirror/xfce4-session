@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2026-10-09 00:55+0200\n"
+"POT-Creation-Date: 2026-10-17 12:57+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Wallon <wallon@ik.me>, 2026\n"
 "Language-Team: French (http://app.transifex.com/xfce/xfce4-session/language/fr/)\n"
@@ -50,29 +50,30 @@ msgstr "Session Xfce (Wayland)"
 msgid "xfce;wayland;desktop;environment;session;"
 msgstr "xfce;wayland;desktop;environment;session;bureau;environnement;"
 
-#: libxfce4session-client/xfce-session-client-dbus.c:530
+#: libxfce4session-client/xfce-session-client-dbus.c:551
 msgid "(unknown)"
 msgstr "(inconnu)"
 
-#: libxfce4session-client/xfce-session-client-dbus.c:533
+#: libxfce4session-client/xfce-session-client-dbus.c:554
 #, c-format
 msgid "Application '%s' cancelled logout"
 msgstr "L’application « %s » a empêché la déconnexion"
 
 #: libxfce4session-client/xfce-session-client-wl-xdg.c:260
 msgid ""
-"Your compositor does not support the xdg-session-management-v1 protocol"
-msgstr "Votre compositeur ne prend pas en charge le protocole xdg-session-management-v1"
+"Your compositor does not support the xdg-session-management-v1 protocol; "
+"attempting to fall back to the DBus interface"
+msgstr ""
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:307
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:315
 msgid "Compositor failed to respond to registration attempt in time"
 msgstr "Le compositeur n’a pas réussi à répondre à temps à la tentative d’enregistrement"
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:328
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:336
 msgid "Another application took over the session during registration"
 msgstr "Une autre application a pris le contrôle de la session lors de l’enregistrement"
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:338
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:346
 msgid "Compositor did not respond with a client ID"
 msgstr "Le compositeur n’a pas répondu avec un ID (identifiant) client"
 
@@ -85,23 +86,23 @@ msgstr "Impossible de se connecter au gestionnaire de session : %s"
 msgid "Session manager did not return a valid client id"
 msgstr "Le gestionnaire de session n’a pas retourné un ID client valide"
 
-#: libxfce4session-client/xfce-session-client.c:1031
+#: libxfce4session-client/xfce-session-client.c:1048
 msgid "Session management client ID"
 msgstr "ID client du gestionnaire de session"
 
-#: libxfce4session-client/xfce-session-client.c:1031
+#: libxfce4session-client/xfce-session-client.c:1048
 msgid "ID"
 msgstr "ID"
 
-#: libxfce4session-client/xfce-session-client.c:1032
+#: libxfce4session-client/xfce-session-client.c:1049
 msgid "Disable session management"
 msgstr "Désactiver le gestionnaire de session"
 
-#: libxfce4session-client/xfce-session-client.c:1048
+#: libxfce4session-client/xfce-session-client.c:1065
 msgid "Session management options"
 msgstr "Options du gestionnaire de session"
 
-#: libxfce4session-client/xfce-session-client.c:1048
+#: libxfce4session-client/xfce-session-client.c:1065
 msgid "Show session management options"
 msgstr "Afficher les options du gestionnaire de session"
 
@@ -182,7 +183,7 @@ msgid "Unable to save the session"
 msgstr "Impossible d’enregistrer la session"
 
 #: settings/session-editor.c:135 settings/session-editor.c:318
-#: xfce4-session/xfsm-manager.c:1368 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1387 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "_Fermer"
 
@@ -201,7 +202,7 @@ msgid "Are you sure you want to empty the session cache?"
 msgstr "Voulez-vous vraiment vider le cache des sessions ?"
 
 #: settings/session-editor.c:198 settings/session-editor.c:290
-#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:743
+#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:748
 #: xfce4-session/xfsm-logout-dialog.c:218
 msgid "_Cancel"
 msgstr "_Annuler"
@@ -262,7 +263,7 @@ msgstr "Programme"
 msgid "Restart Style"
 msgstr "Type de redémarrage"
 
-#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:744
+#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:749
 msgid "_OK"
 msgstr "_OK"
 
@@ -472,7 +473,7 @@ msgstr "Continuer quand même"
 msgid "Try again"
 msgstr "Réessayer"
 
-#: xfce4-session/xfsm-manager.c:605
+#: xfce4-session/xfsm-manager.c:610
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -481,77 +482,77 @@ msgid ""
 "incorrectly."
 msgstr "Impossible de déterminer le nom de la session sans échec. Causes possibles : xfconfd ne fonctionne pas (problème de configuration D-Bus) ; la variable d’environnement $XDG_CONFIG_DIRS n’est pas définie correctement (elle doit contenir « %s ») ; ou xfce4-session n’est pas installé correctement."
 
-#: xfce4-session/xfsm-manager.c:630
+#: xfce4-session/xfsm-manager.c:635
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "La session sans échec (« %s ») n’est pas marquée comme telle."
 
-#: xfce4-session/xfsm-manager.c:672
+#: xfce4-session/xfsm-manager.c:677
 msgid "The list of applications in the failsafe session is empty."
 msgstr "La liste d’applications de la session sans échec est vide."
 
-#: xfce4-session/xfsm-manager.c:756
+#: xfce4-session/xfsm-manager.c:761
 msgid "Name for the new session"
 msgstr "Nom pour la nouvelle session"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:833
+#: xfce4-session/xfsm-manager.c:838
 msgid "Session Manager Error"
 msgstr "Erreur du gestionnaire de sessions"
 
-#: xfce4-session/xfsm-manager.c:834
+#: xfce4-session/xfsm-manager.c:839
 msgid "Unable to load a failsafe session"
 msgstr "Impossible de charger une session sans échec"
 
-#: xfce4-session/xfsm-manager.c:836
+#: xfce4-session/xfsm-manager.c:841
 msgid "_Quit"
 msgstr "_Quitter"
 
-#: xfce4-session/xfsm-manager.c:1358
+#: xfce4-session/xfsm-manager.c:1377
 msgid "Shutdown Failed"
 msgstr "Impossible de mettre hors tension"
 
-#: xfce4-session/xfsm-manager.c:1361
+#: xfce4-session/xfsm-manager.c:1380
 msgid "Failed to suspend session"
 msgstr "Impossible de mettre la session en veille"
 
-#: xfce4-session/xfsm-manager.c:1363
+#: xfce4-session/xfsm-manager.c:1382
 msgid "Failed to hibernate session"
 msgstr "Impossible de mettre la session en veille prolongée"
 
-#: xfce4-session/xfsm-manager.c:1365
+#: xfce4-session/xfsm-manager.c:1384
 msgid "Failed to hybrid sleep session"
 msgstr "Impossible de mettre la session en veille hybride"
 
-#: xfce4-session/xfsm-manager.c:1366
+#: xfce4-session/xfsm-manager.c:1385
 msgid "Failed to switch user"
 msgstr "Impossible de changer d’utilisateur"
 
-#: xfce4-session/xfsm-manager.c:1734
+#: xfce4-session/xfsm-manager.c:1753
 msgid "Can only terminate clients when in the idle state"
 msgstr "La fermeture de clients n’est possible qu’en mode attente"
 
-#: xfce4-session/xfsm-manager.c:2522
+#: xfce4-session/xfsm-manager.c:2570
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Le gestionnaire de sessions doit être en mode attente lors d’une requête d’un point de contrôle"
 
-#: xfce4-session/xfsm-manager.c:2595 xfce4-session/xfsm-manager.c:2615
+#: xfce4-session/xfsm-manager.c:2643 xfce4-session/xfsm-manager.c:2663
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Le gestionnaire de sessions doit être en mode attente lors d’une requête de mise hors tension"
 
-#: xfce4-session/xfsm-manager.c:2652
+#: xfce4-session/xfsm-manager.c:2700
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Le gestionnaire de sessions doit être en mode attente lors d’une requête de redémarrage"
 
-#: xfce4-session/xfsm-manager.c:2688 xfce4-session/xfsm-manager.c:2727
-#: xfce4-session/xfsm-manager.c:2765
+#: xfce4-session/xfsm-manager.c:2736 xfce4-session/xfsm-manager.c:2775
+#: xfce4-session/xfsm-manager.c:2813
 msgid "Session manager must be in idle state when requesting a sleep"
 msgstr "Le gestionnaire de sessions doit être en mode attente lors d’une requête de mise en veille"
 
-#: xfce4-session/xfsm-manager.c:2892
+#: xfce4-session/xfsm-manager.c:2940
 msgid "Session manager must be in idle state when requesting a user switch"
 msgstr "Le gestionnaire de sessions doit être en mode attente lors d’une requête de changement d’utilisateur"
 
