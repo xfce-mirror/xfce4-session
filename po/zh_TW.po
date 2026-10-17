@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2026-10-09 00:55+0200\n"
+"POT-Creation-Date: 2026-10-17 12:57+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: 黃柏諺 <s8321414@gmail.com>, 2019-2020,2023-2024,2026\n"
 "Language-Team: Chinese (Taiwan) (http://app.transifex.com/xfce/xfce4-session/language/zh_TW/)\n"
@@ -45,29 +45,30 @@ msgstr "Xfce 工作階段 (Wayland)"
 msgid "xfce;wayland;desktop;environment;session;"
 msgstr "xfce;wayland;desktop;environment;session;"
 
-#: libxfce4session-client/xfce-session-client-dbus.c:530
+#: libxfce4session-client/xfce-session-client-dbus.c:551
 msgid "(unknown)"
 msgstr "(不明)"
 
-#: libxfce4session-client/xfce-session-client-dbus.c:533
+#: libxfce4session-client/xfce-session-client-dbus.c:554
 #, c-format
 msgid "Application '%s' cancelled logout"
 msgstr "應用程式「%s」已取消登出"
 
 #: libxfce4session-client/xfce-session-client-wl-xdg.c:260
 msgid ""
-"Your compositor does not support the xdg-session-management-v1 protocol"
-msgstr "您的合成器不支援 xdg-session-management-v1 協定"
+"Your compositor does not support the xdg-session-management-v1 protocol; "
+"attempting to fall back to the DBus interface"
+msgstr ""
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:307
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:315
 msgid "Compositor failed to respond to registration attempt in time"
 msgstr "合成器無法即時回應註冊請求"
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:328
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:336
 msgid "Another application took over the session during registration"
 msgstr "註冊期間另一個應用程式接管了工作階段"
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:338
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:346
 msgid "Compositor did not respond with a client ID"
 msgstr "合成器並未回應客戶端 ID"
 
@@ -80,23 +81,23 @@ msgstr "連接到工作階段管理程式失敗：%s"
 msgid "Session manager did not return a valid client id"
 msgstr "工作階段管理程式沒有回傳有效的用戶端 ID"
 
-#: libxfce4session-client/xfce-session-client.c:1031
+#: libxfce4session-client/xfce-session-client.c:1048
 msgid "Session management client ID"
 msgstr "工作階段管理程式用戶端 ID"
 
-#: libxfce4session-client/xfce-session-client.c:1031
+#: libxfce4session-client/xfce-session-client.c:1048
 msgid "ID"
 msgstr "ID"
 
-#: libxfce4session-client/xfce-session-client.c:1032
+#: libxfce4session-client/xfce-session-client.c:1049
 msgid "Disable session management"
 msgstr "停用工作階段管理"
 
-#: libxfce4session-client/xfce-session-client.c:1048
+#: libxfce4session-client/xfce-session-client.c:1065
 msgid "Session management options"
 msgstr "工作階段管理選項"
 
-#: libxfce4session-client/xfce-session-client.c:1048
+#: libxfce4session-client/xfce-session-client.c:1065
 msgid "Show session management options"
 msgstr "顯示工作階段管理選項"
 
@@ -177,7 +178,7 @@ msgid "Unable to save the session"
 msgstr "無法儲存工作階段"
 
 #: settings/session-editor.c:135 settings/session-editor.c:318
-#: xfce4-session/xfsm-manager.c:1368 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1387 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "關閉(_C)"
 
@@ -196,7 +197,7 @@ msgid "Are you sure you want to empty the session cache?"
 msgstr "您確定要清空工作階段快取？"
 
 #: settings/session-editor.c:198 settings/session-editor.c:290
-#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:743
+#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:748
 #: xfce4-session/xfsm-logout-dialog.c:218
 msgid "_Cancel"
 msgstr "取消(_C)"
@@ -257,7 +258,7 @@ msgstr "程式"
 msgid "Restart Style"
 msgstr "重新啟動樣式"
 
-#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:744
+#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:749
 msgid "_OK"
 msgstr "是(_O)"
 
@@ -467,7 +468,7 @@ msgstr "無論如何都要繼續"
 msgid "Try again"
 msgstr "重試"
 
-#: xfce4-session/xfsm-manager.c:605
+#: xfce4-session/xfsm-manager.c:610
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -476,77 +477,77 @@ msgid ""
 "incorrectly."
 msgstr "無法得知防失敗工作階段的名稱。可能原因：xfcond 並非執行中 (D-Bus 設置問題)；環境變數 $XDG_CONFIG_DIRS 的設定不正確 (一定要包含「%s」)，或是 xfce4-session 安裝不正確。"
 
-#: xfce4-session/xfsm-manager.c:630
+#: xfce4-session/xfsm-manager.c:635
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "指定的防失敗工作階段 (「%s」) 並未標記為防失敗工作階段。"
 
-#: xfce4-session/xfsm-manager.c:672
+#: xfce4-session/xfsm-manager.c:677
 msgid "The list of applications in the failsafe session is empty."
 msgstr "防失敗工作階段內的應用程式清單是空的。"
 
-#: xfce4-session/xfsm-manager.c:756
+#: xfce4-session/xfsm-manager.c:761
 msgid "Name for the new session"
 msgstr "新工作階段的名稱"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:833
+#: xfce4-session/xfsm-manager.c:838
 msgid "Session Manager Error"
 msgstr "工作階段管理程式出錯"
 
-#: xfce4-session/xfsm-manager.c:834
+#: xfce4-session/xfsm-manager.c:839
 msgid "Unable to load a failsafe session"
 msgstr "無法載入防失敗工作階段"
 
-#: xfce4-session/xfsm-manager.c:836
+#: xfce4-session/xfsm-manager.c:841
 msgid "_Quit"
 msgstr "退出(_Q)"
 
-#: xfce4-session/xfsm-manager.c:1358
+#: xfce4-session/xfsm-manager.c:1377
 msgid "Shutdown Failed"
 msgstr "關機失敗"
 
-#: xfce4-session/xfsm-manager.c:1361
+#: xfce4-session/xfsm-manager.c:1380
 msgid "Failed to suspend session"
 msgstr "無法暫停工作階段"
 
-#: xfce4-session/xfsm-manager.c:1363
+#: xfce4-session/xfsm-manager.c:1382
 msgid "Failed to hibernate session"
 msgstr "無法休眠工作階段"
 
-#: xfce4-session/xfsm-manager.c:1365
+#: xfce4-session/xfsm-manager.c:1384
 msgid "Failed to hybrid sleep session"
 msgstr "工作階段混合睡眠失敗"
 
-#: xfce4-session/xfsm-manager.c:1366
+#: xfce4-session/xfsm-manager.c:1385
 msgid "Failed to switch user"
 msgstr "切換使用者失敗"
 
-#: xfce4-session/xfsm-manager.c:1734
+#: xfce4-session/xfsm-manager.c:1753
 msgid "Can only terminate clients when in the idle state"
 msgstr "只能在客戶端為閒置狀態時終止它們"
 
-#: xfce4-session/xfsm-manager.c:2522
+#: xfce4-session/xfsm-manager.c:2570
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "當請求檢查點時，工作階段管理程式一定要處於閒置狀態"
 
-#: xfce4-session/xfsm-manager.c:2595 xfce4-session/xfsm-manager.c:2615
+#: xfce4-session/xfsm-manager.c:2643 xfce4-session/xfsm-manager.c:2663
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "當請求關機時，工作階段管理程式一定要處於閒置狀態"
 
-#: xfce4-session/xfsm-manager.c:2652
+#: xfce4-session/xfsm-manager.c:2700
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "當請求重新啟動時，工作階段管理程式一定要處於閒置狀態"
 
-#: xfce4-session/xfsm-manager.c:2688 xfce4-session/xfsm-manager.c:2727
-#: xfce4-session/xfsm-manager.c:2765
+#: xfce4-session/xfsm-manager.c:2736 xfce4-session/xfsm-manager.c:2775
+#: xfce4-session/xfsm-manager.c:2813
 msgid "Session manager must be in idle state when requesting a sleep"
 msgstr "在請求睡眠時，工作階段管理程式必須處理閒置狀態"
 
-#: xfce4-session/xfsm-manager.c:2892
+#: xfce4-session/xfsm-manager.c:2940
 msgid "Session manager must be in idle state when requesting a user switch"
 msgstr "在請求切換使用者時，工作階段管理程式必須處理閒置狀態"
 
