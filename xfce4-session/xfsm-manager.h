@@ -74,8 +74,7 @@ typedef enum
 typedef enum
 {
   XFSM_CLOSE_FLAGS_NONE = 0,
-  XFSM_CLOSE_FLAGS_DO_CLEANUP = (1 << 0),
-  XFSM_CLOSE_FLAGS_CLIENT_GONE = (1 << 1),
+  XFSM_CLOSE_FLAGS_FORCE_DISCONNECT = (1 << 0),
 } XfsmCloseFlags;
 
 GType
@@ -103,8 +102,7 @@ xfsm_manager_signal_startup_done (XfsmManager *manager);
 /* call for each client that fails */
 gboolean
 xfsm_manager_handle_failed_properties (XfsmManager *manager,
-                                       XfsmProperties *properties,
-                                       gboolean carry_ok);
+                                       XfsmProperties *properties);
 
 XfsmClient *
 xfsm_manager_new_client (XfsmManager *manager,
@@ -116,7 +114,8 @@ gboolean
 xfsm_manager_register_client (XfsmManager *manager,
                               XfsmClient *client,
                               const gchar *dbus_client_id,
-                              const gchar *previous_id);
+                              const gchar *previous_id,
+                              gboolean *was_resumed);
 
 void
 xfsm_manager_start_interact (XfsmManager *manager,
