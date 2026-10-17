@@ -49,20 +49,6 @@ typedef enum
   XFSM_CLIENT_STATE_COUNT
 } XfsmClientState;
 
-typedef enum
-{
-  XFSM_START_REASON_LAUNCH = 0,
-  XFSM_START_REASON_RECOVER,
-  XFSM_START_REASON_SESSION_RESTORE,
-} XfsmStartReason;
-
-typedef enum
-{
-  XFSM_SESSION_STATUS_CREATED = 0,
-  XFSM_SESSION_STATUS_RESTORED,
-  XFSM_SESSION_STATUS_REPLACED,
-} XfsmSessionStatus;
-
 gchar *
 xfsm_client_generate_id (SmsConn sms_conn);
 
@@ -70,7 +56,7 @@ XfsmClient *
 xfsm_client_new (XfsmManager *manager,
                  SmsConn sms_conn,
                  GDBusConnection *connection,
-                 gboolean is_delegate_registration);
+                 gboolean is_client2);
 
 void
 xfsm_client_set_initial_properties (XfsmClient *client,
@@ -91,7 +77,7 @@ SmsConn
 xfsm_client_get_sms_connection (XfsmClient *client);
 
 gboolean
-xfsm_client_is_delegate_registration (XfsmClient *client);
+xfsm_client_can_save_state (XfsmClient *client);
 
 gboolean
 xfsm_client_get_dbus_save_requested (XfsmClient *client);
@@ -135,19 +121,10 @@ const gchar *
 xfsm_client_get_service_name (XfsmClient *client);
 
 void
-xfsm_client_set_start_reason (XfsmClient *client,
-                              XfsmStartReason reason);
-XfsmStartReason
-xfsm_client_get_start_reason (XfsmClient *client);
+xfsm_client_send_replaced (XfsmClient *client);
 
 void
-xfsm_client_set_session_status (XfsmClient *client,
-                                XfsmSessionStatus status);
-XfsmSessionStatus
-xfsm_client_get_session_status (XfsmClient *client);
-
-gboolean
-xfsm_client_is_xfsm_aware (XfsmClient *client);
+xfsm_client_send_save_state (XfsmClient *client);
 
 void
 xfsm_client_terminate (XfsmClient *client);
@@ -157,14 +134,6 @@ xfsm_client_end_session (XfsmClient *client);
 
 void
 xfsm_client_cancel_shutdown (XfsmClient *client);
-
-XfsmStartReason
-xfsm_start_reason_parse (const gchar *reason_str);
-const gchar *
-xfsm_start_reason_to_string (XfsmStartReason reason);
-
-const gchar *
-xfsm_session_status_to_string (XfsmSessionStatus status);
 
 G_END_DECLS
 

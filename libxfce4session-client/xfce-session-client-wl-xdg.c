@@ -54,7 +54,6 @@ struct _XfceSessionClientWlXdg
   struct xdg_session_manager_v1 *xdg_manager;
   struct xdg_session_v1 *xdg_session;
 
-  gchar *start_reason;
   SessionStatus session_status;
 
   GHashTable *toplevels; // gchar* -> Toplevel* (owns Toplevel)
@@ -194,38 +193,7 @@ xfce_session_client_wl_xdg_finalize (GObject *obj)
   g_clear_pointer (&wxsession_client->xdg_manager, xdg_session_manager_v1_destroy);
   g_clear_pointer (&wxsession_client->registry, wl_registry_destroy);
 
-  g_free (wxsession_client->start_reason);
-
   G_OBJECT_CLASS (xfce_session_client_wl_xdg_parent_class)->finalize (obj);
-}
-
-static gboolean
-xfce_session_client_wl_xdg_attach (XfceSessionClientDBus *dsession_client,
-                                   GError **error)
-{
-  XfceSessionClientWlXdg *wxsession_client = XFCE_SESSION_CLIENT_WL_XDG (dsession_client);
-
-  XfsmDbusManager *manager_proxy = _xfce_session_client_dbus_get_xfsm_manager_proxy (dsession_client);
-  g_assert (manager_proxy != NULL);
-  const gchar *client_id = xfce_session_client_get_client_id (XFCE_SESSION_CLIENT (dsession_client));
-  gchar *client_object_path = NULL;
-
-  g_clear_pointer (&wxsession_client->start_reason, g_free);
-
-  if (!xfsm_dbus_manager_call_attach_client_sync (manager_proxy,
-                                                  client_id != NULL ? client_id : "",
-                                                  &client_object_path,
-                                                  &wxsession_client->start_reason,
-                                                  NULL,
-                                                  error))
-    {
-      return FALSE;
-    }
-
-  _xfce_session_client_dbus_set_client_object_path (dsession_client, client_object_path);
-  g_free (client_object_path);
-
-  return TRUE;
 }
 
 static gboolean
@@ -391,26 +359,19 @@ xfce_session_client_wl_xdg_connect (XfceSessionClient *session_client,
         }
     }
 
-  // _xfce_session_client_dbus_do_connect() will set is_resumed incorrectly, so we
-  // have to fix it up afterward, but we don't want a property-notify to go out
-  // for the incorrect setting.
-  g_object_freeze_notify (G_OBJECT (session_client));
-
-  if (!XFCE_SESSION_CLIENT_CLASS (xfce_session_client_wl_xdg_parent_class)->is_connected (session_client))
+  GError *error1 = NULL;
+  if (!XFCE_SESSION_CLIENT_CLASS (xfce_session_client_wl_xdg_parent_class)->connect (session_client, &error1))
     {
-      GError *error1 = NULL;
-      if (!_xfce_session_client_dbus_do_connect (XFCE_SESSION_CLIENT_DBUS (session_client),
-                                                 xfce_session_client_wl_xdg_attach,
-                                                 &error1))
-        {
-          g_message ("Unable to connect to an Xfce-compatible session manager; some application state may not be saved: %s", error1->message);
-          g_error_free (error1);
-        }
+      g_message ("Unable to connect to an Xfce-compatible session manager; some application state may not be saved: %s", error1->message);
+      g_error_free (error1);
+
+      // The parent class's version of is_resumed is the canonical one, but if
+      // the parent fails to connect, do our best with what we've gotten from
+      // the xdg protocol.
+      _xfce_session_client_set_is_resumed (session_client, wxsession_client->session_status == SESSION_STATUS_RESTORED);
     }
 
-  _xfce_session_client_set_is_resumed (session_client, wxsession_client->session_status == SESSION_STATUS_RESTORED);
   _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_IDLE);
-  g_object_thaw_notify (G_OBJECT (session_client));
 
   if (queue != NULL)
     {
@@ -456,7 +417,6 @@ xfce_session_client_wl_xdg_disconnect (XfceSessionClient *session_client)
 
   g_clear_pointer (&wxsession_client->xdg_session, xdg_session_v1_destroy);
 
-  g_clear_pointer (&wxsession_client->start_reason, g_free);
   wxsession_client->session_status = SESSION_STATUS_INVALID;
 }
 

@@ -218,7 +218,7 @@ sm_register_client (SmsConn sms_conn,
                 IceConnectionNumber (SmsGetIceConnection (sms_conn)),
                 previous_id != NULL ? previous_id : "None");
 
-  result = xfsm_manager_register_client (XFSM_CLIENT_MANAGER (client), client, NULL, previous_id);
+  result = xfsm_manager_register_client (XFSM_CLIENT_MANAGER (client), client, NULL, previous_id, NULL);
 
   if (previous_id != NULL)
     free (previous_id);
@@ -331,9 +331,7 @@ sm_close_connection (SmsConn sms_conn,
       xfsm_verbose ("\n");
     }
 
-  xfsm_manager_close_connection (XFSM_CLIENT_MANAGER (client),
-                                 client,
-                                 XFSM_CLOSE_FLAGS_DO_CLEANUP | XFSM_CLOSE_FLAGS_CLIENT_GONE);
+  xfsm_manager_close_connection (XFSM_CLIENT_MANAGER (client), client, XFSM_CLOSE_FLAGS_FORCE_DISCONNECT);
 
   if (reasons != NULL)
     SmFreeReasons (num_reasons, reasons);
