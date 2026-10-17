@@ -46,8 +46,6 @@ _xfce_session_client_dbus_get_xfsm_manager_proxy (XfceSessionClientDBus *dsessio
 void
 _xfce_session_client_dbus_set_client_object_path (XfceSessionClientDBus *dsession_client,
                                                   const gchar *object_path);
-void
-_xfce_session_client_dbus_do_teardown (XfceSessionClientDBus *dsession_client);
 
 G_END_DECLS
 

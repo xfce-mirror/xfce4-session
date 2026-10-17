@@ -174,7 +174,7 @@ xsmp_process_ice_messages (GIOChannel *channel,
       if (xsession_client->session_connection)
         {
           XfceSessionClient *session_client = XFCE_SESSION_CLIENT (xsession_client);
-          xfce_session_client_disconnect (session_client);
+          _xfce_session_client_disconnect_internal (session_client);
           _xfce_session_client_start_auto_reconnect (session_client);
         }
       else

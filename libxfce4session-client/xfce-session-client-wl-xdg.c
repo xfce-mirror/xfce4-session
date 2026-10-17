@@ -254,11 +254,19 @@ xfce_session_client_wl_xdg_connect (XfceSessionClient *session_client,
 
   if (wxsession_client->xdg_manager == NULL)
     {
-      g_set_error_literal (error,
-                           XFCE_SESSION_CLIENT_ERROR,
-                           XFCE_SESSION_CLIENT_ERROR_FAILED,
-                           _("Your compositor does not support the xdg-session-management-v1 protocol"));
-      goto out_err;
+      static gsize message_printed = 0;
+      if (g_once_init_enter (&message_printed))
+        {
+          g_message (_("Your compositor does not support the xdg-session-management-v1 protocol; attempting to fall back to the DBus interface"));
+          g_once_init_leave (&message_printed, 1);
+        }
+
+      if (queue != NULL)
+        {
+          wl_event_queue_destroy (queue);
+        }
+
+      return XFCE_SESSION_CLIENT_CLASS (xfce_session_client_wl_xdg_parent_class)->connect (session_client, error);
     }
 
   if (wxsession_client->xdg_session == NULL)
@@ -369,7 +377,7 @@ xfce_session_client_wl_xdg_connect (XfceSessionClient *session_client,
                 }
 
 #ifdef HAVE_GDK_WAYLAND_WINDOW_XDG_TOPLEVEL_REALIZE
-              GdkWindow *gdk_window = gtk_widget_get_window (GTK_WIDGET (window));
+              GdkWindow *gdk_window = gtk_widget_get_window (GTK_WIDGET (toplevel->window));
               struct xdg_toplevel *xdg_toplevel = gdk_window != NULL ? gdk_wayland_window_get_xdg_toplevel (gdk_window) : NULL;
 #else
               struct xdg_toplevel *xdg_toplevel = surfaces_get_xdg_toplevel_for_window (toplevel->window);
@@ -434,9 +442,9 @@ out_err:
 static void
 xfce_session_client_wl_xdg_disconnect (XfceSessionClient *session_client)
 {
-  XfceSessionClientWlXdg *wxsession_client = XFCE_SESSION_CLIENT_WL_XDG (session_client);
+  XFCE_SESSION_CLIENT_CLASS (xfce_session_client_wl_xdg_parent_class)->disconnect (session_client);
 
-  _xfce_session_client_dbus_do_teardown (XFCE_SESSION_CLIENT_DBUS (session_client));
+  XfceSessionClientWlXdg *wxsession_client = XFCE_SESSION_CLIENT_WL_XDG (session_client);
 
   GHashTableIter iter;
   g_hash_table_iter_init (&iter, wxsession_client->toplevels);
@@ -476,7 +484,8 @@ static gboolean
 xfce_session_client_wl_xdg_is_connected (XfceSessionClient *session_client)
 {
   XfceSessionClientWlXdg *wxsession_client = XFCE_SESSION_CLIENT_WL_XDG (session_client);
-  return wxsession_client->xdg_session != NULL;
+  return wxsession_client->xdg_session != NULL
+         || XFCE_SESSION_CLIENT_CLASS (xfce_session_client_wl_xdg_parent_class)->is_connected (session_client);
 }
 
 static void
@@ -609,7 +618,7 @@ xfce_session_client_wl_xdg_register_window (XfceSessionClientWlXdg *wxsession_cl
 #ifdef HAVE_GDK_WAYLAND_WINDOW_XDG_TOPLEVEL_REALIZE
   if (gtk_widget_get_window (GTK_WIDGET (window)) != NULL)
     {
-      window_realized (window);
+      window_realized (GTK_WIDGET (window));
     }
   g_signal_connect (window, "realize", G_CALLBACK (window_realized), NULL);
 #endif
@@ -741,7 +750,7 @@ registry_global_remove (void *data,
 
   if (name == wxsession_client->xdg_manager_name)
     {
-      xfce_session_client_disconnect (XFCE_SESSION_CLIENT (wxsession_client));
+      _xfce_session_client_disconnect_internal (XFCE_SESSION_CLIENT (wxsession_client));
       g_clear_pointer (&wxsession_client->xdg_manager, xdg_session_manager_v1_destroy);
       wxsession_client->xdg_manager_name = 0;
 

@@ -73,6 +73,8 @@ struct _XfsmManager
 
   XfsmManagerState state;
 
+  GHashTable *session_env_vars;
+
   XfsmShutdownType shutdown_type;
   XfsmShutdown *shutdown_helper;
   XfsmInhibitor *inhibitions;
@@ -194,6 +196,7 @@ static void
 xfsm_manager_init (XfsmManager *manager)
 {
   manager->state = XFSM_MANAGER_STARTUP;
+  manager->session_env_vars = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
   manager->session_chooser = FALSE;
   manager->failsafe_mode = TRUE;
   manager->shutdown_type = XFSM_SHUTDOWN_LOGOUT;
@@ -245,6 +248,8 @@ xfsm_manager_finalize (GObject *obj)
   g_free (manager->session_name);
   g_free (manager->checkpoint_session_name);
   g_object_unref (manager->xfw_screen);
+
+  g_hash_table_destroy (manager->session_env_vars);
 
   G_OBJECT_CLASS (xfsm_manager_parent_class)->finalize (obj);
 }
@@ -851,6 +856,20 @@ xfsm_manager_load (XfsmManager *manager,
   manager->start_at = xfconf_channel_get_bool (channel, "/general/StartAssistiveTechnologies", FALSE);
 
   xfsm_manager_load_settings (manager, channel);
+}
+
+
+void
+xfsm_manager_set_env_var (XfsmManager *manager,
+                          const char *name,
+                          const char *value)
+{
+  g_return_if_fail (XFSM_IS_MANAGER (manager));
+  g_return_if_fail (!xfce_str_is_empty (name));
+  g_return_if_fail (!xfce_str_is_empty (value));
+
+  g_setenv (name, value, TRUE);
+  g_hash_table_insert (manager->session_env_vars, g_strdup (name), g_strdup (value));
 }
 
 
@@ -2189,6 +2208,9 @@ static gboolean
 xfsm_manager_dbus_get_info (XfsmDbusManager *object,
                             GDBusMethodInvocation *invocation);
 static gboolean
+xfsm_manager_dbus_get_environment (XfsmDbusManager *object,
+                                   GDBusMethodInvocation *invocation);
+static gboolean
 xfsm_manager_dbus_list_clients (XfsmDbusManager *object,
                                 GDBusMethodInvocation *invocation);
 static gboolean
@@ -2412,6 +2434,7 @@ xfsm_manager_iface_init (XfsmDbusManagerIface *iface)
   iface->handle_can_suspend = xfsm_manager_dbus_can_suspend;
   iface->handle_checkpoint = xfsm_manager_dbus_checkpoint;
   iface->handle_get_info = xfsm_manager_dbus_get_info;
+  iface->handle_get_environment = xfsm_manager_dbus_get_environment;
   iface->handle_get_state = xfsm_manager_dbus_get_state;
   iface->handle_hibernate = xfsm_manager_dbus_hibernate;
   iface->handle_hybrid_sleep = xfsm_manager_dbus_hybrid_sleep;
@@ -2451,6 +2474,31 @@ xfsm_manager_dbus_get_info (XfsmDbusManager *object,
                             GDBusMethodInvocation *invocation)
 {
   xfsm_dbus_manager_complete_get_info (object, invocation, PACKAGE, VERSION_FULL, "Xfce");
+  return TRUE;
+}
+
+
+static gboolean
+xfsm_manager_dbus_get_environment (XfsmDbusManager *object,
+                                   GDBusMethodInvocation *invocation)
+{
+  XfsmManager *manager = XFSM_MANAGER (object);
+
+  GVariantBuilder builder;
+  g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{ss}"));
+
+  GHashTableIter iter;
+  const gchar *name;
+  const gchar *value;
+  g_hash_table_iter_init (&iter, manager->session_env_vars);
+
+  while (g_hash_table_iter_next (&iter, (gpointer) &name, (gpointer) &value))
+    {
+      g_variant_builder_add (&builder, "{ss}", name, value);
+    }
+
+  xfsm_dbus_manager_complete_get_environment (object, invocation, g_variant_builder_end (&builder));
+
   return TRUE;
 }
 
@@ -2912,13 +2960,21 @@ xfsm_manager_dbus_register_client (XfsmDbusManager *object,
 
   manager = XFSM_MANAGER (object);
 
-  if (!xfce_str_is_empty (arg_client_startup_id))
+  client_id = !xfce_str_is_empty (arg_client_startup_id)
+                ? g_strdup (arg_client_startup_id)
+                : g_strdup (arg_app_id);
+
+  for (GList *lp = g_queue_peek_head_link (manager->running_clients); lp != NULL; lp = lp->next)
     {
-      client_id = g_strdup_printf ("%s%s", arg_app_id, arg_client_startup_id);
-    }
-  else
-    {
-      client_id = g_strdup (arg_app_id);
+      XfsmClient *other_client = XFSM_CLIENT (lp->data);
+      if (g_strcmp0 (xfsm_client_get_id (other_client), client_id) == 0)
+        {
+          /* a running client already has claimed this ID, so generate a
+           * new random ID */
+          g_free (client_id);
+          client_id = xfsm_client_generate_id (NULL);
+          break;
+        }
     }
 
   /* create a new dbus-based client */
