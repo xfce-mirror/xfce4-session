@@ -36,11 +36,6 @@ struct _XfceSessionClientDBusClass
   XfceSessionClientClass parent_class;
 };
 
-gboolean
-_xfce_session_client_dbus_do_connect (XfceSessionClientDBus *dsession_client,
-                                      XfceSessionClientDBusRegisterFunc register_func,
-                                      GError **error);
-
 XfsmDbusManager *
 _xfce_session_client_dbus_get_xfsm_manager_proxy (XfceSessionClientDBus *dsession_client);
 void
