@@ -58,6 +58,8 @@ xfce_session_client_dbus_connect (XfceSessionClient *session_client,
 static void
 xfce_session_client_dbus_disconnect (XfceSessionClient *session_client);
 static void
+xfce_session_client_dbus_discard (XfceSessionClient *session_client);
+static void
 xfce_session_client_dbus_request_shutdown (XfceSessionClient *session_client,
                                            XfceSessionClientShutdownHint shutdown_hint);
 static gboolean
@@ -76,6 +78,10 @@ xfce_session_client_dbus_set_current_directory (XfceSessionClient *session_clien
                                                 const gchar *current_directory);
 static void
 xfce_session_client_dbus_sync_commands (XfceSessionClient *session_client);
+
+static void
+xfce_session_client_dbus_set_restart_style_hint (XfceSessionClientDBus *dsession_client,
+                                                 guint8 hint);
 
 static void
 xfce_session_client_dbus_do_teardown (XfceSessionClientDBus *dsession_client);
@@ -127,6 +133,7 @@ xfce_session_client_dbus_class_init (XfceSessionClientDBusClass *klass)
   XfceSessionClientClass *session_client_class = XFCE_SESSION_CLIENT_CLASS (klass);
   session_client_class->connect = xfce_session_client_dbus_connect;
   session_client_class->disconnect = xfce_session_client_dbus_disconnect;
+  session_client_class->discard = xfce_session_client_dbus_discard;
   session_client_class->request_shutdown = xfce_session_client_dbus_request_shutdown;
   session_client_class->is_connected = xfce_session_client_dbus_is_connected;
   session_client_class->set_desktop_file = xfce_session_client_dbus_set_desktop_file;
@@ -373,6 +380,15 @@ xfce_session_client_dbus_disconnect (XfceSessionClient *session_client)
     }
 
   xfce_session_client_dbus_do_teardown (dsession_client);
+
+  XFCE_SESSION_CLIENT_CLASS (xfce_session_client_dbus_parent_class)->disconnect (session_client);
+}
+
+static void
+xfce_session_client_dbus_discard (XfceSessionClient *session_client)
+{
+  xfce_session_client_dbus_set_restart_style_hint (XFCE_SESSION_CLIENT_DBUS (session_client), SmRestartNever);
+  XFCE_SESSION_CLIENT_CLASS (xfce_session_client_dbus_parent_class)->discard (session_client);
 }
 
 static void
@@ -516,15 +532,8 @@ static void
 xfce_session_client_dbus_set_restart_style (XfceSessionClient *session_client,
                                             XfceSessionClientRestartStyle restart_style)
 {
-  XfceSessionClientDBus *dsession_client = XFCE_SESSION_CLIENT_DBUS (session_client);
-  XfceSessionClientDBusPrivate *priv = GET_PRIV (dsession_client);
-
-  if (priv->client_proxy != NULL)
-    {
-      guint8 hint = _xfce_session_client_restart_style_to_xsmp (restart_style);
-      GVariant *value = g_variant_new_byte (hint);
-      xfce_session_client_dbus_set_property (dsession_client, SmRestartStyleHint, value);
-    }
+  guint8 hint = _xfce_session_client_restart_style_to_xsmp (restart_style);
+  xfce_session_client_dbus_set_restart_style_hint (XFCE_SESSION_CLIENT_DBUS (session_client), hint);
 }
 
 static void
@@ -645,6 +654,19 @@ xfce_session_client_dbus_sync_commands (XfceSessionClient *session_client)
       g_strfreev (clone_command);
       g_strfreev (restart_command);
       g_strfreev (discard_command);
+    }
+}
+
+static void
+xfce_session_client_dbus_set_restart_style_hint (XfceSessionClientDBus *dsession_client,
+                                                 guint8 hint)
+{
+  XfceSessionClientDBusPrivate *priv = GET_PRIV (dsession_client);
+
+  if (priv->client_proxy != NULL)
+    {
+      GVariant *value = g_variant_new_byte (hint);
+      xfce_session_client_dbus_set_property (dsession_client, SmRestartStyleHint, value);
     }
 }
 
