@@ -3,16 +3,18 @@
 # This file is distributed under the same license as the xfce4-session.master package.
 # 
 # Translators:
+# beriain, 2019-2020
 # beriain, 2019
 # beriain, 2020
 # Dabid Martinez <dabid@laborategia.eus>, 2020
+# Eder Etxebarria Rojo, 2024
 # Eder Etxebarria Rojo, 2024
 # Piarres Beobide <pi@beobide.net>, 2004-2005,2007-2009
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2026-10-09 00:55+0200\n"
+"POT-Creation-Date: 2026-10-17 12:57+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
 "Last-Translator: Eder Etxebarria Rojo, 2024\n"
 "Language-Team: Basque (http://app.transifex.com/xfce/xfce4-session/language/eu/)\n"
@@ -28,74 +30,75 @@ msgstr "Xfce saioa"
 
 #: xfce.desktop.in:5 xfce-wayland.desktop.in:5
 msgid "Use this session to run Xfce as your desktop environment"
-msgstr "Erabili saio hau Xfce mahaigain ingurune gisa exekutatzeko."
+msgstr "Erabili saio hau Xfce mahaigain-ingurune gisa exekutatzeko"
 
 #: xfce.desktop.in:10
 msgid "xfce;session;desktop;environment;window manager;gui;"
-msgstr "xfce;saioa;mahaigaina;ingurumena;leiho-kudeatzailea;interfaze-grafikoa;"
+msgstr "xfce;session;desktop;environment;window manager;gui;saioa;mahaigaina;ingurunea;leiho-kudeatzailea;interfaze grafikoa;"
 
 #: xfce-wayland.desktop.in:4
 msgid "Xfce Session (Wayland)"
-msgstr "Xfce Saioa (Wayland)"
+msgstr "Xfce saioa (Wayland)"
 
 #: xfce-wayland.desktop.in:10
 msgid "xfce;wayland;desktop;environment;session;"
-msgstr "xfce;wayland;mahaigaina;ingurumena;saioa;"
+msgstr "xfce;wayland;desktop;environment;session;mahaigaina;ingurunea;saioa;"
 
-#: libxfce4session-client/xfce-session-client-dbus.c:530
+#: libxfce4session-client/xfce-session-client-dbus.c:551
 msgid "(unknown)"
 msgstr "(ezezaguna)"
 
-#: libxfce4session-client/xfce-session-client-dbus.c:533
+#: libxfce4session-client/xfce-session-client-dbus.c:554
 #, c-format
 msgid "Application '%s' cancelled logout"
-msgstr ""
+msgstr "'%s' aplikazioak saio-ixtea bertan behera utzi du"
 
 #: libxfce4session-client/xfce-session-client-wl-xdg.c:260
 msgid ""
-"Your compositor does not support the xdg-session-management-v1 protocol"
-msgstr ""
+"Your compositor does not support the xdg-session-management-v1 protocol; "
+"attempting to fall back to the DBus interface"
+msgstr "Zure konposatzaileak ez du xdg-session-management-v1 protokoloa onartzen; DBus interfazera itzultzen saiatzen"
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:307
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:315
 msgid "Compositor failed to respond to registration attempt in time"
-msgstr ""
+msgstr "Konposatzaileak ez dio erregistro-saiakerari garaiz erantzun"
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:328
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:336
 msgid "Another application took over the session during registration"
-msgstr ""
+msgstr "Beste aplikazio batek hartu du saioa erregistroan zehar"
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:338
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:346
 msgid "Compositor did not respond with a client ID"
-msgstr ""
+msgstr "Konposatzaileak ez du bezero-IDrik itzuli"
 
 #: libxfce4session-client/xfce-session-client-xsmp.c:748
 #, c-format
 msgid "Failed to connect to the session manager: %s"
-msgstr "Huts saio-kudeatzailearekin konektatzerakoan: %s"
+msgstr "Huts egin du saio-kudeatzailearekin konektatzean: %s"
 
 #: libxfce4session-client/xfce-session-client-xsmp.c:757
 msgid "Session manager did not return a valid client id"
-msgstr "Saio kudeatzaileak ez du ID erabilgarri bat erantzun"
+msgstr "Saio-kudeatzaileak ez du bezero-ID baliozkorik itzuli"
 
-#: libxfce4session-client/xfce-session-client.c:1031
+#: libxfce4session-client/xfce-session-client.c:1048
 msgid "Session management client ID"
-msgstr "Saio kudeatzaile bezero ID-a"
+msgstr "Saio-kudeaketako bezero-IDa"
 
-#: libxfce4session-client/xfce-session-client.c:1031
+#: libxfce4session-client/xfce-session-client.c:1048
 msgid "ID"
 msgstr "IDa"
 
-#: libxfce4session-client/xfce-session-client.c:1032
+#: libxfce4session-client/xfce-session-client.c:1049
 msgid "Disable session management"
-msgstr "Desgaitu saio kudeaketa"
+msgstr "Desgaitu saio-kudeaketa"
 
-#: libxfce4session-client/xfce-session-client.c:1048
+#: libxfce4session-client/xfce-session-client.c:1065
 msgid "Session management options"
-msgstr "Saio kudeaketa aukerak "
+msgstr "Saio-kudeaketaren aukerak"
 
-#: libxfce4session-client/xfce-session-client.c:1048
+#: libxfce4session-client/xfce-session-client.c:1065
 msgid "Show session management options"
-msgstr "Ikusi saio kudeaketa aukeraj"
+msgstr "Erakutsi saio-kudeaketaren aukerak"
 
 #: libxfsm/xfsm-util.c:371
 msgid "Session"
@@ -103,11 +106,11 @@ msgstr "Saioa"
 
 #: libxfsm/xfsm-util.c:382
 msgid "Last accessed"
-msgstr "Azkenengoz sartuta"
+msgstr "Azken sarbidea"
 
 #: settings/main.c:102
 msgid "Settings manager socket"
-msgstr "Ezarpen kudeatzaile socketa"
+msgstr "Ezarpen-kudeatzailearen socketa"
 
 #: settings/main.c:102
 msgid "SOCKET ID"
@@ -115,39 +118,39 @@ msgstr "SOCKET IDa"
 
 #: settings/main.c:103
 msgid "Version information"
-msgstr "Bertsio argibideak"
+msgstr "Bertsioaren informazioa"
 
 #: settings/main.c:115 xfce4-session/main.c:369
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr "Idatzi '%s --help' erabilerarentzat."
+msgstr "Idatzi '%s --help' erabilera ikusteko."
 
 #: settings/main.c:129 xfce4-session/main.c:379
 #: xfce4-session-logout/main.c:121
 msgid "The Xfce development team. All rights reserved."
-msgstr "Xfce garapen taldea. Eskubide guztiak erreserbaturik."
+msgstr "Xfce garapen taldea. Eskubide guztiak erreserbatuta."
 
 #: settings/main.c:130 xfce4-session/main.c:380
 #: xfce4-session-logout/main.c:124
 #, c-format
 msgid "Please report bugs to <%s>."
-msgstr "Programa erroreen berri eman hemen : <%s>"
+msgstr "Jakinarazi programa-erroreak hona: <%s>."
 
 #: settings/main.c:138 xfce4-session/main.c:388
 msgid "Unable to contact settings server"
-msgstr "Ezin da ezarpen zerbitzaria konektatu"
+msgstr "Ezin da ezarpenen zerbitzariarekin konektatu"
 
 #: settings/main.c:156
 msgid "Unable to create user interface from embedded definition data"
-msgstr "Ezin da txertatutako definizio datuetatik erabiltzaile interfazea sortu"
+msgstr "Ezin da erabiltzaile-interfazea sortu txertatutako definizio-datuetatik"
 
 #: settings/main.c:170
 msgid "App_lication Autostart"
-msgstr "Ap_likazio autoabiaraztea "
+msgstr "Ap_likazioen abiarazte automatikoa"
 
 #: settings/main.c:176
 msgid "Currently active session:"
-msgstr "Orain aktibo dagoen saioa:"
+msgstr "Uneko saio aktiboa:"
 
 #: settings/session-editor.c:56
 msgid "If running"
@@ -163,18 +166,18 @@ msgstr "Berehala"
 
 #: settings/session-editor.c:59
 msgid "Never"
-msgstr "Inoiz"
+msgstr "Inoiz ez"
 
 #: settings/session-editor.c:133
 msgid "Session Save Error"
-msgstr "Saio gordetze errorea"
+msgstr "Errorea saioa gordetzean"
 
 #: settings/session-editor.c:133
 msgid "Unable to save the session"
 msgstr "Ezin da saioa gorde"
 
 #: settings/session-editor.c:135 settings/session-editor.c:318
-#: xfce4-session/xfsm-manager.c:1368 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1387 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "_Itxi"
 
@@ -182,7 +185,7 @@ msgstr "_Itxi"
 msgid ""
 "The saved states of your applications will not be restored during your next "
 "login."
-msgstr "Zure aplikazioen gordetako egoerak ez dira berrezarriko hurrengo saio hastean."
+msgstr "Zure aplikazioen egoera gordeak ez dira leheneratuko saioa hasten duzun hurrengoan."
 
 #: settings/session-editor.c:196
 msgid "Clear sessions"
@@ -190,10 +193,10 @@ msgstr "Garbitu saioak"
 
 #: settings/session-editor.c:197
 msgid "Are you sure you want to empty the session cache?"
-msgstr "Ziur zaude saio cachea ezabatu nahi al duzu?"
+msgstr "Ziur zaude saioen cachea hustu nahi duzula?"
 
 #: settings/session-editor.c:198 settings/session-editor.c:290
-#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:743
+#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:748
 #: xfce4-session/xfsm-logout-dialog.c:218
 msgid "_Cancel"
 msgstr "_Utzi"
@@ -205,11 +208,11 @@ msgstr "_Aurrera"
 #: settings/session-editor.c:242
 #, c-format
 msgid "You might need to delete some files manually in \"%s\"."
-msgstr "Hemendik zenbait fitxategi eskuz ezabatu beharko dituzu: \"%s\"."
+msgstr "Baliteke fitxategi batzuk eskuz ezabatu behar izatea \"%s\" direktorioan."
 
 #: settings/session-editor.c:245
 msgid "All Xfce cache files could not be cleared"
-msgstr "Ezin da Xflock4 abiarazi"
+msgstr "Ezin izan dira Xfce-ren cache-fitxategi guztiak garbitu"
 
 #: settings/session-editor.c:286
 #, c-format
@@ -220,7 +223,7 @@ msgstr "Ziur zaude \"%s\" amaitu nahi duzula?"
 msgid ""
 "The application will lose any unsaved state and will not be restarted in "
 "your next session."
-msgstr "Aplikazioak gorde gabeko edozein egoera galduko eta ez da hurrengo saioan abiaraziko."
+msgstr "Aplikazioak gorde gabeko egoera guztia galduko du, eta ez da berrabiaraziko zure hurrengo saioan."
 
 #: settings/session-editor.c:289 settings/session-editor.c:316
 msgid "Terminate Program"
@@ -228,11 +231,11 @@ msgstr "Amaitu programa"
 
 #: settings/session-editor.c:291 settings/xfce4-session-settings.ui:445
 msgid "_Quit Program"
-msgstr "I_rten programatik"
+msgstr "_Amaitu programa"
 
 #: settings/session-editor.c:316
 msgid "Unable to terminate program."
-msgstr "Ezin da programa amaitu"
+msgstr "Ezin da programa amaitu."
 
 #: settings/session-editor.c:556
 msgid "(Unknown program)"
@@ -244,7 +247,7 @@ msgstr "Lehentasuna"
 
 #: settings/session-editor.c:824
 msgid "PID"
-msgstr "PIDa"
+msgstr "PID"
 
 #: settings/session-editor.c:831 settings/xfae-window.c:195
 msgid "Program"
@@ -252,11 +255,11 @@ msgstr "Programa"
 
 #: settings/session-editor.c:857
 msgid "Restart Style"
-msgstr "Berrabiarazte estiloa"
+msgstr "Berrabiarazte-estiloa"
 
-#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:744
+#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:749
 msgid "_OK"
-msgstr "_ADOS"
+msgstr "_Ados"
 
 #: settings/xfae-dialog.c:73 settings/xfae-window.c:249
 msgid "Add application"
@@ -296,65 +299,65 @@ msgstr "Editatu aplikazioa"
 
 #: settings/xfae-model.c:138
 msgid "on login"
-msgstr "saioa hasterakoan"
+msgstr "saioa hastean"
 
 #: settings/xfae-model.c:139
 msgid "on logout"
-msgstr "saioa amaitzerakoan"
+msgstr "saioa ixtean"
 
 #: settings/xfae-model.c:140
 msgid "on shutdown"
-msgstr "itzaltzerakoan"
+msgstr "itzaltzean"
 
 #: settings/xfae-model.c:141
 msgid "on restart"
-msgstr "berrabiarazterakoan"
+msgstr "berrabiaraztean"
 
 #: settings/xfae-model.c:142
 msgid "on suspend"
-msgstr "esekitzerakoan"
+msgstr "etetean"
 
 #: settings/xfae-model.c:143
 msgid "on hibernate"
-msgstr "hibernatzerakoan"
+msgstr "hibernatzean"
 
 #: settings/xfae-model.c:144
 msgid "on hybrid sleep"
-msgstr "lo hibridoa hasterakoan"
+msgstr "lo hibridoan sartzean"
 
 #: settings/xfae-model.c:145
 msgid "on switch user"
-msgstr "erabiltzailea aldatzerakoan"
+msgstr "erabiltzailea aldatzean"
 
 #: settings/xfae-model.c:480 settings/xfae-model.c:1190
 #: settings/xfae-model.c:1247
 #, c-format
 msgid "Failed to open %s for writing"
-msgstr "Ezin da %s fitxategia idazketarako ireki"
+msgstr "Ezin da %s idazteko ireki"
 
 #: settings/xfae-model.c:829
 #, c-format
 msgid "Failed to unlink %s: %s"
-msgstr "Ezinda %s lotura ezabatu: %s"
+msgstr "Huts egin du %s ezabatzean: %s"
 
 #: settings/xfae-model.c:990
 #, c-format
 msgid "Failed to create file %s"
-msgstr "Ezin da %s fitxategia sortu"
+msgstr "Huts egin du %s fitxategia sortzean"
 
 #: settings/xfae-model.c:1014
 #, c-format
 msgid "Failed to write file %s"
-msgstr "Ezin da %s fitxategia idatzi"
+msgstr "Huts egin du %s fitxategia idaztean"
 
 #: settings/xfae-model.c:1074
 #, c-format
 msgid "Failed to open %s for reading"
-msgstr "Ezin da %s fitxategia irakurtzeko ireki"
+msgstr "Ezin da %s irakurtzeko ireki"
 
 #: settings/xfae-window.c:105
 msgid "Failed to set run hook"
-msgstr "Huts exekutatze krokadura ezartzen"
+msgstr "Huts egin du exekuzio-kakoa ezartzean"
 
 #: settings/xfae-window.c:220
 msgid "Trigger"
@@ -366,11 +369,11 @@ msgstr "Gehitu"
 
 #: settings/xfae-window.c:255 settings/xfae-window.c:341
 msgid "Remove"
-msgstr "Ezabatu"
+msgstr "Kendu"
 
 #: settings/xfae-window.c:258
 msgid "Remove application"
-msgstr "Ezabatu aplikazioa"
+msgstr "Kendu aplikazioa"
 
 #: settings/xfae-window.c:268
 msgid "Edit"
@@ -379,60 +382,60 @@ msgstr "Editatu"
 #: settings/xfae-window.c:394
 #, c-format
 msgid "Failed adding \"%s\""
-msgstr "Huts /\"%s/\" gehitzerakoan"
+msgstr "Huts egin du \"%s\" gehitzean"
 
 #: settings/xfae-window.c:424 settings/xfae-window.c:432
 msgid "Failed to remove item"
-msgstr "Huts elementua ezabatzean"
+msgstr "Huts egin du elementua kentzean"
 
 #: settings/xfae-window.c:461
 msgid "Failed to edit item"
-msgstr "Huts elementua editatzean"
+msgstr "Huts egin du elementua editatzean"
 
 #: settings/xfae-window.c:481
 #, c-format
 msgid "Failed to edit item \"%s\""
-msgstr "Ezin da \"%s\" elementua editatu"
+msgstr "Huts egin du \"%s\" elementua editatzean"
 
 #: settings/xfae-window.c:509
 msgid "Failed to toggle item"
-msgstr "Huts elementua txandakatzean"
+msgstr "Huts egin du elementua txandakatzean"
 
 #: xfce4-session/main.c:77
 msgid "Disable binding to TCP ports"
-msgstr "Ezgaituko lotutako TXP atakak"
+msgstr "Desgaitu TCP atakekiko lotura"
 
 #: xfce4-session/main.c:78 xfce4-session-logout/main.c:80
 msgid "Print version information and exit"
-msgstr "Bertsio argibideak inprimatu eta irten"
+msgstr "Inprimatu bertsioaren informazioa eta irten"
 
 #: xfce4-session/xfsm-chooser.c:144
 msgid "Session Manager"
-msgstr "Saio kudeatzailea"
+msgstr "Saio-kudeatzailea"
 
 #: xfce4-session/xfsm-chooser.c:175
 msgid ""
 "Choose the session you want to restore. You can simply double-click the "
 "session name to restore it."
-msgstr "Aukeratu berreskuratu nahi duzun saioa. Saio izenean klik bikoitza eginez saio kudeatzaileak berreskuratuko du."
+msgstr "Aukeratu leheneratu nahi duzun saioa. Saioaren izenean klik bikoitza egin besterik ez duzu leheneratzeko."
 
 #: xfce4-session/xfsm-chooser.c:191
 msgid "Create a new session."
-msgstr "Saio berria sortu."
+msgstr "Sortu saio berri bat."
 
 #: xfce4-session/xfsm-chooser.c:198
 msgid "Delete a saved session."
-msgstr "Gordetako saio bat ezabatu."
+msgstr "Ezabatu gordetako saio bat."
 
 #. "Logout" button
 #: xfce4-session/xfsm-chooser.c:209
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:12
 msgid "Log Out"
-msgstr "Irten"
+msgstr "Itxi saioa"
 
 #: xfce4-session/xfsm-chooser.c:211
 msgid "Cancel the login attempt and return to the login screen."
-msgstr "Saio abiaraztea utzi eta hasiera pantailara itzuli."
+msgstr "Utzi saio-hasiera eta itzuli saio-hasierako pantailara."
 
 #. "Start" button
 #: xfce4-session/xfsm-chooser.c:218
@@ -441,7 +444,7 @@ msgstr "Hasi"
 
 #: xfce4-session/xfsm-chooser.c:219
 msgid "Start an existing session."
-msgstr "Existitzen den saio bat hasi."
+msgstr "Hasi lehendik dagoen saio bat."
 
 #: xfce4-session/xfsm-dns.c:73
 msgid "(Unknown)"
@@ -454,111 +457,111 @@ msgid ""
 "This will prevent Xfce from operating correctly.\n"
 "It may be possible to correct the problem by adding\n"
 "%s to the file /etc/hosts on your system."
-msgstr "Ezin da %s internet helbidea ebatzi.\nHonek Xfce oker funtzionatzea eragin dezake.\nPosible da arazo hau zuzentzea zure sistemako\n/etc/hosts fitxategiari %s gehituaz."
+msgstr "Ezin izan da %s(r)en interneteko helbidea bilatu.\nHorrek Xfce-k behar bezala funtzionatzea eragotziko du.\nBaliteke arazoa konpontzea zure sistemako\n/etc/hosts fitxategiari %s gehituz."
 
 #: xfce4-session/xfsm-dns.c:152
 msgid "Continue anyway"
-msgstr "Jarraitu halaere"
+msgstr "Jarraitu hala ere"
 
 #: xfce4-session/xfsm-dns.c:153
 msgid "Try again"
-msgstr "Saiatu berriz"
+msgstr "Saiatu berriro"
 
-#: xfce4-session/xfsm-manager.c:605
+#: xfce4-session/xfsm-manager.c:610
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
 "running (D-Bus setup problem); environment variable $XDG_CONFIG_DIRS is set "
 "incorrectly (must include \"%s\"), or xfce4-session is installed "
 "incorrectly."
-msgstr "Ezin da saio seguruaren izena atzeman. Arrazoia posibleak xfconfd ez abiarazita egotea (D-BUS konfigurazio arazoa, $XDG_CONFIG_DIRS aldagaia oker ezarrita egotea (\"%s\" eduki beharko luke) edo xfce4-session oker instalaturik egotea dira."
+msgstr "Ezin da saio seguruaren izena zehaztu. Kausa posibleak: xfconfd ez dago exekutatzen (D-Bus konfigurazio-arazoa); $XDG_CONFIG_DIRS ingurune-aldagaia gaizki ezarrita dago (\"%s\" eduki behar du), edo xfce4-session gaizki instalatuta dago."
 
-#: xfce4-session/xfsm-manager.c:630
+#: xfce4-session/xfsm-manager.c:635
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
-msgstr "Zehazturiko saio segurua (\"%s\") ez da saio seguru bat bezala markaturik."
+msgstr "Zehaztutako saio segurua (\"%s\") ez dago saio seguru gisa markatuta."
 
-#: xfce4-session/xfsm-manager.c:672
+#: xfce4-session/xfsm-manager.c:677
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Saio seguruko aplikazio zerrenda hutsik dago."
 
-#: xfce4-session/xfsm-manager.c:756
+#: xfce4-session/xfsm-manager.c:761
 msgid "Name for the new session"
-msgstr "Saio berriarentzako izena"
+msgstr "Saio berriaren izena"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:833
+#: xfce4-session/xfsm-manager.c:838
 msgid "Session Manager Error"
-msgstr "Saio kudeatzaile errorea"
+msgstr "Saio-kudeatzailearen errorea"
 
-#: xfce4-session/xfsm-manager.c:834
+#: xfce4-session/xfsm-manager.c:839
 msgid "Unable to load a failsafe session"
-msgstr "Ezin da saioa segurua kargatu"
+msgstr "Ezin da saio segurua kargatu"
 
-#: xfce4-session/xfsm-manager.c:836
+#: xfce4-session/xfsm-manager.c:841
 msgid "_Quit"
 msgstr "_Irten"
 
-#: xfce4-session/xfsm-manager.c:1358
+#: xfce4-session/xfsm-manager.c:1377
 msgid "Shutdown Failed"
-msgstr "Huts itzaltzerakoan"
+msgstr "Itzaltzeak huts egin du"
 
-#: xfce4-session/xfsm-manager.c:1361
+#: xfce4-session/xfsm-manager.c:1380
 msgid "Failed to suspend session"
-msgstr "Huts saioa esekitzerakoan"
+msgstr "Huts egin du saioa etetean"
 
-#: xfce4-session/xfsm-manager.c:1363
+#: xfce4-session/xfsm-manager.c:1382
 msgid "Failed to hibernate session"
-msgstr "Huts saioa hibernatzean"
+msgstr "Huts egin du saioa hibernatzean"
 
-#: xfce4-session/xfsm-manager.c:1365
+#: xfce4-session/xfsm-manager.c:1384
 msgid "Failed to hybrid sleep session"
-msgstr "Huts saioa lo hibridoan jartzen"
+msgstr "Huts egin du saioa lo hibridoan jartzean"
 
-#: xfce4-session/xfsm-manager.c:1366
+#: xfce4-session/xfsm-manager.c:1385
 msgid "Failed to switch user"
-msgstr "Huts erabiltzailea aldatzen"
+msgstr "Huts egin du erabiltzailea aldatzean"
 
-#: xfce4-session/xfsm-manager.c:1734
+#: xfce4-session/xfsm-manager.c:1753
 msgid "Can only terminate clients when in the idle state"
-msgstr "Bezeroak inaktibo egoeran daudenean bakarrik amaitu daitezke"
+msgstr "Bezeroak egoera inaktiboan bakarrik amai daitezke"
 
-#: xfce4-session/xfsm-manager.c:2522
+#: xfce4-session/xfsm-manager.c:2570
 msgid "Session manager must be in idle state when requesting a checkpoint"
-msgstr "Saio kudeatzailea inaktibo egoeran egon behar da egiaztapen-puntu bat eskatzean"
+msgstr "Saio-kudeatzaileak egoera inaktiboan egon behar du kontrol-puntu bat eskatzean"
 
-#: xfce4-session/xfsm-manager.c:2595 xfce4-session/xfsm-manager.c:2615
+#: xfce4-session/xfsm-manager.c:2643 xfce4-session/xfsm-manager.c:2663
 msgid "Session manager must be in idle state when requesting a shutdown"
-msgstr "Saio kudeatzailea inaktibo egoeran egon behar da itzaltzea eskatzean"
+msgstr "Saio-kudeatzaileak egoera inaktiboan egon behar du itzaltzea eskatzean"
 
-#: xfce4-session/xfsm-manager.c:2652
+#: xfce4-session/xfsm-manager.c:2700
 msgid "Session manager must be in idle state when requesting a restart"
-msgstr "Saio kudeatzailea inaktibo egoeran egon behar da berrabiaraztea eskatzean"
+msgstr "Saio-kudeatzaileak egoera inaktiboan egon behar du berrabiaraztea eskatzean"
 
-#: xfce4-session/xfsm-manager.c:2688 xfce4-session/xfsm-manager.c:2727
-#: xfce4-session/xfsm-manager.c:2765
+#: xfce4-session/xfsm-manager.c:2736 xfce4-session/xfsm-manager.c:2775
+#: xfce4-session/xfsm-manager.c:2813
 msgid "Session manager must be in idle state when requesting a sleep"
-msgstr "Saio-kudeatzaileak inaktibo egoeran egon behar du lo egiteko eskatzen denean"
+msgstr "Saio-kudeatzaileak egoera inaktiboan egon behar du loa eskatzean"
 
-#: xfce4-session/xfsm-manager.c:2892
+#: xfce4-session/xfsm-manager.c:2940
 msgid "Session manager must be in idle state when requesting a user switch"
-msgstr "Saio-kudeatzaileak inaktibo egoeran egon behar du erabiltzaile-aldaketa eskatzeko"
+msgstr "Saio-kudeatzaileak egoera inaktiboan egon behar du erabiltzaile-aldaketa eskatzean"
 
 #: xfce4-session/xfsm-logout-dialog.c:190
 #, c-format
 msgid "Log out %s"
-msgstr "%s utzi"
+msgstr "Itxi %s(r)en saioa"
 
 #: xfce4-session/xfsm-logout-dialog.c:236
 msgid "_Log Out"
-msgstr "_Saioa itxi"
+msgstr "Itxi _saioa"
 
 #: xfce4-session/xfsm-logout-dialog.c:259
 msgid "_Restart and update"
-msgstr "Berrabiarazi eta eguneratu"
+msgstr "Be_rrabiarazi eta eguneratu"
 
 #: xfce4-session/xfsm-logout-dialog.c:259
 msgid "_Restart"
@@ -566,7 +569,7 @@ msgstr "Be_rrabiarazi"
 
 #: xfce4-session/xfsm-logout-dialog.c:275
 msgid "Update and Shut _Down"
-msgstr "Eguneratu eta itzali"
+msgstr "Eguneratu eta it_zali"
 
 #: xfce4-session/xfsm-logout-dialog.c:275
 msgid "Shut _Down"
@@ -574,7 +577,7 @@ msgstr "It_zali"
 
 #: xfce4-session/xfsm-logout-dialog.c:299
 msgid "Sus_pend"
-msgstr "E_seki"
+msgstr "E_ten"
 
 #: xfce4-session/xfsm-logout-dialog.c:321
 msgid "_Hibernate"
@@ -582,11 +585,11 @@ msgstr "_Hibernatu"
 
 #: xfce4-session/xfsm-logout-dialog.c:343
 msgid "H_ybrid Sleep"
-msgstr "Lo hibridoa"
+msgstr "_Lo hibridoa"
 
 #: xfce4-session/xfsm-logout-dialog.c:369
 msgid "Switch _User"
-msgstr "Erabiltzailea aldatu"
+msgstr "_Aldatu erabiltzailea"
 
 #: xfce4-session/xfsm-logout-dialog.c:412
 msgid "An error occurred"
@@ -594,44 +597,44 @@ msgstr "Errore bat gertatu da"
 
 #: xfce4-session/xfsm-shutdown.c:162
 msgid "Shutdown is blocked by the kiosk settings"
-msgstr "Itzaltzea blokeatuta dago kiosko ezarpenetan"
+msgstr "Kiosko-ezarpenek itzaltzea blokeatzen dute"
 
 #: xfce4-session/xfsm-shutdown.c:219
 #, c-format
 msgid "Unknown shutdown method %d"
-msgstr "Itzalltze %d metodo ezezaguna"
+msgstr "%d itzaltze-metodo ezezaguna"
 
 #: xfce4-session-logout/main.c:56
 msgid "Log out without displaying the logout dialog"
-msgstr "Saioa itxi saio-ixte leihoa bistarazi gabe"
+msgstr "Itxi saioa saio-ixteko elkarrizketa erakutsi gabe"
 
 #: xfce4-session-logout/main.c:59
 msgid "Halt without displaying the logout dialog"
-msgstr "Gelditu saio-ixte leihoa bistarazi gabe"
+msgstr "Gelditu sistema saio-ixteko elkarrizketa erakutsi gabe"
 
 #: xfce4-session-logout/main.c:62
 msgid "Reboot without displaying the logout dialog"
-msgstr "Berrabiarazi saio-ixte leihoa bistarazi gabe"
+msgstr "Berrabiarazi saio-ixteko elkarrizketa erakutsi gabe"
 
 #: xfce4-session-logout/main.c:65
 msgid "Suspend without displaying the logout dialog"
-msgstr "Eseki saio-ixte leihoa bistarazi gabe"
+msgstr "Eten saio-ixteko elkarrizketa erakutsi gabe"
 
 #: xfce4-session-logout/main.c:68
 msgid "Hibernate without displaying the logout dialog"
-msgstr "Hibernatu saio-ixte leihoa bistarazi gabe"
+msgstr "Hibernatu saio-ixteko elkarrizketa erakutsi gabe"
 
 #: xfce4-session-logout/main.c:71
 msgid "Hybrid Sleep without displaying the logout dialog"
-msgstr "Lo hibridoa hasi saioa amaitzeko leihoa erakutsi gabe"
+msgstr "Jarri lo hibridoan saio-ixteko elkarrizketa erakutsi gabe"
 
 #: xfce4-session-logout/main.c:74
 msgid "Switch user without displaying the logout dialog"
-msgstr "Erabiltzailea aldatu saioa amaitzeko leihoa erakutsi gabe"
+msgstr "Aldatu erabiltzailea saio-ixteko elkarrizketa erakutsi gabe"
 
 #: xfce4-session-logout/main.c:77
 msgid "Log out quickly; don't save the session"
-msgstr "Azkar irten: Ez saioa gorde"
+msgstr "Itxi saioa azkar; ez gorde saioa"
 
 #: xfce4-session-logout/main.c:97
 msgid "Unknown error"
@@ -639,36 +642,36 @@ msgstr "Errore ezezaguna"
 
 #: xfce4-session-logout/main.c:122
 msgid "Written by Benedikt Meurer <benny@xfce.org>"
-msgstr "Benedikt Meurer <benny@xfce.org>-ek "
+msgstr "Egileak: Benedikt Meurer <benny@xfce.org>"
 
 #: xfce4-session-logout/main.c:123
 msgid "and Brian Tarricone <kelnos@xfce.org>."
-msgstr "eta Brian Tarricone <kelnos@xfce.org>ek idatzia."
+msgstr "eta Brian Tarricone <kelnos@xfce.org>."
 
 #: xfce4-session-logout/main.c:143 xfce4-session-logout/main.c:218
 msgid "Received error while trying to log out"
-msgstr "Errore bat jaso da saioa ixten saiatzerakoan"
+msgstr "Errore bat jaso da saioa ixten saiatzean"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:10
 msgid "logout;exit;quit;shutdown;"
-msgstr "saioa itxi;irten;utzi;itzali;"
+msgstr "logout;exit;quit;shutdown;saioa itxi;irten;itzali;"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:13
 msgid "Log out of the Xfce Desktop"
-msgstr "Saioa itxi Xfce mahaigainean"
+msgstr "Itxi Xfce mahaigaineko saioa"
 
 #. SECURITY:
 #. - A normal active user on the local machine does not need permission
 #. to suspend or hibernate their system.
 #: xfce4-session/org.xfce.session.policy.in.in:23
 msgid "Shutdown, restart, suspend, or hibernate the system"
-msgstr "Sistema itzali, berrabiarazi, eseki, edo hibernatzen jarri"
+msgstr "Itzali, berrabiarazi, eten edo hibernatu sistema"
 
 #: xfce4-session/org.xfce.session.policy.in.in:24
 msgid ""
 "Authentication is required to shutdown, restart, suspend, or hibernate the "
 "system."
-msgstr "Autentifikazioa beharrezkoa da sistema itzali, berrabiarazi, eseki, edo hibernatzen jartzeko."
+msgstr "Autentifikazioa behar da sistema itzaltzeko, berrabiarazteko, eteteko edo hibernatzeko."
 
 #: settings/xfce4-session-settings.desktop.in:3
 #: settings/xfce4-session-settings.ui:61
@@ -677,13 +680,13 @@ msgstr "Saioa eta abiaraztea"
 
 #: settings/xfce4-session-settings.desktop.in:4
 msgid "Customize desktop startup"
-msgstr "Mahaigainaren abioa pertsonalizatu"
+msgstr "Pertsonalizatu mahaigainaren abioa"
 
 #: settings/xfce4-session-settings.desktop.in:11
 msgid ""
 "session;settings;preferences;manager;startup;login;logout;shutdown;lock "
 "screen;application;autostart;launch;services;daemon;agent;"
-msgstr "saioa;ezarpenak;hobespenak;kudeatzailea;abiaraztea;saioa hastea;saioa ixtea;berrabiarazi;blokeat pantaila;aplikazioa;autoabiaraztea;abiaraztea;zerbitzuak;deabrua;agentea;"
+msgstr "session;settings;preferences;manager;startup;login;logout;shutdown;lock screen;application;autostart;launch;services;daemon;agent;saioa;ezarpenak;hobespenak;kudeatzailea;abioa;saioa hasi;saioa itxi;itzali;blokeatu pantaila;aplikazioa;abiarazte automatikoa;abiarazi;zerbitzuak;agentea;"
 
 #: settings/xfce4-session-settings.ui:51
 msgid ""
@@ -698,43 +701,43 @@ msgstr "_Laguntza"
 
 #: settings/xfce4-session-settings.ui:144
 msgid "_Display chooser on login"
-msgstr "_Bistaratu hautatzailea saio hastean"
+msgstr "_Erakutsi hautatzailea saioa hastean"
 
 #: settings/xfce4-session-settings.ui:149
 msgid "Display the session chooser every time Xfce starts"
-msgstr "Bistarazi saio hautatzailea Xfce abiarazten den bakoitzean"
+msgstr "Erakutsi saio-hautatzailea Xfce abiarazten den bakoitzean"
 
 #: settings/xfce4-session-settings.ui:161
 msgid "<b>Session Chooser</b>"
-msgstr "<b>Saio hautatzailea</b>"
+msgstr "<b>Saio-hautatzailea</b>"
 
 #: settings/xfce4-session-settings.ui:192
 msgid "Automatically save session on logo_ut"
-msgstr "Automatikoki gorde saioa ir_tetzerakoan"
+msgstr "Gorde saioa automatikoki _irtetean"
 
 #: settings/xfce4-session-settings.ui:197
 msgid "Always save the session when logging out"
-msgstr "Automatikoki gorde saioa irteterakoan"
+msgstr "Gorde beti saioa saioa ixtean"
 
 #: settings/xfce4-session-settings.ui:210
 msgid "Pro_mpt on logout"
-msgstr "_Galdetu saioa amaitzean"
+msgstr "_Galdetu saioa ixtean"
 
 #: settings/xfce4-session-settings.ui:215
 msgid "Prompt for confirmation when logging out"
-msgstr "Berrespena eskatu saioa ixterakoan"
+msgstr "Eskatu berrespena saioa ixtean"
 
 #: settings/xfce4-session-settings.ui:235
 msgid "<b>Logout Settings</b>"
-msgstr "<b>Saio-amaiera ezarpenak</b>"
+msgstr "<b>Saio-ixtearen ezarpenak</b>"
 
 #: settings/xfce4-session-settings.ui:266
 msgid "Lock screen be_fore sleep"
-msgstr "B_lokeatu pantaila lo artu aurretik"
+msgstr "_Blokeatu pantaila lo egin aurretik"
 
 #: settings/xfce4-session-settings.ui:289
 msgid "<b>Shutdown</b>"
-msgstr "<b>Itzali</b>"
+msgstr "<b>Itzaltzea</b>"
 
 #: settings/xfce4-session-settings.ui:306
 msgid "_General"
@@ -746,11 +749,11 @@ msgstr "Gorde sa_ioa"
 
 #: settings/xfce4-session-settings.ui:384
 msgid "Currently active session: <b>Default</b>"
-msgstr "Orain aktibo dagoen saioa: <b>Lehenetsia</b>"
+msgstr "Uneko saio aktiboa: <b>Lehenetsia</b>"
 
 #: settings/xfce4-session-settings.ui:485
 msgid "Current Sessio_n"
-msgstr "Oraingo saioa"
+msgstr "_Uneko saioa"
 
 #: settings/xfce4-session-settings.ui:536
 msgid "_Remove"
@@ -758,15 +761,15 @@ msgstr "_Ezabatu"
 
 #: settings/xfce4-session-settings.ui:540
 msgid "Delete the selected session"
-msgstr "Hautatutako saioa ezabatu da"
+msgstr "Ezabatu hautatutako saioa"
 
 #: settings/xfce4-session-settings.ui:564
 msgid "Clear Save_d Sessions"
-msgstr "Gordetako saioak garbitu"
+msgstr "Garbitu _gordetako saioak"
 
 #: settings/xfce4-session-settings.ui:614
 msgid "Saved _Sessions"
-msgstr "Gordetako saioak"
+msgstr "Gordetako _saioak"
 
 #: settings/xfce4-session-settings.ui:649
 msgid "Launch GN_OME services on startup"
@@ -774,7 +777,7 @@ msgstr "Abiarazi GN_OME zerbitzuak abioan"
 
 #: settings/xfce4-session-settings.ui:654
 msgid "Start GNOME services, such as gnome-keyring"
-msgstr "GNOME zerbitzuak abiarazi, gnome-keyring eta GNOME eskuragarritasun egitura bezalakoak"
+msgstr "Abiarazi GNOME zerbitzuak, gnome-keyring adibidez"
 
 #: settings/xfce4-session-settings.ui:667
 msgid "Launch _KDE services on startup"
@@ -782,7 +785,7 @@ msgstr "Abiarazi _KDE zerbitzuak abioan"
 
 #: settings/xfce4-session-settings.ui:672
 msgid "Start KDE services, such as kdeinit"
-msgstr "Abiarazi KDE zerbitzuak, kdeinit bezalakoak"
+msgstr "Abiarazi KDE zerbitzuak, kdeinit adibidez"
 
 #: settings/xfce4-session-settings.ui:691
 msgid "<b>Compatibility</b>"
@@ -790,12 +793,12 @@ msgstr "<b>Bateragarritasuna</b>"
 
 #: settings/xfce4-session-settings.ui:716
 msgid "Manage _remote applications"
-msgstr "Kudeatu u_rruneko aplikazioak"
+msgstr "Kudeatu urruneko _aplikazioak"
 
 #: settings/xfce4-session-settings.ui:721
 msgid ""
 "Manage remote applications over the network (this may be a security risk)"
-msgstr "Kudeatu urruneko aplikazioak sarearen bitartez (hau egitea segurtasun arrisku bat da)"
+msgstr "Kudeatu urruneko aplikazioak sarearen bidez (segurtasun-arriskua izan daiteke)"
 
 #: settings/xfce4-session-settings.ui:733
 msgid "<b>Security</b>"
@@ -813,4 +816,4 @@ msgstr "Saioa gordetzen"
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
-msgstr "Zure saioa gordetzen ari da. Itxoin ez baduzu nahi, leiho hau itxi beharko zenuke"
+msgstr "Zure saioa gordetzen ari da. Itxaron nahi ez baduzu, leiho hau itxi dezakezu."
