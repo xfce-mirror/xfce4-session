@@ -69,6 +69,8 @@ xfce_session_client_xsmp_connect (XfceSessionClient *session_client,
 static void
 xfce_session_client_xsmp_disconnect (XfceSessionClient *session_client);
 static void
+xfce_session_client_xsmp_discard (XfceSessionClient *session_client);
+static void
 xfce_session_client_xsmp_request_shutdown (XfceSessionClient *session_client,
                                            XfceSessionClientShutdownHint shutdown_hint);
 static gboolean
@@ -88,6 +90,9 @@ xfce_session_client_xsmp_set_current_directory (XfceSessionClient *session_clien
 static void
 xfce_session_client_xsmp_sync_commands (XfceSessionClient *session_client);
 
+static void
+xfce_session_client_xsmp_set_restart_style_hint (XfceSessionClientXsmp *xsession_client,
+                                                 char hint);
 
 G_DEFINE_FINAL_TYPE (XfceSessionClientXsmp, xfce_session_client_xsmp, XFCE_TYPE_SESSION_CLIENT)
 
@@ -102,6 +107,7 @@ xfce_session_client_xsmp_class_init (XfceSessionClientXsmpClass *klass)
   XfceSessionClientClass *session_client_class = XFCE_SESSION_CLIENT_CLASS (klass);
   session_client_class->connect = xfce_session_client_xsmp_connect;
   session_client_class->disconnect = xfce_session_client_xsmp_disconnect;
+  session_client_class->discard = xfce_session_client_xsmp_discard;
   session_client_class->request_shutdown = xfce_session_client_xsmp_request_shutdown;
   session_client_class->is_connected = xfce_session_client_xsmp_is_connected;
   session_client_class->set_desktop_file = xfce_session_client_xsmp_set_desktop_file;
@@ -740,22 +746,39 @@ xfce_session_client_xsmp_connect (XfceSessionClient *session_client,
                                                            sizeof (buf) - 1,
                                                            buf);
 
-  if (!xsession_client->session_connection)
+  if (xsession_client->session_connection == NULL)
     {
-      if (error)
+      if (client_id != NULL)
+        {
+          // If we pass a previous client ID, but the session manager doesn't
+          // know anything about it, we get an error back from the SM.
+          // Unfortunately, we can't tell here *why* we got an error; it could
+          // be an unknown client ID, or it could be something else.  So try
+          // again one more time with a NULL client ID, on the chance that was
+          // the problem.
+          xsession_client->session_connection = SmcOpenConnection (NULL, NULL,
+                                                                   SmProtoMajor,
+                                                                   SmProtoMinor,
+                                                                   mask,
+                                                                   &callbacks,
+                                                                   NULL,
+                                                                   &given_client_id,
+                                                                   sizeof (buf) - 1,
+                                                                   buf);
+        }
+
+      if (xsession_client->session_connection == NULL)
         {
           g_set_error (error, XFCE_SESSION_CLIENT_ERROR, XFCE_SESSION_CLIENT_ERROR_FAILED,
                        _( "Failed to connect to the session manager: %s"), buf);
+          goto out_err;
         }
-      goto out_err;
     }
-  else if (!given_client_id)
+
+  if (given_client_id == NULL)
     {
-      if (error)
-        {
-          g_set_error (error, XFCE_SESSION_CLIENT_ERROR, XFCE_SESSION_CLIENT_ERROR_INVALID_CLIENT,
-                       _( "Session manager did not return a valid client id"));
-        }
+      g_set_error (error, XFCE_SESSION_CLIENT_ERROR, XFCE_SESSION_CLIENT_ERROR_INVALID_CLIENT,
+                   _( "Session manager did not return a valid client id"));
       goto out_err;
     }
 
@@ -872,23 +895,31 @@ xfce_session_client_xsmp_disconnect (XfceSessionClient *session_client)
 {
   XfceSessionClientXsmp *xsession_client = XFCE_SESSION_CLIENT_XSMP (session_client);
 
-  if (G_UNLIKELY (!xsession_client->session_connection))
+  if (xsession_client->session_connection != NULL)
     {
-      g_warning ("%s() called with no session connection", G_STRFUNC);
-      return;
+      SmcCloseConnection (xsession_client->session_connection, 0, NULL);
+      xsession_client->session_connection = NULL;
+
+      IceRemoveConnectionWatch (xsmp_new_ice_connection, xsession_client);
+      IceSetIOErrorHandler (xsmp_ice_installed_handler);
+      xsmp_ice_installed_handler = NULL;
     }
 
-  if (xfce_session_client_get_restart_style (session_client) == XFCE_SESSION_CLIENT_RESTART_IMMEDIATELY)
-    xfce_session_client_set_restart_style (session_client, XFCE_SESSION_CLIENT_RESTART_NORMAL);
+  XFCE_SESSION_CLIENT_CLASS (xfce_session_client_xsmp_parent_class)->disconnect (session_client);
+}
 
-  SmcCloseConnection (xsession_client->session_connection, 0, NULL);
-  xsession_client->session_connection = NULL;
+static void
+xfce_session_client_xsmp_discard (XfceSessionClient *session_client)
+{
+  xfce_session_client_xsmp_set_restart_style_hint (XFCE_SESSION_CLIENT_XSMP (session_client), SmRestartNever);
 
-  IceRemoveConnectionWatch (xsmp_new_ice_connection, xsession_client);
-  IceSetIOErrorHandler (xsmp_ice_installed_handler);
-  xsmp_ice_installed_handler = NULL;
+  XfceSessionClientXsmp *xsession_client = XFCE_SESSION_CLIENT_XSMP (session_client);
+  if (xsession_client->ice_connection != NULL)
+    {
+      IceFlush (xsession_client->ice_connection);
+    }
 
-  _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
+  XFCE_SESSION_CLIENT_CLASS (xfce_session_client_xsmp_parent_class)->discard (session_client);
 }
 
 static gboolean
@@ -949,26 +980,8 @@ static void
 xfce_session_client_xsmp_set_restart_style (XfceSessionClient *session_client,
                                             XfceSessionClientRestartStyle restart_style)
 {
-  XfceSessionClientXsmp *xsession_client = XFCE_SESSION_CLIENT_XSMP (session_client);
-
-  if (xsession_client->session_connection)
-    {
-      SmProp prop, *props[1];
-      SmPropValue propval;
-      char hint;
-
-      hint = _xfce_session_client_restart_style_to_xsmp (restart_style);
-
-      prop.name = SmRestartStyleHint;
-      prop.type = SmCARD8;
-      prop.num_vals = 1;
-      prop.vals = &propval;
-      propval.value = &hint;
-      propval.length = 1;
-      props[0] = &prop;
-
-      SmcSetProperties (xsession_client->session_connection, 1, props);
-    }
+  char hint = _xfce_session_client_restart_style_to_xsmp (restart_style);
+  xfce_session_client_xsmp_set_restart_style_hint (XFCE_SESSION_CLIENT_XSMP (session_client), hint);
 }
 
 static void
@@ -1011,6 +1024,27 @@ xfce_session_client_xsmp_set_current_directory (XfceSessionClient *session_clien
       prop.vals = &propval;
       propval.value = (char *) (current_directory != NULL ? current_directory : g_get_home_dir ());
       propval.length = strlen (propval.value);
+      props[0] = &prop;
+
+      SmcSetProperties (xsession_client->session_connection, 1, props);
+    }
+}
+
+static void
+xfce_session_client_xsmp_set_restart_style_hint (XfceSessionClientXsmp *xsession_client,
+                                                 char hint)
+{
+  if (xsession_client->session_connection)
+    {
+      SmProp prop, *props[1];
+      SmPropValue propval;
+
+      prop.name = SmRestartStyleHint;
+      prop.type = SmCARD8;
+      prop.num_vals = 1;
+      prop.vals = &propval;
+      propval.value = &hint;
+      propval.length = 1;
       props[0] = &prop;
 
       SmcSetProperties (xsession_client->session_connection, 1, props);

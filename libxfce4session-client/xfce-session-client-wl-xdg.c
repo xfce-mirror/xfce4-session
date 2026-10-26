@@ -204,6 +204,7 @@ xfce_session_client_wl_xdg_connect (XfceSessionClient *session_client,
   struct wl_display *display = gdk_wayland_display_get_wl_display (gdk_display_get_default ());
   struct wl_event_queue *queue = NULL;
   gboolean reconnect_on_error = FALSE;
+  gboolean was_replaced = FALSE;
 
   if (wxsession_client->registry == NULL)
     {
@@ -285,6 +286,8 @@ xfce_session_client_wl_xdg_connect (XfceSessionClient *session_client,
         }
       else if (wxsession_client->session_status == SESSION_STATUS_REPLACED)
         {
+          was_replaced = TRUE;
+
           // We only try to reconnect once on a replaced-during-connect in
           // order to avoid a blocking reconnect loop (and probably a stack
           // overflow) in the case that the compositor is doing something odd
@@ -382,8 +385,12 @@ xfce_session_client_wl_xdg_connect (XfceSessionClient *session_client,
 
 out_err:
 
-  xfce_session_client_wl_xdg_disconnect (session_client);
-  _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
+  _xfce_session_client_disconnect_internal (session_client);
+  if (was_replaced)
+    {
+      wxsession_client->session_status = SESSION_STATUS_REPLACED;
+    }
+
   if (queue != NULL)
     {
       wl_event_queue_destroy (queue);
@@ -403,8 +410,6 @@ out_err:
 static void
 xfce_session_client_wl_xdg_disconnect (XfceSessionClient *session_client)
 {
-  XFCE_SESSION_CLIENT_CLASS (xfce_session_client_wl_xdg_parent_class)->disconnect (session_client);
-
   XfceSessionClientWlXdg *wxsession_client = XFCE_SESSION_CLIENT_WL_XDG (session_client);
 
   GHashTableIter iter;
@@ -418,6 +423,8 @@ xfce_session_client_wl_xdg_disconnect (XfceSessionClient *session_client)
   g_clear_pointer (&wxsession_client->xdg_session, xdg_session_v1_destroy);
 
   wxsession_client->session_status = SESSION_STATUS_INVALID;
+
+  XFCE_SESSION_CLIENT_CLASS (xfce_session_client_wl_xdg_parent_class)->disconnect (session_client);
 }
 
 static void
@@ -438,6 +445,8 @@ xfce_session_client_wl_xdg_discard (XfceSessionClient *session_client)
       // the remove makes it out to the compositor.
       wl_display_flush (display);
     }
+
+  XFCE_SESSION_CLIENT_CLASS (xfce_session_client_wl_xdg_parent_class)->discard (session_client);
 }
 
 static gboolean

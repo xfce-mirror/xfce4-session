@@ -204,6 +204,11 @@ static void
 xfce_session_client_finalize (GObject *obj);
 
 static void
+xfce_session_client_real_disconnect (XfceSessionClient *session_client);
+static void
+xfce_session_client_real_discard (XfceSessionClient *session_client);
+
+static void
 xfce_session_client_parse_argv (gint argc,
                                 const gchar **argv,
                                 gchar **client_id,
@@ -227,6 +232,9 @@ xfce_session_client_class_init (XfceSessionClientClass *klass)
 #ifdef HAVE_BIND_TEXTDOMAIN_CODESET
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 #endif
+
+  klass->disconnect = xfce_session_client_real_disconnect;
+  klass->discard = xfce_session_client_real_discard;
 
   GObjectClass *gobject_class = (GObjectClass *) klass;
 
@@ -615,7 +623,16 @@ xfce_session_client_finalize (GObject *obj)
   G_OBJECT_CLASS (xfce_session_client_parent_class)->finalize (obj);
 }
 
+static void
+xfce_session_client_real_disconnect (XfceSessionClient *session_client)
+{
+  _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
+}
 
+static void
+xfce_session_client_real_discard (XfceSessionClient *session_client)
+{
+}
 
 const gchar *
 _xfce_session_client_state_to_string (XfceSessionClientState state)
@@ -738,16 +755,18 @@ _xfce_session_client_set_client_id (XfceSessionClient *session_client,
 {
   XfceSessionClientPrivate *priv = GET_PRIV (session_client);
 
+#ifdef ENABLE_X11
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    {
+      gdk_x11_set_sm_client_id (client_id);
+    }
+#endif
+
   if (g_strcmp0 (priv->client_id, client_id) == 0)
     return;
 
   g_free (priv->client_id);
   priv->client_id = g_strdup (client_id);
-
-#ifdef ENABLE_X11
-  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-    gdk_x11_set_sm_client_id (priv->client_id);
-#endif
 
   /* the restart command embeds the ID, so it has to go back out */
   sync_commands (session_client);
@@ -1318,6 +1337,11 @@ xfce_session_client_set_auto_reconnect_interval (XfceSessionClient *session_clie
  *
  * Attempts to connect to the session manager.
  *
+ * @session_client will attempt to use any previous client/session ID that was
+ * provided in the environment or constructor.  It is implementation-defined as
+ * to what happens if that session ID is unknown to the session manager, or if
+ * it is already in use.
+ *
  * Returns: %TRUE on success, %FALSE otherwise.  If an error
  *          occurs, @error will be set.
  **/
@@ -1339,15 +1363,6 @@ void
 _xfce_session_client_disconnect_internal (XfceSessionClient *session_client)
 {
   XFCE_SESSION_CLIENT_GET_CLASS (session_client)->disconnect (session_client);
-
-#ifdef ENABLE_X11
-  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-    {
-      gdk_x11_set_sm_client_id (NULL);
-    }
-#endif
-
-  _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
 }
 
 /**
@@ -1356,10 +1371,12 @@ _xfce_session_client_disconnect_internal (XfceSessionClient *session_client)
  *
  * Disconnects the application from the session manager.
  *
+ * The session manager may keep or discard session state based on the restart
+ * style hint the application has set.
+ *
  * <note><para>
- * This may not remove the application from the saved
- * session (if any) if the user later does not choose to save
- * the session when logging out.
+ * This may not remove the application from the saved session (if any) if the
+ * user later does not choose to save the session when logging out.
  * </para></note>
  *
  **/
@@ -1390,9 +1407,8 @@ xfce_session_client_disconnect (XfceSessionClient *session_client)
  * response to the #XfceSessionClient::quit signal.
  *
  * <note><para>
- * This may not remove the application from the saved
- * session (if any) if the user later does not choose to save
- * the session when logging out.
+ * This may not remove the application from the saved session (if any) if the
+ * user later does not choose to save the session when logging out.
  * </para></note>
  *
  **/
@@ -1404,14 +1420,7 @@ xfce_session_client_discard (XfceSessionClient *session_client)
   if (startup_options.sm_disable)
     return;
 
-  xfce_session_client_set_restart_style (session_client, XFCE_SESSION_CLIENT_RESTART_NORMAL);
-
-  XfceSessionClientClass *klass = XFCE_SESSION_CLIENT_GET_CLASS (session_client);
-  if (klass->discard != NULL)
-    {
-      klass->discard (session_client);
-    }
-
+  XFCE_SESSION_CLIENT_GET_CLASS (session_client)->discard (session_client);
   xfce_session_client_disconnect (session_client);
 }
 
