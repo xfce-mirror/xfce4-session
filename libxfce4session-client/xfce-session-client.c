@@ -1337,6 +1337,11 @@ xfce_session_client_set_auto_reconnect_interval (XfceSessionClient *session_clie
  *
  * Attempts to connect to the session manager.
  *
+ * @session_client will attempt to use any previous client/session ID that was
+ * provided in the environment or constructor.  It is implementation-defined as
+ * to what happens if that session ID is unknown to the session manager, or if
+ * it is already in use.
+ *
  * Returns: %TRUE on success, %FALSE otherwise.  If an error
  *          occurs, @error will be set.
  **/
