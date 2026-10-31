@@ -990,14 +990,17 @@ xfsm_client_dbus_set_sm_properties (XfsmDbusClient *object,
 
   while (g_variant_iter_next (iter, "{sv}", &prop_name, &variant))
     {
-      GValue value;
+      GValue value = G_VALUE_INIT;
 
       g_dbus_gvariant_to_gvalue (variant, &value);
       xfsm_properties_set (properties, prop_name, &value);
 
       g_variant_unref (variant);
+      g_value_unset (&value);
+      g_free (prop_name);
     }
 
+  g_variant_iter_free (iter);
   xfsm_dbus_client_complete_set_sm_properties (object, invocation);
   return TRUE;
 }
