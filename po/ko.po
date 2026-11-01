@@ -6,14 +6,14 @@
 # ByungHyun Choi <byunghyun.choi@gmail.com>, 2005
 # Junghee Lee <daemul72@gmail.com>, 2025
 # 1763f4a4329a2376c933c5e919a36cbc_341ca53 <1f851310383599d03339229d772e1290_119292>, 2017
-# Seong-ho Cho <darkcircle.0426@gmail.com>, 2011-2013,2016,2019-2021,2023-2024
+# Seong-ho Cho <darkcircle.0426@gmail.com>, 2011-2013,2016,2019-2021,2023-2024,2026
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2026-10-09 00:55+0200\n"
+"POT-Creation-Date: 2026-10-17 12:57+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
-"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2025\n"
+"Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>, 2011-2013,2016,2019-2021,2023-2024,2026\n"
 "Language-Team: Korean (http://app.transifex.com/xfce/xfce4-session/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,31 +41,32 @@ msgstr "Xfce 세션(웨일랜드)"
 msgid "xfce;wayland;desktop;environment;session;"
 msgstr "xfce;wayland;desktop;environment;session;데스크탑;환경;세션;"
 
-#: libxfce4session-client/xfce-session-client-dbus.c:530
+#: libxfce4session-client/xfce-session-client-dbus.c:551
 msgid "(unknown)"
 msgstr "(알 수 없음)"
 
-#: libxfce4session-client/xfce-session-client-dbus.c:533
+#: libxfce4session-client/xfce-session-client-dbus.c:554
 #, c-format
 msgid "Application '%s' cancelled logout"
-msgstr ""
+msgstr "'%s' 앱에서 로그아웃을 취소했습니다"
 
 #: libxfce4session-client/xfce-session-client-wl-xdg.c:260
 msgid ""
-"Your compositor does not support the xdg-session-management-v1 protocol"
-msgstr ""
+"Your compositor does not support the xdg-session-management-v1 protocol; "
+"attempting to fall back to the DBus interface"
+msgstr "컴포지터에서 xdg-session-management-v1 프로토콜을 지원하지 않아 DBus 인터페이스로 다시 시도합니다"
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:307
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:315
 msgid "Compositor failed to respond to registration attempt in time"
-msgstr ""
+msgstr "컴포지터에서 시간 내 등록 시도 응답에 실패했습니다"
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:328
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:336
 msgid "Another application took over the session during registration"
-msgstr ""
+msgstr "등록하는 동안 다른 앱에서 세션을 넘겼습니다"
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:338
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:346
 msgid "Compositor did not respond with a client ID"
-msgstr ""
+msgstr "컴포지터에서 클라이언트 ID에 응답하지 않았습니다"
 
 #: libxfce4session-client/xfce-session-client-xsmp.c:748
 #, c-format
@@ -76,23 +77,23 @@ msgstr "세션 관리자로 연결하는데 실패했습니다: %s"
 msgid "Session manager did not return a valid client id"
 msgstr "세션 관리자에서 올바른 클라이언트 ID를 반환하지 않았습니다"
 
-#: libxfce4session-client/xfce-session-client.c:1031
+#: libxfce4session-client/xfce-session-client.c:1048
 msgid "Session management client ID"
 msgstr "세션 관리자 클라이언트 ID"
 
-#: libxfce4session-client/xfce-session-client.c:1031
+#: libxfce4session-client/xfce-session-client.c:1048
 msgid "ID"
 msgstr "ID"
 
-#: libxfce4session-client/xfce-session-client.c:1032
+#: libxfce4session-client/xfce-session-client.c:1049
 msgid "Disable session management"
 msgstr "세션 관리자 비활성화"
 
-#: libxfce4session-client/xfce-session-client.c:1048
+#: libxfce4session-client/xfce-session-client.c:1065
 msgid "Session management options"
 msgstr "세션 관리자 옵션"
 
-#: libxfce4session-client/xfce-session-client.c:1048
+#: libxfce4session-client/xfce-session-client.c:1065
 msgid "Show session management options"
 msgstr "세션 관리자 옵션 보기"
 
@@ -173,7 +174,7 @@ msgid "Unable to save the session"
 msgstr "세션을 저장할 수 없습니다"
 
 #: settings/session-editor.c:135 settings/session-editor.c:318
-#: xfce4-session/xfsm-manager.c:1368 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1387 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "닫기(_O)"
 
@@ -192,7 +193,7 @@ msgid "Are you sure you want to empty the session cache?"
 msgstr "정말로 세션 캐시를 비우시렵니까?"
 
 #: settings/session-editor.c:198 settings/session-editor.c:290
-#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:743
+#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:748
 #: xfce4-session/xfsm-logout-dialog.c:218
 msgid "_Cancel"
 msgstr "취소(_C)"
@@ -253,7 +254,7 @@ msgstr "프로그램"
 msgid "Restart Style"
 msgstr "다시 시작 방식"
 
-#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:744
+#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:749
 msgid "_OK"
 msgstr "확인(_O)"
 
@@ -463,7 +464,7 @@ msgstr "계속 진행합니다"
 msgid "Try again"
 msgstr "다시 시도합니다"
 
-#: xfce4-session/xfsm-manager.c:605
+#: xfce4-session/xfsm-manager.c:610
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -472,77 +473,77 @@ msgid ""
 "incorrectly."
 msgstr "대체 세션 이름을 정할 수 없습니다. 가능한 원인으로는 xfconfd가 실행중에 있지 않거나(D-Bus 설정 문제), 환경변수 $XDG_CONFIG_DIRS를 잘못 설정(반드시 \"%s\"을(를) 포함해야 합니다)했거나, xfce4-session을 잘못 설치했을 수도 있습니다."
 
-#: xfce4-session/xfsm-manager.c:630
+#: xfce4-session/xfsm-manager.c:635
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "지정한 대체 세션(\"%s\")을 대체 세션으로 표시하지 않았습니다."
 
-#: xfce4-session/xfsm-manager.c:672
+#: xfce4-session/xfsm-manager.c:677
 msgid "The list of applications in the failsafe session is empty."
 msgstr "대체 세션에 사용할 프로그램의 목록이 비어 있습니다."
 
-#: xfce4-session/xfsm-manager.c:756
+#: xfce4-session/xfsm-manager.c:761
 msgid "Name for the new session"
 msgstr "새 세션의 이름"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:833
+#: xfce4-session/xfsm-manager.c:838
 msgid "Session Manager Error"
 msgstr "세션 관리자 오류"
 
-#: xfce4-session/xfsm-manager.c:834
+#: xfce4-session/xfsm-manager.c:839
 msgid "Unable to load a failsafe session"
 msgstr "대체 세션을 로드할 수 없습니다"
 
-#: xfce4-session/xfsm-manager.c:836
+#: xfce4-session/xfsm-manager.c:841
 msgid "_Quit"
 msgstr "끝내기(_Q)"
 
-#: xfce4-session/xfsm-manager.c:1358
+#: xfce4-session/xfsm-manager.c:1377
 msgid "Shutdown Failed"
 msgstr "종료 실패"
 
-#: xfce4-session/xfsm-manager.c:1361
+#: xfce4-session/xfsm-manager.c:1380
 msgid "Failed to suspend session"
 msgstr "세션을 대기모드로 진입 시키는데 실패했습니다"
 
-#: xfce4-session/xfsm-manager.c:1363
+#: xfce4-session/xfsm-manager.c:1382
 msgid "Failed to hibernate session"
 msgstr "세션을 최대 절전모드로 진입 시키는데 실패했습니다"
 
-#: xfce4-session/xfsm-manager.c:1365
+#: xfce4-session/xfsm-manager.c:1384
 msgid "Failed to hybrid sleep session"
 msgstr "하이브리드 슬립 모드로 바꾸지 못했습니다"
 
-#: xfce4-session/xfsm-manager.c:1366
+#: xfce4-session/xfsm-manager.c:1385
 msgid "Failed to switch user"
 msgstr "사용자 전환 실패"
 
-#: xfce4-session/xfsm-manager.c:1734
+#: xfce4-session/xfsm-manager.c:1753
 msgid "Can only terminate clients when in the idle state"
 msgstr "대기 상태일 때만 클라이언트를 중지할 수 있습니다"
 
-#: xfce4-session/xfsm-manager.c:2522
+#: xfce4-session/xfsm-manager.c:2570
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "세션 관리자는 체크포인트를 요청할 때 대기 상태에 있어야 합니다"
 
-#: xfce4-session/xfsm-manager.c:2595 xfce4-session/xfsm-manager.c:2615
+#: xfce4-session/xfsm-manager.c:2643 xfce4-session/xfsm-manager.c:2663
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "세션 관리자는 종료를 요청할 때 대기 상태에 있어야 합니다"
 
-#: xfce4-session/xfsm-manager.c:2652
+#: xfce4-session/xfsm-manager.c:2700
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "세션 관리자는 다시 시작할 때 대기 상태에 있어야 합니다"
 
-#: xfce4-session/xfsm-manager.c:2688 xfce4-session/xfsm-manager.c:2727
-#: xfce4-session/xfsm-manager.c:2765
+#: xfce4-session/xfsm-manager.c:2736 xfce4-session/xfsm-manager.c:2775
+#: xfce4-session/xfsm-manager.c:2813
 msgid "Session manager must be in idle state when requesting a sleep"
 msgstr "절전 상태를 요청하면 세션 관리자는 대기 상태로 진입해야합니다"
 
-#: xfce4-session/xfsm-manager.c:2892
+#: xfce4-session/xfsm-manager.c:2940
 msgid "Session manager must be in idle state when requesting a user switch"
 msgstr "사용자 전환을 요청하면 세션 관리자는 대기 상태로 진입해야합니다"
 
