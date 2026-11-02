@@ -40,12 +40,20 @@ struct wl_object
 struct wl_proxy
 {
   struct wl_object object;
+#if WAYLAND_VERSION_MAJOR < 1 || (WAYLAND_VERSION_MAJOR == 1 && WAYLAND_VERSION_MINOR < 23)
+  struct wl_display *display;
+#endif
 };
 
 // wayland-client.c
-static const struct wl_interface *
-wl_proxy_get_interface (struct wl_proxy *proxy)
-{
-  return proxy->object.interface;
-}
+const struct wl_interface *
+wl_proxy_get_interface (struct wl_proxy *proxy);
+
+#if WAYLAND_VERSION_MAJOR < 1 || (WAYLAND_VERSION_MAJOR == 1 && WAYLAND_VERSION_MINOR < 23)
+#define wl_display_create_queue_with_name(display, name) wl_display_create_queue (display)
+
+// wayland-client.c
+struct wl_display *
+wl_proxy_get_display (struct wl_proxy *proxy);
+#endif
 #endif

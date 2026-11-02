@@ -23,6 +23,7 @@
 #include <wayland-client-core.h>
 #include <wayland-client-protocol.h>
 
+#include "stolen-from-libwayland.h"
 #include "xdg-session-management-v1-client.h"
 #include "xdg-shell-client.h"
 #include "xfce-session-client-dbus.h"
