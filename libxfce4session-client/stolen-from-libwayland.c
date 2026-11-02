@@ -24,6 +24,9 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+#include <stdlib.h>
+#include <string.h>
+
 #include "stolen-from-libwayland.h"
 
 // wayland-private.h
@@ -226,3 +229,66 @@ wl_proxy_marshal_array_constructor_versioned (struct wl_proxy *proxy,
 {
   return wl_proxy_marshal_array_flags (proxy, opcode, interface, version, 0, args);
 }
+
+#if WAYLAND_VERSION_MAJOR < 1 || (WAYLAND_VERSION_MAJOR == 1 && WAYLAND_VERSION_MINOR < 24)
+// wayland-client.c
+const struct wl_interface *
+wl_proxy_get_interface (struct wl_proxy *proxy)
+{
+  return proxy->object.interface;
+}
+
+#if WAYLAND_VERSION_MAJOR < 1 || (WAYLAND_VERSION_MAJOR == 1 && WAYLAND_VERSION_MINOR < 23)
+// wayland-client.c
+struct wl_event_queue
+{
+  struct wl_list event_list;
+  struct wl_list proxy_list; /**< struct wl_proxy::queue_link */
+  struct wl_display *display;
+  char *name;
+};
+
+// wayland-private.h
+static inline void *
+zalloc (size_t s)
+{
+  return calloc (1, s);
+}
+
+// wayland-client.c
+static void
+wl_event_queue_init (struct wl_event_queue *queue,
+                     struct wl_display *display,
+                     const char *name)
+{
+  wl_list_init (&queue->event_list);
+  wl_list_init (&queue->proxy_list);
+  queue->display = display;
+  if (name)
+    queue->name = strdup (name);
+}
+
+// wayland-client.c
+__attribute__ ((__visibility__ ("default"))) struct wl_event_queue *
+wl_display_create_queue_with_name (struct wl_display *display,
+                                   const char *name)
+{
+  struct wl_event_queue *queue;
+
+  queue = zalloc (sizeof *queue);
+  if (queue == NULL)
+    return NULL;
+
+  wl_event_queue_init (queue, display, name);
+
+  return queue;
+}
+
+// wayland-client.c
+__attribute__ ((__visibility__ ("default"))) struct wl_display *
+wl_proxy_get_display (struct wl_proxy *proxy)
+{
+  return proxy->display;
+}
+#endif
+#endif
