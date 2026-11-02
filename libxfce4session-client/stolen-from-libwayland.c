@@ -226,3 +226,21 @@ wl_proxy_marshal_array_constructor_versioned (struct wl_proxy *proxy,
 {
   return wl_proxy_marshal_array_flags (proxy, opcode, interface, version, 0, args);
 }
+
+#if WAYLAND_VERSION_MAJOR < 1 || (WAYLAND_VERSION_MAJOR == 1 && WAYLAND_VERSION_MINOR < 24)
+// wayland-client.c
+const struct wl_interface *
+wl_proxy_get_interface (struct wl_proxy *proxy)
+{
+  return proxy->object.interface;
+}
+
+#if WAYLAND_VERSION_MAJOR < 1 || (WAYLAND_VERSION_MAJOR == 1 && WAYLAND_VERSION_MINOR < 23)
+// wayland-client.c
+__attribute__ ((__visibility__ ("default"))) struct wl_display *
+wl_proxy_get_display (struct wl_proxy *proxy)
+{
+  return proxy->display;
+}
+#endif
+#endif

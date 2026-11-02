@@ -32,7 +32,7 @@ dependency_versions = {
   'libx11': '>= 1.6.7',
 
   'gtk-layer-shell': '>= 0.7.0',
-  'wayland': '>= 1.23',
+  'wayland': '>= 1.22',
 
   'polkit': '>= 0.102',
 
