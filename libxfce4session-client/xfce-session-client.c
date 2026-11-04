@@ -929,7 +929,7 @@ _xfce_session_client_dup_effective_discard_command (XfceSessionClient *session_c
     return g_strdupv (priv->discard_command);
 }
 
-static gboolean
+static void
 xfce_session_client_try_reconnect (gpointer data)
 {
   XfceSessionClient *session_client = XFCE_SESSION_CLIENT (data);
@@ -945,13 +945,11 @@ xfce_session_client_try_reconnect (gpointer data)
           g_message ("Failed to reconnect to session manager: %s", error->message);
           g_error_free (error);
 
-          priv->auto_reconnect_id = g_timeout_add (priv->auto_reconnect_interval,
-                                                   xfce_session_client_try_reconnect,
-                                                   session_client);
+          priv->auto_reconnect_id = g_timeout_add_once (priv->auto_reconnect_interval,
+                                                        xfce_session_client_try_reconnect,
+                                                        session_client);
         }
     }
-
-  return FALSE;
 }
 
 void
@@ -966,9 +964,9 @@ _xfce_session_client_start_auto_reconnect (XfceSessionClient *session_client)
       return;
     }
 
-  priv->auto_reconnect_id = g_timeout_add (priv->auto_reconnect_interval,
-                                           xfce_session_client_try_reconnect,
-                                           session_client);
+  priv->auto_reconnect_id = g_timeout_add_once (priv->auto_reconnect_interval,
+                                                xfce_session_client_try_reconnect,
+                                                session_client);
 }
 
 gboolean

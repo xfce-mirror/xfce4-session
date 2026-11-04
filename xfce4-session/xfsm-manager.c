@@ -296,7 +296,7 @@ xfsm_manager_new (GDBusConnection *connection)
 }
 
 
-static gboolean
+static void
 xfsm_manager_startup (gpointer user_data)
 {
   XfsmManager *manager = user_data;
@@ -304,7 +304,6 @@ xfsm_manager_startup (gpointer user_data)
   xfsm_startup_foreign (manager);
   g_queue_sort (manager->pending_properties, (GCompareDataFunc) G_CALLBACK (xfsm_properties_compare), NULL);
   xfsm_startup_begin (manager);
-  return FALSE;
 }
 
 
@@ -869,7 +868,7 @@ xfsm_manager_restart (XfsmManager *manager)
     }
 #endif
 
-  g_idle_add (xfsm_manager_startup, manager);
+  g_idle_add_once (xfsm_manager_startup, manager);
 
   return TRUE;
 }
@@ -929,15 +928,13 @@ xfsm_manager_new_client (XfsmManager *manager,
 }
 
 
-static gboolean
+static void
 xfsm_manager_reset_restart_attempts (gpointer data)
 {
   XfsmProperties *properties = data;
 
   properties->restart_attempts = 0;
   properties->restart_attempts_reset_id = 0;
-
-  return FALSE;
 }
 
 
@@ -990,9 +987,9 @@ xfsm_manager_handle_old_client_reregister (XfsmManager *manager,
    * attempts counter if the client stays alive for a while */
   if (properties->restart_attempts > 0 && properties->restart_attempts_reset_id == 0)
     {
-      properties->restart_attempts_reset_id = g_timeout_add (RESTART_RESET_TIMEOUT,
-                                                             xfsm_manager_reset_restart_attempts,
-                                                             properties);
+      properties->restart_attempts_reset_id = g_timeout_add_once (RESTART_RESET_TIMEOUT,
+                                                                  xfsm_manager_reset_restart_attempts,
+                                                                  properties);
     }
 }
 
@@ -2427,7 +2424,7 @@ xfsm_manager_dbus_get_state (XfsmDbusManager *object,
 }
 
 
-static gboolean
+static void
 xfsm_manager_dbus_checkpoint_idled (gpointer data)
 {
   XfsmManager *manager = XFSM_MANAGER (data);
@@ -2438,8 +2435,6 @@ xfsm_manager_dbus_checkpoint_idled (gpointer data)
   xfsm_manager_save_yourself_global (manager, SmSaveBoth, FALSE,
                                      SmInteractStyleNone, FALSE,
                                      XFSM_SHUTDOWN_ASK, TRUE);
-
-  return FALSE;
 }
 
 
@@ -2463,7 +2458,7 @@ xfsm_manager_dbus_checkpoint (XfsmDbusManager *object,
     manager->checkpoint_session_name = NULL;
 
   /* idle so the dbus call returns in the client */
-  manager->save_idle_id = g_idle_add (xfsm_manager_dbus_checkpoint_idled, manager);
+  manager->save_idle_id = g_idle_add_once (xfsm_manager_dbus_checkpoint_idled, manager);
 
   xfsm_dbus_manager_complete_checkpoint (object, invocation);
   return TRUE;
