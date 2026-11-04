@@ -861,8 +861,7 @@ out_err:
     }
 
   IceRemoveConnectionWatch (xsmp_new_ice_connection, xsession_client);
-  IceSetIOErrorHandler (xsmp_ice_installed_handler);
-  xsmp_ice_installed_handler = NULL;
+  g_clear_pointer (&xsmp_ice_installed_handler, IceSetIOErrorHandler);
 
   return FALSE;
 }
@@ -885,8 +884,7 @@ xfce_session_client_xsmp_disconnect (XfceSessionClient *session_client)
   xsession_client->session_connection = NULL;
 
   IceRemoveConnectionWatch (xsmp_new_ice_connection, xsession_client);
-  IceSetIOErrorHandler (xsmp_ice_installed_handler);
-  xsmp_ice_installed_handler = NULL;
+  g_clear_pointer (&xsmp_ice_installed_handler, IceSetIOErrorHandler);
 
   _xfce_session_client_set_state (session_client, XFCE_SESSION_CLIENT_STATE_DISCONNECTED);
 }

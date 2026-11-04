@@ -481,8 +481,7 @@ void
 xfsm_client_set_service_name (XfsmClient *client,
                               const gchar *service_name)
 {
-  g_free (client->service_name);
-  client->service_name = g_strdup (service_name);
+  g_set_str (&client->service_name, service_name);
 }
 
 
