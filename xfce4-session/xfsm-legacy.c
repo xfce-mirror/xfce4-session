@@ -281,6 +281,7 @@ void
 xfsm_legacy_perform_session_save (void)
 {
   XErrorHandler old_handler;
+  WnckHandle *wnck_handle;
   WnckScreen *screen;
   GList *windows;
   GList *lp;
@@ -316,9 +317,10 @@ xfsm_legacy_perform_session_save (void)
   old_handler = XSetErrorHandler (wins_error_handler);
 
   /* query mapped windows on all screens */
+  wnck_handle = wnck_handle_new (WNCK_CLIENT_TYPE_APPLICATION);
   for (n = 0; n < ScreenCount (gdk_x11_get_default_xdisplay ()); ++n)
     {
-      screen = wnck_screen_get (n);
+      screen = wnck_handle_get_screen (wnck_handle, n);
       wnck_screen_force_update (screen);
 
       windows = wnck_screen_get_windows (screen);
@@ -364,6 +366,7 @@ xfsm_legacy_perform_session_save (void)
           window_list = g_list_append (window_list, sm_window);
         }
     }
+  g_object_unref (wnck_handle);
 
   /* open fresh display for sending WM_SAVE_YOURSELF commands */
   XSync (gdk_x11_get_default_xdisplay (), False);

@@ -18,25 +18,24 @@ i18n = import('i18n')
 fs = import('fs')
 
 dependency_versions = {
-  'glib': '>= 2.76.0',
-  'gdk-pixbuf': '>= 2.42.8',
-  'gtk': '>= 3.24.0',
-  'xfce4': '>= 4.18.0',
+  'glib': '>= 2.80.0',
+  'gdk-pixbuf': '>= 2.42.10',
+  'gtk': '>= 3.24.41',
+  'xfce4': '>= 4.20.0',
   'libxfce4ui': '>= 4.21.0',
   'libxfce4util': '>= 4.21.0',
-  'libxfce4windowing': '>= 4.19.2',
 
   'libice': '>= 1.0.10',
   'libsm': '>= 1.2.3',
-  'libwnck': '>= 3.10.0',
-  'libx11': '>= 1.6.7',
+  'libwnck': '>= 43.0',
+  'libx11': '>= 1.8.7',
 
-  'gtk-layer-shell': '>= 0.7.0',
+  'gtk-layer-shell': '>= 0.8.2',
   'wayland': '>= 1.23',
 
-  'polkit': '>= 0.102',
+  'polkit': '>= 124',
 
-  'gir': '>= 1.72.0',
+  'gir': '>= 1.80.1',
 }
 
 glib = dependency('glib-2.0', version: dependency_versions['glib'])
@@ -47,7 +46,7 @@ gdk_pixbuf = dependency('gdk-pixbuf-2.0', version: dependency_versions['gdk-pixb
 gtk = dependency('gtk+-3.0', version: dependency_versions['gtk'])
 libxfce4ui = dependency('libxfce4ui-2', version: dependency_versions['libxfce4ui'])
 libxfce4util = dependency('libxfce4util-1.0', version: dependency_versions['libxfce4util'])
-libxfce4windowing = dependency('libxfce4windowing-0', version: dependency_versions['libxfce4windowing'])
+libxfce4windowing = dependency('libxfce4windowing-0', version: dependency_versions['xfce4'])
 xfconf = dependency('libxfconf-0', version: dependency_versions['xfce4'])
 
 xdt_gen_visibility = find_program('xdt-gen-visibility', required: true)
