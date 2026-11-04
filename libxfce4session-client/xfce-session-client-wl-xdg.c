@@ -476,8 +476,7 @@ wl_surface_xdg_toplevel_realized (struct wl_surface *wl_surface,
                       if (g_strcmp0 (toplevel->restore_from_name, name) != 0)
                         {
                           xdg_toplevel_session_v1_rename (toplevel->toplevel_session, name);
-                          g_free (toplevel->restore_from_name);
-                          toplevel->restore_from_name = g_strdup (name);
+                          g_set_str (&toplevel->restore_from_name, name);
                         }
                     }
                   else
@@ -650,8 +649,7 @@ xfce_session_client_wl_xdg_rename_window (XfceSessionClient *session_client,
       if (toplevel->toplevel_session != NULL)
         {
           xdg_toplevel_session_v1_rename (toplevel->toplevel_session, new_name);
-          g_free (toplevel->restore_from_name);
-          toplevel->restore_from_name = g_strdup (new_name);
+          g_set_str (&toplevel->restore_from_name, new_name);
         }
     }
 }

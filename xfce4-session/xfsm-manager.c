@@ -797,8 +797,7 @@ xfsm_manager_load_settings (XfsmManager *manager,
                                                      DEFAULT_SESSION_NAME);
   if (G_UNLIKELY (manager->session_name[0] == '\0'))
     {
-      g_free (manager->session_name);
-      manager->session_name = g_strdup (DEFAULT_SESSION_NAME);
+      g_set_str (&manager->session_name, DEFAULT_SESSION_NAME);
     }
 
   manager->session_chooser = xfconf_channel_get_bool (channel, "/chooser/AlwaysDisplay", FALSE);

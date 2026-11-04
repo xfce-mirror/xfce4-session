@@ -55,8 +55,7 @@ xfsm_inhibition_set_app_id (XfsmInhibition *inhibition,
 {
   g_return_if_fail (XFSM_IS_INHIBITION (inhibition));
 
-  g_free (inhibition->app_id);
-  inhibition->app_id = g_strdup (app_id);
+  g_set_str (&inhibition->app_id, app_id);
 
   g_object_notify (G_OBJECT (inhibition), "app-id");
 }
@@ -67,8 +66,7 @@ xfsm_inhibition_set_reason (XfsmInhibition *inhibition,
 {
   g_return_if_fail (XFSM_IS_INHIBITION (inhibition));
 
-  g_free (inhibition->reason);
-  inhibition->reason = g_strdup (reason);
+  g_set_str (&inhibition->reason, reason);
 
   g_object_notify (G_OBJECT (inhibition), "reason");
 }

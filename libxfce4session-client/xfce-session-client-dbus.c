@@ -952,6 +952,5 @@ _xfce_session_client_dbus_set_client_object_path (XfceSessionClientDBus *dsessio
                                                   const gchar *object_path)
 {
   XfceSessionClientDBusPrivate *priv = GET_PRIV (dsession_client);
-  g_free (priv->client_object_path);
-  priv->client_object_path = g_strdup (object_path);
+  g_set_str (&priv->client_object_path, object_path);
 }

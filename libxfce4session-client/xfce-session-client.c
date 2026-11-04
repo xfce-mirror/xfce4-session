@@ -741,8 +741,7 @@ _xfce_session_client_set_client_id (XfceSessionClient *session_client,
   if (g_strcmp0 (priv->client_id, client_id) == 0)
     return;
 
-  g_free (priv->client_id);
-  priv->client_id = g_strdup (client_id);
+  g_set_str (&priv->client_id, client_id);
 
 #ifdef ENABLE_X11
   if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
@@ -1512,8 +1511,7 @@ xfce_session_client_set_desktop_file (XfceSessionClient *session_client,
       goto out;
     }
 
-  g_free (priv->desktop_file);
-  priv->desktop_file = g_strdup (desktop_file);
+  g_set_str (&priv->desktop_file, desktop_file);
 
   xfce_rc_set_group (rcfile, "Desktop Entry");
 
@@ -1670,8 +1668,7 @@ xfce_session_client_set_current_directory (XfceSessionClient *session_client,
   if (g_strcmp0 (priv->current_directory, current_directory) == 0)
     return;
 
-  g_free (priv->current_directory);
-  priv->current_directory = g_strdup (current_directory);
+  g_set_str (&priv->current_directory, current_directory);
 
   XFCE_SESSION_CLIENT_GET_CLASS (session_client)->set_current_directory (session_client, current_directory);
 
