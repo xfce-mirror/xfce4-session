@@ -356,7 +356,7 @@ main (int argc, char **argv)
   if (!xfce_str_is_empty (g_getenv ("SESSION_MANAGER")))
     {
       g_warning ("Another session manager is already running");
-      exit (EXIT_FAILURE);
+      return EXIT_FAILURE;
     }
 
   if (!xfconf_init (&error))
