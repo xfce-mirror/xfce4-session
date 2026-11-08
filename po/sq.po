@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the xfce4-session.master package.
 # 
 # Translators:
-# Besnik Bleta <besnik@programeshqip.org>, 2020,2023-2024
+# Besnik Bleta <besnik@programeshqip.org>, 2020,2023-2024,2026
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2026-10-09 00:55+0200\n"
+"POT-Creation-Date: 2026-10-17 12:57+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
-"Last-Translator: Besnik Bleta <besnik@programeshqip.org>, 2020,2023-2024\n"
+"Last-Translator: Besnik Bleta <besnik@programeshqip.org>, 2020,2023-2024,2026\n"
 "Language-Team: Albanian (http://app.transifex.com/xfce/xfce4-session/language/sq/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,31 +38,32 @@ msgstr "Sesion Xfce (Wayland)"
 msgid "xfce;wayland;desktop;environment;session;"
 msgstr "xfce;wayland;mjedis;desktop;sesion;"
 
-#: libxfce4session-client/xfce-session-client-dbus.c:530
+#: libxfce4session-client/xfce-session-client-dbus.c:551
 msgid "(unknown)"
 msgstr "(e panjohur)"
 
-#: libxfce4session-client/xfce-session-client-dbus.c:533
+#: libxfce4session-client/xfce-session-client-dbus.c:554
 #, c-format
 msgid "Application '%s' cancelled logout"
 msgstr ""
 
 #: libxfce4session-client/xfce-session-client-wl-xdg.c:260
 msgid ""
-"Your compositor does not support the xdg-session-management-v1 protocol"
-msgstr ""
+"Your compositor does not support the xdg-session-management-v1 protocol; "
+"attempting to fall back to the DBus interface"
+msgstr "Hartuesi juaj s’mbulon protokollin xdg-session-management-v1; po bëhen përpjekje të kalohet te përdorimi i ndërfaqes DBus"
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:307
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:315
 msgid "Compositor failed to respond to registration attempt in time"
-msgstr ""
+msgstr "Hartuesi s’arriti t’i përgjigjej në kohë përpjekjes për regjistrim"
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:328
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:336
 msgid "Another application took over the session during registration"
-msgstr ""
+msgstr "Gjatë regjistrimit, sesionin e mori një tjetër aplikacion"
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:338
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:346
 msgid "Compositor did not respond with a client ID"
-msgstr ""
+msgstr "Hartuesi s’u përgjigj me një ID klienti"
 
 #: libxfce4session-client/xfce-session-client-xsmp.c:748
 #, c-format
@@ -73,23 +74,23 @@ msgstr "S’u arrit të lidhej me përgjegjësin e sesioneve: %s"
 msgid "Session manager did not return a valid client id"
 msgstr "Përgjegjësi i sesioneve s’u përgjigj me një ID klienti të vlefshme"
 
-#: libxfce4session-client/xfce-session-client.c:1031
+#: libxfce4session-client/xfce-session-client.c:1048
 msgid "Session management client ID"
 msgstr "ID klienti administrimi sesioni"
 
-#: libxfce4session-client/xfce-session-client.c:1031
+#: libxfce4session-client/xfce-session-client.c:1048
 msgid "ID"
 msgstr "ID"
 
-#: libxfce4session-client/xfce-session-client.c:1032
+#: libxfce4session-client/xfce-session-client.c:1049
 msgid "Disable session management"
 msgstr "Çaktivizo administrim sesionesh"
 
-#: libxfce4session-client/xfce-session-client.c:1048
+#: libxfce4session-client/xfce-session-client.c:1065
 msgid "Session management options"
 msgstr "Mundësi administrimi sesioni"
 
-#: libxfce4session-client/xfce-session-client.c:1048
+#: libxfce4session-client/xfce-session-client.c:1065
 msgid "Show session management options"
 msgstr "Shfaq mundësi administrimi sesioni"
 
@@ -170,7 +171,7 @@ msgid "Unable to save the session"
 msgstr "S’arrihet të ruhet sesionin"
 
 #: settings/session-editor.c:135 settings/session-editor.c:318
-#: xfce4-session/xfsm-manager.c:1368 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1387 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "_Mbylle"
 
@@ -189,7 +190,7 @@ msgid "Are you sure you want to empty the session cache?"
 msgstr "Jeni i sigurt se doni të zbrazet fshehtina e sesioneve?"
 
 #: settings/session-editor.c:198 settings/session-editor.c:290
-#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:743
+#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:748
 #: xfce4-session/xfsm-logout-dialog.c:218
 msgid "_Cancel"
 msgstr "_Anuloje"
@@ -250,7 +251,7 @@ msgstr "Program"
 msgid "Restart Style"
 msgstr "Stil Rinisjeje"
 
-#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:744
+#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:749
 msgid "_OK"
 msgstr "_OK"
 
@@ -460,7 +461,7 @@ msgstr "Vazhdo sidoqoftë"
 msgid "Try again"
 msgstr "Riprovoni"
 
-#: xfce4-session/xfsm-manager.c:605
+#: xfce4-session/xfsm-manager.c:610
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -469,77 +470,77 @@ msgid ""
 "incorrectly."
 msgstr "S’arrihet të përcaktohet emër sesioni \"failsafe\".  Shkaqe të mundshëm: xfconfd nuk po xhiron (problem rregullimi D-Bus-i); ndryshorja e mjedisit $XDG_CONFIG_DIRS është caktuar pasaktësisht (duhet të përfshijë \"%s\"), ose xfce4-session është instaluar jo saktë)."
 
-#: xfce4-session/xfsm-manager.c:630
+#: xfce4-session/xfsm-manager.c:635
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Sesioni \"failsafe\" i dhënë (\"%s\") nuk është i shënuar si sesion \"failsafe\"."
 
-#: xfce4-session/xfsm-manager.c:672
+#: xfce4-session/xfsm-manager.c:677
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Lista e aplikacioneve për sesione \"failsafe\" është e zbrazët."
 
-#: xfce4-session/xfsm-manager.c:756
+#: xfce4-session/xfsm-manager.c:761
 msgid "Name for the new session"
 msgstr "Emër për sesion e ri"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:833
+#: xfce4-session/xfsm-manager.c:838
 msgid "Session Manager Error"
 msgstr "Gabim Përgjegjësi Sesionesh"
 
-#: xfce4-session/xfsm-manager.c:834
+#: xfce4-session/xfsm-manager.c:839
 msgid "Unable to load a failsafe session"
 msgstr "S’arrihet të ngarkohet sesion \"failsafe\""
 
-#: xfce4-session/xfsm-manager.c:836
+#: xfce4-session/xfsm-manager.c:841
 msgid "_Quit"
 msgstr "_Dil"
 
-#: xfce4-session/xfsm-manager.c:1358
+#: xfce4-session/xfsm-manager.c:1377
 msgid "Shutdown Failed"
 msgstr "Fikja Dështoi"
 
-#: xfce4-session/xfsm-manager.c:1361
+#: xfce4-session/xfsm-manager.c:1380
 msgid "Failed to suspend session"
 msgstr "S’u arrit të pezullohej sesioni"
 
-#: xfce4-session/xfsm-manager.c:1363
+#: xfce4-session/xfsm-manager.c:1382
 msgid "Failed to hibernate session"
 msgstr "S’u arrit të plogështohej sesioni"
 
-#: xfce4-session/xfsm-manager.c:1365
+#: xfce4-session/xfsm-manager.c:1384
 msgid "Failed to hybrid sleep session"
 msgstr "S’u arrit të kalohej sesioni në fjetje hibride"
 
-#: xfce4-session/xfsm-manager.c:1366
+#: xfce4-session/xfsm-manager.c:1385
 msgid "Failed to switch user"
 msgstr "S’u arrit të ndërrohej përdorues"
 
-#: xfce4-session/xfsm-manager.c:1734
+#: xfce4-session/xfsm-manager.c:1753
 msgid "Can only terminate clients when in the idle state"
 msgstr "Mund të mbyllë klientë vetëm kur është në gjendje pa veprimtari"
 
-#: xfce4-session/xfsm-manager.c:2522
+#: xfce4-session/xfsm-manager.c:2570
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Përgjegjësi i sesionit duhet të jetë në gjendje pa veprimtari, kur i kërkohet \"checkpoint\""
 
-#: xfce4-session/xfsm-manager.c:2595 xfce4-session/xfsm-manager.c:2615
+#: xfce4-session/xfsm-manager.c:2643 xfce4-session/xfsm-manager.c:2663
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Përgjegjësi i sesionit duhet të jetë në gjendje pa veprimtari, kur i kërkohet fikje"
 
-#: xfce4-session/xfsm-manager.c:2652
+#: xfce4-session/xfsm-manager.c:2700
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Përgjegjësi i sesionit duhet të jetë në gjendje pa veprimtari, kur i kërkohet rinisje"
 
-#: xfce4-session/xfsm-manager.c:2688 xfce4-session/xfsm-manager.c:2727
-#: xfce4-session/xfsm-manager.c:2765
+#: xfce4-session/xfsm-manager.c:2736 xfce4-session/xfsm-manager.c:2775
+#: xfce4-session/xfsm-manager.c:2813
 msgid "Session manager must be in idle state when requesting a sleep"
 msgstr "Përgjegjësi i sesioneve duhet të jetë në gjendje të plogësht, kur kërkohet dremitje"
 
-#: xfce4-session/xfsm-manager.c:2892
+#: xfce4-session/xfsm-manager.c:2940
 msgid "Session manager must be in idle state when requesting a user switch"
 msgstr "Përgjegjësi i sesioneve duhet të jetë në gjendje të plogësht, kur kërkohet ndërrim përdoruesi"
 
