@@ -56,30 +56,6 @@ xfsm_shutdown_try_type (XfsmShutdown *shutdown,
                         XfsmShutdownType type,
                         GError **error);
 
-gboolean
-xfsm_shutdown_try_restart (XfsmShutdown *shutdown,
-                           GError **error);
-
-gboolean
-xfsm_shutdown_try_shutdown (XfsmShutdown *shutdown,
-                            GError **error);
-
-gboolean
-xfsm_shutdown_try_suspend (XfsmShutdown *shutdown,
-                           GError **error);
-
-gboolean
-xfsm_shutdown_try_hibernate (XfsmShutdown *shutdown,
-                             GError **error);
-
-gboolean
-xfsm_shutdown_try_hybrid_sleep (XfsmShutdown *shutdown,
-                                GError **error);
-
-gboolean
-xfsm_shutdown_try_switch_user (XfsmShutdown *shutdown,
-                               GError **error);
-
 void
 xfsm_shutdown_can_restart (XfsmShutdown *shutdown,
                            gboolean *can_restart,

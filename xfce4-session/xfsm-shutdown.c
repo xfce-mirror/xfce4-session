@@ -188,44 +188,7 @@ xfsm_shutdown_get (void)
 
 
 
-gboolean
-xfsm_shutdown_try_type (XfsmShutdown *shutdown,
-                        XfsmShutdownType type,
-                        GError **error)
-{
-  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
-
-  switch (type)
-    {
-    case XFSM_SHUTDOWN_SHUTDOWN:
-      return xfsm_shutdown_try_shutdown (shutdown, error);
-
-    case XFSM_SHUTDOWN_RESTART:
-      return xfsm_shutdown_try_restart (shutdown, error);
-
-    case XFSM_SHUTDOWN_SUSPEND:
-      return xfsm_shutdown_try_suspend (shutdown, error);
-
-    case XFSM_SHUTDOWN_HIBERNATE:
-      return xfsm_shutdown_try_hibernate (shutdown, error);
-
-    case XFSM_SHUTDOWN_HYBRID_SLEEP:
-      return xfsm_shutdown_try_hybrid_sleep (shutdown, error);
-
-    case XFSM_SHUTDOWN_SWITCH_USER:
-      return xfsm_shutdown_try_switch_user (shutdown, error);
-
-    default:
-      g_set_error (error, 1, 0, _("Unknown shutdown method %d"), type);
-      break;
-    }
-
-  return FALSE;
-}
-
-
-
-gboolean
+static gboolean
 xfsm_shutdown_try_restart (XfsmShutdown *shutdown,
                            GError **error)
 {
@@ -243,7 +206,7 @@ xfsm_shutdown_try_restart (XfsmShutdown *shutdown,
           xfsm_packagekit_try_trigger_restart (shutdown->packagekit, NULL);
         }
 
-      if (xfce_systemd_reboot (shutdown->systemd, TRUE, NULL))
+      if (xfce_systemd_reboot_with_flags (shutdown->systemd, XFCE_SYSTEMD_SKIP_INHIBITORS, NULL))
         {
           return TRUE;
         }
@@ -261,7 +224,7 @@ xfsm_shutdown_try_restart (XfsmShutdown *shutdown,
 
 
 
-gboolean
+static gboolean
 xfsm_shutdown_try_shutdown (XfsmShutdown *shutdown,
                             GError **error)
 {
@@ -280,13 +243,13 @@ xfsm_shutdown_try_shutdown (XfsmShutdown *shutdown,
           // To actually trigger the offline update, we need to
           // reboot to do the upgrade. When the upgrade is complete,
           // the computer will shut down automatically.
-          if (xfce_systemd_reboot (shutdown->systemd, TRUE, NULL))
+          if (xfce_systemd_reboot_with_flags (shutdown->systemd, XFCE_SYSTEMD_SKIP_INHIBITORS, NULL))
             {
               return TRUE;
             }
         }
 
-      if (xfce_systemd_power_off (shutdown->systemd, TRUE, NULL))
+      if (xfce_systemd_power_off_with_flags (shutdown->systemd, XFCE_SYSTEMD_SKIP_INHIBITORS, NULL))
         {
           return TRUE;
         }
@@ -304,11 +267,22 @@ xfsm_shutdown_try_shutdown (XfsmShutdown *shutdown,
 
 
 
-typedef gboolean (*SleepFunc) (gpointer object, gboolean polkit_interactive, GError **error);
+typedef gboolean (*SystemdSleepFunc) (XfceSystemd *object, XfceSystemdFlags flags, GError **error);
+typedef gboolean (*ConsolekitSleepFunc) (XfceConsolekit *object, gboolean polkit_interactive, GError **error);
 
 static gboolean
-try_sleep_method (gpointer object,
-                  SleepFunc func)
+try_systemd_sleep_method (XfceSystemd *object,
+                          SystemdSleepFunc func)
+{
+  if (object == NULL)
+    return FALSE;
+
+  return func (object, XFCE_SYSTEMD_SKIP_INHIBITORS, NULL);
+}
+
+static gboolean
+try_consolekit_sleep_method (XfceConsolekit *object,
+                             ConsolekitSleepFunc func)
 {
   if (object == NULL)
     return FALSE;
@@ -337,7 +311,7 @@ lock_screen (XfsmShutdown *shutdown,
 
 
 
-gboolean
+static gboolean
 xfsm_shutdown_try_suspend (XfsmShutdown *shutdown,
                            GError **error)
 {
@@ -349,10 +323,10 @@ xfsm_shutdown_try_suspend (XfsmShutdown *shutdown,
   /* Try each way to suspend - it will handle NULL.
    */
 
-  if (try_sleep_method (shutdown->systemd, (SleepFunc) xfce_systemd_suspend))
+  if (try_systemd_sleep_method (shutdown->systemd, xfce_systemd_suspend_with_flags))
     return TRUE;
 
-  if (try_sleep_method (shutdown->consolekit, (SleepFunc) xfce_consolekit_suspend))
+  if (try_consolekit_sleep_method (shutdown->consolekit, xfce_consolekit_suspend))
     return TRUE;
 
   return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_SUSPEND, error);
@@ -360,7 +334,7 @@ xfsm_shutdown_try_suspend (XfsmShutdown *shutdown,
 
 
 
-gboolean
+static gboolean
 xfsm_shutdown_try_hibernate (XfsmShutdown *shutdown,
                              GError **error)
 {
@@ -372,10 +346,10 @@ xfsm_shutdown_try_hibernate (XfsmShutdown *shutdown,
   /* Try each way to hibernate - it will handle NULL.
    */
 
-  if (try_sleep_method (shutdown->systemd, (SleepFunc) xfce_systemd_hibernate))
+  if (try_systemd_sleep_method (shutdown->systemd, xfce_systemd_hibernate_with_flags))
     return TRUE;
 
-  if (try_sleep_method (shutdown->consolekit, (SleepFunc) xfce_consolekit_hibernate))
+  if (try_consolekit_sleep_method (shutdown->consolekit, xfce_consolekit_hibernate))
     return TRUE;
 
   return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_HIBERNATE, error);
@@ -383,7 +357,7 @@ xfsm_shutdown_try_hibernate (XfsmShutdown *shutdown,
 
 
 
-gboolean
+static gboolean
 xfsm_shutdown_try_hybrid_sleep (XfsmShutdown *shutdown,
                                 GError **error)
 {
@@ -395,16 +369,16 @@ xfsm_shutdown_try_hybrid_sleep (XfsmShutdown *shutdown,
   /* Try each way to hybrid-sleep - it will handle NULL.
    */
 
-  if (try_sleep_method (shutdown->systemd, (SleepFunc) xfce_systemd_hybrid_sleep))
+  if (try_systemd_sleep_method (shutdown->systemd, xfce_systemd_hybrid_sleep_with_flags))
     return TRUE;
 
-  if (try_sleep_method (shutdown->consolekit, (SleepFunc) xfce_consolekit_hybrid_sleep))
+  if (try_consolekit_sleep_method (shutdown->consolekit, xfce_consolekit_hybrid_sleep))
     return TRUE;
 
   return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_HYBRID_SLEEP, error);
 }
 
-gboolean
+static gboolean
 xfsm_shutdown_try_switch_user (XfsmShutdown *shutdown,
                                GError **error)
 {
@@ -451,6 +425,43 @@ xfsm_shutdown_try_switch_user (XfsmShutdown *shutdown,
 
   return (*error == NULL);
 }
+
+
+gboolean
+xfsm_shutdown_try_type (XfsmShutdown *shutdown,
+                        XfsmShutdownType type,
+                        GError **error)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  switch (type)
+    {
+    case XFSM_SHUTDOWN_SHUTDOWN:
+      return xfsm_shutdown_try_shutdown (shutdown, error);
+
+    case XFSM_SHUTDOWN_RESTART:
+      return xfsm_shutdown_try_restart (shutdown, error);
+
+    case XFSM_SHUTDOWN_SUSPEND:
+      return xfsm_shutdown_try_suspend (shutdown, error);
+
+    case XFSM_SHUTDOWN_HIBERNATE:
+      return xfsm_shutdown_try_hibernate (shutdown, error);
+
+    case XFSM_SHUTDOWN_HYBRID_SLEEP:
+      return xfsm_shutdown_try_hybrid_sleep (shutdown, error);
+
+    case XFSM_SHUTDOWN_SWITCH_USER:
+      return xfsm_shutdown_try_switch_user (shutdown, error);
+
+    default:
+      g_set_error (error, 1, 0, _("Unknown shutdown method %d"), type);
+      break;
+    }
+
+  return FALSE;
+}
+
 
 
 void
