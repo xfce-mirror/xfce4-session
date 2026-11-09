@@ -71,11 +71,17 @@ xfsm_start_application (gchar **command,
           gchar *display_name =
             xfsm_gdk_display_get_fullname (gdk_screen_get_display (screen));
 
+          G_GNUC_BEGIN_IGNORE_DEPRECATIONS
           screen_name = g_strdup_printf ("%s.%d", display_name,
                                          gdk_screen_get_number (screen));
+          G_GNUC_END_IGNORE_DEPRECATIONS
         }
       else
-        screen_name = gdk_screen_make_display_name (screen);
+        {
+          G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+          screen_name = gdk_screen_make_display_name (screen);
+          G_GNUC_END_IGNORE_DEPRECATIONS
+        }
       argv[argc++] = g_strdup ("env");
       argv[argc++] = g_strdup_printf ("DISPLAY=%s", screen_name);
       g_free (screen_name);

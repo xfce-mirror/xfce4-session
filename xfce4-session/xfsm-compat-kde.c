@@ -126,7 +126,10 @@ xfsm_compat_kde_startup (void)
   run (command);
 
   /* tell kde if we are running multi-head */
-  if (gdk_display_get_n_screens (gdk_display_get_default ()) > 1)
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+  gint n_screens = gdk_display_get_n_screens (gdk_display_get_default ());
+  G_GNUC_END_IGNORE_DEPRECATIONS
+  if (n_screens > 1)
     {
       g_snprintf (command, 256,
                   "qdbus org.kde.klauncher /KLauncher setLaunchEnv KDE_MULTIHEAD \"true\"");
