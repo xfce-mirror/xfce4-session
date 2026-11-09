@@ -3,9 +3,12 @@
 # This file is distributed under the same license as the xfce4-session.master package.
 # 
 # Translators:
+# 11fae04751cc88bf0b4daf15dbd7e33d_68cdff3, 2022
 # Aleksandr P, 2010-2011
+# AlexanderFilev, 2019-2020
 # AlexanderFilev, 2019
 # Andrei Stepanov, 2023-2024,2026
+# Andres <kovtunos@yandex.ru>, 2010
 # Andres <kovtunos@yandex.ru>, 2010
 # Andrey Fedoseev <andrey.fedoseev@gmail.com>, 2006
 # Anthony Ivanoff <a-i@bk.ru>, 2004-2005
@@ -19,6 +22,7 @@
 # Nikita Belobrov <qvzqvz@gmail.com>, 2008
 # Sergey Alyoshin <alyoshin.s@gmail.com>, 2014,2016
 # Sergey Fedoseev <fedoseev.sergey@gmail.com>, 2006
+# vladiruzz, 2025
 # vladiruzz, 2025
 # 11fae04751cc88bf0b4daf15dbd7e33d_68cdff3, 2022
 msgid ""
@@ -37,11 +41,11 @@ msgstr ""
 
 #: xfce.desktop.in:4
 msgid "Xfce Session"
-msgstr "Сеанс"
+msgstr "Сеанс Xfce"
 
 #: xfce.desktop.in:5 xfce-wayland.desktop.in:5
 msgid "Use this session to run Xfce as your desktop environment"
-msgstr "Используйте этот сеанс, чтобы сделать Xfce вашим окружением"
+msgstr "Используйте этот сеанс, чтобы запускать Xfce в качестве рабочего окружения"
 
 #: xfce.desktop.in:10
 msgid "xfce;session;desktop;environment;window manager;gui;"
@@ -68,7 +72,7 @@ msgstr "Приложение «%s» отменило выход из систе�
 msgid ""
 "Your compositor does not support the xdg-session-management-v1 protocol; "
 "attempting to fall back to the DBus interface"
-msgstr ""
+msgstr "Ваш композитор не поддерживает протокол xdg-session-management-v1; выполняется попытка переключиться на интерфейс D-Bus"
 
 #: libxfce4session-client/xfce-session-client-wl-xdg.c:315
 msgid "Compositor failed to respond to registration attempt in time"
@@ -89,19 +93,19 @@ msgstr "Не удалось подключиться к диспетчеру с�
 
 #: libxfce4session-client/xfce-session-client-xsmp.c:757
 msgid "Session manager did not return a valid client id"
-msgstr "Менеджер сеансов не предоставил допустимый идентификатор клиента"
+msgstr "Диспетчер сеансов не вернул допустимый идентификатор клиента"
 
 #: libxfce4session-client/xfce-session-client.c:1048
 msgid "Session management client ID"
-msgstr "ID клиента менеджера сеансов"
+msgstr "ИД клиента менеджера сеансов"
 
 #: libxfce4session-client/xfce-session-client.c:1048
 msgid "ID"
-msgstr "ID"
+msgstr "ИД"
 
 #: libxfce4session-client/xfce-session-client.c:1049
 msgid "Disable session management"
-msgstr "Выключить менеджер сеансов"
+msgstr "Отключить управление сеансами"
 
 #: libxfce4session-client/xfce-session-client.c:1065
 msgid "Session management options"
@@ -270,7 +274,7 @@ msgstr "Способ перезагрузки"
 
 #: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:749
 msgid "_OK"
-msgstr "О_к"
+msgstr "_Хорошо"
 
 #: settings/xfae-dialog.c:73 settings/xfae-window.c:249
 msgid "Add application"
@@ -290,7 +294,7 @@ msgstr "Команда:"
 
 #: settings/xfae-dialog.c:129
 msgid "Trigger:"
-msgstr "Запуск:"
+msgstr "Условие запуска:"
 
 #: settings/xfae-dialog.c:200
 msgid "Select a command"
@@ -334,7 +338,7 @@ msgstr "при входе в спящий режим"
 
 #: settings/xfae-model.c:144
 msgid "on hybrid sleep"
-msgstr "при входе в гибернацию"
+msgstr "при гибридном спящем режиме"
 
 #: settings/xfae-model.c:145
 msgid "on switch user"
@@ -372,7 +376,7 @@ msgstr "Не удалось задать перехват запуска"
 
 #: settings/xfae-window.c:220
 msgid "Trigger"
-msgstr "Запуск"
+msgstr "Условие запуска"
 
 #: settings/xfae-window.c:246 settings/xfae-window.c:335
 msgid "Add"
@@ -436,7 +440,7 @@ msgstr "Создать новый сеанс."
 
 #: xfce4-session/xfsm-chooser.c:198
 msgid "Delete a saved session."
-msgstr "Удалить сохраненный сеанс."
+msgstr "Удалить сохранённый сеанс."
 
 #. "Logout" button
 #: xfce4-session/xfsm-chooser.c:209
@@ -451,7 +455,7 @@ msgstr "Отменить попытку входа и вернуться к эк
 #. "Start" button
 #: xfce4-session/xfsm-chooser.c:218
 msgid "Start"
-msgstr "Приложения"
+msgstr "Запуск"
 
 #: xfce4-session/xfsm-chooser.c:219
 msgid "Start an existing session."
@@ -555,11 +559,11 @@ msgstr "Менеджер сеансов должен быть в режиме о
 #: xfce4-session/xfsm-manager.c:2736 xfce4-session/xfsm-manager.c:2775
 #: xfce4-session/xfsm-manager.c:2813
 msgid "Session manager must be in idle state when requesting a sleep"
-msgstr "Менеджер сеансов должен быть в режиме ожидания при запросе спящего режима"
+msgstr "При запросе спящего режима диспетчер сеансов должен находиться в состоянии простоя"
 
 #: xfce4-session/xfsm-manager.c:2940
 msgid "Session manager must be in idle state when requesting a user switch"
-msgstr "Менеджер сеансов должен быть в режиме ожидания при запросе смены пользователя"
+msgstr "При запросе смены пользователя диспетчер сеансов должен находиться в состоянии простоя"
 
 #: xfce4-session/xfsm-logout-dialog.c:190
 #, c-format
@@ -596,11 +600,11 @@ msgstr "Спящий _режим"
 
 #: xfce4-session/xfsm-logout-dialog.c:343
 msgid "H_ybrid Sleep"
-msgstr "_Гибернация"
+msgstr "Гибридный с_пящий режим"
 
 #: xfce4-session/xfsm-logout-dialog.c:369
 msgid "Switch _User"
-msgstr "Cмена _пользователя"
+msgstr "Смена _пользователя"
 
 #: xfce4-session/xfsm-logout-dialog.c:412
 msgid "An error occurred"
@@ -665,11 +669,11 @@ msgstr "Получена ошибка при попытке завершения
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:10
 msgid "logout;exit;quit;shutdown;"
-msgstr "завершить сеанс;закрыть;выйти;выключить;"
+msgstr "выход;завершить сеанс;закрыть;выйти;выключить;"
 
 #: xfce4-session-logout/xfce4-session-logout.desktop.in:13
 msgid "Log out of the Xfce Desktop"
-msgstr "Выход из Xfce"
+msgstr "Выйти из рабочего стола Xfce"
 
 #. SECURITY:
 #. - A normal active user on the local machine does not need permission
@@ -691,20 +695,20 @@ msgstr "Сеансы и запуск"
 
 #: settings/xfce4-session-settings.desktop.in:4
 msgid "Customize desktop startup"
-msgstr "Персонализация запуска "
+msgstr "Персонализация запуска рабочего стола"
 
 #: settings/xfce4-session-settings.desktop.in:11
 msgid ""
 "session;settings;preferences;manager;startup;login;logout;shutdown;lock "
 "screen;application;autostart;launch;services;daemon;agent;"
-msgstr "сессия;настройки;менеджер;запуск;логин;сеанс;завершение работы;блокировка экрана;приложение;автозапуск;сервисы;демон;агент;"
+msgstr "сеанс;настройки;параметры;менеджер;запуск;вход;выход;выключение;блокировка экрана;приложение;автозапуск;запуск;службы;демон;агент;"
 
 #: settings/xfce4-session-settings.ui:51
 msgid ""
 "These applications are a part of the currently-running session,\n"
 "and can be saved now or when you log out.\n"
 "Changes below will only take effect when the session is saved."
-msgstr "Эти приложения являются частью текущего сеанса, и могут\nбыть сохранены сейчас или при выходе из системы. \nИзменения ниже вступят в силу только после сохранения сеанса."
+msgstr "Эти приложения являются частью текущего сеанса\nи могут быть сохранены сейчас или при выходе из системы.\nИзменения ниже вступят в силу только после сохранения сеанса."
 
 #: settings/xfce4-session-settings.ui:79
 msgid "_Help"
@@ -788,7 +792,7 @@ msgstr "Запускать службы GNOME при входе в систем�
 
 #: settings/xfce4-session-settings.ui:654
 msgid "Start GNOME services, such as gnome-keyring"
-msgstr "Запускать службы GNOME, такие как gnome-keyring и подсистема специальных возможностей GNOME"
+msgstr "Запускать службы GNOME, такие как gnome-keyring"
 
 #: settings/xfce4-session-settings.ui:667
 msgid "Launch _KDE services on startup"
@@ -827,4 +831,4 @@ msgstr "Сохранение сеанса"
 msgid ""
 "Your session is being saved.  If you do not wish to wait, you may close this"
 " window."
-msgstr "Сеанс сохранён. Если вы не хотите ждать, можете закрыть это окно."
+msgstr "Ваш сеанс сохраняется. Если вы не хотите ждать, можете закрыть это окно."
