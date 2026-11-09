@@ -89,17 +89,8 @@ name_lost (GDBusConnection *connection,
 static void
 setup_environment (void)
 {
-  const gchar *sm;
   gchar *authfile;
   int fd;
-
-  /* check that no other session manager is running */
-  sm = g_getenv ("SESSION_MANAGER");
-  if (sm != NULL && strlen (sm) > 0)
-    {
-      g_warning ("Another session manager is already running");
-      exit (EXIT_FAILURE);
-    }
 
   /* check if running in verbose mode */
   if (g_getenv ("XFSM_VERBOSE") != NULL)
@@ -192,7 +183,6 @@ bus_acquired (GDBusConnection *connection,
     }
 
 
-  xfsm_startup_init (channel);
   xfsm_manager_load (*manager, channel);
   xfsm_manager_restart (*manager);
 }
@@ -363,6 +353,25 @@ main (int argc, char **argv)
   /* install required signal handlers */
   signal (SIGPIPE, SIG_IGN);
 
+  if (!xfce_str_is_empty (g_getenv ("SESSION_MANAGER")))
+    {
+      g_warning ("Another session manager is already running");
+      return EXIT_FAILURE;
+    }
+
+  if (!xfconf_init (&error))
+    {
+      g_critical ("Unable to contact settings server: %s", error->message);
+      g_error_free (error);
+      return EXIT_FAILURE;
+    }
+
+  atexit (xfconf_shutdown);
+  atexit (xfsm_startup_shutdown);
+
+  channel = xfconf_channel_get (SETTINGS_CHANNEL);
+  xfsm_startup_init (channel);
+
   if (!gtk_init_with_args (&argc, &argv, NULL, option_entries, GETTEXT_PACKAGE, &error))
     {
       g_printerr ("%s: %s.\n", G_LOG_DOMAIN, error->message);
@@ -381,13 +390,6 @@ main (int argc, char **argv)
       g_print ("\n");
 
       return EXIT_SUCCESS;
-    }
-
-  if (!xfconf_init (&error))
-    {
-      xfce_dialog_show_error (NULL, error, _("Unable to contact settings server"));
-      g_error_free (error);
-      return EXIT_FAILURE;
     }
 
   /* Process all pending events prior to start DBUS */
@@ -409,9 +411,6 @@ main (int argc, char **argv)
   xfsm_dbus_init (&manager);
 
   gtk_main ();
-
-  xfsm_startup_shutdown ();
-  xfconf_shutdown ();
 
   return EXIT_SUCCESS;
 }
