@@ -188,44 +188,7 @@ xfsm_shutdown_get (void)
 
 
 
-gboolean
-xfsm_shutdown_try_type (XfsmShutdown *shutdown,
-                        XfsmShutdownType type,
-                        GError **error)
-{
-  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
-
-  switch (type)
-    {
-    case XFSM_SHUTDOWN_SHUTDOWN:
-      return xfsm_shutdown_try_shutdown (shutdown, error);
-
-    case XFSM_SHUTDOWN_RESTART:
-      return xfsm_shutdown_try_restart (shutdown, error);
-
-    case XFSM_SHUTDOWN_SUSPEND:
-      return xfsm_shutdown_try_suspend (shutdown, error);
-
-    case XFSM_SHUTDOWN_HIBERNATE:
-      return xfsm_shutdown_try_hibernate (shutdown, error);
-
-    case XFSM_SHUTDOWN_HYBRID_SLEEP:
-      return xfsm_shutdown_try_hybrid_sleep (shutdown, error);
-
-    case XFSM_SHUTDOWN_SWITCH_USER:
-      return xfsm_shutdown_try_switch_user (shutdown, error);
-
-    default:
-      g_set_error (error, 1, 0, _("Unknown shutdown method %d"), type);
-      break;
-    }
-
-  return FALSE;
-}
-
-
-
-gboolean
+static gboolean
 xfsm_shutdown_try_restart (XfsmShutdown *shutdown,
                            GError **error)
 {
@@ -261,7 +224,7 @@ xfsm_shutdown_try_restart (XfsmShutdown *shutdown,
 
 
 
-gboolean
+static gboolean
 xfsm_shutdown_try_shutdown (XfsmShutdown *shutdown,
                             GError **error)
 {
@@ -337,7 +300,7 @@ lock_screen (XfsmShutdown *shutdown,
 
 
 
-gboolean
+static gboolean
 xfsm_shutdown_try_suspend (XfsmShutdown *shutdown,
                            GError **error)
 {
@@ -360,7 +323,7 @@ xfsm_shutdown_try_suspend (XfsmShutdown *shutdown,
 
 
 
-gboolean
+static gboolean
 xfsm_shutdown_try_hibernate (XfsmShutdown *shutdown,
                              GError **error)
 {
@@ -383,7 +346,7 @@ xfsm_shutdown_try_hibernate (XfsmShutdown *shutdown,
 
 
 
-gboolean
+static gboolean
 xfsm_shutdown_try_hybrid_sleep (XfsmShutdown *shutdown,
                                 GError **error)
 {
@@ -404,7 +367,7 @@ xfsm_shutdown_try_hybrid_sleep (XfsmShutdown *shutdown,
   return xfsm_shutdown_fallback_try_action (XFSM_SHUTDOWN_HYBRID_SLEEP, error);
 }
 
-gboolean
+static gboolean
 xfsm_shutdown_try_switch_user (XfsmShutdown *shutdown,
                                GError **error)
 {
@@ -451,6 +414,43 @@ xfsm_shutdown_try_switch_user (XfsmShutdown *shutdown,
 
   return (*error == NULL);
 }
+
+
+gboolean
+xfsm_shutdown_try_type (XfsmShutdown *shutdown,
+                        XfsmShutdownType type,
+                        GError **error)
+{
+  g_return_val_if_fail (XFSM_IS_SHUTDOWN (shutdown), FALSE);
+
+  switch (type)
+    {
+    case XFSM_SHUTDOWN_SHUTDOWN:
+      return xfsm_shutdown_try_shutdown (shutdown, error);
+
+    case XFSM_SHUTDOWN_RESTART:
+      return xfsm_shutdown_try_restart (shutdown, error);
+
+    case XFSM_SHUTDOWN_SUSPEND:
+      return xfsm_shutdown_try_suspend (shutdown, error);
+
+    case XFSM_SHUTDOWN_HIBERNATE:
+      return xfsm_shutdown_try_hibernate (shutdown, error);
+
+    case XFSM_SHUTDOWN_HYBRID_SLEEP:
+      return xfsm_shutdown_try_hybrid_sleep (shutdown, error);
+
+    case XFSM_SHUTDOWN_SWITCH_USER:
+      return xfsm_shutdown_try_switch_user (shutdown, error);
+
+    default:
+      g_set_error (error, 1, 0, _("Unknown shutdown method %d"), type);
+      break;
+    }
+
+  return FALSE;
+}
+
 
 
 void
