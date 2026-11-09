@@ -527,8 +527,10 @@ xfsm_logout_dialog_screenshot_new (GdkScreen *screen)
 
   screen_rect.x = 0;
   screen_rect.y = 0;
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
   screen_rect.width = gdk_screen_get_width (screen);
   screen_rect.height = gdk_screen_get_height (screen);
+  G_GNUC_END_IGNORE_DEPRECATIONS
 
   window = gdk_screen_get_root_window (screen);
 
