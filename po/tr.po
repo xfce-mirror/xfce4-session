@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the xfce4-session.master package.
 # 
 # Translators:
+# Cenk Yıldızlı <luzumsuz@riseup.net>, 2026
 # Demiray Muhterem <mdemiray@msn.com>, 2019-2020,2023
 # Demiray Muhterem <mdemiray@msn.com>, 2018
 # Emin Tufan Çetin <etcetin@gmail.com>, 2022
@@ -19,9 +20,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-session\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2026-10-09 00:55+0200\n"
+"POT-Creation-Date: 2026-10-17 12:57+0200\n"
 "PO-Revision-Date: 2013-07-02 20:44+0000\n"
-"Last-Translator: Ufuk Furkan Öztürk <ufukfurkanozturk@gmail.com>, 2024\n"
+"Last-Translator: Cenk Yıldızlı <luzumsuz@riseup.net>, 2026\n"
 "Language-Team: Turkish (http://app.transifex.com/xfce/xfce4-session/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,29 +50,30 @@ msgstr "Xfce Oturumu (Wayland)"
 msgid "xfce;wayland;desktop;environment;session;"
 msgstr "xfce;wayland;desktop;environment;session;"
 
-#: libxfce4session-client/xfce-session-client-dbus.c:530
+#: libxfce4session-client/xfce-session-client-dbus.c:551
 msgid "(unknown)"
 msgstr "(bilinmiyor)"
 
-#: libxfce4session-client/xfce-session-client-dbus.c:533
+#: libxfce4session-client/xfce-session-client-dbus.c:554
 #, c-format
 msgid "Application '%s' cancelled logout"
-msgstr ""
+msgstr "'%s' uygulaması çıkış yapmaktan vazgeçti"
 
 #: libxfce4session-client/xfce-session-client-wl-xdg.c:260
 msgid ""
-"Your compositor does not support the xdg-session-management-v1 protocol"
+"Your compositor does not support the xdg-session-management-v1 protocol; "
+"attempting to fall back to the DBus interface"
 msgstr ""
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:307
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:315
 msgid "Compositor failed to respond to registration attempt in time"
 msgstr ""
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:328
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:336
 msgid "Another application took over the session during registration"
-msgstr ""
+msgstr "Kayıt sırasında başka bir uygulama oturumu kontrol altına aldı"
 
-#: libxfce4session-client/xfce-session-client-wl-xdg.c:338
+#: libxfce4session-client/xfce-session-client-wl-xdg.c:346
 msgid "Compositor did not respond with a client ID"
 msgstr ""
 
@@ -84,23 +86,23 @@ msgstr "Oturum yöneticisine bağlanırken hata oluştu: %s"
 msgid "Session manager did not return a valid client id"
 msgstr "Oturum yöneticisi geçerli istemci kimliği döndürmedi"
 
-#: libxfce4session-client/xfce-session-client.c:1031
+#: libxfce4session-client/xfce-session-client.c:1048
 msgid "Session management client ID"
 msgstr "Oturum yönetimi istemci kimliği"
 
-#: libxfce4session-client/xfce-session-client.c:1031
+#: libxfce4session-client/xfce-session-client.c:1048
 msgid "ID"
 msgstr "Kimlik"
 
-#: libxfce4session-client/xfce-session-client.c:1032
+#: libxfce4session-client/xfce-session-client.c:1049
 msgid "Disable session management"
 msgstr "Oturum yönetimini devre dışı bırak"
 
-#: libxfce4session-client/xfce-session-client.c:1048
+#: libxfce4session-client/xfce-session-client.c:1065
 msgid "Session management options"
 msgstr "Oturum yönetimi seçenekleri"
 
-#: libxfce4session-client/xfce-session-client.c:1048
+#: libxfce4session-client/xfce-session-client.c:1065
 msgid "Show session management options"
 msgstr "Oturum yönetimi seçeneklerini göster"
 
@@ -181,7 +183,7 @@ msgid "Unable to save the session"
 msgstr "Oturum kaydetme olanaksız"
 
 #: settings/session-editor.c:135 settings/session-editor.c:318
-#: xfce4-session/xfsm-manager.c:1368 settings/xfce4-session-settings.ui:95
+#: xfce4-session/xfsm-manager.c:1387 settings/xfce4-session-settings.ui:95
 msgid "_Close"
 msgstr "_Kapat"
 
@@ -200,7 +202,7 @@ msgid "Are you sure you want to empty the session cache?"
 msgstr "Oturum önbelleğini temizlemek istediğinize emin misiniz?"
 
 #: settings/session-editor.c:198 settings/session-editor.c:290
-#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:743
+#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:748
 #: xfce4-session/xfsm-logout-dialog.c:218
 msgid "_Cancel"
 msgstr "İ_ptal"
@@ -261,7 +263,7 @@ msgstr "Uygulama"
 msgid "Restart Style"
 msgstr "Biçimi Yeniden Başlat"
 
-#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:744
+#: settings/xfae-dialog.c:70 xfce4-session/xfsm-manager.c:749
 msgid "_OK"
 msgstr "_Tamam"
 
@@ -471,7 +473,7 @@ msgstr "Yine de sürdür"
 msgid "Try again"
 msgstr "Yeniden dene"
 
-#: xfce4-session/xfsm-manager.c:605
+#: xfce4-session/xfsm-manager.c:610
 #, c-format
 msgid ""
 "Unable to determine failsafe session name.  Possible causes: xfconfd isn't "
@@ -480,77 +482,77 @@ msgid ""
 "incorrectly."
 msgstr "Güvenli oturum adı belirleme olanaksız. Olası nedenler: xfconfd çalışmıyor (D-Bus kurulum sorunu); $XDG_CONFIG_DIRS ortam değişkeni yanlış ayarlanmış (\"%s\" içermeli), veya xfce4-session yanlış kurulmuş."
 
-#: xfce4-session/xfsm-manager.c:630
+#: xfce4-session/xfsm-manager.c:635
 #, c-format
 msgid ""
 "The specified failsafe session (\"%s\") is not marked as a failsafe session."
 msgstr "Belirlenmiş günveli oturum (\"%s\") güvenli oturum olarak işaretlenmemiş."
 
-#: xfce4-session/xfsm-manager.c:672
+#: xfce4-session/xfsm-manager.c:677
 msgid "The list of applications in the failsafe session is empty."
 msgstr "Güvenli oturum için uygulama listesi boş."
 
-#: xfce4-session/xfsm-manager.c:756
+#: xfce4-session/xfsm-manager.c:761
 msgid "Name for the new session"
 msgstr "Yeni oturumun adı"
 
 #. FIXME: migrate this into the splash screen somehow so the
 #. * window doesn't look ugly (right now no WM is running, so it
 #. * won't have window decorations).
-#: xfce4-session/xfsm-manager.c:833
+#: xfce4-session/xfsm-manager.c:838
 msgid "Session Manager Error"
 msgstr "Oturum Yöneticisi Hatası"
 
-#: xfce4-session/xfsm-manager.c:834
+#: xfce4-session/xfsm-manager.c:839
 msgid "Unable to load a failsafe session"
 msgstr "Güvenli oturum yükleme olanaksız"
 
-#: xfce4-session/xfsm-manager.c:836
+#: xfce4-session/xfsm-manager.c:841
 msgid "_Quit"
 msgstr "_Çıkış"
 
-#: xfce4-session/xfsm-manager.c:1358
+#: xfce4-session/xfsm-manager.c:1377
 msgid "Shutdown Failed"
 msgstr "Bilgisayar Kapatılamadı"
 
-#: xfce4-session/xfsm-manager.c:1361
+#: xfce4-session/xfsm-manager.c:1380
 msgid "Failed to suspend session"
 msgstr "Oturum askıya alınamadı"
 
-#: xfce4-session/xfsm-manager.c:1363
+#: xfce4-session/xfsm-manager.c:1382
 msgid "Failed to hibernate session"
 msgstr "Oturum beklemeye alınamadı"
 
-#: xfce4-session/xfsm-manager.c:1365
+#: xfce4-session/xfsm-manager.c:1384
 msgid "Failed to hybrid sleep session"
 msgstr "Oturum melez uyku durumuna geçemedi"
 
-#: xfce4-session/xfsm-manager.c:1366
+#: xfce4-session/xfsm-manager.c:1385
 msgid "Failed to switch user"
 msgstr "Kullanıcı değiştirilemedi"
 
-#: xfce4-session/xfsm-manager.c:1734
+#: xfce4-session/xfsm-manager.c:1753
 msgid "Can only terminate clients when in the idle state"
 msgstr "İstemciler yalnızca boştayken sonlandırılabilir"
 
-#: xfce4-session/xfsm-manager.c:2522
+#: xfce4-session/xfsm-manager.c:2570
 msgid "Session manager must be in idle state when requesting a checkpoint"
 msgstr "Denetleme noktası istenirken oturum yöneticisi boşta olmalıdır"
 
-#: xfce4-session/xfsm-manager.c:2595 xfce4-session/xfsm-manager.c:2615
+#: xfce4-session/xfsm-manager.c:2643 xfce4-session/xfsm-manager.c:2663
 msgid "Session manager must be in idle state when requesting a shutdown"
 msgstr "Kapatma istenirken oturum yöneticisi boşta olmalıdır"
 
-#: xfce4-session/xfsm-manager.c:2652
+#: xfce4-session/xfsm-manager.c:2700
 msgid "Session manager must be in idle state when requesting a restart"
 msgstr "Yeniden başlatma istenirken oturum yöneticisi boşta olmalıdır"
 
-#: xfce4-session/xfsm-manager.c:2688 xfce4-session/xfsm-manager.c:2727
-#: xfce4-session/xfsm-manager.c:2765
+#: xfce4-session/xfsm-manager.c:2736 xfce4-session/xfsm-manager.c:2775
+#: xfce4-session/xfsm-manager.c:2813
 msgid "Session manager must be in idle state when requesting a sleep"
 msgstr "Uyku talep edilirken oturum yöneticisi boşta durumda olmalıdır"
 
-#: xfce4-session/xfsm-manager.c:2892
+#: xfce4-session/xfsm-manager.c:2940
 msgid "Session manager must be in idle state when requesting a user switch"
 msgstr "Bir kullanıcı geçişi talep edilirken oturum yöneticisi boşta durumda olmalıdır"
 
