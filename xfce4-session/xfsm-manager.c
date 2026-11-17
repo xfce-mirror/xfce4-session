@@ -1591,7 +1591,7 @@ xfsm_manager_close_connection (XfsmManager *manager,
 
   gboolean cleanup = (flags & XFSM_CLOSE_FLAGS_FORCE_DISCONNECT) != 0;
 
-  if (cleanup && manager->state == XFSM_MANAGER_SHUTDOWNPHASE2)
+  if (cleanup)
     {
       SmsConn sms_conn = xfsm_client_get_sms_connection (client);
       if (sms_conn != NULL)
@@ -1603,7 +1603,7 @@ xfsm_manager_close_connection (XfsmManager *manager,
           IceCloseConnection (ice_conn);
 #endif
         }
-      else
+      else if (manager->state == XFSM_MANAGER_SHUTDOWNPHASE2)
         {
           xfsm_client_terminate (client);
         }
