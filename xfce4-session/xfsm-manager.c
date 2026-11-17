@@ -2970,11 +2970,17 @@ xfsm_manager_dbus_unregister_client (XfsmDbusManager *object,
       XfsmClient *client = XFSM_CLIENT (lp->data);
       if (g_strcmp0 (xfsm_client_get_object_path (client), arg_client_id) == 0)
         {
-          /* maybe we remove client from the queue here but as we also get out
-           * of the loop no need for extra precaution */
-          xfsm_manager_close_connection (manager, client, XFSM_CLOSE_FLAGS_NONE);
-          xfsm_dbus_manager_complete_unregister_client (object, invocation);
-
+          if (xfsm_client_get_sms_connection (client) == NULL)
+            {
+              /* maybe we remove client from the queue here but as we also get out
+               * of the loop no need for extra precaution */
+              xfsm_manager_close_connection (manager, client, XFSM_CLOSE_FLAGS_NONE);
+              xfsm_dbus_manager_complete_unregister_client (object, invocation);
+            }
+          else
+            {
+              throw_error (invocation, XFSM_ERROR_BAD_VALUE, "Client with id of '%s' is an XSMP client", arg_client_id);
+            }
           return TRUE;
         }
     }
