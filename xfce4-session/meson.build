@@ -12,6 +12,8 @@ session_sources = [
   'xfsm-dns.h',
   'xfsm-error.c',
   'xfsm-error.h',
+  'xfsm-fadeout.c',
+  'xfsm-fadeout.h',
   'xfsm-global.c',
   'xfsm-global.h',
   'xfsm-inhibition.c',
@@ -50,8 +52,6 @@ if enable_x11
     'ice-layer.h',
     'sm-layer.c',
     'sm-layer.h',
-    'xfsm-fadeout.c',
-    'xfsm-fadeout.h',
   ]
 
   if get_option('legacy-session-management')
