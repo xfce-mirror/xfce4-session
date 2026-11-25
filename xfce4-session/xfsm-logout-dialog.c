@@ -677,9 +677,7 @@ xfsm_logout_dialog (const gchar *session_name,
   GdkScreen *screen;
   gint monitor;
   GdkPixbuf *screenshot = NULL;
-#ifdef ENABLE_X11
   XfsmFadeout *fadeout = NULL;
-#endif
   XfsmLogoutDialog *xfsm_dialog;
   XfconfChannel *channel = xfconf_channel_get (SETTINGS_CHANNEL);
   GdkDevice *device;
@@ -747,13 +745,7 @@ xfsm_logout_dialog (const gchar *session_name,
       if (xfconf_channel_get_bool (channel, "/general/ShowScreenshots", TRUE))
         screenshot = xfsm_logout_dialog_screenshot_new (screen);
 
-#ifdef ENABLE_X11
-      if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-        {
-          /* display fadeout */
-          fadeout = xfsm_fadeout_new (gdk_screen_get_display (screen));
-        }
-#endif
+      fadeout = xfsm_fadeout_new (gdk_screen_get_display (screen));
 
       dialog = g_object_new (XFSM_TYPE_LOGOUT_DIALOG,
                              "type", GTK_WINDOW_POPUP,
@@ -784,13 +776,8 @@ xfsm_logout_dialog (const gchar *session_name,
 
   gtk_widget_hide (dialog);
 
-#ifdef ENABLE_X11
-  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-    {
-      if (fadeout != NULL)
-        xfsm_fadeout_destroy (fadeout);
-    }
-#endif
+  if (fadeout != NULL)
+    xfsm_fadeout_destroy (fadeout);
 
   if (result == GTK_RESPONSE_OK)
     {

@@ -19,23 +19,33 @@
  * MA 02110-1301 USA.
  */
 
+#ifdef ENABLE_X11
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
 #include <cairo-xlib.h>
 #include <gdk/gdkx.h>
+#endif
 #include <gtk/gtk.h>
+
+#ifdef HAVE_GTK_LAYER_SHELL
+#include <gtk-layer-shell.h>
+#endif
 
 #include "xfsm-fadeout.h"
 
 
 struct _XfsmFadeout
 {
+#ifdef ENABLE_X11
   Display *xdisplay;
   Window *xwindow;
+#endif
+  GList *windows;
 };
 
 
 
+#ifdef ENABLE_X11
 static Window
 xfsm_x11_fadeout_new_window (GdkDisplay *display,
                              GdkScreen *screen)
@@ -130,6 +140,60 @@ xfsm_x11_fadeout_new_window (GdkDisplay *display,
 
   return xwindow;
 }
+#endif
+
+
+
+#ifdef HAVE_GTK_LAYER_SHELL
+static gboolean
+xfsm_layer_fadeout_draw (GtkWidget *widget,
+                         cairo_t *cr,
+                         gpointer user_data)
+{
+  cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
+  cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
+  cairo_paint (cr);
+  return TRUE;
+}
+
+
+
+static GtkWidget *
+xfsm_layer_fadeout_new_window (GdkDisplay *display,
+                               GdkMonitor *monitor)
+{
+  GtkWidget *window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  GtkWindow *gtk_window = GTK_WINDOW (window);
+  GdkCursor *cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
+
+  gtk_widget_set_app_paintable (window, TRUE);
+  gtk_layer_init_for_window (gtk_window);
+  gtk_layer_set_namespace (gtk_window, "logout-fade");
+  gtk_layer_set_layer (gtk_window, GTK_LAYER_SHELL_LAYER_OVERLAY);
+  gtk_layer_set_monitor (gtk_window, monitor);
+  gtk_layer_set_exclusive_zone (gtk_window, -1);
+  gtk_layer_set_anchor (gtk_window, GTK_LAYER_SHELL_EDGE_LEFT, TRUE);
+  gtk_layer_set_anchor (gtk_window, GTK_LAYER_SHELL_EDGE_RIGHT, TRUE);
+  gtk_layer_set_anchor (gtk_window, GTK_LAYER_SHELL_EDGE_TOP, TRUE);
+  gtk_layer_set_anchor (gtk_window, GTK_LAYER_SHELL_EDGE_BOTTOM, TRUE);
+  g_signal_connect (window, "draw", G_CALLBACK (xfsm_layer_fadeout_draw), NULL);
+  gtk_widget_show (window);
+  gdk_window_set_cursor (gtk_widget_get_window (window), cursor);
+  g_object_unref (cursor);
+
+  return window;
+}
+
+
+
+static void
+xfsm_layer_fadeout_monitor_added (GdkDisplay *display,
+                                  GdkMonitor *monitor,
+                                  XfsmFadeout *fadeout)
+{
+  fadeout->windows = g_list_prepend (fadeout->windows, xfsm_layer_fadeout_new_window (display, monitor));
+}
+#endif
 
 
 
@@ -137,13 +201,26 @@ XfsmFadeout *
 xfsm_fadeout_new (GdkDisplay *display)
 {
   XfsmFadeout *fadeout;
-  GdkScreen *screen;
 
   fadeout = g_slice_new0 (XfsmFadeout);
 
-  fadeout->xdisplay = gdk_x11_display_get_xdisplay (display);
-  screen = gdk_display_get_default_screen (display);
-  fadeout->xwindow = GINT_TO_POINTER (xfsm_x11_fadeout_new_window (display, screen));
+#ifdef ENABLE_X11
+  if (GDK_IS_X11_DISPLAY (display))
+    {
+      GdkScreen *screen = gdk_display_get_default_screen (display);
+
+      fadeout->xdisplay = gdk_x11_display_get_xdisplay (display);
+      fadeout->xwindow = GINT_TO_POINTER (xfsm_x11_fadeout_new_window (display, screen));
+    }
+#endif
+#ifdef HAVE_GTK_LAYER_SHELL
+  if (gtk_layer_is_supported ())
+    {
+      for (gint i = 0; i < gdk_display_get_n_monitors (display); i++)
+        xfsm_layer_fadeout_monitor_added (display, gdk_display_get_monitor (display, i), fadeout);
+      g_signal_connect (display, "monitor-added", G_CALLBACK (xfsm_layer_fadeout_monitor_added), fadeout);
+    }
+#endif
 
   return fadeout;
 }
@@ -153,10 +230,17 @@ xfsm_fadeout_new (GdkDisplay *display)
 void
 xfsm_fadeout_destroy (XfsmFadeout *fadeout)
 {
-  gdk_x11_display_error_trap_push (gdk_display_get_default ());
-  XDestroyWindow (fadeout->xdisplay, GPOINTER_TO_INT (fadeout->xwindow));
-  gdk_display_flush (gdk_display_get_default ());
-  gdk_x11_display_error_trap_pop_ignored (gdk_display_get_default ());
+#ifdef ENABLE_X11
+  if (fadeout->xdisplay != NULL)
+    {
+      gdk_x11_display_error_trap_push (gdk_display_get_default ());
+      XDestroyWindow (fadeout->xdisplay, GPOINTER_TO_INT (fadeout->xwindow));
+      gdk_display_flush (gdk_display_get_default ());
+      gdk_x11_display_error_trap_pop_ignored (gdk_display_get_default ());
+    }
+#endif
+  g_signal_handlers_disconnect_by_data (gdk_display_get_default (), fadeout);
+  g_list_free_full (fadeout->windows, (GDestroyNotify) gtk_widget_destroy);
 
   g_slice_free (XfsmFadeout, fadeout);
 }
